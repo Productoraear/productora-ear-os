@@ -3,7 +3,7 @@
  * Deep integration with Google Gemini 1.5 for semantic processing.
  */
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY; // 🔒 S-CLASS SECURITY: Server-side only.
 const MODEL = "gemini-1.5-flash";
 
 export class AstraService {

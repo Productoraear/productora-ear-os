@@ -1,11 +1,18 @@
 import React from 'react';
-export default function Page() {
+import { MarketplaceDashboard } from '@/features/analytics/components/MarketplaceDashboard';
+import { ClosingAnalytics } from '@/features/analytics/components/ClosingAnalytics';
+
+export default function AnalyticsPage() {
   return (
-    <div className="min-h-screen bg-[#050505] flex items-center justify-center text-white border-l-2 border-[#D4AF37]">
-      <div className="p-10 text-center">
-        <span className="text-[#D4AF37] text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">Sector Asegurado</span>
-        <h1 className="text-3xl font-serif font-black uppercase italic tracking-widest">analytics</h1>
-      </div>
+    <div className="min-h-screen bg-[#050505] text-white p-12 md:p-20">
+      <header className="mb-20">
+        <span className="text-[#d4a855] text-[10px] font-black tracking-[0.5em] uppercase mb-4 block">S-Class Intelligence Engine</span>
+        <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter italic">Marketplace <span className="text-white/20">Signals</span></h1>
+      </header>
+      
+      <MarketplaceDashboard />
+      
+      <ClosingAnalytics />
     </div>
   );
 }

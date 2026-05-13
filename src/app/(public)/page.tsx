@@ -3,9 +3,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import ImpactSystems from '@/app/components/ImpactSystems';
-import { CinematicTitle } from '@/app/components/effects/CinematicEntrance';
-import CinematicEntrance from '@/app/components/effects/CinematicEntrance';
 import { ApexButton } from '@/app/components/SClassScreens/ApexButton';
+import { DiscoveryHero } from '@/app/components/DiscoveryHero';
+import { MarketplaceCard } from '@/app/components/SClassScreens/MarketplaceCard';
 
 export default function HomePage() {
   return (
@@ -18,41 +18,59 @@ export default function HomePage() {
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
 
       <div className="relative z-10 pt-48 pb-32">
-        <div className="max-w-7xl mx-auto px-6 text-center mb-40">
-          <CinematicEntrance delay={0}>
-            <span className="inline-block px-6 py-2 rounded-full border border-[#d4a855]/30 text-[#d4a855] text-[10px] font-black uppercase tracking-[0.6em] mb-12 bg-[#d4a855]/5 backdrop-blur-sm">
-              SISTEMAS DE IMPACTO
-            </span>
-            <CinematicTitle 
-              text="ARQUITECTURA E INGENIERÍA" 
-              className="text-5xl md:text-[8rem] mb-4 leading-[0.8] italic font-black tracking-tighter uppercase"
-            />
-            <CinematicTitle 
-              text="DE EVENTOS Y TALENTO" 
-              className="text-5xl md:text-[8rem] mb-12 leading-[0.8] font-black tracking-tighter uppercase"
-            />
-          </CinematicEntrance>
+        {/* MISSION 1: DISCOVERY ENGINE */}
+        <section className="mb-48">
+          <DiscoveryHero />
+        </section>
 
-          <CinematicEntrance delay={0.1}>
-            <p className="text-white/40 text-xs md:text-sm uppercase tracking-[0.5em] font-bold max-w-4xl mx-auto leading-relaxed mb-20">
-              La mayoría vende ruido y logística. Nosotros diseñamos <span className="text-white">Sistemas de Impacto</span>.
-              <br />
-              No alquilamos equipos ni representamos nombres; construimos la infraestructura invisible para que el mensaje sea inevitable.
-            </p>
-          </CinematicEntrance>
-
-          <CinematicEntrance delay={0.2} className="flex flex-col items-center gap-12">
-            <ApexButton />
-            <div className="flex flex-col items-center gap-4 opacity-30 hover:opacity-100 transition-opacity">
-              <span className="text-[10px] font-black uppercase tracking-[0.5em]">Ver Infraestructura</span>
-              <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-4 h-4 border-b-2 border-r-2 border-[#d4a855] rotate-45"
-              />
+        {/* MISSION 2: PREMIUM MARKETPLACE GRID */}
+        <section className="max-w-7xl mx-auto px-6 mb-48">
+          <div className="flex flex-col md:flex-row justify-between items-end gap-12 mb-20">
+            <div className="space-y-4">
+              <span className="text-[10px] font-black uppercase tracking-[0.6em] text-[#d4a855]">Curaduría S-Class</span>
+              <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter leading-none">
+                Protocolos <br />
+                <span className="text-white/20">de Alta Demanda</span>
+              </h2>
             </div>
-          </CinematicEntrance>
-        </div>
+            <p className="text-white/30 text-xs font-black uppercase tracking-[0.3em] max-w-sm text-right leading-relaxed">
+              Explora las infraestructuras más solicitadas para esta temporada. Disponibilidad en tiempo real verificada por EAR OS.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <MarketplaceCard 
+              index={0}
+              id="mariachi-gala"
+              title="Mariachi Gala S-Class"
+              location="Madrid / Nacional"
+              category="MÚSICA ÉLITE"
+              price="2.800"
+              rating={5.0}
+              image="https://images.unsplash.com/photo-1514525253361-bee8718a300a?auto=format&fit=crop&q=80&w=1000"
+            />
+            <MarketplaceCard 
+              index={1}
+              id="solista-premium"
+              title="Edwin Agudelo Solista"
+              location="España / Europa"
+              category="VOCAL PERFORMANCE"
+              price="1.500"
+              rating={4.9}
+              image="https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?auto=format&fit=crop&q=80&w=1000"
+            />
+            <MarketplaceCard 
+              index={2}
+              id="produccion-b2g"
+              title="Infraestructura B2G"
+              location="Ayuntamientos"
+              category="PRODUCCIÓN"
+              price="10.000"
+              rating={5.0}
+              image="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1000"
+            />
+          </div>
+        </section>
 
         <motion.div 
           initial={{ opacity: 0 }}

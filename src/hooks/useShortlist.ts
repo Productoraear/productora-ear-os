@@ -1,0 +1,65 @@
+/**
+ * 💾 HOOK: useShortlist - ANONYMOUS PERSISTENCE
+ */
+
+"use client";
+
+import { useState, useEffect } from 'react';
+import { ShortlistItem } from '@/types/marketplace';
+import { marketplaceFeedback } from '@/services/marketplace/MarketplaceFeedbackService';
+
+export const useShortlist = () => {
+  const [items, setItems] = useState<ShortlistItem[]>([]);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const saved = localStorage.getItem('ear_os_shortlist');
+    if (saved) {
+      try {
+        setItems(JSON.parse(saved));
+      } catch (e) {
+        console.error("Shortlist corruption detected, resetting...");
+        localStorage.removeItem('ear_os_shortlist');
+      }
+    }
+  }, []);
+
+  // Sync to localStorage
+  useEffect(() => {
+    localStorage.setItem('ear_os_shortlist', JSON.stringify(items));
+  }, [items]);
+
+  const addToShortlist = (service: Omit<ShortlistItem, 'addedAt'>) => {
+    if (items.some(i => i.id === service.id)) return;
+    
+    const newItem: ShortlistItem = {
+      ...service,
+      addedAt: new Date().toISOString()
+    };
+    
+    setItems(prev => [...prev, newItem]);
+    
+    marketplaceFeedback.track('shortlist_added', {
+      serviceId: service.serviceId,
+      priceSnapshot: parseFloat(service.price.replace(/[^\d.]/g, ''))
+    });
+  };
+
+  const removeFromShortlist = (id: string) => {
+    const item = items.find(i => i.id === id);
+    setItems(prev => prev.filter(i => i.id !== id));
+    
+    if (item) {
+      marketplaceFeedback.track('shortlist_removed', {
+        serviceId: item.serviceId
+      });
+    }
+  };
+
+  return {
+    items,
+    addToShortlist,
+    removeFromShortlist,
+    count: items.length
+  };
+};

@@ -3,6 +3,7 @@ import SovereignNavbar from '@/app/components/layout/SovereignNavbar';
 import SovereignBottomNav from '@/app/components/layout/SovereignBottomNav';
 import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import Footer from '@/app/components/Footer';
+import { PositiveFrictionModal } from '@/app/components/SClassScreens/PositiveFrictionModal';
 
 /**
  * 🏛️ EAR OS GOLD - PUBLIC LAYOUT
@@ -30,6 +31,8 @@ export default function PublicLayout({
       <Suspense fallback={null}>
         <SovereignBottomNav />
       </Suspense>
+
+      <PositiveFrictionModal />
     </>
   );
 }

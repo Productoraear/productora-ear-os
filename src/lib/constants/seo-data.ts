@@ -90,6 +90,19 @@ export const SERVICIOS = [
   }
 ];
 
+export const OCASIONES = [
+  { slug: 'bodas', nombre: 'Bodas de Lujo', descripcion: 'Planificación y música para bodas premium.' },
+  { slug: 'corporativo', nombre: 'Eventos Corporativos', descripcion: 'Soluciones B2B para convenciones y galas.' },
+  { slug: 'ayuntamientos', nombre: 'Institucional B2G', descripcion: 'Protocolos para entidades públicas y festejos.' },
+  { slug: 'ferias', nombre: 'Ferias y Fiestas', descripcion: 'Gran formato para recintos feriales.' }
+];
+
+export const GUIAS = [
+  { slug: 'como-contratar-mariachi', nombre: 'Guía: Cómo contratar un Mariachi', descripcion: 'Todo lo que debes saber para no fallar en tu elección.' },
+  { slug: 'planificacion-sonido-boda', nombre: 'Guía: Planificación de Sonido para Bodas', descripcion: 'Ingeniería acústica para el día más importante.' },
+  { slug: 'impacto-social-eventos', nombre: 'Guía: Impacto Social en Eventos B2B', descripcion: 'Cómo VIMUME transforma tu responsabilidad social.' }
+];
+
 export const SEO_METADATA_BASE = {
   title: "Productora EAR - Dominancia en Eventos Premium",
   description: "Líderes en sonorización, iluminación y producción audiovisual en toda España. Tecnología S-Class para eventos inolvidables.",
