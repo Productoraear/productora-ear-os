@@ -39,14 +39,23 @@ export async function GET(req: Request) {
   const startDb = Date.now();
   try {
     const supabase = createClient();
-    // Simple heart-beat query
-    const { error } = await supabase.from('workspaces').select('id').limit(1);
+    // Use a robust table or multiple attempts for heartbeat
+    const { error: error1 } = await supabase.from('marketplace_events').select('id').limit(1);
     
-    if (!error) {
+    if (!error1) {
       dbStatus = 'healthy';
-      dbLatency = Date.now() - startDb;
     } else {
-      console.error("🏥 [HEALTH_CHECK] DB_ERROR:", error.message);
+      // Fallback attempt
+      const { error: error2 } = await supabase.from('workspaces').select('id').limit(1);
+      if (!error2) {
+        dbStatus = 'healthy';
+      } else {
+        console.error("🏥 [HEALTH_CHECK] DB_ERROR:", error1.message, "| FALLBACK:", error2.message);
+      }
+    }
+    
+    if (dbStatus === 'healthy') {
+      dbLatency = Date.now() - startDb;
     }
   } catch (err: any) {
     console.error("🏥 [HEALTH_CHECK] DB_CRASH:", err.message);
