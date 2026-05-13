@@ -11,6 +11,8 @@ import { marketplaceFeedback } from '@/services/marketplace/MarketplaceFeedbackS
 export const useShortlist = () => {
   const [items, setItems] = useState<ShortlistItem[]>([]);
 
+  const [isInitialized, setIsInitialized] = useState(false);
+
   // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('ear_os_shortlist');
@@ -22,12 +24,15 @@ export const useShortlist = () => {
         localStorage.removeItem('ear_os_shortlist');
       }
     }
+    setIsInitialized(true);
   }, []);
 
   // Sync to localStorage
   useEffect(() => {
-    localStorage.setItem('ear_os_shortlist', JSON.stringify(items));
-  }, [items]);
+    if (isInitialized) {
+      localStorage.setItem('ear_os_shortlist', JSON.stringify(items));
+    }
+  }, [items, isInitialized]);
 
   const addToShortlist = (service: Omit<ShortlistItem, 'addedAt'>) => {
     if (items.some(i => i.id === service.id)) return;

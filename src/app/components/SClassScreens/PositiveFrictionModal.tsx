@@ -39,7 +39,7 @@ export const PositiveFrictionModal: React.FC = () => {
       metadata: { action: 'dossier_requested', items: items.map(i => i.serviceId) }
     });
     // Redirigir al cotizador o portal con la pre-selección
-    window.location.href = '/portal/presupuesto?items=' + items.map(i => i.serviceId).join(',');
+    window.location.href = '/cotizador?items=' + items.map(i => i.serviceId).join(',');
   };
 
   return (

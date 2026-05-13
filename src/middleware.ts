@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // 1. BYPASS DE RUTAS PÚBLICAS (Soberanía de Acceso)
-  const publicRoutes = ['/', '/the-signal', '/artistas', '/eventos', '/bodas', '/arsenal', '/business', '/social', '/login', '/vimume'];
+  const publicRoutes = ['/', '/the-signal', '/artistas', '/eventos', '/bodas', '/arsenal', '/business', '/social', '/login', '/vimume', '/dossier', '/cotizador'];
   
   const isPublic = publicRoutes.some(route => 
     pathname === route || pathname.startsWith(route + '/')
