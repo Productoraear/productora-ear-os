@@ -1,0 +1,803 @@
+{
+  "EMANAGER": [
+    {
+      "id": "93ead7918102449cbe284d7e0175b545",
+      "title": "Emanager Studio Cluster 02 Export (S-Class)",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "c170bb7b11e9454ba7ac231a06df27c9",
+      "title": "Emanager Studio: Operator Mindset",
+      "device": "MOBILE"
+    },
+    {
+      "id": "5a24054726eb48d78c07d3d8b53e9ab7",
+      "title": "Emanager Studio: Assets Vault",
+      "device": "MOBILE"
+    },
+    {
+      "id": "d8d3cc7cfe1b459bb846fe3af6120161",
+      "title": "Emanager Studio: Asset ROI & Legacy Analytics",
+      "device": "MOBILE"
+    },
+    {
+      "id": "6bd6ce3ff6724920913dfd1a75317deb",
+      "title": "Lección: Ingeniería Operativa",
+      "device": "MOBILE"
+    },
+    {
+      "id": "08742241c23a42808df9023724514a83",
+      "title": "Lección: Singularidad e Identidad",
+      "device": "MOBILE"
+    },
+    {
+      "id": "dcc20c120bd54734b8ee3b855c124340",
+      "title": "Emanager Studio Cluster 01",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "82f23e45470d4a1ab2d6a7960e6b7712",
+      "title": "Emanager Studio: Niveles de Autoridad",
+      "device": "MOBILE"
+    },
+    {
+      "id": "fdf9c806b1764d23871e52c50155be13",
+      "title": "Emanager Studio: Interactive Lesson View",
+      "device": "MOBILE"
+    },
+    {
+      "id": "f997b8914e0944839f2853309e684c20",
+      "title": "Emanager Studio: Legal Shield & Infrastructure Shielding Shield",
+      "device": "MOBILE"
+    },
+    {
+      "id": "f67a18e838004abcac4c1d8ecab64ec7",
+      "title": "Emanager Studio: Forensic Diagnostic",
+      "device": "MOBILE"
+    },
+    {
+      "id": "3af4804937a3475a9026d0b687f4e549",
+      "title": "Emanager Studio: Mentoring Execution & Action",
+      "device": "MOBILE"
+    },
+    {
+      "id": "6e5fcbfc5f0c4dc4b36f6930b843e492",
+      "title": "Emanager Studio: The Legal Vault",
+      "device": "MOBILE"
+    },
+    {
+      "id": "20dd525c7de34020889b9ad4903a3ddb",
+      "title": "Emanager Studio: The Legal Vault",
+      "device": "MOBILE"
+    },
+    {
+      "id": "798fc897b6874f3c821d4318783fd0ca",
+      "title": "Entrenamiento: Cierre de Trato Forense",
+      "device": "MOBILE"
+    },
+    {
+      "id": "75f4726f4773406f96357dd3ad88873f",
+      "title": "Dashboard: Emanager Studio EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "c59277d641b3477cbe1cc66c49756475",
+      "title": "Emanager Studio Cluster 03 Export (S-Class)",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "1406b3c2f8cf4d1ca0dc6a39dabc4422",
+      "title": "Entrenamiento: Shark Mindset Audit",
+      "device": "MOBILE"
+    },
+    {
+      "id": "a84942bc7b154888aa3ee9a50c4f71e8",
+      "title": "Emanager Studio: Cimientos de Soberanía",
+      "device": "MOBILE"
+    },
+    {
+      "id": "a9ec1e4e1eba4c548bec72c1c49412e5",
+      "title": "Emanager Studio: Forensic Diagnostic",
+      "device": "MOBILE"
+    },
+    {
+      "id": "10ac1505540c40689244b4fb0f528d2f",
+      "title": "Emanager Studio: The Legal Vault",
+      "device": "MOBILE"
+    },
+    {
+      "id": "7fce758eee584d18825f54040d745b42",
+      "title": "Protocol: 10 Steps of Senior Mentoring",
+      "device": "MOBILE"
+    },
+    {
+      "id": "c05476ffd94847c98cb9ef088630e2e6",
+      "title": "Emanager Studio: Forensic Diagnostic",
+      "device": "MOBILE"
+    },
+    {
+      "id": "d55acf0aefd44093acffdd916837d0be",
+      "title": "Emanager Studio: Senior Mentoring Protocol",
+      "device": "MOBILE"
+    },
+    {
+      "id": "ec064221f30541729d71acfa3e06b178",
+      "title": "Emanager Studio: Legal & Asset Management",
+      "device": "MOBILE"
+    },
+    {
+      "id": "9eccd6ab812a4d7cb36ded1d9c3be474",
+      "title": "Lección: El Ciclo de Expansión 3C",
+      "device": "MOBILE"
+    },
+    {
+      "id": "9b56d2f9106c4e8e870b7fb65e947e92",
+      "title": "Emanager Studio: The Legal Vault",
+      "device": "MOBILE"
+    },
+    {
+      "id": "f48d937785b343cb8832877c21a5e9f3",
+      "title": "Lección: El Mapa de Batalla Artística",
+      "device": "MOBILE"
+    },
+    {
+      "id": "e721f96e8c924716853a8ed339c6d06a",
+      "title": "Emanager Studio: Tour Engineering Hub",
+      "device": "MOBILE"
+    },
+    {
+      "id": "3f2c99f6692044568d96a5eaf1de1d4c",
+      "title": "Emanager Studio: Digital Signal Engineering",
+      "device": "MOBILE"
+    },
+    {
+      "id": "45d5aeef2c964a03a13966e920a8031b",
+      "title": "EAR Forensic: Business Audit Protocol",
+      "device": "MOBILE"
+    },
+    {
+      "id": "91edacfd989c48fa9e70114415acd7ff",
+      "title": "Emanager Studio: Session Tools & Assets",
+      "device": "MOBILE"
+    },
+    {
+      "id": "66337a7bc3254fb49e723d8e3fec2add",
+      "title": "Emanager Studio: Market Intelligence",
+      "device": "MOBILE"
+    },
+    {
+      "id": "da34f538b5d3419299f176e73ad978e6",
+      "title": "Emanager Studio: Market Intelligence & Pricing",
+      "device": "MOBILE"
+    },
+    {
+      "id": "cc4d1c7d5d60407490c49a95c20ef787",
+      "title": "Emanager Studio Cluster 01 Export (S-Class)",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "f5b4e2a3ca684992a6099fc4dcc6a3d2",
+      "title": "Emanager Studio: Forensic Diagnostic",
+      "device": "MOBILE"
+    },
+    {
+      "id": "950a4de4fe104310b82954f91d7ced3e",
+      "title": "Emanager Studio: Infrastructure & Legal Shield",
+      "device": "MOBILE"
+    },
+    {
+      "id": "93b543ecac7542f58bdfadbfd6e25171",
+      "title": "Emanager Studio: Aesthetic Signal Audit",
+      "device": "MOBILE"
+    }
+  ],
+  "ADMIN": [
+    {
+      "id": "230849b952574796a115d89bb59547ba",
+      "title": "Admin: Talent Funnel & Audit Control",
+      "device": "MOBILE"
+    },
+    {
+      "id": "dfe2b77149ee4704a6e04b0e4fb4c9ee",
+      "title": "Admin: Talent Funnel & Audit Control",
+      "device": "MOBILE"
+    },
+    {
+      "id": "ad34e6828cdb4922bf13ad64efb0a336",
+      "title": "Reporte: Arquitectura de Carrera v1.0",
+      "device": "MOBILE"
+    },
+    {
+      "id": "92d597b5e59e41399530d21563518483",
+      "title": "EAR Admin: Global Infrastructure Control",
+      "device": "MOBILE"
+    },
+    {
+      "id": "26375ff0b0fc400ea8650212d26645f7",
+      "title": "Admin Analytics: Artist ROI & Performance",
+      "device": "MOBILE"
+    },
+    {
+      "id": "a52d9b6ab11b4e7ab2cd96776400942f",
+      "title": "Admin Control: Revenue & Metrics Dashboard",
+      "device": "MOBILE"
+    },
+    {
+      "id": "26b8bdd1144e415a829b779c40e766fe",
+      "title": "Reporte: Informe Forense v1.1",
+      "device": "MOBILE"
+    },
+    {
+      "id": "cb2323953c5b402990f439cda2d2b63a",
+      "title": "Admin: Talent Funnel & Audit Control",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2f727d79ef334f8dbe8363214bd71c40",
+      "title": "Reporte Forense de Avance",
+      "device": "MOBILE"
+    },
+    {
+      "id": "5ed522d90c1b4d41b1a2e749188e439f",
+      "title": "Admin: Talent Funnel & Audit Control",
+      "device": "MOBILE"
+    },
+    {
+      "id": "0571bbfbaec741b0969f18e537263420",
+      "title": "Auditoría: Mapa de Empatía del Fan",
+      "device": "MOBILE"
+    }
+  ],
+  "CLIENT_FRONTEND": [
+    {
+      "id": "c16672b4f292410495f8a0bfc2d337d6",
+      "title": "The Signal: Investor Access Funnel",
+      "device": "MOBILE"
+    },
+    {
+      "id": "d3d580778036488492f19a6c56a63a7f",
+      "title": "Servicios: Planificación de Eventos 360",
+      "device": "MOBILE"
+    },
+    {
+      "id": "82c44ce2eb424e12a557779a48060b86",
+      "title": "The Signal: Entry Gate & Manifesto",
+      "device": "MOBILE"
+    },
+    {
+      "id": "bc336e0a79a24db2b7a3c30aba16448f",
+      "title": "EAR Home: Architecture & Engineering",
+      "device": "MOBILE"
+    },
+    {
+      "id": "727363a672ee431c8b57d87a46b8ca05",
+      "title": "Artistas - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "8ef444596d6a4e9a85af8d57f3a22742",
+      "title": "Nosotros: El Equipo Técnico EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "72b4b09798b64f8b89900533cabf3b8d",
+      "title": "EAR Contact: Visionary Dialogue",
+      "device": "MOBILE"
+    },
+    {
+      "id": "3693d7146db549c686491a105d95c690",
+      "title": "EAR Ecosystem: Interactive Home & Gamification",
+      "device": "MOBILE"
+    },
+    {
+      "id": "abbf103bbd6f408584de45b181275add",
+      "title": "Home - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "ec39230f0cb14524b0e29392c9be88e0",
+      "title": "EAR Social: Human Impact",
+      "device": "MOBILE"
+    },
+    {
+      "id": "265607217c6c4c6cb493bbff6948fa02",
+      "title": "The Signal: Entry Gate & Manifesto",
+      "device": "MOBILE"
+    },
+    {
+      "id": "6b19571687314eabb5eded1cd9c3cb90",
+      "title": "EAR The Signal: Artist Funnel",
+      "device": "MOBILE"
+    },
+    {
+      "id": "7f2c1d0b3e014009b1e377896b252d82",
+      "title": "The Signal: Signal Analysis & Status",
+      "device": "MOBILE"
+    },
+    {
+      "id": "1884b94d6fac4b0d9fc89b18c72f80e6",
+      "title": "Social - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "f863202dafd44c6d883ebd7d1e0effd3",
+      "title": "EAR Ecosystem: Interactive Home & Gamification",
+      "device": "MOBILE"
+    },
+    {
+      "id": "a75c2e8bba2f42a89110a62c5a52d393",
+      "title": "Contacto - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "7f3393eda77340cd9916393d3f97cf76",
+      "title": "EAR Social: Viaje Musical por la Memoria",
+      "device": "MOBILE"
+    },
+    {
+      "id": "e5b590432d774cdc9261a13caea73d8a",
+      "title": "The Signal - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "cac86be336c44b168a00909dfe7d9795",
+      "title": "The Signal: Entry Gate & Manifesto",
+      "device": "MOBILE"
+    },
+    {
+      "id": "ba46f1a4b8734e21bdfcbf06a453a9a3",
+      "title": "The Signal: Forensic Talent Audit",
+      "device": "MOBILE"
+    }
+  ],
+  "TOOLS": [
+    {
+      "id": "04245a04120c464094a095dda01afc14",
+      "title": "Herramienta: Filtro de Enfoque EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "521190cc8a3b4717b28b4436a569a3f2",
+      "title": "Herramienta: Planificador de Gira EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "63538057e63641ae91d42530dd23a09d",
+      "title": "Herramienta: Brújula Ikigai EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "91b878bf0170458fae001984b809582c",
+      "title": "Herramienta: Simulador OPAL 12 Meses",
+      "device": "MOBILE"
+    },
+    {
+      "id": "b16f85b1f9b44e7dbc11605004cdd524",
+      "title": "Tool: release Blueprint Spotify EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "7ccd0c58164b42b9bfe36210b9389ec2",
+      "title": "Herramienta: Simulador OPAL 12 Meses",
+      "device": "MOBILE"
+    },
+    {
+      "id": "fb79bdd22d694a3d9eab7a44f9ace25d",
+      "title": "Herramienta: Simulador OPAL 12 Meses",
+      "device": "MOBILE"
+    },
+    {
+      "id": "41ba02bfd471407ba844a03b01246c1e",
+      "title": "Herramienta: Escáner de Objetos Brillantes",
+      "device": "MOBILE"
+    },
+    {
+      "id": "51713bd3ce0846309289c1ad3c836cee",
+      "title": "Herramienta: Calculadora de Costes EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "af04bb2b45434d1f968476181990b5ad",
+      "title": "Tool: Setlist Narrative Architect EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "d88929d486f949e7b4b9cd1b9dab2d30",
+      "title": "Herramienta: Calculadora de Inversión 360",
+      "device": "MOBILE"
+    },
+    {
+      "id": "87cd1f1126344110ae4eb2854a8b473e",
+      "title": "Herramienta: Matriz OPAL EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2ae23428d2a1432ca6e05ab655effd8c",
+      "title": "Herramienta: Radar de Alto Rendimiento",
+      "device": "MOBILE"
+    },
+    {
+      "id": "6d4c0b4e931047eebdbc81478bca6218",
+      "title": "Tool: Expansion Roadmap EAR (3C)",
+      "device": "MOBILE"
+    },
+    {
+      "id": "b185ec33e18444aaa904301bd1b69baf",
+      "title": "Herramienta: Map Builder de Industria",
+      "device": "MOBILE"
+    },
+    {
+      "id": "b109eadd5b294ad7aaa07f02e97a0e6f",
+      "title": "Tool: EAR Cache & ROI Calculator",
+      "device": "MOBILE"
+    },
+    {
+      "id": "1cb28af574df4e188b2e9d65e4f97e1d",
+      "title": "Tool: High-Performance Habit Tracker",
+      "device": "MOBILE"
+    },
+    {
+      "id": "bea4acef07b7404e97f50549753bb8d5",
+      "title": "Herramienta: Simulador OPAL 12 Meses",
+      "device": "MOBILE"
+    },
+    {
+      "id": "1039ea5ca38f433c807d101b40401ccd",
+      "title": "Tool: Forensic Rider Audit EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "de9cae0ec6184fa8b23cc8dc36f09e99",
+      "title": "Herramienta: Calculadora de Inversión 360",
+      "device": "MOBILE"
+    },
+    {
+      "id": "ad239b0758bc41d1be225b16d6a3ddc0",
+      "title": "Herramienta: Simulador OPAL 12 Meses",
+      "device": "MOBILE"
+    }
+  ],
+  "B2B_B2G": [
+    {
+      "id": "da10d269058644ee8b3739d0194e8490",
+      "title": "B2B Portal: Agency Infrastructure Hub & ROI Control",
+      "device": "MOBILE"
+    },
+    {
+      "id": "f97ab72e880e4117a7ae21c92dfa9cfc",
+      "title": "EAR Business: Corporate Solutions",
+      "device": "MOBILE"
+    },
+    {
+      "id": "cd381bd31acf405fb48783158957251c",
+      "title": "EAR Corporate: Business & Pricing Structure",
+      "device": "MOBILE"
+    },
+    {
+      "id": "96a1b2364c2c4ac8a177c2fac68b6f56",
+      "title": "EAR Business: B2B Subscription Tiers",
+      "device": "MOBILE"
+    }
+  ],
+  "VIMUME": [
+    {
+      "id": "8cbfb20c8de54465a3a4e5fb207d8320",
+      "title": "VIMUME Clinical Dashboard v2.0",
+      "device": "DESKTOP"
+    }
+  ],
+  "LEGAL": [
+    {
+      "id": "74e722423fb5404eb41f00c1f327a6fd",
+      "title": "Bóveda: Material Crítico de Escena",
+      "device": "MOBILE"
+    },
+    {
+      "id": "c36c90c3f3314df9b05614651a1f28a5",
+      "title": "The Vault: Multimedia Assets & Infrastructure",
+      "device": "MOBILE"
+    },
+    {
+      "id": "e2186c9284c24fb09fb3239b0caa1287",
+      "title": "Artist Vault: Asset Management",
+      "device": "MOBILE"
+    }
+  ],
+  "OTHER": [
+    {
+      "id": "2f761820e2724512b9ed8c01e0f4e11e",
+      "title": "Artist Signal: Video & Audio Portfolio",
+      "device": "MOBILE"
+    },
+    {
+      "id": "3f4735b60ee740ec8a088cb9a54ddeb5",
+      "title": "EAR Arsenal: Technical Infrastructure",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2e8235be94ba4053ab24aa281dc51185",
+      "title": "Artist Hub: The Command Center",
+      "device": "MOBILE"
+    },
+    {
+      "id": "02094ba418e54e9bb9c9b3971a961434",
+      "title": "Curr\\u00edculum: Nivel 1 Soberan\\u00eda",
+      "device": "MOBILE"
+    },
+    {
+      "id": "85426d042a034c2680d5d6f61c362f40",
+      "title": "B\\u00f3veda Elite: Authority Messaging",
+      "device": "MOBILE"
+    },
+    {
+      "id": "23dc91db2a1940d7946fe1ac0248a53a",
+      "title": "EAR Events: High-End Experiences",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2a95c28bbc214100b0e1ba2e56d02ae7",
+      "title": "Portal: Despliegue de Estrategia EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "73072b237dd7448a98cee7ebca8684a3",
+      "title": "Artist Portal: Sovereign Login",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2f197a3cf9e5471b998cabaac58ef99d",
+      "title": "Catálogo EAR: Ingeniería de Talento",
+      "device": "MOBILE"
+    },
+    {
+      "id": "b898f94b28a54d1fa3a4434c7a6f80f1",
+      "title": "EAR Identity: Philosophy & Accessibility",
+      "device": "MOBILE"
+    },
+    {
+      "id": "1b0bf17a29df4e06ae2e36c7f2fba934",
+      "title": "Artist Tour: Logistics & Routes",
+      "device": "MOBILE"
+    },
+    {
+      "id": "8eabeed15c3b42198735f28a62d15379",
+      "title": "Evaluation: YouTube Signal Audit",
+      "device": "MOBILE"
+    },
+    {
+      "id": "482a013b66f44d20be1e604a3ad20dbb",
+      "title": "Booking Step 3 & 4: Tech & Execution",
+      "device": "MOBILE"
+    },
+    {
+      "id": "7aa50a6792514467abdfea3f50fb2883",
+      "title": "Precios - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "843b60555746421d88dc5e77e48a9c59",
+      "title": "Arsenal - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "a5fb632d259a468a9c4c3fb8afa58476",
+      "title": "Blueprint Táctico EAR OS V2",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "8c1f105238d54d788809fa4d78275cb8",
+      "title": "Portal: Dashboard de Soberanía",
+      "device": "MOBILE"
+    },
+    {
+      "id": "7c64f6b34ba44d1faccc951a056017ac",
+      "title": "Auditor\\u00eda: Soberan\\u00eda Financiera Art\\u00edstica",
+      "device": "MOBILE"
+    },
+    {
+      "id": "68f20f449e4e46c8ad7482c0654c05fb",
+      "title": "Ficha de Activo: Edwin Agudelo EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "8f96467f251f4316b8a1b9d066439e73",
+      "title": "Evaluation: 3C Methodology Certification",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2b4a572ba1d74873845c120f871eed66",
+      "title": "S-Class Revenue Entry Landing Page v2.0 FENIX",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "2fedc3d42a8542a6bfef4d61460838b3",
+      "title": "Empresarios - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "87d87fbdb09a42e394f560b4d55e010b",
+      "title": "Artist Portal: Sovereign Login",
+      "device": "MOBILE"
+    },
+    {
+      "id": "e109809faa3f408199246b0602b36b7e",
+      "title": "Arsenal: Technical Plan & Catalog",
+      "device": "MOBILE"
+    },
+    {
+      "id": "aa21cfd6817643daa6d9a817e2b168bc",
+      "title": "S-Class Skills Hub v2.0 FENIX",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "0b822c0bb59b4232b086ab13b17c6bc5",
+      "title": "Graduation: EAR Authority Certification",
+      "device": "MOBILE"
+    },
+    {
+      "id": "4cf795f1156c46509bd492213126ce07",
+      "title": "Evaluación: Pitch de 60 Segundos",
+      "device": "MOBILE"
+    },
+    {
+      "id": "01420505a2934c0995108c5b4cc5aad2",
+      "title": "S-Class Artists Hub Dashboard v2.0 FENIX",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "a7db47899eef43f6aa660f41d5b08e55",
+      "title": "Artist Dashboard: Career Command Center",
+      "device": "MOBILE"
+    },
+    {
+      "id": "dc02ccfbdc9f46bcb589fe95b9e31a71",
+      "title": "Artist Portal: Sovereign Login",
+      "device": "MOBILE"
+    },
+    {
+      "id": "9e85e60b926f4c20b215e489ef948eb8",
+      "title": "Authority Kit: Asset Deployment Hub",
+      "device": "MOBILE"
+    },
+    {
+      "id": "ac1c8c13864a40489f1b6ad156f64e95",
+      "title": "Live Tour: Real-Time Command Center",
+      "device": "MOBILE"
+    },
+    {
+      "id": "df4a126357084480be23d72c90c58166",
+      "title": "Precios - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "d07099097de840f0a0bef73df3693b77",
+      "title": "Arsenal: Equipamiento y Tecnología EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "3a5f8ca2404e437fbbe71ef429ccdede",
+      "title": "EAR Talent: Inversión y Arsenal",
+      "device": "MOBILE"
+    },
+    {
+      "id": "1fb0cde108fd48ef98c81271c606f820",
+      "title": "Móvil: Cotizador de Impacto EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "b98c0502f2b84a4182c2b5b3b471b4ea",
+      "title": "FENIX v2.0 Command Center",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "aee3c0117ec2419ba97a70161f52a840",
+      "title": "Investor Gateway: Career Audit Sheet",
+      "device": "MOBILE"
+    },
+    {
+      "id": "4978eaf6a61847f1b64ab67b692e96e4",
+      "title": "Dashboard: Círculo de Legado",
+      "device": "MOBILE"
+    },
+    {
+      "id": "e891e17a7f854053b857f183e9cd03a5",
+      "title": "Arsenal: Product Deep-Dive & Specs",
+      "device": "MOBILE"
+    },
+    {
+      "id": "5780ab2645a8422f9addb42509e8dd98",
+      "title": "Portal: Despliegue de Estrategia",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2e937e11609d4469824c6e60ce248b83",
+      "title": "Booking Step 2: Talent Selection",
+      "device": "MOBILE"
+    },
+    {
+      "id": "f8b0d33ea0774ffeaee61c5ad67f295e",
+      "title": "EAR Academy: Talent Training Hub",
+      "device": "MOBILE"
+    },
+    {
+      "id": "92067b8a8ead493cacc2c00c07a182ff",
+      "title": "Graduation: EAR Authority Blueprint Certificate",
+      "device": "MOBILE"
+    },
+    {
+      "id": "df1aaa27220d4c29b5b28f81c88e4acf",
+      "title": "Portal: Dashboard de Soberanía",
+      "device": "MOBILE"
+    },
+    {
+      "id": "5433d83ebc4e46f8a7d64f791ecae1ce",
+      "title": "Guía de Implementación para Antigravity",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "e6cc81548fc24378a55529b314169cd2",
+      "title": "Bodas.net S-Class Twin",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "374d01310444486a9adb5c5661b18743",
+      "title": "EAR Artists: Talent Transformation",
+      "device": "MOBILE"
+    },
+    {
+      "id": "fb4bc66d23b04762936c8ed6c4861f81",
+      "title": "Forensic Bit-by-Bit Scanner v4.0",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "e65342aa99f340da86edf4c7fac498c4",
+      "title": "Astra Neural Engine Chat v2.0",
+      "device": "DESKTOP"
+    },
+    {
+      "id": "7e043016969a425d8551903835759e8c",
+      "title": "Arsenal: Product Deep-Dive & Specs",
+      "device": "MOBILE"
+    },
+    {
+      "id": "0c2baf3536b247c9b9667c69dfe32ec2",
+      "title": "Portal: Dashboard de Soberanía",
+      "device": "MOBILE"
+    },
+    {
+      "id": "c81541d575144f309fbccc2426d53aa7",
+      "title": "Booking Step 1: Event Context",
+      "device": "MOBILE"
+    },
+    {
+      "id": "834660e40c994b0a8b37a3fb9d75bb9b",
+      "title": "Artist Show: Detailed Waybill & Team",
+      "device": "MOBILE"
+    },
+    {
+      "id": "9030206a8e9d4f06b2d462cdb4c7bb3c",
+      "title": "Eventos 360 - Productora EAR",
+      "device": "MOBILE"
+    },
+    {
+      "id": "2582f5961e6d4105ba1e938d2468eb77",
+      "title": "Móvil: Cotizador EAR Sin Sorpresas",
+      "device": "MOBILE"
+    },
+    {
+      "id": "d0a004513d0648abad8f07c8ae40a747",
+      "title": "Simulator: High-Stakes Authority Call",
+      "device": "MOBILE"
+    },
+    {
+      "id": "bf37c73996f046a89b422ebbc3cecd3d",
+      "title": "Arsenal: Technical Plan & Catalog",
+      "device": "MOBILE"
+    },
+    {
+      "id": "5e509807d93045b5b1d1095df7d4f4cd",
+      "title": "EAR Talent: Discovery & Booking",
+      "device": "MOBILE"
+    }
+  ]
+}

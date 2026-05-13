@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --aura-onyx-black: #050505;
+    --aura-onyx-gold: #d4a855;
+    --aura-onyx-gold-deep: #aa8644;
+    --aura-onyx-white: #ffffff;
+    --aura-onyx-glass: rgba(255, 255, 255, 0.03);
+    --aura-onyx-glass-heavy: rgba(255, 255, 255, 0.07);
+    --aura-onyx-border: rgba(255, 255, 255, 0.08);
+    
+    --font-syne: var(--font-syne), 'Syne', sans-serif;
+    --font-manrope: var(--font-manrope), 'Manrope', sans-serif;
+  }
+
+  body {
+    @apply bg-[#050505] text-white transition-all duration-1000 ease-in-out;
+    font-family: var(--font-manrope);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-syne);
+  }
+
+  /* Stitch Skinning - Sovereign Roles */
+  body.theme-b2g {
+    background: radial-gradient(circle at top right, #0a1128 0%, #050505 100%);
+  }
+
+  body.theme-b2c {
+    background: radial-gradient(circle at top right, #1a1608 0%, #050505 100%);
+  }
+
+  body.theme-b2b {
+    background: #050505;
+  }
+}
+
+@layer components {
+  .aura-gold-gradient {
+    background: linear-gradient(135deg, var(--aura-onyx-gold) 0%, var(--aura-onyx-gold-deep) 100%);
+  }
+
+  .text-gold-aura {
+    color: var(--aura-onyx-gold);
+  }
+
+  .glass-panel {
+    background: var(--aura-onyx-glass);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--aura-onyx-border);
+    @apply transition-all duration-700;
+  }
+
+  .glass-panel:hover {
+    background: var(--aura-onyx-glass-heavy);
+    border-color: rgba(212, 168, 85, 0.2);
+  }
+
+  .btn-sclass {
+    @apply px-10 py-6 font-black uppercase text-[10px] tracking-[0.4em] transition-all duration-500 relative overflow-hidden;
+  }
+
+  .btn-sclass-primary {
+    @apply bg-white text-black hover:bg-[#d4a855] hover:text-white;
+  }
+
+  .btn-sclass-outline {
+    @apply border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10;
+  }
+}
+
+/* Custom Scrollbar S-Class */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--aura-onyx-border);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--aura-onyx-gold);
+}
+
+/* Lenis Smooth Scroll Configuration */
+html.lenis {
+  height: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}

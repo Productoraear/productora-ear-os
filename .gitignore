@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+/node_modules
+.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Next.js
+/.next/
+/out/
+
+# Production Build
+dist/
+build/
+
+# Firebase
+.firebase/
+*-debug.log
+firebase-debug.log*
+.firebaserc
+
+# Misc
+.DS_Store
+*.pem
+
+# Env
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+pubsub-debug.log
+ui-debug.log
+
+# Large Files / Logs
+*.log
+data_vault/*.json
+EAR_OS_OMEGA_CODEX.md
+
+src/assets/forensics/inventario_vampiro.csv
+
+src/assets/forensics/inventario_vampiro.csv
+.vercel
+.env*.local
+
+# Masa Crítica de Datos
+BASE_DE_CONOCIMIENTO/
+data_vault/
+src/lib/NUCLEO_DATA/*.json

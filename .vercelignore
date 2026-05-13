@@ -1,0 +1,21 @@
+# 🛡️ VERCEL DOMINANCE SHIELD V134
+.next/cache
+node_modules
+src/infrastructure/archive
+*.log
+.env.local
+.git
+.vercel
+ALMACEN_DE_CUARENTENA_6M
+_ALMACEN_DE_CUARENTENA_6M
+docs
+scripts
+quarantine
+logs
+scratch
+BASE_DE_CONOCIMIENTO
+data_vault
+design-vault
+sync_nexus
+tmp
+build_error.log

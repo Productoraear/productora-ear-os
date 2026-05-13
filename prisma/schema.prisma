@@ -1,0 +1,419 @@
+// 🏛️ EAR OS V2 - ESQUEMA DE GRADO INDUSTRIAL
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+// --- FASE 5: ORÁCULO NEURONAL (KNOWLEDGE GRAPH) ---
+model KnowledgeNode {
+  id          String   @id @default(cuid())
+  sourceFile  String   // Ej: GENOMA_H.csv, Contrato_2023.pdf
+  content     String   // Fragmento de texto
+  embedding   Unsupported("vector(768)")? // Gemini text-embedding-004 usa 768 dimensiones
+  metadata    Json?    // Metadatos (cliente, fecha, budget)
+  createdAt   DateTime @default(now())
+}
+
+// --- VERTICAL PROVEEDORES (VENDORS) ---
+model Vendor {
+  id                  String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String           @unique
+  roi_guarantee_score Float            @default(0.0)
+  roiProjected        Float            @default(0.0)
+  auraLevel           Float            @default(0.0)
+  technicalReliability Float            @default(0.0)
+  
+  category            String?
+  location            String?
+  description         String?
+  original_url        String?
+  is_claimed          Boolean          @default(false)
+  claim_token         String?          @db.Uuid
+  owner_id            String?          @db.Uuid
+  metadata            Json?
+  embedding           Unsupported("vector(1536)")? // OpenAI o similar use 1536
+
+  // Relaciones
+  kycDocuments        KycDocument[]
+  dataOwnership       DataOwnership?   @relation("VendorOwnership")
+  matchingEngines     MatchingEngine[]
+  
+  createdAt           DateTime         @default(now()) @map("created_at")
+  updatedAt           DateTime         @default(now()) @map("updated_at")
+
+  @@map("ear_market_vendors")
+}
+
+// --- VERTICAL CAPTACIÓN (LEADS) ---
+model Lead {
+  id                  Int              @id @default(autoincrement())
+  intentSignals       Json?            // Señales de Intención (IA)
+  budgetCompatibility Boolean          @default(false)
+  
+  matchingEngines     MatchingEngine[]
+  dataOwnership       DataOwnership?   @relation("LeadOwnership")
+  
+  createdAt           DateTime         @default(now())
+}
+
+// --- MOTOR DE INTELIGENCIA (MATCHING ENGINE) ---
+model MatchingEngine {
+  id          Int      @id @default(autoincrement())
+  vendorId    String   @db.Uuid
+  leadId      Int
+  matchScore  Float
+  
+  vendor      Vendor   @relation(fields: [vendorId], references: [id])
+  lead        Lead     @relation(fields: [leadId], references: [id])
+  
+  createdAt   DateTime @default(now())
+}
+
+// --- TAXONOMÍA (BODAS.NET / MUNDIAL) ---
+model Category {
+  id      Int      @id @default(autoincrement())
+  value   String   @unique
+}
+
+// --- VALIDACIÓN Y KYC ---
+model KycDocument {
+  id         Int       @id @default(autoincrement())
+  document   String
+  status     Status    @default(PENDING)
+  verifiedAt DateTime?
+  
+  vendor     Vendor    @relation(fields: [vendorId], references: [id])
+  vendorId   String    @db.Uuid
+}
+
+enum Status {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+// --- SOBERANÍA DEL DATO (DATA OWNERSHIP) ---
+model DataOwnership {
+  id                Int      @id @default(autoincrement())
+  
+  // Vínculos 1:1 para control total
+  vendorId          String?  @unique @db.Uuid
+  vendor            Vendor?  @relation("VendorOwnership", fields: [vendorId], references: [id])
+  
+  leadId            Int?     @unique
+  lead              Lead?    @relation("LeadOwnership", fields: [leadId], references: [id])
+  
+  canViewData       Boolean  @default(true)
+  canEditData       Boolean  @default(true)
+  canShareData      Boolean  @default(false)
+  encryptionKeyHash String?
+}
+
+// --- FASE 4/5: OMNI-STITCH & MARKETPLACE MODELS (BLUEPRINT OMEGA) ---
+enum Role {
+  EXPLORADOR
+  ARQUITECTO
+  OPERADOR
+  ADMIN
+}
+
+enum Rank {
+  NIVEL_0_EXPLORADOR
+  NIVEL_1_ARQUITECTO
+  NIVEL_2_OPERADOR
+  NIVEL_3_ESTRATEGA
+  NIVEL_4_COMANDANTE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  role          Role      @default(EXPLORADOR)
+  rank          Rank      @default(NIVEL_0_EXPLORADOR)
+  xp            Int       @default(0)
+  isPacienteCero Boolean  @default(false)
+  signalStatus  Status    @default(PENDING) // Forensic Check
+  
+  // Relaciones
+  vault         DigitalAsset[]
+  milestones    CareerMilestone[]
+  events        Event[]
+  affiliateCode String?   @unique
+  
+  // --- FINANZAS S-CLASS ---
+  wallet        AuraWallet?
+  ledgerEntries CommissionLedger[]
+  affiliateNode AffiliateNode?
+  
+  vimumeNodes   Vimume[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@map("ear_users")
+}
+
+model MarketService {
+  id                String   @id @default(cuid())
+  name              String
+  description       String?
+  category          String?
+  
+  // Arbitraje & Stripe
+  stripeConceptId   String?  @unique // Link directo al producto en Stripe
+  marketAveragePrice Float   @default(0.0) // El precio promedio vampirizado
+  earDynamicPrice   Float    @default(0.0) // Nuestro precio final de autoridad
+  
+  // Geografía & Multiplicadores
+  provinceGeoId     String?  // Ej: BALEARES vs MADRID
+  province          Province? @relation(fields: [provinceGeoId], references: [id])
+  
+  // Auditoría Forense
+  competitorTrace   Json?    // URLs de donde se extrajo el precio para auditoría
+  lastVampirized    DateTime?
+  
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("ear_market_services")
+}
+
+model Province {
+  id                String   @id // Ej: "MADRID", "ALBACETE"
+  name              String
+  priceMultiplier   Float    @default(1.0) // Multiplicador de zona
+  
+  services          MarketService[]
+  
+  @@map("ear_provinces")
+}
+
+model DigitalAsset {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  name            String
+  type            String   // Ej: "Audio", "Video", "IP_RIGHTS"
+  status          String   @default("ACTIVE")
+  
+  // ROI & Analytics
+  roiCurrent      Float    @default(0.0)
+  roiProjected    Float    @default(0.0)
+  performanceScore Float   @default(0.0)
+  
+  // Bóveda Legal
+  vaultId         String?  @unique
+  legalVault      LegalVault? @relation(fields: [vaultId], references: [id])
+  
+  metadata        Json?    // Data forense adicional
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("ear_digital_assets")
+}
+
+model LegalVault {
+  id              String   @id @default(cuid())
+  assetId         String?  @unique
+  asset           DigitalAsset?
+  
+  encryptionHash  String   // Trust Architecture
+  ipfsPointer     String?  // Decentralized storage
+  contractType    String   @default("DIGITAL_SIGNATURE")
+  legalStatus     String   @default("PROTECTED")
+  
+  auditLog        Json?    // Forensic access tracking
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("ear_legal_vaults")
+}
+
+model CareerMilestone {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  
+  title           String
+  description     String?
+  category        MilestoneCategory
+  impactScore     Int      @default(0)
+  date            DateTime @default(now())
+  
+  isCompleted     Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@map("ear_career_milestones")
+}
+
+enum MilestoneCategory {
+  IKIGAI
+  PITCH
+  METRICS
+  LEGAL
+  TOURING
+  LEGADO
+}
+
+model AuraWallet {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+  
+  // Gravedad Financiera (Balances)
+  balancePending    Float    @default(0.0) // Dinero en retención (Stripe/Escrow)
+  balanceSettled    Float    @default(0.0) // Dinero disponible para retiro
+  totalGenerated    Float    @default(0.0) // Capital histórico total (LTV)
+  
+  currency          String   @default("EUR")
+  updatedAt         DateTime @updatedAt
+  
+  @@map("ear_aura_wallets")
+}
+
+model CommissionLedger {
+  id                String   @id @default(cuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id])
+  
+  // Detalle de la Transacción
+  amountTotal       Float    // El pago total del cliente
+  amountUser        Float    // Lo que recibe este usuario (Split)
+  currency          String   @default("EUR")
+  
+  // Lógica de Split (80/10/10)
+  platformFee       Float    // 10% EAR
+  affiliateFee      Float    // 10% Referido
+  providerCut       Float    // 80% Proveedor
+  
+  status            LedgerStatus @default(PENDING)
+  type              LedgerType   @default(SPLIT)
+  
+  // Origen del Fondo
+  eventId           String?
+  vimumeSessionId   String?
+  stripePaymentId   String?  @unique
+  
+  metadata          Json?    // Auditoría forense adicional
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("ear_commission_ledger")
+}
+
+model AffiliateNode {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user              User     @relation(fields: [userId], references: [id])
+  
+  affiliateHash String   @unique // El link de seguimiento S-Class
+  tier          Int      @default(1) // Nivel de comisión (Lvl 1-10)
+  leadsReferred Int      @default(0)
+  conversionRate Float   @default(0.0)
+  
+  createdAt     DateTime @default(now())
+  
+  @@map("ear_affiliate_nodes")
+}
+
+enum LedgerStatus {
+  PENDING
+  SETTLED
+  VOID
+  DISPUTED
+}
+
+enum LedgerType {
+  SPLIT
+  DIRECT
+  RECURRING
+  BONUS
+}
+
+model Asset {
+  id     String @id @default(cuid())
+  userId String
+  name   String
+  type   String @default("GEAR")
+}
+
+model Event {
+  id            String    @id
+  type          String    // Wedding, Corporate, Social
+  status        String    // Logistics, Rigging, Soundcheck, Live
+  location      String
+  geoCoords     Json      // For Uber-style tracking
+  budget        Float
+  techArsenal   Gear[]
+  contractHash  String    // Trust Architecture
+  
+  userId        String?
+  user          User?     @relation(fields: [userId], references: [id])
+}
+
+model Gear {
+  id            String    @id
+  name          String
+  providerId    String    // Lógica Airbnb (Subcontratado)
+  status        String    @default("AVAILABLE")
+  eventId       String?
+  event         Event?    @relation(fields: [eventId], references: [id])
+}
+
+model Vimume {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  impactScore Float    @default(0.0)
+  credits     Float    @default(0.0)
+  status      String   @default("ACTIVE")
+}
+
+model SystemFeature {
+  id          String   @id @default(cuid())
+  name        String   @unique // Ej: "MARKETPLACE_CHECKOUT", "ASTRA_VOICE"
+  isActive    Boolean  @default(false)
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("ear_system_features")
+}
+
+// --- NEXUS MISSION TRACKER (SSOT OPERATIVO) ---
+model MissionMilestone {
+  id          String   @id @default(cuid())
+  phase       Int      // 0, 1, 2, 3, 4, 5, 6, 7
+  title       String
+  description String?
+  status      MilestoneStatus @default(PENDIENTE)
+  progress    Int      @default(0) // 0-100
+  
+  // --- V101 GOVERNANCE CORE ---
+  isImplemented Boolean  @default(false)
+  isValidated   Boolean  @default(false)
+  isDocumented  Boolean  @default(false)
+  impactScore   Int      @default(0) // Peso estratégico (0-100)
+  
+  evidence    String?  // Link a archivo, commit o reporte
+  risk        String?  // Diagnóstico de riesgo
+  nextAction  String?  // Siguiente paso sugerido
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  @@map("ear_mission_milestones")
+}
+
+enum MilestoneStatus {
+  HECHO
+  EN_PROCESO
+  PENDIENTE
+  BLOQUEADO
+  CUARENTENA
+}
