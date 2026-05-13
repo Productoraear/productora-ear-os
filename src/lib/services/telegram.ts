@@ -7,9 +7,11 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-export async function sendTelegramNotification(message: string) {
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-    console.warn('⚠️ Telegram telemetry not configured. Missing TOKEN or CHAT_ID.');
+export async function sendTelegramNotification(message: string, chatId?: string) {
+  const targetId = chatId || TELEGRAM_CHAT_ID;
+
+  if (!TELEGRAM_BOT_TOKEN || !targetId) {
+    console.warn('⚠️ Telegram telemetry not configured. Missing TOKEN or TARGET_ID.');
     return;
   }
 
@@ -20,7 +22,7 @@ export async function sendTelegramNotification(message: string) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
+        chat_id: targetId,
         text: message,
         parse_mode: 'Markdown',
       }),

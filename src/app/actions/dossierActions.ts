@@ -68,10 +68,72 @@ ${dossier.selected_assets.map((a: string) => `- ${a}`).join('\n')}
   `.trim();
 
   try {
-    await sendTelegramNotification(message); // TODO: Asegurar que acepte chat_id o target
+    await sendTelegramNotification(message, dossier.telegram_target || undefined);
   } catch (e) {
     console.error("❌ Fallo en notificación Telegram:", e);
   }
 
   return { success: true };
+}
+
+export async function createDossierFromLead(leadData: {
+  contactName: string;
+  contactEmail: string;
+  occasion: string;
+  selectedAssets: string[];
+}) {
+  const supabase = createClient();
+
+  // 1. LEAD ROUTING (S-Class Strategy)
+  const routing = LeadRouter.route(leadData.contactEmail, leadData.occasion);
+
+  // 2. DOSSIER GENERATION
+  const expiresAt = new Date();
+  expiresAt.setHours(expiresAt.getHours() + 168); // 1 semana de validez
+
+  const { data: dossier, error: createError } = await supabase
+    .from('dossier_proposals')
+    .insert([{
+      token: Math.random().toString(36).substring(2, 15),
+      status: 'sent',
+      expires_at: expiresAt.toISOString(),
+      contact_name: leadData.contactName,
+      contact_email: leadData.contactEmail,
+      occasion_slug: leadData.occasion,
+      selected_assets: leadData.selectedAssets,
+      channel: routing.channel,
+      routing_reason: routing.reason,
+      priority_score: routing.priority,
+      telegram_target: routing.telegramId
+    }])
+    .select()
+    .single();
+
+  if (createError || !dossier) {
+    console.error("❌ DOSSIER_CREATE_ERROR:", createError);
+    return { success: false, error: 'Error al generar la propuesta técnica.' };
+  }
+
+  // 3. TELEGRAM ALERT (Lead Ingestion)
+  const message = `
+🚀 *NUEVO LEAD DETECTADO (Dossier)*
+ID: \`${dossier.id}\`
+Cliente: *${dossier.contact_name}*
+Email: \`${dossier.contact_email}\`
+Canal: \`${dossier.channel}\`
+Motivo: _${dossier.routing_reason}_
+
+📦 *Interés en:*
+${dossier.selected_assets.map((a: string) => `- ${a}`).join('\n')}
+
+_EAR OS GOLD: Iniciando ciclo de conversión._
+  `.trim();
+
+  try {
+    await sendTelegramNotification(message, dossier.telegram_target);
+  } catch (e) {
+    console.error("❌ Fallo en notificación Telegram (Lead):", e);
+  }
+
+  return { success: true, dossierId: dossier.id };
 }
