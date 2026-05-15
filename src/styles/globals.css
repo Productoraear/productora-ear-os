@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap');
+
+/**
+ * 🏛️ EAR OS / S-CLASS GLOBAL DESIGN SYSTEM (FINAL ELITE UNIFICATION)
+ * Ultra-clean, silent, and institutional authority.
+ */
+
+:root {
+  /* 🎨 Unified Color Palette (Silent Obsidian & S-Class Gold) */
+  --ear-bg: #050505;
+  --ear-surface: #0a0a0a;
+  --ear-surface-2: #141414;
+  --ear-muted: #666666;
+  --ear-text: #f5f1e8;
+  --ear-accent: #ecb613; 
+  --ear-accent-2: #49d6b5; 
+  --ear-danger: #ff4d4d;
+  --ear-success: #10b981;
+
+  /* 📏 Spacing Scale (4/8/12/16/24/32/48/64) */
+  --ear-sp-1: 4px;
+  --ear-sp-2: 8px;
+  --ear-sp-3: 12px;
+  --ear-sp-4: 16px;
+  --ear-sp-6: 24px;
+  --ear-sp-8: 32px;
+  --ear-sp-12: 48px;
+  --ear-sp-16: 64px;
+
+  /* 📐 Radii & Borders */
+  --ear-radius-sm: 8px;
+  --ear-radius-md: 24px; /* Softened for institutional feel */
+  --ear-radius-lg: 32px;
+  --ear-radius-full: 9999px;
+  --ear-border: rgba(255, 255, 255, 0.05);
+
+  /* 🖋️ Typography Scale */
+  --ear-font-display: var(--font-syne), sans-serif;
+  --ear-font-text: var(--font-inter), sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--ear-bg);
+  color: var(--ear-text);
+  font-family: var(--ear-font-text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6; /* More breath */
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, .display {
+  font-family: var(--ear-font-display);
+  font-weight: 800;
+  letter-spacing: -0.05em; /* Tighter for display */
+  text-transform: uppercase;
+  color: var(--ear-text);
+}
+
+p, .text {
+  font-family: var(--ear-font-text);
+  font-weight: 400;
+  color: rgba(245, 241, 232, 0.5); /* More silent */
+}
+
+/* 🧪 S-Class Components */
+.glass-pane {
+  background: rgba(20, 20, 20, 0.5);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--ear-border);
+  border-radius: var(--ear-radius-md);
+}
+
+.surface-card {
+  background: var(--ear-surface);
+  border: 1px solid var(--ear-border);
+  border-radius: var(--ear-radius-md);
+  transition: all 0.5s ease;
+}
+
+.surface-card:hover {
+  border-color: rgba(236, 182, 19, 0.2);
+  transform: translateY(-4px);
+}
+
+/* 🌊 Elegant Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ear-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ear-accent);
+}
+
+/* 🚀 Ultra-Clean Utilities */
+.btn-primary {
+  background: var(--ear-accent);
+  color: #050505;
+  font-weight: 800;
+  padding: 1rem 2rem;
+  border-radius: var(--ear-radius-full);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--ear-border);
+  color: var(--ear-text);
+  font-weight: 800;
+  padding: 1rem 2rem;
+  border-radius: var(--ear-radius-full);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}

@@ -134,6 +134,7 @@ model Workspace {
   waybills         Waybill[]
   contracts        SmartContract[]
   commissionLedger CommissionLedger[]
+  providerProfiles ProviderProfile[]
 
   createdAt        DateTime             @default(now()) @map("created_at")
   updatedAt        DateTime             @updatedAt @map("updated_at")

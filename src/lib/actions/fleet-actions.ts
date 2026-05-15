@@ -1,64 +1,113 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { TelemetryPingSchema, type TelemetryPing } from "@/lib/fleet-api-contracts";
-import { prisma } from "@/lib/prisma"; // Assuming Prisma is configured
+import { prisma } from "@/lib/prisma";
+import { z } from "zod";
 
 /**
- * 🚀 FLEET OS SERVER ACTIONS
- * Handle real-time telemetry ingestion and database mutations.
+ * 🚀 EAR OS / FLEET COMMAND SERVER ACTIONS (V4 PRODUCTION)
+ * Sovereign logistics engine for real-time dispatch and telemetry.
  */
 
-export async function updateFleetTelemetry(data: TelemetryPing) {
+const TelemetryPingSchema = z.object({
+  waybillId: z.string().uuid(),
+  actorUserId: z.string().optional(),
+  latitude: z.number(),
+  longitude: z.number(),
+  heading: z.number().optional().nullable(),
+  speed: z.number().optional().nullable(),
+  accuracy: z.number().optional().nullable(),
+  type: z.enum(["LOCATION_PING", "ARRIVED", "COMPLETED", "CANCELLED"]).default("LOCATION_PING"),
+});
+
+/**
+ * Persists a telemetry ping and updates the unit's last known position.
+ */
+export async function trackFleetUnit(data: z.infer<typeof TelemetryPingSchema>) {
   try {
-    // 1. Validate against API Contract
-    const validatedData = TelemetryPingSchema.parse(data);
+    const validated = TelemetryPingSchema.parse(data);
 
-    // 2. Security Check: Multi-tenant Lockdown
-    // In strict mode, we ensure the driver_id matches the authenticated user
-    // const session = await getAuthSession(); // Implement session check
-    // if (!session) throw new Error("Unauthenticated");
+    return await prisma.$transaction(async (tx) => {
+      // 1. Log Telemetry Event
+      const event = await tx.fleetTelemetryEvent.create({
+        data: {
+          waybillId: validated.waybillId,
+          actorUserId: validated.actorUserId,
+          type: validated.type,
+          latitude: validated.latitude,
+          longitude: validated.longitude,
+          heading: validated.heading,
+          speed: validated.speed,
+          accuracy: validated.accuracy,
+        },
+      });
 
-    console.log(`[FLEET_TELEMETRY] Ping received for Unit ${validatedData.unitId} on Waybill ${validatedData.waybillId}`);
+      // 2. Find associated Unit via Waybill
+      const waybill = await tx.waybill.findUnique({
+        where: { id: validated.waybillId },
+        select: { unitId: true, workspaceId: true },
+      });
 
-    // 3. Persist to Postgres
-    const position = await prisma.fleetPosition.create({
-      data: {
-        unitId: validatedData.unitId,
-        latitude: validatedData.latitude,
-        longitude: validatedData.longitude,
-        altitude: validatedData.altitude,
-        speed: validatedData.speed,
-        heading: validatedData.heading,
-        accuracy: validatedData.accuracy,
-        source: "SERVER_ACTION",
+      if (waybill?.unitId) {
+        // 3. Update Unit's Real-time Shadow State
+        await tx.fleetUnit.update({
+          where: { id: waybill.unitId },
+          data: {
+            lastLatitude: validated.latitude,
+            lastLongitude: validated.longitude,
+            lastHeading: validated.heading,
+            lastSpeed: validated.speed,
+            lastPingAt: new Date(),
+            status: validated.type === "LOCATION_PING" ? "BUSY" : "IDLE",
+          },
+        });
       }
+
+      return { success: true, eventId: event.id };
     });
-
-    // 4. Update Waybill Status Event
-    await prisma.fleetTelemetryEvent.create({
-      data: {
-        waybillId: validatedData.waybillId,
-        eventType: "position_updated",
-        payload: { lat: validatedData.latitude, lng: validatedData.longitude }
-      }
-    });
-
-    // 5. Optimized Revalidation (Avoid full page revalidation on high-freq pings)
-    // revalidateTag(`fleet-unit-${validatedData.unitId}`);
-
-    return { 
-      success: true, 
-      message: "Telemetry synchronized", 
-      id: position.id
-    };
-
   } catch (error) {
-    console.error("[FLEET_TELEMETRY_ERROR]", error);
-    return { 
-      success: false, 
-      message: "Sync failed", 
-      error: error instanceof Error ? error.message : "Unknown error" 
-    };
+    console.error("[FLEET_COMMAND_ERROR]", error);
+    return { success: false, error: "Logistics synchronization failed" };
+  }
+}
+
+/**
+ * Assigns a Fleet Unit to a Waybill (Dispatcher Action).
+ */
+export async function dispatchWaybill(waybillId: string, unitId: string) {
+  try {
+    const result = await prisma.$transaction(async (tx) => {
+      const waybill = await tx.waybill.update({
+        where: { id: waybillId },
+        data: { 
+          unitId, 
+          status: "DISPATCHED" 
+        },
+      });
+
+      await tx.fleetUnit.update({
+        where: { id: unitId },
+        data: { status: "BUSY" },
+      });
+
+      // Log assignment event
+      await tx.fleetTelemetryEvent.create({
+        data: {
+          waybillId,
+          type: "UNIT_ASSIGNED",
+          latitude: 0, // Placeholder as it's an administrative event
+          longitude: 0,
+          payload: { unitId },
+        },
+      });
+
+      return waybill;
+    });
+
+    revalidatePath("/admin/fleet");
+    return { success: true, data: result };
+  } catch (error) {
+    console.error("[DISPATCH_ERROR]", error);
+    return { success: false, error: "Dispatch sequence aborted" };
   }
 }
