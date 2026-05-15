@@ -78,7 +78,7 @@ export const MarketplaceCard: React.FC<MarketplaceCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ x: mouseX, y: mouseY }}
-      className="group relative bg-[#050505] border border-white/10 rounded-[3rem] overflow-hidden flex flex-col shadow-2xl hover:shadow-[#d4a855]/10 transition-shadow duration-700"
+      className="group relative bg-[#050505] border border-white/10 rounded-[3rem] overflow-hidden flex flex-col shadow-2xl hover:shadow-[#ecb613]/10 transition-shadow duration-700"
     >
       {/* 🖼️ PREMIUM VISUAL NODE */}
       <div className="relative aspect-[4/5] overflow-hidden">
@@ -99,13 +99,13 @@ export const MarketplaceCard: React.FC<MarketplaceCardProps> = ({
             <motion.div 
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
-              className="px-5 py-2.5 rounded-full bg-[#d4a855] text-black text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2 shadow-[0_0_30px_rgba(212,168,85,0.4)]"
+              className="px-5 py-2.5 rounded-full bg-[#ecb613] text-black text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2 shadow-[0_0_30px_rgba(212,168,85,0.4)]"
             >
               <ShieldCheck size={12} strokeWidth={3} /> S-Class Certified
             </motion.div>
           )}
           <div className="px-5 py-2.5 rounded-full bg-black/40 backdrop-blur-xl border border-white/10 text-white text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2">
-            <Zap size={12} className="text-[#d4a855]" strokeWidth={3} /> {category}
+            <Zap size={12} className="text-[#ecb613]" strokeWidth={3} /> {category}
           </div>
         </div>
 
@@ -116,7 +116,7 @@ export const MarketplaceCard: React.FC<MarketplaceCardProps> = ({
           className={`absolute top-8 right-8 w-14 h-14 rounded-full flex items-center justify-center transition-all duration-500 backdrop-blur-md border ${
             isSaved 
               ? 'bg-[#10b981]/20 text-[#10b981] border-[#10b981]/40' 
-              : 'bg-white/10 text-white border-white/20 hover:bg-[#d4a855] hover:text-black hover:border-[#d4a855] hover:shadow-[0_0_20px_rgba(212,168,85,0.5)]'
+              : 'bg-white/10 text-white border-white/20 hover:bg-[#ecb613] hover:text-black hover:border-[#ecb613] hover:shadow-[0_0_20px_rgba(212,168,85,0.5)]'
           }`}
         >
           <Zap size={22} fill={isSaved ? "currentColor" : "none"} />
@@ -124,21 +124,21 @@ export const MarketplaceCard: React.FC<MarketplaceCardProps> = ({
 
         {/* 📍 IDENTITY STRIP */}
         <div className="absolute bottom-8 left-8 right-8">
-          <div className="flex items-center gap-3 text-[#d4a855] mb-4">
+          <div className="flex items-center gap-3 text-[#ecb613] mb-4">
             <div className="flex gap-0.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={10} fill={i < rating ? "#d4a855" : "none"} stroke={i < rating ? "none" : "rgba(255,255,255,0.2)"} />
+                <Star key={i} size={10} fill={i < rating ? "#ecb613" : "none"} stroke={i < rating ? "none" : "rgba(255,255,255,0.2)"} />
               ))}
             </div>
             <span className="text-[10px] font-black tracking-widest uppercase opacity-60">Verified Authority</span>
           </div>
           
-          <h3 className="text-3xl font-black uppercase italic tracking-tighter text-white leading-none mb-3 group-hover:text-[#d4a855] transition-colors duration-500">
+          <h3 className="text-3xl font-black uppercase italic tracking-tighter text-white leading-none mb-3 group-hover:text-[#ecb613] transition-colors duration-500">
             {title}
           </h3>
           
           <div className="flex items-center gap-2 text-white/40 text-[10px] font-black uppercase tracking-[0.15em]">
-            <MapPin size={12} className="text-[#d4a855]/60" /> {location}
+            <MapPin size={12} className="text-[#ecb613]/60" /> {location}
           </div>
         </div>
       </div>
@@ -162,13 +162,13 @@ export const MarketplaceCard: React.FC<MarketplaceCardProps> = ({
         <Link 
           href={`/servicios/${id}`}
           onClick={() => marketplaceFeedback.track('card_clicked', { serviceId: id, cardPosition: index })}
-          className="relative h-16 w-full bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center gap-4 group/btn overflow-hidden transition-all duration-500 hover:border-[#d4a855]/40"
+          className="relative h-16 w-full bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center gap-4 group/btn overflow-hidden transition-all duration-500 hover:border-[#ecb613]/40"
         >
-          <div className="absolute inset-0 bg-[#d4a855] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
+          <div className="absolute inset-0 bg-[#ecb613] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500" />
           <span className="relative text-[11px] font-black uppercase tracking-[0.3em] text-white group-hover/btn:text-black transition-colors duration-500">
             Explorar Propuesta
           </span>
-          <ArrowRight size={16} className="relative text-[#d4a855] group-hover/btn:text-black transition-colors duration-500" />
+          <ArrowRight size={16} className="relative text-[#ecb613] group-hover/btn:text-black transition-colors duration-500" />
         </Link>
       </div>
     </motion.div>

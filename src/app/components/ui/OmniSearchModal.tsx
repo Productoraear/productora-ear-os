@@ -7,11 +7,12 @@ import { cn } from '@/lib/utils'; // Adjusted the import path
 import Link from 'next/link';
 import { useSharedContext } from '@/app/context/SharedContext';
 import { SERVICIOS } from '@/lib/constants/seo-data';
+import { ROUTES } from '@/lib/routes';
 
 export default function OmniSearchModal() {
   const { isSearchOpen, setIsSearchOpen } = useSharedContext();
   const [query, setQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState<'ALL' | 'V1' | 'V2' | 'V3'>('ALL');
+  const [activeFilter, setActiveFilter] = useState<'ALL' | 'PRODUCCION' | 'ARTISTAS' | 'VIMUME'>('ALL');
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -44,11 +45,11 @@ export default function OmniSearchModal() {
 
   // Pre-calculated Quick Links for Zero-Friction
   const quickLinks = [
-    { id: 1, type: 'V3', icon: <Activity size={16}/>, title: 'Protocolo 40Hz Gamma (Ciencia)', href: '/vimume#ciencia' },
-    { id: 2, type: 'V3', icon: <Activity size={16}/>, title: 'Rescate de Memoria (Casos B2G)', href: '/vimume#casos' },
-    { id: 3, type: 'V3', icon: <Activity size={16}/>, title: 'Iniciativas Comisión Europea', href: '/vimume#fondos' },
-    { id: 4, type: 'V2', icon: <Music size={16}/>, title: 'Gestión de Artistas Élite', href: '/artistas' },
-    { id: 5, type: 'V1', icon: <Calendar size={16}/>, title: 'Infraestructura para Eventos', href: '/eventos' },
+    { id: 1, type: 'VIMUME', icon: <Activity size={16}/>, title: 'Fundamento VIMUME (Ciencia)', href: ROUTES.fundacion },
+    { id: 2, type: 'VIMUME', icon: <Activity size={16}/>, title: 'Protocolo de Intervención', href: ROUTES.protocolo },
+    { id: 3, type: 'VIMUME', icon: <Activity size={16}/>, title: 'Roadmap y Despliegue', href: ROUTES.roadmap },
+    { id: 4, type: 'ARTISTAS', icon: <Music size={16}/>, title: 'Gestión de Artistas Élite', href: '/artistas' },
+    { id: 5, type: 'PRODUCCION', icon: <Calendar size={16}/>, title: 'Infraestructura para Eventos', href: '/eventos' },
   ];
 
 
@@ -69,9 +70,9 @@ export default function OmniSearchModal() {
       
       // Mapeo de tipos para el filtro
       const typeMap: Record<string, string> = {
-        'V1': 'EVENTO',
-        'V2': 'ARTISTA',
-        'V3': 'VIMUME'
+        'PRODUCCION': 'EVENTO',
+        'ARTISTAS': 'ARTISTA',
+        'VIMUME': 'VIMUME'
       };
 
       const filtered = SERVICIOS.filter(s => {
@@ -83,9 +84,9 @@ export default function OmniSearchModal() {
         if (activeFilter === 'ALL') return matchesQuery;
         
         // Lógica de filtrado por categoría
-        if (activeFilter === 'V2') return matchesQuery && (s.id.includes('edwin') || s.id.includes('mariachi'));
-        if (activeFilter === 'V3') return matchesQuery && s.id.includes('innovacion');
-        if (activeFilter === 'V1') return matchesQuery && !s.id.includes('edwin') && !s.id.includes('innovacion');
+        if (activeFilter === 'ARTISTAS') return matchesQuery && (s.id.includes('edwin') || s.id.includes('mariachi'));
+        if (activeFilter === 'VIMUME') return matchesQuery && s.id.includes('innovacion');
+        if (activeFilter === 'PRODUCCION') return matchesQuery && !s.id.includes('edwin') && !s.id.includes('innovacion');
         
         return matchesQuery;
       }).map(s => ({
@@ -93,7 +94,7 @@ export default function OmniSearchModal() {
         title: s.nombre,
         desc: s.descripcion,
         href: s.id.includes('edwin') ? `/artistas/edwin-agudelo` : `/servicios/${s.slug}/madrid`,
-        type: s.id.includes('innovacion') ? 'V3' : (s.id.includes('edwin') ? 'V2' : 'V1'),
+        type: s.id.includes('innovacion') ? 'VIMUME' : (s.id.includes('edwin') ? 'ARTISTAS' : 'PRODUCCION'),
         icon: s.id.includes('innovacion') ? <Activity size={16}/> : (s.id.includes('edwin') ? <Mic2 size={16}/> : <Calendar size={16}/>)
       }));
 
@@ -127,7 +128,7 @@ export default function OmniSearchModal() {
               <input 
                 ref={inputRef}
                 type="text"
-                placeholder="Comanda el sistema S-Class (ej. 'Edwin', 'Mariachi')..."
+                placeholder="Consultar el ecosistema VIMUME OS..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="flex-1 bg-transparent text-white text-xl placeholder:text-white/20 focus:outline-none font-medium"
@@ -142,20 +143,20 @@ export default function OmniSearchModal() {
 
             <div className="flex gap-2 px-6 py-4 bg-white/[0.02] border-b border-white/5 overflow-x-auto hide-scrollbar">
               <FilterBadge label="TODO" isActive={activeFilter === 'ALL'} onClick={() => setActiveFilter('ALL')} />
-              <FilterBadge label="V1 EVENTOS" icon={<Calendar size={14}/>} isActive={activeFilter === 'V1'} onClick={() => setActiveFilter('V1')} />
-              <FilterBadge label="V2 ARTISTAS" icon={<Music size={14}/>} isActive={activeFilter === 'V2'} onClick={() => setActiveFilter('V2')} />
-              <FilterBadge label="V3 VIMUME" icon={<Activity size={14}/>} isActive={activeFilter === 'V3'} onClick={() => setActiveFilter('V3')} highlight />
+              <FilterBadge label="PRODUCCIÓN" icon={<Calendar size={14}/>} isActive={activeFilter === 'PRODUCCION'} onClick={() => setActiveFilter('PRODUCCION')} />
+              <FilterBadge label="ARTISTAS" icon={<Music size={14}/>} isActive={activeFilter === 'ARTISTAS'} onClick={() => setActiveFilter('ARTISTAS')} />
+              <FilterBadge label="VIMUME" icon={<Activity size={14}/>} isActive={activeFilter === 'VIMUME'} onClick={() => setActiveFilter('VIMUME')} highlight />
             </div>
 
             <div className="max-h-[60vh] overflow-y-auto custom-scrollbar">
               {query.length < 2 ? (
                 <div className="p-6">
-                  <span className="text-[10px] font-black text-[#ecb613] tracking-[0.4em] mb-6 block uppercase opacity-50">Accesos Tácticos S-Class</span>
+                  <span className="text-[10px] font-black text-[#ecb613] tracking-[0.4em] mb-6 block uppercase opacity-50">Navegación Institucional</span>
                   <div className="grid gap-2">
                     {quickLinks.filter(link => activeFilter === 'ALL' || link.type === activeFilter).map(link => (
                       <Link key={link.id} href={link.href} onClick={() => setIsSearchOpen(false)} className="flex items-center justify-between p-4 hover:bg-white/5 rounded-2xl group transition-all border border-transparent hover:border-white/5">
                         <div className="flex items-center gap-4">
-                          <div className={cn("p-3 rounded-xl", link.type === 'V3' ? "bg-[#ecb613]/10 text-[#ecb613]" : "bg-white/5 text-white/40")}>
+                          <div className={cn("p-3 rounded-xl", link.type === 'VIMUME' ? "bg-[#ecb613]/10 text-[#ecb613]" : "bg-white/5 text-white/40")}>
                             {link.icon}
                           </div>
                           <span className="text-white/70 font-bold uppercase tracking-tight group-hover:text-white transition-colors">{link.title}</span>
@@ -200,7 +201,7 @@ export default function OmniSearchModal() {
             </div>
             
             <div className="px-6 py-3 bg-black border-t border-white/5 flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-white/20">
-              <span>EAR OS GOLD • SEARCH INFRASTRUCTURE • V173</span>
+              <span>VIMUME OS • NEURAL SEARCH INFRASTRUCTURE • V174</span>
               <span className="flex items-center gap-2">RESULTADOS: {results.length}</span>
             </div>
           </motion.div>

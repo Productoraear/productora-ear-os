@@ -33,7 +33,7 @@ export default function ArtistasPage() {
         <div className="flex flex-wrap gap-12 py-10 border-y border-white/5">
           <Highlight value="36" label="Conciertos con Éxito" />
           <Highlight value="95%" label="Efectividad Operativa" />
-          <Highlight value="Elite" label="Nivel de Curaduría" />
+          <Highlight value="Auditado" label="Nivel de Curaduría" />
         </div>
       </section>
 

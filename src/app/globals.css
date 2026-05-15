@@ -5,12 +5,20 @@
 @layer base {
   :root {
     --aura-onyx-black: #050505;
-    --aura-onyx-gold: #d4a855;
-    --aura-onyx-gold-deep: #aa8644;
+    --aura-onyx-gold: #ecb613;
+    --aura-onyx-gold-deep: #b38805;
     --aura-onyx-white: #ffffff;
     --aura-onyx-glass: rgba(255, 255, 255, 0.03);
     --aura-onyx-glass-heavy: rgba(255, 255, 255, 0.07);
     --aura-onyx-border: rgba(255, 255, 255, 0.08);
+
+    /* 🕊️ VIMUME LUMINOUS PALETTE */
+    --vimume-ivory: #fdfcf8;
+    --vimume-charcoal: #1a1a1a;
+    --vimume-blue: #3b82f6;
+    --vimume-turquoise: #2dd4bf;
+    --vimume-gold: #ecb613;
+    --vimume-gold-warm: #d4a855;
     
     --font-syne: var(--font-syne), 'Syne', sans-serif;
     --font-manrope: var(--font-manrope), 'Manrope', sans-serif;
@@ -38,6 +46,26 @@
 
   body.theme-b2b {
     background: #050505;
+  }
+
+  /* 🕊️ VIMUME THEME - LUMINOUS & INSPIRATIONAL */
+  body.theme-vimume {
+    background-color: var(--vimume-ivory);
+    color: var(--vimume-charcoal);
+  }
+
+  body.theme-vimume .text-white {
+    color: var(--vimume-charcoal);
+  }
+
+  body.theme-vimume .text-white\/40,
+  body.theme-vimume .text-white\/60 {
+    color: rgba(26, 26, 26, 0.5);
+  }
+
+  body.theme-vimume .border-white\/10,
+  body.theme-vimume .border-white\/5 {
+    border-color: rgba(26, 26, 26, 0.1);
   }
 }
 

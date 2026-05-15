@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 /**
  * 🏛️ ABOUT COMPONENT (VAMPIRIZED)
- * La narrativa de autoridad de Productora EAR, adaptada al estándar S-Class.
+ * La narrativa de autoridad de VIMUME OS, adaptada al estándar institucional.
  */
 const About: React.FC = () => {
   return (
@@ -52,7 +52,7 @@ const About: React.FC = () => {
                 <div className="w-full h-full bg-gradient-to-br from-[#ecb613]/10 to-transparent rounded-full border border-white/10 flex flex-col items-center justify-center text-center p-6 backdrop-blur-xl shadow-2xl">
                    <Anchor className="text-[#ecb613] mb-4" size={48} />
                    <span className="text-white font-bold text-xl uppercase tracking-tighter font-syne">Impacto Real</span>
-                   <p className="text-[10px] text-white/30 mt-2 uppercase tracking-[0.3em]">Garantía S-Class</p>
+                   <p className="text-[10px] text-white/30 mt-2 uppercase tracking-[0.3em]">Garantía Institucional</p>
                 </div>
              </div>
           </div>
@@ -82,7 +82,7 @@ const About: React.FC = () => {
                  <div className="w-14 h-14 bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#ecb613] group-hover:text-black transition-all duration-500">
                     <Shield size={28} />
                  </div>
-                 <h3 className="text-2xl text-white font-bold mb-4 font-syne">Redundancia Militar</h3>
+                 <h3 className="text-2xl text-white font-bold mb-4 font-syne">Máxima Seguridad</h3>
                  <p className="text-white/40 text-sm leading-relaxed font-light">
                     El "Efecto Murphy" es real. Por eso, nuestros sistemas críticos tienen redundancia. Tu tranquilidad es nuestro activo.
                  </p>

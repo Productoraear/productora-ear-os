@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Shield, Zap, Globe, Users, Briefcase, Activity } from 'lucide-react';
 import { SERVICIOS, PROVINCIAS } from '@/lib/constants/seo-data';
+import { ROUTES } from '@/lib/routes';
 
 /**
  * SovereignNav - Mega-Menu de Alta Densidad (V127.1)
@@ -39,7 +40,7 @@ export const SovereignNav: React.FC = () => {
           {/* Logo S-Class */}
           <Link href="/" className="text-2xl font-black tracking-tighter group flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#d4a855] group-hover:scale-150 transition-transform" />
-            PRODUCTORA<span className="text-[#d4a855]">EAR</span>
+            VIMUME<span className="text-[#d4a855]">OS</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -71,7 +72,7 @@ export const SovereignNav: React.FC = () => {
                             className="group flex flex-col gap-1 p-4 bg-[#d4a855]/5 border border-[#d4a855]/20 rounded-2xl mb-4"
                           >
                             <h4 className="text-[11px] font-black uppercase tracking-widest text-[#d4a855]">Dossier Edwin Agudelo</h4>
-                            <p className="text-[9px] text-white/40 uppercase tracking-widest leading-none">Master Artist S-Class • Mariachi / Banda / Corridos</p>
+                            <p className="text-[9px] text-white/40 uppercase tracking-widest leading-none">Autoridad VIMUME OS • Mariachi / Banda / Corridos</p>
                           </Link>
                         )}
                         {item.services.map((s) => (
@@ -102,10 +103,10 @@ export const SovereignNav: React.FC = () => {
             </Link>
 
             <Link 
-              href="/cotizador"
-              className="hidden sm:flex items-center gap-3 px-8 py-4 bg-white text-black text-[10px] font-black tracking-[0.3em] uppercase rounded-2xl hover:bg-[#d4a855] hover:text-white transition-all active:scale-95 shadow-xl"
+              href={ROUTES.contacto}
+              className="hidden sm:flex items-center gap-3 px-8 py-4 bg-white text-black text-[10px] font-black tracking-0.3em uppercase rounded-2xl hover:bg-[#d4a855] hover:text-white transition-all active:scale-95 shadow-xl"
             >
-              MANDO <Shield size={14} />
+              CONTACTO <Shield size={14} />
             </Link>
 
             <button 

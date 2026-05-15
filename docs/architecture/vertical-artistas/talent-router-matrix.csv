@@ -1,0 +1,10 @@
+Route,Access Role,Rendering Type,Description
+/(public)/artistas/[slug],PUBLIC,ISR (60s),Public profile for discovery and discovery.
+/(public)/artistas/[slug]/booking,PUBLIC,SSR,Lead capture and "1€ Trigger" payment.
+/studio/artist,ARTIST | COMMANDER,SSR,Private dashboard (Emanager Studio) overview.
+/studio/artist/rider,ARTIST | COMMANDER,CSR,Technical rider management and storage sync.
+/studio/artist/contracts,ARTIST | COMMANDER,SSR,Smart contract list and signing interface.
+/studio/artist/calendar,ARTIST | COMMANDER,CSR,Availability management and block calendar.
+/studio/artist/settings,ARTIST | COMMANDER,CSR,Profile settings and social links.
+/api/v1/talent/booking,PUBLIC,SERVER_ACTION,Process booking and ledger entry.
+/api/v1/talent/rider/upload,ARTIST | COMMANDER,EDGE_FUNCTION,Secure technical rider upload to storage.

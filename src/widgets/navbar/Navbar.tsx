@@ -17,14 +17,11 @@ const Navbar: React.FC = () => {
   const closeMenus = () => setMobileMenuOpen(false);
 
   const menuItems = [
+    { name: "Producción", path: "/eventos" },
     { name: "Artistas", path: "/artistas" },
-    { name: "Eventos", path: "/eventos" },
-    { name: "Bodas", path: "/bodas" },
-    { name: "Arsenal", path: "/arsenal" },
-    { name: "Business", path: "/business" },
+    { name: "VIMUME", path: "/vimume" },
     { name: "Dossier", path: "/dossier" },
-    { name: "Social", path: "/social" },
-    { name: "Calculadora", path: "/calculadora" },
+    { name: "Contacto", path: "/contacto" },
   ];
 
   return (

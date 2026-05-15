@@ -75,7 +75,7 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
   const getCtaLabel = () => {
     if (loading) return 'ESTABLECIENDO VÍNCULO...';
     if (role === 'ROLE_B2G') return 'SOLICITAR PROTOCOLO B2G';
-    if (role === 'ROLE_B2B') return 'BLOQUEAR CAPACIDAD S-CLASS';
+    if (role === 'ROLE_B2B') return 'SOLICITAR PROTOCOLO VIMUME OS';
     return 'RESERVAR AHORA';
   };
 
@@ -87,13 +87,13 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: isTestMode ? 1 : finalPrice, // Enviamos el valor nominal, el API convierte a centavos
-          concept: `Certificación S-Class: ${category}${isTestMode ? ' [TEST_MODE]' : ''}`,
+          concept: `Certificación VIMUME OS: ${category}${isTestMode ? ' [TEST_MODE]' : ''}`,
           metadata: {
             category,
-            source: 'OMNI_STITCH_V162',
+            source: 'VIMUME_OS_V165',
             venue_id: isGoldenCohort ? category : '',
             is_b2g: isB2G,
-            artist_tier: category.toLowerCase().includes('edwin') ? 'MASTER_ARTIST' : 'STANDARD',
+            artist_tier: category.toLowerCase().includes('edwin') ? 'INSTITUTIONAL_AUTHORITY' : 'STANDARD',
             ...metadata
           }
         })
@@ -121,17 +121,17 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
       className="glass-panel p-10 flex flex-col gap-8 group relative overflow-hidden transition-all duration-700 hover:shadow-[0_0_50px_rgba(212,168,85,0.15)]"
     >
       {/* Visual Artifacts */}
-      <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#d4a855]/5 blur-[80px] rounded-full group-hover:bg-[#d4a855]/10 transition-all duration-1000" />
+      <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#ecb613]/5 blur-[80px] rounded-full group-hover:bg-[#ecb613]/10 transition-all duration-1000" />
       
       <div className="flex flex-col gap-2 relative z-10">
         <div className="flex items-center gap-3">
           <motion.div 
             animate={isHovered ? { rotate: 360 } : {}}
-            className="p-2 bg-[#d4a855]/10 rounded-full text-[#d4a855]"
+            className="p-2 bg-[#ecb613]/10 rounded-full text-[#ecb613]"
           >
             <Sparkles size={16} />
           </motion.div>
-          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#d4a855]/60">S-Class Asset</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#ecb613]/60">VIMUME OS Asset</span>
         </div>
         <h3 className="text-3xl font-black text-white italic tracking-tighter uppercase leading-tight">
           {category}
@@ -152,25 +152,25 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
 
       <div className="space-y-4 relative z-10">
         <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#d4a855] animate-pulse" />
+          <div className="w-1.5 h-1.5 rounded-full bg-[#ecb613] animate-pulse" />
           Protocolo Institucional Ready
         </div>
         <p className="text-[11px] text-white/30 leading-relaxed font-medium">
-          Infraestructura de alta fidelidad validada por el Oráculo. Prioridad de despliegue en 52 provincias.
+          Infraestructura de alta fidelidad validada institucionalmente. Prioridad de despliegue en 52 provincias.
         </p>
 
         {isGoldenCohort && (
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="p-4 bg-[#d4a855]/5 border border-[#d4a855]/20 rounded-xl mt-4"
+            className="p-4 bg-[#ecb613]/5 border border-[#ecb613]/20 rounded-xl mt-4"
           >
             <div className="flex items-center gap-2 mb-2">
-              <Crown size={12} className="text-[#d4a855]" />
-              <span className="text-[9px] font-black uppercase tracking-widest text-[#d4a855]">Artista Recomendado S-Class</span>
+              <Crown size={12} className="text-[#ecb613]" />
+              <span className="text-[9px] font-black uppercase tracking-widest text-[#ecb613]">Artista Recomendado VIMUME OS</span>
             </div>
             <p className="text-[10px] text-white/60 font-bold uppercase tracking-tight">
-              Edwin Agudelo (Master Artist) es el proveedor pre-aprobado para la acústica de este recinto.
+              Edwin Agudelo (Autoridad VIMUME) es el proveedor pre-aprobado para la acústica de este recinto.
             </p>
           </motion.div>
         )}
@@ -199,15 +199,15 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-6 bg-[#d4a855]/5 border border-[#d4a855]/30 rounded-2xl mt-6 border-dashed group cursor-pointer"
+            className="p-6 bg-[#ecb613]/5 border border-[#ecb613]/30 rounded-2xl mt-6 border-dashed group cursor-pointer"
             onClick={() => window.location.href = `/servicios/edwin-caballo/${metadata.provincia || 'madrid'}`}
           >
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-3">
-                <Sparkles size={16} className="text-[#d4a855] animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#d4a855]">Upgrade Recomendado</span>
+                <Sparkles size={16} className="text-[#ecb613] animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-[#ecb613]">Upgrade Recomendado</span>
               </div>
-              <ArrowRight size={14} className="text-[#d4a855] group-hover:translate-x-2 transition-transform" />
+              <ArrowRight size={14} className="text-[#ecb613] group-hover:translate-x-2 transition-transform" />
             </div>
             <h4 className="text-xs font-black uppercase tracking-tighter text-white mb-2">Show "Cantando a Caballo"</h4>
             <p className="text-[10px] text-white/40 font-medium uppercase leading-tight italic">
@@ -225,7 +225,7 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
         className="w-full bg-white text-black font-black py-6 rounded-2xl flex items-center justify-center gap-4 transition-all relative overflow-hidden group/btn"
       >
         <motion.div 
-          className="absolute inset-0 bg-[#d4a855] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500"
+          className="absolute inset-0 bg-[#ecb613] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500"
         />
         <div className="relative z-10 flex items-center gap-3">
           {loading ? <Loader2 size={18} className="animate-spin" /> : <ArrowRight size={18} />}
@@ -235,7 +235,7 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
 
       <div className="flex justify-between items-center pt-4 border-t border-white/5 opacity-30">
          <Activity size={12} />
-         <Shield size={12} className="text-[#d4a855]" />
+         <Shield size={12} className="text-[#ecb613]" />
          <Target size={12} />
       </div>
     </motion.div>

@@ -80,10 +80,10 @@ export const FinancialPanel = () => {
             // Lógica S-Class: Generar sesión de pago vía API
             const result = await sendPost('/api/payments/create-session', {
                 amount: parseStripeAmount(1000), // Ejemplo: 1000€
-                concept: 'Acceso EAR OS GOLD v2.0',
+                concept: 'Acceso VIMUME OS Premium',
                 metadata: {
-                    type: 'SUBSCRIPTION_GOLD',
-                    engine: 'OPAL_S_CLASS'
+                    type: 'SUBSCRIPTION_VIMUME',
+                    engine: 'VIMUME_S_CLASS'
                 }
             });
             

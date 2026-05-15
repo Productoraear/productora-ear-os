@@ -104,6 +104,6 @@ export const GUIAS = [
 ];
 
 export const SEO_METADATA_BASE = {
-  title: "Productora EAR - Dominancia en Eventos Premium",
-  description: "Líderes en sonorización, iluminación y producción audiovisual en toda España. Tecnología S-Class para eventos inolvidables.",
+  title: "VIMUME OS - Autoridad en Impacto Social & Memoria",
+  description: "Arquitectura narrativa y operativa para la economía plateada. Innovación social, gestión de artistas de gala y producción técnica de alta autoridad.",
 };

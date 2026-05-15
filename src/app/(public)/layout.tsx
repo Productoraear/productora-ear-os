@@ -1,13 +1,14 @@
 import React, { Suspense } from 'react';
-import SovereignNavbar from '@/app/components/layout/SovereignNavbar';
+import PublicNavbar from '@/components/public/PublicNavbar';
+import PublicFooter from '@/components/public/PublicFooter';
 import SovereignBottomNav from '@/app/components/layout/SovereignBottomNav';
 import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
-import Footer from '@/app/components/Footer';
 import { PositiveFrictionModal } from '@/app/components/SClassScreens/PositiveFrictionModal';
+import ThemeWrapper from '@/app/components/layout/ThemeWrapper';
 
 /**
- * 🏛️ EAR OS GOLD - PUBLIC LAYOUT
- * Gestiona la experiencia del usuario final (B2C/B2B público).
+ * 🏛️ VIMUME OS - PUBLIC LAYOUT
+ * Shell única canónica para la experiencia pública.
  */
 export default function PublicLayout({
   children,
@@ -15,24 +16,27 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <ThemeWrapper>
       <Suspense fallback={<div className="h-20 bg-black" />}>
-        <SovereignNavbar />
+        <PublicNavbar />
       </Suspense>
       
       <Suspense fallback={null}>
         <OmniSearchModal />
       </Suspense>
 
+      {/* Main Content Area */}
       {children}
 
-      <Footer />
+      <Suspense fallback={<div className="h-40 bg-black" />}>
+        <PublicFooter />
+      </Suspense>
 
       <Suspense fallback={null}>
         <SovereignBottomNav />
       </Suspense>
 
       <PositiveFrictionModal />
-    </>
+    </ThemeWrapper>
   );
 }

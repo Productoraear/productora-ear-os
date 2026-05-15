@@ -18,7 +18,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { GlassCard } from "@/components/ui/glassCard";
 
 // ============================================================================
-// 🏛️ AYUNTAMIENTOS PREMIUM: PROTOCOLO VIMUME SOCIAL (S-CLASS)
+// 🏛️ VIMUME SOCIAL: PROTOCOLO INSTITUCIONAL DE IMPACTO
 // ============================================================================
 
 export default function AyuntamientosPremium() {
@@ -47,7 +47,7 @@ export default function AyuntamientosPremium() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white p-6 md:p-12 font-sans relative overflow-hidden">
-      {/* Background Decor - S-Class Aesthetics */}
+      {/* Background Decor - Institutional Aesthetics */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-[#d4a855]/5 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-[#d4a855]/3 blur-[100px] rounded-full" />
@@ -148,7 +148,7 @@ export default function AyuntamientosPremium() {
                   <h2 className="text-3xl font-black uppercase tracking-tighter italic leading-none mb-2">
                     Ingeniería <span className="text-[#d4a855] not-italic">Presupuestaria</span>
                   </h2>
-                  <p className="text-[10px] text-white/40 uppercase font-black tracking-widest">Ajuste en Tiempo Real (S-Class)</p>
+                  <p className="text-[10px] text-white/40 uppercase font-black tracking-widest">Ajuste en Tiempo Real (Métrica Social)</p>
                 </div>
                 <div className="text-right">
                   <p className="text-[10px] text-white/40 uppercase font-black tracking-widest mb-2">Presupuesto Ejecutado</p>

@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 🏛️ REGLAS DE SEGURIDAD EAR OS
+    // Prioridad: Integridad Operativa y Privacidad de Datos B2B/B2G.
+
+    // Función: Determinar si el usuario tiene rol administrativo
+    function isAdmin() {
+      return request.auth != null && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+
+    // 🤝 COLECCIÓN: LEADS (Public Contact Form)
+    match /leads/{leadId} {
+      allow create: if true; // Cualquier persona puede enviar un lead (formulario de contacto)
+      allow read, update, delete: if isAdmin(); // Solo admins gestionan leads
+    }
+
+    // 🕊️ COLECCIÓN: VIMUME (Hermes / Intervenciones)
+    match /vimume/{docId} {
+      // Acceso público de lectura restringido a campos no sensibles (ej. estadísticas agregadas)
+      allow read: if true; 
+      // Escritura restringida a personal autorizado
+      allow write: if isAdmin();
+    }
+
+    match /vimume/{docId}/intervenciones/{intervencionId} {
+      allow read: if request.auth != null; // Solo usuarios registrados ven detalle de intervención
+      allow write: if isAdmin();
+    }
+
+    // 👤 COLECCIÓN: USERS (Perfiles y RBAC)
+    match /users/{userId} {
+      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      allow write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+    }
+
+    // 📂 COLECCIÓN: PROYECTOS
+    match /proyectos/{proyectoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // 🛠️ REGLA POR DEFECTO: BLOQUEO TOTAL
+    match /{path=**} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,8 @@
+id,origen,texto,tipo,ruta_esperada,destino_real,nivel,retorno,estado,observacion,clasificacion
+N-001,Hub,Sala de Prensa,Card,/vimume/prensa,/vimume/prensa,1,OK,OK,SSR Header OK,FACHADA
+N-002,Hub,Fondos Europeos,Card,/vimume/fondos-europeos,/vimume/fondos-europeos,1,OK,OK,SSR Header OK,FACHADA
+N-003,Hub,Hermes Dashboard,Card,/vimume/hermes/dashboard,/vimume/hermes/dashboard,1,OK,OK,SSR Header OK,FACHADA/MOCK
+N-004,Dashboard,Nueva Sesión,Button,N/A,N/A,2,N/A,FALLO,No responde (JS 500),FACADE
+N-005,Dashboard,Imprimir,Button,N/A,N/A,2,N/A,FALLO,No responde (JS 500),FACADE
+N-006,Hub,Terapia Ocupacional,Link,/vimume/terapia-ocupacional,/vimume/terapia-ocupacional,1,OK,OK,SSR Header OK,FACHADA
+N-007,Hub,Gobernanza,Link,/vimume/gobernanza-del-dato,/vimume/gobernanza-del-dato,1,OK,OK,SSR Header OK,FACHADA

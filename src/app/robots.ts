@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 
 /**
  * 🤖 CONFIGURACIÓN DE ROBOTS (AEO COMPLIANCE)
- * EAR OS V2 GOLD - PRODUCTORAEAR.COM
+ * VIMUME OS - PRODUCTORAEAR.COM
  */
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -10,7 +10,20 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/api/', '/_next/', '/static/'],
+        disallow: [
+          '/admin/', 
+          '/api/', 
+          '/_next/', 
+          '/static/', 
+          '/centro-mando', 
+          '/dashboard', 
+          '/nexus', 
+          '/portal', 
+          '/cotizador',
+          '/configurador',
+          '/descubrir',
+          '/soberania-tecnica'
+        ],
       },
       {
         userAgent: 'Googlebot',
@@ -22,6 +35,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       }
     ],
-    sitemap: 'https://ear-psi.vercel.app/sitemap.xml',
+    sitemap: 'https://productoraear.com/sitemap.xml',
   };
 }

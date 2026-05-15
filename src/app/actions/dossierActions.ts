@@ -104,7 +104,7 @@ export async function createDossierFromLead(leadData: {
       channel: routing.channel,
       routing_reason: routing.reason,
       priority_score: routing.priority,
-      telegram_target: routing.telegramId
+      telegram_target: LeadRouter.getTelegramTarget(routing.channel)
     }])
     .select()
     .single();

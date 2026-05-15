@@ -17,17 +17,21 @@ const nextConfig = {
       'merge-deep',
       'undici',
       'cheerio',
-      '@protobufjs/inquire', // Add this line
+      '@protobufjs/inquire',
     ],
-    // runtime: false, // Disable edge runtime
   },
   images: {
-    domains: ['images.unsplash.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
   reactStrictMode: true,
   webpack: (config) => {
     config.resolve.alias['@'] = path.join(__dirname, './src');
-    config.resolve.alias['@protobufjs'] = path.join(__dirname, 'node_modules/@protobufjs'); // Add this line
+    config.resolve.alias['@protobufjs'] = path.join(__dirname, 'node_modules/@protobufjs');
     return config;
   },
   async rewrites() {
@@ -40,17 +44,35 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: '/mariachis-madrid',
-        destination: '/servicios/mariachi-madrid',
-        permanent: true,
-      },
-      {
-        source: '/mariachis-toledo',
-        destination: '/servicios/mariachi-toledo',
-        permanent: true,
-      },
-      // 301 Redirects para transferir Link Juice de URLs previas a la nueva arquitectura
+      // 🎯 CANONICAL STAKEHOLDER REDIRECTS (V165.L - DEFENSIVE LAYER)
+      
+      // 📬 Contact Hub Consolidation
+      { source: '/cotizador', destination: '/contacto', permanent: true },
+      { source: '/contact', destination: '/contacto', permanent: true },
+      { source: '/contacto-vimume', destination: '/contacto', permanent: true },
+      { source: '/vimume/contacto', destination: '/contacto', permanent: true },
+
+      // 🧪 VIMUME Authority Nodes
+      { source: '/metodo', destination: '/vimume/protocolo', permanent: true },
+      { source: '/protocolo', destination: '/vimume/protocolo', permanent: true },
+      { source: '/fundacion', destination: '/vimume/fundacion', permanent: true },
+      { source: '/roadmap', destination: '/vimume/roadmap', permanent: true },
+      { source: '/hoja-de-ruta', destination: '/vimume/roadmap', permanent: true },
+      { source: '/vimume/fundacion-cientifica', destination: '/vimume/fundacion', permanent: true },
+
+      // 🏛️ Legacy Branding Purge (Antigravity -> VIMUME)
+      { source: '/antigravity', destination: '/vimume', permanent: true },
+      { source: '/antigravity/:path*', destination: '/vimume', permanent: true },
+      { source: '/centro-de-gravedad', destination: '/vimume', permanent: true },
+
+      // 🛡️ System Infrastructure Redirection
+      { source: '/ear-os-gold', destination: '/', permanent: true },
+      { source: '/ear-os-gold/:path*', destination: '/', permanent: true },
+      { source: '/antigravity-alpha-dev', destination: '/', permanent: true },
+
+      // 🎸 Legacy Services
+      { source: '/mariachis-madrid', destination: '/servicios/mariachi-madrid', permanent: true },
+      { source: '/mariachis-toledo', destination: '/servicios/mariachi-toledo', permanent: true },
     ];
   },
 };

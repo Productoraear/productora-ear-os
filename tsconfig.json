@@ -18,8 +18,7 @@
       "@/*": ["./src/*"],
       "@/components/*": ["./src/app/components/*"]
     },
-    "plugins": [{"name": "next"}],
-    "ignoreDeprecations": "6.0"
+    "plugins": [{"name": "next"}]
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist", "prisma/prisma.config.ts", "scripts", "temp_legacy", "src/components", "src/components_legacy", "src/lib/NUCLEO_DATA/valibot.ts", "ALMACEN_DE_CUARENTENA_6M", "_ALMACEN_DE_CUARENTENA_6M", "BASE_DE_CONOCIMIENTO", "scratch"]

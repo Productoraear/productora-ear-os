@@ -9,7 +9,7 @@ import Link from 'next/link';
 const CATEGORIES = [
   { id: 'artistas', label: 'EDWIN AGUDELO', sublabel: 'Master Artist', icon: Shield, color: '#d4a855', b2g_label: 'Protocolo Artístico', href: '/artistas/edwin-agudelo' },
   { id: 'venues', label: 'VENUES PREMIUM', sublabel: 'Golden Cohort', icon: MapPin, color: '#55d4a8', b2g_label: 'Espacios Estratégicos', href: '/venues' },
-  { id: 'infraestructura', label: 'ARSENAL', sublabel: 'Logística Elite', icon: HardHat, color: '#55a8d4', b2g_label: 'Infraestructura Social', href: '/marketplace' },
+  { id: 'infraestructura', label: 'PRODUCCIÓN', sublabel: 'Logística Institucional', icon: HardHat, color: '#ecb613', b2g_label: 'Infraestructura Social', href: '/marketplace' },
   { id: 'social', label: 'VIMUME', sublabel: 'Impacto Clínico', icon: Heart, color: '#d455a8', b2g_label: 'Impacto Comunitario', href: '/vimume' },
   { id: 'b2g', label: 'LICITACIONES', sublabel: 'B2G Sovereign', icon: Gavel, color: '#d45555', b2g_label: 'Contratación Pública', href: '/ayuntamientospremium' },
 ];
@@ -120,7 +120,7 @@ export const PredatorNav: React.FC = () => {
                   className="max-w-xl text-lg font-medium leading-relaxed mb-12"
                 >
                   Infraestructura de alto impacto diseñada para la excelencia operativa en {activeCategory.label.toLowerCase()}. 
-                  Sistemas validados bajo el protocolo EAR GOLD.
+                  Sistemas validados bajo el protocolo VIMUME OS.
                 </motion.p>
                 <Link href={activeCategory.href} className="group flex items-center gap-4 text-white font-black tracking-widest text-[10px] uppercase">
                   <span>Explorar Ecosistema</span>

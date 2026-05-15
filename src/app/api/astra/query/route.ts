@@ -9,8 +9,10 @@ export async function POST(req: Request) {
         const body = await req.json();
         
         // El adaptador simplemente delega al route principal de Astra
-        // En una arquitectura S-Class, esto permite desacoplar la interfaz de búsqueda del motor de IA
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+        // En una arquitectura S-Class, detectamos el host actual para evitar fallos de resolución
+        const host = req.headers.get('host');
+        const protocol = host?.includes('localhost') ? 'http' : 'https';
+        const baseUrl = `${protocol}://${host}`;
         
         const response = await fetch(`${baseUrl}/api/astra`, {
             method: 'POST',

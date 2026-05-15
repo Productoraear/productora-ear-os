@@ -1,5 +1,5 @@
 /**
- * 🧠 ASTRA NEURAL SERVICE - S-CLASS AI CORE
+ * 🧠 ASTRA NEURAL SERVICE - VIMUME OS AI CORE
  * Deep integration with Google Gemini 1.5 for semantic processing.
  */
 
@@ -23,7 +23,7 @@ export class AstraService {
                     parts: [{
                         text: `
 [SYSTEM_CONTEXT]
-Eres Astra, el cerebro cognitivo de EAR OS GOLD. Tu tono es profesional, soberano, senior y estricto. 
+Eres Astra, el cerebro cognitivo de VIMUME OS. Tu tono es profesional, soberano, senior y estricto. 
 Tu misión es transformar datos caóticos en inteligencia estratégica.
 
 [DIRECTIVAS_DE_INTENCION_MUNDIAL_2026]

@@ -1,18 +1,29 @@
 'use client';
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
-import { Zap, Shield, ArrowRight, Activity, Users, Layout, Cpu } from 'lucide-react';
-import { useEarStore } from '@/store/useEarStore';
+import { 
+  Signal, 
+  ShieldCheck, 
+  Zap, 
+  ArrowRight, 
+  Music, 
+  Globe, 
+  Database,
+  CheckCircle2
+} from 'lucide-react';
+import Link from 'next/link';
 
-type Phase = 'CHOICE' | 'MANIFESTO' | 'FORM_1' | 'FORM_2' | 'FINAL';
+/**
+ * 🛰️ THE SIGNAL — TALENT ONBOARDING (AURA ONYX)
+ * Vertical: Talent OS
+ * Concepto: Emisión de señal para validación de autoridad.
+ */
+
+type Phase = 'CHOICE' | 'MANIFESTO' | 'CAPTURE' | 'SUCCESS';
 
 export default function TheSignalPage() {
-  const router = useRouter();
-  const addXp = useEarStore((state) => state.addXp);
-  
   const [phase, setPhase] = useState<Phase>('CHOICE');
-  const [profile, setProfile] = useState<'CREATOR' | 'CURATOR' | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleNext = (nextPhase: Phase) => {
@@ -23,198 +34,157 @@ export default function TheSignalPage() {
     }, 800);
   };
 
-  const finalize = () => {
-    setIsProcessing(true);
-    addXp(100);
-    setTimeout(() => {
-      router.push('/portal');
-    }, 1500);
-  };
-
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#d4a855]/30 flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Background S-Class */}
+    <main className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613]/30 flex items-center justify-center relative overflow-hidden">
+      {/* Background Layer */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#1a1a1a] via-[#050505] to-[#050505] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-[#d4a855]/5 rounded-full blur-[120px] pointer-events-none" />
-
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ecb613]/5 blur-[120px] rounded-full pointer-events-none" />
+      
       <div className="w-full max-w-4xl px-6 relative z-10">
         <AnimatePresence mode="wait">
+          
+          {/* PHASE 1: THE CHOICE */}
           {phase === 'CHOICE' && (
             <motion.div 
               key="choice"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="text-center"
+              className="text-center space-y-12"
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#d4a855]/10 border border-[#d4a855]/20 text-[#d4a855] text-[10px] font-black uppercase tracking-[0.4em] mb-12">
-                <Zap size={12} /> THE EAR SIGNAL
+              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/20 text-[#ecb613] text-[10px] font-black uppercase tracking-[0.4em] animate-pulse">
+                <Signal size={14} /> THE EAR SIGNAL
               </div>
-              <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-[0.8] mb-20">
-                El 99% es ruido.<br/>Nosotros somos <span className="text-[#d4a855]">la Señal</span>.
+              <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter uppercase leading-[0.8] font-syne">
+                El ruido es temporal. <br/>La <span className="text-[#ecb613]">Señal</span> es eterna.
               </h1>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-2 gap-8">
                 <button 
-                  onClick={() => { setProfile('CREATOR'); handleNext('MANIFESTO'); }}
-                  className="glass-panel p-12 rounded-[3rem] border-white/5 bg-white/[0.02] hover:border-[#d4a855]/30 group transition-all"
+                  onClick={() => handleNext('MANIFESTO')}
+                  className="p-12 bg-white/[0.02] border border-white/5 rounded-[3rem] hover:border-[#ecb613]/30 transition-all group text-left"
                 >
-                  <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">Soy Creador</h3>
-                  <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-12">
-                    No buscamos rellenos de cartel. Buscamos Arquitectos de Experiencia.
+                  <h3 className="text-3xl font-black uppercase italic tracking-tighter mb-4">Creador de Impacto</h3>
+                  <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-10">
+                    Músicos y artistas con visión de legado.
                   </p>
-                  <span className="flex items-center justify-center gap-3 text-[#d4a855] font-black text-[10px] tracking-[0.4em] uppercase">
-                    INICIAR PROCESO <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
+                  <span className="flex items-center gap-3 text-[#ecb613] font-black text-[10px] tracking-[0.4em] uppercase">
+                    EMITIR SEÑAL <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
                   </span>
                 </button>
-
-                <button 
-                  onClick={() => { setProfile('CURATOR'); handleNext('MANIFESTO'); }}
-                  className="glass-panel p-12 rounded-[3rem] border-white/5 bg-white/[0.02] hover:border-purple-500/30 group transition-all"
-                >
-                  <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">Soy Curador</h3>
-                  <p className="text-white/30 text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-12">
-                    El algoritmo te da lo viral. Nosotros te damos lo legendario.
+                <div className="p-12 bg-white/[0.01] border border-white/5 rounded-[3rem] opacity-40 text-left">
+                  <h3 className="text-3xl font-black uppercase italic tracking-tighter mb-4 text-white/40">Curador Institucional</h3>
+                  <p className="text-white/20 text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-10">
+                    Próximamente para agentes y promotores.
                   </p>
-                  <span className="flex items-center justify-center gap-3 text-purple-500 font-black text-[10px] tracking-[0.4em] uppercase">
-                    SOLICITAR ACCESO <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
-                  </span>
-                </button>
+                </div>
               </div>
             </motion.div>
           )}
 
+          {/* PHASE 2: MANIFESTO */}
           {phase === 'MANIFESTO' && (
             <motion.div 
               key="manifesto"
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              className="max-w-2xl mx-auto"
+              exit={{ opacity: 0, x: -30 }}
+              className="max-w-2xl mx-auto space-y-12"
             >
-              <div className="border-l-2 border-[#d4a855] pl-12 py-8">
-                <span className="text-[#d4a855] text-[10px] font-black uppercase tracking-[0.5em] mb-8 block">Manifiesto de Ingreso</span>
-                <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase leading-[0.9] mb-12">
-                  Antes de Aplicar,<br/>entiende esto:
+              <div className="border-l-4 border-[#ecb613] pl-12 space-y-8">
+                <span className="text-[#ecb613] text-[10px] font-black uppercase tracking-[0.5em]">Manifiesto de Autoridad</span>
+                <h2 className="text-5xl md:text-7xl font-black italic tracking-tighter uppercase leading-[0.9] font-syne">
+                  No somos un directorio.
                 </h2>
-                <p className="text-white/60 text-lg font-medium leading-relaxed mb-12">
-                  EAR no es un directorio. Somos una <span className="text-white font-black">Infraestructura de Talento</span>. <br/>
-                  Exigimos excelencia absoluta. Si buscas "bolos" rápidos, no apliques. Si buscas construir un activo patrimonial, estás en el lugar correcto.
+                <p className="text-white/60 text-xl font-medium leading-relaxed italic">
+                  EAR OS es una <span className="text-white font-black">Infraestructura Técnica</span>. No buscamos "bolos". Buscamos construir activos patrimoniales para artistas que entienden el valor de la estructura.
                 </p>
                 <button 
-                  onClick={() => handleNext('FORM_1')}
-                  className="px-12 py-6 bg-[#d4a855] text-black font-black uppercase tracking-[0.5em] text-[11px] rounded-full hover:bg-white transition-all shadow-[0_20px_40px_rgba(212,168,85,0.2)]"
+                  onClick={() => handleNext('CAPTURE')}
+                  className="px-14 py-7 bg-[#ecb613] text-black font-black uppercase tracking-[0.4em] text-[11px] rounded-2xl hover:bg-white transition-all shadow-2xl shadow-[#ecb613]/20"
                 >
-                  ACEPTO EL DESAFÍO
+                  ACEPTO EL PROTOCOLO
                 </button>
               </div>
             </motion.div>
           )}
 
-          {phase === 'FORM_1' && (
+          {/* PHASE 3: CAPTURE */}
+          {phase === 'CAPTURE' && (
             <motion.div 
-              key="form1"
+              key="capture"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="max-w-2xl mx-auto glass-panel p-12 lg:p-16 rounded-[4rem] border-white/5 bg-white/[0.01]"
+              className="max-w-xl mx-auto bg-white/[0.02] border border-white/5 p-12 md:p-16 rounded-[4rem] space-y-12"
             >
-              <div className="flex justify-between items-center mb-16">
-                <h2 className="text-4xl font-black italic tracking-tighter uppercase">1. Tu Huella Digital</h2>
-                <span className="text-[#d4a855] text-[10px] font-black uppercase tracking-[0.4em]">Fase 1/3</span>
+              <div className="flex justify-between items-center">
+                <h2 className="text-3xl font-black uppercase italic tracking-tighter">Identidad del Talento</h2>
+                <span className="text-[#ecb613] text-[10px] font-black uppercase tracking-[0.4em]">Signal Ingress</span>
               </div>
 
-              <div className="space-y-12 mb-16">
-                <div>
-                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 block mb-4">Link Video (Actuación)</label>
-                  <input 
-                    type="text" 
-                    placeholder="Youtube / Vimeo..."
-                    className="w-full bg-black/40 border border-white/10 p-6 rounded-2xl text-white font-medium focus:border-[#d4a855] transition-all outline-none"
-                  />
+              <div className="space-y-8">
+                <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-white/40">Nombre del Proyecto / Artista</label>
+                  <input type="text" className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#ecb613]/50 outline-none transition-all" />
                 </div>
-                <div>
-                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 block mb-4">Métricas Reales</label>
-                  <textarea 
-                    placeholder="Engagement, Audiencia media..."
-                    className="w-full bg-black/40 border border-white/10 p-6 rounded-2xl text-white font-medium focus:border-[#d4a855] transition-all outline-none min-h-[150px]"
-                  />
+                <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-white/40">Email de Autoridad</label>
+                  <input type="email" className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#ecb613]/50 outline-none transition-all" />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-white/40">Link a Media Kit / Video</label>
+                  <input type="url" className="w-full bg-white/5 border border-white/10 p-5 rounded-2xl focus:border-[#ecb613]/50 outline-none transition-all" />
+                </div>
+                <button 
+                  onClick={() => handleNext('SUCCESS')}
+                  className="w-full py-6 bg-white text-black font-black uppercase tracking-[0.3em] text-[11px] rounded-2xl hover:bg-[#ecb613] transition-all"
+                >
+                  ENVIAR SEÑAL
+                </button>
               </div>
-
-              <button 
-                onClick={() => handleNext('FORM_2')}
-                className="w-full py-6 bg-white/5 border border-white/10 text-white font-black uppercase tracking-[0.5em] text-[11px] rounded-2xl hover:bg-white/10 transition-all"
-              >
-                CONTINUAR
-              </button>
             </motion.div>
           )}
 
-          {phase === 'FORM_2' && (
+          {/* PHASE 4: SUCCESS */}
+          {phase === 'SUCCESS' && (
             <motion.div 
-              key="form2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="max-w-2xl mx-auto glass-panel p-12 lg:p-16 rounded-[4rem] border-white/5 bg-white/[0.01]"
+              key="success"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center space-y-12"
             >
-              <div className="flex justify-between items-center mb-16">
-                <h2 className="text-4xl font-black italic tracking-tighter uppercase">2. Filosofía de Escenario</h2>
-                <span className="text-[#d4a855] text-[10px] font-black uppercase tracking-[0.4em]">Fase 2/3</span>
+              <div className="w-32 h-32 bg-[#ecb613]/10 border border-[#ecb613]/20 rounded-full flex items-center justify-center mx-auto text-[#ecb613]">
+                <CheckCircle2 size={64} />
               </div>
-
-              <div className="space-y-12 mb-16">
-                <div>
-                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 block mb-4">¿Cuál es tu 'Linchpin'? (Valor Único)</label>
-                  <textarea 
-                    placeholder="¿Por qué eres incomparable?"
-                    className="w-full bg-black/40 border border-white/10 p-6 rounded-2xl text-white font-medium focus:border-[#d4a855] transition-all outline-none min-h-[150px]"
-                  />
-                </div>
-                <div>
-                  <label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 block mb-4">Email de Contacto</label>
-                  <input 
-                    type="email" 
-                    placeholder="tu@email.com"
-                    className="w-full bg-black/40 border border-white/10 p-6 rounded-2xl text-white font-medium focus:border-[#d4a855] transition-all outline-none"
-                  />
-                </div>
+              <div className="space-y-6">
+                <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none font-syne">Señal Emitida</h2>
+                <p className="text-white/40 text-xl font-medium italic max-w-lg mx-auto leading-relaxed">
+                  Tu señal ha sido inyectada en el Nexus. El Comandante auditará tu propuesta en las próximas 48 horas.
+                </p>
               </div>
-
-              <div className="grid grid-cols-2 gap-6">
-                <button 
-                  onClick={() => setPhase('FORM_1')}
-                  className="py-6 bg-white/5 border border-white/10 text-white/40 font-black uppercase tracking-[0.5em] text-[11px] rounded-2xl hover:bg-white/10 hover:text-white transition-all"
-                >
-                  ATRÁS
-                </button>
-                <button 
-                  onClick={finalize}
-                  className="py-6 bg-[#d4a855] text-black font-black uppercase tracking-[0.5em] text-[11px] rounded-2xl hover:bg-white transition-all"
-                >
-                  FINALIZAR APLICACIÓN
-                </button>
-              </div>
+              <Link href="/" className="inline-flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.4em] text-[#ecb613] hover:text-white transition-colors">
+                VOLVER AL RADAR <ArrowRight size={14} />
+              </Link>
             </motion.div>
           )}
+
         </AnimatePresence>
       </div>
 
-      {/* Processing Overlay */}
+      {/* Processing Loader */}
       <AnimatePresence>
         {isProcessing && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-3xl flex items-center justify-center flex-col gap-8"
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-3xl flex flex-col items-center justify-center gap-6"
           >
-            <div className="w-16 h-16 border-4 border-[#d4a855]/20 border-t-[#d4a855] rounded-full animate-spin" />
-            <span className="text-[#d4a855] text-[10px] font-black uppercase tracking-[0.6em] animate-pulse">Sintonizando la Señal...</span>
+            <div className="w-12 h-12 border-2 border-[#ecb613]/20 border-t-[#ecb613] rounded-full animate-spin" />
+            <span className="text-[#ecb613] text-[10px] font-black uppercase tracking-[0.5em] animate-pulse">Sintonizando...</span>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </main>
   );
 }

@@ -1,6 +1,6 @@
 /**
- * 📡 TELEGRAM SERVICE - S-CLASS COMMUNICATION BRIDGE
- * Encrypted alert system for EAR OS GOLD.
+ * 📡 TELEGRAM SERVICE - VIMUME OS COMMUNICATION BRIDGE
+ * Encrypted alert system for VIMUME OS.
  */
 
 export class TelegramService {
@@ -28,7 +28,7 @@ export class TelegramService {
             'CRITICAL': '🔥'
         };
 
-        const formattedMessage = `${icons[priority]} *EAR OS ALERT* (${priority})\n\n${message}`;
+        const formattedMessage = `${icons[priority]} *VIMUME OS ALERT* (${priority})\n\n${message}`;
 
         try {
             const url = `https://api.telegram.org/bot${this.botToken}/sendMessage`;

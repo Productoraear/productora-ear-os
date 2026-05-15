@@ -25,10 +25,10 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://productoraear.com"),
-  title: "EAR OS GOLD | S-Class Production Shell",
-  description: "Sistema Operativo de Alto Rendimiento para la Productora EAR. Gestión de Flota, CRM Forense y Oráculo de IA.",
-  keywords: ["EAR OS", "Productora EAR", "S-Class", "Gestión Corporativa", "IA Forense"],
-  authors: [{ name: "Antigravity Alpha Dev" }],
+  title: "VIMUME OS | Viaje Musical por la Memoria",
+  description: "Plataforma de autoridad y soberanía narrativa diseñada para ordenar visión, método e impacto en el bienestar de nuestros mayores.",
+  keywords: ["VIMUME", "Viaje Musical por la Memoria", "Impacto Social", "Salud Cognitiva", "Autoridad Institucional"],
+  authors: [{ name: "VIMUME Core Team" }],
   icons: {
     icon: "/favicon.svg",
     apple: "/favicon.svg",

@@ -23,8 +23,8 @@ model KnowledgeNode {
   createdAt   DateTime @default(now())
 }
 
-// --- VERTICAL PROVEEDORES (VENDORS) ---
-model Vendor {
+// Renombrado para consistencia con el modelo de actores
+model ProviderProfile {
   id                  String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                String           @unique
   roi_guarantee_score Float            @default(0.0)
@@ -38,19 +38,21 @@ model Vendor {
   original_url        String?
   is_claimed          Boolean          @default(false)
   claim_token         String?          @db.Uuid
-  owner_id            String?          @db.Uuid
+  
+  // Relación con el sistema de actores
+  userId              String?          @unique
+  user                User?            @relation(fields: [userId], references: [id])
+  
   metadata            Json?
-  embedding           Unsupported("vector(1536)")? // OpenAI o similar use 1536
-
-  // Relaciones
+  
+  // Relaciones legacy/existentes
   kycDocuments        KycDocument[]
-  dataOwnership       DataOwnership?   @relation("VendorOwnership")
   matchingEngines     MatchingEngine[]
   
   createdAt           DateTime         @default(now()) @map("created_at")
   updatedAt           DateTime         @default(now()) @map("updated_at")
 
-  @@map("ear_market_vendors")
+  @@map("ear_provider_profiles")
 }
 
 // --- VERTICAL CAPTACIÓN (LEADS) ---
@@ -68,11 +70,11 @@ model Lead {
 // --- MOTOR DE INTELIGENCIA (MATCHING ENGINE) ---
 model MatchingEngine {
   id          Int      @id @default(autoincrement())
-  vendorId    String   @db.Uuid
-  leadId      Int
+  providerId  String   @db.Uuid @map("provider_id")
+  leadId      Int      @map("lead_id")
   matchScore  Float
   
-  vendor      Vendor   @relation(fields: [vendorId], references: [id])
+  provider    ProviderProfile @relation(fields: [providerId], references: [id])
   lead        Lead     @relation(fields: [leadId], references: [id])
   
   createdAt   DateTime @default(now())
@@ -91,8 +93,8 @@ model KycDocument {
   status     Status    @default(PENDING)
   verifiedAt DateTime?
   
-  vendor     Vendor    @relation(fields: [vendorId], references: [id])
-  vendorId   String    @db.Uuid
+  provider   ProviderProfile @relation(fields: [providerId], references: [id])
+  providerId String    @db.Uuid @map("provider_id")
 }
 
 enum Status {
@@ -106,10 +108,10 @@ model DataOwnership {
   id                Int      @id @default(autoincrement())
   
   // Vínculos 1:1 para control total
-  vendorId          String?  @unique @db.Uuid
-  vendor            Vendor?  @relation("VendorOwnership", fields: [vendorId], references: [id])
+  providerId        String?  @unique @db.Uuid @map("provider_id")
+  provider          ProviderProfile? @relation(fields: [providerId], references: [id])
   
-  leadId            Int?     @unique
+  leadId            Int?     @unique @map("lead_id")
   lead              Lead?    @relation("LeadOwnership", fields: [leadId], references: [id])
   
   canViewData       Boolean  @default(true)
@@ -123,6 +125,21 @@ enum Role {
   EXPLORADOR
   ARQUITECTO
   OPERADOR
+  ADMIN
+  ARTIST
+  COMMANDER
+  FLEET_OPERATOR
+  PROVIDER
+  AFFILIATE
+  CLIENT
+}
+
+enum ActorType {
+  ARTIST
+  PROVIDER
+  AFFILIATE
+  OPERATOR
+  CLIENT
   ADMIN
 }
 
@@ -154,6 +171,14 @@ model User {
   affiliateNode AffiliateNode?
   
   vimumeNodes   Vimume[]
+  artistProfile ArtistProfile?
+  contracts     SmartContract[]
+  memberships   WorkspaceMember[]
+  waybillParticipations WaybillParticipant[]
+  providerProfile ProviderProfile?
+  affiliateProfile AffiliateProfile?
+  storageAssets StorageAsset[]
+  
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
@@ -308,10 +333,10 @@ model CommissionLedger {
   @@map("ear_commission_ledger")
 }
 
-model AffiliateNode {
+model AffiliateProfile {
   id            String   @id @default(cuid())
   userId        String   @unique
-  user              User     @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
   
   affiliateHash String   @unique // El link de seguimiento S-Class
   tier          Int      @default(1) // Nivel de comisión (Lvl 1-10)
@@ -320,7 +345,7 @@ model AffiliateNode {
   
   createdAt     DateTime @default(now())
   
-  @@map("ear_affiliate_nodes")
+  @@map("ear_affiliate_profiles")
 }
 
 enum LedgerStatus {
@@ -416,4 +441,327 @@ enum MilestoneStatus {
   PENDIENTE
   BLOQUEADO
   CUARENTENA
+}
+
+// --- VERTICAL ARTISTAS (TALENT OS) ---
+
+model ArtistProfile {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id])
+  
+  slug          String    @unique
+  displayName   String    @map("display_name")
+  bio           String?
+  genres        String[]  @default([])
+  mediaKitUrl   String?   @map("media_kit_url")
+  status        ArtistStatus @default(DRAFT)
+  socialLinks   Json?     @default("{}") @map("social_links")
+  metadata      Json?     @default("{}")
+  
+  riders        TechnicalRider[]
+  contracts     SmartContract[]
+  calendar      CalendarBlock[]
+  
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@map("talent_artist_profiles")
+}
+
+model TechnicalRider {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  artistId      String    @db.Uuid
+  artist        ArtistProfile @relation(fields: [artistId], references: [id])
+  
+  version       Int       @default(1)
+  contentUrl    String?   @map("content_url")
+  requirements  Json?     @default("{}")
+  
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@map("talent_technical_riders")
+}
+
+model SmartContract {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  artistId      String    @db.Uuid
+  artist        ArtistProfile @relation(fields: [artistId], references: [id])
+  
+  clientId      String
+  client        User      @relation(fields: [clientId], references: [id])
+  
+  eventDate     DateTime  @map("event_date")
+  totalAmount   Float     @map("total_amount")
+  depositAmount Float     @default(1.0) @map("deposit_amount")
+  
+  status        ContractStatus @default(PENDING)
+  ledgerId      String?   @map("ledger_id")
+  
+  calendarBlocks CalendarBlock[]
+  waybills       Waybill[]
+  
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@map("talent_smart_contracts")
+}
+
+model CalendarBlock {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  artistId      String    @db.Uuid
+  artist        ArtistProfile @relation(fields: [artistId], references: [id])
+  
+  blockDate     DateTime  @map("block_date")
+  reason        BlockReason @default(BOOKING)
+  
+  contractId    String?   @db.Uuid
+  contract      SmartContract? @relation(fields: [contractId], references: [id])
+  
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  @@unique([artistId, blockDate])
+  @@map("talent_calendar_blocks")
+}
+
+enum ArtistStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContractStatus {
+  PENDING
+  RESERVED
+  SIGNED
+  PAID
+  CANCELLED
+  EXECUTED
+}
+
+enum BlockReason {
+  BOOKING
+  PERSONAL
+  EXTERNAL
+  MAINTENANCE
+}
+
+// --- VERTICAL LOGÍSTICA (FLEET & LOGISTICS OS) ---
+
+model FleetUnit {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String
+  type            FleetUnitType    @default(VAN)
+  status          FleetStatus      @default(AVAILABLE)
+  
+  // Multi-Tenancy
+  tenantId        String?          @map("tenant_id")
+  workspaceId     String?          @db.Uuid @map("workspace_id")
+  workspace       Workspace?       @relation(fields: [workspaceId], references: [id])
+  
+  // Relaciones
+  operatorId      String?
+  operator        User?            @relation(fields: [operatorId], references: [id])
+  
+  positions       FleetPosition[]
+  waybills        Waybill[]
+  
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  @@map("fleet_units")
+}
+
+model FleetPosition {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  unitId          String           @db.Uuid @map("unit_id")
+  unit            FleetUnit        @relation(fields: [unitId], references: [id], onDelete: Cascade)
+  
+  latitude        Float
+  longitude       Float
+  altitude        Float?
+  speed           Float?
+  heading         Float?
+  accuracy        Float?
+  
+  source          String           @default("GPS") // GPS, NETWORK, MANUAL
+  
+  timestamp       DateTime         @default(now())
+  
+  @@index([unitId, timestamp(desc)])
+  @@map("fleet_positions")
+}
+
+model Waybill {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title           String
+  status          WaybillStatus    @default(PENDING)
+  
+  // Vinculación Talent OS
+  contractId      String?          @db.Uuid @map("contract_id")
+  contract        SmartContract?   @relation(fields: [contractId], references: [id])
+  
+  // Vinculación Flota
+  unitId          String?          @db.Uuid @map("unit_id")
+  unit            FleetUnit?       @relation(fields: [unitId], references: [id])
+  
+  // Equipo asignado
+  team            Json?            @default("[]")
+  
+  scheduledStart  DateTime?        @map("scheduled_start")
+  scheduledEnd    DateTime?        @map("scheduled_end")
+  actualStart     DateTime?        @map("actual_start")
+  actualEnd       DateTime?        @map("actual_end")
+  
+  checkpoints     WaybillCheckpoint[]
+  events          FleetTelemetryEvent[]
+  participants    WaybillParticipant[]
+  
+  metadata        Json?            @default("{}")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @updatedAt @map("updated_at")
+
+  @@map("fleet_waybills")
+}
+
+model WaybillCheckpoint {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  waybillId       String           @db.Uuid @map("waybill_id")
+  waybill         Waybill          @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  
+  title           String
+  locationName    String?          @map("location_name")
+  latitude        Float?
+  longitude       Float?
+  
+  status          CheckpointStatus @default(PENDING)
+  scheduledTime   DateTime?        @map("scheduled_time")
+  actualTime      DateTime?        @map("actual_time")
+  
+  order           Int              @default(0)
+  
+  @@map("fleet_waybill_checkpoints")
+}
+
+model FleetTelemetryEvent {
+  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  waybillId       String?          @db.Uuid @map("waybill_id")
+  waybill         Waybill?         @relation(fields: [waybillId], references: [id])
+  
+  eventType       String           @map("event_type") // position_updated, status_changed, etc.
+  payload         Json?            @default("{}")
+  
+  createdAt       DateTime         @default(now()) @map("created_at")
+
+  @@index([waybillId, createdAt(desc)])
+  @@map("fleet_telemetry_events")
+}
+
+enum FleetUnitType {
+  VAN
+  TRUCK
+  CAR
+  EQUIPMENT
+  DRONE
+}
+
+enum FleetStatus {
+  AVAILABLE
+  BUSY
+  MAINTENANCE
+  OFFLINE
+}
+
+enum WaybillStatus {
+  PENDING
+  IN_TRANSIT
+  ARRIVED
+  COMPLETED
+  CANCELLED
+  DELAYED
+}
+
+enum CheckpointStatus {
+  PENDING
+  COMPLETED
+  SKIPPED
+}
+
+// --- SISTEMA DE WORKSPACES & ACTORES ---
+
+model Workspace {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name          String
+  members       WorkspaceMember[]
+  units         FleetUnit[]
+  assets        StorageAsset[]
+  
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+
+  @@map("ear_workspaces")
+}
+
+model WorkspaceMember {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId   String            @db.Uuid @map("workspace_id")
+  workspace     Workspace         @relation(fields: [workspaceId], references: [id])
+  userId        String            @map("user_id")
+  user          User              @relation(fields: [userId], references: [id])
+  
+  actorType     ActorType         @default(OPERATOR) @map("actor_type")
+  role          String            @default("MEMBER")
+  status        String            @default("ACTIVE")
+  
+  createdAt     DateTime          @default(now()) @map("created_at")
+  updatedAt     DateTime          @updatedAt @map("updated_at")
+
+  @@unique([workspaceId, userId, actorType])
+  @@map("ear_workspace_members")
+}
+
+model WaybillParticipant {
+  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  waybillId     String            @db.Uuid @map("waybill_id")
+  waybill       Waybill           @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  userId        String            @map("user_id")
+  user          User              @relation(fields: [userId], references: [id])
+  
+  role          WaybillParticipantRole @default(TECHNICIAN)
+  
+  createdAt     DateTime          @default(now()) @map("created_at")
+
+  @@map("fleet_waybill_participants")
+}
+
+model StorageAsset {
+  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  bucket        String
+  path          String
+  fileName      String    @map("file_name")
+  mimeType      String?   @map("mime_type")
+  size          Int?
+  
+  // Ownership
+  workspaceId   String?   @db.Uuid @map("workspace_id")
+  workspace     Workspace? @relation(fields: [workspaceId], references: [id])
+  ownerId       String    @map("owner_id")
+  owner         User      @relation(fields: [ownerId], references: [id])
+  
+  actorType     ActorType? @map("actor_type")
+  
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  @@map("ear_storage_assets")
+}
+
+enum WaybillParticipantRole {
+  DRIVER
+  ARTIST
+  TECHNICIAN
+  PROVIDER
+  COORDINATOR
+  CLIENT_CONTACT
 }

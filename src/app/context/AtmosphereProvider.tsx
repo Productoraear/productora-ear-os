@@ -18,8 +18,8 @@ export const AtmosphereProvider: React.FC<{ children: ReactNode }> = ({ children
     const root = document.documentElement;
     const configs = {
       elegant: {
-        gold: '#d4a855',
-        glow: 'rgba(212, 168, 85, 0.1)',
+        gold: '#ecb613',
+        glow: 'rgba(236, 182, 19, 0.1)',
         speed: '1.2s'
       },
       cyber: {

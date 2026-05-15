@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0d59f2",
+              "background-light": "#f5f6f8",
+              "background-dark": "#101622",
+            },
+            fontFamily: {
+              "display": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen">
+<div class="relative flex flex-col w-full max-w-md mx-auto min-h-screen bg-background-light dark:bg-background-dark overflow-x-hidden border-x border-slate-200 dark:border-slate-800">
+<!-- TopAppBar -->
+<div class="sticky top-0 z-50 flex items-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-slate-200 dark:border-slate-800">
+<div class="text-slate-900 dark:text-white flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">Hoja de Ruta Forense</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex cursor-pointer items-center justify-center rounded-lg h-12 bg-transparent text-slate-900 dark:text-white p-0">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+<!-- Timer Section -->
+<div class="px-4 pt-6">
+<p class="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Cuenta regresiva para el Show</p>
+<div class="flex gap-4">
+<div class="flex grow basis-0 flex-col items-stretch gap-2">
+<div class="flex h-16 grow items-center justify-center rounded-xl px-3 bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700">
+<p class="text-slate-900 dark:text-white text-2xl font-extrabold tracking-tighter">04</p>
+</div>
+<div class="flex items-center justify-center"><p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase">Horas</p></div>
+</div>
+<div class="flex grow basis-0 flex-col items-stretch gap-2">
+<div class="flex h-16 grow items-center justify-center rounded-xl px-3 bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700">
+<p class="text-slate-900 dark:text-white text-2xl font-extrabold tracking-tighter">22</p>
+</div>
+<div class="flex items-center justify-center"><p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase">Minutos</p></div>
+</div>
+<div class="flex grow basis-0 flex-col items-stretch gap-2">
+<div class="flex h-16 grow items-center justify-center rounded-xl px-3 bg-primary/10 border border-primary/20">
+<p class="text-primary text-2xl font-extrabold tracking-tighter">00</p>
+</div>
+<div class="flex items-center justify-center"><p class="text-primary text-xs font-medium uppercase">Segundos</p></div>
+</div>
+</div>
+</div>
+<!-- Timeline Section -->
+<div class="mt-8">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold px-4 pb-4">Cronograma Operativo</h3>
+<div class="grid grid-cols-[48px_1fr] gap-x-2 px-4">
+<div class="flex flex-col items-center gap-1 pt-3">
+<div class="text-primary bg-primary/10 rounded-full p-1.5 border border-primary/20">
+<span class="material-symbols-outlined text-[20px]">directions_bus</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-6 grow"></div>
+</div>
+<div class="flex flex-1 flex-col py-3">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-none mb-1">Salida Hotel</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">14:00 • Van de Gira 01</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-4"></div>
+<div class="text-slate-400 bg-slate-100 dark:bg-slate-800 rounded-full p-1.5 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-6 grow"></div>
+</div>
+<div class="flex flex-1 flex-col py-3">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-none mb-1">Llegada al Venue</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">15:30 • Movistar Arena</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-4"></div>
+<div class="text-slate-400 bg-slate-100 dark:bg-slate-800 rounded-full p-1.5 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">equalizer</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-6 grow"></div>
+</div>
+<div class="flex flex-1 flex-col py-3">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-none mb-1">Soundcheck</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">16:00 • 90 min duración</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-4"></div>
+<div class="text-slate-400 bg-slate-100 dark:bg-slate-800 rounded-full p-1.5 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">restaurant</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-6 grow"></div>
+</div>
+<div class="flex flex-1 flex-col py-3">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-none mb-1">Catering / Cena</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">18:30 • Zona VIP</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-4"></div>
+<div class="text-slate-400 bg-slate-100 dark:bg-slate-800 rounded-full p-1.5 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">dry_cleaning</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-6 grow"></div>
+</div>
+<div class="flex flex-1 flex-col py-3">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-none mb-1">Vestuario &amp; Calentamiento</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">19:30 • Camarín Principal</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-4"></div>
+<div class="text-white bg-primary rounded-full p-1.5 border border-primary/20 shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined text-[20px]">mic_external_on</span>
+</div>
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-6 grow"></div>
+</div>
+<div class="flex flex-1 flex-col py-3">
+<p class="text-primary text-base font-bold leading-none mb-1 uppercase tracking-tight">Showtime (En Escenario)</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">21:00 • Setlist v2.4</p>
+</div>
+<div class="flex flex-col items-center gap-1 pb-3">
+<div class="w-[2px] bg-slate-200 dark:bg-slate-700 h-4"></div>
+<div class="text-slate-400 bg-slate-100 dark:bg-slate-800 rounded-full p-1.5 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</div>
+</div>
+<div class="flex flex-1 flex-col py-3">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-none mb-1">Carga y Desalojo</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal">23:30 • Finalización jornada</p>
+</div>
+</div>
+</div>
+<!-- Team Section -->
+<div class="mt-8 px-4">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold pb-4">Equipo Asignado</h3>
+<div class="space-y-3">
+<!-- Team Member 1 -->
+<div class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="size-14 rounded-full overflow-hidden bg-slate-200">
+<img alt="Stage Manager Profile" class="w-full h-full object-cover" data-alt="Portrait of a male stage manager wearing a headset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnzt2_YGQqQxHVtaQ6ZYwfhx8nAXbIF8XVtLxeGiFwKOTHn0OlmsIjAgzTQKO-0oKe8p3Y2kItR7Jxh7x27fLmmENKIGaUBu4Vx2RZM6VR8KLQiwxdoDcSBKr49pH2oGRttqatu4uJikXZQtjR45VrPWVvVpQ8dnQB7C9LQr2J6f3q7xBA5cNdeVyg-GrOCGyEUI9l70HK14cf9HgewxtgJVFtgIuOAbxmayPETBZLLLupdFMSpCR2tVPs_fjMOCwQoSUBOeclFA"/>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white font-bold leading-tight">Marcos V.</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Stage Manager</p>
+</div>
+<div class="flex gap-2">
+<button class="size-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-full bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</div>
+</div>
+<!-- Team Member 2 -->
+<div class="flex items-center gap-3 p-3 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700">
+<div class="size-14 rounded-full overflow-hidden bg-slate-200">
+<img alt="FOH Engineer Profile" class="w-full h-full object-cover" data-alt="Portrait of a female sound engineer in a studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOp-ruRIsU5ksy2etUdMx6odqlhhr6IR9jYuKx07b5OhlbeSFIXwxuklW7wT3ivwV-iUoaVPQ4MVMujktmym0av2Qa8wyrycVFHjTGjvIzj3XLJVhixuB36Dz8Mk9xG4o6cUEE2pWvtcPn6AXtUBmaCthtNk9ew7Apw_pu0QP77kRgLjPhAOUu81ZCYOOmyUNJx5B9gil_xMD8DxjLx6iMX5pIz_vM_Na-zIT3nJxvDg3KEmO43U86Va5YXrqJ5HQbLvOeoUnlLw"/>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white font-bold leading-tight">Sofía L.</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">FOH Engineer</p>
+</div>
+<div class="flex gap-2">
+<button class="size-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-10 flex items-center justify-center rounded-full bg-green-500/10 text-green-600 dark:text-green-400 border border-green-500/20">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Logistics Section -->
+<div class="mt-8 px-4">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold pb-4">Logística y Rider</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-2">hotel</span>
+<p class="text-slate-900 dark:text-white text-sm font-bold">Alojamiento</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Hyatt Regency, Hab 402</p>
+</div>
+<div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-2">bolt</span>
+<p class="text-slate-900 dark:text-white text-sm font-bold">Power Supply</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">220V - Trifásica Camlok</p>
+</div>
+<div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-2">meeting_room</span>
+<p class="text-slate-900 dark:text-white text-sm font-bold">Acceso Venue</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">Puerta 4 - Backstage</p>
+</div>
+<div class="p-4 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary mb-2">description</span>
+<p class="text-slate-900 dark:text-white text-sm font-bold">Tech Rider</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs">v4.0 Aprobado</p>
+</div>
+</div>
+</div>
+<!-- Feedback Form -->
+<div class="mt-8 px-4 pb-12">
+<div class="bg-primary/5 dark:bg-primary/10 rounded-2xl p-6 border border-primary/10">
+<h3 class="text-primary text-lg font-bold mb-4">Reporte Post-Show</h3>
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-2">Calidad de Sonido</label>
+<div class="flex gap-2">
+<span class="material-symbols-outlined text-primary">star</span>
+<span class="material-symbols-outlined text-primary">star</span>
+<span class="material-symbols-outlined text-primary">star</span>
+<span class="material-symbols-outlined text-primary">star</span>
+<span class="material-symbols-outlined text-slate-300 dark:text-slate-600">star</span>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-2">Observaciones / Issues</label>
+<textarea class="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg text-sm p-3 focus:ring-primary focus:border-primary" placeholder="Describe cualquier inconveniente técnico..." rows="3"></textarea>
+</div>
+<button class="w-full bg-primary text-white font-bold py-3 rounded-xl hover:bg-primary/90 transition-colors">Enviar Reporte</button>
+</div>
+</div>
+</div>
+<!-- Footer Padding -->
+<div class="h-8"></div>
+</div>
+</body></html>

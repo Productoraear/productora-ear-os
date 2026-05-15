@@ -47,20 +47,20 @@ export const InstitucionalPanel = () => {
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <BentoCard title="PARTNERS" subtitle="Global Municipalities">
                     <div className="mt-6 text-center">
-                        <StatBox label="ACTIVE AGREEMENTS" value="42" color="text-white" />
-                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-2 leading-relaxed px-4">Direct Collaboration & Funding Agreements</p>
+                        <StatBox label="ACTIVE AGREEMENTS" value="--" color="text-white" />
+                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-2 leading-relaxed px-4">Institutional Partnership Development</p>
                     </div>
                 </BentoCard>
                 <BentoCard title="SUBSIDIES" subtitle="R+D Strategic Grants">
                     <div className="mt-6 text-center">
-                        <StatBox label="FUNDS GRANTED" value="€2.4M" color="text-ear-gold" />
-                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-2 px-4 leading-relaxed">Innovation & Sovereignty Impact Budget</p>
+                        <StatBox label="FUNDS GRANTED" value="PLANNING" color="text-ear-gold" />
+                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-2 px-4 leading-relaxed">Projected Innovation & Sovereignty Budget</p>
                     </div>
                 </BentoCard>
-                <BentoCard title="IFEMA CORE" subtitle="Operation Continuous">
+                <BentoCard title="FACILITY CORE" subtitle="Operation Continuous">
                     <div className="mt-6 text-center">
                         <StatBox label="SERVICE DAYS" value="365" color="text-white" />
-                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-2 px-4 leading-relaxed">Active Deployment in IFEMA Nexus</p>
+                        <p className="text-[9px] font-black text-white/20 uppercase tracking-widest mt-2 px-4 leading-relaxed">Active Deployment in Partner Venues</p>
                     </div>
                 </BentoCard>
             </div>
@@ -79,8 +79,8 @@ export const InstitucionalPanel = () => {
             <BentoCard title="OPEN TENDERS" subtitle="Government Procurement">
                 <div className="mt-8 space-y-2">
                     {[
-                        { name: 'Cultura Digital Madrid', amount: '€180k', status: 'REVIEW' },
-                        { name: 'Plan Sostenibilidad IFEMA', amount: '€420k', status: 'APPROVED' }
+                        { name: 'Cultura Digital Local', amount: 'PLANNING', status: 'REVIEW' },
+                        { name: 'Plan Sostenibilidad Venues', amount: 'PLANNING', status: 'DRAFT' }
                     ].map((t, i) => (
                         <LogEntry 
                             key={i}
@@ -93,7 +93,7 @@ export const InstitucionalPanel = () => {
                 </div>
             </BentoCard>
 
-            <BentoCard title="IFEMA 365 PIPELINE" subtitle="Neural Smart Venue Integration">
+            <BentoCard title="VENUES 365 PIPELINE" subtitle="Neural Smart Venue Integration">
                 <div className="mt-8 space-y-6">
                     <div className="flex justify-between items-end">
                         <div>

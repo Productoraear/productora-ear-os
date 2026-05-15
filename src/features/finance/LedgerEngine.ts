@@ -8,7 +8,7 @@
  * - 10% Plataforma (EAR OS Retained Revenue)
  */
 
-export type SovereignRole = 'ROLE_ADMIN' | 'ROLE_B2B' | 'ROLE_B2G' | 'ROLE_B2C';
+import { SovereignRole } from '@/shared/hooks/useSovereignRole';
 
 export interface CheckoutPayload {
   amount: number;             // Centavos (Stripe Standard)

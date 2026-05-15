@@ -2,18 +2,28 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { LayoutGrid, Music, Briefcase, Wallet, Home } from 'lucide-react';
+import { LayoutGrid, Music, Briefcase, Wallet, Home, FileText, Brain, CalendarClock } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 
 const SovereignBottomNav = () => {
   const pathname = usePathname();
-  const navItems = [
-    { name: 'Home', href: '/', icon: <Home className="w-6 h-6" /> },
-    { name: 'Eventos', href: '/eventos', icon: <Briefcase className="w-6 h-6" /> },
-    { name: 'Artistas', href: '/artistas', icon: <Music className="w-6 h-6" /> },
-    { name: 'Vimume', href: '/vimume', icon: <LayoutGrid className="w-6 h-6" /> },
-    { name: 'Wallet', href: '/dashboard', icon: <Wallet className="w-6 h-6" /> },
-  ];
+  const isVimumeContext = pathname.startsWith('/vimume');
+
+  const navItems = isVimumeContext 
+    ? [
+        { name: 'Protocolo', href: '/vimume/protocolo', icon: <FileText className="w-5 h-5" /> },
+        { name: 'Fundación', href: '/vimume/fundacion', icon: <Brain className="w-5 h-5" /> },
+        { name: 'Vimume', href: '/vimume', icon: <LayoutGrid className="w-5 h-5" /> },
+        { name: 'Roadmap', href: '/vimume/roadmap', icon: <CalendarClock className="w-5 h-5" /> },
+        { name: 'Contacto', href: '/contacto', icon: <Wallet className="w-5 h-5" /> },
+      ]
+    : [
+        { name: 'Home', href: '/', icon: <Home className="w-5 h-5" /> },
+        { name: 'Producción', href: '/eventos', icon: <Briefcase className="w-5 h-5" /> },
+        { name: 'Artistas', href: '/artistas', icon: <Music className="w-5 h-5" /> },
+        { name: 'Vimume', href: '/vimume', icon: <LayoutGrid className="w-5 h-5" /> },
+        { name: 'Panel', href: '/dashboard', icon: <Wallet className="w-5 h-5" /> },
+      ];
 
   return (
     <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-sm">

@@ -26,7 +26,7 @@ export const RoadmapPanel = () => {
     { title: 'Vampire Ingestion', date: 'Q2 2024', status: 'Done', desc: 'Massive Data Sync & Neural Cleaning.' },
     { title: 'Astra Neural Link', date: 'Q2 2024', status: 'Development', desc: 'Full Gemini AI Intelligence Integration.' },
     { title: 'OPAL Matrix Activation', date: 'Q2 2024', status: 'Done', desc: 'Predictive Success Algorithm Implemented.' },
-    { title: 'Global Deployment', date: 'Q3 2024', status: 'Planning', desc: 'Public Launch & IFEMA 365 Nexus Scaling.' }
+    { title: 'Global Deployment', date: 'Q3 2024', status: 'Planning', desc: 'Public Launch & Facility Expansion Scaling.' }
   ];
 
   const opalHealth = OpalEngine.getGlobalHealth();

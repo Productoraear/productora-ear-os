@@ -17,7 +17,7 @@ export default function ImpactSystems() {
       icon: BarChart3, 
       desc: 'Motor de predicción de impacto emocional en eventos masivos.',
       colSpan: 'md:col-span-2',
-      bg: 'bg-[#d4a855]/5'
+      bg: 'bg-[#ecb613]/5'
     },
     { 
       id: '02', 
@@ -56,8 +56,8 @@ export default function ImpactSystems() {
   return (
     <section className="relative py-64 bg-black overflow-hidden" id="impact-systems">
       {/* 🔮 SPATIAL DECOR */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,#d4a85505,transparent_50%)]" />
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#d4a855]/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_20%_30%,#ecb61305,transparent_50%)]" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ecb613]/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-[1400px] mx-auto px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-32 gap-16">
@@ -68,8 +68,8 @@ export default function ImpactSystems() {
               viewport={{ once: true }}
               className="flex items-center gap-4 mb-8"
             >
-              <div className="w-12 h-[1px] bg-[#d4a855]" />
-              <span className="text-[#d4a855] text-[11px] font-black uppercase tracking-[0.6em]">Infraestructura Invisible</span>
+              <div className="w-12 h-[1px] bg-[#ecb613]" />
+              <span className="text-[#ecb613] text-[11px] font-black uppercase tracking-[0.6em]">Infraestructura Invisible</span>
             </motion.div>
             <motion.h2 
               initial={{ opacity: 0, y: 30 }}
@@ -100,14 +100,14 @@ export default function ImpactSystems() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className={`group relative p-12 rounded-[2.5rem] border border-white/5 ${sys.bg} hover:border-[#d4a855]/40 transition-all duration-700 overflow-hidden ${sys.colSpan}`}
+              className={`group relative p-12 rounded-[2.5rem] border border-white/5 ${sys.bg} hover:border-[#ecb613]/40 transition-all duration-700 overflow-hidden ${sys.colSpan}`}
             >
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-12">
-                  <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-white group-hover:text-[#d4a855] group-hover:bg-[#d4a855]/10 transition-all duration-500">
+                  <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-white group-hover:text-[#ecb613] group-hover:bg-[#ecb613]/10 transition-all duration-500">
                     <sys.icon size={32} strokeWidth={1.5} />
                   </div>
-                  <span className="text-white/5 font-black text-6xl group-hover:text-[#d4a855]/10 transition-colors duration-700">
+                  <span className="text-white/5 font-black text-6xl group-hover:text-[#ecb613]/10 transition-colors duration-700">
                     {sys.id}
                   </span>
                 </div>
@@ -119,14 +119,14 @@ export default function ImpactSystems() {
                   {sys.desc}
                 </p>
 
-                <div className="mt-12 flex items-center gap-4 text-[#d4a855] opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">
+                <div className="mt-12 flex items-center gap-4 text-[#ecb613] opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-700">
                   <span className="text-[10px] font-black uppercase tracking-[0.3em]">Protocolo Activo</span>
                   <Hexagon size={12} className="animate-spin-slow" />
                 </div>
               </div>
 
               {/* Interactive Hover Decor */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#d4a855]/0 via-transparent to-[#d4a855]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#ecb613]/0 via-transparent to-[#ecb613]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </motion.div>
           ))}
         </div>

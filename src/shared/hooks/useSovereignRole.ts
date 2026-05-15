@@ -4,7 +4,16 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { auth } from '@/lib/services/auth_nexus';
 
-export type SovereignRole = 'ROLE_B2G' | 'ROLE_B2B' | 'ROLE_B2C' | 'ROLE_ADMIN' | 'ROLE_GUEST';
+export type SovereignRole = 
+  | 'ROLE_ADMIN' 
+  | 'ROLE_ARTIST' 
+  | 'ROLE_PROVIDER' 
+  | 'ROLE_AFFILIATE' 
+  | 'ROLE_CLIENT' 
+  | 'ROLE_GUEST'
+  | 'ROLE_B2G'
+  | 'ROLE_B2B'
+  | 'ROLE_B2C';
 
 /**
  * 🕵️‍♂️ USE SOVEREIGN ROLE - INTENT DETECTION ENGINE
@@ -15,29 +24,25 @@ export function useSovereignRole() {
   const [role, setRole] = useState<SovereignRole>('ROLE_GUEST');
 
   useEffect(() => {
-    const detectRole = () => {
+    const detectRole = (): SovereignRole => {
       // 1. Detección por Ruta (Hard Intent)
-      if (pathname.startsWith('/vimume') || pathname.startsWith('/clinica')) {
-        return 'ROLE_B2G';
-      }
-      if (pathname.startsWith('/nexus') || pathname.startsWith('/artistas')) {
-        return 'ROLE_B2B';
-      }
-      if (pathname.startsWith('/eventos') || pathname.startsWith('/marketplace')) {
-        return 'ROLE_B2C';
-      }
-      if (pathname.startsWith('/dashboard')) {
-        return 'ROLE_ADMIN';
-      }
+      if (pathname.startsWith('/admin')) return 'ROLE_ADMIN';
+      if (pathname.startsWith('/panel/artista')) return 'ROLE_ARTIST';
+      if (pathname.startsWith('/panel/proveedor')) return 'ROLE_PROVIDER';
+      if (pathname.startsWith('/panel/afiliado')) return 'ROLE_AFFILIATE';
+      if (pathname.startsWith('/panel/cliente')) return 'ROLE_CLIENT';
+      
+      // VIMUME & Institucional -> B2G Context
+      if (pathname.startsWith('/vimume') || pathname.startsWith('/proyectos/vimume')) return 'ROLE_B2G';
+      
+      // Eventos Corporativos -> B2B
+      if (pathname.startsWith('/eventos') || pathname.startsWith('/empresarios')) return 'ROLE_B2B';
 
-      // 2. Detección por Sesión (Si no hay ruta específica)
+      // 2. Detección por Sesión
       const user = auth.currentUser;
       if (user) {
-        // Lógica de claims personalizada o email de administración
-        if (user.email?.endsWith('@productoraear.com')) {
-          return 'ROLE_ADMIN';
-        }
-        return 'ROLE_B2B'; // Default para usuarios registrados (Artistas)
+        if (user.email?.endsWith('@productoraear.com')) return 'ROLE_ADMIN';
+        return 'ROLE_CLIENT';
       }
 
       return 'ROLE_GUEST';
@@ -48,10 +53,14 @@ export function useSovereignRole() {
 
   return {
     role,
+    isAdmin: role === 'ROLE_ADMIN',
+    isArtist: role === 'ROLE_ARTIST',
+    isProvider: role === 'ROLE_PROVIDER',
+    isAffiliate: role === 'ROLE_AFFILIATE',
+    isClient: role === 'ROLE_CLIENT',
+    isGuest: role === 'ROLE_GUEST',
     isB2G: role === 'ROLE_B2G',
     isB2B: role === 'ROLE_B2B',
-    isB2C: role === 'ROLE_B2C',
-    isAdmin: role === 'ROLE_ADMIN',
-    isGuest: role === 'ROLE_GUEST'
+    isB2C: role === 'ROLE_B2C'
   };
 }

@@ -38,7 +38,7 @@ export const UrlIndexPanel = () => {
                 {[
                     { node: '/events/wedding-madrid-2026', priority: 'ALFA', status: 'RASTREANDO' },
                     { node: '/artists/dj-vault-series', priority: 'BETA', status: 'VALIDADO' },
-                    { node: '/venues/ifema-nexus-v4', priority: 'ALFA', status: 'INDEXANDO' }
+                    { node: '/venues/toledo-office-v1', priority: 'ALFA', status: 'INDEXANDO' }
                 ].map((n, i) => (
                     <div key={i} className="flex items-center justify-between p-5 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.05] transition-all">
                         <div className="flex items-center gap-4">

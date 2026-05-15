@@ -7,8 +7,8 @@ import { ShoppingCart, Zap, Star, ShieldCheck } from 'lucide-react';
 import AdditionalServices from '@/features/marketplace/AdditionalServices';
 
 /**
- * 🏛️ MARKETPLACE S-CLASS - EL ARSENAL DE PRODUCCIÓN
- * Hub central de servicios vampirizados del legado EAR.
+ * 🏛️ MARKETPLACE VIMUME OS
+ * Hub central de servicios de producción y talento.
  */
 export default function MarketplacePage() {
   return (
@@ -32,7 +32,7 @@ export default function MarketplacePage() {
               EL <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] to-[#8a6b0d]">MARKETPLACE</span>
             </h1>
             <p className="text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
-              Accede al arsenal completo de Productora EAR. Desde logística técnica hasta mentoría estratégica, todo en un solo ecosistema soberano.
+              Accede a la infraestructura completa de Productora EAR. Desde logística técnica hasta mentoría de alto impacto, todo en un solo ecosistema soberano.
             </p>
           </motion.div>
 
@@ -40,7 +40,7 @@ export default function MarketplacePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-16">
             {[
               { icon: Zap, label: "Entrega Ágil" },
-              { icon: ShieldCheck, label: "Seguridad S-Class" },
+              { icon: ShieldCheck, label: "Seguridad Institucional" },
               { icon: Star, label: "Calidad Premium" },
               { icon: ShoppingCart, label: "Checkout Unificado" }
             ].map((item, i) => (
@@ -53,14 +53,14 @@ export default function MarketplacePage() {
         </div>
       </section>
 
-      {/* CORE MARKETPLACE COMPONENTS (VAMPIRIZED) */}
+      {/* CORE MARKETPLACE COMPONENTS */}
       <div className="space-y-24 pb-32">
         <AdditionalServices />
         
         {/* Placeholder para futuras secciones del marketplace */}
         <section className="py-20 border-t border-white/5">
           <div className="max-w-7xl mx-auto px-6 text-center">
-             <p className="text-white/30 italic">Más módulos de producción en proceso de vampirización estructural...</p>
+             <p className="text-white/30 italic">Más módulos de producción en proceso de integración estructural...</p>
           </div>
         </section>
       </div>

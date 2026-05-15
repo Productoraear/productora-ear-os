@@ -26,7 +26,7 @@ interface Category {
 
 const EVENT_CATEGORIES: Category[] = [
   { id: 'corp', name: 'Corporativos', path: '/eventos/corporativos', icon: <Briefcase size={20} />, description: 'Sistemas de impacto para marcas líderes.' },
-  { id: 'luxury', name: 'Bodas de Lujo', path: '/eventos/bodas', icon: <Heart size={20} />, description: 'Arquitectura emocional S-Class.' },
+  { id: 'luxury', name: 'Bodas de Lujo', path: '/eventos/bodas', icon: <Heart size={20} />, description: 'Arquitectura emocional de excelencia.' },
   { id: 'galas', name: 'Galas', path: '/eventos/galas', icon: <Star size={20} />, description: 'Eventos de etiqueta con rigor militar.' },
   { id: 'fest', name: 'Festivales', path: '/eventos/festivales', icon: <Music size={20} />, description: 'Infraestructura masiva sin fallos.' },
 ];

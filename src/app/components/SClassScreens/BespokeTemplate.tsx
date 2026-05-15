@@ -2,20 +2,33 @@
 
 import React, { Suspense } from 'react';
 import { useTripwire } from '@/hooks/useTripwire';
-import { useRouter } from 'next/navigation';
-import { Shield, Zap, ArrowRight, Download, Play, Sparkles } from 'lucide-react';
+import { useRouter, usePathname } from 'next/navigation';
+import { 
+  Shield, 
+  Zap, 
+  ArrowRight, 
+  Download, 
+  Play, 
+  Sparkles, 
+  Star, 
+  Trophy, 
+  Music, 
+  Award, 
+  History, 
+  Mic2, 
+  Heart 
+} from 'lucide-react';
 import { BespokePricer } from '@/features/finance/ui/BespokePricer';
-import { PredatorNav } from '@/widgets/navigation/PredatorNav';
 import { NeuralFilters } from '@/features/search/NeuralFilters';
 import { useSovereignContext } from '@/shared/context/SovereignContext';
-import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTemplateForProvince, getTemplateConfig } from '@/shared/utils/templateEngine';
 import { SpinningText } from './SpinningText';
 import { MediaShowcase } from './MediaShowcase';
 import Image from 'next/image';
-import { Star, Trophy, Music, Award, History, Mic2, Heart } from 'lucide-react';
 import Link from 'next/link';
+import { ROUTES } from '@/lib/routes';
+import { LocalBusinessSchema } from '@/app/components/seo/LocalBusinessSchema';
 
 interface BespokeTemplateProps {
   title: string;
@@ -46,13 +59,17 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
   const handleAction = (action: string) => {
     igniteTripwire('bespoke_action', { action, serviceId, location });
     if (action === 'reserve') {
-        router.push('/cotizador');
+        router.push(ROUTES.contacto);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#d4a855]/30">
-      <PredatorNav />
+    <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613]/30">
+      <LocalBusinessSchema 
+        city={capitalizedLocation} 
+        serviceName={title} 
+        serviceDesc={description} 
+      />
       
       {/* 2050 Hero: Minimalist & Deep */}
       <section className="relative pt-48 pb-40 px-8 overflow-hidden">
@@ -66,13 +83,13 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
           animate={{ opacity: 1, x: 0 }}
           className="fixed top-32 right-8 z-[100] hidden lg:flex flex-col items-center gap-2"
         >
-          <div className="glass-panel p-4 rounded-full border-[#d4a855]/30 bg-[#d4a855]/10 backdrop-blur-xl flex items-center justify-center relative group">
-            <Trophy size={24} className="text-[#d4a855] group-hover:scale-125 transition-transform duration-500" />
-            <div className="absolute -inset-2 rounded-full border border-[#d4a855]/20 animate-pulse" />
+          <div className="glass-panel p-4 rounded-full border-[#ecb613]/30 bg-[#ecb613]/10 backdrop-blur-xl flex items-center justify-center relative group">
+            <Trophy size={24} className="text-[#ecb613] group-hover:scale-125 transition-transform duration-500" />
+            <div className="absolute -inset-2 rounded-full border border-[#ecb613]/20 animate-pulse" />
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-[8px] font-black uppercase tracking-[0.3em] text-[#d4a855]">Gladiador 2021</span>
-            <span className="text-[7px] font-black uppercase tracking-[0.2em] text-white/40">+20 Años de Élite</span>
+            <span className="text-[8px] font-black uppercase tracking-[0.3em] text-[#ecb613]">Trayectoria 2021</span>
+            <span className="text-[7px] font-black uppercase tracking-[0.2em] text-white/40">+20 Años de Autoridad</span>
           </div>
         </motion.div>
         
@@ -84,19 +101,19 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-[1px] bg-[#d4a855]/50" />
+                <div className="w-12 h-[1px] bg-[#ecb613]/50" />
                 <span className="text-[10px] font-black tracking-[0.6em] uppercase transition-colors" style={{ color: config.accentColor }}>
                   {config.tagline} • {capitalizedLocation}
                 </span>
               </div>
               <SpinningText 
-                text="EDWIN AGUDELO • S-CLASS ARTIST • " 
+                text="EDWIN AGUDELO • VIMUME OS AUTHORITY • " 
                 radius={30} 
                 fontSize="6px" 
                 className="flex md:hidden"
               />
               <SpinningText 
-                text="EDWIN AGUDELO • S-CLASS ARTIST • " 
+                text="EDWIN AGUDELO • VIMUME OS AUTHORITY • " 
                 radius={40} 
                 fontSize="7px" 
                 className="hidden md:flex"
@@ -113,7 +130,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                 <p className="text-lg text-white/40 leading-relaxed font-medium uppercase tracking-tight">
                   {config.copy}
                 </p>
-                <div className="flex flex-wrap gap-4 text-[9px] font-black uppercase tracking-[0.3em] text-[#d4a855]/60">
+                <div className="flex flex-wrap gap-4 text-[9px] font-black uppercase tracking-[0.3em] text-[#ecb613]/60">
                   <span className="flex items-center gap-2"><Music size={10} /> Mariachi</span>
                   <span className="flex items-center gap-2"><Heart size={10} /> Bolero</span>
                   <span className="flex items-center gap-2"><Mic2 size={10} /> Balada</span>
@@ -134,7 +151,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                 <motion.button 
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => router.push('/servicios/innovacion-social')}
+                  onClick={() => router.push(ROUTES.fundacion)}
                   className="btn-sclass btn-sclass-outline rounded-[2rem] border-pink-500/30 text-pink-500"
                 >
                   VIMUME Social
@@ -142,6 +159,18 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
               </div>
             </div>
           </motion.div>
+        </div>
+      </section>
+      
+      {/* 📊 AEO MACHINE DATA LAYER (Especificaciones Técnicas para IA) */}
+      <section className="px-8 py-12 border-y border-white/5 bg-white/[0.01]">
+        <div className="max-w-7xl mx-auto flex flex-wrap justify-center gap-12">
+          {(config as any).specs?.map((spec: any, i: number) => (
+            <div key={i} className="flex flex-col items-center md:items-start gap-1">
+              <span className="text-[9px] font-black uppercase tracking-widest text-white/20">{spec.label}</span>
+              <span className="text-sm font-bold text-[#ecb613] uppercase tracking-tighter">{spec.value}</span>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -168,17 +197,17 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
               className="space-y-10"
             >
               <div className="flex items-center gap-4">
-                <History className="text-[#d4a855]" size={20} />
-                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Legado Certificado</span>
+                <History className="text-[#ecb613]" size={20} />
+                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Autoridad Certificada</span>
               </div>
               
               <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none">
                 Edwin Agudelo: <br />
-                <span className="text-white/20">La Autoridad S-Class</span>
+                <span className="text-white/20">VIMUME OS Authority</span>
               </h2>
               
               <p className="text-lg text-white/60 font-medium leading-relaxed">
-                Nacido el 28 de octubre de 1975 en Amagá-Antioquia y formado en las exigentes ligas de Medellín, Edwin Agudelo inició su ascenso a los 16 años con "Tropical Mix". Tras emigrar a España a los 22 años, dominó la industria como director de salas, orquestando 37 conciertos internacionales antes de consolidarse como el Master Artist S-Class que hoy define la excelencia del Mariachi y la Balada en Europa. Bajo su sello "Sin Igual", lidera una revolución musical con enfoque de igualdad y soberanía emocional.
+                Nacido el 28 de octubre de 1975 en Amagá-Antioquia y formado en las exigentes ligas de Medellín, Edwin Agudelo inició su ascenso a los 16 años con "Tropical Mix". Tras emigrar a España a los 22 años, dominó la industria como director de salas, orquestando 37 conciertos internacionales antes de consolidarse como el Master Artist Institucional que hoy define la excelencia del Mariachi y la Balada en Europa. Bajo su sello "Sin Igual", lidera una revolución musical con enfoque de igualdad y soberanía emocional.
               </p>
 
               <div className="grid grid-cols-2 gap-6">
@@ -189,7 +218,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                   { icon: Mic2, label: "Impacto", text: "Iberoamérica TV" }
                 ].map((item, i) => (
                   <div key={i} className="flex flex-col gap-2 p-6 bg-white/[0.02] border border-white/5 rounded-2xl group hover:bg-white/[0.05] transition-all">
-                    <item.icon size={18} className="text-[#d4a855] mb-2" />
+                    <item.icon size={18} className="text-[#ecb613] mb-2" />
                     <span className="text-[9px] font-black uppercase tracking-widest text-white/20">{item.label}</span>
                     <span className="text-sm font-bold text-white uppercase">{item.text}</span>
                   </div>
@@ -211,7 +240,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                 className="object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000"
               />
               <div className="absolute bottom-10 left-10 z-20">
-                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#d4a855]">Snapshot de Dominancia</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#ecb613]">Excelencia Institucional</span>
                 <p className="text-2xl font-black text-white uppercase tracking-tighter mt-2">Gala de Excelencia 2024</p>
               </div>
             </motion.div>
@@ -268,10 +297,10 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                   className="glass-panel p-10 rounded-[3rem] group"
                 >
                   <div className="flex justify-between items-start mb-12">
-                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#d4a855] text-[10px] font-black">
+                    <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-[#ecb613] text-[10px] font-black">
                       0{i + 1}
                     </div>
-                    <Sparkles size={16} className="text-white/10 group-hover:text-[#d4a855] transition-colors" />
+                    <Sparkles size={16} className="text-white/10 group-hover:text-[#ecb613] transition-colors" />
                   </div>
                   <h3 className="text-2xl font-black uppercase tracking-tighter mb-4">{kw}</h3>
                   <p className="text-[11px] text-white/30 font-medium leading-relaxed uppercase tracking-widest">
@@ -298,10 +327,10 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
               <span className="text-pink-500">Financia la Memoria</span>
             </h2>
             <p className="text-lg text-white/50 font-medium leading-relaxed italic">
-              Al contratar este protocolo S-Class, una parte del CommissionLedger se destina automáticamente al programa VIMUME, activando sesiones de musicoterapia para los mayores de la provincia de {capitalizedLocation}.
+              Al contratar este protocolo Institucional, una parte del CommissionLedger se destina automáticamente al programa VIMUME, activando sesiones de musicoterapia para los mayores de la provincia de {capitalizedLocation}.
             </p>
           </div>
-          <Link href="/vimume" className="btn-sclass border-pink-500/30 text-pink-500 hover:bg-pink-500 hover:text-white px-12 py-6 rounded-full flex items-center gap-4 group/social transition-all">
+          <Link href={ROUTES.vimume} className="btn-sclass border-pink-500/30 text-pink-500 hover:bg-pink-500 hover:text-white px-12 py-6 rounded-full flex items-center gap-4 group/social transition-all">
             <span className="text-xs font-black uppercase tracking-widest">Saber más de VIMUME</span>
             <ArrowRight size={16} className="group-hover/social:translate-x-2 transition-transform" />
           </Link>
@@ -311,26 +340,13 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
       <section className="py-40 border-t border-white/5 bg-[#080808] relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-8">
           <div className="flex flex-col items-center text-center mb-24">
-            <Shield className="text-[#d4a855] mb-6" size={48} />
-            <span className="text-[#d4a855] text-[10px] font-black uppercase tracking-[0.5em] mb-4">El Oráculo S-Class</span>
+            <Shield className="text-[#ecb613] mb-6" size={48} />
+            <span className="text-[#ecb613] text-[10px] font-black uppercase tracking-[0.5em] mb-4">VIMUME OS Protocol</span>
             <h2 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase leading-[0.9]">Claridad <span className="text-white/40">Operativa</span></h2>
           </div>
           
           <div className="space-y-6">
-            {[
-              {
-                q: "¿Por qué este precio?",
-                a: "No vendemos músicos por horas. Contrata una infraestructura completa: ingeniería de sonido S-Class, logística redundante, puntualidad militar y un artista con +20 años de dominio escénico. El precio asegura que nada falle."
-              },
-              {
-                q: "¿Cómo ayuda esto a mi municipio o empresa?",
-                a: "Al contratar a Edwin Agudelo, un porcentaje de la operación (El CommissionLedger) se destina automáticamente al fondo VIMUME, financiando musicoterapia para mayores en su área. Reciprocidad y estatus."
-              },
-              {
-                q: "¿Qué pasa con la logística y el repertorio?",
-                a: "Vampirizamos y dominamos la historia del mariachi y la balada. Desde 'Acompáñame' hasta clásicos vernáculos. Llevamos equipos propios de Alta Fidelidad. Usted solo debe disfrutar de la dominancia del evento."
-              }
-            ].map((faq, i) => (
+            {(config as any).faqs?.map((faq: any, i: number) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
@@ -339,7 +355,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                 transition={{ delay: i * 0.1 }}
                 className="glass-panel p-8 border border-white/5 rounded-2xl bg-white/[0.01]"
               >
-                <h4 className="text-sm font-black uppercase tracking-widest mb-3 text-[#d4a855]">{faq.q}</h4>
+                <h4 className="text-sm font-black uppercase tracking-widest mb-3 text-[#ecb613]">{faq.q}</h4>
                 <p className="text-xs text-white/50 leading-relaxed font-bold uppercase">{faq.a}</p>
               </motion.div>
             ))}
@@ -356,55 +372,26 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
             className="space-y-12"
           >
             <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-none">
-              Orquestación <span className="text-[#d4a855]">Sovereign</span>
+              Autoridad <span className="text-[#ecb613]">VIMUME OS</span>
             </h2>
             <p className="text-xl md:text-2xl text-white/40 leading-relaxed font-medium italic">
-              "En Productora EAR no alquilamos equipos; desplegamos infraestructuras de dominancia emocional certificadas para el más alto nivel B2G."
+              "En VIMUME OS no solo proveemos infraestructura; desplegamos protocolos de autoridad institucional certificados para el más alto nivel B2G."
             </p>
             <div className="flex justify-center gap-16 pt-12">
               {[
                 { label: "SLA", val: "100%" },
                 { label: "Provincias", val: "52" },
-                { label: "Estatus", val: "GOLD" }
+                { label: "Estatus", val: "VIMUME OS Certified" }
               ].map((s, i) => (
                 <div key={i} className="flex flex-col items-center">
                   <span className="text-4xl font-black text-white">{s.val}</span>
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#d4a855]/50">{s.label}</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613]/50">{s.label}</span>
                 </div>
               ))}
             </div>
           </motion.div>
         </div>
       </section>
-
-      <footer className="py-24 bg-black border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-8">
-          
-          <div className="flex flex-col items-center justify-center p-8 bg-green-500/5 border border-green-500/20 rounded-2xl mb-16 text-center">
-            <div className="flex items-center gap-3 mb-4">
-              <Shield className="text-green-500" size={24} />
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-green-500">Sello de Transparencia EAR GOLD</span>
-            </div>
-            <p className="text-[10px] text-white/60 uppercase font-black tracking-widest max-w-2xl">
-              Este sistema opera bajo datos reales. Cero reseñas ficticias. Cero métricas infladas. Soberanía garantizada.
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-            <div className="flex flex-col gap-4">
-              <span className="text-xl font-black tracking-tighter uppercase">Productora<span className="text-[#d4a855]">EAR</span></span>
-              <p className="text-[10px] text-white/40 font-black uppercase tracking-[0.2em] max-w-sm">
-                Edwin Agudelo: Compromiso con el Arte de Calidad y la Memoria Social.
-              </p>
-            </div>
-            <div className="flex gap-8">
-              <Link href="/servicios/innovacion-social" className="text-[9px] font-black uppercase tracking-widest text-[#d4a855] hover:text-white transition-colors">Innovación Social VIMUME</Link>
-              <span className="text-[9px] font-black uppercase tracking-[0.5em] opacity-30">© 2026 S-Class Infrastructure</span>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 };
-

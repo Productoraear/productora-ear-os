@@ -19,12 +19,16 @@ const SovereignNavbar = () => {
   const shadowOpacity = useTransform(scrollY, [0, 100], [0.1, 0.8]);
 
   // Configuración de Estilo por Rol
-  const roleStyles = {
+  const roleStyles: Record<string, string> = {
     ROLE_B2G: "border-blue-500/30 bg-[#0a1128]/70 shadow-[0_0_30px_rgba(59,130,246,0.2)]",
     ROLE_B2B: "border-[#ecb613]/20 bg-[#050505]/70 shadow-[0_0_30px_rgba(236,182,19,0.1)]",
     ROLE_B2C: "border-pink-500/20 bg-[#0f0a0a]/70 shadow-[0_0_30px_rgba(236,72,153,0.1)]",
     ROLE_ADMIN: "border-red-500/40 bg-black/80 shadow-[0_0_40px_rgba(239,68,68,0.3)]",
-    ROLE_GUEST: "border-[#ecb613]/20 bg-[#050505]/70"
+    ROLE_GUEST: "border-[#ecb613]/20 bg-[#050505]/70",
+    ROLE_ARTIST: "border-purple-500/20 bg-[#0a0f0a]/70",
+    ROLE_PROVIDER: "border-green-500/20 bg-[#0a0f0a]/70",
+    ROLE_AFFILIATE: "border-orange-500/20 bg-[#0a0f0a]/70",
+    ROLE_CLIENT: "border-[#ecb613]/20 bg-[#050505]/70"
   };
 
   // Omni-Search Shortcut Listener
@@ -60,22 +64,22 @@ const SovereignNavbar = () => {
             <span className="text-black font-bold text-xl font-syne">E</span>
           </div>
           <span className="text-lg md:text-xl font-bold font-syne tracking-tighter text-white">
-            EAR {role === 'ROLE_B2G' ? <span className="text-blue-400">CLINIC</span> : <span className="text-[#ecb613]">GOLD</span>}
+            {role === 'ROLE_B2G' ? "VIMUME CLINIC" : "VIMUME OS"}
           </span>
         </Link>
 
         {/* RUTAS S-CLASS & VIMUME */}
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/eventos" className="text-sm font-medium text-white/80 hover:text-[#ecb613] transition-colors">V1 EVENTOS</Link>
-          <Link href="/artistas" className="text-sm font-medium text-white/80 hover:text-[#ecb613] transition-colors">V2 ARTISTAS</Link>
+          <Link href="/eventos" className="text-sm font-medium text-white/80 hover:text-[#ecb613] transition-colors uppercase tracking-widest">Producción</Link>
+          <Link href="/artistas" className="text-sm font-medium text-white/80 hover:text-[#ecb613] transition-colors uppercase tracking-widest">Artistas</Link>
           
           {/* VIMUME HIGHLIGHT (Adapta color según rol) */}
           <Link href="/vimume" className={cn(
-            "flex items-center gap-2 text-sm font-bold text-white bg-white/5 px-4 py-1.5 rounded-full border transition-all",
+            "flex items-center gap-2 text-sm font-bold text-white bg-white/5 px-4 py-1.5 rounded-full border transition-all uppercase tracking-widest",
             role === 'ROLE_B2G' ? "border-blue-400/50 bg-blue-500/10 hover:bg-blue-500/20" : "border-white/10 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10"
           )}>
             <Activity size={14} className={role === 'ROLE_B2G' ? "text-blue-400" : "text-[#ecb613]"} />
-            <span>V3 VIMUME</span>
+            <span>VIMUME</span>
           </Link>
         </div>
 
@@ -92,8 +96,8 @@ const SovereignNavbar = () => {
 
           {/* NEXUS (Solo visible para Admin o B2B identificados) */}
           {(isAdmin || role === 'ROLE_B2B') && (
-            <Link href="/dashboard" className="px-6 py-2 bg-gradient-to-r from-[#ecb613] to-[#b38805] text-black rounded-full font-bold text-sm hover:scale-105 shadow-[0_0_15px_rgba(236,182,19,0.3)] transition-all">
-              NEXUS
+            <Link href="/dashboard" className="px-6 py-2 bg-gradient-to-r from-[#ecb613] to-[#b38805] text-black rounded-full font-bold text-sm hover:scale-105 shadow-[0_0_15px_rgba(236,182,19,0.3)] transition-all uppercase tracking-widest">
+              PANEL
             </Link>
           )}
         </div>
@@ -123,12 +127,12 @@ const SovereignNavbar = () => {
               <span className="flex items-center gap-2"><Search size={16} /> Buscar en el ecosistema...</span>
             </button>
             <hr className="border-white/10" />
-            <Link href="/eventos" className="text-lg font-bold text-white hover:text-[#ecb613]">V1 EVENTOS</Link>
-            <Link href="/artistas" className="text-lg font-bold text-white hover:text-[#ecb613]">V2 ARTISTAS</Link>
-            <Link href="/vimume" className="text-lg font-bold text-[#ecb613] flex items-center gap-2"><Activity size={18} /> V3 VIMUME (Clínico)</Link>
+            <Link href="/eventos" className="text-lg font-bold text-white hover:text-[#ecb613] uppercase tracking-tighter">Producción</Link>
+            <Link href="/artistas" className="text-lg font-bold text-white hover:text-[#ecb613] uppercase tracking-tighter">Artistas</Link>
+            <Link href="/vimume" className="text-lg font-bold text-[#ecb613] flex items-center gap-2 uppercase tracking-tighter"><Activity size={18} /> VIMUME</Link>
             <hr className="border-white/10" />
             {(isAdmin || role === 'ROLE_B2B') && (
-              <Link href="/dashboard" className="text-center py-3 bg-[#ecb613] text-black rounded-xl font-bold">ENTRAR AL NEXUS</Link>
+              <Link href="/dashboard" className="text-center py-3 bg-[#ecb613] text-black rounded-xl font-bold uppercase tracking-widest">ENTRAR AL PANEL</Link>
             )}
           </motion.div>
         )}
