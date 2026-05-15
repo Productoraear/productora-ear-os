@@ -36,7 +36,7 @@ export const WaybillStatusSchema = z.enum([
 
 export const UpdateWaybillSchema = z.object({
   status: WaybillStatusSchema.optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
   actualArrivalTime: z.string().datetime().optional(),
 });
 

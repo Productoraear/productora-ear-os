@@ -31,7 +31,7 @@ export const ArtistProfileSchema = z.object({
   mediaKitUrl: z.string().url().optional(),
   status: ArtistStatusSchema.default('DRAFT'),
   socialLinks: z.record(z.string(), z.string().url()).default({}),
-  metadata: z.record(z.any()).default({}),
+  metadata: z.record(z.string(), z.any()).default({}),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 });
@@ -67,7 +67,7 @@ export const SmartContractSchema = z.object({
   depositAmount: z.number().default(1.00),
   status: ContractStatusSchema.default('PENDING'),
   ledgerId: z.string().optional(),
-  metadata: z.record(z.any()).default({}),
+  metadata: z.record(z.string(), z.any()).default({}),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 });
@@ -93,7 +93,7 @@ export const ProcessBookingSchema = z.object({
   artistId: z.string().uuid(),
   eventDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   totalAmount: z.number().positive(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 export type ProcessBookingInput = z.infer<typeof ProcessBookingSchema>;

@@ -83,7 +83,7 @@ async function main() {
           const technicalReliability = calculateTechnicalReliability(vendor);
           
           // Creamos proveedores "Huérfanos" (DataOwnership nulo inicialmente o por defecto)
-          await prisma.vendor.upsert({
+          await prisma.providerProfile.upsert({
             where: { name: vendor.name },
             update: {
               auraLevel,

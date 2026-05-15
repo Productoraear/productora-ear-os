@@ -1,126 +1,12 @@
-// 🏛️ EAR OS V2 - ESQUEMA DE GRADO INDUSTRIAL
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
 }
-
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-
-
-
-// --- FASE 5: ORÁCULO NEURONAL (KNOWLEDGE GRAPH) ---
-model KnowledgeNode {
-  id          String   @id @default(cuid())
-  sourceFile  String   // Ej: GENOMA_H.csv, Contrato_2023.pdf
-  content     String   // Fragmento de texto
-  embedding   Unsupported("vector(768)")? // Gemini text-embedding-004 usa 768 dimensiones
-  metadata    Json?    // Metadatos (cliente, fecha, budget)
-  createdAt   DateTime @default(now())
-}
-
-// Renombrado para consistencia con el modelo de actores
-model ProviderProfile {
-  id                  String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                String           @unique
-  roi_guarantee_score Float            @default(0.0)
-  roiProjected        Float            @default(0.0)
-  auraLevel           Float            @default(0.0)
-  technicalReliability Float            @default(0.0)
-  
-  category            String?
-  location            String?
-  description         String?
-  original_url        String?
-  is_claimed          Boolean          @default(false)
-  claim_token         String?          @db.Uuid
-  
-  // Relación con el sistema de actores
-  userId              String?          @unique
-  user                User?            @relation(fields: [userId], references: [id])
-  
-  metadata            Json?
-  
-  // Relaciones legacy/existentes
-  kycDocuments        KycDocument[]
-  matchingEngines     MatchingEngine[]
-  
-  createdAt           DateTime         @default(now()) @map("created_at")
-  updatedAt           DateTime         @default(now()) @map("updated_at")
-
-  @@map("ear_provider_profiles")
-}
-
-// --- VERTICAL CAPTACIÓN (LEADS) ---
-model Lead {
-  id                  Int              @id @default(autoincrement())
-  intentSignals       Json?            // Señales de Intención (IA)
-  budgetCompatibility Boolean          @default(false)
-  
-  matchingEngines     MatchingEngine[]
-  dataOwnership       DataOwnership?   @relation("LeadOwnership")
-  
-  createdAt           DateTime         @default(now())
-}
-
-// --- MOTOR DE INTELIGENCIA (MATCHING ENGINE) ---
-model MatchingEngine {
-  id          Int      @id @default(autoincrement())
-  providerId  String   @db.Uuid @map("provider_id")
-  leadId      Int      @map("lead_id")
-  matchScore  Float
-  
-  provider    ProviderProfile @relation(fields: [providerId], references: [id])
-  lead        Lead     @relation(fields: [leadId], references: [id])
-  
-  createdAt   DateTime @default(now())
-}
-
-// --- TAXONOMÍA (BODAS.NET / MUNDIAL) ---
-model Category {
-  id      Int      @id @default(autoincrement())
-  value   String   @unique
-}
-
-// --- VALIDACIÓN Y KYC ---
-model KycDocument {
-  id         Int       @id @default(autoincrement())
-  document   String
-  status     Status    @default(PENDING)
-  verifiedAt DateTime?
-  
-  provider   ProviderProfile @relation(fields: [providerId], references: [id])
-  providerId String    @db.Uuid @map("provider_id")
-}
-
-enum Status {
-  PENDING
-  VERIFIED
-  REJECTED
-}
-
-// --- SOBERANÍA DEL DATO (DATA OWNERSHIP) ---
-model DataOwnership {
-  id                Int      @id @default(autoincrement())
-  
-  // Vínculos 1:1 para control total
-  providerId        String?  @unique @db.Uuid @map("provider_id")
-  provider          ProviderProfile? @relation(fields: [providerId], references: [id])
-  
-  leadId            Int?     @unique @map("lead_id")
-  lead              Lead?    @relation("LeadOwnership", fields: [leadId], references: [id])
-  
-  canViewData       Boolean  @default(true)
-  canEditData       Boolean  @default(true)
-  canShareData      Boolean  @default(false)
-  encryptionKeyHash String?
-}
-
-// --- FASE 4/5: OMNI-STITCH & MARKETPLACE MODELS (BLUEPRINT OMEGA) ---
 enum Role {
   EXPLORADOR
   ARQUITECTO
@@ -143,618 +29,20 @@ enum ActorType {
   ADMIN
 }
 
-enum Rank {
-  NIVEL_0_EXPLORADOR
-  NIVEL_1_ARQUITECTO
-  NIVEL_2_OPERADOR
-  NIVEL_3_ESTRATEGA
-  NIVEL_4_COMANDANTE
-}
-
-model User {
-  id            String    @id @default(cuid())
-  role          Role      @default(EXPLORADOR)
-  rank          Rank      @default(NIVEL_0_EXPLORADOR)
-  xp            Int       @default(0)
-  isPacienteCero Boolean  @default(false)
-  signalStatus  Status    @default(PENDING) // Forensic Check
-  
-  // Relaciones
-  vault         DigitalAsset[]
-  milestones    CareerMilestone[]
-  events        Event[]
-  affiliateCode String?   @unique
-  
-  // --- FINANZAS S-CLASS ---
-  wallet        AuraWallet?
-  ledgerEntries CommissionLedger[]
-  affiliateNode AffiliateNode?
-  
-  vimumeNodes   Vimume[]
-  artistProfile ArtistProfile?
-  contracts     SmartContract[]
-  memberships   WorkspaceMember[]
-  waybillParticipations WaybillParticipant[]
-  providerProfile ProviderProfile?
-  affiliateProfile AffiliateProfile?
-  storageAssets StorageAsset[]
-  
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  @@map("ear_users")
-}
-
-model MarketService {
-  id                String   @id @default(cuid())
-  name              String
-  description       String?
-  category          String?
-  
-  // Arbitraje & Stripe
-  stripeConceptId   String?  @unique // Link directo al producto en Stripe
-  marketAveragePrice Float   @default(0.0) // El precio promedio vampirizado
-  earDynamicPrice   Float    @default(0.0) // Nuestro precio final de autoridad
-  
-  // Geografía & Multiplicadores
-  provinceGeoId     String?  // Ej: BALEARES vs MADRID
-  province          Province? @relation(fields: [provinceGeoId], references: [id])
-  
-  // Auditoría Forense
-  competitorTrace   Json?    // URLs de donde se extrajo el precio para auditoría
-  lastVampirized    DateTime?
-  
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  @@map("ear_market_services")
-}
-
-model Province {
-  id                String   @id // Ej: "MADRID", "ALBACETE"
-  name              String
-  priceMultiplier   Float    @default(1.0) // Multiplicador de zona
-  
-  services          MarketService[]
-  
-  @@map("ear_provinces")
-}
-
-model DigitalAsset {
-  id              String   @id @default(cuid())
-  userId          String
-  user            User     @relation(fields: [userId], references: [id])
-  name            String
-  type            String   // Ej: "Audio", "Video", "IP_RIGHTS"
-  status          String   @default("ACTIVE")
-  
-  // ROI & Analytics
-  roiCurrent      Float    @default(0.0)
-  roiProjected    Float    @default(0.0)
-  performanceScore Float   @default(0.0)
-  
-  // Bóveda Legal
-  vaultId         String?  @unique
-  legalVault      LegalVault? @relation(fields: [vaultId], references: [id])
-  
-  metadata        Json?    // Data forense adicional
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  @@map("ear_digital_assets")
-}
-
-model LegalVault {
-  id              String   @id @default(cuid())
-  assetId         String?  @unique
-  asset           DigitalAsset?
-  
-  encryptionHash  String   // Trust Architecture
-  ipfsPointer     String?  // Decentralized storage
-  contractType    String   @default("DIGITAL_SIGNATURE")
-  legalStatus     String   @default("PROTECTED")
-  
-  auditLog        Json?    // Forensic access tracking
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  @@map("ear_legal_vaults")
-}
-
-model CareerMilestone {
-  id              String   @id @default(cuid())
-  userId          String
-  user            User     @relation(fields: [userId], references: [id])
-  
-  title           String
-  description     String?
-  category        MilestoneCategory
-  impactScore     Int      @default(0)
-  date            DateTime @default(now())
-  
-  isCompleted     Boolean  @default(false)
-  createdAt       DateTime @default(now())
-
-  @@map("ear_career_milestones")
-}
-
-enum MilestoneCategory {
-  IKIGAI
-  PITCH
-  METRICS
-  LEGAL
-  TOURING
-  LEGADO
-}
-
-model AuraWallet {
-  id                String   @id @default(cuid())
-  userId            String   @unique
-  user              User     @relation(fields: [userId], references: [id])
-  
-  // Gravedad Financiera (Balances)
-  balancePending    Float    @default(0.0) // Dinero en retención (Stripe/Escrow)
-  balanceSettled    Float    @default(0.0) // Dinero disponible para retiro
-  totalGenerated    Float    @default(0.0) // Capital histórico total (LTV)
-  
-  currency          String   @default("EUR")
-  updatedAt         DateTime @updatedAt
-  
-  @@map("ear_aura_wallets")
-}
-
-model CommissionLedger {
-  id                String   @id @default(cuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id])
-  
-  // Detalle de la Transacción
-  amountTotal       Float    // El pago total del cliente
-  amountUser        Float    // Lo que recibe este usuario (Split)
-  currency          String   @default("EUR")
-  
-  // Lógica de Split (80/10/10)
-  platformFee       Float    // 10% EAR
-  affiliateFee      Float    // 10% Referido
-  providerCut       Float    // 80% Proveedor
-  
-  status            LedgerStatus @default(PENDING)
-  type              LedgerType   @default(SPLIT)
-  
-  // Origen del Fondo
-  eventId           String?
-  vimumeSessionId   String?
-  stripePaymentId   String?  @unique
-  
-  metadata          Json?    // Auditoría forense adicional
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-
-  @@map("ear_commission_ledger")
-}
-
-model AffiliateProfile {
-  id            String   @id @default(cuid())
-  userId        String   @unique
-  user          User     @relation(fields: [userId], references: [id])
-  
-  affiliateHash String   @unique // El link de seguimiento S-Class
-  tier          Int      @default(1) // Nivel de comisión (Lvl 1-10)
-  leadsReferred Int      @default(0)
-  conversionRate Float   @default(0.0)
-  
-  createdAt     DateTime @default(now())
-  
-  @@map("ear_affiliate_profiles")
-}
-
-enum LedgerStatus {
-  PENDING
-  SETTLED
-  VOID
-  DISPUTED
-}
-
-enum LedgerType {
-  SPLIT
-  DIRECT
-  RECURRING
-  BONUS
-}
-
-model Asset {
-  id     String @id @default(cuid())
-  userId String
-  name   String
-  type   String @default("GEAR")
-}
-
-model Event {
-  id            String    @id
-  type          String    // Wedding, Corporate, Social
-  status        String    // Logistics, Rigging, Soundcheck, Live
-  location      String
-  geoCoords     Json      // For Uber-style tracking
-  budget        Float
-  techArsenal   Gear[]
-  contractHash  String    // Trust Architecture
-  
-  userId        String?
-  user          User?     @relation(fields: [userId], references: [id])
-}
-
-model Gear {
-  id            String    @id
-  name          String
-  providerId    String    // Lógica Airbnb (Subcontratado)
-  status        String    @default("AVAILABLE")
-  eventId       String?
-  event         Event?    @relation(fields: [eventId], references: [id])
-}
-
-model Vimume {
-  id          String   @id @default(cuid())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  impactScore Float    @default(0.0)
-  credits     Float    @default(0.0)
-  status      String   @default("ACTIVE")
-}
-
-model SystemFeature {
-  id          String   @id @default(cuid())
-  name        String   @unique // Ej: "MARKETPLACE_CHECKOUT", "ASTRA_VOICE"
-  isActive    Boolean  @default(false)
-  description String?
-  updatedAt   DateTime @updatedAt
-
-  @@map("ear_system_features")
-}
-
-// --- NEXUS MISSION TRACKER (SSOT OPERATIVO) ---
-model MissionMilestone {
-  id          String   @id @default(cuid())
-  phase       Int      // 0, 1, 2, 3, 4, 5, 6, 7
-  title       String
-  description String?
-  status      MilestoneStatus @default(PENDIENTE)
-  progress    Int      @default(0) // 0-100
-  
-  // --- V101 GOVERNANCE CORE ---
-  isImplemented Boolean  @default(false)
-  isValidated   Boolean  @default(false)
-  isDocumented  Boolean  @default(false)
-  impactScore   Int      @default(0) // Peso estratégico (0-100)
-  
-  evidence    String?  // Link a archivo, commit o reporte
-  risk        String?  // Diagnóstico de riesgo
-  nextAction  String?  // Siguiente paso sugerido
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
-
-  @@map("ear_mission_milestones")
-}
-
-enum MilestoneStatus {
-  HECHO
-  EN_PROCESO
-  PENDIENTE
-  BLOQUEADO
-  CUARENTENA
-}
-
-// --- VERTICAL ARTISTAS (TALENT OS) ---
-
-model ArtistProfile {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId        String    @unique
-  user          User      @relation(fields: [userId], references: [id])
-  
-  slug          String    @unique
-  displayName   String    @map("display_name")
-  bio           String?
-  genres        String[]  @default([])
-  mediaKitUrl   String?   @map("media_kit_url")
-  status        ArtistStatus @default(DRAFT)
-  socialLinks   Json?     @default("{}") @map("social_links")
-  metadata      Json?     @default("{}")
-  
-  riders        TechnicalRider[]
-  contracts     SmartContract[]
-  calendar      CalendarBlock[]
-  
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-
-  @@map("talent_artist_profiles")
-}
-
-model TechnicalRider {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  artistId      String    @db.Uuid
-  artist        ArtistProfile @relation(fields: [artistId], references: [id])
-  
-  version       Int       @default(1)
-  contentUrl    String?   @map("content_url")
-  requirements  Json?     @default("{}")
-  
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-
-  @@map("talent_technical_riders")
-}
-
-model SmartContract {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  artistId      String    @db.Uuid
-  artist        ArtistProfile @relation(fields: [artistId], references: [id])
-  
-  clientId      String
-  client        User      @relation(fields: [clientId], references: [id])
-  
-  eventDate     DateTime  @map("event_date")
-  totalAmount   Float     @map("total_amount")
-  depositAmount Float     @default(1.0) @map("deposit_amount")
-  
-  status        ContractStatus @default(PENDING)
-  ledgerId      String?   @map("ledger_id")
-  
-  calendarBlocks CalendarBlock[]
-  waybills       Waybill[]
-  
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-
-  @@map("talent_smart_contracts")
-}
-
-model CalendarBlock {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  artistId      String    @db.Uuid
-  artist        ArtistProfile @relation(fields: [artistId], references: [id])
-  
-  blockDate     DateTime  @map("block_date")
-  reason        BlockReason @default(BOOKING)
-  
-  contractId    String?   @db.Uuid
-  contract      SmartContract? @relation(fields: [contractId], references: [id])
-  
-  createdAt     DateTime  @default(now()) @map("created_at")
-
-  @@unique([artistId, blockDate])
-  @@map("talent_calendar_blocks")
-}
-
-enum ArtistStatus {
-  DRAFT
-  PUBLISHED
-  ARCHIVED
-}
-
-enum ContractStatus {
-  PENDING
-  RESERVED
-  SIGNED
-  PAID
-  CANCELLED
-  EXECUTED
-}
-
-enum BlockReason {
-  BOOKING
-  PERSONAL
-  EXTERNAL
-  MAINTENANCE
-}
-
-// --- VERTICAL LOGÍSTICA (FLEET & LOGISTICS OS) ---
-
-model FleetUnit {
-  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name            String
-  type            FleetUnitType    @default(VAN)
-  status          FleetStatus      @default(AVAILABLE)
-  
-  // Multi-Tenancy
-  tenantId        String?          @map("tenant_id")
-  workspaceId     String?          @db.Uuid @map("workspace_id")
-  workspace       Workspace?       @relation(fields: [workspaceId], references: [id])
-  
-  // Relaciones
-  operatorId      String?
-  operator        User?            @relation(fields: [operatorId], references: [id])
-  
-  positions       FleetPosition[]
-  waybills        Waybill[]
-  
-  createdAt       DateTime         @default(now()) @map("created_at")
-  updatedAt       DateTime         @updatedAt @map("updated_at")
-
-  @@map("fleet_units")
-}
-
-model FleetPosition {
-  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  unitId          String           @db.Uuid @map("unit_id")
-  unit            FleetUnit        @relation(fields: [unitId], references: [id], onDelete: Cascade)
-  
-  latitude        Float
-  longitude       Float
-  altitude        Float?
-  speed           Float?
-  heading         Float?
-  accuracy        Float?
-  
-  source          String           @default("GPS") // GPS, NETWORK, MANUAL
-  
-  timestamp       DateTime         @default(now())
-  
-  @@index([unitId, timestamp(desc)])
-  @@map("fleet_positions")
-}
-
-model Waybill {
-  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title           String
-  status          WaybillStatus    @default(PENDING)
-  
-  // Vinculación Talent OS
-  contractId      String?          @db.Uuid @map("contract_id")
-  contract        SmartContract?   @relation(fields: [contractId], references: [id])
-  
-  // Vinculación Flota
-  unitId          String?          @db.Uuid @map("unit_id")
-  unit            FleetUnit?       @relation(fields: [unitId], references: [id])
-  
-  // Equipo asignado
-  team            Json?            @default("[]")
-  
-  scheduledStart  DateTime?        @map("scheduled_start")
-  scheduledEnd    DateTime?        @map("scheduled_end")
-  actualStart     DateTime?        @map("actual_start")
-  actualEnd       DateTime?        @map("actual_end")
-  
-  checkpoints     WaybillCheckpoint[]
-  events          FleetTelemetryEvent[]
-  participants    WaybillParticipant[]
-  
-  metadata        Json?            @default("{}")
-  createdAt       DateTime         @default(now()) @map("created_at")
-  updatedAt       DateTime         @updatedAt @map("updated_at")
-
-  @@map("fleet_waybills")
-}
-
-model WaybillCheckpoint {
-  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  waybillId       String           @db.Uuid @map("waybill_id")
-  waybill         Waybill          @relation(fields: [waybillId], references: [id], onDelete: Cascade)
-  
-  title           String
-  locationName    String?          @map("location_name")
-  latitude        Float?
-  longitude       Float?
-  
-  status          CheckpointStatus @default(PENDING)
-  scheduledTime   DateTime?        @map("scheduled_time")
-  actualTime      DateTime?        @map("actual_time")
-  
-  order           Int              @default(0)
-  
-  @@map("fleet_waybill_checkpoints")
-}
-
-model FleetTelemetryEvent {
-  id              String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  waybillId       String?          @db.Uuid @map("waybill_id")
-  waybill         Waybill?         @relation(fields: [waybillId], references: [id])
-  
-  eventType       String           @map("event_type") // position_updated, status_changed, etc.
-  payload         Json?            @default("{}")
-  
-  createdAt       DateTime         @default(now()) @map("created_at")
-
-  @@index([waybillId, createdAt(desc)])
-  @@map("fleet_telemetry_events")
-}
-
-enum FleetUnitType {
-  VAN
-  TRUCK
-  CAR
-  EQUIPMENT
-  DRONE
-}
-
-enum FleetStatus {
-  AVAILABLE
-  BUSY
-  MAINTENANCE
-  OFFLINE
+enum MembershipStatus {
+  ACTIVE
+  INVITED
+  SUSPENDED
+  REMOVED
 }
 
 enum WaybillStatus {
-  PENDING
+  QUEUED
+  DISPATCHED
   IN_TRANSIT
   ARRIVED
   COMPLETED
   CANCELLED
-  DELAYED
-}
-
-enum CheckpointStatus {
-  PENDING
-  COMPLETED
-  SKIPPED
-}
-
-// --- SISTEMA DE WORKSPACES & ACTORES ---
-
-model Workspace {
-  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name          String
-  members       WorkspaceMember[]
-  units         FleetUnit[]
-  assets        StorageAsset[]
-  
-  createdAt     DateTime          @default(now()) @map("created_at")
-  updatedAt     DateTime          @updatedAt @map("updated_at")
-
-  @@map("ear_workspaces")
-}
-
-model WorkspaceMember {
-  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  workspaceId   String            @db.Uuid @map("workspace_id")
-  workspace     Workspace         @relation(fields: [workspaceId], references: [id])
-  userId        String            @map("user_id")
-  user          User              @relation(fields: [userId], references: [id])
-  
-  actorType     ActorType         @default(OPERATOR) @map("actor_type")
-  role          String            @default("MEMBER")
-  status        String            @default("ACTIVE")
-  
-  createdAt     DateTime          @default(now()) @map("created_at")
-  updatedAt     DateTime          @updatedAt @map("updated_at")
-
-  @@unique([workspaceId, userId, actorType])
-  @@map("ear_workspace_members")
-}
-
-model WaybillParticipant {
-  id            String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  waybillId     String            @db.Uuid @map("waybill_id")
-  waybill       Waybill           @relation(fields: [waybillId], references: [id], onDelete: Cascade)
-  userId        String            @map("user_id")
-  user          User              @relation(fields: [userId], references: [id])
-  
-  role          WaybillParticipantRole @default(TECHNICIAN)
-  
-  createdAt     DateTime          @default(now()) @map("created_at")
-
-  @@map("fleet_waybill_participants")
-}
-
-model StorageAsset {
-  id            String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  bucket        String
-  path          String
-  fileName      String    @map("file_name")
-  mimeType      String?   @map("mime_type")
-  size          Int?
-  
-  // Ownership
-  workspaceId   String?   @db.Uuid @map("workspace_id")
-  workspace     Workspace? @relation(fields: [workspaceId], references: [id])
-  ownerId       String    @map("owner_id")
-  owner         User      @relation(fields: [ownerId], references: [id])
-  
-  actorType     ActorType? @map("actor_type")
-  
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-
-  @@map("ear_storage_assets")
 }
 
 enum WaybillParticipantRole {
@@ -764,4 +52,440 @@ enum WaybillParticipantRole {
   PROVIDER
   COORDINATOR
   CLIENT_CONTACT
+}
+
+enum AssetKind {
+  RIDER
+  MEDIA_KIT
+  INVOICE
+  CONTRACT
+  KYC_DOCUMENT
+  IMAGE
+  VIDEO
+  AUDIO
+  OTHER
+}
+
+enum AssetVisibility {
+  PRIVATE
+  WORKSPACE
+  SHARED
+}
+
+enum CommissionStatus {
+  PENDING
+  APPROVED
+  PAID
+  REJECTED
+  VOID
+}
+
+enum TelemetryEventType {
+  WAYBILL_CREATED
+  MATCH_STARTED
+  UNIT_ASSIGNED
+  PARTICIPANT_ATTACHED
+  DEPARTED
+  LOCATION_PING
+  ARRIVED
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id             String  @id @default(cuid())
+  email          String  @unique
+  role           Role    @default(EXPLORADOR)
+  rank           String  @default("NIVEL_0_EXPLORADOR") @map("rank_label")
+  isPacienteCero Boolean @default(false) @map("is_paciente_cero")
+  displayName    String? @map("display_name")
+  phone          String?
+  locale         String? @default("es-ES")
+  timezone       String? @default("Europe/Madrid")
+
+  artistProfile    ArtistProfile?
+  providerProfile  ProviderProfile?
+  affiliateProfile AffiliateProfile?
+  clientProfile    ClientProfile?
+
+  memberships           WorkspaceMember[]
+  waybillParticipations WaybillParticipant[]
+  storageAssets         StorageAsset[]        @relation("AssetOwner")
+  contracts             SmartContract[]
+  wallet                AuraWallet?
+  ledgerEntries         CommissionLedger[]
+  telemetryEvents       FleetTelemetryEvent[] @relation("TelemetryActor")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ear_users")
+}
+
+model Workspace {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String
+  slug        String  @unique
+  description String?
+  isActive    Boolean @default(true) @map("is_active")
+
+  members          WorkspaceMember[]
+  units            FleetUnit[]
+  assets           StorageAsset[]
+  waybills         Waybill[]
+  contracts        SmartContract[]
+  commissionLedger CommissionLedger[]
+
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  ProviderProfile ProviderProfile[]
+
+  @@map("ear_workspaces")
+}
+
+model WorkspaceMember {
+  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId String @map("workspace_id") @db.Uuid
+  userId      String @map("user_id")
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  actorType ActorType        @default(OPERATOR) @map("actor_type")
+  role      String           @default("MEMBER")
+  status    MembershipStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([workspaceId, userId, actorType])
+  @@index([workspaceId, actorType])
+  @@index([userId])
+  @@map("ear_workspace_members")
+}
+
+model ArtistProfile {
+  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId String @unique @map("user_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  slug        String   @unique
+  displayName String   @map("display_name")
+  bio         String?
+  genres      String[]
+  mediaKitUrl String?  @map("media_kit_url")
+  status      String   @default("DRAFT")
+  homeBase    String?  @map("home_base")
+
+  riders    TechnicalRider[]
+  calendar  CalendarBlock[]
+  contracts SmartContract[]
+  waybills  Waybill[]        @relation("WaybillArtist")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ear_artist_profiles")
+}
+
+model ProviderProfile {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String? @unique @map("user_id")
+  workspaceId String? @map("workspace_id") @db.Uuid
+
+  user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+
+  name                 String  @unique
+  slug                 String? @unique
+  category             String?
+  location             String?
+  roiGuaranteeScore    Float   @default(0.0) @map("roi_guarantee_score")
+  roiProjected         Float   @default(0.0) @map("roi_projected")
+  auraLevel            Float   @default(0.0) @map("aura_level")
+  technicalReliability Float   @default(0.0) @map("technical_reliability")
+  isVerified           Boolean @default(false) @map("is_verified")
+
+  waybills Waybill[] @relation("WaybillProvider")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([workspaceId])
+  @@map("ear_provider_profiles")
+}
+
+model AffiliateProfile {
+  id     String @id @default(cuid())
+  userId String @unique @map("user_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  affiliateHash  String @unique @map("affiliate_hash")
+  tier           Int    @default(1)
+  leadsReferred  Int    @default(0) @map("leads_referred")
+  conversionRate Float  @default(0.0) @map("conversion_rate")
+
+  ledgerEntries CommissionLedger[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ear_affiliate_profiles")
+}
+
+model ClientProfile {
+  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId String @unique @map("user_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  companyName  String? @map("company_name")
+  taxId        String? @map("tax_id")
+  billingEmail String? @map("billing_email")
+
+  contracts SmartContract[]
+  waybills  Waybill[]       @relation("WaybillClient")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ear_client_profiles")
+}
+
+model FleetUnit {
+  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId String @map("workspace_id") @db.Uuid
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  code          String    @unique
+  label         String?
+  status        String    @default("IDLE")
+  lastLatitude  Float?    @map("last_latitude")
+  lastLongitude Float?    @map("last_longitude")
+  lastHeading   Float?    @map("last_heading")
+  lastSpeed     Float?    @map("last_speed")
+  lastPingAt    DateTime? @map("last_ping_at")
+
+  waybills Waybill[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([workspaceId])
+  @@map("fleet_units")
+}
+
+model Waybill {
+  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId       String  @map("workspace_id") @db.Uuid
+  unitId            String? @map("unit_id") @db.Uuid
+  artistProfileId   String? @map("artist_profile_id") @db.Uuid
+  providerProfileId String? @map("provider_profile_id") @db.Uuid
+  clientProfileId   String? @map("client_profile_id") @db.Uuid
+
+  workspace       Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  unit            FleetUnit?       @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  artistProfile   ArtistProfile?   @relation("WaybillArtist", fields: [artistProfileId], references: [id], onDelete: SetNull)
+  providerProfile ProviderProfile? @relation("WaybillProvider", fields: [providerProfileId], references: [id], onDelete: SetNull)
+  clientProfile   ClientProfile?   @relation("WaybillClient", fields: [clientProfileId], references: [id], onDelete: SetNull)
+
+  status        WaybillStatus @default(QUEUED)
+  referenceCode String        @unique @map("reference_code")
+
+  originLabel      String @map("origin_label")
+  destinationLabel String @map("destination_label")
+  originLat        Float  @map("origin_lat")
+  originLng        Float  @map("origin_lng")
+  destinationLat   Float  @map("destination_lat")
+  destinationLng   Float  @map("destination_lng")
+
+  startsAt       DateTime? @map("starts_at")
+  etaSeconds     Int?      @map("eta_seconds")
+  distanceMeters Int?      @map("distance_meters")
+  notes          String?
+
+  participants WaybillParticipant[]
+  events       FleetTelemetryEvent[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([workspaceId, status])
+  @@index([unitId])
+  @@index([artistProfileId])
+  @@index([providerProfileId])
+  @@index([clientProfileId])
+  @@map("fleet_waybills")
+}
+
+model WaybillParticipant {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  waybillId String @map("waybill_id") @db.Uuid
+  userId    String @map("user_id")
+
+  waybill Waybill @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  role      WaybillParticipantRole @default(TECHNICIAN)
+  isPrimary Boolean                @default(false) @map("is_primary")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([waybillId, userId, role])
+  @@index([userId])
+  @@map("fleet_waybill_participants")
+}
+
+model FleetTelemetryEvent {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  waybillId   String  @map("waybill_id") @db.Uuid
+  actorUserId String? @map("actor_user_id")
+
+  waybill   Waybill @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  actorUser User?   @relation("TelemetryActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  type      TelemetryEventType
+  latitude  Float
+  longitude Float
+  heading   Float?
+  speed     Float?
+  accuracy  Float?
+  payload   Json?
+  timestamp DateTime           @default(now())
+
+  @@index([waybillId, timestamp])
+  @@index([actorUserId])
+  @@map("fleet_telemetry_events")
+}
+
+model StorageAsset {
+  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  bucket     String
+  path       String
+  fileName   String          @map("file_name")
+  mimeType   String?         @map("mime_type")
+  sizeBytes  Int?            @map("size_bytes")
+  checksum   String?
+  kind       AssetKind       @default(OTHER)
+  visibility AssetVisibility @default(PRIVATE)
+
+  workspaceId String? @map("workspace_id") @db.Uuid
+  ownerId     String  @map("owner_id")
+
+  workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  owner     User       @relation("AssetOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+
+  actorType ActorType? @map("actor_type")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([workspaceId, actorType])
+  @@index([ownerId])
+  @@map("ear_storage_assets")
+}
+
+model CommissionLedger {
+  id                 String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String  @map("user_id")
+  workspaceId        String? @map("workspace_id") @db.Uuid
+  affiliateProfileId String? @map("affiliate_profile_id")
+
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace        Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  affiliateProfile AffiliateProfile? @relation(fields: [affiliateProfileId], references: [id], onDelete: SetNull)
+
+  amount      Float
+  currency    String           @default("EUR")
+  status      CommissionStatus @default(PENDING)
+  reference   String?          @unique
+  sourceEvent String?          @map("source_event")
+  notes       String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId, status])
+  @@index([workspaceId])
+  @@index([affiliateProfileId])
+  @@map("ear_commission_ledger")
+}
+
+model TechnicalRider {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  artistId String @map("artist_id") @db.Uuid
+
+  artist ArtistProfile @relation(fields: [artistId], references: [id], onDelete: Cascade)
+
+  version Int
+  title   String?
+  assetId String? @map("asset_id") @db.Uuid
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([artistId, version])
+  @@map("ear_technical_riders")
+}
+
+model SmartContract {
+  id              String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String  @map("user_id")
+  workspaceId     String? @map("workspace_id") @db.Uuid
+  artistId        String? @map("artist_id") @db.Uuid
+  clientProfileId String? @map("client_profile_id") @db.Uuid
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace     Workspace?     @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  artist        ArtistProfile? @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  clientProfile ClientProfile? @relation(fields: [clientProfileId], references: [id], onDelete: SetNull)
+
+  status   String    @default("DRAFT")
+  title    String?
+  signedAt DateTime? @map("signed_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([workspaceId])
+  @@index([artistId])
+  @@index([clientProfileId])
+  @@map("ear_smart_contracts")
+}
+
+model CalendarBlock {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  artistId String @map("artist_id") @db.Uuid
+
+  artist ArtistProfile @relation(fields: [artistId], references: [id], onDelete: Cascade)
+
+  startsAt DateTime @map("starts_at")
+  endsAt   DateTime @map("ends_at")
+  label    String?
+  status   String   @default("BLOCKED")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([artistId, startsAt, endsAt])
+  @@map("ear_calendar_blocks")
+}
+
+model AuraWallet {
+  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId String @unique @map("user_id")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  balance       Float   @default(0)
+  currency      String  @default("EUR")
+  walletAddress String? @map("wallet_address")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("ear_aura_wallets")
 }

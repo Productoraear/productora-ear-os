@@ -45,9 +45,15 @@ export class UserService {
 
     const roleHierarchy: Record<Role, number> = {
       EXPLORADOR: 0,
-      ARQUITECTO: 1,
-      OPERADOR: 2,
-      ADMIN: 3,
+      CLIENT: 1,
+      AFFILIATE: 2,
+      ARTIST: 3,
+      PROVIDER: 4,
+      ARQUITECTO: 5,
+      OPERADOR: 6,
+      FLEET_OPERATOR: 7,
+      ADMIN: 8,
+      COMMANDER: 9,
     };
 
     return roleHierarchy[user.role] >= roleHierarchy[requiredRole];

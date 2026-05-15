@@ -45,7 +45,7 @@ async function main() {
     });
 
     if (batch.length >= BATCH_SIZE) {
-      await prisma.vendor.createMany({
+      await prisma.providerProfile.createMany({
         data: batch,
         skipDuplicates: true
       });
@@ -59,7 +59,7 @@ async function main() {
   }
 
   if (batch.length > 0) {
-    await prisma.vendor.createMany({ data: batch, skipDuplicates: true });
+    await prisma.providerProfile.createMany({ data: batch, skipDuplicates: true });
     successCount += batch.length;
   }
 
