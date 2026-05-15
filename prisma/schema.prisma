@@ -85,7 +85,6 @@ enum TelemetryEventType {
   MATCH_STARTED
   UNIT_ASSIGNED
   PARTICIPANT_ATTACHED
-  DEPARTED
   LOCATION_PING
   ARRIVED
   COMPLETED
@@ -93,20 +92,20 @@ enum TelemetryEventType {
 }
 
 model User {
-  id             String  @id @default(cuid())
-  email          String  @unique
-  role           Role    @default(EXPLORADOR)
-  rank           String  @default("NIVEL_0_EXPLORADOR") @map("rank_label")
-  isPacienteCero Boolean @default(false) @map("is_paciente_cero")
-  displayName    String? @map("display_name")
-  phone          String?
-  locale         String? @default("es-ES")
-  timezone       String? @default("Europe/Madrid")
+  id                    String                @id @default(cuid())
+  email                 String                @unique
+  role                  Role                  @default(EXPLORADOR)
+  rank                  String                @default("NIVEL_0_EXPLORADOR") @map("rank_label")
+  isPacienteCero        Boolean               @default(false) @map("is_paciente_cero")
+  displayName           String?               @map("display_name")
+  phone                 String?
+  locale                String?               @default("es-ES")
+  timezone              String?               @default("Europe/Madrid")
 
-  artistProfile    ArtistProfile?
-  providerProfile  ProviderProfile?
-  affiliateProfile AffiliateProfile?
-  clientProfile    ClientProfile?
+  artistProfile         ArtistProfile?
+  providerProfile       ProviderProfile?
+  affiliateProfile      AffiliateProfile?
+  clientProfile         ClientProfile?
 
   memberships           WorkspaceMember[]
   waybillParticipations WaybillParticipant[]
@@ -116,18 +115,18 @@ model User {
   ledgerEntries         CommissionLedger[]
   telemetryEvents       FleetTelemetryEvent[] @relation("TelemetryActor")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt             DateTime              @default(now()) @map("created_at")
+  updatedAt             DateTime              @updatedAt @map("updated_at")
 
   @@map("ear_users")
 }
 
 model Workspace {
-  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name        String
-  slug        String  @unique
-  description String?
-  isActive    Boolean @default(true) @map("is_active")
+  id               String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String
+  slug             String               @unique
+  description      String?
+  isActive         Boolean              @default(true) @map("is_active")
 
   members          WorkspaceMember[]
   units            FleetUnit[]
@@ -136,27 +135,26 @@ model Workspace {
   contracts        SmartContract[]
   commissionLedger CommissionLedger[]
 
-  createdAt       DateTime          @default(now()) @map("created_at")
-  updatedAt       DateTime          @updatedAt @map("updated_at")
-  ProviderProfile ProviderProfile[]
+  createdAt        DateTime             @default(now()) @map("created_at")
+  updatedAt        DateTime             @updatedAt @map("updated_at")
 
   @@map("ear_workspaces")
 }
 
 model WorkspaceMember {
-  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  workspaceId String @map("workspace_id") @db.Uuid
-  userId      String @map("user_id")
+  id            String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId   String           @db.Uuid @map("workspace_id")
+  userId        String           @map("user_id")
 
-  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace     Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  actorType ActorType        @default(OPERATOR) @map("actor_type")
-  role      String           @default("MEMBER")
-  status    MembershipStatus @default(ACTIVE)
+  actorType     ActorType        @default(OPERATOR) @map("actor_type")
+  role          String           @default("MEMBER")
+  status        MembershipStatus @default(ACTIVE)
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
 
   @@unique([workspaceId, userId, actorType])
   @@index([workspaceId, actorType])
@@ -165,153 +163,153 @@ model WorkspaceMember {
 }
 
 model ArtistProfile {
-  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId String @unique @map("user_id")
+  id            String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String           @unique @map("user_id")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  slug        String   @unique
-  displayName String   @map("display_name")
-  bio         String?
-  genres      String[]
-  mediaKitUrl String?  @map("media_kit_url")
-  status      String   @default("DRAFT")
-  homeBase    String?  @map("home_base")
+  slug          String           @unique
+  displayName   String           @map("display_name")
+  bio           String?
+  genres        String[]
+  mediaKitUrl   String?          @map("media_kit_url")
+  status        String           @default("DRAFT")
+  homeBase      String?          @map("home_base")
 
-  riders    TechnicalRider[]
-  calendar  CalendarBlock[]
-  contracts SmartContract[]
-  waybills  Waybill[]        @relation("WaybillArtist")
+  riders        TechnicalRider[]
+  calendar      CalendarBlock[]
+  contracts     SmartContract[]
+  waybills      Waybill[]        @relation("WaybillArtist")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
 
   @@map("ear_artist_profiles")
 }
 
 model ProviderProfile {
-  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId      String? @unique @map("user_id")
-  workspaceId String? @map("workspace_id") @db.Uuid
+  id                   String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId               String?           @unique @map("user_id")
+  workspaceId          String?           @db.Uuid @map("workspace_id")
 
-  user      User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
-  workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  user                 User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  workspace            Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
 
-  name                 String  @unique
-  slug                 String? @unique
+  name                 String            @unique
+  slug                 String?           @unique
   category             String?
   location             String?
-  roiGuaranteeScore    Float   @default(0.0) @map("roi_guarantee_score")
-  roiProjected         Float   @default(0.0) @map("roi_projected")
-  auraLevel            Float   @default(0.0) @map("aura_level")
-  technicalReliability Float   @default(0.0) @map("technical_reliability")
-  isVerified           Boolean @default(false) @map("is_verified")
+  roiGuaranteeScore    Float             @default(0.0) @map("roi_guarantee_score")
+  roiProjected         Float             @default(0.0) @map("roi_projected")
+  auraLevel            Float             @default(0.0) @map("aura_level")
+  technicalReliability Float             @default(0.0) @map("technical_reliability")
+  isVerified           Boolean           @default(false) @map("is_verified")
 
-  waybills Waybill[] @relation("WaybillProvider")
+  waybills             Waybill[]         @relation("WaybillProvider")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt            DateTime          @default(now()) @map("created_at")
+  updatedAt            DateTime          @updatedAt @map("updated_at")
 
   @@index([workspaceId])
   @@map("ear_provider_profiles")
 }
 
 model AffiliateProfile {
-  id     String @id @default(cuid())
-  userId String @unique @map("user_id")
+  id             String             @id @default(cuid())
+  userId         String             @unique @map("user_id")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  affiliateHash  String @unique @map("affiliate_hash")
-  tier           Int    @default(1)
-  leadsReferred  Int    @default(0) @map("leads_referred")
-  conversionRate Float  @default(0.0) @map("conversion_rate")
+  affiliateHash  String             @unique @map("affiliate_hash")
+  tier           Int                @default(1)
+  leadsReferred  Int                @default(0) @map("leads_referred")
+  conversionRate Float              @default(0.0) @map("conversion_rate")
 
-  ledgerEntries CommissionLedger[]
+  ledgerEntries  CommissionLedger[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
 
   @@map("ear_affiliate_profiles")
 }
 
 model ClientProfile {
-  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId String @unique @map("user_id")
+  id             String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId         String             @unique @map("user_id")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  companyName  String? @map("company_name")
-  taxId        String? @map("tax_id")
-  billingEmail String? @map("billing_email")
+  companyName    String?            @map("company_name")
+  taxId          String?            @map("tax_id")
+  billingEmail   String?            @map("billing_email")
 
-  contracts SmartContract[]
-  waybills  Waybill[]       @relation("WaybillClient")
+  contracts      SmartContract[]
+  waybills       Waybill[]          @relation("WaybillClient")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
 
   @@map("ear_client_profiles")
 }
 
 model FleetUnit {
-  id          String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  workspaceId String @map("workspace_id") @db.Uuid
+  id              String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId     String                @db.Uuid @map("workspace_id")
 
-  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspace       Workspace             @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
-  code          String    @unique
-  label         String?
-  status        String    @default("IDLE")
-  lastLatitude  Float?    @map("last_latitude")
-  lastLongitude Float?    @map("last_longitude")
-  lastHeading   Float?    @map("last_heading")
-  lastSpeed     Float?    @map("last_speed")
-  lastPingAt    DateTime? @map("last_ping_at")
+  code            String                @unique
+  label           String?
+  status          String                @default("IDLE")
+  lastLatitude    Float?                @map("last_latitude")
+  lastLongitude   Float?                @map("last_longitude")
+  lastHeading     Float?                @map("last_heading")
+  lastSpeed       Float?                @map("last_speed")
+  lastPingAt      DateTime?             @map("last_ping_at")
 
-  waybills Waybill[]
+  waybills        Waybill[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt       DateTime              @default(now()) @map("created_at")
+  updatedAt       DateTime              @updatedAt @map("updated_at")
 
   @@index([workspaceId])
   @@map("fleet_units")
 }
 
 model Waybill {
-  id                String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  workspaceId       String  @map("workspace_id") @db.Uuid
-  unitId            String? @map("unit_id") @db.Uuid
-  artistProfileId   String? @map("artist_profile_id") @db.Uuid
-  providerProfileId String? @map("provider_profile_id") @db.Uuid
-  clientProfileId   String? @map("client_profile_id") @db.Uuid
+  id                String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  workspaceId       String                 @db.Uuid @map("workspace_id")
+  unitId            String?                @db.Uuid @map("unit_id")
+  artistProfileId   String?                @db.Uuid @map("artist_profile_id")
+  providerProfileId String?                @db.Uuid @map("provider_profile_id")
+  clientProfileId   String?                @db.Uuid @map("client_profile_id")
 
-  workspace       Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  unit            FleetUnit?       @relation(fields: [unitId], references: [id], onDelete: SetNull)
-  artistProfile   ArtistProfile?   @relation("WaybillArtist", fields: [artistProfileId], references: [id], onDelete: SetNull)
-  providerProfile ProviderProfile? @relation("WaybillProvider", fields: [providerProfileId], references: [id], onDelete: SetNull)
-  clientProfile   ClientProfile?   @relation("WaybillClient", fields: [clientProfileId], references: [id], onDelete: SetNull)
+  workspace         Workspace              @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  unit              FleetUnit?             @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  artistProfile     ArtistProfile?         @relation("WaybillArtist", fields: [artistProfileId], references: [id], onDelete: SetNull)
+  providerProfile   ProviderProfile?       @relation("WaybillProvider", fields: [providerProfileId], references: [id], onDelete: SetNull)
+  clientProfile     ClientProfile?         @relation("WaybillClient", fields: [clientProfileId], references: [id], onDelete: SetNull)
 
-  status        WaybillStatus @default(QUEUED)
-  referenceCode String        @unique @map("reference_code")
+  status            WaybillStatus          @default(QUEUED)
+  referenceCode     String                 @unique @map("reference_code")
 
-  originLabel      String @map("origin_label")
-  destinationLabel String @map("destination_label")
-  originLat        Float  @map("origin_lat")
-  originLng        Float  @map("origin_lng")
-  destinationLat   Float  @map("destination_lat")
-  destinationLng   Float  @map("destination_lng")
+  originLabel       String                 @map("origin_label")
+  destinationLabel  String                 @map("destination_label")
+  originLat         Float                  @map("origin_lat")
+  originLng         Float                  @map("origin_lng")
+  destinationLat    Float                  @map("destination_lat")
+  destinationLng    Float                  @map("destination_lng")
 
-  startsAt       DateTime? @map("starts_at")
-  etaSeconds     Int?      @map("eta_seconds")
-  distanceMeters Int?      @map("distance_meters")
-  notes          String?
+  startsAt          DateTime?              @map("starts_at")
+  etaSeconds        Int?                   @map("eta_seconds")
+  distanceMeters    Int?                   @map("distance_meters")
+  notes             String?
 
-  participants WaybillParticipant[]
-  events       FleetTelemetryEvent[]
+  participants      WaybillParticipant[]
+  events            FleetTelemetryEvent[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt         DateTime               @default(now()) @map("created_at")
+  updatedAt         DateTime               @updatedAt @map("updated_at")
 
   @@index([workspaceId, status])
   @@index([unitId])
@@ -322,17 +320,17 @@ model Waybill {
 }
 
 model WaybillParticipant {
-  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  waybillId String @map("waybill_id") @db.Uuid
-  userId    String @map("user_id")
+  id            String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  waybillId     String                 @db.Uuid @map("waybill_id")
+  userId        String                 @map("user_id")
 
-  waybill Waybill @relation(fields: [waybillId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  waybill       Waybill                @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  user          User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  role      WaybillParticipantRole @default(TECHNICIAN)
-  isPrimary Boolean                @default(false) @map("is_primary")
+  role          WaybillParticipantRole @default(TECHNICIAN)
+  isPrimary     Boolean                @default(false) @map("is_primary")
 
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt     DateTime               @default(now()) @map("created_at")
 
   @@unique([waybillId, userId, role])
   @@index([userId])
@@ -340,21 +338,21 @@ model WaybillParticipant {
 }
 
 model FleetTelemetryEvent {
-  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  waybillId   String  @map("waybill_id") @db.Uuid
-  actorUserId String? @map("actor_user_id")
+  id            String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  waybillId     String              @db.Uuid @map("waybill_id")
+  actorUserId   String?             @map("actor_user_id")
 
-  waybill   Waybill @relation(fields: [waybillId], references: [id], onDelete: Cascade)
-  actorUser User?   @relation("TelemetryActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+  waybill       Waybill             @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  actorUser     User?               @relation("TelemetryActor", fields: [actorUserId], references: [id], onDelete: SetNull)
 
-  type      TelemetryEventType
-  latitude  Float
-  longitude Float
-  heading   Float?
-  speed     Float?
-  accuracy  Float?
-  payload   Json?
-  timestamp DateTime           @default(now())
+  type          TelemetryEventType
+  latitude      Float
+  longitude     Float
+  heading       Float?
+  speed         Float?
+  accuracy      Float?
+  payload       Json?
+  timestamp     DateTime            @default(now())
 
   @@index([waybillId, timestamp])
   @@index([actorUserId])
@@ -362,26 +360,26 @@ model FleetTelemetryEvent {
 }
 
 model StorageAsset {
-  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  bucket     String
-  path       String
-  fileName   String          @map("file_name")
-  mimeType   String?         @map("mime_type")
-  sizeBytes  Int?            @map("size_bytes")
-  checksum   String?
-  kind       AssetKind       @default(OTHER)
-  visibility AssetVisibility @default(PRIVATE)
+  id            String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  bucket        String
+  path          String
+  fileName      String           @map("file_name")
+  mimeType      String?          @map("mime_type")
+  sizeBytes     Int?             @map("size_bytes")
+  checksum      String?
+  kind          AssetKind        @default(OTHER)
+  visibility    AssetVisibility  @default(PRIVATE)
 
-  workspaceId String? @map("workspace_id") @db.Uuid
-  ownerId     String  @map("owner_id")
+  workspaceId   String?          @db.Uuid @map("workspace_id")
+  ownerId       String           @map("owner_id")
 
-  workspace Workspace? @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
-  owner     User       @relation("AssetOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  workspace     Workspace?       @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  owner         User             @relation("AssetOwner", fields: [ownerId], references: [id], onDelete: Cascade)
 
-  actorType ActorType? @map("actor_type")
+  actorType     ActorType?       @map("actor_type")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
 
   @@index([workspaceId, actorType])
   @@index([ownerId])
@@ -389,24 +387,24 @@ model StorageAsset {
 }
 
 model CommissionLedger {
-  id                 String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId             String  @map("user_id")
-  workspaceId        String? @map("workspace_id") @db.Uuid
-  affiliateProfileId String? @map("affiliate_profile_id")
+  id                 String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId             String             @map("user_id")
+  workspaceId        String?            @db.Uuid @map("workspace_id")
+  affiliateProfileId String?            @map("affiliate_profile_id")
 
-  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace        Workspace?        @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
-  affiliateProfile AffiliateProfile? @relation(fields: [affiliateProfileId], references: [id], onDelete: SetNull)
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace          Workspace?         @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  affiliateProfile   AffiliateProfile?  @relation(fields: [affiliateProfileId], references: [id], onDelete: SetNull)
 
-  amount      Float
-  currency    String           @default("EUR")
-  status      CommissionStatus @default(PENDING)
-  reference   String?          @unique
-  sourceEvent String?          @map("source_event")
-  notes       String?
+  amount             Float
+  currency           String             @default("EUR")
+  status             CommissionStatus   @default(PENDING)
+  reference          String?            @unique
+  sourceEvent        String?            @map("source_event")
+  notes              String?
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
 
   @@index([userId, status])
   @@index([workspaceId])
@@ -415,40 +413,40 @@ model CommissionLedger {
 }
 
 model TechnicalRider {
-  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  artistId String @map("artist_id") @db.Uuid
+  id            String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  artistId      String           @db.Uuid @map("artist_id")
 
-  artist ArtistProfile @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  artist        ArtistProfile    @relation(fields: [artistId], references: [id], onDelete: Cascade)
 
-  version Int
-  title   String?
-  assetId String? @map("asset_id") @db.Uuid
+  version       Int
+  title         String?
+  assetId       String?          @db.Uuid @map("asset_id")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
 
   @@unique([artistId, version])
   @@map("ear_technical_riders")
 }
 
 model SmartContract {
-  id              String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId          String  @map("user_id")
-  workspaceId     String? @map("workspace_id") @db.Uuid
-  artistId        String? @map("artist_id") @db.Uuid
-  clientProfileId String? @map("client_profile_id") @db.Uuid
+  id               String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String          @map("user_id")
+  workspaceId      String?         @db.Uuid @map("workspace_id")
+  artistId         String?         @db.Uuid @map("artist_id")
+  clientProfileId  String?         @db.Uuid @map("client_profile_id")
 
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace     Workspace?     @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
-  artist        ArtistProfile? @relation(fields: [artistId], references: [id], onDelete: SetNull)
-  clientProfile ClientProfile? @relation(fields: [clientProfileId], references: [id], onDelete: SetNull)
+  user             User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace        Workspace?      @relation(fields: [workspaceId], references: [id], onDelete: SetNull)
+  artist           ArtistProfile?  @relation(fields: [artistId], references: [id], onDelete: SetNull)
+  clientProfile    ClientProfile?  @relation(fields: [clientProfileId], references: [id], onDelete: SetNull)
 
-  status   String    @default("DRAFT")
-  title    String?
-  signedAt DateTime? @map("signed_at")
+  status           String          @default("DRAFT")
+  title            String?
+  signedAt         DateTime?       @map("signed_at")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
 
   @@index([workspaceId])
   @@index([artistId])
@@ -457,35 +455,35 @@ model SmartContract {
 }
 
 model CalendarBlock {
-  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  artistId String @map("artist_id") @db.Uuid
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  artistId      String          @db.Uuid @map("artist_id")
 
-  artist ArtistProfile @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  artist        ArtistProfile   @relation(fields: [artistId], references: [id], onDelete: Cascade)
 
-  startsAt DateTime @map("starts_at")
-  endsAt   DateTime @map("ends_at")
-  label    String?
-  status   String   @default("BLOCKED")
+  startsAt      DateTime        @map("starts_at")
+  endsAt        DateTime        @map("ends_at")
+  label         String?
+  status        String          @default("BLOCKED")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
 
   @@index([artistId, startsAt, endsAt])
   @@map("ear_calendar_blocks")
 }
 
 model AuraWallet {
-  id     String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId String @unique @map("user_id")
+  id            String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId        String          @unique @map("user_id")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  balance       Float   @default(0)
-  currency      String  @default("EUR")
-  walletAddress String? @map("wallet_address")
+  balance       Float           @default(0)
+  currency      String          @default("EUR")
+  walletAddress String?         @map("wallet_address")
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt     DateTime        @default(now()) @map("created_at")
+  updatedAt     DateTime        @updatedAt @map("updated_at")
 
   @@map("ear_aura_wallets")
 }

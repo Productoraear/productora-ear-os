@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EAR OS — Sovereign Marketplace (The Crown Jewel)</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#020202; --panel:#080808; --panel-2:#0f0f0f; --line:rgba(255,255,255,.05);
+      --text:#f5f1e8; --muted:#777; --gold:#d4af37; --blue:#4f8fc0; --red:#b84a5a; --green:#5ca04f;
+      --premium-glow: 0 0 40px rgba(212, 175, 55, 0.15);
+    }
+    *{box-sizing:border-box} html,body{height:100%;background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;margin:0;overflow-x:hidden}
+    
+    .navbar{padding:24px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);background:rgba(2,2,2,.95);backdrop-filter:blur(30px);position:sticky;top:0;z-index:2000}
+    .logo{font-family:'Cabinet Grotesk',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.03em}
+    .logo span{color:var(--gold)}
+
+    .hero{padding:100px 48px;max-width:1400px;margin:0 auto}
+    .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.4em;color:var(--gold);font-weight:700;margin-bottom:16px}
+    .title{font-family:'Cabinet Grotesk',sans-serif;font-size:82px;line-height:.92;letter-spacing:-.06em;margin-bottom:40px}
+    
+    .search-card{background:var(--panel);border:1px solid var(--line);border-radius:48px;padding:48px;box-shadow:0 80px 160px rgba(0,0,0,.9);display:grid;grid-template-columns:repeat(4,1fr);gap:24px;align-items:end;margin-bottom:100px}
+    .field{display:flex;flex-direction:column;gap:12px}
+    .field label{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);font-weight:800}
+    .field input, .field select{background:var(--panel-2);border:1px solid var(--line);border-radius:18px;padding:20px;color:var(--text);font-family:inherit;font-size:16px;transition:all .3s cubic-bezier(0.4, 0, 0.2, 1)}
+    
+    .btn-action{grid-column:span 4;background:var(--gold);color:#000;border:none;border-radius:24px;padding:24px;font-weight:900;font-size:20px;cursor:pointer;transition:all .4s ease;margin-top:20px;text-transform:uppercase;letter-spacing:.1em}
+    .btn-action:hover{transform:translateY(-5px);box-shadow:0 30px 60px rgba(212, 175, 55, 0.2)}
+
+    .results-grid{display:grid;grid-template-columns:380px 1fr;gap:60px;opacity:0;transform:translateY(40px);transition:all 1s cubic-bezier(0.2, 0.8, 0.2, 1)}
+    .results-grid.visible{opacity:1;transform:translateY(0)}
+
+    .mariachi-card.exclusive{
+      background:linear-gradient(180deg, #121212, #050505);
+      border:2px solid var(--gold);
+      box-shadow:var(--premium-glow);
+      transform:scale(1.02);
+      z-index:100;
+    }
+    
+    .mariachi-card{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:40px;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:450px 1fr;
+      min-height:350px;
+      transition:all .5s cubic-bezier(0.4, 0, 0.2, 1);
+      position:relative;
+    }
+    .card-img{position:relative;overflow:hidden}
+    .card-img img{width:100%;height:100%;object-fit:cover}
+    
+    .card-content{padding:50px;display:flex;flex-direction:column;justify-content:center}
+    .card-title{font-family:'Cabinet Grotesk',sans-serif;font-size:38px;font-weight:800;letter-spacing:-.03em;margin-bottom:12px}
+    .card-tagline{font-size:16px;color:var(--gold);font-weight:600;margin-bottom:24px;letter-spacing:.02em}
+
+    .price-block{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:32px;border-top:1px solid var(--line)}
+    .price{font-size:42px;font-weight:900;color:var(--gold)}
+    
+    .btn-primary{background:var(--gold);color:#000;border:none;border-radius:18px;padding:16px 32px;font-weight:900;font-size:15px;cursor:pointer;transition:all .3s ease;text-transform:uppercase;letter-spacing:.05em}
+
+    .checkout-modal{
+      position:fixed;inset:0;background:rgba(0,0,0,0.95);backdrop-filter:blur(50px);z-index:5000;
+      display:none;align-items:center;justify-content:center;padding:40px;
+    }
+    .stripe-card{
+      background:#fff;border-radius:24px;width:100%;max-width:500px;padding:40px;color:#30313d;
+      box-shadow:0 100px 200px rgba(0,0,0,0.5);
+    }
+    .stripe-logo{color:#635bff;font-size:32px;font-weight:900;margin-bottom:32px}
+    .stripe-field{margin-bottom:24px}
+    .stripe-field label{display:block;font-size:14px;font-weight:600;margin-bottom:8px;color:#6d6e78}
+    .stripe-input{
+      width:100%;padding:14px;border:1px solid #e6e6e6;border-radius:8px;font-size:16px;outline:none;
+    }
+    .btn-stripe{
+      background:#635bff;color:#fff;border:none;border-radius:8px;width:100%;padding:16px;
+      font-size:16px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:12px;
+    }
+
+    .processing-overlay{
+      position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:6000;display:none;
+      flex-direction:column;align-items:center;justify-content:center;backdrop-filter:blur(100px);
+    }
+    .scan-line{
+      width:300px;height:2px;background:var(--gold);position:relative;
+      box-shadow:0 0 40px var(--gold);animation:scan 2s infinite ease-in-out;
+    }
+    @keyframes scan{0%,100%{top:-100px;opacity:0} 50%{top:100px;opacity:1}}
+    
+    .status-text{
+      margin-top:40px;font-family:'Cabinet Grotesk',sans-serif;font-size:14px;
+      text-transform:uppercase;letter-spacing:.4em;color:var(--gold);font-weight:900;
+    }
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loader{width:32px;height:32px;border:4px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin 1.2s linear infinite}
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">EAR<span>OS</span> / SOVEREIGN HUB</div>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">Enterprise Grade Artist Network</div>
+    <h1 class="title">Soberanía Logística <br>desde Méntrida Hub.</h1>
+    
+    <div class="search-card">
+      <div class="field">
+        <label>Hub Origen (Base)</label>
+        <select id="origin">
+          <option value="Mentrida">Méntrida (Toledo Hub) - C/ Tórtola 5</option>
+          <option value="Madrid">Madrid Central Hub</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Misión (Destino)</label>
+        <input type="text" id="destination" value="Leganés, Madrid">
+      </div>
+      <div class="field">
+        <label>Naturaleza</label>
+        <select id="event-type">
+          <option>Solista Premium (Mañana 12:00h)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Artista</label>
+        <select id="musicians">
+          <option value="1">Edwin Agudelo</option>
+        </select>
+      </div>
+      <button class="btn-action" onclick="startSearch()">Sincronizar Hub Méntrida</button>
+    </div>
+
+    <div class="results-grid" id="results">
+      <main class="mariachi-list" style="grid-column: span 2">
+        <div class="mariachi-card exclusive">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1593339657376-282474e7d403?auto=format&fit=crop&q=80&w=1200" alt="Edwin Agudelo">
+          </div>
+          <div class="card-content">
+            <div class="card-title">Edwin Agudelo</div>
+            <div class="card-tagline">Base: Méntrida — Encinasola Palanquillas.</div>
+            <p class="muted">Despliegue estratégico desde el Hub de Toledo.</p>
+            <div class="price-block">
+              <div class="price">1€ <span>Sincronización de Base</span></div>
+              <button class="btn-primary" onclick="openCheckout()">Hacerle mi Cómplice</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <div class="checkout-modal" id="stripe-modal">
+    <div class="stripe-card">
+      <div class="stripe-logo">Stripe</div>
+      <h2 style="font-size:24px;margin-bottom:8px">Pagar Productora EAR</h2>
+      <p style="color:#6d6e78;margin-bottom:32px">Misión: Méntrida Hub ➔ Leganés (Mañana)</p>
+      <div class="stripe-field">
+        <label>Titular</label>
+        <input type="text" class="stripe-input" value="José Toro">
+      </div>
+      <button class="btn-stripe" onclick="processPayment()">Confirmar Reserva 1,00 €</button>
+    </div>
+  </div>
+
+  <div class="processing-overlay" id="overlay">
+    <div class="scan-line"></div>
+    <div class="status-text" id="overlay-status">Sincronizando Ledger...</div>
+    <div class="status-text" id="overlay-msg" style="font-size:10px;margin-top:10px;opacity:0.5">ESTADO: PROGRAMADO (TRACKING INACTIVO HASTA MAÑANA)</div>
+  </div>
+
+  <script>
+    function startSearch() {
+      const btn = document.querySelector('.btn-action');
+      btn.innerHTML = '<div class="loader"></div>';
+      setTimeout(() => {
+        btn.innerText = 'Base Méntrida Sincronizada';
+        document.getElementById('results').classList.add('visible');
+      }, 1000);
+    }
+
+    function openCheckout() {
+      document.getElementById('stripe-modal').style.display = 'flex';
+    }
+
+    async function processPayment() {
+      document.getElementById('stripe-modal').style.display = 'none';
+      const overlay = document.getElementById('overlay');
+      const status = document.getElementById('overlay-status');
+      overlay.style.display = 'flex';
+      
+      const steps = ["Validando Base Méntrida...", "Asentando en Ledger...", "Generando Waybill Programado...", "Bloqueando Agenda (Mañana 12:00h)..."];
+      for(let s of steps){
+        status.innerText = s;
+        await new Promise(r => setTimeout(r, 800));
+      }
+
+      window.location.href = 'mariachi-dispatch-v2.html?origin=Mentrida&status=SCHEDULED';
+    }
+  </script>
+</body>
+</html>

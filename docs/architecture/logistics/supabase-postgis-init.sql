@@ -1,10 +1,10 @@
--- EAR OS — SUPABASE POSTGIS & LOGISTICS INITIALIZATION
--- Run this in your Supabase SQL Editor to enable geographical intelligence.
+-- 🛰️ EAR OS — POSTGIS LOGISTICS INITIALIZATION
+-- Purpose: Enable spatial indexing and routing for fleet operations.
 
 create extension if not exists postgis;
 create extension if not exists pgrouting;
 
--- Add geography columns for spatial indexing (optimized sorting by distance)
+-- Add spatial columns if not exists (using geography for better accuracy over long distances)
 alter table fleet_waybills
   add column if not exists origin_point geography(Point, 4326),
   add column if not exists destination_point geography(Point, 4326);
@@ -12,7 +12,7 @@ alter table fleet_waybills
 alter table fleet_telemetry_events
   add column if not exists position geography(Point, 4326);
 
--- Populate geography columns from numeric lat/lng
+-- Backfill spatial columns from legacy float columns
 update fleet_waybills
 set
   origin_point = ST_SetSRID(ST_MakePoint(origin_lng, origin_lat), 4326)::geography,
@@ -23,7 +23,7 @@ update fleet_telemetry_events
 set position = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)::geography
 where position is null;
 
--- GIST Indexes for performance
+-- Spatial Indexes (GIST)
 create index if not exists idx_waybills_origin_point
   on fleet_waybills using gist (origin_point);
 
@@ -33,8 +33,8 @@ create index if not exists idx_waybills_destination_point
 create index if not exists idx_telemetry_position
   on fleet_telemetry_events using gist (position);
 
--- Real-time Function: Nearby Available Units
--- Find units within a radius sorted by distance
+-- Operational Procedure: Nearby Matching
+-- Finds units within radius ordered by distance.
 create or replace function nearby_available_units(
   p_workspace_id uuid,
   p_lng double precision,

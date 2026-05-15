@@ -3,223 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EAR OS — Mariachi Dispatch Physical V2</title>
+  <title>EAR OS — Fleet & Logistics Command Hub</title>
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=cabinet-grotesk@500,700,800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#070707; --panel:#111111; --panel-2:#181818; --line:rgba(255,255,255,.08);
-      --text:#f5f1e8; --muted:#aaa39b; --gold:#ecb613; --blue:#4f8fc0; --red:#b84a5a; --green:#5ca04f;
+      --bg:#050505; --panel:#0a0a0a; --line:rgba(255,255,255,.05);
+      --text:#f5f1e8; --muted:#888; --gold:#ecb613; --blue:#4f8fc0; --red:#b84a5a; --green:#5ca04f;
     }
-    *{box-sizing:border-box} html,body{height:100%} body{margin:0;background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;overflow:hidden}
-    .app{display:grid;grid-template-columns:320px 1fr 340px;gap:16px;padding:16px;height:100vh}
-    .panel{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:28px;overflow:hidden}
-    .left,.right{padding:18px;display:flex;flex-direction:column;gap:14px}
-    .title{font-family:'Cabinet Grotesk',sans-serif;font-size:34px;line-height:.92;letter-spacing:-.04em}
-    .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.35em;color:var(--gold);font-weight:700}
-    .muted{color:var(--muted)}
-    .feed{overflow:auto;display:flex;flex-direction:column;gap:10px;min-height:0}
-    .card{padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--panel-2);cursor:pointer}
-    .card.active{border-color:rgba(236,182,19,.45);box-shadow:0 0 0 1px rgba(236,182,19,.22) inset}
-    .row{display:flex;justify-content:space-between;gap:8px;align-items:center}
-    .tiny{font-size:11px;text-transform:uppercase;letter-spacing:.12em}
-    .badge{padding:6px 10px;border-radius:999px;background:#242424;font-size:11px}
-    .main{padding:16px;display:grid;grid-template-rows:auto 1fr auto;gap:14px}
-    .toolbar{display:flex;justify-content:space-between;align-items:center}
-    .map{position:relative;border-radius:28px;border:1px solid var(--line);background:
-      radial-gradient(circle at 20% 18%, rgba(236,182,19,.11), transparent 18%),
-      radial-gradient(circle at 80% 75%, rgba(236,182,19,.08), transparent 16%),
-      #0d0d0d; overflow:hidden}
-    .map::before{content:"";position:absolute;inset:0;background-image:
-      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
-      background-size:56px 56px;opacity:.28}
-    .district{position:absolute;color:rgba(255,255,255,.28);font-size:11px;text-transform:uppercase;letter-spacing:.2em}
-    .road{position:absolute;height:2px;background:linear-gradient(90deg, rgba(255,255,255,.05), rgba(236,182,19,.18), rgba(255,255,255,.05));transform-origin:left center}
-    .provider,.dest,.unit{position:absolute;transform:translate(-50%,-50%);border-radius:50%}
-    .provider{width:13px;height:13px;background:var(--blue);box-shadow:0 0 0 4px rgba(79,143,192,.18)}
-    .dest{width:13px;height:13px;background:var(--red);box-shadow:0 0 0 4px rgba(184,74,90,.15)}
-    .unit{width:16px;height:16px;background:var(--gold);box-shadow:0 0 0 6px rgba(236,182,19,.12),0 0 24px rgba(236,182,19,.35);z-index:10}
-    .unit::after{content:"";position:absolute;inset:-9px;border:1px solid rgba(236,182,19,.28);border-radius:50%;animation:pulse 2s infinite}
-    .label{position:absolute;transform:translate(-50%,calc(-100% - 10px));padding:6px 10px;border-radius:999px;background:rgba(10,10,10,.82);border:1px solid rgba(255,255,255,.08);font-size:11px;white-space:nowrap;z-index:11}
-    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .kpi{padding:12px;border-radius:18px;background:var(--panel-2);border:1px solid var(--line)}
-    .kpi strong{display:block;font-family:'Cabinet Grotesk',sans-serif;font-size:24px}
-    .step{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
-    .node{width:12px;height:12px;border-radius:50%;margin-top:4px;background:#2a2a2a}
-    .done .node{background:var(--green)} .live .node{background:var(--gold);box-shadow:0 0 0 5px rgba(236,182,19,.12)}
-    @keyframes pulse{0%{transform:scale(.85);opacity:1}100%{transform:scale(1.8);opacity:0}}
+    *{box-sizing:border-box} html,body{height:100%;background:var(--bg);color:var(--text);font-family:'General Sans',sans-serif;margin:0;overflow:hidden}
+    
+    .dashboard{display:grid;grid-template-columns:400px 1fr 380px;height:100vh}
+    
+    .sidebar{background:var(--panel);border-right:1px solid var(--line);padding:24px;overflow-y:auto;display:flex;flex-direction:column;gap:20px}
+    .status-chip{padding:4px 12px;border-radius:999px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+    .status-scheduled{background:rgba(79,143,192,.1);color:var(--blue)}
+    .status-dispatched{background:rgba(236,182,19,.1);color:var(--gold)}
+
+    .waybill-card{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:16px;padding:20px;cursor:pointer;transition:all .3s}
+    .waybill-card.active{border-color:var(--gold);background:rgba(236,182,19,.03)}
+    
+    .map-container{position:relative;background: radial-gradient(circle at center, #111 0%, #050505 100%);overflow:hidden}
+    .map-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);background-size:50px 50px}
+    .unit-marker{position:absolute;width:40px;height:40px;transform:translate(-50%, -50%);z-index:10}
+    .unit-marker .icon{width:100%;height:100%;background:var(--gold);clip-path:polygon(50% 0%, 100% 100%, 50% 80%, 0% 100%);box-shadow:0 0 20px rgba(236,182,19,.5)}
+    .unit-label{position:absolute;top:100%;left:50%;transform:translateX(-50%);font-size:10px;font-weight:800;color:var(--gold);white-space:nowrap;margin-top:8px}
+
+    .telemetry{background:var(--panel);border-left:1px solid var(--line);padding:32px;display:flex;flex-direction:column;gap:32px}
+    .stat-box{display:flex;flex-direction:column;gap:8px}
+    .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);font-weight:700}
+    .stat-value{font-size:32px;font-weight:900;letter-spacing:-.02em}
+
+    .header{grid-column:span 3;padding:20px 32px;background:rgba(5,5,5,.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+    .logo{font-family:'Cabinet Grotesk',sans-serif;font-size:24px;font-weight:900;letter-spacing:-.03em}
+    .logo span{color:var(--gold)}
+
+    .scheduled-overlay{
+      position:absolute;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);
+      display:none;align-items:center;justify-content:center;z-index:100;
+    }
+    .scheduled-card{background:var(--panel);border:1px solid var(--gold);padding:40px;border-radius:24px;text-align:center;box-shadow:0 0 50px rgba(236,182,19,0.2)}
   </style>
 </head>
 <body>
-  <div class="app">
-    <aside class="panel left">
-      <div>
-        <div class="eyebrow">EAR OS / Physical Engine V2</div>
-        <div class="title">Mariachi Tracking</div>
-        <p class="muted">Interpolación física real (LERP) entre pings de telemetría. No hay simulaciones ciegas de CSS.</p>
-      </div>
-      <div class="kpis">
-        <div class="kpi"><span class="tiny muted">Solicitudes</span><strong id="kpi-total">9</strong></div>
-        <div class="kpi"><span class="tiny muted">En ruta</span><strong id="kpi-route">0</strong></div>
-        <div class="kpi"><span class="tiny muted">Llegadas</span><strong id="kpi-arrived">0</strong></div>
-      </div>
-      <div class="feed" id="feed"></div>
+  <div class="dashboard">
+    <header class="header">
+      <div class="logo">EAR<span>OS</span> / FLEET COMMAND</div>
+      <div style="font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--muted)" id="op-status">FLEET STATUS: STANDBY</div>
+    </header>
+
+    <aside class="sidebar">
+      <h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.3em;margin-bottom:10px">Active Waybills</h3>
+      <div id="waybill-list"></div>
     </aside>
 
-    <main class="panel main">
-      <div class="toolbar">
-        <div class="eyebrow">Workspace / Real-time Ingestion</div>
-        <div class="tiny muted" id="clock"></div>
+    <main class="map-container">
+      <div class="map-grid"></div>
+      <div id="map-units"></div>
+      <div class="scheduled-overlay" id="sched-overlay">
+        <div class="scheduled-card">
+          <div class="eyebrow" style="color:var(--gold);margin-bottom:12px">Misión Programada</div>
+          <h2 style="font-family:'Cabinet Grotesk',sans-serif;font-size:32px;margin:0">Tracking Inactivo</h2>
+          <p class="muted" style="margin-top:16px">La unidad se encuentra en la Base de Méntrida.<br>El seguimiento comenzará mañana a las 12:00h.</p>
+        </div>
       </div>
-      <section class="map" id="map"></section>
-      <div class="tiny muted">Física aplicada: Interpolación lineal (LERP) @ 60fps subordinada a pings de Supabase.</div>
     </main>
 
-    <aside class="panel right">
-      <div class="eyebrow">Inspector de Misión</div>
-      <div class="title" id="name" style="font-size:28px">Seleccione Waybill</div>
-      <p class="muted" id="desc"></p>
-      <div class="kpis">
-        <div class="kpi"><span class="tiny muted">Estado</span><strong id="status">QUEUE</strong></div>
-        <div class="kpi"><span class="tiny muted">Precision</span><strong id="accuracy">99%</strong></div>
-        <div class="kpi"><span class="tiny muted">Sync</span><strong id="sync">OK</strong></div>
+    <section class="telemetry">
+      <div id="active-waybill-detail">
+        <h2 style="font-family:'Cabinet Grotesk',sans-serif;font-size:40px;margin-bottom:12px">Radar de Misión</h2>
+        <div class="stat-box">
+          <div class="stat-label">Estado Logístico</div>
+          <div class="stat-value" id="t-status">---</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Ubicación Actual</div>
+          <div class="stat-value" id="t-loc" style="font-size:18px">---</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Velocidad</div>
+          <div class="stat-value" id="t-speed">0 KM/H</div>
+        </div>
       </div>
-      <div id="timeline"></div>
-    </aside>
+    </section>
   </div>
 
   <script>
-    const missions = [
-      {id:'WB-001', provider:'Restaurante Sol Azteca', origin:'Plaza de España', destination:'Chamberí', start:{x:12,y:20}, end:{x:42,y:36}, speed:0.00015, pingInterval:2000},
-      {id:'WB-002', provider:'Hotel Ritz Madrid', origin:'Retiro', destination:'Salamanca', start:{x:72,y:26}, end:{x:78,y:34}, speed:0.00025, pingInterval:1500},
-      {id:'WB-003', provider:'Teatro Lope de Vega', origin:'Gran Vía', destination:'Sol', start:{x:36,y:16}, end:{x:50,y:50}, speed:0.00018, pingInterval:2500},
-      {id:'WB-004', provider:'Sala Riviera', origin:'Arganzuela', destination:'Moncloa', start:{x:14,y:74}, end:{x:26,y:18}, speed:0.00012, pingInterval:3000},
-      {id:'WB-005', provider:'Círculo Bellas Artes', origin:'Alcalá', destination:'Atocha', start:{x:61,y:19}, end:{x:71,y:72}, speed:0.0002, pingInterval:2000},
-      {id:'WB-006', provider:'Palacio Real', origin:'Centro', destination:'Retiro', start:{x:24,y:30}, end:{x:75,y:31}, speed:0.00014, pingInterval:2200},
-      {id:'WB-007', provider:'Mercado San Miguel', origin:'Mayor', destination:'Lavapiés', start:{x:34,y:40}, end:{x:56,y:66}, speed:0.00022, pingInterval:1800},
-      {id:'WB-008', provider:'Club Kapital', origin:'Atocha', destination:'Chamartín', start:{x:75,y:76}, end:{x:68,y:12}, speed:0.00009, pingInterval:4000},
-      {id:'WB-009', provider:'Hard Rock Café', origin:'Castellana', destination:'Centro', start:{x:58,y:43}, end:{x:48,y:48}, speed:0.0003, pingInterval:1200},
-    ].map((m,i)=>({
-      ...m,
-      status:'QUEUED',
-      progress:0,
-      current:{...m.start},
-      from:{...m.start},
-      to:{...m.start},
-      lastPingAt:0,
-      nextPingAt:0,
-      active:false
-    }));
+    const urlParams = new URLSearchParams(window.location.search);
+    const isScheduled = urlParams.get('status') === 'SCHEDULED';
+    
+    const waybills = [
+      { id: 'WB-MENT-01', artist: 'Edwin Agudelo', origin: 'Méntrida Hub', status: isScheduled ? 'SCHEDULED' : 'DISPATCHED', unit: 'EA-01' }
+    ];
 
-    const map = document.getElementById('map');
-    const feed = document.getElementById('feed');
-    let selected = missions[0].id;
+    const units = {
+      'EA-01': { 
+        x: 300, y: 500, // Méntrida Base position
+        targetX: 300, targetY: 500, 
+        heading: 45, speed: 0, 
+        lastPing: performance.now(), 
+        waybillId: 'WB-MENT-01' 
+      }
+    };
 
-    function lerp(a,b,t){ return a + (b-a)*t; }
-
-    missions.forEach(m=>{
-      const p=document.createElement('div'); p.className='provider'; p.style.left=m.start.x+'%'; p.style.top=m.start.y+'%';
-      const d=document.createElement('div'); d.className='dest'; d.style.left=m.end.x+'%'; d.style.top=m.end.y+'%';
-      const u=document.createElement('div'); u.className='unit'; u.style.display='none';
-      const l=document.createElement('div'); l.className='label'; l.style.display='none';
-      map.append(p,d,u,l);
-      m.u=u; m.l=l;
-    });
-
-    function applyPing(m, now){
-      m.from = {...m.current};
-      // Simular avance real basado en el ping
-      const step = m.speed * m.pingInterval;
-      m.progress = Math.min(1, m.progress + step);
-      m.to = {
-        x: lerp(m.start.x, m.end.x, m.progress),
-        y: lerp(m.start.y, m.end.y, m.progress)
-      };
-      m.lastPingAt = now;
-      m.nextPingAt = now + m.pingInterval;
-      if(m.progress >= 1) m.status = 'ARRIVED';
-      else if(m.progress > 0) m.status = 'IN_TRANSIT';
-    }
-
-    function tick(now){
-      missions.forEach(m=>{
-        if(!m.active) return;
-        
-        if(now > m.nextPingAt && m.status !== 'ARRIVED'){
-          applyPing(m, now);
-        }
-
-        const duration = Math.max(1, m.nextPingAt - m.lastPingAt);
-        const t = Math.min(1, (now - m.lastPingAt) / duration);
-
-        m.current = {
-          x: lerp(m.from.x, m.to.x, t),
-          y: lerp(m.from.y, m.to.y, t)
-        };
-
-        m.u.style.left = m.current.x + '%';
-        m.u.style.top = m.current.y + '%';
-        m.l.style.left = m.current.x + '%';
-        m.l.style.top = m.current.y + '%';
-        m.l.textContent = `${m.provider} — ${m.status}`;
-      });
-
-      renderFeed();
-      renderInspector();
+    function tick(now) {
+      if (!isScheduled) {
+        // Normal LERP movement for DISPATCHED units
+        Object.keys(units).forEach(id => {
+          const u = units[id];
+          const wb = waybills.find(w => w.id === u.waybillId);
+          if (wb.status === 'DISPATCHED') {
+            // Movement logic...
+          }
+        });
+      }
+      renderMap();
+      renderTelemetry();
       requestAnimationFrame(tick);
     }
 
-    function renderFeed(){
-      feed.innerHTML = missions.map(m=>`
-        <div class="card ${m.id===selected?'active':''}" onclick="selectMission('${m.id}')">
-          <div class="row">
-            <span class="tiny" style="color:var(--gold)">${m.id}</span>
-            <span class="badge">${m.status}</span>
-          </div>
-          <div style="font-weight:700;margin-top:6px">${m.provider}</div>
-          <div class="tiny muted" style="margin-top:4px">${m.origin} → ${m.destination}</div>
-        </div>
-      `).join('');
-      document.getElementById('kpi-route').textContent = missions.filter(m=>m.status==='IN_TRANSIT').length;
-      document.getElementById('kpi-arrived').textContent = missions.filter(m=>m.status==='ARRIVED').length;
+    function renderMap() {
+      const container = document.getElementById('map-units');
+      container.innerHTML = Object.keys(units).map(id => {
+        const u = units[id];
+        return `<div class="unit-marker" style="left:${u.x}px; top:${u.y}px"><div class="icon" style="transform:rotate(${u.heading}deg)"></div><div class="unit-label">${id}</div></div>`;
+      }).join('');
     }
 
-    function renderInspector(){
-      const m = missions.find(x=>x.id===selected);
-      document.getElementById('name').textContent = m.provider;
-      document.getElementById('desc').textContent = `Misión logística ${m.id} bajo protocolo de tracking físico LERP. Sincronización activa con motor Supabase/PostGIS.`;
-      document.getElementById('status').textContent = m.status;
+    function renderTelemetry() {
+      const wb = waybills.find(w => w.id === 'WB-MENT-01');
+      document.getElementById('t-status').innerText = wb.status;
+      document.getElementById('t-status').style.color = isScheduled ? 'var(--blue)' : 'var(--gold)';
+      document.getElementById('t-loc').innerText = isScheduled ? 'BASE: MÉNTRIDA HUB' : 'EN RUTA';
       
-      const steps = [
-        {t:'Despacho emitido (QUEUED)', done:m.active},
-        {t:'Unidad en movimiento (IN_TRANSIT)', done:m.status==='IN_TRANSIT'||m.status==='ARRIVED'},
-        {t:'Llegada confirmada (ARRIVED)', done:m.status==='ARRIVED'},
-      ];
-      document.getElementById('timeline').innerHTML = steps.map(s=>`
-        <div class="step ${s.done?'done':'live'}">
-          <div class="node"></div>
-          <div><div style="font-weight:700">${s.t}</div></div>
-        </div>
-      `).join('');
+      if (isScheduled) {
+        document.getElementById('sched-overlay').style.display = 'flex';
+        document.getElementById('op-status').innerText = 'FLEET STATUS: MISSION SCHEDULED';
+      }
     }
 
-    window.selectMission = (id) => { selected = id; };
-
-    // Secuencia de activación
-    missions.forEach((m,i) => {
-      setTimeout(() => {
-        m.active = true;
-        m.u.style.display = 'block';
-        m.l.style.display = 'block';
-        m.status = 'DISPATCHED';
-        applyPing(m, performance.now());
-      }, i * 1500);
-    });
-
-    setInterval(()=>{
-      document.getElementById('clock').textContent = new Date().toLocaleTimeString();
-    },1000);
+    // Initial render
+    document.getElementById('waybill-list').innerHTML = waybills.map(wb => `
+      <div class="waybill-card active">
+        <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+          <span style="font-weight:900">${wb.id}</span>
+          <span class="status-chip status-${wb.status.toLowerCase()}">${wb.status}</span>
+        </div>
+        <div style="font-size:12px;font-weight:700">${wb.artist}</div>
+      </div>
+    `).join('');
 
     requestAnimationFrame(tick);
   </script>
