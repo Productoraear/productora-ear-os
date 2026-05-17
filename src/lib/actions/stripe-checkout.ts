@@ -7,11 +7,6 @@ import { headers } from "next/headers";
 import { calculateGeoPricing } from "@/lib/services/pricing/geo-pricer";
 import { prisma } from "@/lib/prisma";
 
-const stripeSecret = process.env.STRIPE_SECRET_KEY || "sk_test_placeholder";
-const stripe = new Stripe(stripeSecret, {
-  apiVersion: '2026-04-22.dahlia' as any,
-});
-
 const StripeCheckoutSchema = z.object({
   artistId: z.string().min(1),
   clientId: z.string().min(1),
@@ -27,9 +22,15 @@ const StripeCheckoutSchema = z.object({
 });
 
 export async function createBookingCheckout(input: unknown) {
-  if (!process.env.STRIPE_SECRET_KEY) {
+  const stripeSecret = process.env.STRIPE_SECRET_KEY;
+  if (!stripeSecret) {
     throw new Error("Missing STRIPE_SECRET_KEY in production server environment");
   }
+  
+  const stripe = new Stripe(stripeSecret, {
+    apiVersion: '2026-04-22.dahlia' as any,
+  });
+
   const payload = StripeCheckoutSchema.parse(input);
   const origin = (await headers()).get("origin") ?? "https://productoraear.com";
 
