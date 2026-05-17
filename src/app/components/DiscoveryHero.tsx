@@ -8,19 +8,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, Calendar, Sparkles, ArrowRight, Zap } from 'lucide-react';
-import { marketplaceFeedback } from '@/services/marketplace/MarketplaceFeedbackService';
+import DiscoverySearch from "@/app/components/public/DiscoverySearch";
 
 export default function DiscoveryHero() {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    marketplaceFeedback.track('search_submitted', {
-      query: 'global_search',
-      path: window.location.pathname
-    });
-  };
-
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-black pt-20">
       {/* 🌌 STABLE BACKGROUND ENGINE */}
@@ -75,67 +65,14 @@ export default function DiscoveryHero() {
         </motion.p>
 
         {/* 🛸 MULTIVARIABLE SEARCH ENGINE */}
-        <motion.form 
-          onSubmit={handleSearch}
+        <motion.div 
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className={`relative max-w-5xl mx-auto p-4 bg-white/5 backdrop-blur-3xl rounded-[3rem] border transition-all duration-700 ${
-            isFocused ? 'border-[#ecb613]/40 shadow-[0_0_50px_rgba(212,168,85,0.15)] scale-105' : 'border-white/10'
-          }`}
+          className="relative max-w-5xl mx-auto"
         >
-          <div className="flex flex-col md:flex-row items-center gap-2">
-            {/* Field: Occasion */}
-            <div className="flex-1 w-full group/field px-8 py-4 border-r border-white/5 last:border-0 flex flex-col items-start gap-1">
-              <div className="flex items-center gap-2 text-[#ecb613] mb-1">
-                <Sparkles size={12} />
-                <span className="text-[9px] font-black uppercase tracking-widest opacity-60">Ocasión</span>
-              </div>
-              <input 
-                type="text" 
-                placeholder="¿Qué celebras?" 
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
-                className="w-full bg-transparent text-white font-bold placeholder:text-white/20 focus:outline-none"
-              />
-            </div>
-
-            {/* Field: Location */}
-            <div className="flex-1 w-full group/field px-8 py-4 border-r border-white/5 last:border-0 flex flex-col items-start gap-1">
-              <div className="flex items-center gap-2 text-[#ecb613] mb-1">
-                <MapPin size={12} />
-                <span className="text-[9px] font-black uppercase tracking-widest opacity-60">Territorio</span>
-              </div>
-              <input 
-                type="text" 
-                placeholder="Toda España" 
-                className="w-full bg-transparent text-white font-bold placeholder:text-white/20 focus:outline-none"
-              />
-            </div>
-
-            {/* Field: Date */}
-            <div className="flex-1 w-full group/field px-8 py-4 border-r border-white/5 last:border-0 flex flex-col items-start gap-1">
-              <div className="flex items-center gap-2 text-[#ecb613] mb-1">
-                <Calendar size={12} />
-                <span className="text-[9px] font-black uppercase tracking-widest opacity-60">Temporada</span>
-              </div>
-              <input 
-                type="text" 
-                placeholder="Seleccionar Fecha" 
-                className="w-full bg-transparent text-white font-bold placeholder:text-white/20 focus:outline-none"
-              />
-            </div>
-
-            {/* CTA: TRIGGER */}
-            <button 
-              type="submit"
-              className="w-full md:w-auto h-20 px-12 bg-[#ecb613] text-black rounded-full flex items-center justify-center gap-4 hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#ecb613]/20 group/btn"
-            >
-              <span className="text-xs font-black uppercase tracking-[0.2em]">Discovery</span>
-              <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-            </button>
-          </div>
-        </motion.form>
+          <DiscoverySearch />
+        </motion.div>
 
         {/* 📊 TRENDING INTENT */}
         <motion.div 
