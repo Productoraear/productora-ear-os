@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { PROVINCIAS, SERVICIOS, OCASIONES, GUIAS } from '@/lib/constants/seo-data';
+import { HIGH_VALUE_VARIANTS } from '@/lib/artists/matrix';
 
 /**
  * 🛰️ VIMUME OS - CANONICAL SITEMAP GENERATOR (V165.L)
@@ -12,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const corePages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), priority: 1.0, changeFrequency: 'daily' },
     { url: `${baseUrl}/vimume`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/hermes`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' },
     { url: `${baseUrl}/vimume/nosotros`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' },
     { url: `${baseUrl}/vimume/investigacion`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' },
     { url: `${baseUrl}/vimume/inversion`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' },
@@ -23,6 +25,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/contacto`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
     { url: `${baseUrl}/eventos`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
     { url: `${baseUrl}/artistas`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/eventos`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/bodas`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/ferias`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/festivales`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/ciudades`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/provincias`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/municipios`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/aniversarios`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas/cumpleaños`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artists`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artists/roster`, lastModified: new Date(), priority: 0.8, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artists/releases`, lastModified: new Date(), priority: 0.7, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artists/press`, lastModified: new Date(), priority: 0.6, changeFrequency: 'weekly' },
     { url: `${baseUrl}/blog`, lastModified: new Date(), priority: 0.7, changeFrequency: 'weekly' },
     { url: `${baseUrl}/servicios`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' },
     { url: `${baseUrl}/dossier`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' },
@@ -77,11 +92,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
+  const matrixPages: MetadataRoute.Sitemap = HIGH_VALUE_VARIANTS.map((variant) => ({
+    url: `${baseUrl}/artistas/${variant.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.9,
+  }));
+
   return [
     ...corePages, 
     ...occasionPages, 
     ...guidePages, 
     ...servicePages, 
-    ...dynamicPages
+    ...dynamicPages,
+    ...matrixPages
   ];
 }

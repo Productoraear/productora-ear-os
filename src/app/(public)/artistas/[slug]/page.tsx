@@ -14,10 +14,16 @@ import {
   Youtube,
   Instagram,
   Mic2,
-  Globe
+  Globe,
+  Sparkles,
+  CreditCard
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { HIGH_VALUE_VARIANTS } from '@/lib/artists/matrix';
+import { ArtistPricingMatrix } from '@/app/components/artists/ArtistPricingMatrix';
+import { ArtistTestimonials } from '@/app/components/artists/ArtistTestimonials';
+import { ArtistBookingFlow } from '@/app/components/artists/ArtistBookingFlow';
 
 // --- 🛠️ CONFIGURACIÓN ISR ---
 export const revalidate = 3600; // 1 hora de caché estática
@@ -28,13 +34,18 @@ interface ArtistProfilePageProps {
   };
 }
 
-/**
- * 🎨 PUBLIC ARTIST PROFILE (AURA ONYX)
- * Vertical: Talent OS
- * Engine: ISR (Incremental Static Regeneration)
- */
-
 export async function generateMetadata({ params }: ArtistProfilePageProps): Promise<Metadata> {
+  const variant = HIGH_VALUE_VARIANTS.find(v => v.slug === params.slug);
+  if (variant) {
+    return {
+      title: variant.title,
+      description: variant.metaDescription,
+      alternates: {
+        canonical: `https://productoraear.com/artistas/${params.slug}`
+      }
+    };
+  }
+
   try {
     const artist = await prisma.artistProfile.findUnique({
       where: { slug: params.slug },
@@ -58,22 +69,136 @@ export async function generateMetadata({ params }: ArtistProfilePageProps): Prom
 }
 
 export async function generateStaticParams() {
+  const variantParams = HIGH_VALUE_VARIANTS.map(v => ({ slug: v.slug }));
+  
   try {
     const artists = await prisma.artistProfile.findMany({
       where: { status: 'PUBLISHED' },
       select: { slug: true }
     });
 
-    return artists.map((artist) => ({
+    const dbParams = artists.map((artist) => ({
       slug: artist.slug,
     }));
+
+    return [...variantParams, ...dbParams];
   } catch (error) {
-    console.warn("⚠️ [TALENT OS] generateStaticParams falló (posible falta de DB). Devolviendo array vacío para el build.");
-    return [];
+    console.warn("⚠️ [TALENT OS] generateStaticParams falló (posible falta de DB). Devolviendo solo variantes fijas.");
+    return variantParams;
   }
 }
 
 export default async function ArtistProfilePage({ params }: ArtistProfilePageProps) {
+  // Check if it's a high-value variant first
+  const variant = HIGH_VALUE_VARIANTS.find(v => v.slug === params.slug);
+
+  if (variant) {
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": variant.title,
+      "description": variant.metaDescription,
+      "location": {
+        "@type": "Place",
+        "name": variant.city,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": variant.city,
+          "addressCountry": "ES"
+        }
+      },
+      "performer": {
+        "@type": "Person",
+        "name": "Edwin Agudelo"
+      }
+    };
+
+    return (
+      <main className="min-h-screen bg-[#050505] text-white pt-40 pb-24 font-sans selection:bg-[#ecb613]/30">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
+        <div className="max-w-7xl mx-auto px-6 space-y-20">
+          
+          {/* Header */}
+          <section className="space-y-6 text-center max-w-4xl mx-auto">
+            <div className="flex justify-center items-center gap-3">
+              <span className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.25em] bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/20 flex items-center gap-1.5 font-mono">
+                <Sparkles size={12} /> {variant.eventType.toUpperCase()} · {variant.city.toUpperCase()}
+              </span>
+              <span className="text-white/20 text-[9px] font-black uppercase tracking-widest font-mono">
+                LOCAL INTENT SWARM
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-7xl font-black uppercase italic tracking-tighter leading-none text-white font-syne">
+              {variant.title.split('|')[0].trim()}
+            </h1>
+            <p className="text-white/40 text-lg md:text-xl italic leading-relaxed max-w-2xl mx-auto">
+              {variant.uniqueDescription}
+            </p>
+          </section>
+
+          {/* Logistics and Intent Data Cards */}
+          <section className="grid md:grid-cols-2 gap-8">
+            <div className="bg-[#0b0b0b] border border-white/5 rounded-[3rem] p-10 space-y-6">
+              <div className="flex items-center gap-3 text-[#ecb613]">
+                <MapPin size={24} />
+                <h3 className="text-lg font-black uppercase">Logística en {variant.city}</h3>
+              </div>
+              <p className="text-white/50 text-sm leading-relaxed">
+                {variant.localLogistics}
+              </p>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <span className="text-[9px] font-black text-white/30 uppercase block mb-1">Formato de Show Recomendado</span>
+                <span className="text-md font-black uppercase text-white font-mono">{variant.showTypeName}</span>
+              </div>
+            </div>
+
+            <div className="bg-[#0b0b0b] border border-white/5 rounded-[3rem] p-10 space-y-6">
+              <div className="flex items-center gap-3 text-[#ecb613]">
+                <Music size={24} />
+                <h3 className="text-lg font-black uppercase">Repertorio Sugerido</h3>
+              </div>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Selección de temas optimizada para el protocolo emocional de este show territorial:
+              </p>
+              <div className="flex flex-wrap gap-2 pt-2">
+                {variant.suggestedRepertoire.map((song, i) => (
+                  <span key={i} className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[9px] font-black uppercase text-white/70 font-mono">
+                    {song}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Embedded Stripe Pre-booking Block */}
+          <section className="bg-gradient-to-r from-white/[0.02] to-transparent border border-white/5 rounded-[3.5rem] p-8 md:p-16 grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <div className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.25em] bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/20 w-fit flex items-center gap-1.5">
+                <CreditCard size={12} /> Stripe Secure Checkout
+              </div>
+              <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter font-syne">Reserva tu fecha al instante</h2>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Bloquea el día seleccionado en el calendario de Edwin Agudelo mediante un depósito de garantía de **100€** procesado a través de nuestra pasarela Stripe integrada. La reserva queda confirmada tras la validación de disponibilidad técnica.
+              </p>
+            </div>
+            <div>
+              <ArtistBookingFlow city={variant.city} eventType={variant.eventType} />
+            </div>
+          </section>
+
+          <ArtistPricingMatrix />
+          <ArtistTestimonials />
+
+        </div>
+      </main>
+    );
+  }
+
+  // Fallback to database dynamic profile logic
   let artist;
   try {
     artist = await prisma.artistProfile.findUnique({
@@ -92,7 +217,6 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
     notFound();
   }
 
-  // --- 🧬 SCHEMA.ORG (JSON-LD) ---
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MusicGroup",
@@ -110,9 +234,8 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* 🚀 HERO SECTION: IDENTITY & AURA */}
+      {/* HERO SECTION: IDENTITY & AURA */}
       <section className="relative h-screen flex items-end pb-24 px-6 overflow-hidden">
-        {/* Ambient Glows */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#ecb613]/5 blur-[200px] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#ecb613]/5 blur-[150px] rounded-full -translate-x-1/4 translate-y-1/4 pointer-events-none" />
         
@@ -148,7 +271,6 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
                </div>
             </div>
 
-            {/* 🎯 CALL TO ACTION: THE 1€ TRIGGER */}
             <div className="flex flex-col gap-4 w-full md:w-auto">
                <Link 
                 href={`/artistas/${artist.slug}/booking`}
@@ -163,11 +285,9 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
         </div>
       </section>
 
-      {/* 🧬 MEDIAKIT BENTO: CONTENT & PROOF */}
+      {/* MEDIAKIT BENTO: CONTENT & PROOF */}
       <section className="py-40 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-8 h-[800px]">
-          
-          {/* Main Visual */}
           <div className="md:col-span-2 md:row-span-2 bg-white/5 border border-white/10 rounded-[3.5rem] relative overflow-hidden group">
             {artist.mediaKitUrl ? (
               <Image 
@@ -188,7 +308,6 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
             </div>
           </div>
 
-          {/* Metrics / Stats */}
           <div className="bg-white/[0.02] border border-white/5 rounded-[3rem] p-10 flex flex-col justify-between">
              <div className="text-[#ecb613] opacity-50"><Star size={32} /></div>
              <div>
@@ -197,20 +316,18 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
              </div>
           </div>
 
-          {/* Social / Proof */}
           <div className="bg-white/[0.02] border border-white/5 rounded-[3rem] p-10 space-y-8">
              <h4 className="text-xs font-black uppercase tracking-widest text-white/20">Ecosistema Social</h4>
              <div className="space-y-6">
                 <div className="flex items-center gap-4 text-white/60 hover:text-white transition-colors cursor-pointer">
-                  <Instagram size={20} /> <span className="text-[10px] font-black uppercase tracking-widest">Connect</span>
+                   <Instagram size={20} /> <span className="text-[10px] font-black uppercase tracking-widest">Connect</span>
                 </div>
                 <div className="flex items-center gap-4 text-white/60 hover:text-white transition-colors cursor-pointer">
-                  <Youtube size={20} /> <span className="text-[10px] font-black uppercase tracking-widest">Watch</span>
+                   <Youtube size={20} /> <span className="text-[10px] font-black uppercase tracking-widest">Watch</span>
                 </div>
              </div>
           </div>
 
-          {/* Technical / Rider Availability */}
           <div className="md:col-span-2 bg-gradient-to-r from-white/[0.03] to-transparent border border-white/5 rounded-[3.5rem] p-12 flex items-center justify-between group cursor-pointer hover:border-[#ecb613]/30 transition-all">
              <div className="flex items-center gap-8">
                <div className="p-6 bg-white/5 rounded-3xl text-white group-hover:bg-[#ecb613] group-hover:text-black transition-all">
@@ -223,34 +340,20 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
              </div>
              <ShieldCheck size={40} className="text-white/10 group-hover:text-[#ecb613] transition-colors" />
           </div>
-
         </div>
       </section>
 
-      {/* 📅 CALENDAR: AVAILABILITY ENGINE */}
+      {/* CALENDAR SECTION */}
       <section className="py-40 px-6 bg-white/[0.01] border-y border-white/5">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
           <div className="space-y-12">
-            <h2 className="text-6xl font-black uppercase italic tracking-tighter leading-none italic">Motor de <br /><span className="text-[#ecb613]/40">Disponibilidad</span></h2>
+            <h2 className="text-6xl font-black uppercase italic tracking-tighter leading-none">Motor de <br /><span className="text-[#ecb613]/40">Disponibilidad</span></h2>
             <p className="text-xl text-white/40 font-medium italic leading-relaxed">
               Sistema de sincronización en tiempo real con el Emanager Studio. Consulta disponibilidad inmediata para giras y eventos corporativos.
             </p>
-            <div className="flex gap-10">
-               <div className="flex items-center gap-3">
-                 <div className="w-3 h-3 bg-[#ecb613] rounded-full" />
-                 <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Bloqueado</span>
-               </div>
-               <div className="flex items-center gap-3">
-                 <div className="w-3 h-3 bg-white/10 rounded-full" />
-                 <span className="text-[10px] font-black uppercase tracking-widest opacity-40">Disponible</span>
-               </div>
-            </div>
           </div>
           
           <div className="bg-[#0d0d0d] border border-white/5 p-12 rounded-[4rem] relative overflow-hidden">
-             <div className="absolute top-0 right-0 p-12 opacity-[0.02]">
-               <Calendar size={300} />
-             </div>
              <div className="relative z-10">
                 <div className="grid grid-cols-7 gap-4 mb-10">
                   {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map(day => (
@@ -262,25 +365,8 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-between items-center pt-8 border-t border-white/5">
-                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613]">Ver Calendario Completo</span>
-                   <Share2 size={16} className="text-white/20" />
-                </div>
              </div>
           </div>
-        </div>
-      </section>
-
-      {/* 🏛️ INSTITUTIONAL FOOTER: AUTHORITY */}
-      <section className="py-40 px-6 max-w-4xl mx-auto text-center space-y-12">
-        <div className="w-px h-24 bg-gradient-to-b from-transparent via-[#ecb613]/40 to-transparent mx-auto" />
-        <h2 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter italic">
-          "La música trasciende el evento; <br />construimos <span className="text-[#ecb613]">legados</span> culturales."
-        </h2>
-        <div className="flex justify-center gap-8 text-white/20">
-          <Music size={24} />
-          <Globe size={24} />
-          <ShieldCheck size={24} />
         </div>
       </section>
     </main>

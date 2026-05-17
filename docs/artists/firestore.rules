@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Check if user has specific claims role
+    function hasRole(role) {
+      return request.auth != null && request.auth.token.role == role;
+    }
+
+    // Artist Profile Access Controls
+    match /ear_artist_profiles/{artistId} {
+      allow read: if request.auth != null;
+      allow write: if hasRole('super_admin') || hasRole('label_admin') || (hasRole('artist') && request.auth.uid == resource.data.user_id);
+    }
+
+    // Smart Contracts Controls
+    match /ear_smart_contracts/{contractId} {
+      allow read: if request.auth != null && (hasRole('super_admin') || hasRole('label_admin') || request.auth.uid == resource.data.user_id);
+      allow write: if hasRole('super_admin') || hasRole('label_admin');
+    }
+
+    // Booking Logs Controls
+    match /ear_bookings/{bookingId} {
+      allow read: if request.auth != null && (hasRole('super_admin') || hasRole('label_admin') || request.auth.uid == resource.data.user_id);
+      allow write: if request.auth != null && (hasRole('super_admin') || hasRole('label_admin'));
+    }
+  }
+}

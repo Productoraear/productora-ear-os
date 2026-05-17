@@ -1,49 +1,135 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // 🏛️ REGLAS DE SEGURIDAD EAR OS
-    // Prioridad: Integridad Operativa y Privacidad de Datos B2B/B2G.
+    // 🏛️ HERMES TRACKER CLINICAL MULTI-CENTER SECURITY RULES (S-CLASS - CLAIM RESOLVED)
+    // Core Principle: Absolute data sovereignty, clinical validation, and RGPD compliance.
+    // Source of Truth: Firebase Auth Custom Claims (request.auth.token.role and request.auth.token.center)
+    // Complementary Profile: /users/{uid} for non-sensitive clinical metadata
 
-    // Función: Determinar si el usuario tiene rol administrativo
-    function isAdmin() {
-      return request.auth != null && 
-        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    // 🔒 Auth: Verify user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
     }
 
-    // 🤝 COLECCIÓN: LEADS (Public Contact Form)
+    // 👑 Role helper: Is Super Admin
+    function isSuperAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'super_admin' || 
+        // Fallback safety to check user document role if custom claims are not yet propagated
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin')
+      );
+    }
+
+    // 🏥 Role helper: Is Admin of a specific Center or global admin
+    function isAdminOfCenter(center) {
+      return isAuthenticated() && (
+        request.auth.token.role == 'super_admin' ||
+        (request.auth.token.role == 'admin_centro' && request.auth.token.center == center) ||
+        // Fallback checked document metadata
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin' ||
+          (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin_centro' && 
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.center == center)
+        ))
+      );
+    }
+
+    // 🩺 Role helper: Clinical Staff (Super Admin, Center Admin, Therapist, Clinical Collaborator)
+    function isClinicalStaffOfCenter(center) {
+      return isAuthenticated() && (
+        request.auth.token.role == 'super_admin' ||
+        (request.auth.token.center == center && (
+          request.auth.token.role == 'admin_centro' ||
+          request.auth.token.role == 'terapeuta' ||
+          request.auth.token.role == 'colaborador_clinico'
+        )) ||
+        // Fallback checked document metadata
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin' ||
+          (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.center == center && (
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin_centro' ||
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'terapeuta' ||
+            get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'colaborador_clinico'
+          ))
+        ))
+      );
+    }
+
+    // 👓 Role helper: Has Read-Only or higher access
+    function hasReadAccessOfCenter(center) {
+      return isAuthenticated() && (
+        request.auth.token.role == 'super_admin' ||
+        request.auth.token.center == center ||
+        // Fallback checked document metadata
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'super_admin' ||
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.center == center
+        ))
+      );
+    }
+
+    // 🤝 PUBLIC LEADS & WORKFLOWS
     match /leads/{leadId} {
-      allow create: if true; // Cualquier persona puede enviar un lead (formulario de contacto)
-      allow read, update, delete: if isAdmin(); // Solo admins gestionan leads
+      allow create: if true; // Public lead capture
+      allow read, update, delete: if isSuperAdmin();
     }
 
-    // 🕊️ COLECCIÓN: VIMUME (Hermes / Intervenciones)
-    match /vimume/{docId} {
-      // Acceso público de lectura restringido a campos no sensibles (ej. estadísticas agregadas)
-      allow read: if true; 
-      // Escritura restringida a personal autorizado
-      allow write: if isAdmin();
+    // 🧬 VIMUME INTERVENCIONES & MULTI-CENTRO PATIENTS
+    match /vimume_intervenciones/{docId} {
+      // Allow read if user belongs to the same center or is Super Admin
+      allow read: if isAuthenticated() && (
+        isSuperAdmin() || 
+        request.auth.token.center == resource.data.center ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.center == resource.data.center)
+      );
+      
+      // Allow create if user is clinical staff of the target center
+      allow create: if isAuthenticated() && (
+        isSuperAdmin() || 
+        isClinicalStaffOfCenter(request.resource.data.center)
+      );
+
+      // Only Center Admins or Super Admins can update/delete historical records
+      allow update, delete: if isAuthenticated() && isAdminOfCenter(resource.data.center);
     }
 
-    match /vimume/{docId}/intervenciones/{intervencionId} {
-      allow read: if request.auth != null; // Solo usuarios registrados ven detalle de intervención
-      allow write: if isAdmin();
+    // 📂 AUDIT LOGS (TELEMETRY LEDGER)
+    match /audit_logs/{logId} {
+      // Anyone authenticated can write to the clinical audit trail
+      allow create: if isAuthenticated();
+      // Only Super Admins can read the global audit trail
+      allow read: if isSuperAdmin();
+      // Audit logs are permanent and immutable
+      allow update, delete: if false;
     }
 
-    // 👤 COLECCIÓN: USERS (Perfiles y RBAC)
+    // 👤 USER PROFILES & RBAC CONTROL
     match /users/{userId} {
-      allow read: if request.auth != null && (request.auth.uid == userId || isAdmin());
-      allow write: if request.auth != null && (request.auth.uid == userId || isAdmin());
+      // User can read their own profile; Super Admins read all profiles
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+      
+      // Only Super Admins can modify roles or centers to prevent privilege escalation
+      allow create, update: if isAuthenticated() && (
+        isSuperAdmin() || 
+        (request.auth.uid == userId && 
+         request.resource.data.role == resource.data.role && 
+         request.resource.data.center == resource.data.center)
+      );
+      
+      allow delete: if isSuperAdmin();
     }
 
-    // 📂 COLECCIÓN: PROYECTOS
-    match /proyectos/{proyectoId} {
-      allow read: if true;
-      allow write: if isAdmin();
+    // 📂 SYSTEM CONFIGURATION
+    match /config/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
     }
 
-    // 🛠️ REGLA POR DEFECTO: BLOQUEO TOTAL
+    // 🛠️ DEFAULT FALLBACK: DENY ALL
     match /{path=**} {
-      allow read, write: if isAdmin();
+      allow read, write: if isSuperAdmin();
     }
   }
 }

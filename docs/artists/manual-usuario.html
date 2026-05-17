@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academia de Artistas — Tutor Interactivo VIMUME</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --surface: #0b0b0b;
+      --surface-accent: #121212;
+      --accent: #ecb613;
+      --accent-rgb: 236, 182, 19;
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.4);
+      --border: rgba(255, 255, 255, 0.05);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      padding: 4rem 2rem;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: 50%;
+      transform: translateX(50%);
+      width: 300px;
+      height: 300px;
+      background: rgba(var(--accent-rgb), 0.03);
+      filter: blur(80px);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px border rgba(var(--accent-rgb), 0.2);
+      border-radius: 50px;
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: italic;
+      font-size: 3.5rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .tagline {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      font-style: italic;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2.5rem;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      transition: all 0.5s ease;
+    }
+    .card:hover {
+      border-color: rgba(var(--accent-rgb), 0.15);
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-style: italic;
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    li {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    li::before {
+      content: '➔';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 900;
+    }
+    /* Estimulador Sonoro */
+    .player-container {
+      background: var(--surface-accent);
+      border: 1px solid var(--border);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .freq-display {
+      font-size: 4rem;
+      font-weight: 900;
+      font-family: monospace;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.05em;
+      font-style: italic;
+    }
+    .freq-label {
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .btn {
+      background: var(--accent);
+      color: #000000;
+      border: none;
+      padding: 1.2rem 3rem;
+      border-radius: 1.2rem;
+      font-size: 0.8rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      max-width: 300px;
+    }
+    .btn:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+    }
+    .btn.active {
+      background: #ff4a4a;
+      color: #ffffff;
+    }
+    .visualizer {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      height: 60px;
+      align-items: flex-end;
+      margin-top: 2rem;
+    }
+    .bar {
+      width: 8px;
+      background: rgba(var(--accent-rgb), 0.1);
+      border-radius: 4px;
+      height: 10px;
+      transition: all 0.15s ease;
+    }
+    .active .bar {
+      background: var(--accent);
+      animation: bounce 0.6s infinite ease-in-out alternate;
+    }
+    @keyframes bounce {
+      0% { height: 10px; }
+      100% { height: 50px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Tutor de Artistas</span>
+      <h1>Masterclass Operativa</h1>
+      <p class="tagline">Capacitación de primer nivel para la administración de catálogos y rehabilitación sónica en Productora EAR.</p>
+    </header>
+
+    <div class="card">
+      <h2>Biografía & Roster</h2>
+      <p>Aprende a estructurar de forma profesional los dossiers de prensa y metadatos biográficos del artista. La identidad digital es el activo principal de la marca.</p>
+      <ul>
+        <li><strong>Territorios</strong>: Delimita claramente las zonas geográficas con derechos de exclusividad de distribución.</li>
+        <li><strong>Rider Técnico</strong>: Mantén cargado y actualizado el archivo PDF técnico con las exigencias del escenario del artista.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Estimulación Acústica a 40Hz</h2>
+      <p>En la vertical de **VIMUME**, el sonido modulado a 40Hz es el eje de la terapia de estimulación cognitiva. Utiliza la consola de prueba a continuación para probar la onda Gamma pura en caliente:</p>
+      
+      <div class="player-container" id="playerBox">
+        <div class="freq-display" id="freqVal">40 Hz</div>
+        <div class="freq-label">Onda Pura Gamma (Frecuencia de Curación)</div>
+        
+        <button class="btn" id="playBtn" onclick="toggleAudio()">Iniciar Terapia</button>
+
+        <div class="visualizer" id="vis">
+          <div class="bar" style="animation-delay: 0.1s"></div>
+          <div class="bar" style="animation-delay: 0.3s"></div>
+          <div class="bar" style="animation-delay: 0.2s"></div>
+          <div class="bar" style="animation-delay: 0.5s"></div>
+          <div class="bar" style="animation-delay: 0.4s"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let audioCtx = null;
+    let oscNode = null;
+    let isPlaying = false;
+
+    function toggleAudio() {
+      const btn = document.getElementById('playBtn');
+      const box = document.getElementById('playerBox');
+      const vis = document.getElementById('vis');
+
+      if (!isPlaying) {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        
+        oscNode = audioCtx.createOscillator();
+        oscNode.type = 'sine';
+        oscNode.frequency.setValueAtTime(40, audioCtx.currentTime);
+        
+        oscNode.connect(audioCtx.destination);
+        oscNode.start();
+
+        btn.textContent = 'Detener Terapia';
+        btn.classList.add('active');
+        playerBox.classList.add('active');
+        isPlaying = true;
+      } else {
+        if (oscNode) {
+          oscNode.stop();
+          oscNode.disconnect();
+          oscNode = null;
+        }
+        btn.textContent = 'Iniciar Terapia';
+        btn.classList.remove('active');
+        playerBox.classList.remove('active');
+        isPlaying = false;
+      }
+    }
+  </script>
+</body>
+</html>

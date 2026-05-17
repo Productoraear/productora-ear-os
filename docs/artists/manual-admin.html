@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consola DevOps — Tutor Técnico VIMUME</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --surface: #0b0b0b;
+      --surface-accent: #121212;
+      --accent: #ecb613;
+      --accent-rgb: 236, 182, 19;
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.4);
+      --border: rgba(255, 255, 255, 0.05);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      padding: 4rem 2rem;
+      overflow-x: hidden;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      background: rgba(var(--accent-rgb), 0.1);
+      border: 1px border rgba(var(--accent-rgb), 0.2);
+      border-radius: 50px;
+      color: var(--accent);
+      font-size: 0.65rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      font-style: italic;
+      font-size: 3.5rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2.5rem;
+      padding: 3rem;
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-style: italic;
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+    /* JWT Simulator Grid */
+    .simulator-grid {
+      display: grid;
+      grid-template-cols: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 768px) {
+      .simulator-grid {
+        grid-template-cols: 1fr;
+      }
+    }
+    .selector-box {
+      background: var(--surface-accent);
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .role-btn {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+    .role-btn.active {
+      background: var(--accent);
+      color: #000000;
+      border-color: var(--accent);
+    }
+    .json-box {
+      background: #000000;
+      border: 1px solid var(--border);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #a9ffb2;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Tutor Técnico DevOps</span>
+      <h1>Consola de Control</h1>
+      <p class="tagline">Supervisión táctica de Custom Claims, reglas en la nube e inyección de tokens de acceso.</p>
+    </header>
+
+    <div class="card">
+      <h2>Simulador de Claims JWT en Caliente</h2>
+      <p>Modifica el rol simulado para ver en directo cómo mutaría el payload firmado del token JWT decodificado en el middleware y en el cliente:</p>
+      
+      <div class="simulator-grid">
+        <div class="selector-box">
+          <button class="role-btn active" onclick="setRole('super_admin')">Super Administrador</button>
+          <button class="role-btn" onclick="setRole('label_admin')">Administrador del Sello</button>
+          <button class="role-btn" onclick="setRole('artist_manager')">Mánager de Artista</button>
+          <button class="role-btn" onclick="setRole('artist')">Artista Firmado</button>
+          <button class="role-btn" onclick="setRole('viewer')">Visualizador Externo</button>
+        </div>
+        <div class="json-box" id="jsonViewer">{
+  "iss": "securetoken.google.com",
+  "email": "edwin.agudelo@productoraear.com",
+  "role": "super_admin",
+  "labelId": "LABEL-EAR-GLOBAL",
+  "verified": true
+}</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tokens = {
+      super_admin: {
+        iss: "securetoken.google.com",
+        email: "edwin.agudelo@productoraear.com",
+        role: "super_admin",
+        labelId: "LABEL-EAR-GLOBAL",
+        verified: true
+      },
+      label_admin: {
+        iss: "securetoken.google.com",
+        email: "manager@productoraear.com",
+        role: "label_admin",
+        labelId: "LABEL-EAR-GLOBAL",
+        verified: true
+      },
+      artist_manager: {
+        iss: "securetoken.google.com",
+        email: "booking@productoraear.com",
+        role: "artist_manager",
+        labelId: "LABEL-EAR-GLOBAL",
+        verified: true
+      },
+      artist: {
+        iss: "securetoken.google.com",
+        email: "artist@productoraear.com",
+        role: "artist",
+        artistId: "ART-WAG-001",
+        verified: true
+      },
+      viewer: {
+        iss: "securetoken.google.com",
+        email: "guest@productoraear.com",
+        role: "viewer",
+        verified: true
+      }
+    };
+
+    function setRole(role) {
+      // Toggle buttons
+      const buttons = document.querySelectorAll('.role-btn');
+      buttons.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(role)) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Update JSON viewer
+      const viewer = document.getElementById('jsonViewer');
+      viewer.textContent = JSON.stringify(tokens[role], null, 2);
+    }
+  </script>
+</body>
+</html>

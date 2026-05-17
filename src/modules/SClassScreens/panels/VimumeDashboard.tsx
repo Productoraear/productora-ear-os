@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { 
     Heart, 
     Waves, 
@@ -44,6 +45,7 @@ const PATIENTS: Patient[] = [
 ];
 
 export default function VimumeDashboard() {
+    const router = useRouter();
     const [selectedPatient, setSelectedPatient] = useState<Patient>(PATIENTS[0]);
     const [isHydrated, setIsHydrated] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
@@ -155,7 +157,7 @@ export default function VimumeDashboard() {
                         <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none group-hover:scale-110 group-hover:rotate-6 transition-transform duration-1000">
                             <Brain size={300} className="text-blue-400" />
                         </div>
-
+ 
                         <div className="flex flex-col md:flex-row justify-between items-start mb-12 relative z-10">
                             <div className="space-y-6">
                                 <div className="flex items-center gap-3">
@@ -239,12 +241,18 @@ export default function VimumeDashboard() {
                             </div>
                         </div>
                         <div className="flex gap-4">
-                            <button className="px-8 py-3 bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-blue-500 transition-all group">
+                            <button 
+                                onClick={() => router.push('/vimume/hermes/dashboard')}
+                                className="px-8 py-3 bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-blue-500 transition-all group"
+                            >
                                 <div className="flex items-center gap-3">
                                     <Stethoscope size={14} /> Iniciar Sesión Live
                                 </div>
                             </button>
-                            <button className="px-8 py-3 bg-[#d4a855] text-black text-[10px] font-black uppercase tracking-widest rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#d4a855]/10">
+                            <button 
+                                onClick={() => router.push('/vimume/hermes/dashboard')}
+                                className="px-8 py-3 bg-[#d4a855] text-black text-[10px] font-black uppercase tracking-widest rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-xl shadow-[#d4a855]/10"
+                            >
                                 Generar Reporte Médico
                             </button>
                         </div>

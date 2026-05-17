@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Tutor Interactivo Técnico — Manual de Administrador Hermes OT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --card-bg: rgba(15, 15, 15, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --border-hover: rgba(73, 214, 181, 0.2);
+      --primary: #49d6b5;
+      --primary-rgb: 73, 214, 181;
+      --secondary: #ecb613;
+      --text: #f5f1e8;
+      --text-muted: #8a8a8a;
+      --glow: 0 0 30px rgba(73, 214, 181, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(73, 214, 181, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(236, 182, 19, 0.02) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Cinematic Header */
+    header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(73, 214, 181, 0.06);
+      border: 1px solid rgba(73, 214, 181, 0.2);
+      color: var(--primary);
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+      animation: pulse 3s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 5px rgba(73, 214, 181, 0.1); }
+      100% { box-shadow: 0 0 20px rgba(73, 214, 181, 0.2); }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #f5f1e8, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+    }
+
+    /* Navigation / Tabs */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 1rem 2rem;
+      border-radius: 1.5rem;
+      font-weight: 900;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(73, 214, 181, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Content Cards */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 2.5rem;
+      padding: 3.5rem;
+      margin-bottom: 2.5rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0.3;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    /* Steps and Checkpoints */
+    .step-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: rgba(73, 214, 181, 0.1);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    .step-body h4 {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-body p {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Code Snippets style */
+    pre {
+      background: #0d0d0d;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 1.5rem;
+      border-radius: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      color: #a9a9a9;
+      margin-bottom: 2rem;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      background: rgba(73, 214, 181, 0.05);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    /* Interactive Simulator */
+    .interactive-simulator {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-b: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .sim-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+    }
+
+    .sim-status {
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .btn-action {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      font-weight: 900;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .btn-action:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(73, 214, 181, 0.3);
+    }
+
+    .claim-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: rgba(73, 214, 181, 0.1);
+      border: 1px solid rgba(73, 214, 181, 0.2);
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <header>
+      <div class="badge">
+        <span class="status-dot"></span>
+        DevOps & Seguridad S-Class
+      </div>
+      <h1>Hermes Tracker OT</h1>
+      <div class="subtitle">Manual de Administrador & Bóveda de Tokens</div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('claims')">1. Custom Claims</button>
+      <button class="tab-btn" onclick="switchTab('rules')">2. Rules Hardening</button>
+      <button class="tab-btn" onclick="switchTab('optimization')">3. Audio & Hydration</button>
+      <button class="tab-btn" onclick="switchTab('sitemap')">4. Sitemap canonical</button>
+      <button class="tab-btn" onclick="switchTab('deploy')">5. Despliegue</button>
+    </div>
+
+    <!-- TAB 1: CLAIMS -->
+    <div id="claims" class="tab-content active">
+      <div class="card">
+        <h2>Soberanía Absoluta en Custom Claims</h2>
+        <p>
+          En la arquitectura Hermes OT, los Custom Claims de Firebase Auth representan el origen incuestionable de verdad para la autorización en tiempo real.
+        </p>
+
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h4>Claim de Rol</h4>
+            <p>Define los privilegios lógicos del profesional: <span class="claim-badge">super_admin</span>, <span class="claim-badge">admin_centro</span>, <span class="claim-badge">terapeuta</span>, <span class="claim-badge">colaborador_clinico</span>, o <span class="claim-badge">solo_lectura</span>.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h4>Claim de Centro</h4>
+            <p>Define la segregación geográfica obligatoria cruzada en las reglas: <span class="claim-badge">Centro Navalcarnero</span>, <span class="claim-badge">Centro Madrid HQ</span>, etc.</p>
+          </div>
+        </div>
+
+        <!-- Interactive Custom Claims Simulator -->
+        <div class="interactive-simulator">
+          <div class="sim-header">
+            <div class="sim-title">Simulador de Propagación de Claims JWT</div>
+            <div class="sim-status">
+              <span class="status-dot"></span>
+              <span>Canal Activo</span>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1.5rem;">
+            <label style="font-size: 0.75rem; text-transform: uppercase; font-weight: 900; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">Modificar claims en caliente:</label>
+            <select id="role-select" onchange="updateSimClaims()" style="width: 100%; background: #0d0d0d; border: 1px solid rgba(255,255,255,0.05); color: #fff; padding: 1rem; border-radius: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; outline: none; focus: border-color: var(--primary);">
+              <option value="terapeuta">Rol: TERAPEUTA | Centro: Centro Navalcarnero</option>
+              <option value="admin_centro">Rol: ADMIN CENTRO | Centro: Centro Navalcarnero</option>
+              <option value="super_admin">Rol: SUPER ADMIN | Centro: TODOS</option>
+              <option value="solo_lectura">Rol: SOLO LECTURA | Centro: Centro Navalcarnero</option>
+            </select>
+          </div>
+
+          <pre><code id="claims-json">{
+  "iss": "https://securetoken.google.com/productoraear",
+  "aud": "productoraear",
+  "sub": "edwin_agudelo_7777",
+  "role": "terapeuta",
+  "center": "Centro Navalcarnero"
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: RULES -->
+    <div id="rules" class="tab-content">
+      <div class="card">
+        <h2>Hardening de Reglas en Firestore</h2>
+        <p>
+          El archivo <code>firestore.rules</code> bloquea la escalación de privilegios impidiendo la modificación de perfiles clínicos desde cliente.
+        </p>
+
+        <pre><code>// 🏛️ Validación estricta a nivel criptográfico
+match /users/{userId} {
+  allow read: if isAuthenticated() && (request.auth.uid == userId || isSuperAdmin());
+  allow create, update: if isAuthenticated() && (
+    isSuperAdmin() || 
+    (request.auth.uid == userId && 
+     request.resource.data.role == resource.data.role && 
+     request.resource.data.center == resource.data.center)
+  );
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- TAB 3: OPTIMIZATION -->
+    <div id="rules" class="tab-content">
+      <!-- Inactive tab copy placeholder -->
+    </div>
+
+    <!-- TAB 3: AUDIO & HYDRATION -->
+    <div id="optimization" class="tab-content">
+      <div class="card">
+        <h2>Optimización de Audio Context & Hidratación</h2>
+        <p>
+          Para mantener la consistencia en Next.js (App Router), el reproductor de tonos Gamma a 40Hz aísla el ciclo de vida del contexto de audio en cliente.
+        </p>
+
+        <div class="step-item">
+          <div class="step-number">✓</div>
+          <div class="step-body">
+            <h4>Aislamiento del Oscilador</h4>
+            <p>Se inicializa el estado inicial en 'false'. De esta forma, el DOM inicial servido por SSR coincide al 100% con la primera carga en cliente.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">✓</div>
+          <div class="step-body">
+            <h4>Destrucción de Nodos</h4>
+            <p>Al detener la sesión, se liberan y destruyen todos los nodos y osciladores del procesador de audio, liberando memoria de inmediato.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: SITEMAP -->
+    <div id="sitemap" class="tab-content">
+      <div class="card">
+        <h2>Indexación Canónica (sitemap.ts)</h2>
+        <p>
+          Declarar el portal público en el sitemap dinámico de la raíz garantiza la visibilidad orgánica en Google sin exponer los dashboards privados.
+        </p>
+
+        <pre><code>// src/app/sitemap.ts
+export default async function sitemap() {
+  const baseUrl = 'https://productoraear.com';
+  return [
+    { url: baseUrl, lastModified: new Date(), priority: 1.0 },
+    { url: `${baseUrl}/vimume/hermes`, lastModified: new Date(), priority: 0.9, changeFrequency: 'weekly' }
+  ];
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- TAB 5: DEPLOY -->
+    <div id="deploy" class="tab-content">
+      <div class="card">
+        <h2>Paso de Promoción a Producción (Checklist)</h2>
+        <p>
+          Certifique las variables de entorno clínicas y reglas de seguridad antes de promover el build a Vercel.
+        </p>
+
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h4>firebase deploy --only firestore:rules</h4>
+            <p>Asegura el bloqueo atómico a nivel de base de datos antes de subir el frontend.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h4>npm run build</h4>
+            <p>Genera el compilado sin errores en las Server Actions de Hermes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      const target = document.getElementById(tabId);
+      if (target) {
+        target.classList.add('active');
+      }
+      event.currentTarget.classList.add('active');
+    }
+
+    function updateSimClaims() {
+      const select = document.getElementById('role-select');
+      const code = document.getElementById('claims-json');
+      const val = select.value;
+
+      let role = 'terapeuta';
+      let center = 'Centro Navalcarnero';
+
+      if (val === 'admin_centro') {
+        role = 'admin_centro';
+        center = 'Centro Navalcarnero';
+      } else if (val === 'super_admin') {
+        role = 'super_admin';
+        center = 'TODOS';
+      } else if (val === 'solo_lectura') {
+        role = 'solo_lectura';
+        center = 'Centro Navalcarnero';
+      }
+
+      code.innerText = JSON.stringify({
+        "iss": "https://securetoken.google.com/productoraear",
+        "aud": "productoraear",
+        "sub": "edwin_agudelo_7777",
+        "role": role,
+        "center": center
+      }, null, 2);
+    }
+  </script>
+</body>
+</html>

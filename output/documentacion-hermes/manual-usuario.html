@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Tutor Interactivo Clínico — Manual de Usuario Hermes OT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #050505;
+      --card-bg: rgba(15, 15, 15, 0.7);
+      --border: rgba(255, 255, 255, 0.05);
+      --border-hover: rgba(236, 182, 19, 0.2);
+      --primary: #ecb613;
+      --primary-rgb: 236, 182, 19;
+      --secondary: #49d6b5;
+      --text: #f5f1e8;
+      --text-muted: #8a8a8a;
+      --glow: 0 0 30px rgba(236, 182, 19, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.6;
+      padding: 3rem 1.5rem;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(138, 58, 255, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(236, 182, 19, 0.02) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Cinematic Header */
+    header {
+      text-align: center;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(236, 182, 19, 0.06);
+      border: 1px border var(--border);
+      border-color: rgba(236, 182, 19, 0.2);
+      color: var(--primary);
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 1.5rem;
+      animation: pulse 3s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 5px rgba(236, 182, 19, 0.1); }
+      100% { box-shadow: 0 0 20px rgba(236, 182, 19, 0.2); }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #f5f1e8, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+    }
+
+    /* Navigation / Tabs */
+    .tabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 4rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 1rem 2rem;
+      border-radius: 1.5rem;
+      font-weight: 900;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn:hover, .tab-btn.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--primary);
+      box-shadow: 0 0 20px rgba(236, 182, 19, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Content Cards */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 2.5rem;
+      padding: 3.5rem;
+      margin-bottom: 2.5rem;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0.3;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+    }
+
+    h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      font-style: italic;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      color: #fff;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    /* Steps and Checkpoints */
+    .step-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: rgba(236, 182, 19, 0.1);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+
+    .step-body h4 {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-body p {
+      margin-bottom: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Silicon Valley Interactive Widget */
+    .interactive-simulator {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-b: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .sim-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+    }
+
+    .sim-status {
+      font-size: 0.7rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+    }
+
+    .sim-grid {
+      display: grid;
+      grid-cols: 1;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .sim-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .sim-card {
+      background: #0d0d0d;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 2rem;
+      border-radius: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .sim-card:hover {
+      border-color: rgba(236, 182, 19, 0.15);
+      background: #111;
+    }
+
+    .btn-action {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+      font-weight: 900;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .btn-action:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(236, 182, 19, 0.3);
+    }
+
+    .btn-action.secondary {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-action.secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--secondary);
+    }
+
+    .sound-visualizer {
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin: 1.5rem 0;
+    }
+
+    .bar {
+      width: 4px;
+      height: 8px;
+      background: var(--secondary);
+      border-radius: 10px;
+      transition: height 0.1s ease;
+    }
+
+    .bar.active {
+      animation: bounce 0.6s infinite alternate;
+    }
+
+    .bar:nth-child(2) { animation-delay: 0.1s; }
+    .bar:nth-child(3) { animation-delay: 0.2s; }
+    .bar:nth-child(4) { animation-delay: 0.3s; }
+    .bar:nth-child(5) { animation-delay: 0.4s; }
+    .bar:nth-child(6) { animation-delay: 0.5s; }
+
+    @keyframes bounce {
+      0% { height: 8px; background: var(--secondary); }
+      100% { height: 40px; background: var(--primary); }
+    }
+
+    /* Code Snippets style */
+    pre {
+      background: #0d0d0d;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      padding: 1.5rem;
+      border-radius: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      color: #a9a9a9;
+      margin-bottom: 2rem;
+    }
+
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--primary);
+      background: rgba(236, 182, 19, 0.05);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <header>
+      <div class="badge">
+        <span class="status-dot"></span>
+        Ecosistema VIMUME OS
+      </div>
+      <h1>Hermes Tracker OT</h1>
+      <div class="subtitle">Manual de Usuario & Tutor Clínico</div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('filosofia')">1. Filosofía</button>
+      <button class="tab-btn" onclick="switchTab('mfa')">2. Acceso & MFA</button>
+      <button class="tab-btn" onclick="switchTab('clinica')">3. Sesión Clínica</button>
+      <button class="tab-btn" onclick="switchTab('audio')">4. Estimulación 40Hz</button>
+      <button class="tab-btn" onclick="switchTab('reportes')">5. Informes</button>
+    </div>
+
+    <!-- TAB 1: FILOSOFIA -->
+    <div id="filosofia" class="tab-content active">
+      <div class="card">
+        <h2>La Metáfora del Colibrí Dorado</h2>
+        <p>
+          En <strong>VIMUME</strong>, concebimos la terapia ocupacional digital no como una simple toma de registros en frío, sino como un acto cinemático de protección de la memoria. La <strong>Fábula del Colibrí</strong> nos enseña que cada terapeuta realiza su propia contribución vital en la lucha diaria contra el Alzheimer.
+        </p>
+        
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h4>Soberanía Terapéutica</h4>
+            <p>El profesional de la salud es el custodio de las frecuencias acústicas de estimulación neuronal que se aplican a nivel de centro.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h4>Precisión Fisiológica</h4>
+            <p>Cada intervención documenta y sincroniza la respuesta cardiovascular (BPM) y conductual del paciente en la nube de forma segura.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: MFA -->
+    <div id="mfa" class="tab-content">
+      <div class="card">
+        <h2>Control de Acceso de Doble Factor (MFA)</h2>
+        <p>
+          La seguridad de los datos de la Silver Economy requiere autenticación militar. El ingreso al dashboard privado de terapeutas en <code>/vimume/hermes/dashboard</code> requiere doble firma.
+        </p>
+
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h4>Paso 1: Credencial del Sistema</h4>
+            <p>Introduzca su correo electrónico corporativo clínico registrado en la red VIMUME.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h4>Paso 2: Código Criptográfico temporal</h4>
+            <p>Introduzca el código PIN temporal enviado a su terminal clínica autorizada.</p>
+            <p style="margin-top: 0.5rem;"><code>🔑 Demo PIN: 7777 o 1234</code></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: CLINICA -->
+    <div id="clinica" class="tab-content">
+      <div class="card">
+        <h2>Registro Operativo de la Intervención</h2>
+        <p>
+          Iniciar una sesión neuro-musical de estimulación Gamma exige la validación formal de consentimiento híbrido para cumplir con la normativa RGPD europea.
+        </p>
+
+        <div class="step-item">
+          <div class="step-number">A</div>
+          <div class="step-body">
+            <h4>Selección del Paciente</h4>
+            <p>Seleccione el expediente correspondiente. El sistema cargará el historial base del paciente seed.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">B</div>
+          <div class="step-body">
+            <h4>Objetivo & Frecuencia</h4>
+            <p>Defina la meta clínica y sintonice el tipo de onda (Doppler modular, sónica pura, o rítmica intermitente).</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">C</div>
+          <div class="step-body">
+            <h4>Consentimiento Híbrido</h4>
+            <p>Confirme la firma del familiar y valide la sesión ingresando su código PIN digital.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: AUDIO -->
+    <div id="audio" class="tab-content">
+      <div class="card">
+        <h2>Estimulador Gamma de 40Hz en Tiempo Real</h2>
+        <p>
+          Utilice la Web Audio API del navegador para modular una onda senoidal pura y uniforme a 40Hz.
+        </p>
+
+        <!-- Interactive Web Audio API Simulator -->
+        <div class="interactive-simulator">
+          <div class="sim-header">
+            <div class="sim-title">Consola Sónica Gamma</div>
+            <div class="sim-status">
+              <span class="status-dot" id="sim-indicator" style="background: var(--text-muted); box-shadow: none;"></span>
+              <span id="sim-status-text">Inactivo</span>
+            </div>
+          </div>
+
+          <div class="sim-grid">
+            <div class="sim-card">
+              <span style="font-size: 0.7rem; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em;">Canal sónico</span>
+              <h3 style="font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; italic: true; margin: 0.5rem 0;">40.0Hz</h3>
+              <p style="font-size: 0.75rem; margin-bottom: 0;">Frecuencia Pura Microglial</p>
+            </div>
+
+            <div class="sim-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+              <div class="sound-visualizer" id="visualizer">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+              <button class="btn-action" id="audio-toggle" onclick="toggleOscillator()">Activar Tono 40Hz</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: REPORTES -->
+    <div id="reportes" class="tab-content">
+      <div class="card">
+        <h2>Informes de Alta Densidad (PDF & Print)</h2>
+        <p>
+          Hermes implementa plantillas de impresión nativas optimizadas bajo hojas de estilo limpias.
+        </p>
+
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <h4>Vista del Historial</h4>
+            <p>Acceda a la pestaña 'Informes & PDF' en su panel operativo.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <h4>Filtro de Contraste</h4>
+            <p>El sistema remueve sidebars y colores decorativos para una impresión en blanco y negro clínico libre de ruido visual.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Tab switching engine
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(tabId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    // Web Audio API pure osc 40hz controller
+    let audioCtx = null;
+    let osc = null;
+    let playing = false;
+
+    function toggleOscillator() {
+      const btn = document.getElementById('audio-toggle');
+      const indicator = document.getElementById('sim-indicator');
+      const statusText = document.getElementById('sim-status-text');
+      const bars = document.querySelectorAll('.bar');
+
+      if (!playing) {
+        // Initialize AudioContext safely in response to user click
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(40, audioCtx.currentTime); // Perfect 40Hz pure tone
+        
+        // Setup comfortable volume gain
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        playing = true;
+
+        btn.innerText = 'Detener Estimulación';
+        btn.classList.add('secondary');
+        indicator.style.background = '#22c55e';
+        indicator.style.boxShadow = '0 0 10px #22c55e';
+        statusText.innerText = 'Transmitiendo 40Hz';
+
+        bars.forEach(bar => bar.classList.add('active'));
+      } else {
+        if (osc) {
+          osc.stop();
+          osc.disconnect();
+        }
+        if (audioCtx) {
+          audioCtx.close();
+        }
+        playing = false;
+
+        btn.innerText = 'Activar Tono 40Hz';
+        btn.classList.remove('secondary');
+        indicator.style.background = 'var(--text-muted)';
+        indicator.style.boxShadow = 'none';
+        statusText.innerText = 'Inactivo';
+
+        bars.forEach(bar => bar.classList.remove('active'));
+      }
+    }
+  </script>
+</body>
+</html>
