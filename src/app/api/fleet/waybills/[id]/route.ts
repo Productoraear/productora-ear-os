@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 🛰️ API: GET /api/fleet/waybills/[id]
  * Recupera el detalle completo de una hoja de ruta, incluyendo checkpoints.

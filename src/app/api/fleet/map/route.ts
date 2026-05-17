@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = 'force-dynamic';
+
 /**
  * 🛰️ API: GET /api/fleet/map
  * Estado global de la flota para el God Mode Dashboard.
