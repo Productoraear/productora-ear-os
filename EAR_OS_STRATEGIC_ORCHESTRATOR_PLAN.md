@@ -61,8 +61,8 @@
 
 ---
 
-## 🏗️ FASE ACTUAL: 190.A — DYNAMIC OPERATIONS & STRIPE SINGULARITY — ABIERTA
-**Objetivo**: Integración atómica de pasarela financiera Stripe, sistema de disponibilidad del Roster en caliente y cálculo dinámico de costes operativos.
+## 🏗️ FASE ACTUAL: 190.B — STRIPE INTEGRATION & WEBHOOK ACID — COMPLETADA Y CERTIFICADA
+**Objetivo**: Integración atómica de pasarela financiera Stripe, sistema de disponibilidad del Roster en caliente y cálculo dinámico de costes operativos con raw-body verification.
 
 ### 📊 Estado de Nodos (Audit Forense 2026-05-17)
 - **Marketplace Engine**: [CERTIFICADO - S-CLASS]
@@ -72,8 +72,9 @@
 - **Talent OS Roster & Dashboard**: [MATERIALIZADO - READY FOR PRODUCTION]
 - **Sovereign SEO (562 Nodes)**: [INDEXABLE & SITEMAPPED]
 - **Dynamic Contact Channels**: [100% NAVIGABLE - RESOLVED DYNAMIC CTAs]
-- **Commission Ledger**: [SCHEMA READY - PENDING LOGIC]
-- **Waybill Emission**: [LERP READY - PENDING PDF]
+- **Commission Ledger**: [COMPLETADO - FULL WEBHOOK ACID TRANSACTION & PAID ON STRIPE COMPLETION]
+- **Waybill Emission**: [COMPLETADO - AUTOMATIC EMISSION ON CHECKOUT CALLBACK]
+- **Stripe Embed Checkout**: [COMPLETADO - SECURE SERVER ACTIONS & DYNAMIC GEO-PRICING CALCULATOR]
 - **The Signal Funnel**: [COMPLETADO E INTEGRADO EN /the-signal - S-CLASS]
 - **Centro de Mando**: [COMPLETADO E INTEGRADO EN /command-center - S-CLASS]
 - **Arsenal Técnico**: [COMPLETADO E INTEGRADO EN /arsenal - S-CLASS CON DATOS REALES DE BACKUP]
@@ -81,15 +82,14 @@
 
 ---
 
-## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 190.A)
-1. **Stripe Embed Checkout**: Embeber la pasarela Stripe en el BookingFlow para el depósito de garantía de 100€.
-2. **Dynamic Rates**: Implementar cálculo en caliente de kilometraje y costes de desplazamiento entre provincias.
-3. **Smart Contract Signatures**: Conectar la pasarela de firma con el Aura Wallet para adelantos reales.
-4. **Live Roster E2E**: Ejecutar comprobación en navegador para certificar la navegación interactiva de los nuevos componentes y la consola JWT en tiempo real.
+## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 200.A)
+1. **Live Production Smoke Run**: Ejecutar pruebas de webhook en caliente usando Stripe CLI para confirmar flujos completos.
+2. **Smart Contract Signatures**: Conectar la pasarela de firma con el Aura Wallet para adelantos reales.
+3. **Live Roster E2E**: Ejecutar comprobación en navegador para certificar la navegación interactiva de los nuevos componentes y la consola JWT en tiempo real.
 
 ---
 
-SISTEMA OPERATIVO | V190.A EN DESARROLLO | MONOLITO S-CLASS CERTIFICADO EN VERDE
+SISTEMA OPERATIVO | V190.B CONGELADA Y AUDITADA | MONOLITO S-CLASS CERTIFICADO EN VERDE
 *Última actualización: 2026-05-17 — ANTIGRAVITY OMEGA (Production Singularities & Dynamic Capture)*
 
 
