@@ -1,39 +1,53 @@
+// src/lib/actions/stripe-checkout.ts
 "use server";
 
 import Stripe from "stripe";
 import { z } from "zod";
 import { headers } from "next/headers";
+import { calculateGeoPricing } from "@/lib/services/pricing/geo-pricer";
 import { prisma } from "@/lib/prisma";
 
-// Singleton initialization for production environments
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {
-  // Let it fallback to default account API version to avoid runtime typing issues
+const stripeSecret = process.env.STRIPE_SECRET_KEY || "sk_test_placeholder";
+const stripe = new Stripe(stripeSecret, {
+  apiVersion: '2026-04-22.dahlia' as any,
 });
 
-const BookingCheckoutSchema = z.object({
+const StripeCheckoutSchema = z.object({
   artistId: z.string().min(1),
-  selectedExtras: z.array(z.string()).default([]),
-  date: z.string().min(1),
-  geoDistance: z.number().min(0).optional(),
-  userId: z.string().min(1),
+  clientId: z.string().min(1),
+  eventDate: z.string().min(1),
+  originLat: z.number(),
+  originLng: z.number(),
+  destinationLat: z.number(),
+  destinationLng: z.number(),
+  originLabel: z.string().min(1).optional(),
+  destinationLabel: z.string().min(1).optional(),
   workspaceId: z.string().min(1),
   bookingId: z.string().min(1),
 });
 
 export async function createBookingCheckout(input: unknown) {
-  const payload = BookingCheckoutSchema.parse(input);
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("Missing STRIPE_SECRET_KEY in production server environment");
+  }
+  const payload = StripeCheckoutSchema.parse(input);
   const origin = (await headers()).get("origin") ?? "https://productoraear.com";
 
-  // Safeguard: verify database connection and user / workspace exist before generating checkout session
   const user = await prisma.user.findUnique({
-    where: { id: payload.userId }
+    where: { id: payload.clientId },
+    select: { id: true },
   });
-  if (!user) {
-    throw new Error("Invalid User context in Talent OS V2 payload");
-  }
+  if (!user) throw new Error("Invalid client context");
 
-  // Define deposit amount dynamically. The canonical deposit contract is 100.00 EUR
-  const depositAmount = 10000; // 100 EUR in cents
+  const pricing = await calculateGeoPricing({
+    artistId: payload.artistId,
+    origin: { lat: payload.originLat, lng: payload.originLng },
+    destination: { lat: payload.destinationLat, lng: payload.destinationLng },
+    baseFee: 0,
+    costPerKm: 0.75,
+    depositMode: "fixed",
+    depositValue: 100,
+  });
 
   const session = await stripe.checkout.sessions.create({
     ui_mode: "embedded" as any,
@@ -44,28 +58,37 @@ export async function createBookingCheckout(input: unknown) {
         price_data: {
           currency: "eur",
           product_data: {
-            name: `Depósito Garantía - Edwin Agudelo`,
-            description: `Reserva garantizada de fecha para el show en: ${payload.date}. Identificador: ${payload.bookingId}`,
+            name: "Depósito Garantía - Productora EAR",
+            description: `Reserva para ${payload.eventDate}`,
           },
-          unit_amount: depositAmount,
+          unit_amount: pricing.depositAmount * 100,
         },
       },
     ],
     return_url: `${origin}/artistas/edwin-agudelo/booking/return?session_id={CHECKOUT_SESSION_ID}`,
     metadata: {
-      userId: payload.userId,
       artistId: payload.artistId,
-      date: payload.date,
+      clientId: payload.clientId,
+      eventDate: payload.eventDate,
+      originLat: String(payload.originLat),
+      originLng: String(payload.originLng),
+      destinationLat: String(payload.destinationLat),
+      destinationLng: String(payload.destinationLng),
+      totalAmountCalculated: String(pricing.totalAmount),
+      depositAmount: String(pricing.depositAmount),
+      distanceKm: String(pricing.distanceKm),
       workspaceId: payload.workspaceId,
       bookingId: payload.bookingId,
-      total: "100.00",
-      geoDistance: String(payload.geoDistance ?? 0),
     },
   });
 
-  if (!session.client_secret) {
-    throw new Error("Embedded checkout generation failed: missing Stripe client secret");
-  }
+  if (!session.client_secret) throw new Error("Missing Stripe client secret");
 
-  return { clientSecret: session.client_secret, sessionId: session.id };
+  return {
+    clientSecret: session.client_secret,
+    sessionId: session.id,
+    totalAmount: pricing.totalAmount,
+    depositAmount: pricing.depositAmount,
+    distanceKm: pricing.distanceKm,
+  };
 }

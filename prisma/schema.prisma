@@ -305,6 +305,7 @@ model Waybill {
   etaSeconds        Int?                   @map("eta_seconds")
   distanceMeters    Int?                   @map("distance_meters")
   notes             String?
+  bookingId         String?                @db.Uuid @map("booking_id")
 
   participants      WaybillParticipant[]
   events            FleetTelemetryEvent[]
@@ -403,6 +404,7 @@ model CommissionLedger {
   reference          String?            @unique
   sourceEvent        String?            @map("source_event")
   notes              String?
+  stripeSessionId    String?            @map("stripe_session_id")
 
   createdAt          DateTime           @default(now()) @map("created_at")
   updatedAt          DateTime           @updatedAt @map("updated_at")
@@ -446,6 +448,10 @@ model SmartContract {
   title            String?
   signedAt         DateTime?       @map("signed_at")
 
+  deposit          Float?
+  stripeSessionId  String?         @map("stripe_session_id")
+  eventDate        DateTime?       @map("event_date")
+
   createdAt        DateTime        @default(now()) @map("created_at")
   updatedAt        DateTime        @updatedAt @map("updated_at")
 
@@ -465,6 +471,7 @@ model CalendarBlock {
   endsAt        DateTime        @map("ends_at")
   label         String?
   status        String          @default("BLOCKED")
+  bookingId     String?         @db.Uuid @map("booking_id")
 
   createdAt     DateTime        @default(now()) @map("created_at")
   updatedAt     DateTime        @updatedAt @map("updated_at")

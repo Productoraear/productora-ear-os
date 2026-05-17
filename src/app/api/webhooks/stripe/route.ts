@@ -1,3 +1,4 @@
+// src/app/api/webhooks/stripe/route.ts
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
@@ -5,25 +6,31 @@ import { CommissionStatus } from "@prisma/client";
 
 export const runtime = "nodejs";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_placeholder", {});
-
 export async function POST(req: Request) {
-  const sig = req.headers.get("stripe-signature");
-  if (!sig) {
-    return NextResponse.json({ error: "Missing signature" }, { status: 400 });
+  const stripeSecret = process.env.STRIPE_SECRET_KEY;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!stripeSecret || !webhookSecret) {
+    console.error("Missing Stripe environment configuration variables at runtime.");
+    return NextResponse.json({ error: "Configuration error" }, { status: 500 });
   }
 
-  let event: Stripe.Event;
+  const stripe = new Stripe(stripeSecret, {
+    apiVersion: '2026-04-22.dahlia' as any,
+  });
 
+  const signature = req.headers.get("stripe-signature");
+  if (!signature) {
+    return NextResponse.json({ error: "Missing Stripe signature" }, { status: 400 });
+  }
+
+  const rawBody = await req.text();
+
+  let event: Stripe.Event;
   try {
-    const rawBody = await req.text();
-    event = stripe.webhooks.constructEvent(
-      rawBody,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET || "whsec_placeholder"
-    );
+    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Unknown webhook error";
+    const message = err instanceof Error ? err.message : "Invalid webhook signature";
     return NextResponse.json({ error: message }, { status: 400 });
   }
 
@@ -34,83 +41,121 @@ export async function POST(req: Request) {
   const session = event.data.object as Stripe.Checkout.Session;
   const md = session.metadata ?? {};
 
-  const bookingId = md.bookingId;
   const artistId = md.artistId;
-  const userId = md.userId;
+  const clientId = md.clientId;
+  const eventDate = md.eventDate;
+  const originLat = Number(md.originLat);
+  const originLng = Number(md.originLng);
+  const destinationLat = Number(md.destinationLat);
+  const destinationLng = Number(md.destinationLng);
+  const totalAmountCalculated = Number(md.totalAmountCalculated ?? "0");
+  const depositAmount = Number(md.depositAmount ?? "100");
+  const bookingId = md.bookingId;
   const workspaceId = md.workspaceId;
-  const date = md.date;
 
-  if (!bookingId || !artistId || !userId || !workspaceId || !date) {
-    return NextResponse.json({ error: "Missing metadata in Stripe callback" }, { status: 400 });
+  if (
+    !artistId ||
+    !clientId ||
+    !eventDate ||
+    !bookingId ||
+    !workspaceId ||
+    Number.isNaN(originLat) ||
+    Number.isNaN(originLng) ||
+    Number.isNaN(destinationLat) ||
+    Number.isNaN(destinationLng)
+  ) {
+    return NextResponse.json({ error: "Missing metadata" }, { status: 400 });
   }
 
   try {
     await prisma.$transaction(async (tx) => {
-      // 1. Update Smart Contract to reserved status
-      // We check if smartContract exists with the given bookingId (UUID)
-      const existingContract = await tx.smartContract.findUnique({
-        where: { id: bookingId }
+      // Find client profile relation if exists
+      const clientProfile = await tx.clientProfile.findUnique({
+        where: { userId: clientId },
+        select: { id: true },
+      });
+      const clientProfileId = clientProfile?.id ?? null;
+
+      const contractExists = await tx.smartContract.findUnique({
+        where: { id: bookingId },
+        select: { id: true },
       });
 
-      if (existingContract) {
+      if (contractExists) {
         await tx.smartContract.update({
           where: { id: bookingId },
           data: {
             status: "RESERVED",
-            signedAt: new Date(),
+            deposit: depositAmount,
+            stripeSessionId: session.id,
+            eventDate: new Date(eventDate),
+          },
+        });
+      } else {
+        await tx.smartContract.create({
+          data: {
+            id: bookingId,
+            artistId,
+            userId: clientId,
+            clientProfileId,
+            workspaceId,
+            status: "RESERVED",
+            deposit: depositAmount,
+            stripeSessionId: session.id,
+            eventDate: new Date(eventDate),
           },
         });
       }
 
-      // 2. Create Calendar Block
-      const eventStart = new Date(date);
-      const eventEnd = new Date(eventStart.getTime() + 4 * 60 * 60 * 1000); // 4 hours show duration block
-      
+      const startAt = new Date(eventDate);
+      const endAt = new Date(startAt.getTime() + 4 * 60 * 60 * 1000);
+
       await tx.calendarBlock.create({
         data: {
-          artistId, // Must match valid artist profile UUID
-          startsAt: eventStart,
-          endsAt: eventEnd,
-          label: `Bloqueo de Calendario - Reserva Stripe`,
+          artistId,
+          startsAt: startAt,
+          endsAt: endAt,
+          label: "Stripe Embedded Checkout Reservation",
           status: "BLOCKED",
+          bookingId,
         },
       });
 
-      // 3. Create Logistics Dispatch order (Waybill)
       await tx.waybill.create({
         data: {
           workspaceId,
           artistProfileId: artistId,
+          bookingId,
           referenceCode: `WAY-${bookingId.slice(0, 8)}-${Date.now()}`,
-          originLabel: "Base Central EAR OS",
-          destinationLabel: "Destino del Show - España Vaciada",
-          originLat: 40.416775,
-          originLng: -3.703790,
-          destinationLat: 40.416775,
-          destinationLng: -3.703790,
+          originLabel: "Base Central EAR OS (Madrid)",
+          destinationLabel: "Destino del Show - Geolocalizado",
+          originLat,
+          originLng,
+          destinationLat,
+          destinationLng,
           status: "QUEUED",
         },
       });
 
-      // 4. Create Ledger Accounting
       await tx.commissionLedger.create({
         data: {
-          userId,
+          userId: clientId,
           workspaceId,
-          amount: Number(md.total ?? "100.00"),
+          amount: totalAmountCalculated,
           currency: "EUR",
           status: CommissionStatus.PAID,
           reference: `TX-${bookingId.slice(0, 8)}-${Date.now()}`,
           sourceEvent: "stripe_embedded_checkout",
-          notes: `Depósito garantizado vía Stripe Webhook: Session: ${session.id}`,
+          stripeSessionId: session.id,
+          notes: `Stripe webhook session ${session.id}`,
         },
       });
     });
 
     return NextResponse.json({ received: true }, { status: 200 });
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : "Transaction processing failure";
-    console.error("WEBHOOK TRANSACTION ERROR:", error);
-    return NextResponse.json({ error: errorMsg }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Transaction processing failure";
+    console.error("Webhook processing error:", error);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
