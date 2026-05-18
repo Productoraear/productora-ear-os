@@ -2,24 +2,16 @@ const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  experimental: {
-    serverComponentsExternalPackages: [
-      'puppeteer',
-      'puppeteer-extra',
-      'puppeteer-extra-plugin-stealth',
-      'clone-deep',
-      'merge-deep',
-      'undici',
-      'cheerio',
-      '@protobufjs/inquire',
-    ],
-  },
+  serverExternalPackages: [
+    'puppeteer',
+    'puppeteer-extra',
+    'puppeteer-extra-plugin-stealth',
+    'clone-deep',
+    'merge-deep',
+    'undici',
+    'cheerio',
+    '@protobufjs/inquire',
+  ],
   images: {
     remotePatterns: [
       {
@@ -29,11 +21,6 @@ const nextConfig = {
     ],
   },
   reactStrictMode: true,
-  webpack: (config) => {
-    config.resolve.alias['@'] = path.join(__dirname, './src');
-    config.resolve.alias['@protobufjs'] = path.join(__dirname, 'node_modules/@protobufjs');
-    return config;
-  },
   async rewrites() {
     return [
       {
