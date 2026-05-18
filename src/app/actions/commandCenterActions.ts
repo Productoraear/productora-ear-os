@@ -174,3 +174,45 @@ export async function getSystemFinancials(email: string) {
     }))
   };
 }
+
+/**
+ * 🔮 ASTRA AI INTEGRATION ACTION: RUN PREDICTIVE ANALYSIS
+ * Fetches real historical logged context and evaluates it server-side.
+ */
+export async function runAstraPrediction(
+  email: string,
+  input: { origin: string; destination: string; eventDate: string }
+) {
+  const auth = await authorizeUser(email);
+  if (!auth.authorized) {
+    throw new Error("UNAUTHORIZED_ACCESS: Clearance level S-Class required.");
+  }
+
+  const { astraPredictiveEngine } = await import("@/lib/ai/astra/predictive-engine");
+
+  // Query real database logged parameters
+  const whereClause = (auth.role === Role.ADMIN || auth.role === Role.COMMANDER)
+    ? {}
+    : { artistProfileId: auth.artistProfileId || undefined };
+
+  const historicalWaybills = await prisma.waybill.findMany({
+    where: whereClause,
+    orderBy: { createdAt: "desc" },
+    take: 20
+  });
+
+  const historicalWalletMoves = await prisma.commissionLedger.findMany({
+    where: { userId: auth.userId },
+    orderBy: { createdAt: "desc" },
+    take: 20
+  });
+
+  return astraPredictiveEngine.predict({
+    origin: input.origin,
+    destination: input.destination,
+    eventDate: input.eventDate,
+    providerId: auth.artistProfileId || undefined,
+    historicalWaybills,
+    historicalWalletMoves
+  });
+}

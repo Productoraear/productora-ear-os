@@ -19,7 +19,8 @@ import {
   RefreshCw,
   Wallet,
   ShieldAlert,
-  Fingerprint
+  Fingerprint,
+  BrainCircuit
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/lib/api";
@@ -35,13 +36,14 @@ import {
 // Import S-Class Subcomponents
 import WaybillTimeline from "./WaybillTimeline";
 import AuraWalletLedger from "./AuraWalletLedger";
+import AstraOraclePanel from "./AstraOraclePanel";
 
 export default function CommandCenterDashboard() {
   const router = useRouter();
   const { user, isAdmin, isPaid, loading: authLoading, signInWithGoogle } = useAuth();
   
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<'Logistica' | 'Finanzas'>('Logistica');
+  const [activeTab, setActiveTab] = useState<'Logistica' | 'Finanzas' | 'Astra'>('Logistica');
   
   // Real-time states
   const [waybills, setWaybills] = useState<WaybillData[]>([]);
@@ -314,7 +316,13 @@ export default function CommandCenterDashboard() {
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4 relative z-10">
             <h2 className="text-lg font-black uppercase tracking-tighter flex items-center gap-3 italic">
-              {activeTab === 'Logistica' ? <Truck className="text-[#d4a855]" size={20} /> : <Wallet className="text-[#d4a855]" size={20} />} 
+              {activeTab === 'Logistica' ? (
+                <Truck className="text-[#d4a855]" size={20} />
+              ) : activeTab === 'Finanzas' ? (
+                <Wallet className="text-[#d4a855]" size={20} />
+              ) : (
+                <BrainCircuit className="text-[#d4a855]" size={20} />
+              )} 
               Consola Operativa S-Class
             </h2>
             
@@ -338,6 +346,14 @@ export default function CommandCenterDashboard() {
                 >
                   Finanzas
                 </button>
+                {isAdmin && (
+                  <button 
+                    onClick={() => setActiveTab('Astra')}
+                    className={`text-[9px] font-black uppercase px-3 py-1.5 rounded-lg transition-all ${activeTab === 'Astra' ? 'bg-[#d4a855] text-black border border-[#d4a855]/30' : 'text-white/60 hover:text-white hover:bg-white/5'}`}
+                  >
+                    ASTRA Oráculo
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -349,13 +365,18 @@ export default function CommandCenterDashboard() {
                 loading={loading} 
                 onRefresh={fetchData} 
               />
-            ) : (
+            ) : activeTab === 'Finanzas' ? (
               <AuraWalletLedger 
                 walletData={walletData} 
                 systemFinancials={systemFinancials}
                 isAdmin={isAdmin}
                 loading={loading} 
                 onRefresh={fetchData} 
+              />
+            ) : (
+              <AstraOraclePanel 
+                userEmail={user.email || ""} 
+                isAdmin={isAdmin} 
               />
             )}
           </div>
