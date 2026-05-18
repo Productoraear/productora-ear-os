@@ -147,11 +147,21 @@
 
 ---
 
-## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 203.D)
-1. **Automated Rollback Safeguards**: Implementar simuladores de estrés transaccional y validaciones ACID de Stripe Connect con reversión automática.
-2. **Global Client Booking Integration**: Habilitar reserva premium unificada con cotizaciones en tiempo real basadas en estimaciones de ASTRA.
+## 🛠️ [STATUS] FASE 203.D: AUTOMATED ROLLBACK SAFEGUARDS & RESILIENCY ENGINE — COMPLETADA Y CERTIFICADA
+- [x] **Stripe Webhook Idempotency Gating**: Implementación de compuerta de idempotencia proactiva en `/api/payments/webhook/route.ts` buscando referencias duplicadas `STRIPE-${sessionId}` para evitar re-procesamientos de balances o comisiones repetidas de Stripe.
+- [x] **Endpoint de Health Check de Producción**: Creación de `/api/health` para el monitoreo automatizado superficial de Postgres ping, firebase connectivity, y validación de claves API críticas.
+- [x] **Guardián de Permisos Centralizado**: Implementación de `permissions.ts` en `src/lib/auth/permissions.ts` abstrayendo lógica de RBAC por acción del usuario mediante la función `userCan`, eliminando la dispersión de directivas y aumentando la auditabilidad.
+- [x] **Refactorización de Actions del CommandCenter**: Alineación de `commandCenterActions.ts` para verificar permisos vía `userCan` antes de entregar datos financieros de sistema o estimaciones de ASTRA.
+- [x] **TypeScript Green Build**: Certificación de cero advertencias y exit code 0 con `npx tsc --noEmit`.
 
 ---
 
-SISTEMA OPERATIVO | V203.C CONGELADA Y AUDITADA | MOTOR DE PREDICCIÓN ASTRA Y VISOR EN PRODUCCIÓN GLOBAL (VERCEL READY)
-*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA (Directiva Omega V203.C Realized)*
+## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 203.E)
+1. **Global Client Booking Portal**: Conexión definitiva del Matcher reactivo en la home con la confirmación de checkout dinámico final basado en estimaciones calculadas en vivo por ASTRA.
+2. **Unified B2G Contracts Panel**: Integrar el visor de Smart Contracts y reclamos de fincas directamente con el sistema de firmas inmutables de Ledger.
+
+---
+
+SISTEMA OPERATIVO | V203.D CONGELADA Y AUDITADA | RESILIENCIA EN WEBHOOKS, DIAGNÓSTICOS ACTIVO Y CENTRAL DE PERMISOS CERTIFICADA
+*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA (Directiva Omega V203.D Realized)*
+
