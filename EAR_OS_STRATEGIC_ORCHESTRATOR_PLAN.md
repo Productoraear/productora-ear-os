@@ -210,5 +210,11 @@
 - Design System: EAR OS GOLD 2026 — tokens en `src/app/globals.css`
 - Última actualización: 2026-05-18
 
+## ESTADO DE DEPENDENCIAS REACT
+- React/ReactDOM fijados por overrides a una única versión de React 19.
+- Validación en producción pendiente tras deploy Vercel.
+- Cualquier dependencia que arrastre React 18 debe pasar a cuarentena o reemplazo.
+- No declarar resuelto el incidente hasta confirmar carga limpia en producción.
+
 SISTEMA OPERATIVO | V206 SELLADA | V207 PENDIENTE DE APERTURA | WEBHOOK ROUTER DUAL (CHECKOUT + CONNECT KYC)
 *Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA v2.0 ENTERPRISE (Directiva Omega V206 Realized)*
