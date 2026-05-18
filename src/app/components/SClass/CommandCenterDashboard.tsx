@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { 
   Target, 
@@ -15,25 +15,97 @@ import {
   BarChart3,
   Search,
   CheckCircle2,
-  AlertTriangle
+  AlertTriangle,
+  RefreshCw,
+  Wallet,
+  ShieldAlert,
+  Fingerprint
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/lib/api";
+import { useAuth } from "@/lib/AuthContext";
+import { 
+  getWaybills, 
+  getAuraWalletAndLedgers, 
+  getSystemFinancials,
+  WaybillData,
+  WalletLedgerData
+} from "@/app/actions/commandCenterActions";
+
+// Import S-Class Subcomponents
+import WaybillTimeline from "./WaybillTimeline";
+import AuraWalletLedger from "./AuraWalletLedger";
 
 export default function CommandCenterDashboard() {
   const router = useRouter();
+  const { user, isAdmin, isPaid, loading: authLoading, signInWithGoogle } = useAuth();
+  
   const [showModal, setShowModal] = useState(false);
-  const [activeTab, setActiveTab] = useState<'Live' | 'History' | 'Config'>('Live');
+  const [activeTab, setActiveTab] = useState<'Logistica' | 'Finanzas'>('Logistica');
+  
+  // Real-time states
+  const [waybills, setWaybills] = useState<WaybillData[]>([]);
+  const [walletData, setWalletData] = useState<WalletLedgerData | null>(null);
+  const [systemFinancials, setSystemFinancials] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [lastSync, setLastSync] = useState<Date | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
   const trackEvent = api.trackEvent;
+
+  // Fetch all system and performer dashboard datasets
+  const fetchData = useCallback(async () => {
+    if (!user || !user.email) return;
+    
+    setLoading(true);
+    setErrorMsg(null);
+    try {
+      // 1. Fetch fleet logs
+      const waybillRecords = await getWaybills(user.email);
+      setWaybills(waybillRecords);
+
+      // 2. Fetch wallet splits ledger
+      const walletRecords = await getAuraWalletAndLedgers(user.email);
+      setWalletData(walletRecords);
+
+      // 3. Fetch global financials if admin role is validated
+      if (isAdmin) {
+        const globalFinancials = await getSystemFinancials(user.email);
+        setSystemFinancials(globalFinancials);
+      }
+
+      setLastSync(new Date());
+    } catch (err: any) {
+      console.error("🛑 [COMMAND_CENTER] Error syncing data:", err);
+      setErrorMsg(err.message || "Fallo en sincronización de datos.");
+    } finally {
+      setLoading(false);
+    }
+  }, [user, isAdmin]);
+
+  // Initial fetch and 30-second secure polling
+  useEffect(() => {
+    if (user) {
+      fetchData();
+      
+      // Auto-polling interval: 30 seconds
+      const interval = setInterval(() => {
+        console.log("🔄 [COMMAND_CENTER] Auto-polling live updates...");
+        fetchData();
+      }, 30000);
+
+      return () => clearInterval(interval);
+    }
+  }, [user, fetchData]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       trackEvent("COMMAND_CENTER_ACCESS", {
         timestamp: new Date().toISOString(),
-        clearance: "S-CLASS"
+        clearance: isAdmin ? "COMMANDER_S_CLASS" : "ARTIST_VERIFIED"
       });
     }
-  }, []);
+  }, [isAdmin, trackEvent]);
 
   const verticals = [
     {
@@ -90,6 +162,70 @@ export default function CommandCenterDashboard() {
     }
   };
 
+  // 🛡️ ROLE GATING SCREEN
+  const isAuthorized = isAdmin || isPaid;
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#050505] flex items-center justify-center">
+        <div className="space-y-4 text-center">
+          <div className="w-12 h-12 border-2 border-[#d4a855] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-[10px] text-white/40 uppercase font-black tracking-[0.2em]">
+            Autenticando Firma S-Class...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user || !isAuthorized) {
+    return (
+      <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center p-6 relative overflow-hidden font-sans">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-500/5 blur-[120px] rounded-full pointer-events-none" />
+        
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="max-w-md w-full p-8 bg-white/[0.01] border border-red-500/20 rounded-[3rem] text-center space-y-6 shadow-2xl relative"
+        >
+          <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto border border-red-500/30 shadow-[0_0_20px_rgba(239,68,68,0.15)]">
+            <ShieldAlert className="text-red-500" size={28} />
+          </div>
+          
+          <div className="space-y-2">
+            <h2 className="text-xl font-black uppercase tracking-tighter italic text-white">
+              Acceso Restringido
+            </h2>
+            <p className="text-red-400/80 text-[9px] font-black uppercase tracking-widest">
+              FIRMA CRÍPTICA NO RECONOCIDA
+            </p>
+          </div>
+
+          <p className="text-white/60 text-xs leading-relaxed font-bold">
+            Este Centro de Mando requiere credenciales de <span className="text-[#d4a855]">Administrador</span> o <span className="text-[#d4a855]">Artista Elite</span> verificado en la base de datos centralizada de Productora EAR.
+          </p>
+
+          {!user ? (
+            <button
+              onClick={signInWithGoogle}
+              className="w-full bg-[#d4a855] text-black font-black py-4 rounded-xl shadow-[0_10px_30px_rgba(212,168,85,0.2)] text-[10px] uppercase tracking-widest hover:bg-white transition-colors"
+            >
+              Autenticarse con Google
+            </button>
+          ) : (
+            <div className="p-4 bg-white/5 border border-white/5 rounded-2xl">
+              <p className="text-[9px] text-white/40 uppercase font-black tracking-widest mb-1">Usuario Activo</p>
+              <p className="text-xs font-black text-white">{user.email}</p>
+              <p className="text-[8px] text-red-400 uppercase font-black tracking-widest mt-2 border border-red-500/20 py-1 px-2.5 rounded bg-red-500/5">
+                Rol: Explorador (Liquidación Inactiva)
+              </p>
+            </div>
+          )}
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#050505] text-white p-6 font-sans relative overflow-hidden">
       {/* Background Decor */}
@@ -99,7 +235,7 @@ export default function CommandCenterDashboard() {
       <header className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 relative z-10">
         <div className="flex items-center gap-5">
           <div className="w-14 h-14 bg-gradient-to-br from-[#d4a855] to-[#ffd471] rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(212,168,85,0.3)] hover:rotate-3 transition-all duration-300">
-            <Shield className="text-black w-8 h-8" />
+            <Fingerprint className="text-black w-8 h-8" />
           </div>
           <div>
             <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none italic text-white">
@@ -163,56 +299,64 @@ export default function CommandCenterDashboard() {
         ))}
       </div>
 
+      {/* SECURE SUB-MONITOR / REAL-TIME WORKSPACE CONTROLS */}
+      {errorMsg && (
+        <div className="p-4 mb-6 bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-black uppercase tracking-wider rounded-2xl flex items-center gap-3 relative z-10">
+          <AlertTriangle size={16} />
+          {errorMsg}
+        </div>
+      )}
+
       {/* PANEL DE CONTROL CENTRAL */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10">
         <div className="lg:col-span-2 p-8 bg-white/[0.01] border border-white/5 rounded-[3rem] space-y-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#d4a855]/3 blur-[100px] rounded-full pointer-events-none" />
-          <div className="flex items-center justify-between mb-4 relative z-10">
+          
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4 relative z-10">
             <h2 className="text-lg font-black uppercase tracking-tighter flex items-center gap-3 italic">
-              <Target className="text-[#d4a855]" size={20} /> Radar de Operaciones
+              {activeTab === 'Logistica' ? <Truck className="text-[#d4a855]" size={20} /> : <Wallet className="text-[#d4a855]" size={20} />} 
+              Consola Operativa S-Class
             </h2>
-            <div className="flex gap-2">
-              {(['Live', 'History', 'Config'] as const).map(t => (
+            
+            <div className="flex items-center gap-3">
+              {lastSync && (
+                <span className="text-[8px] text-white/30 font-black uppercase tracking-widest">
+                  Sync: {lastSync.toLocaleTimeString("es-ES")}
+                </span>
+              )}
+              
+              <div className="flex bg-black/40 border border-white/5 p-1 rounded-xl">
                 <button 
-                  key={t} 
-                  onClick={() => setActiveTab(t)}
-                  className={`text-[9px] font-black uppercase px-3 py-1.5 rounded-lg border transition-colors ${activeTab === t ? 'bg-[#d4a855] text-black border-[#d4a855]' : 'bg-white/5 border-white/10 hover:bg-white/10 text-white'}`}
+                  onClick={() => setActiveTab('Logistica')}
+                  className={`text-[9px] font-black uppercase px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'Logistica' ? 'bg-[#d4a855] text-black' : 'text-white/60 hover:text-white'}`}
                 >
-                  {t}
+                  Logística
                 </button>
-              ))}
+                <button 
+                  onClick={() => setActiveTab('Finanzas')}
+                  className={`text-[9px] font-black uppercase px-3 py-1.5 rounded-lg transition-colors ${activeTab === 'Finanzas' ? 'bg-[#d4a855] text-black' : 'text-white/60 hover:text-white'}`}
+                >
+                  Finanzas
+                </button>
+              </div>
             </div>
           </div>
           
-          <div className="space-y-4 relative z-10">
-            {activeTab === 'Live' && [1, 2, 3].map((i) => (
-              <div key={i} className="flex items-center justify-between p-4 bg-black/40 border border-white/5 rounded-2xl hover:border-[#d4a855]/20 transition-all">
-                <div className="flex items-center gap-4">
-                  <div className="w-2 h-2 bg-[#d4a855] rounded-full animate-pulse" />
-                  <div>
-                    <p className="text-xs font-black text-white uppercase tracking-tight">Sync_Nexus_v{i}.0</p>
-                    <p className="text-[9px] text-white/30 uppercase font-black">Procesamiento de datos del catálogo local...</p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs font-black text-[#d4a855]">98.{i}%</p>
-                  <p className="text-[8px] text-white/20 uppercase font-black">Success Rate</p>
-                </div>
-              </div>
-            ))}
-            
-            {activeTab === 'History' && (
-              <div className="p-8 text-center text-white/30 uppercase text-[9px] font-black tracking-widest border border-white/5 rounded-2xl bg-black/40">
-                <CheckCircle2 className="mx-auto mb-3 text-white/10" size={24} />
-                Historial cargado. Cero incidencias críticas reportadas.
-              </div>
-            )}
-
-            {activeTab === 'Config' && (
-              <div className="p-8 text-center text-[#d4a855] uppercase text-[9px] font-black tracking-widest border border-[#d4a855]/10 rounded-2xl bg-black/40">
-                <AlertTriangle className="mx-auto mb-3 text-[#d4a855]/40" size={24} />
-                Acceso de administrador restringido. Configuración S-Class bloqueada.
-              </div>
+          <div className="relative z-10">
+            {activeTab === 'Logistica' ? (
+              <WaybillTimeline 
+                waybills={waybills} 
+                loading={loading} 
+                onRefresh={fetchData} 
+              />
+            ) : (
+              <AuraWalletLedger 
+                walletData={walletData} 
+                systemFinancials={systemFinancials}
+                isAdmin={isAdmin}
+                loading={loading} 
+                onRefresh={fetchData} 
+              />
             )}
           </div>
         </div>
