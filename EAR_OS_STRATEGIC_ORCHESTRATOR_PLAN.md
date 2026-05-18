@@ -151,10 +151,12 @@
 - [x] **Stripe Webhook Idempotency Gating**: Implementación de compuerta de idempotencia proactiva en `/api/payments/webhook/route.ts` buscando referencias duplicadas `STRIPE-${sessionId}` para evitar re-procesamientos de balances o comisiones repetidas de Stripe.
 - [x] **Endpoint de Health Check de Producción**: Creación de `/api/health` para el monitoreo automatizado superficial de Postgres ping, firebase connectivity, y validación de claves API críticas.
 - [x] **Guardián de Permisos Centralizado**: Implementación de `permissions.ts` en `src/lib/auth/permissions.ts` abstrayendo lógica de RBAC por acción del usuario mediante la función `userCan`, eliminando la dispersión de directivas y aumentando la auditabilidad.
+- [x] **Active Perimeter Security Shield**: Creación de `src/lib/security/shield.ts` que inspecciona firmas y agentes HTTP para bloquear scrapers y bots automatizados, integrándolo en el endpoint de búsqueda `/api/profiles/search` con alertas Telegram instantáneas.
 - [x] **Refactorización de Actions del CommandCenter**: Alineación de `commandCenterActions.ts` para verificar permisos vía `userCan` antes de entregar datos financieros de sistema o estimaciones de ASTRA.
 - [x] **TypeScript Green Build**: Certificación de cero advertencias y exit code 0 con `npx tsc --noEmit`.
 
 ---
+
 
 ## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 203.E)
 1. **Global Client Booking Portal**: Conexión definitiva del Matcher reactivo en la home con la confirmación de checkout dinámico final basado en estimaciones calculadas en vivo por ASTRA.
