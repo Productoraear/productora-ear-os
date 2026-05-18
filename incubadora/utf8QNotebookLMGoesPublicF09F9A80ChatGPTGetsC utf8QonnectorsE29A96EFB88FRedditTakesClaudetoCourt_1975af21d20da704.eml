@@ -1,0 +1,1969 @@
+Delivered-To: productoraear@gmail.com
+Received: by 2002:a05:612c:1952:b0:4d5:78c:7295 with SMTP id hm18csp3247993vqb;
+        Tue, 10 Jun 2025 10:45:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbn3DRxRMAJmbEAMj6+IJ0c8u/UNIXOtgrw8pA6oztRVe6jMTLEysGuHGBIcbe8lKTs/9t
+X-Received: by 2002:a05:620a:370c:b0:7d3:8f51:e80c with SMTP id af79cd13be357-7d3a8835907mr44444685a.22.1749577506156;
+        Tue, 10 Jun 2025 10:45:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1749577506; cv=none;
+        d=google.com; s=arc-20240605;
+        b=IN0h7YDU4ULk0LXlHs9IZeBg/2XcY3BSEMncRESCZEjIH1d+K1Zlh7PXvtlONbUeq1
+         64nRO5huuGKWS5moxnxWln6AjGBK7G1fkxla+V0tcUt5GOcooBezO9BmWm5G6VKmJfXl
+         i8XGGb5sFMka1Bhnw1XDGQjl9ysdER2UjF3rqjgbLujOindKuFxHccrs/0gnvRFPZ1dW
+         V+Ti0l4m3O6I9yd5wNJkzBXDBM/NhkmPXdvb9k3euXutNNRBvIdETsDvDR1r1xZU4qwS
+         ACVq6agK5x6nLSEmS/owDWgxJiQsi3fPfWTuGgTXYt/vID3g7aIf1CMsKAWiX4eux3vC
+         dzkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:list-unsubscribe-post:precedence:mime-version:subject
+         :message-id:to:reply-to:from:date:list-unsubscribe:dkim-signature
+         :dkim-signature;
+        bh=qc6x64/kBX6NeIHX1XcSpCvm726dG6Gln9rIuER/sic=;
+        fh=A/irqxAPf/G56+M8nCisELDOlPGiVYF8ZIvF611TLPI=;
+        b=k6Y/EscnnnnR1WZOv8q8OyjDtZns/qDHrPQLW0C9n/wYs/9Aemlx7tihwsnU+rG6L4
+         ennQ2Uq70csAaQ9Ndzo8ah/iZb5wjI5oYwKSWaQJwx3lcFdWyX27tMPRGCu3AM0k3S0O
+         bCtJ25P4UdhyJ+rndt+QivP7zveXj4foApTe6OnDD2Yof7FOqac2+x4VjlXaBYh4vWXR
+         5tj6SvukS3wAvKCavPJ2ga8exKMK6ckEkIwju3ZFsoo2itWLRITbNXQjiNcnq12YkQyn
+         ZH6jP5xHcVND2kcxeVb3DiZWSgp+uEIFE6AlVXKS3B2COKUSmknxWRUGVoFhXKdpgHtw
+         H/nQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@bf53x.hubspotemail.net header.s=hs1 header.b=ncV3qxYm;
+       dkim=pass header.i=@10web.io header.s=hs2-20988450 header.b=eIFhHO1Y;
+       spf=pass (google.com: domain of 1axbj051q7mhaig1twa31nuxndne2knnrg32xz-productoraear=gmail.com@bf53x.hubspotemail.net designates 158.247.29.20 as permitted sender) smtp.mailfrom="1axbj051q7mhaig1twa31nuxndne2knnrg32xz-productoraear=gmail.com@bf53x.hubspotemail.net";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=10web.io
+Return-Path: <1axbj051q7mhaig1twa31nuxndne2knnrg32xz-productoraear=gmail.com@bf53x.hubspotemail.net>
+Received: from bid48rq.bf53x.hubspotemail.net (bid48rq.bf53x.hubspotemail.net. [158.247.29.20])
+        by mx.google.com with ESMTPS id d75a77b69052e-4a6198925cesi114236301cf.435.2025.06.10.10.45.06
+        for <productoraear@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 10 Jun 2025 10:45:06 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 1axbj051q7mhaig1twa31nuxndne2knnrg32xz-productoraear=gmail.com@bf53x.hubspotemail.net designates 158.247.29.20 as permitted sender) client-ip=158.247.29.20;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@bf53x.hubspotemail.net header.s=hs1 header.b=ncV3qxYm;
+       dkim=pass header.i=@10web.io header.s=hs2-20988450 header.b=eIFhHO1Y;
+       spf=pass (google.com: domain of 1axbj051q7mhaig1twa31nuxndne2knnrg32xz-productoraear=gmail.com@bf53x.hubspotemail.net designates 158.247.29.20 as permitted sender) smtp.mailfrom="1axbj051q7mhaig1twa31nuxndne2knnrg32xz-productoraear=gmail.com@bf53x.hubspotemail.net";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=10web.io
+Received: by 172.16.208.13 with SMTP id a0cgfhxxtp4xci02yb579kdkqc6pw7xanuzr9lhdi2g;
+        Tue, 10 Jun 2025 17:45:06 GMT
+DKIM-Signature: v=1; s=hs1; d=bf53x.hubspotemail.net; 
+        i=@bf53x.hubspotemail.net; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=qc6x64/kBX6NeIHX1XcSpCvm726dG6Gln9rIuER/sic=; 
+        b=ncV3qxYmG0E3bKP29HXNzrXltLs1VwVYciA2jDQiunlYl5OCCNocVnLSADOege
+         3XAXkRykwnksiFS1puoPj3cQpFNeqby7e/fFhNXkCrr0bwUnPJaeY3nvUGHsEXB
+         b7r8CO/5ayEfZvk4BhCc0hnuJiUZ3V9DxnljUUroabRIPbo4HlQdpKP2N/AGZom
+         r9HVFFZX2f+BaTb4rC18fWfYeBB7eWj3wF7DfxNXOX+yHzi8gcWrUHHeTG/k8Jt
+         COVR9xzJXbIQ3T2DGFY4qatX+TvhcUm5a4yUbXOzVp68N+ufrJC9WDFa7My+YVp
+         0nXccudfJ3sy/TMzMGP8lhOu1CkQ==; q=dns/txt; t=1749577505; 
+        x=1749840305;
+DKIM-Signature: v=1; s=hs2-20988450; d=10web.io; i=@10web.io; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=qc6x64/kBX6NeIHX1XcSpCvm726dG6Gln9rIuER/sic=; 
+        b=eIFhHO1YHGvOD8+6L4PIy2wfjnf8EG/yiIHaKldLxwWaeLHrTzCSGB+t/eNePF
+         PK0yq+bwHEGuEMJCenuoVl80Sxw9Dby/Dj59/EtbhyyjqphzLI29gDTHB4pZzCI
+         XIoQdCzi3pVFx9pNG2BREN65Vy6GY5cRzpD+2R2yvkLg6nw5n7mr7MfySTEbEIy
+         KztJlmsYVDN4GR0nWLy58TKd2YCX0MXi0B/fdEgBmxfyHPfSacHEqcI4nB/FXpR
+         vNVY7h19a4SVaArvoc64mfS8o2186rLBfOvAcEm214XyEag+wBwYLHpH0U4ubwl
+         1FpdqgIf3JETCNfMxv4D53jA37mQ==; q=dns/txt; t=1749577505; 
+        x=1749840305;
+Return-Path: <1axbj051q7mhaig1twa31nuxndne2knnrg32xz-productoraear=gmail.com@bf53x.hubspotemail.net>
+X-HS-Cid: 1axfbz7gldnrtf8k6rkltihbbzdzcdp0h3bgtj
+List-Unsubscribe: <mailto:1axcs6yy8jv34q83e2fjp4t5nsexsagve0rftz-productoraear=gmail.com@bf53x.hubspotemail.net?subject=unsubscribe>, <https://hs-20988450.s.hubspotemail.net/subscription-preferences/v2/unsubscribe-all?data=W2nXS-N30h-GqW2vNkvk1BDG5lW34GZqz34yLg8W4rkY653zjdsfW3_pDPf3XzjxQW4th9RV1NcNFTW3VQV8l45CbkPW3QC9Ps1-Vzd1W32y5LN4fqfZlW3QTkc_2t3NCfW3_Fs1F4cqrDYW3jdGzK2-p_H6W1Nt5y82sMHG4W2385NM2w145jW3GZncB34ykkhW2-c_7y4cNFCBW2CJTDQ47yTHkW232Llz32pB-gW4kfyX73bxK-3W3QTQ2z3d3_2QW3yX2Kf38mLvXW1Qg88G21pCT_W45D14z1LCtqNW3_wnGR36jdvJW4crgB736yx5DW3_MPd-45Pbw7W349mHf4kqJDKW3BQndb30D4vzW3j8ZXK2zV_pFW2r1thd2sVlNsW3by58T2TQW-jW34jpWq3g1gf4W2PPBJf3P8lkNW2YDpVC2TkBP-W25gyq13g5Tq-W308xjX3ST-8hW3FbT_r1LCmF0W1ZpczD3Vv0xjW1Xf5lc3FgB3NW1Xcqmz2p27hXW3DNx_R2FvmtSW3SSfmx4tvVG5W2vMZX12KyJZPW47Vs8l2zHndqW1LqWHr3z9Dk3W2p5tfD2r8_MXf3z3ny704>
+Date: Tue, 10 Jun 2025 21:45:06 +0400
+From: Arto from 10Web <newsletters@10web.io>
+Reply-To: newsletters@10web.io
+To: productoraear@gmail.com
+Message-ID: <1749577500189.e9f28f20-7abc-4e3c-bad8-f3a9d40218e3@bf53x.hubspotemail.net>
+Subject: =?utf-8?Q?NotebookLM_Goes_Public_=F0=9F=9A=80_ChatGPT_Gets_C?=
+ =?utf-8?Q?onnectors_=E2=9A=96=EF=B8=8F_Reddit_Takes_Claude_to_Court?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_1928036_279184539.1749577505839"
+Precedence: bulk
+X-Report-Abuse-To: abuse@hubspot.com (see
+ https://policy.hubspot.com/abuse-complaints)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: aemr42s:aigb5iiy:aipuz:HubSpot
+
+------=_Part_1928036_279184539.1749577505839
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Google makes AI note-sharing frictionless, OpenAI upgrades ChatGPT into a w=
+orkspace brain, and Reddit sparks a legal battle that could redefine AI tra=
+ining rules.
+
+View in browser (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/=
+VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgqY5n4LbW95jVnq6lZ3kxV3BmWt4yST-4=
+W8XmSBb8dBdf7W7D6cSf7cCzXpW5FNQtL3n3tWqN8Fg4gMTq1ZHW6lQ37T7YzzKfW6w46QM1gDl=
+V1N5gFHDdVfmpgW6XVz7H1Bm2gfM-kqCpVSS6JV1_n-L2XNNBNW2Y8Rrm33N0CnW2PMGP_7yV-w=
+2W8VCzS-8dvJ_RW3wRZcJ3-fNrRW37thLk5VbsJRW4K9t4H3nRKg6W7gjMS0820fnZW7PjHjP6v=
+jfm-W6XrDth499crfW7qZCzX21jHQcW4C1Cc83_y870W3YBg6B5BNGg5N8kZwLXXh8j3W8wKRW_=
+96MZ6tW4WBPGd1pMBQrW6J2xxX4VdS5WW4x8qQN7dxbxYW4sBcBt13RRR7W5N8Yzx6VdhW8W6QP=
+3vT1Sj8TLVxxSCc7NptVrW2n9HtN8kKKcrW3gQP5h8n18VxW6_dctm3qsmB6W4RCgXS7LqjJ2W7=
+F_zMJ83gb9-W1HMRPk5TKkWNW940FXj60rjHdW4lL-FX7lJDfmW43_lYx33Z8qLV6lfz07HfVKx=
+N7Bx5fnQPMJSVh8jlY1cNb14VlCMh642jLv0W4TXcmz2b1tsFf9ghh7204 )
+
+Unsubscribe (https://hs-20988450.s.hubspotemail.net/hs/preferences-center/e=
+n/page?data=3DW2nXS-N30h-MjW43J0673VyFhjW4pJgvf4cs6RMW3QPdlj3JPk6XW34DT-33N=
+XWt8W2KTQQN3yX46wW32F4zg43y763W3JPShf3FdTJcW2Wy7gv4rFz6mW32zQG-2YLLMZW4hrFc=
+x4tG9FTW2t237c1BtKr8W3VBMJ12YK1M4W3BM-5-2MvZqKW1SvVGv4rDjbjW2xZx-821gCG_W2v=
+yjZW230zk-W3BWS-x4mFVVDW1ZnPMX1SjRpzW34yHm745M3GRW3M9rTC32hPj5W1X9nFh34xZLY=
+W34jp1h49JzV8W23jVSB4chNNZW43yt_x4hyztRW1ZqXvj36xMcDW43JSH138jPd-W3GV_Jz1_p=
+Wm4W3T0rM03zg7XdW2TMY1t2TH01mW4hCvkL1Znmc5W3z7y1W3859Y3W2HQGZ12xJrM3W2sFvZm=
+2qVzWhW22XD0h3ghqRKW2w0cvX1NgjwwW4klxyv3Fd7_PW3DZxMD3M4nBpW4fr3Cn3jrxDGW32s=
+tsx47SjfQW1N3Y6_2-cgfhW1_lv8_1_8x0mW3yZXSB3LQrCfW4kBldS2MXr7tW2WjyHd2sCQLzW=
+1Xb_hN2FVC2wW2sN8mm217Tww0&_hsenc=3Dp2ANqtz-8jk9fZw2-THKJv5AEAllFiKOMSH0FgE=
+kFOpPrAcR0aaF9mgY_XzL-fZAlmC1u3qwakHvGNOc7Vz8jXrJPD_htzHp5hew&_hsmi=3D36593=
+3688 )
+
+AI simplified1 (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/V=
+X8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgpM3pyd0W6N1vHY6lZ3m1W5SvwqG5hQyTB=
+W5jY2gY42tSzbW90Rvw37HMVwNW4Q-Sc-5JtVhzW7FCX8m2xp4BzN38z6HcnGLG7W6HM8kK5LcP=
+D5W3jszdV4LtjNfW5nQkYB4Y4tLqVZYgBB6S2P77W5FV9191MLbSSW1VGyYM3wTfDvW8x-lSb1T=
+qjbrW1gdVDX3rChxFW7pWRKq4P-HWkW3g1m3X7T1H-mW2F8MWG1s9GhPW5VRzbQ5m5Xq1W7z3lm=
+T1QsZT-W2_N1Yz5nqsrCW4myPZJ7bFL5BW6g8THp71rvtHf18gBBP04 )
+
+Before You Network, Build the Magnet
+
+Most founders confuse motion with momentum. Fancy booths and endless handsh=
+akes won=E2=80=99t get you traction=E2=80=94real value will. This week=E2=
+=80=99s AI Simplified is a reminder: your product is the signal, everything=
+ else is noise until it resonates.
+
+Inside, we break down why conferences can=E2=80=99t fix a weak value prop a=
+nd how building something undeniably useful attracts the right people organ=
+ically. You=E2=80=99ll get the latest on OpenAI=E2=80=99s game-changing Con=
+nectors and Google=E2=80=99s new Gemini 2.5 Pro, both reshaping how AI fits=
+ into real business workflows. We also unpack the legal clash between Reddi=
+t and Anthropic
+
+If you=E2=80=99re chasing traction, start with product. Then let the pull b=
+egin.
+
+In Today=E2=80=99s AI Simplified:
+
+- Founder=E2=80=99s Insight: Conferences don=E2=80=99t create traction=E2=
+=80=94products do. Early founders often chase exposure before proving value=
+. Solve a real problem, win real users, and let results draw the right peop=
+le in.
+- AI News: ChatGPT now supports Connectors, integrating with Google Drive, =
+GitHub, Outlook & more=E2=80=94turning it into a powerful knowledge assista=
+nt. Google just dropped Gemini 2.5 Pro, boasting better math, reasoning, an=
+d coding=E2=80=94its biggest business-ready move yet. Plus, NotebookLM now =
+allows public sharing, making AI-powered collaboration smoother than ever.
+- AI Spotlights: Reddit is suing Anthropic claiming Claude was trained on s=
+craped content. If successful, it could reshape how public data is used in =
+AI. Mootion is an AI platform that turns text, audio, or video into animati=
+ons.
+
+Most first-time founders treat conferences like cheat codes for traction. T=
+hey=E2=80=99re not. Until you=E2=80=99ve built something undeniably valuabl=
+e, networking is just busy-work in a nicer venue.
+
+The Higher-Leverage Playbook
+
+- Build the Magnet
+
+Obsess over a problem you feel viscerally.
+
+Ship a V1 that delivers a step-change, not a rounding-error.
+
+Win a dozen users who=E2=80=99d be angry if you shut it down tomorrow.
+
+Inbound Beats Outbound
+
+- Once real value exists, gravity takes over:
+
+Top talent starts DM=E2=80=99ing, =E2=80=9CAre you hiring?=E2=80=9D
+
+Investors ask for intros instead of the other way around.
+
+Partners and advisors show up pre-sold on your mission.
+
+- Network After Product-Market Fit
+
+Spend 90 % of early hours in build-measure-learn.
+
+Use the other 10 % to selectively share wins and lessons.
+
+When the magnet is strong, a single event can unlock 10=C3=97 surface area.
+
+Great products compound; handshakes don=E2=80=99t. Nail value creation firs=
+t, and the best network will find you=E2=80=94eager to amplify what you=E2=
+=80=99ve already proven.
+
+1. ChatGPT Connectors: AI That Actually Knows Your Workspace (https://d2thJ=
+004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1=
+h35xFl_0N13dgqY3pyd0W95jsWP6lZ3kMW1MKZ2r8vyRLfW7vWN5x77MTrXW8d0GC37n9grkW1g=
+ppWz2tCbDfN2b96ZRM_rx5W81xYXj4_3QJmW4gj7Jj40l44dW7nc-k-3_mXhgW4WlvQg6mGbBsW=
+714-_-6Z9N0XW4d4y8R42s_shVBXsn13FjdZCV36pn67Qh__gW1VDlTY4WZxGZV345wF71b_Z4W=
+6HNh421LdlJdW8S5BX55JW6g6N7g0BzJhdr85W6ylYTp844s6VW8W6mZR7JPmTWW7Y5cD23H0g-=
+jW6fmDHy534RKwW3nKgMk6wbvbTN5v51mp1KldjW4_sH-01kYyxPN53K-mnTjqfSW3fkf_21RjZ=
+V2VYs-sN7HFMdQW8kDK2P1kqKrDW3c5vvh3f6_xwf4yQbkP04 )
+
+OpenAI has launched ChatGPT Connectors, a major upgrade that links your AI =
+assistant directly to your favorite tools=E2=80=94think Google Drive, GitHu=
+b, Dropbox, SharePoint, Outlook, and more. This transforms ChatGPT from a s=
+mart chatbot into your organization=E2=80=99s knowledge brain, capable of s=
+earching, referencing, and synthesizing internal data on command.
+
+Now in beta, Connectors are available across Pro, Team, Enterprise, and Edu=
+ plans, with advanced capabilities like synced knowledge bases and custom i=
+ntegrations via MCP (Model Context Protocol) for enterprise environments.
+
+Key Highlights:
+
+- Smarter Search: Ask ChatGPT to find and summarize documents, emails, or e=
+vents across connected platforms=E2=80=94no more digging manually.
+- Deep Research Mode: Run advanced queries across multiple sources and rece=
+ive fully cited, cross-platform answers.
+- Custom Connectors: Enterprises can build their own secure integrations to=
+ internal apps or databases using MCP.
+- Context-Aware Memory: With memory enabled, ChatGPT can tailor queries and=
+ responses using what it knows about your workspace or projects.
+
+=F0=9F=93=BD=EF=B8=8F For a full demo and walkthrough, watch this video (ht=
+tps://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL=
+6c4zVKW8hW1h35xFl_0N13dgql3pyd0W7Y8-PT6lZ3l4W74cS1Y9g3GqJW892yJP1MdlJXW1WQ9=
+3g5WzxZYVdbsxS15w7gyW7z0Xbk80PF3YW4ncFwV86fSxcW1DvtV24W9bhZW7vLbQv70xV6vW8s=
+VsS44GtgTXN8JnW5hfkGnPMF64FG5PwmkW3D8spt7kwx3YW8dM57n3Sx2xZW6qXs2T7RfRYsW44=
+ShGF2qvpxBW2mgvlg28ttYFW86_9rc34jmJ9VQwQhB32622MW1hMlpv6W12YwW5CVPwZ8NjmsJW=
+46dTNm3Lq_wgW3wRpGL57JDtkW8CqjHp3BHxfRVh7KRY2lMhbLW7cdB5y6PkrlGVD3ddn3pPCQ2=
+f3wPtcP04 ) .
+
+2. Gemini 2.5 Pro: Smarter, faster, and ready for business (https://d2thJ00=
+4.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h3=
+5xFl_0N13dgqY3pyd0W95jsWP6lZ3m1W2BCLwd3SK9Y_W8PyJDl2Xrk2mW8cVSHT1Z54s9W6w9C=
+F-2d8DgNW1Jz5J79gxCdGW36FZj155-ggPW8rtr2d2TYV-GW8Zp4VH6N_y9_W996kFb77jBl_W6=
+XpjC-7-BT2vW3WY-4J7-7s28W4b5p4c7LtbKtW4j6Z6W4yvvfmMYh5gb2WrjPW8kXl_C6t_bNvW=
+1rDj-D2FrCV5W6Rc-xb6zpJmDW4ZkmW591Cr77W55_DRK8MgWcjW2SHHVq3tk7xwVF596w6r6QX=
+qN6YN_0kb_XR4W2CgR3B7WBRmNW23yKLY8XxQFnW7Z74H-7r9pZdW4kylMs7M_QmmW3v3Kc_1Jd=
+7J7W6HwsTy3KXwPWW3nDY5j8cWKWGW2fh3g56JqVC-dr0WZg04 )
+
+Google just dropped an upgraded preview of Gemini 2.5 Pro =E2=80=94 their s=
+harpest AI model yet =E2=80=94 and it=E2=80=99s about to go full throttle f=
+or enterprise use in a few weeks.
+
+What=E2=80=99s in it for you? This isn=E2=80=99t just geek talk: Gemini 2.5=
+ Pro is crushing coding challenges, acing tough tests in math, science, and=
+ reasoning =E2=80=94 basically, it=E2=80=99s the AI version of a brainiac t=
+hat never sleeps. It=E2=80=99s smarter, more creative, and now serves up cl=
+earer, better-structured answers.
+
+For small businesses and startups, this means powerful AI tools you can tru=
+st to handle complex tasks =E2=80=94 from coding custom solutions to tackli=
+ng tricky data problems =E2=80=94 without breaking the bank or slowing you =
+down. Plus, Google=E2=80=99s added =E2=80=9Cthinking budgets=E2=80=9D to th=
+e API, so you control how much time and money your AI spends on each task. =
+More efficiency, less surprise bills.
+
+Developers can already get their hands on the preview through Google AI Stu=
+dio and Vertex AI, with the update also rolling out in the Gemini app. If y=
+ou want AI that works as hard as you do, keep an eye on this one.
+
+3. Google=E2=80=99s NotebookLM goes public =E2=80=94 and podcasts too (http=
+s://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c=
+4zVKW8hW1h35xFl_0N13dgqY3pyd0W95jsWP6lZ3mxN6TQS5c-7PcFW4TWjcF1H-V-3W6MDPJp7=
+fJB4jW4nN_zP7nG20YW86pkVy6PjQT-VlS1bx4XBBpVW4PWJsV9ksslrW8M7Lpv3WNS4wW5GSVS=
+L66h_D9W2GcqyG2kY8n7W5L2KPz7QJC2kW1ZVMbR2VVlbyW3yh-pn8WQgNkW6yHv7445BGlRW7l=
+gv2w6mrfDFW2hdS9m7BTmQHW7-ZsSV5-qGPQW53F_J36wG1WRVdThg51G3hpGW91vgZG6KRtmGW=
+5ln2Sk7FwRqYVbXGB51nWX9VW4j8K0_8ZR4S0W3mh-zx5nwvt9W6RcjHn8tjBT8W2-pwsn2HcR8=
+XW5XqYfh7C-mr2W4ZJpV-5DYMXPVP3q-v1PV94RW3qT02m18-7j9f5nkCqH04 )
+
+Google=E2=80=99s AI note-taking app, NotebookLM, just leveled up. Now you c=
+an share your notebooks publicly via a simple link=E2=80=94think Google Doc=
+s, but way smarter. Viewers can=E2=80=99t mess with your notes, but they ca=
+n ask questions, listen to AI-generated podcast-style audio overviews, and =
+dive into FAQs crafted by the AI.
+
+Launched experimentally in 2023, NotebookLM quickly became Google=E2=80=99s=
+ sleeper hit for learning and collaboration. It ingests everything from doc=
+uments to YouTube videos, then churns out summaries and interactive chats. =
+Mobile app dropped last month, making on-the-go brain dumps even easier.
+
+Sharing is a breeze: hit the Share button, switch access to =E2=80=9CAnyone=
+ with the link,=E2=80=9D and boom=E2=80=94your notebook=E2=80=99s out there=
+ for the world (or your class, team, or followers) to explore. Want to shar=
+e editing rights? You can do that too, by inviting people via email.
+
+Tool of the week
+
+Mootion (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b=
+4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3pyd0W7Y8-PT6lZ3kqTJmbh4z56gbV99qpz6X7=
+PXRVPVKZf5vzT2pN2d5kQSDXjSBN8NTYs8rBX2GW7QLFdN5czdG4W1Dg2LJ4qWnhvSCQ-1_VDwN=
+W1rSC5K4TknjbW59qC9g81qYsZW6pm7jj9hFR5XW6YRTfY4LLtV3W614wMB8h2FwWW4Bdw2K4rr=
+Y_CW8jSRds1kvqzDW5cFhRZ5xk_PGW7fbtRR977NMCW2Rv4tg1-3klkW5GYgjq6D3Vv0W2P4Fqp=
+1Vkp6wN7XKvBMQsz7DN96lfWt-nCyHW7JcXCW907lnMW2x6p1R712vvRW346Xlr6PcKtFW58bPG=
+v1gvsWYf87sYqH04 ) is an AI-powered platform that simplifies video creation=
+ for individuals and teams. It allows users to turn ideas into animated vid=
+eos using a straightforward 4-step workflow. No prior editing experience is=
+ needed=E2=80=94Mootion manages everything from syncing to effects. The pla=
+tform accepts various input types, including text, scripts, audio, and vide=
+o. Animation styles range from photorealistic to 3D cartoon, with built-in =
+effects, transitions, and AI-generated music to enhance the storytelling pr=
+ocess.
+
+Key Features:
+
+- Streamlined video creation with a guided 4-step process
+- Flexible input formats: text, script, video, audio
+- AI-generated music and transitions
+- Support for 10+ languages
+- Multiple animation styles, including photorealistic and 3D
+
+Social Buzz
+
+Reddit (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4=
+zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgp85n4LbW5BWr2F6lZ3mvW7lQCp651TL6JW29C5Sf8=
+wjn55VPQNpB5BY2GjW1fGFZP4LZt9RN7VhvBVXNzJpN54HYk4txqRSV_9Xmf1DC-01W1C9-Kg5R=
+wyPDW3Z8tyZ7jtDlyVGp-ry6kgZggW2KGJ9m8pS_sWW3xcfrS3Y2nJWW8j_M7m6tXgy-V5m-Mj4=
+GYcVXW1cg5dc6Fc8GhW63VrPc42HRbMW3ww3P97GYjvyW29ZnPV21w4stW3lSQnM201X0wN1Tld=
+Djhw3KjW3R7VQF3ngYP6W2spjvw8sPsYBVxf1B-84fn7sW4GVZvG3NrZvPW19Ydzb6rfD5KW5rd=
+7mT8XYLFcW8m26_m45Y9jRW6NNjb_1Pc8BgW8g5kKg5zC5VmW3YYzp46MXjkKN8x74w5C2VdhW5=
+k-0v64rn6C8Vzbd7_8NMvjlVKkvL31rWrJKf8-_6cz04 ) Sues Anthropic, Demands Clau=
+de Be Taken Offline
+
+Reddit has filed a lawsuit against Anthropic, accusing it of illegally scra=
+ping Reddit content to train its Claude AI without permission or payment. T=
+he platform says Anthropic violated its user agreement and continued scrapi=
+ng even after claiming it had stopped in July 2024.
+
+Reddit also highlights privacy concerns, alleging that deleted posts remain=
+ in Claude=E2=80=99s training data=E2=80=94unlike with OpenAI or Google, wh=
+ich have licensing deals that honor content removal.
+
+Reddit isn=E2=80=99t just asking for damages=E2=80=94it wants Claude pulled=
+ from the market and a ban on any products built using its data. The case c=
+ould set a major precedent on whether publicly accessible online content is=
+ truly fair game for AI training.
+
+AI Event Pick
+
+AI + SEO Webinar: How to Win in the Age of Agentic AI & GEO
+
+=F0=9F=93=85 Date: June 18
+
+One-hour online masterclass to dive into Agentic AI, Generative Engine Opti=
+mization (GEO), and the future of SEO in 2025.
+
+Discover how AI Overviews are changing search results, why optimizing for A=
+I-generated answers is crucial, and how Micro SEO strategies can boost your=
+ rankings across both traditional search engines and new AI-powered platfor=
+ms like ChatGPT and Perplexity.
+
+This session is perfect for marketers, SEO professionals, and business owne=
+rs ready to adapt to rising zero-click searches and the shift from search e=
+ngines to answer engines. Register here (https://d2thJ004.na1.hubspotlinks.=
+com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgpM5n4LbW=
+6N1X8z6lZ3mWW2MrBkk7Dsvb6W1HSNkH29nyg2VTBrk75qDn7wW6JZwk07yx2R9W2ssZc-7MH4g=
+cW8Kdj5k3f_HmJN440Z1lNnSbxW2XtcRS1Qgf1sVPXFFB6c1-pnW5jWQbQ4lBWJMW8r_j2G4ws5=
+bTW1Xj3dR1yzRY3W5GsggJ7mFyf4W5DLpZL5zByLpW2JJTMN8hshKnW1mHm_J8LyVwyW2083z-1=
+ZbkWJW90GSlP8VCvcfW8tycKG2hk0-0W4zW7pY62VnCHW6X9kPg3gbnh_W694sMN6NpYJ2W6SYP=
+vW3XCBxCW4NvHj31hqWHvW51-fLq5f0QYWN56C7gFCvjpbW25gbSM21XWLnVd5gw_686xWFN3NT=
+cmghpclzW4NDYDh37Lf0NW3vJ3RD2PqyrkW1Ds1sy3JtNqYW8K6WnZ5YHQgrW5WTgn9909l6MW7=
+CDQJ97sthwXW81pv224hLWxlW7R5Sv55D7LDBW50xybs2xDXVMd11V7204 ) .
+
+Exclusive for AI Simplified Readers
+
+As an AI Simplified subscriber, enjoy a 20% discount on your first 10Web su=
+bscription! Click here (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2=
+thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3gVDYW7Y8-PT6lZ3l7W8fKy=
+S94f9k_VW2wYkZd8DzXpDW13DkQl3jDJqnW4BbybQ33LrsYN56sm9bb4tK1W64x07b8MQVKRW3M=
+Cgn27nJ1ywW2B4T2q2TYZZ2W4w2c7Z7m_cj4W6_tWcM8w9KFwW3QgzCg3LGzpgW1XJ6Y2338Fr8=
+W77xt9r3rH2H-W8JCw1b53xkQ2W3W0hdd55Y04PVQ_q3J8BhNXtN3G_Wc1yB_5cVGgC-Q3H594J=
+W8cNDV28Jt2s5W65fXBT45mJ5hW9jRx097FQtsqW21Rs4c1h5mztW2Qm2Kl1qYb-6W3DDRjz8SP=
+xjRN3rcR3cqLJ9tN7lvCLhnjZp9f1dZhWx04 )  to apply it automatically, or use c=
+ode AISIMPLIFIED at checkout. Start building with AI today!
+
+Already a Customer?
+
+Spread the innovation! Share this exclusive offer with a friend, and they=
+=E2=80=99ll enjoy 20% off their first subscription too.
+
+Regards,
+
+Arto
+
+Co-founder/CEO at 10Web.io (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+11=
+3/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3pyd0W7Y8-PT6lZ3pFW=
+3FDnQs8BkgfcW1vMsm_3M8pKlW8QXjvm6bKBZ6W24gxlN6V6btnW2S7zjz5Zq-TzVb3nDX5QynY=
+cW1gzz_d15G218W7lK0B51MjspbW8DCGcB46_8gzW1mZLCT5_HZrrVlLlR-77mcRRW6XskFW7tH=
+hxPW4N8_Sb4g3G_NW99WYPf48G_cHN46j7j1St1WSW7fz5kh6xCc4fN5Xyj3S1pz0lW5DmzH390=
+q1FWW51CjnG4Xqn8jW4Kw5X-4nd_hmW50DW-42D3nCTW8g1KJT4KlpqkMG_f9z30-W7W5nT6Xh4=
+CMHJ_W6RwV7c3hbhSwW3fmz8g3bkNR9f122jKd04 )
+
+Linkedin (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31=
+b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3pyd0W7Y8-PT6lZ3n0W6cpBlJ1CWp9_VSgsdr=
+5CF4-PW4SqRJ-36GYSnW4GblZX17Mmb0W1TS0hh8TrTsPW4V4Fm64TmzKNW4bKBw22J87BMW8d8=
+jQH1PLsyjW5N_m0d5GVZQLW4srmTK7VhF7fW42ZDbt1p7s3SW2_2ylc8Y-vRTW927gjm8nPwnpW=
+5WFfLY69L874V3TZsS2RHLB2W3cq_1j4Y8Y20W4Dw4xH5Bcqp9VgdjX33CzY6LW7dgwg14nmmVV=
+W1YbLB_3qdNqXW5S1fh44vl_n4W5-FGJF9m1PVLN3h36ZTC1jpYW58V7Vw62cn9yW83MKLQ98Xn=
+JLW6KHq_m7xGNyWf2Sjbgn04 )
+
+Website (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b=
+4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgpM3pyd0W6N1vHY6lZ3m1W5SvwqG5hQyTBW5jY2gY=
+42tSzbW90Rvw37HMVwNW4Q-Sc-5JtVhzW7FCX8m2xp4BzN38z6HcnGLG7W6HM8kK5LcPD5W3jsz=
+dV4LtjNfW5nQkYB4Y4tLqVZYgBB6S2P77W5FV9191MLbSSW1VGyYM3wTfDvW8x-lSb1TqjbrW1g=
+dVDX3rChxFW7pWRKq4P-HWkW3g1m3X7T1H-mW2F8MWG1s9GhPW5VRzbQ5m5Xq1W7z3lmT1QsZT-=
+W2_N1Yz5nqsrCW4myPZJ7bFL5BW6g8THp71rvtHf18gBBP04 )
+
+Instagram (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-3=
+1b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3pyd0W7Y8-PT6lZ3mTN5RDZ0WTVBzqW4xXqs=
+H5s9fkHW2YbPCy5wjXTzVbPCnq3lX1S6W2pdcPS51qyZzW22ymLY4f_fWSW4X2H9H2XJ4nHW1dZ=
+PvW5SLskJW8HDVnJ5q5bWnVzhT3_5vcLczW7vwWMq3zwxBBW6-9MdN2LXs9CW4bmPxH6l3xH4W2=
+_nr3p2qqSGdN4Q0Llb5FwF7VTtF-X7_7mjSW5g9PVQ4JwbDpW642Nkg9jlY3wW1nHGCB6QPqNDW=
+6cSwcv5mptsqMdFYM7F1_MdW4Y1_1Q5LZffPW1hRvC_25Z1YwW1P31fF4vwqJrW7PDzSK4fZdPn=
+W8ZgfCN4jhktVf7lmGH-04 )
+
+X (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2=
+cRyxL6c4zVKW8hW1h35xFl_0N13dgq23pyd0W7lCdLW6lZ3kqW50YSzR5rHS31W70BT1934kC4-=
+N7MmmYXBBdQRW5x9sTK4y9QblVBTpj93Y1RHRW8vrMVB1H_myMW7NZNZ91vQllNW848scr8KgMk=
+dW8Pwmr69cFLRMW6gDsYw5vD8tDW62sHfK4dsJF1W35Bdzh4_lvp5W66FLfT7Vdf79VP0ddc8jG=
+RGlW6ZsWSJ3z7SmwW6RTp193Nr0PgW301FYR5q6r_YN15D9-kF3Dw2W2NPCmz93HnHKN3GDLcCH=
+LXwFN95pvnXbD354W6TTSzW6ysFXgW6rrLV95PWV4TV1vMXc5rmZXrf1kB82x04 )
+
+LinkedIn (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31=
+b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3pyd0W7Y8-PT6lZ3n6W8Dh1c778J468W5FBl4=
+w58vDgVW2gC4qc7gwXg9W96DL-Y23gDPwW96QX3c24WyGwW4svCFd8MWm51W6plmSh1_b4stW7H=
+BK9R6SDGpSW4kVc4W2_jHvpW69Z0qF1WXSQyN52gNXrlPR-_W6qlhXt5Q94kLW1YcVcq2f_3-DW=
+7RRpwx3PJb4tW5vjTDq2jpry1W3Tmq2d4lgX1GN2kD_7KJzzMXW36NNVq2cSfT6W6-zLhK17-GJ=
+PW1LQZkB7f6LrzW8ZFwX_3VS5JWW7twQl93PrWmDW8x8h7v4wdfpJW8nj2TL50W6-vW1wZgKK8y=
+bmW5W6XMzZ049TCMff3x_d2d04 )
+
+Facebook (https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31=
+b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3pyd0W7Y8-PT6lZ3nfV5KSgF64vjgqW6z2dd7=
+2ZvtGqW2B2fn06M1HNyW6ZQfjW6xSdcJW7QS0CH2XVLC2W414Q1d8C51rzW30zLSK4dyysbN8NY=
+hWr9CdNjW4-pb4K65dB3SVhTPD22444RWW8Qn4p94fZtpHW4Dcz_v5yW00GVwTy5-13Wg5rW7N5=
+tBZ8jWsd6W93RnQ63X1j9jW1nnyrs5Rcs8GW46WDW-3T0X72VzSvc15t6D_4W5q16F-1bJsPqV2=
+zxcc1VH41lN72rhyYkjH4VW6Vd04S6bF1xnW89TsQP2_3DLFW4jmwHC1JTX21W3x8n4w1m17NyW=
+6lwvLh5rWF36f4328Vq04 )
+
+TenWeb, Inc., 40 E Main St, Suite 721,  Newark, Delaware, 19711, United Sta=
+tes,
+
+Unsubscribe (https://hs-20988450.s.hubspotemail.net/hs/preferences-center/e=
+n/direct?data=3DW2nXS-N30h-MjW43J0673VyFhjW4pJgvf4cs6RMW3QPdlj3JPk6XW34DT-3=
+3NXWt8W2KTQQN3yX46wW32F4zg43y763W3JPShf3FdTJcW2Wy7gv4rFz6mW32zQG-2YLLMZW4hr=
+Fcx4tG9FTW2t237c1BtKr8W3VBMJ12YK1M4W3BM-5-2MvZqKW1SvVGv4rDjbjW2xZx-821gCG_W=
+2vyjZW230zk-W3BWS-x4mFVVDW1ZnPMX1SjRpzW34yHm745M3GRW3M9rTC32hPj5W1X9nFh34xZ=
+LYW34jp1h49JzV8W23jVSB4chNNZW43yt_x4hyztRW1ZqXvj36xMcDW43JSH138jPd-W3GV_Jz1=
+_pWm4W3T0rM03zg7XdW2TMY1t2TH01mW4hCvkL1Znmc5W3z7y1W3859Y3W2HQGZ12xJrM3W2sFv=
+Zm2qVzWhW22XD0h3ghqRKW2w0cvX1NgjwwW4klxyv3Fd7_PW3DZxMD3M4nBpW4fr3Cn3jrxDGW3=
+2stsx47SjfQW1N3Y6_2-cgfhW1_lv8_1_8x0mW3yZXSB3LQrCfW4kBldS2MXr7tW2WjyHd2sCQL=
+zW1Xb_hN2FVC2wW2sN8mm217Tww0&_hsenc=3Dp2ANqtz-8jk9fZw2-THKJv5AEAllFiKOMSH0F=
+gEkFOpPrAcR0aaF9mgY_XzL-fZAlmC1u3qwakHvGNOc7Vz8jXrJPD_htzHp5hew&_hsmi=3D365=
+933688 ) Manage Preferences (https://hs-20988450.s.hubspotemail.net/hs/pref=
+erences-center/en/page?data=3DW2nXS-N30h-MjW43J0673VyFhjW4pJgvf4cs6RMW3QPdl=
+j3JPk6XW34DT-33NXWt8W2KTQQN3yX46wW32F4zg43y763W3JPShf3FdTJcW2Wy7gv4rFz6mW32=
+zQG-2YLLMZW4hrFcx4tG9FTW2t237c1BtKr8W3VBMJ12YK1M4W3BM-5-2MvZqKW1SvVGv4rDjbj=
+W2xZx-821gCG_W2vyjZW230zk-W3BWS-x4mFVVDW1ZnPMX1SjRpzW34yHm745M3GRW3M9rTC32h=
+Pj5W1X9nFh34xZLYW34jp1h49JzV8W23jVSB4chNNZW43yt_x4hyztRW1ZqXvj36xMcDW43JSH1=
+38jPd-W3GV_Jz1_pWm4W3T0rM03zg7XdW2TMY1t2TH01mW4hCvkL1Znmc5W3z7y1W3859Y3W2HQ=
+GZ12xJrM3W2sFvZm2qVzWhW22XD0h3ghqRKW2w0cvX1NgjwwW4klxyv3Fd7_PW3DZxMD3M4nBpW=
+4fr3Cn3jrxDGW32stsx47SjfQW1N3Y6_2-cgfhW1_lv8_1_8x0mW3yZXSB3LQrCfW4kBldS2MXr=
+7tW2WjyHd2sCQLzW1Xb_hN2FVC2wW2sN8mm217Tww0&_hsenc=3Dp2ANqtz-8jk9fZw2-THKJv5=
+AEAllFiKOMSH0FgEkFOpPrAcR0aaF9mgY_XzL-fZAlmC1u3qwakHvGNOc7Vz8jXrJPD_htzHp5h=
+ew&_hsmi=3D365933688 )
+
+You received this email because you signed up
+
+on our website or made a purchase from us.
+------=_Part_1928036_279184539.1749577505839
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3=
+.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:=
+v=3D"urn:schemas-microsoft-com:vml" lang=3D"en"><head><!--[if !mso]><!--><l=
+ink rel=3D"stylesheet" type=3D"text/css" hs-webfonts=3D"true" href=3D"https=
+://fonts.googleapis.com/css?family=3DLato|Lato:i,b,bi&amp;display=3Dswap"><=
+!--<![endif]-->
+    <title>NotebookLM Goes Public =F0=9F=9A=80 ChatGPT Gets Connectors =E2=
+=9A=96=EF=B8=8F Reddit Takes Claude to Court</title>
+    <meta property=3D"og:title" content=3D"NotebookLM Goes Public =F0=9F=9A=
+=80 ChatGPT Gets Connectors =E2=9A=96=EF=B8=8F Reddit Takes Claude to Court=
+">
+    <meta name=3D"twitter:title" content=3D"NotebookLM Goes Public =F0=9F=
+=9A=80 ChatGPT Gets Connectors =E2=9A=96=EF=B8=8F Reddit Takes Claude to Co=
+urt">
+   =20
+   =20
+   =20
+<meta name=3D"x-apple-disable-message-reformatting">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+    <!--[if gte mso 9]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    <w:WordDocument xmlns:w=3D"urn:schemas-microsoft-com:office:word">
+      <w:DontUseAdvancedTypographyReadingMail/>
+    </w:WordDocument>
+  </xml>
+ =20
+  <style>
+    ul > li {
+      text-indent: -1em;
+    }
+  </style>
+<![endif]-->
+<!--[if mso]>
+<style type=3D"text/css">
+ body, td {font-family: Arial, Helvetica, sans-serif;}
+ .hse-body-wrapper-table {background-color: #f9f9f9;}
+</style>
+<![endif]-->
+<!--[if mso | IE]>
+  <style type=3D"text/css">
+    .hse-column-container { border: none !important; padding: 0 !important;=
+ }
+  </style>
+<![endif]-->
+   =20
+     =20
+ =20
+ =20
+   =20
+  <meta name=3D"generator" content=3D"HubSpot"><meta property=3D"og:url" co=
+ntent=3D"http://20988450.hs-sites.com/notebooklm-goes-public-chatgpt-gets-c=
+onnectors-=EF=B8=8F-reddit-takes-claude-to-court"><meta name=3D"robots" con=
+tent=3D"noindex,follow"><!--[if !((mso)|(IE))]><!-- --><style type=3D"text/=
+css">@media only screen and (max-width:639px){img.stretch-on-mobile,.hs_rss=
+_email_entries_table img,.hs-stretch-cta .hs-cta-img{height:auto !important=
+;width:100% !important}
+.display_block_on_small_screens{display:block}.hs_padded{padding-left:20px =
+!important;padding-right:20px !important}
+.hs-hm,table.hs-hm{display:none}.hs-hd{display:block !important}table.hs-hd=
+{display:table !important}
+}@media only screen and (max-width:639px){ul,blockquote{margin:0;padding:1e=
+m 40px}
+}@media only screen and (max-width:639px){.hse-border-m{border-left:1px sol=
+id #eaf0f6 !important;border-right:1px solid #eaf0f6 !important;box-sizing:=
+border-box}
+.hse-border-bottom-m{border-bottom:1px solid #eaf0f6 !important}.hse-border=
+-top-m{border-top:1px solid #eaf0f6 !important}
+.hse-border-top-hm{border-top:none !important}.hse-border-bottom-hm{border-=
+bottom:none !important}
+}.moz-text-html .hse-column-container{max-width:600px !important;width:600p=
+x !important}
+.moz-text-html .hse-column{display:table-cell;vertical-align:top}.moz-text-=
+html .hse-section .hse-size-12{max-width:600px !important;width:600px !impo=
+rtant}
+@media only screen and (min-width:640px){.hse-column-container{max-width:60=
+0px !important;width:600px !important}
+.hse-column{display:table-cell;vertical-align:top}.hse-section .hse-size-12=
+{max-width:600px !important;width:600px !important}
+}@media only screen and (max-width:639px){.hse-body-wrapper-td{padding-top:=
+20px !important}
+#section_17344275402365 .hse-column-container{background-color:transparent =
+!important}
+#section_17344275402365 .hse-column-container{background-color:transparent =
+!important}
+}@media screen and (max-width:639px){.social-network-cell{display:inline-bl=
+ock} }
+@media only screen and (max-width:639px){.hse-body-wrapper-td{padding-botto=
+m:20px !important}
+#section-16 .hse-column-container{background-color:#fff !important} }</styl=
+e><!--<![endif]--><style type=3D"text/css">#hs_body #hs_cos_wrapper_main a[=
+x-apple-data-detectors]{color:inherit !important;text-decoration:none !impo=
+rtant;font-size:inherit !important;font-family:inherit !important;font-weig=
+ht:inherit !important;line-height:inherit !important}
+a{text-decoration:underline}p{margin:0}body{-ms-text-size-adjust:100%;-webk=
+it-text-size-adjust:100%;-webkit-font-smoothing:antialiased;moz-osx-font-sm=
+oothing:grayscale}
+table{border-spacing:0;mso-table-lspace:0;mso-table-rspace:0}table,td{borde=
+r-collapse:collapse}
+img{-ms-interpolation-mode:bicubic}p,a,li,td,blockquote{mso-line-height-rul=
+e:exactly}</style></head>
+  <body id=3D"hs_body" bgcolor=3D"#f9f9f9" style=3D"margin:0 !important; pa=
+dding:0 !important; font-family:Georgia, serif; font-size:20px; color:#323a=
+45; word-break:break-word">
+    <div id=3D"preview_text" style=3D"display:none;font-size:1px;color:#f9f=
+9f9;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;=
+" lang=3D"en">Google makes AI note-sharing frictionless, OpenAI upgrades Ch=
+atGPT into a workspace brain, and Reddit sparks a legal battle that could r=
+edefine AI training rules.</div>
+   =20
+<!--[if gte mso 9]>
+<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+    <v:fill type=3D"tile" size=3D"100%,100%" color=3D"#ffffff"/>
+</v:background>
+<![endif]-->
+    <div class=3D"hse-body-background" lang=3D"en" style=3D"background-colo=
+r:#f9f9f9" bgcolor=3D"#f9f9f9">
+      <table role=3D"presentation" class=3D"hse-body-wrapper-table" cellpad=
+ding=3D"0" cellspacing=3D"0" style=3D"margin:0; padding:0; width:100% !impo=
+rtant; min-width:320px !important; height:100% !important" width=3D"100%" h=
+eight=3D"100%">
+        <tbody><tr>
+          <td class=3D"hse-body-wrapper-td" valign=3D"top" style=3D"font-fa=
+mily:Georgia, serif; font-size:20px; color:#323a45; word-break:break-word; =
+padding-top:20px; padding-bottom:20px">
+            <div id=3D"hs_cos_wrapper_main" class=3D"hs_cos_wrapper hs_cos_=
+wrapper_widget hs_cos_wrapper_type_dnd_area" style=3D"color: inherit; font-=
+size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" d=
+ata-hs-cos-type=3D"dnd_area">  <div id=3D"section_17344275402365" class=3D"=
+hse-section hse-section-first" style=3D"padding-left:10px; padding-right:10=
+px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; padding-bottom:20px">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation">
+      <tr>
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;padding-bottom:20px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-1734427540236-0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Georgia, serif; font-size:20px; color:#323a45; word-break:brea=
+k-word; padding:0px 20px"><div id=3D"hs_cos_wrapper_module_17344275402362" =
+class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" s=
+tyle=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-=
+cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div style=3D"overf=
+low:hidden">
+  <table role=3D"presentation" class=3D"hse-pre-header hse-secondary" width=
+=3D"100%" cellpadding=3D"0" cellspacing=3D"0" style=3D"text-align:right; fo=
+nt-family:Arial, sans-serif; font-size:12px; line-height:135%; color:#23496=
+d; margin-bottom:0; padding:0" align=3D"right">
+    <tbody>
+      <tr>
+        <td align=3D"right" valign=3D"top" style=3D"color:#323a45; word-bre=
+ak:break-word; text-align:right; font-family:Arial, sans-serif; font-size:1=
+2px; padding:10px 0; margin-bottom:0; line-height:135%">
+          <a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ=
+004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgqY5nXHsW95jVnq6lZ3pjW2btfYS1=
+LBZMkW1_vVVV71lCbcW60YP70850gv8W3bN04x4wbSCgW3XQ1xk1knqD9W3Bfhb92Rh685W6_06=
+3S8hHxyVW7d5c_r4YKGbcW59TgGD62NtPtW42fzt743bzl3Vp41gl1FwbXhW3LZ6kb7W8hr7W8z=
+bfky1Xlw31W4pjtPC1mw8qyW218mBt8YyrszW7Hg7D88VPv0bW3PfTT572092LVJ9tR52P24LLW=
+7lqlhs1PCYshW6DHFqy3pmBKzW8gZTR827ZgtfW8ZmDxg91B3CcW94CCh76PyFxXW4zw8tp3Mhl=
+Q9W6k1NLz8Zq69_W6jP4B18bc9TvW3_S2kk12kXgxN5-1l027tktvVWm7w34Ft6mKW4hR2Nq1km=
+HjVW5M7JXn6BcF5wW8Yz8bd5cbk6XW3hB9KK52JCb_W7X2CwP6TYpLDW1rtwfy3g4Z_NW38nGcB=
+2JL_CqW5v1m1N179nJJW1xz_tH4FsNPJW6twVb93m0FsnW2LsbvL3qY2xhW79rVfs8sLmyGW7Yc=
+SnK1FzCFZW4zPwvS35-YhHW7XRMfQ6TDbxTW6f9gdY70fzSQV9JtfB5ZQD32f4WM29l04" styl=
+e=3D"color:#000000; font-weight:normal; text-decoration:underline; font-sty=
+le:normal" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"ylRDK2fa" target=3D"=
+_blank">View in browser</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:0px 20px"><div id=3D"hs_cos_wrapper_module_17344275402363" cla=
+ss=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" styl=
+e=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos=
+-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrap=
+per_module_17344275402363_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget h=
+s_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inherit; =
+line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-type=
+=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; font-size:12px; li=
+ne-height:175%; text-align:right" align=3D"right"><span style=3D"color: #00=
+0000; font-family: Arial, sans-serif;"><a href=3D"https://hs-20988450.s.hub=
+spotemail.net/hs/preferences-center/en/page?data=3DW2nXS-N30h-MjW43J0673VyF=
+hjW4pJgvf4cs6RMW3QPdlj3JPk6XW34DT-33NXWt8W2KTQQN3yX46wW32F4zg43y763W3JPShf3=
+FdTJcW2Wy7gv4rFz6mW32zQG-2YLLMZW4hrFcx4tG9FTW2t237c1BtKr8W3VBMJ12YK1M4W3BM-=
+5-2MvZqKW1SvVGv4rDjbjW2xZx-821gCG_W2vyjZW230zk-W3BWS-x4mFVVDW1ZnPMX1SjRpzW3=
+4yHm745M3GRW3M9rTC32hPj5W1X9nFh34xZLYW34jp1h49JzV8W23jVSB4chNNZW43yt_x4hyzt=
+RW1ZqXvj36xMcDW43JSH138jPd-W3GV_Jz1_pWm4W3T0rM03zg7XdW2TMY1t2TH01mW4hCvkL1Z=
+nmc5W3z7y1W3859Y3W2HQGZ12xJrM3W2sFvZm2qVzWhW22XD0h3ghqRKW2w0cvX1NgjwwW4klxy=
+v3Fd7_PW3DZxMD3M4nBpW4fr3Cn3jrxDGW32stsx47SjfQW1N3Y6_2-cgfhW1_lv8_1_8x0mW3y=
+ZXSB3LQrCfW4kBldS2MXr7tW2WjyHd2sCQLzW1Xb_hN2FVC2wW2sN8mm217Tww0&amp;utm_cam=
+paign=3DAI%20Simplified%20Newsletter&amp;utm_source=3Dhs_email&amp;utm_medi=
+um=3Demail&amp;utm_content=3D365933688&amp;_hsenc=3Dp2ANqtz--M59YDq_aXyk06y=
+iDXIpSShYBAlzhhkP7qRsIOFb9g1hrfqJYJtanXN0YOoAS2Zew7bUJaJY2HPG4XE2V7ne08S_Tm=
+Bg&amp;_hsmi=3D365933688" style=3D"color:#000000" data-unsubscribe=3D"true"=
+ data-hs-link-id=3D"0" data-hs-link-id-v2=3D"qjPJqCop" target=3D"_blank">Un=
+subscribe</a></span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1732022279535" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1732022279535_0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module-2-0-0" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; font-size=
+: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-=
+hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"presentat=
+ion" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Georgia, serif; color:#323a45; word-break:break-word; text-align:ce=
+nter; padding:10px 20px; font-size:0px">
+        <a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ00=
+4/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgq23qn9gW7lCdLW6lZ3lsW97nd7t5Tt=
+rR0W8YDwgs2TnRtjN4-9QsfJSbgzW57THTj6BTzlKW8Km6xp8cfv4vW2z0G7v8jzFTKN6s5hFV2=
+ddZbN3tmwD49c_2LW26G_F71k3fsVN6wK3S4-py7yW1ccyhT5DXfdcW8THm4V3Fm6rXW38kyYQ2=
+w5m6lW8-6G7B3MCmY3W5SxZ-W4vL-4qW4vfQQ83P0dCLW20wmMj42442LW44z77H2ZBLmdN2zL2=
+sMMqsmzW90bPtg1Cmd3NMbGGLtBZd2BW4qwB5D2lPSD2W83wsWJ3CJqJLW4DD5wZ493BG6f8vfD=
+yK04" target=3D"_blank" style=3D"color:#00a4bd" data-hs-link-id=3D"0" data-=
+hs-link-id-v2=3D"J9BDI1j/">
+        <img alt=3D"AI simplified1" src=3D"https://hs-20988450.f.hubspotema=
+il.net/hub/20988450/hubfs/AI%20simplified1.png?width=3D1120&amp;upscale=3Dt=
+rue&amp;name=3DAI%20simplified1.png" style=3D"outline:none; text-decoration=
+:none; border:none; max-width:100%; font-size:16px" width=3D"560" align=3D"=
+middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-3" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-3-0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Georgia, serif; font-size:20px; color:#323a45; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17302097464072"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17302097464072_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; font-size:16px=
+; line-height:175%" data-start=3D"94" data-end=3D"137"><span style=3D"font-=
+family: Lato, Tahoma, sans-serif;"><strong data-start=3D"94" data-end=3D"13=
+7">Before You Network, Build the Magnet</strong></span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+ data-start=3D"139" data-end=3D"390"><span style=3D"font-family: Lato, Taho=
+ma, sans-serif;">Most founders confuse motion with momentum. Fancy booths a=
+nd endless handshakes won=E2=80=99t get you traction=E2=80=94real value wil=
+l. This week=E2=80=99s AI Simplified is a reminder: your product is the sig=
+nal, everything else is noise until it resonates.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+ data-start=3D"392" data-end=3D"896"><span style=3D"font-family: Lato, Taho=
+ma, sans-serif;">Inside, we break down why conferences can=E2=80=99t fix a =
+weak value prop and how building something undeniably useful attracts the r=
+ight people organically. You=E2=80=99ll get the latest on OpenAI=E2=80=99s =
+game-changing Connectors and Google=E2=80=99s new Gemini 2.5 Pro, both resh=
+aping how AI fits into real business workflows. We also unpack the legal cl=
+ash between Reddit and Anthropic</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+ data-start=3D"898" data-end=3D"970"><span style=3D"font-family: Lato, Taho=
+ma, sans-serif;">If you=E2=80=99re chasing traction, start with product. Th=
+en let the pull begin.</span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-4" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-4-0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Georgia, serif; font-size:20px; color:#323a45; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module-4-0-0" class=3D=
+"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"=
+color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-gene=
+ral-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_m=
+odule-4-0-0_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_=
+type_rich_text" style=3D"color: inherit; font-size: inherit; line-height: i=
+nherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"rich_text"=
+><h3 style=3D"margin:0; mso-line-height-rule:exactly; font-size:18px; line-=
+height:175%"><span style=3D"font-family: Lato, Tahoma, sans-serif;">In Toda=
+y=E2=80=99s AI Simplified:&nbsp;</span></h3>
+<ul style=3D"mso-line-height-rule:exactly; line-height:150%">
+<li><span style=3D"font-size: 16px; font-family: Lato, Tahoma, sans-serif;"=
+><strong>Founder=E2=80=99s Insight:</strong> Conferences don=E2=80=99t crea=
+te traction=E2=80=94products do. Early founders often chase exposure before=
+ proving value. Solve a real problem, win real users, and let results draw =
+the right people in.</span></li>
+<li><span style=3D"font-size: 16px; font-family: Lato, Tahoma, sans-serif;"=
+><strong>AI News:</strong> ChatGPT now supports Connectors, integrating wit=
+h Google Drive, GitHub, Outlook &amp; more=E2=80=94turning it into a powerf=
+ul knowledge assistant. Google just dropped Gemini 2.5 Pro, boasting better=
+ math, reasoning, and coding=E2=80=94its biggest business-ready move yet. P=
+lus, NotebookLM now allows public sharing, making AI-powered collaboration =
+smoother than ever.</span></li>
+<li><span style=3D"font-size: 16px; font-family: Lato, Tahoma, sans-serif;"=
+><strong>AI Spotlights:</strong> Reddit is suing Anthropic claiming Claude =
+was trained on scraped content. If successful, it could reshape how public =
+data is used in AI. Mootion is an AI platform that turns text, audio, or vi=
+deo into animations.</span></li>
+</ul>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+181b053b-8e91-417f-8d3c-871eaabdd680 --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+6905bbf0-25c2-4935-bc9f-faa60e71d9ff --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+406056db-9625-40ea-b7e8-cee3397f7b9a --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+8c768cb9-1801-43b1-8b80-cb797871da65 --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+82030f33-af7f-44ab-b756-463910157793 --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+c48e7168-4eac-4c74-ac6e-1033e47ba09e --></p></div></div></td></tr></tbody><=
+/table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-8" class=3D"hse-section" style=3D"padding-left:10px; p=
+adding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-8-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17340853845651" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Georgia, ser=
+if; color:#323a45; word-break:break-word; text-align:center; padding:0px 0p=
+x 20px; font-size:0px">
+        <img alt=3D"2-Dec-17-2024-11-03-22-9788-AM" src=3D"https://hs-20988=
+450.f.hubspotemail.net/hub/20988450/hubfs/2-Dec-17-2024-11-03-22-9788-AM.pn=
+g?width=3D1200&amp;upscale=3Dtrue&amp;name=3D2-Dec-17-2024-11-03-22-9788-AM=
+.png" style=3D"outline:none; text-decoration:none; max-width:100%; font-siz=
+e:16px" width=3D"600" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module-8-0-0" class=3D"hs=
+_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"col=
+or: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-general=
+-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_modu=
+le-8-0-0_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_typ=
+e_rich_text" style=3D"color: inherit; font-size: inherit; line-height: inhe=
+rit;" data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"rich_text"><p=
+ style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"><=
+span style=3D"font-family: Lato, Tahoma, sans-serif;">Most first-time found=
+ers treat conferences like cheat codes for traction. They=E2=80=99re not. U=
+ntil you=E2=80=99ve built something undeniably valuable, networking is just=
+ busy-work in a nicer venue.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">The Higher-Leverage=
+ Playbook</span></p>
+<ol style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%=
+">
+<li><span style=3D"font-family: Lato, Tahoma, sans-serif;">Build the Magnet=
+</span></li>
+</ol>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Obsess over a probl=
+em you feel viscerally.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Ship a V1 that deli=
+vers a step-change, not a rounding-error.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Win a dozen users w=
+ho=E2=80=99d be angry if you shut it down tomorrow.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Inbound Beats Outbo=
+und</span></p>
+<ol style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%=
+" start=3D"2">
+<li><span style=3D"font-family: Lato, Tahoma, sans-serif;">Once real value =
+exists, gravity takes over:</span></li>
+</ol>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Top talent starts D=
+M=E2=80=99ing, =E2=80=9CAre you hiring?=E2=80=9D</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Investors ask for i=
+ntros instead of the other way around.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Partners and adviso=
+rs show up pre-sold on your mission.</span></p>
+<ol style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%=
+" start=3D"3">
+<li><span style=3D"font-family: Lato, Tahoma, sans-serif;">Network After Pr=
+oduct-Market Fit</span></li>
+</ol>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Spend 90 % of early=
+ hours in build-measure-learn.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Use the other 10 % =
+to selectively share wins and lessons.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">When the magnet is =
+strong, a single event can unlock 10=C3=97 surface area.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Great products comp=
+ound; handshakes don=E2=80=99t. Nail value creation first, and the best net=
+work will find you=E2=80=94eager to amplify what you=E2=80=99ve already pro=
+ven.</span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_17326246592733" class=3D"hse-section" style=3D"padding=
+-left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-1732624659273-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17398676999003" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Georgia, ser=
+if; color:#323a45; word-break:break-word; text-align:center; padding:0px 0p=
+x 20px; font-size:0px">
+        <img alt=3D"AI News" src=3D"https://hs-20988450.f.hubspotemail.net/=
+hub/20988450/hubfs/AI%20News.png?width=3D1200&amp;upscale=3Dtrue&amp;name=
+=3DAI%20News.png" style=3D"outline:none; text-decoration:none; max-width:10=
+0%; font-size:16px" width=3D"600" align=3D"middle" class=3D"stretch-on-mobi=
+le">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17326246592732" cl=
+ass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" sty=
+le=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-co=
+s-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wra=
+pper_module_17326246592732_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget =
+hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inherit;=
+ line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-typ=
+e=3D"rich_text"><h2 style=3D"margin:0; mso-line-height-rule:exactly; font-f=
+amily:'Times New Roman', Times, serif; font-size:16px; line-height:175%; fo=
+nt-weight:normal"><span style=3D"font-family: Lato, Tahoma, sans-serif;"><s=
+pan style=3D"font-weight: bold;">1</span>.<span style=3D"font-style: italic=
+;"> </span><span style=3D"color: #0600ff;"><a href=3D"https://d2thJ004.na1.=
+hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0=
+N13dgqY3qn9gW95jsWP6lZ3mNW5CG6Rw2fxdPQW2QCNqp11_Wt6W3lVkxb4H-hl9VQFF-t7Bxjb=
+BW3T9FtQ4MtqX5W6ybRRV6yn9GjW83XbGv81sqcgW2CfrcC1twXqfMP-564WH_g5W62fRcs4brt=
+DFW21lhqR66V5ZmW36BKy38_20FzVCgd8H3r_k6sW4kH2Q072626yW1mv-LZ5SRXBqW8n2H5l6P=
+bfcdW4fM42p8fnZk7W5Y1Lvc8NV5nJT9LK72QF3dMW6bj7XC5RYv-6W5WY1Gx4fcg-JW5Fc5TL4=
+68Fb0W5BGrpM8xcNfyW2Z0zHn6sT147W7YrJ_Y8SgjKJW5brf5B1GqB8HVTxrZ46jpCgHW4LjKy=
+B6Hh6DNW2G9hDf5QpcXhW1wXB_w8d_xmnf2-9qGT04" style=3D"font-weight:bold; text=
+-decoration:none; color:#0600ff; font-style:normal" data-hs-link-id=3D"0" d=
+ata-hs-link-id-v2=3D"G9/w+abP" target=3D"_blank">ChatGPT Connectors: AI Tha=
+t Actually Knows Your Workspace</a></span></span></h2>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">OpenAI has launched=
+ <span style=3D"font-weight: normal;">ChatGPT Connectors</span>, a major up=
+grade that links your AI assistant directly to your favorite tools=E2=80=94=
+think <strong>Google Drive, GitHub, Dropbox, SharePoint, Outlook</strong>, =
+and more. This transforms ChatGPT from a smart chatbot into your organizati=
+on=E2=80=99s knowledge brain, capable of searching, referencing, and synthe=
+sizing internal data on command.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Now in beta, Connec=
+tors are available across Pro, Team, Enterprise, and Edu plans, with advanc=
+ed capabilities like synced knowledge bases and custom integrations via MCP=
+ (Model Context Protocol) for enterprise environments.</span></p>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%"><span style=3D"fon=
+t-family: Lato, Tahoma, sans-serif;">Key Highlights:</span></h2>
+<ul style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%=
+">
+<li><span style=3D"font-family: Lato, Tahoma, sans-serif;">Smarter Search: =
+Ask ChatGPT to find and summarize documents, emails, or events across conne=
+cted platforms=E2=80=94no more digging manually.</span></li>
+<li><span style=3D"font-family: Lato, Tahoma, sans-serif;">Deep Research Mo=
+de: Run advanced queries across multiple sources and receive fully cited, c=
+ross-platform answers.</span></li>
+<li><span style=3D"font-family: Lato, Tahoma, sans-serif;">Custom Connector=
+s: Enterprises can build their own secure integrations to internal apps or =
+databases using MCP.</span></li>
+<li><span style=3D"font-family: Lato, Tahoma, sans-serif;">Context-Aware Me=
+mory: With memory enabled, ChatGPT can tailor queries and responses using w=
+hat it knows about your workspace or projects.</span></li>
+</ul>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">=F0=9F=93=BD=EF=B8=
+=8F For a full demo and walkthrough, watch this <span style=3D"color: #0600=
+ff;"><a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/V=
+X8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3qn9gW7Y8-PT6lZ3mDW1slcbN87fsJn=
+VG1tCj2wxMrZW8fr4Wk6jgY0VW8R0r2P2qvqfDVLd-DY4HJWKfW2W8M6K5LqpfwVDyp7327qtZl=
+W1w_pcf4jygXZW2KBCL63SPWp1W2WqbKz4L2vlqW8Hh_7k5rM22XN5FQH4xy2wtjW3YLs_C8Rl3=
+zZW4R6N5y2d2yVDW2YMZnQ71nwFjW16wcjF7Qq14GW7H5G8T1skscCW1s1LFt4fFQtHV-tSbk5T=
+K1MCW8H4Tls2Nc5QwW382xHW3t2M-NW69-yrD4-rJSgW98ndNT1G4fB-N891LfjWSr4jW5pMfvM=
+4Bmv7MW7snCdZ2K6GMJf3v1YYn04" style=3D"text-decoration:none; color:#0600ff"=
+ rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"4oA8cSt8" tar=
+get=3D"_blank">video</a></span>.</span></p>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%; font-weight:normal=
+"><span style=3D"font-family: Lato, Tahoma, sans-serif;"><!-- notionvc: e24=
+d6df7-c2a0-416e-ac2c-e28bed4b3f57 --></span><span style=3D"font-family: Lat=
+o, Tahoma, sans-serif;">&nbsp;</span></h2>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%"><span style=3D"fon=
+t-family: Lato, Tahoma, sans-serif;"><strong><!-- notionvc: f1d9408c-01b1-4=
+d80-ad81-d44448e43de0 --></strong></span></h2>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%; font-weight:normal=
+"><span style=3D"font-family: Lato, Tahoma, sans-serif;">2<span style=3D"te=
+xt-decoration: none;">.&nbsp;</span></span><span style=3D"color: #0600ff; f=
+ont-family: Lato, Tahoma, sans-serif;"><a href=3D"https://d2thJ004.na1.hubs=
+potlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13d=
+gqY3qn9gW95jsWP6lZ3nmW1Xj8Xl5Nl5HZW4cxs7X1b4jB-W9l7b9f9g1HS2W6Vl4-V5c-ZGRW6=
+Q-fXG1WT9qbW5Jc5h12SfFVxVjqPyF1bS1LQW5f76XL7k3CkKW2V0sCh64_THKW21jlqt3jJTYS=
+W20j-Z54pJfJJN4PMWG7M0qqmVKcmxH9cK7ZGW3kP3Kk4WmB-lW4df3078y4hgWW7Vc6Yg43Hgk=
+cV5J7vr1TB4HPW7G3dBP4Bn3LYW61lWwv947qv_W1GnnV-2nmqj7N4L44V2NLRdlW7sspBs809w=
+9BW67ZwBr6ZKfwwW1hTvH54SsfBfW60fN5_3GxNxNW196-9k1bmGVKW7D403N47P34yW4cwhFN7=
+kZFgZM8DDL1XYKDGW3cCPZ24SvDjvf4qh4W804" style=3D"text-decoration:none; colo=
+r:#0600ff; font-weight:bold" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"JG=
+IsKScV" target=3D"_blank">Gemini 2.5 Pro: Smarter, faster, and ready for bu=
+siness</a></span></h2>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Google just dropped=
+ an upgraded preview of Gemini 2.5 Pro =E2=80=94 their sharpest AI model ye=
+t =E2=80=94 and it=E2=80=99s about to go full throttle for enterprise use i=
+n a few weeks.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">What=E2=80=99s in i=
+t for you? This isn=E2=80=99t just geek talk: Gemini 2.5 Pro is crushing co=
+ding challenges, acing tough tests in math, science, and reasoning =E2=80=
+=94 basically, it=E2=80=99s the AI version of a brainiac that never sleeps.=
+ It=E2=80=99s smarter, more creative, and now serves up clearer, better-str=
+uctured answers.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">For small businesse=
+s and startups, this means powerful AI tools you can trust to handle comple=
+x tasks =E2=80=94 from coding custom solutions to tackling tricky data prob=
+lems =E2=80=94 without breaking the bank or slowing you down. Plus, Google=
+=E2=80=99s added =E2=80=9Cthinking budgets=E2=80=9D to the API, so you cont=
+rol how much time and money your AI spends on each task. More efficiency, l=
+ess surprise bills.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Developers can alre=
+ady get their hands on the preview through Google AI Studio and Vertex AI, =
+with the update also rolling out in the Gemini app. If you want AI that wor=
+ks as hard as you do, keep an eye on this one.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+>&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #0600ff;"><span style=3D"font-family: Lato, Tahoma, sans-serif;"><!-=
+- notionvc: c324becd-40ca-4282-b8ba-8ca8551836e8 --></span></span></p>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%; font-weight:normal=
+"><span style=3D"font-family: Lato, Tahoma, sans-serif;"><!-- notionvc: 0ea=
+11698-5e0f-4726-b8fa-4d394d335291 --></span></h2>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><!-- notionvc: 91a7b2d4-95e2-4d6f-b200-87de991524fa --></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%;=
+ font-weight:bold"><span style=3D"font-family: Lato, Tahoma, sans-serif; co=
+lor: #3339f1;"><span style=3D"color: #000000;">3</span><span style=3D"text-=
+decoration: none; font-weight: bold;"><span style=3D"color: #000000;">. </s=
+pan></span></span><span style=3D"color: #0600ff; font-family: Lato, Tahoma,=
+ sans-serif;"><a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d=
+2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgqY3qn9gW95jsWP6lZ3p2W2X6=
+c-C8LkbQsW7P8cMX1_GPd2W1Ppm6M3zVWD-W3Bc3P57j1-19W1VbfSH5mQgNKVLZh7y1bJYvQW3=
+WzC_L5HklYMW6J_6W63m3JJDW44R-fd38WZ9QM9vlxhcx5ynVCmtdy3zXc14Vzfhpk4_Wd0fMqB=
+CcRQGlLkW5vVb5q79MM-CN6JvpPtZyxT3W3DHQF73xyw0XW3qPMsy5KDw71W3KVBrz7sxH5TW2g=
+nrGB2f4WVkW41x_627c5FL3W3Cd_G46rqT4mW8LhF0m67gPPqW2qfB0v5v4XgpMlb77VlRpGWW7=
+7PDGs1TqlP5W5YF3SY7Jb1YbW8hNksB5ZxxxkW5QJ07R8TkX7XW8yZMxn7zd7CJW58HD0Y1tFcF=
+6f1ywwT804" style=3D"text-decoration:none; color:#0600ff; font-weight:bold"=
+ data-hs-link-id=3D"0" data-hs-link-id-v2=3D"+2PvJhmo" target=3D"_blank">Go=
+ogle=E2=80=99s NotebookLM goes public =E2=80=94 and podcasts too</a></span>=
+</p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Google=E2=80=99s AI=
+ note-taking app, NotebookLM, just leveled up. Now you can share your noteb=
+ooks publicly via a simple link=E2=80=94think Google Docs, but way smarter.=
+ Viewers can=E2=80=99t mess with your notes, but they <em>can</em> ask ques=
+tions, listen to AI-generated podcast-style audio overviews, and dive into =
+FAQs crafted by the AI.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Launched experiment=
+ally in 2023, NotebookLM quickly became Google=E2=80=99s sleeper hit for le=
+arning and collaboration. It ingests everything from documents to YouTube v=
+ideos, then churns out summaries and interactive chats. Mobile app dropped =
+last month, making on-the-go brain dumps even easier.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Sharing is a breeze=
+: hit the Share button, switch access to =E2=80=9CAnyone with the link,=E2=
+=80=9D and boom=E2=80=94your notebook=E2=80=99s out there for the world (or=
+ your class, team, or followers) to explore. Want to share editing rights? =
+You can do that too, by inviting people via email.</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><a href=3D"http=
+s://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c=
+4zVKW8hW1h35xFl_0N13dgql3qn9gW7Y8-PT6lZ3mQW8-xJS41SLlsnN7T5TqLRRnYQW6psmSm6=
+gdbXWVzxnhn46csfxW82jwRj1JYqw0W4KVNCz665jF1W78bSrt8sqX_MW4ymTtZ58BY2_N7LHWv=
+737Dw9W5F84nL7lwq0zW41bqSp8k7sYsW8qkYfr3j5yxXN6NfvnCv014WW5jng_27J8DlXW6C2z=
+xM4tFmBlW6Sht5Y7Zy_2qW4BrnWN46sfb7W1GwL0G70VXyWN7ytmv4SC4-DW1-yPP519thWBW5_=
+_nL64Qh-jwVVvbVV37RVqcW1_XM3t23cN-_V9qd7t1ZkM8PW58jXl151JpQgW2W63-z5sV0d8f2=
+zVNg004" style=3D"color:#2160b5; text-decoration:none" data-hs-link-id=3D"0=
+" data-hs-link-id-v2=3D"2GkdBs68" target=3D"_blank"><strong><span style=3D"=
+color: #0600ff;"><!-- notionvc: 60301b4c-5a64-4438-b126-d5716a5d52f8 --></s=
+pan></strong></a></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%;=
+ font-weight:bold"><span style=3D"color: #0600ff; font-family: Lato, Tahoma=
+, sans-serif;"><!-- notionvc: 882fc638-df9c-47e4-895f-f8e79df66104 --></spa=
+n></p>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%; font-weight:bold">=
+<span style=3D"font-family: Lato, Tahoma, sans-serif; color: #3339f1;"><spa=
+n style=3D"text-decoration: none; font-weight: bold;"><!-- notionvc: 17c95a=
+1a-3f4b-4c5b-bb8d-b383dab8b414 --></span></span></h2>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%; font-weight:bold">=
+<span style=3D"font-family: Lato, Tahoma, sans-serif; color: #3339f1;"><spa=
+n style=3D"text-decoration: none; font-weight: bold;"><!-- notionvc: ced555=
+a8-5cb8-4d34-9c34-b9fbdd417a7d --></span></span></h2>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+ac0a778d-cba8-4842-a5e3-46ab96226e53 --></p></div></div></td></tr></tbody><=
+/table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-13" class=3D"hse-section" style=3D"padding-left:10px; =
+padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-13-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17379777828331" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Georgia, serif; color:#323a45; word-break:break-word; text-align:ce=
+nter; padding:0px 10px 20px; font-size:0px">
+        <img alt=3D"AI Spotlight" src=3D"https://hs-20988450.f.hubspotemail=
+.net/hub/20988450/hubfs/AI%20Spotlight.png?width=3D1158&amp;upscale=3Dtrue&=
+amp;name=3DAI%20Spotlight.png" style=3D"outline:none; text-decoration:none;=
+ max-width:100%; font-size:16px" width=3D"579" align=3D"middle">
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section_1739277474093" class=3D"hse-section" style=3D"padding-=
+left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column_1739277474093_0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Georgia, serif; font-size:20px; color:#323a45; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17392774740613"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17392774740613_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><h2 style=3D"margin:0; mso-line-height-rule:exactly; fon=
+t-family:'Times New Roman', Times, serif; font-size:18px; line-height:200%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif; font-size: 20px;">To=
+ol of the week</span></h2>
+<p style=3D"mso-line-height-rule:exactly; font-size:18px; line-height:175%"=
+><span style=3D"color: #0600ff;"><a href=3D"https://d2thJ004.na1.hubspotlin=
+ks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3qn=
+9gW7Y8-PT6lZ3lSW826P1K5WrMrcW4h6FMS5PTS-BW4zw8N26HF36bVFn1PW3WFkg9N5c99MBr-=
+zKpW8-4gJb10qRYJW3S2c-Y3KHt1tW7YtkFm1JJkqsW4tzTkj57CWmYW8dMGWh6Whq6PW1dlG0h=
+5QLgLrN21L2233zbXfW3GgQlv54dZ_nW4mqjKY9lV-D3W1V6cFm8bcy7xW7JWcWJ7xRlzzW7Q_h=
+q_41WPQNW8MNcGT2JgSL6W5j3b7p8ltMDNMt8PR8BFb8ZN5kNLpKdCmw7W6RjpBV69KXSpVcbXs=
+95C6mzMTPF_H8DnKcNVThc9R8QG72NW9fjqcl1rQQFWf3W6Z6C04" style=3D"text-decorat=
+ion:none; color:#0600ff; font-weight:bold" data-hs-link-id=3D"0" data-hs-li=
+nk-id-v2=3D"6k2db/Xd" target=3D"_blank"><span style=3D"font-family: Lato, T=
+ahoma, sans-serif;"><span style=3D"font-size: 16px;">Mootion</span></span><=
+/a></span><span style=3D"font-family: Lato, Tahoma, sans-serif; font-size: =
+16px;"> is an AI-powered platform that simplifies video creation for indivi=
+duals and teams. It allows users to turn ideas into animated videos using a=
+ straightforward 4-step workflow. No prior editing experience is needed=E2=
+=80=94Mootion manages everything from syncing to effects. </span><span styl=
+e=3D"font-family: Lato, Tahoma, sans-serif; font-size: 16px;">The platform =
+accepts various input types, including text, scripts, audio, and video. Ani=
+mation styles range from photorealistic to 3D cartoon, with built-in effect=
+s, transitions, and AI-generated music to enhance the storytelling process.=
+</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:18px; line-height:125%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif; font-size: 16px;"><s=
+trong>Key Features:</strong></span></p>
+<ul style=3D"mso-line-height-rule:exactly; font-size:18px; line-height:175%=
+">
+<li style=3D"line-height: 125%;"><span style=3D"font-family: Lato, Tahoma, =
+sans-serif; font-size: 16px;">Streamlined video creation with a guided 4-st=
+ep process</span></li>
+<li style=3D"line-height: 175%;"><span style=3D"font-family: Lato, Tahoma, =
+sans-serif; font-size: 16px;">Flexible input formats: text, script, video, =
+audio</span></li>
+<li style=3D"line-height: 175%;"><span style=3D"font-family: Lato, Tahoma, =
+sans-serif; font-size: 16px;">AI-generated music and transitions</span></li=
+>
+<li style=3D"line-height: 175%;"><span style=3D"font-family: Lato, Tahoma, =
+sans-serif; font-size: 16px;">Support for 10+ languages</span></li>
+<li style=3D"line-height: 175%;"><span style=3D"font-family: Lato, Tahoma, =
+sans-serif; font-size: 16px;">Multiple animation styles, including photorea=
+listic and 3D</span></li>
+</ul>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif; font-size: 20px;"><!-- notionvc: 61e=
+70e78-2a1c-4d83-8b41-ad500a7f4265 --></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif; font-size: 20px;"><!-- notionvc: 64a=
+da8ab-f84a-4669-ab7b-8d79d423f15b --></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif;"><!-- notionvc: fdb10d7d-242d-4e1e-8=
+3da-0b73a27d6f69 --></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+b54c1c37-81bd-4647-a14f-96143641b2c9 --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+41b59b5f-add5-4477-a4e3-d0551e0f2261 --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif;"><!-- notionvc: fa4356e3-5794-454b-b=
+ee5-9a118256427e --></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+902d83e4-1bb2-4111-8717-2cc047e5ab52 --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+8eb945f5-dba0-47c1-8888-b4e40470aa66 --></p></div></div></td></tr></tbody><=
+/table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17392773332031" cl=
+ass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" sty=
+le=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-co=
+s-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"none" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align:to=
+p" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Georgia, serif; color:#323a45=
+; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #F5F5F6;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #F5F5F6;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17302056690832" cl=
+ass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" sty=
+le=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-co=
+s-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wra=
+pper_module_17302056690832_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget =
+hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inherit;=
+ line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-typ=
+e=3D"rich_text"><h2 style=3D"margin:0; mso-line-height-rule:exactly; font-f=
+amily:'Times New Roman', Times, serif; font-size:20px; line-height:175%"><s=
+pan style=3D"font-family: Lato, Tahoma, sans-serif;">Social Buzz</span></h2=
+>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"color: #0600ff;"><a href=3D"https://d2thJ004.na1.hubspotlin=
+ks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgp85nX=
+HsW5BWr2F6lZ3lnW5TkgbN5m5gW1W50DcpY7dQQYtW8-xX2_204qsRW2mNlJV8llsYCW6k85Q47=
+jz5P7W5PWQ6Q3jWpxpW2hwKhR61GmpVW9d793Q2TjPxBW1wZkJ78Sz_FLW755Yc12VpfDLVkx6D=
+L6Wfs65W3cWxsn3NcpmHW8FWJ8T4bVX55W7cPy-p6ZnvJTW1V1ddl93rqn0W5l3rGH7kG4wfW7Z=
+87Qj6lB1ZzW4y0h3h74p6ZjW1D4TRb3-Wh75W7gCCyR8Gb21BN34LQX_ZH5n1VVqkMs5t3zjZW4=
+hyBL18ktTSQW88MLsJ93VTr4W275w5014sc57N1kp1lSn1QlhW342KCY20BGKbW1MNYLP1MP6sq=
+W4rwmJH14mlw_W4dWjJl5_t3JNW7StVtd3HcY2GVyjPDr61Xk_6W4t1yf01nZH54W5B6lCx86g_=
+B4f6YVWM804" style=3D"text-decoration:none; color:#0600ff; font-weight:bold=
+" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"LqEwG98Z" target=3D"_blank"><=
+span style=3D"font-family: Lato, Tahoma, sans-serif;">Reddit</span></a></sp=
+an><span style=3D"font-family: Lato, Tahoma, sans-serif;"> <span style=3D"f=
+ont-weight: bold;">Sues Anthropic, Demands Claude Be Taken Offline</span></=
+span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Reddit has filed a =
+lawsuit against Anthropic, accusing it of illegally scraping Reddit content=
+ to train its Claude AI without permission or payment. The platform says An=
+thropic violated its user agreement and continued scraping even after claim=
+ing it had stopped in July 2024.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Reddit also highlig=
+hts privacy concerns, alleging that deleted posts remain in Claude=E2=80=99=
+s training data=E2=80=94unlike with OpenAI or Google, which have licensing =
+deals that honor content removal.</span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Reddit isn=E2=80=99=
+t just asking for damages=E2=80=94it wants Claude pulled from the market an=
+d a ban on any products built using its data. The case could set a major pr=
+ecedent on whether publicly accessible online content is truly fair game fo=
+r AI training.</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:150%"><!-- notionvc: =
+3e4f4c3a-efa3-4eeb-89a9-fa0dd67ceb7d --></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><!-- notionvc: b59bb1a5-7d16-4231-bbc9-382d8a956982 --></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><!-- notionvc: 88fceb68-29d6-4bfb-b063-da160e4d2efd --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif;"><!-- notionvc: ecb65b75-6e1a-4bae-8=
+e44-90f878f88e0e --></span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><!-- notionvc: 5853f296-1d24-42ed-a619-e6f06ba3d978 --></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+ data-start=3D"158" data-end=3D"374" data-is-last-node=3D""><!-- notionvc: =
+345b6cc1-e219-422f-8ea8-348113a6d8c2 --></p></div></div></td></tr></tbody><=
+/table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17416987515481" cl=
+ass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" sty=
+le=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-co=
+s-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"none" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align:to=
+p" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Georgia, serif; color:#323a45=
+; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #F5F5F6;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #F5F5F6;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17392778867024" cl=
+ass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" sty=
+le=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-co=
+s-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wra=
+pper_module_17392778867024_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget =
+hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inherit;=
+ line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-typ=
+e=3D"rich_text"><h2 style=3D"margin:0; mso-line-height-rule:exactly; font-f=
+amily:'Times New Roman', Times, serif; font-size:20px; line-height:175%"><s=
+pan style=3D"font-family: Lato, Tahoma, sans-serif;">AI Event Pick</span></=
+h2>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%; font-weight:bol=
+d"><span style=3D"font-family: Lato, Tahoma, sans-serif; font-size: 16px;">=
+AI + SEO Webinar: How to Win in the Age of Agentic AI &amp; GEO</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif; font-size: 16px;"><strong>=F0=9F=93=
+=85 Date</strong>: June 18</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif; font-size: 16px;">One-hour online ma=
+sterclass to dive into Agentic AI, Generative Engine Optimization (GEO), an=
+d the future of SEO in 2025.</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif; font-size: 16px;">Discover how AI Ov=
+erviews are changing search results, why optimizing for AI-generated answer=
+s is crucial, and how Micro SEO strategies can boost your rankings across b=
+oth traditional search engines and new AI-powered platforms like ChatGPT an=
+d Perplexity.</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+font-family: Lato, Tahoma, sans-serif; font-size: 16px;">This session is pe=
+rfect for marketers, SEO professionals, and business owners ready to adapt =
+to rising zero-click searches and the shift from search engines to answer e=
+ngines.</span><span style=3D"font-family: Lato, Tahoma, sans-serif;"><span =
+style=3D"font-size: 16px;">&nbsp;Register<span style=3D"color: #0600ff;"> <=
+a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31=
+b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgpM5nXHsW6N1X8z6lZ3kLW7Jkrxh6z88HyW4f1kG=
+47CKm89W9lLnQm1lVghvW1r9fXB1dRm16W2xBShv8C1_8KW8NnZvx7h07WwN3Cp9VfRbgxwW4jt=
+VrQ6TX7r6W4Cp1nD3f1TKWW6DkmPz7DFSSmW1fkhFj3XfhszW99HCb36lsS2RW5l7Ct12vLnnlW=
+72tKX48Nl8LlW1Szqbr36ZLZYW5ZnrHr3TTs8hN3ShHlDgYXZBW6h-H9w1n9DZ6N507ShZqfC-z=
+W2xG8hn4fFdP6W25jnht8_9bVPW2xFtvL6NqP7VVHgl_B7LTG9DW1Z66vw6Hb5XBW6TxkG48b7v=
+ckW9gdY-37M032GV_ktqg1l2lWsW3xkRvc18_86VMxyJGyx88vGW9h8zH67gB4C_W9lR4x45M7Y=
+61W93-c0912t0sGW4ZhCPf6G_-w_W9htsdV7m96YjW95cJSw4Jds-MW4v442c8BFzMkW2PNXB24=
+cy7ZYW6TV26t2XcLZRf4NzF4004" style=3D"color:#0600ff; text-decoration:none" =
+data-hs-link-id=3D"0" data-hs-link-id-v2=3D"+TQqXmfA" target=3D"_blank">her=
+e</a><span style=3D"text-decoration: none;">.</span></span></span><!-- noti=
+onvc: bb726339-600e-4a19-801f-c1f483f1dfa0 --></span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><!-- notionvc: 4697386e-ac60-4bd8-b846-e2c5a268c2be --></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;"><!-- notionvc: ec5e=
+24bb-6950-4be4-aaab-356fbb7536b4 --></span></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%;=
+ font-weight:normal"><!-- notionvc: 2248beca-7c13-4ab3-a971-97df21aba409 --=
+></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><!-- notionvc: 5c106ab3-fb9a-46e1-afbe-b9500993913e --></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><!-- notionvc: =
+295359e7-4a45-48ee-850e-204c387f49c2 --></p></div></div></td></tr></tbody><=
+/table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div>
+  <div id=3D"section-16" class=3D"hse-section hse-section-last" style=3D"pa=
+dding-left:10px; padding-right:10px">
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; Margin-left:auto; Margin-right:auto; background-color:#ffffff" bg=
+color=3D"#ffffff">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" width=3D"600" bgcolor=3D"#ffffff">
+      <tr style=3D"background-color:#ffffff;">
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"column-16-0" class=3D"hse-column hse-size-12">
+    <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D=
+"font-family:Georgia, serif; font-size:20px; color:#323a45; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17398826787182"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"non=
+e" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align=
+:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Georgia, serif; color:#323a45=
+; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #F5F5F6;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #F5F5F6;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17410864040241" cl=
+ass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" sty=
+le=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-co=
+s-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wra=
+pper_module_17410864040241_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget =
+hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inherit;=
+ line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-typ=
+e=3D"rich_text"><h2 style=3D"margin:0; mso-line-height-rule:exactly; font-f=
+amily:'Times New Roman', Times, serif; font-size:16px; line-height:175%"><s=
+pan style=3D"font-family: Lato, Tahoma, sans-serif;"><strong>Exclusive for =
+AI Simplified Readers</strong></span></h2>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">As an AI Simplified=
+ subscriber, enjoy a 20% discount on your first 10Web subscription!&nbsp;Cl=
+ick&nbsp;<a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ0=
+04/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3hKBbW7Y8-PT6lZ3nQW8l_-1B4l=
+bpg0W6j3bT33BhyvdW2tmFDV4ppNKjW4K3SWJ5NZfkPW8fmNWm8wrF1kW4K7xQg1gfqJXN8SqF7=
+5J6fXJVDkP2t5GXlYNW2bdL4z5LR1m_W3gYRbt1B-1D_W2bFbcB1vMChlW2MLl9_948rHsW4M1q=
+2y1Jyk7VW3kHXjD88-nlMW7FxVmy1wQ8ChW2w3VGs5p--9tW3ZKM5j8xJ1-SW68xw2v2FytmPW1=
+B94XV3RT9YYW7-8LCW7fnNZdW221-jv2Hr5M7W7NR0rM3xp5TLW8RHc8Q5VPV0gVfkrF5841W2x=
+W7Wyw_G8dgrPTW8fvY9c8KK-82f76BVHH04" target=3D"_blank" style=3D"color:#2160=
+b5; text-decoration:none; font-weight:bold" rel=3D"noopener" data-hs-link-i=
+d=3D"0" data-abc=3D"true" data-hs-link-id-v2=3D"DhHM16uT"><span style=3D"co=
+lor: #3339f1;">here</span></a>&nbsp;to apply it automatically, or use&nbsp;=
+code AISIMPLIFIED&nbsp;at checkout. Start building with AI today!</span></p=
+>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+>&nbsp;</p>
+<h2 style=3D"margin:0; mso-line-height-rule:exactly; font-family:'Times New=
+ Roman', Times, serif; font-size:16px; line-height:175%"><span style=3D"fon=
+t-family: Lato, Tahoma, sans-serif;"><strong>Already a Customer?</strong></=
+span></h2>
+<p style=3D"mso-line-height-rule:exactly; font-size:16px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Spread the innovati=
+on! Share this exclusive offer with a friend, and they=E2=80=99ll enjoy 20%=
+ off their first subscription too.</span></p></div></div></td></tr></tbody>=
+</table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17398826588491" cl=
+ass=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" sty=
+le=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-co=
+s-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"none" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align:to=
+p" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Georgia, serif; color:#323a45=
+; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:1px solid #F5F5F6;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:1px solid #F5F5F6;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px 20px"><div id=3D"hs_cos_wrapper_module-15-0-0" class=
+=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=
+=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-=
+general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapp=
+er_module-15-0-0_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wra=
+pper_type_rich_text" style=3D"color: inherit; font-size: inherit; line-heig=
+ht: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"rich_=
+text"><p style=3D"mso-line-height-rule:exactly; font-size:13px; line-height=
+:175%"><span style=3D"font-family: Lato, Tahoma, sans-serif;">Regards, </sp=
+an><br><span style=3D"font-family: Lato, Tahoma, sans-serif;">Arto</span></=
+p>
+<p style=3D"mso-line-height-rule:exactly; font-size:13px; line-height:175%"=
+><span style=3D"font-family: Lato, Tahoma, sans-serif;">Co-founder/CEO at <=
+span style=3D"color: #3339f1; font-weight: normal;"><a href=3D"https://d2th=
+J004.na1.hubspotlinks.com/Ctc/2N+113/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW=
+1h35xFl_0N13dgql3qn9gW7Y8-PT6lZ3nVW8P3v2k8d_HVFW8_k3fB2S_rfKN3dKYPfXpHhbW8n=
+P15w43gfJWW3STg6c2_xlc_W4H4sd85VkFB7W8qGBjG92gVvhW1l1lHh2Z0fGhW30n8y11HK1RW=
+W1mT2XC3Z4xVrW6Cgctn17HVCYW5_N7zP7vnzsMW8yV0Qv89wcXZVXRhV47L3wF1W4FPKZ82qlC=
+d_W21zSRK1QVggVW8cqkJk1FpRjLVQ88T56_K8CDW8RNsjd1lrkB_W1hR7N68xM9jyW78Gr7q60=
+6pYGW4QdFft2D08Q9Vs0PBr6kRMTbN2Zhx6pmyy_dW68cSqr1mxgf1W3MLY151nfXBqf7Zl4V60=
+4" style=3D"text-decoration:none; color:#3339f1" rel=3D"noopener" data-hs-l=
+ink-id=3D"0" data-hs-link-id-v2=3D"DD26WSH9" target=3D"_blank">10Web.io</a>=
+</span></span><br><span style=3D"font-weight: normal; color: #3339f1; font-=
+family: Lato, Tahoma, sans-serif;"><!-- notionvc: f606db62-d9a4-48a7-825f-5=
+14cd6a85f90 --><!-- notionvc: bd537500-f152-44dc-aae7-784839db31c8 --></spa=
+n></p>
+<p style=3D"mso-line-height-rule:exactly; font-size:13px; line-height:175%;=
+ font-weight:normal"><span style=3D"color: #3339f1; font-family: Lato, Taho=
+ma, sans-serif;"><a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+11=
+3/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3qn9gW7Y8-PT6lZ3m5W=
+7f3nK5155sd1W668x4h1lr-HGW4VYKDf2HjL1pW7bBKJN3ZYxZhW2VvFhD5rfMvmW2jxVmN53fy=
+-cM_swPjy-TBMW87l9636-mB84F8ssL3vB_5PVTwYGl5N3dRcMNykcxqphKpW4PNms35qgsmMW4=
+LBBMq3jcb3-W6l_mGl41sRP9N8HxR6YQK01FW147Xk68xD4hqN4WBttzBccvfW2dm4DC6-vyrDW=
+8tsD1V8WlM7sW6Gf_bn4HDgKmV70P9Y7ZT_HcW6FXtpr1cHbdqN4D4J1fgtTpKW5Hhn1p8FNXp7=
+VxVgTn7RRRkdW5xM1N-2C8Jz7f5ZQ8HW04" style=3D"text-decoration:none; color:#3=
+339f1" rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"66BTNdD=
+U" target=3D"_blank">Linkedin</a></span></p></div></div></td></tr></tbody><=
+/table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module-16-0-0" class=3D"h=
+s_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"co=
+lor: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-genera=
+l-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"presentation" =
+align=3D"center" style=3D"width: auto; text-align: center;" class=3D"hs_cos=
+_wrapper_type_social_module">
+  <tbody>
+    <tr align=3D"center">
+      <td class=3D"social-network-cell" style=3D"font-family:Georgia, serif=
+; font-size:20px; color:#323a45; word-break:break-word">
+        <table role=3D"presentation" align=3D"center" style=3D"width: auto;=
+ text-align: center;" class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr align=3D"center">
+              <td class=3D"display_block_on_small_screens" style=3D"font-fa=
+mily:Georgia, serif; font-size:20px; color:#323a45; word-break:break-word; =
+padding:8px 5px; line-height:1; vertical-align:middle" valign=3D"middle">
+                <a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113=
+/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgq23qn9gW7lCdLW6lZ3pkW7=
+QyCqJ64PhZ_W8qVnD_4frtnGW4lvvhC19XmkCW7vRqK27CXd_XVrq5pr2ZZXLGW8FprH286xbmF=
+W3hsdBl49SZXdW5G6rP_7H-hF3W2kX5Rd33BMGfW40Fr4v59yNbSVK-gPK40ncQ4W3xGqB821Cs=
+hCW3ngrMp7LZzsQW1n3zsx2PS7FQVlpzKP1JcqsDW164z1z45MwcKN43SQr4mN92mVspqb05JrD=
+kLW14XstD36-dRVW84-bVJ7Jxk_bW3c3Lbf47QpdcW2RKGDR2hnxR5W5Wdy7y3zZqNrW6fC9TS1=
+Sdz6Pf8T8m4x04" style=3D"color:#00a4bd; text-decoration:none !important" da=
+ta-hs-link-id=3D"1" data-hs-link-id-v2=3D"dJQo6zGT" target=3D"_blank"><img =
+src=3D"https://hs-20988450.f.hubspotemail.net/hs/hsstatic/TemplateAssets/st=
+atic-1.262/img/hs_default_template_images/modules/Follow+Me+-+Email/website=
+_circle_grey.png" alt=3D"Website" height=3D"25" style=3D"outline:none; text=
+-decoration:none; border:none; width:auto!important; height:25px!important;=
+ vertical-align:middle" valign=3D"middle" width=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td><td class=3D"social-network-cell" style=3D"font-family:Georgia, =
+serif; font-size:20px; color:#323a45; word-break:break-word">
+        <table role=3D"presentation" align=3D"center" style=3D"width: auto;=
+ text-align: center;" class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr align=3D"center">
+              <td class=3D"display_block_on_small_screens" style=3D"font-fa=
+mily:Georgia, serif; font-size:20px; color:#323a45; word-break:break-word; =
+padding:8px 5px; line-height:1; vertical-align:middle" valign=3D"middle">
+                <a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113=
+/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3qn9gW7Y8-PT6lZ3nBW3=
+qrKSW3P50bKW6TNLVl8fkmRjW56zHNS7jMyYwW1056m25JmGD6W3YDtBD6kPHvcN7SHw4_MXH02=
+W7FfkKm88RCmJW2kMtSQ2j6NwwN3nN5fD-mNb4W588bby6RkdX2W2nHCNN78YpfvW98zjQX1dSs=
+pdW3DsM0_49x6vxW7_CW343yrG4LW6gbkGy4kHP9wW4n70-K10PLDQW4bWcSl3wbwrsW7zkz492=
+RJSY5W1n8LCr2h23NSW8FRvnc6klYfjW3m9gSq8vQ5yyVtC61N7Z6vx4W85yG5n31WybPW5Vj7T=
+Q6NxsLXVPLwDD4y_dw1W4Gg_7520ZpJjf1dSYmz04" style=3D"color:#00a4bd; text-dec=
+oration:none !important" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"anO/Tg=
+Rb" target=3D"_blank"><img src=3D"https://hs-20988450.f.hubspotemail.net/hs=
+/hsstatic/TemplateAssets/static-1.262/img/hs_default_template_images/module=
+s/Follow+Me+-+Email/instagram_circle_grey.png" alt=3D"Instagram" height=3D"=
+25" style=3D"outline:none; text-decoration:none; border:none; width:auto!im=
+portant; height:25px!important; vertical-align:middle" valign=3D"middle" wi=
+dth=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td><td class=3D"social-network-cell" style=3D"font-family:Georgia, =
+serif; font-size:20px; color:#323a45; word-break:break-word">
+        <table role=3D"presentation" align=3D"center" style=3D"width: auto;=
+ text-align: center;" class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr align=3D"center">
+              <td class=3D"display_block_on_small_screens" style=3D"font-fa=
+mily:Georgia, serif; font-size:20px; color:#323a45; word-break:break-word; =
+padding:8px 5px; line-height:1; vertical-align:middle" valign=3D"middle">
+                <a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113=
+/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgq23qn9gW7lCdLW6lZ3mmN3=
+1xn5Gq48lqW9kP8pn15NVR3W4ckVQZ8KhLQgW5n5B8v5HrTlpW32v_Mc5YJZt-W5T5Q2f2jtV2Q=
+N4xryCQW1yjRN7-Lb_d3PlPpW4NXGFM5hbWqMW3sZ2w15FXFPgW1qGGzR4-gD4jVr7pN_5C-4Rp=
+N53gH6lwyv-bW1csKqw6fXDP0W6qNH9j4zLpfcW6KqMtw9kZb34W3t2dHX4CXPC5W8fZWm-3Zfy=
+VHW357Lxg45nZClW5VQVSL2XQsvnN6V1sbbW-lmhW26Y8nz6L7FWgW1Pc3fx6y-S3GW2PdYwH8D=
+gtJXdFQs6-04" style=3D"color:#00a4bd; text-decoration:none !important" data=
+-hs-link-id=3D"0" data-hs-link-id-v2=3D"ict+k/Yk" target=3D"_blank"><img sr=
+c=3D"https://hs-20988450.f.hubspotemail.net/hs/hsstatic/TemplateAssets/stat=
+ic-1.262/img/hs_default_template_images/modules/Follow+Me+-+Email/twitter_c=
+ircle_grey.png" alt=3D"X" height=3D"25" style=3D"outline:none; text-decorat=
+ion:none; border:none; width:auto!important; height:25px!important; vertica=
+l-align:middle" valign=3D"middle" width=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td><td class=3D"social-network-cell" style=3D"font-family:Georgia, =
+serif; font-size:20px; color:#323a45; word-break:break-word">
+        <table role=3D"presentation" align=3D"center" style=3D"width: auto;=
+ text-align: center;" class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr align=3D"center">
+              <td class=3D"display_block_on_small_screens" style=3D"font-fa=
+mily:Georgia, serif; font-size:20px; color:#323a45; word-break:break-word; =
+padding:8px 5px; line-height:1; vertical-align:middle" valign=3D"middle">
+                <a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113=
+/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3qn9gW7Y8-PT6lZ3lLW1=
+2x3ry8zVws_W6dgyrK3-yT7tW2S_wgv7ZzgdtW4kCFyY62TbdlW4hcHpX3bZ9CYW38NMJG6_1dZ=
+YW2bkLY61ZX89PW4c8gv-7w1mSjW63JrDM4LJzvfN13r13Bcp-RvW8_kLp32d2zmpW8MlfxV1kk=
+nkwN8PqrnMSh6gdW64Yx5l2l8H5rW5w-vMr5qCjc7W6cxjfj1ryWZzW8qjJtR3ppYpMW6nPbc37=
+LTdtvVL2B407StvBWW8jMrxr1zPjB4VJqyRX1V10tLW1bk2M98MC0dCVk5P4n4B06C5W2yK4-53=
+2d4M4W7V71435KxJH5W6s5ld_2MmWGLd5TNX604" style=3D"color:#00a4bd; text-decor=
+ation:none !important" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"12H3QW4D=
+" target=3D"_blank"><img src=3D"https://hs-20988450.f.hubspotemail.net/hs/h=
+sstatic/TemplateAssets/static-1.262/img/hs_default_template_images/modules/=
+Follow+Me+-+Email/linkedin_circle_grey.png" alt=3D"LinkedIn" height=3D"25" =
+style=3D"outline:none; text-decoration:none; border:none; width:auto!import=
+ant; height:25px!important; vertical-align:middle" valign=3D"middle" width=
+=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td><td class=3D"social-network-cell" style=3D"font-family:Georgia, =
+serif; font-size:20px; color:#323a45; word-break:break-word">
+        <table role=3D"presentation" align=3D"center" style=3D"width: auto;=
+ text-align: center;" class=3D"hs_cos_wrapper_type_social_module_single">
+          <tbody>
+            <tr align=3D"center">
+              <td class=3D"display_block_on_small_screens" style=3D"font-fa=
+mily:Georgia, serif; font-size:20px; color:#323a45; word-break:break-word; =
+padding:8px 5px; line-height:1; vertical-align:middle" valign=3D"middle">
+                <a href=3D"https://d2thJ004.na1.hubspotlinks.com/Ctc/2N+113=
+/d2thJ004/VX8t-31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0N13dgql3qn9gW7Y8-PT6lZ3nlW4=
+xf-sB4PbnFTW8JGrBN8YGmgVN62xwzdjK9MqW99w_lN2KvyKLW6FpYjz8k3Gp9W8KjgFk9khFXj=
+W7lR_Q76wFJPFW54xpW452nSdWW92h5p68fXSpbW83Kgbc5Rm2W_W5V7jvh3qtB-0W1HKRCf3_w=
+RCGW7X0X415CfR9nW42_wg-4Z8QJvV6dlG63z4SH5W7wjgbL64dj0YW2xs-_l6BsH7CW3jKky_7=
+qz72HW7J_fZ91kHkqNW3HW56D2L8yBpW68B1vy24N00YW7rD9Rp4HtT2jN1shLSsTV6ygW6Cjpg=
+l6dNqF7W7gdRst6xPhfjVdBWDX3QzSvbf5Qj2-W04" style=3D"color:#00a4bd; text-dec=
+oration:none !important" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"iIBdoQ=
+Ue" target=3D"_blank"><img src=3D"https://hs-20988450.f.hubspotemail.net/hs=
+/hsstatic/TemplateAssets/static-1.262/img/hs_default_template_images/module=
+s/Follow+Me+-+Email/facebook_circle_grey.png" alt=3D"Facebook" height=3D"25=
+" style=3D"outline:none; text-decoration:none; border:none; width:auto!impo=
+rtant; height:25px!important; vertical-align:middle" valign=3D"middle" widt=
+h=3D"auto">
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:10px 20px"><div id=3D"hs_cos_wrapper_module-16-0-1" class=3D"h=
+s_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"co=
+lor: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-genera=
+l-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"presentation" =
+class=3D"hse-footer hse-secondary" width=3D"100%" cellpadding=3D"0" cellspa=
+cing=3D"0" style=3D"font-family:Arial, sans-serif; font-size:12px; line-hei=
+ght:135%; color:#23496d; margin-bottom:0; padding:0">
+  <tbody>
+    <tr>
+      <td align=3D"center" valign=3D"top" style=3D"font-family:Georgia, ser=
+if; font-size:20px; color:#323a45; word-break:break-word; text-align:center=
+; margin-bottom:0; line-height:135%; padding:10px 20px">
+          <p style=3D"font-size: 12px; line-height: 125%;"><span style=3D"c=
+olor: #425b76;"><span style=3D"font-weight: bold; color: #23496d;">&nbsp;Te=
+nWeb, Inc.</span><span style=3D"color: #23496d;">, 40 E Main St, Suite 721,=
+ &nbsp;Newark, Delaware, 19711, United States, </span></span></p>
+<p style=3D"text-align: center; font-size: 11px; line-height: 125%;">&nbsp;=
+</p>
+<p style=3D"text-align: center; font-size: 11px; line-height: 125%;"><span =
+style=3D"color: #999999;"><a href=3D"https://hs-20988450.s.hubspotemail.net=
+/hs/preferences-center/en/direct?data=3DW2nXS-N30h-MjW43J0673VyFhjW4pJgvf4c=
+s6RMW3QPdlj3JPk6XW34DT-33NXWt8W2KTQQN3yX46wW32F4zg43y763W3JPShf3FdTJcW2Wy7g=
+v4rFz6mW32zQG-2YLLMZW4hrFcx4tG9FTW2t237c1BtKr8W3VBMJ12YK1M4W3BM-5-2MvZqKW1S=
+vVGv4rDjbjW2xZx-821gCG_W2vyjZW230zk-W3BWS-x4mFVVDW1ZnPMX1SjRpzW34yHm745M3GR=
+W3M9rTC32hPj5W1X9nFh34xZLYW34jp1h49JzV8W23jVSB4chNNZW43yt_x4hyztRW1ZqXvj36x=
+McDW43JSH138jPd-W3GV_Jz1_pWm4W3T0rM03zg7XdW2TMY1t2TH01mW4hCvkL1Znmc5W3z7y1W=
+3859Y3W2HQGZ12xJrM3W2sFvZm2qVzWhW22XD0h3ghqRKW2w0cvX1NgjwwW4klxyv3Fd7_PW3DZ=
+xMD3M4nBpW4fr3Cn3jrxDGW32stsx47SjfQW1N3Y6_2-cgfhW1_lv8_1_8x0mW3yZXSB3LQrCfW=
+4kBldS2MXr7tW2WjyHd2sCQLzW1Xb_hN2FVC2wW2sN8mm217Tww0&amp;utm_campaign=3DAI%=
+20Simplified%20Newsletter&amp;utm_source=3Dhs_email&amp;utm_medium=3Demail&=
+amp;utm_content=3D365933688&amp;_hsenc=3Dp2ANqtz--M59YDq_aXyk06yiDXIpSShYBA=
+lzhhkP7qRsIOFb9g1hrfqJYJtanXN0YOoAS2Zew7bUJaJY2HPG4XE2V7ne08S_TmBg&amp;_hsm=
+i=3D365933688" style=3D"color:#999999" data-unsubscribe=3D"true" data-hs-li=
+nk-id=3D"0" data-hs-link-id-v2=3D"SFRZzEXk" target=3D"_blank">Unsubscribe</=
+a> <a href=3D"https://hs-20988450.s.hubspotemail.net/hs/preferences-center/=
+en/page?data=3DW2nXS-N30h-MjW43J0673VyFhjW4pJgvf4cs6RMW3QPdlj3JPk6XW34DT-33=
+NXWt8W2KTQQN3yX46wW32F4zg43y763W3JPShf3FdTJcW2Wy7gv4rFz6mW32zQG-2YLLMZW4hrF=
+cx4tG9FTW2t237c1BtKr8W3VBMJ12YK1M4W3BM-5-2MvZqKW1SvVGv4rDjbjW2xZx-821gCG_W2=
+vyjZW230zk-W3BWS-x4mFVVDW1ZnPMX1SjRpzW34yHm745M3GRW3M9rTC32hPj5W1X9nFh34xZL=
+YW34jp1h49JzV8W23jVSB4chNNZW43yt_x4hyztRW1ZqXvj36xMcDW43JSH138jPd-W3GV_Jz1_=
+pWm4W3T0rM03zg7XdW2TMY1t2TH01mW4hCvkL1Znmc5W3z7y1W3859Y3W2HQGZ12xJrM3W2sFvZ=
+m2qVzWhW22XD0h3ghqRKW2w0cvX1NgjwwW4klxyv3Fd7_PW3DZxMD3M4nBpW4fr3Cn3jrxDGW32=
+stsx47SjfQW1N3Y6_2-cgfhW1_lv8_1_8x0mW3yZXSB3LQrCfW4kBldS2MXr7tW2WjyHd2sCQLz=
+W1Xb_hN2FVC2wW2sN8mm217Tww0&amp;utm_campaign=3DAI%20Simplified%20Newsletter=
+&amp;utm_source=3Dhs_email&amp;utm_medium=3Demail&amp;utm_content=3D3659336=
+88&amp;_hsenc=3Dp2ANqtz--M59YDq_aXyk06yiDXIpSShYBAlzhhkP7qRsIOFb9g1hrfqJYJt=
+anXN0YOoAS2Zew7bUJaJY2HPG4XE2V7ne08S_TmBg&amp;_hsmi=3D365933688" style=3D"c=
+olor:#999999" data-unsubscribe=3D"true" data-hs-link-id=3D"1" data-hs-link-=
+id-v2=3D"RzEcto7X" target=3D"_blank">Manage Preferences</a></span></p>
+      </td>
+    </tr>
+  </tbody>
+</table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Georgia, serif; font-size:20px; color:#323a45; word-break:break-w=
+ord; padding:0px 20px"><div id=3D"hs_cos_wrapper_module-16-0-2" class=3D"hs=
+_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"col=
+or: inherit; font-size: inherit; line-height: inherit;" data-hs-cos-general=
+-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_wrapper_modu=
+le-16-0-2_" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_ty=
+pe_rich_text" style=3D"color: inherit; font-size: inherit; line-height: inh=
+erit;" data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"rich_text"><=
+p style=3D"mso-line-height-rule:exactly; font-size:12px; line-height:125%; =
+text-align:center" align=3D"center">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; font-size:12px; line-height:125%;=
+ text-align:center" align=3D"center"><span style=3D"color: #111111;">You re=
+ceived this email because you signed up<br>on our website or made a purchas=
+e from us.</span></p></div></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+  </div></div>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+ =20
+<img src=3D"https://d2thJ004.na1.hubspotlinks.com/Cto/2N+113/d2thJ004/VX8t-=
+31b4zysW2cRyxL6c4zVKW8hW1h35xFl_0W13dg8T8fYz_z2XQ1" alt=3D"" width=3D"1" he=
+ight=3D"1" border=3D"0" style=3D"display:none!important;min-height:1px!impo=
+rtant;width:1px!important;border-width:0!important;margin-top:0!important;m=
+argin-bottom:0!important;margin-right:0!important;margin-left:0!important;p=
+adding-top:0!important;padding-bottom:0!important;padding-right:0!important=
+;padding-left:0!important"></body></html>
+------=_Part_1928036_279184539.1749577505839--
+

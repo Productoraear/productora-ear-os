@@ -1,0 +1,603 @@
+Delivered-To: productoraear@gmail.com
+Received: by 2002:a05:612c:2b89:b0:56b:ab86:92d6 with SMTP id ip9csp1171551vqb;
+        Thu, 12 Feb 2026 14:28:58 -0800 (PST)
+X-Received: by 2002:ad4:5bc8:0:b0:894:70f3:5ece with SMTP id 6a1803df08f44-89734b8b09fmr7512536d6.8.1770935337984;
+        Thu, 12 Feb 2026 14:28:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770935337; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bKwAVFjcHeBFesEaoIx1yAHql7snwbJMdUqFjxEMejocCmwJVfZeN+iCUrdhOK/Le9
+         wQp57vLtyyTVUdPBArKp/GnnBdEHBTqMwjYMO9jOTNS+n3kpgyTVenMQAeJI38kfWDol
+         gw8m3oBy7gMm4fwqVwnY0GjXJPS+cLtrZ5YHwa07CoInidrGJMp1IKPidPQcEhk6eKTH
+         3nLOtmWOv+bfOVZ0+CxLyxUATMdHopbQZcUUTyp+GVkdEArgfr+NEVOS3K2FXoarJtMc
+         7Jv2G0pvvLyJ1uQeviOFvdu8pyaT6b4REibaukDKfalpywFg0y74vTtUtjUznTY6mqwv
+         pRDQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:list-unsubscribe:list-unsubscribe-post:mime-version
+         :subject:message-id:to:reply-to:from:date:cfbl-address
+         :dkim-signature:dkim-signature;
+        bh=xem11iOGmv+OEkJUyX8rYA71LInBIW3mUvYc0xxnJMI=;
+        fh=A/irqxAPf/G56+M8nCisELDOlPGiVYF8ZIvF611TLPI=;
+        b=X8UUqvKjaAiNl+1LEGY9PjRwfzwIok6gugARO7rV7RfY7GIY4UhKQaHjKRRNSrZoDF
+         YKhJjJLaELWYIsFa9hZrxW1twkq2HLbnHHyXonIFDVxxsDg9deIE1Zx3yB7kAauPjfBc
+         2dWdP/cHnlInHeaU/uRGIp4lK8pzm5kDfu6ohajt9hjabhcYhvAtSi5lplykQuzsFMoV
+         253O2+ts+xhMjPOYKZKKHmZlqtQcHScQfvM5XpPPUK5PHirgt6y06IUP13+FIfR3obNY
+         Vc3wxPCko0gCGXU0RSRycjaKsh1efKUP864N6Hs7S6XhXaA5KdkdA/puha+i+3iW/Dbt
+         T1Lg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@velocitymedia.info header.s=acdkim1 header.b=eNn5UcbV;
+       dkim=pass header.i=@acems3.com header.s=acdkim1 header.b="ZwrSgq4/";
+       spf=pass (google.com: domain of bounce-2936680-4023-840089-productoraear=gmail.com@s2.csa1.acemsd1.com designates 192.92.97.47 as permitted sender) smtp.mailfrom="bounce-2936680-4023-840089-productoraear=gmail.com@s2.csa1.acemsd1.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=velocitymedia.info
+Return-Path: <bounce-2936680-4023-840089-productoraear=gmail.com@s2.csa1.acemsd1.com>
+Received: from s2.csa2.acemsb2.com (s2.csa2.acemsb2.com. [192.92.97.47])
+        by mx.google.com with ESMTPS id af79cd13be357-8cb2b24409dsi647277385a.480.2026.02.12.14.28.57
+        for <productoraear@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 14:28:57 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce-2936680-4023-840089-productoraear=gmail.com@s2.csa1.acemsd1.com designates 192.92.97.47 as permitted sender) client-ip=192.92.97.47;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@velocitymedia.info header.s=acdkim1 header.b=eNn5UcbV;
+       dkim=pass header.i=@acems3.com header.s=acdkim1 header.b="ZwrSgq4/";
+       spf=pass (google.com: domain of bounce-2936680-4023-840089-productoraear=gmail.com@s2.csa1.acemsd1.com designates 192.92.97.47 as permitted sender) smtp.mailfrom="bounce-2936680-4023-840089-productoraear=gmail.com@s2.csa1.acemsd1.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=velocitymedia.info
+X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoicHJvZHVjdG9yYWVhckBnbWFpbC5jb20ifQ==
+DKIM-Signature: v=1; a=rsa-sha256; d=velocitymedia.info; s=acdkim1; c=relaxed/relaxed;
+	bh=xem11iOGmv+OEkJUyX8rYA71LInBIW3mUvYc0xxnJMI=;
+	h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id:
+		list-unsubscribe:list-unsubscribe-post; t=1770935337; x=1771021737;
+	b=eNn5UcbVn7uc+cePFNKP3kJcFKmWUZcd7ddo2o8J1PJ76W0i5UKskHZaKsfMZtJnOBvtYrmWH
+	B1Zxo/9SbtjbIpUso/OAvRCfDwV2NOhdM3tZZtVmYznR5hp7cDX77nnLxDcaNWBwidKjAbj4LHj
+	o/ajtjvPR2S7JjMJR5RO021KZw7kxmfbrce6g7ZJkrFRK4sY4moqFMN/A3Ihxpsn7KenlJFbbc9
+	EhR9+ehiPyUKcSN4F/44QwXvQWp6R1aE1ge5gh1NQCdlvcSSrZICgS7kijts4iXYEKm9YDXh1/x
+	d6u4ra7/kOk5m7MWdg0WqX1MbMXhop4+UE856JrSNSyQ==;
+DKIM-Signature: v=1; a=rsa-sha256; d=acems3.com; s=acdkim1; c=relaxed/relaxed;
+	bh=xem11iOGmv+OEkJUyX8rYA71LInBIW3mUvYc0xxnJMI=;
+	h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id:
+		list-unsubscribe:list-unsubscribe-post; t=1770935337; x=1771021737;
+	b=ZwrSgq4/ylRMfoYFLSpRF+Trq4zUzGV9fRve2SG6WVWmF/GjG7XCxVByq0IAWnO+DEjUUVYqd
+	13hBdljeyd9V7dxSe0yHM3KSuB3CzFEVxVv5IKTibK8gsbaOF96pIDydJ6m6eFcMTqPJYkRVeD5
+	NyJhDeVTLRi56CrmEqg26qz/CJMASoGXmSyFx1HVQsfwdHcbjJZhDz2QpKcPZjG+NDYiAfKC2ox
+	PQ4YqY1FCcRFXNc/+EjAFk9T4/JlN+Zen87y56/aGcz5SikuqW+KEP3A3kHRx9lGbacfuKlmJ8Q
+	rn4BWtYS1zu7L3OOvm2MjX50exVpiAd23xLviIQuuRWw==;
+CFBL-Address: fbl-report@acems1.com; report=arf
+X-Mailer: ActiveCampaign Mailer
+Received: from cell-3-5f54f8979c-wzrlj (10.65.106.153)
+  by acems1.com (KumoMTA 10.0.70.119) 
+  with ESMTP id 38cf7b98086211f1ad331251a91d7d27 for <productoraear@gmail.com>;
+  Thu, 12 Feb 2026 22:28:57 +0000
+Date: Thu, 12 Feb 2026 22:28:57 +0000 (GMT)
+From: =?UTF-8?Q?Alexandra_Gonz=C3=A1lez?= <alexandra@velocitymedia.info>
+Reply-To: comunicacion@velocitymedia.info
+To: productoraear@gmail.com
+Message-ID: <1083220332.6039706.1770935337751@cell-3-5f54f8979c-wzrlj>
+Subject: =?UTF-8?Q?=C2=BFSeguimos_conectados,_edwin=3F?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_6039705_294045485.1770935337751"
+X-DKIM-Options: s=acdkim1
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Virtual-Mta: s2.csa1.acemsc3.com
+X-250ok-CID: 2936680-4023
+List-Unsubscribe: <https://amplifymedia.rebelcontact.com/box.php?nl=281&c=4023&m=4519&s=d28c8189815e609d9bbb55165aefad12&funcml=unsub2&luha=1>,<mailto:unsubscribe-4ed7308230f8c29a3b4428f121e20678-4023-d28c8189815e609d9bbb55165aefad12@s2.csa1.acemsd1.com>
+Feedback-ID: 2936680:activecampaign
+X-Sending-Engine: Hedwig PCS
+X-Report-Abuse: Please report abuse to abuse@activecampaign.com
+X-lid: cHJvZHVjdG9yYWVhckBnbWFpbC5jb20gLCBjNDAyMyAsIG00NTE5ICwgczU4NTQ2OCAsIGwyODE=
+X-mid: cHJvZHVjdG9yYWVhckBnbWFpbC5jb20gLCBjNDAyMyAsIG00NTE5ICwgczU4NTQ2OA==
+
+------=_Part_6039705_294045485.1770935337751
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+=C2=A0
+
+=C2=A0
+
+Hola edwin,
+
+Soy Alexandra, y te escribo porque hace tiempo que no abres ninguno de nues=
+tros emails... Y eso me preocupa.
+
+No porque afecte nuestras m=C3=A9tricas, sino porque significa que probable=
+mente no estamos cumpliendo nuestra promesa contigo.
+
+Cuando te suscribiste a nuestra lista, te prometimos contenido aut=C3=A9nti=
+co y =C3=BAtil para emprendedores.=20
+
+Si no est=C3=A1s abriendo nuestros emails entiendo que es porque:
+
+=E2=80=A2 Ya no te interesa el emprendimiento (lo entiendo)=20
+=E2=80=A2 Nuestro contenido no te aporta valor (nuestra responsabilidad)=20
+=E2=80=A2 O simplemente est=C3=A1s saturado de emails (pasa a todos)
+
+**Sea cual sea la raz=C3=B3n, me encantar=C3=ADa saberlo.**
+Porque en 72 horas vamos a limpiar nuestra lista y eliminar a todos los sus=
+criptores que no han mostrado inter=C3=A9s en las =C3=BAltimas semanas.
+
+**Si quieres seguir recibiendo nuestras comunicaciones con todo lo nuevo qu=
+e estamos creando en Amplify, simplemente haz clic abajo**
+**[S=C3=8D, QUIERO SEGUIR EN AMPLIFY MEDIA]** https://influencemedia.info/r=
+eactivacion-lista/
+
+Si no haces clic, entender=C3=A9 que prefieres que no te escribamos m=C3=A1=
+s. Sin resentimientos.
+
+Pero si hay algo que podamos mejorar, me encantar=C3=ADa saberlo. Simplemen=
+te responde a este email y d=C3=ADmelo directamente, gracias!
+
+Un saludo,
+_________________
+
+Enviado a: productoraear@gmail.com
+
+Cancelar suscripci=C3=B3n:
+http://amplifymedia.rebelcontact.com/proc.php?c=3D4023&m=3D4519&s=3Dd28c818=
+9815e609d9bbb55165aefad12&d=3D585468&v=3D2&nl=3D281&act=3Dunsub
+
+Velocity Media, Cornwall Building 45K51 Newhall Street Birmingham , Reino U=
+nido, B3 3 QR, Reino Unido
+------=_Part_6039705_294045485.1770935337751
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+<meta http-equiv=3D"Content-Language" content=3D"es-es">
+<meta name=3D"format-detection" content=3D"telephone=3Dno">
+<meta name=3D"format-detection" content=3D"date=3Dno">
+<meta name=3D"format-detection" content=3D"address=3Dno">
+<meta name=3D"format-detection" content=3D"email=3Dno">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, minimal-ui, initia=
+l-scale=3D1.0, maximum-scale=3D1.0, user-scalable=3D0;">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<style data-ac-keep=3D"true"> .ExternalClass { width: 100%; background: inh=
+erit; background-color: inherit; } .ExternalClass, .ExternalClass p, .Exter=
+nalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {=
+ line-height: 100%; } .ExternalClass p, .ExternalClass ul, .ExternalClass o=
+l { Margin: 0; } .undoreset div p, .undoreset p { margin-bottom: 20px; } di=
+v[class^=3D"aolmail_divbody"] { overflow: auto; } [owa] #ac-footer { paddin=
+g: 20px 0px !important; background: inherit; background-color: inherit; } a=
+[x-apple-data-detectors] { color: inherit !important; text-decoration: none=
+ !important; font-size: inherit !important; font-family: inherit !important=
+; font-weight: inherit !important; line-height: inherit !important; } @-ms-=
+viewport { width: device-width; } </style>
+<style data-ac-keep=3D"true">
+@media only screen and (max-width: 600px) { /*-----------------------------=
+--------------------------------------------*\ Abandoned Cart widget \*----=
+--------------------------------------------------------------------*/ .td_=
+abandoned-cart img {display: block;padding-right: 0 !important;padding-bott=
+om: 0 !important;width: 100% !important;max-width: 100% !important;height: =
+auto !important;} body { padding: 0!important; font-size:1em!important; } *=
+ { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing:=
+ border-box; } *[class].divbody {-webkit-text-size-adjust:none !important;}=
+ *[class].td_picture img {width:auto !important;} *[class].td_text { line-h=
+eight: 110%; } *[class].td_button { width: auto; } /* Collapse all block el=
+ements */ :not(.body) table { display: block!important; float:none!importan=
+t; border-collapse:collapse !important; width:100% !important; min-width:10=
+0% !important; clear:both!important; } :not(.body) thead, :not(.body) tbody=
+, :not(.body) tr { display:block!important; float:none!important; width:100=
+% !important; } :not(.body) th, :not(.body) td, :not(.body) p { display:blo=
+ck!important; float:none!important; width:100% !important; clear:both!impor=
+tant; } /* Remove browser default styling for elements */ ul, ol { margin-l=
+eft: 20px; margin-bottom: 10px; margin-top: 10px; -webkit-margin-before: 0;=
+ -webkit-margin-after: 0; -webkit-padding-start: 0; } /* Set default height=
+ for spacer once collapse */ *[class].spacer { height: auto!important; } a[=
+href^=3Ddate]{ color:inherit !important; text-decoration:none !important;} =
+a[href^=3Dtelephone]{ color:inherit !important; text-decoration:none !impor=
+tant;} a[href^=3Daddress]{ color:inherit !important; text-decoration:none !=
+important;} a[href^=3Demail]{ color:inherit !important; text-decoration:non=
+e !important;} /* Default table cell height */ /*--------------------------=
+-----------------------------------------------*\ Product Widget \*--------=
+-----------------------------------------------------------------*/ .td_pro=
+duct div, .td_product .products-display { float: none !important; display: =
+block !important; width: 100% !important; Margin-bottom: 20px !important; }=
+ .td_product img { width: 100% !important; max-width: 100% !important; } /*=
+ Default social icons */ *[class].ac-social-icon-16 {width:16px !important;=
+ height:16px !important;} *[class].ac-social-icon-24 {width:24px !important=
+; height:24px !important;} *[class].ac-social-icon-28 {width:28px !importan=
+t; height:28px !important;} *[class].__ac_social_icons { margin-right: 0px =
+!important; } }
+</style>
+<style data-ac-keep=3D"true"> @media only screen and (max-width: 320px) { #=
+layout-row36864 { max-height: 0px!important; font-size: 0px!important; disp=
+lay: none!important; visibility: hidden!important; } #layout-row36865 img {=
+ width: 100% !important; height: auto !important; max-width: 320px !importa=
+nt; } div.divbody { padding: 20px !important; } table, tbody, td, .divbody =
+{ display: table !important; width: 100% !important; max-width: 100% !impor=
+tant; } .td_rss .rss-item img.iphone_large_image { width: auto !important; =
+} u + .body { display: table !important; width: 100vw !important; min-width=
+: 100vw !important; } u + .body table { display: table !important; width: 1=
+00% !important; min-width: 100% !important; } u + .body td { display: block=
+ !important; width: 100% !important; min-width: 100% !important; } u + .bod=
+y img { display: inline-block !important; margin: auto !important; width: a=
+uto !important; vertical-align: bottom !important; } u + .body center { dis=
+play: block !important; margin: auto !important; width: 100% !important; mi=
+n-width: 100% !important; text-align: center !important; } u + .body table.=
+_ac_social_table, u + .body table._ac_social_table td, u + .body table._ac_=
+social_table div, u + .body table._ac_social_table a { display: inline-bloc=
+k !important; margin: auto !important; width: auto !important; min-width: a=
+uto !important; text-align: center !important; } u + .body table._ac_social=
+_table img { display: inline-block !important; margin: auto !important; wid=
+th: 32px !important; min-width: 32px !important; max-width: 32px !important=
+; }
+}
+@media only screen and (max-width: 375px) { #layout-row36864 { max-height: =
+0px!important; font-size: 0px!important; display: none!important; visibilit=
+y: hidden!important; } #layout-row36865 img { width: 100% !important; heigh=
+t: auto !important; max-width: 375px !important; } div.divbody { padding: 2=
+0px !important; } table, tbody, td, .divbody { display: table !important; w=
+idth: 100% !important; max-width: 100% !important; } .td_rss .rss-item img.=
+iphone_large_image { width: auto !important; } u + .body { display: table !=
+important; width: 100vw !important; min-width: 100vw !important; } u + .bod=
+y table { display: table !important; width: 100% !important; min-width: 100=
+% !important; } u + .body td { display: block !important; width: 100% !impo=
+rtant; min-width: 100% !important; } u + .body img { display: inline-block =
+!important; margin: auto !important; width: auto !important; vertical-align=
+: bottom !important; } u + .body center { display: block !important; margin=
+: auto !important; width: 100% !important; min-width: 100% !important; text=
+-align: center !important; } u + .body table._ac_social_table, u + .body ta=
+ble._ac_social_table td, u + .body table._ac_social_table div, u + .body ta=
+ble._ac_social_table a { display: inline-block !important; margin: auto !im=
+portant; width: auto !important; min-width: auto !important; text-align: ce=
+nter !important; } u + .body table._ac_social_table img { display: inline-b=
+lock !important; margin: auto !important; width: 32px !important; min-width=
+: 32px !important; max-width: 32px !important; }
+}
+@media only screen and (max-width: 414px) { #layout-row36864 { max-height: =
+0px!important; font-size: 0px!important; display: none!important; visibilit=
+y: hidden!important; } #layout-row36865 img { width: 100% !important; heigh=
+t: auto !important; max-width: 414px !important; } div.divbody { padding: 2=
+0px !important; } table, tbody, td, .divbody { display: table !important; w=
+idth: 100% !important; max-width: 100% !important; } .td_rss .rss-item img.=
+iphone_large_image { width: auto !important; } u + .body { display: table !=
+important; width: 100vw !important; min-width: 100vw !important; } u + .bod=
+y table { display: table !important; width: 100% !important; min-width: 100=
+% !important; } u + .body td { display: block !important; width: 100% !impo=
+rtant; min-width: 100% !important; } u + .body img { display: inline-block =
+!important; margin: auto !important; width: auto !important; vertical-align=
+: bottom !important; } u + .body center { display: block !important; margin=
+: auto !important; width: 100% !important; min-width: 100% !important; text=
+-align: center !important; } u + .body table._ac_social_table, u + .body ta=
+ble._ac_social_table td, u + .body table._ac_social_table div, u + .body ta=
+ble._ac_social_table a { display: inline-block !important; margin: auto !im=
+portant; width: auto !important; min-width: auto !important; text-align: ce=
+nter !important; } u + .body table._ac_social_table img { display: inline-b=
+lock !important; margin: auto !important; width: 32px !important; min-width=
+: 32px !important; max-width: 32px !important; }
+}
+@media only screen and (max-width: 667px) { #layout-row36864 { max-height: =
+0px!important; font-size: 0px!important; display: none!important; visibilit=
+y: hidden!important; } #layout-row36865 img { width: 100% !important; heigh=
+t: auto !important; max-width: 667px !important; } div.divbody { padding: 2=
+0px !important; } table, tbody, td, .divbody { display: table !important; w=
+idth: 100% !important; max-width: 100% !important; } .td_rss .rss-item img.=
+iphone_large_image { width: auto !important; } u + .body { display: table !=
+important; width: 100vw !important; min-width: 100vw !important; } u + .bod=
+y table { display: table !important; width: 100% !important; min-width: 100=
+% !important; } u + .body td { display: block !important; width: 100% !impo=
+rtant; min-width: 100% !important; } u + .body img { display: inline-block =
+!important; margin: auto !important; width: auto !important; vertical-align=
+: bottom !important; } u + .body center { display: block !important; margin=
+: auto !important; width: 100% !important; min-width: 100% !important; text=
+-align: center !important; } u + .body table._ac_social_table, u + .body ta=
+ble._ac_social_table td, u + .body table._ac_social_table div, u + .body ta=
+ble._ac_social_table a { display: inline-block !important; margin: auto !im=
+portant; width: auto !important; min-width: auto !important; text-align: ce=
+nter !important; } u + .body table._ac_social_table img { display: inline-b=
+lock !important; margin: auto !important; width: 32px !important; min-width=
+: 32px !important; max-width: 32px !important; }
+} </style><!--[if !mso]><!-- webfonts --> <!--<![endif]--> <!--[if lt mso 1=
+2]> <![endif]--> <!--[if gte mso 9]>
+<xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:Pixel=
+sPerInch> </o:OfficeDocumentSettings>
+</xml>
+<![endif]-->
+</head>
+<body id=3D"ac-designer" class=3D"body" style=3D"font-family: Arial; line-h=
+eight: 1.1; margin: 0px; background-color: #FFFFFF; width: 100%; text-align=
+: center;">
+<div class=3D"divbody" style=3D"margin: 0px; outline: none; padding: 0px; c=
+olor: #000000; font-family: arial; line-height: 1.1; width: 100%; backgroun=
+d-color: #FFFFFF; background: #FFFFFF; text-align: center;">
+<table class=3D"template-table" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"100%" align=3D"left" style=3D"-ms-text-size-adjust: auto; -=
+webkit-text-size-adjust: 100%; border-collapse: collapse; font-size: 14px; =
+min-width: auto; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-c=
+olor: #FFFFFF; background: #FFFFFF;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td align=3D"center" valign=3D"top" width=3D"100%" style=3D"mso-line-height=
+-rule: exactly;">
+<table class=3D"template-table" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" width=3D"650" bgcolor=3D"#FFFFFF" style=3D"-ms-text-size-adjust: aut=
+o; -webkit-text-size-adjust: 100%; border-collapse: collapse; font-size: 14=
+px; min-width: auto; mso-table-lspace: 0pt; mso-table-rspace: 0pt; max-widt=
+h: 650px;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout_table_f0f7aacd1af2c0c0b485e7998997283862f39ff4" valign=3D"=
+top" align=3D"center" width=3D"650" style=3D"mso-line-height-rule: exactly;=
+">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" class=3D"layout lay=
+out-table root-table" width=3D"650" style=3D"-ms-text-size-adjust: auto; -w=
+ebkit-text-size-adjust: 100%; border-collapse: collapse; font-size: 14px; m=
+in-width: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout-row-margin36864" valign=3D"top" style=3D"mso-line-height-r=
+ule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr id=3D"layout-row36864" class=3D"layout layout-row widget _widget_spacer=
+ " style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout-row-padding36864" valign=3D"top" style=3D"mso-line-height-=
+rule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td valign=3D"top" height=3D"30" style=3D"mso-line-height-rule: exactly;">
+<div class=3D"spacer" style=3D"margin: 0; outline: none; padding: 0; height=
+: 30px;">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td class=3D"spacer-body" valign=3D"top" height=3D"30" width=3D"650" style=
+=3D"mso-line-height-rule: exactly;">&nbsp;</td>
+</tr>
+</table>
+</div></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+<tr style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout-row-margin36863" valign=3D"top" style=3D"mso-line-height-r=
+ule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr id=3D"layout-row36863" class=3D"layout layout-row widget _widget_spacer=
+ " style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout-row-padding36863" valign=3D"top" style=3D"mso-line-height-=
+rule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td valign=3D"top" height=3D"30" style=3D"mso-line-height-rule: exactly;">
+<div class=3D"spacer" style=3D"margin: 0; outline: none; padding: 0; height=
+: 30px;">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td class=3D"spacer-body" valign=3D"top" height=3D"30" width=3D"650" style=
+=3D"mso-line-height-rule: exactly;">&nbsp;</td>
+</tr>
+</table>
+</div></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+<tr style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout-row-margin36862" valign=3D"top" style=3D"mso-line-height-r=
+ule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr id=3D"layout-row36862" class=3D"layout layout-row widget _widget_text "=
+ style=3D"mso-line-height-rule: exactly; margin: 0; padding: 0;">
+<td id=3D"layout-row-padding36862" valign=3D"top" style=3D"mso-line-height-=
+rule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td id=3D"text_div35949" class=3D"td_text td_block" valign=3D"top" align=3D=
+"left" width=3D"650" style=3D"line-height: 140%; mso-line-height-rule: exac=
+tly; margin: 0; outline: none; padding: 0; color: inherit; font-size: 12px;=
+ font-weight: inherit; line-height: 1.4; text-decoration: inherit; font-fam=
+ily: arial;">
+<div style=3D"line-height: 140%; margin: 0; outline: none; padding: 0; colo=
+r: inherit; font-size: inherit; font-weight: inherit; line-height: 1.4; tex=
+t-decoration: inherit; mso-line-height-rule: exactly;" class=3D"" data-line=
+-height=3D"1.4">
+<div style=3D"margin: 0; outline: none; padding: 0; color: inherit; font-si=
+ze: inherit; font-weight: inherit; line-height: inherit; text-decoration: i=
+nherit;" class=3D"">
+<div style=3D"margin: 0; outline: none; padding: 0; color: inherit; font-si=
+ze: inherit; font-weight: inherit; line-height: inherit; text-decoration: i=
+nherit;" class=3D"">
+<div class=3D"" style=3D"margin: 0; outline: none; padding: 0; color: inher=
+it; font-size: inherit; font-weight: inherit; line-height: inherit; text-de=
+coration: inherit;">
+<p class=3D"" style=3D"margin: 0; outline: none; padding: 0; color: inherit=
+; font-size: 17px; font-weight: inherit; line-height: inherit; text-decorat=
+ion: inherit;"></p>
+<div style=3D"margin: 0 0px 0 0px; outline: none; padding: 0; color: inheri=
+t; font-size: inherit; font-weight: inherit; line-height: inherit; text-dec=
+oration: inherit; --tw-shadow: 0 0 transparent; --tw-ring-inset: var(--tw-e=
+mpty, ); --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ri=
+ng-color: rgba(59,130,246,0.5); --tw-ring-offset-shadow: 0 0 transparent; -=
+-tw-ring-shadow: 0 0 transparent; text-align: center;" class=3D"">
+<div style=3D"margin: 0 0px 0 0px; outline: none; padding: 0; color: inheri=
+t; font-size: inherit; font-weight: inherit; line-height: inherit; text-dec=
+oration: inherit; --tw-shadow: 0 0 transparent; --tw-ring-inset: var(--tw-e=
+mpty, ); --tw-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ri=
+ng-color: rgba(59,130,246,0.5); --tw-ring-offset-shadow: 0 0 transparent; -=
+-tw-ring-shadow: 0 0 transparent; text-align: left;" class=3D"">
+<div style=3D"margin: 0; outline: none; padding: 0; color: inherit; font-si=
+ze: 17px; font-weight: inherit; line-height: inherit; text-decoration: inhe=
+rit; text-align: left;" class=3D""></div>
+<div style=3D"margin: 0; outline: none; padding: 0; color: #000000; font-si=
+ze: 17px; font-weight: inherit; line-height: inherit; text-decoration: inhe=
+rit; --tw-shadow: 0 0 transparent; --tw-ring-inset: var(--tw-empty, ); --tw=
+-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb=
+a(59,130,246,0.5); --tw-ring-offset-shadow: 0 0 transparent; --tw-ring-shad=
+ow: 0 0 transparent;" class=3D"">
+<span style=3D"color: inherit; font-size: inherit; font-weight: inherit; li=
+ne-height: inherit; text-decoration: inherit; font-family: arial, helvetica=
+, sans;" class=3D"">Hola edwin,<br><br><span style=3D"color: inherit; font-=
+size: inherit; font-weight: inherit; line-height: inherit; text-decoration:=
+ inherit; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-sp=
+ace: auto;">Soy Alexandra, y te escribo porque hace tiempo que no abres nin=
+guno de nuestros emails... </span><span style=3D"color: inherit; font-size:=
+ inherit; font-weight: inherit; line-height: inherit; text-decoration: inhe=
+rit; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space: =
+auto;">Y eso me preocupa.<br></span><br><span style=3D"color: inherit; font=
+-size: inherit; font-weight: inherit; line-height: inherit; text-decoration=
+: inherit; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-s=
+pace: auto;">No porque afecte nuestras m=C3=A9tricas, sino porque significa=
+ que probablemente no estamos cumpliendo nuestra promesa contigo.<br></span=
+><br><span style=3D"color: inherit; font-size: inherit; font-weight: inheri=
+t; line-height: inherit; text-decoration: inherit; mso-margin-top-alt: auto=
+; mso-margin-bottom-alt: auto; mso-add-space: auto;">Cuando te suscribiste =
+a nuestra lista, te prometimos contenido aut=C3=A9ntico y =C3=BAtil para em=
+prendedores. <br><br>
+Si no est=C3=A1s abriendo nuestros emails entiendo que es porque:<br></span=
+><br><span style=3D"color: inherit; font-size: inherit; font-weight: inheri=
+t; line-height: inherit; text-decoration: inherit; mso-margin-top-alt: auto=
+; mso-margin-bottom-alt: auto; mso-add-space: auto;">=E2=80=A2 Ya no te int=
+eresa el emprendimiento (lo entiendo) <br>
+=E2=80=A2 Nuestro contenido no te aporta valor (nuestra responsabilidad) <b=
+r>
+=E2=80=A2 O simplemente est=C3=A1s saturado de emails (pasa a todos)<br></s=
+pan><br><b style=3D"margin: 0; outline: none; padding: 0; mso-margin-top-al=
+t: auto; mso-margin-bottom-alt: auto; mso-add-space: auto;">Sea cual sea la=
+ raz=C3=B3n, me encantar=C3=ADa saberlo.<br></b><br><span style=3D"color: i=
+nherit; font-size: inherit; font-weight: inherit; line-height: inherit; tex=
+t-decoration: inherit; mso-margin-top-alt: auto; mso-margin-bottom-alt: aut=
+o; mso-add-space: auto;">Porque en 72 horas vamos a limpiar nuestra lista y=
+ eliminar a todos los suscriptores que no han mostrado inter=C3=A9s en las =
+=C3=BAltimas semanas.<br></span><br><b style=3D"margin: 0; outline: none; p=
+adding: 0; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-s=
+pace: auto;">Si quieres seguir recibiendo nuestras comunicaciones con todo =
+lo nuevo que estamos creando en Amplify, simplemente haz clic abajo<br></b>=
+<br><a href=3D"https://amplifymedia.rebelcontact.com/lt.php?x=3D4lZy~GE5I3j=
+M7p3~0NLGVRVx1HVUkQEgv-o0XHbIUqXPD8B6yky7xeVz2XAmkEA0_ueglPPHIXKc95B-yNQYUe=
+hs5X2kkNDy" data-ac-default-color=3D"1" style=3D"margin: 0; outline: none; =
+padding: 0; color: #045FB4; text-decoration: underline;"><b style=3D"margin=
+: 0; outline: none; padding: 0; color: ;">[S=C3=8D, QUIERO SEGUIR EN AMPLIF=
+Y MEDIA]</b></a></span>
+</div>
+<div style=3D"margin: 0; outline: none; padding: 0; color: #000000; font-si=
+ze: 17px; font-weight: inherit; line-height: inherit; text-decoration: inhe=
+rit; --tw-shadow: 0 0 transparent; --tw-ring-inset: var(--tw-empty, ); --tw=
+-ring-offset-width: 0px; --tw-ring-offset-color: #fff; --tw-ring-color: rgb=
+a(59,130,246,0.5); --tw-ring-offset-shadow: 0 0 transparent; --tw-ring-shad=
+ow: 0 0 transparent;" class=3D"">
+<span style=3D"color: inherit; font-size: inherit; font-weight: inherit; li=
+ne-height: inherit; text-decoration: inherit; font-family: arial, helvetica=
+, sans;" class=3D""><br style=3D"font-weight: 700;"><span style=3D"color: i=
+nherit; font-size: inherit; font-weight: inherit; line-height: inherit; tex=
+t-decoration: inherit; mso-margin-top-alt: auto; mso-margin-bottom-alt: aut=
+o; mso-add-space: auto;">Si no haces clic, entender=C3=A9 que prefieres que=
+ no te escribamos m=C3=A1s. </span><span style=3D"color: inherit; font-size=
+: inherit; font-weight: inherit; line-height: inherit; text-decoration: inh=
+erit; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add-space:=
+ auto;">Sin resentimientos.<br></span><br><span style=3D"color: inherit; fo=
+nt-size: inherit; font-weight: inherit; line-height: inherit; text-decorati=
+on: inherit; mso-margin-top-alt: auto; mso-margin-bottom-alt: auto; mso-add=
+-space: auto;">Pero si hay algo que podamos mejorar, me encantar=C3=ADa sab=
+erlo. Simplemente responde a este email y d=C3=ADmelo directamente, gracias=
+!<br><br><br>
+Un saludo,<br></span></span>
+<br class=3D"">
+</div>
+</div>
+</div>
+<p class=3D"" style=3D"margin: 0; outline: none; padding: 0; color: inherit=
+; font-size: 17px; font-weight: inherit; line-height: inherit; text-decorat=
+ion: inherit;"></p>
+<p class=3D"" style=3D"margin: 0; outline: none; padding: 0; color: inherit=
+; font-size: 17px; font-weight: inherit; line-height: inherit; text-decorat=
+ion: inherit;"></p>
+</div>
+</div>
+</div>
+</div><!--[if (gte mso 12)&(lte mso 15) ]>
+<style data-ac-keep=3D"true" data-ac-inline=3D"false"> #text_div35949, #tex=
+t_div35949 div { line-height: 140% !important; };
+</style>
+<![endif]--></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+<tr style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout-row-margin36865" valign=3D"top" style=3D"mso-line-height-r=
+ule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr id=3D"layout-row36865" class=3D"layout layout-row widget _widget_pictur=
+e " align=3D"left" style=3D"mso-line-height-rule: exactly;">
+<td id=3D"layout-row-padding36865" valign=3D"top" style=3D"mso-line-height-=
+rule: exactly;">
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"-ms-text-size-adjust: auto; -webkit-text-size-adjust: 100%; border-col=
+lapse: collapse; font-size: 14px; min-width: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt;">
+<tr style=3D"mso-line-height-rule: exactly;">
+<td class=3D"image-td" align=3D"left" valign=3D"top" width=3D"650" style=3D=
+"mso-line-height-rule: exactly;"><img src=3D"https://content.app-us1.com/cd=
+n-cgi/image/fit=3Dscale-down,format=3Dauto,onerror=3Dredirect,width=3D650,d=
+pr=3D2/wryEz/2025/10/15/5ca894ce-f0ce-4db4-88f5-bdb138721601.jpeg?r=3D99365=
+7680" width=3D"650" style=3D"display: block; border: none; outline: none; w=
+idth: 650px; opacity: 1; max-width: 100%;"></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table></td>
+</tr>
+</table>
+</div>
+<br>
+<div id=3D"ac-footer" style=3D"clear:both;background-color:inherit;backgrou=
+nd:inherit;min-width:100%;mso-table-lspace:0pt;mso-table-rspace:0pt;padding=
+:20px;color:#000000;font-size:11px;font-family:arial,helvetica,sans-serif;l=
+ine-height:140%;line-height:1.4;text-align:center;box-sizing:border-box;">
+<center>
+Enviado a:<span style=3D"font-size:11px;font-family:arial,helvetica,sans-se=
+rif;font-weight:normal;text-decoration:none;outline:none;">productoraear@gm=
+ail.com</span>
+<br>
+<br><a href=3D"http://amplifymedia.rebelcontact.com/proc.php?c=3D4023&m=3D4=
+519&s=3Dd28c8189815e609d9bbb55165aefad12&d=3D585468&v=3D2&nl=3D281&act=3Dun=
+sub" style=3D"font-size:11px;font-family:arial,helvetica,sans-serif;font-we=
+ight:bold;text-decoration:underline;"><span style=3D"font-weight:bold;text-=
+decoration:underline;">Cancelar suscripci=C3=B3n</span></a>
+<br>
+<br>
+Velocity Media, Cornwall Building 45K51 Newhall Street Birmingham , Reino U=
+nido, B3 3 QR, Reino Unido
+</center>
+</div>
+<br>
+<img src=3D"https://amplifymedia.rebelcontact.com/lt.php?x=3D4TZi05TDI3QKHh=
+Vp__1Nguhs3HUoiNQjk-U4k5o3U6Ke653_zQy8hhGf1X8RvETzleozYXl2Z-GbT8jt~xu8jlGoQ=
+HAliNhgy~EiXXjE" border=3D"0" width=3D"1" height=3D"1" style=3D"display:blo=
+ck;width:1px!important;min-width:1px!important;max-width:1px!important;heig=
+ht:1px!important;border:0;overflow:hidden;"/>
+</body>
+</html>
+------=_Part_6039705_294045485.1770935337751--

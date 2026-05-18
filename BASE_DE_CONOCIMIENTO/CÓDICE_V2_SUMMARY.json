@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "name": "CÓDICE EAR OS GOLD",
+  "last_sync": "2026-05-12T10:55:00Z",
+  "status": {
+    "NÚCLEO ACTIVO": [
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_118.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_128.md",
+      "119_HISTORIA_Y_VISION.md"
+    ],
+    "HISTORIA RESIDUAL": [
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_1.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_10.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_12.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_24.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_31.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_54.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_70.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_86.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_91.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_106.md"
+    ],
+    "TRANSICIÓN": [
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_107.md",
+      "EAR_OS_MAESTRO_PROMPTS_PARTE_117.md"
+    ]
+  },
+  "architecture": "FSD (Feature-Sliced Design) + S-Class Sovereign Modules",
+  "tech_stack": {
+    "core": "Next.js 14.2 (SSR/ISR)",
+    "database": "Supabase (PostgreSQL + pgvector)",
+    "auth": "Sovereign Auth (Supabase + RBAC Shield)",
+    "finance": "Stripe Connect + CommissionLedger (Leviathan Sync)",
+    "intelligence": "Astra Neural Brain (Gemini 1.5 Pro + RAG)"
+  }
+}

@@ -15,10 +15,12 @@ export async function generateStaticParams() {
 }
 
 type Props = {
-  params: { nicho: string }
+  params: Promise<{ nicho: string }>
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const nicho = resolvedParams?.nicho || '';
   const titles: Record<string, string> = {
     'musicoterapia-alzheimer': 'Musicoterapia en Alzheimer | Evidencia Clínica VIMUME',
     'terapia-ocupacional': 'Terapia Ocupacional y Música | Intervención VIMUME',
@@ -27,13 +29,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 
   return {
-    title: titles[params.nicho] || 'Conocimiento VIMUME | EAR OS',
-    description: `Biblioteca de conocimiento clínico e institucional sobre ${params.nicho.replace('-', ' ')}.`,
+    title: titles[nicho] || 'Conocimiento VIMUME | EAR OS',
+    description: `Biblioteca de conocimiento clínico e institucional sobre ${nicho.replace(/-/g, ' ')}.`,
   };
 }
 
-export default function VimumeNichePage({ params }: Props) {
-  const { nicho } = params;
+export default async function VimumeNichePage({ params }: Props) {
+  const resolvedParams = await params;
+  const nicho = resolvedParams?.nicho || 'musicoterapia-alzheimer';
   
   const contentMap: Record<string, any> = {
     'musicoterapia-alzheimer': {

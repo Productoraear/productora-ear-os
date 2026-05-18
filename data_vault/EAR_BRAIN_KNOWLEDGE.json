@@ -1,0 +1,591 @@
+{
+  "last_update": "",
+  "documents": [
+    {
+      "name": "Análisis Competencia Alquiler Ferias IFEMA.docx",
+      "type": "docx",
+      "path": "INPUT\\Análisis Competencia Alquiler Ferias IFEMA.docx",
+      "content_summary": "[DOCX detected but python-docx not installed]"
+    },
+    {
+      "name": "codigo desde ai studio 04 02 2026.txt",
+      "type": "txt",
+      "path": "INPUT\\codigo desde ai studio 04 02 2026.txt",
+      "content_summary": "import React from 'react';\nimport { Award, Users, Palette, Shield, Download, Key, MessageSquare, Compass, Layout, Zap, Anchor, Layers, Cpu, Brain } from 'lucide-react';\n\nconst About: React.FC = () => {\n  return (\n    <div className=\"pt-20 bg-black min-h-screen\">\n      {/* Header: The Philosophy */}\n      <div className=\"relative py-24 border-b border-white/10 overflow-hidden\">\n        <div className=\"absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-gray-900 via-black to-black\"></div>\n        <div className=\"max-w-4xl mx-auto px-4 relative z-10 text-center\">\n          <span className=\"text-ear-gold font-body font-bold tracking-[0.3em] uppercase text-xs mb-6 block\">Nuestro Linchpin</span>\n          <h1 className=\"text-4xl md:text-6xl font-display font-black text-white mb-8 leading-tight\">\n            NO ES TÉCNICA.<br/> ES <span className=\"text-ear-gold\">SINCRONICIDAD EMOCIONAL</span>.\n          </h1>\n          <p className=\"text-xl text-gray-300 font-body leading-relaxed font-light\">\n            Nacimos de la resiliencia. Nuestro fundador, Edwin Agudelo, forjó su visión trabajando en aluminio, motos y conduciendo su propio taxi, siempre respaldado por una madre que veía en él a un \"echao pa'lante\". Esa misma garra es la que inyectamos en cada sistema de impacto que diseñamos.\n          </p>\n        </div>\n      </div>\n\n      {/* Content: The Method */}\n      <div className=\"max-w-7xl mx-auto px-4 py-20\">\n        \n        {/* THE METHODOLOGY GRID */}\n        <div className=\"grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-32\">\n          <div className=\"space-y-8\">\n            <div className=\"border-l-2 border-ear-gold pl-6\">\n               <h3 className=\"text-2xl font-display font-bold text-white mb-2\">El Valor del Criterio</h3>\n               <p className=\"text-gray-400 text-lg leading-relaxed\">\n                 La mayoría de productoras añaden ruido. Más pantallas, más vatios, más confusión. Nosotros aplicamos la <strong>Navaja de Ockham</strong>: la solución más simple y elegante suele ser la correcta. Eliminamos lo que no aporta valor para que el mensaje brille.\n               </p>\n            </div>\n            \n            <div className=\"border-l-2 border-white/20 pl-6 group hover:border-ear-gold transition-colors\">\n               <h3 className=\"text-2xl font-display font-bold text-white mb-2 group-hover:text-ear-gold transition-colors\">Trust Architecture™</h3>\n               <p className=\"text-gray-400 text-lg leading-relaxed\">\n                 No construimos escenarios; construimos <strong>Arquitectura de Confianza</strong>. Cada cable, cada foco y cada minuto del guion está diseñado para eliminar la incertidumbre y proyectar autoridad absoluta, heredada de décadas de trabajo de campo real.\n               </p>\n            </div>\n          </div>\n          \n          <div className=\"relative\">\n             <div className=\"aspect-square rounded-full border border-white/10 relative flex items-center justify-center p-8 animate-spin-slow-reverse\">\n                <div className=\"absolute inset-0 border border-dashed border-ear-gold/30 rounded-full\"></div>\n                <div className=\"aspect-square w-2/3 bg-gradient-to-br from-ear-purple/20 to-black rounded-full border border-white/10 flex flex-col items-center justify-center text-center p-6 shadow-2xl backdrop-blur-md\">\n                   <Anchor className=\"text-ear-gold mb-4\" size={48} />\n                   <span className=\"text-white font-display font-bold text-xl uppercase tracking-tighter\">Impacto Real</span>\n                   <p className=\"text-xs text-gray-500 mt-2 uppercase tracking-widest\">Garantía del Fundador</p>\n                </div>\n             </div>\n          </div>\n        </div>\n\n        {/* --- THE 3 SYSTEMS --- */}\n        <div className=\"mb-32\">\n           <div className=\"text-center mb-16\">\n              <h2 className=\"text-3xl font-display font-bold text-white\">NUESTROS SISTEMAS DE EJECUCIÓN</h2>\n              <p className=\"text-gray-400 mt-4\">Ingeniería propietaria para resultados predecibles.</p>\n           </div>\n\n           <div className=\"grid grid-cols-1 md:grid-cols-3 gap-8\">\n              {/* System 1 */}\n              <div className=\"bg-[#0a0a0a] border border-white/10 p-8 rounded-2xl hover:border-ear-gold/50 transition-all duration-500 group\">\n                 <div className=\"w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-6 group-hover:bg-ear-gold group-hover:text-black transition-colors\">\n                    <Brain size={24} />\n                 </div>\n                 <h3 className=\"text-xl text-white font-display font-bold mb-4\">Ingeniería de Contexto</h3>\n                 <p className=\"text-gray-400 text-sm leading-relaxed\">\n                    Antes de mover un equipo, diseñamos el contexto. ¿Qué debe sentir la audiencia al entrar? Creamos fosos estéticos que hacen tu marca incomparable.\n                 </p>\n              </div>\n\n              {/* Syste"
+    },
+    {
+      "name": "ok MVP de Productora Ear Bodas .md",
+      "type": "md",
+      "path": "INPUT\\ok MVP de Productora Ear Bodas .md",
+      "content_summary": "Paso 1 — Decisiones de enfoque (MVP)  \nSegmento inicial: ¿Bodas (inspirado en Bodas.net), músicos en vivo (Fander), o “artistas en general”?  \nGeografía y moneda inicial: ¿Qué país/ciudad lanzar primero (afecta RGPD, IVA, KYC, medios de pago, idioma)?  \nModelo de dirección:  \na) Solicitud de presupuesto (mercado)  \nb) Reserva instantánea (tipo Uber)  \nc) Híbrido (catálogo con instantáneo para ciertos servicios).  \nPolítica económica: % de comisión, adelanto en escrow y reglas de cancelación (escalones de tiempo).  \nSLA de respuesta: tiempo máximo para aceptar/contraofertar antes de expirar una solicitud.  \nPregunta guía: ¿Cuál es tu combinación preferida de (segmento, país/moneda, modelo de contratación)? Ejemplo: “Músicos para bodas en España (EUR), híbrido con 30% de adelanto y 15% de comisión”. CUAL SERÍA PARA LA PRODUCTORA EAR LA MEJOR INSTRUCCION  PARA UN PRD?\n\nAhora tengo suficiente información para crear una respuesta completa y detallada. Permíteme elaborar un análisis profundo sobre las mejores instrucciones para un PRD enfocado en el MVP de Productora Ear.\n\n# **Instrucciones Óptimas para el PRD del MVP de Productora Ear Bodas**\n\nBasándome en el contexto de Productora Ear Bodas en el mercado español de eventos nupciales y contratación de músicos en vivo, y considerando las mejores prácticas de plataformas consolidadas como Bodas.net, Fander, y marketplaces de servicios similares, la instrucción óptima para tu PRD sería:\n\n**\"Músicos especializados en bodas (enfoque inicial: mariachis y música en vivo) para el mercado español (Toledo-Madrid), modelo híbrido con reserva de presupuesto prioritaria y opción instantánea para servicios estandarizados, adelanto del 30% en escrow, comisión del 12-15%, SLA de respuesta de 24-48 horas\"**\n\n## **Justificación Estratégica del Enfoque Recomendado**\n\n## **Segmento Inicial: Músicos para Bodas (Mariachis como Nicho Diferenciador)**\n\n**Opción recomendada**: Músicos especializados en bodas con énfasis en mariachis y música en vivo tradicional\n\n**Razones estratégicas**:\n\n**Ventaja competitiva única**: Tu experiencia actual con Productora Ear Bodas y tu especialización en mariachis te otorga un conocimiento profundo del sector que plataformas generalistas como Bodas.net no poseen. Los mariachis representan un nicho con alta demanda pero baja penetración digital en España, especialmente en comunidades con tradición latinoamericana.[20minutos+1](https://www.20minutos.es/lainformacion/empresas/lluvia-millones-para-antiguos-socios-bodas-net-tras-venta-permira-5321414/)​\n\n**Mercado objetivo definido**: El sector nupcial español mueve aproximadamente 25 millones de euros anuales solo en portales especializados, y el 45% de las parejas busca proveedores en webs especializadas. Focalizarte en músicos para bodas te permite capturar un segmento específico con alto poder adquisitivo y necesidades recurrentes.[bodas+1](https://www.bodas.net/articulos/sobrevivir-organizacion-boda-informe-sector-nupcial--c9224)​\n\n**Escalabilidad gradual**: Comenzar con músicos para bodas te permite posteriormente expandirte a otros artistas (DJ, bandas de versiones, música clásica) y otros tipos de eventos (comuniones, eventos corporativos, fiestas privadas), siguiendo un modelo de crecimiento concéntrico validado por plataformas como Fander y Supermusica.[fander+1](https://fander.es/)​\n\n**Menor complejidad inicial**: A diferencia de un marketplace de \"artistas en general\", enfocarte en un vertical específico reduce la complejidad operativa del MVP, facilita la adquisición de proveedores homogéneos y permite establecer estándares de calidad más claros.[neilpatel](https://neilpatel.com/es/blog/como-crear-un-marketplace-de-servicios/)​\n\n## **Geografía y Moneda: España integra / EUR**\n\n**Justificación del mercado inicial**:\n\n**Base operativa establecida**: Tu ubicación en Méntrida (Toledo) te posiciona estratégicamente en el centro de España, con acceso directo al mercado de Madrid (principal mercado nupcial español) y comunidades autónomas cercanas como Castilla-La Mancha y Castilla y León.[bodas](https://www.bodas.net/articulos/sobrevivir-organizacion-boda-informe-sector-nupcial--c9224)​ inicailmente aunque cubrimos todo el territorio.\n\n**Marco regulatorio conocido**: Operar en España desde el inicio simplifica significativamente los aspectos legales y fiscales del MVP:\n\n* **RGPD/LOPD**: Como marketplace español, debes cumplir con la Ley Orgánica 3/2018 de Protección de Datos, que se adapta al RGPD europeo. Esto implica obtener consentimientos explícitos, implementar medidas de seguridad, y potencialmente designar un Delegado de Protección de Datos si procesas datos sensibles a gran escala.[vosseler-abogados+2](https://www.vosseler-abogados.es/en/Data-protection-laws-in-Spain:-tips-for-complying-with-the-GDPR/)​\n\n* **IVA/Facturación**: El marco fiscal español es familiar para ti. Las comisiones de marketplace están sujetas al 21% de IVA en servicios digitales. Con la entrada en vigor del paquete ViDA "
+    },
+    {
+      "name": "urls de pantallas alquileres.txt",
+      "type": "txt",
+      "path": "INPUT\\urls de pantallas alquileres.txt",
+      "content_summary": "https://www.audiovisualesfader.com/alquiler-pantalla-led/\nhttps://www.googletagmanager.com/ns.html?id=GTM-W5XR2XP%22\nhttps://www.audiovisualesfader.com/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquilar-equipos-de-sonido-en-madrid/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquilar-equipos-de-sonido-en-madrid/alquiler-altavoces/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquilar-equipos-de-sonido-en-madrid/microfonos/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquilar-equipos-de-sonido-en-madrid/alquiler-traduccion-simultanea/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-iluminacion-eventos/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-iluminacion-eventos/alquiler-cabezas-moviles/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-iluminacion-eventos/alquilar-paneles-iluminacion-led/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-iluminacion-eventos/alquiler-iluminacion-led-rgb/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-iluminacion-eventos/iluminacion-laser/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-iluminacion-eventos/alquiler-maquinas-humo/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-tv-monitor-led-madrid/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-tv-monitor-led-madrid/alquiler-monitores-98/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-tv-monitor-led-madrid/alquiler-monitores-85/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-tv-monitor-led-madrid/alquiler-monitores-75/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-tv-monitor-led-madrid/alquiler-monitores-65/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-tv-monitor-led-madrid/alquiler-monitores-60-o-menos/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-tv-monitor-led-madrid/alquiler-pantallas-tactiles/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-proyector-madrid/\nhttps://audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-proyector-madrid/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-de-pantallas/pantallas-de-proyeccion-en-alquiler/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-proyector-madrid/alquilar-lentes-proyector-madrid/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-camaras-profesionales/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-camaras-profesionales/alquiler-camaras-ptz/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-camaras-profesionales/alquiler-blackmagic-ursa/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-equipos-informaticos/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-iluminacion-eventos/alquiler-hologramas/\nhttps://www.audiovisualesfader.com/alquiler-escenarios/\nhttps://www.audiovisualesfader.com/alquiler-escenarios/alquiler-tarima/\nhttps://www.audiovisualesfader.com/alquiler-material-audiovisual-madrid/alquiler-estructuras-truss/\nhttps://www.audiovisualesfader.com/alquiler-pantalla-led/pantalla-led-interior/\nhttps://www.audiovisualesfader.com/alquiler-pantalla-led/pantallas-led-exterior/\nhttps://www.audiovisualesfader.com/alquiler-pantalla-led/alquiler-pantalla-led-techo/\nhttps://www.audiovisualesfader.com/alquiler-pantalla-led/pantalla-led-suelo/\nhttps://www.audiovisualesfader.com/alquiler-pantalla-led/pantallas-led-curva-flexibles/\nhttps://www.audiovisualesfader.com/alquiler-pantalla-led/alquiler-de-totem-led/\nhttps://www.audiovisualesfader.com/alquiler-pantalla-led/pantallas-interactivas/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/\nhttps://www.audiovisualesfader.com/tipos-de-eventos-para-organizar/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/eventos-presenciales/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/evento-hibrido/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/eventos-online-streaming-en-madrid/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/eventos-deportivos/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/evento-corporativo/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/evento-corporativo/reuniones-empresa/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/evento-corporativo/presentacion-de-producto/\nhttps://www.audiovisualesfader.com/servicios-audiovisuales/organizador-de-congre"
+    },
+    {
+      "name": "urls desde bodas.net.txt",
+      "type": "txt",
+      "path": "INPUT\\urls desde bodas.net.txt",
+      "content_summary": "https://www.bodas.net/\nhttps://www.bodas.net/tools/Main\nhttps://www.bodas.net/tools/Checklist\nhttps://www.bodas.net/tools/Guests\nhttps://www.bodas.net/tools/Tables\nhttps://www.bodas.net/tools/Budget\nhttps://www.bodas.net/tools/Vendors\nhttps://www.bodas.net/website/index.php?actionReferrer=8\nhttps://www.bodas.net/sorteo\nhttps://www.bodas.net/tools/Wedshoots\nhttps://www.bodas.net/bodas/banquetes\nhttps://www.bodas.net/bodas/banquetes/fincas\nhttps://www.bodas.net/bodas/banquetes/masias\nhttps://www.bodas.net/bodas/banquetes/hoteles\nhttps://www.bodas.net/bodas/banquetes/restaurantes\nhttps://www.bodas.net/bodas/banquetes/salones-de-boda\nhttps://www.bodas.net/bodas/banquetes/castillos\nhttps://www.bodas.net/bodas/banquetes/cortijos\nhttps://www.bodas.net/bodas/banquetes/haciendas\nhttps://www.bodas.net/bodas/banquetes/bodegas\nhttps://www.bodas.net/bodas/banquetes/espacios-singulares\nhttps://www.bodas.net/bodas/banquetes/bodas-en-la-playa\nhttps://www.bodas.net/promociones/banquetes\nhttps://www.bodas.net/bodas/proveedores\nhttps://www.bodas.net/bodas/proveedores/fotografos\nhttps://www.bodas.net/bodas/proveedores/video\nhttps://www.bodas.net/bodas/proveedores/musica\nhttps://www.bodas.net/bodas/proveedores/catering\nhttps://www.bodas.net/bodas/proveedores/coches-de-boda\nhttps://www.bodas.net/bodas/proveedores/autobuses\nhttps://www.bodas.net/bodas/proveedores/floristerias\nhttps://www.bodas.net/bodas/proveedores/invitaciones-de-boda\nhttps://www.bodas.net/bodas/proveedores/detalles-de-bodas\nhttps://www.bodas.net/bodas/proveedores/viaje-de-novios\nhttps://www.bodas.net/bodas/proveedores/mobiliario\nhttps://www.bodas.net/bodas/proveedores/carpas\nhttps://www.bodas.net/bodas/proveedores/animacion\nhttps://www.bodas.net/bodas/proveedores/decoracion-para-bodas\nhttps://www.bodas.net/bodas/proveedores/listas-de-boda\nhttps://www.bodas.net/bodas/proveedores/organizacion-bodas\nhttps://www.bodas.net/bodas/proveedores/tartas-de-boda\nhttps://www.bodas.net/bodas/proveedores/food-truck-y-mesas-dulces\nhttps://www.bodas.net/promociones/proveedores\nhttps://www.bodas.net/bodas/novias/talleres-de-novia\nhttps://www.bodas.net/bodas/novias/tiendas-de-novia\nhttps://www.bodas.net/bodas/novias/complementos-novia\nhttps://www.bodas.net/bodas/novias/joyeria\nhttps://www.bodas.net/bodas/novias/belleza-novias\nhttps://www.bodas.net/bodas/novias/trajes-fiesta\nhttps://www.bodas.net/bodas/novias/trajes-madrina\nhttps://www.bodas.net/bodas/novias/vestidos-de-arras\nhttps://www.bodas.net/promociones/novias\nhttps://www.bodas.net/bodas/novios/trajes-novio\nhttps://www.bodas.net/bodas/novios/alquiler-trajes\nhttps://www.bodas.net/bodas/novios/complementos-novio\nhttps://www.bodas.net/bodas/novios/cuidado-masculino\nhttps://www.bodas.net/promociones/novios\nhttps://www.bodas.net/bodas/novias\nhttps://www.bodas.net/bodas/novios\nhttps://www.bodas.net/articulos\nhttps://www.bodas.net/articulos/antes-de-la-boda--t1\nhttps://www.bodas.net/articulos/la-ceremonia-de-boda--t2\nhttps://www.bodas.net/articulos/el-banquete--t3\nhttps://www.bodas.net/articulos/los-servicios-para-tu-boda--t4\nhttps://www.bodas.net/articulos/moda-nupcial--t5\nhttps://www.bodas.net/articulos/belleza-y-salud--t6\nhttps://www.bodas.net/articulos/luna-de-miel--t7\nhttps://www.bodas.net/articulos/despues-de-la-boda--t8\nhttps://www.bodas.net/articulos/hazlo-tu-mism@--t35\nhttps://www.bodas.net/articulos/cronicas-de-boda--t36\nhttps://www.bodas.net/cronicas-boda\nhttps://www.bodas.net/luna-de-miel\nhttps://comunidad.bodas.net/\nhttps://comunidad.bodas.net/grupos/grupo-organizar-una-boda\nhttps://comunidad.bodas.net/grupos/grupo-moda-nupcial\nhttps://comunidad.bodas.net/grupos/grupo-antes-de-la-boda\nhttps://comunidad.bodas.net/grupos/grupo-manualidades-para-bodas\nhttps://comunidad.bodas.net/grupos/grupo-luna-de-miel\nhttps://comunidad.bodas.net/grupos/grupo-bodas-net\nhttps://comunidad.bodas.net/grupos/grupo-belleza\nhttps://comunidad.bodas.net/grupos/grupo-vestido-de-novia\nhttps://comunidad.bodas.net/grupos/grupo-banquetes\nhttps://comunidad.bodas.net/grupos/grupo-ceremonia-nupcial\nhttps://comunidad.bodas.net/grupos/grupo-recien-casados\nhttps://comunidad.bodas.net/grupos/grupo-futuras-mamas\nhttps://comunidad.bodas.net/grupos/grupo-cosas-de-familia\nhttps://comunidad.bodas.net/grupos/grupo-bodas-famosas\nhttps://comunidad.bodas.net/grupos/grupo-viviendo-juntos\nhttps://comunidad.bodas.net/grupos/grupo-sorteo\nhttps://comunidad.bodas.net/grupos/grupo-soporte\nhttps://comunidad.bodas.net/grupos/grupo-juegos-boda\nhttps://comunidad.bodas.net/grupos-provincia\nhttps://comunidad.bodas.net/fotos\nhttps://comunidad.bodas.net/videos\nhttps://comunidad.bodas.net/miembros\nhttps://wedshootsapp.onelink.me/2833772549?pid=WP-iOS-ES&s=es&c=WP-ES-MOBILE&af_dp=wedshoots%3A%2F%2F&durl=wedshoots%3A%2F%2F\nhttps://bodasnet.onelink.me/pqTO?pid=WP-iOS-ES&s=es&c=WP-ES-MOBILE&af_dp=bodasnet%3A%2F%2F\nhttps://www.bodas.net/emp-Acceso.php\nhttps://www.bodas.net/users-saved.php\nhttps://www.bodas.net/users-mailbox.php\nhttps://www.bodas.net/users-mailbox.php?folder=16\nhttps://w"
+    },
+    {
+      "name": "1.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\1.jpeg"
+    },
+    {
+      "name": "2.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\2.jpeg"
+    },
+    {
+      "name": "copy 1.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\copy 1.jpeg"
+    },
+    {
+      "name": "copy 2.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\copy 2.jpeg"
+    },
+    {
+      "name": "How-do-you-design-and-install-the-LED-display-screen-at-a-music-festival-www.bibiled.com-2.jpg",
+      "type": "image",
+      "path": "RESOURCES\\How-do-you-design-and-install-the-LED-display-screen-at-a-music-festival-www.bibiled.com-2.jpg"
+    },
+    {
+      "name": "iconografia ear.png",
+      "type": "image",
+      "path": "RESOURCES\\iconografia ear.png"
+    },
+    {
+      "name": "Pantalla-Led-para-Eventos-scaled.jpg",
+      "type": "image",
+      "path": "RESOURCES\\Pantalla-Led-para-Eventos-scaled.jpg"
+    },
+    {
+      "name": "servicios que ofrecemos infografia.jpg",
+      "type": "image",
+      "path": "RESOURCES\\servicios que ofrecemos infografia.jpg"
+    },
+    {
+      "name": "1.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\agente programador ia antigravity\\1.jpeg"
+    },
+    {
+      "name": "1.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\1.jpeg"
+    },
+    {
+      "name": "10.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\10.jpeg"
+    },
+    {
+      "name": "11.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\11.jpeg"
+    },
+    {
+      "name": "12.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\12.jpeg"
+    },
+    {
+      "name": "2.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\2.jpeg"
+    },
+    {
+      "name": "3.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\3.jpeg"
+    },
+    {
+      "name": "4.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\4.jpeg"
+    },
+    {
+      "name": "5.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\5.jpeg"
+    },
+    {
+      "name": "6.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\6.jpeg"
+    },
+    {
+      "name": "7.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\7.jpeg"
+    },
+    {
+      "name": "8.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\8.jpeg"
+    },
+    {
+      "name": "9.jpeg",
+      "type": "image",
+      "path": "RESOURCES\\capturas de pantalla productora ai studio\\9.jpeg"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\admin_analytics__artist_roi_&_performance\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\admin_control__revenue_&_metrics_dashboard\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\arsenal_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\arsenal__product_deep-dive_&_specs\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\arsenal__technical_plan_&_catalog\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artistas_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artist_dashboard__career_command_center\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artist_hub__the_command_center\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artist_portal__sovereign_login\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artist_show__detailed_waybill_&_team\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artist_signal__video_&_audio_portfolio\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artist_tour__logistics_&_routes\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\artist_vault__asset_management\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\auditoría__mapa_de_empatía_del_fan\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\b2b_portal__agency_infrastructure_hub_&_roi_control\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\booking_step_1__event_context\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\booking_step_2__talent_selection\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\booking_step_3_&_4__tech_&_execution\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\contacto_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\dashboard__círculo_de_legado\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\dashboard__emanager_studio_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_academy__talent_training_hub\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_admin__global_infrastructure_control\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_arsenal__technical_infrastructure\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_artists__talent_transformation\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_business__b2b_subscription_tiers\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_business__corporate_solutions\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_contact__visionary_dialogue\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_corporate__business_&_pricing_structure\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_ecosystem__interactive_home_&_gamification\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_events__high-end_experiences\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_forensic__business_audit_protocol\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_home__architecture_&_engineering\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_identity__philosophy_&_accessibility\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_social__human_impact\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_social__viaje_musical_por_la_memoria\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_talent__discovery_&_booking\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\ear_the_signal__artist_funnel\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__aesthetic_signal_audit\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__assets_vault\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__digital_signal_engineering\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__forensic_diagnostic_1\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__forensic_diagnostic_2\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__forensic_diagnostic_3\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__forensic_diagnostic_4\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__interactive_lesson_view\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__legal_shield_&_infrastructure_shielding_shield\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__market_intelligence\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__niveles_de_autoridad\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__operator_mindset\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\emanager_studio__tour_engineering_hub\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\empresarios_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\entrenamiento__cierre_de_trato_forense\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\evaluación__pitch_de_60_segundos\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\evaluation__3c_methodology_certification\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\evaluation__youtube_signal_audit\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\eventos_360_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\graduation__ear_authority_certification\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__brújula_ikigai_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__map_builder_de_industria\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__matriz_opal_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__radar_de_alto_rendimiento\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__simulador_opal_12_meses_1\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__simulador_opal_12_meses_2\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__simulador_opal_12_meses_3\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\herramienta__simulador_opal_12_meses_4\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\home_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\lección__el_ciclo_de_expansión_3c\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\lección__el_mapa_de_batalla_artística\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\lección__ingeniería_operativa\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\portal__dashboard_de_soberanía\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\precios_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\protocol__10_steps_of_senior_mentoring\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\reporte_forense_de_avance\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\reporte__arquitectura_de_carrera_v1.0\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\reporte__informe_forense_v1.1\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\simulator__high-stakes_authority_call\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\social_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\the_signal_-_productora_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\the_signal__entry_gate_&_manifesto\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\the_signal__forensic_talent_audit\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\the_signal__signal_analysis_&_status\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\the_vault__multimedia_assets_&_infrastructure\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\tool__ear_cache_&_roi_calculator\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\tool__forensic_rider_audit_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\tool__high-performance_habit_tracker\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\tool__release_blueprint_spotify_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\tool__setlist_narrative_architect_ear\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\curr\\u00edculum__nivel_1_soberan\\u00eda\\screen.png"
+    },
+    {
+      "name": "screen.png",
+      "type": "image",
+      "path": "RESOURCES\\stitch\\stitch\\auditor\\u00eda__soberan\\u00eda_financiera_art\\u00edstica\\screen.png"
+    }
+  ],
+  "concepts": {}
+}

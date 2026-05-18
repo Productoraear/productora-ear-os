@@ -1,0 +1,939 @@
+Delivered-To: productoraear@gmail.com
+Received: by 2002:a59:c9b2:0:b0:56f:879e:c772 with SMTP id n18csp994988vqt;
+        Tue, 3 Mar 2026 10:55:18 -0800 (PST)
+X-Received: by 2002:a05:622a:50e:b0:4ed:b5d8:a192 with SMTP id d75a77b69052e-507528fb919mr236899351cf.38.1772564117850;
+        Tue, 03 Mar 2026 10:55:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772564117; cv=none;
+        d=google.com; s=arc-20240605;
+        b=cHLZ4BNnt4Tyl8eVlluXbe9rGZ0R9THQg1HqVUsguJDRn8RsIYO4Fs86FPTZxnf55i
+         drBzzG//ngqOwHWQi8FM79sAPXKEumyfQ+5IUpcEGPEXifFWLdLy0Q0gzVQcDmX3sles
+         dpmLdzLQnlVCqLVGQXPXtfJzrda2sLQE6ZNZYIPS4y+F9O4U8eM5guRa2IrSFOoM3I3z
+         c8JaoNpsMzGqFBdI88SUT4RP5o+LAKLmPEMKeZQM7pWa/3NtQzPJIcrJlqRfW3ddnxJT
+         ZPxMeAX4RjyCpDnKMmDQ8v6tIag4LtLs6oJ7mF9r0zcvuZIKtKNK65icbNSRuYbZM9X9
+         dMmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:list-unsubscribe-post:precedence:mime-version:subject
+         :message-id:to:reply-to:from:date:list-unsubscribe:dkim-signature
+         :dkim-signature;
+        bh=6V4BdIDb0XHyw7n/53cM+j+unoXI9+qDXmoWIvLJBkU=;
+        fh=A/irqxAPf/G56+M8nCisELDOlPGiVYF8ZIvF611TLPI=;
+        b=auiTQd/Jkxu9CvaVKlO7JCUNWVj4aftTVDzVgD2SkqH3T1ySJI0wiltcMeFrEIR+dQ
+         xPmDSe/prbZQL7e93G0vuzjwuET7lLTPHrMCO+nnQxFaxAT+NV06rqeI0QmFPxCBu4VX
+         TnMc5GIAAbSR2UySNL8DD1X48Ke+lolAGcIKqYzDYXTQWuTgjU91IIpzQshFnN5fX6Et
+         12qu3ubMGEEA6DDaOR+wqhcrpwoFFWFJKw0YLK5RmjBr7Wzh24oi15oo2K71m1XTUnwj
+         y4AtWesrLrFz+XuRN3rs0jmEhPjxgE+69rSf1euJ++k34A2o9Ey+KvUZGq3ZvnMiSvvm
+         TluQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@bf54x.hubspotemail.net header.s=hs2 header.b=EKqMVxRh;
+       dkim=pass header.i=@stackblitz.com header.s=hs1-45403856 header.b=jQjfyty9;
+       spf=pass (google.com: domain of 1axbvhxtakwg0jzgq7neljco0amqzx0yfkuktj-productoraear=gmail.com@bf54x.hubspotemail.net designates 143.244.91.7 as permitted sender) smtp.mailfrom="1axbvhxtakwg0jzgq7neljco0amqzx0yfkuktj-productoraear=gmail.com@bf54x.hubspotemail.net";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=stackblitz.com
+Return-Path: <1axbvhxtakwg0jzgq7neljco0amqzx0yfkuktj-productoraear=gmail.com@bf54x.hubspotemail.net>
+Received: from bd77gj9.bf54x.hubspotemail.net (bd77gj9.bf54x.hubspotemail.net. [143.244.91.7])
+        by mx.google.com with ESMTPS id 6a1803df08f44-899ebc1d2e3si113995226d6.138.2026.03.03.10.55.17
+        for <productoraear@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 03 Mar 2026 10:55:17 -0800 (PST)
+Received-SPF: pass (google.com: domain of 1axbvhxtakwg0jzgq7neljco0amqzx0yfkuktj-productoraear=gmail.com@bf54x.hubspotemail.net designates 143.244.91.7 as permitted sender) client-ip=143.244.91.7;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@bf54x.hubspotemail.net header.s=hs2 header.b=EKqMVxRh;
+       dkim=pass header.i=@stackblitz.com header.s=hs1-45403856 header.b=jQjfyty9;
+       spf=pass (google.com: domain of 1axbvhxtakwg0jzgq7neljco0amqzx0yfkuktj-productoraear=gmail.com@bf54x.hubspotemail.net designates 143.244.91.7 as permitted sender) smtp.mailfrom="1axbvhxtakwg0jzgq7neljco0amqzx0yfkuktj-productoraear=gmail.com@bf54x.hubspotemail.net";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=stackblitz.com
+Received: by 172.16.157.3 with SMTP id a0b2377bl4ybydwp9h5k6hm4bu2fd7233uhobt53q2i;
+        Tue, 3 Mar 2026 18:53:15 GMT
+DKIM-Signature: v=1; s=hs2; d=bf54x.hubspotemail.net; 
+        i=@bf54x.hubspotemail.net; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=6V4BdIDb0XHyw7n/53cM+j+unoXI9+qDXmoWIvLJBkU=; 
+        b=EKqMVxRhz/958sEC3lS3zgDkCE3LJrggw/nm0RTQqmQxyPo934Oi5ZQJ4Vh5fK
+         rqF7phdX6SB2jDE9re+0iZIzSUu61qPqcgQH/zcSOUSpmToWJbyzn44fFYsgFw7
+         kWJWlQJjug7oaHChXGDfcHODSCL6jcZSlJgtCvm2GcxOxbpMRkU0M/pWrPlXeZz
+         1Iqd0oOewOcz6pZFlqKBkBaUW6Wm0vg2lZwHbbbT9F9/Hysr3qKl1heL4PKWC07
+         slfoJBDpnLFij6/Z+eZybBjIhqyZcJJ98W73raEaIOc2u4Mvdy+TLsSb6SM0ml+
+         bcO2MDfEa/y1E23K+IdmyWx/9RhA==; q=dns/txt; t=1772563995; 
+        x=1772826795;
+DKIM-Signature: v=1; s=hs1-45403856; d=stackblitz.com; 
+        i=@stackblitz.com; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=6V4BdIDb0XHyw7n/53cM+j+unoXI9+qDXmoWIvLJBkU=; 
+        b=jQjfyty9TQm/FYX6b8x00SwNGVWwGMj1EB56vaPQp3eNhBGpVT3csErELWHTST
+         9wo3MYljKugfPfao+09EvmtQoOAewtjgYadEWJwiRga9VFgA17kLZu7oMq0IETb
+         fd/wLlhVjZBV6R5Now1v5Xhj9NlgPGJ+q4ujQv9goJffzwt+64VpTQOmOmAtmS7
+         Cljj7wDHzCC0DPTPm0bktGfP011twim9FRBARnyCqkOxOr90UH2/FLWs99pLwkg
+         RF8G5uYUF2k0R+FgI/9PdRkmRzuDbPD/Ymcer9OcMjwgQvnu0RQe8VmdbiIvORR
+         KmIdwsPzU786FhOnE34yqoiByYtg==; q=dns/txt; t=1772563995; 
+        x=1772826795;
+Return-Path: <1axbvhxtakwg0jzgq7neljco0amqzx0yfkuktj-productoraear=gmail.com@bf54x.hubspotemail.net>
+X-HS-Cid: 1axe2jswz4ucht8e3fafolxbbqoykyot57tfxj
+List-Unsubscribe: <mailto:1axc13409gcc86ka0wz19ae5nwptk2f2q9uwg3-productoraear=gmail.com@bf54x.hubspotemail.net?subject=unsubscribe>, <https://hs-45403856.s.hubspotemail.net/subscription-preferences/v2/unsubscribe-all?data=W2nXS-N30h-MxW3dr5X61BqW-VW32bk783bzRq3W2MpzFV1Z8LkMW3dhZx-4pG-gwW3dvsMP253lPhW25dr9G2qWRvxW2HJSXn32sBl4W3dj2yV2p4B8YW3_s52w234jTVW43pzwB4m8GLvW23qcDq2Tx1v_W233wSW1LmyXWW32hkwS1QbRD-W3_MPC02w4249W3LQSrW23gMc0W2D0Xj62HGPk4W1Q6Hz_49vpkrW3H7L571NlYxwW3GLdvT2-CV0yW2WL7hc2MCS1DW3XJ0vK2MNzHfW4tFHPf3XMNpnW43JnF_43T8yvW30b-s54myVzvW2nXTr83SQ_BGW45VbsN1SzY3QW3XyVPq47s_pFW1W-8lT36wS3sW1Qy4-23FfngLW1BmwTz2qWV1lW2Wjdpd3SQFbqW3_KGkp3_R2-yW1QwXvr2MCnDPW45XL2H1L9xN-W2FD4r63j0HbxW2-nm0M45pSKjW2vS74p2HKcjzW2WJTFv1Q0SGNW3ZXg9C3JHvL6W32qr-H2PMZbyW3XFTVL36gxkDW34kdwv1_6VB5W2TPBZ81_v1r8W32HC6520XNJQW30G4h92FVdpgW32xgQc2Yf-8wW3XYkP73b8MQKW1Sct1n23qLVXW4rrJTL49JCWgW1Nnz802FMYmvW3bp_HT4fh9QzW32zp-d4fKs9xW3BTHZ-4cgy2kW2zJBxQ2zWrLBW2sF29_1-VBsD0>
+Date: Tue, 3 Mar 2026 10:53:15 -0800
+From: "Eric at Bolt.new" <ericsimons@stackblitz.com>
+Reply-To: ericsimons@stackblitz.com
+To: productoraear@gmail.com
+Message-ID: <1772563984810.48606bae-9c96-4cb4-af79-5e7ab3b75abc@bf54x.hubspotemail.net>
+Subject: AI image generation is now built-in.
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_748014_33870484.1772563994930"
+Precedence: bulk
+X-Report-Abuse-To: abuse@hubspot.com (see
+ https://policy.hubspot.com/abuse-complaints)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: ae1bf4i:aig0fwmx:aidf:HubSpot
+
+------=_Part_748014_33870484.1772563994930
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Don=E2=80=99t leave your project on hold; generate images directly inside i=
+t!=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD
+
+Hey there,
+
+I=E2=80=99m super excited to introduce you to built-in AI image generation =
+and much more going on this week:
+
+Built-in image generation
+
+Ever been mid-build, fully flow state=E2=80=A6but then you need an image. Y=
+ou open up an image generator, create, export, locate the file, remember wh=
+at size you actually needed and=E2=80=A6what was I making again and where? =
+That kind of context switch is annoying and disruptive.
+
+We collapsed it all into one step: AI image generation is now built directl=
+y into Bolt. Just describe what you need (subject, style, placement), and w=
+atch it come to life exactly where you=E2=80=99re working. I=E2=80=99m talk=
+ing transparent backgrounds, web-optimized files, all exactly where they ne=
+ed to be.
+
+Image generation is available now in Bolt. Learn more in our post on X (htt=
+ps://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VVXdKV6nxdR-W6CwnkW4=
+v5stxW6TYKFS5LbBvtN6crjp83gVDYW7lCdLW6lZ3pgW8XndBw3VmjZvW6wKwM691LMG3W685nQ=
+W2xgNNzW7gcsyx8Jfh5RN7_6dZKLCN3KVHbwg83GJfsQW5Z85Vz4v5F3jW2wgFm88hmDxSW2JCw=
+Zq30rPWMW8GpdKN4z_2TdW8NCCH56TJLJBW4YQJPd1wtZ4NW8RkLlH3H889zW7Y2Y4s2pm5KYW3=
+3PYTy2wPHyHW1JQZ8K3YCmsMW5gRKWQ8jDzqvW4crTYv32mxmnW77mY8C4YbHMsW423lVX541f6=
+rW3NRxNB5tMFmMW5pP9552mZBxKW4Y2MK57Q49dnW31XWVp2sLlCnf4C_C4W04 ) and Linked=
+In =E2=86=92 (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VVX=
+dKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjnT5fr76W6N1X8z6lZ3lKW4k1QFb85zwpfW2=
+06-L666t-kgW3_8xbF6jrStNW7KsdGz86c5zvW2PD4K532HNKlW4JjXJn52cVZ6W2Tvbr34flyf=
+8W4t3Nvs1QHRtRW4l5SJH2gW_cKVwL7xR82mMR-W6km4c_1DtWVGW8XHwc46n8HqKW8qDPFW4xZ=
+rLTW4ftlTC7k_s3mM2CgsMFHCSVW1Z1HFP1SCWrYW8PnZs02q8FlLW6vhmKy7f8thBW2XxksB3h=
+gBgRW7Bw01J1Y8Pl9W10kfHl9dTZ-dN36Y-w5j0LCGW2CCZX55fbLDKW8PM83S5vrwrNW8WnK24=
+8Csf7XW51mcj27zkJ5TW31pDNz7n8TRPW3YTRc2860NlRW3609mB3cKRVZVSCzwz4C7nGHVxbxk=
+n6pCJ7YW4Y6WZs6Hs34kW18X95k11PSpzN4-BdDGQ67ztW6pGT438gxGHYVDfNqs3FXZc9Vxwt-=
+z2xrfsHW48Y4zw5z1MNPf2X-gfv04 )
+
+Imagegen-Blog@2x (3) (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5ll=
+C804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjp83gVDYW7lCdLW6lZ3pgW8XndBw=
+3VmjZvW6wKwM691LMG3W685nQW2xgNNzW7gcsyx8Jfh5RN7_6dZKLCN3KVHbwg83GJfsQW5Z85V=
+z4v5F3jW2wgFm88hmDxSW2JCwZq30rPWMW8GpdKN4z_2TdW8NCCH56TJLJBW4YQJPd1wtZ4NW8R=
+kLlH3H889zW7Y2Y4s2pm5KYW33PYTy2wPHyHW1JQZ8K3YCmsMW5gRKWQ8jDzqvW4crTYv32mxmn=
+W77mY8C4YbHMsW423lVX541f6rW3NRxNB5tMFmMW5pP9552mZBxKW4Y2MK57Q49dnW31XWVp2sL=
+lCnf4C_C4W04 )
+
+Slack + your Bolt app
+
+Much like image generation, your workflows shouldn=E2=80=99t live in isolat=
+ion. Most teams live in Slack where momentum builds and decisions happen.
+
+That=E2=80=99s why I=E2=80=99m super excited for our next session with Pica=
+, where we=E2=80=99ll be learning how to connect your Bolt app directly to =
+Slack, so your product and team can communicate in real time. Join us tomor=
+row. RSVP =E2=86=92 (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC=
+804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjnz3gVDYW69sMD-6lZ3lBW4Y1RmM4=
+0mq_zW973DhX4prKL2MrbGKL1NcCrW1htYh855DVC0W3619RS1m2JshW9hR01T733sJrW3XfSYL=
+2dC9jrW2566rh1jCK7lW2Dl31b1Y4bPVW9dlLwb7-rZc5W32mJ7Z5H_HQ-W23x41S9fn7BvW8xv=
+ymx6cgXL1W2gwp813SSSS7W8m-Nvx5MRznJW1pKM7-1-YK-1W8G0HZ37Cwpb4W1Gl-Sf23QMR8V=
+prVgq2T9yYrW15vdkF3QzrM_f46r-Hj04 )
+
+From prompt to prod: Have confidence before you ship
+
+Are you ready to ship but not sure your app is truly production-ready? This=
+ session is for you. We=E2=80=99ll walk through the systems inside Bolt des=
+igned to take you from prompt to production with confidence:
+
+-
+
+Security Audit
+
+-
+
+Supabase and Stripe integrations
+
+-
+
+Authentication
+
+-
+
+Deploy controls
+
+-
+
+A live Q&A!
+
+Come learn how to feel confident. Save your seat =E2=86=92 (https://d5llC80=
+4.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS=
+5LbBvtN6crjnz3gVDYW69sMD-6lZ3kvW3qXGNq2RpDSwW8VqBjq11K1-JW1J3zh-9fbLBXW3H3q=
+pJ56ZgCRW7tZXQy13T4ylW8HDNR43Qn6jGW5rYq9Z1H0Vw2W3dS_ZB8x11LQW1V2N4w7jys9GW6=
+zysVZ8Zd5CbW8NYXfr7_09wlW66l6w37Zd8qmW24y1Br1q33xGW3bCs225DLR7hW5wS9YS587Mn=
+_VR7QWX7rmM5VW7BBft39dMHd1W6dz3Pb25kNS8W4_S7d35WzvXnW7CvP5W6gjxwXdghnlx04 )
+
+Monitor & optimize bandwidth (before it hurts)
+
+Bandwidth is a quiet issue until it isn=E2=80=99t. Images measuring 1.5=E2=
+=80=932.5MB each? Suddenly you=E2=80=99re transferring 45MB on a single loa=
+d. Those speeds and costs can add up fast.
+
+In our most recent video, we walk through the best way to measure and reduc=
+e your bandwidth usage. We demonstrate auditing your own bandwidth, optimiz=
+ing assets, prompting the agent to generate and store WebP thumbnails, savi=
+ng them to the Database, and more. Watch now =E2=86=92 (https://d5llC804.na=
+1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbB=
+vtN6crjnT3gVDYW6N1vHY6lZ3mKT6_pq272p3gW6Ryq6G54PBRvW8vWcfV2PTVbYW9fDRgV4NdJ=
+PwW29tS888bSzw5W3-RXT379RsJQW3382r89hhc7QW7xx7yh2hlnp3W1ST3TN6RlvBVW1KTjKW6=
+yD9-fW22HqhP6DnT88N3rXNzvbwLh1W2HXs3F8T1YCyW4Bw0_B2km958W7m4tt113M2_bW5WQy7=
+B1Fm9PkN3d1KMm4mqnWW8Rf5cv4Y6x8-W4M1txY8tjZ3gW4C0Jb31SdXLQN6R3f_PsFFZ9W40Fn=
+kv7-X_5MdZ24gx04 )
+
+optimizeyourbandwidth (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5l=
+lC804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjnT3gVDYW6N1vHY6lZ3mKT6_pq2=
+72p3gW6Ryq6G54PBRvW8vWcfV2PTVbYW9fDRgV4NdJPwW29tS888bSzw5W3-RXT379RsJQW3382=
+r89hhc7QW7xx7yh2hlnp3W1ST3TN6RlvBVW1KTjKW6yD9-fW22HqhP6DnT88N3rXNzvbwLh1W2H=
+Xs3F8T1YCyW4Bw0_B2km958W7m4tt113M2_bW5WQy7B1Fm9PkN3d1KMm4mqnWW8Rf5cv4Y6x8-W=
+4M1txY8tjZ3gW4C0Jb31SdXLQN6R3f_PsFFZ9W40Fnkv7-X_5MdZ24gx04 )
+
+We have a lot of exciting stuff coming up this week so make sure you stay t=
+uned!!
+
+Happy building,
+
+Eric Simons
+
+CEO & Co-Founder, Bolt.new (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+11=
+3/d5llC804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjnz3lcq-W69sMD-6lZ3plW=
+3B9wmd9h6H9hW2TL1dt3Hz6ZpW5_JJ5r7Vs6ZMW28hfX16n9ctzW8NLZ1G5l2-ZyVcxZdr63Nsl=
+RW723t5b5YPW-JW4wY2JB4JwKJ9W8gKPjs6Rj_vxW7vzdnD2jbFF1VnPD7V8c_K9RN6FCfQMBwG=
+BYW4Jx_xN9cBnJvW61c3HJ2KLGTkW1WN7Jm9gJz3FW6Ws5TK1PzpWQW3Pmvjd1VT2HDVMC2Lk80=
+pnpwW6hNdl64-lxQHW9dXv8M83T35Nf8B9r1604 )
+
+StackBlitz, Inc., 2443 Fillmore Street #380-16814, San Francisco, CA, 94115=
+, United States. To opt out of future emails from StackBlitz, click here to=
+ unsubscribe (https://hs-45403856.s.hubspotemail.net/hs/preferences-center/=
+en/page?data=3DW2nXS-N30h-SGW3y-MwD3SHD5hW47mZNd3Fg88fW4ppVK836vz2SW4kLgYj2=
+Rzl95W3NCPWX49gfBSW36FB7Y4t6tDrW3QC8Xg4mpf2zW1BL1fy2KK2Z_W2MHczR3dfWGxW43RZ=
+S-2HTDb1W1_7HTY2xHD7VW36mYYf3_ByZ6W23kLMy1XnDWmW1SxWCB47MkCZW4m9Zf43X-qdnW2=
+nSgcV2nPmCmW2RtPxD1BwR5GW2F-6Fg3g0nHkW49BrM73XFt63W2t270b25jfNQW2Pz9jY1Brd-=
+KW4cR-qf4mnQZsW3dfVNL30z6P-W45FMJ83VY7CqW3jvQ-F2xPl4FW32pFCb3ZYwltW1Qczdg4p=
+7DDmW2WMh4f4mdVrYW4r7WlL2p5VSdW2Rk2vf3c_MmbW32rlfJ2zvKGjW2p5VXn2zsljxW1NsHx=
+F2p3K-tW233-wc3brGHNW3SySxh4rxjv9W3KbpHQ3SMfBqW3BM1g93C15WxW2t7yTY2nVlgkW32=
+mzpM2p0sVfW21lGQ72WH7XlW43XY2y1Y-jHxW30hXYN2CZ7bcW4t8s-H2Hst6WW3gdSkT1XwK6V=
+W1_l70M3gb28hW2PyGvV3S-rtYW43YJBv3R0fp9W2nT54L2Kx4y7W1XwJwV214bgRW3CcVZh2sT=
+82rW3bgZtV3dptHVW2Tk9df2vSSQNW4hxjmF3jbZXHW1Zg8Ft4rhNs4W43symm3_Rv3gf4rC2S7=
+04&_hsenc=3Dp2ANqtz--LpOzjABVy5iuC8A0_D3FEUt6_47tgnr-oQ-yAv-L5YdERO2syGQJZO=
+xvQHaneXvnObjhjfbxQUqmqrUnKFEogevWI3g&_hsmi=3D406729319 ) .
+------=_Part_748014_33870484.1772563994930
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3=
+.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:=
+v=3D"urn:schemas-microsoft-com:vml" lang=3D"en"><head>
+    <title>AI image generation is now built-in.</title>
+    <meta property=3D"og:title" content=3D"AI image generation is now built=
+-in.">
+    <meta name=3D"twitter:title" content=3D"AI image generation is now buil=
+t-in.">
+   =20
+   =20
+   =20
+<meta name=3D"x-apple-disable-message-reformatting">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+    <!--[if gte mso 9]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    <w:WordDocument xmlns:w=3D"urn:schemas-microsoft-com:office:word">
+      <w:DontUseAdvancedTypographyReadingMail/>
+    </w:WordDocument>
+  </xml>
+ =20
+  <style>
+    ul > li {
+      text-indent: -1em;
+    }
+  </style>
+<![endif]-->
+<!--[if mso]>
+<style type=3D"text/css">
+ body, td {font-family: Arial, Helvetica, sans-serif;}
+ .hse-body-wrapper-table {background-color: #ffffff;}
+</style>
+<![endif]-->
+<!--[if mso | IE]>
+  <style type=3D"text/css">
+    .hse-column-container { border: none !important; padding: 0 !important;=
+ }
+  </style>
+<![endif]-->
+   =20
+     =20
+ =20
+ =20
+   =20
+  <meta name=3D"generator" content=3D"HubSpot"><meta property=3D"og:url" co=
+ntent=3D"https://45403856.hs-sites.com/-temporary-slug-55cc4c0a-114d-4122-a=
+e14-045cc0c5ae8d"><meta name=3D"robots" content=3D"noindex,follow"><!--[if =
+!((mso)|(IE))]><!-- --><style type=3D"text/css">@media only screen and (max=
+-width:639px){img.stretch-on-mobile,.hs_rss_email_entries_table img,.hs-str=
+etch-cta .hs-cta-img{height:auto !important;width:100% !important}
+.display_block_on_small_screens{display:block}.hs_padded{padding-left:20px =
+!important;padding-right:20px !important}
+.hs-hm,table.hs-hm{display:none}.hs-hd{display:block !important}table.hs-hd=
+{display:table !important}
+}@media only screen and (max-width:639px){.hse-border-m{border-left:1px sol=
+id #ccc !important;border-right:1px solid #ccc !important;box-sizing:border=
+-box}
+.hse-border-bottom-m{border-bottom:1px solid #ccc !important}.hse-border-to=
+p-m{border-top:1px solid #ccc !important}
+.hse-border-top-hm{border-top:none !important}.hse-border-bottom-hm{border-=
+bottom:none !important}
+}.moz-text-html .hse-column-container{max-width:600px !important;width:600p=
+x !important}
+.moz-text-html .hse-column{display:table-cell;vertical-align:top}.moz-text-=
+html .hse-section .hse-size-12{max-width:600px !important;width:600px !impo=
+rtant}
+@media only screen and (min-width:640px){.hse-column-container{max-width:60=
+0px !important;width:600px !important}
+.hse-column{display:table-cell;vertical-align:top}.hse-section .hse-size-12=
+{max-width:600px !important;width:600px !important}
+}</style><!--<![endif]--><style type=3D"text/css">#hs_body #hs_cos_wrapper_=
+main a[x-apple-data-detectors]{color:inherit !important;text-decoration:non=
+e !important;font-size:inherit !important;font-family:inherit !important;fo=
+nt-weight:inherit !important;line-height:inherit !important}
+a{text-decoration:underline}p{margin:0}body{-ms-text-size-adjust:100%;-webk=
+it-text-size-adjust:100%;-webkit-font-smoothing:antialiased;moz-osx-font-sm=
+oothing:grayscale}
+table{border-spacing:0;mso-table-lspace:0;mso-table-rspace:0}table,td{borde=
+r-collapse:collapse}
+img{-ms-interpolation-mode:bicubic}p,a,li,td,blockquote{mso-line-height-rul=
+e:exactly}
+.ShadowHTML p,.sh-modified-inline p{margin:0}</style></head>
+  <body id=3D"hs_body" bgcolor=3D"#ffffff" style=3D"margin:0 !important; pa=
+dding:0 !important; font-family:Arial, sans-serif; font-size:15px; color:#0=
+00000; word-break:break-word">
+    <div id=3D"preview_text" style=3D"display:none;font-size:1px;color:#fff=
+fff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;=
+" lang=3D"en">Don=E2=80=99t leave your project on hold; generate images dir=
+ectly inside it!=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=
+=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=
+=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=
+=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =
+=E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=CD=8F =E2=80=87=
+=CD=8F =E2=80=87=CD=8F =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=
+=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =
+=C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD =C2=AD &nbsp;
+</div>
+   =20
+<!--[if gte mso 9]>
+<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+    <v:fill type=3D"tile" size=3D"100%,100%" color=3D"#ffffff"/>
+</v:background>
+<![endif]-->
+    <div class=3D"hse-body-background" lang=3D"en" style=3D"background-colo=
+r:#ffffff" bgcolor=3D"#ffffff">
+      <table role=3D"presentation" class=3D"hse-body-wrapper-table hse-full=
+-width-template" cellpadding=3D"0" cellspacing=3D"0" style=3D"margin:0; pad=
+ding:0; width:100% !important; min-width:320px !important; height:100% !imp=
+ortant" width=3D"100%" height=3D"100%">
+        <tbody><tr>
+          <td class=3D"hse-body-wrapper-td" valign=3D"top" style=3D"font-fa=
+mily:Arial, sans-serif; font-size:15px; color:#000000; word-break:break-wor=
+d">
+            <div id=3D"hs_cos_wrapper_main" class=3D"hs_cos_wrapper hs_cos_=
+wrapper_widget hs_cos_wrapper_type_email_flex_area" style=3D"color: inherit=
+; font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"wi=
+dget" data-hs-cos-type=3D"email_flex_area">  <div id=3D"builtin_section-0" =
+class=3D"hse-section" style=3D"padding-left:10px; padding-right:10px; backg=
+round-color:#ffffff" bgcolor=3D"#ffffff">
+   =20
+     =20
+      <!--[if gte mso 9]><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"widt=
+h:100%" bgcolor=3D"#ffffff"><tbody><tr><td valign=3D"top"><![endif]-->
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:600px; margin:0 auto">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:600px;" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation">
+      <tr>
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:600px;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"600" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:600px">
+<![endif]-->
+<div id=3D"builtin_column_0-0" class=3D"hse-column hse-size-12">
+  <div id=3D"hs_cos_wrapper_module_17604488655361" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"left" valign=3D"top" style=3D"font-f=
+amily:Arial, sans-serif; color:#000000; word-break:break-word; text-align:l=
+eft; padding:10px 20px; font-size:0px">
+        <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC80=
+4/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjnz3hKBlW69sMD-6lZ3m_W4kvdgm4zz=
+Dg9W4_gpxR1TbhxJW4NkdXn7wwh49W3YyyYY7fgqMbW80m5RL88SCLQVls5Bq7SM-GxW2C47Ln4=
+7qchyW3Fth7P2rsx7fW3tVgH726PK4pW1DJs9d6vlDq9W2hXcB48j6Pl9N46j3vKtvtpfW69m0y=
+46qrMxhW7ly3mp19LbwbN20Qp0HQDXDvW1syhj64bSjJ2W7qt7kt6tm-tLW1zv9WM7ph1nhW8ck=
+H1b2hZLX8W6wxGCy7cZwPff282RLK04" target=3D"_blank" style=3D"color:#00a4bd" =
+data-hs-link-id=3D"0" data-hs-link-id-v2=3D"sPVia0zW">
+        <img alt=3D"" src=3D"https://hs-45403856.f.hubspotemail.net/hub/454=
+03856/hubfs/Email%20Banners%20-%20v1.jpg?width=3D1120&amp;upscale=3Dtrue&am=
+p;name=3DEmail%20Banners%20-%20v1.jpg" style=3D"outline:none; text-decorati=
+on:none; border:none; max-width:100%; font-size:16px" width=3D"560" align=
+=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17570025135531"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17570025135531_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"line-height:175%">Hey there,</p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%">I=E2=80=99m super excited to introduce you to=
+ built-in AI image generation and much more going on this week:</p></div></=
+div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17725003323041"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17725003323041_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><h2 style=3D"margin:0; line-height:175%; font-size:22px"=
+>Built-in image generation</h2></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17677198895101"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17677198895101_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"line-height:175%">Ever been mid-build, fully=
+ flow state=E2=80=A6but then you need an image. You open up an image genera=
+tor, create, export, locate the file, remember what size you actually neede=
+d and=E2=80=A6what was I making again and where? That kind of context switc=
+h is annoying and disruptive.&nbsp;</p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%">We collapsed it all into one step: AI image g=
+eneration is now built directly into Bolt. Just describe what you need (sub=
+ject, style, placement), and watch it come to life exactly where you=E2=80=
+=99re working. I=E2=80=99m talking transparent backgrounds, web-optimized f=
+iles, all exactly where they need to be.</p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%">Image generation is available now in Bolt. Le=
+arn more in our post on <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ct=
+c/DQ+113/d5llC804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjps3hKBlW7Y8-PT=
+6lZ3mvW3DSpcT7JfwbbW5m_sRx7C3QRnW75qRWb7nzl9pW7R6YYj6HCNs9W8TBg4923CM5hW2Vs=
+KJl6DWbWsW5V1ywX2JpCx_W8Jljk91P4n5VVcP9Z88jcpr5VLS7Cs724qKrW1Tsx6M2Q0Cc_W8L=
+QvrG2S1M3PW8yGQjK8kYLhDW2QrMNG33phZpW3S1n6x8z3_x7W5jfr6y7X00XfW82QPJG3q6Lft=
+W79-62t58QKDHVjLNVS17zGt5N7fwSgr_KBBsN6BTMzJtHfJyW5S-7Qh5wGZRJW3L7-mM3fyjpM=
+W69XW5y3M1qTnW6s5xc94nQLPXW5YwF227m0Gg0f23_Yvn04" rel=3D"noopener" style=3D=
+"color:#2ba6ff" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"7w9ADVe5" targe=
+t=3D"_blank">X</a> and <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc=
+/DQ+113/d5llC804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjp85gg4xW7lCGcx6=
+lZ3lmW6gK5pY82yk_XW7KrqwC7ldyJcVt_fn93XVHRWW3zXS5m4WtwZrV53Vp82hTL_zW81bqss=
+2tyjpbW4pl_cV16nWM5W891Szk21czvSW8k9d0L8YMTczW4SyzT845KKJ4N5Sx4Rr1K5VMW8W18=
+QV7dZv-mW6VGMHN2SRWyxW3MckF14Z9R6pVJtp3N5HdWrDW3jbhMS7dwLW3W6tqc7R2xp-spW34=
+r9jJ2vS7xWW6s7Cgd6VX3lVW6kcr8f5KQ6rjW8Q-PbD1J0N4PW6Z_j1D7kBNHXW54XrK53kKdwQ=
+W1ZC46X3CvvvLN5MNvxNnGv6fW7f6Tjg40BTBdW981Ty08kwgcQW6jXvwC6GVcG1W3stXh73hLN=
+HsW6fnBYN3-2gXVW9f7RdK49HyxgW1jmmTf31JC_cW6DGB_j5G3ZZ9W2LDFT43cgh6XW6YZbBd6=
+gmxkHW8dkHKl7nMy4lN7hHYtR86kYWW1dprFh85TqQSW1Jcw1T5kls4rW5q5V931QjDtCf8Td_b=
+W04" rel=3D"noopener" style=3D"color:#2ba6ff" data-hs-link-id=3D"0" data-hs=
+-link-id-v2=3D"XKQ+pe8H" target=3D"_blank">LinkedIn&nbsp;=E2=86=92</a></p><=
+/div></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_17719498814362" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC80=
+4/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjps3hKBlW7Y8-PT6lZ3nYN5Dn6bBYtd=
+m-W6Wnhfm6N41zKW22_-pt1YhVbqW69XgKz6hVgbNW2Fk7Vt6JYWKVVsRyq96l15kQW6n5Gxw1T=
+lXphW4hrFbV4J0bzBW33zsYv6ZgTY3W3lSXgp4r_xyTW6QqWn61Q6jK1W3dNB1n3YmMR0W3rH_0=
+z3Pq46KW7nd2z27GvWfWW1Sn11r82XhfJN3D1rYh1L69NW1mwzKN4Tk2pZW6sLYbx24_RS_W80X=
+jkG4DxPfNW4LnzZN5ztQXBW1JDgbr6M02L2W2M6Gvj4kMR_HW45wgvM78GSp1N702Xqvl97BCW1=
+kKd3d5n0qBYW23h9m8258gxyf6tM65b04" target=3D"_blank" style=3D"color:#00a4bd=
+" data-hs-link-id=3D"1" data-hs-link-id-v2=3D"78su3t6E">
+        <img alt=3D"Imagegen-Blog@2x (3)" src=3D"https://hs-45403856.f.hubs=
+potemail.net/hub/45403856/hubfs/Imagegen-Blog@2x%20(3).png?width=3D1120&amp=
+;upscale=3Dtrue&amp;name=3DImagegen-Blog@2x%20(3).png" style=3D"outline:non=
+e; text-decoration:none; border:none; max-width:100%; font-size:16px" width=
+=3D"560" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17719499129213"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"non=
+e" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align=
+:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:2px solid #2BA6FF;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:2px solid #2BA6FF;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17647717243831"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17647717243831_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><h2 style=3D"margin:0; line-height:175%; font-size:22px"=
+>Slack + your Bolt app</h2></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17725003647912"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17725003647912_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"line-height:175%">Much like image generation=
+, your workflows shouldn=E2=80=99t live in isolation. Most teams live in Sl=
+ack where momentum builds and decisions happen.&nbsp;</p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%">That=E2=80=99s why I=E2=80=99m super excited =
+for our next session with Pica, where we=E2=80=99ll be learning how to conn=
+ect your Bolt app directly to Slack, so your product and team can communica=
+te in real time. Join us tomorrow. <a href=3D"https://d5llC804.na1.hubspotl=
+inks.com/Ctc/DQ+113/d5llC804/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjnT3=
+hKBlW6N1vHY6lZ3p6N2gRqg4BtHY7W7Sxqrk7CtKwHN6S0GzmcHVJqW57qv-C7-_cPXW4PhkS95=
+kywtWW1VQyZM2qBXwWW3hlqT07J2Vf6W5MLtTn4rtb-4W2j_Y0b4NJDrSVwt2157W3TfqW8N-Y1=
+Q5vC7mdW1Nbt883Wlf75W8ZR8Q34nnKf4W6lLNqf7ZkGwBW4VFzYc5L62xFW115Wkh7dbS0xN2X=
+xz1xfb8jWN7n6fdyHw1xDN6-Pxf7WX41TW6PfMzk4PftJBVyT73h7J30pgW13JNqK2HFP4mf2nP=
+j3T04" rel=3D"noopener" style=3D"color:#2ba6ff" data-hs-link-id=3D"0" data-=
+hs-link-id-v2=3D"j17P56ll" target=3D"_blank">RSVP&nbsp;=E2=86=92</a></p></d=
+iv></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17677200644853"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"non=
+e" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align=
+:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:2px solid #2BA6FF;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:2px solid #2BA6FF;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17677199771552"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17677199771552_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><h2 style=3D"margin:0; line-height:175%; font-size:22px"=
+>From prompt to prod: Have confidence before you ship</h2></div></div></td>=
+</tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17628776298681"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17628776298681_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"line-height:175%">Are you ready to ship but =
+not sure your app is truly production-ready? This session is for you. We=E2=
+=80=99ll walk through the systems inside Bolt designed to take you from pro=
+mpt to production with confidence:</p>
+<ul style=3D"line-height:175%">
+<li>
+<p style=3D"line-height:175%">Security Audit</p>
+</li>
+<li>
+<p style=3D"line-height:175%">Supabase and Stripe integrations</p>
+</li>
+<li>
+<p style=3D"line-height:175%">Authentication</p>
+</li>
+<li>
+<p style=3D"line-height:175%">Deploy controls</p>
+</li>
+<li>
+<p style=3D"line-height:175%">A live Q&amp;A!</p>
+</li>
+</ul>
+<p style=3D"line-height:175%">Come learn how to feel confident. <a href=3D"=
+https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VVXdKV6nxdR-W6Cwn=
+kW4v5stxW6TYKFS5LbBvtN6crjnT3hKBlW6N1vHY6lZ3pfW5Y4jJT7xh-STW1gsVtC1_0TCNW8l=
+grjR47kNWKW68TTXx8yKMKVW2DlZM349c-pvW5_xNyx7h5gbZVkMLFP7xqfpmW4Shb6C4QC-YkW=
+1HdzFC8RsXwTW1cM2Yp3xf6PkW5N44r-3W4xs5VsSXDD5bzsqDF8QRPzGs_L7N7N8vsrdmtxRW8=
+gs19q1P6st9W2gtkfJ6h1ngpW83S1x84wvrx0W276MXS2HnKWHW7sTNvd2Z2bb_W98XhPP7-GF6=
+qVcvPSs3C04fFW71b4P82MtYLpdBX9Vb04" rel=3D"noopener" style=3D"color:#2ba6ff=
+" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"2N7GfAY0" target=3D"_blank">S=
+ave your seat =E2=86=92</a></p></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17677200949664"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"non=
+e" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"vertical-align=
+:top" width=3D"100%">
+  <tbody><tr>
+    <td align=3D"center" style=3D"font-family:Arial, sans-serif; color:#000=
+000; font-size:0; word-break:break-word">
+      <p style=3D"font-size:1px;border-top:2px solid #2BA6FF;width:100%;mar=
+gin:0 auto;"></p>
+      <!--[if mso]>
+        <table role=3D"none" align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-size:1px;border-top:2px solid #2BA6FF;wid=
+th:560px;">
+          <tr>
+            <td style=3D"height:0;line-height:0">&nbsp;</td>
+          </tr>
+        </table>
+      <![endif]-->
+    </td>
+  </tr>
+</tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17719502005904"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17719502005904_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><h2 style=3D"margin:0; line-height:175%; font-size:22px"=
+><strong>Monitor &amp; optimize bandwidth (before it hurts)<br></strong></h=
+2></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17706946060574"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17706946060574_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"line-height:175%">Bandwidth is a quiet issue=
+ until it isn=E2=80=99t. Images measuring 1.5=E2=80=932.5MB each? Suddenly =
+you=E2=80=99re transferring 45MB on a single load. Those speeds and costs c=
+an add up fast.</p>
+<p style=3D"line-height:175%">&nbsp;</p>
+<p style=3D"line-height:175%">In our most recent video, we walk through the=
+ best way to measure and reduce your bandwidth usage. We demonstrate auditi=
+ng your own bandwidth, optimizing assets, prompting the agent to generate a=
+nd store WebP thumbnails, saving them to the Database, and more. <a href=3D=
+"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VVXdKV6nxdR-W6Cw=
+nkW4v5stxW6TYKFS5LbBvtN6crjp83hKBlW7lCdLW6lZ3n4W8nB9qL3nBFjMW58vMqF5hQ4f5W1=
+xXVLJ5fhhVyW32nHLc4J3jGvW2Wfmr81VxvrYN2W4zPb-GG12N3ZGtYBxTgXpW2n4Q463h7hyzW=
+2K7JKn1sWGQYW2G51RY2fVX4DW7rpyWP1DR3fXW76rFVQ13PTcqVMC-r161P7HzW6F8j3z6ksJ8=
+5W4mNjG76BMBQpW6hh5g84HHgLjN1hKnsWxQJ8PW32vJyX2Jnm5jN5R2BGz1SR1XN1CfGkgyqv_=
+rW6LdS8W4qxQPQW6DDfs-74Q3kqW6XqFp24fn17kW5yg9xP5S3TVxf5s0XMd04" rel=3D"noop=
+ener" style=3D"color:#2ba6ff" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"8=
+GjqgWJM" target=3D"_blank">Watch now&nbsp;=E2=86=92</a></p></div></div></td=
+></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_17706946265175" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#000000; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC80=
+4/VVXdKV6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtN6crjp83hKBlW7lCdLW6lZ3lXW7VtnTf312=
+VsTW3ZttyD9dG8HPW5FrLKQ1CX7ZbW1P-JQs6Xp0Q5W6mk4fG85DjZ_W188fBV6jZDH2W2WMkgm=
+1D5fXbW6qgJSz66xz-BW7MmVZQ75wQtWV2194L4r_cRxW1Yr17N1VD1bQW679wRg4-0NzSW6cC9=
+W16KjzzCW2Qv0jt6vBtjhW3RG4rf8vybgRW3mjSRN19fQSrW4WNG3c8119bVW4CR0zg4FNVF9N9=
+hZgrgDzpfcW8Pn3LD5hV3DJW97BzYH7-JxT2W8dK7VM2VJCmYW1868mY61mVtrW3BwLX_7mqM4H=
+dXjFW804" target=3D"_blank" style=3D"color:#00a4bd" data-hs-link-id=3D"1" d=
+ata-hs-link-id-v2=3D"o29MGmBf">
+        <img alt=3D"optimizeyourbandwidth" src=3D"https://hs-45403856.f.hub=
+spotemail.net/hub/45403856/hubfs/optimizeyourbandwidth.png?width=3D1120&amp=
+;upscale=3Dtrue&amp;name=3Doptimizeyourbandwidth.png" style=3D"outline:none=
+; text-decoration:none; border:none; max-width:100%; font-size:16px" width=
+=3D"560" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17725015250643"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17725015250643_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"line-height:175%">We have a lot of exciting =
+stuff coming up this week so make sure you stay tuned!!&nbsp;</p></div></di=
+v></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:19px 20px 10px"><div id=3D"hs_cos_wrapper_module_1744729972=
+3321" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_mod=
+ule" style=3D"color: inherit; font-size: inherit; line-height: inherit;" da=
+ta-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs=
+_cos_wrapper_module_17447299723321_" class=3D"hs_cos_wrapper hs_cos_wrapper=
+_widget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: =
+inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs=
+-cos-type=3D"rich_text"><p style=3D"font-size:15px; line-height:239%">Happy=
+ building,&nbsp;</p>
+<p style=3D"line-height:175%"><span style=3D"color: #000000;">Eric Simons <=
+/span><br><span style=3D"color: #000000;">CEO &amp; Co-Founder, <a href=3D"=
+https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VVXdKV6nxdR-W6Cwn=
+kW4v5stxW6TYKFS5LbBvtN6crjnz3m2nnW69sMD-6lZ3lZW2b4SF68nLDNDV73JGW7c8wnJW4PP=
+kFv2818R-W2mMCY-4H32v5W1-82tB1wtTd_W2s-VF_816cRPVyJlY287zbN2W61GJYl8PKltQW6=
+J5mfR5lSWLhVmttlF3mYCfNW6FrNWv8WN5X0W6yhJm9738SWMW2lpdx38P6f1KW5g8Pjs1pNdkl=
+VkgnzP413kGrW6pV33G438ByQW13CP_b2vDLhWN3XQH2ZvTYVvW4RWVWs5XRK2ZW4p7JLb2LN65=
+qf3MCCCC04" style=3D"color:#2ba6ff; text-decoration:none" rel=3D"noopener" =
+data-hs-link-id=3D"0" data-hs-link-id-v2=3D"2ufH4f1S" target=3D"_blank"><sp=
+an style=3D"color: #2ba6ff;">Bolt.new</span></a></span></p></div></div></td=
+></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#000000; word-break:brea=
+k-word; padding:10px 20px 10px 5px"><div id=3D"hs_cos_wrapper_footer_module=
+" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module"=
+ style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-h=
+s-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"pr=
+esentation" class=3D"hse-footer hse-secondary" width=3D"100%" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"font-family:Arial, sans-serif; font-size:=
+12px; line-height:135%; color:#23496d; margin-bottom:0; padding:0">
+  <tbody>
+    <tr>
+      <td align=3D"left" valign=3D"top" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#000000; word-break:break-word; text-align:left;=
+ margin-bottom:0; line-height:135%; padding:10px 20px">
+          <p style=3D"font-size: 13px; line-height: 125%;"><span style=3D"c=
+olor: #999999;">StackBlitz, Inc., 2443 Fillmore Street #380-16814,&nbsp;San=
+ Francisco, CA, 94115, United States. </span><span style=3D"color: #999999;=
+">To opt out of future emails from StackBlitz,&nbsp;<span style=3D"color: #=
+666666;"><a href=3D"https://hs-45403856.s.hubspotemail.net/hs/preferences-c=
+enter/en/page?data=3DW2nXS-N30h-SGW3y-MwD3SHD5hW47mZNd3Fg88fW4ppVK836vz2SW4=
+kLgYj2Rzl95W3NCPWX49gfBSW36FB7Y4t6tDrW3QC8Xg4mpf2zW1BL1fy2KK2Z_W2MHczR3dfWG=
+xW43RZS-2HTDb1W1_7HTY2xHD7VW36mYYf3_ByZ6W23kLMy1XnDWmW1SxWCB47MkCZW4m9Zf43X=
+-qdnW2nSgcV2nPmCmW2RtPxD1BwR5GW2F-6Fg3g0nHkW49BrM73XFt63W2t270b25jfNQW2Pz9j=
+Y1Brd-KW4cR-qf4mnQZsW3dfVNL30z6P-W45FMJ83VY7CqW3jvQ-F2xPl4FW32pFCb3ZYwltW1Q=
+czdg4p7DDmW2WMh4f4mdVrYW4r7WlL2p5VSdW2Rk2vf3c_MmbW32rlfJ2zvKGjW2p5VXn2zsljx=
+W1NsHxF2p3K-tW233-wc3brGHNW3SySxh4rxjv9W3KbpHQ3SMfBqW3BM1g93C15WxW2t7yTY2nV=
+lgkW32mzpM2p0sVfW21lGQ72WH7XlW43XY2y1Y-jHxW30hXYN2CZ7bcW4t8s-H2Hst6WW3gdSkT=
+1XwK6VW1_l70M3gb28hW2PyGvV3S-rtYW43YJBv3R0fp9W2nT54L2Kx4y7W1XwJwV214bgRW3Cc=
+VZh2sT82rW3bgZtV3dptHVW2Tk9df2vSSQNW4hxjmF3jbZXHW1Zg8Ft4rhNs4W43symm3_Rv3gf=
+4rC2S704&amp;utm_source=3Dhs_email&amp;utm_medium=3Demail&amp;utm_content=
+=3D406729319&amp;_hsenc=3Dp2ANqtz-_kfu3WJSP34cUOwuE2tDnpn73wT4rzabnkugUE6Sc=
+sW8nSOaOJw4AXi0q9VDbuyWDSXuImw456LkzD3d0LBpxZNGpmwg&amp;_hsmi=3D406729319" =
+style=3D"text-decoration:none; color:#666666" rel=3D"noopener" data-unsubsc=
+ribe=3D"true" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"qjPJqCop" target=
+=3D"_blank">click here to unsubscribe</a>.</span></span></p>
+<p>&nbsp;</p>
+      </td>
+    </tr>
+  </tbody>
+</table></div></td></tr></tbody></table>
+<div id=3D"hs_cos_wrapper_module_17659000671402" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"></div>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+      <!--[if gte mso 9]></td></tr></table><![endif]-->
+  =20
+  </div></div>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+ =20
+<img src=3D"https://d5llC804.na1.hubspotlinks.com/Cto/DQ+113/d5llC804/VVXdK=
+V6nxdR-W6CwnkW4v5stxW6TYKFS5LbBvtW6crj7-8fYG2531Xt1" alt=3D"" width=3D"1" h=
+eight=3D"1" border=3D"0" style=3D"display:none!important;min-height:1px!imp=
+ortant;width:1px!important;border-width:0!important;margin-top:0!important;=
+margin-bottom:0!important;margin-right:0!important;margin-left:0!important;=
+padding-top:0!important;padding-bottom:0!important;padding-right:0!importan=
+t;padding-left:0!important"></body></html>
+------=_Part_748014_33870484.1772563994930--
+

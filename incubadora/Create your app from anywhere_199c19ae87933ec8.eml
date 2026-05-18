@@ -1,0 +1,357 @@
+Delivered-To: productoraear@gmail.com
+Received: by 2002:a05:612c:2092:b0:548:5380:7f0a with SMTP id fj18csp606963vqb;
+        Tue, 7 Oct 2025 19:16:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE4V5tDUEJWTrgVYyfuVBxqF/BTPRc30HBRDylybH9LgBDYH7+Cvo1gDHTZFtlEPWgTA9ev
+X-Received: by 2002:a05:690c:45c4:b0:744:66e0:e17e with SMTP id 00721157ae682-780e170c371mr24357897b3.37.1759889779170;
+        Tue, 07 Oct 2025 19:16:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1759889779; cv=none;
+        d=google.com; s=arc-20240605;
+        b=jchZBJFQTANf0s+1fP86GpbnhJz1/QeTvlYs8IUoNGGI2vGNImkuqvc4EUzEj4/lcD
+         Q4AAvERsqJEFjVuDjwgE3kIGCERflsPFtA4RSDKAR5uI3lGZrJdZpQrUGO8gCEc1o6Lq
+         1xPbuw0cM++0+qH+qOk4iGcqYhjrqVwv01cynbliKeCltEREYio8WeamFiIETVdFISqO
+         QRRBZQSFEDngX5VUB7m2h/hLw9cVQ7l4ltNzu/DyPxmsNVYgbcKb/aPLdGv7L/2Qd07D
+         hxENdvz29N/N5AYVIKp00erpiXuXcCd9Anp9kfY0jPme818bGWzkhoVeWZnq1zGM8Elx
+         4xMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:from:subject:list-unsubscribe-post:reply-to
+         :list-unsubscribe:mime-version:date:message-id:to:dkim-signature;
+        bh=gzKDc6dmJBdnjjmMvaspfN+B+qOco1tSpTBHhTzcJn0=;
+        fh=A/irqxAPf/G56+M8nCisELDOlPGiVYF8ZIvF611TLPI=;
+        b=LufdwWR3oH4kBMSes9P8OtfQzYbvNo2MnPS42PFIW76qlKJG/XoF31WONqLzVUL4u8
+         chL1rzslvbki+OBR4BGOL5jjhQb32mygMr122AKMyvFnWoiTOBLPA0hDXz+mhONPvBog
+         YOw3CrZBtSH5zSXvK34CxhrNmWXPOwVR9X7vqiczZTFJiumYhOf84H7L6nQgiceET58E
+         Ay64kyringaKlEFCDAPikzelKGJOYXbBQbnt26hXYAChjhePfygCV0kumt6T5znfnczo
+         vBfYh0lKNcisZ2epILWrOjYFQJxFGSiKHHuYAHCIBLxdNT68Kp8Wwu2xIdaTBEivBmAs
+         yzaw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.replit.com header.s=20250624 header.b="lW8bBuM/";
+       spf=pass (google.com: domain of msprvs1=20376ic7tzmzm=bounces-280172-1545@bounce.replit.com designates 168.203.32.121 as permitted sender) smtp.mailfrom="msprvs1=20376iC7TzmZm=bounces-280172-1545@bounce.replit.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=replit.com
+Return-Path: <msprvs1=20376iC7TzmZm=bounces-280172-1545@bounce.replit.com>
+Received: from mta-203-32-121.sparkpostmail.com (mta-203-32-121.sparkpostmail.com. [168.203.32.121])
+        by mx.google.com with ESMTPS id 00721157ae682-780e1800674si9410327b3.691.2025.10.07.19.16.18
+        for <productoraear@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Oct 2025 19:16:19 -0700 (PDT)
+Received-SPF: pass (google.com: domain of msprvs1=20376ic7tzmzm=bounces-280172-1545@bounce.replit.com designates 168.203.32.121 as permitted sender) client-ip=168.203.32.121;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.replit.com header.s=20250624 header.b="lW8bBuM/";
+       spf=pass (google.com: domain of msprvs1=20376ic7tzmzm=bounces-280172-1545@bounce.replit.com designates 168.203.32.121 as permitted sender) smtp.mailfrom="msprvs1=20376iC7TzmZm=bounces-280172-1545@bounce.replit.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=replit.com
+Return-Path: <msprvs1=20376iC7TzmZm=bounces-280172-1545@bounce.replit.com>
+X-MSFBL: UNnv0B9qVCOXoFCPGtewHRZDevBV4MQWcNmLt4Cd38A=|eyJ0ZW5hbnRfaWQiOiJ
+	zcGMiLCJtZXNzYWdlX2lkIjoiNjhlMTcyYzllNTY4NzU0MTQzOTAiLCJjdXN0b21
+	lcl9pZCI6IjI4MDE3MiIsInIiOiJwcm9kdWN0b3JhZWFyQGdtYWlsLmNvbSIsInN
+	1YmFjY291bnRfaWQiOiIxNTQ1In0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.replit.com;
+	s=20250624; t=1759889778; i=@mail.replit.com;
+	bh=gzKDc6dmJBdnjjmMvaspfN+B+qOco1tSpTBHhTzcJn0=;
+	h=To:Message-ID:Date:Content-Type:List-Unsubscribe:
+	 List-Unsubscribe-Post:Subject:From:From:To:Cc:Subject;
+	b=lW8bBuM/jn2G3U3Ib43XfjDOXscD+0OEAhRZ6BPNqebY+9CTF9LcKj3lAsl3F1RS7
+	 bcjuOShS3g0G0znw2LAxdC98RQshRhbv9I/n/X6oBLC7JH9tZUbWjUdEJRod70FdkP
+	 FReWCgtMZ18hU76S38laHgGVX0w0HxsoN3hQd9RsYVhf7RNQSj9KL1eqIqtq8jZeeb
+	 HIEvORmvaYayjEfHXARdovbV5FefYbmNNScpHVUc59YbsB1y45cepoEPzkg/+H3O/c
+	 wXEB1Nn18cxWziCNPYiz9V8u/tCfws2AbQeasLNOvOHUCDmHMkHdv4KnZF7ED1uBOy
+	 x7bNjYnSFZqnQ==
+Received: from [10.90.18.104] ([10.90.18.104])
+	by i-05eb2300f57bc698d.mta1vrest.sd.prd.sparkpost (ecelerity 5.1.0.74619 r(msys-ecelerity:tags/5.1.0.13)) with REST
+	id 09/34-52893-279C5E86; Wed, 08 Oct 2025 02:16:18 +0000
+To: productoraear@gmail.com
+Message-ID: <09.34.52893.279C5E86@i-05eb2300f57bc698d.mta1vrest.sd.prd.sparkpost>
+Date: Wed, 08 Oct 2025 02:16:18 +0000
+Content-Type: multipart/alternative; boundary="_----fXTvlXiJieRYL9gryFq3ZQ===_E8/34-52893-279C5E86"
+MIME-Version: 1.0
+X-Campaign-ID: 15164503
+List-Unsubscribe: <https://links.iterable.com/s/u/0ofKpviUglt76K6fpXwHPcxPbjHmjx43azwpov3_Ktp-awP34iepeHt_HzNz2vr-Gdn6xH9L_TklVqiZTDl8BNwbVMMgiyKckr3ah3l2LXiYo8T9LZqBcqheMgsle_rg7G8joE9etDKHIgyEUgjCDtiZ1dPp2A83bkMrY8zNaVM9E_hwZaFXmOVHzUq-uociqFRgzMtFZRpT8bpR/nwCrGg37UbQ0iN2ply-HVHksyp6zwPwe/13>,<mailto:unsubscribe+15164503+19745180@unsubscribe.iterable.com>
+X-Message-ID: 9bceb371e04644a7bcb46e1dfaa797af
+X-Feedback-ID: 19745180:15164503:89164:iterable
+Reply-To: contact@replit.com
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Subject: Create your app from anywhere
+From: "Replit" <contact@mail.replit.com>
+Feedback-ID: 19745180:15164503:89164:iterable
+
+--_----fXTvlXiJieRYL9gryFq3ZQ===_E8/34-52893-279C5E86
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Edwin ,=0A=0AGreat ideas don=E2=80=99t wait for desk time. With the Repl=
+it mobile app, you can keep =0Ayour project moving in the moments you alrea=
+dy have. Get the app and continue =0Acreating:=0A=0A=0A * App Store <https:=
+//apps.apple.com/us/app/replit-vibe-code-apps/id1614022293>=0A * Google Pla=
+y <https://play.google.com/store/apps/details=3Fid=3Dcom.replit.app>=0A=0A =
+Real life looks like this: checking progress on a plane before takeoff, =0A=
+kicking off a run on the train, nudging your build between meetings in a =
+=0Arideshare, catching up on your commute, or giving a quick review while y=
+ou=E2=80=99re =0Awaiting in line at a concert or restaurant. Little moments=
+ add up to shipped =0Aapps.=0A=0ALog into the mobile app so you can:=0A=0A=
+=0A * See progress at a glance. Peek at what your Agent=E2=80=99s doing rig=
+ht from your =0Alock screen (live activities on iOS), so you always know wh=
+at=E2=80=99s moving forward.=0A * Make quick moves between moments. Create =
+a new app, review results, or give =0Aa quick nudge in seconds (simple in-a=
+pp controls).=0A * Keep the flow going across devices. Open on your phone, =
+continue on your =0Alaptop=E2=80=94everything stays in sync with your Repli=
+t account.=0A * Jump back in fast. Recent projects and lightweight views ma=
+ke it easy to =0Apick up the thread and keep momentum.=E2=80=8A=0A=0AHappy =
+Building!=0A=0AThe Replit Team=0A=0A=0A=0A=0A=0A Note: Live activities avai=
+lable on iOS; feature availability may vary by =0Aplatform and region.=0A=
+=0A=0A=E2=80=8A=0A=0A <https://twitter.com/Replit> <https://www.linkedin.co=
+m/company/repl-it> =0A<https://www.youtube.com/channel/UCgoJjdR6-7AMu9fDitb=
+6nVw>  =0A<https://www.instagram.com/repl.it/=3Fhl=3Den>=0A=0ASent by Repli=
+t=0A1001 E Hillsdale Blvd, Suite 400, Foster City, CA 94404 =0A=0AUnsubscri=
+be here =0A<https://links.replit.com/s/u/_IzcvMCQhrhvr5YTTJLejWkE6xC_FvgZil=
+vBJO7tsnH7EiUuxh7YjTofkfsg_qtEqaJQ0YqkdCeoERny0r-_hkMlHnpRGmtJkoAHrm2QkY6Ui=
+LJiemJup8eWkOU7KIyYW46JJJkJqAl_bcavyJA5qeBASOGTP_0551JXD7BG-q7ftNliX7CtEWLe=
+jhiEqonV11k0xXI10qupxTpu/p1haKiv0NxBFJLdRDBuCI9R8p3Ee_gFO/13>
+--_----fXTvlXiJieRYL9gryFq3ZQ===_E8/34-52893-279C5E86
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="UTF-8"
+
+<!DOCTYPE html><html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"u=
+rn:schemas-microsoft-com:office:office" lang=3D"en"><head><title></title><m=
+eta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8"><met=
+a name=3D"viewport" content=3D"width=3Ddevice-width,initial-scale=3D1"><!--=
+[if mso]><xml><w:WordDocument xmlns:w=3D"urn:schemas-microsoft-com:office:w=
+ord"><w:DontUseAdvancedTypographyReadingMail/></w:WordDocument> <o:OfficeDo=
+cumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:Office=
+DocumentSettings></xml><![endif]--><!--[if !mso]><!--><link href=3D"https:/=
+/fonts.googleapis.com/css2=3Ffamily=3DSource+Sans+Pro:wght@400;700;900&amp;=
+display=3Dswap" rel=3D"stylesheet" type=3D"text/css"><!--<![endif]--><style=
+>*{box-sizing:border-box}body{margin:0;padding:0}a[x-apple-data-detectors]{=
+color:inherit!important;text-decoration:inherit!important}#MessageViewBody =
+a{color:inherit;text-decoration:none}p{line-height:inherit}.desktop_hide,.d=
+esktop_hide table{mso-hide:all;display:none;max-height:0;overflow:hidden}.i=
+mage_block img+div{display:none}sub,sup{font-size:75%;line-height:0}#conver=
+ted-body .list_block ol,#converted-body .list_block ul,.body [class~=3Dx_li=
+st_block] ol,.body [class~=3Dx_list_block] ul,u+.body .list_block ol,u+.bod=
+y .list_block ul{padding-left:20px}@media(max-width:620px){.social_block.de=
+sktop_hide .social-table{display:inline-block!important}.mobile_hide{displa=
+y:none}.row-content{width:100%!important}.stack .column{width:100%;display:=
+block}.mobile_hide{min-height:0;max-height:0;max-width:0;overflow:hidden;fo=
+nt-size:0}.desktop_hide,.desktop_hide table{display:table!important;max-hei=
+ght:none!important}}</style><!--[if mso ]><style>sup,sub{font-size:100%!imp=
+ortant}sup{mso-text-raise:10%}sub{mso-text-raise:-10%}</style><![endif]--><=
+/head><body class=3D"body" style=3D"background-color:#fff;margin:0;padding:=
+0;-webkit-text-size-adjust:none;text-size-adjust:none">=0D=0A<div style=3D"=
+color:transparent;visibility:hidden;opacity:0;font-size:0px;border:0;max-he=
+ight:1px;width:1px;margin:0px;padding:0px;border-width:0px!important;displa=
+y:none!important;line-height:0px!important;"><img border=3D"0" width=3D"1" =
+height=3D"1" src=3D"http://track.replit.com/q/JklN0egGA9zE19y2LNd-zQ~~/AARG=
+bBA~/YQCru7LSfsZFHwMZQqEpA9sT5-cZZliEkRmCx7pjTIeZDXo5DDhq2n-9tjhV_fyf_Y3aZB=
+6uKM9N5y9EGKru9w~~" alt=3D""/></div>=0D=0A<span style=3D"color:transparent;=
+visibility:hidden;display:none;opacity:0;height:0;width:0;font-size:0;"></s=
+pan><img src=3D"https://links.replit.com/s/eo/oc8HcxjJxN4YWeTB309efHexHuWJr=
+qbKg84b07UFvsfmgmuGLlBw3d8LX7ID3k_H2KeSI6ezg_y3BCWuA-RqerN6tc4hLArhAZYbpU40=
+PSGCSeaY_sKbiv1TPvfN8A9cGTkCRD9xz4KXu2na8fymyONq5Ds-aUdl7RAiVRbOzPgal3Zv1lT=
+-_H2DAHfCvmdWqyECunixpjk7Ihgz1-sepvQrhHNPrYKkY0JA/0aRR0v6HHLYkwFAH4HpK8QzM5=
+_AtQWeV/13" style=3D"border:0;width:1px;height:1px;border-width:0px!importa=
+nt;display:none!important;line-height:0!important;" width=3D"1" height=3D"1=
+"/><table class=3D"nl-container" width=3D"100%" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso=
+-table-rspace:0;background-color:#fff"><tbody><tr><td><table class=3D"row r=
+ow-1" align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-table-rsp=
+ace:0;background-color:#ebeced"><tbody><tr><td><table class=3D"row-content =
+stack" align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"mso-table-lspace:0;mso-table-rspace:0;backgrou=
+nd-color:#ebeced;border-radius:0;color:#000;width:600px;margin:0 auto" widt=
+h=3D"600"><tbody><tr><td class=3D"column column-1" width=3D"100%" style=3D"=
+mso-table-lspace:0;mso-table-rspace:0;font-weight:400;text-align:left;paddi=
+ng-bottom:10px;padding-top:10px;vertical-align:top"><div class=3D"spacer_bl=
+ock block-1" style=3D"height:60px;line-height:60px;font-size:1px">&#8202;</=
+div><table class=3D"image_block block-2" width=3D"100%" border=3D"0" cellpa=
+dding=3D"10" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table-lsp=
+ace:0;mso-table-rspace:0"><tr><td class=3D"pad"><div class=3D"alignment" al=
+ign=3D"center"><div style=3D"max-width:150px"><img src=3D"https://d15k2d11r=
+6t6rl.cloudfront.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542c=
+ff6dd6a/688a6826b9ec49299691e89a144d7cfa/Replit%20logo.png" style=3D"displa=
+y:block;height:auto;border:0;width:100%" width=3D"150" alt title height=3D"=
+auto"></div></div></td></tr></table><div class=3D"spacer_block block-3" sty=
+le=3D"height:30px;line-height:30px;font-size:1px">&#8202;</div></td></tr></=
+tbody></table></td></tr></tbody></table><table class=3D"row row-2" align=3D=
+"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" style=3D"mso-table-lspace:0;mso-table-rspace:0;backgrou=
+nd-color:#ebeced"><tbody><tr><td><table class=3D"row-content stack" align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presen=
+tation" style=3D"mso-table-lspace:0;mso-table-rspace:0;background-color:#fc=
+fcfc;border-bottom:30px solid transparent;border-left:30px solid transparen=
+t;border-radius:30px;border-right:30px solid transparent;border-top:30px so=
+lid transparent;color:#000;width:600px;margin:0 auto" width=3D"600"><tbody>=
+<tr><td class=3D"column column-1" width=3D"100%" style=3D"mso-table-lspace:=
+0;mso-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;pad=
+ding-top:5px;vertical-align:top"><table class=3D"paragraph_block block-1" w=
+idth=3D"100%" border=3D"0" cellpadding=3D"10" cellspacing=3D"0" role=3D"pre=
+sentation" style=3D"mso-table-lspace:0;mso-table-rspace:0;word-break:break-=
+word"><tr><td class=3D"pad"><div style=3D"color:#000;direction:ltr;font-fam=
+ily:'Source Sans Pro',Tahoma,Verdana,Segoe,sans-serif;font-size:16px;font-w=
+eight:400;letter-spacing:0;line-height:1.8;text-align:left;mso-line-height-=
+alt:29px"><p style=3D"margin:0;margin-bottom:16px"> Hi Edwin ,</p><p style=
+=3D"margin:0">Great ideas don=E2=80=99t wait for desk time. With the Replit=
+ mobile app, you can keep your project moving in the moments you already ha=
+ve. Get the app and continue creating:</p></div></td></tr></table><table cl=
+ass=3D"list_block block-2" width=3D"100%" border=3D"0" cellpadding=3D"10" c=
+ellspacing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-tabl=
+e-rspace:0;word-break:break-word;color:#000;direction:ltr;font-family:'Sour=
+ce Sans Pro',Tahoma,Verdana,Segoe,sans-serif;font-size:16px;font-weight:400=
+;letter-spacing:0;line-height:1.8;text-align:left;mso-line-height-alt:29px"=
+><tr><td class=3D"pad"><div style=3D"margin-left:-20px"><ul style=3D"margin=
+-top:0;margin-bottom:0;list-style-type:revert"><li style=3D"Margin:0 0 10px=
+ 0"> <a href=3D"https://links.replit.com/s/c/ESk65qyrASYSvNzAPsCCxDqkGksqbh=
+vznUxLOUS3VxDfZZ3jb1pc2soJ_bMqpVK4bBqQVcmsH2ApE--JIEH8vIIkQjZde6ZFLgNWyom1a=
+niKNKPnNMGw0UZapADQbNOq8DfehLbpHjfl1DjOXLLwBRsg3TSbt35i5JUc9OBnjkF656oHiIQJ=
+8px_W0koG03zquiuDxzoSmp57Pxy4QemGx6CBODUjbMfR7BMCDcmfy73j2ZuYgwyUoeiyNleqxA=
+JtIdfESLyC3We7DfxwJz15bY3bstKeZT4jw_d4KJytnBAy6RSIg1IDxHgN3xMLaadC1rzCkqkP-=
+8wykMuyIRX9BVKwp3iZKTMhRVcjImXs4kjOUdx1NYXu_SZDz4y9GUHmbhf8BNX3QryPnQby_ILh=
+HTU4U6PeJDNeKlQxqVbEH7qJzYXJRdiu2JmvGCic-S0Tn-JeSu3wgb3DBE0iTgY9kPyKGjH1R_G=
+VwFFqCsOMGDzZUzpsm8HyJbT0keCAOL4wH7sZziT-jpgnx_VgwrNnheL36sn7te0itcewJiZN4O=
+okIgU_nSYE6V4OHZVAplqk9yU-I0X87FGUrH-aQwoZaDodlCKiUUc/jUiOUUoa7HnuSEgVcpXli=
+5WCi_C12U8i/13" target=3D"_blank" style=3D"text-decoration: none; color: #f=
+d5402;" rel=3D"noopener">App Store</a></li><li style=3D"Margin:0 0 10px 0">=
+<a href=3D"https://links.replit.com/s/c/aNL5Hc8wqK2kSIoBgBREoQ0jUciqN_-SLE6=
+X-IvgxGlY7_y-CoCwxFzAoMbHMmq4URCPIrZoAvDmJflzb4-DBZ3r8QLMDVyH_VJqpVgEVX89by=
+4MLVbQLzddrdwiDWWRj3qFlEYQX4sEgkfld6XW9WBfnHPuG5_q6Wb18Zi7ZQ33dU6vOAR_U1bw4=
+GcU5_iVDmWD59vJWcWMe_VlFSemox8AQJKqpUjvh32bSwflwam6Jd6A9e02InALZ7Zq9RxqW6ul=
+P_Vq4bmo8v02TBPbpxafR10zgbfxPri_5YtIl619y403dAEU2S5kdABYCshrFMXRj6SWNv5c5wA=
+64E1CNR2xO3Nfn6zNmD5NXYPZAALX97ED4NvFItxDc0jkLY0dUP9whAxG5XPIcX3cs-8zKiR_F1=
+ejrk5b6aIobiuvc-hZ5SnNkRkcysPLlaMZ6-EOIzWuv-gLn5zpeFlyvBy0LAzw7SbEb34QTgvdT=
+iDs5FfLH4FB0dcHwaaAANM_Bq38ITiWoFaTktpfpmUJoYxtZnQj238kKfzGOtVwpvrtYr54cYKe=
+KAKR8_RGOIBn7CU_FPfBANuV3dZqlR2F0UwRMA/_0zRVo204ik-_Ioew7q-Uv5a3Ct5sHmu/13"=
+ target=3D"_blank" style=3D"text-decoration: none; color: #fd5402;" rel=3D"=
+noopener">Google Play</a></li></ul></div></td></tr></table><table class=3D"=
+paragraph_block block-3" width=3D"100%" border=3D"0" cellpadding=3D"10" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-table-=
+rspace:0;word-break:break-word"><tr><td class=3D"pad"><div style=3D"color:#=
+000;direction:ltr;font-family:'Source Sans Pro',Tahoma,Verdana,Segoe,sans-s=
+erif;font-size:16px;font-weight:400;letter-spacing:0;line-height:1.8;text-a=
+lign:left;mso-line-height-alt:29px"><p style=3D"margin:0;margin-bottom:16px=
+"> Real life looks like this: checking progress on a plane before takeoff, =
+kicking off a run on the train, nudging your build between meetings in a ri=
+deshare, catching up on your commute, or giving a quick review while you=E2=
+=80=99re waiting in line at a concert or restaurant. Little moments add up =
+to shipped apps.&nbsp;</p><p style=3D"margin:0">Log into the mobile app so =
+you can:</p></div></td></tr></table><table class=3D"list_block block-4" wid=
+th=3D"100%" border=3D"0" cellpadding=3D"10" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"mso-table-lspace:0;mso-table-rspace:0;word-break:break-wo=
+rd;color:#000;direction:ltr;font-family:'Source Sans Pro',Tahoma,Verdana,Se=
+goe,sans-serif;font-size:16px;font-weight:400;letter-spacing:0;line-height:=
+1.8;text-align:left;mso-line-height-alt:29px"><tr><td class=3D"pad"><div st=
+yle=3D"margin-left:-20px"><ul start=3D"1" style=3D"margin-top:0;margin-bott=
+om:0;list-style-type:revert"><li style=3D"Margin:0 0 10px 0"> <strong>See p=
+rogress at a glance.</strong> Peek at what your Agent=E2=80=99s doing right=
+ from your lock screen (live activities on iOS), so you always know what=E2=
+=80=99s moving forward.</li><li style=3D"Margin:0 0 10px 0"><strong>Make qu=
+ick moves between moments.</strong> Create a new app, review results, or gi=
+ve a quick nudge in seconds (simple in-app controls).</li><li style=3D"Marg=
+in:0 0 10px 0"> <strong>Keep the flow going across devices.</strong> Open o=
+n your phone, continue on your laptop=E2=80=94everything stays in sync with=
+ your Replit account.</li><li style=3D"Margin:0 0 10px 0"><strong>Jump back=
+ in fast.</strong> Recent projects and lightweight views make it easy to pi=
+ck up the thread and keep momentum.</li></ul></div></td></tr></table><div c=
+lass=3D"spacer_block block-5" style=3D"height:30px;line-height:30px;font-si=
+ze:1px">&#8202;</div><table class=3D"paragraph_block block-6" width=3D"100%=
+" border=3D"0" cellpadding=3D"10" cellspacing=3D"0" role=3D"presentation" s=
+tyle=3D"mso-table-lspace:0;mso-table-rspace:0;word-break:break-word"><tr><t=
+d class=3D"pad"><div style=3D"color:#000;direction:ltr;font-family:'Source =
+Sans Pro',Tahoma,Verdana,Segoe,sans-serif;font-size:16px;font-weight:400;le=
+tter-spacing:0;line-height:1.2;text-align:left;mso-line-height-alt:19px"><p=
+ style=3D"margin:0;margin-bottom:16px">Happy Building!</p><p style=3D"margi=
+n:0">The Replit Team<br><br><br></p></div></td></tr></table><table class=3D=
+"text_block block-7" width=3D"100%" border=3D"0" cellpadding=3D"10" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-table-rspa=
+ce:0;word-break:break-word"><tr><td class=3D"pad"><div style=3D"font-family=
+:sans-serif"><div class style=3D"font-size:14px;font-family:'Source Sans Pr=
+o',Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#555;li=
+ne-height:1.2"><p style=3D"margin:0;font-size:14px;mso-line-height-alt:16.8=
+px"> Note: Live activities available on iOS; feature availability may vary =
+by platform and region.</p></div></div></td></tr></table></td></tr></tbody>=
+</table></td></tr></tbody></table><table class=3D"row row-3" align=3D"cente=
+r" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"=
+presentation" style=3D"mso-table-lspace:0;mso-table-rspace:0;background-col=
+or:#ebeced"><tbody><tr><td><table class=3D"row-content stack" align=3D"cent=
+er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" =
+style=3D"mso-table-lspace:0;mso-table-rspace:0;background-color:#ebeced;bor=
+der-radius:0;color:#000;width:600px;margin:0 auto" width=3D"600"><tbody><tr=
+><td class=3D"column column-1" width=3D"100%" style=3D"mso-table-lspace:0;m=
+so-table-rspace:0;font-weight:400;text-align:left;padding-bottom:5px;paddin=
+g-top:5px;vertical-align:top"><div class=3D"spacer_block block-1" style=3D"=
+height:60px;line-height:60px;font-size:1px">&#8202;</div><table class=3D"so=
+cial_block block-2" width=3D"100%" border=3D"0" cellpadding=3D"10" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-table-rspac=
+e:0"><tr><td class=3D"pad"><div class=3D"alignment" align=3D"center"><table=
+ class=3D"social-table" width=3D"208px" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-table-r=
+space:0;display:inline-block"><tr><td style=3D"padding:0 10px 0 10px"><a hr=
+ef=3D"https://links.replit.com/s/c/kY_4Ttu_jjTnwFGZorK4OdMtPLwZEe05KZj5F7dO=
+YHk9gAbeOaWUfXkAO0EIwsbwTAa-9B3te3WWOibyqdXj2SJ5bht0eroGf2SOUQ01YyNG0k-7rZr=
+WogD8ZsnmaDCItg9Zx2Xrs0lypen5de-7_jqyMjzHqsXdTjrwZjgI-pbWkgvoCgNFbqeVh9LW40=
+mFwcUgexzhtXtTljDXdTC5GIkjygamFcLhHADtI99ennJF_AtcWUMEH_-2ItEwrslry2jLcTiOZ=
+6wUVWQPJY3k0p_XqaOju301hf-ECSE-DzmnHRvg2DBJkM0g7A4ZuxxUaqLe7JzfP_owm20DzU1R=
+kvR0WbTLp_kXtlNm4stGaSYvi4rTRPe76-G9F0V1bpfxktO-QnTZPTzIIiR2Kn4wi8y_o01clCK=
+o9-bjsD3qD15KlFFl8Y3ZF0kiPpc6GIYMXYoG1PvxA27cET0QKn5SwhS9zlHebAL4dbw7NQdhOx=
+ln80-VJs1_bQF5/6kR5zjXQ6s360fuCf-hDOeX5rmLRSX93/13" target=3D"_blank"><img =
+src=3D"https://app-rsrc.getbee.io/public/resources/social-networks-icon-set=
+s/t-only-logo-dark-gray/twitter@2x.png" width=3D"32" height=3D"auto" alt=3D=
+"Twitter" title=3D"Twitter" style=3D"display:block;height:auto;border:0"></=
+a></td><td style=3D"padding:0 10px 0 10px"><a href=3D"https://links.replit.=
+com/s/c/UXAFyqoNx-qKy1y8DPT3t5wd_NKHyZX7fQYm_j6YHKTnn_nFAiU1SzwRKhXBbDA96x0=
+_Oqu9KCWuQ2DDHdtuiwWfpBobFulZ-qolrG8E_6wvnvttdZQkwfi-w3kQdZIpvyAQJqCS4xgX7s=
+-KctlwgS61caw81PqWkIytgR3wrnfgI6o1QQVWnPfT1yRGY3F82Q3I6fUURx0ABlrZ0Xg59LbYb=
+dU1ADUeZa27eTF41tOeecgySBh5l5TaZRv1yIwMesiWI7xneQkaf1s6uMCBq4u8LKOS04dJUfc7=
+uJXpk3f0jj07NAH1Z8O6maBj_BtUNNhsaw8HcgoV_FiL2ngANTLVUd1JcDEvGcaHBjo3wmBWK0_=
+4yQ3bzj4tgkzUrg40XI1IpYPTz3n5Pka0E3G9VS5h5v05HFt9hyxw-dTehvClxViinkKnT_xbSw=
+vj2Nm_lLX-wWlTxwO3-aIFgOBUQprcUJo099qPtZh9D5EzsEhi01f8FP5pWOj-jh2_suk-MBQ97=
+YbwgNNHoggDBQ3yemh3E5KVsBKU/7tOizSUuYexhKtDbTZ2JnaT2WNXYacEQ/13" target=3D"=
+_blank"><img src=3D"https://app-rsrc.getbee.io/public/resources/social-netw=
+orks-icon-sets/t-only-logo-dark-gray/linkedin@2x.png" width=3D"32" height=
+=3D"auto" alt=3D"LinkedIn" title=3D"LinkedIn" style=3D"display:block;height=
+:auto;border:0"></a></td><td style=3D"padding:0 10px 0 10px"><a href=3D"htt=
+ps://links.replit.com/s/c/iobtGNG66EQdzbIatifgqICTHvhNKkuhmPRHpLdYN6gb5oanm=
+QWkHP_4EfO9Os6FeAfs9TN_uxpeKrnHtxLmZcqkmfguHhptmv4TKg72ysoqlGxwfnH5lxAyNe0O=
+6HvftJNRJSFsb_namMcggFgjgZttwhXQq1KaAwifDXtAWPVGfjK_Owhmv69ysAZd_zn2D8Tc5Mn=
+d17yTwIkUYkPbB7GPNTvnIwJXvTpkfUJZDFgAd8NrXXWNmPX0g8PuUopNbgE-kvOhKzN2I_vLah=
+MrYXHGZdWIdPqxCjOKEwT-X9Gi9uyq2ZPATldyRWPL2AAqvhxf16HK2mcv78V2ylK2vpQKybjuo=
+0EDHi3LunXYIvldK0pv8nl_gTgmkEBkoMaYKwSLgtgcf1QUPI4Cr8jy6z-kVe7CKYMSWxf2J_OU=
+8hGzDaYw2z1LFLeFZb3xkBsUNElcGqNXKo36rnYBhSGba7Q923RfHZ3z1v2BI7vrFjajmD4wr5M=
+H4BtJePWRWzdVrBiPVMOh1oR8bnsmzIlm1eVZO7LB3rywFAbWXAYOlcpACJYS2-0InMbIa3Mhbr=
+Dtz4jCgf9lAl4/WoYzOJn1YUeSykdNBmxjJmuCPWquGL2u/13" target=3D"_blank"><img s=
+rc=3D"https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets=
+/t-only-logo-dark-gray/youtube@2x.png" width=3D"32" height=3D"auto" alt=3D"=
+YouTube" title=3D"YouTube" style=3D"display:block;height:auto;border:0"></a=
+></td><td style=3D"padding:0 10px 0 10px"> <a href=3D"https://links.replit.=
+com/s/c/kz0_hy12ePTm9q3eGXcUUHsQ2d4aBHXWMj5RHSObDNjIjpMCyJwYIoH3SEpbBjDy-Sj=
+GDpzisp2eoZaTIptTUbEW23h7B55NT00jAqLxysg4wU4-0GQeFNgXAm7b_FkKcKnPrjqUli_nNO=
+Zj4fqFFqTkG5MH5yCjPzjn9uC6JAXGeSpZjdfNC5XlhNjldwA6wy2ukuR0fGBNGLP_L54Hc7iMD=
+ZHekXTM_lPG2PPCy_Mqb9jv1wSCuVAizokCq7SR4oLTuQxmbggrUfh8hjZgIz7koaPXFcngtcTO=
+wsHR31fs5K_z0_4fKOLOxB9sPFQ-z1YrcCpW8FzoeEwjx38IvSDTtW6oxYAvrWiW61hWC1ADfWr=
+jNzTLrmO15jCXVLQdLXmc8bgfgnFtpH2q4r4K83K_HAH28G4IqRIljxG2YnzoF7Jne6g0dQ4UP8=
+de4qtstIogSS2sxxZoijsUWF9Q7nogF5p9HRhjGwkqYandHB3fR802KB-oProOFMYKtasDtijZH=
+x73EZMl4d-XCqYBrhrxIOnSjSjw/LwlE4r3BNLzqRPZ7rGmSO_6fbZa-rvsB/13" target=3D"=
+_blank"><img src=3D"https://app-rsrc.getbee.io/public/resources/social-netw=
+orks-icon-sets/t-only-logo-dark-gray/instagram@2x.png" width=3D"32" height=
+=3D"auto" alt=3D"Instagram" title=3D"Instagram" style=3D"display:block;heig=
+ht:auto;border:0"></a></td></tr></table></div></td></tr></table><table clas=
+s=3D"text_block block-3" width=3D"100%" border=3D"0" cellpadding=3D"5" cell=
+spacing=3D"0" role=3D"presentation" style=3D"mso-table-lspace:0;mso-table-r=
+space:0;word-break:break-word"><tr><td class=3D"pad"><div style=3D"font-fam=
+ily:sans-serif"><div class style=3D"font-size:14px;font-family:'Source Sans=
+ Pro',Tahoma,Verdana,Segoe,sans-serif;mso-line-height-alt:16.8px;color:#555=
+;line-height:1.2"><p style=3D"margin:0;text-align:center;font-size:10px;mso=
+-line-height-alt:12px"><span style=3D"word-break: break-word; font-size: 10=
+px;">Sent by Replit<br>1001 E Hillsdale Blvd, Suite 400, Foster City, CA 94=
+404&nbsp;</span></p><p style=3D"margin:0;text-align:center;font-size:10px;m=
+so-line-height-alt:12px"><span style=3D"word-break: break-word; font-size: =
+10px;"><a href=3D"https://links.replit.com/s/u/_IzcvMCQhrhvr5YTTJLejWkE6xC_=
+FvgZilvBJO7tsnH7EiUuxh7YjTofkfsg_qtEqaJQ0YqkdCeoERny0r-_hkMlHnpRGmtJkoAHrm2=
+QkY6UiLJiemJup8eWkOU7KIyYW46JJJkJqAl_bcavyJA5qeBASOGTP_0551JXD7BG-q7ftNliX7=
+CtEWLejhiEqonV11k0xXI10qupxTpu/p1haKiv0NxBFJLdRDBuCI9R8p3Ee_gFO/13" target=
+=3D"_blank" style=3D"text-decoration: none; color: #fd5402;" rel=3D"noopene=
+r">Unsubscribe here</a>&nbsp;&nbsp;</span></p></div></div></td></tr></table=
+></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></ta=
+ble><!-- End -->=0D=0A<img border=3D"0" width=3D"1" height=3D"1" alt=3D"" s=
+rc=3D"http://track.replit.com/q/LCZgehyFV5lK992hu1Jzrw~~/AARGbBA~/s4Uq2QF8R=
+K1I6DnnDDEO07MYDOQtqUZuGZSxV-66Pwnu2gNZU535lEUOCa8B2sz7BJvWIX0aFlk8C3xx2crh=
+mw~~">=0D=0A</body></html>
+--_----fXTvlXiJieRYL9gryFq3ZQ===_E8/34-52893-279C5E86--
+

@@ -1,0 +1,1020 @@
+Delivered-To: productoraear@gmail.com
+Received: by 2002:a05:612c:2015:b0:4d5:c01:50c4 with SMTP id fe21csp385825vqb;
+        Thu, 5 Jun 2025 08:33:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzKkrPNOPh2YiC1uXSs6+ttKpRUmqkhP1vJkk8IKHMky8xLdLC3MrMlpxLiMX05ygzBrUw
+X-Received: by 2002:a05:620a:c4c:b0:7c5:4adb:781b with SMTP id af79cd13be357-7d2298613e3mr5638785a.7.1749137605747;
+        Thu, 05 Jun 2025 08:33:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1749137605; cv=none;
+        d=google.com; s=arc-20240605;
+        b=OHaEoIxjNFmECx1v3q/WMAZ8XupJxom2vaxIdgUiKBhniJA5NbontYQkLBv59e6J7t
+         7v3yc08pjjqtdxlDfmf/klk1uDyHBJ4NWAGBO5lnbhJBMLNI2lGp/rt445LKjD4mDZNd
+         IT019enTtmiWfTsEUkZ9FlgnR+ha3Z0pXGNtddzCyu1UKwkcsoYMVACqsfHxgPeP6Rnm
+         Vuqqt6c5lmLLe2gKpsraXtdMnOnvtJfx1iw2MZHoZOqSlbrhURfBEJOYljKmRl76zeRH
+         EDgiGb244uAsxxczBDiNcWI+FPtWDPNGP3geV0QlRfzkSEDVgfDZHl+9tsyVWF1AEfi6
+         L7/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=feedback-id:list-unsubscribe-post:precedence:mime-version:subject
+         :message-id:to:reply-to:from:date:list-unsubscribe:dkim-signature
+         :dkim-signature;
+        bh=SdjJc5EWCCm2Due6gRv0u1PEkqw/7RsJXFD3xTUEdOM=;
+        fh=A/irqxAPf/G56+M8nCisELDOlPGiVYF8ZIvF611TLPI=;
+        b=a+5ZXb9IG5fRJSTK7zi2G55Yn9O8WkGlpBjcxP6+BQN6vHbdqXx8fqS9Z6SdY3sR9n
+         rbhUpbbi+L7XipjSWKFjFclT5oLWd6uzLc1I5tFd14ibl7QyXzwk+orw/g3PGkH74mD4
+         eGAwfnnEYf+/uEQn+lExSirQr8QH83pchETnInQpPAd4IUSgTsBGI6zbBXGEpo10chzv
+         3Zp6u/cdSAV0SFOVy4XVJjSgNjZLJpWj/zPFga+Ci0QBzB7zfzCwa+K2kRhl2Is/kYTa
+         uxtSK1wZoT+PVL166KKusWncd5bIddA1tZ5EptruClNEMKSwdpgmYTjh3XbpVNMLkJyM
+         qF8g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@bf03.hubspotemail.net header.s=hs1 header.b=TcGjiPlW;
+       dkim=pass header.i=@stackblitz.com header.s=hs2-45403856 header.b=iSoh76YE;
+       spf=pass (google.com: domain of 1axb8957tjh8ai0o9ecynapebh38qp57sayz03-productoraear=gmail.com@bf03.hubspotemail.net designates 143.244.90.121 as permitted sender) smtp.mailfrom="1axb8957tjh8ai0o9ecynapebh38qp57sayz03-productoraear=gmail.com@bf03.hubspotemail.net";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=stackblitz.com
+Return-Path: <1axb8957tjh8ai0o9ecynapebh38qp57sayz03-productoraear=gmail.com@bf03.hubspotemail.net>
+Received: from bd77ggb.bf03.hubspotemail.net (bd77ggb.bf03.hubspotemail.net. [143.244.90.121])
+        by mx.google.com with ESMTPS id af79cd13be357-7d09a1e208esi1752772485a.222.2025.06.05.08.33.25
+        for <productoraear@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 05 Jun 2025 08:33:25 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 1axb8957tjh8ai0o9ecynapebh38qp57sayz03-productoraear=gmail.com@bf03.hubspotemail.net designates 143.244.90.121 as permitted sender) client-ip=143.244.90.121;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@bf03.hubspotemail.net header.s=hs1 header.b=TcGjiPlW;
+       dkim=pass header.i=@stackblitz.com header.s=hs2-45403856 header.b=iSoh76YE;
+       spf=pass (google.com: domain of 1axb8957tjh8ai0o9ecynapebh38qp57sayz03-productoraear=gmail.com@bf03.hubspotemail.net designates 143.244.90.121 as permitted sender) smtp.mailfrom="1axb8957tjh8ai0o9ecynapebh38qp57sayz03-productoraear=gmail.com@bf03.hubspotemail.net";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=stackblitz.com
+Received: by 172.16.28.112 with SMTP id a0b9znrox27ui20sr0o2wcgmeor8ktaidoh1yr0tiva;
+        Thu, 5 Jun 2025 15:31:25 GMT
+DKIM-Signature: v=1; s=hs1; d=bf03.hubspotemail.net; 
+        i=@bf03.hubspotemail.net; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=SdjJc5EWCCm2Due6gRv0u1PEkqw/7RsJXFD3xTUEdOM=; 
+        b=TcGjiPlWrjJvpRSv4DZW24youjFzXPANnl5Oy6bUFFPM+ssC50E3ddsmQ6D4yV
+         MiE2InNoRzBoSFBZincWO4sPaJaWAhlzbdy8+iFnQWA1Fp2+akq8iKYTEDq4bx4
+         EfpWlacoSF8mQiAdgBz8jS18xAb80SE8wDhNnGVs1cvv0/9E22yfKz82sKadu1O
+         sH91P9W1b/t8Q6AFNqVEZfNvLW+0py+wjbccG4hF+SVFsmrvMm4PZRjR7hoSRey
+         zWnNW8sqsduZWDdwd8RrBln+WzKbgbI4PedqLa93Co4ymch0aZmuLqUngWr8DgD
+         ZtYUR9iU7MlkKuzY6QPXxejvA8cw==; q=dns/txt; t=1749137485; 
+        x=1749400285;
+DKIM-Signature: v=1; s=hs2-45403856; d=stackblitz.com; 
+        i=@stackblitz.com; 
+        h=sender:from:from:reply-to:to:to:cc:cc:subject:subject:list-unsubscribe:form-sub:feedback-id:list-unsubscribe-post; 
+        a=rsa-sha256; c=relaxed/relaxed; 
+        bh=SdjJc5EWCCm2Due6gRv0u1PEkqw/7RsJXFD3xTUEdOM=; 
+        b=iSoh76YENk2n2BOwLxaUwFn3bYxnWathj9sSh6SN+wA3CJZr1JroY4nSSaJvgX
+         s3TPjayA4mAMd7+gVC9M9beOL2AGlT8TRn/LgiADfHB9eCjh3ci3VBycSGiT+yG
+         nBCGVE6vtyfg4HbbwfdhzyDIxoK79gdkJchmC4fK139EyO/X7PWVmuLaPV7ZXv6
+         6U/Yh+AiEjLi6tJ7QO6wb1zul5OIrPMaYsEVkcxckZN2Zy3MNHkt2s80nhnodmd
+         tryCKM+u3kG1PZm0JinwAgjdS3NFuQO5gV8m+AuoB9gY6t+QoC1NZa/0EpQSpcw
+         B/PUWxH5f1sLm8lCxNPK3Qjf5kew==; q=dns/txt; t=1749137485; 
+        x=1749400285;
+Return-Path: <1axb8957tjh8ai0o9ecynapebh38qp57sayz03-productoraear=gmail.com@bf03.hubspotemail.net>
+X-HS-Cid: 1axf2ny2o8khvdn5r51hi2zz9qjr2f1e0wxdyf
+List-Unsubscribe: <mailto:1axc9cbtd3veb12pinyxcjslbxodxj9lhi451z-productoraear=gmail.com@bf03.hubspotemail.net?subject=unsubscribe>, <https://hs-45403856.s.hubspotemail.net/subscription-preferences/v2/unsubscribe-all?data=W2nXS-N30h-FZW1QjDxd2CsxLcW3j6SZS2vPcldW2zY67W3C6qQyW2FQVm443B6zWW4kf36y3zg8r8W43Zb9m1NpnGyW4hLyqD3M16yzW41TQdG2MF-2SW2MBYzQ2r6WCMW3Fdxsr4hMMH8W2FSz7d3Fbp-9W38zCjy2WnnC-W2TwcwB4mDjWdW1Lyz_63QC7kGW3SYMD04tlZH2W1QflD141HlXJW3H630s2Hy2D3W1VyxzM2MBZhNW1Q5q-P4pCJJWW3F99dn1Z9Z8-W3GQVd82Yf51JW2sC0Jy3db-mKW2PQWn63GHnffW36w30_30KRXzW3yYGVR4pGxLZW3d8yWG2r1rx_W4r6fTY4rrHygW3M35pN3F4-nDW2PMw8s1NG7QJW23qLDw2vY1kPW4cMpnv4cB8xFW4hqvSx2HZxS3W47Cssf2CJ18bW2Pl5tH49h_bHW3_C1702RV1JLW41n62D2CSl__W30lZv04rCW7MW30BRQQ2qLjQTW2CsZnM4fQ1kvW45BNBX3j5G96W3VJ9bc2Rj8sDW2CGHn62v-ZWxW1NFHt32vNk7HW2-Df9L1Btnf0W3dj1GW2nPqkHf41XDKS04>
+Date: Thu, 5 Jun 2025 08:31:25 -0700
+From: "Eric at Bolt.new" <ericsimons@stackblitz.com>
+Reply-To: ericsimons@stackblitz.com
+To: productoraear@gmail.com
+Message-ID: <1749137485251.cc0b8f96-8ddd-4844-8046-b25741fee8f0@bf03.hubspotemail.net>
+Subject: =?utf-8?Q?Token_Rollovers_Start_July_1_=F0=9F=94=81?=
+ =?utf-8?Q?_+_Free_Bolt_Pro_for_Hackathon=C2=A0?=
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_287724_1919309889.1749137485362"
+Precedence: bulk
+X-Report-Abuse-To: abuse@hubspot.com (see
+ https://policy.hubspot.com/abuse-complaints)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: ae1bf4i:aigbo4ci:aidf:HubSpot
+
+------=_Part_287724_1919309889.1749137485362
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Starting July 1, unused tokens roll over monthly! Plus, this week=E2=80=99s=
+ hackathon updates and more.
+
+Hey there,
+
+What a week! The World=E2=80=99s Largest Hackathon is officially on, and th=
+ings are moving fast. From new builds to surprise livestreams and IRL meetu=
+ps, we=E2=80=99re blown away by what this community is already showing off.=
+ We=E2=80=99ve officially crossed 80,000 hackathon registrations! As a remi=
+nder, it=E2=80=99s still not too late for you to join if you wanna be part =
+of the hype!
+
+Register (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5=
+w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-b3lcq-W69sMD-6lZ3p-N9g0vkDryY2PW3hyftP=
+7mg0VdW3YcRwD4LH6dgVrfv2Y1Gm8hWW4lwlyF2dy7wDW5XSg4n6PbwgpW60K_4M4q0vCbW7D9P=
+gz4pdS2RN4GwkFmzT-V7W20SxPw1lZk3VW2D5qf_4SHSmCW8RBLKw5gD2nHW1dvBm67LfvhTN1Q=
+mVZ__WMTZN3KDtQ61TZvCV9r4K_1hqG0MW66Dfcb5nb4GLW5-3l3x5fG2J7N5cwJ4XjNxp_W3k0=
+fFd8Mr-wmf29swJq04 ) for the hackathon to get your FREE Builder Pack which =
+includes FREE Bolt Pro and much more. The pack is sent to you via email wit=
+hin 48 hours of signing up, so don=E2=80=99t delay any further!
+
+Register now
+(https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8=
+ybl3b901vW8Ny6Rt5xrrycN76MZ-b3lcq-W69sMD-6lZ3p-N9g0vkDryY2PW3hyftP7mg0VdW3Y=
+cRwD4LH6dgVrfv2Y1Gm8hWW4lwlyF2dy7wDW5XSg4n6PbwgpW60K_4M4q0vCbW7D9Pgz4pdS2RN=
+4GwkFmzT-V7W20SxPw1lZk3VW2D5qf_4SHSmCW8RBLKw5gD2nHW1dvBm67LfvhTN1QmVZ__WMTZ=
+N3KDtQ61TZvCV9r4K_1hqG0MW66Dfcb5nb4GLW5-3l3x5fG2J7N5cwJ4XjNxp_W3k0fFd8Mr-wm=
+f29swJq04 )
+
+Token rollovers start July 1 =F0=9F=9A=80
+
+You asked. We shipped. Starting July 1, unused tokens will roll over to the=
+ next month so your tokens stay with you, even if you don=E2=80=99t use the=
+m right away. That means:
+
+- No more lost tokens
+- Build at your own pace
+- Save up for big launches
+
+We're setting a new standard for vibe coding tools! See the official announ=
+cement. (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w=
+2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3lcq-W7lCdLW6lZ3l6W2KKDHT3q2FPTN1vJsBv=
+PNJPJW3Q-1Jy3cmD78W6dknR-4-TblYW6LLvcg15rwswW7VcyRD405JF4W3mWxLM8TlHPDW3g6X=
+Sn7GTd1lW4-VNNw7cjPglMJwgvDt4Cp6N8SkKyq6hFtVW14msG_2lGKV5W7mnT_43zfQn9W835q=
+0-9cC3zqW22Q5vc1ZsbzTW2t0m3l4-lFQ-V5mClQ3n_LXgW5hKRxY3WZ7FjN1tQHGnnrDQKW7WJ=
+Xtl38XSCTW82MKkd24r1jzW4cJLcp5GHPPGVpX3qW5jwXNVN6ltJCBfx5Gvf4FL4bd04 )
+
+tokenrollover (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VW=
+Y1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3lcq-W7lCdLW6lZ3l6W2KKDHT3q2FPTN=
+1vJsBvPNJPJW3Q-1Jy3cmD78W6dknR-4-TblYW6LLvcg15rwswW7VcyRD405JF4W3mWxLM8TlHP=
+DW3g6XSn7GTd1lW4-VNNw7cjPglMJwgvDt4Cp6N8SkKyq6hFtVW14msG_2lGKV5W7mnT_43zfQn=
+9W835q0-9cC3zqW22Q5vc1ZsbzTW2t0m3l4-lFQ-V5mClQ3n_LXgW5hKRxY3WZ7FjN1tQHGnnrD=
+QKW7WJXtl38XSCTW82MKkd24r1jzW4cJLcp5GHPPGVpX3qW5jwXNVN6ltJCBfx5Gvf4FL4bd04 =
+)
+
+5 MILLION builders and counting
+
+We just crossed 5 million users on Bolt (https://d5llC804.na1.hubspotlinks.=
+com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3lcq-W=
+7lCdLW6lZ3pfW7RGt2b9fsm9lW7nrpf11zTf-jW7VDMxg4RdHwlW1YN5lQ48vC-_W5_N7sl8l5p=
+x3V4gD7M5V78TdW73sW5M2z1jsQW8FZTbk5kq1wNW6nNlch1BH77TW5K6QF32VPpFDW34HYm63W=
+jZy4W1FzPZ9999BG9W87GcZS6569shN89FxcmryL4WW1PZgxv3rj7tFW7k_xcP5RQGDKW29hBTH=
+7rkXfjMX027zfwBFPW2sSLTZ67xp-wW6nx1ps2ML_LQW3rFFWj8DfLjGN5bYgl1kgPLzN5RwH-L=
+_vDHGW8hD77G2pDB7_f92hfrP04 ) and we=E2=80=99re just getting started. The m=
+omentum from this hackathon has been unreal. We're so excited to continue c=
+reating alongside all 5 million of you. This is more than just a number or =
+a milestone: it=E2=80=99s a signal that the future is being made in real ti=
+me.
+
+Hackathon rule updates
+
+We also made some updates to the official rules! Take a minute to review (h=
+ttps://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8yb=
+l3b901vW8Ny6Rt5xrrycN76MZ-P3lcq-W7lCdLW6lZ3m5VyJS9H4pfXCWW7f0hHk4KxcVjW40ZM=
+rF4Pz0jhW8Cb47x5FDTlpW2CMC_h1cH2M4VPFzXj84P3lXW7cpJFx1W0BwrW6h9h3Y2MZHjYW6L=
+TN2s7pJjDFW2s5jwz26swKlW3rRmVh8nf2hwW4bpZf98PzMDyW18RxM89c7DN7W9cqf736Z4WlW=
+W1gT23X3sJ1X5Vgn_9386VMHNW3ybmnB3pLNjjW8z7Mvk4GgrrSW4_lzzk4ggLRDW70lnGQ1Xrw=
+VrW2rV7H64SZ5vHW4YQg1h5bghx6W6jzJRH3jMZwlW8Ns_1n8tPjg0f2Fzrnx04 ) the chang=
+es and make sure you=E2=80=99re set up for success.
+
+To stay eligible, your project must be primarily built in Bolt.new, the cor=
+e functionality and experience should run within Bolt. Tools like Figma or =
+ChatGPT are fine for design or idea development, but your actual app needs =
+to live on Bolt. Final submissions must also include the =E2=80=9CBuilt on =
+Bolt=E2=80=9D badge (automatically added when you deploy via Bolt).
+
+=F0=9F=94=97 Read the full rules + badge guidance (https://d5llC804.na1.hub=
+spotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76=
+MZ_43lcq-W7Y8-PT6lZ3mfW43QhFT53YFZpN3XkKlwSwDp7W38-tqd5S2ybZW8wbZmT1SvBpBW5=
+srH6Q9dxFxnW5tbz958-HyLPW5jhtNf5j5MwGW3-c3pM5lGbZ-W4pyghX4HnSr3VCdJ7D6dbMWR=
+W7Xfk8t1KnzBJMqJFtS5ZR1mW5LZXhk7ctl6CW63sr6q4kXh_JW5ZCgPp8-_3m6W7KZhBL3TgVX=
+MN6qbMVfRwjkFW25dYSP88tSVFW4QP5Gw98pzNBW3HpNxD7lPZY2W28R3kl2kmhvXW6hR8fm3ny=
+5vdW66MlJ51z53mDVsJH0V8JsmtlW445hz217rr6-W4skk2V3qv3Pyf7lf25Y04 )
+
+The ElevenLabs Challenge is Live
+
+Give your app a voice and a personality. The ElevenLabs Challenge (https://=
+d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901v=
+W8Ny6Rt5xrrycN76MZ_43lcq-W7Y8-PT6lZ3kQV_H5dY20_YNvN6NyH-DbGdn3W5l1vPK4-XF-j=
+W2kdsLq84hKf2W1RfMPm4lLxZyW1ywWgd2LQRh7VrmCTy7w8yZjW5QbTs25fy9LNVFb8kk3SB5G=
+fW365kMv9c-M41W2hKDn8856nxpW8gsG_c49bxBzW8rk-kL1fhWpKW45y9kC12DZqRW4d3fsQ80=
+WgkhW2-c5rq1j4QDqW2brYGr72pSLnW7fR5885-1_mSW5bcrjC49ch9vW3k-QXP6yvy4NW5HXSb=
+B37snZ3W4fYp3J4rM3VmTQDtq4ClXffW2_PnLF31T-X7VNj5Ms8mRvGKW4m0xhB5cYqHWf8NKzQ=
+q04 ) is officially live, and $25,000 is up for grabs.
+
+Use ElevenLabs Conversational AI (https://d5llC804.na1.hubspotlinks.com/Ctc=
+/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-b3lcq-W69sMD-6=
+lZ3q1W4wGjdd28JPBhW35BQXZ4Dm2D4W80Wwlr5XnMQ4W2hjFM26ThzmlW166Tcv8cdN7rVrzBm=
+N1QDGD3W2MNWQg7GnXZcW38RD2f5bGTN1N8r5lbcKb4X5W1yCNjK39mDKKW77wpwJ33lX8sW21-=
+Vlm85xky2W8p9rWK2NKJ2xW1_t_YL3Dgh30W5731Vv2Kr1hhW7J3Lyx5ZQjWSW5ct4j01mF61-W=
+1s-v3-3MbHYlVKpHWj7CLryTW842QQJ25zYKFf5bQfcl04 ) to build a voice-enabled e=
+xperience inside your Bolt.new app. Whether it=E2=80=99s a customer support=
+ agent, voice-based game, or real-time audio interface, this is your chance=
+ to make something truly interactive.
+
+What to build:
+
+Use ElevenLabs=E2=80=99 React SDK to give your Bolt app natural voice inter=
+action. Their tools plug right into Bolt, so you can go from idea to full c=
+onversational agent fast.
+
+Helpful Resources:
+
+- Quickstart Guide + Docs (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113=
+/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-v3lcq-W6N1vHY6lZ3pRW1=
+S8pKP8FsYk5W2JGhtk5rm9whW3kBdrX1WcGHWW48LzvN3MfQb4W4YrXvN4pTYgSVGlqFh2pz7gp=
+N8H_Lc_klfrYW4206qv5_DSDsW1yjPbC245GMMW4Wkm5M3X6SfjW4gHtWY6rM50wW6hxVWQ4Y6J=
+_GW3B5JWH49cHqWVXYm_57PKhYxVZDwTR2h953nW1Xt_3z1v0J3mW7h4C1M51mLXhW74bsYm2lh=
+Yg8W2mYqfW12bmQZN1r_lLWn33SMW6jBZKC99mKqJW16NW0Q8hYngSf53q_h204 )
+- Join the ElevenLabs Discord (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ=
++113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-v3lcq-W6N1vHY6lZ3=
+kNW30BnP67z3ynYW1dnFVB2FckMzW773LHM89zR-yW2cKCRz7cxlJ9W7CqR9W2T_6qZVC7Mnz4y=
+FR6qW38LV_R9h4z9SW6-phsH56rVkqW4yK7Ft2Bv27VW2L9_0X6NZ4gGW6qG27W2l_Y96W7WGK-=
+j6tGKYCN6sR1fp8C4cJW4MlPRk1CC8_qW6Dpglt3HhqPxW7kfwJD7BS1bRW8WndyH4tlxnyW3Y6=
+mTd1hbX-KW1cTP_B96m8J6W3Ytzgy1lK_h5W1mWCyF6ktS6QMTgT7c1ZN50f2v9fNg04 )
+- Join ElevenLab's livestream this week (https://d5llC804.na1.hubspotlinks.=
+com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_H3lcq-W=
+95jsWP6lZ3mPN3ryKbLfR4GBW5H2Km74QrwQ5W3J3RLq1MMrR0N92gkDSDb8lwW7xfL2_8cM3bc=
+W5qLd7V7gbgL8W7Lmzfz2nXJpTW3ksxsB61xVLJW695Wjx4fNjQ-W7z6PSD8SJhYqW3_2SFp3r5=
+9tnW74xYj64nwq0qN4k56yH8WJN3Vk84708ghJDNW1Jn0G62P9CXlW7jDQPw5CfQgNVTF2WK39T=
+qFhW3lWvL61ng1sCW25krTC2KdgddW33yQcK62D8YSW94c7CJ32YsDBW49BYvP6yFFGwVzKlVX6=
+VFGcVVPrmFh2hXllgW2dw86n32kskFN3p0w_7s7fh_VJfJN_5P2-DdW14DmdJ742PYFW5tnHwY1=
+3xg7BW6wLvxK7VFnm3d3qdDv04 )
+
+Vote for Contra=E2=80=99s 2025 creator tools awards
+
+We=E2=80=99re proud to share that the official voting site for Contra=E2=80=
+=99s 2025 Creator Tools Awards (https://d5llC804.na1.hubspotlinks.com/Ctc/D=
+Q+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3lcq-W7lCdLW6lZ=
+3lXW4JPbW24lwLdLW8t04qr1szgDzN2fW3M3l3yv1W4XD2B51-4vqpW3lBPSv5w5FqFW1xStVc4=
+xc7gDW7zyXxt4SfjSCVqNTYB7YJyCXW4vzDG85YGhS8W8rY1tM5CmR1WVgyxmg33KHNbMDQn6wj=
+3cRpW1qSv0C8vF4RQVLlxsM7fFphPW415ZvH4PsP1lN2FcB1yLghVyW4ky-CL7hyYJ8W6c0kBy2=
+zBbJTW6Vxx3f1fZSs5N1cj0Mhb1T6CW2D6z8918zypPVJn1xJ75fqdyW1x1jtx2thkwQW7bPGl4=
+9kl_VcdKrNXz04 ) was built entirely on Bolt. It=E2=80=99s fast, beautiful, =
+and packed with tools you=E2=80=99ll recognize. Vote now and you=E2=80=99ll=
+ be entered to win an Apple Studio Display or a Contra Pro membership.
+
+=F0=9F=91=89 Check it out + vote (https://d5llC804.na1.hubspotlinks.com/Ctc=
+/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3lcq-W7lCdLW6=
+lZ3lXW4JPbW24lwLdLW8t04qr1szgDzN2fW3M3l3yv1W4XD2B51-4vqpW3lBPSv5w5FqFW1xStV=
+c4xc7gDW7zyXxt4SfjSCVqNTYB7YJyCXW4vzDG85YGhS8W8rY1tM5CmR1WVgyxmg33KHNbMDQn6=
+wj3cRpW1qSv0C8vF4RQVLlxsM7fFphPW415ZvH4PsP1lN2FcB1yLghVyW4ky-CL7hyYJ8W6c0kB=
+y2zBbJTW6Vxx3f1fZSs5N1cj0Mhb1T6CW2D6z8918zypPVJn1xJ75fqdyW1x1jtx2thkwQW7bPG=
+l49kl_VcdKrNXz04 )
+
+Hackathon Judge Spotlight
+
+Meet Grace Ling (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/=
+VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3lcq-W7lCdLW6lZ3kZW1V8lmp2Tf-b=
+QW1Bq60r8-_L55W3Myr1128H1-KVnydrD46zJFgW1NpR_N1Cy6lsMLqMkZgw4cnW6Wl9hf86BKB=
+jW6hghzy6tz6W9W4RmtTZ2-6XQ_V5YKQm6xdTwLW6rhJqz3bQttVW8frW1V3Jlr49W2-5_rG102=
+xX-W5X8JZQ5dDzQlN6d-BRk2g7-3N1MCVbtWqkCnVP222g7vN9R-MFWcZRCnbLYW8mSB0D2YqX9=
+PW14Xb6D3pz5-QW6gfcds36VLtlW8HccWZ5TmRZqW4CXF338cpfRtV_z22v5rlZPHf6TTxSF04 =
+) , Founder of Design Buddies, Designer, Illustrator, Content Creator and o=
+ne of our amazing Hackathon Judges! Grace is on the lookout for:
+
+- Real problems solved well
+- Thoughtful design thinking
+- That creative spark
+- And unofficially, kawaii vibes =F0=9F=90=B0
+
+She=E2=80=99s judged 100+ events around the world, so we=E2=80=99re so glad=
+ she=E2=80=99s one of our 40 incredible judges reviewing YOUR hackathon bui=
+lds.
+
+Time to tune in
+
+This week=E2=80=99s livestreams were packed with insights, demos, and live =
+builds. Catch the replays on our YouTube channel (https://d5llC804.na1.hubs=
+potlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76M=
+Z-v3lcq-W6N1vHY6lZ3lNW7jZg_t7QTnZbW5dZJrT99ByhyW23F-2f2Lb6gTW2CVT9Y7qhgN0W6=
+zPjWY1Z_XPFN7kZDVZRVxvXW2j033y7ctLs9W3W9BQV2W96r6W95B-QS2mQWHGW8lylpP693Z_W=
+N4km0W1xvYw6W6QK02m4r1ZvjW2tvP8f61S_z3W47chCy6KBsLmW8ybjKv5JkyK4W8kgflc6ZTC=
+XrW24jxT779j59pN9khhnZk3nYYW8_88H145JK-cW1rTZCS3Jc7ctN8twcW_llWccW3jR4MQ5j6=
+65Hf51q4Xv04 ) and don=E2=80=99t miss what=E2=80=99s coming up next:
+
+- Vibe Marketing with Contra (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+=
+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_43lcq-W7Y8-PT6lZ3m=
+nVt51577NdMF4VhLRQC6lLKc0W3HGftV4qS_GkW8Z_p0f7T02fwVb3c3g1pdJ8FW8zC5TQ5tQ6S=
+ZW4d4XSt55tV-pMMRJVJXTGxrW88lttF75j-0kW98h1316wfXmRW99YQ465MpWQFW8TXVTJ3k8s=
+jhVG3HMn7-f8B-W1Gj7BM98JzlWW2Tvv_s8TF5h5W8Zz5q74FzTL0VfGjds1WZw5BW7m0WdM7Sf=
+hYNW1TvfNV64HV4DW1-KmBT4FjmzrW19mX0F1p-NDXW1qKg7B8zncHQVWBXDs49Dr5pW1LfbD94=
+p1nRxW8WrNwL7nr38bVVBmNV8NjjwHdG3SVb04 )
+- Demystifying the backend: How Supabase powers your application with datab=
+ase, authentication, and more (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ=
++113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_H3lcq-W95jsWP6lZ3=
+kxW7175R16Zk8V1V7mZ8y1S-R8BW6wpm-H3TKVlqN3qjYTqRWZTcW39Pk1s1T3Q37W90f18m876=
+VFWW2v8MhT1Rn5D6W6rfQxD4lPYhBN7gGY8B5Q_WmW1hPl3f5fWDbnW6FVNm298ZsJJW3s0ZlY7=
+kdnL9W2PVGs78trYkbW3RbG644KG7cQW3fr3nN8S6krcW58nptq4g6sFNW20szMt1V9C7bW5Q38=
+gw7gX4ccW1gYsp_1bVhZDW8wTBRJ5ngvQsW91wlvq4s4SkMMsM7m_2S5s-W49-74Q8KCfq4W3W2=
+MTq9hTnPZW57sF8v4H-mVKN207xFK71CXmW6LrlBs1Cp-XVVKxYdD8JrqDBW74QgC48QT7t5W3s=
+zc1p2TX9S8dy8n2-04 )
+- Real Talk: Realistic Voice AI with ElevenLabs (https://d5llC804.na1.hubsp=
+otlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ=
+_H3lcq-W95jsWP6lZ3mPN3ryKbLfR4GBW5H2Km74QrwQ5W3J3RLq1MMrR0N92gkDSDb8lwW7xfL=
+2_8cM3bcW5qLd7V7gbgL8W7Lmzfz2nXJpTW3ksxsB61xVLJW695Wjx4fNjQ-W7z6PSD8SJhYqW3=
+_2SFp3r59tnW74xYj64nwq0qN4k56yH8WJN3Vk84708ghJDNW1Jn0G62P9CXlW7jDQPw5CfQgNV=
+TF2WK39TqFhW3lWvL61ng1sCW25krTC2KdgddW33yQcK62D8YSW94c7CJ32YsDBW49BYvP6yFFG=
+wVzKlVX6VFGcVVPrmFh2hXllgW2dw86n32kskFN3p0w_7s7fh_VJfJN_5P2-DdW14DmdJ742PYF=
+W5tnHwY13xg7BW6wLvxK7VFnm3d3qdDv04 )
+- AI Translation with Lingo (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+1=
+13/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_43lcq-W7Y8-PT6lZ3nj=
+W2rtWpt8DvRQYW5TxGZg5BQ4l-V9fmG27z-Xq0W5d2Kcg8GQBY0W6C7x_R8KxbDMW421Gvs1L0s=
+wbVvwRyc38GH52N5xT4QsxJsMrW7G1w-73-DYLTW3Xc8TF9h05skVS4NQp6wHGG9W57vWKj4xYc=
+mWVQpsnk5BYN8xW1Stsfk3jJ7xVW4D0LbT7CBcVrW1p9wx-81GQ_YW5YMwKF966vpNW4Kq7mj6B=
+CL0LW8qZ0bF1XYP6RW1_7J7Z1lHwP5W3Cms0x2TktQKW2q-Y6g1zPQgkW1d81gQ59WDzSW18tBg=
+l2DRJC-W6c_rFg5G4zjNW61g7Sj74xvV_f8l2Kq-04 )
+
+Keep building!!
+
+Eric Simons
+
+CEO & Co-Founder, Bolt.new (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+11=
+3/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-b3lcq-W69sMD-6lZ3pjW=
+5q-nZ83LYJH7TBxhk39zFTjN1z0wsybLPhGW8hJKb83QClgXW4dWdbW1XGSgYW5qwwCP68XFt2W=
+3dXZ7r7LjxkcW5fP6494x-xfMW7Nlr_C205xcFN7hyR-SGLBX4Vp5c-D3k7BgYW91b0SY3wrl30=
+W9dkXqX9lcf9jW1w-2Fb7NWJ8RW8dcW-W2SQSfPW4ww61n1YFQg2W460GM780vlwXW1jZs4H7jZ=
+dSxW3ZvB5l2K1rmPW14XNs22P-gf8f1WKV8404 )
+
+(P.S. Tag @boltdotnew (https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5l=
+lC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-b3lcq-W69sMD-6lZ3lvMSH9Hc=
+n-2rnW4kYMlZ7FV-45W1M_YcJ6F55vDW7k3qHt7fM5bBW1YSnfr8wdQgXW6ZjrxJ5XrlCzVmfVJ=
+Z1HgG0gW74Y2lX1kbCGNW5f_c169l31z3W4vPHfK5qGSdJW5ncCdT3qR2DcVlPDxv1stFVqVVYB=
+Xq67LgF3W1-3jNd3Q_PlkW592Vbd3TGHSlW6lkPGL1xQf8WW1jJpvc7rqL8-W4jKpjM5j4dLfW2=
+y-l8H3XhQ9yW2wlHLx1SJqD3f8TZ6l-04 ) to show us what you=E2=80=99re working =
+on!)
+
+StackBlitz, Inc., 2443 Fillmore Street #380-16814, San Francisco, CA, 94115=
+, United States. To opt out of future emails from StackBlitz, click here to=
+ unsubscribe (https://hs-45403856.s.hubspotemail.net/hs/preferences-center/=
+en/page?data=3DW2nXS-N30h-HbW41GwNN2TqJ0QW36yBJG4pmnK2W4fNRDK1BDjpwW2CDK7r4=
+fpPBVW2nYMDJ3K3jcrW1XlXym4mdTMgW3P5t67328lFJW4fMZm-2YxqmTW2-tMzT4mGlhVW3SCR=
+0N1--7xcW41Q0wv3dpTk1W3VSyHW2MqrgYW2Cw20L34wJ9RW47y6QK1SkC-cW309MN636tq9xW1=
+VstDw2xGHcSW3c-3j81Bm89sW2xZ-BN2vPFT1W4fxWvL2RRY-pW2PnZ_h1QtjqyW3VSxQ41Q50v=
+WW3BV6H83CdlDnW3jbBxZ4fGZ3PW3P5vqT3VWS1cW3K25qR3Q_28kW41StfG3BXCssW2HTvTT3g=
+6b9hW49KVGq2RR3MjW2sBbcm2KDp4zW21kVSf1V95X4W41pLSk3P6L8WW2p9Cgk3blkcjW43Z6p=
+R3_FyjzW30sg1D43rfG8W2Yn5ky23gjHYW2PNjJc3Q_RhFW2Wp_wf3bhk2dW2r5F6m30HnQpW43=
+FrX32MyWvpW2MCTg84r5Qh7W2TNmjR41FMTBW3HfwhN1Sc1ZjW3z3lPb3btPZ-W2MyxRq3yWBdX=
+W3Hfbf83ZxqNwW30KqK03XMgJ70&_hsenc=3Dp2ANqtz-9zHZ0eefdtg12dgQh6ivE4kUJd3VZR=
+te_FWNNMZSGBbfFOCSPfzIUFeMpYVovLnqAbAypK68fD3UsMv4L-8NR8_2Sknw&_hsmi=3D3651=
+68816 ) .
+------=_Part_287724_1919309889.1749137485362
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3=
+.org/1999/xhtml" xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:=
+v=3D"urn:schemas-microsoft-com:vml" lang=3D"en"><head>
+    <title>Token Rollovers Start July 1 =F0=9F=94=81 + Free Bolt Pro for Ha=
+ckathon&nbsp;</title>
+    <meta property=3D"og:title" content=3D"Token Rollovers Start July 1 =F0=
+=9F=94=81 + Free Bolt Pro for Hackathon&nbsp;">
+    <meta name=3D"twitter:title" content=3D"Token Rollovers Start July 1 =
+=F0=9F=94=81 + Free Bolt Pro for Hackathon&nbsp;">
+   =20
+   =20
+   =20
+<meta name=3D"x-apple-disable-message-reformatting">
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+<meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1.=
+0">
+    <!--[if gte mso 9]>
+  <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    <w:WordDocument xmlns:w=3D"urn:schemas-microsoft-com:office:word">
+      <w:DontUseAdvancedTypographyReadingMail/>
+    </w:WordDocument>
+  </xml>
+ =20
+  <style>
+    ul > li {
+      text-indent: -1em;
+    }
+  </style>
+<![endif]-->
+<!--[if mso]>
+<style type=3D"text/css">
+ body, td {font-family: Arial, Helvetica, sans-serif;}
+ .hse-body-wrapper-table {background-color: #ffffff;}
+</style>
+<![endif]-->
+<!--[if mso | IE]>
+  <style type=3D"text/css">
+    .hse-column-container { border: none !important; padding: 0 !important;=
+ }
+  </style>
+<![endif]-->
+   =20
+     =20
+ =20
+ =20
+   =20
+  <meta name=3D"generator" content=3D"HubSpot"><meta property=3D"og:url" co=
+ntent=3D"http://45403856.hs-sites.com/-temporary-slug-c3d50f5c-b06f-4af3-a5=
+d9-693ad9f0780f"><meta name=3D"robots" content=3D"noindex,follow"><!--[if !=
+((mso)|(IE))]><!-- --><style type=3D"text/css">@media only screen and (max-=
+width:639px){img.stretch-on-mobile,.hs_rss_email_entries_table img,.hs-stre=
+tch-cta .hs-cta-img{height:auto !important;width:100% !important}
+.display_block_on_small_screens{display:block}.hs_padded{padding-left:20px =
+!important;padding-right:20px !important}
+.hs-hm,table.hs-hm{display:none}.hs-hd{display:block !important}table.hs-hd=
+{display:table !important}
+}@media only screen and (max-width:639px){ul,blockquote{margin:0;padding:1e=
+m 40px}
+}@media only screen and (max-width:639px){.hse-border-m{border-left:1px sol=
+id #ccc !important;border-right:1px solid #ccc !important;box-sizing:border=
+-box}
+.hse-border-bottom-m{border-bottom:1px solid #ccc !important}.hse-border-to=
+p-m{border-top:1px solid #ccc !important}
+.hse-border-top-hm{border-top:none !important}.hse-border-bottom-hm{border-=
+bottom:none !important}
+}</style><!--<![endif]--><style type=3D"text/css">#hs_body #hs_cos_wrapper_=
+main a[x-apple-data-detectors]{color:inherit !important;text-decoration:non=
+e !important;font-size:inherit !important;font-family:inherit !important;fo=
+nt-weight:inherit !important;line-height:inherit !important}
+a{text-decoration:underline}p{margin:0}body{-ms-text-size-adjust:100%;-webk=
+it-text-size-adjust:100%;-webkit-font-smoothing:antialiased;moz-osx-font-sm=
+oothing:grayscale}
+table{border-spacing:0;mso-table-lspace:0;mso-table-rspace:0}table,td{borde=
+r-collapse:collapse}
+img{-ms-interpolation-mode:bicubic}p,a,li,td,blockquote{mso-line-height-rul=
+e:exactly}</style></head>
+  <body id=3D"hs_body" bgcolor=3D"#ffffff" style=3D"margin:0 !important; pa=
+dding:0 !important; font-family:Arial, sans-serif; font-size:15px; color:#2=
+3496d; word-break:break-word">
+    <div id=3D"preview_text" style=3D"display:none;font-size:1px;color:#fff=
+fff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;=
+" lang=3D"en">Starting July 1, unused tokens roll over monthly! Plus, this =
+week=E2=80=99s hackathon updates and more.</div>
+   =20
+<!--[if gte mso 9]>
+<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+    <v:fill type=3D"tile" size=3D"100%,100%" color=3D"#ffffff"/>
+</v:background>
+<![endif]-->
+    <div class=3D"hse-body-background" lang=3D"en" style=3D"background-colo=
+r:#ffffff" bgcolor=3D"#ffffff">
+      <table role=3D"presentation" class=3D"hse-body-wrapper-table hse-full=
+-width-template" cellpadding=3D"0" cellspacing=3D"0" style=3D"margin:0; pad=
+ding:0; width:100% !important; min-width:320px !important; height:100% !imp=
+ortant" width=3D"100%" height=3D"100%">
+        <tbody><tr>
+          <td class=3D"hse-body-wrapper-td" valign=3D"top" style=3D"font-fa=
+mily:Arial, sans-serif; font-size:15px; color:#23496d; word-break:break-wor=
+d">
+            <div id=3D"hs_cos_wrapper_main" class=3D"hs_cos_wrapper hs_cos_=
+wrapper_widget hs_cos_wrapper_type_email_flex_area" style=3D"color: inherit=
+; font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"wi=
+dget" data-hs-cos-type=3D"email_flex_area">  <div id=3D"builtin_section-0" =
+class=3D"hse-section hse-section-full-width" style=3D"padding-left:0px; pad=
+ding-right:0px; background-color:#ffffff" bgcolor=3D"#ffffff">
+   =20
+     =20
+      <!--[if gte mso 9]><table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"widt=
+h:100%" bgcolor=3D"#ffffff"><tbody><tr><td valign=3D"top"><![endif]-->
+   =20
+   =20
+      <div class=3D"hse-column-container" style=3D"min-width:280px; max-wid=
+th:100%; Margin-left:0; Margin-right:0">
+   =20
+    <!--[if (mso)|(IE)]>
+      <table align=3D"center" style=3D"width:100%;" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation">
+      <tr>
+    <![endif]-->
+    <!--[if (mso)|(IE)]>
+  <td valign=3D"top" style=3D"width:100%;">
+<![endif]-->
+<!--[if gte mso 9]>
+  <table role=3D"presentation" width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"width:100%">
+<![endif]-->
+<div id=3D"builtin_column_0-0" class=3D"hse-column">
+  <div id=3D"hs_cos_wrapper_module_17444072586011" class=3D"hs_cos_wrapper =
+hs_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; =
+font-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widg=
+et" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"=
+presentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"left" valign=3D"top" style=3D"font-f=
+amily:Arial, sans-serif; color:#23496d; word-break:break-word; text-align:l=
+eft; padding:10px 20px 20px; font-size:0px">
+        <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC80=
+4/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-b3m2ndW69sMD-6lZ3pfW4M3_hD1PK=
+7bGW6ZZ4Wz1gvDDWVtlYm06_qSm2W9d4sgB4xT0q7W7DtWkR68CvKYW2QfgLr5w39QyW6VMM2W9=
+dt69kW47xq746cwC0RW9kK0fY5TzQZ3W1q_RD41PCjfbW3tx5-32jw1gRW8-BYj_3jyRdnW4zLq=
+wY41LDQlW40mjL81x15CnW5gDbG_9dXqc6W8dpsv74L1D-MW90vnKt7XNdrkW4zCn7H4zF2QCW7=
+Yqgb14mnLRQW6kQcXx49X1Z6f3CZqMj04" target=3D"_blank" style=3D"color:#00a4bd=
+" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"9n45NXBl">
+        <img alt=3D"" src=3D"https://hs-45403856.f.hubspotemail.net/hub/454=
+03856/hubfs/Hackathon%20Banner%202.jpg?width=3D14000&amp;upscale=3Dtrue&amp=
+;name=3DHackathon%20Banner%202.jpg" style=3D"outline:none; text-decoration:=
+none; border:none; max-width:100%; font-size:16px" width=3D"7000" align=3D"=
+middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:10px 20px 0px"><div id=3D"hs_cos_wrapper_primary_rich_text_=
+module" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_m=
+odule" style=3D"color: inherit; font-size: inherit; line-height: inherit;" =
+data-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"=
+hs_cos_wrapper_primary_rich_text_module_" class=3D"hs_cos_wrapper hs_cos_wr=
+apper_widget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-s=
+ize: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" da=
+ta-hs-cos-type=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; line=
+-height:175%; margin-bottom:10px"><span style=3D"font-size: 15px; color: #0=
+00000;">Hey there,</span></p></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17447278938691"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17447278938691_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; line-height:17=
+5%"><span style=3D"color: #000000;">What a week! The World=E2=80=99s Larges=
+t Hackathon is officially on, and things are moving fast. From new builds&n=
+bsp;to surprise livestreams and IRL meetups, we=E2=80=99re blown away by wh=
+at this community is already showing off. We=E2=80=99ve officially crossed =
+80,000 hackathon registrations! As a reminder, it=E2=80=99s still not too l=
+ate for you to join if you wanna be part of the hype!</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;"><span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC80=
+4.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt=
+5xrrycN76MZ-b3m2ndW69sMD-6lZ3n4W98b3Pk9hdTMTW5zCZ6y82k9kHW5DWQD26p18R9W2xDF=
+xC7zJq4-W2CfJtj5YMvLVW2YdRxn31MrcsW7lkLrH9k9821W3-MD5c3DJ8_SW15WV-S735YjrW6=
+DYRQJ11kxZhW59LHQ38fkRkwW5xD3Tn5j7DS6W3tlPqg6gHzplW22YX2k60zbYCW46yJPD1YBcK=
+NW4BgrR950MDB8N1qx9V0WxzjMW3Gw5DK2mdSjKVSkzN49lxKLZW42vY2N8Bg1Ltf2pPh0H04" =
+style=3D"color:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"1" data-hs-link=
+-id-v2=3D"OpnL8F9I" target=3D"_blank">Register</a> <span style=3D"color: #0=
+00000;">for the hackathon</span> </span>to get your FREE Builder Pack which=
+ includes <span style=3D"font-weight: bold;">FREE Bolt Pro </span><span sty=
+le=3D"font-weight: normal;">and much more</span><span style=3D"font-weight:=
+ bold;">. </span><span style=3D"font-weight: normal;">The pack is sent to y=
+ou via email within 48 hours of signing up, so don=E2=80=99t delay any furt=
+her!</span></span></p></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17491300918671"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table align=3D"ce=
+nter" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"border-collapse:separate!important">
+    <tbody><tr>
+      <td align=3D"center" valign=3D"middle" bgcolor=3D"#000000" style=3D"f=
+ont-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:bre=
+ak-word; border-radius:8px; cursor:auto; background-color:#000000; mso-padd=
+ing-alt:12px 18px">
+        <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC80=
+4/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-b3m2ndW69sMD-6lZ3pYW4vbGKl5LY=
+tC7W8V1Pjs1SB41YN307XZwRG1p1W5BkpDl5JwBs0W6DTWCj3ZlCcBW316RgH4QZmXQW1cFlVG5=
+-VL1vW1Kf9fN2fT5mLN6ZWCqctNqhvW4hyrtX4nfTPFW2hyvS586jQNzW8n_rKP5gcQ8YW59mKz=
+H8PxcbcW2qD2yP1X5g2TW4FfcNR1MnQS4W1W1W6X82RJM7W5jlX0C1yfGKZW3NC2tf3kT56qW3k=
+H8mh522Z7gW4XjzNG5C7WyzdLZ6tP04" target=3D"_blank" style=3D"color:#00a4bd; =
+font-size:16px; font-family:Arial, sans-serif; Margin:0; text-transform:non=
+e; text-decoration:none; padding:12px 18px; display:block" data-hs-link-id=
+=3D"2" data-hs-link-id-v2=3D"tZ2vHKvl">
+          <strong style=3D"color:#ffffff;font-weight:normal;text-decoration=
+:none;font-style:normal;">Register now</strong>
+        </a>
+      </td>
+    </tr>
+  </tbody></table></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17491333520541"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17491333520541_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; line-height:17=
+5%; font-weight:bold"><span style=3D"color: #000000;">Token rollovers start=
+ July 1&nbsp;=F0=9F=9A=80</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">You asked. We shipped. Starting July 1, unused tokens will=
+ roll over to the next month so&nbsp;your tokens stay with you, even if you=
+ don=E2=80=99t use them right away.&nbsp;</span><span style=3D"color: #0000=
+00;">That means:</span></p>
+<ul style=3D"mso-line-height-rule:exactly; line-height:175%">
+<li><span style=3D"color: #000000;">No more lost tokens</span></li>
+<li><span style=3D"color: #000000;">Build at your own pace</span></li>
+<li><span style=3D"color: #000000;">Save up for big launches</span></li>
+</ul>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">We're setting a new standard for vibe coding&nbsp;tools! <=
+span style=3D"color: #2ba6ff;"><a  href=3D"https://d5llC804.na1.hubspotlink=
+s.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3m2n=
+dW7lCdLW6lZ3pdW1cGVzV7QD843W7zmSLh2pvbNGN45n_V4WrPDgW3Hn8t-27X5k3W6bd9w26Vl=
+4PBV4N6SK35QS6XN16Z3LDVfp_fV-Nm_W8WgQZYW5sT5Sn3LtTr6VVNdtb76cH9dW4VqMlG126y=
+Q6W5w5mwq91Tdv9W7x_Xmr3GXt1dW25DwSG5cpp9mVNmnPF6xJNHFW6Q4rwt555q-1W4r_R061-=
+X1QVW5nYchF3Pb4YnV-SzSL7rqD90Vd_26N1-6JcGW2m_cyN6lYNn2Vqcnp38kWzWhW8h7Gnd5v=
+H8ZvW82DXPj91slS1f68xwDz04" style=3D"color:#2ba6ff" rel=3D"noopener" data-h=
+s-link-id=3D"0" data-hs-link-id-v2=3D"M4g5Gd9I" target=3D"_blank">See the o=
+fficial announcement.</a></span></span></p></div></div></td></tr></tbody></=
+table>
+<div id=3D"hs_cos_wrapper_module_17491337279422" class=3D"hs_cos_wrapper hs=
+_cos_wrapper_widget hs_cos_wrapper_type_module" style=3D"color: inherit; fo=
+nt-size: inherit; line-height: inherit;" data-hs-cos-general-type=3D"widget=
+" data-hs-cos-type=3D"module"><table class=3D"hse-image-wrapper" role=3D"pr=
+esentation" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0">
+  <tbody>
+    <tr>
+      <td class=3D"hs_padded" align=3D"center" valign=3D"top" style=3D"font=
+-family:Arial, sans-serif; color:#23496d; word-break:break-word; text-align=
+:center; padding:10px 20px; font-size:0px">
+        <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC80=
+4/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3m2ndW7lCdLW6lZ3lMW4sRj0x3N0=
+nWgW1JG64-3HDwdfW9gG0504JkJZ5N85sbCFj_BVTW7-Ls2z4nRNgLW2XxQ0B91D3jHW1T4bbx8=
+5cKv_W3jdkBP38Zjy9W63QL2j2TkKm6W2Sh-fC3NVTSLW4ccZRj92bXR3VS0wbc3xNJPwW8TBHG=
+N1Zr02rW8XwXP18PDkFWW4cnhbL2VJKBWW99n4r48P_m06W26V0ww11ww4VW15MZFF7LxfWlW8p=
+BN1L4r03rrW14lWRK24Bb1BV1p20J4Y3ln4W9bZJjT2WQw7JW8nj9qH3M7G3wW4LWdPC1PtqMTf=
+37crcv04" target=3D"_blank" style=3D"color:#00a4bd" data-hs-link-id=3D"1" d=
+ata-hs-link-id-v2=3D"hRRyw0Sl">
+        <img alt=3D"tokenrollover" src=3D"https://hs-45403856.f.hubspotemai=
+l.net/hub/45403856/hubfs/tokenrollover.jpg?width=3D500&amp;upscale=3Dtrue&a=
+mp;name=3Dtokenrollover.jpg" style=3D"outline:none; text-decoration:none; b=
+order:none; max-width:100%; font-size:16px" width=3D"250" align=3D"middle">
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table></div>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:10px 20px"><div id=3D"hs_cos_wrapper_module_17488871555781"=
+ class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module" =
+style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-hs=
+-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_cos_=
+wrapper_module_17488871555781_" class=3D"hs_cos_wrapper hs_cos_wrapper_widg=
+et hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: inher=
+it; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-cos-=
+type=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; line-height:17=
+5%"><span style=3D"color: #000000;"><span style=3D"font-weight: bold;">5 MI=
+LLION builders and counting</span></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">We just crossed <span style=3D"color: #2ba6ff;"><a href=3D=
+"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8=
+ybl3b901vW8Ny6Rt5xrrycN76MZ-P3m2ndW7lCdLW6lZ3pgN4Ck5g4ndxT1W4fr5MV8TP1YTW44=
+WS9Y3kQBK9N2HW9vwCJc-xW7s_7CV3nLy50W2D0_lC8rD4HbW70pDTH52hsm6W7bP8yD24R7S6W=
+96TRmY8RHB8WN1Hkltx4bgz7W5xD3bL5WbpD2N6D910z5-79lW7kjPFK4gZh1LW4bvVGc2CsyjR=
+W84TNPB1cq8spVm93YZ7HvgJ7W3WBRrH5R17WrW67fJBm5X24MFN75MG463d6H2W9gnr6s8k0Jy=
+DW4QL0pb96vVBYVjJVk88snrglW60DZtg6v0RFhW8zH-9P5VmjHqf2Zk86n04" style=3D"col=
+or:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"vz=
+Gj0cgh" target=3D"_blank">5 million users on Bolt</a></span> and we=E2=80=
+=99re&nbsp;just getting started. The momentum from this hackathon has been =
+unreal. We're so excited to continue creating alongside all 5 million of yo=
+u. This is more than just a number or a milestone: it=E2=80=99s a signal th=
+at the future is being made in real time.</span><span style=3D"color: #0000=
+00;"><br></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%; font-weight:bol=
+d"><span style=3D"color: #000000;">Hackathon rule updates</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">We also made some updates to the official rules!&nbsp;Take=
+ a minute to <span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na=
+1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrr=
+ycN76MZ-P3m2ndW7lCdLW6lZ3pBW45XWm18DSJQ8W7SrKsK1Y4dBcW4Pxt3s7XjQBBW6ZF23Q8W=
+gw4hW1mFR8Y156hdJW4LDyfJ6jHcCSW5zH05G79nQr8W8_8pTc37K2-5W8y3Pcx5hCWSpW8N-N0=
+13ddDgmW44SCDp5bpWKCW4FmC5Z2XD65rW8wdGSg8_c5dDVHT6tt3m2_NSW88XvfC988p35W4fZ=
+CYv7qKdGjW3PCQ0q17cX85W2cf66L26hMZjW9dRFCD7Ggb9YW7Hhn6_7xj51hW3D4znM1DnbDbW=
+8pZylG84X39kW5d00Lx6VknrqW48vy3T9hWqmDf3PH3T004" style=3D"color:#2ba6ff" re=
+l=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"fYwjPo/i" target=
+=3D"_blank">review</a></span> the changes and make sure you=E2=80=99re set =
+up for success.<br></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">To stay eligible, your project must be primarily built in =
+Bolt.new, the core functionality and experience should run within Bolt. Too=
+ls like Figma or ChatGPT are fine for design or idea development, but your =
+actual app needs to live on Bolt. Final submissions must also include the =
+=E2=80=9CBuilt on Bolt=E2=80=9D badge (automatically added when you deploy =
+via Bolt).<br></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #2ba6ff;">=F0=9F=94=97 <a href=3D"https://d5llC804.na1.hubspotlinks.=
+com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_43m2ndW=
+7Y8-PT6lZ3lpN6f7hW0D0fncW65MWzw2fvGlHW2Wy6vc29Hvr4N96Xn3hJws5QW2xvVnP52QwdB=
+W5fyyr43mJ3w8W1dK_Dd7s2XwrW4-GdVx4S0F0cN5j9fk1K0KYsW1mHStx4F7B6qV6XD6X2SwSj=
+LW1sF-mQ4Pp0JzW5rk3Zj770MQtVKWxHR4gJ7YSW896JXB2tT3F9W8gYDYc6xrvW-W69t3jy92L=
+NxRN1ZhnNwj-PLlW2f5Z_S7kXTYHW84TPHS1KMV2LW70b7m98Y4_4wW3JX_WW2-c2L-W8JwpVd9=
+0P-gWW6YF1n01DzJRtW7TzV1z1nZMZKW4PJSR16FcJRMf2Ch5Jq04" style=3D"color:#2ba6=
+ff" rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"r+DCSSIH" =
+target=3D"_blank">Read the full rules + badge guidance</a></span>&nbsp;</p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</=
+p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%"><span st=
+yle=3D"color: #000000; font-weight: bold;">The ElevenLabs Challenge is Live=
+</span></p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%"><span st=
+yle=3D"color: #000000;">Give your app a voice and a personality. <span styl=
+e=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/=
+DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_43m2ndW7Y8-PT6l=
+Z3ppW4BqNj08r3qMkW8klQ2C2l7cR4W2h8Sgm1lXp0ZN5z3zVBGFHBhW16LKzh3TFjVbW421J6G=
+622RF9W2L2BFX5MkQCCW6-C9446FvyThW3KJfvp83qKvPMxvRnpVlsWRW6SPfyG1YzPP4Vk2D2b=
+4BCrf5W4lSrsz98V0pmW6NzcRs5hzKhLW103f15798ZpFW4fLnNR1Ftfn8MN0VRz7TfWBW8lX-7=
+T5fbzH4W3lJYDp1LS-14W2wTqDV6lc0J2W8Gsjf_6_nkYqW1Qc1bF4zbqkCW8Lzy_z2KW1V8W8D=
+nTJR4fYh_FW1kj_PX7qw8bYVLHX3J6S1V1hf3ztmL204" style=3D"color:#2ba6ff" rel=
+=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"7XdROumF" target=
+=3D"_blank">The ElevenLabs Challenge</a></span> is officially live, and $25=
+,000 is up for grabs.</span></p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</=
+p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%"><span st=
+yle=3D"color: #000000;">Use <span style=3D"color: #2ba6ff;"><a  href=3D"htt=
+ps://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3=
+b901vW8Ny6Rt5xrrycN76MZ-b3m2ndW69sMD-6lZ3lJW5CBbsb78hk-9W8bCpT27h0YlrW2lNSl=
+C2fT7FkW3dfvq0235zD5W7xm2LM122sfBV3yQ6S7DVkl_W8qDQVC7l9TNlW2N2mnQ8yHKNlW6X9=
+TPg1fWQvXW1zLFk_9bKjRBW6tMQq27xv0xwW6NKwBd4kT3RXW11hFmh11BGqGW30YPBv1zB5VnV=
+yHM9x4wB13HW6fCNmn7k6ZjRW7bGKHb5CNVjnW3YhBYY5RclLpW2_q_8T5vGpQrN3SqSrhr3YNQ=
+f4YGhyz04" style=3D"color:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"0" d=
+ata-hs-link-id-v2=3D"q6OM7MBp" target=3D"_blank">ElevenLabs Conversational =
+AI</a></span> to build a voice-enabled experience inside your Bolt.new app.=
+ Whether it=E2=80=99s a customer support agent, voice-based game, or real-t=
+ime audio interface, this is your chance to make something truly interactiv=
+e.</span></p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</=
+p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%"><span st=
+yle=3D"color: #000000;"><span style=3D"font-weight: bold;">What to build:</=
+span><br>Use ElevenLabs=E2=80=99 React SDK to give your Bolt app natural vo=
+ice interaction. Their tools plug right into Bolt, so you can go from idea =
+to full conversational agent fast.<br></span></p>
+<p data-start=3D"711" data-end=3D"759" data-is-last-node=3D"" data-is-only-=
+node=3D"" style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</=
+p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;"><span style=3D"font-weight: bold;">Helpful Resources:</spa=
+n></span></p>
+<ul style=3D"mso-line-height-rule:exactly; line-height:175%">
+<li><span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspot=
+links.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-v=
+3m2ndW6N1vHY6lZ3nGW7ZNhtj5rQSYDV4w7Xs3w_kC0W4G2q3z3Q988YW4VmJ7T34GDftW5Pn1n=
+c9kV9H1MxSjc2sn3TZW7grbQ558Qrc4W5G6TYM6XtLmXW1r8F7V3TYwwDW1swYx11S4-kSVN6XN=
+22j5QDVW573RR-9fXmvvN8qCktSswkbtW8T0Nm3436HWwW1YgJh77vfT72W8pGlbM4wYCLYW923=
+2CS4Ks72lW37j9Fg1SCwJHW66XsXk4K2jbtW8xs5mF7nzT7GN7PM-kYFrjh1W4DwVL58By02Zf9=
+gnlTH04" style=3D"color:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"0" dat=
+a-hs-link-id-v2=3D"I2bi5kJE" target=3D"_blank">Quickstart Guide + Docs</a><=
+/span></li>
+<li><span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspot=
+links.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-v=
+3m2ndW6N1vHY6lZ3lBW3kRFMD4-mHjDW2pPwv-2qpYZNW8nkx6h3HY8nqW7MfqSJ4-kGj-W7G3t=
+b13p4QTSW3j8F107v-bTjW3s_-xr1b7y4kW7QfxDF6c0WWwVRJRM-10gpcwW1WPWq48l1MF0W2z=
+ylNP8pBy1yW6YJMT34Lzr65N10Tb6cfjFLdW3CJZkr144Lx3W1xPxv15rzLvBW8yplSf28WW35W=
+5VHn853WVZGlW1BmxVx2NGbCqN2R8kkWjFKzNVHNR7y8pN__zW2Dj4N77KMk4wW4gzHWM448Qmy=
+f171GXq04" style=3D"color:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"0" d=
+ata-hs-link-id-v2=3D"k5XyJo3T" target=3D"_blank">Join the ElevenLabs Discor=
+d</a></span></li>
+<li><span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspot=
+links.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_H=
+3m2ndW95jsWP6lZ3m3W8qdF4_912_vTW7qdT2y8l941RVcjRlT1QdH2lN8VXQzYNzHcMVdjqMr3=
+-DhNTN3Q3c6WWmRxnW5GVHjd5H2M6JW6LDzqp14hw-mW63RTXk1zc2yTW1YpM9-8c_VsmW4lmyG=
+35wq5BmW5CZBVt2rnjHCW6vQBVw5nFdSBVRD4Rm7HX-2pW45z9V864vxpSW6F6gsq8Z98V_W7fv=
+DWc74MnnzW6hcc2J5_0p5WW8Y48wt4ZbC1gN94LF-jSXJgLW4FmcZt5sMFmSW5tVjpn1ByzY5W1=
+rxgkt5dQ92XW6N7xkX2_Ld8wW69phNv7Zh0HzW4Hdvnw13sgYDW51Frkx1jBcN-W5g9GWZ6DNNF=
+5W4nFKcQ1CWdRfN7tl99TgWDj9f3Y1DTj04" style=3D"color:#2ba6ff" rel=3D"noopene=
+r" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"BdqTXcxG" target=3D"_blank">=
+Join ElevenLab's livestream this week</a></span></li>
+</ul>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%; font-weight:bol=
+d"><span style=3D"color: #000000;">Vote for Contra=E2=80=99s 2025 creator t=
+ools awards</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">We=E2=80=99re proud to share that the official voting site=
+ for <span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspo=
+tlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-=
+P3m2ndW7lCdLW6lZ3l1W72rR1t3Zhdl4W6s9q8Y3TS1ZtW8FdmZ77JQqBcN5ZmRwTctCXwVGjmT=
+Y9d9XKrW3tcQ-33mC9svW4LhdgG6k6xSSVb4tMK49pgM-W41QXM77HhrsgW5t_b9b2ypLfTW1h0=
+gFP1PvbMFVfqhLd5vWBf4W14FfcC5zphlqN6lp6tQfmTzCW821ZJ37TqcNfW6CkFRw62ghWkN6s=
+jRTHK2hB8W18blzL4JpQDPN3y9DT730KMqW88WBjP99hMWJW9h1ddK5c4s0dN8M28SzTpmYpW6t=
+1TX-4NkspvW90DFr44nf45rf2tdfpg04" style=3D"color:#2ba6ff" rel=3D"noopener" =
+data-hs-link-id=3D"0" data-hs-link-id-v2=3D"RJwUVUcN" target=3D"_blank">Con=
+tra=E2=80=99s 2025 Creator Tools Awards</a></span> was built entirely on Bo=
+lt. </span><span style=3D"color: #000000;">It=E2=80=99s fast, beautiful, an=
+d packed with tools you=E2=80=99ll recognize. Vote now and you=E2=80=99ll b=
+e entered to win an Apple Studio Display or a Contra Pro membership.</span>=
+</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">&nbsp;=F0=9F=91=89 <span style=3D"color: #2ba6ff;"><a href=
+=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW=
+2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-P3m2ndW7lCdLW6lZ3mPW7gp8pZ6y4sxHW5WdJGS2mxwr=
+XW5rQ9215Ssd08W47Ps7b5jT1W_W285Rpg8c0ZnfW6n4Bv61VhDnRVn5WLX8mLXsYW8xZXGk18r=
+N_NW2Yf8MQ2nlrM7W6HfHlC8W0CwmW7Z9-qf2vWk2GN6Y12349CBPgW5WKmVM2jhJWpN2w_J2MC=
+s_qtVl9tPV7fy5YYW804hZ17hSNtKF4xDPy6M0SlVC3Mbm6pkFBKW21KzTc6fc5QBW5TDlWt3B-=
+pszN1JKx6S3fYVLW26Gh9K6-rqlkW1HFxxb16PDwvW7wrKww7TfdMYf1mVCvd04" style=3D"c=
+olor:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"1" data-hs-link-id-v2=3D"=
+wd/0iiMY" target=3D"_blank">Check it out + vote</a></span></span></p></div>=
+</div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:10px 20px 0px"><div id=3D"hs_cos_wrapper_module_17477670408=
+232" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modu=
+le" style=3D"color: inherit; font-size: inherit; line-height: inherit;" dat=
+a-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_=
+cos_wrapper_module_17477670408232_" class=3D"hs_cos_wrapper hs_cos_wrapper_=
+widget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: i=
+nherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-=
+cos-type=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; line-heigh=
+t:175%"><span style=3D"color: #000000; font-weight: bold;">Hackathon Judge =
+Spotlight</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">Meet <span style=3D"color: #2ba6ff;"><a href=3D"https://d5=
+llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8=
+Ny6Rt5xrrycN76MZ-P3m2ndW7lCdLW6lZ3mZN5xwg5-bFybWW89dQ2G5n3pTsN8QBNTntZh8SW7=
+8q62752XQvgW6BxQJY4QYVg9N21YS_zM0WsBW3B6vpN5QsHqpW6R8TPz4QBX0CN8YZD3fCTLk1W=
+461Ld71x4ZVyW8BGMxF3Scv-JW8GlhYk3WGbdRW6vKdVx4B_77bW3wDy697QCh7kW3-MKcd8_bL=
+0zW6hnjxz8Rlnv4W25bb4V7x4v8kW41BQFQ4CmbVMW2WMwqc22v-KbVWPz_630PxCZW2FRC547L=
+vLtfW3nxdBv6fW-XyVV93rP68rcyWW7hXkNV9gQSGFdnzHTR04" style=3D"color:#2ba6ff"=
+ rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"JEXy5zW4" tar=
+get=3D"_blank">Grace Ling</a></span>, Founder of Design Buddies, Designer, =
+Illustrator, Content Creator and one of our amazing Hackathon Judges! </spa=
+n><span style=3D"color: #000000;">Grace is on the lookout for:</span></p>
+<ul style=3D"mso-line-height-rule:exactly; line-height:175%">
+<li><span style=3D"color: #000000;">Real problems solved well</span></li>
+<li><span style=3D"color: #000000;">Thoughtful design thinking</span></li>
+<li><span style=3D"color: #000000;">That creative spark</span></li>
+<li><span style=3D"color: #000000;">And unofficially, </span><span style=3D=
+"color: #000000;">kawaii vibes =F0=9F=90=B0</span></li>
+</ul>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">She=E2=80=99s judged 100+ events around the world, so we=
+=E2=80=99re so glad she=E2=80=99s one of our 40 incredible judges reviewing=
+ YOUR hackathon builds.</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;"><strong>Time to tune in</strong></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">This week=E2=80=99s livestreams were packed with insights,=
+ demos, and live builds. Catch the replays on <span style=3D"color: #2ba6ff=
+;"><a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY=
+1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-v3m2ndW6N1vHY6lZ3nHW13Ntz7756lJyW7=
+FPdKL5ZNTRjW171MZF8C0QRrW2psqMT78bNP3W3ZfYPg40L3xqW37QjBm88dBQYW7JtZzS8mfzH=
+cW7x2cjy7VqD9JN91XJrk_FYF-N3RQLQbLtqSZN2SgmdW5z9mCW1ljYRZ6JfpT6W3BDm8Y81TTk=
+rW4tk8Xb30tKFdVNV6wS8mgtY-N2NwD7C6Vn1sW1h3Q7j1vNl28W46QxC67z0ZzqN6LHRXR7L2Q=
+KW66MVwf1mmzTNVSKqKp2fW9fvN7S6X5G3RFCgdhQLTs04" style=3D"color:#2ba6ff" rel=
+=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"M46PMFQa" target=
+=3D"_blank">our YouTube channel</a></span> and don=E2=80=99t miss what=E2=
+=80=99s coming up next:</span></p>
+<ul style=3D"mso-line-height-rule:exactly; line-height:175%">
+<li><span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspot=
+links.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_4=
+3m2ndW7Y8-PT6lZ3lNW5yG7mf60XhLqW2slXJM4MJGCxW111VrL3qBv-kW4bVBmd5sLGq4VnxBY=
+d3JJxBqW94Yt5g6LPqVPW2lBbBm4gDD_hW7jgT_h4sBhVYW4Xn4WV2T8BLgW6FtTsl6Gl0ZGW6w=
+SSDn78Pn2GW4p6RF44r6R63W1t6Czt2BV6-kW87nncz25_YhJW7jB5wy6lyG5SW3-Rmwx23drmQ=
+W5lj8f93xR33KW2bL67X4wy6rJW2Ntq3Q3ggCWFW8V5yWB2cN99zVj0bPR2ZbTqHW2pZskp8V4L=
+d3W1mP3N-2xKzgJVZ5MvT4hH41LW9kVBpp2D53tlW4sFqrv3nnrzYf3d35P804" style=3D"co=
+lor:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"E=
+bB3vpoz" target=3D"_blank">Vibe Marketing with Contra</a></span></li>
+<li><span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspot=
+links.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_H=
+3m2ndW95jsWP6lZ3ncW328vY76YTlKjW7pF8T91N7qvNW7mnTPZ4KSzcyN150XxX5nKJ6W8pGpl=
+w9722n0Tq23r9fKQB8W3rBknl7pBh6hW7h-L2z6c1ZT-W8pMT-l7c3M4mW15LQ3m98-vx7W7Xcv=
+3d6HgR7mW4KT2345Rrs_FW1xFb-22NJbgdW6D_Jdp4lmJD3W6-Nxz_4Q5rdgW7MqcBp7YhjpxW4=
+L6TKs8yWDhfW26hP3G1w4JZqW3WTfmg9g_-XPW17tF658kXsn1W4tcWTX6hdhK0W3bStDG8Qvkz=
+cW1Z_zmc8xmFcdW6ND6kL9dQnqxW4p4NwH4s-MLlW91Clcm1zj_LmW1jk_Z48_YBbrW7GcmBH23=
+kRFwW1wqftL4Pm9qnW1Wb46-22fGX8f5fN8hT04" style=3D"color:#2ba6ff" rel=3D"noo=
+pener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D"UHrrC9Bn" target=3D"_bla=
+nk">Demystifying the backend: How Supabase powers your application with dat=
+abase, authentication, and more</a></span></li>
+<li><span style=3D"color: #2ba6ff;"><a href=3D"https://d5llC804.na1.hubspot=
+links.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_H=
+3m2ndW95jsWP6lZ3mLN3b17qQm7qfHW1STwz87JMxLgW9htDYl4-wqrLW1KBhh28ks6pYW8YqTg=
+b45BXq9W7LM3Wj3BRNfZW27FxBB4TnN5pVdZnhc89KbJTW74h50m5KXDd8W3KVzFG1VdPQGW60R=
+zRG571W7lW1Pr_rw2PxVN0W6z8kQL86-_pPW7L2MsL4pfX7xW3lzRby5yMb9XW7N2Fy123bvNHW=
+8Kf9qL7Q-sR_W3qx8k2983sTvW4nHK5k5C-bPrW3tcTRC1scMSkW8C_6pf5HT87-N8vBLRtHhNT=
+0W6CVdcP3_1TChW3J_ty_3t5CMSW48LHFY8CZ7CMW62lrr344YJwrVgWZWl1DlWrfW7Rjf2T2YY=
+v2RW4QnGhZ4BPy8pN3ls-mkZCjSyf2JHQC404" style=3D"color:#2ba6ff" rel=3D"noope=
+ner" data-hs-link-id=3D"1" data-hs-link-id-v2=3D"5gXyEC/s" target=3D"_blank=
+">Real Talk: Realistic Voice AI with ElevenLabs</a></span></li>
+<li><span style=3D"color: #000000;"><span style=3D"color: #2ba6ff;"><a href=
+=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW=
+2w8ybl3b901vW8Ny6Rt5xrrycN76MZ_43m2ndW7Y8-PT6lZ3pzVvHj018d8wD0V7WBRq3pt5SzW=
+7JTWFm1xy0TLW1WlTjF2JTvLnW1Hf6bG5RB3SnW5Pf8gP8vQPL9W2HYz2l5c-7cFW4nxCnM4dF4=
+_fW1zytd75bT1GVN1T1ML6-hGjxW2_KLCJ6Hb2WtMQHBgWCrQhyVFSlWk5bx-FjVsSDF75BKpRl=
+N3Rcsrq8969LW8g0QKY4bfH1bW82cgNf9dQZkrW7tTwMG2BvxcnW1DDFrG96pFQyW4Zj7fk6cf4=
+DPW8RwzTG2GQpRDW63HHMY7Db64dV75MB845b-BfW8XQ5xR5sFpZTN13ftygV0H4-W85LnC52m8=
+ynSf7RcLnH04" style=3D"color:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"0=
+" data-hs-link-id-v2=3D"VIBS7yW9" target=3D"_blank">AI Translation with Lin=
+go</a></span>&nbsp;<br></span></li>
+</ul></div></div></td></tr></tbody></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:0px 20px 10px"><div id=3D"hs_cos_wrapper_module_17447299723=
+321" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_modu=
+le" style=3D"color: inherit; font-size: inherit; line-height: inherit;" dat=
+a-hs-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><div id=3D"hs_=
+cos_wrapper_module_17447299723321_" class=3D"hs_cos_wrapper hs_cos_wrapper_=
+widget hs_cos_wrapper_type_rich_text" style=3D"color: inherit; font-size: i=
+nherit; line-height: inherit;" data-hs-cos-general-type=3D"widget" data-hs-=
+cos-type=3D"rich_text"><p style=3D"mso-line-height-rule:exactly; line-heigh=
+t:175%"><span style=3D"color: #000000;">Keep building!!</span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">Eric Simons </span><br><span style=3D"color: #000000;">CEO=
+ &amp; Co-Founder, <a href=3D"https://d5llC804.na1.hubspotlinks.com/Ctc/DQ+=
+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycN76MZ-b3m2ndW69sMD-6lZ3q=
+2W3xChzp5chDVDW1RVCqP3Qk-ZtW45v2JM9g75z-W6rdM6j6WVz1XW8mGT336w2-70W8Bw4557J=
+_0k2N5mk8N2PVpYWW3zSqqJ8JLTxQW8WGNmJ3J2NlxW8GDBVw3glp2RN7h7YxXsPSlYW9fYGYC4=
+RVJkmW5jPrwm6ZGsm2W2lsF5P47PsmQW25Zy0Q2cQSZgW7S9Wmk2nnXPmW5R8tDg2CRLd_W2cgb=
+ts7Zpwz9V5mXtB1g7JgwW2Bw0Nl1F17Gvf5vpRc604" style=3D"color:#00a4bd; text-de=
+coration:none" rel=3D"noopener" data-hs-link-id=3D"0" data-hs-link-id-v2=3D=
+"2ufH4f1S" target=3D"_blank"><span style=3D"color: #2ba6ff;">Bolt.new</span=
+></a></span></p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%">&nbsp;</p>
+<p style=3D"mso-line-height-rule:exactly; line-height:175%"><span style=3D"=
+color: #000000;">(P.S. Tag <span style=3D"color: #2ba6ff;"><a href=3D"https=
+://d5llC804.na1.hubspotlinks.com/Ctc/DQ+113/d5llC804/VWY1XJ5w2_TCW2w8ybl3b9=
+01vW8Ny6Rt5xrrycN76MZ-b3m2ndW69sMD-6lZ3kVVfK4Yc43VL9lW2pQzqp4qMhBQW87c-HH5f=
+rzlgN2Ycpd7gGKy4W2JFDX77SJSxqW7KnDl12MQJfyW3G5lzT79gzd1W1yWcBz2V8jxhW7852dM=
+2jSB_vW89psBS8SBPc3W4hThlX6LnW_sW4LmZZp14WlQQW4s68k94DnXMqVVSjQD8YR1-WN57yb=
+spTkjbfW9ckzYD3TrHwLW5LlK-n5clNPPW28kMpH68VWjpW6hrLHp2w4mdNW5dDXYn994fzHf6t=
+lvtl04" style=3D"color:#2ba6ff" rel=3D"noopener" data-hs-link-id=3D"0" data=
+-hs-link-id-v2=3D"M9wFjALc" target=3D"_blank">@boltdotnew</a></span> to sho=
+w us what you=E2=80=99re working on!)</span></p></div></div></td></tr></tbo=
+dy></table>
+  <table role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0" width=3D=
+"100%" class=3D"" style=3D""><tbody><tr><td class=3D"hs_padded" style=3D"fo=
+nt-family:Arial, sans-serif; font-size:15px; color:#23496d; word-break:brea=
+k-word; padding:10px 20px 10px 5px"><div id=3D"hs_cos_wrapper_footer_module=
+" class=3D"hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module"=
+ style=3D"color: inherit; font-size: inherit; line-height: inherit;" data-h=
+s-cos-general-type=3D"widget" data-hs-cos-type=3D"module"><table role=3D"pr=
+esentation" class=3D"hse-footer hse-secondary" width=3D"100%" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"font-family:Arial, sans-serif; font-size:=
+12px; line-height:135%; color:#23496d; margin-bottom:0; padding:0">
+  <tbody>
+    <tr>
+      <td align=3D"left" valign=3D"top" style=3D"font-family:Arial, sans-se=
+rif; font-size:15px; color:#23496d; word-break:break-word; text-align:left;=
+ margin-bottom:0; line-height:135%; padding:10px 0px">
+          <p style=3D"font-size: 13px; line-height: 125%;"><span style=3D"c=
+olor: #999999;">StackBlitz, Inc., 2443 Fillmore Street #380-16814,&nbsp;San=
+ Francisco, CA, 94115, United States. </span><span style=3D"color: #999999;=
+">To opt out of future emails from StackBlitz,&nbsp;<span style=3D"color: #=
+666666;"><a href=3D"https://hs-45403856.s.hubspotemail.net/hs/preferences-c=
+enter/en/page?data=3DW2nXS-N30h-HbW41GwNN2TqJ0QW36yBJG4pmnK2W4fNRDK1BDjpwW2=
+CDK7r4fpPBVW2nYMDJ3K3jcrW1XlXym4mdTMgW3P5t67328lFJW4fMZm-2YxqmTW2-tMzT4mGlh=
+VW3SCR0N1--7xcW41Q0wv3dpTk1W3VSyHW2MqrgYW2Cw20L34wJ9RW47y6QK1SkC-cW309MN636=
+tq9xW1VstDw2xGHcSW3c-3j81Bm89sW2xZ-BN2vPFT1W4fxWvL2RRY-pW2PnZ_h1QtjqyW3VSxQ=
+41Q50vWW3BV6H83CdlDnW3jbBxZ4fGZ3PW3P5vqT3VWS1cW3K25qR3Q_28kW41StfG3BXCssW2H=
+TvTT3g6b9hW49KVGq2RR3MjW2sBbcm2KDp4zW21kVSf1V95X4W41pLSk3P6L8WW2p9Cgk3blkcj=
+W43Z6pR3_FyjzW30sg1D43rfG8W2Yn5ky23gjHYW2PNjJc3Q_RhFW2Wp_wf3bhk2dW2r5F6m30H=
+nQpW43FrX32MyWvpW2MCTg84r5Qh7W2TNmjR41FMTBW3HfwhN1Sc1ZjW3z3lPb3btPZ-W2MyxRq=
+3yWBdXW3Hfbf83ZxqNwW30KqK03XMgJ70&amp;utm_source=3Dhs_email&amp;utm_medium=
+=3Demail&amp;utm_content=3D365168816&amp;_hsenc=3Dp2ANqtz-9Eg3V89wT1wq9W1Xo=
+IEpoOYRqJauzVn7etNYz5Y3Qf3A1yqy37F0a-AW-NtJ2NKFpUukiJUhnAb0dIoukEtFxNbdMexQ=
+&amp;_hsmi=3D365168816" style=3D"text-decoration:none; color:#666666" rel=
+=3D"noopener" data-unsubscribe=3D"true" data-hs-link-id=3D"0" data-hs-link-=
+id-v2=3D"qjPJqCop" target=3D"_blank">click here to unsubscribe</a>.</span><=
+/span></p>
+<p>&nbsp;</p>
+      </td>
+    </tr>
+  </tbody>
+</table></div></td></tr></tbody></table>
+</div>
+<!--[if gte mso 9]></table><![endif]-->
+<!--[if (mso)|(IE)]></td><![endif]-->
+    <!--[if (mso)|(IE)]></tr></table><![endif]-->
+    </div>
+  =20
+      <!--[if gte mso 9]></td></tr></table><![endif]-->
+  =20
+  </div></div>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+ =20
+<img src=3D"https://d5llC804.na1.hubspotlinks.com/Cto/DQ+113/d5llC804/VWY1X=
+J5w2_TCW2w8ybl3b901vW8Ny6Rt5xrrycW76MZLC8fYG2531Xt1" alt=3D"" width=3D"1" h=
+eight=3D"1" border=3D"0" style=3D"display:none!important;min-height:1px!imp=
+ortant;width:1px!important;border-width:0!important;margin-top:0!important;=
+margin-bottom:0!important;margin-right:0!important;margin-left:0!important;=
+padding-top:0!important;padding-bottom:0!important;padding-right:0!importan=
+t;padding-left:0!important"></body></html>
+------=_Part_287724_1919309889.1749137485362--
+

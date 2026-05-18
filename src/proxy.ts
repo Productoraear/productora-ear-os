@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server';
  * 🛡️ MIDDLEWARE OMEGA V134 - VIMUME OS
  * Protocolo de Seguridad S-Class + Geo-Dominancia Predictiva.
  */
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 1. BYPASS DE RUTAS PÚBLICAS (Soberanía de Acceso)
@@ -74,6 +74,8 @@ export function middleware(request: NextRequest) {
   response.headers.set('x-ear-geo-country', country);
   return response;
 }
+
+export { proxy, proxy as middleware };
 
 export const config = {
   matcher: [

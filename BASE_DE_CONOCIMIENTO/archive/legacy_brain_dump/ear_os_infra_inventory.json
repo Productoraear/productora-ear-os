@@ -1,0 +1,9 @@
+{
+    "AI_KERNELS": [],
+    "DATA_CONTRACTS": [],
+    "BOOT_SYSTEM": [],
+    "DEBUG_INFRA": [],
+    "UNCATEGORIZED": [
+        "infra_scanner.py"
+    ]
+}

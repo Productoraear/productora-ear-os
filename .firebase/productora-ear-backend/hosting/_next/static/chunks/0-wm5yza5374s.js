@@ -1,0 +1,1 @@
+(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,73716,t=>{"use strict";var c=t.i(43476),a=t.i(74329);t.s(["default",0,function(){return(0,c.jsx)("div",{className:"max-w-4xl mx-auto",children:(0,c.jsx)(a.TacticalTracker,{})})}])}]);

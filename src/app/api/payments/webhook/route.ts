@@ -51,16 +51,69 @@ export async function POST(req: Request) {
         createdAt: serverTimestamp(),
       });
 
-      // 2. CommissionLedger (Prisma/Supabase)
+      // 2. Transacción Prisma ACID S-Class (Fase 2: Real-time Wallet Ledger & Dispatch)
       try {
-        const finalUserId = meta.clientId || 'SYSTEM_ESCROW';
-        const targetUserExists = await prisma.user.findUnique({
-          where: { id: finalUserId },
-          select: { id: true }
-        });
+        await prisma.$transaction(async (tx) => {
+          // A. Resolver/Crear el Cliente del Ledger (Fase 1: Fallback Cero)
+          let finalUserId = meta.clientId || 'GUEST';
+          let clientUser = null;
+          
+          if (finalUserId && finalUserId !== 'GUEST' && finalUserId !== 'sys-guest-fallback') {
+            clientUser = await tx.user.findUnique({
+              where: { id: finalUserId },
+              select: { id: true, email: true }
+            });
+          }
 
-        if (targetUserExists) {
-          await prisma.commissionLedger.create({
+          // Si es un invitado ("GUEST") o no se encontró el usuario, y Stripe proporciona email
+          if (!clientUser && session.customer_details?.email) {
+            const customerEmail = session.customer_details.email;
+            
+            // Buscar si ya existe un usuario con ese email
+            const existingUser = await tx.user.findUnique({
+              where: { email: customerEmail },
+              select: { id: true }
+            });
+            
+            if (existingUser) {
+              clientUser = existingUser;
+              finalUserId = existingUser.id;
+            } else {
+              // Crear cliente temporal seguro en base de datos para trazabilidad limpia
+              const newTempUser = await tx.user.create({
+                data: {
+                  email: customerEmail,
+                  displayName: session.customer_details.name || 'Cliente Invitado',
+                  role: 'EXPLORADOR'
+                },
+                select: { id: true }
+              });
+              clientUser = newTempUser;
+              finalUserId = newTempUser.id;
+            }
+          }
+
+          // Fallback a primer usuario de sistema si no hay email (resguardo para no romper la BD, sin alterar ledger)
+          if (!clientUser) {
+            const systemUser = await tx.user.findFirst({ select: { id: true } });
+            if (systemUser) {
+              finalUserId = systemUser.id;
+            } else {
+              // Creación de emergencia
+              const adminFallback = await tx.user.create({
+                data: {
+                  email: 'escrow@productoraear.com',
+                  displayName: 'EAR OS Escrow Admin',
+                  role: 'COMMANDER'
+                },
+                select: { id: true }
+              });
+              finalUserId = adminFallback.id;
+            }
+          }
+
+          // B. Registrar la transacción en CommissionLedger
+          await tx.commissionLedger.create({
             data: {
               userId: finalUserId,
               amount: amountTotal,
@@ -70,28 +123,80 @@ export async function POST(req: Request) {
               notes: `Smart Split V152: EAR OS = ${infrastructureFee.toFixed(2)}€ | VIMUME = ${socialRetained.toFixed(2)}€ | Artista = ${artisticCut.toFixed(2)}€`,
               reference: `STRIPE-${session.id}`,
               sourceEvent: 'checkout.session.completed'
-            },
+            }
           });
-        } else {
-          // Fallback to first available system user context to maintain records without foreign key crashes
-          const fallbackUser = await prisma.user.findFirst({ select: { id: true } });
-          if (fallbackUser) {
-            await prisma.commissionLedger.create({
+
+          // C. Actualizar Aura Wallet (ear_aura_wallets)
+          const artistId = meta.artistId;
+          let walletUserId = finalUserId; // Default al pagador
+          
+          if (artistId && /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(artistId)) {
+            // Es un UUID de base de datos
+            const artistProfile = await tx.artistProfile.findUnique({
+              where: { id: artistId },
+              select: { userId: true }
+            });
+            if (artistProfile) {
+              walletUserId = artistProfile.userId;
+            } else {
+              const providerProfile = await tx.providerProfile.findUnique({
+                where: { id: artistId },
+                select: { userId: true }
+              });
+              if (providerProfile && providerProfile.userId) {
+                walletUserId = providerProfile.userId;
+              }
+            }
+          }
+
+          // Upsert del Wallet asociado en PostgreSQL
+          await tx.auraWallet.upsert({
+            where: { userId: walletUserId },
+            create: {
+              userId: walletUserId,
+              balance: artisticCut,
+              currency: session.currency?.toUpperCase() || 'EUR'
+            },
+            update: {
+              balance: {
+                increment: artisticCut
+              }
+            }
+          });
+
+          // D. Habilitar Waybill automático en fleet (FLEET OS dispatch sync)
+          const originLabel = meta.origin || 'Madrid, España';
+          const destinationLabel = meta.destination || 'Provincia Destino';
+          
+          // Buscar primer Workspace activo para asignarlo obligatoriamente (evitar violaciones referenciales)
+          const workspace = await tx.workspace.findFirst({ select: { id: true } });
+          
+          if (workspace) {
+            const isUuid = (val: string) => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(val);
+            const verifiedArtistProfileId = artistId && isUuid(artistId) ? artistId : null;
+            const verifiedProviderProfileId = artistId && isUuid(artistId) && !verifiedArtistProfileId ? artistId : null;
+
+            await tx.waybill.create({
               data: {
-                userId: fallbackUser.id,
-                amount: amountTotal,
-                currency: session.currency?.toUpperCase() || 'EUR',
-                status: 'PAID',
-                stripeSessionId: session.id,
-                notes: `Fallback buyer context. Smart Split V152: EAR OS = ${infrastructureFee.toFixed(2)}€ | VIMUME = ${socialRetained.toFixed(2)}€ | Artista = ${artisticCut.toFixed(2)}€`,
-                reference: `STRIPE-${session.id}`,
-                sourceEvent: 'checkout.session.completed'
-              },
+                workspaceId: workspace.id,
+                artistProfileId: verifiedArtistProfileId,
+                providerProfileId: verifiedProviderProfileId,
+                status: 'QUEUED',
+                referenceCode: `WAY-${session.id}`,
+                originLabel,
+                destinationLabel,
+                originLat: parseFloat(meta.originLat) || 40.416775,
+                originLng: parseFloat(meta.originLng) || -3.703790,
+                destinationLat: parseFloat(meta.destinationLat) || 40.416775,
+                destinationLng: parseFloat(meta.destinationLng) || -3.703790,
+                startsAt: new Date(),
+                notes: `Waybill autogenerado por Stripe Connect Webhook. Artista ID: ${artistId}. Importe: ${amountTotal}€`
+              }
             });
           }
-        }
+        });
       } catch (ledgerErr) {
-        console.error('⚠️ LEDGER_WRITE_FAILED (non-blocking):', ledgerErr);
+        console.error('❌ LEDGER_WRITE_TRANSACTION_FAILED:', ledgerErr);
       }
 
       // 3. Telemetría Telegram

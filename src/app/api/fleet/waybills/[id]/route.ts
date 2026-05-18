@@ -9,19 +9,29 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const waybill = await prisma.waybill.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
-        checkpoints: {
-          orderBy: { order: 'asc' }
-        },
         unit: true,
-        contract: {
-          include: { artist: true }
-        }
+        artistProfile: {
+          select: {
+            id: true,
+            displayName: true,
+            slug: true
+          }
+        },
+        providerProfile: {
+          select: {
+            id: true,
+            name: true,
+            slug: true
+          }
+        },
+        clientProfile: true
       }
     });
 
