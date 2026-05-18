@@ -8,6 +8,7 @@ import { Mail, Phone, Globe, Radio } from "lucide-react"; // Importing missing i
 
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "@/app/components/ui/ThemeToggle";
 
 /**
  * 🏛️ PUBLIC NAVBAR - VIMUME-FIRST LUMINOUS REFACTOR
@@ -108,6 +109,7 @@ export default function PublicNavbar() {
           
           {/* ⚡ CTA */}
           <div className="flex items-center gap-4 ml-6">
+            <ThemeToggle isVimumeContext={isVimumeContext} />
             <Link
               href={isVimumeContext ? ROUTES.vimumeContacto : ROUTES.contacto}
               className={`group relative px-7 py-3 rounded-full text-[11px] font-black uppercase tracking-widest flex items-center gap-3 transition-all overflow-hidden ${
@@ -124,13 +126,16 @@ export default function PublicNavbar() {
         </nav>
 
         {/* 📱 MOBILE TOGGLE */}
-        <button
-          className="lg:hidden transition-colors"
-          style={{ color: isVimumeContext ? '#1a1a1a' : 'white' }}
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <XIcon size={24} /> : <MenuIcon size={24} />}
-        </button>
+        <div className="flex items-center gap-4 lg:hidden">
+          <ThemeToggle isVimumeContext={isVimumeContext} />
+          <button
+            className="transition-colors"
+            style={{ color: isVimumeContext ? '#1a1a1a' : 'white' }}
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <XIcon size={24} /> : <MenuIcon size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* 📱 MOBILE MENU */}

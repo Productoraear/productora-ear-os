@@ -1,0 +1,37 @@
+<!doctype html><html><body><pre># Manual de administrador — Hermes Tracker OT
+
+## 1. Función
+El administrador gobierna accesos, centros, roles, plantillas, auditoría y configuración del sistema.
+
+## 2. Zonas críticas
+- `/vimume/hermes/dashboard` para control operativo.
+- `/app/configuracion` o equivalente para parámetros.
+- Colecciones Firestore: `users`, `vimume_intervenciones`, `audit_logs`.
+
+## 3. Gestión de accesos
+1. Mantén `request.auth.token.role` y `request.auth.token.center` como autoridad de acceso.
+2. Usa `/users/{uid}` solo como metadato auxiliar.
+3. Revisa custom claims antes de asignar permisos.
+4. No permitas cambios de rol desde cliente.
+
+## 4. Centros
+- Crea centros con IDs consistentes.
+- Asegura que cada sesión, paciente e intervención pertenezca a un centro.
+- Verifica el aislamiento entre centros en navegador y reglas.
+
+## 5. Auditoría
+- Toda acción crítica debe generar `audit_logs`.
+- Conserva los logs como inmutables.
+- Revisa accesos, cambios de consentimiento, impresiones y exportaciones.
+
+## 6. Publicación
+1. Comprueba sitemap y rutas públicas.
+2. Valida `/vimume/hermes` como gateway indexable.
+3. Revisa build, env vars y despliegue.
+4. Ejecuta smoke test en Chrome antes de producción.
+
+## 7. Soporte
+- Si un usuario no ve un módulo, revisa rol y centro primero.
+- Si un PDF falla, revisa plantilla, permisos y datos de sesión.
+- Si una ruta no responde, comprueba el sitemap y el route group correspondiente.
+</pre></body></html>

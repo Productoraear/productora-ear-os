@@ -177,6 +177,9 @@ model ArtistProfile {
   status        String           @default("DRAFT")
   homeBase      String?          @map("home_base")
 
+  latitude      Float?
+  longitude     Float?
+
   riders        TechnicalRider[]
   calendar      CalendarBlock[]
   contracts     SmartContract[]
@@ -205,6 +208,10 @@ model ProviderProfile {
   auraLevel            Float             @default(0.0) @map("aura_level")
   technicalReliability Float             @default(0.0) @map("technical_reliability")
   isVerified           Boolean           @default(false) @map("is_verified")
+  latitude             Float?
+  longitude            Float?
+  stripeAccountId      String?           @map("stripe_account_id")
+  stripeConnected      Boolean           @default(false) @map("stripe_connected")
 
   waybills             Waybill[]         @relation("WaybillProvider")
 

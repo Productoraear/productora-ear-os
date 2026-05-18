@@ -333,7 +333,7 @@ export default function DiscoverySearch() {
     <div className="relative w-full max-w-5xl mx-auto" ref={dropdownRef}>
       <form 
         onSubmit={handleDiscoverySubmit}
-        className="bg-black/40 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-4 flex flex-col md:flex-row items-stretch gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+        className="bg-card/70 backdrop-blur-3xl border border-border rounded-[3rem] p-4 flex flex-col md:flex-row items-stretch gap-2 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
       >
         
         {/* OCASIÓN */}
@@ -343,17 +343,17 @@ export default function DiscoverySearch() {
             setActiveDropdown(activeDropdown === "ocasion" ? null : "ocasion");
             setSearchQuery("");
           }}
-          className="flex-1 px-8 py-4 rounded-[2rem] hover:bg-white/5 transition-all text-left group relative"
+          className="flex-1 px-8 py-4 rounded-[2rem] hover:bg-muted/50 transition-all text-left group relative"
         >
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613] mb-1 flex items-center gap-2">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-1 flex items-center gap-2">
             <PartyPopper size={12} />
             Ocasión
           </p>
           <div className="flex items-center justify-between">
-            <span className={`text-sm font-bold italic truncate ${selectedOcasion ? 'text-white' : 'text-white/30'}`}>
+            <span className={`text-sm font-bold italic truncate ${selectedOcasion ? 'text-foreground' : 'text-muted-foreground'}`}>
               {selectedOcasion || "¿Qué celebras?"}
             </span>
-            <ChevronDown size={14} className={`text-[#ecb613] transition-transform duration-300 ${activeDropdown === "ocasion" ? 'rotate-180' : ''}`} />
+            <ChevronDown size={14} className={`text-primary transition-transform duration-300 ${activeDropdown === "ocasion" ? 'rotate-180' : ''}`} />
           </div>
           
           <AnimatePresence>
@@ -362,12 +362,12 @@ export default function DiscoverySearch() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute top-full left-0 right-0 mt-4 bg-[#0a0a0a]/95 border border-white/10 rounded-[2.5rem] p-6 z-[250] shadow-2xl backdrop-blur-3xl max-h-[400px] overflow-y-auto custom-scrollbar"
+                className="absolute top-full left-0 right-0 mt-4 bg-card border border-border rounded-[2.5rem] p-6 z-[250] shadow-2xl backdrop-blur-3xl max-h-[400px] overflow-y-auto custom-scrollbar"
               >
                 <div className="space-y-6">
                   {OCASIONES.map(grupo => (
                     <div key={grupo.grupo} className="space-y-2">
-                      <p className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 border-b border-white/5 pb-1">{grupo.grupo}</p>
+                      <p className="text-[8px] font-black uppercase tracking-[0.3em] text-muted-foreground/40 border-b border-border pb-1">{grupo.grupo}</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
                         {grupo.items.map(item => (
                           <div 
@@ -377,7 +377,7 @@ export default function DiscoverySearch() {
                               setSelectedOcasion(item);
                               setActiveDropdown(null);
                             }}
-                            className="px-4 py-2.5 rounded-xl hover:bg-[#ecb613] hover:text-black text-white/60 text-[10px] font-black uppercase italic tracking-wider transition-all cursor-pointer text-left"
+                            className="px-4 py-2.5 rounded-xl hover:bg-primary hover:text-foreground text-muted-foreground text-[10px] font-black uppercase italic tracking-wider transition-all cursor-pointer text-left"
                           >
                             {item}
                           </div>
@@ -391,7 +391,7 @@ export default function DiscoverySearch() {
           </AnimatePresence>
         </button>
 
-        <div className="w-px bg-white/10 self-stretch my-4 hidden md:block" />
+        <div className="w-px bg-border self-stretch my-4 hidden md:block" />
 
         {/* TERRITORIO (50 PROVINCIAS COMPLETAS DE ESPAÑA Y SUS CIUDADES) */}
         <button 
@@ -401,17 +401,17 @@ export default function DiscoverySearch() {
             setSearchQuery("");
             setSelectedProvinceData(null);
           }}
-          className="flex-1 px-8 py-4 rounded-[2rem] hover:bg-white/5 transition-all text-left group relative"
+          className="flex-1 px-8 py-4 rounded-[2rem] hover:bg-muted/50 transition-all text-left group relative"
         >
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613] mb-1 flex items-center gap-2">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-1 flex items-center gap-2">
             <MapPin size={12} />
             Territorio
           </p>
           <div className="flex items-center justify-between">
-            <span className={`text-sm font-bold italic truncate ${selectedTerritorio ? 'text-white' : 'text-white/30'}`}>
+            <span className={`text-sm font-bold italic truncate ${selectedTerritorio ? 'text-foreground' : 'text-muted-foreground'}`}>
               {selectedCity ? `${selectedTerritorio} (${selectedCity})` : (selectedTerritorio || "Toda España")}
             </span>
-            <ChevronDown size={14} className={`text-[#ecb613] transition-transform duration-300 ${activeDropdown === "territorio" ? 'rotate-180' : ''}`} />
+            <ChevronDown size={14} className={`text-primary transition-transform duration-300 ${activeDropdown === "territorio" ? 'rotate-180' : ''}`} />
           </div>
 
           <AnimatePresence>
@@ -420,33 +420,33 @@ export default function DiscoverySearch() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute top-full left-0 right-0 mt-4 bg-[#0a0a0a]/95 border border-white/10 rounded-[2.5rem] p-6 z-[250] shadow-2xl backdrop-blur-3xl min-w-[340px] md:min-w-[500px]"
+                className="absolute top-full left-0 right-0 mt-4 bg-card border border-border rounded-[2.5rem] p-6 z-[250] shadow-2xl backdrop-blur-3xl min-w-[340px] md:min-w-[500px]"
               >
                 <div className="space-y-4">
                   {/* Buscador de Provincias / Ciudades */}
-                  <div className="relative flex items-center mb-4 bg-white/5 border border-white/10 rounded-xl px-4 py-2">
-                    <Search size={14} className="text-white/30 mr-2" />
+                  <div className="relative flex items-center mb-4 bg-muted border border-border rounded-xl px-4 py-2">
+                    <Search size={14} className="text-muted-foreground mr-2" />
                     <input 
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       onClick={(e) => e.stopPropagation()}
                       placeholder="Filtrar por provincia o municipio de España..."
-                      className="bg-transparent border-none outline-none text-white text-xs font-bold w-full focus:ring-0 placeholder:text-white/20"
+                      className="bg-transparent border-none outline-none text-foreground text-xs font-bold w-full focus:ring-0 placeholder:text-muted-foreground/30"
                     />
                   </div>
 
                   {/* Vista de Selección de Municipios / Ciudades */}
                   {selectedProvinceData ? (
                     <div className="space-y-4">
-                      <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-[#ecb613]">Municipios de {selectedProvinceData.name}</p>
+                      <div className="flex justify-between items-center border-b border-border pb-2">
+                        <p className="text-[10px] font-black uppercase tracking-widest text-primary">Municipios de {selectedProvinceData.name}</p>
                         <button 
                           onClick={(e) => {
                             e.stopPropagation();
                             setSelectedProvinceData(null);
                           }}
-                          className="text-[8px] font-black uppercase text-white/40 hover:text-white px-2 py-1 rounded bg-white/5"
+                          className="text-[8px] font-black uppercase text-muted-foreground hover:text-foreground px-2 py-1 rounded bg-muted"
                         >
                           Atrás
                         </button>
@@ -459,7 +459,7 @@ export default function DiscoverySearch() {
                             setSelectedCity("Toda la Provincia");
                             setActiveDropdown(null);
                           }}
-                          className="px-4 py-2.5 rounded-lg bg-[#ecb613]/10 hover:bg-[#ecb613] hover:text-black text-[#ecb613] text-[9px] font-black uppercase italic tracking-wider transition-all cursor-pointer"
+                          className="px-4 py-2.5 rounded-lg bg-primary/10 hover:bg-primary hover:text-foreground text-primary text-[9px] font-black uppercase italic tracking-wider transition-all cursor-pointer"
                         >
                           Toda la Provincia
                         </div>
@@ -472,7 +472,7 @@ export default function DiscoverySearch() {
                               setSelectedCity(city);
                               setActiveDropdown(null);
                             }}
-                            className="px-4 py-2.5 rounded-lg hover:bg-[#ecb613] hover:text-black text-white/50 text-[9px] font-black uppercase italic tracking-wider transition-all cursor-pointer"
+                            className="px-4 py-2.5 rounded-lg hover:bg-primary hover:text-foreground text-muted-foreground text-[9px] font-black uppercase italic tracking-wider transition-all cursor-pointer"
                           >
                             {city}
                           </div>
@@ -483,7 +483,7 @@ export default function DiscoverySearch() {
                     <div className="max-h-[260px] overflow-y-auto custom-scrollbar space-y-4 pr-1">
                       {filteredProvincias.map(reg => (
                         <div key={reg.region} className="space-y-2">
-                          <p className="text-[8px] font-black uppercase tracking-[0.3em] text-white/20 border-b border-white/5 pb-1">{reg.region}</p>
+                          <p className="text-[8px] font-black uppercase tracking-[0.3em] text-muted-foreground/30 border-b border-border pb-1">{reg.region}</p>
                           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                             {reg.provinces.map(prov => (
                               <div 
@@ -492,10 +492,10 @@ export default function DiscoverySearch() {
                                   e.stopPropagation();
                                   setSelectedProvinceData(prov);
                                 }}
-                                className="px-4 py-2.5 rounded-lg hover:bg-white/5 border border-white/5 text-white/70 text-[9px] font-black uppercase italic tracking-wider transition-all cursor-pointer flex justify-between items-center group/item"
+                                className="px-4 py-2.5 rounded-lg hover:bg-muted border border-border text-foreground/80 text-[9px] font-black uppercase italic tracking-wider transition-all cursor-pointer flex justify-between items-center group/item"
                               >
                                 <span>{prov.name}</span>
-                                <span className="text-[7px] text-white/30 group-hover/item:text-[#ecb613]">{prov.cities.length} c.</span>
+                                <span className="text-[7px] text-muted-foreground group-hover/item:text-primary">{prov.cities.length} c.</span>
                               </div>
                             ))}
                           </div>
@@ -509,11 +509,11 @@ export default function DiscoverySearch() {
           </AnimatePresence>
         </button>
 
-        <div className="w-px bg-white/10 self-stretch my-4 hidden md:block" />
+        <div className="w-px bg-border self-stretch my-4 hidden md:block" />
 
         {/* TEMPORADA / CALENDARIO (CONEXIÓN EN CALIENTE CON DISPONIBILIDAD) */}
-        <div className="flex-1 px-8 py-4 rounded-[2rem] hover:bg-white/5 transition-all text-left group relative">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613] mb-1 flex items-center gap-2">
+        <div className="flex-1 px-8 py-4 rounded-[2rem] hover:bg-muted/50 transition-all text-left group relative">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary mb-1 flex items-center gap-2">
             <CalendarIcon size={12} />
             Temporada
           </p>
@@ -521,7 +521,7 @@ export default function DiscoverySearch() {
             type="date"
             value={selectedFecha}
             onChange={(e) => handleCheckAvailability(e.target.value)}
-            className="w-full bg-transparent border-none text-sm font-bold italic text-white focus:outline-none appearance-none cursor-pointer [color-scheme:dark]"
+            className="w-full bg-transparent border-none text-sm font-bold italic text-foreground focus:outline-none appearance-none cursor-pointer [color-scheme:light-dark]"
             placeholder="Seleccionar Fecha"
           />
         </div>
@@ -529,7 +529,7 @@ export default function DiscoverySearch() {
         {/* DISCOVERY BUTTON */}
         <button 
           type="submit"
-          className="bg-[#ecb613] text-black px-12 py-4 rounded-full font-black uppercase italic tracking-widest flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_rgba(236,182,19,0.3)]"
+          className="bg-primary text-foreground px-12 py-4 rounded-full font-black uppercase italic tracking-widest flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_rgba(236,182,19,0.2)]"
         >
           Discovery
           <ArrowRight size={18} />
@@ -549,22 +549,22 @@ export default function DiscoverySearch() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-[#0c0c0c] border border-white/10 w-full max-w-2xl rounded-[3rem] p-8 md:p-12 relative overflow-hidden shadow-2xl"
+              className="bg-card border border-border w-full max-w-2xl rounded-[3rem] p-8 md:p-12 relative overflow-hidden shadow-2xl"
             >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#ecb613] via-amber-500 to-[#ecb613]/10" />
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-amber-500 to-primary/10" />
 
               <div className="flex justify-between items-start mb-8">
                 <div className="space-y-2">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/20 text-[#ecb613] text-[8px] font-black uppercase tracking-widest">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[8px] font-black uppercase tracking-widest">
                     <CalendarCheck size={10} /> Motor de Disponibilidad EAR OS
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter text-white">
-                    Roster para el <span className="text-[#ecb613]">{selectedFecha}</span>
+                  <h3 className="text-2xl md:text-3xl font-black uppercase italic tracking-tighter text-foreground">
+                    Roster para el <span className="text-primary">{selectedFecha}</span>
                   </h3>
                 </div>
                 <button 
                   onClick={() => setShowAvailabilityModal(false)}
-                  className="text-white/40 hover:text-white text-xs font-black uppercase tracking-widest bg-white/5 px-4 py-2 rounded-xl transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-xs font-black uppercase tracking-widest bg-muted px-4 py-2 rounded-xl transition-colors"
                 >
                   Cerrar
                 </button>
@@ -572,7 +572,7 @@ export default function DiscoverySearch() {
 
               {/* Contenido de la búsqueda y disponibilidad */}
               <div className="space-y-6">
-                <p className="text-white/40 text-[10px] font-black uppercase tracking-wider">
+                <p className="text-muted-foreground text-[10px] font-black uppercase tracking-wider">
                   Verificación de calendario atómico para {selectedCity ? `${selectedCity}, ${selectedTerritorio}` : (selectedTerritorio || "España")}:
                 </p>
 
@@ -580,19 +580,19 @@ export default function DiscoverySearch() {
                   {availabilityResults.map(artist => (
                     <div 
                       key={artist.name}
-                      className="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors"
+                      className="flex items-center justify-between p-4 rounded-2xl bg-muted/30 border border-border hover:border-primary/20 transition-colors"
                     >
                       <div className="flex items-center gap-4">
                         <span className="text-2xl">{artist.avatar}</span>
                         <div>
-                          <h4 className="text-xs font-black uppercase tracking-tight text-white">{artist.name}</h4>
-                          <p className="text-[9px] text-white/30 uppercase font-black">{artist.category}</p>
+                          <h4 className="text-xs font-black uppercase tracking-tight text-foreground">{artist.name}</h4>
+                          <p className="text-[9px] text-muted-foreground uppercase font-black">{artist.category}</p>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-3">
                         {artist.status === "DISPONIBLE" ? (
-                          <span className="flex items-center gap-1.5 text-[8px] font-black text-[#ecb613] border border-[#ecb613]/30 px-2 py-0.5 rounded uppercase">
+                          <span className="flex items-center gap-1.5 text-[8px] font-black text-primary border border-primary/30 px-2 py-0.5 rounded uppercase">
                             <CheckCircle2 size={10} /> DISPONIBLE
                           </span>
                         ) : (
@@ -604,7 +604,7 @@ export default function DiscoverySearch() {
                         <Link 
                           href={`/contacto?artista=${encodeURIComponent(artist.name)}&fecha=${selectedFecha}&ocasion=${encodeURIComponent(selectedOcasion)}`}
                           onClick={() => setShowAvailabilityModal(false)}
-                          className="px-3.5 py-1.5 bg-[#ecb613] text-black text-[9px] font-black uppercase tracking-widest rounded-lg hover:bg-white transition-colors"
+                          className="px-3.5 py-1.5 bg-primary text-foreground font-black text-[9px] uppercase tracking-widest rounded-lg hover:bg-foreground hover:text-background transition-colors"
                         >
                           Reservar
                         </Link>
@@ -613,9 +613,9 @@ export default function DiscoverySearch() {
                   ))}
                 </div>
 
-                <div className="bg-[#ecb613]/5 border border-[#ecb613]/10 rounded-2xl p-4 flex gap-4 items-start">
-                  <Info size={16} className="text-[#ecb613] shrink-0 mt-0.5" />
-                  <p className="text-[10px] text-white/50 leading-relaxed italic font-bold">
+                <div className="bg-primary/5 border border-primary/10 rounded-2xl p-4 flex gap-4 items-start">
+                  <Info size={16} className="text-primary shrink-0 mt-0.5" />
+                  <p className="text-[10px] text-muted-foreground leading-relaxed italic font-bold">
                     El bloqueo temporal de fecha garantiza la exclusividad del artista o equipamiento de sonido. Puedes formalizar el depósito de garantía de 100€ en la siguiente ventana de reserva para asegurar la fecha de tu evento.
                   </p>
                 </div>

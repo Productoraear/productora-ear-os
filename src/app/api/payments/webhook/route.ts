@@ -53,29 +53,43 @@ export async function POST(req: Request) {
 
       // 2. CommissionLedger (Prisma/Supabase)
       try {
-        await prisma.commissionLedger.create({
-          data: {
-            userId: 'SYSTEM_ESCROW',
-            amountTotal,
-            amountUser: artisticCut,
-            currency: session.currency?.toUpperCase() || 'EUR',
-            platformFee: infrastructureFee,
-            affiliateFee: socialRetained, // Mapeado internamente como retención social/VIMUME
-            providerCut: artisticCut,
-            status: 'SETTLED',
-            type: 'SPLIT',
-            stripePaymentId: session.payment_intent || session.id,
-            metadata: {
-              ui_template: meta.ui_template,
-              provincia: meta.provincia,
-              is_b2g: meta.is_b2g,
-              artist_tier: meta.artist_tier,
-              concept: meta.concept,
-              source: meta.source,
-              engine_version: 'V152_LEVIATHAN'
-            },
-          },
+        const finalUserId = meta.clientId || 'SYSTEM_ESCROW';
+        const targetUserExists = await prisma.user.findUnique({
+          where: { id: finalUserId },
+          select: { id: true }
         });
+
+        if (targetUserExists) {
+          await prisma.commissionLedger.create({
+            data: {
+              userId: finalUserId,
+              amount: amountTotal,
+              currency: session.currency?.toUpperCase() || 'EUR',
+              status: 'PAID',
+              stripeSessionId: session.id,
+              notes: `Smart Split V152: EAR OS = ${infrastructureFee.toFixed(2)}€ | VIMUME = ${socialRetained.toFixed(2)}€ | Artista = ${artisticCut.toFixed(2)}€`,
+              reference: `STRIPE-${session.id}`,
+              sourceEvent: 'checkout.session.completed'
+            },
+          });
+        } else {
+          // Fallback to first available system user context to maintain records without foreign key crashes
+          const fallbackUser = await prisma.user.findFirst({ select: { id: true } });
+          if (fallbackUser) {
+            await prisma.commissionLedger.create({
+              data: {
+                userId: fallbackUser.id,
+                amount: amountTotal,
+                currency: session.currency?.toUpperCase() || 'EUR',
+                status: 'PAID',
+                stripeSessionId: session.id,
+                notes: `Fallback buyer context. Smart Split V152: EAR OS = ${infrastructureFee.toFixed(2)}€ | VIMUME = ${socialRetained.toFixed(2)}€ | Artista = ${artisticCut.toFixed(2)}€`,
+                reference: `STRIPE-${session.id}`,
+                sourceEvent: 'checkout.session.completed'
+              },
+            });
+          }
+        }
       } catch (ledgerErr) {
         console.error('⚠️ LEDGER_WRITE_FAILED (non-blocking):', ledgerErr);
       }

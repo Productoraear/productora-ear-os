@@ -12,7 +12,7 @@ import { DemandEngine } from './DemandEngine';
 import { AllianceNetwork } from './AllianceNetwork';
 import { AstraNeuralTwin } from './AstraNeuralTwin';
 import { AutonomousOrchestrator } from './AutonomousOrchestrator';
-import OmnibusTracker from './OmnibusTracker';
+// import OmnibusTracker from './OmnibusTracker';
 
 export default function EarCommandCenter() {
   const [user, setUser] = useState<User | null>(null);
@@ -70,7 +70,8 @@ export default function EarCommandCenter() {
       {/* OMNIBUS TRACKER (Reemplaza a los 4 paneles fragmentados) */}
       <div className="mt-12">
         <Suspense fallback={<SovereignSkeleton />}>
-          <OmnibusTracker />
+          {/* <OmnibusTracker /> */}
+          <div className="p-8 text-center text-white/30 border border-dashed border-white/10 rounded-2xl">Omnibus Tracker en cuarentena.</div>
         </Suspense>
       </div>
 

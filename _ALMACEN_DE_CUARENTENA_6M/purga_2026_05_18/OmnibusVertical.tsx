@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import OmnibusTracker from './panels/OmnibusTracker';
-import OriginalOmnibusDataHub from './OmnibusTracker';
+// import OmnibusTracker from './panels/OmnibusTracker';
+// import OriginalOmnibusDataHub from './OmnibusTracker';
 import { Truck, Database, Globe, Zap } from 'lucide-react';
 
 /**
@@ -16,8 +16,8 @@ export default function OmnibusVertical() {
     const [activePanel, setActivePanel] = useState<'FLEET' | 'HUB'>('FLEET');
 
     const panels = {
-        FLEET: { component: <OmnibusTracker />, icon: Truck, label: 'Telemetría de Flota' },
-        HUB: { component: <OriginalOmnibusDataHub />, icon: Database, label: 'Bóveda CRM & Market' }
+        FLEET: { component: <div className="p-4 text-white/50">Telemetría de Flota en cuarentena.</div>, icon: Truck, label: 'Telemetría de Flota' },
+        HUB: { component: <div className="p-4 text-white/50">Bóveda CRM & Market en cuarentena.</div>, icon: Database, label: 'Bóveda CRM & Market' }
     };
 
     return (

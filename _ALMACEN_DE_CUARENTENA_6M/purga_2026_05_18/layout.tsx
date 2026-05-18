@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { isFeatureEnabled } from '@/features/admin/api/FeatureFlagService';
+// import { isFeatureEnabled } from '@/features/admin/api/FeatureFlagService';
 import React from 'react';
 
 /**
@@ -35,7 +35,8 @@ export default async function NexusLayout({
   }
 
   // 2. VERIFICACIÓN DE MOTOR DE MÓDULOS (Feature Flag)
-  const isNexusActive = await isFeatureEnabled('NEXUS_CORE');
+  // const isNexusActive = await isFeatureEnabled('NEXUS_CORE');
+  const isNexusActive = true; // Bypass temporal mientras el servicio está en cuarentena
   
   if (!isNexusActive) {
     console.warn(`🛑 [MODULE_SHIELD] El núcleo NEXUS está desactivado globalmente.`);

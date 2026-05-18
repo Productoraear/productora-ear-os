@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { Role, Rank } from '@prisma/client';
+import { Role } from '@prisma/client';
 
 export class UserService {
   /**
@@ -17,6 +17,7 @@ export class UserService {
         user = await prisma.user.create({
           data: {
             id,
+            email,
             role: email === 'productoraear@gmail.com' ? 'ADMIN' : 'EXPLORADOR',
             rank: email === 'productoraear@gmail.com' ? 'NIVEL_4_COMANDANTE' : 'NIVEL_0_EXPLORADOR',
             isPacienteCero: email === 'productoraear@gmail.com',

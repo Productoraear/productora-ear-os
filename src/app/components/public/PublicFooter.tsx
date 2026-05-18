@@ -95,6 +95,9 @@ export default function PublicFooter() {
             <Link href={ROUTES.servicios} className={`hover:${textColor} transition-colors`}>Diseño Lumínico</Link>
             <Link href={ROUTES.servicios} className={`hover:${textColor} transition-colors`}>Producción Oficial</Link>
             <Link href={ROUTES.dossier} className={`hover:${textColor} transition-colors`}>Dossier de Autoridad</Link>
+            <Link href="/contacto?subject=reclamar-perfil" className="text-[#ecb613] hover:text-white font-black uppercase tracking-wider text-[11px] not-italic transition-all">
+              Reclamar Perfil S-Class
+            </Link>
           </nav>
         </div>
 

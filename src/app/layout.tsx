@@ -46,6 +46,7 @@ import { SovereignProvider } from "@/shared/context/SovereignContext";
 import SmoothScrollProvider from '@/app/context/SmoothScrollProvider';
 import { AtmosphereProvider } from "@/app/context/AtmosphereProvider";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
+import { ThemeProvider } from "@/app/context/ThemeContext";
 
 export default function RootLayout({
   children,
@@ -59,29 +60,31 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://js.stripe.com" />
       </head>
-      <body className="antialiased bg-[#050505] text-[#f5f1e8] selection:bg-[#ecb613] selection:text-black font-sans">
+      <body className="antialiased bg-background text-foreground selection:bg-[#ecb613] selection:text-black font-sans">
         <Script
           src="https://js.stripe.com/v3/"
           strategy="lazyOnload"
         />
-        <SharedProvider>
-          <RoleSkinProvider>
-            <SovereignProvider>
-              <AtmosphereProvider>
-                <SmoothScrollProvider>
-                  <SpatialIntelligence />
-                  <div className="min-h-screen relative flex flex-col">
-                    <main className="flex-grow">
-                      {children}
-                    </main>
-                    <BespokePricerModal />
-                    <OmniSearchModal />
-                  </div>
-                </SmoothScrollProvider>
-              </AtmosphereProvider>
-            </SovereignProvider>
-          </RoleSkinProvider>
-        </SharedProvider>
+        <ThemeProvider>
+          <SharedProvider>
+            <RoleSkinProvider>
+              <SovereignProvider>
+                <AtmosphereProvider>
+                  <SmoothScrollProvider>
+                    <SpatialIntelligence />
+                    <div className="min-h-screen relative flex flex-col">
+                      <main className="flex-grow">
+                        {children}
+                      </main>
+                      <BespokePricerModal />
+                      <OmniSearchModal />
+                    </div>
+                  </SmoothScrollProvider>
+                </AtmosphereProvider>
+              </SovereignProvider>
+            </RoleSkinProvider>
+          </SharedProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

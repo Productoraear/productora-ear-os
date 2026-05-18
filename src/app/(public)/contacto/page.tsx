@@ -1,110 +1,197 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { MessageSquare, Phone, Mail, MapPin, Send, MessageCircle, ArrowRight } from 'lucide-react';
-import { ROUTES } from '@/lib/routes';
+import React, { Suspense, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { MessageSquare, Mail, MapPin, MessageCircle, ArrowRight, RefreshCw, AlertCircle } from 'lucide-react';
+import { generateWhatsAppLink } from '@/lib/whatsapp';
 
-export default function ContactoPage() {
-  const whatsappNumber = "34693693048";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+function ContactoContent() {
+  const searchParams = useSearchParams();
+  const [redirected, setRedirected] = useState(false);
+
+  // Extract parameters from URL query strings
+  const profile = searchParams.get('profile') || searchParams.get('perfil') || searchParams.get('artist') || '';
+  const service = searchParams.get('service') || searchParams.get('servicio') || searchParams.get('subject') || '';
+  const date = searchParams.get('date') || searchParams.get('fecha') || '';
+  const location = searchParams.get('location') || searchParams.get('provincia') || searchParams.get('ciudad') || '';
+  const intent = searchParams.get('intent') || searchParams.get('intencion') || 'reserva prioritaria';
+
+  // Generate WhatsApp details using our unified server/client utility
+  const { message, url } = generateWhatsAppLink({
+    profile,
+    service,
+    date,
+    location,
+    intent
+  });
+
+  // Perform secure client-side redirection automatically on mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      window.location.href = url;
+      setRedirected(true);
+    }, 1000); // 1-second delay to delight the user with the brand transition
+    return () => clearTimeout(timer);
+  }, [url]);
 
   return (
-    <main className="bg-black text-white min-h-screen selection:bg-[#ecb613]/30">
-      <section className="pt-48 pb-20 px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-32 opacity-[0.03] pointer-events-none">
-          <MessageSquare size={400} />
-        </div>
-
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-start">
-          
-          {/* 📬 LEFT: DIRECT CHANNELS */}
-          <div className="space-y-12">
-            <header className="space-y-6">
-              <p className="text-[#ecb613] text-[10px] uppercase tracking-[0.6em] font-black">Contacto Directo</p>
-              <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter italic leading-[0.85]">
-                Hablemos de <br /> <span className="text-[#ecb613]">Impacto</span>
+    <div className="max-w-4xl mx-auto space-y-12">
+      
+      {/* 📬 ABOVE THE FOLD GLOWING CARD */}
+      <div className="bg-card border border-border rounded-[3rem] p-8 md:p-12 relative overflow-hidden group shadow-xl transition-all duration-300">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-green-500/[0.02] blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="relative z-10 space-y-8 text-center md:text-left">
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-4">
+            <div className="space-y-3">
+              <span className="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-[0.25em] bg-primary/10 text-primary border border-primary/25 font-mono inline-block">
+                CONEXIÓN DE ALTA PRIORIDAD (S-CLASS)
+              </span>
+              <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter italic leading-none font-syne text-foreground">
+                Canal <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-amber-500 dark:to-primary">WhatsApp</span> Directo
               </h1>
-              <p className="text-xl text-white/50 font-medium italic leading-relaxed max-w-md">
-                Si es usted un stakeholder, clínico o representante institucional, busquemos el canal más ágil para coordinar.
-              </p>
-            </header>
-
-            <div className="space-y-6">
-              <a 
-                href={whatsappUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group flex items-center gap-6 p-8 bg-green-500/10 border border-green-500/20 rounded-[2.5rem] hover:bg-green-500/20 transition-all"
-              >
-                <div className="p-4 bg-green-500/20 rounded-2xl text-green-500 group-hover:scale-110 transition-transform">
-                  <MessageCircle size={32} />
-                </div>
-                <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-green-500/60 mb-1">WhatsApp Directo</p>
-                  <p className="text-2xl font-black tracking-tighter italic">693 693 048</p>
-                </div>
-                <ArrowRight className="ml-auto opacity-20 group-hover:opacity-100 group-hover:translate-x-2 transition-all" />
-              </a>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[2.5rem] space-y-4">
-                  <Mail className="text-[#ecb613]" size={24} />
-                  <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Email</p>
-                  <p className="text-lg font-bold">hola@productoraear.com</p>
-                </div>
-                <div className="p-8 bg-white/[0.02] border border-white/5 rounded-[2.5rem] space-y-4">
-                  <MapPin className="text-[#ecb613]" size={24} />
-                  <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Ubicación</p>
-                  <p className="text-lg font-bold">Madrid, España</p>
-                </div>
-              </div>
+            </div>
+            
+            <div className="flex items-center gap-1.5 px-3 py-1 bg-green-500/10 border border-green-500/25 rounded-full text-[9px] font-mono text-green-500 font-bold uppercase tracking-wider">
+              <span className="h-1.5 w-1.5 bg-green-500 rounded-full animate-ping" />
+              {redirected ? 'REDIRECCIÓN EJECUTADA' : 'CONECTANDO EN VIVO'}
             </div>
           </div>
 
-          {/* 📝 RIGHT: FORM LAYER */}
-          <div className="bg-white/[0.02] border border-white/5 rounded-[4rem] p-12 md:p-16 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#ecb613]/5 blur-[80px] rounded-full" />
-            
-            <form className="relative z-10 space-y-8" onSubmit={(e) => e.preventDefault()}>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">Nombre Completo</label>
-                <input 
-                  type="text" 
-                  placeholder="Persona o Institución" 
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm font-bold focus:border-[#ecb613]/50 outline-none transition-all"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">Email de Contacto</label>
-                <input 
-                  type="email" 
-                  placeholder="stakeholder@entidad.com" 
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm font-bold focus:border-[#ecb613]/50 outline-none transition-all"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase tracking-widest text-white/30 ml-4">Mensaje / Propuesta</label>
-                <textarea 
-                  placeholder="Describa brevemente el motivo del contacto..." 
-                  rows={4}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm font-bold focus:border-[#ecb613]/50 outline-none transition-all resize-none"
-                />
-              </div>
-
-              <button className="w-full py-6 bg-[#ecb613] text-black font-black uppercase tracking-widest rounded-2xl hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 shadow-[0_0_40px_rgba(236,182,19,0.2)]">
-                <Send size={18} /> Enviar Consulta
-              </button>
-              
-              <p className="text-[9px] text-white/20 text-center uppercase tracking-widest leading-relaxed">
-                Al enviar este formulario acepta nuestra política de privacidad y tratamiento de datos de impacto.
+          {/* REDIRECTION SPINNER / LOADER */}
+          <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-4 text-left">
+            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <RefreshCw className="w-6 h-6 text-primary animate-spin" />
+            </div>
+            <div>
+              <h3 className="font-bold text-sm text-foreground">Redirigiendo de forma segura a WhatsApp S-Class...</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Si tu navegador bloquea la redirección automática, utiliza el botón táctil masivo de abajo.
               </p>
-            </form>
+            </div>
+          </div>
+
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-2xl">
+            Sin esperas ni formularios. Hemos pre-cargado las especificaciones de su interés en un mensaje seguro. Al hacer clic en el botón inferior, iniciará una conversación de gala directa con nuestro equipo de dirección y coordinación técnica en España.
+          </p>
+
+          {/* SPECIFICATION PREVIEW IN THE CARD */}
+          {(profile || service || date || location) && (
+            <div className="bg-muted border border-border rounded-2xl p-6 text-left space-y-3 max-w-2xl">
+              <p className="text-[9px] font-mono font-black uppercase text-muted-foreground/50 tracking-widest border-b border-border pb-2">
+                Especificaciones del Match Detectadas:
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-mono">
+                {profile && (
+                  <div>
+                    <span className="text-muted-foreground/40 text-[9px] block uppercase">ARTISTA:</span>
+                    <span className="text-primary font-bold">{profile.replace(/-/g, ' ').toUpperCase()}</span>
+                  </div>
+                )}
+                {service && (
+                  <div>
+                    <span className="text-muted-foreground/40 text-[9px] block uppercase">FORMATO:</span>
+                    <span className="text-foreground/80 font-bold">{service.replace(/-/g, ' ').toUpperCase()}</span>
+                  </div>
+                )}
+                {date && (
+                  <div>
+                    <span className="text-muted-foreground/40 text-[9px] block uppercase">FECHA:</span>
+                    <span className="text-foreground/80 font-bold">{date}</span>
+                  </div>
+                )}
+                {location && (
+                  <div>
+                    <span className="text-muted-foreground/40 text-[9px] block uppercase">UBICACIÓN:</span>
+                    <span className="text-foreground/80 font-bold">{location.replace(/-/g, ' ').toUpperCase()}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* MAIN MASSIVE CTA ABOVE THE FOLD */}
+          <div className="pt-4">
+            <a 
+              href={url}
+              className="inline-flex w-full md:w-auto items-center justify-center gap-4 px-10 py-6 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white font-black uppercase tracking-[0.2em] rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shadow-[0_15px_40px_rgba(34,197,94,0.25)] text-xs md:text-sm"
+            >
+              <MessageCircle size={22} className="fill-white/10" />
+              Iniciar Chat de Reserva
+              <ArrowRight size={18} />
+            </a>
+          </div>
+
+          {/* PRELOADED TEXT PREVIEW */}
+          <div className="space-y-2 max-w-2xl text-left border-t border-border pt-6">
+            <span className="text-[8px] font-mono text-muted-foreground/40 uppercase tracking-widest block">Mensaje estructurado listo para envío:</span>
+            <div className="bg-background border border-border rounded-xl p-4 text-[10px] text-muted-foreground leading-relaxed font-mono whitespace-pre-line max-h-36 overflow-y-auto">
+              {message}
+            </div>
           </div>
 
         </div>
+      </div>
+
+      {/* STICKY BOTTOM ACTION BAR FOR MOBILE */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-card/95 backdrop-blur-xl border-t border-border z-50 md:hidden flex justify-between items-center gap-4">
+        <div className="flex flex-col">
+          <span className="text-[8px] text-primary font-black uppercase tracking-widest">PRODUCTORA EAR</span>
+          <span className="text-[10px] text-muted-foreground font-bold font-mono">
+            {profile ? profile.substring(0, 16) + '...' : 'Canal Directo'}
+          </span>
+        </div>
+        <a 
+          href={url}
+          className="flex-1 py-4 bg-green-500 hover:bg-green-400 text-white text-center font-black uppercase tracking-wider text-[10px] rounded-xl flex items-center justify-center gap-2 shadow-[0_10px_25px_rgba(34,197,94,0.3)]"
+        >
+          <MessageCircle size={16} />
+          Chatear en WhatsApp
+        </a>
+      </div>
+
+      {/* SECONDARY INFO CHANNELS */}
+      <div className="grid md:grid-cols-2 gap-6 pb-12">
+        <div className="p-8 bg-card border border-border rounded-[2rem] space-y-4 hover:border-primary/20 transition-colors shadow-md">
+          <Mail className="text-primary" size={24} />
+          <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/50">Email de Respaldo</p>
+          <p className="text-base font-bold text-foreground">hola@productoraear.com</p>
+        </div>
+        <div className="p-8 bg-card border border-border rounded-[2rem] space-y-4 hover:border-primary/20 transition-colors shadow-md">
+          <MapPin className="text-primary" size={24} />
+          <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground/50">Oficina Técnica</p>
+          <p className="text-base font-bold text-foreground">Madrid, España</p>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+export default function ContactoPage() {
+  return (
+    <main className="bg-background text-foreground min-h-screen selection:bg-primary/30 relative">
+      
+      {/* Background Decor */}
+      <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none z-0 opacity-40" />
+
+      <section className="pt-32 pb-20 px-6 relative overflow-hidden z-10">
+        
+        {/* Glow ambient background element */}
+        <div className="absolute top-0 right-0 p-32 opacity-[0.03] pointer-events-none text-primary">
+          <MessageSquare size={400} />
+        </div>
+
+        <Suspense fallback={
+          <div className="max-w-4xl mx-auto text-center py-20">
+            <span className="h-8 w-8 border-2 border-primary border-t-transparent rounded-full animate-spin inline-block mb-4" />
+            <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Inicializando canal seguro...</p>
+          </div>
+        }>
+          <ContactoContent />
+        </Suspense>
+
       </section>
     </main>
   );

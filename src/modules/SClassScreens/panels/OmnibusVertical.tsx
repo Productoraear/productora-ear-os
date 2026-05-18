@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import OmnibusTracker from './OmnibusTracker';
-import OriginalOmnibusDataHub from './OmnibusTracker'; // This might cause a conflict if names are same, let's check
+// import OmnibusTracker from './OmnibusTracker';
+// import OriginalOmnibusDataHub from './OmnibusTracker'; // This might cause a conflict if names are same, let's check
 import { Truck, Database, Globe, Zap, Shield, BarChart3, Navigation } from 'lucide-react';
 import { SovereignSkeleton } from '../components/SovereignSkeleton';
 import dynamic from 'next/dynamic';
@@ -15,24 +15,24 @@ import { GhostTracker } from '@/components/events/GhostTracker';
  */
 
 // We need to differentiate between the visual tracker and the data hub
-const FleetTelemetry = dynamic(() => import('./OmnibusTracker'), {
+/* const FleetTelemetry = dynamic(() => import('./OmnibusTracker'), {
     loading: () => <SovereignSkeleton />,
     ssr: false
-});
+}); */
 
 // Since they have the same filename in my previous thought, I should rename one or be careful.
 // Let's check the filename of the data hub one. It was src/modules/SClassScreens/OmnibusTracker.tsx
-const DataHub = dynamic(() => import('../OmnibusTracker'), {
+/* const DataHub = dynamic(() => import('../OmnibusTracker'), {
     loading: () => <SovereignSkeleton />,
     ssr: false
-});
+}); */
 
 export default function OmnibusVertical() {
     const [activePanel, setActivePanel] = useState<'FLEET' | 'HUB' | 'GHOST'>('FLEET');
 
     const panels = {
-        FLEET: { component: <FleetTelemetry />, icon: Truck, label: 'Telemetría de Flota' },
-        HUB: { component: <DataHub />, icon: Database, label: 'Bóveda CRM & Market' },
+        FLEET: { component: <div className="p-4 text-white/50">Telemetría de Flota en cuarentena.</div>, icon: Truck, label: 'Telemetría de Flota' },
+        HUB: { component: <div className="p-4 text-white/50">Bóveda CRM & Market en cuarentena.</div>, icon: Database, label: 'Bóveda CRM & Market' },
         GHOST: { component: <GhostTracker />, icon: Navigation, label: 'Ghost Tracking' }
     };
 

@@ -4,90 +4,80 @@
 
 @layer base {
   :root {
-    --aura-onyx-black: #050505;
-    --aura-onyx-gold: #ecb613;
-    --aura-onyx-gold-deep: #b38805;
-    --aura-onyx-white: #ffffff;
-    --aura-onyx-glass: rgba(255, 255, 255, 0.03);
-    --aura-onyx-glass-heavy: rgba(255, 255, 255, 0.07);
-    --aura-onyx-border: rgba(255, 255, 255, 0.08);
-
-    /* 🕊️ VIMUME LUMINOUS PALETTE */
-    --vimume-ivory: #fdfcf8;
-    --vimume-charcoal: #1a1a1a;
-    --vimume-blue: #3b82f6;
-    --vimume-turquoise: #2dd4bf;
-    --vimume-gold: #ecb613;
-    --vimume-gold-warm: #d4a855;
+    /* --- MODO CLARO (LUMINANCE SILVER) --- */
+    --background: #fdfcf7; /* Ivory cream */
+    --foreground: #0d0d0d; /* Charcoal almost black */
     
+    --card: #f5f4ef; /* Bento grid light */
+    --card-foreground: #0d0d0d;
+    
+    --primary: #ecb613; /* Oro Kinetic */
+    --primary-foreground: #0d0d0d;
+    
+    --muted: #e5e5df;
+    --muted-foreground: #616161;
+    
+    --border: #d4d4cd;
+
     --font-syne: var(--font-syne), 'Syne', sans-serif;
     --font-manrope: var(--font-manrope), 'Manrope', sans-serif;
   }
 
+  .dark {
+    /* --- MODO OSCURO (AURA ONYX) --- */
+    --background: #050505; /* Black absolute */
+    --foreground: #ffffff; /* White absolute */
+    
+    --card: #0d0d0d; /* Bento grid dark */
+    --card-foreground: #ffffff;
+    
+    --primary: #ecb613; /* Oro Kinetic */
+    --primary-foreground: #0d0d0d;
+    
+    --muted: #1a1a1a;
+    --muted-foreground: #a0a0a0;
+    
+    --border: #262626;
+  }
+
   body {
-    @apply bg-[#050505] text-white transition-all duration-1000 ease-in-out;
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
     font-family: var(--font-manrope);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-syne);
   }
 
-  /* Stitch Skinning - Sovereign Roles */
-  body.theme-b2g {
-    background: radial-gradient(circle at top right, #0a1128 0%, #050505 100%);
-  }
-
-  body.theme-b2c {
-    background: radial-gradient(circle at top right, #1a1608 0%, #050505 100%);
-  }
-
-  body.theme-b2b {
-    background: #050505;
-  }
-
-  /* 🕊️ VIMUME THEME - LUMINOUS & INSPIRATIONAL */
+  /* 🕊️ VIMUME THEME - INHERITS SEMANTIC VARIABLES */
   body.theme-vimume {
-    background-color: var(--vimume-ivory);
-    color: var(--vimume-charcoal);
-  }
-
-  body.theme-vimume .text-white {
-    color: var(--vimume-charcoal);
-  }
-
-  body.theme-vimume .text-white\/40,
-  body.theme-vimume .text-white\/60 {
-    color: rgba(26, 26, 26, 0.5);
-  }
-
-  body.theme-vimume .border-white\/10,
-  body.theme-vimume .border-white\/5 {
-    border-color: rgba(26, 26, 26, 0.1);
+    --background: #fdfcf8;
+    --foreground: #1a1a1a;
   }
 }
 
 @layer components {
   .aura-gold-gradient {
-    background: linear-gradient(135deg, var(--aura-onyx-gold) 0%, var(--aura-onyx-gold-deep) 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, #b38805 100%);
   }
 
   .text-gold-aura {
-    color: var(--aura-onyx-gold);
+    color: var(--primary);
   }
 
   .glass-panel {
-    background: var(--aura-onyx-glass);
+    background: var(--card);
     backdrop-filter: blur(24px);
-    border: 1px solid var(--aura-onyx-border);
-    @apply transition-all duration-700;
+    border: 1px solid var(--border);
+    transition: all 0.5s ease;
   }
 
   .glass-panel:hover {
-    background: var(--aura-onyx-glass-heavy);
-    border-color: rgba(212, 168, 85, 0.2);
+    border-color: var(--primary);
   }
 
   .btn-sclass {
@@ -95,11 +85,11 @@
   }
 
   .btn-sclass-primary {
-    @apply bg-white text-black hover:bg-[#d4a855] hover:text-white;
+    @apply bg-foreground text-background hover:bg-primary hover:text-foreground;
   }
 
   .btn-sclass-outline {
-    @apply border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10;
+    @apply border border-border bg-card hover:bg-muted;
   }
 }
 
@@ -113,12 +103,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--aura-onyx-border);
+  background: var(--border);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--aura-onyx-gold);
+  background: var(--primary);
 }
 
 /* Lenis Smooth Scroll Configuration */
@@ -144,4 +134,58 @@ html {
 
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
+}
+
+/* --- S-CLASS DYNAMIC LIGHT MODE PURGE OVERRIDES --- */
+.light main, 
+.light body,
+.light .bg-black, 
+.light .bg-\[\#050505\], 
+.light .bg-\[\#090909\],
+.light .bg-\[\#0a0a0a\], 
+.light .bg-\[\#0c0c0c\], 
+.light .bg-\[\#121212\],
+.light .bg-gradient-to-br {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+.light .bg-\[\#0b0b0b\],
+.light .bg-\[\#0b0b0b\]\/90,
+.light .bg-\[\#0b0b0b\]\/80,
+.light .bg-\[\#0b0b0b\]\/40,
+.light .bg-white\/\[0\.01\],
+.light .bg-white\/\[0\.02\],
+.light .bg-white\/\[0\.05\],
+.light .bg-white\/5,
+.light .bg-card,
+.light .bg-card\/80,
+.light .bg-card\/40 {
+  background-color: var(--card) !important;
+  color: var(--card-foreground) !important;
+  border-color: var(--border) !important;
+}
+
+.light .border-white\/5,
+.light .border-white\/10,
+.light .border-white\/15,
+.light .border-border {
+  border-color: var(--border) !important;
+}
+
+.light .text-white,
+.light .text-white\/80,
+.light .text-white\/70,
+.light .text-white\/60,
+.light .text-white\/50,
+.light .text-white\/40,
+.light .text-white\/30,
+.light .text-white\/20 {
+  color: var(--foreground) !important;
+}
+
+.light .text-white\/40,
+.light .text-white\/30,
+.light .text-white\/20 {
+  opacity: 0.6;
 }
