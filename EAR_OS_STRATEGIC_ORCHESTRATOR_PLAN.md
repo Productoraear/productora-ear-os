@@ -115,16 +115,25 @@
 - **Stripe Checkout S-Class Guardrail**: [COMPLETADO - BLOQUEO DE HUÉRFANOS Y METADATOS INTEGRADOS]
 - **Transactional Home & Matcher split**: [COMPLETADO - PROCESADO CON ÉXITO]
 - **Real-Time Transactional Webhook & Dispatch Sync**: [COMPLETADO - ACID VERIFICADO]
+- **S-Class Link Auditor & 404 Purge**: [COMPLETADO - CERTIFICADO CON CERO ENLACES ROTOS]
 - **Next.js Production Build**: [VERIFICADO - EXIT CODE 0 EN VERCEL DEPLOY]
 
 ---
 
-## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 203)
+## 🛠️ [STATUS] FASE 203.A: AUDIT DE ENLACES ROTOS & 404 PURGE — COMPLETADA Y CERTIFICADA
+- [x] **Motor de Escaneo Automatizado**: Creación del script `scripts/audit_links.mjs` que normaliza y valida rutas del Next.js App Router (soportando parámetros dinámicos y catch-all).
+- [x] **Registro de Rutas Dinámicas de Metadatos**: Integración de soporte para `/sitemap.xml` y `/robots.txt` a partir de sus respectivos archivos `.ts` en el root del router.
+- [x] **Erradicación de 404s en el Footer**: Sustitución segura en `PublicFooter.tsx` del enlace roto `/legal` por `/aviso-legal` y `/sitemap` por `/sitemap.xml` (dinámico).
+- [x] **Validación de Tipos TSC**: Certificación con `npx tsc --noEmit` de que las correcciones mantienen integridad total (Exit Code 0).
+
+---
+
+## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 203.B)
 1. **Interactive Waybill Timeline Logs**: Implementar el visor de auditoría en la consola de flotas para seguir el avance del trayecto de forma interactiva.
 2. **Dynamic Ledger Balances View**: Incorporar el componente de visualización de saldos en tiempo real de `AuraWallet` en el panel financiero del artista.
 3. **Automated Rollback Safeguards**: Diseñar los tests automáticos para verificar fallas parciales durante la ejecución del webhook de pagos.
 
 ---
 
-SISTEMA OPERATIVO | V202.B CONGELADA Y AUDITADA | WEBHOOK TRANSACCIONAL COMPILADO CON ÉXITO Y EN PRODUCCIÓN (VERCEL GREEN)
-*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA (Directiva Omega V202.B Realized)*
+SISTEMA OPERATIVO | V203.A CONGELADA Y AUDITADA | AUDITORÍA DE ENLACES EN CERO ERRORES 404 Y TSC VERIFICADO EN VERDE
+*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA (Directiva Omega V203.A Realized)*
