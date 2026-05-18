@@ -13,7 +13,6 @@ export default function SmoothScrollProvider({ children }: { children: ReactNode
   // Si es un dispositivo táctil, no usamos Lenis para evitar saturar el hilo principal (TBT)
   if (isTouch) return <>{children}</>;
 
-  // @ts-expect-error - @studio-freight/react-lenis bundles outdated @types/react incompatible with React 19 ReactNode
   const lenisChildren: Parameters<typeof ReactLenis>[0]['children'] = children;
 
   return (
