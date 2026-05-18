@@ -124,9 +124,9 @@ export default function PublicFooter() {
         <p className={`${sublineColor} text-[11px] font-black uppercase tracking-[0.6em]`}>© 2026 Productora EAR. Rigor Certificado.</p>
         <div className={`flex gap-10 text-[11px] font-black uppercase tracking-[0.4em] ${sublineColor}`}>
           <Link href="/privacidad" className={`hover:${textColor} transition-colors`}>Privacidad</Link>
-          <Link href="/legal" className={`hover:${textColor} transition-colors`}>Legal</Link>
+          <Link href="/aviso-legal" className={`hover:${textColor} transition-colors`}>Legal</Link>
           <Link href="/cookies" className={`hover:${textColor} transition-colors`}>Cookies</Link>
-          <Link href="/sitemap" className={`hover:${textColor} transition-colors`}>Mapa del Sitio</Link>
+          <Link href="/sitemap.xml" className={`hover:${textColor} transition-colors`}>Mapa del Sitio</Link>
         </div>
       </div>
     </footer>
