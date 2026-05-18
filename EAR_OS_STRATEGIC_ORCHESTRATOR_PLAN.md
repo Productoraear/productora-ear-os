@@ -157,13 +157,20 @@
 
 ---
 
-
-## 🛠️ PRÓXIMOS MOVIMIENTOS (FASE 203.E)
-1. **Global Client Booking Portal**: Conexión definitiva del Matcher reactivo en la home con la confirmación de checkout dinámico final basado en estimaciones calculadas en vivo por ASTRA.
-2. **Unified B2G Contracts Panel**: Integrar el visor de Smart Contracts y reclamos de fincas directamente con el sistema de firmas inmutables de Ledger.
+## 🛠️ [STATUS] FASE 203.E: THE TRANSACTIONAL MATCH CAROUSEL — COMPLETADA Y CERTIFICADA
+- [x] **Deterministic Guest Flow**: Remoción absoluta del azar de `findFirst()` en `/api/payments/webhook/route.ts`. Ahora la identidad de clientes invitados se resuelve de forma determinista mediante `meta.clientId` y respaldo de correo real (`customer_details.email`).
+- [x] **Onboarding Account Segregation**: Creación de cuentas temporales controladas bajo rol `CLIENT` y rango inicial `NIVEL_0_EXPLORADOR` para clientes sin registro local previo.
+- [x] **Consistencia Referencial y Alineación de Esquema**: Mapeo estricto del procesamiento del webhook a las tablas `CommissionLedger`, `AuraWallet` y `Waybill` de Prisma.
+- [x] **Producción Desbloqueada y Push Exitoso**: Limpieza del historial Git local mediante `git filter-branch` purgando el archivo bloqueante legacy (> 164MB) y empujando exitosamente a `main`.
 
 ---
 
-SISTEMA OPERATIVO | V203.D CONGELADA Y AUDITADA | RESILIENCIA EN WEBHOOKS, DIAGNÓSTICOS ACTIVO Y CENTRAL DE PERMISOS CERTIFICADA
-*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA (Directiva Omega V203.D Realized)*
+## 🛠️ [STATUS] FASE 204: OBSIDIAN KNOWLEDGE LAYER & BOOKING PORTAL — EN DESARROLLO
+- [x] **Soberanía Documental Integrada**: Creación e implantación de la carpeta oficial `docs/memoria EAR OS` como vault de Obsidian estructurado con 7 categorías clave, 12 notas canónicas (Esquema general, Webhook, Hardening, Permisos, Runbooks de deploy y rollback, plantillas de incidentes/ADR e historia de Edwin Agudelo).
+- [ ] **RAG Document Integration**: Ingestión de manuales técnicos y procedimentales para el motor predictivo ASTRA.
+- [ ] **Checkout & Dispatch Fusion**: Conexión final del Matcher predictivo en la Home con el flujo transaccional.
 
+---
+
+SISTEMA OPERATIVO | V204 ACTIVA | WEBHOOK DETERMINISTA ACID Y MEMORIA SOBERANA DE OBSIDIAN SELLADA Y DESPLEGADA
+*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA (Directiva Omega V204 Realized)*
