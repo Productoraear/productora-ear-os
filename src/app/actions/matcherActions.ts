@@ -1,6 +1,17 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { headers } from "next/headers";
+import { isRateLimited } from "@/lib/security/shield";
+import { logger } from "@/lib/logger";
+import { z } from "zod";
+
+const MatcherInputSchema = z.object({
+  atmosphere: z.string().min(1, "La atmósfera es requerida"),
+  date: z.string().optional(),
+  location: z.string().optional(),
+});
+
 
 export interface MatchingProvider {
   id: string;
@@ -133,9 +144,26 @@ export async function getMatchingProviders(params: {
   date?: string;
   location?: string;
 }): Promise<MatchingProvider[]> {
-  const { atmosphere, date, location } = params;
+  // 1. IP Rate Limiting Check
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for")?.split(",")[0].trim() || "127.0.0.1";
 
-  console.log(`🔍 [MATCHER_ACTION] Buscando para atmósfera: ${atmosphere}, fecha: ${date || 'ninguna'}, ubicación: ${location || 'ninguna'}`);
+  if (isRateLimited(ip, 10, 60000)) { // 10 searches per minute limit
+    logger.warn({ event: "MATCHER_RATE_LIMIT_EXCEEDED", ip, atmosphere: params.atmosphere });
+    throw new Error("RATE_LIMIT_EXCEEDED: Has excedido el límite de consultas por minuto.");
+  }
+
+  // 2. Validation with Zod
+  const parsed = MatcherInputSchema.safeParse(params);
+  if (!parsed.success) {
+    logger.error({ event: "MATCHER_VALIDATION_FAILED", errors: parsed.error.format(), ip });
+    throw new Error("VALIDATION_ERROR: Parámetros de búsqueda inválidos.");
+  }
+
+  const { atmosphere, date, location } = parsed.data;
+
+  logger.info({ event: "MATCHER_QUERY_INIT", atmosphere, location, ip });
+
 
   // 1. Obtener artistas prioritarios (Sticky Top)
   const priorityActs = [...(MASTER_ROSTER[atmosphere] || [])];
@@ -181,8 +209,8 @@ export async function getMatchingProviders(params: {
         { name: 'asc' }
       ]
     });
-  } catch (error) {
-    console.error("❌ [MATCHER_ACTION_DB_ERROR]: Fallo al consultar PostgreSQL", error);
+  } catch (error: any) {
+    logger.error({ event: "MATCHER_ACTION_DB_ERROR", error: error.message, ip });
   }
 
   // Si no se encuentran resultados con el filtro específico, hacer un fallback general en la DB
@@ -193,8 +221,8 @@ export async function getMatchingProviders(params: {
         take: 8,
         orderBy: { roiGuaranteeScore: 'desc' }
       });
-    } catch (e) {
-      console.error("❌ Fallo en fallback general de DB:", e);
+    } catch (e: any) {
+      logger.error({ event: "MATCHER_FALLBACK_DB_ERROR", error: e.message, ip });
     }
   }
 

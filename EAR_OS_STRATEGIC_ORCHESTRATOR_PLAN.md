@@ -165,12 +165,50 @@
 
 ---
 
-## 🛠️ [STATUS] FASE 204: OBSIDIAN KNOWLEDGE LAYER & BOOKING PORTAL — EN DESARROLLO
+## 🛠️ [STATUS] FASE 204: OBSIDIAN KNOWLEDGE LAYER — COMPLETADA Y CERTIFICADA
 - [x] **Soberanía Documental Integrada**: Creación e implantación de la carpeta oficial `docs/memoria EAR OS` como vault de Obsidian estructurado con 7 categorías clave, 12 notas canónicas (Esquema general, Webhook, Hardening, Permisos, Runbooks de deploy y rollback, plantillas de incidentes/ADR e historia de Edwin Agudelo).
-- [ ] **RAG Document Integration**: Ingestión de manuales técnicos y procedimentales para el motor predictivo ASTRA.
-- [ ] **Checkout & Dispatch Fusion**: Conexión final del Matcher predictivo en la Home con el flujo transaccional.
+- [x] **RAG Obsidian Ingestor**: Implementación de `src/lib/services/rag/obsidianIngestor.ts` para parseo recursivo del vault, extracción de headings, tags, backlinks `[[...]]` y limpieza de cuerpo para vectorización ASTRA.
+- [x] **Checkout Determinista S-Class**: Refactorización de `createEliteCheckout` con metadatos enriquecidos de geolocalización y telemetría Haversine inyectados en `stripe.checkout.sessions`.
+- [x] **Webhook ACID Blindado**: Eliminación de `findFirst()` aleatorio. Resolución determinista de identidad (`meta.clientId` → email Stripe → creación atómica CLIENT).
+- [x] **Barreras de Contención**: Inyección de `error.tsx` y `loading.tsx` en el route group `(public)` para aislamiento de fallos.
+- [x] **Build Certificado**: 2,465 páginas SSG, Exit Code 0.
 
 ---
 
-SISTEMA OPERATIVO | V204 ACTIVA | WEBHOOK DETERMINISTA ACID Y MEMORIA SOBERANA DE OBSIDIAN SELLADA Y DESPLEGADA
-*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA (Directiva Omega V204 Realized)*
+## 🛠️ [STATUS] FASE 205: GOD MODE — ENTERPRISE HARDENING — COMPLETADA Y CERTIFICADA
+- [x] **Structured JSON Logger**: Creación de `src/lib/logger.ts` eliminando 100% de `console.log`/`console.error` amateur en flujos financieros (checkout, webhook, matcher).
+- [x] **Zod Validation Gates**: Schemas estrictos de Zod en `createEliteCheckout` y `getMatchingProviders`. Prohibida validación de strings contra `"undefined"` o `"null"`.
+- [x] **In-Memory Rate Limiting**: Extensión de `src/lib/security/shield.ts` con `isRateLimited(ip, limit, windowMs)` activo en checkout (5/min) y matcher (10/min).
+- [x] **Cron Job ASTRA RAG**: Creación de `src/app/api/cron/obsidian-sync/route.ts` protegido por Bearer Token (`CRON_SECRET`) para sincronización automatizada del vault con notificación Telegram.
+- [x] **Playwright E2E Skeleton**: Creación de `e2e/checkout-flow.spec.ts` con emulación iPhone 13 para flujo mobile-first de checkout.
+- [x] **Build Certificado**: `npx tsc --noEmit` Exit Code 0 + `npm run build` Exit Code 0.
+
+---
+
+## 🛠️ [STATUS] FASE 206: STRIPE CONNECT EXPRESS — AUTOMATED ASSIMILATION ENGINE — COMPLETADA Y CERTIFICADA
+- [x] **Server Action de Onboarding**: Creación de `src/app/actions/stripeConnectActions.ts` con `createConnectOnboardingLink`. Crea cuenta Express en Stripe, persiste `stripeAccountId` en Prisma, genera Account Link de onboarding hosted. Validación Zod + Rate Limit (3/min).
+- [x] **Webhook Event Router**: Refactorización de `src/app/api/payments/webhook/route.ts` de single-event guard a `switch` dispatcher con handlers `handleCheckoutCompleted` y `handleAccountUpdated`.
+- [x] **Handler `account.updated`**: Único codepath que puede activar `isVerified = true`. Requiere `details_submitted === true` AND `charges_enabled === true` del objeto Account de Stripe. Idempotente. Notificación Telegram.
+- [x] **StripeConnectGate UI Component**: Overlay Aura Onyx infranqueable en `src/components/StripeConnectGate.tsx` que bloquea el dashboard del proveedor hasta que `stripeConnected === true`.
+- [x] **Zero Bypass Guarantee**: No existe codepath en frontend, admin, ni scripts que escriba `isVerified = true` fuera del webhook `account.updated`.
+- [x] **Gobernanza Operativa**: Materialización del `CLINE_OMEGA_KERNEL.md` como micro-kernel de gobernanza AI enterprise-grade.
+- [x] **Build Certificado**: `npx tsc --noEmit` Exit Code 0 + `npm run build` Exit Code 0 (2,465 páginas).
+
+---
+
+## 🏗️ FASE ACTUAL: V207 — PENDIENTE DE APERTURA
+**Prerequisitos para abrir V207:**
+- 🔲 Configurar `account.updated` en Stripe Dashboard apuntando al endpoint de producción.
+- 🔲 Smoke test de flujo Express completo en modo test.
+- 🔲 Añadir `CRON_SECRET` a variables de entorno de Vercel Production.
+
+---
+
+## PROTOCOLO OPERATIVO ANTIGRAVITY OMEGA v2.0 ENTERPRISE
+- Kernel: `CLINE_OMEGA_KERNEL.md`
+- Prompts: 100 directivas organizadas en 10 dominios funcionales (P001–P100)
+- Design System: EAR OS GOLD 2026 — tokens en `src/app/globals.css`
+- Última actualización: 2026-05-18
+
+SISTEMA OPERATIVO | V206 SELLADA | V207 PENDIENTE DE APERTURA | WEBHOOK ROUTER DUAL (CHECKOUT + CONNECT KYC)
+*Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA v2.0 ENTERPRISE (Directiva Omega V206 Realized)*

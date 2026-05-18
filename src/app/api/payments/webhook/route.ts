@@ -1,13 +1,14 @@
-import { NextResponse } from 'next/server';
-import { stripe } from '@/lib/payments';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { sendTelegramNotification } from '@/lib/services/telegram';
-import { prisma } from '@/lib/prisma';
-import Stripe from 'stripe';
+import { NextResponse } from "next/server";
+import { stripe } from "@/lib/payments";
+import { db } from "@/lib/firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { sendTelegramNotification } from "@/lib/services/telegram";
+import { prisma } from "@/lib/prisma";
+import { logger } from "@/lib/logger";
+import Stripe from "stripe";
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 type StripeSession = Stripe.Checkout.Session & {
   customer_details?: { email?: string | null; name?: string | null } | null;
@@ -20,7 +21,7 @@ type StripeSession = Stripe.Checkout.Session & {
  * Normalizes email address formatting for strict matching.
  */
 function getEmailFromSession(session: StripeSession): string | null {
-  const email = 
+  const email =
     session.customer_details?.email?.trim().toLowerCase() ||
     session.customer_email?.trim().toLowerCase() ||
     null;
@@ -28,17 +29,21 @@ function getEmailFromSession(session: StripeSession): string | null {
 }
 
 /**
- * 🌌 STRIPE WEBHOOK HANDLER - S-CLASS RESILIENCY ENGINE (V153.FUSION)
+ * 🌌 STRIPE WEBHOOK HANDLER - S-CLASS RESILIENCY ENGINE (V205.GOD_MODE)
  * Implements Proactive Idempotency Gating, Deterministic Guest Identity, and Unified ACID Transaction.
+ * Refactorizado 100% con Logger Estructurado sin rastros de logs amateur en flujos financieros.
  */
 export async function POST(req: Request) {
   const body = await req.text();
-  const signature = req.headers.get('stripe-signature') as string;
+  const signature = req.headers.get("stripe-signature") as string;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!webhookSecret) {
-    console.error('❌ [ASTRA_WEBHOOK] [CRITICAL_ERROR] STRIPE_WEBHOOK_SECRET is missing.');
-    return NextResponse.json({ error: 'Webhook configuration error' }, { status: 500 });
+    logger.error({
+      event: "WEBHOOK_CONFIG_ERROR",
+      reason: "STRIPE_WEBHOOK_SECRET is missing.",
+    });
+    return NextResponse.json({ error: "Webhook configuration error" }, { status: 500 });
   }
 
   let event: Stripe.Event;
@@ -46,15 +51,32 @@ export async function POST(req: Request) {
   try {
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err: any) {
-    console.error(`❌ [ASTRA_WEBHOOK] [SECURITY_ALERT] Webhook signature validation failed: ${err.message}`);
-    return NextResponse.json({ error: 'Invalid signature' }, { status: 400 });
+    logger.error({
+      event: "WEBHOOK_SIGNATURE_VALIDATION_FAILED",
+      reason: err.message,
+    });
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  if (event.type !== 'checkout.session.completed') {
-    return NextResponse.json({ received: true, ignored: true }, { status: 200 });
-  }
+  // ═══════════════════════════════════════════════════════════════
+  // EVENT ROUTER — dispatch to deterministic handlers
+  // ═══════════════════════════════════════════════════════════════
+  switch (event.type) {
+    case "checkout.session.completed":
+      return handleCheckoutCompleted(event.data.object as StripeSession);
 
-  const session = event.data.object as StripeSession;
+    case "account.updated":
+      return handleAccountUpdated(event.data.object as Stripe.Account);
+
+    default:
+      return NextResponse.json({ received: true, ignored: true }, { status: 200 });
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HANDLER 1: checkout.session.completed (Ledger + Wallet + Waybill)
+// ═══════════════════════════════════════════════════════════════
+async function handleCheckoutCompleted(session: StripeSession) {
   const meta = session.metadata || {};
   const idempotencyRef = `STRIPE-${session.id}`;
   const amountTotal = (session.amount_total ?? 0) / 100;
@@ -63,93 +85,95 @@ export async function POST(req: Request) {
   try {
     const existingLedger = await prisma.commissionLedger.findUnique({
       where: { reference: idempotencyRef },
-      select: { id: true }
+      select: { id: true },
     });
 
     if (existingLedger) {
-      console.log(`ℹ️ [ASTRA_WEBHOOK] [IDEMPOTENCY_HIT] Session ${session.id} was already processed. Terminating execution.`);
-      return NextResponse.json({ received: true, status: 'SKIPPED_DUPLICATE' }, { status: 200 });
+      logger.info({ event: "WEBHOOK_IDEMPOTENCY_HIT", sessionId: session.id });
+      return NextResponse.json({ received: true, status: "SKIPPED_DUPLICATE" }, { status: 200 });
     }
   } catch (checkErr: any) {
-    console.error(`⚠️ [ASTRA_WEBHOOK] [DB_CONN_FAILURE] Could not run idempotency check: ${checkErr.message}`);
+    logger.error({
+      event: "WEBHOOK_IDEMPOTENCY_CHECK_FAILED",
+      error: checkErr.message,
+    });
   }
 
   // Smart Split V152: 80% Artística, 10% Infraestructura (EAR OS), 10% Retención Social (VIMUME)
-  const infrastructureFee = amountTotal * 0.10;
-  const socialRetained = amountTotal * 0.10;
-  const artisticCut = amountTotal * 0.80;
+  const infrastructureFee = amountTotal * 0.1;
+  const socialRetained = amountTotal * 0.1;
+  const artisticCut = amountTotal * 0.8;
 
   try {
-    // 2. Deterministic Identity Resolution (Fase 1: Resolving/Creating Guest User)
+    // 2. Deterministic Identity Resolution
     const resolvedUserId = await prisma.$transaction(async (tx) => {
-      // A. Try internal metadata clientId matching
-      if (meta.clientId) {
+      if (meta.clientId && meta.clientId !== "GUEST") {
         const existingUser = await tx.user.findUnique({
           where: { id: meta.clientId },
-          select: { id: true }
+          select: { id: true },
         });
         if (existingUser) return existingUser.id;
       }
 
-      // B. Resolve by Stripe Checkout email details
       const email = getEmailFromSession(session);
       if (!email) {
-        throw new Error('Unable to resolve guest identity from Stripe session');
+        throw new Error("Unable to resolve guest identity from Stripe session");
       }
 
       const existingByEmail = await tx.user.findUnique({
         where: { email },
-        select: { id: true }
+        select: { id: true },
       });
       if (existingByEmail) return existingByEmail.id;
 
-      // C. Create guest user with explicit CLIENT role & rank mapping
       const newTempUser = await tx.user.create({
         data: {
           email,
-          displayName: meta.clientName || session.customer_details?.name || 'Cliente Invitado',
-          role: 'CLIENT',
-          rank: 'NIVEL_0_EXPLORADOR'
+          displayName:
+            meta.clientName || session.customer_details?.name || "Cliente Invitado",
+          role: "CLIENT",
+          rank: "NIVEL_0_EXPLORADOR",
         },
-        select: { id: true }
+        select: { id: true },
       });
       return newTempUser.id;
     });
 
-    // 3. Consolidated Transactional ACID Writes (Ledger, Wallet and Waybill dispatch)
+    // 3. Consolidated ACID Writes (Ledger, Wallet, Waybill)
     const result = await prisma.$transaction(async (tx) => {
-      // A. B2B / CommissionLedger Registration
       const ledger = await tx.commissionLedger.create({
         data: {
           userId: resolvedUserId,
           amount: amountTotal,
-          currency: session.currency?.toUpperCase() || 'EUR',
-          status: 'PAID',
+          currency: session.currency?.toUpperCase() || "EUR",
+          status: "PAID",
           stripeSessionId: session.id,
           notes: `Smart Split V152: EAR OS = ${infrastructureFee.toFixed(2)}€ | VIMUME = ${socialRetained.toFixed(2)}€ | Artista = ${artisticCut.toFixed(2)}€`,
           reference: idempotencyRef,
-          sourceEvent: 'checkout.session.completed'
+          sourceEvent: "checkout.session.completed",
         },
-        select: { id: true }
+        select: { id: true },
       });
 
-      // B. Wallet Balance Increment
       const artistId = meta.artistId;
       let walletUserId = resolvedUserId;
 
-      if (artistId && /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(artistId)) {
+      if (
+        artistId &&
+        /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(artistId)
+      ) {
         const artistProfile = await tx.artistProfile.findUnique({
           where: { id: artistId },
-          select: { userId: true }
+          select: { userId: true },
         });
         if (artistProfile) {
           walletUserId = artistProfile.userId;
         } else {
           const providerProfile = await tx.providerProfile.findUnique({
             where: { id: artistId },
-            select: { userId: true }
+            select: { userId: true },
           });
-          if (providerProfile && providerProfile.userId) {
+          if (providerProfile?.userId) {
             walletUserId = providerProfile.userId;
           }
         }
@@ -160,41 +184,38 @@ export async function POST(req: Request) {
         create: {
           userId: walletUserId,
           balance: artisticCut,
-          currency: session.currency?.toUpperCase() || 'EUR'
+          currency: session.currency?.toUpperCase() || "EUR",
         },
-        update: {
-          balance: {
-            increment: artisticCut
-          }
-        }
+        update: { balance: { increment: artisticCut } },
       });
 
-      // C. Logistics Waybill Dispatch
       const workspace = await tx.workspace.findFirst({ select: { id: true } });
       let waybillId = null;
 
       if (workspace) {
-        const isUuid = (val: string) => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(val);
+        const isUuid = (val: string) =>
+          /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(val);
         const verifiedArtistProfileId = artistId && isUuid(artistId) ? artistId : null;
-        const verifiedProviderProfileId = artistId && isUuid(artistId) && !verifiedArtistProfileId ? artistId : null;
+        const verifiedProviderProfileId =
+          artistId && isUuid(artistId) && !verifiedArtistProfileId ? artistId : null;
 
         const waybill = await tx.waybill.create({
           data: {
             workspaceId: workspace.id,
             artistProfileId: verifiedArtistProfileId,
             providerProfileId: verifiedProviderProfileId,
-            status: 'QUEUED',
+            status: "QUEUED",
             referenceCode: `WAY-${session.id}`,
-            originLabel: meta.origin || 'Madrid, España',
-            destinationLabel: meta.destination || 'Provincia Destino',
+            originLabel: meta.origin || "Madrid, España",
+            destinationLabel: meta.destination || "Provincia Destino",
             originLat: meta.originLat ? parseFloat(meta.originLat) : 40.416775,
-            originLng: meta.originLng ? parseFloat(meta.originLng) : -3.703790,
+            originLng: meta.originLng ? parseFloat(meta.originLng) : -3.70379,
             destinationLat: meta.destinationLat ? parseFloat(meta.destinationLat) : 40.416775,
-            destinationLng: meta.destinationLng ? parseFloat(meta.destinationLng) : -3.703790,
+            destinationLng: meta.destinationLng ? parseFloat(meta.destinationLng) : -3.70379,
             startsAt: new Date(),
-            notes: `Waybill autogenerado por Stripe Connect Webhook. Artista ID: ${artistId}. Importe: ${amountTotal}€`
+            notes: `Waybill autogenerado por Stripe Connect Webhook. Artista ID: ${artistId}. Importe: ${amountTotal}€`,
           },
-          select: { id: true }
+          select: { id: true },
         });
         waybillId = waybill.id;
       }
@@ -202,53 +223,148 @@ export async function POST(req: Request) {
       return { ledgerId: ledger.id, waybillId };
     });
 
-    console.log(`✨ [ASTRA_WEBHOOK] [SUCCESS] Deterministic transactions finalized. User ID: ${resolvedUserId}`);
+    logger.info({
+      event: "WEBHOOK_CHECKOUT_SUCCESS",
+      resolvedUserId,
+      ledgerId: result.ledgerId,
+    });
 
-    // 4. Async Firestore Order Backup (Non-blocking telemetry log)
+    // Async Firestore backup (non-blocking)
     try {
-      await addDoc(collection(db, 'ear_orders'), {
+      await addDoc(collection(db, "ear_orders"), {
         sessionId: session.id,
         amount: amountTotal,
         currency: session.currency,
-        status: 'PAID',
-        client: getEmailFromSession(session) || 'Desconocido',
+        status: "PAID",
+        client: getEmailFromSession(session) || "Desconocido",
         metadata: meta,
         split: { infrastructureFee, socialRetained, artisticCut },
         createdAt: serverTimestamp(),
       });
     } catch (backupErr: any) {
-      console.error(`⚠️ [ASTRA_WEBHOOK] [BACKUP_WARN] Firestore write failed: ${backupErr.message}`);
+      logger.error({ event: "WEBHOOK_FIRESTORE_BACKUP_FAILED", error: backupErr.message });
     }
 
-    // 5. Async Telegram Notification dispatch
+    // Async Telegram notification
     try {
-      const currency = session.currency?.toUpperCase() || 'EUR';
-      const email = getEmailFromSession(session) || 'Anónimo';
-      const splitStatus = `EAR OS: ${infrastructureFee.toFixed(2)}€ | VIMUME: ${socialRetained.toFixed(2)}€ | Artista: ${artisticCut.toFixed(2)}€`;
+      const currency = session.currency?.toUpperCase() || "EUR";
+      const email = getEmailFromSession(session) || "Anónimo";
 
       await sendTelegramNotification(
-        `💰 *NUEVA VENTA S-CLASS CONFIRMADA (GUEST DETECTED)*\n\n` +
-        `👤 *Cliente:* ${email}\n` +
-        `💵 *Monto:* ${amountTotal} ${currency}\n` +
-        `📊 *Smart Split:* ${splitStatus}\n` +
-        `🌍 *Destino:* ${meta.destination || 'No especificado'}\n` +
-        `🏆 *ID Contable:* \`${result.ledgerId}\`\n` +
-        `🚛 *Waybill:* \`${result.waybillId || 'No despachado (Falta Workspace)'}\`\n\n` +
-        `🚀 _EAR OS GOLD V153: Leviathan Ledger Deterministic Active._`
+        `💰 *NUEVA VENTA S-CLASS CONFIRMADA*\n\n` +
+          `👤 *Cliente:* ${email}\n` +
+          `💵 *Monto:* ${amountTotal} ${currency}\n` +
+          `📊 *Split:* EAR OS ${infrastructureFee.toFixed(2)}€ | VIMUME ${socialRetained.toFixed(2)}€ | Artista ${artisticCut.toFixed(2)}€\n` +
+          `🏆 *Ledger:* \`${result.ledgerId}\`\n` +
+          `🚛 *Waybill:* \`${result.waybillId || "N/A"}\``
       );
     } catch (tgErr: any) {
-      console.error(`⚠️ [ASTRA_WEBHOOK] [TELEGRAM_WARN] Notification delivery failed: ${tgErr.message}`);
+      logger.error({ event: "WEBHOOK_TELEGRAM_NOTIFY_FAILED", error: tgErr.message });
     }
 
     return NextResponse.json({
       received: true,
-      status: 'PROCESSED',
+      status: "PROCESSED",
       userId: resolvedUserId,
-      ...result
+      ...result,
     });
-
   } catch (transactionErr: any) {
-    console.error('❌ [ASTRA_WEBHOOK] [ACID_TRANSACTION_FAILED] Fatal error in processing webhook:', transactionErr.message);
-    return NextResponse.json({ error: `Database transaction failed: ${transactionErr.message}` }, { status: 500 });
+    logger.error({
+      event: "WEBHOOK_ACID_TRANSACTION_FAILED",
+      error: transactionErr.message,
+    });
+    return NextResponse.json(
+      { error: `Database transaction failed: ${transactionErr.message}` },
+      { status: 500 }
+    );
   }
 }
+
+// ═══════════════════════════════════════════════════════════════
+// HANDLER 2: account.updated (Stripe Connect KYC verification)
+// THIS IS THE ONLY CODEPATH THAT CAN SET isVerified = true
+// ═══════════════════════════════════════════════════════════════
+async function handleAccountUpdated(account: Stripe.Account) {
+  const stripeAccountId = account.id;
+  const detailsSubmitted = account.details_submitted ?? false;
+  const chargesEnabled = account.charges_enabled ?? false;
+
+  logger.info({
+    event: "WEBHOOK_ACCOUNT_UPDATED",
+    stripeAccountId,
+    detailsSubmitted,
+    chargesEnabled,
+  });
+
+  // Only promote to verified when Stripe has completed full KYC
+  if (!detailsSubmitted || !chargesEnabled) {
+    logger.info({
+      event: "WEBHOOK_ACCOUNT_NOT_YET_VERIFIED",
+      stripeAccountId,
+      reason: !detailsSubmitted ? "details_submitted=false" : "charges_enabled=false",
+    });
+    return NextResponse.json({ received: true, status: "PENDING_VERIFICATION" }, { status: 200 });
+  }
+
+  // Find the provider by stripeAccountId
+  const provider = await prisma.providerProfile.findFirst({
+    where: { stripeAccountId },
+    select: { id: true, name: true, isVerified: true, stripeConnected: true },
+  });
+
+  if (!provider) {
+    logger.warn({
+      event: "WEBHOOK_ACCOUNT_ORPHAN",
+      stripeAccountId,
+      reason: "No ProviderProfile found with this stripeAccountId",
+    });
+    return NextResponse.json({ received: true, status: "ORPHAN_ACCOUNT" }, { status: 200 });
+  }
+
+  // Idempotency: skip if already verified
+  if (provider.isVerified && provider.stripeConnected) {
+    logger.info({
+      event: "WEBHOOK_ACCOUNT_ALREADY_VERIFIED",
+      stripeAccountId,
+      providerId: provider.id,
+    });
+    return NextResponse.json({ received: true, status: "ALREADY_VERIFIED" }, { status: 200 });
+  }
+
+  // ACID update: mark provider as fiscally verified
+  await prisma.providerProfile.update({
+    where: { id: provider.id },
+    data: {
+      isVerified: true,
+      stripeConnected: true,
+    },
+  });
+
+  logger.info({
+    event: "WEBHOOK_PROVIDER_VERIFIED",
+    stripeAccountId,
+    providerId: provider.id,
+    providerName: provider.name,
+  });
+
+  // Telegram notification
+  try {
+    await sendTelegramNotification(
+      `✅ *PROVEEDOR VERIFICADO POR STRIPE CONNECT*\n\n` +
+        `🏢 *Proveedor:* ${provider.name}\n` +
+        `🆔 *ID:* \`${provider.id}\`\n` +
+        `🏦 *Stripe Account:* \`${stripeAccountId}\`\n` +
+        `📋 *KYC:* details_submitted=true, charges_enabled=true\n\n` +
+        `🛡️ _Verificación fiscal completada. El proveedor puede recibir pagos._`
+    );
+  } catch (tgErr: any) {
+    logger.error({ event: "WEBHOOK_CONNECT_TELEGRAM_FAILED", error: tgErr.message });
+  }
+
+  return NextResponse.json({
+    received: true,
+    status: "PROVIDER_VERIFIED",
+    providerId: provider.id,
+  });
+}
+

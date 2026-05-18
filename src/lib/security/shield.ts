@@ -116,3 +116,34 @@ export async function inspectRequest(req: Request, endpointName: string): Promis
   // Block absolutely if threat is CRITICAL
   return fingerprint.threatLevel === "CRITICAL";
 }
+
+// 🔒 S-CLASS IN-MEMORY RATE LIMIT STORE (V205.GOD_MODE)
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+
+/**
+ * Valida si un IP o identificador de cliente ha excedido el Rate Limit.
+ * Bloquea solicitudes si superan el límite indicado por ventana de tiempo.
+ */
+export function isRateLimited(ip: string, limit: number = 5, windowMs: number = 60000): boolean {
+  const now = Date.now();
+  const record = rateLimitStore.get(ip);
+
+  if (!record) {
+    rateLimitStore.set(ip, { count: 1, resetAt: now + windowMs });
+    return false;
+  }
+
+  if (now > record.resetAt) {
+    // Window expired, reset window context
+    rateLimitStore.set(ip, { count: 1, resetAt: now + windowMs });
+    return false;
+  }
+
+  record.count += 1;
+  if (record.count > limit) {
+    return true;
+  }
+
+  return false;
+}
+

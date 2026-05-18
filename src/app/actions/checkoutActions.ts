@@ -3,6 +3,10 @@
 import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/payments";
 import { calculateGeoPricing } from "@/lib/services/pricing/geo-pricer";
+import { headers } from "next/headers";
+import { isRateLimited } from "@/lib/security/shield";
+import { logger } from "@/lib/logger";
+import { z } from "zod";
 
 export interface EliteCheckoutInput {
   artistId: string;    // ID del ArtistProfile o ProviderProfile verificado
@@ -12,53 +16,78 @@ export interface EliteCheckoutInput {
   eventDate: string;   // Fecha seleccionada
 }
 
+// 🛡️ SCHEMA DE VALIDACIÓN ESTRICTO CON ZOD
+const EliteCheckoutSchema = z.object({
+  artistId: z.string().min(1, "El ID del artista es obligatorio"),
+  clientId: z.string().nullable().optional(),
+  origin: z.string().min(1, "El origen es obligatorio"),
+  destination: z.string().min(1, "El destino es obligatorio"),
+  eventDate: z.string().min(1, "La fecha de evento es obligatoria"),
+});
+
 /**
  * 💳 S-CLASS SERVER ACTION: SECURE ELITE CHECKOUT
  * Valida la legitimidad del perfil, calcula la distancia física real y genera la sesión de
  * Stripe Checkout garantizando que perfiles no autorizados u huérfanos nunca toquen Stripe.
+ * Endurecido con Zod, structured JSON logs y Rate Limiting perimetral.
  */
 export async function createEliteCheckout(input: EliteCheckoutInput) {
-  const { artistId, clientId, origin, destination, eventDate } = input;
+  // 1. IP Rate Limiting Check en Borde
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for")?.split(",")[0].trim() || "127.0.0.1";
 
-  console.log(`💳 [ELITE_CHECKOUT] Procesando sesión para artista/proveedor ID: ${artistId}, cliente ID: ${clientId}`);
+  if (isRateLimited(ip, 5, 60000)) {
+    logger.warn({ event: "CHECKOUT_RATE_LIMIT_EXCEEDED", ip, artistId: input.artistId });
+    throw new Error("RATE_LIMIT_EXCEEDED: Has excedido el límite de 5 intentos por minuto. Por favor, espere.");
+  }
 
-  // 1. Resolver el cliente de forma limpia sin fallbacks ficticios de usuarios aleatorios (Fase 1: Fallback Cero)
+  // 2. Parse estricto de entrada con Zod
+  const parsed = EliteCheckoutSchema.safeParse(input);
+  if (!parsed.success) {
+    logger.error({ event: "CHECKOUT_VALIDATION_FAILED", errors: parsed.error.format(), ip });
+    throw new Error(`VALIDATION_ERROR: ${parsed.error.issues.map((e) => e.message).join(", ")}`);
+  }
+
+  const { artistId, clientId, origin, destination, eventDate } = parsed.data;
+
+  logger.info({ event: "CHECKOUT_INIT", artistId, clientId, ip });
+
+  // 3. Resolver el cliente de forma limpia sin fallbacks ficticios
   let resolvedClientId: string | null = null;
-  if (clientId && clientId !== "undefined" && clientId !== "null" && clientId !== "GUEST") {
+  if (clientId) {
     const clientUser = await prisma.user.findUnique({
       where: { id: clientId },
-      select: { id: true }
+      select: { id: true },
     });
     if (clientUser) {
       resolvedClientId = clientUser.id;
     }
   }
 
-  // 2. Validar perfil y verificar estatus oficial o de verificación S-Class
+  // 4. Validar perfil y verificar estatus oficial o de verificación S-Class
   let isAuthorized = false;
   let artistName = "";
   let baseFee = 1200; // Tarifa base estándar del Roster de Élite
 
-  // A. Intentar buscar en el Roster de Artistas (Edwin Agudelo y Co.)
-  // Todos los artistas que poseen un perfil asociado en ArtistProfile son considerados parte del Roster Oficial.
+  // A. Buscar en el Roster de Artistas (Edwin Agudelo y Co.)
   const artist = await prisma.artistProfile.findUnique({
     where: { id: artistId },
-    select: { id: true, displayName: true }
+    select: { id: true, displayName: true },
   });
 
   if (artist) {
     isAuthorized = true;
     artistName = artist.displayName;
   } else {
-    // B. Si no está en el roster de artistas, buscar en perfiles de proveedores verificados
+    // B. Buscar en perfiles de proveedores verificados
     const provider = await prisma.providerProfile.findFirst({
       where: {
         OR: [
           { id: artistId },
-          { slug: artistId }
-        ]
+          { slug: artistId },
+        ],
       },
-      select: { id: true, name: true, isVerified: true, roiGuaranteeScore: true }
+      select: { id: true, name: true, isVerified: true, roiGuaranteeScore: true },
     });
 
     if (provider && provider.isVerified) {
@@ -69,14 +98,12 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   }
 
   // 🚨 GUARDRAIL DE SEGURIDAD ABSOLUTO S-CLASS (VETO DE ORPHANS)
-  // Ningún perfil huérfano, no verificado o sin verificar puede inicializar una sesión de cobros Stripe
   if (!isAuthorized) {
-    console.error(`🚨 [VETO_SECURITY_VIOLATION] Intento de facturación para perfil no verificado ID: ${artistId}`);
+    logger.error({ event: "VETO_SECURITY_VIOLATION", artistId, ip });
     throw new Error("VETO ESTRATÉGICO ACTIVADO: Operación financiera no autorizada. Este perfil no cuenta con la verificación o suscripción Stripe Connect activa.");
   }
 
-  // 3. Geocodificación y cálculo de distancia/precios en entorno seguro (Server-Side)
-  // Previene alteración de payloads por interceptores de red en el cliente
+  // 5. Geocodificación y cálculo de distancia/precios en entorno seguro (Server-Side)
   const pricing = await calculateGeoPricing({
     artistId,
     origin,
@@ -84,12 +111,12 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
     baseFee,
     costPerKm: 0.75, // Costo de transporte por KM de instrumentación/caballos
     depositMode: "fixed",
-    depositValue: 150 // Garantía mínima
+    depositValue: 150, // Garantía mínima
   });
 
-  console.log(`🎯 [ELITE_CHECKOUT] Distancia calculada: ${pricing.distanceKm} km. Total calculado: ${pricing.totalAmount}€.`);
+  logger.info({ event: "CHECKOUT_PRICING_CALCULATED", distanceKm: pricing.distanceKm, totalAmount: pricing.totalAmount, ip });
 
-  // 4. Creación de la sesión de Stripe Checkout con metadatos enriquecidos de geolocalización
+  // 6. Creación de la sesión de Stripe Checkout con metadatos enriquecidos de geolocalización
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
@@ -113,16 +140,18 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
       totalAmount: String(pricing.totalAmount),
       eventDate: eventDate,
       origin: origin,
-      destination: destination
+      destination: destination,
     },
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3007"}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3007"}/contacto`,
   });
 
+  logger.info({ event: "CHECKOUT_SESSION_CREATED", sessionId: session.id, ip });
+
   return {
     sessionId: session.id,
     url: session.url,
     totalAmount: pricing.totalAmount,
-    distanceKm: pricing.distanceKm
+    distanceKm: pricing.distanceKm,
   };
 }

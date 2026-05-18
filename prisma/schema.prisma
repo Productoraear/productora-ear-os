@@ -214,6 +214,7 @@ model ProviderProfile {
   stripeConnected      Boolean           @default(false) @map("stripe_connected")
 
   waybills             Waybill[]         @relation("WaybillProvider")
+  payouts              PayoutSchedule[]
 
   createdAt            DateTime          @default(now()) @map("created_at")
   updatedAt            DateTime          @updatedAt @map("updated_at")
@@ -501,4 +502,26 @@ model AuraWallet {
   updatedAt     DateTime        @updatedAt @map("updated_at")
 
   @@map("ear_aura_wallets")
+}
+
+model PayoutSchedule {
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  providerProfileId String          @db.Uuid @map("provider_profile_id")
+  provider          ProviderProfile @relation(fields: [providerProfileId], references: [id], onDelete: Cascade)
+  stripeAccountId   String          @map("stripe_account_id")
+
+  amount            Float
+  currency          String          @default("EUR")
+  status            String          @default("PENDING")
+
+  stripeTransferId  String?         @unique @map("stripe_transfer_id")
+  scheduledFor      DateTime        @map("scheduled_for")
+  processedAt       DateTime?       @map("processed_at")
+
+  createdAt         DateTime        @default(now()) @map("created_at")
+  updatedAt         DateTime        @updatedAt @map("updated_at")
+
+  @@index([providerProfileId, status])
+  @@index([stripeAccountId])
+  @@map("ear_payout_schedules")
 }
