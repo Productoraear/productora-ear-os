@@ -5,6 +5,16 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET(request: Request) {
   try {
+    // 🛡️ Active Security Perimeter Screening
+    const { inspectRequest } = await import('@/lib/security/shield');
+    const isThreat = await inspectRequest(request, 'API: Profile Search Auto-suggest');
+    if (isThreat) {
+      return NextResponse.json(
+        { error: 'Blocked by S-Class Security Shield: Automation attempt logged.' },
+        { status: 403 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const q = searchParams.get('q') || '';
 
