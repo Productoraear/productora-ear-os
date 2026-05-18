@@ -216,5 +216,11 @@
 - Cualquier dependencia que arrastre React 18 debe pasar a cuarentena o reemplazo.
 - No declarar resuelto el incidente hasta confirmar carga limpia en producción.
 
+## DECISIÓN DE REGIÓN
+- Mantener funciones críticas en región europea cercana a datos y usuarios.
+- Preferir Frankfurt o París según disponibilidad real.
+- No asumir que el build se desplaza de región; solo el runtime de funciones.
+- Validar con headers y latencia antes de oficializar el cambio.
+
 SISTEMA OPERATIVO | V206 SELLADA | V207 PENDIENTE DE APERTURA | WEBHOOK ROUTER DUAL (CHECKOUT + CONNECT KYC)
 *Última actualización: 2026-05-18 — ANTIGRAVITY OMEGA v2.0 ENTERPRISE (Directiva Omega V206 Realized)*

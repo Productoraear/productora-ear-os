@@ -1,4 +1,14 @@
 {
+  "functions": {
+    "src/app/api/**/route.ts": {
+      "runtime": "nodejs",
+      "regions": ["fra1", "cdg1", "mad1"]
+    },
+    "src/app/actions/**": {
+      "runtime": "nodejs",
+      "regions": ["fra1", "cdg1", "mad1"]
+    }
+  },
   "crons": [
     {
       "path": "/api/infra/keep-alive",
