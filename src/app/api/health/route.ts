@@ -1,80 +1,60 @@
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { db } from '@/lib/firebase';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 /**
- * 🏥 HEALTH ENDPOINT - V165.B
- * Monitoreo ligero y auditable de servicios críticos.
- * Soporta type=liveness y type=readiness (por defecto).
+ * 🏥 HEALTH CHECK MONITOR - S-CLASS SYSTEM DIAGNOSTIC (V153)
+ * Resolves Postgres ping, Firebase configurations, and API keys validation.
  */
-export async function GET(req: NextRequest) {
-  const start = Date.now();
-  const { searchParams } = new URL(req.url);
-  const type = searchParams.get('type') || 'readiness';
-
-  // 🟢 LIVENESS: Respuesta minimalista para confirmar que el proceso está vivo.
-  if (type === 'liveness') {
-    return new NextResponse(JSON.stringify({ 
-      status: 'alive', 
-      timestamp: new Date().toISOString(),
-      uptime: Math.floor(process.uptime())
-    }), {
-      status: 200,
-      headers: { 
-        'Content-Type': 'application/json', 
-        'Cache-Control': 'no-cache, no-store, must-revalidate' 
-      }
-    });
-  }
-
-  // 🛡️ READINESS: Verificación de dependencias críticas.
-  const healthData: any = {
+export async function GET() {
+  const timestamp = new Date().toISOString();
+  
+  const status = {
     status: 'healthy',
-    timestamp: new Date().toISOString(),
-    uptime: Math.floor(process.uptime()),
-    version: 'V165.B',
+    timestamp,
+    environment: process.env.NODE_ENV || 'production',
     checks: {
-      db: { status: 'unknown', latencyMs: 0 },
-      telegram: { status: 'unknown' },
-      stripe: { status: 'unknown' }
-    }
+      postgres: 'UNKNOWN',
+      firebase: 'UNKNOWN',
+      stripe: 'UNKNOWN',
+      gemini: 'UNKNOWN'
+    },
+    latencyMs: 0
   };
 
-  // 1. DB CHECK (Operación mínima sin caché)
+  const startTime = Date.now();
+
+  // 1. PostgreSQL Database Ping Check
   try {
-    const dbStart = Date.now();
+    // Quick select raw statement to test pooling & credentials
     await prisma.$queryRaw`SELECT 1`;
-    healthData.checks.db.status = 'healthy';
-    healthData.checks.db.latencyMs = Date.now() - dbStart;
-  } catch (error) {
-    healthData.status = 'unhealthy';
-    healthData.checks.db.status = 'error';
-    healthData.checks.db.message = error instanceof Error ? error.message : String(error);
+    status.checks.postgres = 'UP';
+  } catch (err: any) {
+    status.status = 'unhealthy';
+    status.checks.postgres = `DOWN: ${err.message}`;
+    console.error('🚨 [HEALTH_MONITOR] PostgreSQL verification failed:', err.message);
   }
 
-  // 2. TELEGRAM CONFIGURATION (Verificación pasiva de credenciales)
-  const hasTelegram = !!(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
-  healthData.checks.telegram.status = hasTelegram ? 'configured' : 'missing_credentials';
-
-  // 3. STRIPE CONFIGURATION (Verificación pasiva de credenciales)
-  const hasStripe = !!process.env.STRIPE_SECRET_KEY;
-  healthData.checks.stripe.status = hasStripe ? 'configured' : 'missing_credentials';
-
-  const totalLatency = Date.now() - start;
-  healthData.latencyMs = totalLatency;
-
-  // Gate de seguridad: Si la DB falla, el estado global es 503 (Service Unavailable)
-  const responseStatus = healthData.status === 'healthy' ? 200 : 503;
-
-  return new NextResponse(JSON.stringify(healthData), {
-    status: responseStatus,
-    headers: {
-      'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-      'X-Health-Check-Latency': `${totalLatency}ms`
+  // 2. Firebase Diagnostic Check
+  try {
+    if (db && db.app) {
+      status.checks.firebase = 'UP';
+    } else {
+      status.checks.firebase = 'MISCONFIGURED';
     }
-  });
+  } catch (err: any) {
+    status.status = 'unhealthy';
+    status.checks.firebase = `DOWN: ${err.message}`;
+  }
+
+  // 3. Stripe & Gemini Credentials Verification
+  status.checks.stripe = process.env.STRIPE_SECRET_KEY ? 'CONFIGURED' : 'MISSING';
+  status.checks.gemini = process.env.GEMINI_API_KEY ? 'CONFIGURED' : 'MISSING';
+
+  status.latencyMs = Date.now() - startTime;
+
+  const responseStatus = status.status === 'healthy' ? 200 : 500;
+  return NextResponse.json(status, { status: responseStatus });
 }

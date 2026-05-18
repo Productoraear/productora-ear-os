@@ -47,7 +47,9 @@ async function authorizeUser(email: string): Promise<{ authorized: boolean; role
     return { authorized: false, role: Role.EXPLORADOR, userId: "", artistProfileId: null };
   }
 
-  const isAuthorized = user.role === Role.ADMIN || user.role === Role.ARTIST || user.role === Role.COMMANDER;
+  const { userCan } = require("@/lib/auth/permissions");
+  const isAuthorized = userCan(user.role, "write:waybill") || userCan(user.role, "read:all_waybills") || user.role === Role.ARTIST;
+
   return {
     authorized: isAuthorized,
     role: user.role,
@@ -141,7 +143,8 @@ export async function getAuraWalletAndLedgers(email: string): Promise<WalletLedg
  */
 export async function getSystemFinancials(email: string) {
   const auth = await authorizeUser(email);
-  if (auth.role !== Role.ADMIN && auth.role !== Role.COMMANDER) {
+  const { userCan } = require("@/lib/auth/permissions");
+  if (!userCan(auth.role, "read:system_financials")) {
     throw new Error("UNAUTHORIZED_ACCESS: Global administrator role required.");
   }
 
@@ -184,8 +187,9 @@ export async function runAstraPrediction(
   input: { origin: string; destination: string; eventDate: string }
 ) {
   const auth = await authorizeUser(email);
-  if (!auth.authorized) {
-    throw new Error("UNAUTHORIZED_ACCESS: Clearance level S-Class required.");
+  const { userCan } = require("@/lib/auth/permissions");
+  if (!userCan(auth.role, "read:astra_oracle")) {
+    throw new Error("UNAUTHORIZED_ACCESS: Global administrator role required.");
   }
 
   const { astraPredictiveEngine } = await import("@/lib/ai/astra/predictive-engine");
