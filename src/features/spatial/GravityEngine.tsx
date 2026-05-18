@@ -1,5 +1,13 @@
 'use client';
 
+// R3F@8 JSX intrinsics for React 19 compatibility
+import type { ThreeElements } from '@react-three/fiber';
+declare module 'react' {
+  namespace JSX {
+    interface IntrinsicElements extends ThreeElements {}
+  }
+}
+
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { InstancedMesh, MathUtils, Vector3, Color, Object3D } from 'three';
