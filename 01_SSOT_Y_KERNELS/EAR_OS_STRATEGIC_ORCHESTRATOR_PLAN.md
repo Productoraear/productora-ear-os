@@ -211,6 +211,10 @@
   - **Estado**: ✅ HECHO VERIFICADO
   - **Detalle**: Clasificación de activos de datos e históricos en la raíz del proyecto completada bajo modo simulación estricta, blindando el runtime y conservando el SSOT.
   - **Auditoría Documental**: `docs/forensics/taxonomy_audit_manifest.md` registrado en la memoria de la conversación.
+- ✅ [2026-05-19] FASE 207.B - EXTRACCIÓN EXTERNA Y DESVINCULACIÓN ATÓMICA SELLADA:
+  - **Estado**: ✅ HECHO VERIFICADO
+  - **Detalle**: Extracción física absoluta de `_ALMACEN_DE_CUARENTENA_6M` fuera del workspace vivo hacia un volumen externo. Reubicación exitosa de logs masivos y CSVs de la raíz. El compilador TypeScript retornó a pureza total (`Exit Code 0`) al dejar de escanear código muerto. Commit sellado: `[main 424b8ca9]`.
+  - **Siguiente Hito Pendiente**: Inicialización manual del vault de Obsidian en la raíz con configuración estricta de exclusiones (`node_modules`, `.next`, etc.) antes de crear MOCs.
 
 **Evidencia de producción pendiente**
 - 🔲 `account.updated` activado en Stripe Dashboard para `https://ear-psi.vercel.app/api/payments/webhook`.

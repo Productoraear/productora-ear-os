@@ -1,0 +1,12 @@
+{
+  "userIgnoreFilters": [
+    "node_modules/",
+    ".next/",
+    ".git/",
+    "dist/",
+    "build/",
+    "logs/",
+    "quarantine/",
+    "BASE_DE_CONOCIMIENTO/"
+  ]
+}
