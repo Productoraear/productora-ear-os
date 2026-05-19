@@ -41,7 +41,7 @@ export class ObsidianIngestor {
 
     // 3. Extraer vínculos internos (Backlinks Extraction) formato [[Enlace]]
     const backlinksMatch = content.match(/\[\[(.*?)\]\]/g);
-    const backlinks = backlinksMatch ? backlinksMatch.map(b => b.replace(/[\[\]]/g, '')) : [];
+    const backlinks = backlinksMatch ? backlinksMatch.map(b => b.replace(/\[|\]/g, '')) : [];
 
     // 4. Limpieza del cuerpo del texto para el vectorizador (Clean Body)
     let cleanBody = content;

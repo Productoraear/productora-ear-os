@@ -379,7 +379,9 @@ export async function generateStaticParams() {
               allParams.push({ slug: pathArray });
             }
           }
-        } catch (e) {}
+        } catch (e) {
+          // Ignore invalid URL formatting in sitemap
+        }
       });
     }
   } catch (error) {

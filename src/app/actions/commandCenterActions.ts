@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { Role } from "@prisma/client";
+import { userCan } from "@/lib/auth/permissions";
 
 export interface WaybillData {
   id: string;
@@ -47,7 +48,6 @@ async function authorizeUser(email: string): Promise<{ authorized: boolean; role
     return { authorized: false, role: Role.EXPLORADOR, userId: "", artistProfileId: null };
   }
 
-  const { userCan } = require("@/lib/auth/permissions");
   const isAuthorized = userCan(user.role, "write:waybill") || userCan(user.role, "read:all_waybills") || user.role === Role.ARTIST;
 
   return {
@@ -143,7 +143,6 @@ export async function getAuraWalletAndLedgers(email: string): Promise<WalletLedg
  */
 export async function getSystemFinancials(email: string) {
   const auth = await authorizeUser(email);
-  const { userCan } = require("@/lib/auth/permissions");
   if (!userCan(auth.role, "read:system_financials")) {
     throw new Error("UNAUTHORIZED_ACCESS: Global administrator role required.");
   }
@@ -187,7 +186,6 @@ export async function runAstraPrediction(
   input: { origin: string; destination: string; eventDate: string }
 ) {
   const auth = await authorizeUser(email);
-  const { userCan } = require("@/lib/auth/permissions");
   if (!userCan(auth.role, "read:astra_oracle")) {
     throw new Error("UNAUTHORIZED_ACCESS: Global administrator role required.");
   }

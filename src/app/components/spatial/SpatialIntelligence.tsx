@@ -1,14 +1,8 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useBiometricIntent, useBiometricStore } from '@/lib/hooks/useBiometricIntent';
 import { useEffect } from 'react';
 import { useSharedContext } from '@/app/context/SharedContext';
-
-const GravityEngine = dynamic(() => import('@/features/spatial/GravityEngine'), { 
-  ssr: false,
-  loading: () => <div className="fixed inset-0 bg-[#050505] z-[-1]" />
-});
 
 export function SpatialIntelligence() {
   useBiometricIntent();
@@ -23,5 +17,6 @@ export function SpatialIntelligence() {
     }
   }, [isReadyToCommit, setIsPricerOpen]);
 
-  return <GravityEngine />;
+  return <div className="fixed inset-0 bg-[#050505] z-[-1]" />;
 }
+

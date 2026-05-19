@@ -124,7 +124,7 @@ export const ArtistSEOSwarm: React.FC = () => {
   const handleGenerateSlug = (e: React.FormEvent) => {
     e.preventDefault();
     if (!customCity) return;
-    const cleanCity = customCity.toLowerCase().trim().replace(/[\s_]+/g, '-').replace(/[^\w\-]+/g, '');
+    const cleanCity = customCity.toLowerCase().trim().replace(/[\s_]+/g, '-').replace(/[^\w-]+/g, '');
     const cleanEvent = customEvent.toLowerCase().trim().replace(/[\s_]+/g, '-');
     const slug = `mariachi-${cleanEvent}-${cleanCity}`;
     setGeneratedSlug(slug);

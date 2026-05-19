@@ -51,7 +51,6 @@ export const syncSClassAuth = (callback: (user: FirebaseUser | null) => void) =>
             } else {
               throw error;
             }
-          } else {
           }
         } catch (err) {
           console.warn('⚠️ [AUTH NEXUS] Supabase sync falló — operando solo con Firebase:', err);

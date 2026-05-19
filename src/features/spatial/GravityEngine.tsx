@@ -2,11 +2,13 @@
 
 // R3F@8 JSX intrinsics for React 19 compatibility
 import type { ThreeElements } from '@react-three/fiber';
+/* eslint-disable @typescript-eslint/no-namespace */
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements extends ThreeElements {}
   }
 }
+/* eslint-enable @typescript-eslint/no-namespace */
 
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
