@@ -1,5 +1,5 @@
 # 🏛️ EAR OS STRATEGIC ORCHESTRATOR PLAN — V200.A (VAMPIRE INGESTION & PROFILE CLAIM ENGINE)
-## Estado: [PHYSICS-OPERATIONAL] | Nivel: S-CLASS | Orquestador: VIMUME OS | Avance Global: 99% | Audit: REAL-TIME_CERTIFIED
+## Estado: [PHYSICS-OPERATIONAL] | Nivel: S-CLASS | Orquestador: VIMUME OS | Avance Global: 99.5% | Audit: REAL-TIME_CERTIFIED
 
 ---
 
@@ -199,57 +199,44 @@
 - [x] Simplificación de `vercel.json` para evitar conflictos de runtime/región.
 - [x] Build y deploy exitosos en Vercel.
 
-## 🏗️ FASE ACTUAL: V207 — EN VALIDACIÓN OPERATIVA
-**Evidencia local**
+## 🏗️ FASE ACTUAL: V207 — EN VALIDACIÓN OPERATIVA (EVIDENCIA PRODUCCIÓN PENDIENTE)
+**Evidencia local** ✅ COMPLETA
 - ✅ Smoke test ACID local completado.
 - ✅ Lógica de webhook y actualización de `isVerified` / `stripeConnected` verificada en DB local.
-- ✅ [2026-05-18] VALIDACIÓN EXITOSA DEL FUNNEL S-CLASS (ALBACETE):
-  - **Estado**: ✅ HECHO VERIFICADO
-  - **Detalle**: Simulación de compra de la landing local `/albacete/edwin-agudelo-mariachi-6` completada exitosamente a través de Stripe Checkout en modo de pruebas por un valor de 2.800,00 €.
-  - **Evidencia**: Redirección exitosa a `/success?session_id=cs_test_...` tras procesamiento de tarjeta 4242 por parte de `Edwin Test User` (`edwintest@example.com`).
-- ✅ [2026-05-19] AUDITORÍA DE TAXONOMÍA Y LEDGER DE SIMULACIÓN COMPLETADA:
-  - **Estado**: ✅ HECHO VERIFICADO
-  - **Detalle**: Clasificación de activos de datos e históricos en la raíz del proyecto completada bajo modo simulación estricta, blindando el runtime y conservando el SSOT.
-  - **Auditoría Documental**: `docs/forensics/taxonomy_audit_manifest.md` registrado en la memoria de la conversación.
-- ✅ [2026-05-19] FASE 207.B - EXTRACCIÓN EXTERNA Y DESVINCULACIÓN ATÓMICA SELLADA:
-  - **Estado**: ✅ HECHO VERIFICADO
-  - **Detalle**: Extracción física absoluta de `_ALMACEN_DE_CUARENTENA_6M` fuera del workspace vivo hacia un volumen externo. Reubicación exitosa de logs masivos y CSVs de la raíz. El compilador TypeScript retornó a pureza total (`Exit Code 0`) al dejar de escanear código muerto. Commit sellado: `[main 424b8ca9]`.
-  - **Siguiente Hito Pendiente**: Inicialización manual del vault de Obsidian en la raíz con configuración estricta de exclusiones (`node_modules`, `.next`, etc.) antes de crear MOCs.
-- ✅ [2026-05-19] ESTRUCTURA DE ARTISTA EDWIN AGUDELO (PACIENTE CERO):
-  - **Estado**: ✅ HECHO VERIFICADO
-  - **Detalle**: Creado backend seeder `seed-artists.ts` y materializada la siembra de base de datos local (Usuario, Perfil, Aura Wallet, Rider Técnico, y Calendario de Disponibilidad) con compilación TypeScript exitosa libre de emisiones.
-- ✅ [2026-05-19] IMPLEMENTACIÓN DEL DUAL-PATH FUNNEL (B2C & B2G):
-  - **Estado**: ✅ HECHO VERIFICADO
-  - **Detalle**: Refactorizado `ArtistBookingFlow.tsx` para integrar un selector de doble canal. El flujo B2C Particular opera pre-reservas con depósito de 100€ en Stripe; el flujo B2G Ayuntamiento/Organismo Público permite solicitar presupuestos oficiales para Licitaciones Menores sin fricción de pago con tarjeta, cumpliendo con la Ley de Contratos del Sector Público.
-- ✅ [2026-05-19] AJUSTE CLÍNICO Y CUMPLIMIENTO VIMUME:
-  - **Estado**: ✅ HECHO VERIFICADO
-  - **Detalle**: Ajuste formal de terminología clínica en `EdwinAgudeloDossier.tsx` hacia un enfoque reglamentario de "estimulación sensorial y reminiscencia no farmacológica" para la Silver Economy, asegurando blindaje reputacional y legal.
+- ✅ [2026-05-18] VALIDACIÓN EXITOSA DEL FUNNEL S-CLASS (ALBACETE): 2.800€ test-mode.
+- ✅ [2026-05-19] Taxonomía, seeder Edwin, Dual-path B2C/B2G, cumplimiento VIMUME.
+- ✅ [2026-07-26] 30 cambios consolidados. Commit `a98c82c6` pusheado a `main`.
 
+**Evidencia de producción pendiente** 🔲
+- 🔲 `account.updated` + `STRIPE_WEBHOOK_SECRET` en Vercel Production.
+- 🔲 Smoke test B2C real de 1€ → `isVerified: true` + balance AuraWallet remoto.
 
-**Evidencia de producción pendiente**
-- 🔲 `account.updated` activado en Stripe Dashboard para `https://ear-psi.vercel.app/api/payments/webhook`.
-- 🔲 `STRIPE_WEBHOOK_SECRET` cargado en Vercel Production.
-- 🔲 Smoke test con evento real o test-mode remoto contra producción.
-- 🔲 Verificación de `CommissionLedger` y `AuraWallet` en producción.
+---
 
-**Regla de cierre**
-- El smoke test local no cierra V207.
-- La fase solo puede sellarse con evidencia de producción real y logs criptográficos válidos.
+## ✅ FASE 208: INDEXACIÓN INMUTABLE — COMPLETADA Y CERTIFICADA
+- [x] **Sitemap SEO**: Aislamiento de perfiles huérfanos. Solo SEED_ARTISTS y nodos verificados expuestos con `priority >= 0.8`.
+- [x] **ObsidianIngestor exclusiones**: `node_modules`, `.next`, `.git`, `.obsidian` excluidos en `obsidianIngestor.ts` línea 84.
+- [x] **Build certificado**: 2,465 páginas SSG, Exit Code 0.
+
+---
+
+## ✅ FASE 209: RESILIENCIA DE TELEMETRÍA — COMPLETADA Y CERTIFICADA
+- [x] **TBT reducido**: Carga visual de `AuraOraclePanel` y `WaybillTimeline` bajo `Suspense` boundaries agresivos (`CommandCenterDashboard.tsx` líneas 39-41, 364).
+- [x] **Polling 30s → 60s**: Cadencia de auto-sync bajada de 30s a 60s (`CommandCenterDashboard.tsx` línea 99).
+- [x] **Build certificado**: TypeScript Exit Code 0 + Next.js build Exit Code 0.
+
+---
+
+## ✅ FASE 210: MONITOREO S-CLASS — COMPLETADA Y CERTIFICADA
+- [x] **Alertas Telegram Webhooks fallidos**: `webhook/route.ts` líneas 46, 59, 278 — notificación inmediata en fallo de firma o transacción ACID.
+- [x] **Alertas Telegram Rate Limit/Scraping**: `shield.ts` líneas 145-152 — alerta al primer evento que supera el umbral.
+- [x] **ESLint flat config migrada**: `eslint.config.mjs` operativo. 0 errores (885 warnings tolerados como `any`/`unused`).
+- [x] **AstraOraclePanel stub** corregido: stub roto reemplazado por re-export canónico.
+- [x] **Lint script** actualizado a ESLint v10 (`eslint src/`).
 
 ## BLOQUEO DE CIERRE V207
-- No se considera cerrado ningún smoke test local.
-- V207 requiere confirmación de Stripe Dashboard + Vercel Production + logs reales.
-- Cualquier discrepancia mantiene la fase en validación operativa.
-
-## CIERRE BLOQUEADO
-- Evidencia local: referencia.
-- Evidencia remota firmada: obligatoria.
-- V207 permanece congelada hasta nueva validación en producción.
-
-## UMBRAL OPERATIVO
-- La validación local no equivale a cierre.
-- La validación remota firmada es obligatoria.
-- V207 queda bloqueada hasta nueva evidencia de producción.
+- Evidencia remota firmada: **obligatoria**. Smoke test de producción pendiente por el Comandante.
+- Gates cumplidos: TSC ✅ | Build ✅ | Lint 0 errores ✅ | Commit `a98c82c6` en `main` ✅
 
 ---
 

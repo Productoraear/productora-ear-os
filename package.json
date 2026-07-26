@@ -6,7 +6,7 @@
         "dev": "next dev -p 3007",
         "build": "prisma generate && next build",
         "start": "next start",
-        "lint": "eslint src --ext ts,tsx",
+        "lint": "eslint src/",
         "postinstall": "prisma generate",
         "test-memory-persistence": "ts-node src/test-memory-persistence.ts",
         "ingest:omega": "ts-node scripts/ingestion/omega_indexer.ts",
