@@ -3,15 +3,7 @@
  * EAR OS V2 GOLD - PRODUCTORAEAR.COM
  */
 
-export const PROVINCIAS = [
-  "alava", "albacete", "alicante", "almeria", "asturias", "avila", "badajoz", "baleares", 
-  "barcelona", "burgos", "caceres", "cadiz", "cantabria", "castellon", "ciudad-real", 
-  "cordoba", "cuenca", "gerona", "granada", "guadalajara", "guipuzcoa", "huelva", "huesca", 
-  "jaen", "leon", "lerida", "lugo", "madrid", "malaga", "murcia", "navarra", "orense", 
-  "palencia", "las-palmas", "pontevedra", "la-rioja", "salamanca", "segovia", "sevilla", 
-  "soria", "tarragona", "santa-cruz-de-tenerife", "teruel", "toledo", "valencia", 
-  "valladolid", "vizcaya", "zamora", "zaragoza", "ceuta", "melilla"
-];
+export const PROVINCIAS = ['madrid', 'barcelona', 'valencia', 'sevilla', 'zaragoza', 'malaga', 'murcia', 'palma', 'las-palmas', 'bilbao', 'alicante', 'cordoba', 'valladolid', 'vigo', 'gijon', 'hospitalet', 'vitoria', 'coruna', 'elche', 'granada', 'terrassa', 'badalona', 'oviedo', 'sabadell', 'cartagena', 'jerez', 'mostoles', 'santa-cruz', 'pamplona', 'almeria', 'alcala', 'fuenlabrada', 'leganes', 'san-sebastian', 'getafe', 'burgos', 'albacete', 'castellon', 'santander', 'alcorcon', 'logrono', 'badajoz', 'la-laguna', 'huelva', 'salamanca', 'marbella', 'lerida', 'dos-hermanas', 'torrejon', 'parla', 'mataro', 'leon', 'algeciras', 'santa-coloma', 'alcobendas', 'cadiz', 'jaen', 'reus', 'orense', 'telde', 'gerona', 'barakaldo', 'roquetas', 'santiago', 'lugo', 'lorca', 'caceres', 'san-fernando', 'las-rozas', 'sant-cugat', 'rivas', 'san-sebastian-reyes', 'cornella', 'el-puerto', 'pozuelo', 'guadalajara', 'tarraco', 'melilla', 'toledo', 'ceuta', 'pontevedra', 'chiclana', 'torrent', 'el-ejido', 'arona', 'roquetas-de-mar', 'coslada', 'velez-malaga', 'mijas', 'getxo', 'fuengirola', 'rubi', 'manresa', 'alcala-de-guadaira', 'ponferrada', 'valdemoro', 'majadahonda', 'benidorm', 'molina-de-segura', 'santa-lucia', 'sanlucar', 'estepona', 'benalmadena', 'sagunto', 'paterna', 'zamora', 'avila', 'segovia', 'cuenca', 'huesca', 'soria', 'teruel'];
 
 export const SERVICIOS = [
   {

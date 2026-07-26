@@ -49,6 +49,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
+  const provinceEntries = PROVINCIAS.map(p => ({ url: `${baseUrl}/servicios/mariachis/${p}`, lastModified: now, priority: 0.8, changeFrequency: 'monthly' as const }));
+
   return unique([
     ...corePages,
     ...occasionPages,
@@ -56,5 +58,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...servicePages,
     ...dynamicPages.filter(p => p.indexable !== false),
     ...matrixPages.filter(p => p.indexable !== false),
+    ...provinceEntries,
   ].map(({ indexable, ...rest }: any) => rest));
 }

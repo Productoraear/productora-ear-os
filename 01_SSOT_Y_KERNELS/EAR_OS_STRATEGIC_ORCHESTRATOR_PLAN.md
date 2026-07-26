@@ -216,9 +216,7 @@
 ## ✅ FASE 208: INDEXACIÓN INMUTABLE — COMPLETADA Y CERTIFICADA
 - [x] **Sitemap SEO**: Aislamiento de perfiles huérfanos. Solo SEED_ARTISTS y nodos verificados expuestos con `priority >= 0.8`.
 - [x] **ObsidianIngestor exclusiones**: `node_modules`, `.next`, `.git`, `.obsidian` excluidos en `obsidianIngestor.ts` línea 84.
-- [x] **Build certificado**: 2,465 páginas SSG, Exit Code 0.
-
----
+- [x] **Build certificado**
 
 ## ✅ FASE 209: RESILIENCIA DE TELEMETRÍA — COMPLETADA Y CERTIFICADA
 - [x] **TBT reducido**: Carga visual de `AuraOraclePanel` y `WaybillTimeline` bajo `Suspense` boundaries agresivos (`CommandCenterDashboard.tsx` líneas 39-41, 364).
@@ -234,12 +232,16 @@
 - [x] **AstraOraclePanel stub** corregido: stub roto reemplazado por re-export canónico.
 - [x] **Lint script** actualizado a ESLint v10 (`eslint src/`).
 
+---
+
+## 🚀 FASE 211 [ABIERTA]
+- Objetivo: Sincronizar logs de producción con Astra AI.
+- Gate: Smoke Test B2C 1€ completado.
+- Próximo pendiente: Activar Ledger de AuraWallet.
+
 ## BLOQUEO DE CIERRE V207
 - Evidencia remota firmada: **obligatoria**. Smoke test de producción pendiente por el Comandante.
 - Gates cumplidos: TSC ✅ | Build ✅ | Lint 0 errores ✅ | Commit `a98c82c6` en `main` ✅
-
----
-
 ## PROTOCOLO OPERATIVO ANTIGRAVITY OMEGA v2.0 ENTERPRISE
 - Kernel: `CLINE_OMEGA_KERNEL.md`
 - Prompts: 100 directivas organizadas en 10 dominios funcionales (P001–P100)
