@@ -43,6 +43,7 @@ export async function POST(req: Request) {
       event: "WEBHOOK_CONFIG_ERROR",
       reason: "STRIPE_WEBHOOK_SECRET is missing.",
     });
+    sendTelegramNotification(`🚨 *Fallo Crítico en Webhook*\nMotivo: STRIPE_WEBHOOK_SECRET faltante.`).catch(() => null);
     return NextResponse.json({ error: "Webhook configuration error" }, { status: 500 });
   }
 
@@ -55,6 +56,7 @@ export async function POST(req: Request) {
       event: "WEBHOOK_SIGNATURE_VALIDATION_FAILED",
       reason: err.message,
     });
+    sendTelegramNotification(`🚨 *Fallo Crítico en Webhook*\nMotivo: Firma Inválida (Posible Ataque).\nDetalle: ${err.message}`).catch(() => null);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
@@ -273,6 +275,7 @@ async function handleCheckoutCompleted(session: StripeSession) {
       event: "WEBHOOK_ACID_TRANSACTION_FAILED",
       error: transactionErr.message,
     });
+    sendTelegramNotification(`🚨 *Fallo Crítico en Transacción ACID (Webhook)*\nError: ${transactionErr.message}`).catch(() => null);
     return NextResponse.json(
       { error: `Database transaction failed: ${transactionErr.message}` },
       { status: 500 }

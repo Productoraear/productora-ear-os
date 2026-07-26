@@ -22,7 +22,7 @@ const syne = Syne({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://productoraear.com"),
-  title: "EAR OS | S-Class Institutional Ecosystem",
+  title: "Unio - Matchmaking and Events Platform",
   description: "Plataforma de soberanía operativa y despliegue institucional para Productora EAR y VIMUME.",
   keywords: ["VIMUME", "Productora EAR", "EAR OS", "S-Class", "Logistics OS"],
   authors: [{ name: "EAR OS Core" }],

@@ -33,10 +33,12 @@ import {
   WalletLedgerData
 } from "@/app/actions/commandCenterActions";
 
+import { lazy, Suspense } from "react";
+
 // Import S-Class Subcomponents
-import WaybillTimeline from "./WaybillTimeline";
-import AuraWalletLedger from "./AuraWalletLedger";
-import AstraOraclePanel from "./AstraOraclePanel";
+const WaybillTimeline = lazy(() => import("./WaybillTimeline"));
+const AuraWalletLedger = lazy(() => import("./AuraWalletLedger"));
+const AstraOraclePanel = lazy(() => import("./AstraOraclePanel"));
 
 export default function CommandCenterDashboard() {
   const router = useRouter();
@@ -90,11 +92,11 @@ export default function CommandCenterDashboard() {
     if (user) {
       fetchData();
       
-      // Auto-polling interval: 30 seconds
+      // Auto-polling interval: 60 seconds (Fase 209: TBT Resiliency)
       const interval = setInterval(() => {
         console.log("🔄 [COMMAND_CENTER] Auto-polling live updates...");
         fetchData();
-      }, 30000);
+      }, 60000);
 
       return () => clearInterval(interval);
     }
@@ -359,26 +361,28 @@ export default function CommandCenterDashboard() {
           </div>
           
           <div className="relative z-10">
-            {activeTab === 'Logistica' ? (
-              <WaybillTimeline 
-                waybills={waybills} 
-                loading={loading} 
-                onRefresh={fetchData} 
-              />
-            ) : activeTab === 'Finanzas' ? (
-              <AuraWalletLedger 
-                walletData={walletData} 
-                systemFinancials={systemFinancials}
-                isAdmin={isAdmin}
-                loading={loading} 
-                onRefresh={fetchData} 
-              />
-            ) : (
-              <AstraOraclePanel 
-                userEmail={user.email || ""} 
-                isAdmin={isAdmin} 
-              />
-            )}
+            <Suspense fallback={<div className="h-64 flex items-center justify-center text-[#d4a855] text-xs font-black uppercase tracking-widest animate-pulse border border-[#d4a855]/20 bg-white/5 rounded-2xl">Cargando Motor S-Class...</div>}>
+              {activeTab === 'Logistica' ? (
+                <WaybillTimeline 
+                  waybills={waybills} 
+                  loading={loading} 
+                  onRefresh={fetchData} 
+                />
+              ) : activeTab === 'Finanzas' ? (
+                <AuraWalletLedger 
+                  walletData={walletData} 
+                  systemFinancials={systemFinancials}
+                  isAdmin={isAdmin}
+                  loading={loading} 
+                  onRefresh={fetchData} 
+                />
+              ) : (
+                <AstraOraclePanel 
+                  userEmail={user.email || ""} 
+                  isAdmin={isAdmin} 
+                />
+              )}
+            </Suspense>
           </div>
         </div>
 

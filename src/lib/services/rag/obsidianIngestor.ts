@@ -81,6 +81,9 @@ export class ObsidianIngestor {
       for (const entry of entries) {
         const fullPath = path.join(dir, entry.name);
         if (entry.isDirectory()) {
+          if (['node_modules', '.next', '.git', '.obsidian'].includes(entry.name)) {
+            continue;
+          }
           await walk(fullPath);
         } else if (entry.isFile() && entry.name.endsWith('.md')) {
           try {

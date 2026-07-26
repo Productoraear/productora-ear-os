@@ -218,6 +218,12 @@
 - ✅ [2026-05-19] ESTRUCTURA DE ARTISTA EDWIN AGUDELO (PACIENTE CERO):
   - **Estado**: ✅ HECHO VERIFICADO
   - **Detalle**: Creado backend seeder `seed-artists.ts` y materializada la siembra de base de datos local (Usuario, Perfil, Aura Wallet, Rider Técnico, y Calendario de Disponibilidad) con compilación TypeScript exitosa libre de emisiones.
+- ✅ [2026-05-19] IMPLEMENTACIÓN DEL DUAL-PATH FUNNEL (B2C & B2G):
+  - **Estado**: ✅ HECHO VERIFICADO
+  - **Detalle**: Refactorizado `ArtistBookingFlow.tsx` para integrar un selector de doble canal. El flujo B2C Particular opera pre-reservas con depósito de 100€ en Stripe; el flujo B2G Ayuntamiento/Organismo Público permite solicitar presupuestos oficiales para Licitaciones Menores sin fricción de pago con tarjeta, cumpliendo con la Ley de Contratos del Sector Público.
+- ✅ [2026-05-19] AJUSTE CLÍNICO Y CUMPLIMIENTO VIMUME:
+  - **Estado**: ✅ HECHO VERIFICADO
+  - **Detalle**: Ajuste formal de terminología clínica en `EdwinAgudeloDossier.tsx` hacia un enfoque reglamentario de "estimulación sensorial y reminiscencia no farmacológica" para la Silver Economy, asegurando blindaje reputacional y legal.
 
 
 **Evidencia de producción pendiente**

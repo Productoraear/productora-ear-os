@@ -141,6 +141,16 @@ export function isRateLimited(ip: string, limit: number = 5, windowMs: number = 
 
   record.count += 1;
   if (record.count > limit) {
+    if (record.count === limit + 1) {
+      sendTelegramNotification(
+        `🚨 *RATE LIMIT EXCEDIDO: POSIBLE SCRAPING*\n\n` +
+        `🌐 *IP:* \`${ip}\`\n` +
+        `⚠️ *Límite:* ${limit} reqs por ventana\n` +
+        `🛡️ _EAR OS Shield Active: IP Bloqueada temporalmente._`
+      ).catch((e: any) => {
+        console.error("⚠️ [SECURITY_SHIELD] Telegram alert failed:", e.message);
+      });
+    }
     return true;
   }
 

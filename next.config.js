@@ -2,6 +2,9 @@ const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  turbopack: {
+    root: __dirname, // Set the Turbopack root to the current directory
+  },
   serverExternalPackages: [
     'puppeteer',
     'puppeteer-extra',
@@ -47,7 +50,7 @@ const nextConfig = {
       { source: '/hoja-de-ruta', destination: '/vimume/roadmap', permanent: true },
       { source: '/vimume/fundacion-cientifica', destination: '/vimume/fundacion', permanent: true },
 
-      // 🏛️ Legacy Branding Purge (Antigravity -> VIMUME)
+      // 🛠️ Legacy Branding Purge (Antigravity -> VIMUME)
       { source: '/antigravity', destination: '/vimume', permanent: true },
       { source: '/antigravity/:path*', destination: '/vimume', permanent: true },
       { source: '/centro-de-gravedad', destination: '/vimume', permanent: true },
