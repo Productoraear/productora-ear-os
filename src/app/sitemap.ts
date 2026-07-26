@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { PROVINCIAS, SERVICIOS, OCASIONES, GUIAS } from '@/lib/constants/seo-data';
 import { HIGH_VALUE_VARIANTS } from '@/lib/artists/matrix';
+import { generateTotalMatrix } from '@/config/seo-matrix';
 
 const now = new Date();
 const baseUrl = 'https://productoraear.com';
@@ -51,6 +52,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const provinceEntries = PROVINCIAS.map(p => ({ url: `${baseUrl}/servicios/mariachis/${p}`, lastModified: now, priority: 0.8, changeFrequency: 'monthly' as const }));
 
+  // Generador de Nodos Infinitos (Geo-AI S-Class)
+  const matrixCombinations = generateTotalMatrix().map(combo => ({
+    url: `${baseUrl}/servicios/mariachis/${combo.provincia}/${combo.evento}`,
+    lastModified: now,
+    priority: 0.8,
+    changeFrequency: 'weekly' as const
+  }));
+
   return unique([
     ...corePages,
     ...occasionPages,
@@ -59,5 +68,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...dynamicPages.filter(p => p.indexable !== false),
     ...matrixPages.filter(p => p.indexable !== false),
     ...provinceEntries,
+    ...matrixCombinations
   ].map(({ indexable, ...rest }: any) => rest));
 }

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
-export default async function ProvincePage({ params }: { params: { provincia: string } }) {
+export default async function ProvincePage(props: { params: Promise<{ provincia: string }> }) {
+  const params = await props.params;
   const { provincia } = params;
   
   return (
