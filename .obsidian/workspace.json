@@ -11,10 +11,14 @@
             "id": "c1d8c1b69e7ee5b6",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Vista gráfica"
+              "type": "markdown",
+              "state": {
+                "file": "01_SSOT_Y_KERNELS/EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN"
             }
           }
         ]
@@ -178,6 +182,10 @@
   },
   "active": "c1d8c1b69e7ee5b6",
   "lastOpenFiles": [
+    "ruta.txt",
+    "Nuevo Documento de texto.txt",
+    "~WRD0002.tmp",
+    "~$ hoja de ruta despues de la busqueda de datos.docx",
     "scratch/seed_edwin_local.js",
     "scratch/test_local_db.js",
     "src/lib/actions/seed-artists.ts",
@@ -192,8 +200,6 @@
     "AuraWallet.md",
     "00_MOC_MAESTRO.md",
     "01_SSOT_Y_KERNELS/EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md",
-    "logs/inventory_audit.csv",
-    "scripts/inventory_audit.ps1",
-    "scripts/Iniciar_obsidian_earos.ps1"
+    "logs/inventory_audit.csv"
   ]
 }

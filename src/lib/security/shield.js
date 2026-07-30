@@ -1,0 +1,121 @@
+import { sendTelegramNotification } from "@/lib/services/telegram";
+/**
+ * Analyzes request headers and connection parameters to detect scrapers, headless browsers, or scanning engines.
+ */
+export function analyzeHeaders(headers) {
+    const userAgent = headers.get("user-agent") || "";
+    const host = headers.get("host") || "";
+    const referrer = headers.get("referer") || "";
+    const forwardedFor = headers.get("x-forwarded-for") || "";
+    const ip = forwardedFor.split(",")[0].trim() || "127.0.0.1";
+    const lowercaseUA = userAgent.toLowerCase();
+    // 🔍 1. Common Scraping & Automation Signatures
+    const botSignatures = [
+        "headless",
+        "puppeteer",
+        "playwright",
+        "selenium",
+        "webdriver",
+        "phantomjs",
+        "axios",
+        "node-fetch",
+        "python-requests",
+        "scrapy",
+        "curl",
+        "wget",
+        "postman",
+        "sqlmap",
+        "nikto",
+        "nmap"
+    ];
+    const matchedSignature = botSignatures.find(sig => lowercaseUA.includes(sig));
+    let isBot = false;
+    let threatLevel = "CLEAN";
+    let reason = "";
+    if (matchedSignature) {
+        isBot = true;
+        threatLevel = "CRITICAL";
+        reason = `Automation signature detected: [${matchedSignature}] in User-Agent.`;
+    }
+    // 🔍 2. Structural Fingerprint Anomalies (Headers checking)
+    if (!isBot && userAgent.length < 15) {
+        isBot = true;
+        threatLevel = "SUSPICIOUS";
+        reason = "Anomalously short User-Agent header (Scraper/Crawler suspect).";
+    }
+    if (!isBot && !headers.get("accept") && !lowercaseUA.includes("googlebot")) {
+        threatLevel = "SUSPICIOUS";
+        reason = "Missing HTTP Accept headers standard for browsers.";
+    }
+    return {
+        ip,
+        userAgent,
+        host,
+        referrer,
+        isBot,
+        threatLevel,
+        reason
+    };
+}
+/**
+ * Inspects incoming request server-side and dispatches a live alert to Telegram if a breach is detected.
+ * Returns true if the request is marked as a critical threat (should be blocked).
+ */
+export async function inspectRequest(req, endpointName) {
+    // Safe clone headers to prevent stream lock
+    const headers = req.headers;
+    const fingerprint = analyzeHeaders(headers);
+    if (fingerprint.threatLevel === "CLEAN") {
+        return false; // Clean traffic
+    }
+    // ⚡ Dispatch Active Telegram Breach Alert
+    try {
+        const alertMessage = `🚨 *VIGILANTE DE SEGURIDAD S-CLASS: ALERTA DE PERÍMETRO*\n\n` +
+            `🎯 *Endpoint:* \`${endpointName}\`\n` +
+            `🌐 *IP:* \`${fingerprint.ip}\`\n` +
+            `🚨 *Nivel de Amenaza:* **${fingerprint.threatLevel}**\n` +
+            `🔍 *Razón:* _${fingerprint.reason || "Patrón de navegación anómalo"}\n\n` +
+            `🖥️ *User-Agent:* \`${fingerprint.userAgent}\`\n` +
+            `🔗 *Referrer:* \`${fingerprint.referrer || "Directo / Desconocido"}\`\n` +
+            `🏢 *Host:* \`${fingerprint.host}\`\n\n` +
+            `🛡️ _EAR OS Shield Active: Solicitud bajo vigilancia inmutable._`;
+        await sendTelegramNotification(alertMessage);
+    }
+    catch (tgErr) {
+        console.error("⚠️ [SECURITY_SHIELD] Failed to send Telegram notification:", tgErr.message);
+    }
+    // Block absolutely if threat is CRITICAL
+    return fingerprint.threatLevel === "CRITICAL";
+}
+// 🔒 S-CLASS IN-MEMORY RATE LIMIT STORE (V205.GOD_MODE)
+const rateLimitStore = new Map();
+/**
+ * Valida si un IP o identificador de cliente ha excedido el Rate Limit.
+ * Bloquea solicitudes si superan el límite indicado por ventana de tiempo.
+ */
+export function isRateLimited(ip, limit = 5, windowMs = 60000) {
+    const now = Date.now();
+    const record = rateLimitStore.get(ip);
+    if (!record) {
+        rateLimitStore.set(ip, { count: 1, resetAt: now + windowMs });
+        return false;
+    }
+    if (now > record.resetAt) {
+        // Window expired, reset window context
+        rateLimitStore.set(ip, { count: 1, resetAt: now + windowMs });
+        return false;
+    }
+    record.count += 1;
+    if (record.count > limit) {
+        if (record.count === limit + 1) {
+            sendTelegramNotification(`🚨 *RATE LIMIT EXCEDIDO: POSIBLE SCRAPING*\n\n` +
+                `🌐 *IP:* \`${ip}\`\n` +
+                `⚠️ *Límite:* ${limit} reqs por ventana\n` +
+                `🛡️ _EAR OS Shield Active: IP Bloqueada temporalmente._`).catch((e) => {
+                console.error("⚠️ [SECURITY_SHIELD] Telegram alert failed:", e.message);
+            });
+        }
+        return true;
+    }
+    return false;
+}

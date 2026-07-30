@@ -1,5 +1,5 @@
 import React from 'react';
-import CommandCenterDashboard from '@/components/SClass/CommandCenterDashboard';
+import CommandCenterDashboard from '@/components/sclass/ArsenalTechnical';
 
 export const metadata = {
   title: 'Centro de Mando EAR | Comandante S-Class',

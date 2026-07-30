@@ -38,8 +38,12 @@ export async function createCheckoutSession(params: { amount: number; concept: s
   }
 }
 
-export const createArtistVerificationSession = async (artistId: string) => {
+export const createArtistVerificationSession = async (params: { amount: number; artistId: string }) => {
   const { artistVerification } = require('../config/stripe-products');
+
+  if (params.amount !== 1) {
+    throw new Error('El monto del pago debe ser de 1€');
+  }
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -50,7 +54,7 @@ export const createArtistVerificationSession = async (artistId: string) => {
           product_data: {
             name: artistVerification.name,
           },
-          unit_amount: artistVerification.price,
+          unit_amount: Math.round(100), // Convert to cents (1€)
         },
         quantity: 1,
       },
@@ -60,7 +64,7 @@ export const createArtistVerificationSession = async (artistId: string) => {
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
     metadata: {
       type: 'artist_verification',
-      artistId: artistId
+      artistId: params.artistId
     }
   });
 

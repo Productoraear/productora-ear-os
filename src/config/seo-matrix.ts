@@ -54,6 +54,16 @@ export function getCopyForEvent(provincia: string, evento: string) {
   };
 }
 
+// Definición de seoMatrix
+export const seoMatrix = {
+  Madrid: {
+    landmarks: ["Retiro", "Gran Vía", "Barrio de Salamanca"],
+  },
+  Barcelona: {
+    landmarks: ["Sagrada Familia", "Las Ramblas", "Sarrià"],
+  },
+};
+
 // Devuelve todas las combinaciones posibles (~572 combinaciones para 52 provincias * 11 eventos)
 export function generateTotalMatrix() {
   const combinaciones = [];

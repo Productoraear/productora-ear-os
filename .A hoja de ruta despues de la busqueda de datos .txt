@@ -1,0 +1,55 @@
+.A hoja de ruta despues de la busqueda de datos
+Esta es tu Hoja de Ruta de Consolidación Atómica. Una vez que el script v3.0 termine de "succionar" los datos de tus discos C, D y H, habrás pasado de la fase de búsqueda a la fase de Dominancia Operativa.
+Sigue este paso a paso exacto para transformar ese caos recuperado en el imperio EAR OS.
+________________________________________
+PASO 1: Verificación de la "Cosecha" (Terminal PowerShell)
+Nada más terminar el script, lo primero es saber qué hemos pescado sin marearnos con miles de archivos.
+1.	Abre la carpeta: C:\EAR_OS_V2\ARCHIVE_RECOVERY.
+2.	Genera el Informe de Guerra: Copia y pega este comando en tu terminal para crear un resumen legible:
+codePowershell
+$report = "INFORME DE MISIÓN EAR OS`n"
+$report += "ADN Confirmado: $((Get-ChildItem C:\EAR_OS_V2\ARCHIVE_RECOVERY\CONFIRMED_ADN -Filter *.meta.json).Count)`n"
+$report += "Intel de Competencia: $((Get-ChildItem C:\EAR_OS_V2\ARCHIVE_RECOVERY\SCRAPING_INTELLIGENCE -Filter *.meta.json).Count)`n"
+$report | Out-File "C:\EAR_OS_V2\ARCHIVE_RECOVERY\RESUMEN_MISION.txt"
+notepad "C:\EAR_OS_V2\ARCHIVE_RECOVERY\RESUMEN_MISION.txt"
+________________________________________
+PASO 2: Activación del "Oráculo" (AnythingLLM)
+Aquí es donde usaremos tu 7900 XTX para procesar los datos.
+1.	Abre AnythingLLM Desktop.
+2.	Crea un Workspace nuevo: Lámalo EAR_RECOVERY_LAB.
+3.	Configuración de Pestañas (Settings):
+o	Ve a Workspace Settings -> Vector Database.
+o	Asegúrate de que el Embedding Engine esté en "Local" o "Ollama".
+4.	Ingesta Masiva:
+o	Haz clic en el icono de la nube con flecha (Upload).
+o	Arrastra la carpeta CONFIRMED_ADN completa.
+o	IMPORTANTE: Arraste también los archivos .json de metadatos.
+o	Dale al botón "Save and Embed". (Verás que tu GPU sube de carga mientras "lee" todo).
+________________________________________
+PASO 3: Triaje Forense (El Checklist "Nivel Dios")
+Para no leer 1.000 archivos, deja que la IA haga la criba por ti.
+1.	En el chat de AnythingLLM, escribe este prompt:
+"Analiza todos los metadatos (.json) y el contenido de los archivos recuperados. Hazme una tabla con los 20 archivos más importantes que tengan relación directa con Stripe, AuraWallet o el Pricing Engine. Incluye en la tabla su 'Ruta Original' para que yo pueda identificar si vienen de una carpeta de 'Versión Final' o de 'Pruebas'."
+2.	Acción Manual: Mira la tabla. Si ves una ruta que reconoces como "La buena", marca ese archivo como Prioridad 1.
+________________________________________
+PASO 4: Inyección en el Core (VS Code + Cline)
+Ahora que ya sabemos qué archivos son los "tesoros", vamos a integrarlos en el código vivo.
+1.	Abre VS Code.
+2.	Abre a Cline y dale esta instrucción:
+"Cline, hemos recuperado ADN antiguo. Mira el archivo C:\EAR_OS_V2\ARCHIVE_RECOVERY\CONFIRMED_ADN\REC_XXXX_StripeLogic.ts (usa el nombre del archivo que elegiste en el paso anterior).
+Compara su lógica con el src/lib/payments.ts actual. Si el archivo recuperado tiene funciones de seguridad o manejo de errores que no tenemos ahora, VAMPIRÍZALAS e intégralas mediante Surgical Diff."
+________________________________________
+PASO 5: Dominancia sobre bodas.net (Vampirización de Intel)
+Este es el golpe final para ser líderes.
+1.	En AnythingLLM, abre el Workspace donde subiste SCRAPING_INTELLIGENCE.
+2.	Pregunta al Oráculo:
+"Basado en el scraping de bodas.net, hazme una lista de las 15 'Fincas de Bodas' más exclusivas de Madrid y Barcelona. Crea un objeto JSON que podamos meter en nuestro seo-matrix.ts como 'Landmarks' para que Edwin Agudelo aparezca posicionado en esos recintos específicos."
+3.	Llévalo a la matriz: Copia ese JSON y dáselo a Cline diciendo: "Actualiza el seo-matrix con estos nuevos puntos de interés de alta demanda".
+________________________________________
+Resumen de "Paz Mental" (Qué tienes al final)
+•	Carpeta CONFIRMED_ADN: Tu biblioteca de código histórico, ordenado y con "pasaporte" (el JSON).
+•	AnythingLLM: Un cerebro que sabe TODO lo que has hecho en el pasado y todo lo que hace tu competencia.
+•	Sitemap de 572 URLs: Una red de pesca gigante en Google que menciona sitios que tus competidores ignoran.
+•	AuraWallet: Edwin recibiendo bits de dinero real con contabilidad inmutable.
+Comandante, cuando el script de la terminal diga "SUCCIÓN COMPLETADA", su PC será la base de datos más potente del sector en España. ¿Desea que prepare el script para automatizar el Paso 1 (el informe) ahora mismo?
+

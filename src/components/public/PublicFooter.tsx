@@ -1,0 +1,1 @@
+{/* Archivo PublicFooter.tsx */}
