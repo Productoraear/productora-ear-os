@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { syncSClassAuth } from '@/lib/services/auth_nexus';
 import { User } from 'firebase/auth';
 import { MotorTactico } from './components/MotorTactico';
-import { BespokeConfigurator } from './ConfiguradorBespoke.ts';
+import { ConfiguradorBespoke as BespokeConfigurator } from './ConfiguradorBespoke';
 import { ShieldTracker } from './ShieldTracker';
 import { FleetTracker } from './FleetTracker';
 import { ExpansionDashboard } from './ExpansionDashboard';

@@ -2,7 +2,7 @@ import Stripe from 'stripe';
 
 // Configuración con versión de API Dahlia para compatibilidad total
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', { 
-  apiVersion: '2026-04-22.dahlia' 
+  apiVersion: '2026-07-29.dahlia' as any 
 });
 
 export async function createCheckoutSession(params: { amount: number; concept: string; metadata?: Record<string, string>; }) {

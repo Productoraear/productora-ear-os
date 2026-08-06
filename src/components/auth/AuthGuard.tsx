@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface AuthGuardProps {
-  children: JSX.Element;
+  children: React.ReactNode;
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {

@@ -35,3 +35,14 @@ node_modules/
 *.meta.json
 *.log
 .env.local
+
+_auditoria/
+auditoria_*/
+.env.backup_*
+.env.local.backup_*
+*.m4a
+Dominancia_EAR_*.ps1
+INICIAR_EAR_OS*.ps1
+CHAT CON AI STUDIO PARA EAR OS/
+EAR_OS_CONTROL/
+CLINE_RULES_V3.md

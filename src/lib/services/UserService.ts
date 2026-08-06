@@ -18,9 +18,9 @@ export class UserService {
           data: {
             id,
             email,
-            role: email === 'productoraear@gmail.com' ? 'ADMIN' : 'EXPLORADOR',
-            rank: email === 'productoraear@gmail.com' ? 'NIVEL_4_COMANDANTE' : 'NIVEL_0_EXPLORADOR',
-            isPacienteCero: email === 'productoraear@gmail.com',
+            role: 'EXPLORADOR',
+            rank: 'NIVEL_0_EXPLORADOR',
+            isPacienteCero: false,
           },
         });
       }

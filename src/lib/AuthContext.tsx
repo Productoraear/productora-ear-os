@@ -40,20 +40,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       
       if (firebaseUser) {
         try {
-          // 🔄 Sincronización con la Base de Datos Centralizada
+          const idToken = await firebaseUser.getIdToken();
+          // 🔄 Señal UX cliente para pre-filtro Edge
+          document.cookie = "ear_auth_signal=1; path=/; SameSite=Lax";
+
+          // 🔄 Sincronización Segura con la Base de Datos Centralizada (Server Verificación)
           const response = await fetch('/api/nexus/user/sync', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-              id: firebaseUser.uid, 
-              email: firebaseUser.email 
-            }),
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${idToken}`
+            },
           });
           
           if (response.ok) {
             const profile = await response.json();
             setIsAdmin(profile.role === 'ADMIN');
-            setIsPaid(profile.rank !== 'NIVEL_0_EXPLORADOR'); // Ejemplo de lógica S-Class
+            setIsPaid(profile.rank !== 'NIVEL_0_EXPLORADOR');
           } else {
             console.warn('⚠️ [AUTH_CONTEXT] Fallo en sincronización de perfil DB.');
           }
@@ -61,6 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           console.error('🛑 [AUTH_CONTEXT] Error crítico de sincronización:', err);
         }
       } else {
+        document.cookie = "ear_auth_signal=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
         setIsAdmin(false);
         setIsPaid(false);
       }

@@ -1,2 +1,2 @@
 // @ts-nocheck
-[Contenido original del archivo]
+// [Contenido original del archivo]

@@ -21,7 +21,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
+      ],
+      "@/components/*": [
+        "./src/components/*",
+        "./src/app/components/*"
       ]
     },
     "typeRoots": [

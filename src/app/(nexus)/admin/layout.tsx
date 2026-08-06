@@ -1,8 +1,7 @@
 import React from 'react';
 import { Sidebar } from '@/components/SClass/Sidebar';
 import { TacticalTracker } from '@/components/SClass/TacticalTracker';
-import { AuthGuard } from '@/components/auth/AuthGuard';
-
+import AuthGuard from '@/components/auth/AuthGuard';
 export default function AdminLayout({
   children,
 }: {

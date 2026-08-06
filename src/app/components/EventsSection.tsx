@@ -1,10 +1,15 @@
 
 import React, { useState } from 'react';
-import { trackEvent } from '../FleetTracker';  // Inyectar importación de la función trackEvent
 import { Calendar, MapPin, Clock, Ticket, Star, Mic2, Users, ArrowRight, Heart, Zap, Megaphone, CheckCircle } from 'lucide-react';
-import type { Event } from '../data/Event';  // Importar la interfaz Event
+import type { Event } from '@/data/Event';
 import PaymentModal from './PaymentModal';
-import { UPCOMING_EVENTS } from '../data/events';  // Asegurar que la ruta esté correcta
+import { UPCOMING_EVENTS } from '@/data/events';
+
+const trackEvent = (name: string) => {
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', name);
+  }
+};
 
 const EventsSection: React.FC = () => {
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
