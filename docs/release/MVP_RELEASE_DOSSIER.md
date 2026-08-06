@@ -44,3 +44,43 @@
 ## Backlog P2/P3
 - Implementar Clarity en `layout.tsx` con manejo de consentimiento.
 - Refinar tests unitarios de `pricing-engine.ts`.
+
+---
+
+## Reconciliación Final del Ciclo de Ingesta Gravitacional
+
+**Fecha de Reconciliación:** 2026-08-06T23:44:54 CEST  
+**Estado del Ciclo:** `PASS` (Validado, Aditivo, Auditado y Reversible)  
+**Gravitational Root Canónico:** `C:\EAR_OS_V2`
+
+### Resumen Ejecutivo de Gobernanza
+El ciclo de descubrimiento, puntuación y absorción gravitacional para EAR OS ha sido completado y sellado exitosamente. El sistema opera como un centro gravitacional aditivo que absorbe candidatos bajo verificación estricta de fixity (SHA256) sin alterar ni destruir el workspace original ni archivos externos.
+
+### Principales Hallazgos y Verdades Reconciliadas
+
+1. **Discovery & BFS Traversal (PASADO)**
+   - Escaneo ejecutado sobre 3 ubicaciones: `C:\EAR_OS_V2`, `C:\Users\M2-W10\Documents` y `C:\Users\M2-W10\Desktop`.
+   - Cobertura: 4,551 archivos procesados en **19 segundos** utilizando motor BFS con detección y bypass de ciclos por `ReparsePoint` (junctions/symlinks).
+   - Exclusiones estrictas verificadas: `node_modules`, `.git`, `.next`, `dist`, `build`, `coverage`, `appdata`, `temp`, `$recycle.bin`, etc.
+
+2. **Scoring Engine (REV-B/C) & Metadata-First (PASADO)**
+   - Puntuación en dos etapas (Staged Pass): los archivos sin coincidencia preliminar en ruta/nombre son filtrados inmediatamente (`content_skipped_low_prelim_score`), protegiendo el presupuesto de memoria y CPU.
+   - Evaluación de contenido optimizada mediante `.Contains` nativo e inspección acotada a archivos < 1 MB.
+
+3. **Absorción Aditiva y Rollback Auditado (PASADO)**
+   - Script `09_gravitational_absorber.ps1` validado: 14 artefactos `EAR_OS_CORE` copiados a `EAR_OS_CONTROL\staging\absorbed\`.
+   - Garantía de integridad: Verificación de coincidencia SHA256 pos-copia al 100%.
+   - Reversibilidad: Script de rollback individual generado automáticamente (`rollback_staging_20260806_232629.ps1`).
+
+4. **Baseline Enriquecido (`ear_core_baseline.json` v1.1)**
+   - Registradas 15 firmas criptográficas SHA256 (14 correspondientes al núcleo interno + 1 documento estratégico externo promovido).
+   - El impulso por firma de baseline eleva la puntuación del conocimiento histórico legítimo de forma predictiva.
+
+5. **Política de No-Movilización de Externos (`No-Movement Policy`)**
+   - Identificados 13 candidatos externos en `Desktop` (`external_candidates_20260806_234322.json`).
+   - Clasificación auditada:
+     - `EAR_CORE_PROMOTE` (1): `MANUAL_SOBERANO_EAR_OS.md` (promovido al baseline por firma e identidad).
+     - `LEGACY_REFERENCE` (6): Planes y auditorías históricas (`master_plan_ear_os_52BC.md`, etc.), preservados en `Desktop` para consulta pasiva.
+     - `REVIEW_ONLY` (6): Componentes cliente UI v4 (`SEOOptimization.tsx`, `CRMDashboard.tsx`, etc.), mantenidos aislados fuera del staging.
+   - Ningún archivo fuera de `C:\EAR_OS_V2` fue copiado, movido o alterado automáticamente.
+
