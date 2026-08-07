@@ -6,7 +6,14 @@
 
 ## 1. Frase Maestra (Elevator Pitch)
 
-> **"EAR OS no es un escaparate de servicios: es una infraestructura comercial y operativa vertical que convierte la demanda local de eventos artísticos premium en reservas transaccionales, con una arquitectura de datos, RAG y mensaje capaz de escalar por ciudades, verticales y países."**
+> **"EAR OS es una infraestructura comercial y operativa vertical que convierte demanda local premium en reservas transaccionales, seguimiento operativo y un SaaS multi-tenant defendible para múltiples ciudades y sectores."**
+
+### Los 5 Pilares Estratégicos del Deck
+1. **Infraestructura, no escaparate:** No es un folleto estático; es un motor transaccional con pricing dinámico, depósitos en Stripe/Bizum, contratos y tracking tipo Uber.
+2. **Verticalización, no genérico:** Adaptación precisa a 18 stakeholders (Bodas, Corporativo, Ayuntamientos, Embajadas, Hoteles).
+3. **Múltiples flujos de ingreso:** Venta directa de alto ticket + Take-rate por transacción + SaaS Multi-Tenant (99€-299€/mes).
+4. **Capability Map, no intuición:** Auditoría forense verificable del estado real del software.
+5. **Moat operativo y semántico:** Barrera de entrada basada en datos locales, diccionario de gobernanza semántica y RAG Rerank evaluado en CI/CD.
 
 ---
 
