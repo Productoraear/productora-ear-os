@@ -1,0 +1,13 @@
+ID,URL_Path,Categoria,Intencion,Ciudad,Ocasion,Formato_Prioridad,Contexto_B2B_B2G
+EXP-001,/landings/mariachis-bodas-madrid,Transaccional,Reserva Boda,Madrid,Bodas,Cuarteto,No
+EXP-002,/landings/mariachis-cumpleanos-madrid,Transaccional,Sorpresa Impulso,Madrid,Cumpleaños,Solista/Trio,No
+EXP-003,/landings/serenatas-urgentes-madrid,Urgencia,Reserva 24h,Madrid,Serenatas,Solista,No
+EXP-004,/landings/mariachis-empresas-madrid,B2B,Evento Corporativo,Madrid,Empresas,Gran Show,Si
+EXP-005,/landings/mariachis-restaurantes-madrid,B2B,Cierre Recurrente,Madrid,Restaurantes,Trio,Si
+EXP-006,/landings/mariachis-bodas-barcelona,Transaccional,Reserva Boda,Barcelona,Bodas,Cuarteto,No
+EXP-007,/landings/mariachis-lujo-marbella,High-Ticket,Luxury Event,Marbella,Bodas Lujo,Gran Show,No
+EXP-008,/landings/mariachis-embajadas-bruselas,B2G,Diplomático,Bruselas,Protocolo,Gran Show,Si
+EXP-009,/landings/mariachis-festivales-valencia,B2G,Licitacion,Valencia,Festivales,Gran Show,Si
+EXP-010,/landings/mariachis-precios-madrid,Informativa,Comparativa,Madrid,General,Todos,No
+EXP-011,/landings/cuarteto-mariachis-madrid,Transaccional,Formato Específico,Madrid,General,Cuarteto,No
+EXP-012,/landings/mariachis-pedidas-mano-madrid,Transaccional,Momento Clave,Madrid,Pedidas,Solista/Trio,No
