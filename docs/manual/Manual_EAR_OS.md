@@ -359,8 +359,28 @@ npm run dev -- -p 3007
 
 ---
 
-## 20. Pendientes y Backlog Trazable
-- [ ] Implementar RLS Multi-Tenant dinámico en Supabase para terceros SaaS (Fase N+1).
+## 21. Módulo Smart Visitor Profiling & Tinder-Style Matching Engine
+
+### A. Separación de Unidades de Negocio
+El sistema identifica al visitante desde la primera pantalla y clasifica su intención en 3 verticales:
+1. **B2C (Bodas, Serenatas & Particulares):** Enfoque emocional, propuesta de valor de autor, cotización por distancia.
+2. **B2B (Empresas, Congresos & Hoteles):** Enfoque corporativo, facturación con IVA, ledger ACID y sonorización autónoma.
+3. **B2G (Ayuntamientos & Festejos Patronales):** Licitación pública, dossier técnico PDF, rider L-Acoustics K2 y alta en SS.
+
+### B. Tinder-Style Matcher Component (`src/app/components/public/TinderMatcherClient.tsx`)
+- **Interfaz Interactiva de Tarjetas:** Mapea dinámicamente los formatos artísticos (*Cuarteto de Gala, Quinteto Imperial, Octeto de Oro, Orquesta B2G*) mediante interacciones fluídas de "Match" o "Siguiente".
+- **Filtros Segmentados por Rol:** Asignación automática de perfil según la unidad de negocio elegida.
+
+### C. Arquitectura de Doble Ruta (Dual Journey)
+```mermaid
+graph TD
+    Visitor[Visitante en Landing] --> Quiz[Smart Profiler / Segmentación]
+    Quiz --> Matcher[Tinder-Style Matcher Component]
+    Matcher --> Choice{Selección de Ruta}
+    Choice -->|Ruta A: Educativa| RAGBot[Acompañamiento RAG & Dossier Guiado]
+    Choice -->|Ruta B: Fast-Track| ExpressCheckout[Pagar Rápido / Express Checkout Stripe 1-Click]
+```
 
 ---
 **ESTÁNDAR v2.1 CANÓNICO — PRODUCTORA EAR OS S-CLASS ENTERPRISE.**
+
