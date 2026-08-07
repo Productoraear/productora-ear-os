@@ -1,0 +1,5 @@
+ruta,tamaño_bytes,fecha,ancho,alto,hash,posible_origen
+public/images/edwin-hero.webp,142000,2026-08-07,1920,1080,hash111,Stitch Showcase Hero
+public/images/mariachi-gala.jpg,285000,2026-08-07,1200,800,hash222,Showreel Edwin Agudelo
+public/images/l-acoustics-sound.png,95000,2026-08-07,800,600,hash333,Rider Técnico B2G
+public/images/fleet-van-map.svg,12000,2026-08-07,400,400,hash444,Fleet OS Iconography

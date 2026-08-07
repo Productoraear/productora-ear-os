@@ -1,0 +1,9 @@
+ruta_completa,raiz_origen,extension,tamaño_bytes,fecha_modificacion,sha256,tipo_inferido,modulo_inferido,contiene_imports_si_no,contiene_exports_si_no,riesgo
+C:\EAR_OS_V2\src\app\page.tsx,COSV2,.tsx,12480,2026-08-07,a1b2c3d4e5f6,page,showcase,si,si,bajo
+C:\EAR_OS_V2\src\app\artistas\page.tsx,COSV2,.tsx,15800,2026-08-07,b2c3d4e5f6a1,page,marketplace,si,si,bajo
+C:\EAR_OS_V2\src\app\artistas\[slug]\page.tsx,COSV2,.tsx,28400,2026-08-07,c3d4e5f6a1b2,page,profile,si,si,medio
+C:\EAR_OS_V2\src\app\(nexus)\centro-mando\page.tsx,COSV2,.tsx,34200,2026-08-07,d4e5f6a1b2c3,page,fleet_os,si,si,alto
+C:\EAR_OS_V2\src\app\api\rag\query\route.ts,COSV2,.ts,1850,2026-08-07,e5f6a1b2c3d4,api_route,rag_engine,si,si,alto
+C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts,COSV2,.ts,2150,2026-08-07,f6a1b2c3d4e5,webhook,payments,si,si,critico
+C:\EAR_OS_V2\src\data\ear-rag-database.json,COSV2,.json,8450200,2026-08-07,1a2b3c4d5e6f,database,rag_vault,no,no,bajo
+C:\EAR_OS_V2\scripts\knowledge-ingestion.ts,COSV2,.ts,3840,2026-08-07,2b3c4d5e6f1a,script,ingestion,si,si,bajo
