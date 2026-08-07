@@ -2,75 +2,120 @@ import fs from 'fs';
 import path from 'path';
 
 /**
- * 🧠 EAR OS // NEURAL RAG INGESTION
- * Directiva 06: Absorción de Conocimiento Base (Mapas Mentales PDFs)
- * Convierte el conocimiento inerte de los discos (Ej: H:, I:) en Vectores/JSON para la IA S-Class.
+ * 🧠 EAR OS // AUTOMATED NEURAL RAG INGESTION SCRIPT
+ * Reads all master documentation specs in docs/ and generates src/data/ear-rag-database.json
  */
 
 export interface KnowledgeNode {
   id: string;
-  sourceType: 'pdf' | 'html_scrape' | 'mindmap_json';
+  sourceType: 'markdown_spec' | 'pdf' | 'html_scrape';
   title: string;
+  category: string;
   content: string;
   tags: string[];
   metadata: {
-    author?: string;
-    date?: string;
     originalPath: string;
-    valuationImpact?: number;
+    lastUpdated: string;
+    confidenceScore: number;
   };
 }
 
 export class KnowledgeIngestor {
   private memoryBank: KnowledgeNode[] = [];
   
-  constructor(private readonly basePath: string) {}
+  constructor(private readonly projectRoot: string) {}
 
   /**
-   * Scannea un directorio buscando recursos inyectables (PDF, JSON, HTM).
+   * Recursively scan a folder for .md files
    */
-  async scanLegacyDrives(targetPath: string) {
-    console.log(`[RAG INGEST] Initializing scan on ${targetPath}...`);
-    // Placeholder para la lógica real de Node FS que recorrerá el disco H: y el I: recursivamente
-    // buscando los PDFs clave (e.g. Mapa Mental Creación de Productora.pdf).
-    
-    // Simulación de rescate de un PDF y un HTM
-    this.memoryBank.push({
-      id: "rag-001",
-      sourceType: "pdf",
-      title: "Mapa Mental Creación de Productora de Eventos (EAR)",
-      content: "Arquitectura base del ecosistema. Servicios core incluyen Sonido, Iluminación, Artistas S-Class. Flujos de ingresos a través de Planners, B2C, e Instituciones (Vimume/BOE).",
-      tags: ["architecture", "core", "business-model"],
-      metadata: { originalPath: "H:/EAR_OS_MASTER/Mapa Mental Creación de Productora de Eventos y Artistas (EAR).pdf", valuationImpact: 5000000 }
-    });
+  private scanMarkdownFiles(dirPath: string): string[] {
+    let results: string[] = [];
+    if (!fs.existsSync(dirPath)) return results;
 
-    this.memoryBank.push({
-      id: "rag-002",
-      sourceType: "html_scrape",
-      title: "Vampire Target: Finca El Mirador (Bodas.net)",
-      content: "Finca de eventos con 4.8 estrellas, especializada en bodas al aire libre. Capacidad para 300 invitados. No incluyen DJ por defecto.",
-      tags: ["competitor", "lead", "venue"],
-      metadata: { originalPath: "H:/Scraping/finca-el-mirador.htm" }
+    const list = fs.readdirSync(dirPath);
+    list.forEach(file => {
+      const fullPath = path.join(dirPath, file);
+      const stat = fs.statSync(fullPath);
+      if (stat && stat.isDirectory()) {
+        results = results.concat(this.scanMarkdownFiles(fullPath));
+      } else if (file.endsWith('.md')) {
+        results.push(fullPath);
+      }
     });
-
-    console.log(`[RAG INGEST] Scan complete. ${this.memoryBank.length} items staged for vectorization.`);
+    return results;
   }
 
   /**
-   * Genera el fichero base de memoria JSON (Static RAG)
+   * Process all docs/ Markdown specs
+   */
+  async ingestDocsDirectory() {
+    const docsDir = path.join(this.projectRoot, 'docs');
+    console.log(`[RAG INGESTION] Scanning master specs in ${docsDir}...`);
+    
+    const files = this.scanMarkdownFiles(docsDir);
+    let count = 0;
+
+    for (const filePath of files) {
+      const relativePath = path.relative(this.projectRoot, filePath);
+      const content = fs.readFileSync(filePath, 'utf-8');
+      const filename = path.basename(filePath, '.md');
+      const category = path.dirname(relativePath).replace(/\\/g, '/');
+
+      // Extract title from first H1 or use filename
+      const titleMatch = content.match(/^#\s+(.+)$/m);
+      const title = titleMatch ? titleMatch[1].trim() : filename;
+
+      // Split into semantic chunks by H2/H3 headings
+      const chunks = content.split(/(?=^##?\s+)/m);
+
+      chunks.forEach((chunk, index) => {
+        const trimmed = chunk.trim();
+        if (trimmed.length < 20) return;
+
+        count++;
+        this.memoryBank.push({
+          id: `node-${filename}-${index + 1}`,
+          sourceType: 'markdown_spec',
+          title: `${title} (Section ${index + 1})`,
+          category: category,
+          content: trimmed,
+          tags: [category, filename, 'spec', 'ssot'],
+          metadata: {
+            originalPath: relativePath,
+            lastUpdated: new Date().toISOString(),
+            confidenceScore: 1.0
+          }
+        });
+      });
+    }
+
+    console.log(`[RAG INGESTION] Processed ${files.length} markdown documents into ${count} semantic knowledge chunks.`);
+  }
+
+  /**
+   * Export the vectorized database to src/data/ear-rag-database.json
    */
   async exportEmbeddedDatabase() {
-    const dbPath = path.join(this.basePath, 'ear-rag-database.json');
-    
-    // In a real environment, this data would be indexed into Pinecone, Weaviate, or a local ChromaDB
+    const outputDir = path.join(this.projectRoot, 'src', 'data');
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    const dbPath = path.join(outputDir, 'ear-rag-database.json');
     fs.writeFileSync(dbPath, JSON.stringify(this.memoryBank, null, 2));
-    
-    console.log(`[RAG DB STRIPPED] Database generated at ${dbPath}`);
+    console.log(`✅ [RAG INGESTION SUCCESS] Knowledge database exported to ${dbPath}`);
     return dbPath;
   }
 }
 
-// Para ejecutar individualmente como script:
-// const ingestor = new KnowledgeIngestor('./src/data');
-// ingestor.scanLegacyDrives('H:/')
-//    .then(() => ingestor.exportEmbeddedDatabase());
+// Automatic CLI Execution
+if (require.main === module) {
+  const root = path.resolve(__dirname, '..');
+  const ingestor = new KnowledgeIngestor(root);
+  ingestor.ingestDocsDirectory()
+    .then(() => ingestor.exportEmbeddedDatabase())
+    .catch(err => {
+      console.error('❌ [RAG INGESTION FAILED]', err);
+      process.exit(1);
+    });
+}
