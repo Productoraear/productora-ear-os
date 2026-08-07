@@ -1,0 +1,6 @@
+ID,Archivo_Origen,Tipo_Archivo,Tema,Frente_Afectado,Confianza,Extracto_Resumido
+EVID-001,docs/memoria EAR OS/06-Legado_y_Contexto/Historia de Edwin Agudelo.md,Markdown,Historia y Genoma,Ambos,ALTA,Origen de EAR OS por Edwin Agudelo. Retención 10% VIMUME. 80% split artista.
+EVID-002,docs/release/MVP_RELEASE_DOSSIER.md,Markdown,Reconciliación Release,Empresario,ALTA,Fase Gravitacional sellada. Gobernanza y cadena de custodia intacta.
+EVID-003,docs/design/STITCH_DESIGN_SYSTEM.md,Markdown,Tokens de Diseño,Artista,ALTA,Tema Dark #050505 con custom color #ecb613 y fuentes Manrope/Newsreader/Space Grotesk.
+EVID-004,docs/design/STITCH_CUSTOMER_JOURNEY_MAP.md,Markdown,Customer Journeys,Ambos,ALTA,Mapeo de 4 pantallas del Journey de Adquisición (Home, Artistas, Detalle, Presupuesto).
+EVID-005,src/app/(public)/artistas/page.tsx,TypeScript React,Ruta Catálogo Artistas,Artista,ALTA,Implementación saneada JSX con tarjetas S-Class y navegación Link.

@@ -19,3 +19,6 @@ design-vault
 sync_nexus
 tmp
 build_error.log
+EAR_OS_CONTROL
+.firebase
+tools

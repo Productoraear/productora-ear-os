@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { db } from '@/lib/firebase-admin';
 
 /**
  * 🛰 EAR OS SYSTEM SCANNER & CLOUD SYNC [VIMUME RAG]
@@ -19,7 +18,8 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const knowledgeSummary: any[] = [];
-    let syncedCount = 0;
-
-    for (const targetPath of SCAN_TARGETS) {
+    return NextResponse.json({ status: 'ok', targets: SCAN_TARGETS });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

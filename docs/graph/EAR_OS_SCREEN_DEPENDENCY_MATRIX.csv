@@ -1,0 +1,8 @@
+ID_Pantalla,Nombre_Pantalla,Ruta_App_Router,Entradas,Salidas_CTAs,Datos_Requeridos,Herramienta_EAR_OS,Estado_Fallback
+1.1,Home / Landing,src/app/(public)/page.tsx,"Raiz /, Header",/artistas | /presupuesto | /login,Telemetria | Visual Tokens,STITCH_DESIGN_SYSTEM,SSG Prerender
+1.2,Catálogo Artistas,src/app/(public)/artistas/page.tsx,Home / Header,/artistas/[slug] | /presupuesto,Prisma artistProfile,EAR Roster 35k,Skeleton loading.tsx
+1.3,Perfil Detalle Artista,src/app/(public)/artistas/[slug]/page.tsx,Catálogo /artistas,/artistas/[slug]/booking | /presupuesto,Prisma Artist detail | Showreel,ARTIST_MASTER_PROFILE,notFound() / not-found.tsx
+1.4,Cotizador Presupuesto,src/app/(public)/presupuesto/page.tsx,Home / Catálogo / Ficha,/success | /login,Datos de evento | Tarifas,ASTRA RAG Engine,Form fallback
+2.1,Login Portal,src/app/(public)/(auth)/login/page.tsx,Header / Cotizador,/studio/artist | /admin,Firebase JWT | User Claims,Auth Context,Redirect error
+3.1,Flow Booking,src/app/(public)/artistas/[slug]/booking/page.tsx,Ficha Detalle,/success | /payments,Parametros reserva | AuraWallet,CommissionLedger,Error boundary
+4.1,Dashboard Artista,src/app/(dashboard)/studio/artist/page.tsx,Login (Role Artist),/studio/artist/bookings | /perfil,Artist Claims | Waybills,Fleet OS,Access Denied 403
