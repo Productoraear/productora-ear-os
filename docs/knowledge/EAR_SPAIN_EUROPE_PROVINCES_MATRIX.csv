@@ -1,0 +1,16 @@
+Provincia_Ciudad,Pais,Distancia_Km_Desde_Madrid,Tarifa_Base_Solista_Gala,Suplemento_Km_Estimado,Precio_Total_Estimado,Metodo_Pago_Sugerido,Tracking_GPS_Status
+Madrid,España,0 km,350 €,0 €,350 €,Stripe / Bizum,GPS Live Fleet OS
+Guadalajara,España,55 km,350 €,1.75 €,351.75 €,Bizum / Stripe,GPS Live Fleet OS
+Toledo,España,72 km,350 €,7.70 €,357.70 €,Bizum / Stripe,GPS Live Fleet OS
+Segovia,España,90 km,350 €,14.00 €,364.00 €,Bizum / Stripe,GPS Live Fleet OS
+Ávila,España,108 km,350 €,20.30 €,370.30 €,Bizum / Stripe,GPS Live Fleet OS
+Valladolid,España,190 km,350 €,49.00 €,399.00 €,Stripe 30% / Bizum,GPS Live Fleet OS
+Zaragoza,España,315 km,350 €,92.75 €,442.75 €,Stripe 30% / Transfer,GPS Live Fleet OS
+Valencia,España,350 km,350 €,105.00 €,455.00 €,Stripe 30% / Transfer,GPS Live Fleet OS
+Barcelona,España,620 km,350 €,199.50 €,549.50 €,Stripe 30% / Transfer,GPS Live Fleet OS
+Sevilla,España,530 km,350 €,168.00 €,518.00 €,Stripe 30% / Transfer,GPS Live Fleet OS
+Málaga,España,535 km,350 €,169.75 €,519.75 €,Stripe 30% / Transfer,GPS Live Fleet OS
+París,Francia,1050 km (Vuelo/Vía Rápida),900 € (Cuarteto),350 € (Traslado/Vuelo),1250.00 €,Stripe 30% / Factura B2B,Tracking Vuelo / Logística
+Bruselas,Bélgica,1315 km (Vuelo/Vía Rápida),900 € (Cuarteto),400 € (Traslado/Vuelo),1300.00 €,Factura B2G Diplomática,Tracking Vuelo / Logística
+Roma,Italia,1360 km (Vuelo/Vía Rápida),900 € (Cuarteto),400 € (Traslado/Vuelo),1300.00 €,Stripe 30% / Factura,Tracking Vuelo / Logística
+Ginebra,Suiza,1025 km (Vuelo/Vía Rápida),1400 € (Ensamble),500 € (Traslado/Vuelo),1900.00 €,Factura B2B Private Wealth,Tracking Vuelo / Logística
