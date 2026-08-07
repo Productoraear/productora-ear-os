@@ -37,7 +37,6 @@ const nextConfig = {
       // 🎯 CANONICAL STAKEHOLDER REDIRECTS (V165.L - DEFENSIVE LAYER)
       
       // 📬 Contact Hub Consolidation
-      { source: '/cotizador', destination: '/contacto', permanent: true },
       { source: '/contact', destination: '/contacto', permanent: true },
       { source: '/contacto-vimume', destination: '/contacto', permanent: true },
       { source: '/vimume/contacto', destination: '/contacto', permanent: true },
