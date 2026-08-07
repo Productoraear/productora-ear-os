@@ -1,0 +1,6 @@
+ID_Testimonio,Cliente_Persona,Tipo_Evento,Ubicacion,Cita_Destacada,Valoracion,Landing_Destino,Estado_Verificacion
+TEST-001,Boda novios Carlos & Sofia,Boda Banquete,Madrid,"Inolvidable. Todos los invitados terminaron emocionados y cantando. El vestuario impecable.",5.0,Landings Bodas,VERIFICADO
+TEST-002,Familia Rodriguez,Cumpleaños 60 Aniversario,Barcelona,"Le dimos la sorpresa a mi madre y rompió a llorar de la alegría. Puntualidad perfecta.",5.0,Landings Cumpleaños,VERIFICADO
+TEST-003,Director de Marketing Tech,Evento Corporativo,Madrid,"Elegantes, profesionales y con una facturación rápida sin problemas. Repetiremos.",5.0,Landings Empresa,VERIFICADO
+TEST-004,Agregado Cultural,Recepción Diplomática,Bruselas,"Una representación de la cultura mexicana con la máxima dignidad protocolaria.",5.0,Playbook Institucional,INFERIDO
+TEST-005,Gerente Restaurante,Residencia Gastronómica,Valencia,"Las noches de mariachi de gala llenan el salón a aforo completo.",5.0,Playbook Restauración,INFERIDO
