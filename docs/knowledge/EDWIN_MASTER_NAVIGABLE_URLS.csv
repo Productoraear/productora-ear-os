@@ -1,0 +1,12 @@
+ID_URL,Path_URL_Explicito,Intencion_Busqueda,Stakeholder,Ciudad_Pais,Estado_Vercel,Nivel_Unicidad_Copy,Metodo_Pago_Gatillo
+URL-001,/,Landing Principal / Home,General / Todos,Península Ibérica,● Ready (Live),100% Original,Presupuesto / Contacto
+URL-002,/artistas,Catálogo Público Artistas,General / B2C / B2B,España,● Ready (Preview),100% Original,Ficha Detalle / Presupuesto
+URL-003,/artistas/edwin-agudelo,Perfil Maestro Edwin Agudelo,General / Fans / B2C,España / Europa,Bloqueado (Step 1.3),100% Original,Reserva Directa / Stripe 30%
+URL-004,/landings/mariachis-bodas-madrid,Mariachis para Bodas en Madrid,B2C High-Ticket,Madrid (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-005,/landings/mariachis-cumpleanos-madrid,Mariachis Cumpleaños Madrid,B2C Impulsivo,Madrid (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-006,/landings/serenatas-gala-madrid,Serenatas de Gala Madrid,B2C High-Ticket,Madrid (ES),Mapped (Fase N+1),Unique Copy Local,Bizum / Stripe 30%
+URL-007,/landings/mariachis-empresas-madrid,Mariachis Eventos Corporativos,B2B Empresas,Madrid (ES),Mapped (Fase N+1),Unique Copy B2B,Factura / Transferencia
+URL-008,/landings/mariachis-bodas-barcelona,Mariachis para Bodas Barcelona,B2C High-Ticket,Barcelona (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-009,/landings/mariachis-cumpleanos-barcelona,Mariachis Cumpleaños Barcelona,B2C Impulsivo,Barcelona (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-010,/landings/mariachis-embajadas-bruselas,Mariachi Diplomático Bruselas,B2G Institucional,Bruselas (BE),Mapped (Fase N+1),Unique Copy Multilingüe,Factura Oficial B2G
+URL-011,/landings/mariachis-gala-paris,Mariachi de Prestige à Paris,High-Ticket / Diplomático,París (FR),Mapped (Fase N+1),Unique Copy Francés,Stripe / Transferencia
