@@ -1,0 +1,14 @@
+Comunidad_Autonoma,Provincia,Municipio_Cabecera,Poblacion_Estimada,Ruta_Catch_All_Directory,Festejo_Principal,Gatillo_Precio_Base,Estado_ISR
+Madrid,Madrid,Alcalá de Henares,195000,/directorio/espana/madrid/alcala-de-henares/bodas,Mariachi Bodas Alcalá,350 € + 0€ km,ISR On-Demand
+Madrid,Madrid,Alcobendas,118000,/directorio/espana/madrid/alcobendas/cumpleanos,Mariachi Cumpleaños Alcobendas,350 € + 0€ km,ISR On-Demand
+Madrid,Madrid,Aranjuez,60000,/directorio/espana/madrid/aranjuez/serenatas,Serenatas Gala Aranjuez,350 € + 0€ km,ISR On-Demand
+Cataluña,Barcelona,Hospitalet de Llobregat,265000,/directorio/espana/barcelona/hospitalet/bodas,Mariachi Bodas Hospitalet,350 € + 199.50€ km,ISR On-Demand
+Cataluña,Barcelona,Sitges,30000,/directorio/espana/barcelona/sitges/bodas-lujo,Mariachi Bodas Luxury Sitges,550 € + 199.50€ km,ISR On-Demand
+Comunidad Valenciana,Valencia,Gandía,75000,/directorio/espana/valencia/gandia/bodas,Mariachi Bodas Playa Gandía,350 € + 105€ km,ISR On-Demand
+Andalucía,Sevilla,Dos Hermanas,137000,/directorio/espana/sevilla/dos-hermanas/cumpleanos,Mariachi Cumpleaños Dos Hermanas,350 € + 168€ km,ISR On-Demand
+Andalucía,Málaga,Marbella,147000,/directorio/espana/malaga/marbella/bodas-lujo,Mariachi Luxury Weddings Marbella,900 € + 169.75€ km,ISR On-Demand
+Aragón,Zaragoza,Calatayud,20000,/directorio/espana/zaragoza/calatayud/bodas,Mariachi Bodas Calatayud,350 € + 92.75€ km,ISR On-Demand
+Galicia,A Coruña,Santiago de Compostela,97000,/directorio/espana/coruna/santiago/bodas,Mariachi Gala Santiago,350 € + 210€ km,ISR On-Demand
+País Vasco,Bizkaia,Getxo,77000,/directorio/espana/bizkaia/getxo/bodas-lujo,Mariachi Premium Getxo,550 € + 150€ km,ISR On-Demand
+Bélgica,Bruselas,Bruselas Capital,1200000,/directorio/europa/belgica/bruselas/consulados,Mariachi Diplomático Bruselas,900 € + 400€ vuelo,ISR On-Demand
+Francia,París,París Métropole,2100000,/directorio/europa/francia/paris/gala,Mariachi de Prestige Paris,900 € + 350€ vuelo,ISR On-Demand
