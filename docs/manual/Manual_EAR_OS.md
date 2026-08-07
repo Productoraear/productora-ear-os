@@ -382,5 +382,18 @@ graph TD
 ```
 
 ---
+
+## 22. Protocolo de Autonomía (90% Autónomo / 10% Gatekeeper Humano)
+
+- **90% Autonomía Ejecutiva:** Análisis forense, refactorización local reversible, generación de artefactos, ejecución de tests y actualización automática del manual sin microgestión.
+- **10% Hard Veto Rails (Detención Obligatoria):**
+  1. Secretos y credenciales `.env`.
+  2. Merges a `main` o deploys a Vercel.
+  3. Stripe/Bizum real y webhooks de producción.
+  4. Operaciones destructivas sobre bases de datos.
+  5. Gates en estado `BLOCKED` o `REQUIERE_APROBACION`.
+
+---
 **ESTÁNDAR v2.1 CANÓNICO — PRODUCTORA EAR OS S-CLASS ENTERPRISE.**
+
 
