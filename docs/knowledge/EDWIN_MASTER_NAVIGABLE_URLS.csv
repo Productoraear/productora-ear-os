@@ -6,7 +6,72 @@ URL-004,/landings/mariachis-bodas-madrid,Mariachis para Bodas en Madrid,B2C High
 URL-005,/landings/mariachis-cumpleanos-madrid,Mariachis Cumpleaños Madrid,B2C Impulsivo,Madrid (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
 URL-006,/landings/serenatas-gala-madrid,Serenatas de Gala Madrid,B2C High-Ticket,Madrid (ES),Mapped (Fase N+1),Unique Copy Local,Bizum / Stripe 30%
 URL-007,/landings/mariachis-empresas-madrid,Mariachis Eventos Corporativos,B2B Empresas,Madrid (ES),Mapped (Fase N+1),Unique Copy B2B,Factura / Transferencia
-URL-008,/landings/mariachis-bodas-barcelona,Mariachis para Bodas Barcelona,B2C High-Ticket,Barcelona (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
-URL-009,/landings/mariachis-cumpleanos-barcelona,Mariachis Cumpleaños Barcelona,B2C Impulsivo,Barcelona (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
-URL-010,/landings/mariachis-embajadas-bruselas,Mariachi Diplomático Bruselas,B2G Institucional,Bruselas (BE),Mapped (Fase N+1),Unique Copy Multilingüe,Factura Oficial B2G
-URL-011,/landings/mariachis-gala-paris,Mariachi de Prestige à Paris,High-Ticket / Diplomático,París (FR),Mapped (Fase N+1),Unique Copy Francés,Stripe / Transferencia
+URL-008,/landings/mariachis-urgentes-madrid,Mariachis Urgentes 24h Madrid,B2C Urgencias,Madrid (ES),Mapped (Fase N+1),Unique Copy 24h,Bizum 100% Inmediato
+URL-009,/landings/mariachis-bodas-barcelona,Mariachis para Bodas Barcelona,B2C High-Ticket,Barcelona (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-010,/landings/mariachis-cumpleanos-barcelona,Mariachis Cumpleaños Barcelona,B2C Impulsivo,Barcelona (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-011,/landings/serenatas-gala-barcelona,Serenatas de Gala Barcelona,B2C High-Ticket,Barcelona (ES),Mapped (Fase N+1),Unique Copy Local,Bizum / Stripe 30%
+URL-012,/landings/mariachis-empresas-barcelona,Mariachis Eventos Corporativos,B2B Empresas,Barcelona (ES),Mapped (Fase N+1),Unique Copy B2B,Factura / Transferencia
+URL-013,/landings/mariachis-bodas-valencia,Mariachis para Bodas Valencia,B2C High-Ticket,Valencia (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-014,/landings/mariachis-cumpleanos-valencia,Mariachis Cumpleaños Valencia,B2C Impulsivo,Valencia (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-015,/landings/mariachis-bodas-sevilla,Mariachis para Bodas Sevilla,B2C High-Ticket,Sevilla (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-016,/landings/mariachis-cumpleanos-sevilla,Mariachis Cumpleaños Sevilla,B2C Impulsivo,Sevilla (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-017,/landings/mariachis-bodas-malaga,Mariachis para Bodas Málaga,B2C High-Ticket,Málaga (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-018,/landings/mariachis-cumpleanos-malaga,Mariachis Cumpleaños Málaga,B2C Impulsivo,Málaga (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-019,/landings/mariachis-bodas-zaragoza,Mariachis para Bodas Zaragoza,B2C High-Ticket,Zaragoza (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-020,/landings/mariachis-cumpleanos-zaragoza,Mariachis Cumpleaños Zaragoza,B2C Impulsivo,Zaragoza (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-021,/landings/mariachis-bodas-murcia,Mariachis para Bodas Murcia,B2C High-Ticket,Murcia (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-022,/landings/mariachis-cumpleanos-murcia,Mariachis Cumpleaños Murcia,B2C Impulsivo,Murcia (ES),Mapped (Fase N+1),Unique Copy Local,Bizum 100% Inmediato
+URL-023,/landings/mariachis-bodas-palma,Mariachis para Bodas Mallorca,B2C High-Ticket,Palma de Mallorca (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-024,/landings/mariachis-bodas-laspalmas,Mariachis para Bodas Las Palmas,B2C High-Ticket,Las Palmas (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-025,/landings/mariachis-bodas-tenerife,Mariachis para Bodas Tenerife,B2C High-Ticket,Santa Cruz de Tenerife (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-026,/landings/mariachis-bodas-alicante,Mariachis para Bodas Alicante,B2C High-Ticket,Alicante (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-027,/landings/mariachis-bodas-cordoba,Mariachis para Bodas Córdoba,B2C High-Ticket,Córdoba (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-028,/landings/mariachis-bodas-valladolid,Mariachis para Bodas Valladolid,B2C High-Ticket,Valladolid (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-029,/landings/mariachis-bodas-vigo,Mariachis para Bodas Vigo / Pontevedra,B2C High-Ticket,Pontevedra (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-030,/landings/mariachis-bodas-bilbao,Mariachis para Bodas Bilbao,B2C High-Ticket,Bizkaia (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-031,/landings/mariachis-bodas-sansebastian,Mariachis para Bodas San Sebastián,B2C High-Ticket,Gipuzkoa (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-032,/landings/mariachis-bodas-oviedo,Mariachis para Bodas Asturias,B2C High-Ticket,Asturias (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-033,/landings/mariachis-bodas-coruna,Mariachis para Bodas A Coruña,B2C High-Ticket,A Coruña (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-034,/landings/mariachis-bodas-granada,Mariachis para Bodas Granada,B2C High-Ticket,Granada (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-035,/landings/mariachis-bodas-almeria,Mariachis para Bodas Almería,B2C High-Ticket,Almería (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-036,/landings/mariachis-bodas-badajoz,Mariachis para Bodas Badajoz,B2C High-Ticket,Badajoz (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-037,/landings/mariachis-bodas-caceres,Mariachis para Bodas Cáceres,B2C High-Ticket,Cáceres (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-038,/landings/mariachis-bodas-cadiz,Mariachis para Bodas Cádiz,B2C High-Ticket,Cádiz (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-039,/landings/mariachis-bodas-castellon,Mariachis para Bodas Castellón,B2C High-Ticket,Castellón (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-040,/landings/mariachis-bodas-toledo,Mariachis para Bodas Toledo,B2C High-Ticket,Toledo (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-041,/landings/mariachis-bodas-ciudadreal,Mariachis para Bodas Ciudad Real,B2C High-Ticket,Ciudad Real (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-042,/landings/mariachis-bodas-cuenca,Mariachis para Bodas Cuenca,B2C High-Ticket,Cuenca (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-043,/landings/mariachis-bodas-girona,Mariachis para Bodas Girona,B2C High-Ticket,Girona (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-044,/landings/mariachis-bodas-huelva,Mariachis para Bodas Huelva,B2C High-Ticket,Huelva (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-045,/landings/mariachis-bodas-huesca,Mariachis para Bodas Huesca,B2C High-Ticket,Huesca (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-046,/landings/mariachis-bodas-jaen,Mariachis para Bodas Jaén,B2C High-Ticket,Jaén (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-047,/landings/mariachis-bodas-leon,Mariachis para Bodas León,B2C High-Ticket,León (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-048,/landings/mariachis-bodas-lleida,Mariachis para Bodas Lleida,B2C High-Ticket,Lleida (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-049,/landings/mariachis-bodas-lugo,Mariachis para Bodas Lugo,B2C High-Ticket,Lugo (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-050,/landings/mariachis-bodas-ourense,Mariachis para Bodas Ourense,B2C High-Ticket,Ourense (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-051,/landings/mariachis-bodas-palencia,Mariachis para Bodas Palencia,B2C High-Ticket,Palencia (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-052,/landings/mariachis-bodas-salamanca,Mariachis para Bodas Salamanca,B2C High-Ticket,Salamanca (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-053,/landings/mariachis-bodas-segovia,Mariachis para Bodas Segovia,B2C High-Ticket,Segovia (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-054,/landings/mariachis-bodas-soria,Mariachis para Bodas Soria,B2C High-Ticket,Soria (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-055,/landings/mariachis-bodas-tarragona,Mariachis para Bodas Tarragona,B2C High-Ticket,Tarragona (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-056,/landings/mariachis-bodas-teruel,Mariachis para Bodas Teruel,B2C High-Ticket,Teruel (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-057,/landings/mariachis-bodas-zamora,Mariachis para Bodas Zamora,B2C High-Ticket,Zamora (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-058,/landings/mariachis-bodas-albacete,Mariachis para Bodas Albacete,B2C High-Ticket,Albacete (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-059,/landings/mariachis-bodas-burgos,Mariachis para Bodas Burgos,B2C High-Ticket,Burgos (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-060,/landings/mariachis-bodas-avila,Mariachis para Bodas Ávila,B2C High-Ticket,Ávila (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-061,/landings/mariachis-bodas-logrono,Mariachis para Bodas La Rioja,B2C High-Ticket,La Rioja (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-062,/landings/mariachis-bodas-vitoria,Mariachis para Bodas Álava,B2C High-Ticket,Álava (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-063,/landings/mariachis-bodas-pamplona,Mariachis para Bodas Navarra,B2C High-Ticket,Navarra (ES),Mapped (Fase N+1),Unique Copy Local,Stripe 30% / Bizum
+URL-064,/landings/mariachis-embajadas-bruselas,Mariachi Diplomático Bruselas,B2G Institucional,Bruselas (BE),Mapped (Fase N+1),Unique Copy Multilingüe,Factura Oficial B2G
+URL-065,/landings/mariachis-gala-paris,Mariachi de Prestige à Paris,High-Ticket / Diplomático,París (FR),Mapped (Fase N+1),Unique Copy Francés,Stripe / Transferencia
+URL-066,/landings/mariachis-gala-roma,Mariachi di Gala a Roma,High-Ticket / Lujo,Roma (IT),Mapped (Fase N+1),Unique Copy Italiano,Stripe / Transferencia
+URL-067,/landings/mariachis-gala-milan,Mariachi per Eventi Milano,High-Ticket / Moda & Marcas,Milán (IT),Mapped (Fase N+1),Unique Copy Italiano,Stripe / Transferencia
+URL-068,/landings/mariachis-gala-geneve,Mariachi Premium for Geneva,Private Banking / High-Ticket,Ginebra (CH),Mapped (Fase N+1),Unique Copy Francés/Inglés,Factura B2B / Stripe
+URL-069,/landings/mariachis-gala-zurich,Mariachi Luxury Events Zurich,Private Wealth / High-Ticket,Zurich (CH),Mapped (Fase N+1),Unique Copy Alemán/Inglés,Factura B2B / Stripe
+URL-070,/landings/mariachis-gala-lisboa,Mariachi de Gala em Lisboa,High-Ticket / Bodas Villa,Lisboa (PT),Mapped (Fase N+1),Unique Copy Portugués,Stripe 30% / Bizum
+URL-071,/landings/mariachis-gala-porto,Mariachi de Gala no Porto,High-Ticket / Eventos,Oporto (PT),Mapped (Fase N+1),Unique Copy Portugués,Stripe 30% / Bizum
+URL-072,/landings/mariachis-gala-london,Mariachi Luxury Performances London,High-Ticket / Corporate,Londres (UK),Mapped (Fase N+1),Unique Copy Inglés,Factura B2B / Stripe
+URL-073,/landings/mariachis-gala-amsterdam,Mariachi Premium Amsterdam,High-Ticket / Events,Ámsterdam (NL),Mapped (Fase N+1),Unique Copy Inglés,Factura B2B / Stripe
+URL-074,/landings/mariachis-gala-vienna,Mariachi Classical Gala Vienna,High-Ticket / Lujo Lírico,Viena (AT),Mapped (Fase N+1),Unique Copy Alemán/Inglés,Factura B2B / Stripe
+URL-075,/landings/mariachis-gala-berlin,Mariachi Gala Berlin,Corporate / Cultural,Berlín (DE),Mapped (Fase N+1),Unique Copy Alemán/Inglés,Factura B2B / Stripe
+URL-076,/landings/mariachis-gala-munich,Mariachi Premium Munich,Bavaria High-Ticket,Múnich (DE),Mapped (Fase N+1),Unique Copy Alemán/Inglés,Factura B2B / Stripe
