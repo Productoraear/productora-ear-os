@@ -1,106 +1,158 @@
-'use client';
-
 import React from 'react';
-import CategoryRouter from '@/features/discovery/CategoryRouter';
-import { Star, TrendingUp, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
-/**
- * 🎨 VERTICAL V2 - INGENIERÍA DE TALENTO (AURA ONYX)
- * Transformación de la gestión artística en un activo de inversión.
- */
+export const metadata = {
+  title: 'Catálogo de Artistas S-Class | Productora EAR',
+  description: 'Explora y contrata el catálogo exclusivo de artistas, mariachis, orquestas y grupos musicales de Productora EAR.',
+};
 
 export default function ArtistasPage() {
+  const artistas = [
+    {
+      id: 'mariachi-bodas-madrid-solista',
+      nombre: 'Mariachi Sol de Madrid',
+      categoria: 'Mariachi / High-Ticket',
+      rating: '4.9/5',
+      shows: '450+ Eventos',
+      imagen: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBrZgks4GsWmEDKFQNVrOB37mgl_-Duaigz_IKgADnLbVLPr_5lzctoYf3DMe2d70Yuinv4D1BcKTx0fpKoQ00HDxQNaxT5itANIpwjBL5i_eyzs2_HfyrmoTeXTOi5Vglb9I7qCcFi5Hy8IWlokBM7qP_2lbm8RhTEDxFS7BjZPOw9TR4jsHwIergb7oKT9mQ4d0RSfaspsMDfCwQCBR4yMwdlE2V0yz20cPo9-29pw0hf3EL6ahw6NU8VeYThQGd5pwAOL1_njA',
+      leverage: 'ALTO LEVERAGE',
+    },
+    {
+      id: 'mariachis-bodas-barcelona-gala',
+      nombre: 'Gala Ranchera Barcelona',
+      categoria: 'Mariachi / Ensamble Real',
+      rating: '4.8/5',
+      shows: '320+ Eventos',
+      imagen: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDZ6lzt-zlx09RLp8Bh3Q4Z9muNKrxNwbZj6lfnIL4nXiR5nAzoxSf8y3dlO91NWzsf5CCidqLF5JiCGboTydFg5iHb9q1ith5X6dFLoB8qapQ9FKPWCgwKA7NHIp7u43xCU_8v4eckjU1ho5y44DMo5nsSZWY9NYHRCnPvYckhhhD3OLqp_g0MtJ-19T-qgAjst6bXYjXjdUBAoSb5rSFT9eHQ6805naLvinPmeZq7lU94HanTSJZDZ2JRgltZZaWQdHBJ0Vgoog',
+      leverage: 'STANDARD',
+    },
+    {
+      id: 'mariachi-caballo-eventos-sevilla',
+      nombre: 'Mariachi a Caballo Sevilla',
+      categoria: 'Espectáculo Ecuestre',
+      rating: '5.0/5',
+      shows: '180+ Eventos',
+      imagen: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCu6a-B5xc-O0dFkQD_dd2x2SWSnCrezUf0Pc1pNisJ21XE418p5E86YqJJ_7RH5NWDGU__-NjRwoFUjIsYuUKzdjv-CyIotOHAHYbXb6PEzvq6nWMV_buFkDgHMUB93IRBOOJ9L1vmabEEyobZ6jRKG7T2TvYCrMWBpJaKrxFNa9D_YeWWjdAqIod6aa1mFIwkMqobS0usYWzC3J__3CKN4g1koBAhtmEVvPz54GftzboDUEFvXEbD_6MADtpyhZjQniRI88GQyQ',
+      leverage: 'ALTO LEVERAGE',
+    },
+  ];
+
   return (
-    <main className="min-h-screen bg-[#050505] text-white pt-32 pb-20">
-      {/* Hero Section */}
-      <section className="px-6 mb-24 max-w-7xl mx-auto">
-        <div className="flex items-center gap-3 mb-6">
-           <div className="w-8 h-8 bg-[#ecb613]/20 rounded-lg flex items-center justify-center text-[#ecb613] border border-[#ecb613]/30">
-             <Star size={16} />
-           </div>
-           <span className="text-[#ecb613] text-[10px] font-black uppercase tracking-[0.4em]">Vertical de Talento V2</span>
+    <div className="bg-[#050505] text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen">
+      {/* TOP NAVIGATION BAR */}
+      <header className="bg-[#0A0A0A] border-b border-[#D4AF37]/10 flex justify-between items-center w-full px-6 py-4 fixed top-0 z-50">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="text-2xl font-headline font-bold text-[#F2CA50] uppercase tracking-widest hover:opacity-80 transition-opacity">
+            PRODUCTORA EAR
+          </Link>
+          <nav className="hidden md:flex gap-6">
+            <Link href="/" className="text-[#C6C6C6] font-label uppercase text-xs tracking-widest hover:text-[#F2CA50] transition-colors duration-100">
+              Inicio
+            </Link>
+            <Link href="/artistas" className="text-[#F2CA50] border-b-2 border-[#F2CA50] pb-1 font-label uppercase text-xs tracking-widest">
+              Catálogo Artistas
+            </Link>
+            <Link href="/presupuesto" className="text-[#C6C6C6] font-label uppercase text-xs tracking-widest hover:text-[#F2CA50] transition-colors duration-100">
+              Cotizador
+            </Link>
+          </nav>
         </div>
-        
-        <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter mb-8 font-syne leading-[0.85]">
-          Arquitectura de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] to-white/60">Legado</span> Artístico.
-        </h1>
-        
-        <p className="text-xl md:text-2xl text-white/40 font-medium max-w-2xl leading-relaxed mb-12">
-          El talento sin estructura es efímero. Aplicamos metodología empresarial a carreras artísticas. 
-          Diseñamos el <span className="text-white">Edificio que Protege</span> y rentabiliza tu arte.
-        </p>
-
-        <div className="flex flex-wrap gap-12 py-10 border-y border-white/5">
-          <Highlight value="36" label="Conciertos con Éxito" />
-          <Highlight value="95%" label="Efectividad Operativa" />
-          <Highlight value="Auditado" label="Nivel de Curaduría" />
+        <div className="flex items-center gap-4">
+          <div className="px-3 py-1 border border-primary/20 text-primary font-label text-[10px] tracking-widest bg-primary/5">
+            ROSTER_STATUS: ACTIVE
+          </div>
+          <Link href="/presupuesto" className="bg-primary text-on-primary px-4 py-1.5 font-label text-xs uppercase tracking-wider font-bold hover:bg-primary-container transition-colors">
+            CONTRATAR
+          </Link>
         </div>
-      </section>
+      </header>
 
-      {/* Discovery Engine */}
-      <CategoryRouter type="V2" />
+      {/* SIDEBAR NAVIGATION */}
+      <aside className="fixed left-0 top-0 h-full w-64 bg-[#0A0A0A] border-r border-[#D4AF37]/5 flex flex-col pt-24 pb-8 z-40 hidden md:flex">
+        <div className="px-6 mb-8">
+          <h3 className="text-[#F2CA50] font-label font-bold text-xs tracking-[0.15rem] mb-1">EAR_ROSTER</h3>
+          <p className="text-secondary opacity-60 font-label text-[9px] tracking-widest">V.2.0.0_CATALOG</p>
+        </div>
+        <nav className="flex-1 space-y-1">
+          <Link href="/artistas" className="text-[#F2CA50] bg-[#1C1B1B] border-l-2 border-[#F2CA50] px-6 py-3 flex items-center gap-3">
+            <span className="material-symbols-outlined text-sm">groups</span>
+            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">TODOS LOS ARTISTAS</span>
+          </Link>
+          <Link href="/artistas?categoria=mariachis" className="text-[#C6C6C6] opacity-60 px-6 py-3 flex items-center gap-3 hover:bg-[#1C1B1B] hover:text-[#E5E2E1] transition-all">
+            <span className="material-symbols-outlined text-sm">music_note</span>
+            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">MARIACHIS</span>
+          </Link>
+          <Link href="/artistas?categoria=solistas" className="text-[#C6C6C6] opacity-60 px-6 py-3 flex items-center gap-3 hover:bg-[#1C1B1B] hover:text-[#E5E2E1] transition-all">
+            <span className="material-symbols-outlined text-sm">person</span>
+            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">SOLISTAS & DJS</span>
+          </Link>
+          <Link href="/presupuesto" className="text-[#C6C6C6] opacity-60 px-6 py-3 flex items-center gap-3 hover:bg-[#1C1B1B] hover:text-[#E5E2E1] transition-all">
+            <span className="material-symbols-outlined text-sm">calculate</span>
+            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">PRESUPUESTO RAPIDO</span>
+          </Link>
+        </nav>
+      </aside>
 
-      {/* Academia Section */}
-      <section className="py-32 px-6">
-        <div className="max-w-7xl mx-auto bg-gradient-to-b from-white/[0.03] to-transparent rounded-[3rem] p-12 md:p-24 border border-white/5 overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ecb613]/5 blur-[120px] rounded-full pointer-events-none" />
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+      {/* MAIN CONTENT CANVAS */}
+      <main className="ml-0 md:ml-64 pt-24 px-8 pb-12 min-h-screen relative overflow-hidden">
+        <div className="max-w-[1400px] mx-auto space-y-8">
+          {/* HERO TITLE SECTION */}
+          <section className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#4D4635]/15 pb-6">
             <div>
-              <span className="text-[#ecb613] text-xs font-black uppercase tracking-widest mb-6 block">Academia Diamante Rojo</span>
-              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-10 font-syne leading-tight">
-                Forjando el <span className="text-white">Patrimonio</span> del mañana.
-              </h2>
-              <div className="space-y-8">
-                <Step number="01" title="Auditoría de Aura" desc="Analizamos la identidad única del artista y su potencial de escalado B2B." />
-                <Step number="02" title="Ingeniería de Carrera" desc="Diseño de planos tácticos para la monetización y el posicionamiento de marca." />
-                <Step number="03" title="Ejecución S-Class" desc="Implementación en los escenarios más exigentes del ecosistema global." />
-              </div>
+              <h1 className="font-headline text-5xl italic tracking-tighter text-on-surface">Catálogo de Artistas S-Class</h1>
+              <p className="font-label text-xs uppercase tracking-[0.3rem] text-primary mt-2">Formatos verificados // Auditoría de Integridad EAR</p>
             </div>
-            
-            <div className="flex flex-col justify-center gap-8">
-              <div className="p-10 bg-[#0d0d0d]/80 backdrop-blur-xl border border-white/10 rounded-3xl">
-                <ShieldCheck className="text-[#ecb613] mb-6" size={40} />
-                <h3 className="text-2xl font-black uppercase mb-4">Protección de Activos</h3>
-                <p className="text-white/40 leading-relaxed italic">
-                  "No representamos nombres; construimos marcas indestructibles que trascienden la logística del evento."
-                </p>
-              </div>
-              <div className="p-10 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-between group cursor-pointer hover:border-[#ecb613]/50 transition-colors">
-                <div className="flex items-center gap-6">
-                  <TrendingUp className="text-[#ecb613]" size={32} />
-                  <div>
-                    <h4 className="text-xl font-bold uppercase tracking-tight">Plan de Carrera</h4>
-                    <p className="text-white/40 text-xs uppercase tracking-widest font-black">Auditado por Nexo EAR</p>
+            <div className="mt-4 md:mt-0 font-label text-[0.65rem] text-secondary text-right">
+              DISPONIBILIDAD: DIRECTA<br />FILTROS: ACTIVOS
+            </div>
+          </section>
+
+          {/* ARTISTS GRID */}
+          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {artistas.map((artista) => (
+              <div key={artista.id} className="group bg-surface-container-low border border-outline-variant/20 overflow-hidden hover:border-primary transition-all duration-300">
+                <div className="relative h-56 overflow-hidden">
+                  <img 
+                    src={artista.imagen} 
+                    alt={artista.nombre}
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" 
+                  />
+                  <div className="absolute top-3 left-3 bg-primary-container text-on-primary-container font-label text-[0.6rem] px-2.5 py-0.5 font-bold tracking-wider">
+                    {artista.leverage}
                   </div>
                 </div>
-                <span className="text-3xl opacity-20 group-hover:opacity-100 transition-opacity">→</span>
+
+                <div className="p-6 space-y-4">
+                  <div>
+                    <p className="font-label text-[0.65rem] text-primary tracking-widest uppercase mb-1">{artista.categoria}</p>
+                    <h3 className="font-headline text-2xl italic text-on-surface">{artista.nombre}</h3>
+                  </div>
+
+                  <div className="flex justify-between items-center text-xs font-label text-secondary border-t border-outline-variant/10 pt-4">
+                    <span>Valoración: <strong className="text-primary">{artista.rating}</strong></span>
+                    <span>{artista.shows}</span>
+                  </div>
+
+                  <div className="pt-2 flex gap-3">
+                    <Link 
+                      href={`/artistas/${artista.id}`}
+                      className="flex-1 text-center py-2.5 border border-primary/30 text-primary font-label text-[0.7rem] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all"
+                    >
+                      Ver Ficha
+                    </Link>
+                    <Link 
+                      href="/presupuesto"
+                      className="px-4 py-2.5 bg-surface-container-high border border-outline-variant/30 text-on-surface font-label text-[0.7rem] uppercase tracking-widest hover:border-primary transition-all"
+                    >
+                      Cotizar
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            ))}
+          </section>
         </div>
-      </section>
-    </main>
-  );
-}
-
-function Highlight({ value, label }: { value: string, label: string }) {
-  return (
-    <div className="flex flex-col">
-      <span className="text-5xl font-black text-white font-syne mb-1 tracking-tighter">{value}</span>
-      <span className="text-[10px] text-white/40 uppercase tracking-widest font-black">{label}</span>
-    </div>
-  );
-}
-
-function Step({ number, title, desc }: { number: string, title: string, desc: string }) {
-  return (
-    <div className="flex gap-6 group">
-      <span className="text-3xl font-black text-white/10 group-hover:text-[#ecb613] transition-colors duration-500 font-syne">{number}</span>
-      <div>
-        <h4 className="text-xl font-bold uppercase tracking-tight text-white mb-2">{title}</h4>
-        <p className="text-white/40 text-sm leading-relaxed max-w-sm">{desc}</p>
-      </div>
+      </main>
     </div>
   );
 }
