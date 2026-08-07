@@ -1,0 +1,19 @@
+Variable,Tipo,Ejemplo_Long_Tail,Intencion,Prioridad
+bodas,Ocasión,"mariachi para ceremonia y celebracion nupcial madrid",Transaccional,P0
+cumpleaños,Ocasión,"homenaje sorpresa de mariachi para cumpleaños",Transaccional,P0
+serenatas,Ocasión,"dedicatoria de serenatas a domicilio para aniversario",Transaccional,P0
+pedidas,Ocasión,"mariachi para pedida de mano discreta e inolvidable",Transaccional,P0
+urgentes,Urgencia,"mariachis con disponibilidad prioritaria madrid",Transaccional (Impulso),P0
+cerca de mi,Geolocal,"mariachis con cobertura local cerca de mi ubicacion",Descubrimiento local,P1
+precios,Precio,"opciones de inversion y formatos de mariachi por una hora",Informativa / Comparativa,P1
+de lujo,Contexto / Precio,"mariachi gala premium para eventos de lujo",High-Ticket,P1
+empresas,Contexto B2B,"presencia institucional mariachis eventos corporativos",B2B Transaccional,P0
+restaurantes,Contexto B2B,"residencia musical mariachi para restaurante madrid",B2B Recurrente,P1
+hoteles,Contexto B2B,"ambientacion premium mariachis bodas hoteles",B2B Transaccional,P1
+festivales,Contexto B2G,"espectaculo mariachis para fiestas patronales",Licitación / B2G,P1
+embajadas,Contexto B2G,"mariachi protocolo oficial para embajadas",Diplomático / B2G,P0
+fiestas privadas,Contexto,"mariachis para celebracion intima fincas privadas",Transaccional,P1
+solista,Formato,"reservar mariachi solista formato esencial",Impulso / Precio,P2
+trio,Formato,"trio de mariachis para detalle protocolario",Transaccional,P0
+cuarteto,Formato,"cuarteto de mariachis presencia escenica",Transaccional,P0
+show premium,Formato,"gran show de mariachi impacto masivo 8 musicos",High-Ticket VIP,P1
