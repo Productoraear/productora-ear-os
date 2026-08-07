@@ -1,0 +1,34 @@
+Archivo_Carpeta,Ruta_Actual,Categoria_Detectada,Nueva_Ruta_Propuesta,Accion_Requerida
+Dominancia_EAR*.ps1,/,Script PowerShell,scripts/maintenance/,Mover a scripts
+INICIAR_DOMINANCIA.bat,/,Script Batch,scripts/deploy/,Mover a scripts
+INICIAR_EAR_OS*.ps1,/,Script PowerShell,scripts/deploy/,Mover a scripts
+recuperar_adn.ps1,/,Script PowerShell,scripts/maintenance/,Mover a scripts
+Cómo_jubilar_al_Cumpleaños y las mañanitas podcast.m4a,/,Media Audio,docs/knowledge/media/,Mover a docs
+AuraWallet.md,/,Documentación,docs/knowledge/,Mover a docs
+CLINE_RULES_V2.md,/,Reglas Prompt,docs/architecture/,Mover a docs
+CLINE_RULES_V3.md,/,Reglas Prompt,docs/architecture/,Mover a docs
+DEPLOYCERTIFICATE.md,/,Certificado Deploy,docs/release/,Mover a docs
+EAR OS — P0 Admin Demand Map — Planificación,/,Documentación,docs/release/,Mover a docs
+EAR_OS_OMEGA_PROMPTS.md,/,Reglas Prompt,docs/architecture/,Mover a docs
+INVENTARIO_TOTAL.md,/,Auditoría,docs/audit/,Mover a docs
+SEO_DOMINANCE_PLAN.md,/,SEO Plan,docs/seo/,Mover a docs
+SOVEREIGN_GENOMA.md,/,Core SSOT,docs/architecture/,Mover a docs
+.A hoja de ruta despues de la busqueda de datos .txt,/,Borrador,docs/audit/,Mover a docs
+.docx,/,Archivo Invalido,quarantine/,Mover a cuarentena
+EAR_OS_CONTROL/,/,Carpeta Scripts Antigua,scripts/,Consolidar en scripts/
+00_INBOX_COGNITIVO/,/,Carpeta Docs Antigua,docs/knowledge/inbox/,Consolidar en docs
+01_SSOT_Y_KERNELS/,/,Carpeta Docs Antigua,docs/architecture/,Consolidar en docs
+02_ARQUITECTURA_Y_MATRICES/,/,Carpeta Docs Antigua,docs/architecture/,Consolidar en docs
+99_CUARENTENA_COGNITIVA/,/,Carpeta Cuarentena,quarantine/cognitiva/,Consolidar en cuarentena
+ALMACEN_DE_CUARENTENA_6M/,/,Carpeta Cuarentena,quarantine/6m/,Consolidar en cuarentena
+BASE_DE_CONOCIMIENTO/,/,Carpeta Docs Antigua,docs/knowledge/legacy/,Consolidar en docs
+CHAT CON AI STUDIO PARA EAR OS/,/,Logs Chat,docs/knowledge/ai_logs/,Consolidar en docs
+CORE/,/,Docs Core,docs/architecture/core/,Consolidar en docs
+_auditoria/,/,Carpeta Auditoría,docs/audit/,Consolidar en docs
+auditoria_32b/,/,Carpeta Auditoría,docs/audit/32b/,Consolidar en docs
+auditoria_auth_matriz/,/,Carpeta Auditoría,docs/audit/auth/,Consolidar en docs
+data_vault/,/,Datos Backup,docs/knowledge/data_vault/,Consolidar en docs
+design-vault/,/,Diseño Assets,docs/design/vault/,Consolidar en docs
+incubadora/,/,Proyectos Draft,docs/knowledge/incubadora/,Consolidar en docs
+sync_nexus/,/,Sincronización,docs/knowledge/sync_nexus/,Consolidar en docs
+tools/,/,Herramientas Extra,scripts/tools/,Consolidar en scripts
