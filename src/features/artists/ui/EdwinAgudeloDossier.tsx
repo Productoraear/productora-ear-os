@@ -6,10 +6,11 @@ import { motion } from 'framer-motion';
 import { 
   Shield, Zap, Star, Music, Check, ArrowRight, Heart, Crown, 
   Mic2, Users, ShoppingCart, Trophy, Sparkles, Activity, 
-  Download, Globe, Award, Calendar, BookOpen, Volume2
+  Download, Globe, Award, Calendar, BookOpen, Volume2, Phone
 } from 'lucide-react';
 import Link from 'next/link';
 import { ROUTES } from '@/lib/routes';
+import { CENTRALITA } from '@/lib/phone-constants';
 import { ManifestoSection } from './ManifestoSection';
 import { TruthNuggets } from '@/features/telemetry/TruthNuggets';
 import { ArtistBookingFlow } from '@/app/components/artists/ArtistBookingFlow';
@@ -140,6 +141,43 @@ export const EdwinAgudeloDossier: React.FC = () => {
             <span className="text-[8px] font-black uppercase tracking-[0.1em] text-white/40">Máximo Galardón 2021</span>
           </div>
         </motion.div>
+      </section>
+
+      {/* 1.5 CENTRALITA CTA — CLICK-TO-CALL DOMINANT BLOCK */}
+      <section className="relative py-8 px-6 bg-gradient-to-b from-[#050505] to-[#080808] border-b border-white/5">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-stretch gap-4">
+            {/* Primary: Call */}
+            <a
+              href={CENTRALITA.tel}
+              className="flex-1 flex items-center justify-center gap-3 bg-[#ecb613] text-black font-black text-base uppercase tracking-wider rounded-2xl py-5 px-8 transition-all hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(236,182,19,0.4)] active:scale-95"
+              aria-label={`Llamar al ${CENTRALITA.display}`}
+            >
+              <Phone size={22} strokeWidth={2.5} />
+              <span>Llamar: {CENTRALITA.display}</span>
+            </a>
+
+            {/* Secondary: WhatsApp */}
+            <a
+              href={CENTRALITA.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 bg-[#25D366]/10 border border-[#25D366]/30 text-[#25D366] font-black text-sm uppercase tracking-wider rounded-2xl py-5 px-8 transition-all hover:bg-[#25D366]/20 active:scale-95"
+            >
+              <Heart size={18} />
+              <span>WhatsApp Directo</span>
+            </a>
+
+            {/* Tertiary: Scroll to booking */}
+            <a
+              href="#booking-funnel"
+              className="flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-white/70 font-black text-sm uppercase tracking-wider rounded-2xl py-5 px-8 transition-all hover:bg-white/10 hover:text-white active:scale-95"
+            >
+              <Calendar size={18} />
+              <span>Reservar Fecha</span>
+            </a>
+          </div>
+        </div>
       </section>
 
       {/* 2. THREE-DIMENSIONAL COGNITIVE BENTO: CHOOSE THE PATH */}

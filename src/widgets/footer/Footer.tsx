@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Instagram, Facebook, Mail, Phone, Twitter, Linkedin, Share2, Shield } from 'lucide-react';
 import { useSovereignRole } from '@/shared/hooks/useSovereignRole';
 import { ROUTES } from '@/lib/routes';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 const Footer: React.FC = () => {
   const shareSite = () => {
@@ -100,17 +101,21 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-white font-black uppercase tracking-[0.2em] text-[11px] mb-8">Contacto</h4>
             <ul className="space-y-6 font-body text-sm text-white/40">
-              <li className="flex items-center gap-4 group cursor-pointer">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#ecb613]/10 group-hover:text-[#ecb613] transition-colors">
-                  <Phone size={18} />
-                </div>
-                <span>+34 693 693 048</span>
+              <li>
+                <a href={CENTRALITA.tel} className="flex items-center gap-4 group cursor-pointer hover:text-[#ecb613] transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#ecb613]/10 group-hover:text-[#ecb613] transition-colors">
+                    <Phone size={18} />
+                  </div>
+                  <span>{CENTRALITA.display}</span>
+                </a>
               </li>
-              <li className="flex items-center gap-4 group cursor-pointer">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#ecb613]/10 group-hover:text-[#ecb613] transition-colors">
-                  <Mail size={18} />
-                </div>
-                <span>hola@productoraear.com</span>
+              <li>
+                <a href={CENTRALITA.email} className="flex items-center gap-4 group cursor-pointer hover:text-[#ecb613] transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#ecb613]/10 group-hover:text-[#ecb613] transition-colors">
+                    <Mail size={18} />
+                  </div>
+                  <span>{CENTRALITA.emailDisplay}</span>
+                </a>
               </li>
               <li className="pt-6 border-t border-white/5 leading-relaxed text-[11px] uppercase font-black tracking-widest text-white/20">
                 Sede Central: Méntrida, Toledo<br/>

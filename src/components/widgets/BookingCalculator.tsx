@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react';
 import { calculateMariachiRate } from '@/lib/pricing-engine';
-import { MapPin, Clock, Info, ShieldCheck, CreditCard } from 'lucide-react';
+import { MapPin, Clock, Info, ShieldCheck, CreditCard, Phone, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { CENTRALITA } from '@/lib/phone-constants';
+import { generateWhatsAppLink } from '@/lib/whatsapp';
 
 export default function BookingCalculator() {
   const [distanciaKm, setDistanciaKm] = useState<number>(0);
@@ -151,6 +153,31 @@ export default function BookingCalculator() {
         <CreditCard className="w-6 h-6" />
         {loading ? 'Procesando S-Class...' : 'Reservar con Klarna / Tarjeta'}
       </motion.button>
+
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        <a 
+          href={CENTRALITA.tel}
+          className="flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-lg font-bold transition-colors"
+        >
+          <Phone className="w-5 h-5 text-gray-400" />
+          Llamar
+        </a>
+        <a 
+          href={generateWhatsAppLink({
+            profile: 'edwin-agudelo',
+            service: `Mariachi Premium - ${evento}`,
+            location: provincia,
+            intent: `reserva con presupuesto estimado de ${priceDetails.total.toFixed(2)}€`,
+            slug: 'calculador'
+          }).url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-3 rounded-lg font-bold transition-colors"
+        >
+          <MessageCircle className="w-5 h-5" />
+          WhatsApp
+        </a>
+      </div>
     </div>
   );
 }

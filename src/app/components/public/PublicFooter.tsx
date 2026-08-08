@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Mail, Phone, Globe, ArrowUpRight } from "lucide-react";
 import { ROUTES } from "@/lib/routes";
 import { usePathname } from "next/navigation";
+import { CENTRALITA } from "@/lib/phone-constants";
 
 /**
  * 🏛️ PUBLIC FOOTER - VIMUME-FIRST LUMINOUS REFACTOR
@@ -68,10 +69,14 @@ export default function PublicFooter() {
           </div>
 
           <div className="flex gap-4">
-             {[Mail, Phone, Globe].map((Icon, i) => (
-               <div key={i} className={`w-12 h-12 rounded-full border ${borderColor} flex items-center justify-center transition-all cursor-pointer ${isVimumeContext ? 'text-black/30 hover:text-[#3b82f6] hover:border-[#3b82f6]/30' : 'text-white/30 hover:text-[#ecb613] hover:border-[#ecb613]/30'}`}>
+             {[
+               { Icon: Mail, href: CENTRALITA.email, label: "Enviar email" },
+               { Icon: Phone, href: CENTRALITA.tel, label: `Llamar al ${CENTRALITA.display}` },
+               { Icon: Globe, href: "/", label: "Ir al inicio" },
+             ].map(({ Icon, href, label }, i) => (
+                <a key={i} href={href} aria-label={label} className={`w-12 h-12 rounded-full border ${borderColor} flex items-center justify-center transition-all cursor-pointer ${isVimumeContext ? 'text-black/30 hover:text-[#3b82f6] hover:border-[#3b82f6]/30' : 'text-white/30 hover:text-[#ecb613] hover:border-[#ecb613]/30'}`}>
                  <Icon size={18} />
-               </div>
+                </a>
              ))}
           </div>
         </div>
@@ -107,11 +112,11 @@ export default function PublicFooter() {
           <div className={`space-y-5 text-[13px] font-medium ${mutedTextColor} italic`}>
             <div className="flex items-center gap-4">
                <Phone size={14} className={isVimumeContext ? "text-[#3b82f6]" : "text-[#ecb613]"} />
-               <span>+34 693 693 048</span>
+               <a href={CENTRALITA.tel} className="hover:text-white transition-colors">{CENTRALITA.display}</a>
             </div>
             <div className="flex items-center gap-4">
                <Mail size={14} className={isVimumeContext ? "text-[#3b82f6]" : "text-[#ecb613]"} />
-               <span>hola@productoraear.com</span>
+               <a href={CENTRALITA.email} className="hover:text-white transition-colors">{CENTRALITA.emailDisplay}</a>
             </div>
             <p className={`${isVimumeContext ? 'text-[#3b82f6]' : 'text-[#ecb613]'} text-[11px] font-black uppercase not-italic tracking-[0.4em] mt-10 flex items-center gap-2`}>
                Logística Institucional Activada <ArrowUpRight size={10} />

@@ -5,6 +5,7 @@ import SovereignBottomNav from '@/app/components/layout/SovereignBottomNav';
 import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import { PositiveFrictionModal } from '@/app/components/SClassScreens/PositiveFrictionModal';
 import ThemeWrapper from '@/app/components/layout/ThemeWrapper';
+import ClickToCallBar from '@/app/components/public/ClickToCallBar';
 
 /**
  * 🏛️ VIMUME OS - PUBLIC LAYOUT
@@ -37,6 +38,9 @@ export default function PublicLayout({
       </Suspense>
 
       <PositiveFrictionModal />
+
+      {/* 📞 CENTRALITA: Sticky click-to-call bar (mobile only) */}
+      <ClickToCallBar />
     </ThemeWrapper>
   );
 }

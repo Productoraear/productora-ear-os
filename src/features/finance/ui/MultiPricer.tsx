@@ -11,11 +11,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, Zap, Boxes, ArrowRight, Loader2, Users, Activity, 
   Mail, User, MapPin, Calendar, FileText, CheckCircle2, 
-  Sparkles, CreditCard, Clock, Truck, Award
+  Sparkles, CreditCard, Clock, Truck, Award, Phone, MessageCircle
 } from 'lucide-react';
 import { createDossierFromLead } from '@/app/actions/dossierActions';
 import { createEliteCheckout } from '@/app/actions/checkoutActions';
 import { marketplaceFeedback } from '@/services/marketplace/MarketplaceFeedbackService';
+import { CENTRALITA } from '@/lib/phone-constants';
+import { generateWhatsAppLink } from '@/lib/whatsapp';
 
 interface ServiceItem {
   id: string;
@@ -487,6 +489,32 @@ const MultiPricerContent = () => {
               >
                 <FileText size={16} /> Solicitar Dossier Oficial PDF
               </button>
+            </div>
+            
+            {/* Click-to-call / WhatsApp Handoff */}
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <a 
+                href={CENTRALITA.tel}
+                className="flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-widest border border-white/10"
+              >
+                <Phone className="w-4 h-4 text-[#d4a855]" />
+                Llamar
+              </a>
+              <a 
+                href={generateWhatsAppLink({
+                  profile: 'cotizador',
+                  service: `Presupuesto Personalizado - ${selectedServices.length} conceptos`,
+                  location: selectedProvince,
+                  intent: `solicito viabilidad con presupuesto total estimado de ${calculations.finalTotal}€`,
+                  slug: 'presupuesto'
+                }).url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-widest"
+              >
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
