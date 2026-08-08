@@ -48,6 +48,8 @@ import { AtmosphereProvider } from "@/app/context/AtmosphereProvider";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import { ThemeProvider } from "@/app/context/ThemeContext";
 
+import ClickToCallBar from '@/app/components/public/ClickToCallBar';
+
 export default function RootLayout({
   children,
 }: {
@@ -78,6 +80,7 @@ export default function RootLayout({
                       </main>
                       <BespokePricerModal />
                       <OmniSearchModal />
+                      <ClickToCallBar />
                     </div>
                   </SmoothScrollProvider>
                 </AtmosphereProvider>
