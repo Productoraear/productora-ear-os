@@ -128,7 +128,7 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
             name: `Reserva Roster Oficial Elite - ${artistName}`,
             description: `Actuación oficial programada para el ${eventDate}. Trayecto: ${origin} -> ${destination} (${pricing.distanceKm} km)`,
           },
-          unit_amount: Math.round(pricing.totalAmount * 100), // Stripe procesa en céntimos
+          unit_amount: 100, // TEMPORAL PARA TEST SANDBOX 1€ (Fase 215)
         },
         quantity: 1,
       },
