@@ -1,9 +1,16 @@
 # MVP RELEASE DOSSIER - EAR OS (OMEGA v2.2)
 
-**Fecha última reconciliación:** 2026-08-06T20:12 CEST
-**Commit base:** `3d274961` (rama `consolidacion-aditiva`)
-**Cambios pendientes de commit:** 27 archivos (1078+, 274−)
-**Dictamen:** `LISTO_PARA_PREVIEW | BLOQUEADORES OPERATIVOS PENDIENTES`
+**Fase Activa:** FASE 215 (Centralita Orgánica + Despacho + Journey Adaptativo)
+**Fecha última reconciliación:** 2026-08-08T19:00 CEST
+**Commit base:** `28001114` (rama `consolidacion-aditiva`)
+**Dictamen:** `LISTO_PARA_PREVIEW | JOURNEY ADAPTATIVO ACTIVADO`
+
+## El Paradigma de la Intención (FASE 215)
+EAR OS ya no opera como un catálogo lineal, sino como un **sistema adaptativo** que muta según la intención del cliente detectada en el punto de entrada:
+1. **Urgencia / Boda Inminente (B2C Local)** -> Captación inmediata con `ClickToCallBar` y `CENTRALITA.tel`.
+2. **Explorador Premium (B2C)** -> Direccionado al motor táctico (`/presupuesto`) con Matching y cotización dinámica.
+3. **Institucional (B2B/B2G)** -> Cotizador de partidas S-Class (`MultiPricer.tsx`) con desglose PDF.
+4. **Handoff Inteligente** -> Botones de Llamada/WhatsApp pre-rellenados que inyectan el *quoteId*, provincia e importe antes del saludo, reduciendo la fricción a cero.
 
 ## Alcance verificado
 - Build de producción local (Next.js 16.2.12 Turbopack, 3386 rutas, exit 0).
