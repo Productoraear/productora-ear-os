@@ -2,10 +2,9 @@ import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 import genomeData from '@/app/data/genome_sessions.json';
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '', 
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-);
+// Force dynamic: prevents Next.js from evaluating this route at build time.
+// Supabase requires a valid URL which may not be present in all build environments.
+export const dynamic = 'force-dynamic';
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
@@ -13,21 +12,27 @@ export async function GET(req: Request) {
 
     try {
         // 1. INTENTO DE INFERENCIA EN DB (SOBERANÍA TOTAL)
-        const { data, error } = await supabase
-            .from('ear_knowledge_base')
-            .select('*')
-            .or(`content.ilike.%${query}%, metadata->>source.ilike.%${query}%`)
-            .limit(5);
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-        if (!error && data && data.length > 0) {
-            return NextResponse.json(data.map(item => ({
-                id: item.id,
-                category: item.metadata?.sector || 'CONOCIMIENTO',
-                title: item.metadata?.filename || item.metadata?.source || 'Documento Forense',
-                relevance: "98%",
-                content: item.content,
-                path: item.file_path
-            })));
+        if (supabaseUrl && supabaseKey) {
+            const supabase = createClient(supabaseUrl, supabaseKey);
+            const { data, error } = await supabase
+                .from('ear_knowledge_base')
+                .select('*')
+                .or(`content.ilike.%${query}%, metadata->>source.ilike.%${query}%`)
+                .limit(5);
+
+            if (!error && data && data.length > 0) {
+                return NextResponse.json(data.map(item => ({
+                    id: item.id,
+                    category: item.metadata?.sector || 'CONOCIMIENTO',
+                    title: item.metadata?.filename || item.metadata?.source || 'Documento Forense',
+                    relevance: "98%",
+                    content: item.content,
+                    path: item.file_path
+                })));
+            }
         }
 
         // 2. FALLBACK TÁCTICO: GENOMA H (JSON ESTÁTICO)
