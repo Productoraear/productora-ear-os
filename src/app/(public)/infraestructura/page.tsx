@@ -23,8 +23,6 @@ export default function InfraestructuraSilo() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-blue-500/30">
-      <PublicNavbar />
-      
       {/* HERO SECTION */}
       <section className="relative pt-48 pb-32 px-8 overflow-hidden">
         <div className="absolute inset-0 z-0">

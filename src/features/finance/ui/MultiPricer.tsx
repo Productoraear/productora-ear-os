@@ -190,7 +190,7 @@ const MultiPricerContent = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 relative text-white space-y-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 relative text-white space-y-8 sm:space-y-12 pb-36 lg:pb-12">
       {/* 🚀 FORM OVERLAY (DOSSIER & FORMAL TENDER) */}
       <AnimatePresence>
         {showLeadForm && (
@@ -203,11 +203,11 @@ const MultiPricerContent = () => {
             <motion.div 
               initial={{ scale: 0.9, y: 40 }}
               animate={{ scale: 1, y: 0 }}
-              className="w-full max-w-xl bg-[#0e0e0e] border border-[#d4a855]/30 rounded-[3rem] p-10 relative overflow-hidden shadow-2xl space-y-6"
+              className="w-full max-w-xl bg-[#0e0e0e] border border-[#d4a855]/30 rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-10 relative overflow-y-auto max-h-[90vh] shadow-2xl space-y-5"
             >
               <button 
                 onClick={() => setShowLeadForm(false)}
-                className="absolute top-8 right-8 text-zinc-500 hover:text-white font-mono text-xs uppercase"
+                className="absolute top-6 right-6 text-zinc-400 hover:text-white font-mono text-xs uppercase p-2 min-h-[44px] min-w-[44px] flex items-center justify-center"
               >
                 Cerrar ✕
               </button>
@@ -319,7 +319,7 @@ const MultiPricerContent = () => {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+                className={`px-5 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap min-h-[44px] flex items-center ${
                   activeCategory === cat 
                     ? 'bg-[#d4a855] text-black shadow-lg shadow-[#d4a855]/20' 
                     : 'bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white'
@@ -510,12 +510,42 @@ const MultiPricerContent = () => {
                 }).url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-widest"
+                className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-widest min-h-[44px]"
               >
                 <MessageCircle className="w-4 h-4" />
                 WhatsApp
               </a>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 📱 MOBILE STICKY SUMMARY & CLOSING BAR (< lg screens) */}
+      <div className="lg:hidden fixed bottom-16 inset-x-0 z-[80] bg-[#121212]/95 backdrop-blur-xl border-t border-[#d4a855]/30 px-4 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <span className="text-[9px] uppercase font-mono tracking-widest text-zinc-400 block">
+              Total ({selectedServices.length} ítems)
+            </span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl font-black text-white italic">{calculations.finalTotal}€</span>
+              <span className="text-[10px] text-[#d4a855] font-mono">(30%: {calculations.depositAmount}€)</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowLeadForm(true)}
+              className="px-3 py-2.5 bg-white/10 text-white rounded-xl text-[10px] font-black uppercase tracking-wider min-h-[44px] flex items-center gap-1.5 active:scale-95 transition-all"
+            >
+              <FileText size={14} /> PDF
+            </button>
+            <button
+              onClick={handleInstantStripeDeposit}
+              disabled={loading}
+              className="px-4 py-2.5 bg-[#d4a855] text-black rounded-xl text-[11px] font-black uppercase tracking-wider min-h-[44px] flex items-center gap-1.5 shadow-lg shadow-[#d4a855]/20 active:scale-95 transition-all"
+            >
+              <CreditCard size={14} /> Reservar
+            </button>
           </div>
         </div>
       </div>

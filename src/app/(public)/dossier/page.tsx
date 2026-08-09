@@ -95,8 +95,6 @@ export default function DossierHub() {
 
   return (
     <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-[#ecb613] selection:text-black pb-32">
-      <PublicNavbar />
-      
       {/* HERO SECTION */}
       <section className="relative pt-40 pb-20 overflow-hidden">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ecb613]/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />

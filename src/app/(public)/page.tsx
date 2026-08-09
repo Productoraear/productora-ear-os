@@ -1,281 +1,305 @@
 import React from 'react';
+import Link from 'next/link';
+import { 
+  Sparkles, ShieldCheck, ArrowRight, Phone, MessageCircle, 
+  Crown, Heart, Building2, Boxes, Mic2, FileText, CheckCircle2, 
+  Calendar, Star, Music, Award, Users, ChevronRight
+} from 'lucide-react';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 export default function Home() {
-  const mockSkills = Array.from({ length: 8 }).map((_, i) => ({
-    id: i,
-    version: `V.0.0.${i}`,
-    title: `Skill Node ${100 + i}`
-  }));
+  const occasionLinks = [
+    { title: 'Bodas de Gala', href: '/artistas/bodas', tag: 'B2C VIP' },
+    { title: 'Cumpleaños & Fiestas', href: '/artistas/cumpleanos', tag: 'FAMILIAR' },
+    { title: 'Licitaciones B2G', href: '/ocasiones/ayuntamientos', tag: 'SECTOR PÚBLICO' },
+    { title: 'Eventos Corporativos', href: '/ocasiones/corporativo', tag: 'B2B ÉLITE' },
+    { title: 'Ferias & Grandes Formatos', href: '/ocasiones/ferias', tag: 'MASIVO' },
+    { title: 'Mariachis en Madrid', href: '/servicios/mariachis/madrid', tag: 'LOCAL' },
+  ];
 
   return (
-    <div className="bg-[#050505] text-on-surface font-body overflow-hidden h-screen flex flex-col">
-      {/* Top Navigation Anchor */}
-      <header className="flex justify-between items-center px-6 w-full h-16 border-b border-[#4D4635]/15 bg-[#050505] z-50">
-        <div className="flex items-center gap-4">
-          <span className="font-headline text-[#F2CA50] italic font-bold tracking-tighter text-2xl">FENIX v2.0</span>
-          <div className="h-4 w-px bg-outline-variant/30 hidden md:block"></div>
-          <span className="font-label text-[0.65rem] tracking-[0.2rem] text-secondary hidden md:block">COMMAND CENTER // S-CLASS</span>
+    <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-[#ecb613] selection:text-black">
+      
+      {/* 🚀 HERO SECTION: INTENT ROUTER S-CLASS */}
+      <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 relative overflow-hidden">
+        {/* Ambient glow effects */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-[#ecb613]/10 via-transparent to-transparent blur-[140px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 blur-[120px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto text-center space-y-8 relative z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono font-black uppercase tracking-[0.3em]">
+            <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-ping" />
+            EAR OS // PLATAFORMA DE CONTRATACIÓN MUSICAL & LOGÍSTICA S-CLASS
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase italic tracking-tighter text-white font-syne leading-[0.9]">
+            La Infraestructura que Convierte <br className="hidden sm:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">
+              Intención en Realidad
+            </span>
+          </h1>
+
+          <p className="text-white/60 text-base sm:text-xl max-w-3xl mx-auto font-light leading-relaxed">
+            No somos un catálogo inerte. Interpretamos tu necesidad, calculamos el presupuesto exacto sin intermediarios y coordinamos la actuación con rigor logístico y cobertura jurídica completa.
+          </p>
+
+          {/* Quick Intent CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 max-w-xl mx-auto">
+            <Link
+              href="/cotizador"
+              className="w-full sm:w-auto flex-1 py-4 px-8 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[50px] shadow-xl shadow-[#ecb613]/20 active:scale-95 transition-all"
+            >
+              <span>Calcular Presupuesto en Vivo</span>
+              <ArrowRight size={16} />
+            </Link>
+
+            <a
+              href={CENTRALITA.tel}
+              className="w-full sm:w-auto flex-1 py-4 px-8 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[50px] active:scale-95 transition-all"
+            >
+              <Phone size={16} className="text-[#ecb613]" />
+              <span>Llamar Centralita: {CENTRALITA.display}</span>
+            </a>
+          </div>
         </div>
-        
-        <div className="flex items-center gap-6">
-          <div className="relative hidden sm:flex items-center">
-            <span className="material-symbols-outlined absolute left-3 text-secondary text-sm">search</span>
-            <input 
-              className="bg-surface-container-low border-none focus:ring-1 focus:ring-primary text-xs font-label uppercase tracking-widest pl-10 pr-4 py-2 w-64" 
-              placeholder="QUERY SYSTEM..." 
-              type="text"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="material-symbols-outlined text-[#C6C6C6] hover:text-[#F2CA50] transition-colors cursor-pointer" data-icon="terminal">terminal</span>
-            <span className="material-symbols-outlined text-[#C6C6C6] hover:text-[#F2CA50] transition-colors cursor-pointer" data-icon="settings">settings</span>
-            <img 
-              alt="User Profile" 
-              className="w-8 h-8 object-cover grayscale brightness-75" 
-              data-alt="Close up portrait of a professional male strategist in dark clothing with sharp lighting against a black background" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrZgks4GsWmEDKFQNVrOB37mgl_-Duaigz_IKgADnLbVLPr_5lzctoYf3DMe2d70Yuinv4D1BcKTx0fpKoQ00HDxQNaxT5itANIpwjBL5i_eyzs2_HfyrmoTeXTOi5Vglb9I7qCcFi5Hy8IWlokBM7qP_2lbm8RhTEDxFS7BjZPOw9TR4jsHwIergb7oKT9mQ4d0RSfaspsMDfCwQCBR4yMwdlE2V0yz20cPo9-29pw0hf3EL6ahw6NU8VeYThQGd5pwAOL1_njA"
-            />
-          </div>
-        </div>
-      </header>
+      </section>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar Left: Leverage Filter */}
-        <aside className="flex flex-col h-full w-64 bg-[#0A0A0A] border-r border-[#4D4635]/15 z-40">
-          <div className="p-6">
-            <h2 className="font-label text-[0.75rem] uppercase tracking-[0.1rem] text-[#F2CA50] font-black">LEVERAGE FILTER</h2>
-            <p className="font-label text-[0.6rem] text-secondary tracking-widest mt-1">S-CLASS SKILLS HUB</p>
-          </div>
-          <nav className="flex-1 px-3 space-y-1">
-            <a className="flex items-center gap-3 px-4 py-3 bg-[#2A2A2A] text-[#F2CA50] border-l-2 border-[#F2CA50] font-label text-[0.75rem] uppercase tracking-[0.1rem]" href="#">
-              <span className="material-symbols-outlined text-sm" data-icon="priority_high">priority_high</span>
-              High Leverage
-            </a>
-            <a className="flex items-center gap-3 px-4 py-3 text-[#C6C6C6] hover:bg-[#1C1B1B] transition-all font-label text-[0.75rem] uppercase tracking-[0.1rem]" href="#">
-              <span className="material-symbols-outlined text-sm" data-icon="speed">speed</span>
-              Medium Leverage
-            </a>
-            <a className="flex items-center gap-3 px-4 py-3 text-[#C6C6C6] hover:bg-[#1C1B1B] transition-all font-label text-[0.75rem] uppercase tracking-[0.1rem]" href="#">
-              <span className="material-symbols-outlined text-sm" data-icon="layers">layers</span>
-              Standard
-            </a>
-          </nav>
-          <div className="mt-auto p-4 space-y-1 border-t border-[#4D4635]/10">
-            <a className="flex items-center gap-3 px-4 py-2 text-[#C6C6C6] hover:bg-[#1C1B1B] transition-all font-label text-[0.65rem] uppercase tracking-[0.1rem]" href="#">
-              <span className="material-symbols-outlined text-sm" data-icon="monitoring">monitoring</span>
-              TELEMETRY
-            </a>
-            <a className="flex items-center gap-3 px-4 py-2 text-[#C6C6C6] hover:bg-[#1C1B1B] transition-all font-label text-[0.65rem] uppercase tracking-[0.1rem]" href="#">
-              <span className="material-symbols-outlined text-sm" data-icon="code">code</span>
-              LOGS
-            </a>
-          </div>
-        </aside>
+      {/* 👑 PACIENTE CERO: EDWIN AGUDELO (TARJETA DE HONOR INSIGNIA) */}
+      <section className="px-4 sm:px-6 pb-20 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-gradient-to-b from-[#121212] to-[#080808] border border-[#ecb613]/40 rounded-[2.5rem] sm:rounded-[3.5rem] p-6 sm:p-12 shadow-2xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/10 blur-[100px] pointer-events-none" />
 
-        {/* Central Content Area */}
-        <main className="flex-1 overflow-y-auto bg-[#050505] p-8 flex flex-col gap-12" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {/* Hero Title */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#4D4635]/15 pb-6">
-            <div>
-              <h1 className="font-headline text-5xl italic tracking-tighter text-on-surface">Skill Repository</h1>
-              <p className="font-label text-xs uppercase tracking-[0.3rem] text-primary mt-2">Accessing encrypted dossiers...</p>
-            </div>
-            <div className="mt-4 md:mt-0 font-label text-[0.65rem] text-secondary text-right">
-              LATENCY: 14MS<br/>CONNECTION: SECURE
-            </div>
-          </div>
-
-          {/* Skill Grid */}
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {/* High Leverage Card 1 */}
-            <div className="group relative bg-surface-container-low border border-primary-container p-5 transition-all duration-150 hover:bg-surface-container-high cursor-pointer">
-              <div className="flex justify-between items-start mb-4">
-                <span className="bg-primary-container text-on-primary-container font-label text-[0.6rem] px-2 py-0.5 tracking-tighter font-bold">ALTO LEVERAGE</span>
-                <span className="font-label text-[0.65rem] text-secondary tracking-widest uppercase">V.1.1.0</span>
-              </div>
-              <p className="font-label text-[0.65rem] text-primary-container tracking-widest uppercase mb-1">High-Leverage Conversion</p>
-              <h3 className="font-headline text-2xl italic text-on-surface mb-6">Copywriting Elite</h3>
-              <div className="flex justify-between items-center mt-auto border-t border-outline-variant/20 pt-4">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary text-sm" data-icon="database">database</span>
-                  <span className="font-label text-xs font-bold tracking-widest">1,200</span>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Left Column: Bio & Authority */}
+              <div className="lg:col-span-7 space-y-6">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-[#ecb613] text-black text-[9px] font-black uppercase tracking-widest font-mono">
+                    PACIENTE CERO // ARTISTA INSIGNIA
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/60 text-[9px] font-mono">
+                    37+ CONCIERTOS INTERNACIONALES
+                  </span>
                 </div>
-                <span className="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward">arrow_forward</span>
-              </div>
-            </div>
 
-            {/* Card 2 */}
-            <div className="group relative bg-surface-container-low border border-outline-variant/20 p-5 transition-all duration-150 hover:bg-surface-container-high cursor-pointer">
-              <div className="flex justify-between items-start mb-4">
-                <span className="bg-surface-container-highest text-secondary font-label text-[0.6rem] px-2 py-0.5 tracking-tighter">STANDARD</span>
-                <span className="font-label text-[0.65rem] text-secondary tracking-widest uppercase">V.0.9.4</span>
-              </div>
-              <p className="font-label text-[0.65rem] text-secondary tracking-widest uppercase mb-1">Traffic Optimization</p>
-              <h3 className="font-headline text-2xl italic text-on-surface mb-6">SEO Archeology</h3>
-              <div className="flex justify-between items-center mt-auto border-t border-outline-variant/20 pt-4">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-secondary text-sm" data-icon="database">database</span>
-                  <span className="font-label text-xs font-bold tracking-widest">450</span>
+                <div>
+                  <h2 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter text-white font-syne">
+                    Edwin Agudelo
+                  </h2>
+                  <p className="text-[#ecb613] text-xs sm:text-sm font-bold uppercase tracking-widest mt-1">
+                    Tenor Lírico & Mariachi de Gran Gala
+                  </p>
                 </div>
-                <span className="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward">arrow_forward</span>
-              </div>
-            </div>
 
-            {/* Card 3 */}
-            <div className="group relative bg-surface-container-low border border-primary-container p-5 transition-all duration-150 hover:bg-surface-container-high cursor-pointer">
-              <div className="flex justify-between items-start mb-4">
-                <span className="bg-primary-container text-on-primary-container font-label text-[0.6rem] px-2 py-0.5 tracking-tighter font-bold">ALTO LEVERAGE</span>
-                <span className="font-label text-[0.65rem] text-secondary tracking-widest uppercase">V.2.0.1</span>
-              </div>
-              <p className="font-label text-[0.65rem] text-primary-container tracking-widest uppercase mb-1">Psychological Framing</p>
-              <h3 className="font-headline text-2xl italic text-on-surface mb-6">Negotiation Prime</h3>
-              <div className="flex justify-between items-center mt-auto border-t border-outline-variant/20 pt-4">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-primary text-sm" data-icon="database">database</span>
-                  <span className="font-label text-xs font-bold tracking-widest">2,500</span>
-                </div>
-                <span className="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity" data-icon="arrow_forward">arrow_forward</span>
-              </div>
-            </div>
+                <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light">
+                  La validación viva de EAR OS. Desde recitales íntimos a piano hasta grandes ensambles orquestales de 16 músicos y espectáculos ecuestres de alta escuela. Cobertura en toda España con ingeniería acústica dedicada.
+                </p>
 
-            {/* Generated Mock Cards */}
-            {mockSkills.map((skill) => (
-              <div key={skill.id} className="group relative bg-surface-container-low border border-outline-variant/10 p-5 transition-all duration-150 hover:bg-surface-container-high cursor-pointer opacity-40">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="bg-surface-container-lowest text-secondary font-label text-[0.6rem] px-2 py-0.5 tracking-tighter">ARCHIVED</span>
-                  <span className="font-label text-[0.65rem] text-secondary tracking-widest uppercase">{skill.version}</span>
-                </div>
-                <p className="font-label text-[0.65rem] text-secondary tracking-widest uppercase mb-1">Legacy System</p>
-                <h3 className="font-headline text-2xl italic text-secondary mb-6">{skill.title}</h3>
-                <div className="flex justify-between items-center mt-auto border-t border-outline-variant/10 pt-4">
-                  <div className="flex items-center gap-2">
-                    <span className="material-symbols-outlined text-outline-variant text-sm" data-icon="lock">lock</span>
-                    <span className="font-label text-xs tracking-widest text-outline-variant">LOCKED</span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+                  <div className="bg-black/60 p-3.5 rounded-2xl border border-white/5">
+                    <span className="text-[9px] font-mono uppercase text-zinc-400 block">Solista & Piano</span>
+                    <span className="text-lg font-black text-white">650€</span>
+                  </div>
+                  <div className="bg-black/60 p-3.5 rounded-2xl border border-white/5">
+                    <span className="text-[9px] font-mono uppercase text-zinc-400 block">Cuarteto Imperial</span>
+                    <span className="text-lg font-black text-[#ecb613]">950€</span>
+                  </div>
+                  <div className="bg-black/60 p-3.5 rounded-2xl border border-white/5">
+                    <span className="text-[9px] font-mono uppercase text-zinc-400 block">Gran Gala (6+)</span>
+                    <span className="text-lg font-black text-white">2.800€</span>
                   </div>
                 </div>
-              </div>
-            ))}
-          </section>
 
-          {/* Expanded Detail Area (Focus on Copywriting Elite) */}
-          <section className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-[#4D4635]/15 border border-[#4D4635]/15">
-            {/* Left Pane: Instructions */}
-            <div className="bg-surface-container-low p-8">
-              <h4 className="font-label text-[0.75rem] uppercase tracking-[0.2rem] text-primary mb-6">DEPLOYMENT PROTOCOL</h4>
-              <div className="space-y-6">
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                  <Link
+                    href="/artistas/edwin-agudelo"
+                    className="py-3.5 px-6 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[48px] shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all"
+                  >
+                    <span>Ver Dossier Oficial de Edwin Agudelo</span>
+                    <ChevronRight size={16} />
+                  </Link>
+                  <Link
+                    href="/cotizador?items=cuarteto-gala"
+                    className="py-3.5 px-6 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[48px] transition-all"
+                  >
+                    <span>Cotizar Formato Directo</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right Column: Key Metrics & Seals */}
+              <div className="lg:col-span-5 bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5">
+                <h4 className="text-xs font-mono font-black uppercase tracking-widest text-[#ecb613] flex items-center gap-2">
+                  <ShieldCheck size={16} /> Garantías de Contratación S-Class
+                </h4>
+
+                <ul className="space-y-3 text-xs text-white/80">
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 size={16} className="text-[#ecb613] shrink-0 mt-0.5" />
+                    <span>Microfonía inalámbrica Shure Axient Digital & Neumann sin interferencias.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 size={16} className="text-[#ecb613] shrink-0 mt-0.5" />
+                    <span>Póliza de Responsabilidad Civil de 1.000.000€ y altas de Seguridad Social.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <CheckCircle2 size={16} className="text-[#ecb613] shrink-0 mt-0.5" />
+                    <span>Bloqueo atómico de fecha con depósito de reserva trazable.</span>
+                  </li>
+                </ul>
+
+                <div className="p-4 bg-white/5 rounded-2xl border border-white/5 text-center">
+                  <span className="text-[10px] font-mono text-zinc-400 block uppercase">Disponibilidad Actual</span>
+                  <span className="text-sm font-black text-emerald-400">● Calendario Abierto para Temporada 2026</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 🧭 CUATRO PERFILES, CUATRO CAMINOS: EL ROUTER DE INTENCIÓN */}
+      <section className="px-4 sm:px-6 py-16 bg-[#080808] border-y border-white/5 relative z-10">
+        <div className="max-w-6xl mx-auto space-y-12">
+          <div className="text-center space-y-3">
+            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#ecb613]">ADAPTACIÓN MULTI-PERFIL</span>
+            <h2 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter text-white font-syne">
+              Cuatro Perfiles. Cuatro Caminos. <br />
+              <span className="text-white/40">Una Sola Inteligencia.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Profile 1: Particular / Pareja */}
+            <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
+                  <Heart size={22} />
+                </div>
                 <div>
-                  <h5 className="font-headline text-xl italic text-on-surface mb-2">Cómo usar esta skill...</h5>
-                  <p className="text-on-surface-variant leading-relaxed text-sm">
-                    El copywriting de alto nivel no trata de palabras, sino de arquitectura psicológica. Implementa el framework <span className="text-primary font-bold">PAS+P+C</span> para maximizar la conversión en entornos de baja confianza.
-                  </p>
+                  <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 1</span>
+                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Particular / Pareja</h3>
                 </div>
-                <div className="bg-surface-container-lowest p-6 border-l border-primary">
-                  <h5 className="font-headline text-lg italic text-on-surface mb-3">Ejemplo Práctico</h5>
-                  <p className="text-on-surface-variant font-body italic text-sm">
-                    "Mariachi para una boda high-ticket: No vendes música, vendes la <span className="underline decoration-primary/40 text-on-surface">eternización del momento</span>. La fatiga del evento se rompe con una entrada cinemática."
-                  </p>
-                </div>
+                <p className="text-white/50 text-xs leading-relaxed">
+                  Bodas, aniversarios y cumpleaños. Necesitas claridad de tarifas, emoción y respuesta inmediata sin sorpresas de última hora.
+                </p>
               </div>
+              <Link
+                href="/artistas/bodas"
+                className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
+              >
+                <span>Bodas & Fiestas</span>
+                <ChevronRight size={14} />
+              </Link>
             </div>
 
-            {/* Right Pane: Locked Content */}
-            <div className="bg-[#0A0A0A] p-8 flex flex-col justify-center items-center text-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
-              <div className="relative z-20 space-y-4">
-                <div className="flex justify-center mb-2">
-                  <span className="material-symbols-outlined text-primary text-4xl animate-pulse" data-icon="lock" style={{ fontVariationSettings: "'FILL' 1" }}>lock</span>
+            {/* Profile 2: Institución / B2G */}
+            <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                  <Building2 size={22} />
                 </div>
-                <h4 className="font-label text-[0.75rem] uppercase tracking-[0.2rem] text-primary">NIVEL 3: MASTER ARCHITECT</h4>
-                <div className="blur-sm select-none opacity-20 px-8">
-                  <p className="font-label text-lg tracking-wider text-secondary">
-                    Framework: Problema -&gt; Agitación -&gt; Solución -&gt; Prueba -&gt; CTA
-                  </p>
-                  <p className="mt-4 text-xs font-body text-secondary">
-                    Contenido restringido. Requiere 5,000 puntos de reputación y activación del Protocolo EAR.
-                  </p>
+                <div>
+                  <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 2</span>
+                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Institución / B2G</h3>
                 </div>
-                <button className="bg-primary text-on-primary px-8 py-3 font-label text-xs uppercase tracking-[0.15rem] font-bold hover:bg-primary-container transition-colors mt-6">
-                  UNLOCK FULL FRAMEWORK
-                </button>
+                <p className="text-white/50 text-xs leading-relaxed">
+                  Ayuntamientos, comisiones de fiestas y corporativos. Solvencia técnica, pliegos, facturación FACe y pólizas homologadas.
+                </p>
               </div>
+              <Link
+                href="/ocasiones/ayuntamientos"
+                className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
+              >
+                <span>Canal Institucional</span>
+                <ChevronRight size={14} />
+              </Link>
             </div>
-          </section>
 
-          {/* Bottom Motto */}
-          <footer className="pt-8 pb-12 text-center opacity-30">
-            <p className="font-label text-[0.65rem] uppercase tracking-[0.5rem] text-secondary">
-              33 Expertos en tu Bolsillo // El Blindaje EAR
-            </p>
-          </footer>
-        </main>
+            {/* Profile 3: Proveedor / Afiliado */}
+            <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                  <Boxes size={22} />
+                </div>
+                <div>
+                  <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 3</span>
+                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Proveedor / Afiliado</h3>
+                </div>
+                <p className="text-white/50 text-xs leading-relaxed">
+                  Sonido, iluminación, tarimas y servicios auxiliares. Intégrate en la red logística S-Class y monetiza tus recursos.
+                </p>
+              </div>
+              <Link
+                href="/servicios"
+                className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
+              >
+                <span>Red de Producción</span>
+                <ChevronRight size={14} />
+              </Link>
+            </div>
 
-        {/* Sidebar Right: Telemetry */}
-        <aside className="hidden xl:flex flex-col w-72 bg-[#0A0A0A] border-l border-[#4D4635]/15 p-6 gap-8">
-          <div>
-            <h2 className="font-label text-[0.75rem] uppercase tracking-[0.15rem] text-primary mb-6">TOKEN CONSUMPTION</h2>
-            <div className="space-y-2">
-              <div className="flex justify-between font-label text-[0.6rem] text-secondary">
-                <span>DATA THROUGHPUT</span>
-                <span className="text-on-surface">450 / 1000 CR</span>
+            {/* Profile 4: Artista */}
+            <div className="bg-[#101010] border border-[#ecb613]/30 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613] transition-all shadow-xl">
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+                  <Mic2 size={22} />
+                </div>
+                <div>
+                  <span className="text-[9px] font-mono uppercase tracking-widest text-[#ecb613]">Perfil 4</span>
+                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Artista</h3>
+                </div>
+                <p className="text-white/50 text-xs leading-relaxed">
+                  Vivir dignamente de tu arte. Un sistema que te respalda con ingeniería sónica, contratos vinculantes y cobro garantizado.
+                </p>
               </div>
-              <div className="h-1 w-full bg-surface-container-highest overflow-hidden">
-                <div className="h-full bg-primary w-[45%]"></div>
-              </div>
-              <p className="font-label text-[0.5rem] text-outline text-right">SYSTEM STABLE</p>
+              <Link
+                href="/artistas"
+                className="w-full py-3.5 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all"
+              >
+                <span>Roster de Artistas</span>
+                <ChevronRight size={14} />
+              </Link>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="flex-1 space-y-6">
-            <h3 className="font-label text-[0.65rem] uppercase tracking-[0.15rem] text-secondary">ACTIVE TELEMETRY</h3>
-            {/* Mock Sparkline Items */}
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-label text-[0.55rem] text-outline uppercase">Neural Load</p>
-                <p className="font-label text-sm text-primary font-black">74.2%</p>
-              </div>
-              <div className="w-16 h-8 flex items-end gap-0.5">
-                <div className="w-1 bg-primary/20 h-[30%]"></div>
-                <div className="w-1 bg-primary/40 h-[50%]"></div>
-                <div className="w-1 bg-primary/20 h-[40%]"></div>
-                <div className="w-1 bg-primary/60 h-[70%]"></div>
-                <div className="w-1 bg-primary h-[90%]"></div>
-                <div className="w-1 bg-primary/40 h-[60%]"></div>
-              </div>
+      {/* 🎯 HUBS POR OCASIÓN Y DEMANDA TRANSACCIONAL */}
+      <section className="px-4 sm:px-6 py-16 relative z-10">
+        <div className="max-w-6xl mx-auto space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
+            <div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613]">DEMANDA ORGÁNICA</span>
+              <h2 className="text-2xl sm:text-4xl font-black uppercase italic tracking-tight text-white font-syne">
+                Páginas de Ocasión & Contratación
+              </h2>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-label text-[0.55rem] text-outline uppercase">Uptime</p>
-                <p className="font-label text-sm text-secondary font-black">99.98%</p>
-              </div>
-              <div className="w-16 h-8 flex items-end gap-0.5">
-                <div className="w-1 bg-secondary/20 h-[60%]"></div>
-                <div className="w-1 bg-secondary/40 h-[60%]"></div>
-                <div className="w-1 bg-secondary/20 h-[60%]"></div>
-                <div className="w-1 bg-secondary/60 h-[60%]"></div>
-                <div className="w-1 bg-secondary h-[60%]"></div>
-                <div className="w-1 bg-secondary/40 h-[60%]"></div>
-              </div>
-            </div>
-
-            <div className="border border-outline-variant/20 p-4 space-y-4">
-              <h4 className="font-label text-[0.6rem] text-primary uppercase tracking-widest">LOG_FEED.v2</h4>
-              <div className="space-y-2 font-label text-[0.55rem] leading-tight text-on-surface-variant">
-                <p><span className="text-primary">[OK]</span> SESSION_START: 09:00:23</p>
-                <p><span className="text-primary">[OK]</span> AUTH_SUCCESS: CID_9921</p>
-                <p><span className="text-outline-variant">[..]</span> LOADING_SKILL_ELITE...</p>
-                <p><span className="text-primary">[OK]</span> GRID_RENDER_COMPLETE</p>
-              </div>
-            </div>
+            <Link
+              href="/cotizador"
+              className="text-xs font-black uppercase tracking-widest text-[#ecb613] hover:underline flex items-center gap-1 min-h-[44px]"
+            >
+              <span>Ver Cotizador Integral →</span>
+            </Link>
           </div>
 
-          <div className="mt-auto">
-            <button className="w-full border border-primary/30 py-3 font-label text-[0.65rem] uppercase tracking-[0.2rem] text-primary hover:bg-primary hover:text-on-primary transition-all">
-              BUY CREDITS
-            </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {occasionLinks.map(occ => (
+              <Link
+                key={occ.href}
+                href={occ.href}
+                className="bg-[#0e0e0e] border border-white/10 hover:border-[#ecb613]/50 rounded-2xl p-5 flex items-center justify-between group transition-all min-h-[64px]"
+              >
+                <div className="space-y-1">
+                  <span className="text-[8px] font-mono uppercase tracking-widest text-zinc-400 block">{occ.tag}</span>
+                  <span className="text-sm font-black uppercase tracking-tight text-white group-hover:text-[#ecb613] transition-colors">{occ.title}</span>
+                </div>
+                <ChevronRight size={16} className="text-zinc-500 group-hover:text-[#ecb613] transition-colors" />
+              </Link>
+            ))}
           </div>
-        </aside>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

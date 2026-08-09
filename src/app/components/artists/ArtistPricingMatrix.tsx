@@ -71,6 +71,25 @@ export const ArtistPricingMatrix: React.FC = () => {
                 ))}
               </ul>
             </div>
+
+            <div className="pt-6 mt-6 border-t border-white/5 space-y-2.5">
+              <a
+                href={`/cotizador?items=cuarteto-gala&service=${encodeURIComponent(tier.name)}`}
+                className={`w-full py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 min-h-[44px] transition-all ${
+                  tier.featured
+                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 active:scale-95'
+                    : 'bg-white/10 text-white hover:bg-white/20 active:scale-95'
+                }`}
+              >
+                <span>Configurar Formato</span>
+              </a>
+              <a
+                href="/artistas/edwin-agudelo"
+                className="w-full py-2.5 text-center text-[10px] font-mono uppercase tracking-widest text-zinc-400 hover:text-[#ecb613] min-h-[44px] flex items-center justify-center transition-colors"
+              >
+                Ver Ficha de Edwin Agudelo →
+              </a>
+            </div>
           </div>
         ))}
       </div>

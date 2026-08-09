@@ -1,6 +1,5 @@
 import React from 'react';
 import { EdwinAgudeloDossier } from '@/features/artists/ui/EdwinAgudeloDossier';
-import PublicNavbar from '@/app/components/public/PublicNavbar';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,7 +10,6 @@ export const metadata: Metadata = {
 export default function EdwinAgudeloPage() {
   return (
     <main className="min-h-screen bg-[#050505]">
-      <PublicNavbar />
       <EdwinAgudeloDossier />
     </main>
   );

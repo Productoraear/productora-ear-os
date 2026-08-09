@@ -92,13 +92,13 @@ export default function PublicFooter() {
           </nav>
         </div>
 
-        {/* Servicios */}
+        {/* Producción & Artistas */}
         <div className="space-y-10">
-          <h4 className={`text-xs font-black uppercase tracking-[0.4em] ${sublineColor}`}>Servicios</h4>
+          <h4 className={`text-xs font-black uppercase tracking-[0.4em] ${sublineColor}`}>Contratación & Roster</h4>
           <nav className={`flex flex-col gap-4 text-[13px] font-medium ${mutedTextColor} italic`}>
-            <Link href={ROUTES.servicios} className={`hover:${textColor} transition-colors`}>Infraestructura Pública</Link>
-            <Link href={ROUTES.servicios} className={`hover:${textColor} transition-colors`}>Diseño Lumínico</Link>
-            <Link href={ROUTES.servicios} className={`hover:${textColor} transition-colors`}>Producción Oficial</Link>
+            <Link href={ROUTES.artistas} className={`hover:${textColor} transition-colors`}>Catálogo de Artistas S-Class</Link>
+            <Link href={ROUTES.cotizador} className={`hover:${textColor} transition-colors`}>Calculadora de Presupuesto</Link>
+            <Link href={ROUTES.empresarios} className={`hover:${textColor} transition-colors`}>Canal Empresas & B2B</Link>
             <Link href={ROUTES.dossier} className={`hover:${textColor} transition-colors`}>Dossier de Autoridad</Link>
             <Link href="/contacto?subject=reclamar-perfil" className="text-[#ecb613] hover:text-white font-black uppercase tracking-wider text-[11px] not-italic transition-all">
               Reclamar Perfil S-Class

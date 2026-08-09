@@ -10,7 +10,9 @@
         "postinstall": "prisma generate",
         "test-memory-persistence": "ts-node src/test-memory-persistence.ts",
         "ingest:omega": "ts-node scripts/ingestion/omega_indexer.ts",
-        "ingest:omega:gemini": "ts-node scripts/ingestion/omega_ingestor.ts"
+        "ingest:omega:gemini": "ts-node scripts/ingestion/omega_ingestor.ts",
+        "rag:gravitational": "node scripts/ingestion/gravitational_vampirizer.js",
+        "ingest:gravitational": "node scripts/ingestion/gravitational_vampirizer.js"
     },
     "dependencies": {
         "@google/generative-ai": "^0.24.1",

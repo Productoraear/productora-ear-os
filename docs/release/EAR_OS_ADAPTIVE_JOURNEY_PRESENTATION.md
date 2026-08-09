@@ -1,97 +1,99 @@
-# EAR OS: La Transformación de la Contratación Musical
+# EAR OS: La Infraestructura que Convierte Intención en Realidad
 
-> *"EAR OS no es una interfaz para contratar música. Es un sistema que interpreta intención, reduce incertidumbre y acompaña cada decisión hasta convertirla en una actuación real, coordinada y digna."*
-
----
-
-## 1. El Mundo Roto
-
-Contratar música para un momento irrepetible siempre ha sido opaco, lento e improvisado. 
-
-- El cliente no sabe a quién llamar ni cuánto cuesta realmente un servicio de calidad.
-- El gremio musical trabaja en la dispersión, sin contratos vinculantes, sin anticipos asegurados y con una logística desorganizada.
-- El evento depende de la buena suerte: presupuestos que cambian por teléfono, intermediarios que inflan costes y llamadas sin respuesta.
-- La contratación carece de trazabilidad, de dignidad profesional y de rigor operativo.
-
-El cliente no entra a una web para "navegar un catálogo". Busca **certeza**, **velocidad** y alguien que se haga cargo del momento más importante de su vida o de su institución.
+> *"EAR OS no muestra opciones: interpreta intención, reduce incertidumbre y acompaña cada decisión hasta convertirla en una actuación real, coordinada y digna."*
 
 ---
 
-## 2. El Momento de Verdad
+## 1. El Mercado Roto
 
-Todo se decide en menos de 20 segundos. 
+La contratación musical nunca ha fallado por falta de talento. Ha fallado por falta de estructura.
+El cliente llega con urgencia, emoción o responsabilidad institucional, y se encuentra con opacidad, tiempos muertos, precios inconsistentes y una cadena de contacto que obliga a repetirlo todo otra vez.
 
-Cuando una persona aterriza desde una búsqueda en Google, ve un número de teléfono o calcula un presupuesto, cualquier fricción enfría el lead. Si el sistema le exige rellenar formularios largos, esperar 48 horas por un correo o repetir tres veces qué necesita, el usuario abandona.
-
-**La verdad de mercado:**
-- Quien tiene una urgencia, necesita un canal directo.
-- Quien tiene dudas, necesita una tarifa transparente.
-- Quien tiene un pliego institucional, necesita solvencia técnica y garantías legales.
+En ese mundo roto, el usuario no busca navegar. Busca certeza. Busca velocidad. Busca una señal clara de que alguien va a hacerse cargo de lo importante antes de que el momento se enfríe.
 
 ---
 
-## 3. La Respuesta de EAR OS: Tres Protagonistas, Tres Caminos
+## 2. La Ventana Decisiva
 
-EAR OS no obliga al usuario a aprender una interfaz rígida; **adapta la experiencia a la necesidad del protagonista**.
+Todo se decide en segundos.
+Si la experiencia obliga a pensar demasiado, rellenar demasiado o esperar demasiado, el lead pierde temperatura y el cierre se rompe. Por eso la batalla real no está en "tener una web", sino en responder correctamente en el primer contacto, en el primer cálculo y en el primer gesto del pulgar.
+
+EAR OS nace exactamente ahí: en la frontera entre la intención y el abandono. No espera a que el usuario entienda el sistema; hace que el sistema entienda al usuario.
+
+> *"EAR OS no solo adapta el contenido a la intención; adapta el canal, la jerarquía, la ergonomía y la acción al momento exacto en que cada perfil está listo para avanzar, con prioridad explícita sobre la visibilidad y la economía del artista que valida el sistema: Edwin Agudelo."*
+
+---
+
+## 3. Cuatro Perfiles, Cuatro Caminos, Una Sola Inteligencia
+
+EAR OS no presenta un recorrido uniforme para todos. Reordena la experiencia según la naturaleza de la necesidad:
 
 ```mermaid
 graph TD
-    A[Señal de Entrada e Intención] --> B(1. La Wedding Planner)
-    A --> C(2. El Cliente Premium)
-    A --> D(3. La Institución B2G)
+    A[Señal de Entrada e Intención] --> B(1. Particular / Pareja)
+    A --> C(2. Institución / B2G / B2B)
+    A --> D(3. Proveedor / Afiliado)
+    A --> E(4. Artista - Paciente Cero: Edwin)
     
-    B --> B1[Sticky Call Bar / WhatsApp Pre-cargado]
-    C --> C1[Motor Táctico / MultiPricer en Vivo]
-    D --> D1[Partidas Homologadas / Dossier Oficial]
+    B --> B1[Sticky Call Bar / WhatsApp Pre-cargado / Cotizador B2C]
+    C --> C1[Partidas Homologadas / Dossier B2G / Pliegos]
+    D --> D1[Red de Producción / L-Acoustics / Marketplace]
+    E --> E1[Dossier Oficial Edwin Agudelo / Booking S-Class]
     
-    B1 --> E[Handoff con Contexto Transferido]
-    C1 --> E
-    D1 --> E
+    B1 --> F[Handoff con Contexto Transferido]
+    C1 --> F
+    D1 --> F
+    E1 --> F
     
-    E --> F[Reserva Inmutable + Despacho PostGIS + Telemetría]
+    F --> G[Reserva Inmutable + Despacho PostGIS + Telemetría]
 ```
 
-### 1. La Wedding Planner (Madrid, 23:45h — Boda en Riesgo)
-- **El Conflicto:** Quedan semanas para el evento, el proveedor anterior ha fallado y necesita resolver el cuarteto de mariachis, la sonorización y la iluminación sin margen de error.
-- **La Respuesta:** No ve menús confusos. Ve la **Sticky Call Bar móvil**, pulsa el botón directo y conecta con la centralita (`+34 693 693 048`). Al abrir WhatsApp, el mensaje ya viene pre-rellenado con la fecha, la provincia y el formato deseado. Fricción cero.
+### 1. Particular / Pareja (Emoción, Claridad y Cierre Inmediato)
+- **El Contexto:** Bodas, cumpleaños, aniversarios y serenatas. Llega con emoción y necesidad de certeza de fecha y presupuesto.
+- **La Respuesta:** Jerarquía simplificada. Sticky Call Bar móvil (`+34 693 693 048`), WhatsApp pre-rellenado con contexto y acceso en 1 tap a la contratación de Edwin Agudelo y sus mariachis de gala.
 
-### 2. El Cliente Premium (Planificación de Gran Gala)
-- **El Conflicto:** Quiere excelencia acústica y presencia escénica, pero desconfía de precios arbitrarios o inflados.
-- **La Respuesta:** Aterriza en el **Motor Táctico** (`/cotizador`). Ajusta formación, kilómetros y sonido. El sistema calcula en vivo mediante un motor determinista (`pricing-engine.ts`) el desglose exacto (Base + Logística + IVA). Puede asegurar su fecha inmediatamente con tarjeta o Klarna.
+### 2. Institución / B2G / B2B (Solvencia Técnica y Garantía Legal)
+- **El Contexto:** Fiestas patronales, galas corporativas y licitaciones públicas. Requiere cumplimiento de la LCSP, seguros RC (1.000.000€), altas laborales y facturación FACe.
+- **La Respuesta:** Despliegue de infraestructura S-Class (audio L-Acoustics K2, microfonía Axient, rider homologado) y dossier técnico oficial descargable.
 
-### 3. La Institución / Sector Público (Fiestas Patronales y Festivales)
-- **El Conflicto:** Necesita justificación técnica, cumplimiento de pólizas de RC (1.000.000€), altas en Seguridad Social y solvencia de pliegos.
-- **La Respuesta:** La plataforma despliega el catálogo de infraestructura (`MultiPricer` B2G), audio L-Acoustics y documentación de autoridad (VIMUME y Dossier de Autoridad), asegurando contratación legal blindada.
+### 3. Proveedor / Afiliado (Integración, Demanda y Retorno)
+- **El Contexto:** Empresas de sonido, iluminación, tarimas y catering que buscan rentabilizar su inventario y logística.
+- **La Respuesta:** Integración formal en la red de despacho logístico PostGIS de Productora EAR con asignación transparente de hojas de ruta (`Waybill`).
+
+### 4. Artista (Paciente Cero: Edwin Agudelo)
+- **El Contexto:** Vivir dignamente de su arte, multiplicar su alcance geográfico y monetizar con anticipos seguros y respeto profesional.
+- **La Validación Viva:** *Edwin Agudelo no es un perfil más; es la validación empírica del sistema.* Si EAR OS mejora su visibilidad, su autoridad y su volumen de contratación en bodas, cumpleaños, serenatas y festivales, la tesis queda demostrada.
 
 ---
 
-## 4. La Transformación: Antes vs. Después
+## 4. De Catálogo a Acompañamiento
 
 | Dimensión | El Modelo Tradicional (Roto) | La Realidad de EAR OS (Transformada) |
 |---|---|---|
-| **Punto de Entrada** | Home estática y catálogo genérico | Experiencia adaptada a la intención de búsqueda |
-| **Tiempo de Cotización** | 24 - 72 horas vía email | Cálculo matemático instantáneo (SSOT) |
-| **Handoff a Contacto** | Chat vacío ("Hola, ¿en qué te ayudo?") | WhatsApp estructurado con presupuesto y datos inyectados |
-| **Garantía de Reserva** | Promesa verbal o justificante manual | Bloqueo atómico de calendario y depósito Stripe |
+| **Punto de Entrada** | Home estática y catálogo genérico | Router adaptativo de 4 perfiles con tarjeta de honor a Edwin |
+| **Tiempo de Cotización** | 24 - 72 horas vía email | Cálculo matemático instantáneo en vivo (`pricing-engine.ts`) |
+| **Handoff a Contacto** | Chat vacío o auto-redirección | Hub multicanal soberano (Tel, WhatsApp context, Formulario) |
+| **Ergonomía Táctil** | Interfaces comprimidas de desktop | Mobile-first real, tap targets ≥44px y sticky bar con total |
+| **Garantía de Reserva** | Promesa verbal o justificante manual | Bloqueo atómico de calendario y depósito trazable |
 | **Coordinación de Flota** | Músicos desorientados en carretera | Hoja de ruta `Waybill` despachada vía PostGIS |
 | **Liquidación Económica** | Cobros en efectivo desregulados | Asiento contable trazable en `CommissionLedger` |
 
 ---
 
-## 5. Evidencia Observable y Prueba de Impacto
+## 5. La Prueba Real
 
-La superioridad de EAR OS no es un concepto teórico; es un sistema en ejecución:
+La superioridad de EAR OS se demuestra en los puntos críticos de conversión:
 
-1. **Click-to-Call Universal (`CENTRALITA.tel`):** Conexión inmediata al `+34 693 693 048` anclada en todas las landings públicas.
-2. **Sticky Mobile Bar (`z-90`):** Máxima tasa de conversión en dispositivos móviles sin obstaculizar la lectura.
-3. **WhatsApp con Contexto Transferido:** El operador recibe el desglose técnico antes del primer mensaje, eliminando la repetición de datos.
-4. **Single Source of Truth (`pricing-engine.ts`):** Una única regla algorítmica para web, llamada y pasarela.
-5. **Despacho Espacial y Ledger Inmutable:** Enlace directo entre el cobro de la reserva, el calendario bloqueado y la hoja de ruta del artista.
+1. **El teléfono está siempre accesible:** Click-to-call universal anclado en `CENTRALITA.tel`.
+2. **El WhatsApp llega con contexto:** Inyección automática de ítems, provincia e importe calculado.
+3. **El precio nace del mismo motor:** `pricing-engine.ts` unifica web, centralita y cierre.
+4. **La interfaz respeta el pulgar:** Totales sticky, navegación fluida y sin bloqueos de zoom.
+5. **Edwin Agudelo siempre visible:** Acceso prioritario desde la Home y landings de ocasión.
 
 ---
 
 ## Conclusión
 
-> *"Cuando el usuario llega con urgencia, EAR OS responde con claridad. Cuando llega con duda, responde con cálculo. Cuando llega decidido, responde con cierre.*
+> *"Cuando el usuario llega con urgencia, EAR OS responde con claridad. Cuando llega con duda, responde con cálculo. Cuando llega con decisión, responde con cierre.*
 > 
-> *Lo que antes era incertidumbre, ahora se convierte en una reserva trazable, coordinada y digna."*
+> *Lo que antes era improvisación ahora es una cadena de confianza, coordinación y reserva trazable."*

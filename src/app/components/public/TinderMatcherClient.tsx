@@ -240,7 +240,7 @@ export default function TinderMatcherClient() {
           </div>
 
           {/* Segment Selector Tabs */}
-          <div className="flex bg-black/50 p-1 rounded-2xl border border-white/10">
+          <div className="flex bg-black/50 p-1 rounded-2xl border border-white/10 overflow-x-auto scrollbar-hide">
             {(['B2C', 'B2B', 'B2G'] as const).map(seg => (
               <button
                 key={seg}
@@ -249,20 +249,20 @@ export default function TinderMatcherClient() {
                   setCurrentIndex(0);
                   setMatchSuccess(null);
                 }}
-                className={`px-5 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                className={`flex-1 min-h-[44px] px-3 sm:px-5 py-2 rounded-xl text-[10px] sm:text-xs font-black uppercase tracking-wider transition-all whitespace-nowrap flex items-center justify-center ${
                   clientSegment === seg
                     ? 'bg-[#d4a855] text-black shadow-lg shadow-[#d4a855]/20'
                     : 'text-zinc-400 hover:text-white'
                 }`}
               >
-                {seg === 'B2C' ? '💍 Particular / Boda' : seg === 'B2B' ? '🏢 Corporativo B2B' : '🏛️ Licitación B2G'}
+                {seg === 'B2C' ? '💍 Boda / Particular' : seg === 'B2B' ? '🏢 B2B' : '🏛️ B2G'}
               </button>
             ))}
           </div>
         </div>
 
         {/* Dynamic Filters Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
           {/* Province */}
           <div className="space-y-1.5 bg-white/5 p-3 rounded-2xl border border-white/5">
             <label className="text-[9px] font-black uppercase tracking-widest text-zinc-400 flex items-center gap-1">

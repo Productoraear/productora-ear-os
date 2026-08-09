@@ -4,6 +4,26 @@
  */
 export const ROUTES = {
   home: "/",
+  artistas: "/artistas",
+  artists: "/artistas",
+  presupuesto: "/presupuesto",
+  cotizador: "/cotizador",
+  theSignal: "/the-signal",
+  empresarios: "/empresarios",
+  ayuntamientos: "/ayuntamientospremium",
+  ayuntamientosPremium: "/ayuntamientospremium",
+  dossier: "/dossier",
+  servicios: "/servicios",
+  bodas: "/bodas",
+  calculadora: "/calculadora",
+  marketplace: "/marketplace",
+  ocasiones: "/ocasiones",
+  precios: "/precios",
+  infraestructura: "/infraestructura",
+  arsenal: "/arsenal",
+  reclamarPerfil: "/reclamar-perfil",
+  login: "/login",
+  dashboard: "/dashboard",
   blog: "/blog",
   blogCasos: "/blog/casos-clinicos",
   blogInvestigacion: "/blog/investigacion",
@@ -20,10 +40,9 @@ export const ROUTES = {
   fundacion: "/vimume/fundacion",
   protocolo: "/vimume/protocolo",
   roadmap: "/vimume/roadmap",
-  servicios: "/servicios",
-  dossier: "/dossier",
   contacto: "/contacto",
   vimumeContacto: "/vimume/contacto",
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
+

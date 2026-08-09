@@ -10,6 +10,7 @@ interface ThemeToggleProps {
 
 export default function ThemeToggle({ isVimumeContext = false }: ThemeToggleProps) {
   const { theme, toggleTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [isPressing, setIsPressing] = useState(false);
   const [progress, setProgress] = useState(0);
   
@@ -74,6 +75,7 @@ export default function ThemeToggle({ isVimumeContext = false }: ThemeToggleProp
   };
 
   useEffect(() => {
+    setMounted(true);
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       if (intervalRef.current) clearInterval(intervalRef.current);
@@ -121,7 +123,9 @@ export default function ThemeToggle({ isVimumeContext = false }: ThemeToggleProp
 
         {/* Icons */}
         <div className="relative z-10">
-          {isLightMode ? (
+          {!mounted ? (
+            <Moon className="w-5 h-5 text-white" />
+          ) : isLightMode ? (
             <Sun className="w-5 h-5 text-[#ecb613] animate-spin-slow" />
           ) : (
             <Moon className="w-5 h-5 text-white" />

@@ -36,8 +36,6 @@ const sections = [
 export default function FundacionPage() {
   return (
     <main className="bg-black text-white min-h-screen">
-      <PublicNavbar />
-      
       {/* Hero Section */}
       <section className="relative pt-40 pb-20 overflow-hidden">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ecb613]/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2" />
@@ -107,8 +105,6 @@ export default function FundacionPage() {
           href: ROUTES.contacto
         }}
       />
-
-      <PublicFooter />
     </main>
   );
 }

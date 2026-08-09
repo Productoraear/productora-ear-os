@@ -65,7 +65,6 @@ export default function SolistasPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground pt-40 pb-24 font-sans selection:bg-[#ecb613]/30 overflow-hidden">
-      <PublicNavbar />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -32,10 +32,11 @@ export default function PublicNavbar() {
         { label: "FAQ", href: ROUTES.vimumeFaq, isPill: false },
       ]
     : [
+        { label: "Artistas", href: ROUTES.artistas, isPill: false },
+        { label: "Cotizador", href: ROUTES.cotizador, isPill: false },
         { label: "VIMUME", href: ROUTES.vimume, isPill: true },
-        { label: "Servicios", href: ROUTES.servicios, isPill: false },
+        { label: "Empresas", href: ROUTES.empresarios, isPill: false },
         { label: "Dossier", href: ROUTES.dossier, isPill: false },
-        { label: "Blog", href: ROUTES.blog, isPill: false },
         { label: "Contacto", href: ROUTES.contacto, isPill: false },
       ];
 

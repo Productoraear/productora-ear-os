@@ -1,158 +1,253 @@
 import React from 'react';
 import Link from 'next/link';
+import { 
+  Sparkles, Star, ShieldCheck, ChevronRight, ArrowRight, 
+  Crown, Mic2, Users, Trophy, Music, Calendar, Phone 
+} from 'lucide-react';
+import { Metadata } from 'next';
+import { CENTRALITA } from '@/lib/phone-constants';
 
-export const metadata = {
-  title: 'Catálogo de Artistas S-Class | Productora EAR',
-  description: 'Explora y contrata el catálogo exclusivo de artistas, mariachis, orquestas y grupos musicales de Productora EAR.',
+export const metadata: Metadata = {
+  title: 'Catálogo de Artistas & Roster S-Class | Productora EAR',
+  description: 'Explora y contrata el catálogo exclusivo de artistas, mariachis de gala, ensambles ecuestres y producciones de Productora EAR.',
 };
 
 export default function ArtistasPage() {
-  const artistas = [
+  const featuredArtist = {
+    id: 'edwin-agudelo',
+    nombre: 'Edwin Agudelo',
+    subtitulo: 'Tenor Lírico & Mariachi de Gran Gala',
+    tagline: 'Paciente Cero // Artista Insignia de EAR OS',
+    rating: '5.0/5 (350+ Reseñas Verificadas)',
+    shows: '37+ Conciertos Internacionales',
+    basePrice: 'Desde 650€',
+    formatos: ['Solista & Piano Acústico', 'Cuarteto Imperial', 'Quinteto de Honor', 'Cantando a Caballo', 'Banda Monumental'],
+    descripcion: 'La vanguardia en Mariachi y música lírica en España. Calibración acústica de alta gama, repertorio de autor y garantía de solvencia logística en todo el territorio nacional.',
+  };
+
+  const artists = [
     {
       id: 'mariachi-bodas-madrid-solista',
-      nombre: 'Mariachi Sol de Madrid',
-      categoria: 'Mariachi / High-Ticket',
+      nombre: 'Mariachi Imperial de Madrid',
+      categoria: 'Mariachi / Gran Gala',
       rating: '4.9/5',
       shows: '450+ Eventos',
-      imagen: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBrZgks4GsWmEDKFQNVrOB37mgl_-Duaigz_IKgADnLbVLPr_5lzctoYf3DMe2d70Yuinv4D1BcKTx0fpKoQ00HDxQNaxT5itANIpwjBL5i_eyzs2_HfyrmoTeXTOi5Vglb9I7qCcFi5Hy8IWlokBM7qP_2lbm8RhTEDxFS7BjZPOw9TR4jsHwIergb7oKT9mQ4d0RSfaspsMDfCwQCBR4yMwdlE2V0yz20cPo9-29pw0hf3EL6ahw6NU8VeYThQGd5pwAOL1_njA',
-      leverage: 'ALTO LEVERAGE',
+      precio: 'Desde 950€',
+      tag: 'ALTO LEVERAGE',
+      desc: 'Formación clásica de gala para bodas de alto ticket, ceremonias y aniversarios solemnes en la Zona Centro.',
+      link: '/artistas/edwin-agudelo#mariachi'
     },
     {
       id: 'mariachis-bodas-barcelona-gala',
-      nombre: 'Gala Ranchera Barcelona',
+      nombre: 'Gala Ranchera Barcelona & Levante',
       categoria: 'Mariachi / Ensamble Real',
       rating: '4.8/5',
       shows: '320+ Eventos',
-      imagen: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDZ6lzt-zlx09RLp8Bh3Q4Z9muNKrxNwbZj6lfnIL4nXiR5nAzoxSf8y3dlO91NWzsf5CCidqLF5JiCGboTydFg5iHb9q1ith5X6dFLoB8qapQ9FKPWCgwKA7NHIp7u43xCU_8v4eckjU1ho5y44DMo5nsSZWY9NYHRCnPvYckhhhD3OLqp_g0MtJ-19T-qgAjst6bXYjXjdUBAoSb5rSFT9eHQ6805naLvinPmeZq7lU94HanTSJZDZ2JRgltZZaWQdHBJ0Vgoog',
-      leverage: 'STANDARD',
+      precio: 'Desde 1.250€',
+      tag: 'TOP B2C',
+      desc: 'Ensamble de gala con sección de violines maestros y microfonía inalámbrica para recepciones en Cataluña y Levante.',
+      link: '/artistas/edwin-agudelo#mariachi'
     },
     {
       id: 'mariachi-caballo-eventos-sevilla',
-      nombre: 'Mariachi a Caballo Sevilla',
-      categoria: 'Espectáculo Ecuestre',
+      nombre: 'Espectáculo "Cantando a Caballo"',
+      categoria: 'Alta Escuela Ecuestre',
       rating: '5.0/5',
       shows: '180+ Eventos',
-      imagen: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCu6a-B5xc-O0dFkQD_dd2x2SWSnCrezUf0Pc1pNisJ21XE418p5E86YqJJ_7RH5NWDGU__-NjRwoFUjIsYuUKzdjv-CyIotOHAHYbXb6PEzvq6nWMV_buFkDgHMUB93IRBOOJ9L1vmabEEyobZ6jRKG7T2TvYCrMWBpJaKrxFNa9D_YeWWjdAqIod6aa1mFIwkMqobS0usYWzC3J__3CKN4g1koBAhtmEVvPz54GftzboDUEFvXEbD_6MADtpyhZjQniRI88GQyQ',
-      leverage: 'ALTO LEVERAGE',
+      precio: 'Desde 5.500€',
+      tag: 'FORMATO MONUMENTAL',
+      desc: 'Doma clásica y música tradicional en vivo sobre caballos de pura raza española. Ideal para ferias y plazas.',
+      link: '/artistas/edwin-agudelo#caballo'
     },
+    {
+      id: 'solistas-gala-espana',
+      nombre: 'Voces Líricas & Solistas de Autor',
+      categoria: 'Solistas / Microfonía Hi-Fi',
+      rating: '4.9/5',
+      shows: '210+ Eventos',
+      precio: 'Desde 650€',
+      tag: 'ALTA FIDELIDAD',
+      desc: 'Repertorio melódico, boleros y canciones de autor con sistemas de amplificación acústica Bose & Neumann.',
+      link: '/artistas/solistas'
+    }
   ];
 
   return (
-    <div className="bg-[#050505] text-on-surface font-body selection:bg-primary selection:text-on-primary min-h-screen">
-      {/* TOP NAVIGATION BAR */}
-      <header className="bg-[#0A0A0A] border-b border-[#D4AF37]/10 flex justify-between items-center w-full px-6 py-4 fixed top-0 z-50">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="text-2xl font-headline font-bold text-[#F2CA50] uppercase tracking-widest hover:opacity-80 transition-opacity">
-            PRODUCTORA EAR
-          </Link>
-          <nav className="hidden md:flex gap-6">
-            <Link href="/" className="text-[#C6C6C6] font-label uppercase text-xs tracking-widest hover:text-[#F2CA50] transition-colors duration-100">
-              Inicio
-            </Link>
-            <Link href="/artistas" className="text-[#F2CA50] border-b-2 border-[#F2CA50] pb-1 font-label uppercase text-xs tracking-widest">
-              Catálogo Artistas
-            </Link>
-            <Link href="/presupuesto" className="text-[#C6C6C6] font-label uppercase text-xs tracking-widest hover:text-[#F2CA50] transition-colors duration-100">
-              Cotizador
-            </Link>
-          </nav>
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="px-3 py-1 border border-primary/20 text-primary font-label text-[10px] tracking-widest bg-primary/5">
-            ROSTER_STATUS: ACTIVE
+    <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 px-4 sm:px-6 md:px-8 selection:bg-[#ecb613] selection:text-black">
+      <div className="max-w-7xl mx-auto space-y-16">
+        
+        {/* 🚀 HEADER HERO */}
+        <div className="text-center space-y-4 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.3em]">
+            <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-ping" />
+            ROSTER EXCLUSIVO // AUDITORÍA DE INTEGRIDAD EAR
           </div>
-          <Link href="/presupuesto" className="bg-primary text-on-primary px-4 py-1.5 font-label text-xs uppercase tracking-wider font-bold hover:bg-primary-container transition-colors">
-            CONTRATAR
-          </Link>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase italic tracking-tighter text-white font-syne leading-[0.95]">
+            CATÁLOGO DE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">ARTISTAS S-CLASS</span>
+          </h1>
+          <p className="text-sm sm:text-base text-zinc-400 font-light leading-relaxed">
+            Formatos artísticos verificados bajo contrato mercantil, alta en Seguridad Social, microfonía sin interferencias y seguro de responsabilidad civil.
+          </p>
         </div>
-      </header>
 
-      {/* SIDEBAR NAVIGATION */}
-      <aside className="fixed left-0 top-0 h-full w-64 bg-[#0A0A0A] border-r border-[#D4AF37]/5 flex flex-col pt-24 pb-8 z-40 hidden md:flex">
-        <div className="px-6 mb-8">
-          <h3 className="text-[#F2CA50] font-label font-bold text-xs tracking-[0.15rem] mb-1">EAR_ROSTER</h3>
-          <p className="text-secondary opacity-60 font-label text-[9px] tracking-widest">V.2.0.0_CATALOG</p>
-        </div>
-        <nav className="flex-1 space-y-1">
-          <Link href="/artistas" className="text-[#F2CA50] bg-[#1C1B1B] border-l-2 border-[#F2CA50] px-6 py-3 flex items-center gap-3">
-            <span className="material-symbols-outlined text-sm">groups</span>
-            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">TODOS LOS ARTISTAS</span>
-          </Link>
-          <Link href="/artistas?categoria=mariachis" className="text-[#C6C6C6] opacity-60 px-6 py-3 flex items-center gap-3 hover:bg-[#1C1B1B] hover:text-[#E5E2E1] transition-all">
-            <span className="material-symbols-outlined text-sm">music_note</span>
-            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">MARIACHIS</span>
-          </Link>
-          <Link href="/artistas?categoria=solistas" className="text-[#C6C6C6] opacity-60 px-6 py-3 flex items-center gap-3 hover:bg-[#1C1B1B] hover:text-[#E5E2E1] transition-all">
-            <span className="material-symbols-outlined text-sm">person</span>
-            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">SOLISTAS & DJS</span>
-          </Link>
-          <Link href="/presupuesto" className="text-[#C6C6C6] opacity-60 px-6 py-3 flex items-center gap-3 hover:bg-[#1C1B1B] hover:text-[#E5E2E1] transition-all">
-            <span className="material-symbols-outlined text-sm">calculate</span>
-            <span className="font-label uppercase text-[10px] tracking-[0.15rem]">PRESUPUESTO RAPIDO</span>
-          </Link>
-        </nav>
-      </aside>
+        {/* 👑 INSIGNIA ARTIST CARD: EDWIN AGUDELO */}
+        <section className="bg-gradient-to-b from-[#141414] to-[#0a0a0a] border border-[#ecb613]/40 rounded-[2.5rem] p-6 sm:p-12 shadow-2xl relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ecb613]/10 blur-[130px] pointer-events-none" />
 
-      {/* MAIN CONTENT CANVAS */}
-      <main className="ml-0 md:ml-64 pt-24 px-8 pb-12 min-h-screen relative overflow-hidden">
-        <div className="max-w-[1400px] mx-auto space-y-8">
-          {/* HERO TITLE SECTION */}
-          <section className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#4D4635]/15 pb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="lg:col-span-8 space-y-6">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="px-3.5 py-1 rounded-full bg-[#ecb613] text-black text-[9px] font-black uppercase tracking-widest font-mono flex items-center gap-1.5">
+                  <Crown size={12} /> {featuredArtist.tagline}
+                </span>
+                <span className="px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-[9px] font-mono">
+                  {featuredArtist.shows}
+                </span>
+              </div>
+
+              <div>
+                <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase italic tracking-tighter text-white font-syne">
+                  {featuredArtist.nombre}
+                </h2>
+                <p className="text-[#ecb613] text-xs sm:text-sm font-bold uppercase tracking-widest mt-1">
+                  {featuredArtist.subtitulo}
+                </p>
+              </div>
+
+              <p className="text-white/70 text-sm sm:text-base leading-relaxed font-light">
+                {featuredArtist.descripcion}
+              </p>
+
+              {/* Formatos Disponibles */}
+              <div className="space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 block">Formatos Disponibles en Directo:</span>
+                <div className="flex flex-wrap gap-2">
+                  {featuredArtist.formatos.map((fmt, i) => (
+                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold text-zinc-200">
+                      {fmt}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                <Link
+                  href="/artistas/edwin-agudelo"
+                  className="py-3.5 px-7 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all min-h-[48px]"
+                >
+                  <span>Ver Dossier Oficial de Edwin Agudelo</span>
+                  <ChevronRight size={16} />
+                </Link>
+                <Link
+                  href="/cotizador?artist=edwin-agudelo"
+                  className="py-3.5 px-7 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all min-h-[48px]"
+                >
+                  <span>Calcular Presupuesto Inmediato</span>
+                  <ArrowRight size={16} className="text-[#ecb613]" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Metric Card */}
+            <div className="lg:col-span-4 bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 text-center lg:text-left">
+              <div className="space-y-1">
+                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Tarifa Base Homologada</span>
+                <span className="text-3xl sm:text-4xl font-black text-[#ecb613] font-mono">{featuredArtist.basePrice}</span>
+              </div>
+
+              <div className="space-y-3 pt-4 border-t border-white/10 text-xs text-white/80">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-[#ecb613] shrink-0" />
+                  <span>Sonorización L-Acoustics & Microfonía Axient</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-[#ecb613] shrink-0" />
+                  <span>Cobertura en las 52 Provincias de España</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-[#ecb613] shrink-0" />
+                  <span>Bloqueo Atómico de Fecha con Depósito Reembolsable</span>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <a
+                  href={CENTRALITA.tel}
+                  className="w-full py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-white/80 hover:text-white transition-all"
+                >
+                  <Phone size={14} className="text-[#ecb613]" />
+                  <span>Centralita: {CENTRALITA.display}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 🎭 ENSEMBLES & VERTICAL CATALOG */}
+        <section className="space-y-8">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
             <div>
-              <h1 className="font-headline text-5xl italic tracking-tighter text-on-surface">Catálogo de Artistas S-Class</h1>
-              <p className="font-label text-xs uppercase tracking-[0.3rem] text-primary mt-2">Formatos verificados // Auditoría de Integridad EAR</p>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613]">CATÁLOGO COMPLETO</span>
+              <h2 className="text-2xl sm:text-4xl font-black uppercase italic tracking-tight text-white font-syne">
+                Formatos & Ensambles de Gira
+              </h2>
             </div>
-            <div className="mt-4 md:mt-0 font-label text-[0.65rem] text-secondary text-right">
-              DISPONIBILIDAD: DIRECTA<br />FILTROS: ACTIVOS
-            </div>
-          </section>
+            <Link
+              href="/cotizador"
+              className="text-xs font-black uppercase tracking-widest text-[#ecb613] hover:underline flex items-center gap-1 min-h-[44px]"
+            >
+              <span>Abrir Cotizador de Formatos →</span>
+            </Link>
+          </div>
 
-          {/* ARTISTS GRID */}
-          <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {artistas.map((artista) => (
-              <div key={artista.id} className="group bg-surface-container-low border border-outline-variant/20 overflow-hidden hover:border-primary transition-all duration-300">
-                <div className="relative h-56 overflow-hidden">
-                  <img 
-                    src={artista.imagen} 
-                    alt={artista.nombre}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" 
-                  />
-                  <div className="absolute top-3 left-3 bg-primary-container text-on-primary-container font-label text-[0.6rem] px-2.5 py-0.5 font-bold tracking-wider">
-                    {artista.leverage}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            {artists.map((art) => (
+              <div 
+                key={art.id} 
+                className="bg-[#0e0e0e] border border-white/10 hover:border-[#ecb613]/50 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between group transition-all shadow-xl"
+              >
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start">
+                    <span className="px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[9px] font-black uppercase tracking-widest font-mono">
+                      {art.tag}
+                    </span>
+                    <span className="text-xl font-black text-white font-mono">{art.precio}</span>
                   </div>
+
+                  <div>
+                    <span className="text-[10px] font-mono uppercase text-zinc-400 block">{art.categoria}</span>
+                    <h3 className="text-2xl font-black uppercase italic tracking-tight text-white group-hover:text-[#ecb613] transition-colors mt-0.5 font-syne">
+                      {art.nombre}
+                    </h3>
+                  </div>
+
+                  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+                    {art.desc}
+                  </p>
                 </div>
 
-                <div className="p-6 space-y-4">
-                  <div>
-                    <p className="font-label text-[0.65rem] text-primary tracking-widest uppercase mb-1">{artista.categoria}</p>
-                    <h3 className="font-headline text-2xl italic text-on-surface">{artista.nombre}</h3>
-                  </div>
-
-                  <div className="flex justify-between items-center text-xs font-label text-secondary border-t border-outline-variant/10 pt-4">
-                    <span>Valoración: <strong className="text-primary">{artista.rating}</strong></span>
-                    <span>{artista.shows}</span>
-                  </div>
-
-                  <div className="pt-2 flex gap-3">
-                    <Link 
-                      href={`/artistas/${artista.id}`}
-                      className="flex-1 text-center py-2.5 border border-primary/30 text-primary font-label text-[0.7rem] uppercase tracking-widest hover:bg-primary hover:text-on-primary transition-all"
-                    >
-                      Ver Ficha
-                    </Link>
-                    <Link 
-                      href="/presupuesto"
-                      className="px-4 py-2.5 bg-surface-container-high border border-outline-variant/30 text-on-surface font-label text-[0.7rem] uppercase tracking-widest hover:border-primary transition-all"
-                    >
-                      Cotizar
-                    </Link>
-                  </div>
+                <div className="pt-4 border-t border-white/5 flex flex-col sm:flex-row gap-3">
+                  <Link
+                    href={art.link}
+                    className="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
+                  >
+                    <span>Ver Ficha Técnica</span>
+                    <ChevronRight size={14} />
+                  </Link>
+                  <Link
+                    href={`/cotizador?artist=${art.id}`}
+                    className="flex-1 py-3 rounded-xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider text-center shadow-lg shadow-[#ecb613]/10 active:scale-95 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
+                  >
+                    <span>Cotizar Formato</span>
+                    <ArrowRight size={14} />
+                  </Link>
                 </div>
               </div>
             ))}
-          </section>
-        </div>
-      </main>
-    </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
   );
 }
