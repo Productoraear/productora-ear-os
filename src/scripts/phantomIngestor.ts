@@ -89,14 +89,14 @@ async function main() {
               auraLevel,
               roiProjected,
               technicalReliability,
-              roi_guarantee_score: technicalReliability / 10,
+              roiGuaranteeScore: technicalReliability / 10,
             },
             create: {
               name: vendor.name,
               auraLevel,
               roiProjected,
               technicalReliability,
-              roi_guarantee_score: technicalReliability / 10,
+              roiGuaranteeScore: technicalReliability / 10,
             }
           });
           successCount++;

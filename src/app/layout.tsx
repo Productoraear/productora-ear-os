@@ -46,6 +46,11 @@ import { AtmosphereProvider } from "@/app/context/AtmosphereProvider";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import { ThemeProvider } from "@/app/context/ThemeContext";
 
+// Importing required components
+import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
+import EarBottomNav from "@/app/components/layout/EarBottomNav";
+import AuraMatrixCanvas from "@/app/components/3d/AuraMatrixCanvas";
+
 export default function RootLayout({
   children,
 }: {
@@ -72,7 +77,12 @@ export default function RootLayout({
                     <SpatialIntelligence />
                     <div className="min-h-screen relative flex flex-col">
                       <main className="flex-grow">
-                        {children}
+<>
+  <SovereignNavbar />
+  {children}
+  <EarBottomNav />
+  <AuraMatrixCanvas />
+</>
                       </main>
                       <BespokePricerModal />
                       <OmniSearchModal />

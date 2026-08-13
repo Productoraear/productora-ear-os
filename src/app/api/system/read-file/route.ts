@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import * as fs from "fs";
+import * as fs from "fs/promises";
 import * as path from "path";
 
 export const runtime = 'nodejs';
@@ -11,17 +11,13 @@ export async function GET(req: Request) {
   
   if (!fileName) return NextResponse.json({ content: "Archivo no especificado." }, { status: 400 });
 
-  // Busca en la raíz del proyecto
-  const filePath = path.join(process.cwd(), fileName);
-  
+  // Busca en el directorio de datos estático
+  const filePath = path.join(process.cwd(), 'src/app/api/system/data', fileName);
+
   try {
-    if (fs.existsSync(filePath)) {
-      const content = fs.readFileSync(filePath, "utf8");
-      return NextResponse.json({ content });
-    } else {
-      return NextResponse.json({ content: "Archivo clasificado o inexistente." }, { status: 404 });
-    }
+    const content = await fs.readFile(filePath, "utf8");
+    return NextResponse.json({ content });
   } catch (error) {
-    return NextResponse.json({ content: "Error de lectura forense." }, { status: 500 });
+    return NextResponse.json({ content: "Archivo clasificado o inexistente." }, { status: 404 });
   }
 }

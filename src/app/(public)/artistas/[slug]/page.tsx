@@ -1,11 +1,11 @@
-import React from 'react';
+import 'client-only'; // Ensure this file is treated as a Client Component
+import { useRouter } from 'next/navigation';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { 
   Star, 
   ShieldCheck, 
-  Calendar, 
   MapPin, 
   Share2, 
   Download, 
@@ -28,6 +28,9 @@ import { ArtistBookingFlow } from '@/app/components/artists/ArtistBookingFlow';
 // --- 🛠️ CONFIGURACIÓN ISR ---
 export const revalidate = 3600; // 1 hora de caché estática
 
+// Corregir las importaciones para evitar duplicados
+import { artistProfile, User, technicalRider as Rider } from '@prisma/client';
+
 interface ArtistProfilePageProps {
   params: {
     slug: string;
@@ -47,10 +50,11 @@ export async function generateMetadata({ params }: ArtistProfilePageProps): Prom
   }
 
   try {
-    const artist = await prisma.artistProfile.findUnique({
-      where: { slug: params.slug },
-      include: { user: true }
-    });
+const artist = await prisma.artistProfile.findUnique({
+  where: { slug: params.slug },
+  // Comentar o modificar la inclusión del campo 'user' si no está definido
+  // include: { user: true }
+});
 
     if (!artist || artist.status !== 'PUBLISHED') {
       return { title: 'Artista no encontrado' };
@@ -352,7 +356,7 @@ export default async function ArtistProfilePage({ params }: ArtistProfilePagePro
               Sistema de sincronización en tiempo real con el Emanager Studio. Consulta disponibilidad inmediata para giras y eventos corporativos.
             </p>
           </div>
-          
+           
           <div className="bg-[#0d0d0d] border border-white/5 p-12 rounded-[4rem] relative overflow-hidden">
              <div className="relative z-10">
                 <div className="grid grid-cols-7 gap-4 mb-10">
