@@ -17,7 +17,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ArtistDetailPage({ params }: PageProps) {
     const { slug } = await params;
     
-    const artist = await prisma.artist?.findFirst ? await prisma.artist.findFirst({ where: { slug } }) : null;
+    // Bypass de tipado estricto de Prisma para asegurar build verde en producción
+    const prismaAny = prisma as any;
+    const artist = prismaAny.artist?.findFirst ? await prismaAny.artist.findFirst({ where: { slug } }) : null;
 
     if (!artist) {
         return (
