@@ -1,24 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
-import { Inter, Syne } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
 // 🖋️ S-CLASS TYPOGRAPHY CONSOLIDATION
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-  weight: ["400", "500", "800"], // 3 real weights per family
-});
-
-const syne = Syne({
-  subsets: ["latin"],
-  variable: "--font-syne",
-  display: "swap",
-  weight: ["700", "800"],
-});
+// (Tipografías delegadas al CSS global para garantizar soberanía de build y evitar errores 404)
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://productoraear.com"),
@@ -57,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" suppressHydrationWarning className={`${inter.variable} ${syne.variable} scroll-smooth`}>
+    <html lang="es" suppressHydrationWarning className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -77,12 +64,12 @@ export default function RootLayout({
                     <SpatialIntelligence />
                     <div className="min-h-screen relative flex flex-col">
                       <main className="flex-grow">
-<>
-  <SovereignNavbar />
-  {children}
-  <EarBottomNav />
-  <AuraMatrixCanvas />
-</>
+                        <>
+                          <SovereignNavbar />
+                          {children}
+                          <EarBottomNav />
+                          <AuraMatrixCanvas />
+                        </>
                       </main>
                       <BespokePricerModal />
                       <OmniSearchModal />
