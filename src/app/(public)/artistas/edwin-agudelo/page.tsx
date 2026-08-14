@@ -135,38 +135,38 @@ const jsonLd = {
       offers: [
         {
           '@type': 'Offer',
-          name: 'Edwin Agudelo Solista Premium',
+          name: 'Edwin Agudelo Solista Premium (1 Músico)',
           description:
-            'Tenor lírico con sistemas auto-amplificados Bose. Bodas, recepciones diplomáticas y corporativos selectos.',
-          price: '1500',
+            'Tenor lírico con sistemas auto-amplificados Bose. Bodas, cumpleaños y serenatas de gala.',
+          price: '350',
           priceCurrency: 'EUR',
           availability: 'https://schema.org/InStock',
           url: 'https://productoraear.com/artistas/edwin-agudelo#booking-funnel',
         },
         {
           '@type': 'Offer',
-          name: 'Ensamble de Gala Mariachi 6+',
+          name: 'Ensamble de Gala Mariachi (6 Músicos)',
           description:
             'Formación clásica de gala con trajes bordados a mano. El estándar de oro de la música charra.',
-          price: '2800',
+          price: '750',
           priceCurrency: 'EUR',
           availability: 'https://schema.org/InStock',
         },
         {
           '@type': 'Offer',
-          name: 'Show Cantando a Caballo',
+          name: 'Grupo de Gala Imperial (9 Músicos)',
           description:
-            'Espectáculo ecuestre único en España. Doma clásica de alta escuela con mariachi en vivo.',
-          price: '5500',
+            'Formación expandida de mariachi que eleva la potencia sonora a un nivel sinfónico clásico.',
+          price: '1250',
           priceCurrency: 'EUR',
           availability: 'https://schema.org/InStock',
         },
         {
           '@type': 'Offer',
-          name: 'Banda Monumental EAR 12+',
+          name: 'Banda Monumental EAR (13 Músicos)',
           description:
-            'Despliegue de más de 12 músicos para festivales, ferias y licitaciones B2G.',
-          price: '9500',
+            'Despliegue sinfónico de mariachis para ayuntamientos, festivales, ferias y licitaciones B2G.',
+          price: '1800',
           priceCurrency: 'EUR',
           availability: 'https://schema.org/InStock',
         },
@@ -180,7 +180,7 @@ const jsonLd = {
           name: '¿Cuánto cuesta contratar a Edwin Agudelo para una boda?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'El formato solista para bodas tiene un coste desde 1.500€. El ensamble de gala con 6 músicos cuesta 2.800€. Puedes bloquear tu fecha con un depósito reembolsable de 100€ a través de nuestra pasarela segura.',
+            text: 'El formato solista premium para bodas tiene un coste de 350€. El ensamble de gala tradicional con 6 músicos cuesta 750€. Para grandes recintos disponemos de la formación imperial de 9 músicos por 1.250€ y la monumental de 13 músicos por 1.800€. Puedes bloquear tu fecha con un depósito reembolsable de 100€.',
           },
         },
         {

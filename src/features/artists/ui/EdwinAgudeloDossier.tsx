@@ -19,64 +19,62 @@ const products = [
   {
     id: 'edwin-solista',
     title: 'Edwin Agudelo - Solista Premium',
-    subtitle: 'Cantautor de Gala / Alta Fidelidad',
-    price: 1500,
+    subtitle: 'Cantautor de Gala / Alta Fidelidad (1 Músico)',
+    price: 350,
     icon: <Crown size={32} />,
-    description: 'La esencia pura del tenor lírico. Un formato versátil de alto impacto sónico con sistemas auto-amplificados Bose, diseñado para recepciones diplomáticas, corporativos selectos e hitos familiares exclusivos.',
+    description: 'La esencia pura del tenor lírico mariachi. Show íntimo y de alto impacto sónico con sistemas auto-amplificados Bose, ideal para serenatas románticas a domicilio, pedidas de mano y aniversarios íntimos.',
     includes: [
-      'Show de 60 a 90 minutos de gala',
-      'Ingeniería sónica EAR dedicada',
-      'Repertorio en Positivo & Tradicional',
-      'Protocolo diplomático e institucional'
+      'Show de 45 a 60 minutos de gala solista',
+      'Ingeniería sónica EAR portátil dedicada',
+      'Repertorio en Positivo & Tradicional (Vicente Fernández, Javier Solís)',
+      'Desplazamiento y equipo de sonido Bose incluido'
     ],
-    conditions: 'Reserva mínima de 15 días. Desplazamiento bonificado en Comunidad de Madrid.'
+    conditions: 'Reserva mínima de 7 días. Bloqueo de fecha inmediato con depósito de 100€.'
   },
   {
     id: 'edwin-mariachi-6',
-    title: 'Ensamble de Gala Mariachi (6+)',
+    title: 'Ensamble de Gala Mariachi (6 Músicos)',
     subtitle: 'El Estándar de Oro de la Música Charra',
-    price: 2800,
+    price: 750,
     icon: <Users size={32} />,
-    description: 'Formación clásica de gala con trajes bordados a mano, sombreros de charro de alta escuela, violines, trompetas y guitarrón. Sonoridad acústica inigualable de gran impacto emocional.',
+    description: 'Formación clásica de gala con trajes bordados a mano, sombreros de charro de alta escuela, violines, trompetas y guitarrón. Sonoridad acústica tradicional inigualable y puesta en escena regia.',
     includes: [
       'Mínimo 6 músicos profesionales coordinados',
       'Entrada sorpresa del homenajeado',
       'Ecualización y microfonía inalámbrica profesional',
       'Peticiones ilimitadas del cancionero clásico'
     ],
-    conditions: 'Sujeto a disponibilidad. Se aconseja reservar con 30 días de antelación.'
+    conditions: 'Sujeto a disponibilidad. Se aconseja reservar con 15 días de antelación.'
   },
   {
-    id: 'edwin-caballo',
-    title: 'Show "Cantando a Caballo"',
-    subtitle: 'Alta Escuela Ecuestre & Tradición',
-    price: 5500,
-    icon: <Sparkles size={32} />,
-    description: 'Espectáculo ecuestre único en España. Edwin Agudelo fusiona la doma clásica de alta escuela con el mariachi tradicional sobre majestuosos caballos, coordinando música y jinete.',
+    id: 'edwin-mariachi-9',
+    title: 'Grupo de Gala Imperial (9 Músicos)',
+    subtitle: 'Impacto Acústico Completo para Bodas y Eventos',
+    price: 1250,
+    icon: <Music size={32} />,
+    description: 'Formación expandida de mariachi que eleva la potencia sonora a un nivel sinfónico clásico. Ideal para banquetes de bodas en grandes fincas, cócteles de lujo y eventos de empresa.',
     includes: [
-      'Edwin Agudelo a lomos de caballo de alta escuela',
-      'Ensamble de Mariachi de Gala en pista',
-      'Seguro de responsabilidad civil ecuestre completo',
-      'Logística de transporte especializada de caballos',
-      'Protocolo diseñado para plazas y recintos feriales'
+      '9 músicos de gala en escena con trajes de gala',
+      'Sección de metales y violines maestros coordinada',
+      'Ingeniería acústica EAR de alta gama homologada',
+      'Show estructurado en dos pases'
     ],
-    conditions: 'Requiere validación técnica del terreno, picadero o plaza y permisos locales.'
+    conditions: 'Reserva recomendada de 30 días. Incluye soporte de iluminación básico.'
   },
   {
-    id: 'edwin-banda',
-    title: 'Banda Monumental EAR',
+    id: 'edwin-banda-13',
+    title: 'Banda Monumental EAR (13 Músicos)',
     subtitle: 'Infraestructura Sónica para Grandes Aforos',
-    price: 9500,
+    price: 1800,
     icon: <Zap size={32} />,
-    description: 'El despliegue transaccional definitivo. Un ensamble de más de 12 músicos en escena respaldados por ingeniería sónica y lumínica avanzada de Productora EAR. Diseñado para festivales, ferias y licitaciones B2G.',
+    description: 'El despliegue transaccional definitivo para ayuntamientos y grandes fiestas patronales. Un ensamble monumental de hasta 13 músicos interpretando himnos con arreglos sinfónicos de alta definición.',
     includes: [
-      'Orquestación masiva (12+ músicos en escena)',
-      'Ingeniería acústica de alta gama homologada',
+      'Orquestación masiva (13 músicos profesionales en escena)',
+      'Ingeniería acústica homologada para grandes espacios',
       'Diseño de iluminación inmersiva espectacular',
-      'Coordinación directa de protocolo B2G / B2B',
-      'Show de 120 minutos en dos pases'
+      'Coordinación directa de protocolo B2G / LCSP'
     ],
-    conditions: 'Reserva mínima de 60 días. Requiere acometida eléctrica trifásica en recinto.'
+    conditions: 'Reserva mínima de 30 días. Cumplimiento absoluto de pliegos y facturación FACe.'
   }
 ];
 
@@ -321,30 +319,42 @@ export const EdwinAgudeloDossier: React.FC = () => {
             {/* RIGHT VISUAL BENTO CARD */}
             <div className="lg:col-span-5 relative aspect-square">
               <div className="absolute -inset-4 bg-[#d4a855]/10 blur-[90px] opacity-40 rounded-full pointer-events-none" />
-              <div className="rounded-[3rem] border border-white/10 relative z-10 bg-white/5 overflow-hidden w-full h-full flex flex-col justify-between p-12 group hover:border-[#d4a855]/40 transition-all duration-700">
+              <div className="rounded-[3rem] border border-white/10 relative z-10 bg-white/5 overflow-hidden w-full h-full flex flex-col justify-between p-0 group hover:border-[#d4a855]/40 transition-all duration-700">
+                <div className="absolute inset-0 z-0">
+                  <Image 
+                    src="/images/mariachi.png" 
+                    alt="Edwin Agudelo vestido de Charro de Gala" 
+                    fill
+                    className="object-cover object-top opacity-80 group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/30 z-10" />
+                </div>
                 
-                <div className="flex justify-between items-start">
-                  <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center text-[#d4a855] group-hover:scale-110 transition-transform duration-500">
-                    <Mic2 size={32} />
+                <div className="relative z-20 p-10 flex flex-col justify-between h-full">
+                  <div className="flex justify-between items-start">
+                    <div className="w-12 h-12 rounded-xl bg-[#ecb613] flex items-center justify-center text-black font-black">
+                      <Mic2 size={24} />
+                    </div>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-[#d4a855] bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-[#d4a855]/20">
+                      S-Class Elite
+                    </span>
                   </div>
-                  <span className="text-[9px] font-black uppercase tracking-widest text-[#d4a855] bg-[#d4a855]/10 px-3 py-1.5 rounded-lg border border-[#d4a855]/20">
-                    S-Class Authority
-                  </span>
-                </div>
 
-                <div className="space-y-6">
-                  <div className="text-5xl font-black text-white leading-none font-syne uppercase tracking-tighter">
-                    El Mariachi <br />
-                    <span className="text-[#d4a855]">Más Respetado</span>
+                  <div className="space-y-4">
+                    <div className="text-4xl font-black text-white leading-none font-syne uppercase tracking-tighter drop-shadow-lg">
+                      Edwin Agudelo <br />
+                      <span className="text-[#d4a855]">Cantautor Charro</span>
+                    </div>
+                    <p className="text-white/90 text-xs font-bold leading-relaxed uppercase tracking-wider drop-shadow-md">
+                      "Tenor lírico con botonadura de plata y un repertorio de esperanza."
+                    </p>
                   </div>
-                  <p className="text-white/40 text-xs font-bold leading-relaxed uppercase tracking-wider">
-                    "Un directo impecable, sonido sin distorsión calibrado en cada recinto, trajes de botonadura de plata y un repertorio de esperanza."
-                  </p>
-                </div>
 
-                <div className="pt-6 border-t border-white/5 flex items-center justify-between">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-white/60">Garantía Productora EAR</span>
-                  <Shield size={18} className="text-[#d4a855]" />
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-white/80 drop-shadow-lg">Garantía Productora EAR</span>
+                    <Shield size={18} className="text-[#d4a855]" />
+                  </div>
                 </div>
               </div>
             </div>
