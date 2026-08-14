@@ -4,5 +4,10 @@
       "path": "/api/infra/keep-alive",
       "schedule": "0 0 * * *"
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "VERCEL_SUPPORT_LARGE_FUNCTIONS": "1"
+    }
+  }
 }
