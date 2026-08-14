@@ -4,9 +4,6 @@ import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import Script from "next/script";
 import "./globals.css";
 
-// 🖋️ S-CLASS TYPOGRAPHY CONSOLIDATION
-// (Tipografías delegadas al CSS global para garantizar soberanía de build y evitar errores 404)
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://productoraear.com"),
   title: "Unio - Matchmaking and Events Platform",
@@ -33,10 +30,10 @@ import { AtmosphereProvider } from "@/app/context/AtmosphereProvider";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import { ThemeProvider } from "@/app/context/ThemeContext";
 
-// Importing required components
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
 import EarBottomNav from "@/app/components/layout/EarBottomNav";
 import AuraMatrixCanvas from "@/app/components/3d/AuraMatrixCanvas";
+import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
 
 export default function RootLayout({
   children,
@@ -73,6 +70,7 @@ export default function RootLayout({
                       </main>
                       <BespokePricerModal />
                       <OmniSearchModal />
+                      <DynamicContextBar />
                     </div>
                   </SmoothScrollProvider>
                 </AtmosphereProvider>
