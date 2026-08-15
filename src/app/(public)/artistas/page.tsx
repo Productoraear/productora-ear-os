@@ -5,8 +5,8 @@ import {
   Crown, Mic2, Users, Trophy, Music, Calendar, Phone 
 } from 'lucide-react';
 import { Metadata } from 'next';
-import { CENTRALITA } from '@/lib/phone-constants';
 import { InjectHeroButton, InjectCatalogButton } from './InjectArtistButton';
+import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
 
 export const metadata: Metadata = {
   title: 'Catálogo de Artistas & Roster S-Class | Productora EAR',
@@ -181,6 +181,22 @@ export default function ArtistasPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* 🔥 TINDER MATCHER INTERACTIVO DE FORMATOS ARTÍSTICOS (SWIPE S-CLASS) */}
+        <section className="pt-4 pb-8">
+          <div className="text-center mb-8">
+            <span className="text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.4em] block mb-2">
+              ✦ MATCHMAKER TÁCTICO EN VIVO
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter text-white font-syne">
+              Encuentra tu <span className="text-[#ecb613]">Formato Ideal</span>
+            </h2>
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto font-light mt-2">
+              Desliza o filtra los formatos de directo según aforo, acústica exterior y tipología de evento.
+            </p>
+          </div>
+          <TinderMatcherClient />
         </section>
 
         {/* 🎭 ENSEMBLES & VERTICAL CATALOG */}
