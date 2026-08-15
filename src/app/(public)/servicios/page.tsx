@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import publicCatalog from '../../../../scripts/vampire_public_catalog_zk.json';
+import publicCatalog from '@/data/catalog/vampire_public_catalog_zk.json';
 import { useEventCart, CartItem } from '@/context/EventCartContext';
 
 // Activos de Infraestructura Propia (Tier 0 - Margen >75%)
