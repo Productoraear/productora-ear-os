@@ -1,7 +1,7 @@
 // scripts/fitur_swarm_simulator.ts
 import puppeteer from 'puppeteer';
 
-const TARGET_URL = 'http://localhost:3007';
+const TARGET_URL = 'http://localhost:3008';
 
 const fiturSimulations = [
     { title: "Pabellón Institucional Madrid - FITUR 2027", type: "B2G", amount: "2800€", query: "Sonorización lineal Bose F1 y pantallas LED para pabellón institucional de Madrid en FITUR" },

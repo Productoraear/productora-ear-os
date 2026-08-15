@@ -17,6 +17,8 @@ interface SharedState {
   setIsPricerOpen: (open: boolean) => void;
   pricerData: PricerData | null;
   setPricerData: (data: PricerData | null) => void;
+  role: string | null;
+  setRole: (role: string) => void;
   addEvent: (event: any) => void;
   addArtist: (artist: any) => void;
   addProject: (project: any) => void;
@@ -36,6 +38,7 @@ export const SharedProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isPricerOpen, setIsPricerOpen] = useState(false);
   const [pricerData, setPricerData] = useState<PricerData | null>(null);
+  const [role, setRole] = useState<string | null>(null);
   
   const [state, setState] = useState<{
     events: any[];
@@ -77,6 +80,8 @@ export const SharedProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setIsPricerOpen,
       pricerData,
       setPricerData,
+      role,
+      setRole,
       addEvent, 
       addArtist, 
       addProject 
@@ -85,3 +90,4 @@ export const SharedProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     </SharedContext.Provider>
   );
 };
+
