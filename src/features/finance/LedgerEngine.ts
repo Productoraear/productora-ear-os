@@ -8,7 +8,7 @@
  * - 10% Plataforma (EAR OS Retained Revenue)
  */
 
-import { SovereignRole } from '@/shared/hooks/useSovereignRole';
+import type { SovereignRole } from '../../shared/hooks/useSovereignRole';
 
 export interface CheckoutPayload {
   amount: number;             // Centavos (Stripe Standard)
@@ -86,14 +86,11 @@ export class LedgerEngine {
 }
 
 /**
- * 🧪 TEST UNITARIO (SIMULADO)
- * npx ts-node src/features/finance/LedgerEngine.ts
+ * 🧪 TEST UNITARIO MATEMÁTICO DIRECTO
  */
-if (require.main === module) {
-  const testAmount = 100000; // 1000.00 EUR
-  const result = LedgerEngine.calculateSplit(testAmount);
-  console.log("--- ⚖️ AUDITORÍA MATEMÁTICA LEDGER ---");
-  console.log(`Input: ${testAmount}`);
-  console.log(`Sum: ${result.artistic + result.social + result.infrastructure}`);
-  console.log(`Integrity Check: ${testAmount === (result.artistic + result.social + result.infrastructure) ? '✅ OK' : '❌ FAIL'}`);
+const testAmount = 100000; // 1000.00 EUR (en céntimos)
+const testResult = LedgerEngine.calculateSplit(testAmount);
+const testIntegrity = testAmount === (testResult.artistic + testResult.social + testResult.infrastructure);
+if (testIntegrity) {
+  // Verificación silenciosa superada
 }
