@@ -21,7 +21,11 @@ const CreditCard = dynamic(() => import('lucide-react').then(m => m.CreditCard),
 const OrderSchema = z.object({
     id: z.string(),
     customer: z.string().optional().default('Anonymous'),
-    amount: z.union([z.number(), z.string()]).transform(v => Number(v) || 0),
+    amount: z.union([z.number(), z.string(), z.undefined(), z.null()]).transform(v => {
+        if (typeof v === 'number') return v;
+        if (typeof v === 'string') return Number(v) || 0;
+        return 0;
+    }),
     status: z.string().optional().default('INITIATED'),
     concept: z.string().optional().default('S-Class Transaction'),
     paymentMethod: z.string().optional().default('Stripe'),

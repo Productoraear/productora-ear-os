@@ -17,14 +17,26 @@ const SovereignNavbar = () => {
   const { scrollY } = useScroll();
   const { role, isAdmin } = useSovereignRole();
 
+  // Efectos Parallax y Contraste Dinámico (declarados incondicionalmente)
+  const navY = useTransform(scrollY, [0, 300], [0, -5]); 
+  const shadowOpacity = useTransform(scrollY, [0, 100], [0.1, 0.8]);
+
+  // Omni-Search Shortcut Listener (declarado incondicionalmente)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(!isSearchOpen);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isSearchOpen]);
+
   // En la raíz inicial (Gateway Soberano) no se muestra ningún menú para forzar identificación
   if (pathname === '/') {
     return null;
   }
-  
-  // Efectos Parallax y Contraste Dinámico
-  const navY = useTransform(scrollY, [0, 300], [0, -5]); 
-  const shadowOpacity = useTransform(scrollY, [0, 100], [0.1, 0.8]);
 
   // Configuración de Estilo por Rol
   const roleStyles: Record<string, string> = {
@@ -38,18 +50,6 @@ const SovereignNavbar = () => {
     ROLE_AFFILIATE: "border-orange-500/20 bg-[#0a0f0a]/70",
     ROLE_CLIENT: "border-[#ecb613]/20 bg-[#050505]/70"
   };
-
-  // Omni-Search Shortcut Listener
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setIsSearchOpen(!isSearchOpen);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isSearchOpen]);
 
   return (
     <motion.header 
