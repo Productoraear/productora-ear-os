@@ -17,9 +17,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ArtistDetailPage({ params }: PageProps) {
     const { slug } = await params;
     
-    // Bypass de tipado estricto de Prisma para asegurar build verde en producción
-    const prismaAny = prisma as any;
-    const artist = prismaAny.artist?.findFirst ? await prismaAny.artist.findFirst({ where: { slug } }) : null;
+    // Tipado estricto con el modelo autogenerado de Prisma (artistProfile)
+    const artist = await prisma.artistProfile.findUnique({
+        where: { slug },
+        include: {
+            user: {
+                select: {
+                    name: true,
+                    displayName: true,
+                }
+            }
+        }
+    });
 
     if (!artist) {
         return (
@@ -30,9 +39,11 @@ export default async function ArtistDetailPage({ params }: PageProps) {
         );
     }
 
+    const artistName = artist.stageName || artist.displayName || artist.user?.displayName || artist.user?.name || slug;
+
     return (
         <main className="min-h-screen bg-black text-white p-12">
-            <h1 className="text-4xl font-bold mb-4">{artist.name}</h1>
+            <h1 className="text-4xl font-bold mb-4">{artistName}</h1>
             <p className="text-gray-400">{artist.bio || 'Sin biografía registrada.'}</p>
         </main>
     );
