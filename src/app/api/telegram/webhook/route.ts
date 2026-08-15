@@ -92,6 +92,7 @@ El núcleo de *Astra AI* calculará en tiempo real:
 📍 *Ubicación:* ${quote.location}
 📅 *Fecha:* ${quote.date}
 👥 *Aforo:* ${quote.pax} pax (${quote.powerRmsRequired.toLocaleString()}W RMS Calculados)
+🗺️ *Distancia Base:* ${quote.distanceKm} km | Desplazamiento: ${quote.travelCost} €
 
 🎛️ *EQUIPAMIENTO RECOMENDADO:*
 • ${quote.hardwarePack.name}
