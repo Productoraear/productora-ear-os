@@ -17,15 +17,15 @@ interface NivelCascada {
 
 const NIVELES_CASCADA: NivelCascada[] = [
   { nivel: 1, nombre: 'Soberanía', anchor: 'auth_nexus_sovereignty', estado: 'ONLINE', descripcion: 'Firebase Auth + Sincronización Supabase JWT', archivosClave: ['auth_nexus.ts', 'AuthContext.tsx'] },
-  { nivel: 2, nombre: 'Inteligencia', anchor: 'vampire_rag_intelligence', estado: 'EN_PROGRESO', descripcion: 'Extracción competitiva + RAG semántico', archivosClave: ['ghost_hunter.ts', 'vampire_scrapers/'] },
-  { nivel: 3, nombre: 'Nervio Central', anchor: 'command_center_nerve', estado: 'PENDIENTE', descripcion: 'Centro de Mando Fénix (Hub del CEO)', archivosClave: ['EarCommandCenter.tsx'] },
-  { nivel: 4, nombre: 'Logística', anchor: 'logistics_bespoke_fleet', estado: 'PENDIENTE', descripcion: 'Configurador Bespoke + Gestión de Flota', archivosClave: ['BespokeConfigurator.tsx', 'FleetTracker.tsx'] },
-  { nivel: 5, nombre: 'CRM & Dominancia', anchor: 'crm_expansion_dominance', estado: 'PENDIENTE', descripcion: 'Matriz de Soberanos + Ofertas Vampiro', archivosClave: ['ExpansionDashboard.tsx'] },
-  { nivel: 6, nombre: 'Seguimiento Táctico', anchor: 'tactical_progress_tracker', estado: 'PENDIENTE', descripcion: 'Gobernanza visual con Puntos de Anclaje', archivosClave: ['TacticalTracker.tsx'] },
-  { nivel: 7, nombre: 'Generación Demanda', anchor: 'demand_generation_autonomous', estado: 'PENDIENTE', descripcion: 'Campañas y funnels autónomos (AEO)', archivosClave: ['DemandEngine.tsx'] },
-  { nivel: 8, nombre: 'Red de Alianzas', anchor: 'alliance_affiliate_network', estado: 'PENDIENTE', descripcion: 'Red de proveedores y afiliados estratégicos', archivosClave: ['AllianceNetwork.tsx'] },
-  { nivel: 9, nombre: 'IA Predictiva', anchor: 'predictive_analytics_astra', estado: 'PENDIENTE', descripcion: 'Gemelo Neural Astra (Oráculo de Precios)', archivosClave: ['AstraService.ts', 'AstraNeuralTwin.tsx'] },
-  { nivel: 10, nombre: 'Dominancia Total', anchor: 'total_dominance_autonomous', estado: 'PENDIENTE', descripcion: 'Imperio autónomo operando en piloto automático', archivosClave: ['EmpireLoop.ts', 'AutonomousOrchestrator.tsx'] },
+  { nivel: 2, nombre: 'Inteligencia', anchor: 'vampire_rag_intelligence', estado: 'ONLINE', descripcion: 'Extracción competitiva + RAG semántico (25MB ZK)', archivosClave: ['ghost_hunter.ts', 'ear-rag-database.json'] },
+  { nivel: 3, nombre: 'Nervio Central', anchor: 'command_center_nerve', estado: 'ONLINE', descripcion: 'Centro de Mando Fénix (Hub del CEO)', archivosClave: ['EarCommandCenter.tsx', 'NexusRealCockpit.tsx'] },
+  { nivel: 4, nombre: 'Logística', anchor: 'logistics_bespoke_fleet', estado: 'ONLINE', descripcion: 'Configurador Bespoke + Gestión de Flota VIP', archivosClave: ['BespokeConfigurator.tsx', 'FleetTracker.tsx'] },
+  { nivel: 5, nombre: 'CRM & Dominancia', anchor: 'crm_expansion_dominance', estado: 'ONLINE', descripcion: 'Matriz de Soberanos + Tripwire Ledger', archivosClave: ['ExpansionDashboard.tsx', 'FinancialPanel.tsx'] },
+  { nivel: 6, nombre: 'Seguimiento Táctico', anchor: 'tactical_progress_tracker', estado: 'ONLINE', descripcion: 'Gobernanza visual con Puntos de Anclaje', archivosClave: ['TacticalTracker.tsx'] },
+  { nivel: 7, nombre: 'Generación Demanda', anchor: 'demand_generation_autonomous', estado: 'ONLINE', descripcion: 'Campañas y funnels autónomos (AEO & Hummingbird)', archivosClave: ['HummingbirdFlight.tsx', 'NeuralJourneyApex.tsx'] },
+  { nivel: 8, nombre: 'Red de Alianzas', anchor: 'alliance_affiliate_network', estado: 'ONLINE', descripcion: 'Red de proveedores y catálogo nacional ZK', archivosClave: ['vampire_public_catalog_zk.json'] },
+  { nivel: 9, nombre: 'IA Predictiva', anchor: 'predictive_analytics_astra', estado: 'ONLINE', descripcion: 'Gemelo Neural Astra & Telemetría Acústica', archivosClave: ['weddingMatchEngine.ts', 'pricing-engine.ts'] },
+  { nivel: 10, nombre: 'Dominancia Total', anchor: 'total_dominance_autonomous', estado: 'ONLINE', descripcion: 'Imperio autónomo operando en piloto automático', archivosClave: ['SovereignNavbar.tsx', 'ThreeDoors.tsx'] },
 ];
 
 const configuracionEstado = {

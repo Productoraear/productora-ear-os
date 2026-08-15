@@ -44,11 +44,13 @@ export default function NexusCommandCenter() {
       </div>
 
       {/* 📊 TELEMETRÍA 100% REAL Y FUNCIONAL (CERO DATOS VANIDOSOS) */}
-      <NexusRealCockpit />
+      <div className="w-full overflow-hidden">
+        <NexusRealCockpit />
+      </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Celda Principal (Span 2) */}
-        <div className="xl:col-span-2 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Celda Principal (Span 8 en Desktop, full en Mobile) */}
+        <div className="lg:col-span-8 flex flex-col gap-8">
           <Suspense fallback={<PanelSkeleton title="Omega Cockpit" />}>
             <OmegaCockpitPanel />
           </Suspense>
@@ -58,8 +60,8 @@ export default function NexusCommandCenter() {
           </Suspense>
         </div>
 
-        {/* Celda Lateral (Finanzas) */}
-        <div className="xl:col-span-1">
+        {/* Celda Lateral (Finanzas y Ledger - Span 4 en Desktop, full en Mobile) */}
+        <div className="lg:col-span-4 flex flex-col gap-8">
           <Suspense fallback={<PanelSkeleton title="Financial Ledger" />}>
             <FinancialPanel />
           </Suspense>
