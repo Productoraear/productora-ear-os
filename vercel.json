@@ -1,13 +1,13 @@
 {
   "crons": [
+{
+  "crons": [
     {
-      "path": "/api/infra/keep-alive",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/telegram/dashboard",
+      "path": "/api/cron/hunter",
       "schedule": "0 3 * * *"
     }
+  ]
+}
   ],
   "build": {
     "env": {
