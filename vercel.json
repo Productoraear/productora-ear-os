@@ -3,6 +3,10 @@
     {
       "path": "/api/infra/keep-alive",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/telegram/dashboard",
+      "schedule": "0 */6 * * *"
     }
   ],
   "build": {
