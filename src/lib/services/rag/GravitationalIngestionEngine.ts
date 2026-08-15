@@ -251,7 +251,7 @@ export class GravitationalIngestionEngine {
     ];
 
     for (const p of possiblePaths) {
-      if (fs.existsSync(p)) {
+if (fs.existsSync(/*turbopackIgnore: true*/ p)) {
         try {
           const raw = fs.readFileSync(/*turbopackIgnore: true*/ p, 'utf-8');
           const parsed = JSON.parse(raw);

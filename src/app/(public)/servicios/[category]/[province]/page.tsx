@@ -1,11 +1,10 @@
-import { metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import publicCatalog from '@/scripts/vampire_public_catalog_zk.json';
-import { calculateGeoPricing } from '@/lib/services/pricing/geo-pricer';
+import publicCatalog from '../../../../../../scripts/vampire_public_catalog_zk.json';
 
 interface PageProps {
-  params: { category: string; province: string };
+  params: Promise<{ category: string; province: string }>;
 }
 
 // 1. Matriz de Generación Estática (Categoría x Provincia)
@@ -22,15 +21,15 @@ export async function generateStaticParams() {
   return params;
 }
 
-export default function CategoryProvinceSeoPage({ params }: PageProps) {
-  const categoryTitle = params.category.toUpperCase();
-  const provinceData = calculateGeoPricing(params.province);
-  const normalizedProvince = provinceData.normalizedProvince || params.province;
+export default async function CategoryProvinceSeoPage({ params }: PageProps) {
+  const { category, province } = await params;
+  const categoryTitle = category.toUpperCase();
+  const normalizedProvince = province;
 
   // Filtrado de proveedores por categoría y localización
   const filteredVendors = publicCatalog.filter(
     (vendor: any) =>
-      vendor.category?.toLowerCase().includes(params.category.toLowerCase()) ||
+      vendor.category?.toLowerCase().includes(category.toLowerCase()) ||
       vendor.description?.toLowerCase().includes(normalizedProvince.toLowerCase())
   );
 
@@ -40,7 +39,7 @@ export default function CategoryProvinceSeoPage({ params }: PageProps) {
     '@type': 'ItemList',
     name: `Los mejores profesionales de ${categoryTitle} en ${normalizedProvince}`,
     description: `Directorio oficial y contratacion directa de ${categoryTitle} en ${normalizedProvince}. Reserva garantizada con Price-Lock 72h.`,
-    url: `https://www.productoraear.com/servicios/${params.category}/${params.province}`,
+    url: `https://www.productoraear.com/servicios/${category}/${province}`,
     numberOfItems: filteredVendors.length,
     itemListElement: filteredVendors.slice(0, 10).map((vendor: any, index: number) => ({
       '@type': 'ListItem',
