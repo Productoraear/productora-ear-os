@@ -8,6 +8,16 @@ if (fs.existsSync('.env.production.local')) dotenv.config({ path: '.env.producti
 if (fs.existsSync('.env.local')) dotenv.config({ path: '.env.local' });
 dotenv.config({ path: '.env' });
 
+if (!process.env.POSTGRES_PRISMA_URL && process.env.DATABASE_URL) {
+  process.env.POSTGRES_PRISMA_URL = process.env.DATABASE_URL;
+}
+if (!process.env.POSTGRES_URL_NON_POOLING && process.env.DATABASE_URL) {
+  process.env.POSTGRES_URL_NON_POOLING = process.env.DATABASE_URL;
+}
+if (!process.env.FIREBASE_ADMIN_PROJECT_ID && process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) {
+  process.env.FIREBASE_ADMIN_PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+}
+
 /**
  * 👑 SCRIPT DE RESTAURACIÓN DE ADMINISTRADOR ÚNICO (EAR OS V2)
  * Inyecta Custom Claims de Superadmin en Firebase Auth y eleva el registro en PostgreSQL (Prisma).

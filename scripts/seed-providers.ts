@@ -7,6 +7,13 @@ if (fs.existsSync('.env.production.local')) dotenv.config({ path: '.env.producti
 if (fs.existsSync('.env.local')) dotenv.config({ path: '.env.local' });
 dotenv.config({ path: '.env' });
 
+if (!process.env.POSTGRES_PRISMA_URL && process.env.DATABASE_URL) {
+  process.env.POSTGRES_PRISMA_URL = process.env.DATABASE_URL;
+}
+if (!process.env.POSTGRES_URL_NON_POOLING && process.env.DATABASE_URL) {
+  process.env.POSTGRES_URL_NON_POOLING = process.env.DATABASE_URL;
+}
+
 export interface LegacyProviderData {
   id?: string;
   slug?: string;
