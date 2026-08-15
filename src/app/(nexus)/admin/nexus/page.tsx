@@ -3,6 +3,7 @@
 import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { Activity } from 'lucide-react';
+import NexusRealCockpit from '@/components/admin/NexusRealCockpit';
 
 // 1. Inyección Segura: Carga diferida sin SSR para evitar bloqueos de hidratación
 const OmegaCockpitPanel = dynamic(() => import('@/modules/SClassScreens/panels/OmegaCockpitPanel'), { 
@@ -28,19 +29,22 @@ const PanelSkeleton = ({ title }: { title: string }) => (
   </div>
 );
 
-// 3. Chasis de Cristal (Nexus Dashboard)
+// 3. Chasis de Cristal (Nexus Dashboard con Telemetría Real)
 export default function NexusCommandCenter() {
   return (
-    <div className="min-h-screen bg-[#050505] p-4 lg:p-8 text-white font-sans">
-      <div className="mb-8 border-b border-white/10 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div className="min-h-screen bg-[#050505] p-4 lg:p-8 text-white font-sans space-y-8">
+      <div className="border-b border-white/10 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <span className="text-[#ecb613] text-xs font-mono tracking-widest uppercase border border-[#ecb613]/30 px-3 py-1 rounded-full bg-[#ecb613]/5">
-            Centro de Mando Supremo :: Materia Oscura Rescatada
+            Centro de Mando Supremo :: Telemetría Real en Vivo
           </span>
           <h1 className="text-3xl font-extrabold mt-3 tracking-tight">NEXUS S-CLASS</h1>
           <p className="text-slate-400 text-sm mt-1">Telemetría Operativa, Licitaciones B2G y Flujo de Caja Soberano</p>
         </div>
       </div>
+
+      {/* 📊 TELEMETRÍA 100% REAL Y FUNCIONAL (CERO DATOS VANIDOSOS) */}
+      <NexusRealCockpit />
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Celda Principal (Span 2) */}
