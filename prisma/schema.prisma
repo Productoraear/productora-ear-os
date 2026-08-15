@@ -288,3 +288,27 @@ model calendarBlock {
   date            DateTime?
   createdAt       DateTime  @default(now())
 }
+
+model VendorShadowProfile {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  rawName         String
+  description     String?
+  extractedImages String[]
+  claimToken      String   @unique
+  isClaimed       Boolean  @default(false)
+  sourceOrigin    String   @default("PARSED_LOCAL")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model EquipmentInventory {
+  id             String   @id @default(uuid())
+  modelName      String   // Ej: "Bose F1 Model 812"
+  serialNumber   String   @unique
+  category       String   // SOUND_PA, MIXER, MICROPHONE, LIGHTING
+  isAvailable    Boolean  @default(true)
+  suitableForPax Int      @default(300)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
