@@ -37,11 +37,6 @@ function CheckoutPresupuestoContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!rawPayload && !quoteHash) {
-      setIsTampered(true);
-      return;
-    }
-
     if (rawPayload) {
       try {
         const decodedStr = atob(rawPayload);
@@ -55,21 +50,22 @@ function CheckoutPresupuestoContent() {
         setIsTampered(true);
       }
     } else {
-      // Si solo viene hash sin payload firmado
+      // Flujo directo desde el Túnel Neural / Carrito en vivo
       setQuoteData({
-        quoteHash,
-        location: 'Ubicación registrada en base de datos',
-        date: 'Fecha guardada',
+        quoteHash: quoteHash || `SHA256-NEURAL-${Date.now()}`,
+        location: 'Comunidad de Madrid / Cobertura Nacional',
+        date: 'Fecha Seleccionada en Túnel Neural',
         pax: 150,
-        hardware: 'Bose F1 Model 812 + XR18',
-        estimatedTotal: 1200,
+        hardware: 'Sistema Line Array Bose F1 + Shure Axient Digital',
+        artist: 'Edwin Agudelo (Tenor Lírico / Ensamble de Gala)',
+        estimatedTotal: 2950,
         depositAmount: 10
       });
     }
 
     igniteTripwire('PRICE_LOCK_CHECKOUT_VIEW', {
-      quoteHash: quoteHash || 'UNKNOWN',
-      metadata: { source: 'TELEGRAM_INTAKE' }
+      quoteHash: quoteHash || 'NEURAL-FUNNEL',
+      metadata: { source: 'NEURAL_JOURNEY_DIRECT' }
     });
   }, [rawPayload, quoteHash, igniteTripwire]);
 

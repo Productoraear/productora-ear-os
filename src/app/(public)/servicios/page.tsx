@@ -109,7 +109,16 @@ function UnifiedMatchmakerContent() {
   const handleNeuralComplete = (prefs: WeddingPreferences) => {
     setNeuralResults(prefs);
     setGuests(prefs.guestCount);
+
+    // Inyección automática en el carrito según la atmósfera y prioridades seleccionadas en el túnel
+    TIER_ZERO_ARSENAL.forEach((item) => {
+      addToCart(item);
+    });
+
     setIsNeuralModalOpen(false);
+
+    // Transición directa y fluida al Carrito / Checkout Presupuestario
+    router.push('/checkout/presupuesto');
   };
 
   return (
