@@ -35,7 +35,7 @@ import { ThemeProvider } from "@/app/context/ThemeContext";
 
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
 import EarBottomNav from "@/app/components/layout/EarBottomNav";
-import AuraMatrixCanvas from "@/app/components/3d/AuraMatrixCanvas";
+import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
 import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
 
 import { EventCartProvider } from "@/context/EventCartContext";
@@ -71,7 +71,7 @@ export default function RootLayout({
                             <SovereignNavbar />
                             {children}
                             <EarBottomNav />
-                            <AuraMatrixCanvas />
+                            <HummingbirdFlight />
                           </>
                         </main>
                         <BespokePricerModal />
