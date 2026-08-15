@@ -27,12 +27,15 @@ import { GhostTracker } from '@/components/events/GhostTracker';
     ssr: false
 }); */
 
+import { FleetTracker } from '../FleetTracker';
+import { ExpansionDashboard } from '../ExpansionDashboard';
+
 export default function OmnibusVertical() {
     const [activePanel, setActivePanel] = useState<'FLEET' | 'HUB' | 'GHOST'>('FLEET');
 
     const panels = {
-        FLEET: { component: <div className="p-4 text-white/50">Telemetría de Flota en cuarentena.</div>, icon: Truck, label: 'Telemetría de Flota' },
-        HUB: { component: <div className="p-4 text-white/50">Bóveda CRM & Market en cuarentena.</div>, icon: Database, label: 'Bóveda CRM & Market' },
+        FLEET: { component: <FleetTracker />, icon: Truck, label: 'Telemetría de Flota' },
+        HUB: { component: <ExpansionDashboard />, icon: Database, label: 'Bóveda CRM & Market' },
         GHOST: { component: <GhostTracker />, icon: Navigation, label: 'Ghost Tracking' }
     };
 

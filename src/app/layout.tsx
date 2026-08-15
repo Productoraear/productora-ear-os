@@ -6,9 +6,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://productoraear.com"),
-  title: "Unio - Matchmaking and Events Platform",
-  description: "Plataforma de soberanía operativa y despliegue institucional para Productora EAR y VIMUME.",
-  keywords: ["VIMUME", "Productora EAR", "EAR OS", "S-Class", "Logistics OS"],
+  title: "EarOS :: Sistema Operativo de Eventos & Matchmaking",
+  description: "Plataforma de soberanía operativa, booking y contratación para Productora EAR.",
+  keywords: ["EarOS", "Productora EAR", "Edwin Agudelo", "S-Class", "Logistics OS"],
   authors: [{ name: "EAR OS Core" }],
   icons: {
     icon: "/favicon.svg",
@@ -38,6 +38,8 @@ import EarBottomNav from "@/app/components/layout/EarBottomNav";
 import AuraMatrixCanvas from "@/app/components/3d/AuraMatrixCanvas";
 import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
 
+import { EventCartProvider } from "@/context/EventCartContext";
+
 export default function RootLayout({
   children,
 }: {
@@ -60,22 +62,24 @@ export default function RootLayout({
             <RoleSkinProvider>
               <SovereignProvider>
                 <AtmosphereProvider>
-                  <SmoothScrollProvider>
-                    <SpatialIntelligence />
-                    <div className="min-h-screen relative flex flex-col">
-                      <main className="flex-grow">
-                        <>
-                          <SovereignNavbar />
-                          {children}
-                          <EarBottomNav />
-                          <AuraMatrixCanvas />
-                        </>
-                      </main>
-                      <BespokePricerModal />
-                      <OmniSearchModal />
-                      <DynamicContextBar />
-                    </div>
-                  </SmoothScrollProvider>
+                  <EventCartProvider>
+                    <SmoothScrollProvider>
+                      <SpatialIntelligence />
+                      <div className="min-h-screen relative flex flex-col">
+                        <main className="flex-grow">
+                          <>
+                            <SovereignNavbar />
+                            {children}
+                            <EarBottomNav />
+                            <AuraMatrixCanvas />
+                          </>
+                        </main>
+                        <BespokePricerModal />
+                        <OmniSearchModal />
+                        <DynamicContextBar />
+                      </div>
+                    </SmoothScrollProvider>
+                  </EventCartProvider>
                 </AtmosphereProvider>
               </SovereignProvider>
             </RoleSkinProvider>

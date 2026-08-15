@@ -8,11 +8,19 @@ import { cn } from '@/lib/utils';
 import { useSharedContext } from '@/app/context/SharedContext';
 import { useSovereignRole } from '@/shared/hooks/useSovereignRole';
 
+import { usePathname } from 'next/navigation';
+
 const SovereignNavbar = () => {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isSearchOpen, setIsSearchOpen } = useSharedContext();
   const { scrollY } = useScroll();
   const { role, isAdmin } = useSovereignRole();
+
+  // En la raíz inicial (Gateway Soberano) no se muestra ningún menú para forzar identificación
+  if (pathname === '/') {
+    return null;
+  }
   
   // Efectos Parallax y Contraste Dinámico
   const navY = useTransform(scrollY, [0, 300], [0, -5]); 
@@ -64,7 +72,7 @@ const SovereignNavbar = () => {
             <span className="text-black font-bold text-xl font-syne">E</span>
           </div>
           <span className="text-lg md:text-xl font-bold font-syne tracking-tighter text-white">
-            {role === 'ROLE_B2G' ? "VIMUME CLINIC" : "VIMUME OS"}
+            {role === 'ROLE_B2G' ? "EarOS B2G" : "EarOS"}
           </span>
         </Link>
 

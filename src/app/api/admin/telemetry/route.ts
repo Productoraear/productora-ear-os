@@ -35,21 +35,26 @@ export async function GET() {
       console.warn('⚠️ [TELEMETRY API] Fallback a cache local JSON:', dbErr);
     }
 
-    // 2. Si la DB no está disponible en local, leer datos del backup JSON
+    // 2. Si la DB no está disponible en local, leer el índice resumen liviano (<50KB)
     if (totalVendors === 0) {
       try {
-        const jsonPath = path.join(process.cwd(), 'scripts', 'vampire_mass_extracted.json');
-        const altJsonPath = path.join(process.cwd(), 'scripts', 'vampire_shadow_profiles_sanitized.json');
-        
-        let targetPath = fs.existsSync(jsonPath) ? jsonPath : (fs.existsSync(altJsonPath) ? altJsonPath : null);
-        if (targetPath) {
-          const raw = fs.readFileSync(targetPath, 'utf-8');
-          const parsed = JSON.parse(raw);
-          totalVendors = Array.isArray(parsed) ? parsed.length : 0;
-          claimedVendors = Array.isArray(parsed) ? parsed.filter(p => p.isClaimed).length : 0;
+        const summaryPath = path.join(process.cwd(), 'scripts', 'vampire_index_summary.json');
+        if (fs.existsSync(summaryPath)) {
+          const raw = fs.readFileSync(summaryPath, 'utf-8');
+          const summary = JSON.parse(raw);
+          totalVendors = summary.totalAudited || 0;
+          claimedVendors = 0;
+        } else {
+          const jsonPath = path.join(process.cwd(), 'scripts', 'vampire_mass_extracted.json');
+          if (fs.existsSync(jsonPath)) {
+            const raw = fs.readFileSync(jsonPath, 'utf-8');
+            const parsed = JSON.parse(raw);
+            totalVendors = Array.isArray(parsed) ? parsed.length : 0;
+            claimedVendors = Array.isArray(parsed) ? parsed.filter(p => p.isClaimed).length : 0;
+          }
         }
       } catch (err) {
-        console.warn('⚠️ [TELEMETRY API] Error leyendo JSON local:', err);
+        console.warn('⚠️ [TELEMETRY API] Error leyendo índice resumen:', err);
       }
     }
 

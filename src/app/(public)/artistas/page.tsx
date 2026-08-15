@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Metadata } from 'next';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { InjectHeroButton, InjectCatalogButton } from './InjectArtistButton';
 
 export const metadata: Metadata = {
   title: 'Catálogo de Artistas & Roster S-Class | Productora EAR',
@@ -135,16 +136,15 @@ export default function ArtistasPage() {
                   href="/artistas/edwin-agudelo"
                   className="py-3.5 px-7 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all min-h-[48px]"
                 >
-                  <span>Ver Dossier Oficial de Edwin Agudelo</span>
+                  <span>Ver Dossier Oficial</span>
                   <ChevronRight size={16} />
                 </Link>
-                <Link
-                  href="/cotizador?artist=edwin-agudelo"
-                  className="py-3.5 px-7 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all min-h-[48px]"
-                >
-                  <span>Calcular Presupuesto Inmediato</span>
-                  <ArrowRight size={16} className="text-[#ecb613]" />
-                </Link>
+                <InjectHeroButton 
+                  artistId={featuredArtist.id} 
+                  artistName={featuredArtist.nombre} 
+                  basePrice={featuredArtist.basePrice} 
+                  formats={featuredArtist.formatos} 
+                />
               </div>
             </div>
 
@@ -234,13 +234,12 @@ export default function ArtistasPage() {
                     <span>Ver Ficha Técnica</span>
                     <ChevronRight size={14} />
                   </Link>
-                  <Link
-                    href={`/cotizador?artist=${art.id}`}
-                    className="flex-1 py-3 rounded-xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider text-center shadow-lg shadow-[#ecb613]/10 active:scale-95 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
-                  >
-                    <span>Cotizar Formato</span>
-                    <ArrowRight size={14} />
-                  </Link>
+                  <InjectCatalogButton
+                    artistId={art.id}
+                    artistName={art.nombre}
+                    category={art.categoria}
+                    basePrice={art.precio}
+                  />
                 </div>
               </div>
             ))}

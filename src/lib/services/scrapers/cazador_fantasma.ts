@@ -32,15 +32,29 @@ export async function runCazadorFantasma(targetUrl: string) {
         const html = await page.content();
         const $ = cheerio.load(html);
 
-        // Lógica de detección de LEADS (E-mails, Teléfonos, Nombres)
+        // Lógica de detección de LEADS (E-mails, Teléfonos, Nombres, Perfiles)
         const text = $('body').text();
         const emails = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) || [];
+        const phones = text.match(/(?:\+34|0034)?[ -]*(?:6|7|8|9)[0-9]{2}[ -]*[0-9]{3}[ -]*[0-9]{3}/g) || [];
+        
+        // Extracción de tarjetas/proveedores en directorios (ej. celebrents, bodas)
+        const extractedVendors: string[] = [];
+        $('h2, h3, a[href*="mariachi"], a[href*="orquesta"], a[href*="proveedor"], a[href*="musica"]').each((_, el) => {
+            const title = $(el).text().trim();
+            const href = $(el).attr('href');
+            if (title.length > 4 && title.length < 80 && !extractedVendors.includes(title)) {
+                extractedVendors.push(`${title}${href ? ` (${href})` : ''}`);
+            }
+        });
+
         const uniqueEmails = Array.from(new Set(emails));
-
-
-        // FILTRO DE VALOR S-CLASS & PERSISTENCIA
+        const combinedLeads = [
+            ...uniqueEmails.map(e => `[EMAIL] ${e}`),
+            ...Array.from(new Set(phones)).map(p => `[PHONE] ${p}`),
+            ...extractedVendors.slice(0, 30).map(v => `[PROVEEDOR] ${v}`)
+        ];
+        // Persistencia y retorno
         for (const email of uniqueEmails) {
-            // Persistencia en Firestore (DNA Operativo)
             try {
                 await addDoc(collection(db, 'ear_leads'), {
                     email,
@@ -53,9 +67,7 @@ export async function runCazadorFantasma(targetUrl: string) {
                 console.error(`❌ Error persistiendo lead ${email}:`, err);
             }
 
-            // Si el lead parece valioso (dominio corporativo o específico)
             const isHighValue = !email.includes('gmail.com') && !email.includes('hotmail.com');
-            
             if (isHighValue) {
                 await telegramService.sendAlert(
                     `🔥 LEAD DE ORO DETECTADO\n\nOrigen: ${targetUrl}\nContacto: ${email}\n\nStatus: Pendiente de Transmutación RAG.`,
@@ -71,8 +83,8 @@ export async function runCazadorFantasma(targetUrl: string) {
 
         return { 
             success: true, 
-            leadsCount: uniqueEmails.length,
-            leads: uniqueEmails 
+            leadsCount: combinedLeads.length > 0 ? combinedLeads.length : uniqueEmails.length,
+            leads: combinedLeads.length > 0 ? combinedLeads : uniqueEmails 
         };
 
     } catch (error: any) {

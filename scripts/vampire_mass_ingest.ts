@@ -56,8 +56,8 @@ export async function processMassIngestion() {
     return;
   }
 
-  // Carga dinámica de Prisma (anti-hoisting)
-  const { prisma } = await import('@/lib/prisma');
+  // Carga dinámica de Prisma (anti-hoisting y path relativo)
+  const { prisma } = await import('../src/lib/prisma');
   let successCount = 0;
   let errorCount = 0;
   const allExtracted: any[] = [];

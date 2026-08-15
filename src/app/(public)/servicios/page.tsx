@@ -1,183 +1,227 @@
-"use client";
+'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  ArrowRight, 
-  Sparkles, 
-  Landmark, 
-  ShieldCheck,
-  Zap,
-  Star
-} from 'lucide-react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ROUTES } from '@/lib/routes';
+import { useRouter } from 'next/navigation';
+import publicCatalog from '../../../../scripts/vampire_public_catalog_zk.json';
+import { useEventCart, CartItem } from '@/context/EventCartContext';
 
-export default function ServiciosHubPage() {
-  const categories = [
-    {
-      title: "Eventos Institucionales",
-      desc: "Protocolo, elegancia y rigor para recepciones oficiales y actos de ayuntamientos.",
-      icon: Landmark,
-      href: "/servicios/eventos-institucionales",
-      niches: ["Galas Municipales", "Actos de Patrimonio", "Protocolo Oficial"]
-    },
-    {
-      title: "Corporativo & Empresa",
-      desc: "Incentivos, cenas de gala y presentaciones de producto con impacto sonoro.",
-      icon: Zap,
-      href: "/servicios/corporativo",
-      niches: ["Incentivos", "Cenas de Gala", "Lanzamientos"]
-    },
-    {
-      title: "VIMUME (Impacto Social)",
-      desc: "Intervenciones musicales terapéuticas en centros residenciales y fundaciones.",
-      icon: Heart,
-      href: ROUTES.vimume,
-      niches: ["Centros de Día", "Residencias", "Proyectos ODS"]
-    },
-    {
-      title: "Dossier Artístico",
-      desc: "La trayectoria y autoridad de Edwin Agudelo como solista y director técnico.",
-      icon: Star,
-      href: ROUTES.dossier,
-      niches: ["Edwin Agudelo Solista", "Mariachi de Gala", "Cantando a Caballo"]
-    }
-  ];
+// Activos de Infraestructura Propia (Tier 0 - Margen >75%)
+const TIER_ZERO_ARSENAL: CartItem[] = [
+  {
+    slug: 'bose-f1-array-pack',
+    rawName: 'Sistema PA Bose F1 Model 812 + Subwoofers (2000W)',
+    category: 'Sonido Profesional',
+    itemType: 'HARDWARE_RIDER',
+    estimatedPrice: 450,
+    technicalWatts: 2000,
+  },
+  {
+    slug: 'behringer-xr18-air-pack',
+    rawName: 'Mesa Digital Behringer XR18 + Microfonía Shure Beta 87A',
+    category: 'Manejo de Señal',
+    itemType: 'HARDWARE_RIDER',
+    estimatedPrice: 220,
+    technicalWatts: 0,
+  },
+  {
+    slug: 'edwin-agudelo-tenor-mariachi',
+    rawName: 'Edwin Agudelo - Tenor & Mariachi Show Especial (Vocal Direct)',
+    category: 'Actuación Principal',
+    itemType: 'ARTIST_DIRECT',
+    estimatedPrice: 750,
+    technicalWatts: 0,
+  }
+];
+
+export default function UnifiedMatchmakerPage() {
+  const { cart, addToCart, removeFromCart, totalBudget, totalWatts, hardwareMargin } = useEventCart();
+  const router = useRouter();
+
+  const [atmosphere, setAtmosphere] = useState('elegante');
+  const [guests, setGuests] = useState<number>(150);
+  const [priceLockActive, setPriceLockActive] = useState(false);
+
+  // Autocalculadora de potencia acústica según aforo (12W por persona en exterior/gala)
+  const requiredWatts = useMemo(() => guests * 12, [guests]);
 
   return (
-    <main className="bg-background min-h-screen text-foreground selection:bg-primary/30 relative">
-      
-      {/* Dynamic Background Backdrop */}
-      <div className="absolute inset-0 bg-gradient-to-br from-card via-background to-card pointer-events-none z-0 opacity-40" />
-
-      <section className="px-6 pt-48 pb-32 relative overflow-hidden z-10">
-        {/* Atmosphere Decor */}
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto text-center space-y-12 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.4em] backdrop-blur-md"
-          >
-            <Sparkles size={14} /> Catálogo de Servicios
-          </motion.div>
-
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-7xl md:text-[10rem] font-black uppercase tracking-tighter leading-[0.8] italic text-foreground"
-          >
-            INFRAESTRUCTURA <br />
-            <span className="text-muted-foreground/20">DE VALOR</span>
-          </motion.h1>
-
-          <p className="text-xl md:text-3xl text-muted-foreground font-medium leading-relaxed max-w-4xl mx-auto italic">
-            "No vendemos música; diseñamos el ambiente de alta fidelidad que su institución o empresa requiere para trascender."
-          </p>
+    <div className="max-w-7xl mx-auto px-4 py-8 text-white font-mono pb-36">
+      <div className="mb-6 border-b border-slate-800 pb-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-amber-500">MOTOR UNIFICADO DE MATCHMAKING & BESPOKE</h1>
+          <p className="text-xs text-slate-400">Diseño de Atmósfera + Inyección Automática de Arsenal Tier 0</p>
         </div>
-      </section>
+        <button
+          onClick={() => setPriceLockActive(!priceLockActive)}
+          className={`px-4 py-2 rounded text-xs font-bold border transition ${
+            priceLockActive
+              ? 'bg-emerald-950 border-emerald-500 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]'
+              : 'bg-slate-900 border-slate-700 text-slate-300 hover:border-amber-500'
+          }`}
+        >
+          {priceLockActive ? '🔒 Tarifa Congelada (SHA-256 72h Active)' : '🔓 Activar Price-Lock 72h'}
+        </button>
+      </div>
 
-      {/* 🛠️ SERVICES GRID */}
-      <section className="px-6 py-20 relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          {categories.map((cat, i) => (
-            <Link 
-              key={i} 
-              href={cat.href} 
-              className="group p-16 bg-card border border-border rounded-[4rem] flex flex-col justify-between hover:border-primary/20 hover:shadow-2xl transition-all min-h-[450px]"
-            >
-              <div className="space-y-8">
-                <div className="p-4 bg-muted rounded-2xl w-fit text-primary group-hover:scale-110 transition-transform border border-border">
-                  <cat.icon size={32} />
-                </div>
-                <div className="space-y-4">
-                  <h2 className="text-4xl font-black uppercase tracking-tighter italic text-foreground">{cat.title}</h2>
-                  <p className="text-xl text-muted-foreground font-medium leading-relaxed max-w-sm italic">"{cat.desc}"</p>
-                </div>
-                
-                <div className="flex flex-wrap gap-2 pt-4">
-                  {cat.niches.map((n, j) => (
-                    <span 
-                      key={j} 
-                      className="px-4 py-1.5 bg-muted border border-border rounded-full text-[8px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-primary transition-colors"
-                    >
-                      {n}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-12 flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground group-hover:gap-6 transition-all">
-                Ver Detalles del Servicio <ArrowRight size={14} className="text-primary" />
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* 🧬 FAQ / DOCUMENTACIÓN RÁPIDA */}
-      <section className="px-6 py-32 border-t border-border relative z-10 bg-card/40">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-20">
-            <div className="space-y-8">
-              <h3 className="text-5xl font-black uppercase italic tracking-tighter text-foreground">
-                Garantía de <br/><span className="text-primary">Excelencia</span>
-              </h3>
-              <p className="text-muted-foreground text-lg leading-relaxed italic">
-                Cada servicio incluye un protocolo de auditoría técnica que asegura que la calidad sonora y el comportamiento del personal cumplen con los estándares de PRODUCTORAEAR.
-              </p>
-              <div className="pt-8">
-                <Link href={ROUTES.protocolo} className="inline-flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-primary hover:underline">
-                  Consultar Protocolo de Calidad <ArrowRight size={14} />
-                </Link>
-              </div>
-            </div>
-            
-            <div className="grid gap-6">
-              {[
-                { q: "¿Incluyen equipo de sonido?", a: "Sí, todos nuestros servicios incluyen ingeniería de sonido propia (EAR High Fidelity)." },
-                { q: "¿Se desplazan fuera de la zona base?", a: "Operamos en todo el territorio nacional con logística especializada." },
-                { q: "¿Cómo se formaliza la reserva?", a: "Mediante contrato de servicios institucionales tras validación de disponibilidad." }
-              ].map((faq, i) => (
-                <div key={i} className="p-8 bg-card border border-border rounded-3xl space-y-3 shadow-md hover:border-primary/20 transition-all">
-                  <p className="font-black text-sm uppercase tracking-widest text-primary">{faq.q}</p>
-                  <p className="text-muted-foreground text-xs italic font-medium">"{faq.a}"</p>
-                </div>
-              ))}
-            </div>
+      {/* DIÁLOGO TÁCTICO DE ATMÓSFERA Y AFORO */}
+      <div className="bg-slate-900 border border-slate-800 p-6 rounded-lg mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 shadow-xl">
+        <div>
+          <label className="text-xs text-amber-400 font-bold block mb-2">1. SELECCIONA LA ATMÓSFERA DEL EVENTO</label>
+          <div className="grid grid-cols-2 gap-2">
+            {['Elegante / Gala', 'Fiesta Rompedora', 'Institucional / B2G', 'Íntimo / Acústico'].map((atm) => (
+              <button
+                key={atm}
+                onClick={() => setAtmosphere(atm.toLowerCase())}
+                className={`p-2 text-xs rounded border text-left font-bold transition ${
+                  atmosphere === atm.toLowerCase()
+                    ? 'bg-amber-500 text-slate-950 border-amber-500 shadow-md shadow-amber-500/20'
+                    : 'bg-slate-950 text-slate-300 border-slate-800 hover:border-slate-700'
+                }`}
+              >
+                {atm}
+              </button>
+            ))}
           </div>
         </div>
-      </section>
 
-      {/* 📞 FINAL CTA */}
-      <section className="px-6 py-40 bg-primary text-foreground relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-12">
-          <h2 className="text-6xl md:text-8xl font-black uppercase italic tracking-tighter leading-[0.8] text-foreground">
-            ¿Hablamos <br /> de su proyecto?
-          </h2>
-          <p className="text-xl font-black uppercase tracking-widest text-foreground/60">Activar canal de consulta directa</p>
-          <div className="flex flex-col md:flex-row gap-6 justify-center pt-8">
-            <Link 
-              href={ROUTES.contacto} 
-              className="px-16 py-8 bg-foreground text-background rounded-full font-black text-xs uppercase tracking-[0.4em] hover:scale-105 transition-all text-center"
-            >
-              SOLICITAR PRESUPUESTO
-            </Link>
-            <Link 
-              href={ROUTES.dossier} 
-              className="px-16 py-8 border-2 border-foreground text-foreground rounded-full font-black text-xs uppercase tracking-[0.4em] hover:bg-foreground hover:text-background transition-all text-center"
-            >
-              VER DOSSIER TÉCNICO
-            </Link>
+        <div>
+          <div className="flex justify-between text-xs mb-2">
+            <span className="text-amber-400 font-bold">2. AFORO ESTIMADO (INVITADOS)</span>
+            <span className="text-white font-bold">{guests} PAX → Requeridos ~{requiredWatts}W PA</span>
+          </div>
+          <input
+            type="range"
+            min="30"
+            max="1000"
+            step="10"
+            value={guests}
+            onChange={(e) => setGuests(Number(e.target.value))}
+            className="w-full accent-amber-500 bg-slate-950 h-2 rounded cursor-pointer mt-4"
+          />
+          <div className="flex justify-between text-[10px] text-slate-500 mt-2">
+            <span>30 PAX (Acústico)</span>
+            <span>500 PAX (Concierto)</span>
+            <span>1000 PAX (Festival)</span>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+
+      {/* SECCIÓN 1: INYECTADOR DE ARSENAL PROPIO (TIER 0) */}
+      <div className="mb-10">
+        <h2 className="text-sm font-bold text-amber-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+          <span>⚡ INFRAESTRUCTURA TÉCNICA & ARTISTAS RECOMENDADOS (TIER 0)</span>
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {TIER_ZERO_ARSENAL.map((item) => {
+            const isInCart = cart.some((i) => i.slug === item.slug);
+            return (
+              <div key={item.slug} className="bg-slate-900 border border-amber-500/30 p-4 rounded-lg flex flex-col justify-between shadow-lg">
+                <div>
+                  <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-bold">
+                    {item.category}
+                  </span>
+                  <h3 className="font-bold text-sm text-white mt-2">{item.rawName}</h3>
+                  {item.technicalWatts ? (
+                    <p className="text-xs text-cyan-400 mt-1">Potencia: {item.technicalWatts}W RMS</p>
+                  ) : null}
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-800 flex justify-between items-center">
+                  <span className="text-sm font-bold text-white">{item.estimatedPrice} €</span>
+                  <button
+                    onClick={() => {
+                      if (isInCart) {
+                        removeFromCart(item.slug);
+                      } else {
+                        addToCart(item);
+                        router.push('/cotizador');
+                      }
+                    }}
+                    className={`px-3 py-1.5 rounded text-xs font-bold transition ${
+                      isInCart ? 'bg-red-900/50 text-red-300 border border-red-500' : 'bg-amber-500 text-slate-950 hover:bg-amber-400'
+                    }`}
+                  >
+                    {isInCart ? 'Quitar' : '+ Inyectar al Paquete'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* SECCIÓN 2: BARAJA DE PROVEEDORES INDEXADOS B2B */}
+      <div>
+        <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">
+          🌐 RED DE PROVEEDORES COMPLEMENTARIOS INDEXADOS ({(publicCatalog as any[]).length})
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {(publicCatalog as any[]).slice(0, 18).map((vendor: any) => {
+            const isInCart = cart.some((i) => i.slug === vendor.slug);
+            return (
+              <div key={vendor.slug} className="bg-slate-900/60 border border-slate-800 p-4 rounded-lg flex flex-col justify-between hover:border-slate-700 transition">
+                <div>
+                  <h3 className="font-bold text-sm text-slate-200 truncate">{vendor.rawName}</h3>
+                  <p className="text-xs text-slate-400 line-clamp-2 mt-1">{vendor.description || 'Proveedor verificado en el ecosistema.'}</p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-800 flex justify-between items-center">
+                  <Link href={`/proveedores/${vendor.slug}`} className="text-xs text-amber-400 underline">
+                    Ver Ficha →
+                  </Link>
+                  <button
+                    onClick={() => {
+                      if (isInCart) {
+                        removeFromCart(vendor.slug);
+                      } else {
+                        addToCart({
+                          slug: vendor.slug,
+                          rawName: vendor.rawName,
+                          category: 'Servicio B2B',
+                          itemType: 'VENDOR_SERVICE',
+                          estimatedPrice: 500,
+                          technicalWatts: 0,
+                        });
+                        router.push('/cotizador');
+                      }
+                    }}
+                    className={`px-3 py-1.5 rounded text-xs font-bold transition ${
+                      isInCart ? 'bg-red-900/50 text-red-300' : 'bg-slate-800 text-white hover:bg-slate-700'
+                    }`}
+                  >
+                    {isInCart ? 'Quitar' : '+ Añadir y Cotizar'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* DOCK BAR FLOTANTE DEL PAQUETE HÍBRIDO */}
+      {cart.length > 0 && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-4xl bg-slate-950 border border-amber-500/50 p-4 rounded-xl shadow-2xl flex items-center justify-between z-50 backdrop-blur-lg bg-slate-950/95">
+          <div className="flex items-center gap-6">
+            <div>
+              <span className="text-xs text-slate-400">Total Cotizado:</span>
+              <p className="text-lg font-bold text-amber-400">{totalBudget.toLocaleString()} €</p>
+            </div>
+            <div>
+              <span className="text-xs text-slate-400">Suministro Acústico:</span>
+              <p className="text-lg font-bold text-cyan-400">{totalWatts.toLocaleString()}W RMS</p>
+            </div>
+            <div className="hidden md:block">
+              <span className="text-xs text-slate-400">Margen Directo Estimado:</span>
+              <p className="text-sm font-bold text-emerald-400">~{hardwareMargin.toLocaleString()} €</p>
+            </div>
+          </div>
+          <Link
+            href="/checkout/presupuesto"
+            className="px-6 py-2.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-lg shadow-lg hover:bg-amber-400 transition"
+          >
+            Bloquear Reserva & Pagar (€{totalBudget}) →
+          </Link>
+        </div>
+      )}
+    </div>
   );
 }
-
-const Heart = ({ size }: { size: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-);

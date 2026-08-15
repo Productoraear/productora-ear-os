@@ -9,8 +9,8 @@ import { getAuth, onAuthStateChanged, User as FirebaseUser } from 'firebase/auth
 // Firebase Auth manda en el cliente. Supabase confía en Firebase vía JWT.
 // ============================================================================
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy-build.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy_key';
 
 // 1. SUPABASE CLIENT
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {

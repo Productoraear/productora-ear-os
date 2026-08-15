@@ -52,3 +52,5 @@ tools/
 # Scratch, Marketing e Inteligencia Externa
 Marketing_Skills/
 system-prompts-and-models-of-ai-tools-main/
+.env*.local
+scripts/vampire_mass_extracted.json

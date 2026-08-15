@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import { MessageSquare, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Send, CheckCircle2, Building2 } from 'lucide-react';
 import { generateWhatsAppLink } from '@/lib/whatsapp';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { useEventCart } from '@/context/EventCartContext';
+import { useTripwire } from '@/hooks/useTripwire';
 
 function ContactoContent() {
   const searchParams = useSearchParams();
@@ -25,6 +27,33 @@ function ContactoContent() {
     intent
   });
 
+  const { cart, totalBudget } = useEventCart();
+  const { igniteTripwire } = useTripwire();
+  const lockEmitted = React.useRef(false);
+  const [priceLockToken, setPriceLockToken] = useState<string | null>(null);
+
+  React.useEffect(() => {
+    if (!lockEmitted.current && cart.length > 0) {
+      lockEmitted.current = true;
+      const timestamp = Date.now();
+      const rawString = `${timestamp}-${totalBudget}-${cart.map(c => c.slug).join(',')}`;
+      
+      // Pseudo SHA-256 for visual effect / Price-Lock
+      const hashArray = Array.from(rawString).map(c => c.charCodeAt(0).toString(16));
+      const token = `SHA256-${hashArray.join('').substring(0, 32).toUpperCase()}`;
+      setPriceLockToken(token);
+
+      igniteTripwire('PRICE_LOCK_EMITTED', {
+        entityId: token,
+        entityType: 'CHECKOUT',
+        metadata: {
+          budget: totalBudget,
+          items: cart.length
+        }
+      });
+    }
+  }, [cart, totalBudget, igniteTripwire]);
+
   // Contact form state
   const [formData, setFormData] = useState({
     name: '',
@@ -42,6 +71,12 @@ function ContactoContent() {
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
+      
+      igniteTripwire('RESERVE_DEPOSIT_INIT', {
+        entityId: formData.email,
+        entityType: 'CHECKOUT',
+        metadata: { budget: totalBudget }
+      });
     }, 800);
   };
 
@@ -58,6 +93,16 @@ function ContactoContent() {
         <p className="text-white/50 text-sm sm:text-base leading-relaxed">
           Atención personalizada para particulares, wedding planners, empresas y entidades públicas. Conecta directamente por llamada, WhatsApp o formulario oficial.
         </p>
+        {priceLockToken && (
+          <div className="mt-6 p-4 border border-emerald-500/30 bg-emerald-500/10 rounded-xl inline-block text-center shadow-lg shadow-emerald-500/5">
+            <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block mb-1">
+              🔐 TARIFA CONGELADA ACTIVA (PRICE-LOCK 72H)
+            </span>
+            <span className="text-sm font-mono text-white/80 select-all">
+              TOKEN: {priceLockToken}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* 3 Quick Channels Grid */}
