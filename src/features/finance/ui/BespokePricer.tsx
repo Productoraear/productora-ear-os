@@ -1,12 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { motion, useSpring, useTransform, animate } from 'framer-motion';
-import { Zap, Shield, Activity, Target, ArrowRight, Loader2, Sparkles, Crown } from 'lucide-react';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { Zap, Shield, Activity, Target, ArrowRight, Loader2, Sparkles, Lock } from 'lucide-react';
 import { useSovereignRole } from '@/shared/hooks/useSovereignRole';
+import PriceLockBadge from './PriceLockBadge';
 
 /**
  * BespokePricer - EAR OS V2 GOLD | OMNI-STITCH 2050
- * Nodo de conversión de vanguardia con animaciones de alta fidelidad.
+ * Nodo de conversión de vanguardia con Congelador de Tarifa (Price-Lock 72h / Palanca 8) e Integración Stripe Connect.
  */
 export interface BespokePricerProps {
   category: string;
@@ -26,6 +27,7 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
   const [loading, setLoading] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [isTestMode, setIsTestMode] = useState(false); // Gatillo de 1€
+  const [priceLockData, setPriceLockData] = useState<any>(null);
 
   // Activar Test Mode con Ctrl + Shift + T (Solo Admin/Comandante)
   useEffect(() => {
@@ -58,25 +60,39 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
   const getPriceForCategory = () => {
     const cat = category.toLowerCase();
     if (isTestMode) return 1;
-    if (cat.includes('caballo')) return 5500;
-    if (cat.includes('monumental') || cat.includes('banda')) return 9500;
-    if (cat.includes('mariachi gala') || cat.includes('6+')) return 2800;
-    if (cat.includes('solista') || cat.includes('premium')) return 1500;
-    if (cat.includes('vimume')) return 3500;
+    if (cat.includes('edwin')) return 1450;
+    if (cat.includes('orquesta')) return 3800;
+    if (cat.includes('mariachi')) return 650;
+    if (cat.includes('discomovil')) return 850;
     return basePrice;
   };
 
   const finalPrice = getPriceForCategory();
 
-  useEffect(() => {
-    count.set(finalPrice);
-  }, [finalPrice, count]);
+  // 🔒 Palanca 8: Generación del Congelador de Tarifa SHA-256
+  const handleLockPrice = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/quotes/lock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: finalPrice,
+          eventDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          riderConfig: 'Bose F1 Model 812 + Subwoofers FBT + XR18 Digital',
+          location: metadata.provincia || 'Madrid / Toledo'
+        })
+      });
 
-  const getCtaLabel = () => {
-    if (loading) return 'ESTABLECIENDO VÍNCULO...';
-    if (role === 'ROLE_B2G') return 'SOLICITAR PROTOCOLO B2G';
-    if (role === 'ROLE_B2B') return 'SOLICITAR PROTOCOLO VIMUME OS';
-    return 'RESERVAR AHORA';
+      const data = await res.json();
+      if (data.success) {
+        setPriceLockData(data);
+      }
+    } catch (err) {
+      console.error('❌ [PRICE_LOCK_FAILED]:', err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCheckout = async () => {
@@ -86,7 +102,7 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: isTestMode ? 1 : finalPrice, // Enviamos el valor nominal, el API convierte a centavos
+          amount: isTestMode ? 1 : finalPrice, // Valor nominal
           concept: `Certificación VIMUME OS: ${category}${isTestMode ? ' [TEST_MODE]' : ''}`,
           metadata: {
             category,
@@ -94,6 +110,7 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
             venue_id: isGoldenCohort ? category : '',
             is_b2g: isB2G,
             artist_tier: category.toLowerCase().includes('edwin') ? 'INSTITUTIONAL_AUTHORITY' : 'STANDARD',
+            price_lock_hash: priceLockData?.priceLockHash || '',
             ...metadata
           }
         })
@@ -112,13 +129,19 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
     }
   };
 
+  const getCtaLabel = () => {
+    if (isTestMode) return 'EJECUTAR PRUEBA DE COBRO (1.00 €)';
+    if (isB2G) return 'SOLICITAR DOSSIER Y MEMORIA ART. 118 LCSP';
+    return 'RESERVAR FECHA Y BLOQUEAR TARIFA';
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="glass-panel p-10 flex flex-col gap-8 group relative overflow-hidden transition-all duration-700 hover:shadow-[0_0_50px_rgba(212,168,85,0.15)]"
+      className="glass-panel p-8 md:p-10 flex flex-col gap-8 group relative overflow-hidden transition-all duration-700 hover:shadow-[0_0_50px_rgba(212,168,85,0.15)] bg-[#050505] border border-white/10 rounded-3xl"
     >
       {/* Visual Artifacts */}
       <div className="absolute -top-12 -right-12 w-48 h-48 bg-[#ecb613]/5 blur-[80px] rounded-full group-hover:bg-[#ecb613]/10 transition-all duration-1000" />
@@ -138,102 +161,62 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
         </h3>
       </div>
 
-      <div className="flex items-baseline gap-2 relative">
-        <motion.span className="text-6xl font-black text-white tracking-tighter italic">
-          {rounded}
-        </motion.span>
-        <span className="text-[10px] font-black text-white/20 uppercase tracking-widest mb-4">Start</span>
-        {isTestMode && (
-          <div className="absolute -top-6 right-0 bg-red-600 text-white text-[8px] font-black px-2 py-1 rounded uppercase animate-pulse">
-            1€ Gatillo Armado
-          </div>
-        )}
-      </div>
-
-      <div className="space-y-4 relative z-10">
-        <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#ecb613] animate-pulse" />
-          Protocolo Institucional Ready
+      {/* 💰 Precio animado */}
+      <div className="flex flex-col gap-1 my-2">
+        <span className="text-xs text-slate-400 uppercase font-mono tracking-widest">Inversión Estimada S-Class</span>
+        <div className="flex items-baseline gap-3">
+          <motion.span className="text-5xl md:text-6xl font-black text-white tracking-tight">
+            {rounded}
+          </motion.span>
+          <span className="text-xs text-[#ecb613] font-bold font-mono">+ IVA</span>
         </div>
-        <p className="text-[11px] text-white/30 leading-relaxed font-medium">
-          Infraestructura de alta fidelidad validada institucionalmente. Prioridad de despliegue en 52 provincias.
-        </p>
-
-        {isGoldenCohort && (
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="p-4 bg-[#ecb613]/5 border border-[#ecb613]/20 rounded-xl mt-4"
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <Crown size={12} className="text-[#ecb613]" />
-              <span className="text-[9px] font-black uppercase tracking-widest text-[#ecb613]">Artista Recomendado VIMUME OS</span>
-            </div>
-            <p className="text-[10px] text-white/60 font-bold uppercase tracking-tight">
-              Edwin Agudelo (Autoridad VIMUME) es el proveedor pre-aprobado para la acústica de este recinto.
-            </p>
-          </motion.div>
-        )}
-
-        {isB2G && (
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="p-6 bg-blue-500/5 border border-blue-500/20 rounded-2xl mt-6 relative overflow-hidden group"
-          >
-            <div className="absolute inset-0 bg-blue-500/5 translate-x-full group-hover:translate-x-0 transition-transform duration-700" />
-            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-3">
-                <Shield size={16} className="text-blue-400" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">Protocolo VIMUME Activo</span>
-              </div>
-              <p className="text-[11px] text-white/70 font-bold uppercase tracking-tight leading-relaxed">
-                La contratación de Edwin Agudelo en su municipio activa automáticamente el Programa de Innovación Social VIMUME, financiando sesiones de musicoterapia de alto impacto para la población senior local.
-              </p>
-            </div>
-          </motion.div>
-        )}
-
-        {/* UPSELLING ECUESTRE: Solo para exteriores o grandes recintos */}
-        {!category.toLowerCase().includes('caballo') && (isB2G || isGoldenCohort) && (
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-6 bg-[#ecb613]/5 border border-[#ecb613]/30 rounded-2xl mt-6 border-dashed group cursor-pointer"
-            onClick={() => window.location.href = `/servicios/edwin-caballo/${metadata.provincia || 'madrid'}`}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-3">
-                <Sparkles size={16} className="text-[#ecb613] animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#ecb613]">Upgrade Recomendado</span>
-              </div>
-              <ArrowRight size={14} className="text-[#ecb613] group-hover:translate-x-2 transition-transform" />
-            </div>
-            <h4 className="text-xs font-black uppercase tracking-tighter text-white mb-2">Show "Cantando a Caballo"</h4>
-            <p className="text-[10px] text-white/40 font-medium uppercase leading-tight italic">
-              "La experiencia definitiva de arte ecuestre y música vernácula dirigida por el maestro Daniel".
-            </p>
-          </motion.div>
-        )}
       </div>
 
+      {/* 🔒 Botón Congelador de Tarifa (Palanca 8) */}
+      {!priceLockData ? (
+        <button
+          onClick={handleLockPrice}
+          disabled={loading}
+          className="w-full py-3 bg-white/5 border border-[#ecb613]/30 hover:bg-[#ecb613]/10 text-[#ecb613] rounded-2xl text-xs font-mono uppercase tracking-widest flex items-center justify-center gap-2 transition-all cursor-pointer"
+        >
+          <Lock className="w-4 h-4" /> Congelar Tarifa 72h con Hash SHA-256
+        </button>
+      ) : (
+        <PriceLockBadge
+          initialHash={priceLockData.priceLockHash}
+          initialAmount={priceLockData.amount}
+          initialExpiresAtMs={priceLockData.expiresAtMs}
+          riderConfig={priceLockData.riderConfig}
+          onPayLock={handleCheckout}
+        />
+      )}
+
+      {/* Mensajes de Autoridad */}
+      {isGoldenCohort && (
+        <div className="p-4 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-2xl text-xs text-slate-300">
+          <span className="text-[#ecb613] font-bold block mb-1">Finca Reconocida: {category}</span>
+          <p className="text-[11px] text-slate-400">Configuración acústica pre-homologada para evitar problemas de limitadores de sonido.</p>
+        </div>
+      )}
+
+      {/* Botón Principal de Reserva */}
       <motion.button 
         onClick={handleCheckout}
         disabled={loading}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className="w-full bg-white text-black font-black py-6 rounded-2xl flex items-center justify-center gap-4 transition-all relative overflow-hidden group/btn"
+        className="w-full bg-white text-black font-black py-5 rounded-2xl flex items-center justify-center gap-4 transition-all relative overflow-hidden group/btn cursor-pointer shadow-xl"
       >
         <motion.div 
           className="absolute inset-0 bg-[#ecb613] translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500"
         />
         <div className="relative z-10 flex items-center gap-3">
           {loading ? <Loader2 size={18} className="animate-spin" /> : <ArrowRight size={18} />}
-          <span className="text-[10px] uppercase tracking-[0.3em]">{getCtaLabel()}</span>
+          <span className="text-xs uppercase tracking-[0.25em] font-extrabold">{getCtaLabel()}</span>
         </div>
       </motion.button>
 
-      <div className="flex justify-between items-center pt-4 border-t border-white/5 opacity-30">
+      <div className="flex justify-between items-center pt-4 border-t border-white/5 opacity-30 text-white">
          <Activity size={12} />
          <Shield size={12} className="text-[#ecb613]" />
          <Target size={12} />
@@ -241,3 +224,5 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
     </motion.div>
   );
 };
+
+export default BespokePricer;
