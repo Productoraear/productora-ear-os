@@ -7,10 +7,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, Shield, Zap, Activity, Award, CheckCircle2, 
   Layers, Sliders, ArrowRight, Lock, Unlock, Radio, Users, 
-  Cpu, Music, Flame, GlassWater, Crown, Disc
+  Cpu, Music, Flame, GlassWater, Crown, Disc, Utensils, 
+  Headphones, Camera, Video, Lightbulb, ClipboardList, ChevronRight
 } from 'lucide-react';
 import publicCatalog from '@/data/catalog/vampire_public_catalog_zk.json';
 import { useEventCart, CartItem } from '@/context/EventCartContext';
+import { NeuralJourneyApex } from '@/app/components/SClassScreens/NeuralJourneyApex';
+import { EventEngineProvider } from '@/contexts/EventEngineContext';
+import type { AuraType, ClimaxType, ServiceCategory, WeddingPreferences } from '@/lib/engines/weddingMatchEngine';
 
 // Activos de Infraestructura Propia (Tier 0 - Margen >75% / S-Class Certified)
 const TIER_ZERO_ARSENAL: CartItem[] = [
@@ -80,6 +84,14 @@ const ATMOSPHERES = [
 ];
 
 export default function UnifiedMatchmakerPage() {
+  return (
+    <EventEngineProvider>
+      <UnifiedMatchmakerContent />
+    </EventEngineProvider>
+  );
+}
+
+function UnifiedMatchmakerContent() {
   const { cart, addToCart, removeFromCart, totalBudget, totalWatts, hardwareMargin } = useEventCart();
   const router = useRouter();
 
@@ -87,10 +99,18 @@ export default function UnifiedMatchmakerPage() {
   const [guests, setGuests] = useState<number>(150);
   const [priceLockActive, setPriceLockActive] = useState(true);
   const [activeTab, setActiveTab] = useState<'tier0' | 'catalog'>('tier0');
+  const [isNeuralModalOpen, setIsNeuralModalOpen] = useState(false);
+  const [neuralResults, setNeuralResults] = useState<WeddingPreferences | null>(null);
 
   // Autocalculadora de potencia acústica según aforo (12W por persona en exterior/gala)
   const requiredWatts = useMemo(() => guests * 12, [guests]);
   const activeAtmosphereData = useMemo(() => ATMOSPHERES.find(a => a.id === atmosphere) || ATMOSPHERES[0], [atmosphere]);
+
+  const handleNeuralComplete = (prefs: WeddingPreferences) => {
+    setNeuralResults(prefs);
+    setGuests(prefs.guestCount);
+    setIsNeuralModalOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pb-40">
@@ -246,30 +266,69 @@ export default function UnifiedMatchmakerPage() {
         </div>
 
         {/* TABS DE SELECCIÓN DE REPERTORIO / ARSENAL */}
-        <div className="flex items-center gap-4 mb-8 border-b border-white/10 pb-4">
-          <button
-            onClick={() => setActiveTab('tier0')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
-              activeTab === 'tier0'
-                ? 'bg-[#ecb613] text-black shadow-[0_0_25px_rgba(236,182,19,0.3)]'
-                : 'text-white/60 hover:text-white hover:bg-white/5'
-            }`}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-white/10 pb-4">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setActiveTab('tier0')}
+              className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
+                activeTab === 'tier0'
+                  ? 'bg-[#ecb613] text-black shadow-[0_0_25px_rgba(236,182,19,0.3)]'
+                  : 'text-white/60 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Sparkles size={15} />
+              INFRAESTRUCTURA TÉCNICA & ARTISTAS S-CLASS ({TIER_ZERO_ARSENAL.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('catalog')}
+              className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
+                activeTab === 'catalog'
+                  ? 'bg-[#ecb613] text-black shadow-[0_0_25px_rgba(236,182,19,0.3)]'
+                  : 'text-white/60 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Users size={15} />
+              CATÁLOGO NACIONAL ZK ({(publicCatalog as any[]).length})
+            </button>
+          </div>
+
+          {/* TRIGGER TÚNEL NEURAL MULTI-PANTALLA */}
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setIsNeuralModalOpen(true)}
+            className="px-6 py-3 rounded-2xl bg-gradient-to-r from-[#d4a855] via-[#ecb613] to-[#ffd700] text-black font-mono font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_0_30px_rgba(212,168,85,0.4)]"
           >
-            <Sparkles size={15} />
-            INFRAESTRUCTURA TÉCNICA & ARTISTAS S-CLASS ({TIER_ZERO_ARSENAL.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('catalog')}
-            className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
-              activeTab === 'catalog'
-                ? 'bg-[#ecb613] text-black shadow-[0_0_25px_rgba(236,182,19,0.3)]'
-                : 'text-white/60 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Users size={15} />
-            CATÁLOGO NACIONAL ZK ({(publicCatalog as any[]).length})
-          </button>
+            <Sparkles size={16} className="animate-spin" />
+            <span>Iniciar Túnel Neural Multi-Pantalla →</span>
+          </motion.button>
         </div>
+
+        {/* MODAL DEL TÚNEL NEURAL S-CLASS */}
+        <AnimatePresence>
+          {isNeuralModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4 md:p-10 overflow-y-auto"
+            >
+              <div className="relative w-full max-w-6xl bg-zinc-950 border border-[#d4a855]/30 rounded-[3rem] p-6 md:p-12 shadow-[0_0_80px_rgba(0,0,0,0.9)] overflow-hidden">
+                <button
+                  onClick={() => setIsNeuralModalOpen(false)}
+                  className="absolute top-8 right-8 text-white/50 hover:text-white px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-mono"
+                >
+                  ✕ Cerrar
+                </button>
+                <NeuralJourneyApex
+                  isOpen={isNeuralModalOpen}
+                  onClose={() => setIsNeuralModalOpen(false)}
+                  onComplete={handleNeuralComplete}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* SECCIÓN 1: ARSENAL PROPIO TIER 0 */}
         {activeTab === 'tier0' && (
