@@ -28,7 +28,7 @@ export class TelegramService {
             'CRITICAL': '🔥'
         };
 
-        const formattedMessage = `${icons[priority]} *VIMUME OS ALERT* (${priority})\n\n${message}`;
+        const formattedMessage = `${icons[priority]} *EAR OS ALERT* (${priority})\n\n${message}`;
 
         try {
             const url = `https://api.telegram.org/bot${this.botToken}/sendMessage`;
@@ -52,6 +52,41 @@ export class TelegramService {
 
         } catch (error) {
             console.error('❌ TELEGRAM_SERVICE_ERROR:', error);
+            return { success: false, error };
+        }
+    }
+
+    /**
+     * Responde a un chat específico o usuario en Telegram.
+     */
+    async replyToChat(chatId: string | number, text: string, parseMode: 'Markdown' | 'HTML' = 'Markdown') {
+        if (!this.botToken) {
+            console.warn('⚠️ TELEGRAM_SERVICE: Falta TELEGRAM_BOT_TOKEN en el entorno.');
+            return { success: false, error: 'Missing TELEGRAM_BOT_TOKEN' };
+        }
+
+        try {
+            const url = `https://api.telegram.org/bot${this.botToken}/sendMessage`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: text,
+                    parse_mode: parseMode
+                })
+            });
+
+            const data = await response.json();
+
+            if (!data.ok) {
+                throw new Error(data.description || 'Fallo en la API de Telegram al responder');
+            }
+
+            return { success: true, data };
+
+        } catch (error) {
+            console.error('❌ TELEGRAM_REPLY_ERROR:', error);
             return { success: false, error };
         }
     }

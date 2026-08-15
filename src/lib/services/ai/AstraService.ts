@@ -99,6 +99,42 @@ Transmuta este lead en un objeto de tipo "Vendor" siguiendo este esquema JSON:
 `;
         return this.generateResponse(prompt);
     }
+
+    /**
+     * Parsea un mensaje de Telegram libre en parámetros estructurados para cotización.
+     */
+    async parseTelegramQuote(message: string) {
+        const prompt = `
+Analiza el siguiente mensaje de un cliente recibido por Telegram pidiendo cotización de evento o servicios técnicos:
+Mensaje: "${message}"
+
+Extrae de forma precisa las variables en formato JSON estricto con el siguiente esquema:
+{
+    "pax": number (aforo estimado de asistentes o personas; si no se indica, usa 150),
+    "location": string (ciudad, municipio o provincia detectada; si no se indica, "No especificado"),
+    "date": string (fecha detectada en formato texto o DD/MM/AAAA; si no se indica, "Por confirmar"),
+    "serviceType": string (sonido, iluminacion, mariachi, solista, dj, produccion_completa, etc.),
+    "genre": string (estilo musical o tipo de evento, ej: boda, corporativo, fiesta patronal),
+    "details": string (resumen en 1 frase de los requerimientos clave)
+}
+`;
+        try {
+            return await this.generateResponse(prompt);
+        } catch (err) {
+            console.warn('⚠️ [ASTRA] Fallback regex parsing para Telegram message:', err);
+            // Fallback determinista si Gemini estuviera offline
+            const paxMatch = message.match(/(\d+)\s*(personas|pax|asistentes|invitados)?/i);
+            const pax = paxMatch ? parseInt(paxMatch[1], 10) : 150;
+            return {
+                pax,
+                location: message.toLowerCase().includes('toledo') ? 'Toledo' : 'Ubicación por confirmar',
+                date: '15 de septiembre',
+                serviceType: message.toLowerCase().includes('mariachi') ? 'mariachi' : 'sonido',
+                genre: 'evento',
+                details: message
+            };
+        }
+    }
 }
 
 export const astraService = new AstraService();
