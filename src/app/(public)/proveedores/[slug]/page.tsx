@@ -13,13 +13,29 @@ interface PageProps {
 export default async function ProviderShadowProfilePage({ params }: PageProps) {
   const { slug } = await params;
 
-  let shadowProfile = null;
+  let shadowProfile: any = null;
   try {
     shadowProfile = await prisma.vendorShadowProfile.findUnique({
       where: { slug }
     });
   } catch (e) {
     console.warn(`[SHADOW_PROFILE_PAGE] Fallback DB query for ${slug}:`, e);
+  }
+
+  // Fallback a repositorio local JSON si la DB no está sincronizada
+  if (!shadowProfile) {
+    try {
+      const fs = await import('fs');
+      const path = await import('path');
+      const jsonPath = path.join(process.cwd(), 'scripts', 'vampire_shadow_profiles_extracted.json');
+      if (fs.existsSync(jsonPath)) {
+        const raw = fs.readFileSync(jsonPath, 'utf-8');
+        const profiles = JSON.parse(raw);
+        shadowProfile = profiles.find((p: any) => p.slug === slug);
+      }
+    } catch (err) {
+      console.warn(`[SHADOW_PROFILE_PAGE] JSON fallback error:`, err);
+    }
   }
 
   if (!shadowProfile) {
