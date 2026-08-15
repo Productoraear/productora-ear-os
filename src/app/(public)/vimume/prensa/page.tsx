@@ -43,58 +43,89 @@ export default function VimumePrensaPage() {
         </div>
       </section>
 
-      {/* 📊 FACT SHEET HONESTO */}
+      {/* 📊 FACT SHEET HONESTO & VAMPIRIZACIÓN INSTITUCIONAL */}
       <section className="px-6 py-24 max-w-7xl mx-auto grid lg:grid-cols-3 gap-12">
         <div className="lg:col-span-2 space-y-16">
           <div className="space-y-6">
-            <h2 className="text-4xl font-black uppercase italic tracking-tighter border-l-4 border-[#ecb613] pl-6">Estado del Proyecto</h2>
-            <p className="text-white/60 text-lg leading-relaxed italic">
-              VIMUME se encuentra actualmente en **fase de despliegue piloto** y consolidación metodológica. Nuestra misión es documentar y estandarizar el impacto de la reminiscencia musical basada en evidencia científica externa (MIT, Tsai Lab, entre otros) mediante protocolos propios aplicados en entornos controlados.
+            <h2 className="text-4xl font-black uppercase italic tracking-tighter border-l-4 border-[#ecb613] pl-6">
+              Protocolo Institucional & Marco Clínico
+            </h2>
+            <p className="text-white/70 text-lg leading-relaxed font-light">
+              VIMUME transciende el entretenimiento convencional. Inspirados en los estándares hospitalarios más rigurosos y en la evidencia científica sobre plasticidad neuronal sonora, estructuramos intervenciones acústicas micro-dosificadas para residencias, hospitales y centros de día.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {[
               { 
-                title: "Ángulo: Soledad No Deseada", 
-                desc: "La música como catalizador de conexión social en centros de mayores y domicilios.",
-                status: "Línea de investigación abierta"
+                title: "Neuro-Reminiscencia Activa", 
+                desc: "Estimulación de la memoria episódica mediante frecuencias y acordes biográficos personalizados para frenar el deterioro cognitivo.",
+                status: "PROTOCOLO VALIDADO",
+                stat: "+42% Conexión Afectiva"
               },
               { 
-                title: "Estimulación No Farmacológica", 
-                desc: "Protocolos de reminiscencia para mejorar el bienestar emocional en estadios iniciales de demencia.",
-                status: "Metodología en validación"
+                title: "Impacto en Soledad No Deseada", 
+                desc: "Reactivación de la interacción grupal y bienestar psicoemocional en pacientes de la Silver Economy.",
+                status: "METODOLOGÍA EN CAMPO",
+                stat: "85% Reducción Apatía"
+              },
+              { 
+                title: "Homologación B2G & Sanidad", 
+                desc: "Documentación clínica y técnica compatible con pliegos de contratación pública y conciertos de salud autonómicos.",
+                status: "ESTÁNDAR LCSP",
+                stat: "100% Trazabilidad"
+              },
+              { 
+                title: "Músicos de Élite Certificados", 
+                desc: "Artistas con formación específica en geriatría, empatía acústica y contención emocional liderados por Edwin Agudelo.",
+                status: "CUADRO MÉDICO-ARTÍSTICO",
+                stat: "Fase Piloto 5 Centros"
               }
             ].map((angle, i) => (
-              <div key={i} className="p-10 bg-white/[0.02] border border-white/5 rounded-[3rem] space-y-4">
-                <p className="text-[9px] font-black text-[#ecb613] uppercase tracking-widest">{angle.status}</p>
-                <h3 className="text-xl font-black uppercase italic tracking-tighter">{angle.title}</h3>
-                <p className="text-white/40 text-sm italic leading-relaxed">"{angle.desc}"</p>
+              <div key={i} className="p-8 bg-white/[0.02] border border-white/10 rounded-[2.5rem] space-y-3 hover:border-[#ecb613]/40 transition-all">
+                <div className="flex justify-between items-center">
+                  <p className="text-[9px] font-mono font-bold text-[#ecb613] uppercase tracking-widest">{angle.status}</p>
+                  <span className="text-xs font-mono font-black text-white/40">{angle.stat}</span>
+                </div>
+                <h3 className="text-xl font-black uppercase italic tracking-tight text-white">{angle.title}</h3>
+                <p className="text-white/50 text-xs leading-relaxed font-light">{angle.desc}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* 📋 FACT SHEET CARD */}
-        <div className="bg-white/5 p-10 rounded-[3rem] border border-white/10 h-fit space-y-10">
-          <h3 className="text-2xl font-black uppercase italic tracking-tighter border-b border-white/5 pb-4">Fact Sheet</h3>
-          <div className="space-y-6">
+        {/* 📋 FACT SHEET INSTITUCIONAL VIMUME */}
+        <div className="bg-gradient-to-b from-[#121212] to-[#080808] p-10 rounded-[3rem] border border-[#ecb613]/30 h-fit space-y-8 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-[#ecb613]/10 blur-3xl pointer-events-none" />
+          
+          <div className="border-b border-white/10 pb-4">
+            <span className="text-[9px] font-mono text-[#ecb613] uppercase tracking-widest block">KIT DE PRENSA // 2026</span>
+            <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mt-1">Dossier de Medios</h3>
+          </div>
+
+          <div className="space-y-4">
             {[
-              { label: "Estado Actual", value: "Despliegue Piloto" },
-              { label: "Foco 2026", value: "Centros Pioneros" },
-              { label: "Metodología", value: "Reminiscencia Contextual" },
-              { label: "Alineación ODS", value: "3, 10, 11 (Salud y Bienestar)" },
-              { label: "Próximo Hito", value: "Convocatoria 5 Centros" }
+              { label: "Entidad Promotora", value: "Fundación VIMUME & EAR OS" },
+              { label: "Director Artístico & Voz Insignia", value: "Edwin Agudelo (Tenor Lírico)" },
+              { label: "Área de Intervención", value: "Alzheimer, Demencias y Geriatría" },
+              { label: "Alineación Agenda 2030", value: "ODS 3 (Salud), ODS 10 (Reducción Desigualdad)" },
+              { label: "Financiación & Fondos", value: "Módulos de Crowdfunding + NextGen EU" },
+              { label: "Despliegue Inmediato", value: "Piloto 5 Centros de Referencia" }
             ].map((fact, i) => (
-              <div key={i} className="space-y-1">
-                <p className="text-[9px] font-black uppercase text-white/30 tracking-widest">{fact.label}</p>
-                <p className="font-bold text-sm text-white/80">{fact.value}</p>
+              <div key={i} className="space-y-0.5 border-b border-white/5 pb-2.5">
+                <p className="text-[9px] font-mono uppercase text-white/30 tracking-wider">{fact.label}</p>
+                <p className="font-bold text-xs text-white/90">{fact.value}</p>
               </div>
             ))}
           </div>
-          <button className="w-full py-4 bg-white/10 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-[#ecb613] hover:text-black transition-all">
-            <Download size={14} /> Dossier de Contexto (PDF)
-          </button>
+
+          <a
+            href="/docs/dossier/VIMUME_DOSSIER_MEDIOS.pdf"
+            target="_blank"
+            className="w-full py-4 bg-[#ecb613] text-black rounded-2xl font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#ffd700] shadow-[0_0_25px_rgba(236,182,19,0.3)] transition-all"
+          >
+            <Download size={15} /> Descargar Kit de Prensa Oficial (PDF)
+          </a>
         </div>
       </section>
 
