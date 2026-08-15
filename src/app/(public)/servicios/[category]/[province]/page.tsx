@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import publicCatalog from '../../../../../../scripts/vampire_public_catalog_zk.json';
+import publicCatalog from '@/data/catalog/vampire_public_catalog_zk.json';
 
 interface PageProps {
   params: Promise<{ category: string; province: string }>;
