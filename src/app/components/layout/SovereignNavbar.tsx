@@ -102,11 +102,25 @@ const SovereignNavbar = () => {
             <kbd className="ml-2 bg-white/10 px-1.5 py-0.5 rounded text-[10px] font-mono text-white/70">⌘K</kbd>
           </button>
 
-          {/* NEXUS (Solo visible para Admin o B2B identificados) */}
-          {(isAdmin || role === 'ROLE_B2B') && (
-            <Link href="/dashboard" className="px-6 py-2 bg-gradient-to-r from-[#ecb613] to-[#b38805] text-black rounded-full font-bold text-sm hover:scale-105 shadow-[0_0_15px_rgba(236,182,19,0.3)] transition-all uppercase tracking-widest">
-              PANEL
-            </Link>
+          {/* NEXUS & LOGOUT (Solo visible para Admin o B2B identificados) */}
+          {(isAdmin || role === 'ROLE_B2B' || role === 'ROLE_ADMIN') && (
+            <div className="flex items-center gap-2">
+              <Link href="/admin" className="px-5 py-2 bg-gradient-to-r from-[#ecb613] to-[#b38805] text-black rounded-full font-bold text-xs hover:scale-105 shadow-[0_0_15px_rgba(236,182,19,0.3)] transition-all uppercase tracking-widest">
+                ADMIN
+              </Link>
+              <button 
+                onClick={async () => {
+                  await fetch('/api/auth/logout', { method: 'POST' });
+                  document.cookie = 'ear_auth_signal=; path=/; max-age=0';
+                  document.cookie = 'ear_os_auth_token=; path=/; max-age=0';
+                  window.location.href = '/login';
+                }}
+                className="px-3 py-2 bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/30 text-white/60 hover:text-red-400 rounded-full text-xs font-mono transition-all"
+                title="Cerrar Sesión"
+              >
+                Salir
+              </button>
+            </div>
           )}
         </div>
 
