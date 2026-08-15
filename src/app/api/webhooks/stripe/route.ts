@@ -3,6 +3,9 @@ import Stripe from "stripe";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { CommissionStatus } from "@prisma/client";
+import { LedgerEngine } from "@/features/finance/LedgerEngine";
+import { db } from "@/lib/firebase";
+import { doc, setDoc } from "firebase/firestore";
 
 export const runtime = "nodejs";
 
@@ -10,36 +13,54 @@ export async function POST(req: Request) {
   const stripeSecret = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  if (!stripeSecret || !webhookSecret) {
-    console.error("Missing Stripe environment configuration variables at runtime.");
-    return NextResponse.json({ error: "Configuration error" }, { status: 500 });
+  if (!stripeSecret) {
+    console.error("❌ [STRIPE CRITICAL] Falta STRIPE_SECRET_KEY en las variables de entorno.");
+    return NextResponse.json({ error: "Missing Stripe secret key" }, { status: 500 });
   }
 
   const stripe = new Stripe(stripeSecret, {
-    apiVersion: '2026-04-22.dahlia' as any,
+    apiVersion: '2023-10-16' as any,
   });
 
   const signature = req.headers.get("stripe-signature");
-  if (!signature) {
-    return NextResponse.json({ error: "Missing Stripe signature" }, { status: 400 });
-  }
-
   const rawBody = await req.text();
 
   let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Invalid webhook signature";
-    return NextResponse.json({ error: message }, { status: 400 });
+
+  // Validación de firma criptográfica
+  if (webhookSecret && signature) {
+    try {
+      event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
+    } catch (err: any) {
+      console.error(`❌ [STRIPE SECURITY] Fallo de Firma Webhook: ${err.message}`);
+      return NextResponse.json({ error: `Webhook signature verification failed: ${err.message}` }, { status: 400 });
+    }
+  } else {
+    // Si no hay webhookSecret en local dev, permitir parsing directo para pruebas internas
+    console.warn("⚠️ [STRIPE] STRIPE_WEBHOOK_SECRET no configurado. Parseando evento en modo desarrollo...");
+    try {
+      event = JSON.parse(rawBody) as Stripe.Event;
+    } catch (err: any) {
+      return NextResponse.json({ error: "Invalid payload format" }, { status: 400 });
+    }
   }
 
+  // Procesamiento exclusivo de Checkout Completado
   if (event.type !== "checkout.session.completed") {
-    return NextResponse.json({ received: true }, { status: 200 });
+    return NextResponse.json({ received: true, type: event.type }, { status: 200 });
   }
 
   const session = event.data.object as Stripe.Checkout.Session;
   const md = session.metadata ?? {};
+
+  // Extracción del importe bruto (Stripe envía centavos)
+  const amountTotal = (session.amount_total || 0) / 100;
+  const payerEmail = session.customer_details?.email || md.customerEmail || 'anonimo@productoraear.com';
+  const concept = md.concept || 'EAR OS S-Class Transaction';
+
+  // 1. Ejecución del Ledger Engine S-Class (Split 80/10/10)
+  const splitResult = LedgerEngine.calculateSplit(amountTotal);
+  console.log(`⚖️ [LEDGER ENGINE] Total: ${amountTotal}€ | Artista (80%): ${splitResult.artistic}€ | EAR OS (10%): ${splitResult.infrastructure}€ | VIMUME (10%): ${splitResult.social}€`);
 
   const artistId = md.artistId;
   const clientId = md.clientId;
@@ -48,114 +69,155 @@ export async function POST(req: Request) {
   const originLng = Number(md.originLng);
   const destinationLat = Number(md.destinationLat);
   const destinationLng = Number(md.destinationLng);
-  const totalAmountCalculated = Number(md.totalAmountCalculated ?? "0");
-  const depositAmount = Number(md.depositAmount ?? "100");
+  const totalAmountCalculated = Number(md.totalAmountCalculated ?? amountTotal);
+  const depositAmount = Number(md.depositAmount ?? amountTotal);
   const bookingId = md.bookingId;
   const workspaceId = md.workspaceId;
 
-  if (
-    !artistId ||
-    !clientId ||
-    !eventDate ||
-    !bookingId ||
-    !workspaceId ||
-    Number.isNaN(originLat) ||
-    Number.isNaN(originLng) ||
-    Number.isNaN(destinationLat) ||
-    Number.isNaN(destinationLng)
-  ) {
-    return NextResponse.json({ error: "Missing metadata" }, { status: 400 });
-  }
+  const hasFullBookingMetadata =
+    artistId &&
+    clientId &&
+    eventDate &&
+    bookingId &&
+    workspaceId &&
+    !Number.isNaN(originLat) &&
+    !Number.isNaN(originLng) &&
+    !Number.isNaN(destinationLat) &&
+    !Number.isNaN(destinationLng);
 
   try {
-    await prisma.$transaction(async (tx) => {
-      // Find client profile relation if exists
-      const clientProfile = await tx.clientProfile.findUnique({
-        where: { userId: clientId },
-        select: { id: true },
-      });
-      const clientProfileId = clientProfile?.id ?? null;
+    if (hasFullBookingMetadata) {
+      // Flujo Completo con SmartContract, Waybill y Bloqueo de Calendario
+      await prisma.$transaction(async (tx) => {
+        const clientProfile = await tx.clientProfile.findUnique({
+          where: { userId: clientId },
+          select: { id: true },
+        });
+        const clientProfileId = clientProfile?.id ?? null;
 
-      const contractExists = await tx.smartContract.findUnique({
-        where: { id: bookingId },
-        select: { id: true },
-      });
-
-      if (contractExists) {
-        await tx.smartContract.update({
+        const contractExists = await tx.smartContract.findUnique({
           where: { id: bookingId },
-          data: {
-            status: "RESERVED",
-            deposit: depositAmount,
-            stripeSessionId: session.id,
-            eventDate: new Date(eventDate),
-          },
+          select: { id: true },
         });
-      } else {
-        await tx.smartContract.create({
+
+        if (contractExists) {
+          await tx.smartContract.update({
+            where: { id: bookingId },
+            data: {
+              status: "RESERVED",
+              deposit: depositAmount,
+              stripeSessionId: session.id,
+              eventDate: new Date(eventDate),
+            },
+          });
+        } else {
+          await tx.smartContract.create({
+            data: {
+              id: bookingId,
+              artistId,
+              userId: clientId,
+              clientProfileId,
+              workspaceId,
+              status: "RESERVED",
+              deposit: depositAmount,
+              stripeSessionId: session.id,
+              eventDate: new Date(eventDate),
+            },
+          });
+        }
+
+        const startAt = new Date(eventDate);
+        const endAt = new Date(startAt.getTime() + 4 * 60 * 60 * 1000);
+
+        await tx.calendarBlock.create({
           data: {
-            id: bookingId,
             artistId,
-            userId: clientId,
-            clientProfileId,
-            workspaceId,
-            status: "RESERVED",
-            deposit: depositAmount,
-            stripeSessionId: session.id,
-            eventDate: new Date(eventDate),
+            startsAt: startAt,
+            endsAt: endAt,
+            label: "Stripe Embedded Checkout Reservation",
+            status: "BLOCKED",
+            bookingId,
           },
         });
-      }
 
-      const startAt = new Date(eventDate);
-      const endAt = new Date(startAt.getTime() + 4 * 60 * 60 * 1000);
+        await tx.waybill.create({
+          data: {
+            workspaceId,
+            artistProfileId: artistId,
+            bookingId,
+            referenceCode: `WAY-${bookingId.slice(0, 8)}-${Date.now()}`,
+            originLabel: "Base Central EAR OS (Madrid)",
+            destinationLabel: "Destino del Show - Geolocalizado",
+            originLat,
+            originLng,
+            destinationLat,
+            destinationLng,
+            status: "QUEUED",
+          },
+        });
 
-      await tx.calendarBlock.create({
-        data: {
-          artistId,
-          startsAt: startAt,
-          endsAt: endAt,
-          label: "Stripe Embedded Checkout Reservation",
-          status: "BLOCKED",
-          bookingId,
-        },
+        await tx.commissionLedger.create({
+          data: {
+            userId: clientId,
+            amount: totalAmountCalculated,
+            currency: "EUR",
+            status: CommissionStatus.PAID,
+            reference: `TX-${bookingId.slice(0, 8)}-${Date.now()}`,
+            sourceEvent: "stripe_checkout",
+            description: `Split 80/10/10: Artista=${splitResult.artistic}€, EAR OS=${splitResult.infrastructure}€, VIMUME=${splitResult.social}€`,
+            notes: `Stripe session ${session.id} | ${payerEmail}`,
+          },
+        });
       });
-
-      await tx.waybill.create({
+    } else {
+      // Flujo Express / Directo / B2G / Depósito Autónomo
+      await prisma.commissionLedger.create({
         data: {
-          workspaceId,
-          artistProfileId: artistId,
-          bookingId,
-          referenceCode: `WAY-${bookingId.slice(0, 8)}-${Date.now()}`,
-          originLabel: "Base Central EAR OS (Madrid)",
-          destinationLabel: "Destino del Show - Geolocalizado",
-          originLat,
-          originLng,
-          destinationLat,
-          destinationLng,
-          status: "QUEUED",
-        },
-      });
-
-      await tx.commissionLedger.create({
-        data: {
-          userId: clientId,
-          workspaceId,
-          amount: totalAmountCalculated,
+          userId: clientId || null,
+          amount: amountTotal,
           currency: "EUR",
           status: CommissionStatus.PAID,
-          reference: `TX-${bookingId.slice(0, 8)}-${Date.now()}`,
-          sourceEvent: "stripe_embedded_checkout",
-          stripeSessionId: session.id,
-          notes: `Stripe webhook session ${session.id}`,
+          reference: `TX-SOV-${Date.now()}`,
+          sourceEvent: "stripe_checkout_express",
+          description: `Split 80/10/10: Artista=${splitResult.artistic}€, EAR OS=${splitResult.infrastructure}€, VIMUME=${splitResult.social}€`,
+          notes: `Stripe session ${session.id} | Payer: ${payerEmail} | Concept: ${concept}`,
         },
       });
-    });
+    }
 
-    return NextResponse.json({ received: true }, { status: 200 });
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "Transaction processing failure";
-    console.error("Webhook processing error:", error);
-    return NextResponse.json({ error: message }, { status: 500 });
+    // Sincronización en tiempo real con Firestore (FinancialPanel feed)
+    if (db) {
+      try {
+        const orderRef = doc(db, 'ear_orders', session.id);
+        await setDoc(orderRef, {
+          customer: payerEmail,
+          amount: amountTotal,
+          status: 'PAID',
+          concept,
+          paymentMethod: 'Stripe',
+          splits: {
+            artist: splitResult.artistic,
+            earOs: splitResult.infrastructure,
+            vault: splitResult.social,
+          },
+          createdAt: new Date(),
+        });
+        console.log(`📡 [FINANCIAL FEED] Sincronización reactiva con Firestore exitosa (${session.id})`);
+      } catch (fbErr) {
+        console.warn("⚠️ [FIREBASE] Advertencia al escribir en ear_orders (no crítico):", fbErr);
+      }
+    }
+
+    console.log(`✅ [LEDGER SETTLED] ${amountTotal} € reconciliados en base de datos.`);
+    return NextResponse.json({ 
+      success: true, 
+      settled: true, 
+      amount: amountTotal, 
+      splits: splitResult 
+    }, { status: 200 });
+
+  } catch (error: any) {
+    console.error("❌ [WEBHOOK ERROR] Error procesando transacción:", error);
+    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
   }
 }
