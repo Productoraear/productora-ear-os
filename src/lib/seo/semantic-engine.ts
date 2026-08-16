@@ -109,6 +109,59 @@ export function generateSemanticPageData(
     .replace('Ear', 'EAR')
     .replace('Dj', 'DJ');
 
+  // CASO 0: WEDDING PLANNERS, COLABORACIÓN & AGENCIAS DE EVENTOS B2B
+  if (leaf.includes('wedding-planner') || leaf.includes('colaboracion') || leaf.includes('agencias') || leaf.includes('proveedores')) {
+    return {
+      title: `Alianza con Wedding Planners & Agencias en ${cityName} | Productora EAR`,
+      h1: `Infraestructura & Proveedores para Wedding Planners en ${cityName}`,
+      metaDescription: `Plataforma de matchmaking y abastecimiento técnico para wedding planners en ${cityName}. Sonido Bose F1, iluminación DMX, mariachis de gala y streaming con 10% comisión de agencia y SLA 99.9%.`,
+      searchIntent: `Alianza técnica y provisión integral de proveedores homologados para wedding planners y agencias en ${cityName}.`,
+      editorialBody: `
+### El Aliado Técnico y Artístico Definitivo para Wedding Planners en ${cityName}
+
+Como organizador de bodas y eventos en **${cityName}**, tu mayor activo es el tiempo y la reputación de tu marca. Lidiar con múltiples proveedores dispersos, coordinar riders técnicos incompatibles y asumir el estrés del directo en fincas como *${geo.venues[0]}* o *${geo.venues[1]}* es el principal cuello de botella del sector.
+
+En Productora EAR transformamos la producción en un **ecosistema llave en mano**:
+
+#### 1. Túnel Neural de Matchmaking en 10 Pantallas
+A través de nuestro configurador interactivo, introduces las dimensiones del espacio y el aforo para obtener en segundos la combinación exacta de **P.A. Line Array, iluminación robótica, microfonía y artistas** alineados con el presupuesto de los novios.
+
+#### 2. Cotizador con Candados de Bloqueo
+Permite congelar partidas estratégicas (como el caché artístico o el paquete de sonido) mientras ajustas el resto con deslizadores en tiempo real, garantizando presupuestos cerrados y sin sobrecostes sorpresa.
+
+#### 3. Cero Riesgo en Directo (SLA 99.9%)
+* Redundancia N+1 en microfonía y canales de mezcla.
+* Póliza de Responsabilidad Civil de 1.000.000 € y adaptación a la ${geo.regionalNorm}.
+* **Comisión de Agencia Garantizada (10%)**: Transparencia total a través de nuestro Split Soberano de honorarios para wedding planners.
+      `.trim(),
+      technicalSpecs: [
+        { label: "SLA Operativo", value: "99.9% Garantizado por Contrato" },
+        { label: "Comisión Wedding Planner", value: "10% Retribución Directa" },
+        { label: "Póliza RC", value: "1.000.000 € de Cobertura" },
+        { label: "Fincas Homologadas", value: geo.venues.slice(0, 3).join(', ') },
+        { label: "Tiempo de Respuesta", value: "Cotización Inmediata con Price-Lock 72h" }
+      ],
+      faqs: [
+        {
+          q: `¿Cómo funciona la comisión y colaboración para Wedding Planners en ${cityName}?`,
+          a: `Al registrar tu ficha de wedding planner o reservar a través de nuestro túnel neural, tu código de agencia queda vinculado al expediente. Liquidamos automáticamente tu 10% de honorarios tras la ejecución del evento con factura formal.`
+        },
+        {
+          q: `¿Podéis adaptaros al timing y escaleta específica de nuestra boda?`,
+          a: `Absolutamente. Realizamos una reunión de coordinación técnica con tu equipo 15 días antes para sincronizar pruebas de sonido, entradas de los novios, discursos y momentos clímax al segundo.`
+        },
+        {
+          q: `¿Qué ocurre si el recinto tiene limitaciones estrictas de potencia o decibelios?`,
+          a: `Calibramos nuestros sistemas Bose F1 con dispersión controlada y procesadores con ecualización de sala para respetar escrupulosamente los limitadores de la finca sin restar emoción a la fiesta.`
+        }
+      ],
+      localKeywords: [`wedding planners ${matchedCity}`, `proveedores de bodas ${matchedCity}`, `organizacion de bodas ${matchedCity}`, `sonido e iluminacion para wedding planners ${matchedCity}`],
+      venues: geo.venues,
+      schemaType: 'LocalBusiness',
+      priceRange: '650€ - 4.500€'
+    };
+  }
+
   // CASO 1: ARSENAL / PANTALLAS LED / HARDWARE
   if (root === 'arsenal' || leaf.includes('pantalla-led') || leaf.includes('altavoces') || leaf.includes('luces')) {
     return {

@@ -7,8 +7,6 @@ import {
   Shield, 
   Zap, 
   ArrowRight, 
-  Download, 
-  Play, 
   Sparkles, 
   Star, 
   Trophy, 
@@ -19,18 +17,17 @@ import {
   Heart,
   MapPin,
   CheckCircle2,
-  HelpCircle
+  HelpCircle,
+  Users,
+  Layers,
+  Building2,
+  Crown
 } from 'lucide-react';
-import { BespokePricer } from '@/features/finance/ui/BespokePricer';
-import { NeuralFilters } from '@/features/search/NeuralFilters';
-import { AcousticSpatialMatcher } from '@/app/components/SClassScreens/AcousticSpatialMatcher';
+import { SublimeEventMatchmaker } from '@/app/components/SClassScreens/SublimeEventMatchmaker';
 import { useSovereignContext } from '@/shared/context/SovereignContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getTemplateForProvince, getTemplateConfig } from '@/shared/utils/templateEngine';
 import { generateSemanticPageData } from '@/lib/seo/semantic-engine';
-import { SpinningText } from './SpinningText';
-import { MediaShowcase } from './MediaShowcase';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ROUTES } from '@/lib/routes';
 import { LocalBusinessSchema } from '@/app/components/seo/LocalBusinessSchema';
@@ -64,12 +61,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
   const templateId = getTemplateForProvince(location.toLowerCase());
   const config = getTemplateConfig(templateId, capitalizedLocation);
 
-  const handleAction = (action: string) => {
-    igniteTripwire('bespoke_action', { action, serviceId, location });
-    if (action === 'reserve') {
-        router.push(ROUTES.contacto);
-    }
-  };
+  const isWeddingPlannerIntent = serviceId.includes('wedding-planner') || serviceId.includes('colaboracion') || serviceId.includes('proveedores');
 
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613]/30 font-sans">
@@ -80,12 +72,12 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
       />
       
       {/* 2050 Hero: Minimalist & Deep */}
-      <section className="relative pt-44 pb-32 px-6 md:px-12 overflow-hidden border-b border-white/10">
+      <section className="relative pt-44 pb-24 px-6 md:px-12 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 pointer-events-none">
           <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full h-[700px] bg-gradient-to-b ${config.gradient} to-transparent blur-[120px]`} />
         </div>
 
-        {/* AUTHORITY SEAL: Gladiadores 2021 */}
+        {/* AUTHORITY SEAL */}
         <motion.div 
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -96,8 +88,8 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
             <div className="absolute -inset-2 rounded-full border border-[#ecb613]/20 animate-pulse" />
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-[8px] font-black uppercase tracking-[0.3em] text-[#ecb613]">Trayectoria 2021</span>
-            <span className="text-[7px] font-black uppercase tracking-[0.2em] text-white/40">+20 Años de Autoridad</span>
+            <span className="text-[8px] font-black uppercase tracking-[0.3em] text-[#ecb613]">SLA 99.9%</span>
+            <span className="text-[7px] font-black uppercase tracking-[0.2em] text-white/40">Garantía Productora EAR</span>
           </div>
         </motion.div>
         
@@ -124,6 +116,11 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
             <div className="text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-4 py-2 rounded-xl">
               Rango Tarifario: {semanticData.priceRange} (Garantía 0.50 €)
             </div>
+            {isWeddingPlannerIntent && (
+              <div className="text-xs font-mono text-amber-400 bg-amber-950/40 border border-amber-500/30 px-4 py-2 rounded-xl">
+                ★ 10% Comisión de Agencia Garantizada
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -140,58 +137,32 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
         </div>
       </section>
 
+      {/* TÚNEL NEURAL SUBLIME (10 PANTALLAS + TINDER MATCH + SLIDERS CON CANDADO) */}
+      <section className="py-16 px-4 md:px-12 max-w-7xl mx-auto space-y-12">
+        <SublimeEventMatchmaker initialLocation={location} />
+      </section>
+
       {/* SECCIÓN EDITORIAL PROFUNDA (>70% UNICIDAD SEMÁNTICA) */}
-      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
-          {/* COLUMNA PRINCIPAL ARTÍCULO EDITORIAL */}
-          <div className="lg:col-span-8 bg-[#0a0a0d] border border-white/10 p-8 md:p-12 rounded-[2.5rem] space-y-6">
-            <div className="prose prose-invert prose-yellow max-w-none text-slate-300 text-sm md:text-base leading-relaxed whitespace-pre-line font-light">
-              {semanticData.editorialBody}
-            </div>
-
-            {/* VENUES LOCALS DESTACADOS */}
-            <div className="pt-8 border-t border-white/10 space-y-4">
-              <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#ecb613]">
-                Espacios y Fincas de Referencia en {capitalizedLocation}:
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {semanticData.venues.map((venue, idx) => (
-                  <span key={idx} className="bg-white/5 border border-white/10 text-xs px-3 py-1.5 rounded-full text-slate-300 font-mono">
-                    📍 {venue}
-                  </span>
-                ))}
-              </div>
-            </div>
+      <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto border-t border-white/10">
+        <div className="bg-[#0a0a0d] border border-white/10 p-8 md:p-14 rounded-[3rem] space-y-8">
+          <div className="prose prose-invert prose-yellow max-w-none text-slate-300 text-sm md:text-base leading-relaxed whitespace-pre-line font-light">
+            {semanticData.editorialBody}
           </div>
 
-          {/* COLUMNA LATERAL: BESPOKE PRICER */}
-          <div className="lg:col-span-4 sticky top-28 space-y-6">
-            <BespokePricer 
-              category={title} 
-              basePrice={serviceId.includes('solista') ? 350 : (serviceId.includes('mariachi') ? 750 : 450)} 
-              metadata={{ ui_template: templateId, provincia: location }}
-            />
+          {/* VENUES LOCALS DESTACADOS */}
+          <div className="pt-8 border-t border-white/10 space-y-4">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-[#ecb613]">
+              Espacios y Fincas de Referencia en {capitalizedLocation}:
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {semanticData.venues.map((venue, idx) => (
+                <span key={idx} className="bg-white/5 border border-white/10 text-xs px-3 py-1.5 rounded-full text-slate-300 font-mono">
+                  📍 {venue}
+                </span>
+              ))}
+            </div>
           </div>
-
         </div>
-      </section>
-
-      {/* INTERFAZ INTERACTIVA: RECOMENDADOR ACÚSTICO & INVENTARIO ACTIVO */}
-      <section className="py-12 px-6 md:px-12 max-w-7xl mx-auto">
-        <AcousticSpatialMatcher />
-      </section>
-
-      {/* MEDIA SHOWCASE & DOSSIER */}
-      <section className="py-16 px-6 md:px-12 max-w-7xl mx-auto space-y-12">
-        <div className="flex items-center gap-4">
-          <History className="text-[#ecb613]" size={20} />
-          <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight">
-            Autoridad de Autor: Edwin Agudelo & Ecosistema EAR
-          </h2>
-        </div>
-
-        <MediaShowcase />
       </section>
 
       {/* PREGUNTAS FRECUENTES GEO-LOCALES & SCHEMA FAQ */}
