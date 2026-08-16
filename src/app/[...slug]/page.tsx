@@ -48,7 +48,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   if (!slug || slug.length === 0) return {};
   
-  if (slug.length === 1 && CORE_STATIC_ROUTES.has(slug[0].toLowerCase())) {
+  const rootPrefix = slug[0].toLowerCase();
+  if (CORE_STATIC_ROUTES.has(rootPrefix) || rootPrefix === 'api') {
     return {};
   }
 
@@ -72,8 +73,8 @@ export default async function UniversalOmegaPage({ params }: PageProps) {
 
   const rootPrefix = slug[0].toLowerCase();
 
-  // 1. SI ES UNA RUTA ESTÁTICA NATIVA DE UN SOLO SEGMENTO, DELEGAR AL ROUTER NATIVO (404 EN CATCH-ALL)
-  if (slug.length === 1 && CORE_STATIC_ROUTES.has(rootPrefix)) {
+  // 1. SI COMIENZA POR UNA RUTA ESTÁTICA O API NATIVA, DELEGAR AL ROUTER NATIVO
+  if (CORE_STATIC_ROUTES.has(rootPrefix) || rootPrefix === 'api') {
     notFound();
   }
 
