@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
 import { Zap, Shield, Activity, Target, ArrowRight, Loader2, Sparkles, Lock } from 'lucide-react';
 import { useSovereignRole } from '@/shared/hooks/useSovereignRole';
-import PriceLockBadge from './PriceLockBadge';
+import { PriceLockBadge } from './PriceLockBadge';
 
 /**
  * BespokePricer - EAR OS V2 GOLD | OMNI-STITCH 2050
@@ -182,13 +182,24 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
           <Lock className="w-4 h-4" /> Congelar Tarifa 72h con Hash SHA-256
         </button>
       ) : (
-        <PriceLockBadge
-          initialHash={priceLockData.priceLockHash}
-          initialAmount={priceLockData.amount}
-          initialExpiresAtMs={priceLockData.expiresAtMs}
-          riderConfig={priceLockData.riderConfig}
-          onPayLock={handleCheckout}
-        />
+        <div className="space-y-4">
+          <PriceLockBadge
+            hash={priceLockData.priceLockHash}
+            total={priceLockData.amount}
+            split={{ 
+              artist: parseFloat((priceLockData.amount * 0.8).toFixed(2)), 
+              platform: parseFloat((priceLockData.amount * 0.1).toFixed(2)), 
+              vimume: parseFloat((priceLockData.amount * 0.1).toFixed(2)) 
+            }}
+          />
+          <button
+            onClick={handleCheckout}
+            disabled={loading}
+            className="w-full py-4 bg-[#ecb613] hover:bg-[#ffc61c] text-black rounded-2xl text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#ecb613]/20"
+          >
+            {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Abonar Garantía de Reserva (30%)'}
+          </button>
+        </div>
       )}
 
       {/* Mensajes de Autoridad */}

@@ -13,6 +13,9 @@ import {
   Mail, User, MapPin, Calendar, FileText, CheckCircle2, 
   Sparkles, CreditCard, Clock, Truck, Award, Phone, MessageCircle
 } from 'lucide-react';
+import { PRICING_CATALOG } from '@/lib/constants/pricing-catalog';
+import { SClassPricingEngine, SClassQuote } from '@/lib/pricing-engine';
+import { PriceLockBadge } from '@/features/finance/ui/PriceLockBadge';
 import { createDossierFromLead } from '@/app/actions/dossierActions';
 import { createEliteCheckout } from '@/app/actions/checkoutActions';
 import { marketplaceFeedback } from '@/services/marketplace/MarketplaceFeedbackService';
@@ -30,11 +33,13 @@ interface ServiceItem {
 
 const SERVICES_CATALOG: Record<string, ServiceItem[]> = {
   'BOOKING ARTÍSTICO DE GALA': [
-    { id: 'solo-edwin', name: 'Edwin Agudelo — Solista & Piano', price: 650, icon: <Sparkles size={20} />, desc: 'Voz lírica & mariachi con base de piano acústico.', category: 'BOOKING' },
-    { id: 'cuarteto-gala', name: 'Mariachi Cuarteto Imperial', price: 950, icon: <Users size={20} />, desc: '2 Trompetas, Vihuela y Guitarrón de alta fidelidad.', category: 'BOOKING' },
-    { id: 'quinteto-honor', name: 'Quinteto de Honor con Violín', price: 1250, icon: <Award size={20} />, desc: 'La formación predilecta para bodas prémium y galas.', category: 'BOOKING' },
-    { id: 'octeto-magistral', name: 'Octeto Magistral de Gran Gala', price: 2400, icon: <Activity size={20} />, desc: 'Presencia orquestal de impacto con sección de cuerda.', category: 'BOOKING' },
-    { id: 'banda-monumental', name: 'Banda Monumental (12-16 Artistas)', price: 4500, icon: <Boxes size={20} />, desc: 'Espectáculo audiovisual masivo con solistas en directo.', category: 'BOOKING' }
+    { id: PRICING_CATALOG['clasico-esencial'].id, name: PRICING_CATALOG['clasico-esencial'].name, price: PRICING_CATALOG['clasico-esencial'].basePrice, icon: <Sparkles size={20} />, desc: PRICING_CATALOG['clasico-esencial'].description, category: 'BOOKING' },
+    { id: PRICING_CATALOG['premium-gala'].id, name: PRICING_CATALOG['premium-gala'].name, price: PRICING_CATALOG['premium-gala'].basePrice, icon: <Users size={20} />, desc: PRICING_CATALOG['premium-gala'].description, category: 'BOOKING' },
+    { id: PRICING_CATALOG['cuarteto-imperial'].id, name: PRICING_CATALOG['cuarteto-imperial'].name, price: PRICING_CATALOG['cuarteto-imperial'].basePrice, icon: <Award size={20} />, desc: PRICING_CATALOG['cuarteto-imperial'].description, category: 'BOOKING' },
+    { id: PRICING_CATALOG['quinteto-honor'].id, name: PRICING_CATALOG['quinteto-honor'].name, price: PRICING_CATALOG['quinteto-honor'].basePrice, icon: <Activity size={20} />, desc: PRICING_CATALOG['quinteto-honor'].description, category: 'BOOKING' },
+    { id: PRICING_CATALOG['sinfonico-royal'].id, name: PRICING_CATALOG['sinfonico-royal'].name, price: PRICING_CATALOG['sinfonico-royal'].basePrice, icon: <Activity size={20} />, desc: PRICING_CATALOG['sinfonico-royal'].description, category: 'BOOKING' },
+    { id: PRICING_CATALOG['octeto-magistral'].id, name: PRICING_CATALOG['octeto-magistral'].name, price: PRICING_CATALOG['octeto-magistral'].basePrice, icon: <Activity size={20} />, desc: PRICING_CATALOG['octeto-magistral'].description, category: 'BOOKING' },
+    { id: PRICING_CATALOG['banda-monumental'].id, name: PRICING_CATALOG['banda-monumental'].name, price: PRICING_CATALOG['banda-monumental'].basePrice, icon: <Boxes size={20} />, desc: PRICING_CATALOG['banda-monumental'].description, category: 'BOOKING' }
   ],
   'PRODUCCIÓN & SONORIZACIÓN S-CLASS': [
     { id: 'pa-lacoustics', name: 'Sonorización L-Acoustics K2 / Kara', price: 1800, icon: <Activity size={20} />, desc: 'Presión acústica cristalina sin distorsión certificada.', category: 'PRODUCCION' },
@@ -70,6 +75,8 @@ const MultiPricerContent = () => {
   const [selectedProvince, setSelectedProvince] = useState<string>('Madrid');
   const [urgencyLevel, setUrgencyLevel] = useState<'ESTANDAR' | 'PRIORITARIA' | 'EXPRESS'>('ESTANDAR');
   const [includeVAT, setIncludeVAT] = useState<boolean>(true);
+  const [pax, setPax] = useState<number>(150);
+  const [quote, setQuote] = useState<SClassQuote | null>(null);
   
   const [loading, setLoading] = useState<boolean>(false);
   const [showLeadForm, setShowLeadForm] = useState<boolean>(false);
@@ -99,33 +106,43 @@ const MultiPricerContent = () => {
     }
   }, [searchParams]);
 
-  // --- ADVANCED FORMULA ENGINE ---
-  const calculations = useMemo(() => {
-    const allServices = Object.values(SERVICES_CATALOG).flat();
-    const baseSum = allServices
-      .filter(s => selectedServices.includes(s.id))
-      .reduce((acc, curr) => acc + curr.price, 0);
+  // --- ADVANCED FORMULA ENGINE (S-CLASS) ---
+  useEffect(() => {
+    let isActive = true;
 
-    const provinceRate = PROVINCE_RATES[selectedProvince]?.multiplier || 1.0;
-    const subtotalWithTravel = baseSum * provinceRate;
+    const fetchQuote = async () => {
+      try {
+        const distanceKm = selectedProvince === 'Madrid' ? 0 : 
+                          selectedProvince === 'Valencia' ? 350 :
+                          selectedProvince === 'Barcelona' ? 620 :
+                          selectedProvince === 'Sevilla' ? 530 : 100;
+        
+        const mappedUrgency = urgencyLevel === 'ESTANDAR' ? 'STANDARD' :
+                              urgencyLevel === 'PRIORITARIA' ? 'PRIORITY' : 'EXPRESS';
 
-    const urgencyMultiplier = urgencyLevel === 'EXPRESS' ? 1.25 : urgencyLevel === 'PRIORITARIA' ? 1.10 : 1.0;
-    const subtotalWithUrgency = subtotalWithTravel * urgencyMultiplier;
+        // Usamos el primer ID seleccionado como base para el engine
+        // Si no se encuentra (ej: son servicios logísticos puros), usamos clasico-esencial como base técnica
+        const formatId = PRICING_CATALOG[selectedServices[0]] ? selectedServices[0] : 'clasico-esencial';
 
-    const vatAmount = includeVAT ? subtotalWithUrgency * 0.21 : 0;
-    const finalTotal = Math.round(subtotalWithUrgency + vatAmount);
-    const depositAmount = Math.round(finalTotal * 0.30); // 30% Booking lock deposit
-
-    return {
-      baseSum,
-      travelFee: Math.round(baseSum * (provinceRate - 1)),
-      urgencyFee: Math.round(subtotalWithTravel * (urgencyMultiplier - 1)),
-      subtotal: Math.round(subtotalWithUrgency),
-      vatAmount: Math.round(vatAmount),
-      finalTotal,
-      depositAmount
+        const q = await SClassPricingEngine.generateQuote({
+          formatId,
+          pax,
+          distanceKm,
+          urgency: mappedUrgency
+        });
+        
+        if (isActive) {
+          setQuote(q);
+        }
+      } catch (err) {
+        console.error("Error generating quote:", err);
+      }
     };
-  }, [selectedServices, selectedProvince, urgencyLevel, includeVAT]);
+
+    fetchQuote();
+
+    return () => { isActive = false; };
+  }, [selectedServices, selectedProvince, urgencyLevel, pax]);
 
   const toggleService = (id: string) => {
     setSelectedServices(prev => 
@@ -170,13 +187,13 @@ const MultiPricerContent = () => {
       const result = await createDossierFromLead({
         contactName: leadData.name,
         contactEmail: leadData.email,
-        occasion: `${leadData.occasion} [${selectedProvince}] (Total: ${calculations.finalTotal}€)`,
+        occasion: `${leadData.occasion} [${selectedProvince}] (Total: ${quote?.finalTotal || 0}€)`,
         selectedAssets: selectedNames
       });
 
       if (result.success && result.dossierId) {
         marketplaceFeedback.track('lead_started', {
-          metadata: { status: 'dossier_created', dossierId: result.dossierId, total: calculations.finalTotal }
+          metadata: { status: 'dossier_created', dossierId: result.dossierId, total: quote?.finalTotal || 0 }
         });
         router.push(`/dossier/${result.dossierId}`);
       } else {
@@ -279,7 +296,7 @@ const MultiPricerContent = () => {
 
                 <div className="p-4 bg-white/5 rounded-2xl border border-white/5 flex justify-between items-center text-xs">
                   <span className="text-zinc-400">Presupuesto Estimado con Desglose:</span>
-                  <span className="text-lg font-black text-[#d4a855]">{calculations.finalTotal}€</span>
+                  <span className="text-lg font-black text-[#d4a855]">{quote?.finalTotal || 0}€</span>
                 </div>
 
                 <button 
@@ -374,10 +391,24 @@ const MultiPricerContent = () => {
           </div>
 
           {/* Location & Urgency Adjusters */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-white/5 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-white/5 text-xs">
             <div className="space-y-2 bg-black/40 p-4 rounded-2xl border border-white/5">
               <label className="text-[10px] font-black uppercase tracking-widest text-[#d4a855] flex items-center gap-1.5">
-                <MapPin size={14} /> Ubicación & Logística de Desplazamiento
+                <Users size={14} /> Aforo Asistentes (PAX)
+              </label>
+              <input
+                type="number"
+                min="10"
+                max="10000"
+                value={pax}
+                onChange={e => setPax(parseInt(e.target.value) || 0)}
+                className="w-full bg-zinc-900 border border-white/10 rounded-xl p-2.5 text-white font-bold outline-none focus:border-[#d4a855]"
+              />
+            </div>
+
+            <div className="space-y-2 bg-black/40 p-4 rounded-2xl border border-white/5">
+              <label className="text-[10px] font-black uppercase tracking-widest text-[#d4a855] flex items-center gap-1.5">
+                <MapPin size={14} /> Ubicación
               </label>
               <select
                 value={selectedProvince}
@@ -433,45 +464,28 @@ const MultiPricerContent = () => {
                 ))}
             </div>
 
-            {/* Calculations Breakdown */}
-            <div className="border-t border-white/5 pt-4 space-y-2 text-xs text-zinc-400 font-mono">
-              <div className="flex justify-between">
-                <span>Base Artística:</span>
-                <span className="text-white">{calculations.baseSum}€</span>
-              </div>
-              {calculations.travelFee > 0 && (
-                <div className="flex justify-between text-amber-400/90">
-                  <span>Logística ({selectedProvince}):</span>
-                  <span>+{calculations.travelFee}€</span>
+            {/* S-Class Pricing Engine Output */}
+            {quote ? (
+              <div className="space-y-4">
+                <div className="space-y-2 text-xs text-zinc-400 font-mono bg-black/40 p-4 rounded-2xl border border-white/5">
+                  <div className="text-[#ecb613] mb-2 font-black uppercase">Especificaciones del Motor S-Class:</div>
+                  {quote.technicalSpecs.map((spec, i) => (
+                    <div key={i} className="flex items-start gap-2">
+                      <span className="text-[#ecb613]">&gt;</span>
+                      <span className="text-white">{spec}</span>
+                    </div>
+                  ))}
                 </div>
-              )}
-              {calculations.urgencyFee > 0 && (
-                <div className="flex justify-between text-amber-400/90">
-                  <span>Factor Urgencia:</span>
-                  <span>+{calculations.urgencyFee}€</span>
-                </div>
-              )}
-              {includeVAT && (
-                <div className="flex justify-between">
-                  <span>IVA (21%):</span>
-                  <span className="text-white">{calculations.vatAmount}€</span>
-                </div>
-              )}
-            </div>
 
-            {/* Final Total Display */}
-            <div className="bg-black/60 p-4 rounded-2xl border border-white/5 space-y-1">
-              <span className="text-[9px] uppercase font-mono tracking-widest text-zinc-500 block">
-                Total Presupuesto Certificado
-              </span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-black text-white italic">{calculations.finalTotal}</span>
-                <span className="text-lg font-black text-[#d4a855]">€</span>
+                <PriceLockBadge 
+                  hash={quote.sha256Token} 
+                  total={quote.finalTotal} 
+                  split={quote.split} 
+                />
               </div>
-              <div className="text-[10px] text-zinc-400 font-mono pt-1">
-                Bloqueo de Fecha (30% Depósito): <strong className="text-[#d4a855]">{calculations.depositAmount}€</strong>
-              </div>
-            </div>
+            ) : (
+              <div className="p-8 text-center text-white/30 font-mono text-xs">Calculando físicas de acústica...</div>
+            )}
 
             {/* Action Buttons */}
             <div className="space-y-3">
@@ -505,7 +519,7 @@ const MultiPricerContent = () => {
                   profile: 'cotizador',
                   service: `Presupuesto Personalizado - ${selectedServices.length} conceptos`,
                   location: selectedProvince,
-                  intent: `solicito viabilidad con presupuesto total estimado de ${calculations.finalTotal}€`,
+                  intent: `solicito viabilidad con presupuesto total estimado de ${quote?.finalTotal || 0}€`,
                   slug: 'presupuesto'
                 }).url}
                 target="_blank"
@@ -528,8 +542,8 @@ const MultiPricerContent = () => {
               Total ({selectedServices.length} ítems)
             </span>
             <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-black text-white italic">{calculations.finalTotal}€</span>
-              <span className="text-[10px] text-[#d4a855] font-mono">(30%: {calculations.depositAmount}€)</span>
+              <span className="text-2xl font-black text-white italic">{quote?.finalTotal || 0}€</span>
+              <span className="text-[10px] text-[#d4a855] font-mono">(30%: {quote?.depositAmount || 0}€)</span>
             </div>
           </div>
           <div className="flex items-center gap-2">

@@ -1,8 +1,8 @@
 # MVP EXECUTION QUEUE (OMEGA V2.2)
 
 **ESTADO GLOBAL:** LISTO_PARA_PREVIEW | BLOQUEADORES OPERATIVOS PENDIENTES (commit, Vercel auth, env vars)
-**ÚLTIMA RECONCILIACIÓN:** 2026-08-06T20:12 CEST
-**BUILD LOCAL:** PASS (exit 0, 3386 rutas, Next.js 16.2.12 Turbopack)
+**ÚLTIMA RECONCILIACIÓN:** 2026-08-16T10:55 CEST
+**BUILD LOCAL:** PASS (exit 0)
 
 ## BLOQUE MVP-P0-01A (PRECONDICIONES Y VERIFICACIÓN)
 - **ID:** `MVP-P0-01A`
@@ -50,10 +50,17 @@
 
 ---
 
+## BLOQUE MVP-PRICING-SCLASS (ALGORITMO DE COTIZACIÓN Y PRICE-LOCK)
+- **ID:** `MVP-PRICING-SCLASS`
+- **ESTADO:** ✅ PASS
+- **EVIDENCIA:** Sustitución de lógica estática por el motor `SClassPricingEngine` (12 W/pax, SHA-256). Componente `PriceLockBadge` integrado en `MultiPricer.tsx` y `BespokePricer.tsx` de forma asíncrona. Preservación del tipado heredado mitigando TS2305/TS2613. Verificado exitosamente con `npx tsc --noEmit` (Código 0).
+- **FECHA CIERRE:** 2026-08-16
+
+---
+
 ## SIGUIENTE FASE: PREVIEW DEPLOY
 
 ### Bloqueadores operativos (no de código)
 1. `git add` + `git commit` + `git push` — REQUIERE_APROBACIÓN_HUMANA
 2. `npx vercel login` — Operador debe autenticar CLI
 3. Verificar variables `FIREBASE_ADMIN_*` y `STRIPE_WEBHOOK_SECRET` en Vercel Preview scope
-
