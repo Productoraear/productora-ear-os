@@ -17,8 +17,9 @@ const HunterPanel = dynamic(() => import('@/modules/SClassScreens/panels/HunterP
 const ConfiguradorBespoke = dynamic(() => import('@/modules/SClassScreens/ConfiguradorBespoke'), { ssr: false });
 const TacticalTracker = dynamic(() => import('@/app/components/SClass/TacticalTracker').then(mod => mod.TacticalTracker), { ssr: false });
 const RouteGovernancePanel = dynamic(() => import('@/app/(nexus)/admin/rutas/page'), { ssr: false });
+const ProVimumeDashboard = dynamic(() => import('@/modules/SClassScreens/PRO_VIMUMEDASHBOARD_2').then(m => m.default || m), { ssr: false });
 
-type AdminTab = 'nexus' | 'financial' | 'hunter' | 'configurador' | 'estado' | 'rutas';
+type AdminTab = 'nexus' | 'financial' | 'hunter' | 'vimume' | 'configurador' | 'estado' | 'rutas';
 
 export default function UnifiedAdminCommandCenter() {
   const [activeTab, setActiveTab] = useState<AdminTab>('nexus');
@@ -45,6 +46,7 @@ export default function UnifiedAdminCommandCenter() {
     { id: 'nexus', label: 'Centro de Mando', icon: Activity },
     { id: 'financial', label: 'Ledger Financiero', icon: DollarSign },
     { id: 'hunter', label: 'Hunter Licitaciones', icon: Radar },
+    { id: 'vimume', label: 'Panel VIMUME Astra', icon: Sparkles },
     { id: 'configurador', label: 'Configurador Bespoke', icon: Sliders },
     { id: 'estado', label: 'Estado & Dominancia', icon: Layers },
     { id: 'rutas', label: 'Gobernanza URLs', icon: ShieldCheck },
@@ -149,6 +151,17 @@ export default function UnifiedAdminCommandCenter() {
               exit={{ opacity: 0, y: -15 }}
             >
               <HunterPanel />
+            </motion.div>
+          )}
+
+          {activeTab === 'vimume' && (
+            <motion.div
+              key="vimume"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+            >
+              <ProVimumeDashboard />
             </motion.div>
           )}
 

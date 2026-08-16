@@ -1,121 +1,156 @@
-"use client";
+'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import { ShieldCheck, Activity, TrendingUp, Map, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Heart, Brain, Users, Activity, ShieldCheck, Sparkles, 
+  ChevronRight, Building2, Phone, FileText, ArrowRight
+} from 'lucide-react';
 import Link from 'next/link';
+import { CENTRALITA } from '@/lib/phone-constants';
 
-/**
- * 🏛️ VIMUME OS — FINAL S-CLASS REFINEMENT (ULTRA-CLEAN / CONTEMPLATIVE)
- * Unified with the Global Design System tokens.
- */
+// Carga diferida de los módulos de alta capacidad rescatados de la vertical
+const ProVimumePage = dynamic(() => import('@/modules/SClassScreens/PRO_VIMUMEPAGE'), { ssr: false });
+const VIMUMEClinicalBlock = dynamic(() => import('@/modules/SClassScreens/PRO_VIMUMECLINICALBLOCK').then(m => m.VIMUMEClinicalBlock), { ssr: false });
+const VimumeFamilyDashboard = dynamic(() => import('@/modules/SClassScreens/PRO_VIMUMEFAMILYDASHBOARD').then(m => m.VimumeFamilyDashboard), { ssr: false });
 
-export default function VimumeLandingPage() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: containerRef });
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
-
-  const scale = useTransform(smoothProgress, [0, 0.2], [1, 0.98]);
-  const opacity = useTransform(smoothProgress, [0, 0.15], [1, 0]);
-
-  const nodes = [
-    { title: "Soberanía", label: "Manifiesto", desc: "El compromiso de Edwin Agudelo: Defender la identidad contra el olvido.", href: "/vimume/nosotros" },
-    { title: "Métrica", label: "Ciencia", desc: "Protocolo de activación neuronal con precisión de grado operativo.", href: "/vimume/investigacion" },
-    { title: "Capital", label: "Inversión", desc: "Desarrollo estratégico de activos emocionales para la Silver Economy.", href: "/vimume/inversion" },
-    { title: "Misión", label: "Roadmap", desc: "Hoja de ruta 2026: Despliegue nacional de la infraestructura VIMUME.", href: "/vimume/roadmap" }
-  ];
+export default function VimumeMasterHub() {
+  const [activeView, setActiveView] = useState<'public' | 'clinical' | 'family'>('public');
 
   return (
-    <main ref={containerRef} className="bg-[#050505] min-h-screen text-[#f5f1e8] selection:bg-[#ecb613]/40 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-[#050505] text-[#f5f1e8] selection:bg-[#ecb613] selection:text-black font-sans">
       
-      {/* 🌌 EAR OS AURA (SILENT LUMINOSITY) */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#ecb613]/5 blur-[250px] rounded-full" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#ecb613]/3 blur-[250px] rounded-full" />
-      </div>
-
-      {/* 🚀 ULTRA-CLEAN HERO */}
-      <section className="h-screen flex flex-col items-center justify-center relative px-6 text-center">
-        <motion.div style={{ scale, opacity }} className="space-y-24 relative z-10 max-w-6xl">
-          <motion.div 
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="text-[#ecb613] text-[12px] font-black uppercase tracking-[1em] opacity-80"
-          >
-            EAR OS / VIMUME S-CLASS
-          </motion.div>
-          
-          <div className="space-y-2">
-            <h1 className="text-8xl md:text-[12rem] font-black uppercase tracking-tighter leading-[0.75] text-white">
-              <span className="text-white/20 block mb-[-0.05em]">RESCATAR</span>
-              <span className="text-[#ecb613]">EL ALMA</span>
+      {/* 🌌 HERO STRATEGIC HEADER */}
+      <section className="relative pt-28 pb-16 px-4 md:px-8 max-w-7xl mx-auto border-b border-white/10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/10 border border-pink-500/30 text-pink-400 text-[10px] font-mono tracking-widest uppercase">
+              <Brain size={13} />
+              <span>FUNDACIÓN VIMUME // VIAJE MUSICAL POR LA MEMORIA</span>
+            </div>
+            <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tight text-white font-syne">
+              NEURO-REMINISCENCIA <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-300 to-[#ecb613]">ACTIVA</span>
             </h1>
+            <p className="text-white/60 text-sm md:text-base max-w-2xl font-light">
+              Protocolos de estimulación cognitiva sonora para residencias, centros de día y familias. Licitaciones B2G (NextGenerationEU) y Musicoterapia de Precisión Grado Clínico.
+            </p>
           </div>
 
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="text-xl md:text-3xl text-white/40 font-medium max-w-3xl mx-auto leading-tight italic"
-          >
-            Infraestructura táctica para la preservación de la identidad humana.
-          </motion.p>
-
-          <motion.div 
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.8 }}
-             className="pt-12"
-          >
-            <Link href="#explorer" className="btn-primary">
-              Iniciar Protocolo
-            </Link>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* 📋 NODOS DE AUTORIDAD (BENTO SILENT) */}
-      <section id="explorer" className="max-w-7xl mx-auto px-6 py-48">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {nodes.map((node, i) => (
-            <motion.div
-              key={node.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="group"
+          {/* SELECTOR DE VISTAS S-CLASS */}
+          <div className="flex flex-wrap gap-2 bg-white/5 border border-white/10 p-1.5 rounded-2xl">
+            <button
+              onClick={() => setActiveView('public')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${
+                activeView === 'public'
+                  ? 'bg-pink-600 text-white shadow-[0_0_20px_rgba(236,72,153,0.4)]'
+                  : 'text-white/60 hover:text-white'
+              }`}
             >
-              <Link href={node.href}>
-                <div className="surface-card p-12 h-full flex flex-col justify-between">
-                  <div className="space-y-6">
-                    <div className="text-[#ecb613] text-[10px] font-black uppercase tracking-[0.4em] opacity-60">
-                      {node.label}
-                    </div>
-                    <h3 className="text-5xl font-black uppercase tracking-tighter group-hover:text-[#ecb613] transition-colors">
-                      {node.title}
-                    </h3>
-                    <p className="text-xl text-white/30 font-medium leading-snug">
-                      {node.desc}
-                    </p>
-                  </div>
-                  <div className="pt-12 flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-white/20 group-hover:text-[#ecb613] transition-all">
-                    Explorar Nodo <ArrowRight size={14} />
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+              Proyecto & Estrategia
+            </button>
+            <button
+              onClick={() => setActiveView('clinical')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${
+                activeView === 'clinical'
+                  ? 'bg-[#ecb613] text-black shadow-[0_0_20px_rgba(236,182,19,0.3)]'
+                  : 'text-white/60 hover:text-white'
+              }`}
+            >
+              Evidencia Clínica (40Hz)
+            </button>
+            <button
+              onClick={() => setActiveView('family')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${
+                activeView === 'family'
+                  ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+                  : 'text-white/60 hover:text-white'
+              }`}
+            >
+              Portal Familias
+            </button>
+          </div>
+        </div>
+
+        {/* CTA B2G & FAMILIAS */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+          <a
+            href={CENTRALITA.tel}
+            className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-pink-500/40 flex items-center justify-between group transition-all"
+          >
+            <div>
+              <span className="text-[10px] font-mono text-pink-400 block uppercase">Convocatoria 2026</span>
+              <h4 className="text-sm font-bold text-white">Solicitar Piloto en Residencia</h4>
+            </div>
+            <ArrowRight size={16} className="text-white/40 group-hover:text-pink-400 group-hover:translate-x-1 transition-all" />
+          </a>
+
+          <Link
+            href="/vimume/prensa"
+            className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#ecb613]/40 flex items-center justify-between group transition-all"
+          >
+            <div>
+              <span className="text-[10px] font-mono text-[#ecb613] block uppercase">Medios & Dossier</span>
+              <h4 className="text-sm font-bold text-white">Kit Institucional & ODS 2030</h4>
+            </div>
+            <ArrowRight size={16} className="text-white/40 group-hover:text-[#ecb613] group-hover:translate-x-1 transition-all" />
+          </Link>
+
+          <a
+            href={CENTRALITA.whatsapp}
+            target="_blank"
+            rel="noreferrer"
+            className="p-4 rounded-2xl bg-[#25D366]/10 border border-[#25D366]/30 hover:border-[#25D366] flex items-center justify-between group transition-all text-[#25D366]"
+          >
+            <div>
+              <span className="text-[10px] font-mono block uppercase">Atención Inmediata</span>
+              <h4 className="text-sm font-bold">WhatsApp Terapeutas de Guardia</h4>
+            </div>
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-all" />
+          </a>
         </div>
       </section>
 
-      {/* 🏛️ FOOTER S-CLASS */}
-      <footer className="border-t border-white/5 py-24 text-center px-6">
-         <div className="space-y-8 opacity-30">
-            <p className="text-[10px] font-black uppercase tracking-[1em]">Productora EAR | S-Class Institutional OS</p>
-            <p className="text-[10px] font-mono">© 2026 | ALL RIGHTS RESERVED | C001-AURA-ONYX</p>
-         </div>
-      </footer>
-    </main>
+      {/* 🚀 CONTENIDO DINÁMICO TRASPLANTADO */}
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+        <AnimatePresence mode="wait">
+          {activeView === 'public' && (
+            <motion.div
+              key="public"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              className="space-y-12"
+            >
+              <ProVimumePage />
+              <VIMUMEClinicalBlock ciudad="Madrid & Nacional" />
+            </motion.div>
+          )}
+
+          {activeView === 'clinical' && (
+            <motion.div
+              key="clinical"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+            >
+              <VIMUMEClinicalBlock ciudad="Centros Sociosanitarios Homologados" />
+            </motion.div>
+          )}
+
+          {activeView === 'family' && (
+            <motion.div
+              key="family"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+            >
+              <VimumeFamilyDashboard />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
+
+    </div>
   );
 }
