@@ -24,6 +24,21 @@ import {
     Database,
     Cpu
 } from 'lucide-react';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    RadialLinearScale,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+} from 'chart.js';
+import { Line, Bar, Radar, Pie } from 'react-chartjs-2';
 import { db } from '@/lib/firebase';
 import {
     collection,
@@ -32,6 +47,28 @@ import {
     limit,
     onSnapshot
 } from 'firebase/firestore';
+
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    RadialLinearScale,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+);
+
+interface EarOrder {
+    id: string;
+    client: string;
+    total: number;
+    status: string;
+    createdAt?: any;
+}
 // --- TYPES ---
 type Role = 'CEO' | 'TERAPEUTA' | 'DATA_SCIENTIST' | 'DEVOPS' | 'UX_DESIGNER' | 'PM' | 'CFO';
 
@@ -173,8 +210,8 @@ export const VimumeDashboard: React.FC = () => {
 
 
     return (
-        <EarLayout>
-            <div className="min-h-screen bg-[#050505] pt-32 pb-20 px-6">
+        <div className="w-full space-y-6">
+            <div className="min-h-screen bg-[#050505] pt-6 pb-20 px-2 md:px-6">
                 <div className="max-w-[1600px] mx-auto">
                     {/* HEADER STATUS */}
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
@@ -444,7 +481,7 @@ export const VimumeDashboard: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </EarLayout>
+        </div>
     );
 };
 

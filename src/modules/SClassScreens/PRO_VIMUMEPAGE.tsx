@@ -489,11 +489,7 @@ export const VimumePage: React.FC = () => {
     const [activeTab, setActiveTab] = useState<TabId>('overview');
 
     return (
-        <div className="pt-20 bg-black min-h-screen text-white">
-            <SEO
-                title="VIMUME™ | Viaje Musical por la Memoria — Productora EAR"
-                description="Iniciativa terapéutica de musicoterapia para devolver la identidad y la emoción a nuestros mayores. Proyecto buque insignia de la Productora EAR."
-            />
+        <div className="pt-4 bg-black min-h-screen text-white">
 
             {/* HERO */}
             <div className="relative py-24 border-b border-white/10 overflow-hidden">
