@@ -42,6 +42,8 @@ function formatTitle(slugArray: string[]) {
     .replace('Dj', 'DJ');
 }
 
+import { generateSemanticPageData } from '@/lib/seo/semantic-engine';
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   if (!slug || slug.length === 0) return {};
@@ -50,16 +52,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
-  const title = formatTitle(slug);
-  const location = slug.length >= 2 ? formatTitle([slug[0]]) : 'España';
+  const semantic = generateSemanticPageData(slug, slug.length >= 2 ? slug[0] : undefined);
 
   return {
-    title: `${title} | Productora EAR & VIMUME OS`,
-    description: `Infraestructura técnica, producción S-Class y contratación oficial para ${title}. Protocolo certificado en ${location}.`,
-    keywords: [...slug, 'productora ear', 'vimume os', 'eventos de alta gama', 'ingenieria acustica'],
+    title: semantic.title,
+    description: semantic.metaDescription,
+    keywords: semantic.localKeywords,
     openGraph: {
-      title: `${title} - Productora EAR`,
-      description: `Protocolo oficial y contratación S-Class: ${title}. Cobertura en toda España.`,
+      title: semantic.title,
+      description: semantic.metaDescription,
       images: ['/og-image-vimume.jpg'],
     }
   };
