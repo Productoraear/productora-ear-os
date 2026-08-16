@@ -170,7 +170,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Profile 1: Particular / Pareja */}
+            {/* Profile 1: Particular / Pareja / Cliente */}
             <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
@@ -178,17 +178,17 @@ export default function Home() {
                 </div>
                 <div>
                   <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 1</span>
-                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Particular / Pareja</h3>
+                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Cliente de Eventos</h3>
                 </div>
                 <p className="text-white/50 text-xs leading-relaxed">
-                  Bodas, aniversarios y cumpleaños. Necesitas claridad de tarifas, emoción y respuesta inmediata sin sorpresas de última hora.
+                  Bodas, aniversarios y galas privadas. Presupuesto exacto con Price-Lock SHA-256 (72h) y depósito de 10 €.
                 </p>
               </div>
               <Link
-                href="/artistas/bodas"
+                href="/cotizador?mode=bespoke&role=cliente"
                 className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
               >
-                <span>Bodas & Fiestas</span>
+                <span>Cotización Bespoke</span>
                 <ChevronRight size={14} />
               </Link>
             </div>
@@ -204,19 +204,19 @@ export default function Home() {
                   <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Institución / B2G</h3>
                 </div>
                 <p className="text-white/50 text-xs leading-relaxed">
-                  Ayuntamientos, comisiones de fiestas y corporativos. Solvencia técnica, pliegos, facturación FACe y pólizas homologadas.
+                  Ayuntamientos, comisiones y residencias. Contratos menores (Art. 118 LCSP &lt;15.000€) y fondos NextGenEU.
                 </p>
               </div>
               <Link
-                href="/ocasiones/ayuntamientos"
+                href="/vimume/clinica?mode=b2g&role=institucion"
                 className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
               >
-                <span>Canal Institucional</span>
+                <span>Pliegos B2G & VIMUME</span>
                 <ChevronRight size={14} />
               </Link>
             </div>
 
-            {/* Profile 3: Proveedor / Afiliado */}
+            {/* Profile 3: Proveedor / Partner */}
             <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
@@ -224,10 +224,10 @@ export default function Home() {
                 </div>
                 <div>
                   <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 3</span>
-                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Proveedor / Afiliado</h3>
+                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Proveedor / Partner</h3>
                 </div>
                 <p className="text-white/50 text-xs leading-relaxed">
-                  Sonido, iluminación, tarimas y servicios auxiliares. Intégrate en la red logística S-Class y monetiza tus recursos.
+                  Sonido Line Array, microfonía y logística. Intégrate en la red S-Class o reclama tu ficha entre los 22.471 indexados.
                 </p>
               </div>
               <Link
@@ -239,7 +239,7 @@ export default function Home() {
               </Link>
             </div>
 
-            {/* Profile 4: Artista */}
+            {/* Profile 4: Artista / Producción */}
             <div className="bg-[#101010] border border-[#ecb613]/30 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613] transition-all shadow-xl">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
@@ -247,17 +247,17 @@ export default function Home() {
                 </div>
                 <div>
                   <span className="text-[9px] font-mono uppercase tracking-widest text-[#ecb613]">Perfil 4</span>
-                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Artista</h3>
+                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Artista / Producción</h3>
                 </div>
                 <p className="text-white/50 text-xs leading-relaxed">
-                  Vivir dignamente de tu arte. Un sistema que te respalda con ingeniería sónica, contratos vinculantes y cobro garantizado.
+                  The Signal: Evaluación de talento para Diamantes Rojos con liquidación soberana bajo el split 80/10/10.
                 </p>
               </div>
               <Link
-                href="/artistas"
+                href="/artistas?mode=signal&role=artista"
                 className="w-full py-3.5 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all"
               >
-                <span>Roster de Artistas</span>
+                <span>Evaluar en The Signal</span>
                 <ChevronRight size={14} />
               </Link>
             </div>
