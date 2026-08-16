@@ -234,41 +234,42 @@ export const NeuralJourneyApex: React.FC<NeuralJourneyApexProps> = ({ isOpen, on
                             className="flex flex-col gap-12"
                         >
                             <div className="grid md:grid-cols-2 gap-8">
-                                <div className="glass-panel p-10 rounded-[3rem]">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.5em] text-[#d4a855] mb-6 block">Ubicación Estratégica</label>
+                                <div className="p-8 rounded-3xl bg-[#0f0f0f] border border-white/20 shadow-xl">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-[#ecb613] mb-4 block">Ubicación Estratégica</label>
                                     <select 
                                         value={city} 
                                         onChange={e => setCity(e.target.value)}
-                                        className="w-full bg-transparent border-b border-white/10 py-4 text-2xl font-black text-white focus:border-[#d4a855] outline-none transition-colors uppercase"
+                                        className="w-full bg-[#181818] border border-white/20 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:border-[#ecb613] outline-none transition-colors uppercase cursor-pointer"
                                     >
-                                        <option value="" className="bg-black">Seleccionar...</option>
-                                        <option value="madrid" className="bg-black">Madrid</option>
-                                        <option value="barcelona" className="bg-black">Barcelona</option>
-                                        <option value="marbella" className="bg-black">Marbella</option>
-                                        <option value="ibiza" className="bg-black">Ibiza</option>
+                                        <option value="" className="bg-[#181818] text-white/50">Seleccionar provincia...</option>
+                                        <option value="madrid" className="bg-[#181818] text-white">Madrid (Sede Central)</option>
+                                        <option value="barcelona" className="bg-[#181818] text-white">Barcelona / Cataluña</option>
+                                        <option value="toledo" className="bg-[#181818] text-white">Toledo / Castilla</option>
+                                        <option value="marbella" className="bg-[#181818] text-white">Marbella / Costa del Sol</option>
+                                        <option value="ibiza" className="bg-[#181818] text-white">Ibiza / Baleares</option>
+                                        <option value="sevilla" className="bg-[#181818] text-white">Sevilla / Andalucía</option>
                                     </select>
                                 </div>
-                                <div className="glass-panel p-10 rounded-[3rem]">
-                                    <label className="text-[10px] font-black uppercase tracking-[0.5em] text-[#d4a855] mb-6 block">Fecha del Evento</label>
+                                <div className="p-8 rounded-3xl bg-[#0f0f0f] border border-white/20 shadow-xl">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-[#ecb613] mb-4 block">Fecha del Evento</label>
                                     <input 
                                         type="date" 
                                         value={date} 
                                         onChange={e => setDate(e.target.value)}
-                                        className="w-full bg-transparent border-b border-white/10 py-4 text-2xl font-black text-white focus:border-[#d4a855] outline-none transition-colors" 
+                                        className="w-full bg-[#181818] border border-white/20 rounded-2xl px-5 py-4 text-lg font-bold text-white focus:border-[#ecb613] outline-none transition-colors cursor-pointer [color-scheme:dark]" 
                                     />
                                 </div>
                             </div>
 
-                            <div className="glass-panel p-16 rounded-[4rem] flex flex-col gap-12 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-10 opacity-20">
-                                    <Activity size={80} strokeWidth={0.5} className="text-[#d4a855]" />
-                                </div>
-                                
-                                <div className="flex flex-col gap-2">
-                                    <span className="text-[11px] font-black uppercase tracking-[0.6em] text-white/30">Inversión Recomendada</span>
-                                    <div className="flex items-baseline gap-4">
-                                        <span className="text-8xl font-black text-white italic leading-none">{(budget).toLocaleString()}</span>
-                                        <span className="text-[#d4a855] text-4xl font-black italic">€</span>
+                            <div className="p-10 rounded-3xl bg-[#0f0f0f] border border-white/20 shadow-xl flex flex-col gap-8 relative overflow-hidden">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <span className="text-xs font-bold uppercase tracking-widest text-[#ecb613] block">Inversión Estimada Sugerida</span>
+                                        <p className="text-xs text-white/60 mt-0.5">Calculada dinámicamente con control de aforo y rider</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <span className="text-4xl md:text-5xl font-black text-white">{(budget).toLocaleString()}</span>
+                                        <span className="text-[#ecb613] text-2xl font-black ml-1">€</span>
                                     </div>
                                 </div>
 

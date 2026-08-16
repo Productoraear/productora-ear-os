@@ -75,16 +75,30 @@
     border-color: var(--primary);
   }
 
-  .btn-sclass {
-    @apply px-10 py-6 font-black uppercase text-[10px] tracking-[0.4em] transition-all duration-500 relative overflow-hidden;
+  /* Forzar contraste nítido absoluto en inputs, selects y formularios */
+  input, select, textarea {
+    color: #ffffff !important;
+    background-color: #121212 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
   }
 
-  .btn-sclass-primary {
-    @apply bg-foreground text-background hover:bg-primary hover:text-foreground;
+  input:focus, select:focus, textarea:focus {
+    border-color: #ecb613 !important;
+    outline: none !important;
   }
 
-  .btn-sclass-outline {
-    @apply border border-border bg-card hover:bg-muted;
+  select option {
+    background-color: #181818 !important;
+    color: #ffffff !important;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+  }
+
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
   }
 }
 
