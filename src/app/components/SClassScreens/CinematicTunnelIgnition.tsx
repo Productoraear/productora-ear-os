@@ -154,10 +154,10 @@ export const CinematicTunnelIgnition: React.FC<CinematicTunnelIgnitionProps> = (
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 z-50 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition-all"
+          className="absolute top-6 right-6 z-50 w-12 h-12 min-w-[48px] min-h-[48px] rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center text-white/60 hover:text-white transition-all cursor-pointer"
           aria-label="Cerrar túnel"
         >
-          <X size={18} />
+          <X size={20} />
         </button>
 
         <div className="sticky top-24 max-w-5xl mx-auto px-6 md:px-12 pt-16 pb-32 space-y-16 relative z-10">
