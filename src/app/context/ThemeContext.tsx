@@ -14,7 +14,7 @@ const CustomThemeContext = createContext<ThemeContextType | undefined>(undefined
 // Core provider that wraps children with next-themes provider and custom bridge context
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem>
+    <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem={false} forcedTheme="dark">
       <ThemeBridge>{children}</ThemeBridge>
     </NextThemesProvider>
   );

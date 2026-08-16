@@ -46,13 +46,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" suppressHydrationWarning className="scroll-smooth">
+    <html lang="es" suppressHydrationWarning className="dark scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://js.stripe.com" />
       </head>
-      <body className="antialiased bg-background text-foreground selection:bg-[#ecb613] selection:text-black font-sans">
+      <body className="antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans">
         <Script
           src="https://js.stripe.com/v3/"
           strategy="lazyOnload"

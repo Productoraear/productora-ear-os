@@ -4,27 +4,7 @@
 
 @layer base {
   :root {
-    /* --- MODO CLARO (LUMINANCE SILVER) --- */
-    --background: #fdfcf7; /* Ivory cream */
-    --foreground: #0d0d0d; /* Charcoal almost black */
-    
-    --card: #f5f4ef; /* Bento grid light */
-    --card-foreground: #0d0d0d;
-    
-    --primary: #ecb613; /* Oro Kinetic */
-    --primary-foreground: #0d0d0d;
-    
-    --muted: #e5e5df;
-    --muted-foreground: #616161;
-    
-    --border: #d4d4cd;
-
-    --font-syne: var(--font-syne), 'Syne', sans-serif;
-    --font-manrope: var(--font-manrope), 'Manrope', sans-serif;
-  }
-
-  .dark {
-    /* --- MODO OSCURO (AURA ONYX) --- */
+    /* --- MODO SOBERANO S-CLASS (AURA ONYX) --- */
     --background: #050505; /* Black absolute */
     --foreground: #ffffff; /* White absolute */
     
@@ -37,6 +17,21 @@
     --muted: #1a1a1a;
     --muted-foreground: #a0a0a0;
     
+    --border: #262626;
+
+    --font-syne: var(--font-syne), 'Syne', sans-serif;
+    --font-manrope: var(--font-manrope), 'Manrope', sans-serif;
+  }
+
+  .dark {
+    --background: #050505;
+    --foreground: #ffffff;
+    --card: #0d0d0d;
+    --card-foreground: #ffffff;
+    --primary: #ecb613;
+    --primary-foreground: #0d0d0d;
+    --muted: #1a1a1a;
+    --muted-foreground: #a0a0a0;
     --border: #262626;
   }
 
