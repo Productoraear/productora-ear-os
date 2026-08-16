@@ -5,6 +5,7 @@ import {
   Crown, Mic2, Users, Trophy, Music, Calendar, Phone 
 } from 'lucide-react';
 import { Metadata } from 'next';
+import { CENTRALITA } from '@/lib/phone-constants';
 import { InjectHeroButton, InjectCatalogButton } from './InjectArtistButton';
 import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
 

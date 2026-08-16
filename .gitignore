@@ -54,3 +54,5 @@ Marketing_Skills/
 system-prompts-and-models-of-ai-tools-main/
 .env*.local
 scripts/vampire_mass_extracted.json
+docs/release/COMPREHENSIVE_FORENSIC_INVENTORY.json
+src/data/catalog/ADN_EAR_INDEX.json
