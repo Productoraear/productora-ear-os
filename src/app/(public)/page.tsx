@@ -1,13 +1,31 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { AnimatePresence } from 'framer-motion';
 import { 
   Sparkles, ShieldCheck, ArrowRight, Phone, MessageCircle, 
   Crown, Heart, Building2, Boxes, Mic2, FileText, CheckCircle2, 
   Calendar, Star, Music, Award, Users, ChevronRight
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import type { ProfileContext } from '@/app/components/SClassScreens/CinematicTunnelIgnition';
+
+const CinematicTunnelIgnition = dynamic(
+  () => import('@/app/components/SClassScreens/CinematicTunnelIgnition').then(m => m.CinematicTunnelIgnition),
+  { ssr: false }
+);
 
 export default function Home() {
+  const [activeProfile, setActiveProfile] = useState<ProfileContext | null>(null);
+
+  const handleIgnition = (profile: ProfileContext) => {
+    setActiveProfile(profile);
+    setTimeout(() => {
+      document.getElementById('neural-tunnel-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
   const occasionLinks = [
     { title: 'Bodas de Gala', href: '/artistas/bodas', tag: 'B2C VIP' },
     { title: 'Cumpleaños & Fiestas', href: '/artistas/cumpleanos', tag: 'FAMILIAR' },
@@ -170,8 +188,15 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Profile 1: Particular / Pareja / Cliente */}
-            <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
+            {/* Profile 1: Cliente de Eventos */}
+            <div
+              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
+                activeProfile === 'CLIENT' ? 'border-[#ecb613] ring-2 ring-[#ecb613]/30' : 'border-white/10 hover:border-[#ecb613]/50'
+              }`}
+              onClick={() => handleIgnition('CLIENT')}
+              role="button"
+              tabIndex={0}
+            >
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
                   <Heart size={22} />
@@ -184,17 +209,21 @@ export default function Home() {
                   Bodas, aniversarios y galas privadas. Presupuesto exacto con Price-Lock SHA-256 (72h) y depósito de 10 €.
                 </p>
               </div>
-              <Link
-                href="/cotizador?mode=bespoke&role=cliente"
-                className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
-              >
+              <span className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all">
                 <span>Cotización Bespoke</span>
                 <ChevronRight size={14} />
-              </Link>
+              </span>
             </div>
 
             {/* Profile 2: Institución / B2G */}
-            <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
+            <div
+              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
+                activeProfile === 'B2G' ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-white/10 hover:border-[#ecb613]/50'
+              }`}
+              onClick={() => handleIgnition('B2G')}
+              role="button"
+              tabIndex={0}
+            >
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
                   <Building2 size={22} />
@@ -207,17 +236,21 @@ export default function Home() {
                   Ayuntamientos, comisiones y residencias. Contratos menores (Art. 118 LCSP &lt;15.000€) y fondos NextGenEU.
                 </p>
               </div>
-              <Link
-                href="/vimume/clinica?mode=b2g&role=institucion"
-                className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
-              >
+              <span className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all">
                 <span>Pliegos B2G & VIMUME</span>
                 <ChevronRight size={14} />
-              </Link>
+              </span>
             </div>
 
             {/* Profile 3: Proveedor / Partner */}
-            <div className="bg-[#101010] border border-white/10 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all shadow-xl">
+            <div
+              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
+                activeProfile === 'PARTNER' ? 'border-emerald-500 ring-2 ring-emerald-500/30' : 'border-white/10 hover:border-[#ecb613]/50'
+              }`}
+              onClick={() => handleIgnition('PARTNER')}
+              role="button"
+              tabIndex={0}
+            >
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
                   <Boxes size={22} />
@@ -230,17 +263,21 @@ export default function Home() {
                   Sonido Line Array, microfonía y logística. Intégrate en la red S-Class o reclama tu ficha entre los 22.471 indexados.
                 </p>
               </div>
-              <Link
-                href="/servicios?mode=dynamic&role=proveedor"
-                className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
-              >
+              <span className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all">
                 <span>Ingresar al Ecosistema</span>
                 <ChevronRight size={14} />
-              </Link>
+              </span>
             </div>
 
             {/* Profile 4: Artista / Producción */}
-            <div className="bg-[#101010] border border-[#ecb613]/30 rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613] transition-all shadow-xl">
+            <div
+              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
+                activeProfile === 'ARTIST' ? 'border-purple-500 ring-2 ring-purple-500/30' : 'border-[#ecb613]/30 hover:border-[#ecb613]'
+              }`}
+              onClick={() => handleIgnition('ARTIST')}
+              role="button"
+              tabIndex={0}
+            >
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
                   <Mic2 size={22} />
@@ -253,16 +290,26 @@ export default function Home() {
                   The Signal: Evaluación de talento para Diamantes Rojos con liquidación soberana bajo el split 80/10/10.
                 </p>
               </div>
-              <Link
-                href="/artistas?mode=signal&role=artista"
-                className="w-full py-3.5 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all"
-              >
+              <span className="w-full py-3.5 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all">
                 <span>Evaluar en The Signal</span>
                 <ChevronRight size={14} />
-              </Link>
+              </span>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* 🧠 TÚNEL NEURAL CINEMÁTICO — IGNICIÓN POR SCROLL */}
+      <section id="neural-tunnel-section" className="px-4 sm:px-6 pb-8 relative z-10">
+        <AnimatePresence mode="wait">
+          {activeProfile && (
+            <CinematicTunnelIgnition
+              key={activeProfile}
+              profileContext={activeProfile}
+              onClose={() => setActiveProfile(null)}
+            />
+          )}
+        </AnimatePresence>
       </section>
 
       {/* 🎯 HUBS POR OCASIÓN Y DEMANDA TRANSACCIONAL */}
