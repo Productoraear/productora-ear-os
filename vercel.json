@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/api/cron/hunter",
+      "path": "/api/cron/obsidian-sync",
       "schedule": "0 3 * * *"
     }
   ],

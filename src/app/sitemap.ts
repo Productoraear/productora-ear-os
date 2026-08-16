@@ -33,6 +33,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/artists/press`, lastModified: now, priority: 0.6, changeFrequency: 'weekly' },
     { url: `${baseUrl}/blog`, lastModified: now, priority: 0.7, changeFrequency: 'weekly' },
     { url: `${baseUrl}/servicios`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/presupuesto`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/afiliados`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
     { url: `${baseUrl}/dossier`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
   ];
 
