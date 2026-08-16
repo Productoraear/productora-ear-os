@@ -64,9 +64,13 @@ ChartJS.register(
 
 interface EarOrder {
     id: string;
-    client: string;
-    total: number;
+    client?: string;
+    userId?: string;
+    total?: number;
+    totalAmount?: number;
     status: string;
+    items?: any[];
+    paymentMethod?: string;
     createdAt?: any;
 }
 // --- TYPES ---
