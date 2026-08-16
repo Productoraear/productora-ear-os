@@ -34,10 +34,10 @@ const AstraNeuralTwinPanel = dynamic(
 
 export default function PublicAcademyPage() {
   const tools = [
-    { name: "Rider Técnico Standard v2.pdf", cat: "Producción", size: "2.4 MB" },
-    { name: "Contrato de Actuación B2G / B2B.docx", cat: "Legal", size: "1.1 MB" },
-    { name: "Split Sheet & Royalties Protocol.xls", cat: "Finanzas", size: "850 KB" },
-    { name: "Checklist Pre-Show & Sonorización Bose F1.pdf", cat: "Técnica", size: "3.2 MB" },
+    { name: "Rider Técnico Standard v2.md", cat: "Producción", size: "2.4 KB", docId: "rider" },
+    { name: "Contrato de Actuación B2G / B2B.txt", cat: "Legal", size: "1.8 KB", docId: "contrato" },
+    { name: "Split Sheet & Royalties Protocol.csv", cat: "Finanzas", size: "850 B", docId: "split" },
+    { name: "Checklist Pre-Show & Sonorización Bose F1.md", cat: "Técnica", size: "3.2 KB", docId: "checklist" },
   ];
 
   return (
@@ -120,12 +120,13 @@ export default function PublicAcademyPage() {
                   <p className="font-bold text-sm mt-1 line-clamp-2 text-white">{tool.name}</p>
                   <span className="text-slate-500 text-[11px] mt-1 block">{tool.size}</span>
                 </div>
-                <button 
-                  onClick={() => alert(`Descarga iniciada: ${tool.name}`)}
-                  className="flex items-center justify-center gap-2 w-full py-2 bg-white/10 hover:bg-[#ecb613] hover:text-black text-white text-xs font-bold rounded-xl transition-all cursor-pointer"
+                <a 
+                  href={`/api/academy/download?doc=${tool.docId}`}
+                  download
+                  className="flex items-center justify-center gap-2 w-full py-2 bg-white/10 hover:bg-[#ecb613] hover:text-black text-white text-xs font-bold rounded-xl transition-all cursor-pointer no-underline"
                 >
                   <Download className="w-3.5 h-3.5" /> Descargar
-                </button>
+                </a>
               </div>
             ))}
           </div>
