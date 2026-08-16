@@ -69,3 +69,8 @@ export function generateWhatsAppLink(params: WhatsAppParams): { number: string; 
     url
   };
 }
+
+export const CENTRALITA = {
+  tel: "tel:+34693693048",
+  raw: "+34 693 693 048"
+};

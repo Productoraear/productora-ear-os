@@ -13,6 +13,7 @@ import {
 import publicCatalog from '@/data/catalog/vampire_public_catalog_zk.json';
 import { useEventCart, CartItem } from '@/context/EventCartContext';
 import { NeuralJourneyApex } from '@/app/components/SClassScreens/NeuralJourneyApex';
+import { AcousticSpatialMatcher } from '@/app/components/SClassScreens/AcousticSpatialMatcher';
 import { EventEngineProvider } from '@/contexts/EventEngineContext';
 import type { AuraType, ClimaxType, ServiceCategory, WeddingPreferences } from '@/lib/engines/weddingMatchEngine';
 
@@ -188,6 +189,11 @@ function UnifiedMatchmakerContent() {
               </div>
             </motion.button>
           </div>
+        </div>
+
+        {/* RECOMENDADOR ACÚSTICO SPATIAL MATCHMAKER */}
+        <div className="mb-14">
+          <AcousticSpatialMatcher />
         </div>
 
         {/* BENTO GRID: ATMÓSFERAS Y AFORO */}
