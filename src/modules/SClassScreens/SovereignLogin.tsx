@@ -19,6 +19,18 @@ function SovereignLoginContent() {
   const affiliateRef = searchParams.get('ref');
 
   useEffect(() => {
+    const roleParam = searchParams.get('role');
+
+    // Si es un cliente accediendo a servicios, conectar sesión y redirigir inmediatamente
+    if (roleParam === 'cliente' || fromPath.startsWith('/servicios')) {
+      if (typeof document !== 'undefined') {
+        document.cookie = `ear_os_role=cliente; path=/; max-age=86400; samesite=lax`;
+        document.cookie = `ear_os_auth_token=true; path=/; max-age=86400; samesite=lax`;
+      }
+      router.push(fromPath || '/servicios');
+      return;
+    }
+
     // 1. Ingesta de Identidad y Auto-Focus (Reducción de Carga Cognitiva)
     if (fromPath.includes('/blog/b2g') || fromPath.includes('institucional') || fromPath.includes('/vimume')) {
       setSelectedRole('INSTITUCIONAL');

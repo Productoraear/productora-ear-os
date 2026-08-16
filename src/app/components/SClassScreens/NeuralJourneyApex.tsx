@@ -65,14 +65,14 @@ const CLIMAX_OPTIONS: { id: ClimaxType; label: string; desc: string; icon: any }
 ];
 
 const SERVICE_OPTIONS: { id: ServiceCategory; label: string; icon: any }[] = [
-    { id: 'MUSICA_LIVE', label: 'Live Music', icon: Music },
-    { id: 'DJ', label: 'DJ Set', icon: Headphones },
-    { id: 'FOTOGRAFIA', label: 'Foto', icon: Camera },
-    { id: 'VIDEO', label: 'Video', icon: Clapperboard },
-    { id: 'CATERING', label: 'Catering', icon: Utensils },
-    { id: 'DECORACION', label: 'Deco', icon: Flower2 },
-    { id: 'ILUMINACION', label: 'Luz', icon: Lightbulb },
-    { id: 'WEDDING_PLANNER', label: 'WP', icon: ClipboardList },
+    { id: 'MUSICA_LIVE', label: 'Mariachi & Tenor Lírico', icon: Music },
+    { id: 'DJ', label: 'DJ Set & Live Remix', icon: Headphones },
+    { id: 'ILUMINACION', label: 'PA Bose & Shure Axient (Alquiler)', icon: Lightbulb },
+    { id: 'FOTOGRAFIA', label: 'Registro Visual 4K', icon: Camera },
+    { id: 'CATERING', label: 'Suministro Gastronómico', icon: Utensils },
+    { id: 'DECORACION', label: 'Escenografía S-Class', icon: Flower2 },
+    { id: 'WEDDING_PLANNER', label: 'Dirección Protocolar VIP', icon: ClipboardList },
+    { id: 'VIDEO', label: 'VIMUME Memoria Activa', icon: Clapperboard },
 ];
 
 export const NeuralJourneyApex: React.FC<NeuralJourneyApexProps> = ({ isOpen, onClose, onComplete }) => {
