@@ -24,21 +24,6 @@ import {
     Database,
     Cpu
 } from 'lucide-react';
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    RadialLinearScale,
-    ArcElement,
-    Title,
-    Tooltip,
-    Legend,
-    Filler
-} from 'chart.js';
-import { Line, Bar, Radar, Pie } from 'react-chartjs-2';
 import { db } from '@/lib/firebase';
 import {
     collection,
@@ -47,22 +32,6 @@ import {
     limit,
     onSnapshot
 } from 'firebase/firestore';
-
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    RadialLinearScale,
-    ArcElement,
-    Title,
-    Tooltip,
-    Legend,
-    Filler
-);
-
 // --- TYPES ---
 type Role = 'CEO' | 'TERAPEUTA' | 'DATA_SCIENTIST' | 'DEVOPS' | 'UX_DESIGNER' | 'PM' | 'CFO';
 
