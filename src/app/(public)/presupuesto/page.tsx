@@ -47,9 +47,25 @@ export default function PresupuestoPage() {
           </div>
         </div>
 
-        {/* Dynamic Matcher Component */}
-        <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+        {/* Dynamic Matcher Component & Unified Flow */}
+        <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden space-y-8">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
+          
+          {/* Banner de Salto Inmediato al Túnel Neural */}
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-transparent border border-[#ecb613]/30 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="space-y-1">
+              <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest block">Inteligencia Conductual 50Q</span>
+              <h3 className="text-xl font-black text-white uppercase font-syne">¿Prefieres que el Túnel Neural profile tu evento paso a paso?</h3>
+              <p className="text-xs text-white/50">Simulador de presión acústica, compatibilidad de repertorio y congelación de tarifa en 4 pantallas.</p>
+            </div>
+            <Link
+              href="/servicios"
+              className="px-6 py-3 rounded-xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center gap-2 hover:scale-105 transition-all shadow-[0_0_25px_rgba(236,182,19,0.3)] whitespace-nowrap"
+            >
+              <span>Abrir Túnel Neural →</span>
+            </Link>
+          </div>
+
           <TinderMatcherClient />
         </div>
       </div>

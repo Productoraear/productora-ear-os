@@ -1,0 +1,90 @@
+{
+  "version": "2026.S-CLASS",
+  "archetypes": {
+    "CLIENTE_PARTICULAR": {
+      "name": "Cliente Particular & Bodas VIP",
+      "objective": "Experiencia emocional inolvidable, estética impecable y cero fatiga auditiva",
+      "conversionGoal": "Price-Lock 72h + Depósito 10€ + Asignación de Edwin Agudelo",
+      "questions": [
+        { "id": "cp_01", "q": "¿Cuál es la emoción predominante que deseas grabar en la memoria de tus invitados?", "options": ["Elegancia solemne", "Alegría desbordante", "Intimidad romántica", "Asombro monumental"] },
+        { "id": "cp_02", "q": "¿En qué momento del evento debe ocurrir el clímax musical?", "options": ["Entrada / Ceremonia", "Cóctel de bienvenida", "Apertura del baile", "Recena / Cierre"] },
+        { "id": "cp_03", "q": "¿Prefieres voz solista con piano acústico o ensamble completo de mariachi?", "options": ["Solista & Piano", "Cuarteto Imperial", "Quinteto con Violines", "Show a Caballo"] },
+        { "id": "cp_04", "q": "¿El recinto cuenta con limitador acústico de decibelios municipal?", "options": ["Sí, limitador estricto (<85dB)", "No, espacio abierto sin límite", "Espacio mixto interior/exterior", "Pendiente de consultar con la finca"] },
+        { "id": "cp_05", "q": "¿Deseas calibración acústica de precisión (12W/PAX) Bose Line Array?", "options": ["Sí, sonido cristalino Hi-Fi", "Solo la microfonía básica", "Incluir iluminación robotizada", "Sonorización completa multizona"] },
+        { "id": "cp_06", "q": "¿Qué prioridad otorgas al vestuario y presencia escénica?", "options": ["Traje Charro de Gran Gala bordado", "Esmoquin clásico / Black Tie", "Traje de gala contemporáneo", "Indiferente mientras sea formal"] },
+        { "id": "cp_07", "q": "¿Quieres incluir canciones de autor personalizadas o dedicatorias?", "options": ["Sí, dedicatoria especial en directo", "Repertorio clásico tradicional", "Mezcla lírica y ranchera", "Elección libre del maestro"] },
+        { "id": "cp_08", "q": "¿Cómo prefieres bloquear la fecha en el calendario?", "options": ["Depósito 10€ con 72h de congelación", "Transferencia bancaria formal", "Llamada previa con el director", "Confirmación por WhatsApp"] },
+        { "id": "cp_09", "q": "¿Tienes plan de contingencia por lluvia o intemperie?", "options": ["Sí, carpa homologada", "Recinto interior alternativo", "Se requiere asesoramiento EAR", "Fecha de verano garantizada"] },
+        { "id": "cp_10", "q": "¿Deseas que una parte del presupuesto apoye la Fundación VIMUME?", "options": ["Sí, incluir certificado de impacto social", "Explicar el proyecto primero", "Enfocar 100% en el evento", "Doble donación conmemorativa"] }
+      ]
+    },
+    "WEDDING_PLANNER": {
+      "name": "Wedding Planner & Directores de Eventos",
+      "objective": "Solvencia técnica, puntualidad militar, contratos transparentes y 10% ledger mercantil",
+      "conversionGoal": "Alta en Red de Afiliados + Dossier Marca Blanca + Reserva Táctica",
+      "questions": [
+        { "id": "wp_01", "q": "¿Gestionas eventos de alto ticket (>30.000€ presupuesto global)?", "options": ["Frecuentemente (>10 al año)", "Ocasionalmente (3-10 al año)", "En fase de captación", "Eventos corporativos y privados mixtos"] },
+        { "id": "wp_02", "q": "¿Necesitas presentar dossiers sin marca (Marca Blanca) a tus parejas?", "options": ["Sí, fundamental para mi agencia", "Con co-branding EAR OS", "Directamente como Productora EAR", "Ficha técnica simplificada"] },
+        { "id": "wp_03", "q": "¿Prefieres liquidación del 10% por evento o acumulado mensual?", "options": ["Transferencia inmediata post-evento", "Liquidación mensual consolidada", "Crédito en hardware para futuras bodas", "Descuento directo al cliente final"] },
+        { "id": "wp_04", "q": "¿Qué nivel de exigencia técnica requiere el espacio del enlace?", "options": ["Rider complejo (Trussing + Line Array)", "Sonido compacto sin cableado visible", "Microfonía Shure Axient anti-interferencias", "Todo coordinado por técnico EAR"] },
+        { "id": "wp_05", "q": "¿Valoras tener un WhatsApp de guardia con el director técnico?", "options": ["Imprescindible 24/7", "Solo durante la semana del evento", "Por correo electrónico es suficiente", "Acceso directo al móvil de Edwin"] },
+        { "id": "wp_06", "q": "¿Manejas enlaces multiculturales o con peticiones internacionales?", "options": ["Sí, repertorio bilingüe y mariachi", "Exclusivamente nacional", "Eventos diplomáticos y de embajadas", "Bodas destino (Destination Weddings)"] },
+        { "id": "wp_07", "q": "¿Exiges certificado de Seguro de Responsabilidad Civil de 1.000.000€?", "options": ["Obligatorio para la finca", "Recomendable", "Incluido en todos los packs EAR", "Requerido por protocolo del cliente"] },
+        { "id": "wp_08", "q": "¿Cómo integras los tiempos de prueba de sonido con el catering?", "options": ["Prueba silenciosa previa a invitados", "Montaje 4 horas antes", "Coordinado con el metre", "Sincronizado vía timeline EAR OS"] },
+        { "id": "wp_09", "q": "¿Deseas acceso a la pre-reserva de fechas exclusivas 2026/2027?", "options": ["Sí, bloquear calendario prioritario", "Según demanda de clientes", "Solo para temporada alta", "Acceso multi-evento"] },
+        { "id": "wp_10", "q": "¿Quieres recibir muestras de audio masterizado y vídeos 4K?", "options": ["Sí, kit para WhatsApp comercial", "Acceso al portal digital", "Solo ficha técnica", "Reunión presencial de cata acústica"] }
+      ]
+    },
+    "EMPRESA_B2B": {
+      "name": "Corporativo, Marcas & Convenciones B2B",
+      "objective": "Impacto de marca, puntualidad corporativa, facturación estructurada y cumplimiento legal",
+      "conversionGoal": "Contrato Mercantil B2B + Facturación FACe/IVA + Bloqueo de Producción",
+      "questions": [
+        { "id": "b2b_01", "q": "¿Cuál es la tipología de vuestro evento corporativo?", "options": ["Convención anual / Kick-off", "Gala de entrega de premios", "Presentación de producto / Marca", "Cena de navidad / Aniversario"] },
+        { "id": "b2b_02", "q": "¿Cuántos asistentes presenciales congregaréis?", "options": ["50 - 150 pax", "150 - 500 pax", "500 - 1.500 pax", "Más de 1.500 pax (Gran Formato)"] },
+        { "id": "b2b_03", "q": "¿Requerís integración con streaming o realización multicámara?", "options": ["Sí, broadcast 4K en directo", "Solo grabación para aftermovie", "Audio directo a mesa de prensa", "Solo producción presencial"] },
+        { "id": "b2b_04", "q": "¿Vuestro departamento de compras exige homologación de proveedor?", "options": ["Sí, certificado tributario y SS al día", "Facturación estándar con IVA", "Plataforma de compras interna", "Pago a 30 días certificado"] },
+        { "id": "b2b_05", "q": "¿Necesitáis oratoria nítida con microfonía de cuello de cisne y solapa?", "options": ["Sí, para discursos de directivos", "Microfonía de mano inalámbrica", "Traducción simultánea", "Show musical al término del acto"] },
+        { "id": "b2b_06", "q": "¿Deseáis que el show artístico se sincronice con el reveal de marca?", "options": ["Sí, impacto en clímax de presentación", "Música de fondo sutil", "Show completo de clausura", "Fanfarria lírica de entrega"] },
+        { "id": "b2b_07", "q": "¿Requerís estructuras trussing con focos corporativos en color exacto?", "options": ["Sí, iluminación DMX color HEX de marca", "Luz blanca neutra de alta definición", "Ambiente cálido de cena", "Efectos dinámicos Beam"] },
+        { "id": "b2b_08", "q": "¿Vuestra política de RSC incluye proyectos sociales homologados?", "options": ["Sí, alineado con ODS 2030 (VIMUME)", "Evaluando proyectos de salud", "No aplica para este evento", "Reporte de sostenibilidad requerido"] },
+        { "id": "b2b_09", "q": "¿El recinto es propio o un centro de convenciones externo?", "options": ["Sede corporativa / Nave propia", "Hotel / Palacio de Congresos", "Espacio singular / Finca", "Espacio público al aire libre"] },
+        { "id": "b2b_10", "q": "¿Plazo estimado para la toma de decisión y emisión de orden de compra?", "options": ["Inmediato (<48 horas)", "1 a 2 semanas", "Sujeto a comité de dirección", "Presupuesto para ejercicio siguiente"] }
+      ]
+    },
+    "AYUNTAMIENTO_B2G": {
+      "name": "Sector Público, Ayuntamientos & Fiestas Patronales B2G",
+      "objective": "Cumplimiento Ley Contratos Sector Público (LCSP), facturación FACe y seguridad ciudadana",
+      "conversionGoal": "Licitación / Contrato Menor + Factura FACe + Seguro RC Masivo",
+      "questions": [
+        { "id": "b2g_01", "q": "¿Cuál es la modalidad administrativa de contratación?", "options": ["Contrato Menor (<15.000€)", "Procedimiento Abierto / Licitación PLACSP", "Negociado sin publicidad", "Convenio institucional / Patrocinio"] },
+        { "id": "b2g_02", "q": "¿El espectáculo es en Plaza Mayor, Recinto Ferial o Teatro Municipal?", "options": ["Plaza Mayor / Escenario Central", "Recinto Ferial al aire libre", "Teatro / Auditorio Municipal", "Residencias Municipales (VIMUME)"] },
+        { "id": "b2g_03", "q": "¿Qué formato escénico se ajusta a la programación festiva?", "options": ["Banda Monumental (12-16 músicos)", "Show 'Cantando a Caballo' (Alta Escuela)", "Mariachi Imperial de Gran Gala", "Ciclo de Musicoterapia VIMUME"] },
+        { "id": "b2g_04", "q": "¿Se requiere tramitación mediante factura electrónica FACe?", "options": ["Sí, códigos DIR3 obligatorios", "Factura digital con firma electrónica", "Vía gestoría municipal", "Pliego de condiciones previo"] },
+        { "id": "b2g_05", "q": "¿Dispone el ayuntamiento de tarima propia y toma de corriente trifásica?", "options": ["Sí, acometida 32A/63A y escenario", "Requiere infraestructura completa EAR", "Solo toma de corriente", "Generador insonorizado requerido"] },
+        { "id": "b2g_06", "q": "¿Se precisa plan de autoprotección y seguro de RC para masas?", "options": ["Sí, póliza ampliada y técnicos dados de alta", "Aportado por el plan municipal", "Coordinado con Policía Local", "Certificado de no afección acústica"] },
+        { "id": "b2g_07", "q": "¿El espectáculo forma parte de Fiestas Patronales o Festival Cultural?", "options": ["Fiestas Patronales oficiales", "Festival temático / Día de la Música", "Semana del Mayor (Tercera Edad)", "Concierto extraordinario de gala"] },
+        { "id": "b2g_08", "q": "¿Existe dotación presupuestaria con cargo a fondos NextGenerationEU?", "options": ["Sí, proyecto de inclusión social/salud", "Presupuesto ordinario de festejos", "Subvención diputación / comunidad", "Presupuesto de cultura"] },
+        { "id": "b2g_09", "q": "¿Qué fecha límite figura para la entrega de la memoria técnica?", "options": ["Menos de 5 días hábiles", "15 días", "En fase de consulta preliminar", "Inmediata para junta de gobierno"] },
+        { "id": "b2g_10", "q": "¿Desean incluir un taller de neuro-reminiscencia para mayores previo al concierto?", "options": ["Sí, gran valor social para el municipio", "Solo el concierto de noche", "Consultar con concejalía de bienestar", "Programa mixto completo"] }
+      ]
+    },
+    "PROVEEDOR_PARTNER": {
+      "name": "Proveedores, Músicos, Técnicos & Partners",
+      "objective": "Integración en la red de abastecimiento, alquiler de equipos y contratos por actuación",
+      "conversionGoal": "Verificación ZK + Registro en Catálogo + Asignación de Rutas Logísticas",
+      "questions": [
+        { "id": "pr_01", "q": "¿Cuál es vuestra especialidad en la cadena de valor de eventos?", "options": ["Alquiler de Sonido / Iluminación", "Espacio / Finca para eventos", "Catering / Gastronomía", "Fotografía / Vídeo / Dron"] },
+        { "id": "pr_02", "q": "¿Contáis con alta en Seguridad Social y autónomos/sociedad en vigor?", "options": ["Sí, documentación 100% al día", "Empresa con plantilla propia", "En proceso de tramitación", "Cooperativa de artistas"] },
+        { "id": "pr_03", "q": "¿Qué marcas de sonido profesional componen vuestro inventario?", "options": ["L-Acoustics / d&b audiotechnik", "Bose Professional / Yamaha", "Midas / Behringer Digital", "Otras marcas homologadas"] },
+        { "id": "pr_04", "q": "¿Disponéis de flota rodante propia con tarjeta de transporte?", "options": ["Furgonetas carrozadas propias", "Vehículos ligeros de carga", "Subcontratación de transporte", "Cobertura local sin desplazamiento"] },
+        { "id": "pr_05", "q": "¿Qué radio geográfico de cobertura garantizáis sin recargo?", "options": ["Comunidad de Madrid y limítrofes", "Toda la Península Ibérica", "Zona Levante / Cataluña", "Andalucía y Sur"] },
+        { "id": "pr_06", "q": "¿Tenéis disponibilidad para servicios de sustitución urgente (<24h)?", "options": ["Sí, retén de guardia 24h", "Con preaviso de 48h", "Solo fines de semana", "Sujeto a calendario"] },
+        { "id": "pr_07", "q": "¿Aceptáis pago por hito cumplido bajo contrato mercantil EAR?", "options": ["Sí, liquidación pactada", "50% anticipo + 50% fin de evento", "Facturación mensual de horas", "Condiciones estándar del gremio"] },
+        { "id": "pr_08", "q": "¿Vuestros técnicos cuentan con formación en PRL y trabajo en altura?", "options": ["Sí, certificaciones vigentes", "En renovación anual", "No realizamos montajes en altura", "Personal de sala únicamente"] },
+        { "id": "pr_09", "q": "¿Os interesa recibir órdenes de servicio directas desde el Nexus EAR?", "options": ["Sí, alertas por WhatsApp y app", "Por correo electrónico", "Solo grandes producciones", "Integración API directa"] },
+        { "id": "pr_10", "q": "¿Queréis participar en el programa de mecenazgo y apoyo a VIMUME?", "options": ["Sí, cesión de horas técnicas solidarias", "Aportación en eventos benéficos", "Conocer primero las bases", "Enfoque puramente comercial"] }
+      ]
+    }
+  }
+}
