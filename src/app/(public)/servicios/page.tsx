@@ -83,6 +83,8 @@ const ATMOSPHERES = [
   }
 ];
 
+import { useSearchParams } from 'next/navigation';
+
 export default function UnifiedMatchmakerPage() {
   return (
     <EventEngineProvider>
@@ -94,6 +96,7 @@ export default function UnifiedMatchmakerPage() {
 function UnifiedMatchmakerContent() {
   const { cart, addToCart, removeFromCart, totalBudget, totalWatts, hardwareMargin } = useEventCart();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [atmosphere, setAtmosphere] = useState('gala');
   const [guests, setGuests] = useState<number>(150);
@@ -101,6 +104,10 @@ function UnifiedMatchmakerContent() {
   const [activeTab, setActiveTab] = useState<'tier0' | 'catalog'>('tier0');
   const [isNeuralModalOpen, setIsNeuralModalOpen] = useState(false);
   const [neuralResults, setNeuralResults] = useState<WeddingPreferences | null>(null);
+
+  // Detección de temperatura de entrada o modo dinámico
+  const modeParam = searchParams.get('mode');
+  const tempParam = searchParams.get('temp');
 
   // Autocalculadora de potencia acústica según aforo (12W por persona en exterior/gala)
   const requiredWatts = useMemo(() => guests * 12, [guests]);
@@ -131,6 +138,22 @@ function UnifiedMatchmakerContent() {
 
       <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pt-28">
         
+        {/* 🏢 BANNER PERSISTENTE: RECLAMACIÓN DE PERFIL B2B */}
+        <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-[#0a0a0a] to-[#0a0a0a] border border-[#ecb613]/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+          <div className="flex items-center gap-3">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#ecb613] animate-ping" />
+            <p className="text-xs text-white/80 font-mono">
+              ¿Eres propietario de uno de los <strong className="text-[#ecb613]">22.471 perfiles indexados</strong> en España?
+            </p>
+          </div>
+          <Link
+            href="/reclamar-perfil"
+            className="px-4 py-2 rounded-xl bg-[#ecb613]/10 hover:bg-[#ecb613] border border-[#ecb613]/30 text-[#ecb613] hover:text-black text-xs font-mono font-bold uppercase tracking-wider transition-all whitespace-nowrap"
+          >
+            Reclama tu Ficha en 1 Clic →
+          </Link>
+        </div>
+
         {/* HEADER S-CLASS HERO */}
         <div className="border-b border-white/10 pb-8 mb-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

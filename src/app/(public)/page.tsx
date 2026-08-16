@@ -231,10 +231,10 @@ export default function Home() {
                 </p>
               </div>
               <Link
-                href="/servicios"
+                href="/servicios?mode=dynamic&role=proveedor"
                 className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all"
               >
-                <span>Red de Producción</span>
+                <span>Ingresar al Ecosistema</span>
                 <ChevronRight size={14} />
               </Link>
             </div>
