@@ -1,5 +1,5 @@
 # 🛡️ VERCEL DOMINANCE SHIELD V134
-.next/cache
+.next
 node_modules
 src/infrastructure/archive
 *.log
