@@ -14,7 +14,8 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/nexus') ||
     pathname.startsWith('/dashboard') ||
     pathname.startsWith('/vault') ||
-    pathname.startsWith('/artist') ||
+    pathname === '/artist' ||
+    pathname.startsWith('/artist/') ||
     pathname.startsWith('/studio');
 
   // 2. Comprobación de señal de sesión (Firebase client signal / Sovereign cookies)
