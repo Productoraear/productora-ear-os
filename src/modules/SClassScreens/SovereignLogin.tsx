@@ -63,9 +63,16 @@ function SovereignLoginContent() {
       document.cookie = `ear_os_auth_token=true; path=/; max-age=86400; samesite=lax`;
     }
 
+    // Enrutamiento directo sin doble clic
+    let destination = fromPath !== '/nexus' ? fromPath : '/servicios';
+    if (role === 'PROVEEDOR') destination = '/cotizador';
+    else if (role === 'ARTISTA') destination = '/artistas';
+    else if (role === 'INSTITUCIONAL') destination = '/vimume';
+    else if (role === 'AFILIADO') destination = '/afiliados';
+
     setTimeout(() => {
-      router.push(fromPath);
-    }, 500);
+      router.push(destination);
+    }, 400);
   };
 
   if (isHydrating) {
