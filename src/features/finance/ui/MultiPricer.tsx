@@ -153,18 +153,28 @@ const MultiPricerContent = () => {
   const handleInstantStripeDeposit = async () => {
     setLoading(true);
     try {
-      const session = await createEliteCheckout({
-        artistId: selectedServices[0] || 'custom-cotizador-package',
-        clientId: `client-${Date.now()}`,
-        origin: `${selectedProvince}, España`,
-        destination: `Cotización Personalizada EAR OS`,
-        eventDate: leadData.eventDate || new Date(Date.now() + 86400000 * 14).toISOString().split('T')[0]
+      const depositVal = quote?.depositAmount ?? 0.50;
+      const res = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: depositVal,
+          concept: `Depósito Garantía S-Class (${quote?.sha256Token || '72H-LOCK'})`,
+          metadata: {
+            sha256Token: quote?.sha256Token || '',
+            formatId: selectedServices[0] || 'clasico-esencial',
+            pax: pax,
+            province: selectedProvince,
+            finalTotal: quote?.finalTotal || 0,
+            deposit: depositVal
+          }
+        })
       });
-
-      if (session?.url) {
-        window.location.href = session.url;
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
       } else {
-        alert('Redirigiendo a pasarela segura de depósito...');
+        alert(data.error || 'Error al conectar con la pasarela Stripe');
       }
     } catch (err) {
       console.error(err);
@@ -494,7 +504,7 @@ const MultiPricerContent = () => {
                 disabled={loading}
                 className="w-full py-4 bg-[#d4a855] hover:bg-[#e0b666] text-black font-black uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#d4a855]/20 active:scale-95"
               >
-                <CreditCard size={16} /> Bloquear Fecha con Depósito (30%)
+                <CreditCard size={16} /> Bloquear Fecha con Depósito ({quote?.depositAmount ?? 0.50}€)
               </button>
 
               <button
@@ -543,7 +553,7 @@ const MultiPricerContent = () => {
             </span>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-black text-white italic">{quote?.finalTotal || 0}€</span>
-              <span className="text-[10px] text-[#d4a855] font-mono">(30%: {quote?.depositAmount || 0}€)</span>
+              <span className="text-[10px] text-[#d4a855] font-mono">(Garantía: {quote?.depositAmount ?? 0.50}€)</span>
             </div>
           </div>
           <div className="flex items-center gap-2">

@@ -30,7 +30,7 @@ export const PriceLockBadge: React.FC<PriceLockBadgeProps> = ({ hash, total, spl
         </div>
         <div className="text-right">
           <p className="text-3xl font-display font-black text-white italic">{total.toFixed(0)} €</p>
-          <p className="text-[9px] text-gray-500 uppercase tracking-widest">+ 10 € Depósito de Garantía</p>
+          <p className="text-[9px] text-gray-500 uppercase tracking-widest">+ 0.50 € Depósito de Garantía</p>
         </div>
       </div>
 

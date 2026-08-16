@@ -1,8 +1,9 @@
 # MVP EXECUTION QUEUE (OMEGA V2.2)
 
-**ESTADO GLOBAL:** LISTO_PARA_PREVIEW | BLOQUEADORES OPERATIVOS PENDIENTES (commit, Vercel auth, env vars)
-**ÚLTIMA RECONCILIACIÓN:** 2026-08-16T10:55 CEST
+**ESTADO GLOBAL:** ✅ LISTO_PARA_PRODUCCION_MVP
+**ÚLTIMA RECONCILIACIÓN:** 2026-08-16T16:10 CEST
 **BUILD LOCAL:** PASS (exit 0)
+**VERCEL DEPLOYMENT:** PASS (Ready)
 
 ## BLOQUE MVP-P0-01A (PRECONDICIONES Y VERIFICACIÓN)
 - **ID:** `MVP-P0-01A`
@@ -42,6 +43,8 @@
 - **EVIDENCIA:** Viewport desbloqueado en `layout.tsx` (WCAG 1.4.4); Home (`page.tsx`) con scroll nativo, navbar limpia única y chips de filtro; `MultiPricer.tsx` con barra resumen sticky persistente en móvil (`calculations.finalTotal}€`) y tap targets ≥44px; Matcher (`TinderMatcherClient.tsx`) con rejilla responsive fluida. Verificado en navegador headless móvil (390x844) con clicks interactivos reales. Exit 0 en `tsc`.
 - **FECHA CIERRE:** 2026-08-09
 
+---
+
 ## BLOQUE MVP-JOURNEY-215 (PUBLIC JOURNEY COHERENCE & CONVERSION HARDENING)
 - **ID:** `MVP-JOURNEY-215`
 - **ESTADO:** ✅ PASS
@@ -58,9 +61,11 @@
 
 ---
 
-## SIGUIENTE FASE: PREVIEW DEPLOY
-
-### Bloqueadores operativos (no de código)
-1. `git add` + `git commit` + `git push` — REQUIERE_APROBACIÓN_HUMANA
-2. `npx vercel login` — Operador debe autenticar CLI
-3. Verificar variables `FIREBASE_ADMIN_*` y `STRIPE_WEBHOOK_SECRET` en Vercel Preview scope
+## BLOQUE MVP-PREVIEW-DEPLOY (SINCRONIZACIÓN Y DESPLIEGUE A PRODUCCIÓN)
+- **ID:** `MVP-PREVIEW-DEPLOY`
+- **ESTADO:** ✅ PASS
+- **EVIDENCIA:** Sincronización Git en `origin/main` (commits `4ec1681`, `f1ef63c`, `0329966`). Variables de entorno `FIREBASE_ADMIN_*` y `STRIPE_*` verificadas en Vercel Preview/Production. Despliegues en estado `Ready`:
+  - `https://ear-bqc2sr9n5-productoraear-gmailcoms-projects.vercel.app`
+  - `https://ear-productoraear-gmailcoms-projects.vercel.app`
+  - `.vercelignore` saneado (ignora `.next` íntegro) eliminando el error de 100 MB para CLI.
+- **FECHA CIERRE:** 2026-08-16

@@ -83,7 +83,7 @@ export class SClassPricingEngine {
       logisticCost,
       urgencyMultiplier: multiplier,
       finalTotal: parseFloat(finalTotal.toFixed(2)),
-      depositAmount: 10, // Garantía unitaria inmutable
+      depositAmount: 0.50, // Garantía unitaria de prueba de campo (50 céntimos)
       split,
       technicalSpecs,
       sha256Token
