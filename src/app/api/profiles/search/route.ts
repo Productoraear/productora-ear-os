@@ -30,8 +30,8 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const q = (searchParams.get('q') || '').trim().toLowerCase();
-    const category = (searchParams.get('category') || 'ALL').toUpperCase();
-    const province = (searchParams.get('province') || 'ALL').toLowerCase();
+    const rawCategory = (searchParams.get('category') || 'ALL').trim().toUpperCase();
+    const rawProvince = (searchParams.get('province') || 'ALL').trim().toLowerCase();
     const maxBudget = parseInt(searchParams.get('maxBudget') || '10000', 10);
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     const limit = Math.min(100, Math.max(6, parseInt(searchParams.get('limit') || '24', 10)));
@@ -40,11 +40,15 @@ export async function GET(request: Request) {
     const all = loadMasterProviders();
 
     let filtered = all.filter((p: any) => {
-      if (category !== 'ALL' && p.category !== category) return false;
+      if (rawCategory !== 'ALL' && p.category !== rawCategory) {
+        // Tolerancia a categorías generales o coincidencias parciales
+        const pCat = (p.category || '').toUpperCase();
+        if (pCat !== rawCategory && !pCat.includes(rawCategory)) return false;
+      }
       
-      if (province !== 'ALL') {
+      if (rawProvince !== 'all' && rawProvince !== 'toda españa (nacional)') {
         const pLoc = (p.location?.province || p.location?.city || p.location?.address || p.location || '').toLowerCase();
-        if (!pLoc.includes(province)) return false;
+        if (!pLoc.includes(rawProvince)) return false;
       }
 
       const price = p.pricing?.rentalBasePrice || p.basePrice || p.price || 450;
