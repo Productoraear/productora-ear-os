@@ -1,0 +1,234 @@
+[
+  {
+    "expediente_id": "EXP-B2G-L01281158-202608-01",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Pozuelo de Alarcón",
+    "codigo_dir3": "L01281158",
+    "provincia": "Madrid",
+    "objeto_contrato": "Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas",
+    "codigo_cpv": "92312140-4 (Servicios de Grupos Musicales)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 14500,
+      "oferta_base_eur": 13775.0,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2892.75,
+      "total_licitable_eur": 16667.75
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Sistema Electro-Voice ETX 12P + Monitoraje In-Ear Sennheiser G4",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Mariachi Imperial Productora EAR",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas en Ayuntamiento de Pozuelo de Alarcón, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Pozuelo de Alarcón para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  },
+  {
+    "expediente_id": "EXP-B2G-L01451688-202608-02",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Toledo",
+    "codigo_dir3": "L01451688",
+    "provincia": "Toledo",
+    "objeto_contrato": "Programa VIMUME de Neuro-Reminiscencia Musical en Residencias de Mayores",
+    "codigo_cpv": "85311100-3 (Servicios de Bienestar Social para Personas de Edad)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 14900,
+      "oferta_base_eur": 14155.0,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2972.55,
+      "total_licitable_eur": 17127.55
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Auriculares de Conducción Ósea + Frecuencias Isocrónicas 40Hz",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Equipo Clínico VIMUME OS",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Programa VIMUME de Neuro-Reminiscencia Musical en Residencias de Mayores en Ayuntamiento de Toledo, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Toledo para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  },
+  {
+    "expediente_id": "EXP-B2G-L01281273-202608-03",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Las Rozas de Madrid",
+    "codigo_dir3": "L01281273",
+    "provincia": "Madrid",
+    "objeto_contrato": "Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas",
+    "codigo_cpv": "92312140-4 (Servicios de Grupos Musicales)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 14200,
+      "oferta_base_eur": 13490.0,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2832.9,
+      "total_licitable_eur": 16322.9
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Sistema Electro-Voice ETX 12P + Monitoraje In-Ear Sennheiser G4",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Mariachi Imperial Productora EAR",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas en Ayuntamiento de Las Rozas de Madrid, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Las Rozas de Madrid para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  },
+  {
+    "expediente_id": "EXP-B2G-L01280051-202608-04",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Alcalá de Henares",
+    "codigo_dir3": "L01280051",
+    "provincia": "Madrid",
+    "objeto_contrato": "Programa VIMUME de Neuro-Reminiscencia Musical en Residencias de Mayores",
+    "codigo_cpv": "85311100-3 (Servicios de Bienestar Social para Personas de Edad)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 14850,
+      "oferta_base_eur": 14107.5,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2962.57,
+      "total_licitable_eur": 17070.07
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Auriculares de Conducción Ósea + Frecuencias Isocrónicas 40Hz",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Equipo Clínico VIMUME OS",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Programa VIMUME de Neuro-Reminiscencia Musical en Residencias de Mayores en Ayuntamiento de Alcalá de Henares, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Alcalá de Henares para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  },
+  {
+    "expediente_id": "EXP-B2G-L01280135-202608-05",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Aranjuez",
+    "codigo_dir3": "L01280135",
+    "provincia": "Madrid",
+    "objeto_contrato": "Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas",
+    "codigo_cpv": "92312140-4 (Servicios de Grupos Musicales)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 13900,
+      "oferta_base_eur": 13205.0,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2773.05,
+      "total_licitable_eur": 15978.05
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Sistema Electro-Voice ETX 12P + Monitoraje In-Ear Sennheiser G4",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Mariachi Imperial Productora EAR",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas en Ayuntamiento de Aranjuez, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Aranjuez para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  },
+  {
+    "expediente_id": "EXP-B2G-L01451659-202608-06",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Talavera de la Reina",
+    "codigo_dir3": "L01451659",
+    "provincia": "Toledo",
+    "objeto_contrato": "Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas",
+    "codigo_cpv": "92312140-4 (Servicios de Grupos Musicales)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 14700,
+      "oferta_base_eur": 13965.0,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2932.65,
+      "total_licitable_eur": 16897.65
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Sistema Electro-Voice ETX 12P + Monitoraje In-Ear Sennheiser G4",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Mariachi Imperial Productora EAR",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Circuito Municipal de Música Tradicional y Mariachi en Plazas Públicas en Ayuntamiento de Talavera de la Reina, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Talavera de la Reina para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  },
+  {
+    "expediente_id": "EXP-B2G-L01280804-202608-07",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Majadahonda",
+    "codigo_dir3": "L01280804",
+    "provincia": "Madrid",
+    "objeto_contrato": "Producción Integral y Sonorización de Fiestas Patronales",
+    "codigo_cpv": "92300000-4 (Servicios de Espectáculos)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 14600,
+      "oferta_base_eur": 13870.0,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2912.7,
+      "total_licitable_eur": 16782.7
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Bose F1 Model 812 Dual Array + Subgraves F1 + Microfonía Shure Axient Digital",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Edwin Agudelo (Exclusividad Art. 168.a.2º LCSP)",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Producción Integral y Sonorización de Fiestas Patronales en Ayuntamiento de Majadahonda, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Majadahonda para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  },
+  {
+    "expediente_id": "EXP-B2G-L01280226-202608-08",
+    "timestamp": "2026-08-17T19:01:43.066447",
+    "entidad_publica": "Ayuntamiento de Boadilla del Monte",
+    "codigo_dir3": "L01280226",
+    "provincia": "Madrid",
+    "objeto_contrato": "Programa VIMUME de Neuro-Reminiscencia Musical en Residencias de Mayores",
+    "codigo_cpv": "85311100-3 (Servicios de Bienestar Social para Personas de Edad)",
+    "marco_normativo": "Artículo 118.1 de la Ley 9/2017 LCSP (Contratos Menores)",
+    "desglose_economico": {
+      "techo_presupuestario_eur": 14950,
+      "oferta_base_eur": 14202.5,
+      "porcentaje_techo": "95.00%",
+      "iva_21_eur": 2982.53,
+      "total_licitable_eur": 17185.03
+    },
+    "prescripcion_tecnica": {
+      "rider_acustico": "Auriculares de Conducción Ósea + Frecuencias Isocrónicas 40Hz",
+      "presion_acustica": "12 W/pax Homologada",
+      "artista_o_elenco": "Equipo Clínico VIMUME OS",
+      "poliza_rc": "1.000.000 EUR (Productora EAR S.L.)"
+    },
+    "memorias_autogeneradas": {
+      "memoria_justificativa": "La presente contratación se ampara en el Art. 118 LCSP para cubrir las necesidades de Programa VIMUME de Neuro-Reminiscencia Musical en Residencias de Mayores en Ayuntamiento de Boadilla del Monte, garantizando la exclusividad técnica y artística.",
+      "informe_insuficiencia_medios": "Se acredita la insuficiencia de medios técnicos propios del Ayuntamiento de Boadilla del Monte para la ejecución de espectáculos sonoros bajo normativa de limitadores.",
+      "declaracion_responsable": "Certificación de no estar incurso en prohibición de contratar y estar al corriente de obligaciones tributarias y de Seguridad Social."
+    },
+    "estado_expediente": "AUTO_GENERATED_READY_TO_DISPATCH"
+  }
+]
