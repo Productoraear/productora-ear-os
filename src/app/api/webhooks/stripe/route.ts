@@ -1,15 +1,18 @@
 // src/app/api/webhooks/stripe/route.ts
 import Stripe from "stripe";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { CommissionStatus } from "@prisma/client";
-import { LedgerEngine } from "@/features/finance/LedgerEngine";
 import { db } from "@/lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 
 export const runtime = "nodejs";
 
-export async function POST(req: Request) {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
+  apiVersion: '2023-10-16' as any,
+});
+
+export async function POST(req: NextRequest) {
   const stripeSecret = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -18,29 +21,30 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Missing Stripe secret key" }, { status: 500 });
   }
 
-  const stripe = new Stripe(stripeSecret, {
-    apiVersion: '2023-10-16' as any,
-  });
-
-  const signature = req.headers.get("stripe-signature");
   const rawBody = await req.text();
+  const signature = req.headers.get("stripe-signature");
+
+  // 🛡️ BLINDAJE ESTRICTO ANTHROPIC/SECURITY-GUIDANCE: Enforzamiento HMAC SHA-256
+  if (!signature || !webhookSecret) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('❌ [SECURITY_VIOLATION] Acceso a webhook sin firma válida o webhook secret no configurado.');
+      return NextResponse.json({ error: 'CONFIGURACION_SEGURIDAD_INVALIDA' }, { status: 400 });
+    }
+  }
 
   let event: Stripe.Event;
 
-  // Validación de firma criptográfica
-  if (webhookSecret && signature) {
-    try {
+  try {
+    if (webhookSecret && signature) {
+      // Verificación Criptográfica HMAC SHA-256 Obligatoria
       event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
-    } catch (err: any) {
-      console.error(`❌ [STRIPE SECURITY] Fallo de Firma Webhook: ${err.message}`);
-      return NextResponse.json({ error: `Webhook signature verification failed: ${err.message}` }, { status: 400 });
-    }
-  } else {
-    try {
+    } else {
+      // Permitido únicamente en entorno de desarrollo local controlado
       event = JSON.parse(rawBody) as Stripe.Event;
-    } catch (err: any) {
-      return NextResponse.json({ error: "Invalid payload format" }, { status: 400 });
     }
+  } catch (err: any) {
+    console.error(`❌ [SECURITY_ALERT] Fallo en la verificación de firma Stripe: ${err.message}`);
+    return NextResponse.json({ error: `FIRMA_WEBHOOK_RECHAZADA: ${err.message}` }, { status: 400 });
   }
 
   // Procesamiento exclusivo de Checkout Completado

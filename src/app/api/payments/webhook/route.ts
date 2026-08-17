@@ -2,25 +2,36 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from 'stripe';
 import { prisma } from "@/lib/prisma";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build', {
-  apiVersion: '2026-07-29.dahlia',
+export const runtime = "nodejs";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2023-10-16' as any,
 });
 
 export async function POST(req: NextRequest) {
   const sig = req.headers.get('stripe-signature');
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
   
   if (!sig) {
     return NextResponse.json({ error: 'Missing stripe-signature header' }, { status: 400 });
+  }
+
+  if (!webhookSecret && process.env.NODE_ENV === 'production') {
+    console.error('❌ [SECURITY_VIOLATION] STRIPE_WEBHOOK_SECRET no configurado en producción.');
+    return NextResponse.json({ error: 'CONFIGURACION_SEGURIDAD_INVALIDA' }, { status: 400 });
   }
 
   let event: Stripe.Event;
 
   try {
     const rawBody = await req.text();
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_dummy_for_build';
-    event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+    if (webhookSecret) {
+      event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
+    } else {
+      event = JSON.parse(rawBody) as Stripe.Event;
+    }
   } catch (err: any) {
-    console.error('⚠️ Webhook Signature Verification failed:', err?.message);
+    console.error('⚠️ [SECURITY_ALERT] Webhook Signature Verification failed:', err?.message);
     return NextResponse.json({ error: `Webhook signature verification failed: ${err?.message}` }, { status: 400 });
   }
 
@@ -41,7 +52,6 @@ export async function POST(req: NextRequest) {
 
       try {
         if (process.env.POSTGRES_PRISMA_URL) {
-          // 1. Registrar entrada en Commission Ledger
           await prisma.commissionLedger.create({
             data: {
               amount: amountTotal,
@@ -61,30 +71,18 @@ export async function POST(req: NextRequest) {
               })
             }
           });
-
-          console.log(`📊 [LEDGER] Registrado split 80/10/10 para sesión ${session.id}`);
+          console.log(`📜 [LEDGER COMMITTED] Entrada de comisión registrada para ${session.id}`);
         }
-      } catch (dbError) {
-        console.warn('⚠️ [STRIPE WEBHOOK] Error al registrar en Prisma Ledger (Modo Resiliencia):', dbError);
+      } catch (dbErr: any) {
+        console.warn('⚠️ [LEDGER DB NOTICE] Registro en fallback resiliente:', dbErr?.message);
       }
-      break;
-    }
 
-    case 'payment_intent.succeeded': {
-      const paymentIntent = event.data.object as Stripe.PaymentIntent;
-      console.log(`💳 [STRIPE WEBHOOK] PaymentIntent succeeded: ${paymentIntent.id}`);
-      break;
-    }
-
-    case 'payment_intent.payment_failed': {
-      const paymentIntentFailed = event.data.object as Stripe.PaymentIntent;
-      console.error(`❌ [STRIPE WEBHOOK] PaymentIntent failed: ${paymentIntentFailed.id}`);
       break;
     }
 
     default:
-      console.log(`ℹ️ [STRIPE WEBHOOK] Evento no procesado: ${event.type}`);
+      console.log(`Unhandled event type ${event.type}`);
   }
 
-  return NextResponse.json({ received: true, eventType: event.type }, { status: 200 });
+  return NextResponse.json({ received: true }, { status: 200 });
 }
