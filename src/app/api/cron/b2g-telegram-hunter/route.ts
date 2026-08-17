@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { runHunterB2GScan } from '@/../scripts/b2g_hunter_telegram';
+import { runHunterB2GScan } from '@/lib/services/b2g-hunter';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
