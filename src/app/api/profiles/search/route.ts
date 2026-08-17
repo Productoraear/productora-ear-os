@@ -6,9 +6,10 @@ import path from 'path';
 
 /**
  * 🏛️ S-CLASS SOVEREIGN PROVIDER SEARCH & MATCHMAKING API
- * Búsqueda y paginación ultrarrápida sobre los 8.352 proveedores homologados.
+ * Búsqueda, conteo en tiempo real y paginación ultrarrápida sobre los 8.352 proveedores homologados.
  */
 let cachedProviders: any[] | null = null;
+let cachedCategoryCounts: Record<string, number> | null = null;
 
 function loadMasterProviders(): any[] {
   if (cachedProviders) return cachedProviders;
@@ -18,6 +19,15 @@ function loadMasterProviders(): any[] {
     if (fs.existsSync(jsonPath)) {
       const raw = fs.readFileSync(jsonPath, 'utf-8');
       cachedProviders = JSON.parse(raw);
+      
+      // Calcular conteos de categorías
+      const counts: Record<string, number> = { ALL: (cachedProviders || []).length };
+      (cachedProviders || []).forEach((p: any) => {
+        const cat = p.category || 'SERVICIOS_EVENTOS';
+        counts[cat] = (counts[cat] || 0) + 1;
+      });
+      cachedCategoryCounts = counts;
+
       return cachedProviders || [];
     }
   } catch (e) {
@@ -32,7 +42,7 @@ export async function GET(request: Request) {
     const q = (searchParams.get('q') || '').trim().toLowerCase();
     const rawCategory = (searchParams.get('category') || 'ALL').trim().toUpperCase();
     const rawProvince = (searchParams.get('province') || 'ALL').trim().toLowerCase();
-    const maxBudget = parseInt(searchParams.get('maxBudget') || '10000', 10);
+    const maxBudget = parseInt(searchParams.get('maxBudget') || '15000', 10);
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     const limit = Math.min(100, Math.max(6, parseInt(searchParams.get('limit') || '24', 10)));
     const sortBy = searchParams.get('sortBy') || 'MATCH';
@@ -40,25 +50,29 @@ export async function GET(request: Request) {
     const all = loadMasterProviders();
 
     let filtered = all.filter((p: any) => {
-      if (rawCategory !== 'ALL' && p.category !== rawCategory) {
-        // Tolerancia a categorías generales o coincidencias parciales
-        const pCat = (p.category || '').toUpperCase();
-        if (pCat !== rawCategory && !pCat.includes(rawCategory)) return false;
+      // 1. Filtro de Categoría
+      if (rawCategory !== 'ALL') {
+        const pCat = (p.category || 'SERVICIOS_EVENTOS').toUpperCase();
+        if (pCat !== rawCategory) return false;
       }
       
+      // 2. Filtro de Provincia / Ubicación
       if (rawProvince !== 'all' && rawProvince !== 'toda españa (nacional)') {
-        const pLoc = (p.location?.province || p.location?.city || p.location?.address || p.location || '').toLowerCase();
+        const pLoc = `${p.location?.province || ''} ${p.location?.city || ''} ${p.location?.address || ''}`.toLowerCase();
         if (!pLoc.includes(rawProvince)) return false;
       }
 
+      // 3. Filtro de Presupuesto
       const price = p.pricing?.rentalBasePrice || p.basePrice || p.price || 450;
       if (price > maxBudget) return false;
 
+      // 4. Búsqueda por Texto
       if (q.length > 0) {
         const nameMatch = (p.name || '').toLowerCase().includes(q);
         const descMatch = (p.description || '').toLowerCase().includes(q);
         const cityMatch = (p.location?.city || '').toLowerCase().includes(q);
-        if (!nameMatch && !descMatch && !cityMatch) return false;
+        const provMatch = (p.location?.province || '').toLowerCase().includes(q);
+        if (!nameMatch && !descMatch && !cityMatch && !provMatch) return false;
       }
 
       return true;
@@ -87,6 +101,7 @@ export async function GET(request: Request) {
       page,
       limit,
       totalPages: Math.ceil(total / limit),
+      categoryCounts: cachedCategoryCounts || {},
       providers: paginated
     });
 
