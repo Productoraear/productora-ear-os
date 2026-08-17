@@ -1,21 +1,21 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
   Sparkles, Star, ShieldCheck, ChevronRight, ArrowRight, 
-  Crown, Mic2, Users, Trophy, Music, Calendar, Phone 
+  Crown, Mic2, Users, Trophy, Music, Calendar, Phone,
+  Compass, Map, Layers, DollarSign, Bot, Activity, Brain
 } from 'lucide-react';
-import { Metadata } from 'next';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { InjectHeroButton, InjectCatalogButton } from './InjectArtistButton';
 import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
 import { AstraNeuralStrategicSuite } from '@/app/components/SClassScreens/AstraNeuralStrategicSuite';
-
-export const metadata: Metadata = {
-  title: 'Catálogo de Artistas & Roster S-Class | Productora EAR',
-  description: 'Explora y contrata el catálogo exclusivo de artistas, mariachis de gala, ensambles ecuestres y producciones de Productora EAR.',
-};
+import { AstraNeuralExperience } from '@/app/components/SClassScreens/AstraNeuralExperience';
 
 export default function ArtistasPage() {
+  const [activePortalView, setActivePortalView] = useState<'ASTRA_ENGINE' | 'ROSTER_CATALOG' | 'HIGH_TICKET_SUITE'>('ASTRA_ENGINE');
+
   const featuredArtist = {
     id: 'edwin-agudelo',
     nombre: 'Edwin Agudelo',
@@ -76,198 +76,208 @@ export default function ArtistasPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 px-4 sm:px-6 md:px-8 selection:bg-[#ecb613] selection:text-black">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <main className="min-h-screen bg-[#050505] text-white pt-28 pb-24 px-4 sm:px-6 md:px-8 selection:bg-[#ecb613] selection:text-black">
+      <div className="max-w-7xl mx-auto space-y-12">
         
         {/* 🚀 HEADER HERO */}
-        <div className="text-center space-y-4 max-w-3xl mx-auto">
+        <div className="text-center space-y-4 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.3em]">
             <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-ping" />
-            ROSTER EXCLUSIVO // AUDITORÍA DE INTEGRIDAD EAR
+            ASTRA OS // MOTOR ESTRATÉGICO NEURONAL PARA ARTISTAS
           </div>
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase italic tracking-tighter text-white font-syne leading-[0.95]">
-            CATÁLOGO DE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">ARTISTAS S-CLASS</span>
+            PORTAL DEL ARTISTA <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-[#ecb613] to-white">& ASTRA NEURAL</span>
           </h1>
           <p className="text-sm sm:text-base text-zinc-400 font-light leading-relaxed">
-            Formatos artísticos verificados bajo contrato mercantil, alta en Seguridad Social, microfonía sin interferencias y seguro de responsabilidad civil.
+            Deconstruye y reconstruye tu carrera artística como Atleta Cultural de Alto Rendimiento. Sigue el protocolo EAR, evalúa tu Rueda de la Vida Artística y apaláncate en el Split Soberano 80/10/10.
           </p>
         </div>
 
-        {/* 👑 INSIGNIA ARTIST CARD: EDWIN AGUDELO */}
-        <section className="bg-gradient-to-b from-[#141414] to-[#0a0a0a] border border-[#ecb613]/40 rounded-[2.5rem] p-6 sm:p-12 shadow-2xl relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ecb613]/10 blur-[130px] pointer-events-none" />
+        {/* 🎛️ SELECTOR DE EXPERIENCIA EN EL PORTAL */}
+        <div className="flex flex-wrap justify-center gap-3 bg-[#0a0a0e] border border-white/10 p-2 rounded-3xl max-w-3xl mx-auto">
+          <button
+            onClick={() => setActivePortalView('ASTRA_ENGINE')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+              activePortalView === 'ASTRA_ENGINE'
+                ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg shadow-purple-500/20 font-black'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <Brain className="w-4 h-4 text-purple-300" /> 1. Astra OS Neural (Hoja de Ruta)
+          </button>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-            <div className="lg:col-span-8 space-y-6">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3.5 py-1 rounded-full bg-[#ecb613] text-black text-[9px] font-black uppercase tracking-widest font-mono flex items-center gap-1.5">
-                  <Crown size={12} /> {featuredArtist.tagline}
-                </span>
-                <span className="px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-[9px] font-mono">
-                  {featuredArtist.shows}
-                </span>
-              </div>
+          <button
+            onClick={() => setActivePortalView('HIGH_TICKET_SUITE')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+              activePortalView === 'HIGH_TICKET_SUITE'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-black'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <Crown className="w-4 h-4" /> 2. Arsenal High-Ticket & Split
+          </button>
 
-              <div>
-                <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase italic tracking-tighter text-white font-syne">
-                  {featuredArtist.nombre}
-                </h2>
-                <p className="text-[#ecb613] text-xs sm:text-sm font-bold uppercase tracking-widest mt-1">
-                  {featuredArtist.subtitulo}
-                </p>
-              </div>
+          <button
+            onClick={() => setActivePortalView('ROSTER_CATALOG')}
+            className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
+              activePortalView === 'ROSTER_CATALOG'
+                ? 'bg-white/20 text-white font-black'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <Music className="w-4 h-4" /> 3. Roster de Formatos
+          </button>
+        </div>
 
-              <p className="text-white/70 text-sm sm:text-base leading-relaxed font-light">
-                {featuredArtist.descripcion}
-              </p>
+        {/* 🧠 VISTA 1: ASTRA OS NEURAL STRATEGIC ENGINE (EL VIAJE DEL ARTISTA) */}
+        {activePortalView === 'ASTRA_ENGINE' && (
+          <section className="space-y-6">
+            <AstraNeuralExperience />
+          </section>
+        )}
 
-              {/* Formatos Disponibles */}
-              <div className="space-y-2">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 block">Formatos Disponibles en Directo:</span>
-                <div className="flex flex-wrap gap-2">
-                  {featuredArtist.formatos.map((fmt, i) => (
-                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold text-zinc-200">
-                      {fmt}
+        {/* 👑 VISTA 2: HIGH-TICKET SUITE & SPLIT SOBERANO */}
+        {activePortalView === 'HIGH_TICKET_SUITE' && (
+          <section className="space-y-6">
+            <AstraNeuralStrategicSuite />
+          </section>
+        )}
+
+        {/* 🎭 VISTA 3: ROSTER Y CATÁLOGO DE ENSAMBLES */}
+        {activePortalView === 'ROSTER_CATALOG' && (
+          <div className="space-y-16">
+            {/* 👑 INSIGNIA ARTIST CARD: EDWIN AGUDELO */}
+            <section className="bg-gradient-to-b from-[#141414] to-[#0a0a0a] border border-[#ecb613]/40 rounded-[2.5rem] p-6 sm:p-12 shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#ecb613]/10 blur-[130px] pointer-events-none" />
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+                <div className="lg:col-span-8 space-y-6">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-3.5 py-1 rounded-full bg-[#ecb613] text-black text-[9px] font-black uppercase tracking-widest font-mono flex items-center gap-1.5">
+                      <Crown size={12} /> {featuredArtist.tagline}
                     </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <Link
-                  href="/artistas/edwin-agudelo"
-                  className="py-3.5 px-7 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all min-h-[48px]"
-                >
-                  <span>Ver Dossier Oficial</span>
-                  <ChevronRight size={16} />
-                </Link>
-                <InjectHeroButton 
-                  artistId={featuredArtist.id} 
-                  artistName={featuredArtist.nombre} 
-                  basePrice={featuredArtist.basePrice} 
-                  formats={featuredArtist.formatos} 
-                />
-              </div>
-            </div>
-
-            {/* Right Metric Card */}
-            <div className="lg:col-span-4 bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6 text-center lg:text-left">
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Tarifa Base Homologada</span>
-                <span className="text-3xl sm:text-4xl font-black text-[#ecb613] font-mono">{featuredArtist.basePrice}</span>
-              </div>
-
-              <div className="space-y-3 pt-4 border-t border-white/10 text-xs text-white/80">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={16} className="text-[#ecb613] shrink-0" />
-                  <span>Sonorización L-Acoustics & Microfonía Axient</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={16} className="text-[#ecb613] shrink-0" />
-                  <span>Cobertura en las 52 Provincias de España</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ShieldCheck size={16} className="text-[#ecb613] shrink-0" />
-                  <span>Bloqueo Atómico de Fecha con Depósito Reembolsable</span>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <a
-                  href={CENTRALITA.tel}
-                  className="w-full py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 text-white/80 hover:text-white transition-all"
-                >
-                  <Phone size={14} className="text-[#ecb613]" />
-                  <span>Centralita: {CENTRALITA.display}</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 🔥 TINDER MATCHER INTERACTIVO DE FORMATOS ARTÍSTICOS (SWIPE S-CLASS) */}
-        <section className="pt-4 pb-8">
-          <div className="text-center mb-8">
-            <span className="text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.4em] block mb-2">
-              ✦ MATCHMAKER TÁCTICO EN VIVO
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter text-white font-syne">
-              Encuentra tu <span className="text-[#ecb613]">Formato Ideal</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto font-light mt-2">
-              Desliza o filtra los formatos de directo según aforo, acústica exterior y tipología de evento.
-            </p>
-          </div>
-          <TinderMatcherClient />
-        </section>
-
-        {/* 🎭 ENSEMBLES & VERTICAL CATALOG */}
-        <section className="space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
-            <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613]">CATÁLOGO COMPLETO</span>
-              <h2 className="text-2xl sm:text-4xl font-black uppercase italic tracking-tight text-white font-syne">
-                Formatos & Ensambles de Gira
-              </h2>
-            </div>
-            <Link
-              href="/cotizador"
-              className="text-xs font-black uppercase tracking-widest text-[#ecb613] hover:underline flex items-center gap-1 min-h-[44px]"
-            >
-              <span>Abrir Cotizador de Formatos →</span>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-            {artists.map((art) => (
-              <div 
-                key={art.id} 
-                className="bg-[#0e0e0e] border border-white/10 hover:border-[#ecb613]/50 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between group transition-all shadow-xl"
-              >
-                <div className="space-y-4">
-                  <div className="flex justify-between items-start">
-                    <span className="px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[9px] font-black uppercase tracking-widest font-mono">
-                      {art.tag}
+                    <span className="px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-[9px] font-mono">
+                      {featuredArtist.shows}
                     </span>
-                    <span className="text-xl font-black text-white font-mono">{art.precio}</span>
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-mono uppercase text-zinc-400 block">{art.categoria}</span>
-                    <h3 className="text-2xl font-black uppercase italic tracking-tight text-white group-hover:text-[#ecb613] transition-colors mt-0.5 font-syne">
-                      {art.nombre}
-                    </h3>
+                    <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase italic tracking-tight text-white font-syne">
+                      {featuredArtist.nombre}
+                    </h2>
+                    <p className="text-[#ecb613] font-mono text-xs sm:text-sm uppercase tracking-wider mt-1">
+                      {featuredArtist.subtitulo}
+                    </p>
                   </div>
 
-                  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
-                    {art.desc}
+                  <p className="text-white/70 text-xs sm:text-sm md:text-base leading-relaxed font-light">
+                    {featuredArtist.descripcion}
                   </p>
+
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {featuredArtist.formatos.map((f, i) => (
+                      <span 
+                        key={i} 
+                        className="px-3 py-1 bg-white/5 border border-white/10 rounded-xl text-[10px] text-zinc-300 font-mono"
+                      >
+                        {f}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pt-4 flex flex-col sm:flex-row gap-4">
+                    <Link
+                      href="/artistas/edwin-agudelo"
+                      className="px-8 py-4 bg-white text-black font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-[#ecb613] transition-all text-center flex items-center justify-center gap-2 min-h-[44px]"
+                    >
+                      <span>Ver Dossier & Rider</span>
+                      <ArrowRight size={14} />
+                    </Link>
+                    <InjectHeroButton 
+                      artistId={featuredArtist.id} 
+                      artistName={featuredArtist.nombre} 
+                      basePrice={featuredArtist.basePrice} 
+                      formats={featuredArtist.formatos} 
+                    />
+                  </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/5 flex flex-col sm:flex-row gap-3">
-                  <Link
-                    href={art.link}
-                    className="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
-                  >
-                    <span>Ver Ficha Técnica</span>
-                    <ChevronRight size={14} />
-                  </Link>
-                  <InjectCatalogButton
-                    artistId={art.id}
-                    artistName={art.nombre}
-                    category={art.categoria}
-                    basePrice={art.precio}
-                  />
+                <div className="lg:col-span-4 bg-[#0a0a0a] border border-white/10 rounded-3xl p-6 space-y-4">
+                  <span className="text-[10px] font-mono uppercase text-zinc-400 block">Soberanía de Caché</span>
+                  <div className="text-3xl font-black font-mono text-white">{featuredArtist.basePrice}</div>
+                  <div className="space-y-2 text-xs font-mono text-zinc-400">
+                    <div className="flex justify-between"><span>Valoración:</span><span className="text-amber-400 font-bold">{featuredArtist.rating}</span></div>
+                    <div className="flex justify-between"><span>Split:</span><span className="text-emerald-400 font-bold">80/10/10 Soberano</span></div>
+                    <div className="flex justify-between"><span>Microfonía:</span><span className="text-white">Shure Axient Digital</span></div>
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
 
-        {/* 🧠 ASTRA NEURAL STRATEGIC SUITE • HIGH-TICKET ARTIST & MANAGEMENT ENGINE */}
-        <section className="pt-8">
-          <AstraNeuralStrategicSuite />
-        </section>
+            {/* 🎭 ENSEMBLES & VERTICAL CATALOG */}
+            <section className="space-y-8">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
+                <div>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613]">CATÁLOGO COMPLETO</span>
+                  <h2 className="text-2xl sm:text-4xl font-black uppercase italic tracking-tight text-white font-syne">
+                    Formatos & Ensambles de Gira
+                  </h2>
+                </div>
+                <Link
+                  href="/cotizador"
+                  className="text-xs font-black uppercase tracking-widest text-[#ecb613] hover:underline flex items-center gap-1 min-h-[44px]"
+                >
+                  <span>Abrir Cotizador de Formatos →</span>
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+                {artists.map((art) => (
+                  <div 
+                    key={art.id} 
+                    className="bg-[#0e0e0e] border border-white/10 hover:border-[#ecb613]/50 rounded-3xl p-6 sm:p-8 space-y-6 flex flex-col justify-between group transition-all shadow-xl"
+                  >
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-start">
+                        <span className="px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[9px] font-black uppercase tracking-widest font-mono">
+                          {art.tag}
+                        </span>
+                        <span className="text-xl font-black text-white font-mono">{art.precio}</span>
+                      </div>
+
+                      <div>
+                        <span className="text-[10px] font-mono uppercase text-zinc-400 block">{art.categoria}</span>
+                        <h3 className="text-2xl font-black uppercase italic tracking-tight text-white group-hover:text-[#ecb613] transition-colors mt-0.5 font-syne">
+                          {art.nombre}
+                        </h3>
+                      </div>
+
+                      <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+                        {art.desc}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-white/5 flex flex-col sm:flex-row gap-3">
+                      <Link
+                        href={art.link}
+                        className="flex-1 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
+                      >
+                        <span>Ver Ficha Técnica</span>
+                        <ChevronRight size={14} />
+                      </Link>
+                      <InjectCatalogButton
+                        artistId={art.id}
+                        artistName={art.nombre}
+                        category={art.categoria}
+                        basePrice={art.precio}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
 
       </div>
     </main>
