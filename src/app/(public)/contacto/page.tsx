@@ -2,11 +2,12 @@
 
 import React, { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { MessageSquare, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Send, CheckCircle2, Building2 } from 'lucide-react';
+import { MessageSquare, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Send, CheckCircle2, Building2, Heart, Sparkles } from 'lucide-react';
 import { generateWhatsAppLink } from '@/lib/whatsapp';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { useEventCart } from '@/context/EventCartContext';
 import { useTripwire } from '@/hooks/useTripwire';
+import { DonationPricer } from '@/features/finance/ui/DonationPricer';
 
 function ContactoContent() {
   const searchParams = useSearchParams();
@@ -17,6 +18,7 @@ function ContactoContent() {
   const date = searchParams.get('date') || searchParams.get('fecha') || '';
   const location = searchParams.get('location') || searchParams.get('provincia') || searchParams.get('ciudad') || '';
   const intent = searchParams.get('intent') || searchParams.get('intencion') || 'reserva prioritaria';
+  const isDonationIntent = intent === 'donar' || intent === 'donacion' || intent === 'vimume' || service === 'donacion';
 
   // Generate WhatsApp details using unified utility
   const { message, url } = generateWhatsAppLink({
@@ -59,7 +61,7 @@ function ContactoContent() {
     name: '',
     email: '',
     phone: '',
-    subject: service ? `Consulta sobre ${service}` : 'Consulta General de Contratación',
+    subject: service ? `Consulta sobre ${service}` : (isDonationIntent ? 'Interés en Donación / Mecenazgo VIMUME' : 'Consulta General de Contratación'),
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
@@ -81,17 +83,18 @@ function ContactoContent() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32 pb-24 space-y-12 text-white">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-32 pb-24 space-y-16 text-white">
+      
       {/* Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <span className="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/25 font-mono inline-block">
           CENTRALITA Y DESPACHO S-CLASS
         </span>
         <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tighter italic font-syne text-white">
-          Centro de <span className="text-[#ecb613]">Contacto & Reserva</span>
+          Centro de <span className="text-[#ecb613]">Contacto & Legado</span>
         </h1>
         <p className="text-white/50 text-sm sm:text-base leading-relaxed">
-          Atención personalizada para particulares, wedding planners, empresas y entidades públicas. Conecta directamente por llamada, WhatsApp o formulario oficial.
+          Atención personalizada para particulares, wedding planners, empresas, donaciones VIMUME y entidades públicas. Conecta directamente por llamada, WhatsApp, pasarela Stripe o formulario oficial.
         </p>
         {priceLockToken && (
           <div className="mt-6 p-4 border border-emerald-500/30 bg-emerald-500/10 rounded-xl inline-block text-center shadow-lg shadow-emerald-500/5">
@@ -169,11 +172,16 @@ function ContactoContent() {
         </div>
       </div>
 
+      {/* 💖 PASARELA DE DONACIÓN STRIPE // VIMUME LEGADO */}
+      <section id="donar" className="scroll-mt-32">
+        <DonationPricer defaultAmount={isDonationIntent ? 50 : 25} />
+      </section>
+
       {/* Contact Form Section */}
       <div className="bg-[#0b0b0b] border border-white/5 rounded-[2.5rem] p-8 sm:p-12 space-y-8">
         <div>
           <span className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613]">Formulario Oficial</span>
-          <h2 className="text-2xl sm:text-3xl font-black uppercase italic tracking-tight text-white mt-1">
+          <h2 className="text-2xl sm:text-3xl font-black uppercase italic tracking-tight text-white mt-1 font-syne">
             Envía tu Consulta o Petición de Dossier
           </h2>
         </div>
@@ -181,7 +189,7 @@ function ContactoContent() {
         {submitted ? (
           <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-2xl p-8 text-center space-y-3">
             <CheckCircle2 size={36} className="text-emerald-400 mx-auto" />
-            <h4 className="text-lg font-black uppercase text-white">Mensaje Recibido Correctamente</h4>
+            <h4 className="text-lg font-black uppercase text-white font-syne">Mensaje Recibido Correctamente</h4>
             <p className="text-white/50 text-xs max-w-md mx-auto">
               Nuestro equipo de despacho se pondrá en contacto contigo en menos de 2 horas laborables.
             </p>

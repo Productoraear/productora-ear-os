@@ -10,6 +10,7 @@ import {
     Terminal, Scale, ChevronDown, ChevronUp, ShieldCheck, Gem, TrendingDown, Anchor,
     Network, Activity, Star, Speaker, Ear, Sun, MapPin,
 } from 'lucide-react';
+import { DonationPricer } from '@/features/finance/ui/DonationPricer';
 
 type TabId = 'overview' | 'ethics' | 'strategy' | 'funding' | 'campaigns' | 'roadmap';
 
@@ -543,21 +544,27 @@ export const VimumePage: React.FC = () => {
                     {activeTab === 'roadmap' && <RoadmapTab />}
                 </div>
 
-                {/* CTA FINAL */}
-                <div className="mt-24 text-center p-16 bg-gradient-to-br from-pink-900/20 to-black border border-pink-500/20 rounded-[3rem]">
-                    <Heart size={40} className="text-pink-400 mx-auto mb-6" fill="currentColor" />
-                    <h2 className="text-3xl md:text-5xl font-display font-black text-white mb-6">
+                {/* CTA FINAL & PASARELA DE DONACIÓN */}
+                <div id="legado-cta" className="mt-24 text-center p-8 sm:p-16 bg-gradient-to-br from-pink-900/20 to-black border border-pink-500/20 rounded-[3rem] space-y-8">
+                    <Heart size={40} className="text-pink-400 mx-auto mb-2" fill="currentColor" />
+                    <h2 className="text-3xl md:text-5xl font-display font-black text-white">
                         Sé Parte de <span className="text-pink-400">Este Legado</span>
                     </h2>
-                    <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
+                    <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto">
                         Cada sesión es una historia de vida recuperada. Una llamada a tiempo puede cambiar el último capítulo de alguien.
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="/contacto" className="px-10 py-4 bg-pink-600 text-white font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-pink-500 transition-all shadow-lg shadow-pink-900/30">
-                            Colaborar / Donar
+
+                    {/* COMPONENTE DE PAGO DINÁMICO STRIPE */}
+                    <div className="max-w-2xl mx-auto text-left">
+                        <DonationPricer defaultAmount={25} />
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                        <a href="/contacto?intent=donar#donar" className="px-10 py-4 bg-pink-600 text-white font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-pink-500 transition-all shadow-lg shadow-pink-900/30">
+                            Canal Oficial de Donación
                         </a>
                         <a href="/contacto" className="px-10 py-4 border border-white/20 text-white font-black uppercase tracking-widest text-xs rounded-2xl hover:bg-white hover:text-black transition-all">
-                            Agendar Presentación
+                            Agendar Presentación Institucional
                         </a>
                     </div>
                 </div>
