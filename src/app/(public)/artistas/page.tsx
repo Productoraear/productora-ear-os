@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { InjectHeroButton, InjectCatalogButton } from './InjectArtistButton';
 import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
+import { AstraNeuralStrategicSuite } from '@/app/components/SClassScreens/AstraNeuralStrategicSuite';
 
 export const metadata: Metadata = {
   title: 'Catálogo de Artistas & Roster S-Class | Productora EAR',
@@ -261,6 +262,11 @@ export default function ArtistasPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        {/* 🧠 ASTRA NEURAL STRATEGIC SUITE • HIGH-TICKET ARTIST & MANAGEMENT ENGINE */}
+        <section className="pt-8">
+          <AstraNeuralStrategicSuite />
         </section>
 
       </div>

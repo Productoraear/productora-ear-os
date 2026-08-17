@@ -1,0 +1,8 @@
+{
+  "name": "Astra OS: Neural Strategic Engine",
+  "description": "Un asistente avanzado impulsado por IA diseñado para proporcionar control absoluto sobre el análisis estratégico. Aprovecha el modelado multi-persona, la evaluación dinámica de riesgos y la visualización interactiva de datos para tomar decisiones informadas.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "prompt": ""
+}
