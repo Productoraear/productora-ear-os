@@ -28,7 +28,12 @@ import {
   Lightbulb, 
   ChevronDown, 
   X,
-  Lock
+  Lock,
+  Headphones,
+  BookOpen,
+  DollarSign,
+  Play,
+  Check
 } from 'lucide-react';
 
 export type UserRole = 
@@ -59,31 +64,63 @@ const LIFE_DIMENSIONS = [
   'Diversión y Ocio'
 ];
 
+const DANI_ARAGON_MODULES = [
+  {
+    id: 'e-manager-mastery',
+    title: 'E-Manager: Dirección Estratégica y Negociación de Caché',
+    mentor: 'Dani Aragón & E-Manager Suite',
+    lessons: '14 Lecciones • 3h 45m',
+    summary: 'Cómo estructurar contratos de representación blindados, fijar mínimos garantizados y erradicar la intermediación parasitaria.',
+    topics: ['Contratos Mercantiles vs Laborales', 'Estructuración de Caché S-Class', 'Cláusulas de Exclusividad y Territorio', 'Negociación con Promotores']
+  },
+  {
+    id: 'manager-evolution',
+    title: 'Manager Evolution: Escalabilidad y Venta Consultiva B2B',
+    mentor: 'Dani Aragón & Manager Evolution',
+    lessons: '18 Lecciones • 4h 20m',
+    summary: 'Metodología avanzada para transformar a un artista en una marca comercial de alta demanda en ayuntamientos, bodas y festivales.',
+    topics: ['Licitaciones Art. 118 LCSP', 'Packaging de Espectáculos Híbridos', 'Riders Técnicos Homologados', 'Psicología de Cierre de 4 Cifras']
+  },
+  {
+    id: 'sovereign-split',
+    title: 'Lógica del Split 80/10/10 y Soberanía Financiera',
+    mentor: 'Productora EAR & The Signal',
+    lessons: '8 Lecciones • 2h 10m',
+    summary: 'El modelo económico de EAR OS: 80% directo al artista con custodia Escrow y 10% de impacto social en VIMUME.',
+    topics: ['Flujo de Caja y Escrow en Stripe', 'Puntualidad Militar y Disciplina', 'Lectura de Sala y Resolución Escénica']
+  }
+];
+
 export const AstraNeuralExperience: React.FC = () => {
-  // Estado de Autenticación Biométrica
+  // Estado de Autenticación Biométrica (modal inicial o disponible en header)
   const [showBiometricModal, setShowBiometricModal] = useState<boolean>(false);
 
-  // Navegación Principal
-  const [currentView, setCurrentView] = useState<'ROADMAP' | 'WHEEL' | 'COMMAND_CENTER' | 'TOOLKIT' | 'VAULT'>('ROADMAP');
+  // Navegación Principal de Astra OS
+  const [currentView, setCurrentView] = useState<'ROADMAP' | 'WHEEL' | 'COMMAND_CENTER' | 'TOOLKIT' | 'VAULT' | 'PROFILE_LAB'>('ROADMAP');
   const [selectedRole, setSelectedRole] = useState<UserRole>('ARTISTA_VISIONARIO');
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState<boolean>(false);
 
   // Estado de la Rueda de la Vida Artística (Sliders de 1 a 10)
   const [wheelScores, setWheelScores] = useState<Record<string, number>>({
-    'Arte y Creatividad': 5,
+    'Arte y Creatividad': 7,
     'Carrera y Negocio': 5,
-    'Finanzas': 5,
-    'Salud y Bienestar': 5,
-    'Relaciones': 5,
-    'Desarrollo Personal': 5,
+    'Finanzas': 4,
+    'Salud y Bienestar': 6,
+    'Relaciones': 6,
+    'Desarrollo Personal': 7,
     'Entorno Físico': 5,
-    'Diversión y Ocio': 5
+    'Diversión y Ocio': 4
   });
 
-  // Estado del Abogado del Diablo / Síntesis IA
-  const [isDevilsAdvocateActive, setIsDevilsAdvocateActive] = useState<boolean>(false);
+  // Estado del Abogado del Diablo (Activo por defecto según decisión del usuario)
+  const [isDevilsAdvocateActive, setIsDevilsAdvocateActive] = useState<boolean>(true);
   const [isGeneratingSynthesis, setIsGeneratingSynthesis] = useState<boolean>(false);
   const [synthesisResult, setSynthesisResult] = useState<string | null>(null);
+
+  // Módulo de Laboratorio de Perfil
+  const [riderHomologated, setRiderHomologated] = useState<boolean>(true);
+  const [stagePresenceScore, setStagePresenceScore] = useState<number>(9);
+  const [cachePricing, setCachePricing] = useState<number>(1850);
 
   // Orb flotante
   const [isOrbOpen, setIsOrbOpen] = useState<boolean>(false);
@@ -115,18 +152,18 @@ export const AstraNeuralExperience: React.FC = () => {
       const avg = Object.values(wheelScores).reduce((a, b) => a + b, 0) / 8;
       if (isDevilsAdvocateActive) {
         setSynthesisResult(
-          `[ORÁCULO ASTRA // ABOGADO DEL DIABLO]:\nTu promedio actual es ${avg.toFixed(1)}/10. Tu talón de Aquiles está en la brecha entre Creatividad (${wheelScores['Arte y Creatividad']}/10) y Finanzas (${wheelScores['Finanzas']}/10). Sin disciplina operativa y Split 80/10/10, estás subsidiando la diversión de otros con tu energía. Recomendación: Homologa tu Rider Bose F1 y cierra fugas de caché inmediatamente.`
+          `[ORÁCULO ASTRA // ABOGADO DEL DIABLO]:\nTu promedio actual es ${avg.toFixed(1)}/10. Tu talón de Aquiles está en la asimetría entre tu Arte (${wheelScores['Arte y Creatividad']}/10) y tus Finanzas (${wheelScores['Finanzas']}/10).\n\n⚠️ PUNTOS CIEGOS CRÍTICOS:\n1. Estás cobrando por horas de actuación en lugar de empaquetar una Experiencia Inmersiva S-Class.\n2. Sin un Rider Bose F1 / Shure Axient homologado, los promotores te comparan con músicos amateurs.\n3. Tu margen real se diluye si no exiges el Split 80/10/10 con anticipo protegido.\n\n🎯 ACCIÓN INMEDIATA:\nAvanza al Laboratorio de Perfil Estratégico y fija tu tarifa base en mínimo 1.250 € bajo el estándar EAR OS.`
         );
       } else {
         setSynthesisResult(
-          `[SÍNTESIS ESTRATÉGICA S-CLASS]:\nNivel de equilibrio: ${avg.toFixed(1)}/10. Tu potencial de escalabilidad en EAR OS es del 92%. Se recomienda avanzar a Fase 2 (Arsenal de Propuestas de Valor) para estructurar bolos de 1.250€ a 3.500€ con microfonía Shure y liquidación protegida.`
+          `[SÍNTESIS ESTRATÉGICA S-CLASS]:\nNivel de equilibrio: ${avg.toFixed(1)}/10. Tu potencial de escalabilidad en EAR OS es del 94%. Se recomienda avanzar a Fase 2 para estructurar bolos de 1.250€ a 3.500€ con microfonía Shure y liquidación protegida.`
         );
       }
-    }, 1200);
+    }, 1000);
   };
 
   return (
-    <div className="w-full bg-[#050508] text-white font-sans rounded-[3rem] border border-white/10 overflow-hidden shadow-[0_0_80px_rgba(147,51,234,0.15)] relative min-h-[900px] flex flex-col">
+    <div className="w-full bg-[#050508] text-white font-sans rounded-[3rem] border border-white/10 overflow-hidden shadow-[0_0_100px_rgba(147,51,234,0.2)] relative min-h-[920px] flex flex-col selection:bg-purple-600 selection:text-white">
       
       {/* 🔮 MODAL DE ACCESO BIOMÉTRICO */}
       <AnimatePresence>
@@ -148,7 +185,7 @@ export const AstraNeuralExperience: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-2xl font-black text-white uppercase tracking-tight">Acceso Biométrico</h3>
+                <h3 className="text-2xl font-black text-white uppercase tracking-tight font-syne">Acceso Biométrico</h3>
                 <p className="text-xs text-slate-400 leading-relaxed font-light">
                   Escanea tu huella o usa el reconocimiento facial para sincronizar con Astra OS.
                 </p>
@@ -181,18 +218,18 @@ export const AstraNeuralExperience: React.FC = () => {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-blue-500 flex items-center justify-center shadow-lg shadow-purple-500/30">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <span className="font-black text-sm uppercase tracking-widest text-white">ASTRA OS</span>
+            <span className="font-black text-sm uppercase tracking-widest text-white font-syne">ASTRA OS</span>
           </div>
 
           <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-purple-300">
-            <Zap className="w-3 h-3 text-purple-400" /> Astra
+            <Zap className="w-3 h-3 text-purple-400" /> Astra Neural Engine
           </div>
 
           <button
             onClick={() => setShowBiometricModal(true)}
             className="hidden lg:flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-950/40 border border-blue-500/30 text-[10px] font-mono text-blue-300 hover:bg-blue-900/40 transition-colors cursor-pointer"
           >
-            <Fingerprint className="w-3 h-3" /> Biometría
+            <Fingerprint className="w-3 h-3" /> Acceso Biométrico
           </button>
         </div>
 
@@ -240,7 +277,7 @@ export const AstraNeuralExperience: React.FC = () => {
       <div className="flex-1 flex flex-col md:flex-row">
         
         {/* SIDEBAR NAVEGACIÓN */}
-        <aside className="w-full md:w-64 bg-[#07070a] border-r border-white/5 p-6 flex flex-col justify-between space-y-8">
+        <aside className="w-full md:w-64 bg-[#07070a] border-r border-white/5 p-6 flex flex-col justify-between space-y-8 shrink-0">
           <div className="space-y-6">
             <div className="space-y-1">
               <span className="text-[9px] font-mono uppercase tracking-widest text-slate-500 block">NAVEGACIÓN</span>
@@ -284,13 +321,15 @@ export const AstraNeuralExperience: React.FC = () => {
             </div>
 
             <div className="space-y-1">
-              <span className="text-[9px] font-mono uppercase tracking-widest text-slate-500 block">MÓDULOS</span>
+              <span className="text-[9px] font-mono uppercase tracking-widest text-slate-500 block">MÓDULOS & FORMACIÓN</span>
               <div className="space-y-1">
                 <button
-                  onClick={() => setCurrentView('COMMAND_CENTER')}
-                  className="w-full text-left px-4 py-2.5 rounded-xl text-xs font-mono text-slate-400 hover:text-white hover:bg-white/5 flex items-center gap-2 cursor-pointer"
+                  onClick={() => setCurrentView('PROFILE_LAB')}
+                  className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-mono flex items-center gap-2 cursor-pointer ${
+                    currentView === 'PROFILE_LAB' ? 'text-white bg-purple-900/40 border border-purple-500/40' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                  }`}
                 >
-                  <Flame className="w-3.5 h-3.5 text-amber-400" /> Operaciones
+                  <Flame className="w-3.5 h-3.5 text-amber-400" /> Laboratorio de Perfil
                 </button>
 
                 <button
@@ -299,7 +338,7 @@ export const AstraNeuralExperience: React.FC = () => {
                     currentView === 'VAULT' ? 'text-[#ecb613] bg-white/5' : 'text-slate-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
-                  <Database className="w-3.5 h-3.5 text-[#ecb613]" /> Bóveda Neural
+                  <Database className="w-3.5 h-3.5 text-[#ecb613]" /> Bóveda Dani Aragón
                 </button>
               </div>
             </div>
@@ -317,7 +356,7 @@ export const AstraNeuralExperience: React.FC = () => {
         {/* WORKSPACE PRINCIPAL DINÁMICO */}
         <main className="flex-1 p-6 md:p-12 overflow-y-auto">
           
-          {/* VISTA 1: HOJA DE RUTA ESTRATÉGICA (SCREENSHOT 2) */}
+          {/* VISTA 1: HOJA DE RUTA ESTRATÉGICA (SCREENSHOT 2 EXACTO) */}
           {currentView === 'ROADMAP' && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -340,7 +379,7 @@ export const AstraNeuralExperience: React.FC = () => {
                     <Activity className="w-4 h-4" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black uppercase text-white">Fase 1: Diagnóstico Forense</h3>
+                    <h3 className="text-lg font-black uppercase text-white font-syne">Fase 1: Diagnóstico Forense</h3>
                     <p className="text-xs text-slate-400 italic">"Sin diagnóstico no hay cura."</p>
                   </div>
                 </div>
@@ -369,7 +408,7 @@ export const AstraNeuralExperience: React.FC = () => {
                       <Compass className="w-5 h-5" />
                     </div>
                     <div className="space-y-1">
-                      <h4 className="text-xl font-black uppercase text-white group-hover:text-[#ecb613] transition-colors">
+                      <h4 className="text-xl font-black uppercase text-white group-hover:text-[#ecb613] transition-colors font-syne">
                         Rueda de la Vida Artística
                       </h4>
                       <p className="text-xs text-slate-400 font-light">
@@ -382,14 +421,14 @@ export const AstraNeuralExperience: React.FC = () => {
                   </div>
 
                   <div 
-                    onClick={() => setCurrentView('TOOLKIT')}
+                    onClick={() => setCurrentView('PROFILE_LAB')}
                     className="bg-[#0b0b10] border border-white/10 hover:border-blue-500/50 p-8 rounded-3xl space-y-4 cursor-pointer group transition-all shadow-xl"
                   >
                     <div className="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
                       <Layers className="w-5 h-5" />
                     </div>
                     <div className="space-y-1">
-                      <h4 className="text-xl font-black uppercase text-white group-hover:text-blue-400 transition-colors">
+                      <h4 className="text-xl font-black uppercase text-white group-hover:text-blue-400 transition-colors font-syne">
                         Laboratorio de Perfil Estratégico
                       </h4>
                       <p className="text-xs text-slate-400 font-light">
@@ -403,10 +442,40 @@ export const AstraNeuralExperience: React.FC = () => {
                 </div>
               </div>
 
+              {/* FASE 2: BÓVEDA FORMATIVA DANI ARAGÓN */}
+              <div className="pt-8 border-t border-white/10 space-y-4">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-emerald-400" />
+                    <h3 className="text-sm font-bold uppercase text-white font-mono">Bóveda Formativa de Élite (Dani Aragón & EAR)</h3>
+                  </div>
+                  <button 
+                    onClick={() => setCurrentView('VAULT')}
+                    className="text-xs font-mono text-emerald-400 hover:underline"
+                  >
+                    Ver Todas las Masterclasses →
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {DANI_ARAGON_MODULES.map((m) => (
+                    <div 
+                      key={m.id}
+                      onClick={() => setCurrentView('VAULT')}
+                      className="bg-[#09090d] border border-white/5 hover:border-emerald-500/40 p-5 rounded-2xl space-y-2 cursor-pointer transition-all"
+                    >
+                      <span className="text-[9px] font-mono text-emerald-400 uppercase">{m.lessons}</span>
+                      <h4 className="text-xs font-bold text-white line-clamp-1">{m.title}</h4>
+                      <p className="text-[11px] text-slate-400 line-clamp-2 font-light">{m.summary}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </motion.div>
           )}
 
-          {/* VISTA 2: RUEDA DE LA VIDA ARTÍSTICA (SCREENSHOT INTERACTIVO) */}
+          {/* VISTA 2: RUEDA DE LA VIDA ARTÍSTICA (INTERACTIVA CON SLIDERS Y ABOGADO DEL DIABLO) */}
           {currentView === 'WHEEL' && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -419,7 +488,7 @@ export const AstraNeuralExperience: React.FC = () => {
                     onClick={() => setCurrentView('ROADMAP')}
                     className="text-[10px] font-mono uppercase text-[#ecb613] hover:underline flex items-center gap-1 mb-2 cursor-pointer"
                   >
-                    ← Volver a la Hoja de Ruta
+                    ← Volver al Centro de Mando
                   </button>
                   <h2 className="text-3xl font-black uppercase text-white font-syne">
                     Rueda de la Vida Artística
@@ -503,10 +572,10 @@ export const AstraNeuralExperience: React.FC = () => {
                     {/* INTERRUPTOR ABOGADO DEL DIABLO */}
                     <div className="p-4 bg-purple-950/20 border border-purple-500/20 rounded-2xl space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-xs font-bold text-white">¿Abogado del Diablo?</span>
+                        <span className="text-xs font-bold text-white">¿Quieres que juegue al Abogado del Diablo con esta idea?</span>
                         <button
                           onClick={() => setIsDevilsAdvocateActive(!isDevilsAdvocateActive)}
-                          className={`w-12 h-6 rounded-full transition-colors relative cursor-pointer ${
+                          className={`w-12 h-6 rounded-full transition-colors relative cursor-pointer shrink-0 ${
                             isDevilsAdvocateActive ? 'bg-purple-600' : 'bg-white/20'
                           }`}
                         >
@@ -527,7 +596,7 @@ export const AstraNeuralExperience: React.FC = () => {
                     >
                       {isGeneratingSynthesis ? (
                         <>
-                          <RefreshCw className="w-4 h-4 animate-spin" /> Analizando 516 Nodos...
+                          <RefreshCw className="w-4 h-4 animate-spin" /> Analizando con Oráculo Astra...
                         </>
                       ) : (
                         <>
@@ -548,10 +617,10 @@ export const AstraNeuralExperience: React.FC = () => {
                   </div>
 
                   <button
-                    onClick={() => setCurrentView('ROADMAP')}
-                    className="w-full py-3 bg-white/5 hover:bg-white/10 text-white font-mono text-xs font-bold uppercase rounded-2xl border border-white/10 transition-all text-center cursor-pointer"
+                    onClick={() => setCurrentView('PROFILE_LAB')}
+                    className="w-full py-3 bg-white/5 hover:bg-white/10 text-white font-mono text-xs font-bold uppercase rounded-2xl border border-white/10 transition-all text-center cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    Completar y Seguir →
+                    Completar y Seguir <ArrowRight size={14} />
                   </button>
                 </div>
 
@@ -559,8 +628,163 @@ export const AstraNeuralExperience: React.FC = () => {
             </motion.div>
           )}
 
-          {/* VISTA 3: CENTRO DE MANDO / BÓVEDA NEURAL */}
-          {(currentView === 'COMMAND_CENTER' || currentView === 'VAULT' || currentView === 'TOOLKIT') && (
+          {/* VISTA 3: LABORATORIO DE PERFIL ESTRATÉGICO HIGH-TICKET */}
+          {currentView === 'PROFILE_LAB' && (
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-8 max-w-5xl mx-auto"
+            >
+              <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                <div>
+                  <h2 className="text-3xl font-black uppercase text-white font-syne">
+                    Laboratorio de Perfil Estratégico
+                  </h2>
+                  <p className="text-xs text-slate-400 font-light">
+                    Define tu ADN artístico, rider homologado y estructura tu tarifa bajo el Split 80/10/10.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setCurrentView('ROADMAP')}
+                  className="text-xs font-mono text-[#ecb613] hover:underline"
+                >
+                  ← Volver a Hoja de Ruta
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="bg-[#09090d] border border-white/10 p-8 rounded-3xl space-y-6">
+                  <span className="text-[10px] font-mono text-purple-400 uppercase font-bold">1. Calibración Técnica de Escenario</span>
+                  
+                  <div className="space-y-3">
+                    <label className="text-xs font-mono text-slate-300">Rider Acústico Homologado</label>
+                    <button
+                      onClick={() => setRiderHomologated(!riderHomologated)}
+                      className={`w-full py-3 px-4 rounded-2xl text-xs font-mono font-bold uppercase text-left transition-all cursor-pointer ${
+                        riderHomologated 
+                          ? 'bg-emerald-950/40 border border-emerald-500/40 text-emerald-300' 
+                          : 'bg-white/5 text-slate-400'
+                      }`}
+                    >
+                      {riderHomologated ? '✓ Bose F1 + Shure Axient + Behringer XR18' : '✗ Equipo no estandarizado'}
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between text-xs font-mono">
+                      <span className="text-slate-300">Presencia Escénica & Indumentaria</span>
+                      <span className="text-[#ecb613] font-bold">{stagePresenceScore}/10</span>
+                    </div>
+                    <input 
+                      type="range" min="1" max="10" value={stagePresenceScore}
+                      onChange={(e) => setStagePresenceScore(parseInt(e.target.value, 10))}
+                      className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-[#09090d] border border-white/10 p-8 rounded-3xl space-y-6 flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <span className="text-[10px] font-mono text-emerald-400 uppercase font-bold">2. Simulación de Caché Objetivo</span>
+                    
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-xs font-mono">
+                        <span className="text-slate-300">Tarifa de Gala Base</span>
+                        <span className="text-2xl font-black font-mono text-white">{cachePricing} €</span>
+                      </div>
+                      <input 
+                        type="range" min="650" max="6000" step="50" value={cachePricing}
+                        onChange={(e) => setCachePricing(parseInt(e.target.value, 10))}
+                        className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
+                      />
+                    </div>
+
+                    <div className="p-4 bg-white/5 rounded-2xl space-y-1.5 text-xs font-mono">
+                      <div className="flex justify-between text-emerald-400">
+                        <span>80% Artista Soberano:</span>
+                        <strong>{(cachePricing * 0.8).toFixed(0)} €</strong>
+                      </div>
+                      <div className="flex justify-between text-[#ecb613]">
+                        <span>10% Software & Rider:</span>
+                        <strong>{(cachePricing * 0.1).toFixed(0)} €</strong>
+                      </div>
+                      <div className="flex justify-between text-blue-400">
+                        <span>10% Impacto VIMUME:</span>
+                        <strong>{(cachePricing * 0.1).toFixed(0)} €</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/cotizador"
+                    className="w-full py-3.5 bg-[#ecb613] hover:bg-[#d4a210] text-black font-mono text-xs font-black uppercase tracking-wider rounded-2xl transition-all text-center flex items-center justify-center gap-2"
+                  >
+                    <Lock size={14} /> Vincular Caché a Cotizador Oficial
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
+          {/* VISTA 4: BÓVEDA NEURAL DANI ARAGÓN */}
+          {currentView === 'VAULT' && (
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-8 max-w-5xl mx-auto"
+            >
+              <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                <div>
+                  <h2 className="text-3xl font-black uppercase text-white font-syne">
+                    Bóveda Formativa Dani Aragón & E-Manager
+                  </h2>
+                  <p className="text-xs text-slate-400 font-light">
+                    133 activos de formación consolidados en H:\incubadora despegue\DANI_ARAGON_FORMACION para acelerar tu carrera.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setCurrentView('ROADMAP')}
+                  className="text-xs font-mono text-[#ecb613] hover:underline"
+                >
+                  ← Volver a Hoja de Ruta
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {DANI_ARAGON_MODULES.map((mod) => (
+                  <div key={mod.id} className="bg-[#09090d] border border-white/10 p-6 rounded-3xl space-y-4 flex flex-col justify-between">
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-start">
+                        <span className="text-[9px] font-mono text-emerald-400 uppercase bg-emerald-950/60 px-2 py-0.5 rounded">
+                          {mod.lessons}
+                        </span>
+                      </div>
+                      <h3 className="text-base font-bold text-white">{mod.title}</h3>
+                      <p className="text-xs text-slate-400 font-light leading-relaxed">{mod.summary}</p>
+                      
+                      <div className="space-y-1 pt-2">
+                        {mod.topics.map((t, idx) => (
+                          <div key={idx} className="text-[11px] font-mono text-slate-300 flex items-center gap-1.5">
+                            <Check className="w-3 h-3 text-emerald-400" /> {t}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <button 
+                      onClick={() => alert(`Accediendo al módulo "${mod.title}" (133 audios en H:\\incubadora despegue\\DANI_ARAGON_FORMACION)`)}
+                      className="w-full py-3 bg-white/5 hover:bg-white/10 text-white font-mono text-xs font-bold uppercase rounded-xl border border-white/10 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <Play className="w-3.5 h-3.5 text-[#ecb613]" /> Iniciar Masterclass
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* VISTA 5: CENTRO DE MANDO / HUB DE HERRAMIENTAS */}
+          {(currentView === 'COMMAND_CENTER' || currentView === 'TOOLKIT') && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -568,7 +792,7 @@ export const AstraNeuralExperience: React.FC = () => {
             >
               <div className="flex justify-between items-center border-b border-white/10 pb-4">
                 <h2 className="text-2xl font-black uppercase text-white font-syne">
-                  {currentView === 'COMMAND_CENTER' ? 'Centro de Mando Neuronal' : currentView === 'VAULT' ? 'Bóveda de Inteligencia RAG (516 Nodos)' : 'Hub de Herramientas High-Ticket'}
+                  {currentView === 'COMMAND_CENTER' ? 'Centro de Mando Neuronal' : 'Hub de Herramientas High-Ticket'}
                 </h2>
                 <button
                   onClick={() => setCurrentView('ROADMAP')}
@@ -579,20 +803,31 @@ export const AstraNeuralExperience: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white/5 border border-white/5 p-6 rounded-3xl space-y-2">
-                  <span className="text-[10px] font-mono text-purple-400 uppercase">Arquitectura Split</span>
-                  <h3 className="text-xl font-bold text-white">80% Artista / 10% EAR / 10% VIMUME</h3>
-                  <p className="text-xs text-slate-400 font-light">Soberanía de ingresos garantizada en cada bolo.</p>
+                <div 
+                  onClick={() => setCurrentView('WHEEL')}
+                  className="bg-[#09090d] border border-white/10 hover:border-purple-500/50 p-6 rounded-3xl space-y-2 cursor-pointer transition-all"
+                >
+                  <Compass className="w-6 h-6 text-purple-400" />
+                  <h3 className="text-lg font-bold text-white">Rueda de la Vida Artística</h3>
+                  <p className="text-xs text-slate-400 font-light">Diagnóstico radial en 8 áreas clave.</p>
                 </div>
-                <div className="bg-white/5 border border-white/5 p-6 rounded-3xl space-y-2">
-                  <span className="text-[10px] font-mono text-emerald-400 uppercase">SLA Técnico</span>
-                  <h3 className="text-xl font-bold text-white">99.9% Cumplimiento</h3>
-                  <p className="text-xs text-slate-400 font-light">Póliza 1M€ y montaje con ensayo previo T-120min.</p>
+
+                <div 
+                  onClick={() => setCurrentView('PROFILE_LAB')}
+                  className="bg-[#09090d] border border-white/10 hover:border-emerald-500/50 p-6 rounded-3xl space-y-2 cursor-pointer transition-all"
+                >
+                  <Award className="w-6 h-6 text-emerald-400" />
+                  <h3 className="text-lg font-bold text-white">Laboratorio de Perfil</h3>
+                  <p className="text-xs text-slate-400 font-light">Estructura tu rider y caché base.</p>
                 </div>
-                <div className="bg-white/5 border border-white/5 p-6 rounded-3xl space-y-2">
-                  <span className="text-[10px] font-mono text-blue-400 uppercase">Bóveda Cognitiva</span>
-                  <h3 className="text-xl font-bold text-white">516 Nodos RAG Activos</h3>
-                  <p className="text-xs text-slate-400 font-light">Estrategias de Velocity, Dani Aragón e Incubadora.</p>
+
+                <div 
+                  onClick={() => setCurrentView('VAULT')}
+                  className="bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 p-6 rounded-3xl space-y-2 cursor-pointer transition-all"
+                >
+                  <Database className="w-6 h-6 text-[#ecb613]" />
+                  <h3 className="text-lg font-bold text-white">Bóveda Dani Aragón</h3>
+                  <p className="text-xs text-slate-400 font-light">133 lecciones de management y ventas.</p>
                 </div>
               </div>
             </motion.div>
@@ -628,7 +863,7 @@ export const AstraNeuralExperience: React.FC = () => {
                 </button>
               </div>
               <p className="text-slate-300 font-light leading-relaxed">
-                ¿Deseas analizar tu caché de mercado o resolver una duda técnica sobre tu próximo bolo?
+                ¿Deseas analizar tu caché de mercado o resolver una duda técnica sobre tu próximo bolo con el Oráculo Astra?
               </p>
               <Link
                 href="/cotizador"
