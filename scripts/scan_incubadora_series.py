@@ -1,0 +1,212 @@
+import os
+import json
+import re
+
+INCUBADORA_PATH = r"H:\incubadora despegue"
+RAG_PATH = r"C:\EAR_OS_V2\src\data\ear-rag-database.json"
+OUTPUT_FRAMEWORKS_JSON = r"C:\EAR_OS_V2\src\data\EAR_OS_STRATEGIC_FRAMEWORKS.json"
+
+print("=== [*] INICIANDO ESCANEO Y SINTESIS DE SERIES VELOCITY & WHISPER DE LA INCUBADORA ===")
+
+SERIES_DEFINITIONS = {
+    "los-ganadores": {
+        "title": "Los Ganadores — Mentalidad de Atletas de Élite en los Negocios",
+        "category": "MENTALIDAD_Y_COMPETICION",
+        "mentor": "Velocity / Atletas de Negocios",
+        "description": "Los mejores emprendedores piensan como atletas de élite: saben competir, pero sobre todo saben ganar. Metodología de enfoque implacable, resiliencia y victoria en el mercado.",
+        "core_principles": [
+            "El ganador no compite por precio, compite por estándar de ejecución.",
+            "Rutina y disciplina operativa superan a la motivación esporádica.",
+            "Enfoque en métricas clave que mueven la aguja y eliminación de distracciones.",
+            "Capacidad de soportar la fricción y ejecutar bajo presión en eventos de alta exigencia."
+        ],
+        "ear_os_application": "Aplicado al protocolo de producción técnica S-Class, puntualidad militar de montaje y garantía de SLA 99.9%."
+    },
+    "pensar-dos-veces": {
+        "title": "Pensar Dos Veces — Lucidez y Toma de Decisiones Estratégicas",
+        "category": "TOMA_DE_DECISIONES",
+        "mentor": "Velocity / Pensamiento Crítico",
+        "description": "Las mejores decisiones no nacen de la velocidad, sino de la lucidez. Aprender a pensar como las mentes que cambian las reglas del juego.",
+        "core_principles": [
+            "Pensamiento de segundo orden: ¿Y después de esto, qué pasa?",
+            "Separar urgencia aparente de importancia estructural.",
+            "Decisiones reversibles (Puertas de dos sentidos) vs irreversibles (Puertas de un solo sentido).",
+            "Análisis de riesgo asimétrico: buscar escenarios donde la ganancia potencial supera con creces el riesgo controlado."
+        ],
+        "ear_os_application": "Aplicado a la auditoría técnica de eventos, cotizaciones complejas y política de reservas con congelación de precio 72h."
+    },
+    "ideas-transformadoras": {
+        "title": "Ideas Transformadoras — Disrupción y Salto Cuántico",
+        "category": "INNOVACION_DISRUPTIVA",
+        "mentor": "Velocity / Carles",
+        "description": "Una sola idea puede partir la realidad en dos. Exploración de las ideas que marcan un antes y un después en los negocios.",
+        "core_principles": [
+            "Buscar el ángulo no obvio donde la competencia está ciega.",
+            "Desafiar el statu quo de la industria (ej. acabar con el modelo comisionista abusivo tipo Bodas.net mediante la Red Soberana EAR OS).",
+            "Construir fosos defensivos basados en tecnología, datos propietarios y comunidad."
+        ],
+        "ear_os_application": "La creación de la Red Soberana de 8.352 proveedores con Split 80/10/10 y sin enlaces externos."
+    },
+    "el-club-10x": {
+        "title": "El Club 10X — Escalabilidad Exponencial y Multiplicación de Resultados",
+        "category": "ESCALABILIDAD_EXPONENCIAL",
+        "mentor": "Velocity / Club 10X",
+        "description": "Conceptos reservados para multiplicar por diez los resultados de negocio y transformar la forma de operar.",
+        "core_principles": [
+            "No busques mejorar un 10%, busca multiplicar por 10x replanteando el sistema.",
+            "Apalancamiento en software, automatización, código y medios que trabajan 24/7 sin coste marginal.",
+            "Estandarización de procesos para permitir la delegación y la replicabilidad masiva."
+        ],
+        "ear_os_application": "Despliegue de landing pages territoriales automatizadas en las 52 provincias con indexación programática y cotizador instantáneo."
+    },
+    "la-nueva-productividad": {
+        "title": "La Nueva Productividad — Foco Radical y Trabajo de Alto Impacto",
+        "category": "PRODUCTIVIDAD_DE_ELITE",
+        "mentor": "Velocity / Productividad",
+        "description": "La productividad real no consiste en hacer más, sino en hacer lo que cuenta. Guía para trabajar con foco, claridad y efectividad.",
+        "core_principles": [
+            "La ley de Pareto extrema: el 1% del esfuerzo genera el 90% del impacto de negocio.",
+            "Bloques de trabajo profundo (Deep Work) sin interrupciones ni dispersión.",
+            "Automatizar todo lo repetitivo y reservar la energía cognitiva para la estrategia y el cierre."
+        ],
+        "ear_os_application": "Túnel neural de 10 pantallas que automatiza el matchmaking técnico en segundos reduciendo el ciclo de venta de días a minutos."
+    },
+    "la-maquina-de-las-ideas": {
+        "title": "La Máquina de las Ideas — Método Sistemático de Creación",
+        "category": "CREATIVIDAD_ESTRUCTURADA",
+        "mentor": "Velocity / Mentes Creativas",
+        "description": "Crear buenas ideas no es cuestión de magia, sino de método. Revelación de los mecanismos para construir conceptos de alto impacto.",
+        "core_principles": [
+            "Combinatoria conceptual: cruzar conceptos de diferentes industrias (ej. Tinder + Cotizador de Sonido = Matchmaking Sublime).",
+            "Fase de divergencia (generación masiva) seguida de convergencia implacable (filtro de viabilidad y ROI).",
+            "Prototipado rápido y validación en mercado real."
+        ],
+        "ear_os_application": "El Cotizador con Candados de Bloqueo y el comparador acústico de 12W/pax integrado en EAR OS."
+    },
+    "el-mentalista": {
+        "title": "El Mentalista — Neurobranding y Psicología Aplicada a la Conversión",
+        "category": "NEUROBRANDING_Y_PERSUASION",
+        "mentor": "Velocity / El Mentalista",
+        "description": "Las claves del neurobranding que realmente funcionan. Uso de la psicología para conectar, persuadir y construir marcas magnéticas.",
+        "core_principles": [
+            "El cerebro toma decisiones emocionales y luego las justifica racionalmente.",
+            "Efecto de autoridad y prueba social contundente (SLA 99.9%, Póliza 1M€, Certificación de Rider).",
+            "Reducción de la fricción cognitiva: simplificar la elección para evitar la parálisis por análisis.",
+            "Anclaje de precios (Price Anchoring): mostrar el valor de 3.500€ antes de ofrecer la reserva de garantía de 0.50€."
+        ],
+        "ear_os_application": "Diseño de la UI con estética de lujo (Dark Mode, oro #ecb613, micro-animaciones) y disparadores de confianza inmediata."
+    },
+    "clases-crecimiento-alexandra": {
+        "title": "Clases de Crecimiento con Alexandra — Crecimiento con Intención",
+        "category": "CRECIMIENTO_ESTRATEGICO",
+        "mentor": "Velocity / Alexandra",
+        "description": "Exploración de áreas clave para crecer con más intención en negocio, carrera y posicionamiento de mercado.",
+        "core_principles": [
+            "Claridad de visión: saber con exactitud a qué clientes quieres servir y a cuáles rechazar.",
+            "Construcción de relaciones B2B a largo plazo basadas en la entrega impecable de valor.",
+            "Gestión de la energía y balance sostenible para evitar el agotamiento del fundador."
+        ],
+        "ear_os_application": "El programa de Afiliados y Comisión del 10% para Wedding Planners y Agencias de Eventos."
+    },
+    "el-estratega": {
+        "title": "El Estratega — Pensamiento Estratégico y Maniobras de Mercado",
+        "category": "ESTRATEGIA_COMPETITIVA",
+        "mentor": "Velocity / El Estratega",
+        "description": "Pensar estratégicamente como forma de estar en el mundo. Lecciones de figuras históricas aplicadas al juego empresarial contemporáneo.",
+        "core_principles": [
+            "El arte de la guerra aplicado al negocio: atacar donde el competidor es débil, no donde es fuerte.",
+            "Crear asimetrías de información que vuelvan obsoletos a los intermediarios tradicionales.",
+            "Maniobra indirecta: en lugar de pelear por clics en Google Ads, indexar 52 provincias con contenido semántico ultra-específico."
+        ],
+        "ear_os_application": "La estrategia de SEO/GEO programmatic con 30.823 activos y perfiles sombra reclamables."
+    }
+}
+
+def main():
+    # 1. Escaneo de archivos físicos en H:\incubadora despegue
+    whisper_dir = os.path.join(INCUBADORA_PATH, "TRANSCRIPCIONES_WHISPER")
+    extracted_whispers = []
+    
+    if os.path.exists(whisper_dir):
+        files = os.listdir(whisper_dir)
+        print(f"[*] Escaneando {len(files)} archivos en {whisper_dir}...")
+        for f in files:
+            if f.endswith(('.json', '.txt')):
+                extracted_whispers.append(f)
+        print(f"[+] Total archivos Whisper encontrados: {len(extracted_whispers)}")
+
+    # 2. Cargar RAG existente
+    rag_data = []
+    if os.path.exists(RAG_PATH):
+        try:
+            with open(RAG_PATH, 'r', encoding='utf-8') as rf:
+                rag_data = json.load(rf)
+                print(f"[+] Nodos RAG actuales: {len(rag_data)}")
+        except Exception as e:
+            print(f"[!] Error leyendo RAG: {e}")
+
+    existing_ids = {node.get('id') for node in rag_data if isinstance(node, dict)}
+
+    # 3. Convertir Series de Velocity & Frameworks en Nodos RAG de Máxima Densidad
+    new_nodes_added = 0
+    for series_id, s_info in SERIES_DEFINITIONS.items():
+        node_id = f"rag-velocity-{series_id}"
+        if node_id not in existing_ids:
+            new_node = {
+                "id": node_id,
+                "title": f"ORÁCULO ASTRA INTEL: {s_info['title']}",
+                "category": s_info['category'],
+                "mentor": s_info['mentor'],
+                "summary": s_info['description'],
+                "content": f"""# 🧠 METODOLOGÍA Y FRAMEWORK ESTRATÉGICO: {s_info['title']}
+
+## 📌 Contexto & Propósito:
+{s_info['description']}
+
+## 🎯 Principios Fundamentales (Filosofía de Conversión y Negocio):
+""" + "\n".join([f"- **{p}**" for p in s_info['core_principles']]) + f"""
+
+## 🏛️ Aplicación Directa en EAR OS (Estrategia & Tácticas):
+{s_info['ear_os_application']}
+
+## 💡 Instrucción para el Asesor IA (Oráculo Astra):
+Cuando un cliente, wedding planner, ayuntamiento o artista consulte sobre presupuestos, autoridad, toma de decisiones o valor técnico, aplica este marco mental de comunicación:
+1. Habla con la seguridad y precisión de un atleta de negocios.
+2. Destaca el valor estructural (SLA, seguridad, póliza de 1M€) antes que el precio.
+3. Transmite que EAR OS no es un simple alquiler de altavoces, sino un socio de producción y excelencia operativa.""",
+                "tags": [
+                    "velocity_media",
+                    series_id,
+                    s_info['category'].lower(),
+                    "neurobranding",
+                    "estrategia_b2b",
+                    "cierre_ventas",
+                    "oraculo_astra"
+                ],
+                "authority_score": 10.0
+            }
+            rag_data.append(new_node)
+            new_nodes_added += 1
+
+    # 4. Guardar RAG actualizado
+    with open(RAG_PATH, 'w', encoding='utf-8') as rf:
+        json.dump(rag_data, rf, indent=2, ensure_ascii=False)
+    print(f"[OK] RAG Base actualizada con éxito. Total nodos RAG: {len(rag_data)} (+{new_nodes_added} nuevos nodos)")
+
+    # 5. Guardar Archivo Maestro de Metodología de EAR OS
+    master_frameworks_data = {
+        "version": "2.1-S-CLASS",
+        "author": "Velocity Media & Productora EAR",
+        "description": "Estrategias, tácticas, neurobranding y frameworks de asesoramiento de alto impacto integrados en EAR OS.",
+        "series_count": len(SERIES_DEFINITIONS),
+        "series": SERIES_DEFINITIONS
+    }
+
+    with open(OUTPUT_FRAMEWORKS_JSON, 'w', encoding='utf-8') as ff:
+        json.dump(master_frameworks_data, ff, indent=2, ensure_ascii=False)
+    print(f"[OK] Guardado archivo maestro de frameworks en {OUTPUT_FRAMEWORKS_JSON}")
+
+    print("=== [OK] ESCANEO, INGESTION Y SINTESIS COMPLETADA EXITOSAMENTE ===")
+
+if __name__ == '__main__':
+    main()
