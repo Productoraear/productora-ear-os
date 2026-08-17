@@ -90,8 +90,18 @@ const MultiPricerContent = () => {
     eventDate: ''
   });
 
-  // 📥 AUTO-LOAD FROM URL PARAMS
+  const [artistTarget, setArtistTarget] = useState<string | null>(null);
+
+  // 📥 AUTO-LOAD FROM URL PARAMS (ITEMS & ARTISTA TARGET)
   useEffect(() => {
+    const artista = searchParams.get('artista') || searchParams.get('artist');
+    if (artista && (artista.toLowerCase().includes('edwin') || artista.toLowerCase().includes('agudelo'))) {
+      setArtistTarget('Edwin Agudelo (Tenor Lírico / Mariachi Imperial)');
+      setSelectedServices(['cuarteto-imperial']);
+      setActiveCategory('BOOKING ARTÍSTICO DE GALA');
+      setSelectedProvince('Madrid');
+    }
+
     const items = searchParams.get('items');
     if (items) {
       const ids = items.split(',');
@@ -525,7 +535,7 @@ const MultiPricerContent = () => {
                 Llamar
               </a>
               <a 
-                href={generateWhatsAppLink({
+                href={artistTarget ? `https://wa.me/34693693048?text=${encodeURIComponent("Hola Edwin, quiero consultar disponibilidad para mi evento a través de Productora EAR.")}` : generateWhatsAppLink({
                   profile: 'cotizador',
                   service: `Presupuesto Personalizado - ${selectedServices.length} conceptos`,
                   location: selectedProvince,
