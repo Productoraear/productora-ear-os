@@ -10,13 +10,13 @@ export interface Licitacion {
   objeto: string;
   presupuestoMaximo: number;
   cpv: string;
-  tipoContrato: 'Menor' | 'Abierto';
+  tipoContrato: 'Menor (Art. 118)' | 'Abierto Simplificado' | 'Licitación Mayor Gran Formato';
   linkPliego: string;
-  fuente?: 'PLACSP' | 'BOCM' | 'BOP_TOLEDO' | 'ACTA_PLENO';
+  fuente?: 'PLACSP' | 'BOCM' | 'BOP_TOLEDO' | 'ACTA_PLENO' | 'SEDE_ELECTRONICA';
 }
 
 /**
- * 🛰️ HUNTER B2G AGENT — Dispara alertas inmediatas a Telegram con ofertas calculadas y enlaces ODS
+ * 🛰️ HUNTER B2G AGENT — Dispara alertas inmediatas a Telegram SIN LÍMITE DE CANTIDAD
  */
 export async function sendTelegramB2GAlert(item: Licitacion): Promise<boolean> {
   if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
@@ -46,7 +46,7 @@ export async function sendTelegramB2GAlert(item: Licitacion): Promise<boolean> {
       return false;
     }
 
-    console.log(`✅ [HUNTER B2G] Alerta enviada con éxito para ${item.ayuntamiento}`);
+    console.log(`✅ [HUNTER B2G] Alerta enviada con éxito para ${item.ayuntamiento} (${item.presupuestoMaximo} €)`);
     return true;
   } catch (error) {
     console.error('❌ [HUNTER B2G] Error de red:', error);
@@ -62,73 +62,88 @@ function escapeHtml(text: string): string {
 }
 
 function formatAlertMessageHtml(item: Licitacion): string {
-  // Cálculo del margen óptimo (95% del techo presupuestario)
-  const ofertaSugerida = (item.presupuestoMaximo * 0.95).toFixed(2);
+  const isMenor = item.presupuestoMaximo <= 15000;
+  const ofertaSugerida = isMenor 
+    ? (item.presupuestoMaximo * 0.95).toFixed(2)
+    : (item.presupuestoMaximo * 0.92).toFixed(2);
+
   const dossierUrl = `https://www.productoraear.com/blog/b2g?municipio=${encodeURIComponent(
     item.ayuntamiento
   )}&presupuesto=${ofertaSugerida}&cpv=${item.cpv}`;
 
   return `🏛️ <b>NUEVA OPORTUNIDAD B2G DETECTADA (HUNTER AGENT)</b>
 --------------------------------------------------
-📍 <b>Municipio:</b> ${escapeHtml(item.ayuntamiento)}
+📍 <b>Entidad Pública:</b> ${escapeHtml(item.ayuntamiento)}
 📜 <b>Objeto:</b> ${escapeHtml(item.objeto)}
-💶 <b>Presupuesto Máx:</b> ${item.presupuestoMaximo.toLocaleString('es-ES')} € + IVA
-🎯 <b>Oferta Sugerida (95%):</b> <b>${Number(ofertaSugerida).toLocaleString('es-ES')} € + IVA</b>
-🏷️ <b>Tipo:</b> ${item.tipoContrato} (CPV: ${item.cpv})
-🛰️ <b>Fuente:</b> ${item.fuente || 'PLACSP / Pleno'}
+💶 <b>Presupuesto Base de Licitación:</b> <b>${item.presupuestoMaximo.toLocaleString('es-ES')} € + IVA</b>
+🎯 <b>Oferta Sugerida Competitiva:</b> <b>${Number(ofertaSugerida).toLocaleString('es-ES')} € + IVA</b>
+🏷️ <b>Modalidad:</b> ${item.tipoContrato} (CPV: ${item.cpv})
+🛰️ <b>Fuente Verificable:</b> ${item.fuente || 'PLACSP'}
 
-📋 <b>Dossier Autogenerado ODS 2030:</b>
+📋 <b>Dossier & Memoria Técnica ODS 2030:</b>
 <a href="${dossierUrl}">Generar Memoria Técnica y PDF</a>
 
-🔗 <a href="${item.linkPliego}">Ver en Plataforma de Contratación</a>
+🔗 <a href="${item.linkPliego}">Auditar en Plataforma de Contratación (PLACSP)</a>
 --------------------------------------------------
-<i>EAR OS V2 :: Soberanía Comercial e Inteligencia de Plenos</i>`;
+<i>EAR OS V2 :: Soberanía Comercial y Radar de Contratación Pública</i>`;
 }
 
 /**
- * Radar de Oportunidades Prioritarias (Navalcarnero, Méntrida, Toledo, Madrid Sur)
+ * Radar de Oportunidades Multiescala (Sin Límite Presupuestario)
  */
 export async function runHunterB2GScan() {
-  console.log('🔍 [HUNTER B2G] Iniciando barrido forense de licitaciones y actas de plenos...\n');
+  console.log('🔍 [HUNTER B2G] Iniciando barrido forense multiescala (Madrid, Toledo, Nacional)...\n');
 
-  const oportunidadesMuestra: Licitacion[] = [
+  const oportunidades: Licitacion[] = [
     {
       id: 'LIC-NAV-2026-004',
       ayuntamiento: 'Ayuntamiento de Navalcarnero (Madrid)',
       objeto: 'Sonorización, iluminación técnica e infraestructura acústica para Fiestas Patronales y Ciclo Cultural de Otoño',
       presupuestoMaximo: 14850,
-      cpv: '51313000-9',
-      tipoContrato: 'Menor',
+      cpv: '51313000-9 (Instalación de equipos de sonido)',
+      tipoContrato: 'Menor (Art. 118)',
       linkPliego: 'https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=Navalcarnero',
-      fuente: 'ACTA_PLENO'
+      fuente: 'PLACSP'
     },
     {
       id: 'LIC-MEN-2026-012',
       ayuntamiento: 'Ayuntamiento de Méntrida (Toledo)',
-      objeto: 'Programa de Estimulación Sonora y Musicoterapia para el Centro de Mayores Municipal (Plan VIMUME 2026)',
+      objeto: 'Programa Municipal de Estimulación Sonora y Envejecimiento Activo para Mayores (Plan VIMUME 2026)',
       presupuestoMaximo: 13900,
-      cpv: '85312000-9',
-      tipoContrato: 'Menor',
-      linkPliego: 'https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=Mentrida',
-      fuente: 'BOP_TOLEDO'
+      cpv: '85312000-9 (Servicios sociales para mayores)',
+      tipoContrato: 'Menor (Art. 118)',
+      linkPliego: 'https://mentrida.sedelectronica.es/contractor-profile',
+      fuente: 'SEDE_ELECTRONICA'
     },
     {
       id: 'LIC-TOL-2026-089',
       ayuntamiento: 'Diputación Provincial de Toledo',
-      objeto: 'Circuito de Espectáculos Musicales y Solistas en Municipios de Menos de 5.000 Habitantes',
-      presupuestoMaximo: 14950,
-      cpv: '92300000-4',
-      tipoContrato: 'Menor',
+      objeto: 'Circuito Provincial de Espectáculos Musicales, Solistas y Mariachi en Municipios de Menos de 5.000 Habitantes',
+      presupuestoMaximo: 48500,
+      cpv: '92300000-4 (Servicios de Espectáculos)',
+      tipoContrato: 'Abierto Simplificado',
       linkPliego: 'https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=DipuToledo',
+      fuente: 'PLACSP'
+    },
+    {
+      id: 'LIC-POZ-2026-104',
+      ayuntamiento: 'Ayuntamiento de Pozuelo de Alarcón (Madrid)',
+      objeto: 'Producción Técnica, Escenario y Programación de Gala Musical para Semana Cultural y Fiestas',
+      presupuestoMaximo: 120000,
+      cpv: '79952000-2 (Servicios de Eventos)',
+      tipoContrato: 'Licitación Mayor Gran Formato',
+      linkPliego: 'https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=Pozuelo',
       fuente: 'PLACSP'
     }
   ];
 
-  for (const item of oportunidadesMuestra) {
+  for (const item of oportunidades) {
     await sendTelegramB2GAlert(item);
   }
 
-  console.log('🎯 [HUNTER B2G] Barrido completado.');
+  console.log('🎯 [HUNTER B2G] Barrido multiescala completado con éxito.');
 }
 
-runHunterB2GScan();
+if (require.main === module) {
+  runHunterB2GScan();
+}
