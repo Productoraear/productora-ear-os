@@ -1,45 +1,32 @@
 import { NextResponse } from 'next/server';
-// Importación dinámica para evitar el crash del servidor en despliegues sin Puppeteer nativo
-const runCazadorFantasma = async (url: string) => {
-    const { runCazadorFantasma: execute } = await import('@/lib/services/scrapers/cazador_fantasma');
-    return execute(url);
-};
+import { runCazadorFantasma } from '@/lib/services/scrapers/cazador_fantasma';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 /**
  * ⚡ PHANTOM HUNTER API (S-CLASS)
- * High-end Node.js scraping engine using Puppeteer & Cheerio.
+ * High-end extraction engine with Puppeteer Stealth & HTTP Fallback.
  */
-
 export async function POST(req: Request) {
     try {
-        const { targetUrl } = await req.json();
+        const body = await req.json();
+        const targetUrl = body.targetUrl || 'https://www.bodas.net/bodas/proveedores';
+        const depth = body.depth || 'Alpha';
 
-        if (!targetUrl) {
-            return NextResponse.json({ error: 'URL de objetivo requerida' }, { status: 400 });
-        }
-
+        console.log(`🕵️ [API PHANTOM HUNTER] Infiltrando ${targetUrl} [Profundidad: ${depth}]...`);
 
         // Ejecución del motor S-Class
-        const result = await runCazadorFantasma(targetUrl);
+        const result = await runCazadorFantasma(targetUrl, depth);
 
-        if (result.success) {
-            return NextResponse.json({ 
-                success: true, 
-                message: 'Infiltración completada con éxito.',
-                data: result 
-            });
-        } else {
-            return NextResponse.json({ 
-                success: false, 
-                error: result.error || 'Fallo desconocido en el motor' 
-            }, { status: 500 });
-        }
+        return NextResponse.json({ 
+            success: true, 
+            message: 'Infiltración completada con éxito.',
+            data: result 
+        });
 
     } catch (error: any) {
         console.error('❌ PHANTOM_HUNTER_EXECUTION_ERROR:', error);
-        return NextResponse.json({ error: 'Error interno en el puente S-Class' }, { status: 500 });
+        return NextResponse.json({ error: error.message || 'Error en el puente S-Class' }, { status: 500 });
     }
 }
