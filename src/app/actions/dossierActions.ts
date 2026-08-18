@@ -8,6 +8,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { sendTelegramNotification } from '@/lib/services/telegram';
 import { LeadRouter } from '@/lib/services/leads/LeadRouter';
+import { TrelloService } from '@/lib/services/trello';
 
 export async function approveDossier(dossierId: string, token: string) {
   const supabase = createClient();
@@ -133,6 +134,21 @@ _EAR OS GOLD: Iniciando ciclo de conversión._
     await sendTelegramNotification(message, dossier.telegram_target);
   } catch (e) {
     console.error("❌ Fallo en notificación Telegram (Lead):", e);
+  }
+
+  // 4. TRELLO AUTOMATION DISPATCH
+  try {
+    await TrelloService.createCard({
+      dossierId: dossier.id,
+      contactName: leadData.contactName,
+      contactEmail: leadData.contactEmail,
+      occasion: leadData.occasion,
+      selectedAssets: leadData.selectedAssets,
+      channel: routing.channel,
+      priority: routing.priority > 75 ? 'CRITICA' : routing.priority > 50 ? 'ALTA' : 'NORMAL'
+    });
+  } catch (trelloErr) {
+    console.error("❌ Fallo en sincronización Trello:", trelloErr);
   }
 
   return { success: true, dossierId: dossier.id };
