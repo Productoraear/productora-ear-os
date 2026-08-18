@@ -18,6 +18,7 @@ interface Track {
   description: string;
   lyricsExcerpt: string;
   genre: string;
+  url: string;
 }
 
 const TRACKS: Track[] = [
@@ -31,7 +32,8 @@ const TRACKS: Track[] = [
     venue: 'Teatro La Latina, Madrid (1.000+ Asistentes)',
     description: 'Presentada ante el cuerpo diplomático y la comunidad hispana. Una declaración de principios sobre la lucha del emigrante y la forja de la identidad artística.',
     lyricsExcerpt: '"No me mires con lástima, mírame con valor... porque he cruzado mares construyendo mi propia realidad con la voz que Dios me dio."',
-    genre: 'Ranchera Lírica de Gala'
+    genre: 'Ranchera Lírica de Gala',
+    url: '/media/edwin/mi-propia-realidad.mp3'
   },
   {
     id: 'track-2',
@@ -43,7 +45,8 @@ const TRACKS: Track[] = [
     venue: 'La Cubierta de Leganés, Madrid',
     description: 'El clásico de las serenatas familiares y bodas. Compuesta para agradecer los sacrificios maternales y el amor incondicional que trasciende fronteras.',
     lyricsExcerpt: '"Algún día mamá, podré devolverte en besos y flores cada noche de desvelo... mientras mi canto sea el abrazo que te abrace el alma."',
-    genre: 'Mariachi Tradicional Solemne'
+    genre: 'Mariachi Tradicional Solemne',
+    url: '/media/edwin/algun-dia-mama.mp3'
   },
   {
     id: 'track-3',
@@ -55,82 +58,141 @@ const TRACKS: Track[] = [
     venue: 'Inspirada en Cadena 100 Por Ellas',
     description: 'Producida por Silvio Ocaña con arreglos del trompetista Over Vásquez y dirección de Ángeles Cepero. Canción dedicada a la superación y a quienes nunca se rinden.',
     lyricsExcerpt: '"Acompáñame en este vuelo, dame tu mano al caminar... que la tormenta pasará y juntos volveremos a cantar."',
-    genre: 'Balada Sinfónica en Positivo'
+    genre: 'Balada Sinfónica en Positivo',
+    url: '/media/edwin/acompaname.mp3'
   },
   {
     id: 'track-4',
-    title: 'LAS MEJORES RANCHERAS DE TODOS LOS TIEMPOS',
-    subtitle: 'Popurrí Imperial Clásico en Directo',
+    title: 'CÓMO JUBILAR AL CUMPLEAÑOS & MAÑANITAS',
+    subtitle: 'Master de Serenatas & Presión Sonora en Directo',
     duration: '05:30',
     durationSeconds: 330,
-    year: '2023',
+    year: '2026',
     venue: 'Gira de Gala en Fincas & Auditorios',
-    description: 'Interpretación magistral de los grandes himnos de la música charra: El Rey, Si Nos Dejan, Las Mañanitas, Volver Volver y La Bikina con arreglos líricos de tenor.',
+    description: 'Masterclass sonora y podcast exclusivo sobre la liturgia de la serenata, psicología del homenaje y arreglos líricos de tenor con mariachi.',
     lyricsExcerpt: '"Con dinero y sin dinero, hago siempre lo que quiero... y mi palabra es la ley. ¡Que viva el Mariachi y el amor verdadero!"',
-    genre: 'Gran Ensamble de Mariachi'
+    genre: 'Gran Ensamble de Mariachi',
+    url: '/media/edwin/podcast-cumpleanos-edwin.m4a'
   }
 ];
 
 export const EdwinLegacyPlayer: React.FC = () => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.85);
   const [isMuted, setIsMuted] = useState(false);
   const [showLyrics, setShowLyrics] = useState(false);
   const [hasLiked, setHasLiked] = useState(false);
+  const [audioError, setAudioError] = useState<string | null>(null);
 
   const currentTrack = TRACKS[currentTrackIndex];
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const oscillatorRef = useRef<OscillatorNode | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Simulación de reproducción con progreso interactivo
+  // Sincronizar volumen
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            handleNextTrack();
-            return 0;
-          }
-          return prev + (100 / currentTrack.durationSeconds);
-        });
-      }, 1000);
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume;
     }
-    return () => clearInterval(interval);
-  }, [isPlaying, currentTrackIndex]);
+  }, [volume, isMuted]);
+
+  // Cambiar de pista
+  useEffect(() => {
+    setAudioError(null);
+    setCurrentTime(0);
+    if (audioRef.current) {
+      audioRef.current.src = currentTrack.url;
+      audioRef.current.load();
+      if (isPlaying) {
+        audioRef.current.play().catch((err) => {
+          console.warn('⚠️ [EDWIN AUDIO PREVENTED]:', err);
+          setAudioError('MASTER_PENDIENTE_CARGA');
+          setIsPlaying(false);
+        });
+      }
+    }
+  }, [currentTrackIndex]);
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      setAudioError(null);
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch((err) => {
+        console.warn('⚠️ [EDWIN AUDIO ERROR]:', err);
+        setAudioError('MASTER_PENDIENTE_CARGA');
+        setIsPlaying(false);
+      });
+    }
   };
 
   const handleNextTrack = () => {
-    setProgress(0);
     setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
   };
 
   const handlePrevTrack = () => {
-    setProgress(0);
     setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length);
   };
 
-  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
-    setProgress(newProgress);
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+      if (!duration && audioRef.current.duration) {
+        setDuration(audioRef.current.duration);
+      }
+    }
   };
 
-  const currentSeconds = Math.floor((progress / 100) * currentTrack.durationSeconds);
+  const handleLoadedMetadata = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration);
+      setAudioError(null);
+    }
+  };
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, clickX / rect.width));
+    const targetTime = percentage * (duration || currentTrack.durationSeconds);
+    audioRef.current.currentTime = targetTime;
+    setCurrentTime(targetTime);
+  };
+
   const formatTime = (secs: number) => {
+    if (isNaN(secs) || secs === 0) return "00:00";
     const mins = Math.floor(secs / 60);
-    const remainingSecs = secs % 60;
+    const remainingSecs = Math.floor(secs % 60);
     return `${mins.toString().padStart(2, '0')}:${remainingSecs.toString().padStart(2, '0')}`;
   };
 
+  const progressPercent = duration > 0 
+    ? (currentTime / duration) * 100 
+    : (currentTime / currentTrack.durationSeconds) * 100;
+
   return (
     <div className="relative rounded-[2.5rem] bg-[#09090d] border border-white/10 p-6 md:p-10 overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,0.8)]">
+      {/* Audio element invisible */}
+      <audio
+        ref={audioRef}
+        src={currentTrack.url}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleLoadedMetadata}
+        onEnded={handleNextTrack}
+        onError={() => {
+          console.warn(`⚠️ [EDWIN AUDIO ERROR] No se pudo cargar: ${currentTrack.url}`);
+          setAudioError('MASTER_PENDIENTE_CARGA');
+          setIsPlaying(false);
+        }}
+      />
+
       {/* Fondo con brillo atmosférico */}
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#ecb613]/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#a855f7]/10 blur-[100px] rounded-full pointer-events-none" />
@@ -142,9 +204,20 @@ export const EdwinLegacyPlayer: React.FC = () => {
             <Radio size={20} className={isPlaying ? "animate-pulse text-[#ecb613]" : "text-[#ecb613]/60"} />
           </div>
           <div>
-            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#ecb613] block font-mono">
-              Bóveda Sonora S-Class
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#ecb613] block font-mono">
+                Bóveda Sonora S-Class
+              </span>
+              {audioError ? (
+                <span className="text-[8px] font-mono px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  MASTER_AUDIO_PRODUCCIÓN
+                </span>
+              ) : (
+                <span className="text-[8px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  AUDIO_EN_VIVO
+                </span>
+              )}
+            </div>
             <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white font-syne">
               Discografía & Canciones Inéditas
             </h3>
@@ -258,16 +331,16 @@ export const EdwinLegacyPlayer: React.FC = () => {
               className="h-2.5 w-full bg-white/10 rounded-full cursor-pointer relative overflow-hidden group"
             >
               <div 
-                className="h-full bg-gradient-to-r from-[#ecb613] to-amber-300 rounded-full transition-all duration-200 relative"
-                style={{ width: `${progress}%` }}
+                className="h-full bg-gradient-to-r from-[#ecb613] to-amber-300 rounded-full transition-all duration-150 relative"
+                style={{ width: `${Math.min(100, Math.max(0, progressPercent))}%` }}
               >
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </div>
 
             <div className="flex justify-between items-center text-[10px] font-mono text-white/40">
-              <span>{formatTime(currentSeconds)}</span>
-              <span>{currentTrack.duration}</span>
+              <span>{formatTime(currentTime)}</span>
+              <span>{duration > 0 ? formatTime(duration) : currentTrack.duration}</span>
             </div>
           </div>
 
@@ -356,7 +429,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
             key={t.id}
             onClick={() => {
               setCurrentTrackIndex(idx);
-              setProgress(0);
+              setCurrentTime(0);
               setIsPlaying(true);
             }}
             className={`p-3.5 rounded-2xl text-left transition-all border flex items-center justify-between ${

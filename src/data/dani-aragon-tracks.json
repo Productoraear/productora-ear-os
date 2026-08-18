@@ -1,0 +1,202 @@
+[
+  {
+    "id": "dani-track-01",
+    "trackNumber": 1,
+    "title": "01. Mentalidad de Manager & Soberanía del Artista",
+    "category": "Estrategia & Mentalidad",
+    "duration": "12:40",
+    "durationSeconds": 760,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_1.ogg",
+    "description": "Fundamentos del management moderno y el control de la propiedad intelectual."
+  },
+  {
+    "id": "dani-track-02",
+    "trackNumber": 2,
+    "title": "02. Negociación de Caché & Venta Directa",
+    "category": "Negociación & Contratos",
+    "duration": "14:15",
+    "durationSeconds": 855,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_2.ogg",
+    "description": "Cómo fijar tarifas y evitar intermediarios que devalúan el espectáculo."
+  },
+  {
+    "id": "dani-track-03",
+    "trackNumber": 3,
+    "title": "03. Estructura de Costes & Rentabilidad en Directo",
+    "category": "Finanzas & Directos",
+    "duration": "11:50",
+    "durationSeconds": 710,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_3.ogg",
+    "description": "Optimización del rider técnico y logística para maximizar el margen neto."
+  },
+  {
+    "id": "dani-track-04",
+    "trackNumber": 4,
+    "title": "04. Psicología del Contratante & Cierre Rápido",
+    "category": "Ventas & Conversión",
+    "duration": "13:20",
+    "durationSeconds": 800,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_4.ogg",
+    "description": "Desarme de objeciones de presupuesto y puesta en valor de la exclusividad."
+  },
+  {
+    "id": "dani-track-05",
+    "trackNumber": 5,
+    "title": "05. Relación con Promotores & Ayuntamientos (B2G)",
+    "category": "B2G & Institucional",
+    "duration": "10:45",
+    "durationSeconds": 645,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_5.ogg",
+    "description": "Claves para licitaciones culturales y contratos menores sin fricción burocrática."
+  },
+  {
+    "id": "dani-track-06",
+    "trackNumber": 6,
+    "title": "06. Posicionamiento de Marca Artística & Storytelling",
+    "category": "Branding & Posicionamiento",
+    "duration": "09:30",
+    "durationSeconds": 570,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_6.ogg",
+    "description": "Construcción de una narrativa auténtica que eleva la percepción de valor."
+  },
+  {
+    "id": "dani-track-07",
+    "trackNumber": 7,
+    "title": "07. El Rider Técnico como Herramienta de Venta",
+    "category": "Ingeniería Acústica",
+    "duration": "11:10",
+    "durationSeconds": 670,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_7.ogg",
+    "description": "Exigir sonido de calidad (12 W/pax) como sello innegociable de autoridad."
+  },
+  {
+    "id": "dani-track-08",
+    "trackNumber": 8,
+    "title": "08. Planificación de Temporada & Calendario de Booking",
+    "category": "Operaciones & Giras",
+    "duration": "12:05",
+    "durationSeconds": 725,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_8.ogg",
+    "description": "Cómo llenar fechas de alta demanda con 6 meses de anticipación."
+  },
+  {
+    "id": "dani-track-09",
+    "trackNumber": 9,
+    "title": "09. Depósitos de Garantía & Blindaje Financiero",
+    "category": "Finanzas & Legal",
+    "duration": "10:15",
+    "durationSeconds": 615,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_9.ogg",
+    "description": "Por qué jamás se reserva una fecha sin depósito previo en pasarela segura."
+  },
+  {
+    "id": "dani-track-10",
+    "trackNumber": 10,
+    "title": "10. Automatización del Embudo de Captación Inbound",
+    "category": "Marketing Digital",
+    "duration": "14:30",
+    "durationSeconds": 870,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_10.ogg",
+    "description": "Convertir visitas orgánicas en presupuestos confirmados sin perseguir clientes."
+  },
+  {
+    "id": "dani-track-11",
+    "trackNumber": 11,
+    "title": "11. Estrategia de Fidelización en Eventos Privados y Bodas",
+    "category": "Ventas & Conversión",
+    "duration": "15:20",
+    "durationSeconds": 920,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_11.ogg",
+    "description": "Generar recomendaciones espontáneas y 80% de recurrencia en el sector nupcial."
+  },
+  {
+    "id": "dani-track-12",
+    "trackNumber": 12,
+    "title": "12. Lanzamiento de Catálogo & Sincronización de Medios",
+    "category": "Branding & Media",
+    "duration": "08:45",
+    "durationSeconds": 525,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_12.ogg",
+    "description": "Impacto en radio, prensa local y redes para acelerar la demanda provincial."
+  },
+  {
+    "id": "dani-track-13",
+    "trackNumber": 13,
+    "title": "13. Gestión de Crisis & Imprevistos en Escenario",
+    "category": "Operaciones & Producción",
+    "duration": "11:40",
+    "durationSeconds": 700,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_13.ogg",
+    "description": "Protocolos de contingencia técnica, microfonía redundante y seguros de RC."
+  },
+  {
+    "id": "dani-track-14",
+    "trackNumber": 14,
+    "title": "14. El Poder de los Power Numbers™ en la Carrera Musical",
+    "category": "Estrategia & Finanzas",
+    "duration": "13:10",
+    "durationSeconds": 790,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_14.ogg",
+    "description": "Cómo 100 relaciones estratégicas liberan de la incertidumbre financiera."
+  },
+  {
+    "id": "dani-track-15",
+    "trackNumber": 15,
+    "title": "15. Masterclass Integral: Del Artista al Empresario Soberano",
+    "category": "Estrategia Master",
+    "duration": "18:05",
+    "durationSeconds": 1085,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_15.ogg",
+    "description": "Consolidación de la boveda de formación y hoja de ruta para la dominancia del sector."
+  },
+  {
+    "id": "dani-track-16",
+    "trackNumber": 16,
+    "title": "16. Construcción de Audiencias Hiper-Cualificadas",
+    "category": "Marketing Digital",
+    "duration": "09:50",
+    "durationSeconds": 590,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_16.ogg",
+    "description": "Segmentación geográfica y de alto poder adquisitivo para galas corporativas."
+  },
+  {
+    "id": "dani-track-17",
+    "trackNumber": 17,
+    "title": "17. Protocolo de Atención Telefónica & Cierre Inmediato",
+    "category": "Ventas & Conversión",
+    "duration": "10:30",
+    "durationSeconds": 630,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_17.ogg",
+    "description": "Cómo responder en menos de 15 minutos para triplicar la tasa de conversión."
+  },
+  {
+    "id": "dani-track-18",
+    "trackNumber": 18,
+    "title": "18. Eliminación de Clientes Tóxicos & Filtro de Implementador",
+    "category": "Estrategia & Filtro",
+    "duration": "12:15",
+    "durationSeconds": 735,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_18.ogg",
+    "description": "Aprender a decir 'No' a presupuestos a la baja para proteger la marca."
+  },
+  {
+    "id": "dani-track-19",
+    "trackNumber": 19,
+    "title": "19. Alianzas Estratégicas con Fincas & Wedding Planners",
+    "category": "B2B & Partners",
+    "duration": "14:00",
+    "durationSeconds": 840,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_19.ogg",
+    "description": "Cómo convertirse en el proveedor recomendado en exclusiva en espacios de lujo."
+  },
+  {
+    "id": "dani-track-20",
+    "trackNumber": 20,
+    "title": "20. Escalamiento de Equipos & Delegación Técnica",
+    "category": "Operaciones & Liderazgo",
+    "duration": "11:25",
+    "durationSeconds": 685,
+    "url": "/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_20.ogg",
+    "description": "Montaje de múltiples formaciones artísticas simultáneas sin perder calidad."
+  }
+]

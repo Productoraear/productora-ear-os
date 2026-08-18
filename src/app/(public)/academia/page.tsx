@@ -32,6 +32,8 @@ const AstraNeuralTwinPanel = dynamic(
   }
 );
 
+import { DaniAragonVault } from '@/features/academy/ui/DaniAragonVault';
+
 export default function PublicAcademyPage() {
   const tools = [
     { name: "Rider Técnico Standard v2.md", cat: "Producción", size: "2.4 KB", docId: "rider" },
@@ -83,6 +85,9 @@ export default function PublicAcademyPage() {
       {/* LMS INTERFACE CONTAINER */}
       <main id="campus-lms" className="max-w-7xl mx-auto px-4 md:px-12 py-16 space-y-16">
         
+        {/* BÓVEDA FORMATIVA DANI ARAGÓN (56 AUDIOS NATIVOS) */}
+        <DaniAragonVault />
+
         {/* LMS Module */}
         <div className="space-y-6">
           <div className="flex items-center justify-between">
