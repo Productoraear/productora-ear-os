@@ -16,7 +16,7 @@ interface PageProps {
 
 // 🛡️ LISTA DE RAÍCES ESTÁTICAS DE NIVEL 1 QUE TIENEN RUTA PROPIA EN APP ROUTER
 const EXACT_ROOT_STATIC_ROUTES = new Set([
-  'about', 'academia', 'afiliados', 'artistas', 'artists', 'aviso-legal',
+  'about', 'academia', 'afiliados', 'artistas', 'artists', 'aviso-legal', 'ayuntamientos',
   'ayuntamientospremium', 'ayuntamientos-premium', 'blog', 'calculadora',
   'categorias', 'checkout', 'contacto', 'cookies', 'cotizador', 'dossier', 'dossier-seo',
   'empresarios', 'infraestructura', 'journal', 'marketplace',

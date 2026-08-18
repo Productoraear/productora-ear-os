@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: baseUrl, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
     { url: `${baseUrl}/artistas/edwin-agudelo`, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
     { url: `${baseUrl}/cotizador`, lastModified: now, priority: 0.95, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/ayuntamientos`, lastModified: now, priority: 0.95, changeFrequency: 'weekly' },
     { url: `${baseUrl}/academia`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
     { url: `${baseUrl}/servicios`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
     { url: `${baseUrl}/arsenal`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
