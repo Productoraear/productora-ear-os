@@ -1,9 +1,9 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect, RedirectType } from 'next/navigation';
 import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
 import { PROVINCIAS, SERVICIOS } from '@/lib/constants/seo-data';
-import { generateSemanticPageData } from '@/lib/seo/semantic-engine';
+import { generateSemanticPageData, resolveGeoLocation, parseRelationalIntent } from '@/lib/seo/semantic-engine';
 
 export const dynamicParams = true;
 export const revalidate = 3600;
@@ -24,13 +24,19 @@ const EXACT_ROOT_STATIC_ROUTES = new Set([
   'proyectos', 'reclamar-perfil', 'soberania-tecnica', 'social',
   'the-signal', 'vimume', 'login', 'register', 'admin', 'nexus', 'dashboard',
   'studio', 'api', 'guia-estrategica', 'casos-exito', 'subasta', 'metodologia',
-  'prensa', 'terms', 'privacy', 'directorio', 'wedding-planners', 'business', 'comparativas-premium'
+  'prensa', 'terms', 'privacy', 'directorio', 'business', 'comparativas-premium'
 ]);
 
-// 🏷️ CATEGORÍAS VERTICALES DINÁMICAS (ADMITEN SUB-RUTAS COMO /eventos/festivales, /ocasiones/ferias, ETC.)
-const DYNAMIC_VERTICAL_PREFIXES = new Set([
-  'eventos', 'ocasiones', 'servicios', 'weddings', 'production', 'tools', 'arsenal', 'bodas'
-]);
+// Helper para detectar si un slug contiene una provincia conocida
+function findProvinceInString(str: string): string | null {
+  const normalized = str.toLowerCase();
+  for (const prov of PROVINCIAS) {
+    if (normalized === prov || normalized.endsWith(`-${prov}`) || normalized.includes(`-${prov}-`)) {
+      return prov;
+    }
+  }
+  return null;
+}
 
 function formatTitle(slugArray: string[]) {
   const lastSegment = slugArray[slugArray.length - 1];
@@ -42,6 +48,10 @@ function formatTitle(slugArray: string[]) {
     .replace('Dj', 'DJ');
 }
 
+/**
+ * 🛰️ GENERADOR DE METADATOS CANÓNICOS S-CLASS
+ * Garantiza que cada URL (incluidas las relacionales) apunte estrictamente a su equivalente canónico único
+ */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   if (!slug || slug.length === 0) return {};
@@ -51,20 +61,47 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return {};
   }
 
-  const semantic = generateSemanticPageData(slug, slug.length >= 2 ? slug[0] : 'España');
+  // Determinar la ubicación para enriquecer metadatos
+  let locationCandidate = 'Madrid';
+  const lastSegment = slug[slug.length - 1].toLowerCase();
+  if (PROVINCIAS.includes(lastSegment)) {
+    locationCandidate = lastSegment;
+  } else if (PROVINCIAS.includes(rootPrefix)) {
+    locationCandidate = rootPrefix;
+  }
+
+  const semantic = generateSemanticPageData(slug, locationCandidate);
+  const canonicalUrl = `https://www.productoraear.com/${semantic.canonicalPath.replace(/^\//, '')}`;
 
   return {
-    title: `${semantic.title} | Productora EAR`,
+    title: semantic.title,
     description: semantic.metaDescription,
     keywords: semantic.localKeywords,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
-      title: `${semantic.title} | Productora EAR`,
+      title: semantic.title,
       description: semantic.metaDescription,
+      url: canonicalUrl,
       images: ['/og-image-vimume.jpg'],
+      siteName: 'Productora EAR',
+      locale: 'es_ES',
+      type: 'website'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: semantic.title,
+      description: semantic.metaDescription,
+      images: ['/og-image-vimume.jpg']
     }
   };
 }
 
+/**
+ * 🏆 ENRUTADOR UNIVERSAL OMEGA & GUARDIÁN DE CANONICIDAD 301
+ * Erradica la canibalización y gestiona la Matriz Relacional de Roles y Celebraciones.
+ */
 export default async function DynamicCatchAllPage({ params }: PageProps) {
   const { slug } = await params;
   if (!slug || slug.length === 0) notFound();
@@ -72,62 +109,163 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   const primaryPrefix = slug[0].toLowerCase();
   const isProvincia = PROVINCIAS.includes(primaryPrefix);
 
-  // 1. RUTA VERTICAL DINÁMICA (ej: /eventos/festivales, /ocasiones/ferias, /servicios/sonorizacion, /weddings/fincas)
-  if (DYNAMIC_VERTICAL_PREFIXES.has(primaryPrefix)) {
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 1. PROTOCOLO DE REDIRECCIÓN 301 (ANTI-CANIBALIZACIÓN QUIRÚRGICA)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  // 1.A. Rutas Legadas de Artículos (/articulo/*)
+  if (primaryPrefix === 'articulo') {
+    const rawRest = slug.slice(1).join('-');
+    const detectedProv = findProvinceInString(rawRest) || 'madrid';
+    
+    if (rawRest.includes('pantalla-led') || rawRest.includes('led') || rawRest.includes('visual')) {
+      redirect(`/arsenal/pantalla-led/${detectedProv}`, RedirectType.replace);
+    } else if (rawRest.includes('mariachi') || rawRest.includes('edwin') || rawRest.includes('cantante')) {
+      redirect(`/servicios/mariachis/${detectedProv}`, RedirectType.replace);
+    } else if (rawRest.includes('festejo') || rawRest.includes('patronal') || rawRest.includes('ayuntamiento')) {
+      redirect(`/b2g/fiestas-patronales/${detectedProv}`, RedirectType.replace);
+    } else {
+      redirect(`/servicios/sonorizacion-eventos/${detectedProv}`, RedirectType.replace);
+    }
+  }
+
+  // 1.B. Rutas Legadas de Bodas / Weddings (/weddings/*, /bodas/*)
+  if ((primaryPrefix === 'weddings' || primaryPrefix === 'bodas') && slug.length >= 2) {
+    const rawRest = slug.slice(1).join('-');
+    const detectedProv = findProvinceInString(rawRest) || (slug.length >= 3 && PROVINCIAS.includes(slug[2].toLowerCase()) ? slug[2].toLowerCase() : 'madrid');
+    
+    if (rawRest.includes('mariachi') || rawRest.includes('musica')) {
+      redirect(`/servicios/mariachis/${detectedProv}`, RedirectType.replace);
+    } else if (rawRest.includes('planner') || rawRest.includes('fincas')) {
+      redirect(`/servicios/wedding-planners/${detectedProv}`, RedirectType.replace);
+    } else {
+      redirect(`/servicios/sonorizacion-eventos/${detectedProv}`, RedirectType.replace);
+    }
+  }
+
+  // 1.C. Inversión Territorial (/madrid/pantalla-led, /albacete/mariachis, /toledo/sonorizacion-eventos)
+  if (isProvincia && slug.length >= 2) {
+    const province = primaryPrefix;
+    const subRoute = slug[1].toLowerCase();
+
+    if (subRoute.includes('pantalla-led') || subRoute.includes('led') || subRoute.includes('altavoces')) {
+      redirect(`/arsenal/${subRoute}/${province}`, RedirectType.replace);
+    } else if (subRoute.includes('mariachi') || subRoute.includes('mariachis')) {
+      redirect(`/servicios/mariachis/${province}`, RedirectType.replace);
+    } else if (subRoute.includes('festejos') || subRoute.includes('patronales') || subRoute.includes('festivales')) {
+      redirect(`/b2g/fiestas-patronales/${province}`, RedirectType.replace);
+    } else {
+      redirect(`/servicios/${subRoute}/${province}`, RedirectType.replace);
+    }
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 2. PILARES CANÓNICOS SANEADOS & MATRIZ RELACIONAL
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  // 2.A. SERVICIOS ARTÍSTICOS & RELACIONALES (/servicios/[servicio]/[provincia] o /servicios/mariachis/[evento-rol]/[provincia])
+  if (primaryPrefix === 'servicios') {
+    const lastSeg = slug[slug.length - 1].toLowerCase();
+    const isLastProv = PROVINCIAS.includes(lastSeg);
+    const provinceSlug = isLastProv ? lastSeg : (slug.length >= 3 ? slug[2].toLowerCase() : 'madrid');
+    const serviceSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : slug.slice(1).join('-');
+    
+    const { cityName } = resolveGeoLocation(provinceSlug);
+    const semantic = generateSemanticPageData(slug, cityName);
+
+    return (
+      <BespokeTemplate
+        title={semantic.title}
+        description={semantic.metaDescription}
+        location={cityName}
+        serviceId={serviceSlug || 'mariachis'}
+        keywords={semantic.localKeywords}
+        isApex={true}
+      />
+    );
+  }
+
+  // 2.B. ARSENAL TÉCNICO / PANTALLAS LED / SONIDO (/arsenal/[equipo]/[provincia])
+  if (primaryPrefix === 'arsenal') {
+    const lastSeg = slug[slug.length - 1].toLowerCase();
+    const isLastProv = PROVINCIAS.includes(lastSeg);
+    const provinceSlug = isLastProv ? lastSeg : 'madrid';
+    const equipmentSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : (slug[1] || 'pantalla-led');
+    
+    const { cityName } = resolveGeoLocation(provinceSlug);
+    const semantic = generateSemanticPageData(slug, cityName);
+
+    return (
+      <BespokeTemplate
+        title={semantic.title}
+        description={semantic.metaDescription}
+        location={cityName}
+        serviceId={equipmentSlug}
+        keywords={semantic.localKeywords}
+        isApex={true}
+      />
+    );
+  }
+
+  // 2.C. B2G INSTITUCIONAL / FESTEJOS PATRONALES (/b2g/[evento]/[provincia])
+  if (primaryPrefix === 'b2g') {
+    const lastSeg = slug[slug.length - 1].toLowerCase();
+    const isLastProv = PROVINCIAS.includes(lastSeg);
+    const provinceSlug = isLastProv ? lastSeg : 'madrid';
+    const eventSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : (slug[1] || 'fiestas-patronales');
+    
+    const { cityName } = resolveGeoLocation(provinceSlug);
+    const semantic = generateSemanticPageData(slug, cityName);
+
+    return (
+      <BespokeTemplate
+        title={semantic.title}
+        description={semantic.metaDescription}
+        location={cityName}
+        serviceId={eventSlug}
+        keywords={semantic.localKeywords}
+        isApex={true}
+      />
+    );
+  }
+
+  // 2.D. LANDING PROVINCIAL PURA (/madrid, /barcelona, /toledo, /albacete, /ibiza...)
+  if (isProvincia && slug.length === 1) {
+    const { cityName } = resolveGeoLocation(primaryPrefix);
+    const semantic = generateSemanticPageData(['servicios', 'produccion-territorial'], cityName);
+
+    return (
+      <BespokeTemplate
+        title={`Producción & Eventos en ${cityName} | 12 W/pax & S-Class | EAR OS`}
+        description={`Ingeniería acústica de precisión, catálogo homologado de proveedores y mariachis en exclusiva para ${cityName}.`}
+        location={cityName}
+        serviceId="produccion-territorial"
+        keywords={['producción de eventos', cityName, 'alquiler sonido', 'mariachis de gala', 'pantallas led']}
+        isApex={true}
+      />
+    );
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 3. OTRAS CATEGORÍAS VERTICALES DINÁMICAS (FALLBACK SANEADO)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const dynamicVerticals = new Set(['eventos', 'ocasiones', 'production', 'tools']);
+  if (dynamicVerticals.has(primaryPrefix)) {
     const subCategory = slug.slice(1).join('-') || 'general';
     const cleanTitle = formatTitle(slug);
 
     return (
       <BespokeTemplate
-        title={cleanTitle}
+        title={`${cleanTitle} | Productora EAR`}
         description={`Producción técnica, sonido homologado (12 W/pax) y contratación artística de élite para ${cleanTitle}.`}
         location="España (Nacional)"
         serviceId={subCategory}
-        keywords={[cleanTitle, primaryPrefix, 'Productora EAR', 'Producción de Eventos', 'Riders Técnicos']}
+        keywords={[cleanTitle, primaryPrefix, 'Productora EAR', 'Producción de Eventos']}
         isApex={true}
       />
     );
   }
 
-  // 2. RUTA TERRITORIAL DINÁMICA (ej: /madrid, /barcelona, /valencia, /sevilla...)
-  if (isProvincia) {
-    const provinceCapitalized = primaryPrefix.charAt(0).toUpperCase() + primaryPrefix.slice(1);
-    
-    // CASO 2.A: /madrid/sonorizacion-eventos
-    if (slug.length >= 2) {
-      const serviceSlug = slug[1].toLowerCase();
-      const serviceObj = SERVICIOS.find(s => s.slug === serviceSlug) || {
-        id: serviceSlug,
-        nombre: formatTitle([serviceSlug]),
-        descripcion: `Servicio especializado de producción y rider acústico en ${provinceCapitalized}.`,
-        keywords: [serviceSlug, primaryPrefix, 'Productora EAR']
-      };
-
-      return (
-        <BespokeTemplate
-          title={`${serviceObj.nombre} en ${provinceCapitalized}`}
-          description={serviceObj.descripcion}
-          location={provinceCapitalized}
-          serviceId={serviceObj.id}
-          keywords={serviceObj.keywords}
-          isApex={true}
-        />
-      );
-    }
-
-    // CASO 2.B: /madrid (Landing provincial pura)
-    return (
-      <BespokeTemplate
-        title={`Producción & Eventos en ${provinceCapitalized}`}
-        description={`Ingeniería acústica de precisión, catálogo homologado de 24.869 proveedores y orquestas en exclusiva para ${provinceCapitalized}.`}
-        location={provinceCapitalized}
-        serviceId="produccion-territorial"
-        keywords={['producción de eventos', provinceCapitalized, 'alquiler sonido', 'artistas en exclusiva']}
-        isApex={true}
-      />
-    );
-  }
-
-  // 3. CUALQUIER OTRA RUTA NO VÁLIDA DEVUELVE 404
+  // 4. CUALQUIER OTRA RUTA NO RECONOCIDA -> 404
   notFound();
 }

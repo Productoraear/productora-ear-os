@@ -35,6 +35,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       }
     ],
-    sitemap: 'https://productoraear.com/sitemap.xml',
+    sitemap: 'https://www.productoraear.com/sitemap.xml',
   };
 }

@@ -21,6 +21,27 @@ export async function generateStaticParams() {
   return params;
 }
 
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { category, province } = await params;
+  const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
+  const provinceTitle = province.charAt(0).toUpperCase() + province.slice(1);
+  const canonicalUrl = `https://www.productoraear.com/servicios/${category}/${province}`;
+
+  return {
+    title: `${categoryTitle} en ${provinceTitle} | Catálogo Homologado | EAR OS`,
+    description: `Directorio y contratación directa de ${categoryTitle.toLowerCase()} en ${provinceTitle}. Reserva garantizada con Price-Lock 72h vía Stripe Live.`,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${categoryTitle} en ${provinceTitle} | Productora EAR`,
+      description: `Directorio y contratación directa de ${categoryTitle.toLowerCase()} en ${provinceTitle}.`,
+      url: canonicalUrl,
+      images: ['/og-image-vimume.jpg'],
+    },
+  };
+}
+
 export default async function CategoryProvinceSeoPage({ params }: PageProps) {
   const { category, province } = await params;
   const categoryTitle = category.toUpperCase();

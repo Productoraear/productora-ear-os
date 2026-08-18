@@ -5,7 +5,7 @@ import Script from "next/script";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://productoraear.com"),
+  metadataBase: new URL("https://www.productoraear.com"),
   title: "EarOS :: Sistema Operativo de Eventos & Matchmaking",
   description: "Plataforma de soberanía operativa, booking y contratación para Productora EAR.",
   keywords: ["EarOS", "Productora EAR", "Edwin Agudelo", "S-Class", "Logistics OS"],

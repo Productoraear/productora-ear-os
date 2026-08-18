@@ -69,6 +69,9 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
         city={capitalizedLocation} 
         serviceName={semanticData.title} 
         serviceDesc={semanticData.metaDescription} 
+        priceRange={semanticData.priceRange}
+        canonicalPath={semanticData.canonicalPath}
+        faqs={semanticData.faqs}
       />
       
       {/* 2050 Hero: Minimalist & Deep */}

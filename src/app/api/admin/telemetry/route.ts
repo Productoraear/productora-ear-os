@@ -14,25 +14,27 @@ export async function GET() {
     let totalRevenue = 0;
     let transactionsCount = 0;
 
-    // 1. Consulta segura a PostgreSQL con Prisma
-    try {
-      const [vendors, claimed, fleet, ledgerEntries] = await Promise.all([
-        prisma.vendorShadowProfile.count(),
-        prisma.vendorShadowProfile.count({ where: { isClaimed: true } }),
-        prisma.equipmentInventory.count(),
-        prisma.commissionLedger.findMany({
-          where: { status: 'PAID' },
-          select: { amount: true }
-        })
-      ]);
+    // 1. Consulta segura a PostgreSQL con Prisma (solo si está configurado el pool de PostgreSQL)
+    if (process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL) {
+      try {
+        const [vendors, claimed, fleet, ledgerEntries] = await Promise.all([
+          prisma.vendorShadowProfile.count(),
+          prisma.vendorShadowProfile.count({ where: { isClaimed: true } }),
+          prisma.equipmentInventory.count(),
+          prisma.commissionLedger.findMany({
+            where: { status: 'PAID' },
+            select: { amount: true }
+          })
+        ]);
 
-      totalVendors = vendors;
-      claimedVendors = claimed;
-      fleetCount = fleet;
-      totalRevenue = ledgerEntries.reduce((acc, curr) => acc + (curr.amount || 0), 0);
-      transactionsCount = ledgerEntries.length;
-    } catch (dbErr) {
-      console.warn('⚠️ [TELEMETRY API] Fallback a cache local JSON:', dbErr);
+        totalVendors = vendors;
+        claimedVendors = claimed;
+        fleetCount = fleet;
+        totalRevenue = ledgerEntries.reduce((acc, curr) => acc + (curr.amount || 0), 0);
+        transactionsCount = ledgerEntries.length;
+      } catch (dbErr) {
+        console.warn('⚠️ [TELEMETRY API] Fallback a cache local JSON.');
+      }
     }
 
     // 2. Si la DB no está disponible en local, leer el índice resumen liviano (<50KB)

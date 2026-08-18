@@ -1,5 +1,5 @@
 import React from 'react';
-import { EdwinAgudeloDossier } from '@/features/artists/ui/EdwinAgudeloDossier';
+import { EdwinArtistVault } from '@/features/artists/ui/EdwinArtistVault';
 import { Metadata } from 'next';
 import Script from 'next/script';
 
@@ -33,16 +33,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Edwin Agudelo — El Mariachi de Referencia en España y Europa',
     description:
-      'Solista (1.500€), Ensamble de Gala 6+ (2.800€), Show Cantando a Caballo (5.500€) y ' +
-      'Banda Monumental 12+ (9.500€). El único mariachi-empresario certificado diplomáticamente en España.',
-    url: 'https://productoraear.com/artistas/edwin-agudelo',
+      'Solista (350€), Ensamble de Gala 6+ (750€), Grupo Imperial 9+ (1.250€) y ' +
+      'Banda Monumental 13+ (1.800€). El único mariachi-empresario certificado diplomáticamente en España.',
+    url: 'https://www.productoraear.com/artistas/edwin-agudelo',
     type: 'profile',
+    images: ['/images/mariachi.png'],
   },
   alternates: {
-    canonical: 'https://productoraear.com/artistas/edwin-agudelo',
+    canonical: 'https://www.productoraear.com/artistas/edwin-agudelo',
     languages: {
-      'es-ES': 'https://productoraear.com/artistas/edwin-agudelo',
-      'es': 'https://productoraear.com/artistas/edwin-agudelo',
+      'es-ES': 'https://www.productoraear.com/artistas/edwin-agudelo',
+      'es': 'https://www.productoraear.com/artistas/edwin-agudelo',
     },
   },
 };
@@ -52,7 +53,7 @@ const jsonLd = {
   '@graph': [
     {
       '@type': ['Person', 'PerformingArtist'],
-      '@id': 'https://productoraear.com/artistas/edwin-agudelo#artist',
+      '@id': 'https://www.productoraear.com/artistas/edwin-agudelo#artist',
       name: 'Edwin Agudelo',
       alternateName: [
         'Edwin Agudelo Mariachi',
@@ -119,16 +120,18 @@ const jsonLd = {
         'Países Bajos',
         'Europa',
       ],
-      url: 'https://productoraear.com/artistas/edwin-agudelo',
+      url: 'https://www.productoraear.com/artistas/edwin-agudelo',
+      telephone: '+34 693 693 048',
+      email: 'hola@productoraear.com',
       worksFor: {
         '@type': 'Organization',
         name: 'Productora EAR',
-        url: 'https://productoraear.com',
+        url: 'https://www.productoraear.com',
       },
     },
     {
       '@type': 'MusicGroup',
-      '@id': 'https://productoraear.com/artistas/edwin-agudelo#group',
+      '@id': 'https://www.productoraear.com/artistas/edwin-agudelo#group',
       name: 'Edwin Agudelo & Productora EAR',
       genre: ['Mariachi', 'Ranchera', 'Corridos', 'Música Mexicana', 'Banda'],
       areaServed: ['España', 'Europa'],
@@ -141,7 +144,7 @@ const jsonLd = {
           price: '350',
           priceCurrency: 'EUR',
           availability: 'https://schema.org/InStock',
-          url: 'https://productoraear.com/artistas/edwin-agudelo#booking-funnel',
+          url: 'https://www.productoraear.com/artistas/edwin-agudelo#booking-funnel',
         },
         {
           '@type': 'Offer',
@@ -229,7 +232,7 @@ export default function EdwinAgudeloPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main className="min-h-screen bg-[#050505]">
-        <EdwinAgudeloDossier />
+        <EdwinArtistVault />
       </main>
     </>
   );

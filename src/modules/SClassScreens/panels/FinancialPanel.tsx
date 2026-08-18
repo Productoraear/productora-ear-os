@@ -54,8 +54,20 @@ export const FinancialPanel = () => {
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const rawData = snapshot.docs.map(doc => {
-                const data = doc.data();
-                return OrderSchema.parse({ id: doc.id, ...data });
+                const data = doc.data() as any;
+                const parsed = OrderSchema.safeParse({ id: doc.id, ...data });
+                if (parsed.success) {
+                    return parsed.data;
+                }
+                return {
+                    id: doc.id,
+                    customer: data?.customer || 'Cliente EAR OS',
+                    amount: typeof data?.amount === 'number' ? data.amount : Number(data?.amount || data?.total || 0),
+                    status: data?.status || 'PAID',
+                    concept: data?.concept || 'Reserva S-Class',
+                    paymentMethod: data?.paymentMethod || 'Stripe',
+                    createdAt: data?.createdAt || new Date().toISOString()
+                };
             });
 
             setOrders(rawData);
