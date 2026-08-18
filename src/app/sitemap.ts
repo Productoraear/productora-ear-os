@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next';
-import { PROVINCIAS, SERVICIOS, OCASIONES, GUIAS } from '@/lib/constants/seo-data';
+import { PROVINCIAS, OCASIONES, GUIAS } from '@/lib/constants/seo-data';
 import { HIGH_VALUE_VARIANTS } from '@/lib/artists/matrix';
-import { RELATIONAL_ROLES, RELATIONAL_EVENTS } from '@/lib/seo/semantic-engine';
 
 const now = new Date();
 const baseUrl = 'https://www.productoraear.com';
@@ -13,56 +12,57 @@ const unique = <T extends { url: string }>(items: T[]) => {
 
 /**
  * 🗺️ SITEMAP SOBERANO CANÓNICO (EAR OS V2 - S-CLASS REBUILD)
- * Genera exclusivamente URLs canónicas saneadas para erradicar la fragmentación de Crawl Budget.
- * Prioridad 0.9 - 1.0 y frecuencia weekly en los pilares estratégicos de conversión.
+ * Genera exclusivamente URLs canónicas vivas y saneadas para erradicar la fragmentación de Crawl Budget.
+ * Prioridad 0.80 - 1.00 y frecuencia weekly en los pilares estratégicos de conversión.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  // 1. PÁGINAS CORE & NODOS DE ALTA CONVERSIÓN
+  // 1. NÚCLEO SOBERANO & NODOS DE ALTA CONVERSIÓN
   const corePages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
     { url: `${baseUrl}/artistas/edwin-agudelo`, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
-    { url: `${baseUrl}/servicios`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/arsenal`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/presupuesto`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/cotizador`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/artistas`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume/hermes`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume/nosotros`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume/investigacion`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume/inversion`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume/centros`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume/eventos`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/vimume/contacto`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/contacto`, lastModified: now, priority: 0.8, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/afiliados`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/dossier`, lastModified: now, priority: 0.9, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/blog`, lastModified: now, priority: 0.7, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/cotizador`, lastModified: now, priority: 0.95, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/academia`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/servicios`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/arsenal`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/presupuesto`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/artistas`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/hermes`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/nosotros`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/investigacion`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/inversion`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/centros`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/eventos`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/vimume/contacto`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/contacto`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/afiliados`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/dossier`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/blog`, lastModified: now, priority: 0.80, changeFrequency: 'weekly' },
   ];
 
   // 2. CATEGORÍAS & GUÍAS ESTRATÉGICAS
   const occasionPages: MetadataRoute.Sitemap = OCASIONES.map(o => ({
     url: `${baseUrl}/ocasiones/${o.slug}`,
     lastModified: now,
-    priority: 0.8,
+    priority: 0.80,
     changeFrequency: 'weekly'
   }));
 
   const guidePages: MetadataRoute.Sitemap = GUIAS.map(g => ({
     url: `${baseUrl}/guias/${g.slug}`,
     lastModified: now,
-    priority: 0.7,
+    priority: 0.80,
     changeFrequency: 'monthly'
   }));
 
   const matrixPages: MetadataRoute.Sitemap = HIGH_VALUE_VARIANTS.map(v => ({
     url: `${baseUrl}/artistas/${v.slug}`,
     lastModified: now,
-    priority: 0.9,
+    priority: 0.90,
     changeFrequency: 'weekly'
   }));
 
-  // 3. PILAR CANÓNICO: SERVICIOS x PROVINCIAS (/servicios/[servicio]/[provincia])
+  // 3. PILAR CANÓNICO: SERVICIOS x 52 PROVINCIAS (/servicios/[servicio]/[provincia])
   const serviceCanonicalPages: MetadataRoute.Sitemap = [];
   const primaryServices = [
     'mariachis',
@@ -82,7 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       serviceCanonicalPages.push({
         url: `${baseUrl}/servicios/${serviceSlug}/${province}`,
         lastModified: now,
-        priority: isHighIntent ? 0.9 : 0.8,
+        priority: isHighIntent ? 0.90 : 0.85,
         changeFrequency: 'weekly'
       });
     });
@@ -108,13 +108,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       relationalCanonicalPages.push({
         url: `${baseUrl}/servicios/mariachis/${combo}/${province}`,
         lastModified: now,
-        priority: 0.9,
+        priority: 0.90,
         changeFrequency: 'weekly'
       });
     });
   });
 
-  // 5. PILAR CANÓNICO: ARSENAL & PANTALLAS LED x PROVINCIAS (/arsenal/[equipo]/[provincia])
+  // 5. PILAR CANÓNICO: ARSENAL & PANTALLAS LED x 52 PROVINCIAS (/arsenal/[equipo]/[provincia])
   const arsenalCanonicalPages: MetadataRoute.Sitemap = [];
   const primaryArsenalItems = [
     'pantalla-led',
@@ -128,13 +128,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       arsenalCanonicalPages.push({
         url: `${baseUrl}/arsenal/${itemSlug}/${province}`,
         lastModified: now,
-        priority: 0.9,
+        priority: 0.85,
         changeFrequency: 'weekly'
       });
     });
   });
 
-  // 6. PILAR CANÓNICO: B2G INSTITUCIONAL x PROVINCIAS (/b2g/[evento]/[provincia])
+  // 6. PILAR CANÓNICO: B2G INSTITUCIONAL x 52 PROVINCIAS (/b2g/[evento]/[provincia])
   const b2gCanonicalPages: MetadataRoute.Sitemap = [];
   const b2gEventTypes = [
     'fiestas-patronales',
@@ -146,7 +146,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       b2gCanonicalPages.push({
         url: `${baseUrl}/b2g/${eventSlug}/${province}`,
         lastModified: now,
-        priority: 0.9,
+        priority: 0.85,
         changeFrequency: 'weekly'
       });
     });
@@ -156,10 +156,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const provinceCanonicalPages: MetadataRoute.Sitemap = PROVINCIAS.map(province => ({
     url: `${baseUrl}/${province}`,
     lastModified: now,
-    priority: 0.8,
+    priority: 0.85,
     changeFrequency: 'weekly'
   }));
 
+  // PURGADO ATÓMICO: 0 URLs de basura legada (/articulo/*, /weddings/*) en el sitemap
   return unique([
     ...corePages,
     ...occasionPages,

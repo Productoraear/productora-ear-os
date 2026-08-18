@@ -2,8 +2,8 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
-import { PROVINCIAS, SERVICIOS } from '@/lib/constants/seo-data';
-import { generateSemanticPageData, resolveGeoLocation, parseRelationalIntent } from '@/lib/seo/semantic-engine';
+import { PROVINCIAS } from '@/lib/constants/seo-data';
+import { generateSemanticPageData, resolveGeoLocation } from '@/lib/seo/semantic-engine';
 
 export const dynamicParams = true;
 export const revalidate = 3600;
@@ -14,7 +14,7 @@ interface PageProps {
   }>;
 }
 
-// 🛡️ LISTA DE RAÍCES ESTÁTICAS DE NIVEL 1 QUE TIENEN RUTA PROPIA
+// 🛡️ LISTA DE RAÍCES ESTÁTICAS DE NIVEL 1 QUE TIENEN RUTA PROPIA EN APP ROUTER
 const EXACT_ROOT_STATIC_ROUTES = new Set([
   'about', 'academia', 'afiliados', 'artistas', 'artists', 'aviso-legal',
   'ayuntamientospremium', 'ayuntamientos-premium', 'blog', 'calculadora',
@@ -38,19 +38,9 @@ function findProvinceInString(str: string): string | null {
   return null;
 }
 
-function formatTitle(slugArray: string[]) {
-  const lastSegment = slugArray[slugArray.length - 1];
-  return lastSegment
-    .replace(/-/g, ' ')
-    .replace(/\b\w/g, (l) => l.toUpperCase())
-    .replace('Ear', 'EAR')
-    .replace('Ai', 'IA')
-    .replace('Dj', 'DJ');
-}
-
 /**
  * 🛰️ GENERADOR DE METADATOS CANÓNICOS S-CLASS
- * Garantiza que cada URL (incluidas las relacionales) apunte estrictamente a su equivalente canónico único
+ * Garantiza que cada URL apunte estrictamente a su equivalente canónico único con OpenGraph.
  */
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -100,37 +90,53 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 /**
  * 🏆 ENRUTADOR UNIVERSAL OMEGA & GUARDIÁN DE CANONICIDAD 301
- * Erradica la canibalización y gestiona la Matriz Relacional de Roles y Celebraciones.
+ * Erradica errores 404, neutraliza escaneos legacy y canaliza tráfico hacia los pilares canónicos.
  */
 export default async function DynamicCatchAllPage({ params }: PageProps) {
   const { slug } = await params;
   if (!slug || slug.length === 0) notFound();
 
   const primaryPrefix = slug[0].toLowerCase();
-  const isProvincia = PROVINCIAS.includes(primaryPrefix);
+  const rawPath = slug.join('/').toLowerCase();
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 1. PROTOCOLO DE REDIRECCIÓN 301 (ANTI-CANIBALIZACIÓN QUIRÚRGICA)
+  // 1. NEUTRALIZACIÓN INMEDIATA DE ESCANEOS MALICIOSOS / OBSOLETOS (404 LIMPIO)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (
+    rawPath.includes('wp-content') ||
+    rawPath.includes('wp-admin') ||
+    rawPath.includes('wp-includes') ||
+    rawPath.includes('.php') ||
+    rawPath.includes('xmlrpc') ||
+    rawPath.includes('eval-stdin')
+  ) {
+    notFound();
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 2. PROTOCOLO DE REDIRECCIÓN 301 PERMANENTE (ANTI-CANIBALIZACIÓN QUIRÚRGICA)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  // 1.A. Rutas Legadas de Artículos (/articulo/*)
-  if (primaryPrefix === 'articulo') {
+  // 2.A. Rutas Legadas de Artículos (/articulo/*, /noticias/*, /post/*)
+  if (primaryPrefix === 'articulo' || primaryPrefix === 'noticias' || primaryPrefix === 'post' || primaryPrefix === 'blog-post') {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || 'madrid';
     
     if (rawRest.includes('pantalla-led') || rawRest.includes('led') || rawRest.includes('visual')) {
       redirect(`/arsenal/pantalla-led/${detectedProv}`, RedirectType.replace);
-    } else if (rawRest.includes('mariachi') || rawRest.includes('edwin') || rawRest.includes('cantante')) {
+    } else if (rawRest.includes('mariachi') || rawRest.includes('edwin') || rawRest.includes('cantante') || rawRest.includes('serenata')) {
       redirect(`/servicios/mariachis/${detectedProv}`, RedirectType.replace);
     } else if (rawRest.includes('festejo') || rawRest.includes('patronal') || rawRest.includes('ayuntamiento')) {
       redirect(`/b2g/fiestas-patronales/${detectedProv}`, RedirectType.replace);
+    } else if (rawRest.includes('wedding') || rawRest.includes('boda') || rawRest.includes('planner')) {
+      redirect(`/servicios/wedding-planners/${detectedProv}`, RedirectType.replace);
     } else {
       redirect(`/servicios/sonorizacion-eventos/${detectedProv}`, RedirectType.replace);
     }
   }
 
-  // 1.B. Rutas Legadas de Bodas / Weddings (/weddings/*, /bodas/*)
-  if ((primaryPrefix === 'weddings' || primaryPrefix === 'bodas') && slug.length >= 2) {
+  // 2.B. Rutas Legadas de Bodas / Weddings / Production (/weddings/*, /bodas/*, /production/*)
+  if ((primaryPrefix === 'weddings' || primaryPrefix === 'bodas' || primaryPrefix === 'production') && slug.length >= 2) {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || (slug.length >= 3 && PROVINCIAS.includes(slug[2].toLowerCase()) ? slug[2].toLowerCase() : 'madrid');
     
@@ -143,7 +149,14 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     }
   }
 
-  // 1.C. Inversión Territorial (/madrid/pantalla-led, /albacete/mariachis, /toledo/sonorizacion-eventos)
+  // 2.C. Rutas Legadas con Sufijos Especiales como /arsenal(1)/*
+  if (primaryPrefix.startsWith('arsenal(') || primaryPrefix.startsWith('servicios(')) {
+    const detectedProv = findProvinceInString(rawPath) || 'madrid';
+    redirect(`/arsenal/pantalla-led/${detectedProv}`, RedirectType.replace);
+  }
+
+  // 2.D. Inversión Territorial (/madrid/pantalla-led -> /arsenal/pantalla-led/madrid)
+  const isProvincia = PROVINCIAS.includes(primaryPrefix);
   if (isProvincia && slug.length >= 2) {
     const province = primaryPrefix;
     const subRoute = slug[1].toLowerCase();
@@ -160,10 +173,10 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 2. PILARES CANÓNICOS SANEADOS & MATRIZ RELACIONAL
+  // 3. PILARES CANÓNICOS SANEADOS & MATRIZ RELACIONAL S-CLASS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  // 2.A. SERVICIOS ARTÍSTICOS & RELACIONALES (/servicios/[servicio]/[provincia] o /servicios/mariachis/[evento-rol]/[provincia])
+  // 3.A. SERVICIOS ARTÍSTICOS & RELACIONALES (/servicios/[servicio]/[provincia])
   if (primaryPrefix === 'servicios') {
     const lastSeg = slug[slug.length - 1].toLowerCase();
     const isLastProv = PROVINCIAS.includes(lastSeg);
@@ -185,7 +198,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 2.A.1 RUTAS DIRECTAS ULTRA-AMIGABLES POR INTENCIÓN DE BÚSQUEDA PURA
+  // 3.B. RUTAS DIRECTAS ULTRA-AMIGABLES POR INTENCIÓN DE BÚSQUEDA PURA
   // Permite URLs directas como /mariachis/madrid, /mariachis/cumpleanos-madre/albacete, /alquiler-pantalla-led/madrid
   const directFriendlyPrefixes = new Set([
     'mariachis', 'mariachi', 'serenatas', 'serenata', 'alquiler-pantalla-led', 'pantallas-led', 'pantalla-led',
@@ -213,7 +226,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 2.B. ARSENAL TÉCNICO / PANTALLAS LED / SONIDO (/arsenal/[equipo]/[provincia])
+  // 3.C. ARSENAL TÉCNICO / PANTALLAS LED / SONIDO (/arsenal/[equipo]/[provincia])
   if (primaryPrefix === 'arsenal') {
     const lastSeg = slug[slug.length - 1].toLowerCase();
     const isLastProv = PROVINCIAS.includes(lastSeg);
@@ -235,7 +248,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 2.C. B2G INSTITUCIONAL / FESTEJOS PATRONALES (/b2g/[evento]/[provincia])
+  // 3.D. B2G INSTITUCIONAL / FESTEJOS PATRONALES (/b2g/[evento]/[provincia])
   if (primaryPrefix === 'b2g') {
     const lastSeg = slug[slug.length - 1].toLowerCase();
     const isLastProv = PROVINCIAS.includes(lastSeg);
@@ -257,43 +270,23 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 2.D. LANDING PROVINCIAL PURA (/madrid, /barcelona, /toledo, /albacete, /ibiza...)
+  // 3.E. LANDINGS PROVINCIALES PURAS (/[provincia])
   if (isProvincia && slug.length === 1) {
     const { cityName } = resolveGeoLocation(primaryPrefix);
-    const semantic = generateSemanticPageData(['servicios', 'produccion-territorial'], cityName);
+    const semantic = generateSemanticPageData(slug, cityName);
 
     return (
       <BespokeTemplate
-        title={`Producción & Eventos en ${cityName} | 12 W/pax & S-Class | EAR OS`}
-        description={`Ingeniería acústica de precisión, catálogo homologado de proveedores y mariachis en exclusiva para ${cityName}.`}
+        title={semantic.title}
+        description={semantic.metaDescription}
         location={cityName}
-        serviceId="produccion-territorial"
-        keywords={['producción de eventos', cityName, 'alquiler sonido', 'mariachis de gala', 'pantallas led']}
+        serviceId="produccion-integral"
+        keywords={semantic.localKeywords}
         isApex={true}
       />
     );
   }
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 3. OTRAS CATEGORÍAS VERTICALES DINÁMICAS (FALLBACK SANEADO)
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  const dynamicVerticals = new Set(['eventos', 'ocasiones', 'production', 'tools']);
-  if (dynamicVerticals.has(primaryPrefix)) {
-    const subCategory = slug.slice(1).join('-') || 'general';
-    const cleanTitle = formatTitle(slug);
-
-    return (
-      <BespokeTemplate
-        title={`${cleanTitle} | Productora EAR`}
-        description={`Producción técnica, sonido homologado (12 W/pax) y contratación artística de élite para ${cleanTitle}.`}
-        location="España (Nacional)"
-        serviceId={subCategory}
-        keywords={[cleanTitle, primaryPrefix, 'Productora EAR', 'Producción de Eventos']}
-        isApex={true}
-      />
-    );
-  }
-
-  // 4. CUALQUIER OTRA RUTA NO RECONOCIDA -> 404
+  // 4. FALLBACK CONTROLADO: Si la ruta no concuerda con ningún patrón
   notFound();
 }
