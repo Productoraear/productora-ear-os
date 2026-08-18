@@ -24,6 +24,19 @@ interface Track {
 const TRACKS: Track[] = [
   {
     id: 'track-1',
+    title: 'CÓMO JUBILAR AL CUMPLEAÑOS & MAÑANITAS',
+    subtitle: 'Master Oficial de Serenatas & Presión Sonora en Directo',
+    duration: '05:30',
+    durationSeconds: 330,
+    year: '2026',
+    venue: 'Gira de Gala en Fincas & Auditorios',
+    description: 'Grabación de audio exclusiva sobre la liturgia de la serenata, psicología del homenaje y arreglos líricos de tenor con mariachi.',
+    lyricsExcerpt: '"Con dinero y sin dinero, hago siempre lo que quiero... y mi palabra es la ley. ¡Que viva el Mariachi y el amor verdadero!"',
+    genre: 'Gran Ensamble de Mariachi',
+    url: '/media/edwin/podcast-cumpleanos-edwin.m4a'
+  },
+  {
+    id: 'track-2',
     title: 'MI PROPIA REALIDAD',
     subtitle: 'El himno de resiliencia y orígenes',
     duration: '03:45',
@@ -36,7 +49,7 @@ const TRACKS: Track[] = [
     url: '/media/edwin/mi-propia-realidad.mp3'
   },
   {
-    id: 'track-2',
+    id: 'track-3',
     title: 'ALGÚN DÍA MAMÁ',
     subtitle: 'Homenaje universal a las madres',
     duration: '04:12',
@@ -49,7 +62,7 @@ const TRACKS: Track[] = [
     url: '/media/edwin/algun-dia-mama.mp3'
   },
   {
-    id: 'track-3',
+    id: 'track-4',
     title: 'ACOMPÁÑAME',
     subtitle: 'Himno de esperanza y gratitud',
     duration: '03:58',
@@ -60,19 +73,6 @@ const TRACKS: Track[] = [
     lyricsExcerpt: '"Acompáñame en este vuelo, dame tu mano al caminar... que la tormenta pasará y juntos volveremos a cantar."',
     genre: 'Balada Sinfónica en Positivo',
     url: '/media/edwin/acompaname.mp3'
-  },
-  {
-    id: 'track-4',
-    title: 'CÓMO JUBILAR AL CUMPLEAÑOS & MAÑANITAS',
-    subtitle: 'Master de Serenatas & Presión Sonora en Directo',
-    duration: '05:30',
-    durationSeconds: 330,
-    year: '2026',
-    venue: 'Gira de Gala en Fincas & Auditorios',
-    description: 'Masterclass sonora y podcast exclusivo sobre la liturgia de la serenata, psicología del homenaje y arreglos líricos de tenor con mariachi.',
-    lyricsExcerpt: '"Con dinero y sin dinero, hago siempre lo que quiero... y mi palabra es la ley. ¡Que viva el Mariachi y el amor verdadero!"',
-    genre: 'Gran Ensamble de Mariachi',
-    url: '/media/edwin/podcast-cumpleanos-edwin.m4a'
   }
 ];
 
@@ -89,6 +89,8 @@ export const EdwinLegacyPlayer: React.FC = () => {
 
   const currentTrack = TRACKS[currentTrackIndex];
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const synthTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
 
   // Sincronizar volumen
   useEffect(() => {
@@ -97,46 +99,112 @@ export const EdwinLegacyPlayer: React.FC = () => {
     }
   }, [volume, isMuted]);
 
+  // Generador de acordes acústicos en Web Audio para preview cuando el mp3 no está en disco
+  const playSynthAcousticChord = (freq: number) => {
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === 'suspended') {
+        ctx.resume();
+      }
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, ctx.currentTime);
+      gain.gain.setValueAtTime(0.08 * (isMuted ? 0 : volume), ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.start();
+      osc.stop(ctx.currentTime + 1.2);
+    } catch (e) {
+      // Audio context ignorado en navegadores estrictos
+    }
+  };
+
+  const stopSynth = () => {
+    if (synthTimerRef.current) {
+      clearInterval(synthTimerRef.current);
+      synthTimerRef.current = null;
+    }
+  };
+
+  const startSynthPreview = () => {
+    stopSynth();
+    const chords = [220, 277.18, 329.63, 440, 329.63, 277.18]; // Arpegio clásico La menor
+    let noteIdx = 0;
+    
+    synthTimerRef.current = setInterval(() => {
+      playSynthAcousticChord(chords[noteIdx % chords.length]);
+      noteIdx++;
+      setCurrentTime((prev) => {
+        if (prev >= currentTrack.durationSeconds) {
+          handleNextTrack();
+          return 0;
+        }
+        return prev + 0.6;
+      });
+    }, 600);
+  };
+
+  // Limpiar temporizador al desmontar
+  useEffect(() => {
+    return () => stopSynth();
+  }, []);
+
   // Cambiar de pista
   useEffect(() => {
+    stopSynth();
     setAudioError(null);
     setCurrentTime(0);
+    
     if (audioRef.current) {
       audioRef.current.src = currentTrack.url;
       audioRef.current.load();
       if (isPlaying) {
-        audioRef.current.play().catch((err) => {
-          console.warn('⚠️ [EDWIN AUDIO PREVENTED]:', err);
+        audioRef.current.play().catch(() => {
+          // Si falla el archivo físico, activar el modo de preview acústico armónico
           setAudioError('MASTER_PENDIENTE_CARGA');
-          setIsPlaying(false);
+          startSynthPreview();
         });
       }
     }
   }, [currentTrackIndex]);
 
   const togglePlay = () => {
-    if (!audioRef.current) return;
-
     if (isPlaying) {
-      audioRef.current.pause();
+      stopSynth();
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
       setIsPlaying(false);
     } else {
       setAudioError(null);
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch((err) => {
-        console.warn('⚠️ [EDWIN AUDIO ERROR]:', err);
-        setAudioError('MASTER_PENDIENTE_CARGA');
-        setIsPlaying(false);
-      });
+      if (audioRef.current) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {
+          // Activar preview armónico
+          setAudioError('MASTER_PENDIENTE_CARGA');
+          setIsPlaying(true);
+          startSynthPreview();
+        });
+      }
     }
   };
 
   const handleNextTrack = () => {
+    stopSynth();
     setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
   };
 
   const handlePrevTrack = () => {
+    stopSynth();
     setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length);
   };
 
@@ -187,9 +255,10 @@ export const EdwinLegacyPlayer: React.FC = () => {
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={handleNextTrack}
         onError={() => {
-          console.warn(`⚠️ [EDWIN AUDIO ERROR] No se pudo cargar: ${currentTrack.url}`);
           setAudioError('MASTER_PENDIENTE_CARGA');
-          setIsPlaying(false);
+          if (isPlaying) {
+            startSynthPreview();
+          }
         }}
       />
 
