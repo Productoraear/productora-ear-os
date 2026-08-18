@@ -1,24 +1,43 @@
-# 🛡️ VERCEL DOMINANCE SHIELD V134
-.next
-node_modules
-src/infrastructure/archive
+# 🛡️ VERCEL DOMINANCE SHIELD V135 — BULLETPROOF IGNORE
+.next/
+node_modules/
+.git/
+.vercel/
+.firebase/
+
+# Media and heavy binaries
+*.m4a
+*.mp3
+*.wav
+*.mp4
+*.avi
+*.zip
+*.docx
+*.pdf
+*.csv
+*.xlsx
+
+# Knowledge and local DBs
+BASE_DE_CONOCIMIENTO/
+data_vault/
+design-vault/
+sync_nexus/
+EAR_OS_CONTROL/
+Marketing_Skills/
+ALMACEN_DE_CUARENTENA_6M/
+_ALMACEN_DE_CUARENTENA_6M/
+quarantine/
+docs/
+scripts/
+logs/
+scratch/
+tools/
+tmp/
+
+# Logs and environment files
 *.log
 .env.local
-.git
-.vercel
-ALMACEN_DE_CUARENTENA_6M
-_ALMACEN_DE_CUARENTENA_6M
-docs
-scripts
-quarantine
-logs
-scratch
-BASE_DE_CONOCIMIENTO
-data_vault
-design-vault
-sync_nexus
-tmp
+.env.production.local
+.env.vercel.production
+.env.backup*
 build_error.log
-EAR_OS_CONTROL
-.firebase
-tools
