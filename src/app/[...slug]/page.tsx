@@ -185,6 +185,34 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
+  // 2.A.1 RUTAS DIRECTAS ULTRA-AMIGABLES POR INTENCIÓN DE BÚSQUEDA PURA
+  // Permite URLs directas como /mariachis/madrid, /mariachis/cumpleanos-madre/albacete, /alquiler-pantalla-led/madrid
+  const directFriendlyPrefixes = new Set([
+    'mariachis', 'mariachi', 'serenatas', 'serenata', 'alquiler-pantalla-led', 'pantallas-led', 'pantalla-led',
+    'sonorizacion-eventos', 'sonorizacion', 'wedding-planners', 'wedding-planner', 'dj-boda', 'alquiler-sonido'
+  ]);
+
+  if (directFriendlyPrefixes.has(primaryPrefix)) {
+    const lastSeg = slug[slug.length - 1].toLowerCase();
+    const isLastProv = PROVINCIAS.includes(lastSeg);
+    const provinceSlug = isLastProv ? lastSeg : (slug.length >= 2 && PROVINCIAS.includes(slug[1].toLowerCase()) ? slug[1].toLowerCase() : 'madrid');
+    const serviceSlug = isLastProv ? slug.slice(0, slug.length - 1).join('-') : slug.join('-');
+
+    const { cityName } = resolveGeoLocation(provinceSlug);
+    const semantic = generateSemanticPageData(slug, cityName);
+
+    return (
+      <BespokeTemplate
+        title={semantic.title}
+        description={semantic.metaDescription}
+        location={cityName}
+        serviceId={serviceSlug || primaryPrefix}
+        keywords={semantic.localKeywords}
+        isApex={true}
+      />
+    );
+  }
+
   // 2.B. ARSENAL TÉCNICO / PANTALLAS LED / SONIDO (/arsenal/[equipo]/[provincia])
   if (primaryPrefix === 'arsenal') {
     const lastSeg = slug[slug.length - 1].toLowerCase();
