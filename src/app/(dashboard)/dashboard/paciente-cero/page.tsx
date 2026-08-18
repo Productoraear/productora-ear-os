@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { CENTRALITA } from '@/lib/phone-constants';
+import gscPerformanceData from '@/data/telemetry/gsc-performance-data.json';
 
 interface Reservation {
   id: string;
@@ -362,39 +363,45 @@ export default function PacienteCeroDashboardPage() {
         {activeTab === 'METRICAS' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* TOP LANDINGS RELACIONALES CAPTURADAS */}
+            {/* TOP LANDINGS & CONSULTAS GSC CAPTURADAS */}
             <div className="lg:col-span-8 p-8 rounded-[2.5rem] bg-[#09090d] border border-white/10 space-y-6">
-              <div className="flex justify-between items-center border-b border-white/5 pb-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/5 pb-4">
                 <div className="space-y-1">
-                  <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] block">
-                    Captura Orgánica de Alta Conversión
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] block">
+                      Google Search Console Telemetry (SSOT)
+                    </span>
+                    <span className="text-[8px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">
+                      Auto-Ingested
+                    </span>
+                  </div>
                   <h3 className="text-xl font-black uppercase text-white font-syne">
-                    Top Consultas de Búsqueda Relacional
+                    Consultas y Oportunidades Orgánicas Reales
                   </h3>
                 </div>
-                <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-lg">
-                  Unicidad Media: 88.4%
-                </span>
+                <div className="flex items-center gap-2 text-xs font-mono">
+                  <span className="text-white/40">Dataset:</span>
+                  <span className="text-white/80 bg-white/5 border border-white/10 px-2.5 py-1 rounded-lg">
+                    {gscPerformanceData.totals.totalImpressions.toLocaleString()} Impresiones • {gscPerformanceData.totals.totalUniqueQueries} Consultas
+                  </span>
+                </div>
               </div>
 
+              {/* LISTADO DE CONSULTAS CON DATOS REALES DE GSC */}
               <div className="space-y-3">
-                {[
-                  { query: 'mariachis para cumpleanos de mi madre albacete', clicks: 412, impressions: 3890, ctr: '10.59%', url: '/servicios/mariachis/cumpleanos-madre/albacete' },
-                  { query: 'serenata regalo de aniversario suegro madrid', clicks: 388, impressions: 4210, ctr: '9.21%', url: '/servicios/mariachis/aniversario-suegro/madrid' },
-                  { query: 'mariachi sorpresa cumpleanos padre toledo', clicks: 295, impressions: 3120, ctr: '9.45%', url: '/servicios/mariachis/cumpleanos-padre/toledo' },
-                  { query: 'mariachis bodas de oro abuelos valencia', clicks: 240, impressions: 2650, ctr: '9.05%', url: '/servicios/mariachis/boda-oro-abuela/valencia' },
-                  { query: 'alquiler pantalla led gigante madrid', clicks: 512, impressions: 6800, ctr: '7.52%', url: '/arsenal/pantalla-led/madrid' }
-                ].map((item, idx) => (
+                {gscPerformanceData.topOpportunityQueries.slice(0, 6).map((item, idx) => (
                   <div key={idx} className="p-4 rounded-2xl bg-white/5 border border-white/5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-[#ecb613]/30 transition-all">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-mono text-[#ecb613] font-bold">0{idx + 1}</span>
+                        <span className="text-[10px] font-mono text-[#ecb613] font-bold">#{idx + 1}</span>
                         <span className="text-xs font-black uppercase text-white">{item.query}</span>
+                        <span className="text-[8px] font-mono px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                          Pos. Media: {item.position}
+                        </span>
                       </div>
-                      <Link href={item.url} className="text-[10px] font-mono text-white/40 hover:text-[#ecb613] transition-colors block">
-                        {item.url} →
-                      </Link>
+                      <span className="text-[10px] font-mono text-white/40 block">
+                        Score de Oportunidad de Tráfico: <strong className="text-emerald-400">{item.opportunityScore} pts</strong>
+                      </span>
                     </div>
                     <div className="flex items-center gap-6 text-xs font-mono">
                       <div>
@@ -403,15 +410,20 @@ export default function PacienteCeroDashboardPage() {
                       </div>
                       <div>
                         <span className="text-[9px] text-white/40 block">Impresiones</span>
-                        <span className="font-bold text-white/70">{item.impressions}</span>
+                        <span className="font-bold text-[#ecb613]">{item.impressions}</span>
                       </div>
                       <div>
                         <span className="text-[9px] text-white/40 block">CTR</span>
-                        <span className="font-bold text-emerald-400">{item.ctr}</span>
+                        <span className="font-bold text-white/70">{item.ctr}%</span>
                       </div>
                     </div>
                   </div>
                 ))}
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-dashed border-white/10 flex items-center justify-between text-xs font-mono text-white/50">
+                <span>Rango de Datos: {gscPerformanceData.meta.dateRange}</span>
+                <span className="text-[10px] text-white/30">Para actualizar: <code className="text-[#ecb613]">npm run gsc:ingest</code></span>
               </div>
             </div>
 

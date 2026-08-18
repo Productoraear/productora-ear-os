@@ -1,0 +1,1022 @@
+{
+  "meta": {
+    "lastIngestedAt": "2026-08-18T07:39:00.636Z",
+    "sourceDirectory": "https___productoraear.com_-Performance-on-Search-2026-08-18",
+    "searchType": "Web",
+    "dateRange": "Últimos 16 meses"
+  },
+  "totals": {
+    "totalClicks": 5,
+    "totalImpressions": 10947,
+    "averageCtr": 0.05,
+    "averagePosition": 50.1,
+    "totalUniqueQueries": 834,
+    "totalUniquePages": 1000
+  },
+  "topOpportunityQueries": [
+    {
+      "query": "pantalla led gigante madrid",
+      "clicks": 0,
+      "impressions": 309,
+      "ctr": 0,
+      "position": 26.2,
+      "opportunityScore": 1179
+    },
+    {
+      "query": "aftermovie para eventos barcelona",
+      "clicks": 0,
+      "impressions": 140,
+      "ctr": 0,
+      "position": 12.98,
+      "opportunityScore": 1079
+    },
+    {
+      "query": "alquiler de pantalla gigante en cordoba",
+      "clicks": 0,
+      "impressions": 109,
+      "ctr": 0,
+      "position": 11.94,
+      "opportunityScore": 913
+    },
+    {
+      "query": "alquiler pantallas led mallorca",
+      "clicks": 0,
+      "impressions": 236,
+      "ctr": 0,
+      "position": 28.17,
+      "opportunityScore": 838
+    },
+    {
+      "query": "wedding planners a coruña",
+      "clicks": 0,
+      "impressions": 248,
+      "ctr": 0,
+      "position": 36.27,
+      "opportunityScore": 684
+    },
+    {
+      "query": "pantallas led logroño",
+      "clicks": 0,
+      "impressions": 65,
+      "ctr": 0,
+      "position": 10.22,
+      "opportunityScore": 636
+    },
+    {
+      "query": "coches de boda a coruña",
+      "clicks": 0,
+      "impressions": 117,
+      "ctr": 0,
+      "position": 19.84,
+      "opportunityScore": 590
+    },
+    {
+      "query": "iluminacion espectacular",
+      "clicks": 0,
+      "impressions": 160,
+      "ctr": 0,
+      "position": 31.64,
+      "opportunityScore": 506
+    },
+    {
+      "query": "iluminacion espectacular madrid",
+      "clicks": 0,
+      "impressions": 89,
+      "ctr": 0,
+      "position": 17.58,
+      "opportunityScore": 506
+    },
+    {
+      "query": "alquiler pantalla led en feria vigo",
+      "clicks": 0,
+      "impressions": 63,
+      "ctr": 0,
+      "position": 13.62,
+      "opportunityScore": 463
+    },
+    {
+      "query": "catering premium valladolid",
+      "clicks": 0,
+      "impressions": 101,
+      "ctr": 0,
+      "position": 22.23,
+      "opportunityScore": 454
+    },
+    {
+      "query": "alquiler pantalla gigante led",
+      "clicks": 0,
+      "impressions": 133,
+      "ctr": 0,
+      "position": 30.59,
+      "opportunityScore": 435
+    },
+    {
+      "query": "creación videoclip almeria",
+      "clicks": 0,
+      "impressions": 104,
+      "ctr": 0,
+      "position": 26.51,
+      "opportunityScore": 392
+    },
+    {
+      "query": "pantallas led y audiovisuales en mallorca",
+      "clicks": 0,
+      "impressions": 91,
+      "ctr": 0,
+      "position": 23.9,
+      "opportunityScore": 381
+    },
+    {
+      "query": "pantalla led producciones",
+      "clicks": 0,
+      "impressions": 172,
+      "ctr": 0,
+      "position": 45.94,
+      "opportunityScore": 374
+    },
+    {
+      "query": "grupos musicales para bodas madrid",
+      "clicks": 0,
+      "impressions": 123,
+      "ctr": 0,
+      "position": 33.13,
+      "opportunityScore": 371
+    },
+    {
+      "query": "streaming corporativo girona",
+      "clicks": 0,
+      "impressions": 58,
+      "ctr": 0,
+      "position": 18.22,
+      "opportunityScore": 318
+    },
+    {
+      "query": "pantalla led alquiler malaga",
+      "clicks": 0,
+      "impressions": 52,
+      "ctr": 0,
+      "position": 16.56,
+      "opportunityScore": 314
+    },
+    {
+      "query": "productora audiovisual toledo",
+      "clicks": 0,
+      "impressions": 57,
+      "ctr": 0,
+      "position": 18.21,
+      "opportunityScore": 313
+    },
+    {
+      "query": "productora audiovisual para moda y belleza.",
+      "clicks": 0,
+      "impressions": 124,
+      "ctr": 0,
+      "position": 41.73,
+      "opportunityScore": 297
+    },
+    {
+      "query": "catering & dj's",
+      "clicks": 0,
+      "impressions": 70,
+      "ctr": 0,
+      "position": 24.13,
+      "opportunityScore": 290
+    },
+    {
+      "query": "pantalla led alquiler alicante",
+      "clicks": 0,
+      "impressions": 55,
+      "ctr": 0,
+      "position": 19.4,
+      "opportunityScore": 284
+    },
+    {
+      "query": "pantalla led alquiler zaragoza",
+      "clicks": 0,
+      "impressions": 52,
+      "ctr": 0,
+      "position": 18.85,
+      "opportunityScore": 276
+    },
+    {
+      "query": "alquiler pantallas led castellon",
+      "clicks": 0,
+      "impressions": 44,
+      "ctr": 0,
+      "position": 16.3,
+      "opportunityScore": 270
+    },
+    {
+      "query": "aftermovie de eventos",
+      "clicks": 0,
+      "impressions": 81,
+      "ctr": 0,
+      "position": 30.98,
+      "opportunityScore": 261
+    },
+    {
+      "query": "coches de boda pamplona",
+      "clicks": 0,
+      "impressions": 78,
+      "ctr": 0,
+      "position": 30.17,
+      "opportunityScore": 259
+    },
+    {
+      "query": "alquiler pantalla led en feria malaga",
+      "clicks": 0,
+      "impressions": 54,
+      "ctr": 0,
+      "position": 23.24,
+      "opportunityScore": 232
+    },
+    {
+      "query": "aftermovie para eventos igualada",
+      "clicks": 0,
+      "impressions": 31,
+      "ctr": 0,
+      "position": 13.35,
+      "opportunityScore": 232
+    },
+    {
+      "query": "streaming para eventos en barcelona",
+      "clicks": 0,
+      "impressions": 89,
+      "ctr": 0,
+      "position": 39.51,
+      "opportunityScore": 225
+    },
+    {
+      "query": "finca de bodas en logroño",
+      "clicks": 0,
+      "impressions": 45,
+      "ctr": 0,
+      "position": 20.84,
+      "opportunityScore": 216
+    }
+  ],
+  "topPerformingQueries": [
+    {
+      "query": "mariachis albacete",
+      "clicks": 2,
+      "impressions": 2,
+      "ctr": 100,
+      "position": 16.5,
+      "opportunityScore": 0
+    },
+    {
+      "query": "alquiler pantalla led vigo",
+      "clicks": 1,
+      "impressions": 33,
+      "ctr": 3.03,
+      "position": 7.03,
+      "opportunityScore": 0
+    },
+    {
+      "query": "pantallas led para eventos alquiler",
+      "clicks": 1,
+      "impressions": 2,
+      "ctr": 50,
+      "position": 6,
+      "opportunityScore": 0
+    },
+    {
+      "query": "alquiler pantallas led para eventos",
+      "clicks": 1,
+      "impressions": 2,
+      "ctr": 50,
+      "position": 8,
+      "opportunityScore": 0
+    },
+    {
+      "query": "pantalla led gigante madrid",
+      "clicks": 0,
+      "impressions": 309,
+      "ctr": 0,
+      "position": 26.2,
+      "opportunityScore": 1179
+    },
+    {
+      "query": "wedding planners a coruña",
+      "clicks": 0,
+      "impressions": 248,
+      "ctr": 0,
+      "position": 36.27,
+      "opportunityScore": 684
+    },
+    {
+      "query": "alquiler pantallas led mallorca",
+      "clicks": 0,
+      "impressions": 236,
+      "ctr": 0,
+      "position": 28.17,
+      "opportunityScore": 838
+    },
+    {
+      "query": "pantalla led producciones",
+      "clicks": 0,
+      "impressions": 172,
+      "ctr": 0,
+      "position": 45.94,
+      "opportunityScore": 374
+    },
+    {
+      "query": "iluminacion espectacular",
+      "clicks": 0,
+      "impressions": 160,
+      "ctr": 0,
+      "position": 31.64,
+      "opportunityScore": 506
+    },
+    {
+      "query": "aftermovie para eventos barcelona",
+      "clicks": 0,
+      "impressions": 140,
+      "ctr": 0,
+      "position": 12.98,
+      "opportunityScore": 1079
+    },
+    {
+      "query": "alquiler pantalla gigante led",
+      "clicks": 0,
+      "impressions": 133,
+      "ctr": 0,
+      "position": 30.59,
+      "opportunityScore": 435
+    },
+    {
+      "query": "boda catering mallorca",
+      "clicks": 0,
+      "impressions": 128,
+      "ctr": 0,
+      "position": 55.83,
+      "opportunityScore": 0
+    },
+    {
+      "query": "productora audiovisual para moda y belleza.",
+      "clicks": 0,
+      "impressions": 124,
+      "ctr": 0,
+      "position": 41.73,
+      "opportunityScore": 297
+    },
+    {
+      "query": "grupos musicales para bodas madrid",
+      "clicks": 0,
+      "impressions": 123,
+      "ctr": 0,
+      "position": 33.13,
+      "opportunityScore": 371
+    },
+    {
+      "query": "coches de boda a coruña",
+      "clicks": 0,
+      "impressions": 117,
+      "ctr": 0,
+      "position": 19.84,
+      "opportunityScore": 590
+    },
+    {
+      "query": "alquiler de pantalla gigante en cordoba",
+      "clicks": 0,
+      "impressions": 109,
+      "ctr": 0,
+      "position": 11.94,
+      "opportunityScore": 913
+    },
+    {
+      "query": "creación videoclip almeria",
+      "clicks": 0,
+      "impressions": 104,
+      "ctr": 0,
+      "position": 26.51,
+      "opportunityScore": 392
+    },
+    {
+      "query": "catering premium valladolid",
+      "clicks": 0,
+      "impressions": 101,
+      "ctr": 0,
+      "position": 22.23,
+      "opportunityScore": 454
+    },
+    {
+      "query": "fotógrafo de bodas editorial",
+      "clicks": 0,
+      "impressions": 97,
+      "ctr": 0,
+      "position": 59.66,
+      "opportunityScore": 0
+    },
+    {
+      "query": "pantallas led y audiovisuales en mallorca",
+      "clicks": 0,
+      "impressions": 91,
+      "ctr": 0,
+      "position": 23.9,
+      "opportunityScore": 381
+    },
+    {
+      "query": "catering de lujo en ibiza",
+      "clicks": 0,
+      "impressions": 90,
+      "ctr": 0,
+      "position": 63.11,
+      "opportunityScore": 0
+    },
+    {
+      "query": "iluminacion espectacular madrid",
+      "clicks": 0,
+      "impressions": 89,
+      "ctr": 0,
+      "position": 17.58,
+      "opportunityScore": 506
+    },
+    {
+      "query": "streaming para eventos en barcelona",
+      "clicks": 0,
+      "impressions": 89,
+      "ctr": 0,
+      "position": 39.51,
+      "opportunityScore": 225
+    },
+    {
+      "query": "empresa catering de lujo ibiza",
+      "clicks": 0,
+      "impressions": 85,
+      "ctr": 0,
+      "position": 63.65,
+      "opportunityScore": 0
+    },
+    {
+      "query": "transmisión de eventos en madrid",
+      "clicks": 0,
+      "impressions": 84,
+      "ctr": 0,
+      "position": 59.54,
+      "opportunityScore": 0
+    },
+    {
+      "query": "aftermovie de eventos",
+      "clicks": 0,
+      "impressions": 81,
+      "ctr": 0,
+      "position": 30.98,
+      "opportunityScore": 261
+    },
+    {
+      "query": "grupo de musica para bodas",
+      "clicks": 0,
+      "impressions": 81,
+      "ctr": 0,
+      "position": 71.6,
+      "opportunityScore": 0
+    },
+    {
+      "query": "organización bodas a coruña",
+      "clicks": 0,
+      "impressions": 79,
+      "ctr": 0,
+      "position": 48.94,
+      "opportunityScore": 161
+    },
+    {
+      "query": "coches de boda pamplona",
+      "clicks": 0,
+      "impressions": 78,
+      "ctr": 0,
+      "position": 30.17,
+      "opportunityScore": 259
+    },
+    {
+      "query": "catering bodas ibiza",
+      "clicks": 0,
+      "impressions": 78,
+      "ctr": 0,
+      "position": 60.92,
+      "opportunityScore": 0
+    }
+  ],
+  "topPages": [
+    {
+      "page": "https://productoraear.com/",
+      "clicks": 33,
+      "impressions": 76,
+      "ctr": 43.42,
+      "position": 3.95
+    },
+    {
+      "page": "https://productoraear.com/home/",
+      "clicks": 14,
+      "impressions": 84,
+      "ctr": 16.67,
+      "position": 4.32
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-san-sebastian",
+      "clicks": 3,
+      "impressions": 9,
+      "ctr": 33.33,
+      "position": 6.78
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-mallorca",
+      "clicks": 2,
+      "impressions": 11,
+      "ctr": 18.18,
+      "position": 8.27
+    },
+    {
+      "page": "https://productoraear.com/arsenal/alquiler-estructuras-truss-granada",
+      "clicks": 2,
+      "impressions": 10,
+      "ctr": 20,
+      "position": 3.9
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-pamplona/",
+      "clicks": 2,
+      "impressions": 7,
+      "ctr": 28.57,
+      "position": 5.14
+    },
+    {
+      "page": "https://productoraear.com/articulo/produccion-videoclips-musicales-getafe/",
+      "clicks": 2,
+      "impressions": 4,
+      "ctr": 50,
+      "position": 5.5
+    },
+    {
+      "page": "https://productoraear.com/servicios/edwin-agudelo-mariachi-6/albacete",
+      "clicks": 2,
+      "impressions": 3,
+      "ctr": 66.67,
+      "position": 11.33
+    },
+    {
+      "page": "https://productoraear.com/grupos-musicales-bodas",
+      "clicks": 1,
+      "impressions": 809,
+      "ctr": 0.12,
+      "position": 55.46
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-valencia/",
+      "clicks": 1,
+      "impressions": 102,
+      "ctr": 0.98,
+      "position": 39.47
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-vigo",
+      "clicks": 1,
+      "impressions": 85,
+      "ctr": 1.18,
+      "position": 19.6
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-bilbao",
+      "clicks": 1,
+      "impressions": 61,
+      "ctr": 1.64,
+      "position": 34.2
+    },
+    {
+      "page": "https://productoraear.com/festival",
+      "clicks": 1,
+      "impressions": 46,
+      "ctr": 2.17,
+      "position": 6.67
+    },
+    {
+      "page": "https://productoraear.com/articulo/produccion-videoclips-musicales-canarias/",
+      "clicks": 1,
+      "impressions": 34,
+      "ctr": 2.94,
+      "position": 67.71
+    },
+    {
+      "page": "https://productoraear.com/production/produccion-videoclips-musicales-almeria",
+      "clicks": 1,
+      "impressions": 25,
+      "ctr": 4,
+      "position": 48.44
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-rivas-vaciamadrid/",
+      "clicks": 1,
+      "impressions": 24,
+      "ctr": 4.17,
+      "position": 36.83
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-guadalajara",
+      "clicks": 1,
+      "impressions": 22,
+      "ctr": 4.55,
+      "position": 36.77
+    },
+    {
+      "page": "https://productoraear.com/weddings/fincas-bodas-exclusivas-lugo",
+      "clicks": 1,
+      "impressions": 21,
+      "ctr": 4.76,
+      "position": 56.1
+    },
+    {
+      "page": "https://productoraear.com/articulo/produccion-videoclips-musicales-castellon/",
+      "clicks": 1,
+      "impressions": 19,
+      "ctr": 5.26,
+      "position": 25.47
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-gijon",
+      "clicks": 1,
+      "impressions": 18,
+      "ctr": 5.56,
+      "position": 18.72
+    },
+    {
+      "page": "https://productoraear.com/articulo/mariachis-elite-cuenca/",
+      "clicks": 1,
+      "impressions": 16,
+      "ctr": 6.25,
+      "position": 16.06
+    },
+    {
+      "page": "https://productoraear.com/artistas",
+      "clicks": 1,
+      "impressions": 14,
+      "ctr": 7.14,
+      "position": 8.07
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-rivas-vaciamadrid",
+      "clicks": 1,
+      "impressions": 13,
+      "ctr": 7.69,
+      "position": 37.23
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-sonido-line-array-palencia/",
+      "clicks": 1,
+      "impressions": 12,
+      "ctr": 8.33,
+      "position": 23.33
+    },
+    {
+      "page": "https://productoraear.com/articulo/mariachis-elite-gijon/",
+      "clicks": 1,
+      "impressions": 11,
+      "ctr": 9.09,
+      "position": 12.64
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-sevilla",
+      "clicks": 1,
+      "impressions": 11,
+      "ctr": 9.09,
+      "position": 14
+    },
+    {
+      "page": "https://productoraear.com/articulo/artistas-indie-pop-almeria",
+      "clicks": 1,
+      "impressions": 10,
+      "ctr": 10,
+      "position": 4.7
+    },
+    {
+      "page": "https://productoraear.com/ayuntamientos-premium",
+      "clicks": 1,
+      "impressions": 10,
+      "ctr": 10,
+      "position": 5.8
+    },
+    {
+      "page": "https://productoraear.com/arsenal/alquiler-estructuras-truss-cordoba",
+      "clicks": 1,
+      "impressions": 9,
+      "ctr": 11.11,
+      "position": 6.44
+    },
+    {
+      "page": "https://productoraear.com/articulo/artistas-indie-pop-guadalajara/",
+      "clicks": 1,
+      "impressions": 8,
+      "ctr": 12.5,
+      "position": 8.88
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-burgos/",
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 14.29,
+      "position": 3.14
+    },
+    {
+      "page": "https://productoraear.com/arsenal/alquiler-estructuras-truss-alcala-de-henares",
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 14.29,
+      "position": 4.43
+    },
+    {
+      "page": "https://productoraear.com/arsenal/alquiler-estructuras-truss-bilbao",
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 14.29,
+      "position": 8.86
+    },
+    {
+      "page": "https://productoraear.com/arsenal/alquiler-pantalla-led-alcala-de-henares",
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 14.29,
+      "position": 17.43
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-albacete/",
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 14.29,
+      "position": 32.86
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-santiago",
+      "clicks": 1,
+      "impressions": 6,
+      "ctr": 16.67,
+      "position": 40.83
+    },
+    {
+      "page": "https://productoraear.com/weddings/dj-boda-premium-alcorcon",
+      "clicks": 1,
+      "impressions": 5,
+      "ctr": 20,
+      "position": 7.6
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-boadilla-del-monte/",
+      "clicks": 1,
+      "impressions": 5,
+      "ctr": 20,
+      "position": 26.4
+    },
+    {
+      "page": "https://productoraear.com/articulo/aftermovie-eventos-alcala-de-henares",
+      "clicks": 1,
+      "impressions": 5,
+      "ctr": 20,
+      "position": 31.4
+    },
+    {
+      "page": "https://productoraear.com/articulo/streaming-eventos-hibridos-logrono/",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 4
+    },
+    {
+      "page": "https://productoraear.com/articulo/mariachis-elite-pozuelo-de-alarcon",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 5.5
+    },
+    {
+      "page": "https://productoraear.com/articulo/wedding-planners-fuenlabrada",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 5.75
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-pantalla-led-san-sebastian/",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 7.5
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-iluminacion-robotica-a-coruna/",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 8
+    },
+    {
+      "page": "https://productoraear.com/servicios/edwin-agudelo-mariachi-6/valladolid",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 10.25
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-ourense/",
+      "clicks": 1,
+      "impressions": 4,
+      "ctr": 25,
+      "position": 18.5
+    },
+    {
+      "page": "https://productoraear.com/articulo/alquiler-estructuras-truss-albacete/",
+      "clicks": 1,
+      "impressions": 3,
+      "ctr": 33.33,
+      "position": 9.33
+    },
+    {
+      "page": "https://productoraear.com/articulo/catering-boda-premium-murcia",
+      "clicks": 1,
+      "impressions": 3,
+      "ctr": 33.33,
+      "position": 21.33
+    },
+    {
+      "page": "https://productoraear.com/articulo/artistas-jazz-soul-collado-villalba",
+      "clicks": 1,
+      "impressions": 3,
+      "ctr": 33.33,
+      "position": 28
+    },
+    {
+      "page": "https://productoraear.com/arsenal/alquiler-estructuras-truss-leon",
+      "clicks": 1,
+      "impressions": 2,
+      "ctr": 50,
+      "position": 1.5
+    }
+  ],
+  "devices": [
+    {
+      "device": "Móviles",
+      "clicks": 70,
+      "impressions": 2866,
+      "ctr": 2.44,
+      "position": 32.53
+    },
+    {
+      "device": "Ordenador",
+      "clicks": 54,
+      "impressions": 10943,
+      "ctr": 0.49,
+      "position": 39.21
+    },
+    {
+      "device": "Tablet",
+      "clicks": 1,
+      "impressions": 105,
+      "ctr": 0.95,
+      "position": 46.2
+    }
+  ],
+  "topCountries": [
+    {
+      "country": "España",
+      "clicks": 113,
+      "impressions": 13098,
+      "ctr": 0.86,
+      "position": 39.24
+    },
+    {
+      "country": "Estados Unidos",
+      "clicks": 6,
+      "impressions": 263,
+      "ctr": 2.28,
+      "position": 7.5
+    },
+    {
+      "country": "México",
+      "clicks": 2,
+      "impressions": 126,
+      "ctr": 1.59,
+      "position": 30.9
+    },
+    {
+      "country": "Chile",
+      "clicks": 2,
+      "impressions": 68,
+      "ctr": 2.94,
+      "position": 39.03
+    },
+    {
+      "country": "Ecuador",
+      "clicks": 1,
+      "impressions": 18,
+      "ctr": 5.56,
+      "position": 11.39
+    },
+    {
+      "country": "Suiza",
+      "clicks": 1,
+      "impressions": 7,
+      "ctr": 14.29,
+      "position": 4.57
+    },
+    {
+      "country": "Argentina",
+      "clicks": 0,
+      "impressions": 43,
+      "ctr": 0,
+      "position": 15.91
+    },
+    {
+      "country": "Reino Unido",
+      "clicks": 0,
+      "impressions": 30,
+      "ctr": 0,
+      "position": 17.9
+    },
+    {
+      "country": "Países Bajos",
+      "clicks": 0,
+      "impressions": 29,
+      "ctr": 0,
+      "position": 25.48
+    },
+    {
+      "country": "Canadá",
+      "clicks": 0,
+      "impressions": 24,
+      "ctr": 0,
+      "position": 3.83
+    },
+    {
+      "country": "Brasil",
+      "clicks": 0,
+      "impressions": 19,
+      "ctr": 0,
+      "position": 6.79
+    },
+    {
+      "country": "Colombia",
+      "clicks": 0,
+      "impressions": 19,
+      "ctr": 0,
+      "position": 14.42
+    },
+    {
+      "country": "Francia",
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0,
+      "position": 10.14
+    },
+    {
+      "country": "La India",
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0,
+      "position": 27.64
+    },
+    {
+      "country": "Alemania",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0,
+      "position": 18.85
+    },
+    {
+      "country": "Italia",
+      "clicks": 0,
+      "impressions": 11,
+      "ctr": 0,
+      "position": 8.09
+    },
+    {
+      "country": "Portugal",
+      "clicks": 0,
+      "impressions": 8,
+      "ctr": 0,
+      "position": 6.38
+    },
+    {
+      "country": "Polonia",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0,
+      "position": 5.83
+    },
+    {
+      "country": "República Dominicana",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0,
+      "position": 37
+    },
+    {
+      "country": "Rumanía",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0,
+      "position": 3.8
+    }
+  ],
+  "timelineSummary": {
+    "startDate": "2026-02-16",
+    "endDate": "2026-08-15",
+    "totalDays": 181
+  }
+}
