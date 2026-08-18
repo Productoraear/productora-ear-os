@@ -1,7 +1,7 @@
 /**
  * 💰 MULTIPRICER S-CLASS - ADVANCED COST ARCHITECTURE & VALUE-FIRST QUOTATION ENGINE
  * Basado en el Framework de Reencuadre de Valor de la Incubadora Despegue / Midas & UX Tipo Airbnb:
- * Jerarquía: [1. Calculadora Interactiva de Ocasión & Ensamble] -> [2. Sidebar Inversión & Depósito Stripe] -> [3. Diagnóstico de Riesgo Técnico & Blindaje S-Class].
+ * Jerarquía: [1. Calculadora Interactiva de Ocasión & Ensamble] -> [2. Túnel Neural / Filtros Ultra-Detallados Airbnb] -> [3. Sidebar Inversión & Depósito Stripe] -> [4. Diagnóstico de Riesgo Técnico & Blindaje S-Class].
  */
 
 "use client";
@@ -14,7 +14,7 @@ import {
   Mail, User, MapPin, Calendar, FileText, CheckCircle2, XCircle,
   Sparkles, CreditCard, Clock, Truck, Award, Phone, MessageCircle,
   AlertTriangle, Check, Volume2, Lock, ShieldAlert, HeartHandshake,
-  Heart, Building2, PartyPopper, Flame, ChevronDown
+  Heart, Building2, PartyPopper, Flame, ChevronDown, SlidersHorizontal
 } from 'lucide-react';
 import { PRICING_CATALOG } from '@/lib/constants/pricing-catalog';
 import { SClassPricingEngine, SClassQuote } from '@/lib/pricing-engine';
@@ -22,6 +22,8 @@ import { PriceLockBadge } from '@/features/finance/ui/PriceLockBadge';
 import { createDossierFromLead } from '@/app/actions/dossierActions';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { generateWhatsAppLink } from '@/lib/whatsapp';
+import { SClassUltraFilters, DEFAULT_ULTRA_FILTERS, calculateFilterSurcharges } from '@/features/finance/types/filters';
+import { AirbnbUltraFiltersModal } from '@/features/finance/ui/AirbnbUltraFiltersModal';
 
 interface ServiceItem {
   id: string;
@@ -155,6 +157,10 @@ const MultiPricerContent = () => {
   const [pax, setPax] = useState<number>(150);
   const [quote, setQuote] = useState<SClassQuote | null>(null);
   
+  // 🎛️ ESTADO DE FILTROS ULTRA-DETALLADOS AIRBNB STYLE
+  const [ultraFilters, setUltraFilters] = useState<SClassUltraFilters>(DEFAULT_ULTRA_FILTERS);
+  const [showUltraFiltersModal, setShowUltraFiltersModal] = useState<boolean>(false);
+
   const [loading, setLoading] = useState<boolean>(false);
   const [showLeadForm, setShowLeadForm] = useState<boolean>(false);
 
@@ -168,6 +174,22 @@ const MultiPricerContent = () => {
   });
 
   const [artistTarget, setArtistTarget] = useState<string | null>(null);
+
+  // Cálculo de Métricas de Filtros
+  const filterMetrics = useMemo(() => calculateFilterSurcharges(ultraFilters), [ultraFilters]);
+
+  // Total Ajustado con Suplementos Técnicos
+  const adjustedFinalTotal = useMemo(() => {
+    return (quote?.finalTotal || 0) + filterMetrics.surchargeAmount;
+  }, [quote, filterMetrics]);
+
+  // Especificaciones Técnicas Combinadas
+  const combinedSpecs = useMemo(() => {
+    return [
+      ...(quote?.technicalSpecs || []),
+      ...filterMetrics.riderSpecs
+    ];
+  }, [quote, filterMetrics]);
 
   // 📥 AUTO-LOAD FROM URL PARAMS (ITEMS, OCASIÓN & ARTISTA TARGET)
   useEffect(() => {
@@ -271,8 +293,9 @@ const MultiPricerContent = () => {
             pax: pax,
             province: selectedProvince,
             occasion: selectedOccasion,
-            finalTotal: quote?.finalTotal || 0,
-            deposit: depositVal
+            finalTotal: adjustedFinalTotal,
+            deposit: depositVal,
+            ultraFiltersCount: filterMetrics.activeCount
           }
         })
       });
@@ -300,11 +323,16 @@ const MultiPricerContent = () => {
         .filter(s => selectedServices.includes(s.id))
         .map(s => s.name);
 
+      const combinedAssets = [
+        ...selectedNames,
+        ...filterMetrics.riderSpecs.slice(0, 3)
+      ];
+
       const result = await createDossierFromLead({
         contactName: leadData.name,
         contactEmail: leadData.email,
-        occasion: `${selectedOccasion} [${selectedProvince}] (Total: ${quote?.finalTotal || 0}€)`,
-        selectedAssets: selectedNames
+        occasion: `${selectedOccasion} [${selectedProvince}] (${filterMetrics.activeCount} filtros técnicos) - Total: ${adjustedFinalTotal}€`,
+        selectedAssets: combinedAssets
       });
 
       if (result.success && result.dossierId) {
@@ -320,7 +348,7 @@ const MultiPricerContent = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8 relative text-white space-y-12 pb-36 lg:pb-16 font-sans">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8 relative text-white space-y-10 pb-36 lg:pb-16 font-sans">
       
       {/* 🏛️ ENCABEZADO DE ENTRADA DIRECTA (FIRST VIEWPORT) */}
       <div className="text-center space-y-3 max-w-3xl mx-auto">
@@ -331,7 +359,7 @@ const MultiPricerContent = () => {
           CONFIGURA TU <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">PRESUPUESTO EN VIVO</span>
         </h1>
         <p className="text-white/60 text-xs sm:text-sm font-light">
-          Selecciona tu ocasión, formación artística y asistentes para calcular la tarifa exacta con Price-Lock 72h.
+          Selecciona tu ocasión, formación artística y especificaciones de recinto para calcular la tarifa exacta con Price-Lock 72h.
         </p>
       </div>
 
@@ -418,6 +446,46 @@ const MultiPricerContent = () => {
             );
           })}
         </div>
+      </div>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* 🎛️ TÚNEL NEURAL: BOTÓN MODAL FILTROS ULTRA-DETALLADOS AIRBNB */}
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="p-5 sm:p-6 rounded-[2rem] bg-gradient-to-r from-black via-[#0d0d14] to-black border border-[#ecb613]/35 shadow-[0_10px_40px_rgba(236,182,19,0.08)] flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/15 border border-[#ecb613]/40 flex items-center justify-center text-[#ecb613] shrink-0">
+            <SlidersHorizontal size={22} />
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] tracking-widest">
+                Túnel Neural de Especificaciones Técnicas
+              </span>
+              <span className="text-[8px] font-mono px-2.5 py-0.5 rounded-full bg-[#ecb613]/20 text-[#ecb613] border border-[#ecb613]/30 font-black">
+                {filterMetrics.activeCount} Filtros Activos
+              </span>
+            </div>
+            <p className="text-white font-bold text-xs sm:text-sm">
+              ¿Tu recinto tiene escaleras, limitador acústico OPCAT, o requiere grupo electrógeno?
+            </p>
+            <p className="text-white/50 text-[11px]">
+              Personaliza acústica, microfonía, estructuras truss, momentos y protocolo B2G al estilo Airbnb.
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setShowUltraFiltersModal(true)}
+          className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-[#ecb613] to-amber-400 hover:brightness-110 text-black font-black uppercase text-xs tracking-wider rounded-2xl flex items-center justify-center gap-2.5 shadow-xl shadow-[#ecb613]/25 transition-all active:scale-95 whitespace-nowrap shrink-0"
+        >
+          <SlidersHorizontal size={15} />
+          <span>Filtros Avanzados (Airbnb Style)</span>
+          {filterMetrics.surchargeAmount > 0 && (
+            <span className="bg-black text-[#ecb613] text-[9px] px-2 py-0.5 rounded-full font-mono font-black">
+              +{filterMetrics.surchargeAmount}€
+            </span>
+          )}
+        </button>
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -578,9 +646,11 @@ const MultiPricerContent = () => {
                   <span className="text-xs text-white/50 uppercase font-mono">Inversión Estimada:</span>
                   <div className="text-right">
                     <span className="text-3xl font-black text-white italic tracking-tight font-mono">
-                      {quote.finalTotal} €
+                      {adjustedFinalTotal} €
                     </span>
-                    <span className="text-[10px] text-white/40 block font-mono">IVA excluido</span>
+                    <span className="text-[10px] text-white/40 block font-mono">
+                      {filterMetrics.surchargeAmount > 0 ? `(Inc. +${filterMetrics.surchargeAmount}€ filtros)` : 'IVA excluido'}
+                    </span>
                   </div>
                 </div>
 
@@ -594,6 +664,10 @@ const MultiPricerContent = () => {
                     <span className="text-white">{pax} PAX • {selectedProvince}</span>
                   </div>
                   <div className="flex justify-between text-white/60">
+                    <span>Filtros Técnicos:</span>
+                    <span className="text-emerald-400 font-bold">{filterMetrics.activeCount} Especificaciones</span>
+                  </div>
+                  <div className="flex justify-between text-white/60">
                     <span>Depósito Garantía:</span>
                     <span className="text-emerald-400 font-bold">{quote.depositAmount ?? 100} €</span>
                   </div>
@@ -602,9 +676,9 @@ const MultiPricerContent = () => {
                 {/* Especificaciones Técnicas */}
                 <div className="space-y-1 bg-white/5 p-3 rounded-xl border border-white/5">
                   <div className="text-[10px] font-mono text-white/40 uppercase font-bold mb-1">
-                    Blindaje Incluido:
+                    Blindaje Incluido & Rider:
                   </div>
-                  {quote.technicalSpecs.map((spec, i) => (
+                  {combinedSpecs.slice(0, 5).map((spec, i) => (
                     <div key={i} className="flex items-start gap-2 text-white/70 text-[11px]">
                       <span className="text-[#ecb613]">&gt;</span>
                       <span>{spec}</span>
@@ -614,7 +688,7 @@ const MultiPricerContent = () => {
 
                 <PriceLockBadge 
                   hash={quote.sha256Token} 
-                  total={quote.finalTotal} 
+                  total={adjustedFinalTotal} 
                   split={quote.split} 
                 />
               </div>
@@ -652,11 +726,11 @@ const MultiPricerContent = () => {
                 Llamar
               </a>
               <a 
-                href={artistTarget ? `https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero consultar disponibilidad para mi evento (${selectedOccasion}) en ${selectedProvince} a través de Productora EAR.`)}` : generateWhatsAppLink({
+                href={artistTarget ? `https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero consultar disponibilidad para mi evento (${selectedOccasion}) en ${selectedProvince} con ${filterMetrics.activeCount} especificaciones técnicas a través de Productora EAR.`)}` : generateWhatsAppLink({
                   profile: 'cotizador',
                   service: `Presupuesto Personalizado - ${selectedOccasion}`,
                   location: selectedProvince,
-                  intent: `solicito viabilidad para ${selectedOccasion} con presupuesto total estimado de ${quote?.finalTotal || 0}€`,
+                  intent: `solicito viabilidad para ${selectedOccasion} con presupuesto total estimado de ${adjustedFinalTotal}€ y ${filterMetrics.activeCount} especificaciones de recinto`,
                   slug: 'presupuesto'
                 }).url}
                 target="_blank"
@@ -674,7 +748,7 @@ const MultiPricerContent = () => {
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {/* 🌟 BLOQUE DE REFUEZO DE VALOR (REUBICADO ABAJO DE LA CALCULADORA) */}
+      {/* 🌟 BLOQUE DE REFUERZO DE VALOR (REUBICADO ABAJO DE LA CALCULADORA) */}
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       
       {/* FASE 1: DIAGNÓSTICO DE RIESGO TÉCNICO & BLINDAJE 12 W/PAX */}
@@ -801,6 +875,14 @@ const MultiPricerContent = () => {
 
       </div>
 
+      {/* 🚀 MODAL ULTRA-FILTROS AIRBNB STYLE */}
+      <AirbnbUltraFiltersModal
+        isOpen={showUltraFiltersModal}
+        onClose={() => setShowUltraFiltersModal(false)}
+        filters={ultraFilters}
+        onChange={setUltraFilters}
+      />
+
       {/* 🚀 FORM OVERLAY (DOSSIER & PROCESAMIENTO LEAD) */}
       <AnimatePresence>
         {showLeadForm && (
@@ -919,11 +1001,17 @@ const MultiPricerContent = () => {
               {selectedOccasion}
             </span>
             <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-black text-white italic font-mono">{quote?.finalTotal || 0}€</span>
+              <span className="text-2xl font-black text-white italic font-mono">{adjustedFinalTotal}€</span>
               <span className="text-[10px] text-[#ecb613] font-mono">(Garantía: {quote?.depositAmount ?? 100}€)</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowUltraFiltersModal(true)}
+              className="px-2.5 py-2.5 bg-white/10 text-[#ecb613] rounded-xl text-[10px] font-black uppercase tracking-wider min-h-[44px] flex items-center gap-1 active:scale-95 transition-all border border-[#ecb613]/30"
+            >
+              <SlidersHorizontal size={14} />
+            </button>
             <button
               onClick={() => setShowLeadForm(true)}
               className="px-3 py-2.5 bg-white/10 text-white rounded-xl text-[10px] font-black uppercase tracking-wider min-h-[44px] flex items-center gap-1.5 active:scale-95 transition-all"
