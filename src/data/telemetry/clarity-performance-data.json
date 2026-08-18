@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "period": "Últimos 365 días",
+    "lastUpdated": "2026-08-18T09:45:00.000Z",
+    "provider": "Microsoft Clarity"
+  },
+  "traffic": {
+    "totalSessions": 3832,
+    "botSessionsExcluded": 685,
+    "uniqueUsers": 3829,
+    "newUsersPercentage": 99.95,
+    "returningUsersPercentage": 0.05,
+    "pagesPerSession": 1.00,
+    "avgScrollDepthPercentage": 75.88,
+    "activeTimeSeconds": 49,
+    "totalTimeMinutes": 2.3
+  },
+  "userFriction": {
+    "deadClicksPercentage": 2.22,
+    "deadClicksSessions": 85,
+    "excessiveScrollPercentage": 0.00,
+    "quickBacktracksPercentage": 0.00
+  },
+  "smartEvents": [
+    { "event": "Clic de salida", "percentage": 1.07, "status": "LEAKAGE" },
+    { "event": "Finalización de la compra", "percentage": 1.02, "status": "CONVERSION_INTENT" },
+    { "event": "Reservar", "percentage": 0.78, "status": "CONVERSION_INTENT" },
+    { "event": "Iniciar sesión", "percentage": 0.34, "status": "RETENTION" },
+    { "event": "Enviar formulario", "percentage": 0.31, "status": "LEAD_CAPTURE" },
+    { "event": "Descargar", "percentage": 0.26, "status": "ENGAGEMENT" },
+    { "event": "Buscar una ubicación", "percentage": 0.21, "status": "GEO_INTENT" },
+    { "event": "Solicitar presupuesto", "percentage": 0.18, "status": "HIGH_VALUE_INTENT" },
+    { "event": "Pedido correcto", "percentage": 0.05, "status": "REVENUE_REALIZED" }
+  ],
+  "coreWebVitals": {
+    "score": 72,
+    "lcpSeconds": 1.8,
+    "lcpRating": "BUENO",
+    "inpMs": 160,
+    "inpRating": "BUENO",
+    "cls": 0.87,
+    "clsRating": "POBRE_CRITICO",
+    "clsRootCause": "Saltos de maquetación por elementos sin dimensiones fijas e inyecciones dinámicas en el código legado"
+  },
+  "topReferrers": [
+    { "source": "productoraear.com (Direct/Internal)", "sessions": 586 },
+    { "source": "www.google.com (Organic)", "sessions": 440 },
+    { "source": "www.productoraear.com", "sessions": 57 },
+    { "source": "console.firebase.google.com", "sessions": 18 },
+    { "source": "hpanel.hostinger.com", "sessions": 13 },
+    { "source": "www.bing.com", "sessions": 11 },
+    { "source": "Vercel Staging Deployments", "sessions": 16 },
+    { "source": "m.facebook.com", "sessions": 6 }
+  ],
+  "browsers": [
+    { "name": "Edge", "share": 51.04, "sessions": 1956 },
+    { "name": "GoogleApp", "share": 22.36, "sessions": 857 },
+    { "name": "Chrome", "share": 18.68, "sessions": 716 },
+    { "name": "MobileSafari", "share": 4.85, "sessions": 186 },
+    { "name": "ChromeMobile", "share": 2.66, "sessions": 102 }
+  ],
+  "legacyJavaScriptErrors": [
+    {
+      "error": "'text/html' is not a valid javascript mime type",
+      "frequency": 12.58,
+      "resolutionInV2": "SOLVED: Enrutador Next.js 14 App Router con rutas API y páginas estrictamente tipadas."
+    },
+    {
+      "error": "useSuit must be used within SuitProvider",
+      "frequency": 10.60,
+      "resolutionInV2": "SOLVED: Erradicado el árbol obsoleto de SuitProvider en EAR OS V2."
+    },
+    {
+      "error": "failed to fetch dynamically imported module: http://localhost:5173/src/pages/ops/warroom.tsx",
+      "frequency": 6.62,
+      "resolutionInV2": "SOLVED: Imports relativos @/ y compilación server-side en Vercel."
+    },
+    {
+      "error": "cannot read properties of null (reading 'uniforms')",
+      "frequency": 5.96,
+      "resolutionInV2": "SOLVED: Safe canvas mounting y WebGL context loss recovery."
+    },
+    {
+      "error": "cannot read properties of null (reading 'useRef')",
+      "frequency": 3.97,
+      "resolutionInV2": "SOLVED: React 19 Client Boundaries auditados con Typecheck Code 0."
+    }
+  ]
+}
