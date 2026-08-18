@@ -1,7 +1,7 @@
 /**
  * 💰 MULTIPRICER S-CLASS - ADVANCED COST ARCHITECTURE & VALUE-FIRST QUOTATION ENGINE
- * Basado en el Framework de Reencuadre de Valor de la Incubadora Despegue / Midas:
- * Secuencia: [1. Costo del Problema & Riesgo Evitado] -> [2. Transformación & Blindaje 12 W/pax] -> [3. Inversión & Reserva Stripe].
+ * Basado en el Framework de Reencuadre de Valor de la Incubadora Despegue / Midas & UX Tipo Airbnb:
+ * Jerarquía: [1. Calculadora Interactiva de Ocasión & Ensamble] -> [2. Sidebar Inversión & Depósito Stripe] -> [3. Diagnóstico de Riesgo Técnico & Blindaje S-Class].
  */
 
 "use client";
@@ -13,7 +13,8 @@ import {
   Shield, Zap, Boxes, ArrowRight, Loader2, Users, Activity, 
   Mail, User, MapPin, Calendar, FileText, CheckCircle2, XCircle,
   Sparkles, CreditCard, Clock, Truck, Award, Phone, MessageCircle,
-  AlertTriangle, Check, Volume2, Lock, ShieldAlert, HeartHandshake
+  AlertTriangle, Check, Volume2, Lock, ShieldAlert, HeartHandshake,
+  Heart, Building2, PartyPopper, Flame, ChevronDown
 } from 'lucide-react';
 import { PRICING_CATALOG } from '@/lib/constants/pricing-catalog';
 import { SClassPricingEngine, SClassQuote } from '@/lib/pricing-engine';
@@ -67,10 +68,86 @@ const PROVINCE_RATES: Record<string, { multiplier: number, label: string }> = {
   'Resto España': { multiplier: 1.25, label: 'Nacional (+25%)' }
 };
 
+// 🏨 MATRIZ RELACIONAL & GRUPOS DE OCASIÓN TIPO AIRBNB
+interface OccasionItem {
+  id: string;
+  name: string;
+  badge?: string;
+  description: string;
+  defaultEnsemble?: string;
+}
+
+interface OccasionCategory {
+  id: string;
+  label: string;
+  icon: string;
+  items: OccasionItem[];
+}
+
+const OCCASIONS_CATEGORIES: OccasionCategory[] = [
+  {
+    id: 'familia',
+    label: 'Familia & Emocional',
+    icon: '💖',
+    items: [
+      { id: 'cumpleanos-madre', name: 'Cumpleaños Madre / Mamá', badge: 'MÁS POPULAR', description: 'Serenata sorpresa con violines y ramo de flores.', defaultEnsemble: 'cuarteto-imperial' },
+      { id: 'cumpleanos-padre', name: 'Cumpleaños Padre / Papá', description: 'Brindis charro con trompetas y canciones de honor.', defaultEnsemble: 'cuarteto-imperial' },
+      { id: 'cumpleanos-abuelos', name: 'Cumpleaños Abuela / Abuelo', description: 'Calibración acústica suave y música dorada.', defaultEnsemble: 'clasico-esencial' },
+      { id: 'boda-oro-plata', name: 'Bodas de Oro / Plata (25 y 50 Años)', badge: 'GALA', description: 'Homenaje a una vida entera juntos con ensamble imperial.', defaultEnsemble: 'quinteto-honor' },
+      { id: 'bautizo-comunion', name: 'Bautizo / Primera Comunión VIP', description: 'Música alegre y distinguida para reunión familiar.', defaultEnsemble: 'clasico-esencial' }
+    ]
+  },
+  {
+    id: 'bodas',
+    label: 'Bodas & Parejas',
+    icon: '💍',
+    items: [
+      { id: 'boda-nupcial', name: 'Boda VIP / Entrada Nupcial & Banquete', badge: 'PREMIUM', description: 'Entrada solemne de novios, cóctel y fiesta de gala.', defaultEnsemble: 'quinteto-honor' },
+      { id: 'pedida-mano', name: 'Pedida de Mano / Anillo Sorpresa', badge: 'ROMÁNTICO', description: 'Aparición íntima con el tenor Edwin Agudelo.', defaultEnsemble: 'clasico-esencial' },
+      { id: 'aniversario-pareja', name: 'Aniversario de Pareja / Esposa', description: 'Serenata nocturna de alta distinción.', defaultEnsemble: 'cuarteto-imperial' },
+      { id: 'reconciliacion-pareja', name: 'Reconciliación & Detalle de Amor', description: 'Música del corazón para tender puentes inolvidables.', defaultEnsemble: 'clasico-esencial' }
+    ]
+  },
+  {
+    id: 'amigos',
+    label: 'Amigos & Hitos',
+    icon: '🎉',
+    items: [
+      { id: 'cumpleanos-amigo', name: 'Cumpleaños Amiga / Amigo VIP', description: 'Fiesta charra de pura diversión y alegría grupal.', defaultEnsemble: 'cuarteto-imperial' },
+      { id: 'jubilacion-homenaje', name: 'Jubilación & Despedida de Honor', badge: 'HOMENAJE', description: 'Reconocimiento a una gran trayectoria vital y laboral.', defaultEnsemble: 'cuarteto-imperial' },
+      { id: 'graduacion-hijo', name: 'Graduación & Éxito Académico', description: 'Celebración de fin de grado y metas cumplidas.', defaultEnsemble: 'clasico-esencial' },
+      { id: 'despedida-soltero', name: 'Despedida de Soltera / Soltero', description: 'Show festivo de alta energía y diversión.', defaultEnsemble: 'premium-gala' }
+    ]
+  },
+  {
+    id: 'b2b',
+    label: 'Corporativo & Empresa',
+    icon: '🏢',
+    items: [
+      { id: 'gala-empresa', name: 'Cena de Gala / Convención Anual', badge: 'B2B ÉLITE', description: 'Sonorización 12 W/pax y show musical corporativo de impacto.', defaultEnsemble: 'octeto-magistral' },
+      { id: 'entrega-premios', name: 'Entrega de Premios & Gala de Honor', description: 'Protocolo de etiqueta con dirección musical y fanfarrias.', defaultEnsemble: 'sinfonico-royal' },
+      { id: 'lanzamiento-producto', name: 'Lanzamiento de Marca / Cóctel VIP', description: 'Música en vivo sincronizada con iluminación espectacular.', defaultEnsemble: 'quinteto-honor' }
+    ]
+  },
+  {
+    id: 'b2g',
+    label: 'Ayuntamientos & B2G',
+    icon: '🏛️',
+    items: [
+      { id: 'fiestas-patronales', name: 'Fiestas Patronales & Semanas Culturales', badge: 'ART. 118 LCSP', description: 'Pliegos técnicos homologados y facturación FacturaE (DIR3).', defaultEnsemble: 'banda-monumental' },
+      { id: 'circuito-vimume-senior', name: 'Ciclo Musical Tercera Edad (Plan VIMUME)', badge: 'ODS 2030', description: 'Estimulación neuroacústica y bienestar emocional para mayores.', defaultEnsemble: 'cuarteto-imperial' },
+      { id: 'gala-navidad-reyes', name: 'Concierto de Navidad / Reyes Magos', description: 'Repertorio solemne y festivo para plazas y auditorios.', defaultEnsemble: 'sinfonico-royal' }
+    ]
+  }
+];
+
 const MultiPricerContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // Estados de Configuración
+  const [activeOccasionCategory, setActiveOccasionCategory] = useState<string>('familia');
+  const [selectedOccasion, setSelectedOccasion] = useState<string>('Cumpleaños Madre / Mamá');
   const [activeCategory, setActiveCategory] = useState<string>('BOOKING ARTÍSTICO DE GALA');
   const [selectedServices, setSelectedServices] = useState<string[]>(['cuarteto-imperial']);
   const [selectedProvince, setSelectedProvince] = useState<string>('Madrid');
@@ -86,13 +163,13 @@ const MultiPricerContent = () => {
     name: '',
     email: '',
     phone: '',
-    occasion: 'Gala de Empresa / Boda VIP',
+    occasion: 'Cumpleaños Madre / Mamá',
     eventDate: ''
   });
 
   const [artistTarget, setArtistTarget] = useState<string | null>(null);
 
-  // 📥 AUTO-LOAD FROM URL PARAMS (ITEMS & ARTISTA TARGET)
+  // 📥 AUTO-LOAD FROM URL PARAMS (ITEMS, OCASIÓN & ARTISTA TARGET)
   useEffect(() => {
     const artista = searchParams.get('artista') || searchParams.get('artist');
     if (artista && (artista.toLowerCase().includes('edwin') || artista.toLowerCase().includes('agudelo'))) {
@@ -100,6 +177,12 @@ const MultiPricerContent = () => {
       setSelectedServices(['cuarteto-imperial']);
       setActiveCategory('BOOKING ARTÍSTICO DE GALA');
       setSelectedProvince('Madrid');
+    }
+
+    const oc = searchParams.get('ocasion') || searchParams.get('occasion');
+    if (oc) {
+      setSelectedOccasion(oc);
+      setLeadData(prev => ({ ...prev, occasion: oc }));
     }
 
     const items = searchParams.get('items');
@@ -115,6 +198,11 @@ const MultiPricerContent = () => {
       }
     }
   }, [searchParams]);
+
+  // Actualizar leadData.occasion cuando cambia selectedOccasion
+  useEffect(() => {
+    setLeadData(prev => ({ ...prev, occasion: selectedOccasion }));
+  }, [selectedOccasion]);
 
   // --- ADVANCED FORMULA ENGINE (S-CLASS) ---
   useEffect(() => {
@@ -160,6 +248,13 @@ const MultiPricerContent = () => {
     );
   };
 
+  const handleSelectOccasion = (item: OccasionItem) => {
+    setSelectedOccasion(item.name);
+    if (item.defaultEnsemble && PRICING_CATALOG[item.defaultEnsemble]) {
+      setSelectedServices(prev => [item.defaultEnsemble!, ...prev.filter(s => s !== item.defaultEnsemble && !Object.keys(PRICING_CATALOG).includes(s))]);
+    }
+  };
+
   const handleInstantStripeDeposit = async () => {
     setLoading(true);
     try {
@@ -169,12 +264,13 @@ const MultiPricerContent = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: depositVal,
-          concept: `Depósito Garantía S-Class (${quote?.sha256Token || '72H-LOCK'})`,
+          concept: `Depósito Garantía S-Class (${quote?.sha256Token || '72H-LOCK'}) - ${selectedOccasion}`,
           metadata: {
             sha256Token: quote?.sha256Token || '',
             formatId: selectedServices[0] || 'clasico-esencial',
             pax: pax,
             province: selectedProvince,
+            occasion: selectedOccasion,
             finalTotal: quote?.finalTotal || 0,
             deposit: depositVal
           }
@@ -207,7 +303,7 @@ const MultiPricerContent = () => {
       const result = await createDossierFromLead({
         contactName: leadData.name,
         contactEmail: leadData.email,
-        occasion: `${leadData.occasion} [${selectedProvince}] (Total: ${quote?.finalTotal || 0}€)`,
+        occasion: `${selectedOccasion} [${selectedProvince}] (Total: ${quote?.finalTotal || 0}€)`,
         selectedAssets: selectedNames
       });
 
@@ -224,32 +320,372 @@ const MultiPricerContent = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 relative text-white space-y-10 pb-36 lg:pb-16 font-sans">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8 relative text-white space-y-12 pb-36 lg:pb-16 font-sans">
       
-      {/* 🏛️ ENCABEZADO DE ARQUITECTURA DE VALOR S-CLASS */}
-      <div className="text-center space-y-4 max-w-4xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 text-[#ecb613] text-[10px] font-black tracking-[0.4em] uppercase font-mono">
-          <Shield size={14} /> Ingeniería de Precios & Reencuadre de Valor
+      {/* 🏛️ ENCABEZADO DE ENTRADA DIRECTA (FIRST VIEWPORT) */}
+      <div className="text-center space-y-3 max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 text-[#ecb613] text-[9px] font-black tracking-[0.3em] uppercase font-mono">
+          <Sparkles size={12} /> Cotizador Instantáneo de Alta Fidelidad
         </div>
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black italic uppercase tracking-tighter font-syne leading-tight">
-          Cotizador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">Tranquilidad & Éxito</span>
+        <h1 className="text-3xl sm:text-5xl font-black italic uppercase tracking-tight font-syne leading-tight text-white">
+          CONFIGURA TU <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">PRESUPUESTO EN VIVO</span>
         </h1>
-        <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-          No compres horas de sonido o música sin garantías. Cotiza el blindaje acústico, la solvencia legal y el impacto emocional de tu evento con el estándar S-Class de Productora EAR.
+        <p className="text-white/60 text-xs sm:text-sm font-light">
+          Selecciona tu ocasión, formación artística y asistentes para calcular la tarifa exacta con Price-Lock 72h.
         </p>
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {/* BLOQUE 1: DIAGNÓSTICO DE RIESGO EVITADO (COSTO DEL PROBLEMA) */}
+      {/* 🌟 PASO 1: SELECTOR DE OCASIÓN & EVENTO TIPO AIRBNB (FIRST VIEWPORT) */}
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="p-6 sm:p-8 rounded-[2.5rem] bg-[#09090d] border border-[#ecb613]/25 shadow-[0_20px_60px_rgba(0,0,0,0.85)] space-y-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-white/5 pb-4">
+          <div className="flex items-center gap-2.5">
+            <span className="w-6 h-6 rounded-full bg-[#ecb613] text-black font-black text-xs flex items-center justify-center font-mono">
+              1
+            </span>
+            <div>
+              <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] tracking-widest block">
+                Propósito del Evento
+              </span>
+              <h2 className="text-lg font-black uppercase text-white font-syne">
+                ¿Qué Ocasión o Celebración Vamos a Blindar?
+              </h2>
+            </div>
+          </div>
+          <div className="text-[11px] font-mono text-white/50 bg-white/5 px-3 py-1 rounded-xl border border-white/10">
+            Seleccionado: <span className="text-[#ecb613] font-bold">{selectedOccasion}</span>
+          </div>
+        </div>
+
+        {/* Categorías Tipo Airbnb (Tabs Principales) */}
+        <div className="flex overflow-x-auto pb-2 gap-2 scrollbar-none border-b border-white/5">
+          {OCCASIONS_CATEGORIES.map(cat => {
+            const isActive = activeOccasionCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveOccasionCategory(cat.id)}
+                className={`flex items-center gap-2 px-4 py-3 rounded-2xl text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all ${
+                  isActive 
+                    ? 'bg-gradient-to-r from-[#ecb613] to-amber-400 text-black shadow-lg shadow-[#ecb613]/25 scale-105' 
+                    : 'bg-white/5 text-white/60 hover:text-white hover:bg-white/10 border border-white/5'
+                }`}
+              >
+                <span>{cat.icon}</span>
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Tarjetas / Chips de Ocasión Activa */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 pt-2">
+          {OCCASIONS_CATEGORIES.find(c => c.id === activeOccasionCategory)?.items.map(item => {
+            const isSelected = selectedOccasion === item.name;
+            return (
+              <div
+                key={item.id}
+                onClick={() => handleSelectOccasion(item)}
+                className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-2 relative overflow-hidden group ${
+                  isSelected 
+                    ? 'bg-[#ecb613]/15 border-[#ecb613] shadow-md shadow-[#ecb613]/10 scale-[1.02]' 
+                    : 'bg-black/40 border-white/5 hover:border-white/20 hover:bg-white/5'
+                }`}
+              >
+                {item.badge && (
+                  <span className="absolute top-2.5 right-2.5 text-[8px] font-mono font-black uppercase px-2 py-0.5 rounded-full bg-[#ecb613]/20 text-[#ecb613] border border-[#ecb613]/30">
+                    {item.badge}
+                  </span>
+                )}
+                <div>
+                  <h4 className="text-xs font-black uppercase text-white font-syne group-hover:text-[#ecb613] transition-colors">
+                    {item.name}
+                  </h4>
+                  <p className="text-[10px] text-white/50 leading-relaxed mt-1">
+                    {item.description}
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-2 text-[10px] font-mono border-t border-white/5">
+                  <span className="text-white/40">Elegir</span>
+                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] ${
+                    isSelected ? 'bg-[#ecb613] text-black font-bold' : 'border border-white/20 text-transparent'
+                  }`}>
+                    ✓
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* 🌟 PASO 2: CALCULADORA DE SERVICIOS & PARÁMETROS + SIDEBAR */}
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        {/* Columna Izquierda: Catálogo Interactivo */}
+        <div className="lg:col-span-8 space-y-6">
+          
+          <div className="flex items-center gap-2.5 border-b border-white/5 pb-3">
+            <span className="w-6 h-6 rounded-full bg-[#ecb613] text-black font-black text-xs flex items-center justify-center font-mono">
+              2
+            </span>
+            <h2 className="text-base sm:text-lg font-black uppercase text-white font-syne">
+              Selección de Ensamble Artístico & Producción Técnica
+            </h2>
+          </div>
+
+          {/* Selector de Categorías de Servicio */}
+          <div className="flex flex-wrap gap-2">
+            {Object.keys(SERVICES_CATALOG).map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                  activeCategory === cat 
+                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20' 
+                    : 'bg-white/5 text-white/60 hover:text-white border border-white/5'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Grid de Ítems de Servicio */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {SERVICES_CATALOG[activeCategory].map(service => {
+              const isSelected = selectedServices.includes(service.id);
+              return (
+                <div
+                  key={service.id}
+                  onClick={() => toggleService(service.id)}
+                  className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
+                    isSelected 
+                      ? 'bg-[#ecb613]/10 border-[#ecb613] shadow-lg shadow-[#ecb613]/10' 
+                      : 'bg-[#09090d] border-white/10 hover:border-white/20'
+                  }`}
+                >
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-start">
+                      <div className={`p-2.5 rounded-xl ${isSelected ? 'bg-[#ecb613] text-black' : 'bg-white/5 text-white/60'}`}>
+                        {service.icon}
+                      </div>
+                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${
+                        isSelected ? 'bg-[#ecb613] border-[#ecb613] text-black font-bold' : 'border-white/20 text-transparent'
+                      }`}>
+                        ✓
+                      </div>
+                    </div>
+                    <h4 className="text-sm font-black uppercase text-white font-syne">{service.name}</h4>
+                    <p className="text-[11px] text-white/50 leading-relaxed">{service.desc}</p>
+                  </div>
+
+                  <div className="flex justify-between items-center pt-3 border-t border-white/5 text-xs font-mono">
+                    <span className="text-white/40 uppercase text-[10px]">Tarifa Base</span>
+                    <span className="font-bold text-white text-sm">{service.price} €</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Ajustes de Aforo, Ubicación y Plazo */}
+          <div className="p-6 rounded-2xl bg-[#09090d] border border-white/10 space-y-4">
+            <div className="flex items-center gap-2 pb-2 border-b border-white/5">
+              <span className="w-5 h-5 rounded-full bg-[#ecb613] text-black font-black text-[10px] flex items-center justify-center font-mono">
+                3
+              </span>
+              <h3 className="text-xs font-black uppercase text-white font-syne tracking-wider">
+                Parámetros Logísticos & Aforo
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-mono font-bold uppercase text-[#ecb613] flex items-center gap-1.5">
+                  <Users size={14} /> Asistentes (PAX)
+                </label>
+                <input
+                  type="number"
+                  min="10"
+                  max="10000"
+                  value={pax}
+                  onChange={e => setPax(parseInt(e.target.value) || 0)}
+                  className="w-full bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-bold font-mono text-sm outline-none focus:border-[#ecb613]"
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-mono font-bold uppercase text-[#ecb613] flex items-center gap-1.5">
+                  <MapPin size={14} /> Provincia
+                </label>
+                <select
+                  value={selectedProvince}
+                  onChange={e => setSelectedProvince(e.target.value)}
+                  className="w-full bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-bold font-mono text-xs outline-none focus:border-[#ecb613]"
+                >
+                  {Object.entries(PROVINCE_RATES).map(([prov, rate]) => (
+                    <option key={prov} value={prov} className="bg-black">
+                      {prov} — {rate.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-mono font-bold uppercase text-[#ecb613] flex items-center gap-1.5">
+                  <Clock size={14} /> Plazo de Activación
+                </label>
+                <select
+                  value={urgencyLevel}
+                  onChange={e => setUrgencyLevel(e.target.value as any)}
+                  className="w-full bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-bold font-mono text-xs outline-none focus:border-[#ecb613]"
+                >
+                  <option value="ESTANDAR" className="bg-black">Estándar (&gt; 30 días)</option>
+                  <option value="PRIORITARIA" className="bg-black">Prioritaria (&lt; 15 días / +10%)</option>
+                  <option value="EXPRESS" className="bg-black">Express Inmediata (&lt; 72h / +25%)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        {/* SIDEBAR: INVERSIÓN, DESGLOSE DE TRANQUILIDAD & STRIPE ESCROW */}
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <div className="lg:col-span-4 sticky top-28 space-y-6">
+          <div className="bg-[#09090d] border border-white/10 rounded-[2.5rem] p-6 lg:p-8 space-y-6 shadow-2xl">
+            <div className="flex justify-between items-center border-b border-white/5 pb-4">
+              <div className="space-y-0.5">
+                <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] block">
+                  Garantía de Inversión
+                </span>
+                <h3 className="text-lg font-black uppercase text-white font-syne">
+                  Presupuesto S-Class
+                </h3>
+              </div>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-white/60">
+                {selectedServices.length} Conceptos
+              </span>
+            </div>
+
+            {quote ? (
+              <div className="space-y-4">
+                <div className="flex items-baseline justify-between border-b border-white/5 pb-3">
+                  <span className="text-xs text-white/50 uppercase font-mono">Inversión Estimada:</span>
+                  <div className="text-right">
+                    <span className="text-3xl font-black text-white italic tracking-tight font-mono">
+                      {quote.finalTotal} €
+                    </span>
+                    <span className="text-[10px] text-white/40 block font-mono">IVA excluido</span>
+                  </div>
+                </div>
+
+                <div className="space-y-1.5 bg-black/40 p-3.5 rounded-2xl border border-white/5 text-xs font-mono">
+                  <div className="flex justify-between text-white/60">
+                    <span>Ocasión:</span>
+                    <span className="text-[#ecb613] font-bold truncate max-w-[170px]">{selectedOccasion}</span>
+                  </div>
+                  <div className="flex justify-between text-white/60">
+                    <span>Aforo & Ubicación:</span>
+                    <span className="text-white">{pax} PAX • {selectedProvince}</span>
+                  </div>
+                  <div className="flex justify-between text-white/60">
+                    <span>Depósito Garantía:</span>
+                    <span className="text-emerald-400 font-bold">{quote.depositAmount ?? 100} €</span>
+                  </div>
+                </div>
+
+                {/* Especificaciones Técnicas */}
+                <div className="space-y-1 bg-white/5 p-3 rounded-xl border border-white/5">
+                  <div className="text-[10px] font-mono text-white/40 uppercase font-bold mb-1">
+                    Blindaje Incluido:
+                  </div>
+                  {quote.technicalSpecs.map((spec, i) => (
+                    <div key={i} className="flex items-start gap-2 text-white/70 text-[11px]">
+                      <span className="text-[#ecb613]">&gt;</span>
+                      <span>{spec}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <PriceLockBadge 
+                  hash={quote.sha256Token} 
+                  total={quote.finalTotal} 
+                  split={quote.split} 
+                />
+              </div>
+            ) : (
+              <div className="p-6 text-center text-white/30 font-mono text-xs">
+                Calculando físicas acústicas...
+              </div>
+            )}
+
+            {/* Botones de Acción */}
+            <div className="space-y-3 pt-2">
+              <button
+                onClick={handleInstantStripeDeposit}
+                disabled={loading}
+                className="w-full py-4 bg-[#ecb613] hover:bg-amber-300 text-black font-black uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/20 active:scale-95"
+              >
+                <CreditCard size={16} /> Bloquear Fecha con Depósito ({quote?.depositAmount ?? 100}€)
+              </button>
+
+              <button
+                onClick={() => setShowLeadForm(true)}
+                className="w-full py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-2 border border-white/10"
+              >
+                <FileText size={16} /> Emitir Dossier Oficial PDF
+              </button>
+            </div>
+            
+            {/* Click-to-call & WhatsApp */}
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <a 
+                href={CENTRALITA.tel}
+                className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-wider border border-white/10"
+              >
+                <Phone className="w-4 h-4 text-[#ecb613]" />
+                Llamar
+              </a>
+              <a 
+                href={artistTarget ? `https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero consultar disponibilidad para mi evento (${selectedOccasion}) en ${selectedProvince} a través de Productora EAR.`)}` : generateWhatsAppLink({
+                  profile: 'cotizador',
+                  service: `Presupuesto Personalizado - ${selectedOccasion}`,
+                  location: selectedProvince,
+                  intent: `solicito viabilidad para ${selectedOccasion} con presupuesto total estimado de ${quote?.finalTotal || 0}€`,
+                  slug: 'presupuesto'
+                }).url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-wider"
+              >
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* 🌟 BLOQUE DE REFUEZO DE VALOR (REUBICADO ABAJO DE LA CALCULADORA) */}
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      
+      {/* FASE 1: DIAGNÓSTICO DE RIESGO TÉCNICO & BLINDAJE 12 W/PAX */}
       <div className="p-6 sm:p-8 rounded-[2.5rem] bg-[#09090d] border border-white/10 space-y-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/5 pb-4">
           <div>
-            <span className="text-[9px] font-mono font-bold uppercase text-rose-400 tracking-widest block">
-              Fase 1: Diagnóstico de Riesgo Técnico
+            <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] tracking-widest block">
+              Garantía Técnica Inmutable
             </span>
             <h2 className="text-xl font-black uppercase text-white font-syne">
-              ¿Qué Riesgos Evitas Contratando Productora EAR?
+              ¿Por Qué Contratar el Estándar S-Class de Productora EAR?
             </h2>
           </div>
           <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
@@ -300,9 +736,7 @@ const MultiPricerContent = () => {
         </div>
       </div>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {/* BLOQUE 2: EL ANTES VS. EL DESPUÉS (THE SHIFT / TRANSFORMACIÓN) */}
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {/* FASE 2: TABLA COMPARATIVA RIESGO AMATEUR VS. ESTÁNDAR S-CLASS */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
         {/* LA OPCIÓN CONVENCIONAL / AMATEUR */}
@@ -367,226 +801,6 @@ const MultiPricerContent = () => {
 
       </div>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {/* BLOQUE 3: CONFIGURADOR DE SERVICIOS & PARÁMETROS */}
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* Columna Izquierda: Catálogo Interactivo */}
-        <div className="lg:col-span-8 space-y-6">
-          
-          {/* Selector de Categorías */}
-          <div className="flex flex-wrap gap-2 border-b border-white/5 pb-4">
-            {Object.keys(SERVICES_CATALOG).map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
-                  activeCategory === cat 
-                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20' 
-                    : 'bg-white/5 text-white/60 hover:text-white border border-white/5'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Grid de Ítems */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {SERVICES_CATALOG[activeCategory].map(service => {
-              const isSelected = selectedServices.includes(service.id);
-              return (
-                <div
-                  key={service.id}
-                  onClick={() => toggleService(service.id)}
-                  className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
-                    isSelected 
-                      ? 'bg-[#ecb613]/10 border-[#ecb613] shadow-lg shadow-[#ecb613]/10' 
-                      : 'bg-[#09090d] border-white/10 hover:border-white/20'
-                  }`}
-                >
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-start">
-                      <div className={`p-2.5 rounded-xl ${isSelected ? 'bg-[#ecb613] text-black' : 'bg-white/5 text-white/60'}`}>
-                        {service.icon}
-                      </div>
-                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${
-                        isSelected ? 'bg-[#ecb613] border-[#ecb613] text-black font-bold' : 'border-white/20 text-transparent'
-                      }`}>
-                        ✓
-                      </div>
-                    </div>
-                    <h4 className="text-sm font-black uppercase text-white font-syne">{service.name}</h4>
-                    <p className="text-[11px] text-white/50 leading-relaxed">{service.desc}</p>
-                  </div>
-
-                  <div className="flex justify-between items-center pt-3 border-t border-white/5 text-xs font-mono">
-                    <span className="text-white/40 uppercase text-[10px]">Tarifa Base</span>
-                    <span className="font-bold text-white text-sm">{service.price} €</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Ajustes de Aforo, Ubicación y Plazo */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-white/5">
-            <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10 space-y-2">
-              <label className="text-[10px] font-mono font-bold uppercase text-[#ecb613] flex items-center gap-1.5">
-                <Users size={14} /> Asistentes (PAX)
-              </label>
-              <input
-                type="number"
-                min="10"
-                max="10000"
-                value={pax}
-                onChange={e => setPax(parseInt(e.target.value) || 0)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-bold font-mono text-sm outline-none focus:border-[#ecb613]"
-              />
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10 space-y-2">
-              <label className="text-[10px] font-mono font-bold uppercase text-[#ecb613] flex items-center gap-1.5">
-                <MapPin size={14} /> Provincia
-              </label>
-              <select
-                value={selectedProvince}
-                onChange={e => setSelectedProvince(e.target.value)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-bold font-mono text-xs outline-none focus:border-[#ecb613]"
-              >
-                {Object.entries(PROVINCE_RATES).map(([prov, rate]) => (
-                  <option key={prov} value={prov} className="bg-black">
-                    {prov} — {rate.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="p-4 rounded-2xl bg-[#09090d] border border-white/10 space-y-2">
-              <label className="text-[10px] font-mono font-bold uppercase text-[#ecb613] flex items-center gap-1.5">
-                <Clock size={14} /> Plazo de Activación
-              </label>
-              <select
-                value={urgencyLevel}
-                onChange={e => setUrgencyLevel(e.target.value as any)}
-                className="w-full bg-black/50 border border-white/10 rounded-xl p-2.5 text-white font-bold font-mono text-xs outline-none focus:border-[#ecb613]"
-              >
-                <option value="ESTANDAR" className="bg-black">Estándar (&gt; 30 días)</option>
-                <option value="PRIORITARIA" className="bg-black">Prioritaria (&lt; 15 días / +10%)</option>
-                <option value="EXPRESS" className="bg-black">Express Inmediata (&lt; 72h / +25%)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        {/* BLOQUE 4: INVERSIÓN, DESGLOSE DE TRANQUILIDAD & STRIPE ESCROW */}
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div className="lg:col-span-4 sticky top-28 space-y-6">
-          <div className="bg-[#09090d] border border-white/10 rounded-[2.5rem] p-6 lg:p-8 space-y-6 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-white/5 pb-4">
-              <div className="space-y-0.5">
-                <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] block">
-                  Garantía de Inversión
-                </span>
-                <h3 className="text-lg font-black uppercase text-white font-syne">
-                  Presupuesto S-Class
-                </h3>
-              </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-white/60">
-                {selectedServices.length} Conceptos
-              </span>
-            </div>
-
-            {/* Lista de Ítems Seleccionados */}
-            <div className="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs">
-              {Object.values(SERVICES_CATALOG).flat()
-                .filter(s => selectedServices.includes(s.id))
-                .map(s => (
-                  <div key={s.id} className="flex justify-between items-center text-white/70 py-1 border-b border-white/5">
-                    <span className="truncate pr-2">{s.name}</span>
-                    <span className="font-mono font-bold text-white shrink-0">{s.price} €</span>
-                  </div>
-                ))}
-            </div>
-
-            {/* S-Class Pricing Engine Output */}
-            {quote ? (
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2 font-mono text-xs">
-                  <div className="text-[#ecb613] text-[10px] font-black uppercase tracking-wider">
-                    Parámetros Acústicos & Logísticos:
-                  </div>
-                  {quote.technicalSpecs.map((spec, i) => (
-                    <div key={i} className="flex items-start gap-2 text-white/70 text-[11px]">
-                      <span className="text-[#ecb613]">&gt;</span>
-                      <span>{spec}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <PriceLockBadge 
-                  hash={quote.sha256Token} 
-                  total={quote.finalTotal} 
-                  split={quote.split} 
-                />
-              </div>
-            ) : (
-              <div className="p-6 text-center text-white/30 font-mono text-xs">
-                Calculando físicas acústicas...
-              </div>
-            )}
-
-            {/* Botones de Acción */}
-            <div className="space-y-3 pt-2">
-              <button
-                onClick={handleInstantStripeDeposit}
-                disabled={loading}
-                className="w-full py-4 bg-[#ecb613] hover:bg-amber-300 text-black font-black uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/20 active:scale-95"
-              >
-                <CreditCard size={16} /> Bloquear Fecha con Depósito ({quote?.depositAmount ?? 100}€)
-              </button>
-
-              <button
-                onClick={() => setShowLeadForm(true)}
-                className="w-full py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-2 border border-white/10"
-              >
-                <FileText size={16} /> Emitir Dossier Oficial PDF
-              </button>
-            </div>
-            
-            {/* Click-to-call & WhatsApp */}
-            <div className="grid grid-cols-2 gap-3 pt-2">
-              <a 
-                href={CENTRALITA.tel}
-                className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-wider border border-white/10"
-              >
-                <Phone className="w-4 h-4 text-[#ecb613]" />
-                Llamar
-              </a>
-              <a 
-                href={artistTarget ? `https://wa.me/34693693048?text=${encodeURIComponent("Hola Edwin, quiero consultar disponibilidad para mi evento a través de Productora EAR.")}` : generateWhatsAppLink({
-                  profile: 'cotizador',
-                  service: `Presupuesto Personalizado - ${selectedServices.length} conceptos`,
-                  location: selectedProvince,
-                  intent: `solicito viabilidad con presupuesto total estimado de ${quote?.finalTotal || 0}€`,
-                  slug: 'presupuesto'
-                }).url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 py-3 rounded-2xl font-bold transition-colors uppercase text-xs tracking-wider"
-              >
-                <MessageCircle className="w-4 h-4" />
-                WhatsApp
-              </a>
-            </div>
-
-          </div>
-        </div>
-
-      </div>
-
       {/* 🚀 FORM OVERLAY (DOSSIER & PROCESAMIENTO LEAD) */}
       <AnimatePresence>
         {showLeadForm && (
@@ -627,7 +841,7 @@ const MultiPricerContent = () => {
                       type="text" 
                       value={leadData.name}
                       onChange={e => setLeadData({...leadData, name: e.target.value})}
-                      placeholder="Ej. Boda Carmen & Alejandro / Ayuntamiento"
+                      placeholder="Ej. Carmen & Alejandro / Ayuntamiento"
                       className="w-full h-12 bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 text-white focus:border-[#ecb613] outline-none"
                     />
                   </div>
@@ -648,19 +862,29 @@ const MultiPricerContent = () => {
                   </div>
                 </div>
 
+                <div className="space-y-1.5">
+                  <label className="text-[9px] font-black uppercase tracking-widest text-white/60">Teléfono (WhatsApp)</label>
+                  <div className="relative">
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-[#ecb613]" size={16} />
+                    <input 
+                      type="tel" 
+                      value={leadData.phone}
+                      onChange={e => setLeadData({...leadData, phone: e.target.value})}
+                      placeholder="+34 600 000 000"
+                      className="w-full h-12 bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 text-white focus:border-[#ecb613] outline-none"
+                    />
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-white/60">Tipo de Evento</label>
-                    <select 
-                      value={leadData.occasion}
-                      onChange={e => setLeadData({...leadData, occasion: e.target.value})}
-                      className="w-full h-12 bg-black border border-white/10 rounded-xl px-3 text-white focus:border-[#ecb613] outline-none"
-                    >
-                      <option>Boda VIP / Particular</option>
-                      <option>Gala Corporativa / Empresa</option>
-                      <option>Fiestas Patronales / B2G</option>
-                      <option>Homenaje Familiar / Serenata</option>
-                    </select>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-white/60">Ocasión Seleccionada</label>
+                    <input 
+                      type="text" 
+                      readOnly
+                      value={selectedOccasion}
+                      className="w-full h-12 bg-black/60 border border-white/10 rounded-xl px-3 text-[#ecb613] font-bold outline-none"
+                    />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-[9px] font-black uppercase tracking-widest text-white/60">Fecha Estimada</label>
@@ -679,7 +903,7 @@ const MultiPricerContent = () => {
                   className="w-full py-4 rounded-xl bg-[#ecb613] text-black font-black uppercase tracking-wider text-xs hover:bg-amber-300 transition-all flex items-center justify-center gap-2"
                 >
                   {loading ? <Loader2 className="animate-spin" size={16} /> : <FileText size={16} />}
-                  <span>Generar y Descargar Dossier</span>
+                  <span>Generar y Enviar Dossier Oficial</span>
                 </button>
               </form>
             </motion.div>
@@ -691,8 +915,8 @@ const MultiPricerContent = () => {
       <div className="lg:hidden fixed bottom-16 inset-x-0 z-[80] bg-[#121212]/95 backdrop-blur-xl border-t border-[#ecb613]/30 px-4 py-3 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <span className="text-[9px] uppercase font-mono tracking-widest text-white/40 block">
-              Inversión ({selectedServices.length} ítems)
+            <span className="text-[9px] uppercase font-mono tracking-widest text-white/40 block truncate max-w-[140px]">
+              {selectedOccasion}
             </span>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-black text-white italic font-mono">{quote?.finalTotal || 0}€</span>
