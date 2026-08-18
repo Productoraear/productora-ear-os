@@ -20,15 +20,15 @@ export interface TrelloLeadPayload {
 }
 
 export class TrelloService {
-  private static readonly API_KEY = process.env.TRELLO_API_KEY;
-  private static readonly TOKEN = process.env.TRELLO_TOKEN;
-  private static readonly LIST_ID = process.env.TRELLO_LIST_ID_INBOUND || process.env.TRELLO_LIST_ID;
-  private static readonly MAKE_WEBHOOK = process.env.NEXT_PUBLIC_MAKE_WEBHOOK_TRELLO || process.env.TRELLO_WEBHOOK_URL;
-
   /**
    * Crea una tarjeta estructurada en el tablero de Trello o la envía vía Webhook de Make/Zapier.
    */
   public static async createCard(payload: TrelloLeadPayload): Promise<{ success: boolean; cardId?: string; message: string }> {
+    const apiKey = (process.env.TRELLO_API_KEY || '').replace(/['"]/g, '').trim();
+    const token = (process.env.TRELLO_TOKEN || '').replace(/['"]/g, '').trim();
+    const listId = (process.env.TRELLO_LIST_ID_INBOUND || process.env.TRELLO_LIST_ID || '').replace(/['"]/g, '').trim();
+    const makeWebhook = (process.env.NEXT_PUBLIC_MAKE_WEBHOOK_TRELLO || process.env.TRELLO_WEBHOOK_URL || '').replace(/['"]/g, '').trim();
+
     const title = `[LEAD EAR OS] ${payload.contactName} - ${payload.occasion} ${payload.totalAmount ? `(${payload.totalAmount}€)` : ''}`;
     
     const description = `
@@ -54,17 +54,18 @@ https://www.productoraear.com/dossier/${payload.dossierId || ''}
     `.trim();
 
     // 1. INTENTO VÍA API NATIVA DE TRELLO (Si existen credenciales)
-    if (this.API_KEY && this.TOKEN && this.LIST_ID) {
+    if (apiKey && token && listId) {
       try {
-        const url = `https://api.trello.com/1/cards?key=${this.API_KEY}&token=${this.TOKEN}&idList=${this.LIST_ID}&name=${encodeURIComponent(title)}&desc=${encodeURIComponent(description)}&pos=top`;
+        const url = `https://api.trello.com/1/cards?key=${apiKey}&token=${token}&idList=${listId}&name=${encodeURIComponent(title)}&desc=${encodeURIComponent(description)}&pos=top`;
         const res = await fetch(url, { method: 'POST' });
         
         if (res.ok) {
           const cardData = await res.json();
-          console.log(`📋 [TRELLO NATIVE API] Tarjeta creada con éxito: ${cardData.id}`);
-          return { success: true, cardId: cardData.id, message: 'Tarjeta creada exitosamente en Trello.' };
+          console.log(`📋 [TRELLO NATIVE API] Tarjeta creada con éxito: ${cardData.id} (${cardData.shortUrl})`);
+          return { success: true, cardId: cardData.id, message: `Tarjeta creada exitosamente en Trello: ${cardData.shortUrl}` };
         } else {
-          console.warn('⚠️ [TRELLO API WARNING] Fallo en API nativa, recurriendo a webhook fallback:', await res.text());
+          const errorText = await res.text();
+          console.warn('⚠️ [TRELLO API WARNING] Error en API nativa:', errorText);
         }
       } catch (apiErr) {
         console.error('❌ [TRELLO API ERROR]:', apiErr);
@@ -72,9 +73,9 @@ https://www.productoraear.com/dossier/${payload.dossierId || ''}
     }
 
     // 2. FALLBACK VÍA WEBHOOK DE MAKE / ZAPIER / AUTOMATION
-    if (this.MAKE_WEBHOOK && !this.MAKE_WEBHOOK.includes('placeholder')) {
+    if (makeWebhook && !makeWebhook.includes('placeholder')) {
       try {
-        const webhookRes = await fetch(this.MAKE_WEBHOOK, {
+        const webhookRes = await fetch(makeWebhook, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
