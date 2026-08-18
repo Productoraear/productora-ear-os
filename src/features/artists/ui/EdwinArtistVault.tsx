@@ -15,6 +15,7 @@ import { ManifestoSection } from './ManifestoSection';
 import { TruthNuggets } from '@/features/telemetry/TruthNuggets';
 import { ArtistBookingFlow } from '@/app/components/artists/ArtistBookingFlow';
 import { EdwinLegacyPlayer } from './EdwinLegacyPlayer';
+import { EdwinVaultGalleryGrid } from './EdwinVaultGalleryGrid';
 import { EdwinServicesGrid } from './EdwinServicesGrid';
 import { EdwinPressAndMetrics } from './EdwinPressAndMetrics';
 import { EdwinMariachiCulture } from './EdwinMariachiCulture';
@@ -118,9 +119,10 @@ export const EdwinArtistVault: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. BÓVEDA SONORA: REPRODUCTOR MULTIMEDIA S-CLASS */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
+      {/* 3. BÓVEDA MULTIMEDIA: REPRODUCTOR DUAL S-CLASS & GALERÍA DE 6 CAPAS */}
+      <section id="legacy-player-section" className="py-20 px-6 max-w-7xl mx-auto space-y-20">
         <EdwinLegacyPlayer />
+        <EdwinVaultGalleryGrid />
       </section>
 
       {/* 4. TRAYECTORIA TRIDIMENSIONAL & HITOS */}

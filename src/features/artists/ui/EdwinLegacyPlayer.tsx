@@ -58,7 +58,7 @@ const TRACKS: TrackItem[] = [
     year: '2014',
     venue: 'Teatro La Latina, Madrid (1.000+ Asistentes)',
     description: 'Presentada ante el cuerpo diplomático y la comunidad hispana. Una declaración de principios sobre la lucha del emigrante y la forja de la identidad artística.',
-    lyricsExcerpt: '"No me mires con lástima, mírame con valor... porque he cruzado mares construyendo mi propia realidad con la voz que Dios me dio."',
+    lyricsExcerpt: 'Y cuánto me dolió dejar mi casa y tierra, mi gente. Esta es mi propia realidad, ¿cuál es la tuya?\n\nY tuve que dejar mi tierra buscando mi porvenir, luchando por todo aquello que no hay en donde nací. Tan dolorosa partida, ¿por qué tengo que sufrir? Si amo tanto a mi gente, mis costumbres, mi país.\n\nYo no puedo comprender por qué tuve que dejar mi familia y mis amigos que nunca voy a olvidar. Aunque todo se derrumbe, adelante seguiré, yo he venido por mis metas y por Dios que triunfaré.\n\nYa mis padres están viejos y a mí me duele pensar que cuando regrese a casa yo no los voy a encontrar. Que el aroma de mis tierras y sus únicos paisajes me los llevo aquí en mi mente, cosas tan inolvidables.\n\nYo te pido, por favor, que me dejes disfrutar todo lo que yo tenía y que perdí por marchar, porque de nada valdría tener todo lo que tengo sin poderlo disfrutar con la gente que yo quiero.\n\nExtraño mi tierra, ¡ay, cuánto extraño mi gente! ¿Cómo me duele su ausencia? Extraño mi tierra con sus paisajes tan bellos... Voy a extrañarte, terruño mío, soñando siempre volver a ti.',
     genre: 'Ranchera Lírica de Gala',
     type: 'studio',
     youtubeId: '7yybH70StV0',
