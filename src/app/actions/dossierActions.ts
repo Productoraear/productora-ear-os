@@ -9,6 +9,7 @@ import { createClient } from '@/lib/supabase/server';
 import { sendTelegramNotification } from '@/lib/services/telegram';
 import { LeadRouter } from '@/lib/services/leads/LeadRouter';
 import { TrelloService } from '@/lib/services/trello';
+import { EmailService } from '@/lib/services/emailService';
 
 export async function approveDossier(dossierId: string, token: string) {
   const supabase = createClient();
@@ -149,6 +150,20 @@ _EAR OS GOLD: Iniciando ciclo de conversión._
     });
   } catch (trelloErr) {
     console.error("❌ Fallo en sincronización Trello:", trelloErr);
+  }
+
+  // 5. EMAIL TRANSACCIONAL & NURTURING MAILERLITE
+  try {
+    await EmailService.sendDossierEmail({
+      toEmail: leadData.contactEmail,
+      toName: leadData.contactName,
+      dossierId: dossier.id,
+      occasion: leadData.occasion,
+      selectedAssets: leadData.selectedAssets,
+      token: dossier.token
+    });
+  } catch (emailErr) {
+    console.error("❌ Fallo en despacho de email transaccional:", emailErr);
   }
 
   return { success: true, dossierId: dossier.id };
