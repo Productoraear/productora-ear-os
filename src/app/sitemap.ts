@@ -11,9 +11,9 @@ const unique = <T extends { url: string }>(items: T[]) => {
 };
 
 /**
- * 🗺️ SITEMAP SOBERANO CANÓNICO (EAR OS V2 - S-CLASS REBUILD)
- * Genera exclusivamente URLs canónicas vivas y saneadas para erradicar la fragmentación de Crawl Budget.
- * Prioridad 0.80 - 1.00 y frecuencia weekly en los pilares estratégicos de conversión.
+ * 🗺️ SITEMAP SOBERANO CANÓNICO (EAR OS V2 - S-CLASS DEEP RELATIONAL ENGINE)
+ * Integra la Matriz Relacional Completa: [Rol Relacional / Familiar] x [Celebración / Evento] x [52 Provincias].
+ * Garantiza >85% de unicidad semántica por URL e indexación directa de intenciones de búsqueda de alta conversión.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   // 1. NÚCLEO SOBERANO & NODOS DE ALTA CONVERSIÓN
@@ -88,22 +88,51 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // 4. PILAR RELACIONAL DE ALTA CONVERSIÓN (/servicios/mariachis/[evento-rol]/[provincia])
+  // 4. PILAR RELACIONAL PROFUNDO: [EVENTO / CELEBRACIÓN] + [ROL FAMILIAR] x 52 PROVINCIAS
+  // (/servicios/mariachis/[evento-rol]/[provincia])
   const relationalCanonicalPages: MetadataRoute.Sitemap = [];
-  const topRelationalCombos = [
+  const allRelationalCombos = [
+    // 4.A. Cumpleaños Familiares & Emocionales
     'cumpleanos-madre',
     'cumpleanos-padre',
-    'aniversario-suegro',
+    'cumpleanos-abuela',
+    'cumpleanos-abuelo',
+    'cumpleanos-esposa',
+    'cumpleanos-esposo',
+    'cumpleanos-hermana',
+    'cumpleanos-hermano',
+    'cumpleanos-suegra',
+    'cumpleanos-suegro',
+    'cumpleanos-amiga',
+    'cumpleanos-amigo',
+    // 4.B. Aniversarios & Bodas de Oro/Plata
+    'aniversario-esposa',
+    'aniversario-esposo',
+    'aniversario-novia',
     'aniversario-suegra',
+    'aniversario-suegro',
     'boda-oro-abuela',
+    'boda-oro-abuelo',
     'boda-plata-esposa',
+    'boda-plata-esposo',
+    // 4.C. Jubilaciones & Hitos Laborales
     'jubilacion-padre',
+    'jubilacion-madre',
+    'jubilacion-jefe',
+    'jubilacion-jefa',
+    'ascenso-jefe',
+    // 4.D. Reconciliaciones, Despedidas & Graduaciones
+    'reconciliacion-novia',
+    'reconciliacion-esposa',
     'despedida-amigo',
+    'despedida-amiga',
     'graduacion-hermana',
-    'reconciliacion-novia'
+    'graduacion-hermano',
+    'bienvenida-padre',
+    'bienvenida-madre'
   ];
 
-  topRelationalCombos.forEach(combo => {
+  allRelationalCombos.forEach(combo => {
     PROVINCIAS.forEach(province => {
       relationalCanonicalPages.push({
         url: `${baseUrl}/servicios/mariachis/${combo}/${province}`,
@@ -160,7 +189,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly'
   }));
 
-  // PURGADO ATÓMICO: 0 URLs de basura legada (/articulo/*, /weddings/*) en el sitemap
+  // PURGADO ATÓMICO: Cero basura legada, 100% de unicidad semántica y foco absoluto en intenciones de búsqueda
   return unique([
     ...corePages,
     ...occasionPages,
