@@ -3,7 +3,7 @@ import { stripe } from '@/lib/payments';
 
 /**
  * 🏛️ STRIPE CHECKOUT - S-CLASS FINANCIAL ENGINE (V141)
- * Inyecta metadata de Split, Golden Cohort y B2G para el CommissionLedger.
+ * Desglose explícito de presupuesto, concepto, aforo, provincia y split 80/10/10.
  */
 export async function POST(req: Request) {
   try {
@@ -15,6 +15,15 @@ export async function POST(req: Request) {
     const totalCents = Math.round(Number(amount) * 100);
     const platformFeeCents = Math.round(totalCents * 0.10);
 
+    const productName = clientMeta?.productName || concept || `Reserva & Bloqueo de Fecha S-Class (${amount} €)`;
+    
+    // Descripción estructurada sin perder contexto
+    const productDesc = clientMeta?.description || (
+      clientMeta?.serviceName 
+        ? `${clientMeta.serviceName} (${clientMeta.finalTotal || 0} €) • ${clientMeta.occasion || 'Evento'} | ${clientMeta.pax || 150} PAX | ${clientMeta.province || 'Madrid'} | Hash: ${clientMeta.sha256Token || '72H-LOCK'}`
+        : `Garantía de Bloqueo de Fecha 72h • Productora EAR • Hash: ${clientMeta?.sha256Token || '72H-LOCK'}`
+    );
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -22,7 +31,8 @@ export async function POST(req: Request) {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: concept || 'Inversión S-Class EAR OS',
+              name: productName,
+              description: productDesc,
             },
             unit_amount: totalCents,
           },
@@ -33,6 +43,13 @@ export async function POST(req: Request) {
       metadata: {
         source: 'EAR_OS_GOLD_V141',
         concept: concept || 'S-Class',
+        service_name: clientMeta?.serviceName || '',
+        occasion: clientMeta?.occasion || '',
+        province: clientMeta?.province || 'Madrid',
+        pax: String(clientMeta?.pax || 150),
+        final_total: String(clientMeta?.finalTotal || 0),
+        deposit_amount: String(amount || 0),
+        sha256_token: clientMeta?.sha256Token || '',
         venue_id: clientMeta?.venue_id || '',
         is_b2g: clientMeta?.is_b2g ? 'true' : 'false',
         artist_tier: clientMeta?.artist_tier || '',

@@ -54,6 +54,7 @@
     "node_modules",
     "scripts",
     "Marketing_Skills",
-    "system-prompts-and-models-of-ai-tools-main"
+    "system-prompts-and-models-of-ai-tools-main",
+    "src/adn_vault"
   ]
 }
