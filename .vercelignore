@@ -1,4 +1,4 @@
-# 🛡️ VERCEL DOMINANCE SHIELD V136 — WINDOWS-COMPATIBLE IGNORE
+# 🛡️ VERCEL DOMINANCE SHIELD V137 — WINDOWS-COMPATIBLE IGNORE
 .next
 node_modules
 .git
@@ -33,6 +33,9 @@ logs
 scratch
 tools
 tmp
+src/data/catalog/ADN_EAR_INDEX.json
+src/lib/NUCLEO_DATA
+src/scripts
 
 # Logs and environment files
 *.log
