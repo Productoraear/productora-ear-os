@@ -119,6 +119,14 @@ const PRESS_CLIPPINGS = [
     icon: <Award className="text-[#ecb613]" size={20} />
   },
   {
+    media: 'Lanzamiento Oficial & Tracción Audiovisual',
+    headline: '165.000+ Reproducciones: "Amantes y Amigos" (Bachata)',
+    excerpt: 'Hito de diversificación artística junto a Andriu Mathyun con dirección de fotografía cinematográfica por Pablo Quispe, consolidando la versatilidad de Edwin Agudelo en ritmos latinos de gala.',
+    category: 'Tracción Streaming & Cine',
+    year: '2022',
+    icon: <Sparkles className="text-[#ecb613]" size={20} />
+  },
+  {
     media: 'Consulado General de Colombia en Madrid',
     headline: 'Diploma de Honor al Mérito Artístico y Comunitario',
     excerpt: 'Certificación diplomática oficial concedida por el cuerpo consular en el Teatro La Latina con motivo del lanzamiento de "Mi Propia Realidad".',

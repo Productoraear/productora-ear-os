@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, 
   Sparkles, Disc3, Radio, FileText, Heart, Clock,
-  Video, Music, Youtube, Lock, CheckCircle2, ArrowRight, ExternalLink
+  Video, Music, Youtube, Lock, CheckCircle2, ArrowRight, ExternalLink, Clapperboard, Award
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -18,9 +18,10 @@ export interface TrackItem {
   year: string;
   venue: string;
   description: string;
+  cinematography?: string;
   lyricsExcerpt: string;
   genre: string;
-  type: 'podcast' | 'studio' | 'live' | 'custom';
+  type: 'podcast' | 'studio' | 'live' | 'custom' | 'collaboration';
   audioUrl?: string;
   youtubeId?: string;
   youtubeUrl?: string;
@@ -32,19 +33,21 @@ export interface TrackItem {
 const TRACKS: TrackItem[] = [
   {
     id: 'track-1',
-    title: 'CÓMO JUBILAR AL CUMPLEAÑOS & MAÑANITAS',
-    subtitle: 'Masterclass Sonora & Presión Acústica en Directo',
-    duration: '05:30',
-    durationSeconds: 330,
-    year: '2026',
-    venue: 'Estudios Productora EAR, Madrid',
-    description: 'Masterclass sonora y podcast exclusivo sobre la liturgia de la serenata, psicología del homenaje y técnica de tenor con mariachi.',
-    lyricsExcerpt: '"Con dinero y sin dinero, hago siempre lo que quiero... y mi palabra es la ley. ¡Que viva el Mariachi y el amor verdadero!"',
-    genre: 'Masterclass & Ensamble de Mariachi',
-    type: 'podcast',
-    audioUrl: '/media/edwin/podcast-cumpleanos-edwin.m4a',
-    hasVideo: false,
-    badge: 'MASTER_AUDIO_OFICIAL'
+    title: 'AMANTES Y AMIGOS (BACHATA)',
+    subtitle: 'Feat. Andriu Mathyun • Dir. Fotografía: Pablo Quispe',
+    duration: '01:59',
+    durationSeconds: 119,
+    year: '2022',
+    venue: 'Producción Cinematográfica Oficial (165k+ Vistas)',
+    description: 'Hito de colaboración artística y diversificación de género hacia la Bachata Urbana. Dirección de fotografía cinematográfica por el director y cineasta Pablo Quispe.',
+    cinematography: 'Pablo Quispe (Dirección Cinematográfica)',
+    lyricsExcerpt: '"Amantes y amigos en secreto... viviendo esta pasión que quema el alma y no pide permiso."',
+    genre: 'Bachata Urbana / Fusión Latina',
+    type: 'collaboration',
+    youtubeId: 'tx3Jc5A-0Lk',
+    youtubeUrl: 'https://youtu.be/tx3Jc5A-0Lk',
+    hasVideo: true,
+    badge: '165K+_REPRODUCCIONES'
   },
   {
     id: 'track-2',
@@ -65,23 +68,6 @@ const TRACKS: TrackItem[] = [
   },
   {
     id: 'track-3',
-    title: 'EDWIN AGUDELO EN DIRECTO (TOP 10 MARIACHI)',
-    subtitle: 'Gala de San Valentín & Serenatas de Gran Presión Acústica',
-    duration: '10:15',
-    durationSeconds: 615,
-    year: '2024',
-    venue: 'Auditorio & Directos de Gala, España',
-    description: 'Sesión en vivo de las 10 canciones rancheras más pedidas en bodas y celebraciones privadas. Demostración de voz de tenor en directo con mariachi completo.',
-    lyricsExcerpt: '"Si nos dejan, nos vamos a querer toda la vida... Si nos dejan, nos vamos a vivir a un mundo nuevo."',
-    genre: 'Mariachi Live Session S-Class',
-    type: 'live',
-    youtubeId: 'fLT4-kqfdI4',
-    youtubeUrl: 'https://youtu.be/fLT4-kqfdI4',
-    hasVideo: true,
-    badge: 'LIVE_SESSION_4K'
-  },
-  {
-    id: 'track-4',
     title: 'ALGÚN DÍA MAMÁ',
     subtitle: 'Homenaje universal a las madres (Videoclip Oficial)',
     duration: '04:12',
@@ -98,14 +84,14 @@ const TRACKS: TrackItem[] = [
     badge: 'VIDEOCLIP_OFICIAL'
   },
   {
-    id: 'track-5',
+    id: 'track-4',
     title: 'ACOMPÁÑAME',
-    subtitle: 'Himno de esperanza y resiliencia',
+    subtitle: 'Himno de esperanza y superación personal',
     duration: '03:58',
     durationSeconds: 238,
     year: '2020',
     venue: 'Inspirada en Cadena 100 Por Ellas',
-    description: 'Producida por Silvio Ocaña con arreglos del trompetista Over Vásquez y dirección de Ángeles Cepero. Obra dedicada a la superación.',
+    description: 'Producida por Silvio Ocaña con arreglos del trompetista Over Vásquez y dirección de Ángeles Cepero. Obra dedicada a la resiliencia.',
     lyricsExcerpt: '"Acompáñame en este vuelo, dame tu mano al caminar... que la tormenta pasará y juntos volveremos a cantar."',
     genre: 'Balada Sinfónica en Positivo',
     type: 'studio',
@@ -113,6 +99,23 @@ const TRACKS: TrackItem[] = [
     youtubeUrl: 'https://youtu.be/jTU8aBsX2ik',
     hasVideo: true,
     badge: 'PRODUCCIÓN_SINFÓNICA'
+  },
+  {
+    id: 'track-5',
+    title: 'EDWIN AGUDELO EN DIRECTO (TOP 10 MARIACHI)',
+    subtitle: 'Gala de San Valentín & Serenatas de Gran Presión Acústica',
+    duration: '10:15',
+    durationSeconds: 615,
+    year: '2024',
+    venue: 'Auditorio & Directos de Gala, España',
+    description: 'Sesión en vivo de las 10 canciones rancheras más pedidas en bodas y celebraciones privadas. Demostración de voz de tenor en directo con mariachi completo.',
+    lyricsExcerpt: '"Si nos dejan, nos vamos a querer toda la vida... Si nos dejan, nos vamos a vivir a un mundo nuevo."',
+    genre: 'Mariachi Live Session S-Class',
+    type: 'live',
+    youtubeId: 'fLT4-kqfdI4',
+    youtubeUrl: 'https://youtu.be/fLT4-kqfdI4',
+    hasVideo: true,
+    badge: 'LIVE_SESSION_4K'
   },
   {
     id: 'track-6',
@@ -136,7 +139,7 @@ const TRACKS: TrackItem[] = [
 
 export const EdwinLegacyPlayer: React.FC = () => {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [playbackMode, setPlaybackMode] = useState<'audio' | 'video'>('audio');
+  const [playbackMode, setPlaybackMode] = useState<'video' | 'audio'>('video');
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -148,7 +151,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
   const currentTrack = TRACKS[currentTrackIndex];
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Sincronizar volumen en audio nativo
+  // Sincronizar volumen en audio nativo si aplica
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = isMuted ? 0 : volume;
@@ -163,10 +166,6 @@ export const EdwinLegacyPlayer: React.FC = () => {
       audioRef.current.load();
       if (isPlaying && playbackMode === 'audio') {
         audioRef.current.play().catch(() => setIsPlaying(false));
-      }
-    } else {
-      if (audioRef.current) {
-        audioRef.current.pause();
       }
     }
   }, [currentTrackIndex, playbackMode]);
@@ -186,7 +185,6 @@ export const EdwinLegacyPlayer: React.FC = () => {
         }).catch(() => setIsPlaying(false));
       }
     } else if (currentTrack.hasVideo) {
-      // Si el track es de video, conmutamos a modo video para reproducir
       setPlaybackMode('video');
       setIsPlaying(true);
     }
@@ -238,7 +236,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
 
   return (
     <div className="relative rounded-[2.5rem] bg-[#09090d] border border-white/10 p-6 md:p-10 overflow-hidden shadow-[0_20px_70px_rgba(0,0,0,0.85)]">
-      {/* Elemento de Audio Nativo */}
+      {/* Elemento de Audio Nativo Opcional */}
       {currentTrack.audioUrl && (
         <audio
           ref={audioRef}
@@ -249,55 +247,59 @@ export const EdwinLegacyPlayer: React.FC = () => {
         />
       )}
 
-      {/* Fondos con brillo atmosférico */}
+      {/* Fondos atmosféricos OLED */}
       <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-[#ecb613]/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-[#a855f7]/10 blur-[110px] rounded-full pointer-events-none" />
 
-      {/* CABECERA CON CONMUTADOR DUAL AUDIO / VIDEO */}
+      {/* CABECERA CON CONMUTADOR DUAL EXPERIENCIA */}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/5 pb-6 mb-8">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-            <Disc3 size={22} className={isPlaying ? "animate-spin text-[#ecb613]" : "text-[#ecb613]/70"} style={{ animationDuration: '4s' }} />
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#ecb613]/20 to-purple-500/20 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+            {playbackMode === 'video' ? (
+              <Clapperboard size={22} className="text-purple-400 animate-pulse" />
+            ) : (
+              <Disc3 size={22} className={isPlaying ? "animate-spin text-[#ecb613]" : "text-[#ecb613]/70"} style={{ animationDuration: '4s' }} />
+            )}
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#ecb613] block font-mono">
-                Bóveda Multimedia S-Class
+                Bóveda Multimedia Soberana
               </span>
-              <span className="text-[8px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-white/50 border border-white/10">
+              <span className="text-[8px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-white/60 border border-white/10">
                 {currentTrack.badge}
               </span>
             </div>
             <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white font-syne">
-              Discografía & Actuaciones de Edwin Agudelo
+              Edwin Agudelo • Discografía & Videoclips Oficiales
             </h3>
           </div>
         </div>
 
-        {/* CONMUTADOR DUAL AUDIO / VIDEO */}
-        <div className="flex items-center gap-2 bg-black/60 p-1 rounded-2xl border border-white/10">
-          <button
-            onClick={() => setPlaybackMode('audio')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
-              playbackMode === 'audio'
-                ? 'bg-[#ecb613] text-black shadow-[0_0_20px_rgba(236,182,19,0.3)]'
-                : 'text-white/60 hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Music size={14} />
-            <span>Modo Audio</span>
-          </button>
-
+        {/* CONMUTADOR DUAL DE MODO EXPERIENCIA */}
+        <div className="flex items-center gap-1.5 bg-black/70 p-1.5 rounded-2xl border border-white/10 backdrop-blur-md">
           <button
             onClick={() => setPlaybackMode('video')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
               playbackMode === 'video'
-                ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
+                ? 'bg-purple-600 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)]'
                 : 'text-white/60 hover:text-white hover:bg-white/5'
             }`}
           >
             <Video size={14} />
-            <span>Modo Video</span>
+            <span>Videoclip HD</span>
+          </button>
+
+          <button
+            onClick={() => setPlaybackMode('audio')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+              playbackMode === 'audio'
+                ? 'bg-[#ecb613] text-black shadow-[0_0_20px_rgba(236,182,19,0.4)]'
+                : 'text-white/60 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <Music size={14} />
+            <span>Pista de Audio</span>
           </button>
         </div>
       </div>
@@ -323,17 +325,22 @@ export const EdwinLegacyPlayer: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-4 bg-white/[0.02] border border-white/5 p-6 rounded-2xl">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
+            <div className="space-y-1.5">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-[10px] font-mono text-[#ecb613] bg-[#ecb613]/10 px-2.5 py-0.5 rounded-md font-bold uppercase">
                   {currentTrack.genre}
                 </span>
+                {currentTrack.cinematography && (
+                  <span className="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded-md font-bold uppercase flex items-center gap-1">
+                    <Clapperboard size={11} /> {currentTrack.cinematography}
+                  </span>
+                )}
                 <span className="text-xs text-white/40 font-mono">• {currentTrack.year}</span>
               </div>
               <h4 className="text-xl md:text-2xl font-black uppercase text-white font-syne">
                 {currentTrack.title}
               </h4>
-              <p className="text-xs text-white/60 mt-1 max-w-2xl leading-relaxed">
+              <p className="text-xs text-white/60 max-w-2xl leading-relaxed">
                 {currentTrack.description}
               </p>
             </div>
@@ -347,7 +354,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
                   className="px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 hover:text-red-400 text-white/80 text-xs font-mono flex items-center gap-2 transition-all"
                 >
                   <Youtube size={16} className="text-red-500" />
-                  <span>Abrir en YouTube</span>
+                  <span>Ver en YouTube</span>
                   <ExternalLink size={12} />
                 </a>
               )}
@@ -355,14 +362,14 @@ export const EdwinLegacyPlayer: React.FC = () => {
                 href="/cotizador"
                 className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#ecb613] to-amber-400 text-black text-xs font-black uppercase tracking-wider hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
               >
-                <span>Cotizar Esta Canción</span>
+                <span>Cotizar Actuación</span>
                 <ArrowRight size={14} />
               </Link>
             </div>
           </div>
         </div>
       ) : (
-        /* ================= VISTA MODO AUDIO (VINILO & MASTER NATIVO) ================= */
+        /* ================= VISTA MODO AUDIO (VINILO & EMBED STREAM ASÍNCRONO) ================= */
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* VINILO GIRATORIO */}
@@ -408,7 +415,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
                 onClick={() => setPlaybackMode('video')}
                 className="mt-4 text-[10px] font-mono text-purple-400 hover:text-purple-300 flex items-center gap-1.5 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full transition-all"
               >
-                <Video size={12} /> Ver Video Oficial ({currentTrack.duration})
+                <Video size={12} /> Ver Videoclip ({currentTrack.duration})
               </button>
             )}
           </div>
@@ -416,7 +423,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
           {/* INFORMACIÓN DEL TRACK Y CONTROLES */}
           <div className="lg:col-span-8 space-y-5">
             <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-[9px] font-mono font-black uppercase tracking-widest text-[#ecb613] bg-[#ecb613]/10 border border-[#ecb613]/20 px-2.5 py-0.5 rounded-lg">
                   Track {currentTrackIndex + 1} de {TRACKS.length}
                 </span>
@@ -439,7 +446,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
 
             <div className="text-[10px] font-mono text-white/40 bg-white/5 border border-white/5 p-3 rounded-xl flex items-center gap-2">
               <Clock size={12} className="text-[#ecb613]" />
-              <span>Escenario Histórico: <strong>{currentTrack.venue}</strong></span>
+              <span>Escenario / Referencia: <strong>{currentTrack.venue}</strong></span>
             </div>
 
             {/* BARRA DE PROGRESO */}
@@ -581,7 +588,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
                     0{idx + 1}
                   </span>
                   <span className="text-[8px] font-mono text-white/40 uppercase">
-                    {t.hasVideo ? '• Video HD' : '• Audio Master'}
+                    • {t.genre.split('/')[0].trim()}
                   </span>
                   {t.isPrivate && (
                     <span className="text-[7px] font-mono bg-purple-500/20 text-purple-300 px-1.5 py-0.2 rounded border border-purple-500/30">
