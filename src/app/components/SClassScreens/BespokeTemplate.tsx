@@ -5,6 +5,7 @@ import catalogData from '@/data/mariachis_catalog_clean.json';
 import { useSharedContext } from '@/app/context/SharedContext';
 
 interface BespokeTemplateProps {
+  keywords?: any;
   category?: string;
   location?: string;
   province?: string;
@@ -19,10 +20,10 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
   province: provinceProp = 'Madrid',
 }) => {
   // Conexión corregida al Hook exportado formalmente por SharedContext
-  let setPricerModalOpen: ((open: boolean) => void) | undefined;
+  let setIsPricerOpen: ((open: boolean) => void) | undefined;
   try {
     const shared = useSharedContext();
-    setPricerModalOpen = shared?.setPricerModalOpen;
+    setIsPricerOpen = shared?.setIsPricerOpen;
   } catch (e) {
     // Salvaguarda si se renderiza fuera de Provider
   }
@@ -46,8 +47,8 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
   const displayList = filteredCatalog.length > 0 ? filteredCatalog : catalogData;
 
   const handleCotizarExpress = (artistName: string, basePrice: number) => {
-    if (typeof setPricerModalOpen === 'function') {
-      setPricerModalOpen(true);
+    if (typeof setIsPricerOpen === 'function') {
+      setIsPricerOpen(true);
     } else {
       const text = encodeURIComponent(
         `Hola Productora EAR, deseo cotización express para ${artistName} (${safeCategory.toUpperCase()}) en ${capitalizedLocation}. Precio estimado: desde ${basePrice}€.`
