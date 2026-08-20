@@ -65,14 +65,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: semantic.title,
-    description: semantic.metaDescription,
-    keywords: semantic.localKeywords,
+    description: (semantic as any).metaDescription || (semantic as any).description,
+    keywords: (semantic as any).localKeywords,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
       title: semantic.title,
-      description: semantic.metaDescription,
+      description: (semantic as any).metaDescription || (semantic as any).description,
       url: canonicalUrl,
       images: ['/og-image-vimume.jpg'],
       siteName: 'Productora EAR',
@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: semantic.title,
-      description: semantic.metaDescription,
+      description: (semantic as any).metaDescription || (semantic as any).description,
       images: ['/og-image-vimume.jpg']
     }
   };
@@ -189,10 +189,10 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={semantic.metaDescription}
+        description={(semantic as any).metaDescription || (semantic as any).description}
         location={cityName}
         serviceId={serviceSlug || 'mariachis'}
-        keywords={semantic.localKeywords}
+        keywords={(semantic as any).localKeywords}
         isApex={true}
       />
     );
@@ -217,10 +217,10 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={semantic.metaDescription}
+        description={(semantic as any).metaDescription || (semantic as any).description}
         location={cityName}
         serviceId={serviceSlug || primaryPrefix}
-        keywords={semantic.localKeywords}
+        keywords={(semantic as any).localKeywords}
         isApex={true}
       />
     );
@@ -239,10 +239,10 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={semantic.metaDescription}
+        description={(semantic as any).metaDescription || (semantic as any).description}
         location={cityName}
         serviceId={equipmentSlug}
-        keywords={semantic.localKeywords}
+        keywords={(semantic as any).localKeywords}
         isApex={true}
       />
     );
@@ -261,10 +261,10 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={semantic.metaDescription}
+        description={(semantic as any).metaDescription || (semantic as any).description}
         location={cityName}
         serviceId={eventSlug}
-        keywords={semantic.localKeywords}
+        keywords={(semantic as any).localKeywords}
         isApex={true}
       />
     );
@@ -278,10 +278,10 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={semantic.metaDescription}
+        description={(semantic as any).metaDescription || (semantic as any).description}
         location={cityName}
         serviceId="produccion-integral"
-        keywords={semantic.localKeywords}
+        keywords={(semantic as any).localKeywords}
         isApex={true}
       />
     );

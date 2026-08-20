@@ -112,7 +112,7 @@ export const SublimeEventMatchmaker: React.FC<{ initialLocation?: string }> = ({
         name: soundTier === 'BOSE_F1' ? 'Sistema Bose F1 Model 812 + Subwoofers' : 'L-Acoustics Syva Array',
         role: `Sonorización ${calculatedWatts}W RMS para ${m2}m² (${pax} pax)`,
         affinityScore: 98,
-        specs: ['100° Cobertura Horizontal', 'Latencia <1.5ms', 'Cumplimiento ' + geo.regionalNorm],
+        specs: ['100° Cobertura Horizontal', 'Latencia <1.5ms', 'Cumplimiento ' + (geo as any).regionalNorm],
         price: soundBudget,
         badge: 'CERTIFICADO EAR',
         inventoryStock: 8
@@ -314,7 +314,7 @@ export const SublimeEventMatchmaker: React.FC<{ initialLocation?: string }> = ({
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 text-xs text-slate-400 flex items-center gap-3">
               <MapPin className="w-5 h-5 text-[#ecb613] shrink-0" />
-              <span>Fincas registradas en {location.toUpperCase()}: <strong>{geo.venues.join(' • ')}</strong></span>
+              <span>Fincas registradas en {location.toUpperCase()}: <strong>{(geo as any).venues.join(' • ')}</strong></span>
             </div>
           </motion.div>
         )}
