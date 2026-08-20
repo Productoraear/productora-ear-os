@@ -2,345 +2,533 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Fingerprint, Activity, Globe, Boxes, Truck, Wallet, BrainCircuit, 
-  BarChart3, Crown, DollarSign, Award, Bot, CheckCircle2, ArrowRight
+import {
+    Activity,
+    Brain,
+    Zap,
+    Users,
+    Shield,
+    TrendingUp,
+    Music,
+    Settings,
+    Smartphone,
+    Eye,
+    Layout,
+    Search,
+    ChevronRight,
+    ArrowUpRight,
+    Target,
+    Heart,
+    Globe,
+    AlertTriangle,
+    Database,
+    Cpu
 } from 'lucide-react';
-import Link from 'next/link';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    RadialLinearScale,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+} from 'chart.js';
+import { Line, Bar, Radar, Pie } from 'react-chartjs-2';
+import { db } from '@/lib/firebase';
+import {
+    collection,
+    query,
+    orderBy,
+    limit,
+    onSnapshot
+} from 'firebase/firestore';
 
-export default function NexusWarRoom() {
-  const [activeTab, setActiveTab] = useState<'TELEMETRY' | 'SPLIT_CALC' | 'COUNCIL'>('TELEMETRY');
-  const [cachePrice, setCachePrice] = useState<number>(2500);
-  const [hasHomologatedRider, setHasHomologatedRider] = useState<boolean>(true);
-  
-  // Fake real-time hydration state to avoid hydration errors
-  const [isMounted, setIsMounted] = useState(false);
-  
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    RadialLinearScale,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend,
+    Filler
+);
 
-  const calculateSplit = (total: number) => {
-    return {
-      artistAmount: total * 0.80,
-      platformAmount: total * 0.10,
-      socialAmount: total * 0.10
-    };
-  };
-
-  const split = calculateSplit(cachePrice);
-
-  if (!isMounted) return <div className="min-h-screen bg-[#050505]" />;
-
-  return (
-    <div className="min-h-screen bg-[#050505] text-white p-6 font-sans relative overflow-hidden">
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#ecb613]/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      
-      {/* HEADER TÁCTICO */}
-      <header className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 relative z-10">
-        <div className="flex items-center gap-5">
-          <div className="w-14 h-14 bg-gradient-to-br from-[#ecb613] to-[#ffd471] rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(236,182,19,0.3)] hover:rotate-3 transition-all duration-300">
-            <Fingerprint className="text-black w-8 h-8" />
-          </div>
-          <div>
-            <h1 className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none italic text-white">
-              NEXUS <span className="text-[#ecb613]">WAR ROOM</span>
-            </h1>
-            <div className="flex items-center gap-3 mt-2">
-              <span className="flex items-center gap-1 text-[9px] font-black text-[#ecb613] uppercase tracking-widest bg-[#ecb613]/10 px-2.5 py-1 rounded border border-[#ecb613]/20">
-                <Activity size={10} className="animate-pulse" /> Sistema Operativo S-Class
-              </span>
-              <span className="text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">
-                Sovereign Control
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-4">
-          <div className="bg-white/[0.01] border border-white/5 rounded-2xl px-6 py-3 flex flex-col items-end">
-            <span className="text-[8px] text-white/40 uppercase font-black tracking-widest">Live GMV Proyectado</span>
-            <span className="text-xl font-black text-[#ecb613] flex items-center gap-2">
-              €1.245.890
-            </span>
-          </div>
-          <div className="bg-white/[0.01] border border-white/5 rounded-2xl px-6 py-3 flex flex-col items-end">
-            <span className="text-[8px] text-white/40 uppercase font-black tracking-widest">Cotizaciones Activas</span>
-            <span className="text-xl font-black text-white flex items-center gap-2">
-              <Boxes size={16} /> 142
-            </span>
-          </div>
-        </div>
-      </header>
-
-      {/* TABS DE CONTROL CENTRAL */}
-      <div className="flex flex-wrap gap-2 mb-8 relative z-10">
-        <button
-          onClick={() => setActiveTab('TELEMETRY')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
-            activeTab === 'TELEMETRY' 
-              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-black' 
-              : 'bg-white/5 text-slate-300 hover:bg-white/10'
-          }`}
-        >
-          <Activity className="w-4 h-4" /> Telemetría Global
-        </button>
-
-        <button
-          onClick={() => setActiveTab('SPLIT_CALC')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
-            activeTab === 'SPLIT_CALC' 
-              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-black' 
-              : 'bg-white/5 text-slate-300 hover:bg-white/10'
-          }`}
-        >
-          <DollarSign className="w-4 h-4" /> Arbitraje Soberano 80/10/10
-        </button>
-
-        <button
-          onClick={() => setActiveTab('COUNCIL')}
-          className={`flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-mono font-bold uppercase transition-all cursor-pointer ${
-            activeTab === 'COUNCIL' 
-              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-black' 
-              : 'bg-white/5 text-slate-300 hover:bg-white/10'
-          }`}
-        >
-          <Bot className="w-4 h-4" /> Oráculo RAG (516 Nodos)
-        </button>
-      </div>
-
-      <AnimatePresence mode="wait">
-        
-        {/* === TAB 1: TELEMETRÍA GLOBAL === */}
-        {activeTab === 'TELEMETRY' && (
-          <motion.div
-            key="TELEMETRY"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative z-10"
-          >
-            {/* Panel Principal */}
-            <div className="lg:col-span-2 p-8 bg-[#09090d] border border-white/5 rounded-[3rem] space-y-8 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-80 h-80 bg-[#ecb613]/5 blur-[100px] rounded-full pointer-events-none" />
-              
-              <div className="flex items-center gap-3">
-                <Globe className="text-[#ecb613] w-6 h-6" />
-                <div>
-                  <h2 className="text-xl font-black uppercase tracking-tighter text-white">Dominios y Tráfico Orgánico</h2>
-                  <p className="text-xs text-slate-400 font-light">Matriz Relacional de 52 Provincias (CAC = 0€)</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-black/50 border border-white/5 p-6 rounded-3xl space-y-2">
-                  <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">Unicidad Semántica</span>
-                  <div className="text-4xl font-black font-mono text-white">88.4%</div>
-                  <p className="text-[11px] text-slate-400 font-light">Libre de penalización Panda/Penguin en 1.560 rutas.</p>
-                </div>
-                <div className="bg-black/50 border border-white/5 p-6 rounded-3xl space-y-2">
-                  <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest block font-bold">Ahorro Anual Proyectado (Ads)</span>
-                  <div className="text-4xl font-black font-mono text-white">€182.500</div>
-                  <p className="text-[11px] text-slate-400 font-light">Capital liberado de pujas PPC gracias a dominancia SEO.</p>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-white/5">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-xs font-black uppercase tracking-widest text-white/50">Licitaciones B2G Recientes (Art. 118 LCSP)</span>
-                  <span className="text-[9px] font-bold text-emerald-400 bg-emerald-900/20 px-2 py-1 rounded border border-emerald-500/20">Hunter Agent ACTIVO</span>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    { ayto: 'Ayto. de Méntrida', fecha: 'Hace 2 horas', importe: '€14.500', status: 'MEMORIA ENVIADA' },
-                    { ayto: 'Diputación de Toledo', fecha: 'Hace 5 horas', importe: '€8.200', status: 'PROCESANDO' },
-                    { ayto: 'Ayto. de Alcobendas', fecha: 'Ayer', importe: '€12.000', status: 'ADJUDICADO' },
-                  ].map((lic, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.04] transition-colors">
-                      <div className="flex items-center gap-3">
-                        <CheckCircle2 className={`w-4 h-4 ${lic.status === 'ADJUDICADO' ? 'text-emerald-400' : 'text-[#ecb613]'}`} />
-                        <div>
-                          <div className="text-xs font-bold text-white">{lic.ayto}</div>
-                          <div className="text-[10px] font-mono text-slate-500">{lic.fecha}</div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-sm font-mono font-black text-white">{lic.importe}</div>
-                        <div className="text-[8px] font-black uppercase text-[#ecb613] tracking-widest">{lic.status}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Sidebar KPIs */}
-            <div className="p-8 bg-[#09090d] border border-white/5 rounded-[3rem] flex flex-col justify-between space-y-6">
-              <div className="space-y-6">
-                <h2 className="text-lg font-black uppercase tracking-tighter flex items-center gap-3 italic text-white">
-                  <BarChart3 className="text-[#ecb613]" size={20} /> Conversión Global
-                </h2>
-                <div className="space-y-6">
-                  <div>
-                    <div className="flex justify-between text-[10px] font-black uppercase mb-2">
-                      <span className="text-white/40">Tasa de Cierre Stripe (0.50€)</span>
-                      <span className="text-emerald-400">32.4%</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                      <div className="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: '32.4%' }} />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="flex justify-between text-[10px] font-black uppercase mb-2">
-                      <span className="text-white/40">Retención de Proveedores (B2B)</span>
-                      <span className="text-[#ecb613]">94.2%</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-[#ecb613] to-[#ffd471]" style={{ width: '94.2%' }} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-5 bg-white/5 border border-white/10 rounded-2xl">
-                <span className="text-[10px] font-mono uppercase text-[#ecb613] font-bold block mb-1">Múltiplo M&A Estimado</span>
-                <div className="text-3xl font-black font-mono text-white">9.5x <span className="text-sm text-slate-500">ARR</span></div>
-                <p className="text-[10px] text-slate-400 mt-2 font-light">Basado en el crecimiento del CAC = 0 y flujos recurrentes B2G.</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        {/* === TAB 2: ARBITRAJE SOBERANO 80/10/10 === */}
-        {activeTab === 'SPLIT_CALC' && (
-          <motion.div
-            key="SPLIT_CALC"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            className="bg-[#09090d] border border-[#ecb613]/20 p-8 md:p-12 rounded-[3rem] space-y-8 relative overflow-hidden"
-          >
-            <div className="absolute top-0 left-0 w-96 h-96 bg-[#ecb613]/5 blur-[100px] rounded-full pointer-events-none" />
-
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
-              <div>
-                <h3 className="text-3xl font-black uppercase text-white tracking-tight">Ledger Atómico 80/10/10</h3>
-                <p className="text-sm text-slate-400 font-light mt-1">
-                  Distribución soberana del capital sin pasivos laborales ni intermediarios.
-                </p>
-              </div>
-              <div className="text-right">
-                <span className="text-[10px] font-mono text-slate-500 uppercase block">Caché Total del Contrato</span>
-                <span className="text-4xl font-black font-mono text-[#ecb613]">{cachePrice} €</span>
-              </div>
-            </div>
-
-            <div className="space-y-2 relative z-10">
-              <input 
-                type="range" min="500" max="15000" step="100" value={cachePrice}
-                onChange={(e) => setCachePrice(parseInt(e.target.value, 10))}
-                className="w-full h-3 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
-              />
-              <div className="flex justify-between text-[10px] font-mono text-slate-500 font-bold">
-                <span>500 €</span>
-                <span>7.500 €</span>
-                <span>15.000 €</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 relative z-10">
-              <div className="bg-emerald-950/20 border border-emerald-500/30 p-8 rounded-3xl space-y-2 hover:bg-emerald-950/40 transition-colors">
-                <span className="text-xs font-mono uppercase text-emerald-400 font-black block tracking-wider">80% • Proveedor / Artista</span>
-                <div className="text-4xl font-black font-mono text-white">{split.artistAmount.toFixed(0)} €</div>
-                <p className="text-xs text-slate-400 font-light mt-2 leading-relaxed">
-                  Liquidación directa protegida por Stripe Connect. Cero retenciones laborales.
-                </p>
-              </div>
-
-              <div className="bg-[#ecb613]/10 border border-[#ecb613]/40 p-8 rounded-3xl space-y-2 hover:bg-[#ecb613]/20 transition-colors shadow-[0_0_30px_rgba(236,182,19,0.1)]">
-                <span className="text-xs font-mono uppercase text-[#ecb613] font-black block tracking-wider">10% • Margen EAR OS</span>
-                <div className="text-4xl font-black font-mono text-white">{split.platformAmount.toFixed(0)} €</div>
-                <p className="text-xs text-slate-400 font-light mt-2 leading-relaxed">
-                  Beneficio neto atómico. Sin inventario, sin almacenes, sin mermas.
-                </p>
-              </div>
-
-              <div className="bg-blue-950/20 border border-blue-500/30 p-8 rounded-3xl space-y-2 hover:bg-blue-950/40 transition-colors">
-                <span className="text-xs font-mono uppercase text-blue-400 font-black block tracking-wider">10% • Fondo VIMUME</span>
-                <div className="text-4xl font-black font-mono text-white">{split.socialAmount.toFixed(0)} €</div>
-                <p className="text-xs text-slate-400 font-light mt-2 leading-relaxed">
-                  Reinversión en terapia neuroacústica e impacto social auditado.
-                </p>
-              </div>
-            </div>
-            
-            <div className="flex justify-end pt-6 relative z-10">
-                <Link href="/cotizador" target="_blank" className="bg-[#ecb613] text-black font-black uppercase text-xs px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-white transition-colors">
-                    Ver Cotizador S-Class en Vivo <ArrowRight size={14} />
-                </Link>
-            </div>
-          </motion.div>
-        )}
-
-        {/* === TAB 3: ORÁCULO RAG & MENTORES === */}
-        {activeTab === 'COUNCIL' && (
-          <motion.div
-            key="COUNCIL"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            className="bg-[#09090d] border border-white/5 p-8 md:p-12 rounded-[3rem] space-y-8"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center">
-                <BrainCircuit className="w-8 h-8 text-[#ecb613]" />
-              </div>
-              <div>
-                <h3 className="text-3xl font-black uppercase text-white tracking-tight">Consejo Estratégico Sintético</h3>
-                <p className="text-sm text-slate-400 font-light mt-1">
-                  Oráculo RAG (Retrieval-Augmented Generation) con 516 nodos cognitivos de negociación.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-              <div className="bg-white/[0.02] border border-white/10 hover:border-[#ecb613]/30 p-8 rounded-3xl space-y-4 transition-all group">
-                <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest block bg-[#ecb613]/10 w-fit px-2 py-1 rounded">Mentor: Los Ganadores</span>
-                <h4 className="font-black text-lg text-white group-hover:text-[#ecb613] transition-colors">Disciplina y Estándar de Ejecución</h4>
-                <p className="text-xs text-slate-400 font-light leading-relaxed">
-                  "No compitas por precio. Compite asegurando puntualidad militar, rider impecable (Bose F1/Axient) y SLA 99.9%. El cliente premium paga por la certidumbre, no por la música."
-                </p>
-              </div>
-
-              <div className="bg-white/[0.02] border border-white/10 hover:border-[#ecb613]/30 p-8 rounded-3xl space-y-4 transition-all group">
-                <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest block bg-[#ecb613]/10 w-fit px-2 py-1 rounded">Mentor: El Mentalista</span>
-                <h4 className="font-black text-lg text-white group-hover:text-[#ecb613] transition-colors">Neurobranding y Anclaje</h4>
-                <p className="text-xs text-slate-400 font-light leading-relaxed">
-                  "Muestra primero la propuesta de Gran Producción de 5.000€ antes de ofrecer la formación base. El anclaje cognitivo hace que la tarifa de 1.850€ parezca una oportunidad ineludible."
-                </p>
-              </div>
-
-              <div className="bg-white/[0.02] border border-white/10 hover:border-[#ecb613]/30 p-8 rounded-3xl space-y-4 transition-all group">
-                <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest block bg-[#ecb613]/10 w-fit px-2 py-1 rounded">Mentor: El Club 10X</span>
-                <h4 className="font-black text-lg text-white group-hover:text-[#ecb613] transition-colors">Apalancamiento de Software</h4>
-                <p className="text-xs text-slate-400 font-light leading-relaxed">
-                  "Deja que los 1.560 activos indexados capten clientes 24/7 mientras duermes. Tú solo debes aparecer para firmar la validación y cobrar el depósito criptográfico."
-                </p>
-              </div>
-            </div>
-            
-            <div className="p-6 bg-black/50 border border-white/10 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping" />
-                <span className="text-xs font-mono text-emerald-400 uppercase tracking-widest">Base Vectorial RAG Activa (516/516 Nodos)</span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-500">Última sincronización: Hace 4 minutos</span>
-            </div>
-          </motion.div>
-        )}
-
-      </AnimatePresence>
-    </div>
-  );
+interface EarOrder {
+    id: string;
+    client?: string;
+    userId?: string;
+    total?: number;
+    totalAmount?: number;
+    status: string;
+    items?: any[];
+    paymentMethod?: string;
+    createdAt?: any;
 }
+// --- TYPES ---
+type Role = 'CEO' | 'TERAPEUTA' | 'DATA_SCIENTIST' | 'DEVOPS' | 'UX_DESIGNER' | 'PM' | 'CFO';
+
+
+interface RoleConfig {
+    id: Role;
+    label: string;
+    icon: any;
+    color: string;
+}
+
+const ROLES: RoleConfig[] = [
+    { id: 'CEO', label: 'Executive CEO', icon: Shield, color: '#DAA520' },
+    { id: 'TERAPEUTA', label: 'Musicoterapeuta', icon: Heart, color: '#FF69B4' },
+    { id: 'CFO', label: 'Financial Intelligence', icon: Zap, color: '#FFD700' },
+    { id: 'DATA_SCIENTIST', label: 'Data Scientist', icon: Brain, color: '#2ECC71' },
+    { id: 'PM', label: 'Project Manager', icon: Target, color: '#40E0D0' },
+    { id: 'DEVOPS', label: 'DevOps / Latency', icon: Cpu, color: '#FFA07A' },
+    { id: 'UX_DESIGNER', label: 'UX / Heatmaps', icon: Eye, color: '#888' },
+];
+
+
+// --- MOCK DATA ---
+const biometricLabels = ['0m', '5m', '15m', '20m', '30m'];
+const lineData = {
+    labels: biometricLabels,
+    datasets: [
+        {
+            fill: true,
+            label: 'Enfoque Cognitivo',
+            data: [45, 65, 85, 88, 75],
+            borderColor: '#DAA520',
+            backgroundColor: 'rgba(218, 165, 32, 0.2)',
+            tension: 0.4,
+        },
+        {
+            fill: true,
+            label: 'Ritmo Cardiaco',
+            data: [72, 85, 68, 65, 70],
+            borderColor: '#FF69B4',
+            backgroundColor: 'rgba(255, 105, 180, 0.1)',
+            tension: 0.4,
+        },
+    ],
+};
+
+const radarData = {
+    labels: ['Neuroplasticidad', 'Memoria', 'Social', 'Motor', 'Lenguaje'],
+    datasets: [
+        {
+            label: 'Pre-VIMUME',
+            data: [65, 59, 90, 81, 56],
+            backgroundColor: 'rgba(64, 224, 208, 0.2)',
+            borderColor: '#40E0D0',
+            pointBackgroundColor: '#40E0D0',
+        },
+        {
+            label: 'Post-VIMUME',
+            data: [98, 90, 95, 85, 92],
+            backgroundColor: 'rgba(218, 165, 32, 0.2)',
+            borderColor: '#DAA520',
+            pointBackgroundColor: '#DAA520',
+        },
+    ],
+};
+
+// --- COMPONENTS ---
+
+const GlassCard: React.FC<{ title: string, icon: any, children: React.ReactNode, className?: string }> = ({ title, icon: Icon, children, className }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={`bg-white/5 border border-white/10 rounded-[2rem] p-6 backdrop-blur-xl hover:border-white/20 transition-all ${className}`}
+    >
+        <div className="flex items-center justify-between mb-6">
+            <h3 className="text-sm font-black uppercase tracking-widest text-gray-400 flex items-center gap-3">
+                <Icon size={18} className="text-ear-gold" />
+                {title}
+            </h3>
+            <ArrowUpRight size={16} className="text-gray-600" />
+        </div>
+        <div className="h-full">
+            {children}
+        </div>
+    </motion.div>
+);
+
+const RoleSelector: React.FC<{ active: Role, onSelect: (r: Role) => void }> = ({ active, onSelect }) => (
+    <div className="flex flex-wrap gap-2 mb-12 p-2 bg-black/40 border border-white/5 rounded-3xl backdrop-blur-3xl overflow-x-auto">
+        {ROLES.map((role) => (
+            <button
+                key={role.id}
+                onClick={() => onSelect(role.id)}
+                className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all font-black uppercase tracking-widest text-[10px] whitespace-nowrap ${active === role.id
+                    ? 'bg-ear-gold text-black scale-105 shadow-[0_0_20px_rgba(218,165,32,0.3)]'
+                    : 'text-gray-500 hover:text-white hover:bg-white/5'
+                    }`}
+            >
+                <role.icon size={14} />
+                {role.label}
+            </button>
+        ))}
+    </div>
+);
+
+// --- MAIN PAGE ---
+
+export const VimumeDashboard: React.FC = () => {
+    const [activeRole, setActiveRole] = useState<Role>('CEO');
+    const [orders, setOrders] = useState<EarOrder[]>([]);
+
+    const [stats, setStats] = useState({
+        pagosHoy: 85,
+        webhooksOk: 99,
+        cumplimiento: 92,
+        cobertura: 100
+    });
+
+    React.useEffect(() => {
+        if (!db) return;
+
+        // Listener para Órdenes Reales
+        const q = query(collection(db, 'ear_orders'), orderBy('createdAt', 'desc'), limit(10));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const newOrders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as EarOrder));
+            setOrders(newOrders);
+
+            // Recalcular Stats (Simulado por ahora basado en los datos reales del snap)
+            const paid = newOrders.filter(o => o.status === 'PAID').length;
+            const total = newOrders.length || 1;
+            setStats(prev => ({
+                ...prev,
+                pagosHoy: Math.min(100, Math.round((paid / total) * 100))
+            }));
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+
+    return (
+        <div className="w-full space-y-6">
+            <div className="min-h-screen bg-[#050505] pt-6 pb-20 px-2 md:px-6">
+                <div className="max-w-[1600px] mx-auto">
+                    {/* HEADER STATUS */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+                        <div>
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-green-500">ASTRA VIMUME INTELLIGENCE Online</span>
+                            </div>
+                            <h1 className="text-5xl font-display font-black uppercase italic tracking-tighter">
+                                DASHBOARD <span className="text-ear-gold">ASTRA</span>
+                            </h1>
+                        </div>
+
+                        <div className="flex items-center gap-4">
+                            <div className="text-right">
+                                <p className="text-[10px] text-gray-500 uppercase font-black">Escalado 2026 Ready</p>
+                                <p className="text-xs font-bold font-mono">NODE_ASTRA_V2.5</p>
+                            </div>
+                            <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center">
+                                <Settings size={20} className="text-ear-gold" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <RoleSelector active={activeRole} onSelect={setActiveRole} />
+
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <AnimatePresence mode="wait">
+                            {activeRole === 'CEO' && (
+                                <React.Fragment key="ceo">
+                                    <GlassCard title="Impacto Social VIMUME" icon={Heart} className="lg:col-span-2 bg-gradient-to-br from-red-500/10 to-transparent">
+                                        <div className="flex flex-col items-center justify-center h-full py-6 text-center">
+                                            <Heart className="text-red-500 mb-4 animate-pulse" size={48} />
+                                            <h4 className="text-4xl font-black text-white italic tracking-tighter mb-1">
+                                                {orders.filter(o => o.items?.some(i => i.sku === 'DONATION_VIMUME')).reduce((acc, curr) => acc + curr.totalAmount, 0)}€
+                                            </h4>
+                                            <p className="text-[10px] font-black uppercase text-gray-500 tracking-[0.3em]">Recaudación Total</p>
+
+                                            <div className="grid grid-cols-2 gap-8 mt-10 w-full">
+                                                <div>
+                                                    <p className="text-2xl font-black text-ear-gold">
+                                                        {new Set(orders.filter(o => o.items?.some(i => i.sku === 'DONATION_VIMUME')).map(o => o.userId)).size}
+                                                    </p>
+                                                    <p className="text-[8px] font-black uppercase text-gray-600">Donantes Únicos</p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-2xl font-black text-blue-400">
+                                                        {Math.floor(orders.filter(o => o.items?.some(i => i.sku === 'DONATION_VIMUME')).reduce((acc, curr) => acc + curr.totalAmount, 0) / 45)}
+                                                    </p>
+                                                    <p className="text-[8px] font-black uppercase text-gray-600">Sesiones Generadas</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="KPIs de Lanzamiento" icon={Shield}>
+                                        <div className="flex flex-col items-center justify-center h-full py-10">
+                                            <div className="relative">
+                                                <div className="text-5xl font-black italic">98%</div>
+                                                <div className="absolute -top-4 -right-8 bg-green-500 text-black text-[10px] px-2 py-1 rounded-full font-black">SUCCESS</div>
+                                            </div>
+                                            <p className="text-gray-500 text-[10px] mt-4 uppercase tracking-widest font-black">Adoption Rate</p>
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Salud Social & Impacto" icon={Globe} className="lg:col-span-2">
+                                        <div className="h-[300px] w-full mt-4">
+                                            <Line
+                                                data={lineData}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    scales: { y: { display: false }, x: { display: false } },
+                                                    plugins: { legend: { display: false } }
+                                                }}
+                                            />
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Eficiencia del Legado" icon={Zap}>
+                                        <div className="flex flex-col items-center justify-center h-full py-10">
+                                            <div className="relative">
+                                                <div className="text-5xl font-black italic">62%</div>
+                                                <div className="absolute -top-4 -right-8 bg-green-500 text-black text-[10px] px-2 py-1 rounded-full font-black">OPTIMAL</div>
+                                            </div>
+                                            <p className="text-gray-500 text-[10px] mt-4 uppercase tracking-widest font-black">Sentiment ROI</p>
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Alertas de Sistema" icon={AlertTriangle}>
+                                        <div className="space-y-4">
+                                            <AlertItem color="red" text="Latencia Crítica Marbella" />
+                                            <AlertItem color="yellow" text="IA Drift en Predictor" />
+                                            <AlertItem color="green" text="Vimume Pilot Active" />
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Estadísticas de Stakeholders" icon={Users} className="lg:col-span-4">
+                                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-6">
+                                            <MetricItem label="Familiares" value="450+" sub="Reconectados" />
+                                            <MetricItem label="Centros" value="28" sub="Suscritos" />
+                                            <MetricItem label="Inversores" value="12" sub="Silver Economy" />
+                                            <MetricItem label="Premios" value="3" sub="Innovación '25" />
+                                        </div>
+                                    </GlassCard>
+                                </React.Fragment>
+                            )}
+
+                            {activeRole === 'TERAPEUTA' && (
+                                <React.Fragment key="terapeuta">
+                                    <GlassCard title="Live Biometric Flow" icon={Activity} className="lg:col-span-3">
+                                        <div className="h-[400px]">
+                                            <Line
+                                                data={lineData}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    plugins: { legend: { labels: { color: '#888', font: { family: 'Inter', weight: 'bold' } } } },
+                                                    scales: { x: { grid: { color: '#ffffff05' } }, y: { grid: { color: '#ffffff05' } } }
+                                                }}
+                                            />
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Protocolo Activo" icon={Music}>
+                                        <div className="space-y-6">
+                                            <ActionButton label="Intro (3m)" />
+                                            <ActionButton label="Opening (4m)" />
+                                            <ActionButton label="Show Central" active />
+                                            <div className="pt-6 border-t border-white/10">
+                                                <p className="text-[10px] font-black uppercase text-gray-500 mb-4">AIA Agent Sugiere:</p>
+                                                <div className="p-4 bg-pink-500/10 border border-pink-500/20 rounded-xl text-pink-500 text-xs italic">
+                                                    "Bajar volumen 10db. El paciente muestra picos de estrés."
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </GlassCard>
+                                </React.Fragment>
+                            )}
+
+                            {activeRole === 'DATA_SCIENTIST' && (
+                                <React.Fragment key="data">
+                                    <GlassCard title="Análisis de Neuroplasticidad" icon={Brain} className="lg:col-span-2">
+                                        <div className="h-[350px]">
+                                            <Radar
+                                                data={radarData}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    scales: { r: { grid: { color: '#ffffff10' }, angleLines: { color: '#ffffff10' }, pointLabels: { color: '#888' } } }
+                                                }}
+                                            />
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Storage Estructural" icon={Database}>
+                                        <p className="text-xs text-gray-400 italic mb-6">Megaproyecto indexado en Vector DB (Pinecone).</p>
+                                        <div className="space-y-3">
+                                            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                                                <div className="h-full bg-ear-gold w-[85%]" />
+                                            </div>
+                                            <p className="text-[10px] font-mono text-gray-600 uppercase">85K Vectors Sync</p>
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Latencia Nodos" icon={Cpu}>
+                                        <div className="text-center py-6">
+                                            <div className="text-4xl font-black text-ear-gold">14ms</div>
+                                            <p className="text-gray-500 text-[10px] uppercase font-black mt-2">Global Avg</p>
+                                        </div>
+                                    </GlassCard>
+                                </React.Fragment>
+                            )}
+
+                            {activeRole === 'CFO' && (
+                                <React.Fragment key="cfo">
+                                    <GlassCard title="Telemetría de Pagos (LIVE)" icon={Zap} className="lg:col-span-2">
+                                        <div className="space-y-6 py-4">
+                                            <ProgressBar label="Pagos Hoy (Conversión)" value={stats.pagosHoy} color="#DAA520" />
+                                            <ProgressBar label="Webhooks OK (Estabilidad)" value={stats.webhooksOk} color="#2ECC71" />
+                                            <ProgressBar label="Cumplimiento (Fulfillment)" value={stats.cumplimiento} color="#40E0D0" />
+                                            <ProgressBar label="Cobertura Métodos (Stripe/PayPal/Transfer)" value={stats.cobertura} color="#FF69B4" />
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Health Status: Webhooks" icon={Globe}>
+                                        <div className="flex flex-col items-center justify-center h-full">
+                                            <div className="w-20 h-20 rounded-full border-4 border-ear-gold border-t-transparent animate-spin mb-4" />
+                                            <p className="text-[10px] font-black uppercase text-ear-gold">Polling Eventos Stripe...</p>
+                                            <p className="text-xs text-gray-500 mt-2">v3.0 Secure Webhook Layer</p>
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Alerta Riesgo Financiero" icon={AlertTriangle}>
+                                        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
+                                            <p className="text-[10px] font-black text-red-500 uppercase mb-2">IA Predictora:</p>
+                                            <p className="text-xs text-gray-400 italic leading-tight">
+                                                "Sin anomalías detectadas. El flujo Bizum está operando al 100% de efectividad en España."
+                                            </p>
+                                        </div>
+                                    </GlassCard>
+
+                                    <GlassCard title="Log Financiero Tiempo Real (ASTRA Core)" icon={Activity} className="lg:col-span-4">
+                                        <div className="overflow-x-auto">
+                                            <table className="w-full text-left text-[10px] uppercase font-black tracking-tighter">
+                                                <thead>
+                                                    <tr className="text-gray-500 border-b border-white/5">
+                                                        <th className="py-4 px-2">ID_ORDEN</th>
+                                                        <th className="py-4 px-2">FECHA</th>
+                                                        <th className="py-4 px-2">METODO</th>
+                                                        <th className="py-4 px-2">IMPORTE</th>
+                                                        <th className="py-4 px-2">STATUS</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody className="divide-y divide-white/5">
+                                                    {orders.length > 0 ? orders.map(order => (
+                                                        <tr key={order.id} className="text-gray-300 hover:bg-white/5 transition-colors">
+                                                            <td className="py-4 px-2 font-mono text-ear-gold">{order.id.slice(-8)}</td>
+                                                            <td className="py-4 px-2">{new Date(order.createdAt).toLocaleTimeString()}</td>
+                                                            <td className="py-4 px-2">{order.paymentMethod}</td>
+                                                            <td className="py-4 px-2">{order.totalAmount}€</td>
+                                                            <td className="py-4 px-2">
+                                                                <span className={`px-2 py-1 rounded-md ${order.status === 'PAID' ? 'bg-green-500/20 text-green-500' : 'bg-yellow-500/20 text-yellow-500'}`}>
+                                                                    {order.status}
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    )) : (
+                                                        <tr>
+                                                            <td colSpan={5} className="py-10 text-center text-gray-600">No hay transacciones registradas hoy</td>
+                                                        </tr>
+                                                    )}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </GlassCard>
+                                </React.Fragment>
+                            )}
+
+                        </AnimatePresence>
+                    </div>
+
+                    {/* AI FOOTER */}
+                    <div className="mt-12 grid grid-cols-1 lg:grid-cols-4 gap-6">
+                        <div className="p-10 bg-ear-gold rounded-[4rem] text-black">
+                            <h4 className="font-black uppercase italic mb-4">ASTRA INSIGHTS</h4>
+                            <p className="font-bold leading-tight mb-8">
+                                "La reestructuración del megaproyecto ha sido exitosa. 14 fragmentos marcados como 'No Relacionados' han sido desplazados al storage frío."
+                            </p>
+                            <button className="flex items-center gap-2 bg-black text-white px-8 py-4 rounded-2xl font-black uppercase text-[10px]">
+                                Abrir Auditoría <ChevronRight size={14} />
+                            </button>
+                        </div>
+                        <div className="lg:col-span-3 bg-white/5 border border-white/10 rounded-[4rem] p-12 flex items-center justify-between">
+                            <div className="flex gap-16">
+                                <div>
+                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Uptime 2026</p>
+                                    <p className="text-4xl font-black italic">99.99%</p>
+                                </div>
+                                <div className="hidden md:block">
+                                    <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-2">Tokens Contexto</p>
+                                    <p className="text-4xl font-black italic">1.2M</p>
+                                </div>
+                            </div>
+                            <Smartphone className="text-ear-gold" size={40} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const AlertItem = ({ color, text }: { color: string, text: string }) => (
+    <div className="flex items-center gap-3 p-4 bg-white/5 rounded-[1.5rem] border border-white/5">
+        <div className={`w-2 h-2 rounded-full ${color === 'red' ? 'bg-red-500' : color === 'yellow' ? 'bg-yellow-500' : 'bg-green-500'}`} />
+        <span className="text-[10px] font-black uppercase tracking-tight text-gray-300">{text}</span>
+    </div>
+);
+
+const MetricItem = ({ label, value, sub }: { label: string, value: string, sub: string }) => (
+    <div className="text-center group">
+        <p className="text-[10px] font-black uppercase text-gray-500 mb-1">{label}</p>
+        <p className="text-4xl font-black italic text-white group-hover:text-ear-gold transition-colors">{value}</p>
+        <p className="text-[8px] font-black uppercase text-ear-gold/50">{sub}</p>
+    </div>
+);
+
+const ActionButton = ({ label, active = false }: { label: string, active?: boolean }) => (
+    <button className={`w-full py-4 rounded-2xl border flex items-center justify-between px-6 transition-all ${active ? 'bg-ear-gold border-ear-gold text-black' : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
+        }`}>
+        <span className="font-black uppercase text-xs">{label}</span>
+        {active ? <Zap size={16} /> : <div className="w-1 h-1 bg-white rounded-full" />}
+    </button>
+);
+
+const ProgressBar = ({ label, value, color }: { label: string, value: number, color: string }) => (
+    <div className="space-y-2">
+        <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-widest text-gray-500">
+            <span>{label}</span>
+            <span style={{ color }}>{value}%</span>
+        </div>
+        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+            <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${value}%` }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="h-full rounded-full"
+                style={{ backgroundColor: color, boxShadow: `0 0 10px ${color}44` }}
+            />
+        </div>
+    </div>
+);
+
+
+export default VimumeDashboard;

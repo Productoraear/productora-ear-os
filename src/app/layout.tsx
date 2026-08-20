@@ -1,8 +1,25 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
-import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import Script from "next/script";
 import "./globals.css";
+
+// Provider Imports
+import { SharedProvider } from "@/app/context/SharedContext";
+import { RoleSkinProvider } from "@/app/context/RoleSkinProvider";
+import { SovereignProvider } from "@/shared/context/SovereignContext";
+import { AtmosphereProvider } from "@/app/context/AtmosphereProvider";
+import { EventCartProvider } from "@/context/EventCartContext";
+import SmoothScrollProvider from '@/app/context/SmoothScrollProvider';
+import { ThemeProvider } from "@/app/context/ThemeContext";
+
+// Component Imports
+import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
+import EarBottomNav from "@/app/components/layout/EarBottomNav";
+import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
+import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
+import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
+import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
+import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
@@ -24,22 +41,6 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-import { SharedProvider } from "@/app/context/SharedContext";
-import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
-import { RoleSkinProvider } from "@/app/context/RoleSkinProvider";
-import { SovereignProvider } from "@/shared/context/SovereignContext";
-import SmoothScrollProvider from '@/app/context/SmoothScrollProvider';
-import { AtmosphereProvider } from "@/app/context/AtmosphereProvider";
-import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
-import { ThemeProvider } from "@/app/context/ThemeContext";
-
-import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
-import EarBottomNav from "@/app/components/layout/EarBottomNav";
-import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
-import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
-
-import { EventCartProvider } from "@/context/EventCartContext";
-
 export default function RootLayout({
   children,
 }: {
@@ -52,7 +53,10 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://js.stripe.com" />
       </head>
-      <body className="antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans">
+      <body 
+        className="antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans"
+        suppressHydrationWarning
+      >
         <Script
           src="https://js.stripe.com/v3/"
           strategy="lazyOnload"
@@ -77,14 +81,12 @@ export default function RootLayout({
                     <SmoothScrollProvider>
                       <SpatialIntelligence />
                       <div className="min-h-screen relative flex flex-col">
+                        <SovereignNavbar />
                         <main className="flex-grow">
-                          <>
-                            <SovereignNavbar />
-                            {children}
-                            <EarBottomNav />
-                            <HummingbirdFlight />
-                          </>
+                          {children}
                         </main>
+                        <EarBottomNav />
+                        <HummingbirdFlight />
                         <BespokePricerModal />
                         <OmniSearchModal />
                         <DynamicContextBar />

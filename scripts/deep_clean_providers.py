@@ -1,4 +1,92 @@
-'use client';
+import os
+import json
+import re
+
+print("🚀 INICIANDO SANEAMIENTO Y RECLASIFICACIÓN RIGUROSA S-CLASS...")
+
+base_dir = r"H:\EAR_OS_V2"
+db_path = os.path.join(base_dir, "EAR_OS_V2", "src", "data", "all_providers_database.json")
+
+if not os.path.exists(db_path):
+    print("❌ Base de datos no encontrada.")
+    exit()
+
+with open(db_path, "r", encoding="utf-8") as f:
+    providers = json.load(f)
+
+# Palabras clave prohibidas (basura de scraping/carpetas)
+system_trash = [
+    'javascript', 'caos', 'original_textos', 'documentos_bodasnet', 'proyectos_y_código',
+    'safari', 'google play', 'cookiepedia', '7z format', 'agenda de tareas', 'privacidad',
+    'borrar el historial', 'información sobre', 'http', 'www', 'index', 'default', 'php',
+    's-class', 'provincias', 'tarifa', 'archivo base'
+]
+
+def clean_text(txt):
+    return str(txt).strip()
+
+def detect_real_category(name, old_cat):
+    combined = f"{name} {old_cat}".lower()
+    if any(k in combined for k in ['finca', 'espacio', 'masia', 'pazo', 'cortijo', 'castillo', 'hotel', 'salon', 'cigarral', 'jardin']):
+        return 'finca'
+    if any(k in combined for k in ['catering', 'gastro', 'banquete', 'comida', 'cocktail', 'cortador', 'cortadores', 'menu']):
+        return 'catering'
+    if any(k in combined for k in ['flor', 'decorac', 'carpa', 'mobiliario', 'iluminac', 'ambientac']):
+        return 'decoracion'
+    if any(k in combined for k in ['musi', 'mariachi', 'banda', 'dj', 'tenor', 'viol', 'saxo', 'grupo', 'coro', 'duo', 'cantante', 'acustico']):
+        return 'musica'
+    if any(k in combined for k in ['sonido', 'luces', 'altavoces', 'escenario', 'equipo']):
+        return 'sonido'
+    if any(k in combined for k in ['foto', 'video', 'fotografo', 'videografo', 'reportaje', 'album', 'photocall']):
+        return 'foto'
+    if any(k in combined for k in ['wedding', 'planner', 'organiza', 'coordinac']):
+        return 'wedding'
+    if any(k in combined for k in ['moda', 'belleza', 'vestido', 'novia', 'novio', 'traje', 'joya', 'maquillaje', 'peinado', 'zapato', 'complemento', 'tocado']):
+        return 'moda'
+    if any(k in combined for k in ['transporte', 'coche', 'autobus', 'limusina', 'vehiculo', 'clasico']):
+        return 'transporte'
+    return 'servicios'
+
+clean_list = []
+dedup_set = set()
+
+for p in providers:
+    raw_name = clean_text(p.get('name', ''))
+    
+    # 1. Filtro Anti-Basura
+    if any(trash in raw_name.lower() for trash in system_trash):
+        continue
+    if len(raw_name) < 3 or raw_name.startswith('10_') or raw_name.startswith('04.') or raw_name.startswith('76.'):
+        continue
+    if re.match(r'^[0-9_\-\.\(\)]+$', raw_name):
+        continue
+
+    # 2. Deduplicación por nombre limpio
+    norm_key = re.sub(r'\W+', '', raw_name.lower())
+    if norm_key in dedup_set:
+        continue
+    dedup_set.add(norm_key)
+
+    # 3. Asignación de Categoría Real
+    real_cat = detect_real_category(raw_name, p.get('category', ''))
+    p['name'] = raw_name
+    p['category'] = real_cat
+    p['province'] = p.get('province') or 'madrid'
+    
+    clean_list.append(p)
+
+print(f"✅ SANEAMIENTO COMPLETADO.")
+print(f"📊 Registros Basura Eliminados: {len(providers) - len(clean_list)}")
+print(f"⭐ Proveedores Comerciales Reales Finales: {len(clean_list)}")
+
+# Guardar base limpia
+with open(db_path, "w", encoding="utf-8") as f:
+    json.dump(clean_list, f, ensure_ascii=False, indent=2)
+
+# Actualizar el frontend con los nuevos contadores reales
+page_path = os.path.join(base_dir, "EAR_OS_V2", "src", "app", "(public)", "proveedores", "page.tsx")
+
+code = """'use client';
 
 import React, { useState, useMemo } from 'react';
 import providersData from '@/data/all_providers_database.json';
@@ -193,3 +281,9 @@ export default function ProveedoresPage() {
     </div>
   );
 }
+"""
+
+with open(page_path, "w", encoding="utf-8") as f:
+    f.write(code)
+
+print("✅ Dashboard reconfigurado con categorización exacta y eliminación de basura de carpetas.")

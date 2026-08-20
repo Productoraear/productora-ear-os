@@ -1,19 +1,64 @@
-'use client';
+import os
+import json
+import re
+
+print("🚀 Limpiando base de datos y calculando métricas reales...")
+
+base_dir = r"H:\EAR_OS_V2"
+db_path = os.path.join(base_dir, "EAR_OS_V2", "src", "data", "all_providers_database.json")
+
+if not os.path.exists(db_path):
+    print("❌ Base de datos no encontrada.")
+    exit()
+
+with open(db_path, "r", encoding="utf-8") as f:
+    providers = json.load(f)
+
+# 1. Filtro estricto de basuras de scraping
+blacklist = [
+    'safari', 'google play', 'cookiepedia', '7z format', 'agenda de tareas', 
+    'prácticas de privacidad', 'borrar el historial', 'información sobre', 
+    'http', 'www', 'index', 'default'
+]
+
+clean_providers = []
+for p in providers:
+    name = str(p.get('name', '')).strip()
+    
+    # Excluir registros por basura o cadenas numéricas
+    if any(b in name.lower() for b in blacklist):
+        continue
+    if len(name) < 3 or re.match(r'^\d+[\.\d+]*$', name):
+        continue
+        
+    clean_providers.append(p)
+
+print(f"🧹 Registros limpios finales: {len(clean_providers)} de {len(providers)} originales.")
+
+# Guardar base saneada
+with open(db_path, "w", encoding="utf-8") as f:
+    json.dump(clean_providers, f, ensure_ascii=False, indent=2)
+
+# 2. Actualizar el frontend para dinamizar contadores y renderizar imágenes reales
+page_path = os.path.join(base_dir, "EAR_OS_V2", "src", "app", "(public)", "proveedores", "page.tsx")
+
+code = """'use client';
 
 import React, { useState, useMemo } from 'react';
 import providersData from '@/data/all_providers_database.json';
 
 export default function ProveedoresPage() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
-  const [selectedProvince, setSelectedProvince] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState('MADRID');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 24;
 
+  // Cálculo dinámico del recuento real por categoría
   const getCount = (catKey: string) => {
     if (catKey === 'ALL') return providersData.length;
     return providersData.filter((p: any) => 
-      p.category && p.category.toLowerCase() === catKey.toLowerCase()
+      p.category && p.category.toLowerCase().includes(catKey.toLowerCase())
     ).length;
   };
 
@@ -34,7 +79,7 @@ export default function ProveedoresPage() {
     return providersData.filter((p: any) => {
       const matchCat =
         selectedCategory === 'ALL' ||
-        (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase());
+        (p.category && p.category.toLowerCase().includes(selectedCategory.toLowerCase()));
       const matchProv =
         !selectedProvince ||
         (p.province && p.province.toLowerCase().includes(selectedProvince.toLowerCase()));
@@ -80,7 +125,7 @@ export default function ProveedoresPage() {
             </div>
             <input
               type="text"
-              placeholder="Buscar proveedor..."
+              placeholder="Buscar por nombre, servicio..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full md:w-80 bg-neutral-950 border border-neutral-800 rounded-xl px-4 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#ecb613]"
@@ -105,7 +150,7 @@ export default function ProveedoresPage() {
           </div>
         </div>
 
-        {/* GRID LIMPIO S-CLASS */}
+        {/* GRID CON IMÁGENES REALES */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {paginatedProviders.map((item: any) => (
             <article
@@ -119,7 +164,7 @@ export default function ProveedoresPage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-md text-[10px] font-bold text-[#ecb613] uppercase tracking-wider">
-                  {item.category ? item.category.toUpperCase() : 'SERVICIOS'}
+                  {item.category ? item.category.toUpperCase().replace('_', ' ') : 'SERVICIOS'}
                 </div>
                 <div className="absolute top-3 right-3 bg-[#10b981]/90 text-black px-2.5 py-1 rounded-md text-[10px] font-black flex items-center gap-1">
                   ★ 4.9 <span className="text-black/70 font-bold">(18)</span>
@@ -135,7 +180,7 @@ export default function ProveedoresPage() {
                     {item.name}
                   </h3>
                   <p className="text-neutral-400 text-xs mt-2 line-clamp-2 leading-relaxed">
-                    {item.description || `${item.name} (Servicios profesionales homologados). Contratación directa Productora EAR.`}
+                    {item.description || `${item.name} (Servicios profesionales en ${item.province || 'Madrid'}). Garantía de contratación directa Productora EAR.`}
                   </p>
                 </div>
 
@@ -193,3 +238,9 @@ export default function ProveedoresPage() {
     </div>
   );
 }
+"""
+
+with open(page_path, "w", encoding="utf-8") as f:
+    f.write(code)
+
+print("✅ Dashboard y métricas vinculados dinámicamente al JSON saneado.")
