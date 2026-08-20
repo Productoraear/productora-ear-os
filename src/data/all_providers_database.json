@@ -10,7 +10,7 @@
     "isPreferred": true,
     "rank": 1,
     "badge": "S-CLASS PREFERRED #1",
-    "basePrice": 550,
+    "basePrice": 350,
     "rating": "5.0",
     "reviews": 128,
     "sla": "12 W/pax Homologado + Micro Shure",
@@ -21,16 +21,19 @@
       "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200",
       "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200"
     ],
-    "description": "Servicios de música, sonido profesional y shows en vivo de alta gama (Mariachis, Boleros, Baladas y DJ) dirigidos por Edwin Agudelo.",
-    "description_full": "Ficha oficial homologada de Productora EAR. Proveedor especializado en MUSICA con cobertura en la zona de Madrid y nacional. Cuenta con verificación de solvencia técnica, póliza de Responsabilidad Civil de 1M€ y supervisión de calidad por Productora EAR.",
+    "description": "Show musical en vivo de 1 hora (2 pases), sonido profesional Bose, ramo de flores, canción personalizada y sesión de fotos con sombreros temáticos.",
+    "description_full": "La propuesta más completa en relación calidad-precio. Incluye actuación de 1 hora en 2 salidas de 30 min (12-14 canciones), sonorización de alta fidelidad Bose, entrega de ramo de flores en vivo, canción personalizada dedicada y sesión fotográfica con sombreros temáticos y envío de galería digital HD vía email.",
     "address": "Ubicación Principal en Madrid",
     "services_list": [
-      "Atención Personalizada y Asesoría",
-      "Montaje y Desmontaje Técnico Incluido",
-      "Cobertura con Seguro de RC de 1.000.000 €",
-      "SLA y Tiempos de Respuesta Garantizados por Contrato",
-      "Facturación Centralizada vía Split Soberano"
-    ]
+      "Actuación Musical en Vivo (1 Hora / 2 pases de 30 min / 12-14 canciones)",
+      "Sonorización Profesional de Alta Fidelidad BOSE",
+      "Entrega de Ramo de Flores en directo",
+      "Canción Personalizada adaptada al evento",
+      "Sesión Fotográfica con sombreros temáticos y envío digital HD",
+      "Garantía de Exclusividad: Bloqueo total de agenda ese día"
+    ],
+    "pack_name": "Pack Solista Premium — Experiencia Irresistible",
+    "whatsapp_payload": "Hola Productora EAR, deseo reservar el PACK SOLISTA PREMIUM (350€) con sonido Bose, flores, fotos y canción personalizada."
   },
   {
     "id": "prov-1",
