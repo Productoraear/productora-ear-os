@@ -6,6 +6,8 @@ import { useSharedContext } from '@/app/context/SharedContext';
 
 interface BespokeTemplateProps {
   keywords?: any;
+  isApex?: boolean;
+  keywords?: any;
   category?: string;
   location?: string;
   province?: string;
