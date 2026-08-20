@@ -354,7 +354,7 @@ export const ProveedorDirectory: React.FC<{ initialCategory?: string }> = ({ ini
             {providers.map((p) => {
               const basePrice = p.pricing?.rentalBasePrice || 650;
               const paxPrice = p.pricing?.minPricePerPax || 85;
-              const coverImg = p.media?.coverImage || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80';
+              const coverImg = p.media?.coverImage || '';
 
               return (
                 <motion.div
@@ -366,14 +366,20 @@ export const ProveedorDirectory: React.FC<{ initialCategory?: string }> = ({ ini
                   <div>
                     {/* IMAGEN DE CABECERA CON BADGES */}
                     <div className="h-52 w-full relative overflow-hidden bg-zinc-900">
-                      <img 
-                        src={coverImg} 
-                        alt={p.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        onError={(e: any) => {
-                          e.target.src = 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80';
-                        }}
-                      />
+                      {coverImg ? (
+                        <img 
+                          src={coverImg} 
+                          alt={p.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={(e: any) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-950">
+                          <span className="text-3xl text-neutral-700">📷</span>
+                        </div>
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                       
                       <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">

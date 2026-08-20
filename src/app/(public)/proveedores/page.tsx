@@ -1,9 +1,15 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import providersData from '@/data/all_providers_database.json';
 
-export default function ProveedoresPage() {
+function useHasMounted() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  return mounted;
+}
+
+function MainProveedoresComponent() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [selectedProvince, setSelectedProvince] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -134,11 +140,17 @@ export default function ProveedoresPage() {
               }`}
             >
               <div className="relative h-52 w-full overflow-hidden bg-neutral-950">
-                <img
-                  src={item.img || 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800'}
-                  alt={item.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                {item.img ? (
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-neutral-900 to-neutral-950">
+                    <span className="text-3xl text-neutral-700">📷</span>
+                  </div>
+                )}
                 <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-md text-[10px] font-bold text-[#ecb613] uppercase tracking-wider">
                   {item.badge || (item.category ? item.category.toUpperCase() : 'SERVICIOS')}
                 </div>
@@ -267,4 +279,11 @@ export default function ProveedoresPage() {
       </main>
     </div>
   );
+}
+
+
+export default function WrappedProveedoresPage(props: any) {
+  const mounted = useHasMounted();
+  if (!mounted) return <div suppressHydrationWarning className="min-h-screen bg-black" />;
+  return <MainProveedoresComponent {...props} />;
 }

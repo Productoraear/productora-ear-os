@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { PROVINCIAS, OCASIONES, GUIAS } from '@/lib/constants/seo-data';
 import { HIGH_VALUE_VARIANTS } from '@/lib/artists/matrix';
+import allProviders from '@/data/all_providers_database.json';
 
 const now = new Date();
 const baseUrl = 'https://www.productoraear.com';
@@ -190,6 +191,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'weekly'
   }));
 
+  // 8. CATÁLOGO SOBERANO: 4.906 PROVEEDORES CURADOS (/proveedores/[id])
+  const providerPages: MetadataRoute.Sitemap = (allProviders as any[]).map((p: any) => {
+    const provSlug = p.slug || p.id || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    return {
+      url: `${baseUrl}/proveedores/${provSlug}`,
+      lastModified: now,
+      priority: p.isPreferred ? 0.95 : 0.70,
+      changeFrequency: 'monthly' as const
+    };
+  });
+
   // PURGADO ATÓMICO: Cero basura legada, 100% de unicidad semántica y foco absoluto en intenciones de búsqueda
   return unique([
     ...corePages,
@@ -200,6 +212,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...relationalCanonicalPages,
     ...arsenalCanonicalPages,
     ...b2gCanonicalPages,
-    ...provinceCanonicalPages
+    ...provinceCanonicalPages,
+    ...providerPages
   ]);
 }

@@ -39,7 +39,7 @@ async function getProviderData(slug: string) {
     // Fallback silencioso
   }
 
-  // 2. Consulta al Dataset Maestro de 8.183 Proveedores
+  // 2. Consulta al Dataset Maestro de 24.869 Proveedores
   if (!provider) {
     try {
       const masterPath = path.join(process.cwd(), 'src', 'data', 'catalog', 'proveedores_soberanos_master.json');
@@ -50,6 +50,26 @@ async function getProviderData(slug: string) {
       }
     } catch (err) {
       console.warn(`[PROVIDER_SLUG] Error leyendo máster:`, err);
+    }
+  }
+
+  // 3. Fallback: Dataset Curado de 4.906 Proveedores Saneados
+  if (!provider) {
+    try {
+      const curatedPath = path.join(process.cwd(), 'src', 'data', 'all_providers_database.json');
+      if (fs.existsSync(curatedPath)) {
+        const raw = fs.readFileSync(curatedPath, 'utf-8');
+        const list = JSON.parse(raw);
+        const slugNorm = slug.toLowerCase();
+        provider = list.find((p: any) => {
+          if (p.id === slug || p.slug === slug) return true;
+          // Derivar slug del nombre para matching flexible
+          const nameSlug = (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+          return nameSlug === slugNorm;
+        });
+      }
+    } catch (err) {
+      console.warn(`[PROVIDER_SLUG] Error leyendo curado:`, err);
     }
   }
 
