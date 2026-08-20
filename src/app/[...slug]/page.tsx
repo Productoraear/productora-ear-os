@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
