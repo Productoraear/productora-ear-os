@@ -1,4 +1,8 @@
-'use client';
+import os
+
+path = os.path.join("src", "app", "(public)", "proveedores", "page.tsx")
+
+code = """'use client';
 
 import React, { useState, useMemo } from 'react';
 import providersData from '@/data/all_providers_database.json';
@@ -268,3 +272,9 @@ export default function ProveedoresPage() {
     </div>
   );
 }
+"""
+
+with open(path, "w", encoding="utf-8") as f:
+    f.write(code)
+
+print("✅ Interacción táctil y cursor de mano configurados correctamente.")
