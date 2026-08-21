@@ -18,30 +18,23 @@ credentials.json
 token.json
 scripts/credentials.json
 scripts/token.json
-.next/
 .turbo/
 ARCHIVE_RECOVERY/
-node_modules/
 *.html
 *.htm
 *.meta.json
-*.log
-.next/
-.turbo/
-ARCHIVE_RECOVERY/
-node_modules/
-EAR_OS_CONTROL/
-CLINE_RULES_V3.md
-tools/
-*.tsbuildinfo
-
-# Scratch, Marketing e Inteligencia Externa
-Marketing_Skills/
-system-prompts-and-models-of-ai-tools-main/
-.env*.local
 scripts/vampire_mass_extracted.json
 docs/release/COMPREHENSIVE_FORENSIC_INVENTORY.json
 src/data/catalog/ADN_EAR_INDEX.json
 
 vault_secrets_backup/
 scratch/
+EAR_OS_CONTROL/
+Marketing_Skills/
+system-prompts-and-models-of-ai-tools-main/
+*.tsbuildinfo
+
+# Ignore root tools directory while explicitly keeping astra components tools
+/tools/
+/scripts/tools/
+!src/features/astra/components/tools/
