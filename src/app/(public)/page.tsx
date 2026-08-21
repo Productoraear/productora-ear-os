@@ -17,6 +17,8 @@ const CinematicTunnelIgnition = dynamic(
   { ssr: false }
 );
 
+import CinematicHeroSClass from '@/components/sclass/CinematicHeroSClass';
+
 export default function Home() {
   const [activeProfile, setActiveProfile] = useState<ProfileContext | null>(null);
 
@@ -38,49 +40,8 @@ export default function Home() {
   return (
     <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-[#ecb613] selection:text-black">
       
-      {/* 🚀 HERO SECTION: INTENT ROUTER S-CLASS */}
-      <section className="pt-32 sm:pt-40 pb-16 sm:pb-24 px-4 sm:px-6 relative overflow-hidden">
-        {/* Ambient glow effects */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-[#ecb613]/10 via-transparent to-transparent blur-[140px] pointer-events-none" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/5 blur-[120px] pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto text-center space-y-8 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono font-black uppercase tracking-[0.3em]">
-            <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-ping" />
-            EAR OS // PLATAFORMA DE CONTRATACIÓN MUSICAL & LOGÍSTICA S-CLASS
-          </div>
-
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase italic tracking-tighter text-white font-syne leading-[0.9]">
-            La Infraestructura que Convierte <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">
-              Intención en Realidad
-            </span>
-          </h1>
-
-          <p className="text-white/60 text-base sm:text-xl max-w-3xl mx-auto font-light leading-relaxed">
-            No somos un catálogo inerte. Interpretamos tu necesidad, calculamos el presupuesto exacto sin intermediarios y coordinamos la actuación con rigor logístico y cobertura jurídica completa.
-          </p>
-
-          {/* Quick Intent CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 max-w-xl mx-auto">
-            <Link
-              href="/cotizador"
-              className="w-full sm:w-auto flex-1 py-4 px-8 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[50px] shadow-xl shadow-[#ecb613]/20 active:scale-95 transition-all"
-            >
-              <span>Calcular Presupuesto en Vivo</span>
-              <ArrowRight size={16} />
-            </Link>
-
-            <a
-              href={CENTRALITA.tel}
-              className="w-full sm:w-auto flex-1 py-4 px-8 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[50px] active:scale-95 transition-all"
-            >
-              <Phone size={16} className="text-[#ecb613]" />
-              <span>Llamar Centralita: {CENTRALITA.display}</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* 🚀 HERO SECTION: CINEMATIC S-CLASS WITH 4 SOVEREIGN PROFILES */}
+      <CinematicHeroSClass />
 
       {/* 👑 PACIENTE CERO: EDWIN AGUDELO (TARJETA DE HONOR INSIGNIA) */}
       <section className="px-4 sm:px-6 pb-20 relative z-10">

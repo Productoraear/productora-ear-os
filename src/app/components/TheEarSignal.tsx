@@ -115,13 +115,13 @@ export const TheEarSignal: React.FC = () => {
           <Radio size={14} className="animate-pulse" /> The EAR Signal
         </div>
         
-        <h1 className="text-5xl sm:text-7xl md:text-8xl font-black text-white tracking-tighter leading-none font-syne uppercase">
-          EL 99% ES RUIDO.<br/>
-          NOSOTROS SOMOS LA <span className="text-[#ecb613]">SEÑAL</span>.
+        <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[0.95] font-syne uppercase">
+          El 90% de los artistas independientes <br className="hidden sm:inline" />
+          regala su margen por <span className="text-[#ecb613]">falta de estructura</span>.
         </h1>
         
-        <p className="text-white/50 text-sm md:text-base max-w-2xl mx-auto uppercase tracking-widest font-bold leading-relaxed">
-          Infraestructura de talento y curaduría de autor. Si tu frecuencia es pura, el escenario te pertenece.
+        <p className="text-white/70 text-sm md:text-base max-w-3xl mx-auto font-light leading-relaxed">
+          Somete tu propuesta al Test de 10 Fases Meritorias de EAR OS. Si superas la auditoría, accedes directamente al Split Soberano 80/10/10.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mx-auto pt-6 text-left">

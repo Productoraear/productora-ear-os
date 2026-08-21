@@ -297,9 +297,27 @@ export const ArsenalTecnicoView: React.FC = () => {
 
   const generateWhatsAppMessage = () => {
     const itemsList = planoTecnico
-      .map(p => `• ${p.quantity}x ${p.item.name} (${p.item.priceDisplay})`)
-      .join('%0A');
-    return `https://wa.me/34693693048?text=Hola%20Edwin,%20quiero%20cotizar%20este%20Plano%20T%C3%A9cnico%20de%20Arsenal%20EAR:%0A${itemsList}%0A%0APresupuesto%20Base%20Estimado:%20${totalEstimatedBudget}€`;
+      .map((p, idx) => `${idx + 1}. *${p.quantity}x ${p.item.name}* — ${p.item.priceDisplay} (${p.item.priceNumeric * p.quantity} €)`)
+      .join('\n');
+
+    const messageLines = [
+      `⚡ *PLANO TÉCNICO & ARSENAL RESERVADO — EAR OS 2026*`,
+      `─────────────────────────────`,
+      `📍 *Destino / Evento:* Cobertura Central Madrid & Nacional`,
+      `💰 *Inversión Base Estimada:* ${totalEstimatedBudget} €`,
+      ``,
+      `📋 *EQUIPAMIENTO & ACTIVOS SELECCIONADOS:*`,
+      itemsList,
+      ``,
+      `🛡️ *GARANTÍAS INCLUIDAS:*`,
+      `• Montaje Certificado y Cableado Oculto`,
+      `• Técnico de Guardia / Redundancia In Situ`,
+      `• Póliza de Responsabilidad Civil de 1.000.000 €`,
+      `─────────────────────────────`,
+      `💬 *Mensaje:* "Hola Edwin, solicito cotización formal y confirmación de disponibilidad técnica para este despliegue."`
+    ];
+
+    return `https://wa.me/34693693048?text=${encodeURIComponent(messageLines.join('\n'))}`;
   };
 
   return (

@@ -29,11 +29,14 @@ export default function VimumeMasterHub() {
               <Brain size={13} />
               <span>FUNDACIÓN VIMUME // VIAJE MUSICAL POR LA MEMORIA</span>
             </div>
-            <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tight text-white font-syne">
-              NEURO-REMINISCENCIA <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-300 to-[#ecb613]">ACTIVA</span>
+            <h1 className="text-3xl md:text-6xl font-black uppercase tracking-tight text-white font-syne leading-[0.95]">
+              Contratación pública simplificada y adjudicación directa en &lt;24h <br className="hidden md:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-300 to-[#ecb613]">
+                bajo el Art. 118 LCSP (&lt;15.000 €).
+              </span>
             </h1>
-            <p className="text-white/60 text-sm md:text-base max-w-2xl font-light">
-              Protocolos de estimulación cognitiva sonora para residencias, centros de día y familias. Licitaciones B2G (NextGenerationEU) y Musicoterapia de Precisión Grado Clínico.
+            <p className="text-white/70 text-sm md:text-base max-w-3xl font-light leading-relaxed">
+              Programa de estimulación cognitiva Gamma a 40Hz respaldado por metodología clínica para residencias, centros de mayores y ayuntamientos.
             </p>
           </div>
 

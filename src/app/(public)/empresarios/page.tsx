@@ -55,13 +55,15 @@ export default function EmpresariosPage() {
             Acompañamiento Estratégico & Táctico
           </div>
           
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase italic tracking-tighter text-white font-syne leading-[0.95]">
-            Acompañamiento <br className="hidden sm:inline"/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">Estratégico & Táctico</span>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white font-syne leading-[0.95]">
+            Los directorios tradicionales cobran por leads <br className="hidden sm:inline"/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">
+              que luego subastan a tu competencia.
+            </span>
           </h1>
           
-          <p className="text-sm sm:text-lg text-zinc-300 font-normal leading-relaxed max-w-3xl mx-auto">
-            No solo diseñamos la estrategia; bajamos al barro contigo para implementarla. Resultados que superan expectativas con ROI garantizado por escrito.
+          <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed max-w-3xl mx-auto">
+            Reclama tu ficha dentro de 24.869 proveedores homologados. Cero comisiones ocultas, enlace directo a tu WhatsApp y control total de tu agenda con acompañamiento táctico de alto nivel.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">

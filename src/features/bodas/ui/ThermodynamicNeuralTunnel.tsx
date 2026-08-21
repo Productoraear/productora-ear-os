@@ -443,8 +443,26 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
   };
 
   const handleContactWhatsApp = (p: MatchmakerProvider) => {
-    const text = encodeURIComponent(`Hola ${p.name}, he visto vuestro perfil en Productora EAR para mi boda en ${province}. Mi presupuesto estimado es de ${totalBudget}€. ${p.whatsappText}`);
-    window.open(`https://wa.me/34693693048?text=${text}`, '_blank');
+    const messageLines = [
+      `👑 *SOLICITUD DE RESERVA S-CLASS — EAR OS 2026*`,
+      `─────────────────────────────`,
+      `📍 *Ubicación:* ${province}`,
+      `🎨 *Atmósfera:* ${activeAtmosphere.name}`,
+      `👥 *Invitados:* ${guestCount} pax`,
+      `💰 *Presupuesto Estimado:* ${totalBudget} €`,
+      ``,
+      `📋 *PARTIDAS Y ACTIVOS RESERVADOS:*`,
+      `1. *${p.name}* (${p.categoryLabel}) — ${p.basePrice < 150 ? `${p.basePrice}€/pax` : `${p.basePrice}€`}`,
+      ``,
+      `🛡️ *GARANTÍAS INCLUIDAS:*`,
+      `• Blindaje Plan B Redundante`,
+      `• Sonorización Pista-BPM (Cero Distorsión)`,
+      `• Presupuesto Cerrado Sin Sorpresas`,
+      `─────────────────────────────`,
+      userInput.trim() ? `💬 *Mensaje de la Pareja:* "${userInput.trim()}"` : `💬 *Mensaje de la Pareja:* "Hola Edwin, queremos consultar la disponibilidad formal de nuestra fecha."`
+    ];
+
+    window.open(`https://wa.me/34693693048?text=${encodeURIComponent(messageLines.join('\n'))}`, '_blank');
   };
 
   const handleLeadSubmit = async () => {
@@ -543,15 +561,15 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
             </div>
 
             <div className="space-y-4 max-w-3xl mx-auto">
-              <h2 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white font-syne leading-tight">
-                Diseña la Experiencia de <br />
+              <h2 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white font-syne leading-tight">
+                No contrates a ciegas para el día <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">
-                  Vuestro Gran Día
+                  más importante de vuestra vida
                 </span>
               </h2>
 
-              <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                Olvídate de comparar cientos de opciones a ciegas. Cuéntanos qué tenéis en mente y os ayudaremos a encontrar exactamente lo que necesitáis con presupuesto cerrado y garantía total.
+              <p className="text-white/70 text-sm sm:text-base leading-relaxed font-light max-w-2xl mx-auto">
+                Sonorización Pista-BPM Bose/Shure, Plan B redundante in situ y congelación de tarifa en 72h con un depósito inicial de solo 10 €. Cuéntanos vuestra visión:
               </p>
             </div>
 
@@ -950,16 +968,26 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
-                  href={`https://wa.me/34693693048?text=${encodeURIComponent(
-                    `Hola Edwin, he configurado nuestra propuesta de boda en productoraear.com:\n\n` +
-                    `Atmósfera: ${activeAtmosphere.name}\n` +
-                    `Provincia: ${province}\n` +
-                    `Presupuesto Estimado: ${totalBudget}€\n` +
-                    `Invitados: ${guestCount} personas\n\n` +
-                    `Servicios Seleccionados:\n` +
-                    matchedProviders.map((m, idx) => `${idx + 1}. ${m.name} (${m.basePrice}€)`).join('\n') +
-                    `\n\nNos gustaría consultar disponibilidad para nuestra fecha.`
-                  )}`}
+                  href={`https://wa.me/34693693048?text=${encodeURIComponent([
+                    `👑 *SOLICITUD DE RESERVA S-CLASS — EAR OS 2026*`,
+                    `─────────────────────────────`,
+                    `📍 *Ubicación:* ${province}`,
+                    `🎨 *Atmósfera:* ${activeAtmosphere.name}`,
+                    `👥 *Invitados:* ${guestCount} pax`,
+                    `💰 *Presupuesto Estimado:* ${totalBudget} €`,
+                    ``,
+                    `📋 *PARTIDAS Y ACTIVOS RESERVADOS:*`,
+                    matchedProviders.length > 0
+                      ? matchedProviders.map((m, idx) => `${idx + 1}. *${m.name}* (${m.categoryLabel}) — ${m.basePrice < 150 ? `${m.basePrice}€/pax` : `${m.basePrice}€`}`).join('\n')
+                      : `1. *Producción Nupcial Integral ${activeAtmosphere.name}* — ${totalBudget} €`,
+                    ``,
+                    `🛡️ *GARANTÍAS INCLUIDAS:*`,
+                    `• Blindaje Plan B Redundante`,
+                    `• Sonorización Pista-BPM (Cero Distorsión)`,
+                    `• Presupuesto Cerrado Sin Sorpresas`,
+                    `─────────────────────────────`,
+                    userInput.trim() ? `💬 *Mensaje de la Pareja:* "${userInput.trim()}"` : `💬 *Mensaje de la Pareja:* "Hola Edwin, queremos consultar la disponibilidad formal de nuestra fecha."`
+                  ].join('\n'))}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto px-8 py-4.5 bg-[#25D366] hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-widest rounded-2xl flex items-center justify-center gap-2 shadow-2xl transition-all cursor-pointer hover:scale-105"
