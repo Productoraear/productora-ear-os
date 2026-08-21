@@ -11,7 +11,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
-import { PROVINCIAS, SERVICIOS } from '@/lib/constants/seo-data';
+import { PROVINCIAS } from '@/lib/constants/seo-data';
 
 const PRIORITY_PROVINCES = new Set(['madrid', 'barcelona', 'valencia', 'sevilla', 'toledo']);
 
@@ -39,7 +39,7 @@ export default function SovereignFooter() {
               </span>
             </div>
 
-            <p className="text-xs sm:text-sm text-white/60 max-w-lg leading-relaxed">
+            <p className="text-xs sm:text-sm text-zinc-300 max-w-lg leading-relaxed">
               Infraestructura y Sistema Operativo para Bodas de Alta Distinción, Eventos Corporativos y Licitaciones Públicas B2G. Producción acústica calibrada a 12 W/pax y gestión de talento soberano sin intermediarios pasivos.
             </p>
 
@@ -53,17 +53,17 @@ export default function SovereignFooter() {
 
           {/* Quick Vertical Links */}
           <div className="space-y-3">
-            <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#ecb613]">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[#ecb613]">
               Infraestructura
-            </h4>
+            </h3>
             <nav aria-label="Enlaces de Infraestructura">
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-zinc-300">
                 <li>
                   <Link 
                     href="/bodas" 
                     prefetch={true}
                     aria-label="Ir a la Experiencia Nupcial"
-                    className="hover:text-white hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
+                    className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
                   >
                     <ChevronRight size={12} className="text-[#ecb613]" /> Experiencia Nupcial
                   </Link>
@@ -73,7 +73,7 @@ export default function SovereignFooter() {
                     href="/arsenal" 
                     prefetch={true}
                     aria-label="Ir al Arsenal Técnico y Pantallas LED"
-                    className="hover:text-white hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
+                    className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
                   >
                     <ChevronRight size={12} className="text-[#ecb613]" /> Arsenal Técnico & Pantallas
                   </Link>
@@ -83,7 +83,7 @@ export default function SovereignFooter() {
                     href="/empresarios" 
                     prefetch={true}
                     aria-label="Ir a Consultoría Empresarios B2B"
-                    className="hover:text-white hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
+                    className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
                   >
                     <ChevronRight size={12} className="text-[#ecb613]" /> Consultoría Empresarios B2B
                   </Link>
@@ -93,7 +93,7 @@ export default function SovereignFooter() {
                     href="/the-signal" 
                     prefetch={false}
                     aria-label="Ir a The Signal Captación de Artistas"
-                    className="hover:text-white hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
+                    className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
                   >
                     <ChevronRight size={12} className="text-[#ecb613]" /> The Signal (Captación Artistas)
                   </Link>
@@ -103,7 +103,7 @@ export default function SovereignFooter() {
                     href="/vimume" 
                     prefetch={false}
                     aria-label="Ir a VIMUME Neuroestimulación 40Hz"
-                    className="hover:text-white hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
+                    className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5"
                   >
                     <ChevronRight size={12} className="text-[#ecb613]" /> VIMUME (Neuroestimulación 40Hz)
                   </Link>
@@ -114,10 +114,10 @@ export default function SovereignFooter() {
 
           {/* Contacto & Centralita Directa */}
           <div className="space-y-3">
-            <h4 className="text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#ecb613]">
+            <h3 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-[#ecb613]">
               Contacto Soberano
-            </h4>
-            <p className="text-xs text-white/60">
+            </h3>
+            <p className="text-xs text-zinc-300">
               Atención directa con la Dirección Técnica de Edwin Agudelo:
             </p>
             <a
@@ -139,13 +139,13 @@ export default function SovereignFooter() {
           <div className="flex items-center justify-between border-b border-white/5 pb-3">
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#ecb613] font-bold">
               <MapPin size={14} />
-              <span>Red Territorial de Cobertura Oficial en España</span>
+              <h2>Red Territorial de Cobertura Oficial en España</h2>
             </div>
-            <span className="text-[10px] font-mono text-white/40">52 Nodos Provinciales Activos</span>
+            <span className="text-[10px] font-mono text-zinc-400">52 Nodos Provinciales Activos</span>
           </div>
 
           <nav aria-label="Red de Provincias Oficiales">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2 text-[11px] font-mono text-white/60">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2 text-[11px] font-mono text-zinc-300">
               {PROVINCIAS.slice(0, 48).map((prov) => {
                 const formattedName = prov
                   .split('-')
@@ -172,41 +172,41 @@ export default function SovereignFooter() {
 
         {/* 3. MATRIZ DE SERVICIOS POR PROVINCIA DESTACADA */}
         <div className="space-y-4 pt-4">
-          <div className="text-[10px] font-mono text-white/40 uppercase tracking-wider">
+          <div className="text-xs font-mono text-zinc-300 uppercase tracking-wider font-semibold">
             Rutas de Alta Demanda Nupcial & Corporativa:
           </div>
 
           <nav aria-label="Rutas de Alta Demanda">
-            <div className="flex flex-wrap gap-2 text-[10px] font-mono text-white/50">
-              <Link href="/bodas/madrid/dj-eventos" prefetch={true} aria-label="DJ Bodas Madrid" className="hover:text-[#ecb613] transition-colors">
+            <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-300">
+              <Link href="/bodas/madrid/dj-eventos" prefetch={true} aria-label="DJ Bodas Madrid" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 DJ Bodas Madrid
               </Link>
-              <span>•</span>
-              <Link href="/bodas/madrid/sonido-iluminacion" prefetch={true} aria-label="Sonido e Iluminación Madrid" className="hover:text-[#ecb613] transition-colors">
+              <span className="text-zinc-500">•</span>
+              <Link href="/bodas/madrid/sonido-iluminacion" prefetch={true} aria-label="Sonido e Iluminación Madrid" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 Sonido e Iluminación Madrid
               </Link>
-              <span>•</span>
-              <Link href="/bodas/barcelona/musica-directo" prefetch={true} aria-label="Música en Directo Barcelona" className="hover:text-[#ecb613] transition-colors">
+              <span className="text-zinc-500">•</span>
+              <Link href="/bodas/barcelona/musica-directo" prefetch={true} aria-label="Música en Directo Barcelona" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 Música en Directo Barcelona
               </Link>
-              <span>•</span>
-              <Link href="/bodas/valencia/mariachis-boda" prefetch={true} aria-label="Mariachis Valencia" className="hover:text-[#ecb613] transition-colors">
+              <span className="text-zinc-500">•</span>
+              <Link href="/bodas/valencia/mariachis-boda" prefetch={true} aria-label="Mariachis Valencia" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 Mariachis Valencia
               </Link>
-              <span>•</span>
-              <Link href="/bodas/sevilla/fotografo-boda" prefetch={true} aria-label="Fotógrafo Sevilla" className="hover:text-[#ecb613] transition-colors">
+              <span className="text-zinc-500">•</span>
+              <Link href="/bodas/sevilla/fotografo-boda" prefetch={true} aria-label="Fotógrafo Sevilla" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 Fotógrafo Sevilla
               </Link>
-              <span>•</span>
-              <Link href="/bodas/malaga/saxofonista-eventos" prefetch={false} aria-label="Saxofonista Málaga" className="hover:text-[#ecb613] transition-colors">
+              <span className="text-zinc-500">•</span>
+              <Link href="/bodas/malaga/saxofonista-eventos" prefetch={false} aria-label="Saxofonista Málaga" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 Saxofonista Málaga
               </Link>
-              <span>•</span>
-              <Link href="/bodas/toledo/animacion-fiesta" prefetch={true} aria-label="Animación Toledo" className="hover:text-[#ecb613] transition-colors">
+              <span className="text-zinc-500">•</span>
+              <Link href="/bodas/toledo/animacion-fiesta" prefetch={true} aria-label="Animación Toledo" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 Animación Toledo
               </Link>
-              <span>•</span>
-              <Link href="/bodas/alicante/dj-eventos" prefetch={false} aria-label="DJ Alicante" className="hover:text-[#ecb613] transition-colors">
+              <span className="text-zinc-500">•</span>
+              <Link href="/bodas/alicante/dj-eventos" prefetch={false} aria-label="DJ Alicante" className="hover:text-[#ecb613] transition-colors underline-offset-4 hover:underline">
                 DJ Alicante
               </Link>
             </div>
@@ -214,12 +214,12 @@ export default function SovereignFooter() {
         </div>
 
         {/* 4. COPYRIGHT & LEGALES */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/5 text-[11px] font-mono text-white/40">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/5 text-xs font-mono text-zinc-400">
           <div>
             © {new Date().getFullYear()} Productora EAR S.L. Todos los derechos reservados.
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 text-zinc-300">
             <Link href="/terminos-del-servicio" prefetch={false} aria-label="Términos del Servicio" className="hover:text-white transition-colors">
               Términos del Servicio
             </Link>

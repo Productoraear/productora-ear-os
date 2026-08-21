@@ -157,9 +157,10 @@ export const AstraOracle: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setIsOpen(true)}
+          aria-label="Abrir Oráculo de Inteligencia Táctica Astra"
           className="p-3.5 sm:px-5 sm:py-3 bg-[#0c0c14]/90 backdrop-blur-xl border border-[#ecb613]/50 hover:border-[#ecb613] rounded-full shadow-[0_10px_35px_rgba(236,182,19,0.25)] flex items-center gap-3 text-white cursor-pointer group"
         >
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center" aria-hidden="true">
             <span className="w-2.5 h-2.5 rounded-full bg-[#ecb613] animate-ping absolute" />
             <span className="w-2.5 h-2.5 rounded-full bg-[#ecb613] relative z-10" />
           </div>
@@ -173,7 +174,8 @@ export const AstraOracle: React.FC = () => {
             </span>
           </div>
 
-          <Sparkles size={16} className="text-[#ecb613] group-hover:rotate-12 transition-transform" />
+          <span className="sr-only">Abrir Oráculo Astra de Inteligencia Táctica</span>
+          <Sparkles size={16} aria-hidden="true" className="text-[#ecb613] group-hover:rotate-12 transition-transform" />
         </motion.button>
       )}
 
@@ -184,6 +186,9 @@ export const AstraOracle: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Oráculo Astra Panel Táctico"
             className="w-[92vw] sm:w-[460px] bg-[#07070c]/95 backdrop-blur-2xl border border-[#ecb613]/40 rounded-[2.5rem] p-6 shadow-[0_25px_80px_rgba(0,0,0,0.9)] space-y-5 text-white overflow-hidden relative"
           >
             {/* Ambient Background Aura */}
@@ -208,6 +213,7 @@ export const AstraOracle: React.FC = () => {
 
               <button
                 onClick={() => setIsOpen(false)}
+                aria-label="Cerrar Oráculo Astra"
                 className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X size={16} />
@@ -256,17 +262,25 @@ export const AstraOracle: React.FC = () => {
                 <button
                   type="submit"
                   disabled={searching || !searchQuery.trim()}
+                  aria-label="Consultar Bóveda RAG"
                   className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-[#ecb613] hover:text-white transition-colors cursor-pointer disabled:opacity-30"
                 >
-                  <Search size={15} />
+                  <Search size={14} />
                 </button>
               </div>
 
+              {searching && (
+                <div className="text-[10px] font-mono text-[#ecb613] flex items-center gap-2 animate-pulse">
+                  <Sparkles size={11} />
+                  <span>Sintetizando respuesta táctica en los 8.420 nodos...</span>
+                </div>
+              )}
+
               {customAnswer && (
                 <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  className="p-3.5 rounded-xl bg-[#100d04] border border-[#ecb613]/30 text-xs text-white/90 leading-relaxed font-light font-mono"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-xl text-xs text-white/90 font-mono leading-relaxed"
                 >
                   {customAnswer}
                 </motion.div>
@@ -277,6 +291,7 @@ export const AstraOracle: React.FC = () => {
             <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/5 relative z-10">
               <button
                 onClick={() => handleCopy(activePlaybook.actionPayload)}
+                aria-label="Copiar protocolo táctico"
                 className="py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono font-bold uppercase flex items-center justify-center gap-2 transition-all cursor-pointer text-white"
               >
                 {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} className="text-[#ecb613]" />}
@@ -287,6 +302,7 @@ export const AstraOracle: React.FC = () => {
                 href={`https://wa.me/34693693048?text=${encodeURIComponent(`Astra Neural Protocol (${pathname}):\n${activePlaybook.actionPayload}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Contactar centralita de WhatsApp con el protocolo activo"
                 className="py-3 px-4 rounded-xl bg-[#ecb613] hover:bg-white text-black text-xs font-mono font-black uppercase flex items-center justify-center gap-2 transition-all shadow-lg cursor-pointer"
               >
                 <Phone size={13} />

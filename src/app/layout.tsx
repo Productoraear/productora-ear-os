@@ -50,19 +50,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning className="dark scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://js.stripe.com" />
-      </head>
+      <head />
       <body 
         className="antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans"
         suppressHydrationWarning
       >
-        <Script
-          src="https://js.stripe.com/v3/"
-          strategy="lazyOnload"
-        />
         {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
             {`

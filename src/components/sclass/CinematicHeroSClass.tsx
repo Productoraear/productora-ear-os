@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Music, Mic2, HeartHandshake, Sparkles, Crown, AlertTriangle, Layers } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Music, Mic2, HeartHandshake, Layers } from 'lucide-react';
 import Link from 'next/link';
 
 const perfiles = [
@@ -63,62 +63,52 @@ export default function CinematicHeroSClass() {
   return (
     <section className="relative min-h-screen w-full bg-[#050505] text-gray-200 overflow-hidden flex flex-col justify-center items-center px-4 sm:px-8 py-24 sm:py-32 selection:bg-[#ecb613]/30 font-sans">
       
-      {/* Neblinas Volumétricas de Fondo */}
-      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/15 blur-[160px] rounded-full mix-blend-screen pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-900/10 blur-[160px] rounded-full mix-blend-screen pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#ecb613]/5 blur-[140px] pointer-events-none" />
+      {/* Neblinas Volumétricas de Fondo (GPU CSS puro sin JS reflow) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/15 blur-[160px] rounded-full mix-blend-screen pointer-events-none transform-gpu" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-900/10 blur-[160px] rounded-full mix-blend-screen pointer-events-none transform-gpu" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#ecb613]/5 blur-[140px] pointer-events-none transform-gpu" />
 
-      {/* Encabezado Cinemático con Fusión Aditiva S-Class */}
+      {/* Encabezado Cinemático con LCP Inmediato (Cero Retraso de Renderizado) */}
       <div className="z-10 text-center max-w-5xl mb-14 mt-4 space-y-6">
         
         {/* Kicker Overline */}
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono font-black uppercase tracking-[0.35em]">
-          <Layers size={13} className="text-[#ecb613]" />
+          <Layers size={13} className="text-[#ecb613]" aria-hidden="true" />
           <span>ADAPTACIÓN MULTI-PERFIL · ORQUESTACIÓN S-CLASS</span>
         </div>
 
-        {/* H1 Principal: Interrupción de Patrón */}
-        <motion.h1 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-syne text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white leading-[0.95]"
-        >
+        {/* H1 Principal: Renderizado Nativo Instantáneo para LCP Ultra-Rápido */}
+        <h1 className="font-syne text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white leading-[0.95]">
           El 84% de los presupuestos <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">
             esconden un 35% de sobrecoste invisible.
           </span>
-        </motion.h1>
+        </h1>
 
         {/* H2 Secundario: Claridad Estructural */}
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="font-syne text-xl sm:text-2xl md:text-3xl font-bold text-gray-200 tracking-tight"
-        >
+        <h2 className="font-syne text-xl sm:text-2xl md:text-3xl font-bold text-gray-200 tracking-tight">
           Cuatro Perfiles. Cuatro Caminos. <span className="text-[#ecb613]">Una Sola Inteligencia Soberana.</span>
-        </motion.h2>
+        </h2>
 
         {/* Subtítulo de Autoridad y Ejecución */}
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.25 }}
-          className="font-inter text-sm sm:text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed font-light"
-        >
+        <p className="font-inter text-sm sm:text-base md:text-lg text-zinc-300 max-w-3xl mx-auto leading-relaxed font-light">
           Eliminamos la intermediación parásita. Blindamos tu fecha con <strong className="text-white font-medium">Price-Lock SHA-256 (72h)</strong>, sonorización garantizada a <strong className="text-white font-medium">12 W/pax</strong> y ejecución técnica S-Class sin margen de error. Selecciona tu vector de entrada:
-        </motion.p>
+        </p>
       </div>
 
       {/* Grid de 4 Perfiles Glassmorphism */}
       <div className="z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full">
         {perfiles.map((perfil, index) => (
-          <Link href={perfil.href} key={perfil.id} className="group outline-none block h-full">
+          <Link 
+            href={perfil.href} 
+            key={perfil.id} 
+            aria-label={`Acceder a ${perfil.title}`}
+            className="group outline-none block h-full"
+          >
             <motion.div
-              initial={{ opacity: 0, y: 25 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
+              transition={{ duration: 0.35, delay: 0.05 * index }}
               className={`relative h-full flex flex-col justify-between p-7 rounded-3xl bg-[#09090d]/85 backdrop-blur-xl border border-white/5 transition-all duration-500 overflow-hidden shadow-2xl ${perfil.cardStyle}`}
             >
               {/* Resplandor reactivo interno */}
@@ -128,7 +118,7 @@ export default function CinematicHeroSClass() {
                 {/* Header Icon + Perfil Badge */}
                 <div className="flex items-center justify-between">
                   <div className="p-3 bg-white/5 rounded-2xl border border-white/10 group-hover:scale-110 transition-transform duration-500">
-                    <perfil.icon className="w-6 h-6 text-gray-300 group-hover:text-white transition-colors" />
+                    <perfil.icon className="w-6 h-6 text-gray-300 group-hover:text-white transition-colors" aria-hidden="true" />
                   </div>
                   <span className={`px-2.5 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase border ${perfil.badgeStyle}`}>
                     {perfil.perfilNum}
@@ -140,7 +130,7 @@ export default function CinematicHeroSClass() {
                   <h3 className="font-syne text-lg sm:text-xl font-bold uppercase text-white tracking-tight leading-snug group-hover:text-[#ecb613] transition-colors">
                     {perfil.title}
                   </h3>
-                  <p className="font-inter text-gray-400 leading-relaxed text-xs font-light">
+                  <p className="font-inter text-zinc-300 leading-relaxed text-xs font-light">
                     {perfil.desc}
                   </p>
                 </div>
@@ -150,7 +140,7 @@ export default function CinematicHeroSClass() {
               <div className="pt-6 z-10">
                 <div className={`w-full py-3 px-4 rounded-xl border text-[11px] font-mono font-bold uppercase tracking-wider flex items-center justify-between transition-all duration-300 ${perfil.btnStyle}`}>
                   <span>{perfil.cta}</span>
-                  <ArrowRight size={14} className="transform group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={14} aria-hidden="true" className="transform group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
 

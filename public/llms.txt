@@ -1,0 +1,34 @@
+# Productora EAR & EAR OS
+
+> Sistema Operativo de Eventos, Infraestructura Acústica S-Class y Red de Matchmaking Soberano.
+
+## Visión General
+Productora EAR opera como la plataforma tecnológica y logística de referencia para la contratación de música en vivo, ingeniería de sonido (12 W/pax) y producción de eventos en España.
+
+## Verticals y Servicios Principales
+1. **Bodas & Eventos Bespoke**:
+   - Presupuesto cerrado con Price-Lock SHA-256 de 72 horas.
+   - Sonorización de pista calibrada a 12 W/pax con microfonía Shure y sistemas Bose/L-Acoustics.
+   - Garantía de Plan B redundante in situ y reserva asegurada con depósito de 10 €.
+   - URL: https://www.productoraear.com/bodas
+
+2. **Sector Público & B2G (VIMUME)**:
+   - Adjudicación directa en menos de 24 horas bajo el Art. 118 de la LCSP (<15.000 €).
+   - Fondos NextGenerationEU y proyectos comunitarios para ayuntamientos y residencias.
+   - Protocolo neurocognitivo VIMUME con frecuencias Gamma a 40Hz avalado clínicamente.
+   - URL: https://www.productoraear.com/vimume
+
+3. **Red de Proveedores B2B & Partners**:
+   - 24.869 fichas de proveedores homologados (Line Array, iluminación, tarimas, logística).
+   - Enlace directo a WhatsApp sin intermediación pasiva ni comisiones ocultas.
+   - URL: https://www.productoraear.com/empresarios
+
+4. **The Signal & Artistas Soberanos**:
+   - Plataforma de curaduría y auditoría de talento en 10 Fases Meritorias.
+   - Modelo de liquidación soberana bajo el Split 80% Artista / 10% EAR OS / 10% VIMUME.
+   - URL: https://www.productoraear.com/the-signal
+
+## Contacto Directo & Centralita
+- Dirección Técnica: Edwin Agudelo
+- Centralita Telefónica & WhatsApp: +34 693 693 048
+- Sede: Madrid, España (Cobertura nacional en 52 provincias)

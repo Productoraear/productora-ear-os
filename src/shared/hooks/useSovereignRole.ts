@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { auth } from '@/lib/services/auth_nexus';
 
 export type SovereignRole = 
   | 'ROLE_ADMIN' 
@@ -18,6 +17,7 @@ export type SovereignRole =
 /**
  * 🕵️‍♂️ USE SOVEREIGN ROLE - INTENT DETECTION ENGINE
  * Detecta la intención del usuario basándose en la ruta y la sesión.
+ * Diseñado con carga diferida de Auth para optimizar el LCP en páginas públicas.
  */
 export function useSovereignRole() {
   const pathname = usePathname();
@@ -38,11 +38,18 @@ export function useSovereignRole() {
       // Eventos Corporativos -> B2B
       if (pathname.startsWith('/eventos') || pathname.startsWith('/empresarios')) return 'ROLE_B2B';
 
-      // 2. Detección por Sesión
-      const user = auth.currentUser;
-      if (user) {
-        if (user.email?.endsWith('@productoraear.com')) return 'ROLE_ADMIN';
-        return 'ROLE_CLIENT';
+      // 2. Detección por Sesión (Lazy check solo en rutas de autenticación/panel)
+      if (pathname.startsWith('/admin') || pathname.startsWith('/panel')) {
+        try {
+          const { auth } = require('@/lib/services/auth_nexus');
+          const user = auth?.currentUser;
+          if (user) {
+            if (user.email?.endsWith('@productoraear.com')) return 'ROLE_ADMIN';
+            return 'ROLE_CLIENT';
+          }
+        } catch {
+          // Operación segura sin bloqueo
+        }
       }
 
       return 'ROLE_GUEST';
@@ -61,6 +68,6 @@ export function useSovereignRole() {
     isGuest: role === 'ROLE_GUEST',
     isB2G: role === 'ROLE_B2G',
     isB2B: role === 'ROLE_B2B',
-    isB2C: role === 'ROLE_B2C'
+    isB2C: role === 'ROLE_B2C' || role === 'ROLE_GUEST',
   };
 }
