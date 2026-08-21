@@ -17,7 +17,9 @@ import {
   ArrowRight, 
   Phone,
   Calendar,
-  CheckCircle2
+  CheckCircle2,
+  Star,
+  ExternalLink
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import ThermodynamicNeuralTunnel from '@/features/bodas/ui/ThermodynamicNeuralTunnel';
@@ -259,6 +261,96 @@ export default function BodasPage() {
               </Link>
             </div>
 
+          </div>
+        </section>
+
+        {/* 4. OPINIONES VERIFICADAS EN BODAS.NET (5.0 ESTRELLAS · 100% RECOMENDADO) */}
+        <section className="space-y-10 pt-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-white/10 pb-6">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[9px] font-black uppercase tracking-widest font-mono">
+                <Star size={12} className="fill-[#ecb613]" />
+                <span>100% Recomendado por Parejas</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-syne">
+                Opiniones Reales en <span className="text-[#ecb613]">Bodas.net</span>
+              </h2>
+            </div>
+            <a
+              href="https://www.bodas.net/musica/productora-ear--e78903#reviews"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-xs font-black uppercase tracking-wider transition-all min-h-[48px]"
+            >
+              <span>Ver Escaparate en Bodas.net (5.0★)</span>
+              <ExternalLink size={14} />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                autor: "Adriana & Sergio",
+                fecha: "27/04/2024",
+                rating: 5.0,
+                titulo: "Nuestra Boda Sergio y Adriana",
+                comentario: "No tenemos palabras para expresar la inmensa gratitud que tenemos hacia Edwin y su grupo, ya que recibimos el mejor servicio de Mariachis, de fotos y decoración que ha hecho nuestra noche de bodas la mejor e inolvidable."
+              },
+              {
+                autor: "Eduardo",
+                fecha: "03/11/2023",
+                rating: 5.0,
+                titulo: "Mi boda fue espectacular",
+                comentario: "Muy agradecido por el espectacular show, cómo conecta a través de las emociones es increíble."
+              },
+              {
+                autor: "Yanet",
+                fecha: "03/04/2023",
+                rating: 5.0,
+                titulo: "Insuperable",
+                comentario: "Por mucho que busques, no encontrarás a alguien tan profesional como Edwin."
+              },
+              {
+                autor: "Alexandra",
+                fecha: "12/10/2019",
+                rating: 5.0,
+                titulo: "Excelente grupo de mariachis",
+                comentario: "Edwin es un gran profesional, lo habíamos oído anteriormente en actuaciones individuales y para nuestra boda se trajo a su grupo de mariachis y fue espectacular, ¡un gran recuerdo!"
+              }
+            ].map((rev, idx) => (
+              <div
+                key={idx}
+                className="p-6 rounded-3xl bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between space-y-4 shadow-xl"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1 text-[#ecb613]">
+                      {[...Array(5)].map((_, s) => (
+                        <Star key={s} size={14} className="fill-[#ecb613]" />
+                      ))}
+                    </div>
+                    <span className="text-[10px] font-mono text-white/40">{rev.fecha}</span>
+                  </div>
+
+                  <h3 className="text-sm font-black text-white uppercase tracking-tight font-syne">
+                    "{rev.titulo}"
+                  </h3>
+
+                  <p className="text-xs text-white/70 leading-relaxed italic">
+                    "{rev.comentario}"
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/5 flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-white uppercase">
+                    {rev.autor}
+                  </span>
+                  <span className="text-[8px] font-mono uppercase tracking-widest text-[#ecb613] bg-[#ecb613]/10 px-2 py-0.5 rounded-full font-mono">
+                    Verificado
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
