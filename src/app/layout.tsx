@@ -11,6 +11,7 @@ import { AtmosphereProvider } from "@/app/context/AtmosphereProvider";
 import { EventCartProvider } from "@/context/EventCartContext";
 import SmoothScrollProvider from '@/app/context/SmoothScrollProvider';
 import { ThemeProvider } from "@/app/context/ThemeContext";
+import { TenantRoleProvider } from "@/contexts/TenantRoleContext";
 
 // Component Imports
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
@@ -21,6 +22,7 @@ import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import AstraOracle from "@/components/sclass/AstraOracle";
+import UniversalCommandPalette from "@/components/sclass/UniversalCommandPalette";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
 
 export const metadata: Metadata = {
@@ -70,32 +72,35 @@ export default function RootLayout({
           </Script>
         )}
         <ThemeProvider>
-          <SharedProvider>
-            <RoleSkinProvider>
-              <SovereignProvider>
-                <AtmosphereProvider>
-                  <EventCartProvider>
-                    <SmoothScrollProvider>
-                      <SpatialIntelligence />
-                      <div className="min-h-screen relative flex flex-col">
-                        <SovereignNavbar />
-                        <main className="flex-grow">
-                          {children}
-                        </main>
-                        <SovereignFooter />
-                        <EarBottomNav />
-                        <HummingbirdFlight />
-                        <BespokePricerModal />
-                        <OmniSearchModal />
-                        <DynamicContextBar />
-                        <AstraOracle />
-                      </div>
-                    </SmoothScrollProvider>
-                  </EventCartProvider>
-                </AtmosphereProvider>
-              </SovereignProvider>
-            </RoleSkinProvider>
-          </SharedProvider>
+          <TenantRoleProvider>
+            <SharedProvider>
+              <RoleSkinProvider>
+                <SovereignProvider>
+                  <AtmosphereProvider>
+                    <EventCartProvider>
+                      <SmoothScrollProvider>
+                        <SpatialIntelligence />
+                        <div className="min-h-screen relative flex flex-col">
+                          <SovereignNavbar />
+                          <main className="flex-grow">
+                            {children}
+                          </main>
+                          <SovereignFooter />
+                          <EarBottomNav />
+                          <HummingbirdFlight />
+                          <BespokePricerModal />
+                          <OmniSearchModal />
+                          <DynamicContextBar />
+                          <AstraOracle />
+                          <UniversalCommandPalette />
+                        </div>
+                      </SmoothScrollProvider>
+                    </EventCartProvider>
+                  </AtmosphereProvider>
+                </SovereignProvider>
+              </RoleSkinProvider>
+            </SharedProvider>
+          </TenantRoleProvider>
         </ThemeProvider>
       </body>
     </html>

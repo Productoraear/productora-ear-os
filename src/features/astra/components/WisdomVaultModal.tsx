@@ -43,6 +43,34 @@ export const WisdomVaultModal: React.FC<WisdomVaultModalProps> = ({
     downloadAnchor.remove();
   };
 
+  const [syncingRag, setSyncingRag] = useState(false);
+  const [syncSuccess, setSyncSuccess] = useState(false);
+
+  const handleSyncToRag = async () => {
+    if (nuggets.length === 0) return;
+    setSyncingRag(true);
+    try {
+      for (const n of nuggets) {
+        await fetch('/api/rag/ingest', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: n.title,
+            category: n.category || 'WISDOM_VAULT',
+            content: n.insight,
+            tags: ['Wisdom Vault', 'Astra OS', n.category || 'Insight']
+          })
+        });
+      }
+      setSyncSuccess(true);
+      setTimeout(() => setSyncSuccess(false), 3000);
+    } catch (e) {
+      console.error('Error syncing to RAG:', e);
+    } finally {
+      setSyncingRag(false);
+    }
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -61,17 +89,26 @@ export const WisdomVaultModal: React.FC<WisdomVaultModalProps> = ({
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">Astra Wisdom Vault</h3>
-                  <p className="text-xs text-zinc-400">Personalized archive of captured strategic insights and breakthroughs</p>
+                  <p className="text-xs text-zinc-400">Personalized archive of captured strategic insights & RAG sync</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 {nuggets.length > 0 && (
-                  <button
-                    onClick={handleExport}
-                    className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs text-zinc-300 flex items-center gap-1.5"
-                  >
-                    <ArrowDownTrayIcon className="w-3.5 h-3.5" /> Export JSON
-                  </button>
+                  <>
+                    <button
+                      onClick={handleSyncToRag}
+                      disabled={syncingRag}
+                      className="px-3 py-1.5 bg-emerald-600/20 hover:bg-emerald-600/40 border border-emerald-500/40 rounded-xl text-xs text-emerald-300 flex items-center gap-1.5 transition-all"
+                    >
+                      {syncSuccess ? '✅ Sincronizado a RAG' : syncingRag ? 'Inyectando...' : '⚡ Sincronizar a Bóveda RAG'}
+                    </button>
+                    <button
+                      onClick={handleExport}
+                      className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs text-zinc-300 flex items-center gap-1.5"
+                    >
+                      <ArrowDownTrayIcon className="w-3.5 h-3.5" /> Export JSON
+                    </button>
+                  </>
                 )}
                 <button onClick={onClose} className="text-zinc-500 hover:text-white">
                   <XMarkIcon className="w-5 h-5" />
