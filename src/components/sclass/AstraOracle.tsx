@@ -206,7 +206,7 @@ export const AstraOracle: React.FC = () => {
                   </h3>
                   <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                     <Radio size={10} className="animate-pulse" />
-                    8.420 Nodos RAG Sincronizados
+                    8.430 Nodos RAG Sincronizados
                   </span>
                 </div>
               </div>
@@ -272,7 +272,7 @@ export const AstraOracle: React.FC = () => {
               {searching && (
                 <div className="text-[10px] font-mono text-[#ecb613] flex items-center gap-2 animate-pulse">
                   <Sparkles size={11} />
-                  <span>Sintetizando respuesta táctica en los 8.420 nodos...</span>
+                  <span>Sintetizando respuesta táctica en los 8.430 nodos...</span>
                 </div>
               )}
 
@@ -307,6 +307,17 @@ export const AstraOracle: React.FC = () => {
               >
                 <Phone size={13} />
                 <span>Centralita</span>
+              </a>
+            </div>
+
+            {/* Astra Suite Direct Launch */}
+            <div className="pt-2 border-t border-white/5 relative z-10">
+              <a
+                href="/admin/astra"
+                className="w-full py-2.5 px-4 rounded-xl bg-purple-950/40 hover:bg-purple-900/60 border border-purple-500/30 text-purple-200 text-xs font-mono font-bold uppercase flex items-center justify-center gap-2 transition-all text-center"
+              >
+                <Cpu size={14} className="text-purple-400" />
+                <span>Abrir Suite Estratégica Astra (8 Motores) →</span>
               </a>
             </div>
 

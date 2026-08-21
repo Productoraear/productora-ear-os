@@ -30,20 +30,6 @@ node_modules/
 .turbo/
 ARCHIVE_RECOVERY/
 node_modules/
-*.html
-*.htm
-*.meta.json
-*.log
-.env.local
-
-_auditoria/
-auditoria_*/
-.env.backup_*
-.env.local.backup_*
-*.m4a
-Dominancia_EAR_*.ps1
-INICIAR_EAR_OS*.ps1
-CHAT CON AI STUDIO PARA EAR OS/
 EAR_OS_CONTROL/
 CLINE_RULES_V3.md
 tools/
@@ -58,3 +44,4 @@ docs/release/COMPREHENSIVE_FORENSIC_INVENTORY.json
 src/data/catalog/ADN_EAR_INDEX.json
 
 vault_secrets_backup/
+scratch/
