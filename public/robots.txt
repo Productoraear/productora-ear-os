@@ -1,6 +1,41 @@
+# 🤖 ROBOTS.TXT CANÓNICO // PRODUCTORA EAR (S-CLASS SEO & AEO)
+# Permite rastreo universal de páginas y recursos estáticos (_next, css, js, fonts)
+
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /_next/
+Allow: /_next/
+Allow: /assets/
+Allow: /images/
+Allow: /fonts/
 
-Sitemap: https://productoraear.com/sitemap.xml
+# Exclusiones de seguridad y áreas privadas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /nexus/
+Disallow: /portal/
+
+# Directivas de Motores de Búsqueda e Inteligencia Artificial
+User-agent: Googlebot
+Allow: /
+Allow: /_next/
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /assets/
+Allow: /images/
+
+User-agent: Bingbot
+Allow: /
+Allow: /_next/
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+Sitemap: https://www.productoraear.com/sitemap.xml

@@ -12,68 +12,67 @@ declare module 'react' {
 
 import React, { useRef, useMemo, useEffect, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { InstancedMesh, MathUtils, Vector3, Color, Object3D } from 'three';
+import { InstancedMesh, MathUtils, Color, Object3D, ShaderMaterial } from 'three';
 import { useBiometricStore } from '@/lib/hooks/useBiometricIntent';
 
-const PARTICLE_COUNT = 4211;
+const vertexShader = `
+  varying vec2 vUv;
+  varying float vIntent;
+  uniform float uTime;
+  uniform float uIntent;
 
-const AuraShader = {
-  uniforms: {
-    uTime: { value: 0 },
-    uIntent: { value: 0 },
-    uColor: { value: new Color('#d4a855') },
-  },
-  vertexShader: `
-    varying vec2 vUv;
-    varying float vIntent;
-    uniform float uTime;
-    uniform float uIntent;
+  void main() {
+    vUv = uv;
+    vIntent = uIntent;
+    vec3 pos = position;
+    
+    // Animación sutil
+    pos.x += sin(uTime * 0.5 + float(gl_InstanceID) * 0.1) * 0.02;
+    pos.y += cos(uTime * 0.5 + float(gl_InstanceID) * 0.1) * 0.02;
+    
+    vec4 mvPosition = instanceMatrix * vec4(pos, 1.0);
+    gl_Position = projectionMatrix * modelViewMatrix * mvPosition;
+  }
+`;
 
-    void main() {
-      vUv = uv;
-      vIntent = uIntent;
-      vec3 pos = position;
-      
-      // Animación sutil
-      pos.x += sin(uTime * 0.5 + float(gl_InstanceID) * 0.1) * 0.02;
-      pos.y += cos(uTime * 0.5 + float(gl_InstanceID) * 0.1) * 0.02;
-      
-      vec4 mvPosition = instanceMatrix * vec4(pos, 1.0);
-      gl_Position = projectionMatrix * modelViewMatrix * mvPosition;
-    }
-  `,
-  fragmentShader: `
-    varying vec2 vUv;
-    varying float vIntent;
-    uniform vec3 uColor;
-    uniform float uTime;
+const fragmentShader = `
+  varying vec2 vUv;
+  varying float vIntent;
+  uniform vec3 uColor;
+  uniform float uTime;
 
-    void main() {
-      float dist = distance(vUv, vec2(0.5));
-      float strength = 0.05 / dist - 0.1;
-      
-      // Brillo Aura Onyx
-      vec3 finalColor = uColor * strength;
-      
-      // Aumento de brillo por intención biométrica
-      finalColor *= (1.0 + vIntent * 2.0);
-      
-      gl_FragColor = vec4(finalColor, strength);
-    }
-  `,
-};
+  void main() {
+    float dist = distance(vUv, vec2(0.5));
+    float strength = 0.05 / dist - 0.1;
+    
+    // Brillo Aura Onyx
+    vec3 finalColor = uColor * strength;
+    
+    // Aumento de brillo por intención biométrica
+    finalColor *= (1.0 + vIntent * 2.0);
+    
+    gl_FragColor = vec4(finalColor, strength);
+  }
+`;
 
 function Particles() {
   const meshRef = useRef<InstancedMesh>(null);
+  const materialRef = useRef<ShaderMaterial>(null);
   const { intent, mousePos } = useBiometricStore();
   const { viewport } = useThree();
   const dummy = useMemo(() => new Object3D(), []);
 
   // ⚡ Optimización S-Class: Conteo dinámico basado en dispositivo
   const particleCount = useMemo(() => {
-    if (typeof window !== 'undefined' && window.innerWidth < 768) return 500;
-    return 4211;
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return 300;
+    return 2000;
   }, []);
+
+  const uniforms = useMemo(() => ({
+    uTime: { value: 0 },
+    uIntent: { value: 0 },
+    uColor: { value: new Color('#d4a855') },
+  }), []);
 
   const particles = useMemo(() => {
     const temp = [];
@@ -88,8 +87,18 @@ function Particles() {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
+    
+    // Actualización segura de uniforms sin colapsar por nulos
+    if (materialRef.current && materialRef.current.uniforms) {
+      if (materialRef.current.uniforms.uTime) {
+        materialRef.current.uniforms.uTime.value = time;
+      }
+      if (materialRef.current.uniforms.uIntent) {
+        materialRef.current.uniforms.uIntent.value = intent;
+      }
+    }
+
     if (meshRef.current) {
-      // 🏎️ Optimización de bucle: Usar for simple para máxima velocidad
       for (let i = 0; i < particleCount; i++) {
         const p = particles[i];
         const { x, y, z, speed } = p;
@@ -122,11 +131,12 @@ function Particles() {
     <instancedMesh ref={meshRef} args={[undefined, undefined, particleCount]}>
       <planeGeometry args={[1, 1]} />
       <shaderMaterial
+        ref={materialRef}
         transparent
         depthWrite={false}
-        vertexShader={AuraShader.vertexShader}
-        fragmentShader={AuraShader.fragmentShader}
-        uniforms={AuraShader.uniforms}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        uniforms={uniforms}
       />
     </instancedMesh>
   );
@@ -151,7 +161,7 @@ export default function GravityEngine() {
         {/* Fallback Aura: High Fidelity CSS Gradients */}
         <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] opacity-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#d4a855]/10 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#d4a855]/5 rounded-full blur-[80px] animate-float" />
+          <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#d4a855]/5 rounded-full blur-[80px]" />
         </div>
       </div>
     );
@@ -160,17 +170,12 @@ export default function GravityEngine() {
   if (hasWebGL === null) return <div className="fixed inset-0 bg-[#050505] z-0" />;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0">
-      <Canvas 
-        camera={{ position: [0, 0, 5], fov: 75 }}
-        gl={{ antialias: false, powerPreference: 'high-performance' }}
-        onCreated={({ gl }) => {
-          if (!gl) setHasWebGL(false);
-        }}
-        onError={() => setHasWebGL(false)}
+    <div className="fixed inset-0 pointer-events-none z-0 bg-[#050505] overflow-hidden">
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 60 }}
+        gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
+        dpr={typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 1.5) : 1}
       >
-        <color attach="background" args={['#050505']} />
-        <ambientLight intensity={0.5} />
         <Particles />
       </Canvas>
     </div>

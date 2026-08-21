@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 /**
- * 🤖 DIRECTIVA CANÓNICA DE RASTREO ROBOTS.TXT (S-CLASS SEO & AEO)
+ * 🤖 DIRECTIVA CANÓNICA DE RASTREO ROBOTS.TS (S-CLASS SEO & AEO)
  * Desbloqueo total del catálogo territorial y relacional para Googlebot, Bingbot y Motores de IA (GEO).
  */
 export default function robots(): MetadataRoute.Robots {
@@ -11,34 +11,39 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
+        allow: ['/', '/_next/', '/assets/', '/images/', '/fonts/'],
         disallow: [
           '/api/',
           '/admin/',
           '/dashboard/',
           '/nexus/',
           '/portal/',
-          '/*?*', // Bloquea parámetros de query innecesarios para preservar Crawl Budget
         ],
       },
       {
         userAgent: 'Googlebot',
-        allow: '/',
+        allow: ['/', '/_next/', '/assets/', '/images/'],
         disallow: [
           '/api/',
           '/admin/',
           '/dashboard/',
           '/nexus/',
+          '/portal/',
         ],
       },
       {
         userAgent: 'Googlebot-Image',
-        allow: '/',
+        allow: ['/', '/assets/', '/images/'],
         disallow: ['/api/'],
       },
       {
         userAgent: 'Bingbot',
-        allow: '/',
+        allow: ['/', '/_next/', '/assets/'],
+        disallow: ['/api/', '/admin/', '/dashboard/'],
+      },
+      {
+        userAgent: ['GPTBot', 'ClaudeBot', 'PerplexityBot'],
+        allow: ['/'],
         disallow: ['/api/', '/admin/', '/dashboard/'],
       }
     ],

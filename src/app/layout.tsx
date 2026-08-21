@@ -21,6 +21,7 @@ import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import AstraOracle from "@/components/sclass/AstraOracle";
+import SovereignFooter from "@/app/components/layout/SovereignFooter";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
@@ -86,6 +87,7 @@ export default function RootLayout({
                         <main className="flex-grow">
                           {children}
                         </main>
+                        <SovereignFooter />
                         <EarBottomNav />
                         <HummingbirdFlight />
                         <BespokePricerModal />
