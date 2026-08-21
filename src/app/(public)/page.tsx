@@ -108,9 +108,9 @@ export default function Home() {
 
               {/* Right Column: Key Metrics & Seals */}
               <div className="lg:col-span-5 bg-black/60 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5">
-                <h4 className="text-xs font-mono font-black uppercase tracking-widest text-[#ecb613] flex items-center gap-2">
+                <h3 className="text-xs font-mono font-black uppercase tracking-widest text-[#ecb613] flex items-center gap-2">
                   <ShieldCheck size={16} /> Garantías de Contratación S-Class
-                </h4>
+                </h3>
 
                 <ul className="space-y-3 text-xs text-white/80">
                   <li className="flex items-start gap-2.5">
@@ -132,129 +132,6 @@ export default function Home() {
                   <span className="text-sm font-black text-emerald-400">● Calendario Abierto para Temporada 2026</span>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 🧭 CUATRO PERFILES, CUATRO CAMINOS: EL ROUTER DE INTENCIÓN */}
-      <section className="px-4 sm:px-6 py-16 bg-[#080808] border-y border-white/5 relative z-10">
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="text-center space-y-3">
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#ecb613]">ADAPTACIÓN MULTI-PERFIL</span>
-            <h2 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter text-white font-syne">
-              Cuatro Perfiles. Cuatro Caminos. <br />
-              <span className="text-white/40">Una Sola Inteligencia.</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Profile 1: Cliente de Eventos */}
-            <div
-              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
-                activeProfile === 'CLIENT' ? 'border-[#ecb613] ring-2 ring-[#ecb613]/30' : 'border-white/10 hover:border-[#ecb613]/50'
-              }`}
-              onClick={() => handleIgnition('CLIENT')}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
-                  <Heart size={22} />
-                </div>
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 1</span>
-                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Cliente de Eventos</h3>
-                </div>
-                <p className="text-white/50 text-xs leading-relaxed">
-                  Bodas, aniversarios y galas privadas. Presupuesto exacto con Price-Lock SHA-256 (72h) y depósito de 10 €.
-                </p>
-              </div>
-              <span className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all">
-                <span>Cotización Bespoke</span>
-                <ChevronRight size={14} />
-              </span>
-            </div>
-
-            {/* Profile 2: Institución / B2G */}
-            <div
-              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
-                activeProfile === 'B2G' ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-white/10 hover:border-[#ecb613]/50'
-              }`}
-              onClick={() => handleIgnition('B2G')}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
-                  <Building2 size={22} />
-                </div>
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 2</span>
-                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Institución / B2G</h3>
-                </div>
-                <p className="text-white/50 text-xs leading-relaxed">
-                  Ayuntamientos, comisiones y residencias. Contratos menores (Art. 118 LCSP &lt;15.000€) y fondos NextGenEU.
-                </p>
-              </div>
-              <span className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all">
-                <span>Pliegos B2G & VIMUME</span>
-                <ChevronRight size={14} />
-              </span>
-            </div>
-
-            {/* Profile 3: Proveedor / Partner */}
-            <div
-              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
-                activeProfile === 'PARTNER' ? 'border-emerald-500 ring-2 ring-emerald-500/30' : 'border-white/10 hover:border-[#ecb613]/50'
-              }`}
-              onClick={() => handleIgnition('PARTNER')}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
-                  <Boxes size={22} />
-                </div>
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400">Perfil 3</span>
-                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Proveedor / Partner</h3>
-                </div>
-                <p className="text-white/50 text-xs leading-relaxed">
-                  Sonido Line Array, microfonía y logística. Intégrate en la red S-Class o reclama tu ficha entre los 22.471 indexados.
-                </p>
-              </div>
-              <span className="w-full py-3.5 rounded-2xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] transition-all">
-                <span>Ingresar al Ecosistema</span>
-                <ChevronRight size={14} />
-              </span>
-            </div>
-
-            {/* Profile 4: Artista / Producción */}
-            <div
-              className={`bg-[#101010] border rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 transition-all shadow-xl cursor-pointer ${
-                activeProfile === 'ARTIST' ? 'border-purple-500 ring-2 ring-purple-500/30' : 'border-[#ecb613]/30 hover:border-[#ecb613]'
-              }`}
-              onClick={() => handleIgnition('ARTIST')}
-              role="button"
-              tabIndex={0}
-            >
-              <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-                  <Mic2 size={22} />
-                </div>
-                <div>
-                  <span className="text-[9px] font-mono uppercase tracking-widest text-[#ecb613]">Perfil 4</span>
-                  <h3 className="text-xl font-black uppercase italic tracking-tight text-white mt-0.5">Artista / Producción</h3>
-                </div>
-                <p className="text-white/50 text-xs leading-relaxed">
-                  The Signal: Evaluación de talento para Diamantes Rojos con liquidación soberana bajo el split 80/10/10.
-                </p>
-              </div>
-              <span className="w-full py-3.5 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 min-h-[48px] shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all">
-                <span>Evaluar en The Signal</span>
-                <ChevronRight size={14} />
-              </span>
             </div>
           </div>
         </div>
