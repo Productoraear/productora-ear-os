@@ -126,13 +126,28 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Right: Quick Action Modals & Tools */}
       <div className="flex items-center gap-1.5 md:gap-2">
         {/* Language switch */}
-        <button
-          onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-          className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 transition-all"
-          title="Switch Language (EN / ES)"
-        >
-          {language.toUpperCase()}
-        </button>
+        <div className="flex items-center rounded-xl bg-white/5 border border-white/10 p-0.5" title="Conmutar Idioma / Switch Language">
+          <button
+            onClick={() => setLanguage('es')}
+            className={`px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+              language === 'es'
+                ? 'bg-[#ecb613] text-black shadow-md'
+                : 'text-white/60 hover:text-white'
+            }`}
+          >
+            ES
+          </button>
+          <button
+            onClick={() => setLanguage('en')}
+            className={`px-2 py-1 rounded-lg text-xs font-mono font-bold transition-all cursor-pointer ${
+              language === 'en'
+                ? 'bg-[#ecb613] text-black shadow-md'
+                : 'text-white/60 hover:text-white'
+            }`}
+          >
+            EN
+          </button>
+        </div>
 
         {/* AI Assistant Button */}
         <button
