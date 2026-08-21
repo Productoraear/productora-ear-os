@@ -45,6 +45,8 @@ export const HunterPanel = () => {
                 ...doc.data()
             })) as Lead[];
             setLeads(data);
+        }, (err) => {
+            console.warn('⚠️ [HunterPanel] Firestore fallback activo:', err.message);
         });
 
         return () => unsubscribe();

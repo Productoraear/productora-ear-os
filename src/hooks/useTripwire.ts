@@ -36,6 +36,9 @@ export const useTripwire = () => {
                         igniteTripwire("lead", change.doc.data());
                     }
                 });
+            },
+            (err) => {
+                console.warn('⚠️ [useTripwire] Leads fallback activo:', err.message);
             }
         );
 
@@ -47,6 +50,9 @@ export const useTripwire = () => {
                         igniteTripwire("order", change.doc.data());
                     }
                 });
+            },
+            (err) => {
+                console.warn('⚠️ [useTripwire] Orders fallback activo:', err.message);
             }
         );
 

@@ -207,6 +207,8 @@ export const VimumeDashboard: React.FC = () => {
                 ...prev,
                 pagosHoy: Math.min(100, Math.round((paid / total) * 100))
             }));
+        }, (err) => {
+            console.warn('⚠️ [PRO_VIMUMEDASHBOARD_2] Firestore fallback activo:', err.message);
         });
 
         return () => unsubscribe();

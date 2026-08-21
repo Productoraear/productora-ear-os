@@ -1,46 +1,35 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-/**
- * 🛡️ MIDDLEWARE OMEGA — EAR OS GOLD (MVP-P1-01B)
- * Protocolo de Seguridad S-Class + Prefiltro Perimetral Edge.
- */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 1. Rutas protegidas que requieren señal de autenticación
-  const isProtected = 
-    pathname.startsWith('/admin') ||
-    pathname.startsWith('/nexus') ||
-    pathname.startsWith('/dashboard') ||
-    pathname.startsWith('/vault') ||
-    pathname === '/artist' ||
-    pathname.startsWith('/artist/') ||
-    pathname.startsWith('/studio');
+  const hasSession = request.cookies.get('ear_session')?.value;
+  const hasToken = request.cookies.get('ear_admin_token')?.value;
 
-  // 2. Comprobación de señal de sesión (Firebase client signal / Sovereign cookies)
-  const hasAuthSignal = 
-    request.cookies.has('ear_auth_signal') ||
-    request.cookies.has('ear_os_auth_token') ||
-    request.cookies.has('sb-access-token');
-
-  if (isProtected && !hasAuthSignal) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    url.searchParams.set('from', pathname);
-    return NextResponse.redirect(url);
+  // Si intenta acceder a rutas protegidas sin cookies válidas
+  if (pathname.startsWith('/admin') && (!hasSession || !hasToken)) {
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('from', pathname);
+    
+    const redirectResponse = NextResponse.redirect(loginUrl);
+    // Evitar que guarde en caché la redirección
+    redirectResponse.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    return redirectResponse;
   }
 
   const response = NextResponse.next();
-  const city = (request as any).geo?.city || 'Madrid';
-  const country = (request as any).geo?.country || 'ES';
-  response.headers.set('x-ear-geo-city', encodeURIComponent(city));
-  response.headers.set('x-ear-geo-country', country);
+
+  // Desactivar caché HTTP en todo el panel /admin para neutralizar el botón 'Atrás'
+  if (pathname.startsWith('/admin')) {
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+  }
+
   return response;
 }
 
 export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/admin/:path*']
 };

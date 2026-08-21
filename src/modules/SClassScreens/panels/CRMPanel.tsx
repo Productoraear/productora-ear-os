@@ -45,6 +45,8 @@ export const CRMPanel = () => {
             return { id: doc.id, email: data.email || 'error@parse.com', value: Number(data.value) || 0 } as AbandonedCheckout;
         }
       }));
+    }, (err) => {
+      console.warn('⚠️ [CRMPanel] Firestore fallback activo (abandoned_checkouts):', err.message);
     });
 
     const unsubL = onSnapshot(collection(db, 'ear_loyalty_logs'), (snap) => {
@@ -55,6 +57,8 @@ export const CRMPanel = () => {
           return { id: doc.id, user: 'Parsing Error', xp: 0, reason: 'Invalid Format' } as LoyaltyLog;
         }
       }));
+    }, (err) => {
+      console.warn('⚠️ [CRMPanel] Firestore fallback activo (loyalty_logs):', err.message);
     });
 
     return () => { unsubA(); unsubL(); };

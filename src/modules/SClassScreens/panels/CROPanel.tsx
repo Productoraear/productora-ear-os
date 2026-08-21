@@ -40,6 +40,8 @@ export const CROPanel = () => {
         }
       });
       setEvents(data);
+    }, (err) => {
+      console.warn('⚠️ [CROPanel] Firestore fallback activo:', err.message);
     });
     return () => unsubscribe();
   }, []);

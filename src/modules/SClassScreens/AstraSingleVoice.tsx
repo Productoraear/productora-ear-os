@@ -25,6 +25,8 @@ export default function AstraSingleVoice() {
       ordersList = docs;
       if (docs.length > 0) latestOrder = docs[0];
       setVerdict(generateAstraVerdict(latestOrder, latestFleet, ordersList));
+    }, (err) => {
+      console.warn('⚠️ [AstraSingleVoice] CRM fallback activo:', err.message);
     });
 
     const qFlota = query(collection(db, 'ear_fleet_telemetry'), limit(1));
@@ -32,6 +34,8 @@ export default function AstraSingleVoice() {
       const docs = snapshot.docs.map(doc => doc.data());
       if (docs.length > 0) latestFleet = docs[0];
       setVerdict(generateAstraVerdict(latestOrder, latestFleet, ordersList));
+    }, (err) => {
+      console.warn('⚠️ [AstraSingleVoice] Flota fallback activo:', err.message);
     });
 
     return () => {
