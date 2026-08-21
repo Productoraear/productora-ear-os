@@ -6,21 +6,26 @@ export function middleware(request: NextRequest) {
 
   const hasSession = request.cookies.get('ear_session')?.value;
   const hasToken = request.cookies.get('ear_admin_token')?.value;
+  const role = request.cookies.get('ear_role')?.value;
 
-  // Si intenta acceder a rutas protegidas sin cookies válidas
+  // Rutas administrativas protegidas
   if (pathname.startsWith('/admin') && (!hasSession || !hasToken)) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('from', pathname);
     
     const redirectResponse = NextResponse.redirect(loginUrl);
-    // Evitar que guarde en caché la redirección
     redirectResponse.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+    return redirectResponse;
+  }
+
+  // Restricción de rutas súper-soberanas exclusivamente para Administrador CEO
+  if ((pathname.startsWith('/admin/brain') || pathname.startsWith('/admin/mapear')) && role === 'editor') {
+    const redirectResponse = NextResponse.redirect(new URL('/admin', request.url));
     return redirectResponse;
   }
 
   const response = NextResponse.next();
 
-  // Desactivar caché HTTP en todo el panel /admin para neutralizar el botón 'Atrás'
   if (pathname.startsWith('/admin')) {
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     response.headers.set('Pragma', 'no-cache');
