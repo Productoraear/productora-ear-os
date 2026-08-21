@@ -25,6 +25,9 @@ import SovereignFooter from "@/app/components/layout/SovereignFooter";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
+  alternates: {
+    canonical: "/",
+  },
   title: "EarOS :: Sistema Operativo de Eventos & Matchmaking",
   description: "Plataforma de soberanía operativa, booking y contratación para Productora EAR.",
   keywords: ["EarOS", "Productora EAR", "Edwin Agudelo", "S-Class", "Logistics OS"],
