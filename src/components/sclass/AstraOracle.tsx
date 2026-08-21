@@ -206,7 +206,7 @@ export const AstraOracle: React.FC = () => {
                   </h3>
                   <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
                     <Radio size={10} className="animate-pulse" />
-                    8.430 Nodos RAG Sincronizados
+                    9.569 Nodos RAG Sincronizados
                   </span>
                 </div>
               </div>
@@ -272,7 +272,7 @@ export const AstraOracle: React.FC = () => {
               {searching && (
                 <div className="text-[10px] font-mono text-[#ecb613] flex items-center gap-2 animate-pulse">
                   <Sparkles size={11} />
-                  <span>Sintetizando respuesta táctica en los 8.430 nodos...</span>
+                  <span>Sintetizando respuesta táctica en los 9.569 nodos...</span>
                 </div>
               )}
 
