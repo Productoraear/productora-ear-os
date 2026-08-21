@@ -1,15 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, ShieldCheck, Music, Mic2, HeartHandshake, Sparkles, Crown, AlertTriangle } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Music, Mic2, HeartHandshake, Sparkles, Crown, AlertTriangle, Layers } from 'lucide-react';
 import Link from 'next/link';
 
 const perfiles = [
   {
     id: 'bodas',
-    perfilNum: 'PERFIL 1',
-    title: 'Bodas & Eventos Bespoke',
-    desc: 'No contrates a ciegas. Sonorización Pista-BPM Bose/Shure, Plan B redundante in situ y tarifa congelada 72h con depósito de 10 €.',
+    perfilNum: 'PERFIL 1 · B2C PRIVATE',
+    title: 'BODAS, GALAS & CLIENTE BESPOKE',
+    desc: 'No contrates a ciegas. Presupuesto exacto sin costes ocultos para bodas, aniversarios y galas privadas con Price-Lock SHA-256 (72h), sonorización Pista-BPM Bose/Shure, Plan B redundante in situ y congelación de tarifa con solo 10 € de depósito.',
     cta: 'COTIZACIÓN BESPOKE',
     icon: HeartHandshake,
     href: '/bodas',
@@ -20,9 +20,9 @@ const perfiles = [
   },
   {
     id: 'b2g',
-    perfilNum: 'PERFIL 2',
-    title: 'Instituciones & VIMUME',
-    desc: 'Contratación pública simplificada y adjudicación directa en <24h bajo Art. 118 LCSP (<15.000 €). Neuroestimulación 40Hz.',
+    perfilNum: 'PERFIL 2 · PUBLIC SECTOR',
+    title: 'INSTITUCIÓN & B2G (VIMUME)',
+    desc: 'Ayuntamientos, comisiones y residencias. Contratación pública simplificada y adjudicación directa en <24h bajo el Art. 118 LCSP (<15.000 €), respaldada por fondos NextGenEU y protocolos de neuroestimulación cognitiva 40Hz.',
     cta: 'PLIEGOS B2G & VIMUME',
     icon: ShieldCheck,
     href: '/vimume',
@@ -33,9 +33,9 @@ const perfiles = [
   },
   {
     id: 'partners',
-    perfilNum: 'PERFIL 3',
-    title: 'Nodos & Partners B2B',
-    desc: 'Los directorios tradicionales subastan tus leads a tu competencia. Reclama tu ficha en 24.869 homologados con contacto WhatsApp directo.',
+    perfilNum: 'PERFIL 3 · B2B NETWORK',
+    title: 'PROVEEDOR, NODO & PARTNER B2B',
+    desc: 'Los directorios tradicionales subastan tus leads a tu competencia. Reclama tu ficha soberana entre los 24.869 proveedores homologados (Line Array, microfonía, logística), con contacto directo a WhatsApp y cero comisiones.',
     cta: 'INGRESAR AL ECOSISTEMA',
     icon: Music,
     href: '/empresarios',
@@ -46,14 +46,14 @@ const perfiles = [
   },
   {
     id: 'artistas',
-    perfilNum: 'PERFIL 4',
-    title: 'Artistas & The Signal',
-    desc: 'El 90% de los artistas regala su margen. Somete tu propuesta al Test de 10 Fases Meritorias y accede al Split Soberano 80/10/10.',
+    perfilNum: 'PERFIL 4 · TALENT VAULT',
+    title: 'ARTISTA, PRODUCCIÓN & THE SIGNAL',
+    desc: 'El 90% de los artistas independientes regala su margen por falta de estructura. Somete tu propuesta al Test de 10 Fases Meritorias para Diamantes Rojos y accede a la liquidación soberana bajo el split 80/10/10.',
     cta: 'EVALUAR EN THE SIGNAL',
     icon: Mic2,
     href: '/the-signal',
     accent: '#ecb613',
-    cardStyle: 'border-[#ecb613]/40 hover:border-[#ecb613] hover:shadow-[0_0_50px_-5px_rgba(236,182,19,0.45)] bg-gradient-to-b from-[#110e05]/90 to-[#09090d]/90',
+    cardStyle: 'border-[#ecb613]/50 hover:border-[#ecb613] hover:shadow-[0_0_50px_-5px_rgba(236,182,19,0.45)] bg-gradient-to-b from-[#110e05]/95 to-[#09090d]/95',
     badgeStyle: 'bg-[#ecb613] text-black font-black border-[#ecb613]',
     btnStyle: 'bg-[#ecb613] hover:bg-white text-black font-black border-[#ecb613] hover:border-white shadow-lg shadow-[#ecb613]/25'
   },
@@ -61,40 +61,53 @@ const perfiles = [
 
 export default function CinematicHeroSClass() {
   return (
-    <section className="relative min-h-screen w-full bg-[#050505] text-gray-200 overflow-hidden flex flex-col justify-center items-center px-4 sm:px-8 py-24 sm:py-32 selection:bg-[#ecb613]/30">
+    <section className="relative min-h-screen w-full bg-[#050505] text-gray-200 overflow-hidden flex flex-col justify-center items-center px-4 sm:px-8 py-24 sm:py-32 selection:bg-[#ecb613]/30 font-sans">
       
       {/* Neblinas Volumétricas de Fondo */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-900/15 blur-[160px] rounded-full mix-blend-screen pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-900/10 blur-[160px] rounded-full mix-blend-screen pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-[#ecb613]/5 blur-[140px] pointer-events-none" />
 
-      {/* Encabezado Cinemático con Gancho Asimétrico */}
+      {/* Encabezado Cinemático con Fusión Aditiva S-Class */}
       <div className="z-10 text-center max-w-5xl mb-14 mt-4 space-y-6">
         
+        {/* Kicker Overline */}
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono font-black uppercase tracking-[0.35em]">
-          <AlertTriangle size={14} className="text-[#ecb613]" />
-          <span>DESMITIFICACIÓN DE MERCADO // PRODUCTORA EAR S-CLASS</span>
+          <Layers size={13} className="text-[#ecb613]" />
+          <span>ADAPTACIÓN MULTI-PERFIL · ORQUESTACIÓN S-CLASS</span>
         </div>
 
+        {/* H1 Principal: Interrupción de Patrón */}
         <motion.h1 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="font-syne text-4xl sm:text-6xl md:text-7xl font-black uppercase tracking-tight text-white leading-[0.95]"
         >
-          El 84% de los presupuestos de eventos <br className="hidden md:block" />
+          El 84% de los presupuestos <br className="hidden md:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">
             esconden un 35% de sobrecoste invisible.
           </span>
         </motion.h1>
 
+        {/* H2 Secundario: Claridad Estructural */}
+        <motion.h2
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="font-syne text-xl sm:text-2xl md:text-3xl font-bold text-gray-200 tracking-tight"
+        >
+          Cuatro Perfiles. Cuatro Caminos. <span className="text-[#ecb613]">Una Sola Inteligencia Soberana.</span>
+        </motion.h2>
+
+        {/* Subtítulo de Autoridad y Ejecución */}
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-inter text-base sm:text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed font-light"
+          transition={{ duration: 0.8, delay: 0.25 }}
+          className="font-inter text-sm sm:text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed font-light"
         >
-          Eliminamos la intermediación parásita. Blindamos tu fecha con Price-Lock 72h, sonorización garantizada a 12 W/pax y ejecución técnica S-Class sin margen de error. Selecciona tu vector de entrada:
+          Eliminamos la intermediación parásita. Blindamos tu fecha con <strong className="text-white font-medium">Price-Lock SHA-256 (72h)</strong>, sonorización garantizada a <strong className="text-white font-medium">12 W/pax</strong> y ejecución técnica S-Class sin margen de error. Selecciona tu vector de entrada:
         </motion.p>
       </div>
 
@@ -117,14 +130,14 @@ export default function CinematicHeroSClass() {
                   <div className="p-3 bg-white/5 rounded-2xl border border-white/10 group-hover:scale-110 transition-transform duration-500">
                     <perfil.icon className="w-6 h-6 text-gray-300 group-hover:text-white transition-colors" />
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase border ${perfil.badgeStyle}`}>
+                  <span className={`px-2.5 py-1 rounded-full text-[9px] font-mono tracking-widest uppercase border ${perfil.badgeStyle}`}>
                     {perfil.perfilNum}
                   </span>
                 </div>
                 
                 {/* Title & Desc */}
                 <div className="space-y-2">
-                  <h3 className="font-syne text-xl font-bold uppercase text-white tracking-tight leading-snug group-hover:text-[#ecb613] transition-colors">
+                  <h3 className="font-syne text-lg sm:text-xl font-bold uppercase text-white tracking-tight leading-snug group-hover:text-[#ecb613] transition-colors">
                     {perfil.title}
                   </h3>
                   <p className="font-inter text-gray-400 leading-relaxed text-xs font-light">
