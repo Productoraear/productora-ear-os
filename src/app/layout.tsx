@@ -20,6 +20,7 @@ import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
 import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
+import AstraOracle from "@/components/sclass/AstraOracle";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
@@ -90,6 +91,7 @@ export default function RootLayout({
                         <BespokePricerModal />
                         <OmniSearchModal />
                         <DynamicContextBar />
+                        <AstraOracle />
                       </div>
                     </SmoothScrollProvider>
                   </EventCartProvider>

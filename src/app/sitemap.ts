@@ -21,11 +21,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const corePages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
     { url: `${baseUrl}/artistas/edwin-agudelo`, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
+    { url: `${baseUrl}/the-signal`, lastModified: now, priority: 0.95, changeFrequency: 'daily' },
+    { url: `${baseUrl}/eventos`, lastModified: now, priority: 0.95, changeFrequency: 'daily' },
+    { url: `${baseUrl}/bodas`, lastModified: now, priority: 0.95, changeFrequency: 'daily' },
+    { url: `${baseUrl}/empresarios`, lastModified: now, priority: 0.95, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/arsenal`, lastModified: now, priority: 0.95, changeFrequency: 'weekly' },
     { url: `${baseUrl}/cotizador`, lastModified: now, priority: 0.95, changeFrequency: 'weekly' },
     { url: `${baseUrl}/ayuntamientos`, lastModified: now, priority: 0.95, changeFrequency: 'weekly' },
     { url: `${baseUrl}/academia`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
     { url: `${baseUrl}/servicios`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
-    { url: `${baseUrl}/arsenal`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
     { url: `${baseUrl}/presupuesto`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
     { url: `${baseUrl}/artistas`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
     { url: `${baseUrl}/vimume`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
@@ -40,6 +44,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/afiliados`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
     { url: `${baseUrl}/dossier`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
     { url: `${baseUrl}/blog`, lastModified: now, priority: 0.80, changeFrequency: 'weekly' },
+    // 16 URLs Canónicas de Arsenal Técnico
+    { url: `${baseUrl}/alquiler-pantalla-led/pantalla-led-interior`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-pantalla-led/pantallas-led-exterior`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-pantalla-led/pantalla-led-suelo`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-pantalla-led/pantallas-led-curva-flexibles`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-tv-monitor-led-madrid/alquiler-monitores-98`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-tv-monitor-led-madrid/alquiler-monitores-85`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-tv-monitor-led-madrid/alquiler-pantallas-tactiles`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquilar-equipos-de-sonido-en-madrid/alquiler-altavoces`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquilar-equipos-de-sonido-en-madrid/microfonos`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquilar-equipos-de-sonido-en-madrid/alquiler-traduccion-simultanea`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-iluminacion-eventos/alquiler-cabezas-moviles`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-iluminacion-eventos/iluminacion-laser`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-camaras-profesionales/alquiler-blackmagic-ursa`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-equipos-informaticos`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-escenarios/alquiler-tarima`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/alquiler-estructuras-truss`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
   ];
 
   // 2. CATEGORÍAS & GUÍAS ESTRATÉGICAS
@@ -202,6 +223,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
   });
 
+  // 9. PILAR PROGRAMÁTICO: BODAS x SERVICIO x 52 PROVINCIAS (/bodas/[provincia]/[servicio])
+  const weddingProgrammaticPages: MetadataRoute.Sitemap = [];
+  const weddingServices = [
+    'dj-eventos',
+    'catering-gourmet',
+    'mariachis-boda',
+    'wedding-planners',
+    'sonorizacion-boda',
+    'iluminacion-boda',
+    'maestros-de-ceremonia',
+    'decoracion-espacios'
+  ];
+
+  weddingServices.forEach(serv => {
+    PROVINCIAS.forEach(prov => {
+      weddingProgrammaticPages.push({
+        url: `${baseUrl}/bodas/${prov}/${serv}`,
+        lastModified: now,
+        priority: 0.90,
+        changeFrequency: 'weekly'
+      });
+    });
+  });
+
   // PURGADO ATÓMICO: Cero basura legada, 100% de unicidad semántica y foco absoluto en intenciones de búsqueda
   return unique([
     ...corePages,
@@ -213,6 +258,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...arsenalCanonicalPages,
     ...b2gCanonicalPages,
     ...provinceCanonicalPages,
+    ...weddingProgrammaticPages,
     ...providerPages
   ]);
 }

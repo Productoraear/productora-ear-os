@@ -20,6 +20,7 @@ import { EdwinServicesGrid } from './EdwinServicesGrid';
 import { EdwinPressAndMetrics } from './EdwinPressAndMetrics';
 import { EdwinMariachiCulture } from './EdwinMariachiCulture';
 import { EdwinCouponBanner } from './EdwinCouponBanner';
+import { EdwinEcosystemHero } from './EdwinEcosystemHero';
 
 export const EdwinArtistVault: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'BIO' | 'HITOS' | 'VIMUME'>('BIO');
@@ -27,59 +28,8 @@ export const EdwinArtistVault: React.FC = () => {
   return (
     <div className="bg-[#050505] text-white overflow-hidden selection:bg-[#ecb613]/30 font-sans">
       
-      {/* 1. HERO SECTION: ATMOSPHERIC & MAJESTIC S-CLASS */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-28 pb-16">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-[#050505] z-10" />
-          <div className="absolute inset-0 bg-[#050505] z-0" />
-          {/* Resplandor radial Oro Imperial */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-radial from-[#ecb613]/10 via-transparent to-transparent blur-[140px] opacity-70 animate-pulse" />
-        </div>
-
-        <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 text-[#ecb613] text-[10px] font-black tracking-[0.5em] uppercase mb-2 font-mono">
-              <Crown size={14} /> Master Artist & Tenor de Gala
-            </div>
-            
-            <h1 className="text-5xl sm:text-7xl md:text-9xl font-black italic tracking-tighter uppercase leading-[0.85] mb-6 font-syne">
-              Edwin <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">Agudelo</span>
-            </h1>
-            
-            <p className="text-lg md:text-2xl font-light text-white/80 max-w-4xl mx-auto leading-relaxed italic">
-              "Cuando me enfundo el traje de charro, no solo represento mi nombre; represento un patrimonio de la humanidad, con el respeto, rigor y la grandeza que exige la música tradicional."
-            </p>
-            
-            <div className="flex flex-wrap justify-center gap-6 text-[10px] font-black uppercase tracking-widest text-[#ecb613]/90 pt-4 font-mono">
-              <span className="border-r border-white/15 pr-6">Amagá, Colombia (1975)</span>
-              <span className="border-r border-white/15 pr-6">37 Conciertos Internacionales</span>
-              <span className="border-r border-white/15 pr-6">Gladiador Extranjero 2021</span>
-              <span>Consulado de Colombia Certificado</span>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* RECOGNITION SEAL */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="absolute top-28 right-8 z-[50] hidden xl:flex flex-col items-center gap-2"
-        >
-          <div className="glass-panel p-5 rounded-full border-[#ecb613]/30 bg-[#ecb613]/10 backdrop-blur-xl flex items-center justify-center relative group">
-            <Trophy size={28} className="text-[#ecb613] group-hover:rotate-12 transition-transform duration-500" />
-            <div className="absolute -inset-1 rounded-full border border-[#ecb613]/20 animate-ping" />
-          </div>
-          <div className="flex flex-col items-center text-center">
-            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#ecb613]">Gladiador Extranjero</span>
-            <span className="text-[8px] font-black uppercase tracking-[0.1em] text-white/40">Máximo Galardón 2021</span>
-          </div>
-        </motion.div>
-      </section>
+      {/* 1. ECOSYSTEM S-CLASS HERO: EDWIN AGUDELO */}
+      <EdwinEcosystemHero />
 
       {/* 2. CENTRALITA DIRECTA & CONTACTO OFICIAL */}
       <section className="relative py-6 px-6 bg-[#08080c] border-y border-white/5">
