@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/services/auth_nexus';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 
 // ============================================================================
 // 🌌 CAZADOR FANTASMA - MOTOR DE INGESTIÓN

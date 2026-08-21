@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2022",
     "lib": [
       "dom",
       "dom.iterable",
@@ -8,8 +8,7 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -18,43 +17,37 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "src/*": [
-        "./src/*"
-      ],
-      "@/components/*": [
-        "./src/components/*",
-        "./src/app/components/*"
-      ]
-    },
-    "typeRoots": [
-      "./node_modules/@types",
-      "./@types"
-    ],
     "plugins": [
       {
         "name": "next"
       }
     ],
-    "types": [
-      "node"
-    ]
+    "paths": {
+      "@/components/*": [
+        "./src/components/*",
+        "./src/app/components/*"
+      ],
+      "@/*": [
+        "./src/*",
+        "./src/app/*"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "**/*.ts",
+    "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "scripts",
     "Marketing_Skills",
-    "system-prompts-and-models-of-ai-tools-main",
-    "src/adn_vault"
+    "extracted_astra_neural",
+    "scratch",
+    "scripts",
+    "src/adn_vault",
+    "dist",
+    "build"
   ]
 }
