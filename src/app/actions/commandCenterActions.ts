@@ -86,13 +86,13 @@ export async function getWaybills(email: string): Promise<WaybillData[]> {
 
   return waybills.map(w => ({
     id: w.id,
-    referenceCode: w.referenceCode,
+    referenceCode: w.referenceCode ?? "",
     status: w.status,
-    originLabel: w.originLabel,
-    destinationLabel: w.destinationLabel,
-    distanceMeters: w.distanceMeters,
+    originLabel: w.originLabel ?? "",
+    destinationLabel: w.destinationLabel ?? "",
+    distanceMeters: w.distanceMeters ?? 0,
     createdAt: w.createdAt,
-    notes: w.notes,
+    notes: w.notes ?? "",
     artistName: w.artistProfile?.displayName || null,
     providerName: w.providerProfile?.name || null,
     clientName: w.clientProfile?.companyName || w.clientProfile?.user.displayName || null
@@ -165,7 +165,7 @@ export async function getSystemFinancials(email: string) {
     })),
     ledgerEntries: ledgerEntries.map(e => ({
       id: e.id,
-      displayName: e.user.displayName || "Usuario Anonimo",
+      displayName: e.user?.displayName || "Usuario Anonimo",
       amount: e.amount,
       currency: e.currency,
       status: e.status,

@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const semantic = generateSemanticPageData(slug, locationCandidate);
-  const canonicalUrl = `https://www.productoraear.com/${semantic.canonicalPath.replace(/^\//, '')}`;
+  const canonicalUrl = `https://www.productoraear.com/${(semantic?.canonicalPath || "").replace(/^\//, '')}`;
 
   return {
     title: semantic.title,

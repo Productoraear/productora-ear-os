@@ -1,0 +1,280 @@
+# Plan de acción mínimo — Mapa inicial de autenticación
+
+## HECHO_VERIFICADO
+
+- Se analizaron únicamente rutas y archivos permitidos para el mapa inicial de autenticación.
+- Se excluyeron .env y .env.local de la selección.
+- No se ejecutaron scripts, builds, tests, servidores, llamadas de red ni operaciones Git de escritura.
+
+## Rutas API encontradas
+
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\admin\demand-map\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\admin\demand-map\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\astra\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\astra\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\astra\query\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\astra\query\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\contracts\generate\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\contracts\generate\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\fleet\map\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\fleet\map\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\fleet\waybills\[id]\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\fleet\waybills\[id]\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\health\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\health\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\hunter\execute\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\hunter\execute\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\hunter\phantom\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\hunter\phantom\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\nexus\user\sync\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\nexus\user\sync\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\oracle\infer\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\oracle\infer\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\oracle\simulator\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\oracle\simulator\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\checkout\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\checkout\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\liquidate\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\liquidate\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\payments\webhook\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\profiles\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\profiles\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\profiles\claim\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\profiles\claim\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\profiles\search\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\profiles\search\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\rag\query\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\rag\query\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\system\read-file\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\system\read-file\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\test-telegram\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\test-telegram\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\tripwire\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\tripwire\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\vampire\transmute\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\vampire\transmute\route.ts
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js
+- INDETERMINADA | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts
+
+## Archivos permitidos revisados
+
+- HECHO_VERIFICADO | C:\EAR_OS_V2\.firebase\productora-ear-backend\functions\package.json
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\CLINE_MVP_RULES.md
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_RELEASE_DOSSIER.md
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\ROUTE_AUTH_MATRIX.md
+- HECHO_VERIFICADO | C:\EAR_OS_V2\package.json
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\admin\demand-map\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\admin\demand-map\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\astra\query\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\astra\query\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\astra\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\astra\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\contracts\generate\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\contracts\generate\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\fleet\map\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\fleet\map\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\fleet\waybills\[id]\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\fleet\waybills\[id]\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\health\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\health\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\execute\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\execute\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\phantom\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\phantom\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\nexus\user\sync\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\nexus\user\sync\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\simulator\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\simulator\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\liquidate\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\liquidate\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\profiles\claim\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\profiles\claim\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\profiles\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\profiles\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\profiles\search\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\profiles\search\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\rag\query\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\rag\query\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\system\read-file\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\system\read-file\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\test-telegram\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\test-telegram\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\vampire\transmute\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\vampire\transmute\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\AuthContext.tsx
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\firebase.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\firebase.ts
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts
+
+## Mecanismos y líneas relevantes
+
+- HECHO_VERIFICADO | C:\EAR_OS_V2\.firebase\productora-ear-backend\functions\package.json:31 | "firebase-admin": "^11.11.1"
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\CLINE_MVP_RULES.md:15 | 9. **Realidad de Sesión:** Cline NO crea un `middleware.ts` basado en una cookie hipotética; debe existir un contrato real de sesión/cookie comprobado.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:8 | - **OBJETIVO ÚNICO:** Determinar la forma exacta de inicializar `firebase-admin` sin hardcodear secretos y cómo enviar el JWT desde `AuthContext.tsx`.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:9 | - **CAUSA RAÍZ CONFIRMADA:** `AuthContext.tsx` no envía el token en la petición (`body: JSON.stringify({id, email})`), y `route.ts` no lo valida. Falta el contrato de token.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:11 | - **CONTRATO DESEADO:** `AuthContext.tsx` llama a `firebaseUser.getIdToken()` y lo envía en `Authorization: Bearer <token>`.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:20 | - **RESULTADO ESPERADO:** Documentar en evidencia cómo inyectar las variables de Firebase Admin y modificar `AuthContext.tsx` para obtener el JWT.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:21 | - **CRITERIO PASS:** Documentación exacta de qué variables se necesitan para `firebase-admin` y cómo el frontend obtendrá el token.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:22 | - **CRITERIO BLOCKED:** Si no hay variables disponibles para Firebase Admin o no se puede obtener el token.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:33 | - **OBJETIVO ÚNICO:** Implementar la validación JWT en el backend y el envío del token desde el frontend.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:34 | - **CAUSA RAÍZ CONFIRMADA:** Falta validación JWT para evitar spoofing de UID.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:35 | - **CONTRATO ESPERADO:** Header `Authorization` requerido y validado con `firebase-admin`.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:42 | - **VALIDACIÓN:** Petición HTTP a `/api/nexus/user/sync` sin token debe fallar con 401. Con token inválido debe fallar con 401.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:44 | - **RIESGO RESIDUAL:** Fallo en la sincronización del usuario si el token expira o el backend no inicializa bien Firebase Admin.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:55 | - **OBJETIVO ÚNICO:** Investigar cómo se establece la sesión (cookie/token real) para poder crear un middleware compatible con el Edge Runtime.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:56 | - **CAUSA RAÍZ CONFIRMADA:** Rutas privadas protegidas únicamente por CSR (`useEffect` en cliente). No existe middleware. Firebase no usa cookies por defecto.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:64 | - **CRITERIO PASS:** Identificar quién establece la cookie (o cómo crear una) que el middleware en Edge pueda leer, y cómo evitar loops de redirección y preservar rutas públicas/Stripe.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:76 | - **OBJETIVO ÚNICO:** Crear `middleware.ts` para proteger rutas privadas basado en la cookie confirmada en el bloque 01A.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:77 | - **RUTAS AUTORIZADAS DE ESCRITURA:** `middleware.ts` (CREATE)
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md:82 | - **ROLLBACK:** Borrado manual de `middleware.ts`.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_RELEASE_DOSSIER.md:24 | | Login/Auth | `FAIL` | Inexistencia de `middleware.ts`. Autenticación sólo visual/cliente en algunas partes | Exposición de rutas privadas | SÍ (P0) |
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_RELEASE_DOSSIER.md:25 | | Datos/Seguridad | `FAIL` | `/api/nexus/user/sync` acepta payload sin verificar JWT de Firebase | Falsificación de perfiles y escalada de privilegios | SÍ (P0) |
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_RELEASE_DOSSIER.md:33 | 1. Falta total de `middleware.ts` para protección de rutas a nivel edge.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\MVP_RELEASE_DOSSIER.md:34 | 2. `/api/nexus/user/sync/route.ts` es altamente vulnerable; no valida el token de Firebase.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\ROUTE_AUTH_MATRIX.md:7 | | `/dashboard` / `/nexus` | Privada | Perfil, ingresos | Redirección CSR (`useRouter`) | Cliente (`useEffect`) | `src/app/(nexus)/dashboard/page.tsx:16` | P1 (Bypass visual) | Middleware / Server Auth | CONFIRMADO |
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\ROUTE_AUTH_MATRIX.md:8 | | `/admin` / `/centro-mando` | Admin | Datos globales | Redirección CSR (asumido) | Cliente | `src/app/(nexus)/(admin)/` | P0 (Bypass crítico) | Middleware Admin | REQUIERE_VALIDACION |
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\ROUTE_AUTH_MATRIX.md:9 | | Wallet/Ledger | Privada | Financieros | Redirección CSR (asumido) | Cliente | `src/app/(nexus)/dashboard/vault` | P0 (Fuga datos) | Middleware / Server Auth | REQUIERE_VALIDACION |
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\ROUTE_AUTH_MATRIX.md:10 | | Perfiles privados | Privada | Personales | Redirección CSR (asumido) | Cliente | `src/app/(artist)/` | P1 | Middleware / Server Auth | REQUIERE_VALIDACION |
+- HECHO_VERIFICADO | C:\EAR_OS_V2\docs\release\ROUTE_AUTH_MATRIX.md:12 | | `/api/nexus/user/sync` | Privada | Rol, UID, Email | NINGUNA | Backend | `src/app/api/nexus/user/sync/route.ts:6` | P0 (Spoofing UID) | Validar JWT Firebase | CONFIRMADO |
+- HECHO_VERIFICADO | C:\EAR_OS_V2\package.json:67 | "firebase-admin": "^14.2.0",
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\astra\route.js:24 | maxOutputTokens: 2048,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\astra\route.ts:30 | maxOutputTokens: 2048,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\contracts\generate\route.js:5 | const { sessionId, provincia, evento } = data;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\contracts\generate\route.js:10 | console.log(`[EAR_OS] Contrato S-Class generado para ${provincia} - ${evento} (Sesión: ${sessionId})`);
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\contracts\generate\route.ts:6 | const { sessionId, provincia, evento } = data;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\contracts\generate\route.ts:13 | console.log(`[EAR_OS] Contrato S-Class generado para ${provincia} - ${evento} (Sesión: ${sessionId})`);
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.js:10 | * Diseñado para ser invocado por Vercel Cron Jobs mediante Bearer Token.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.js:13 | const authHeader = req.headers.get("authorization");
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.js:15 | // 1. Verificación del Guardián Bearer Token
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.js:17 | !authHeader.startsWith("Bearer ") ||
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.ts:12 | * Diseñado para ser invocado por Vercel Cron Jobs mediante Bearer Token.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.ts:15 | const authHeader = req.headers.get("authorization");
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.ts:18 | // 1. Verificación del Guardián Bearer Token
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\cron\obsidian-sync\route.ts:21 | !authHeader.startsWith("Bearer ") ||
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.js:9 | const authHeader = req.headers.get('authorization');
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.js:10 | if (authHeader !== 'Bearer ' + process.env.HUNTER_API_KEY) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.ts:11 | const authHeader = req.headers.get('authorization');
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\hunter\ingest\route.ts:12 | if (authHeader !== 'Bearer ' + process.env.HUNTER_API_KEY) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.js:3 | import genomeData from '@/app/data/genome_sessions.json';
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.js:27 | const fallbackResults = (genomeData?.sessions || [])
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.js:35 | path: 'local://genome_sessions.json'
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.ts:3 | import genomeData from '@/app/data/genome_sessions.json';
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.ts:36 | const fallbackResults = (genomeData?.sessions || [])
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\oracle\infer\route.ts:44 | path: 'local://genome_sessions.json'
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.js:14 | const session = await stripe.checkout.sessions.create({
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.js:39 | success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.js:42 | return NextResponse.json({ url: session.url });
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.ts:18 | const session = await stripe.checkout.sessions.create({
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.ts:43 | success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\checkout\route.ts:47 | return NextResponse.json({ url: session.url });
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js:2 | import { createCheckoutSession } from '@/lib/payments';
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js:4 | // 💳 STRIPE SESSION HANDLER (S-CLASS)
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js:14 | const session = await createCheckoutSession({
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js:20 | id: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js:21 | url: session.url,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.js:28 | error: 'STRIPE_SESSION_ERROR',
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts:2 | import { createCheckoutSession } from '@/lib/payments';
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts:5 | // 💳 STRIPE SESSION HANDLER (S-CLASS)
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts:21 | const session = await createCheckoutSession({
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts:28 | id: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts:29 | url: session.url,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\create-session\route.ts:37 | error: 'STRIPE_SESSION_ERROR',
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:13 | function getEmailFromSession(session) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:14 | const email = session.customer_details?.email?.trim().toLowerCase() ||
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:15 | session.customer_email?.trim().toLowerCase() ||
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:52 | case "checkout.session.completed":
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:61 | // HANDLER 1: checkout.session.completed (Ledger + Wallet + Waybill)
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:63 | async function handleCheckoutCompleted(session) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:64 | const meta = session.metadata || {};
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:65 | const idempotencyRef = `STRIPE-${session.id}`;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:66 | const amountTotal = (session.amount_total ?? 0) / 100;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:74 | logger.info({ event: "WEBHOOK_IDEMPOTENCY_HIT", sessionId: session.id });
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:99 | const email = getEmailFromSession(session);
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:101 | throw new Error("Unable to resolve guest identity from Stripe session");
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:112 | displayName: meta.clientName || session.customer_details?.name || "Cliente Invitado",
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:126 | currency: session.currency?.toUpperCase() || "EUR",
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:128 | stripeSessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:131 | sourceEvent: "checkout.session.completed",
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:161 | currency: session.currency?.toUpperCase() || "EUR",
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:177 | referenceCode: `WAY-${session.id}`,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:201 | sessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:203 | currency: session.currency,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:205 | client: getEmailFromSession(session) || "Desconocido",
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:216 | const currency = session.currency?.toUpperCase() || "EUR";
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\payments\webhook\route.js:217 | const email = getEmailFromSession(session) || "Anónimo";
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.js:17 | if (!event.type || !event.sessionId || !event.payload) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.js:24 | session_id: event.sessionId,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.ts:24 | if (!event.type || !event.sessionId || !event.payload) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\telemetry\marketplace\route.ts:32 | session_id: event.sessionId,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.js:5 | const BOT_TOKEN: [REDACTADO];
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.js:7 | if (!BOT_TOKEN || !CHAT_ID) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.js:17 | const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.ts:7 | const BOT_TOKEN: [REDACTADO];
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.ts:10 | if (!BOT_TOKEN || !CHAT_ID) {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\tripwire\route.ts:21 | const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js:30 | if (event.type !== "checkout.session.completed") {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js:33 | const session = event.data.object;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js:34 | const md = session.metadata ?? {};
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js:75 | stripeSessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js:90 | stripeSessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js:131 | stripeSessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.js:132 | notes: `Stripe webhook session ${session.id}`,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts:37 | if (event.type !== "checkout.session.completed") {
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts:41 | const session = event.data.object as Stripe.Checkout.Session;
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts:42 | const md = session.metadata ?? {};
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts:90 | stripeSessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts:104 | stripeSessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts:149 | stripeSessionId: session.id,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\app\api\webhooks\stripe\route.ts:150 | notes: `Stripe webhook session ${session.id}`,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js:8 | // Firebase Auth manda en el cliente. Supabase confía en Firebase vía JWT.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js:15 | persistSession: true,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js:16 | autoRefreshToken: [REDACTADO],
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js:35 | const token: [REDACTADO] firebaseUser.getIdToken();
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js:36 | const { error } = await supabase.auth.setSession({
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js:37 | access_token: [REDACTADO],
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.js:38 | refresh_token: [REDACTADO],
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts:9 | // Firebase Auth manda en el cliente. Supabase confía en Firebase vía JWT.
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts:18 | persistSession: true,
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts:19 | autoRefreshToken: [REDACTADO],
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts:41 | const token: [REDACTADO] firebaseUser.getIdToken();
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts:43 | const { error } = await supabase.auth.setSession({
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts:44 | access_token: [REDACTADO],
+- HECHO_VERIFICADO | C:\EAR_OS_V2\src\lib\services\auth_nexus.ts:45 | refresh_token: [REDACTADO],
+
+## Riesgos observables
+
+- RIESGO | La clasificación pública, protegida o indeterminada requiere revisar cada ruta detectada contra evidencia de middleware o validación de token.
+- RIESGO | La ausencia de una coincidencia textual no demuestra ausencia de controles de autenticación.
+
+## RECOMENDACIÓN
+
+- Revisar manualmente el informe generado y, antes de cambiar código, aprobar una matriz explícita ruta por ruta: pública, protegida o indeterminada.

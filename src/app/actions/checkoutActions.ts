@@ -77,7 +77,7 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
 
   if (artist) {
     isAuthorized = true;
-    artistName = artist.displayName;
+    artistName = artist.displayName ?? "";
   } else {
     // B. Buscar en perfiles de proveedores verificados
     const provider = await prisma.providerProfile.findFirst({
@@ -92,8 +92,8 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
 
     if (provider && provider.isVerified) {
       isAuthorized = true;
-      artistName = provider.name;
-      baseFee = provider.roiGuaranteeScore > 0 ? Math.round(provider.roiGuaranteeScore * 200) : 1000;
+      artistName = provider.name ?? "";
+      baseFee = (provider.roiGuaranteeScore ?? 0) > 0 ? Math.round((provider.roiGuaranteeScore ?? 0) * 200) : 1000;
     }
   }
 

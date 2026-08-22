@@ -148,7 +148,7 @@ export const ProjectsDashboard: React.FC<ProjectsDashboardProps> = ({
                     <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[11px] text-zinc-500">
                       <span className="flex items-center gap-1">
                         <CalendarIcon className="w-3.5 h-3.5" />
-                        {new Date(proj.createdAt).toLocaleDateString()}
+                        {new Date(proj.createdAt || Date.now()).toLocaleDateString()}
                       </span>
                       {onDeleteProject && (
                         <button

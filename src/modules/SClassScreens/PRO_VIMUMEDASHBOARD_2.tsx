@@ -252,7 +252,7 @@ export const VimumeDashboard: React.FC = () => {
                                         <div className="flex flex-col items-center justify-center h-full py-6 text-center">
                                             <Heart className="text-red-500 mb-4 animate-pulse" size={48} />
                                             <h4 className="text-4xl font-black text-white italic tracking-tighter mb-1">
-                                                {orders.filter(o => o.items?.some(i => i.sku === 'DONATION_VIMUME')).reduce((acc, curr) => acc + curr.totalAmount, 0)}€
+                                                {orders.filter(o => o.items?.some(i => i.sku === 'DONATION_VIMUME')).reduce((acc, curr) => acc + (curr.totalAmount ?? 0), 0)}€
                                             </h4>
                                             <p className="text-[10px] font-black uppercase text-gray-500 tracking-[0.3em]">Recaudación Total</p>
 
@@ -265,7 +265,7 @@ export const VimumeDashboard: React.FC = () => {
                                                 </div>
                                                 <div>
                                                     <p className="text-2xl font-black text-blue-400">
-                                                        {Math.floor(orders.filter(o => o.items?.some(i => i.sku === 'DONATION_VIMUME')).reduce((acc, curr) => acc + curr.totalAmount, 0) / 45)}
+                                                        {Math.floor(orders.filter(o => o.items?.some(i => i.sku === 'DONATION_VIMUME')).reduce((acc, curr) => acc + (curr.totalAmount ?? 0), 0) / 45)}
                                                     </p>
                                                     <p className="text-[8px] font-black uppercase text-gray-600">Sesiones Generadas</p>
                                                 </div>

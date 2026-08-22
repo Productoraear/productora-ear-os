@@ -27,6 +27,18 @@
         "./src/components/*",
         "./src/app/components/*"
       ],
+      "@/contexts/*": [
+        "./src/context/*"
+      ],
+      "@/context/*": [
+        "./src/context/*"
+      ],
+      "@/stores/*": [
+        "./src/store/*"
+      ],
+      "@/store/*": [
+        "./src/store/*"
+      ],
       "@/*": [
         "./src/*",
         "./src/app/*"

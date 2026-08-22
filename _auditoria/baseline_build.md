@@ -1,0 +1,13 @@
+scripts/intelligence_scan_route.ts(25,45): error TS1005: '}' expected.
+scripts/stress-test-pricing.ts(2,12): error TS1005: ',' expected.
+scripts/stress-test-pricing.ts(2,21): error TS1005: ',' expected.
+scripts/stress-test-pricing.ts(2,25): error TS1005: ',' expected.
+scripts/test-memory-persistence.ts(2,12): error TS1005: ',' expected.
+scripts/test-memory-persistence.ts(2,21): error TS1005: ',' expected.
+scripts/test-memory-persistence.ts(2,25): error TS1005: ',' expected.
+scripts/vampirization/seed_products.ts(2,12): error TS1005: ',' expected.
+scripts/vampirization/seed_products.ts(2,21): error TS1005: ',' expected.
+scripts/vampirization/seed_products.ts(2,25): error TS1005: ',' expected.
+src/lib/NUCLEO_DATA/valibot.ts(2,12): error TS1005: ',' expected.
+src/lib/NUCLEO_DATA/valibot.ts(2,21): error TS1005: ',' expected.
+src/lib/NUCLEO_DATA/valibot.ts(2,25): error TS1005: ',' expected.

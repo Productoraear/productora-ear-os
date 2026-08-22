@@ -1,0 +1,5 @@
+﻿Volumenes: C:\EAR_OS_V2\_auditoria\volumenes_actuales.csv
+Particiones: C:\EAR_OS_V2\_auditoria\particiones_actuales.csv
+Fisicos: C:\EAR_OS_V2\_auditoria\discos_fisicos_actuales.csv
+Mapa: C:\EAR_OS_V2\_auditoria\mapa_funcional_discos.csv
+Markdown: C:\EAR_OS_V2\_auditoria\mapa_funcional_discos.md

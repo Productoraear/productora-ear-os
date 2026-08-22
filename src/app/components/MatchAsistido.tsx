@@ -65,7 +65,7 @@ export const MatchAsistido: React.FC<MatchAsistidoProps> = ({ onComplete, onClos
         if (step < STEPS.length - 1) {
             setStep(step + 1);
         } else {
-            onComplete(newSelection);
+            onComplete?.(newSelection);
         }
     };
 

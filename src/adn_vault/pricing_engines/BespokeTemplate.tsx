@@ -52,7 +52,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
   const { signal, isMounted } = useSovereignContext();
   const router = useRouter();
   const pathname = usePathname();
-  const capitalizedLocation = location.charAt(0).toUpperCase() + location??.slice(1);
+  const capitalizedLocation = location.charAt(0).toUpperCase() + location?.slice(1);
 
   // Semantic & GEO Engine Generation (Unicidad Semántica >70%)
   const semanticData = generateSemanticPageData([serviceId], location);
@@ -114,7 +114,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
 
           <div className="flex flex-wrap items-center gap-6 pt-4">
             <div className="flex items-center gap-2 text-xs font-mono text-slate-400 bg-white/5 border border-white/10 px-4 py-2 rounded-xl">
-              <MapPin className="w-4 h-4 text-[#ecb613]" /> Cobertura en: {semanticData.venues??.slice(0, 3).join(', ')}
+              <MapPin className="w-4 h-4 text-[#ecb613]" /> Cobertura en: {semanticData.venues?.slice(0, 3).join(', ')}
             </div>
             <div className="text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-4 py-2 rounded-xl">
               Rango Tarifario: {semanticData.priceRange} (Garantía 0.50 €)

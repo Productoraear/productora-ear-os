@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Activity, BrainCircuit, PlayCircle, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
-import { cn } from 'src/lib/index';
+import { cn } from '@/lib';
 
 export default function AffinityEngine() {
   const [step, setStep] = useState(1);
