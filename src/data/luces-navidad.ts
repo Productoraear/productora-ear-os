@@ -21,6 +21,7 @@ export interface ChristmasLightingProduct {
   cataloguePage: number;
   provider: string;
   canonicalUrl: string;
+  image?: string;
 }
 
 export const CHRISTMAS_LIGHTING_PRODUCTS: ChristmasLightingProduct[] = demetrioData as ChristmasLightingProduct[];
