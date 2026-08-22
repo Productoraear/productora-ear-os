@@ -14,7 +14,8 @@ import {
   Mail, User, MapPin, Calendar, FileText, CheckCircle2, XCircle,
   Sparkles, CreditCard, Clock, Truck, Award, Phone, MessageCircle,
   AlertTriangle, Check, Volume2, Lock, ShieldAlert, HeartHandshake,
-  Heart, Building2, PartyPopper, Flame, ChevronDown, SlidersHorizontal
+  Heart, Building2, PartyPopper, Flame, ChevronDown, SlidersHorizontal,
+  Camera, Gamepad2, Tv
 } from 'lucide-react';
 import { PRICING_CATALOG } from '@/lib/constants/pricing-catalog';
 import { SClassPricingEngine, SClassQuote } from '@/lib/pricing-engine';
@@ -43,6 +44,20 @@ const SERVICES_CATALOG: Record<string, ServiceItem[]> = {
     { id: PRICING_CATALOG['sinfonico-royal'].id, name: PRICING_CATALOG['sinfonico-royal'].name, price: PRICING_CATALOG['sinfonico-royal'].basePrice, icon: <Activity size={20} />, desc: PRICING_CATALOG['sinfonico-royal'].description, category: 'BOOKING' },
     { id: PRICING_CATALOG['octeto-magistral'].id, name: PRICING_CATALOG['octeto-magistral'].name, price: PRICING_CATALOG['octeto-magistral'].basePrice, icon: <Activity size={20} />, desc: PRICING_CATALOG['octeto-magistral'].description, category: 'BOOKING' },
     { id: PRICING_CATALOG['banda-monumental'].id, name: PRICING_CATALOG['banda-monumental'].name, price: PRICING_CATALOG['banda-monumental'].basePrice, icon: <Boxes size={20} />, desc: PRICING_CATALOG['banda-monumental'].description, category: 'BOOKING' }
+  ],
+  'ARSENAL & EQUIPAMIENTO AUDIOVISUAL (STOCK MADRID)': [
+    { id: 'arsenal-fotomaton-360', name: 'Fotomatón 360º Vídeo Slow-Motion (3h)', price: 390, icon: <Camera size={20} />, desc: 'Plataforma motorizada, iPad Pro, descarga instantánea QR y atrezo.', category: 'ARSENAL' },
+    { id: 'arsenal-fotomaton-vintage', name: 'Fotomatón Clásico Tótem Impresión Ilimitada', price: 350, icon: <Camera size={20} />, desc: 'Cámara réflex DSLR, tiras personalizadas y libro de firmas.', category: 'ARSENAL' },
+    { id: 'arsenal-monitor-98', name: 'Monitor Gran Formato 98" 4K HDR + Peana', price: 450, icon: <Tv size={20} />, desc: 'Pantalla gigante profesional 24/7 antirreflejos para galas y ferias.', category: 'ARSENAL' },
+    { id: 'arsenal-monitor-85', name: 'Monitor Profesional 85" 4K Ultra Slim', price: 320, icon: <Tv size={20} />, desc: 'Pantalla 4K con peana regulable de diseño y conexión wireless.', category: 'ARSENAL' },
+    { id: 'arsenal-pantalla-tactil', name: 'Tótem / Monitor Táctil Interactivo 65"', price: 220, icon: <Tv size={20} />, desc: 'Pantalla táctil 20 puntos con Windows 11 / Android para stands.', category: 'ARSENAL' },
+    { id: 'arsenal-muro-led', name: 'Muro Pantalla LED Interior P2.6 (Módulo)', price: 120, icon: <Boxes size={20} />, desc: 'Resolución ultra alta y brillo calibrado para escenarios y congresos.', category: 'ARSENAL' },
+    { id: 'arsenal-simulador-f1', name: 'Simulador Conducción F1 / Rally Fanatec', price: 380, icon: <Gamepad2 size={20} />, desc: 'Cockpit con baquet deportivo, volante Force Feedback y pantalla curva.', category: 'ARSENAL' },
+    { id: 'arsenal-gafas-vr', name: 'Puesto Realidad Virtual VR Meta Quest 3', price: 190, icon: <Gamepad2 size={20} />, desc: 'Gafas VR sin cables con pantalla réplica externa para el público.', category: 'ARSENAL' },
+    { id: 'arsenal-videoconsolas', name: 'Puesto Gaming PS5 / Nintendo Switch + TV 4K', price: 140, icon: <Gamepad2 size={20} />, desc: 'Consola, 4 mandos inalámbricos, TV 55" y catálogo de juegos.', category: 'ARSENAL' },
+    { id: 'arsenal-karaoke', name: 'Karaoke Profesional 50.000 Temas + Micros', price: 195, icon: <Sparkles size={20} />, desc: 'Sistema de karaoke con pantalla para letras y 2 micros inalámbricos.', category: 'ARSENAL' },
+    { id: 'arsenal-humo-chispas', name: 'Efectos: Humo Bajo (Nube) + Chispas Frías', price: 120, icon: <Sparkles size={20} />, desc: 'Efectos homologados seguros para interior (baile nupcial / galas).', category: 'ARSENAL' },
+    { id: 'arsenal-streaming', name: 'Kit Streaming Broadcast 4K + ATEM Mini', price: 320, icon: <Tv size={20} />, desc: 'Cámaras Blackmagic 4K, switcher y set de realización en vivo.', category: 'ARSENAL' }
   ],
   'PRODUCCIÓN & SONORIZACIÓN S-CLASS': [
     { id: 'pa-lacoustics', name: 'Sonorización L-Acoustics / Bose F1', price: 1800, icon: <Activity size={20} />, desc: 'Presión acústica cristalina calibrada a 12 W/pax sin distorsión.', category: 'PRODUCCION' },
