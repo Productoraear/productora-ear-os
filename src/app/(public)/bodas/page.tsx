@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import ThermodynamicNeuralTunnel from '@/features/bodas/ui/ThermodynamicNeuralTunnel';
+import SmartMarketplaceNav from '@/features/marketplace/ui/SmartMarketplaceNav';
 
 interface WeddingBlock {
   id: string;
@@ -145,7 +146,12 @@ export default function BodasPage() {
           </div>
         </section>
 
-        {/* 2. TÚNEL NEURAL TERMODINÁMICO S-CLASS (MATCHMAKING NUPCIAL) */}
+        {/* 2. NAVEGACIÓN INTELIGENTE S-CLASS (DUAL SEARCH + MEGA MENÚ + ZONAS) */}
+        <section className="pt-4">
+          <SmartMarketplaceNav />
+        </section>
+
+        {/* 3. TÚNEL NEURAL TERMODINÁMICO S-CLASS (MATCHMAKING NUPCIAL) */}
         <section className="pt-2">
           <ThermodynamicNeuralTunnel 
             initialProvince="Madrid" 
