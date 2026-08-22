@@ -247,6 +247,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
+  // 10. PILAR PROGRAMÁTICO S-CLASS: [vertical]/[intent] — NEURO-FUNNEL SEO NODES
+  const neuroFunnelProgrammaticPages: MetadataRoute.Sitemap = [
+    { vertical: 'bodas', intent: 'madrid-precios-musica-directo' },
+    { vertical: 'bodas', intent: 'fincas-toledo-sonorizacion-gala' },
+    { vertical: 'bodas', intent: 'serenata-sorpresa-pedida-mano' },
+    { vertical: 'bodas', intent: 'mariachi-bodas-precios-espana' },
+    { vertical: 'corporativo', intent: 'eventos-empresa-madrid-sonido-dj' },
+    { vertical: 'corporativo', intent: 'presentacion-producto-audiovisual' },
+    { vertical: 'corporativo', intent: 'cena-gala-empresarial-madrid' },
+    { vertical: 'quinceaneras', intent: 'fiestas-15-anos-dj-iluminacion' },
+    { vertical: 'cumpleanos', intent: 'mariachi-sorpresa-domicilio-madrid' },
+    { vertical: 'vimume', intent: 'musicoterapia-centros-mayores-madrid' },
+    { vertical: 'vimume', intent: 'envejecimiento-activo-musicoterapia' },
+    { vertical: 'ayuntamientos', intent: 'conciertos-fiestas-patronales-lcsp' },
+    { vertical: 'ayuntamientos', intent: 'sonorizacion-actos-institucionales' },
+  ].map(node => ({
+    url: `${baseUrl}/${node.vertical}/${node.intent}`,
+    lastModified: now,
+    priority: 0.90,
+    changeFrequency: 'weekly' as const,
+  }));
+
   // PURGADO ATÓMICO: Cero basura legada, 100% de unicidad semántica y foco absoluto en intenciones de búsqueda
   return unique([
     ...corePages,
@@ -259,6 +281,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...b2gCanonicalPages,
     ...provinceCanonicalPages,
     ...weddingProgrammaticPages,
+    ...neuroFunnelProgrammaticPages,
     ...providerPages
   ]);
 }
