@@ -31,6 +31,7 @@ const SEO_NODES: SEONode[] = [
   { vertical: 'corporativo', intent: 'cena-gala-empresarial-madrid', title: 'Música para Cenas de Gala Empresarial | Madrid', description: 'Ambientación musical y sonorización de alta fidelidad para cenas de gala. Microfonía DPA y PA L-Acoustics. Presupuesto cerrado.' },
   { vertical: 'corporativo', intent: 'alquiler-pantallas-led-madrid', title: 'Alquiler de Pantallas LED en Madrid | Gran Formato P2.6 / P3.9', description: 'Alquiler de pantallas LED gigantes de interior y exterior en Madrid. Tótems 4K, muros interactivos y procesadores Novastar con técnico in-situ.' },
   { vertical: 'corporativo', intent: 'sonorizacion-eventos-barcelona-valles', title: 'Sonorización de Eventos en Barcelona y El Vallès | 12 W/pax', description: 'Sonido profesional para eventos corporativos y bandas en Barcelona y Vallès. Garantía de presión acústica 12 W/pax, consolas digitales y cero fallos.' },
+  { vertical: 'corporativo', intent: 'decoracion-navidena-centros-comerciales', title: 'Decoración Navideña e Iluminación 3D para Centros Comerciales', description: 'Proyectos llave en mano de iluminación navideña monumental. Conos gigantes hasta 10.6m, esferas 3D, tecnología Twinkly Pro y photocalls transitables.' },
   // Quinceañeras y Cumpleaños
   { vertical: 'quinceaneras', intent: 'fiestas-15-anos-dj-iluminacion', title: 'DJ e Iluminación para Fiestas de 15 Años', description: 'Set híbrido: vals mariachi + DJ urbano con cabina LED DMX. PA 2.000W con subwoofers activos desde 450€.' },
   { vertical: 'cumpleanos', intent: 'mariachi-sorpresa-domicilio-madrid', title: 'Mariachi Sorpresa a Domicilio en Madrid', description: 'Serenata sorpresa con Edwin Agudelo. Llegada coordinada, repertorio personalizado y equipo portátil HiFi. Desde 350€.' },
@@ -40,9 +41,11 @@ const SEO_NODES: SEONode[] = [
   // Ayuntamientos B2G
   { vertical: 'ayuntamientos', intent: 'conciertos-fiestas-patronales-lcsp', title: 'Conciertos para Fiestas Patronales | LCSP', description: 'Presupuesto cerrado bajo contrato menor LCSP (<15.000€). Memoria técnica, seguro RC 600.000€ y PA 12.000W.' },
   { vertical: 'ayuntamientos', intent: 'sonorizacion-actos-institucionales', title: 'Sonorización para Actos Institucionales | Ayuntamientos', description: 'PA profesional para plazas y auditorios municipales. Certificado de solidez, pliego técnico y logística integral.' },
+  { vertical: 'ayuntamientos', intent: 'alumbrado-navideno-luces-licitacion-lcsp', title: 'Alumbrado Navideño para Ayuntamientos | Licitaciones LCSP', description: 'Instalación integral de alumbrado navideño, arcos de calle y figuras 3D gigantes para municipios. Contrato menor LCSP (<15.000€) y pliegos técnicos con seguro RC 600.000€.' },
   // Fincas Singulares
   { vertical: 'fincas', intent: 'opiniones-quinta-malpica-sonorizacion', title: 'Sonorización y Música en Quinta Malpica | Opiniones y Rider', description: 'Estudio de acústica y música en directo para eventos en Quinta Malpica. Cobertura uniforme 12 W/pax, microfonía sin acoples y solista desde 350€.' },
   { vertical: 'fincas', intent: 'finca-los-afligidos-musica-directo', title: 'Música en Directo y Sonorización en Finca Los Afligidos', description: 'Producción musical y técnica para bodas en Finca Los Afligidos. Ensamble de mariachi, tenor Edwin Agudelo y PA Bose F1 con cero distorsión.' },
+  { vertical: 'fincas', intent: 'iluminacion-navidena-fincas-eventos', title: 'Iluminación Navideña y Micro-LED para Fincas y Hoteles', description: 'Ambientación lumínica de alta gama para fincas, bodegas y espacios de eventos. Cortinas de micro-LED IP65, arbolado luminoso y figuras 3D exclusivas.' },
 ];
 
 export function generateStaticParams() {

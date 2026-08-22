@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-08-22T15:55:24.527Z",
+  "personasTested": 3,
+  "results": [
+    {
+      "persona": "Wedding Planner Madrid (20 Servicios)",
+      "status": "PASSED",
+      "durationMs": 4621,
+      "validations": {
+        "neuroFunnelActive": true,
+        "fotomaton360Available": true
+      }
+    },
+    {
+      "persona": "Diplomático FITUR 2027 (B2B/B2G Stand)",
+      "status": "PASSED",
+      "durationMs": 755,
+      "validations": {
+        "seoLandingLoaded": true,
+        "soundStandardCertified": true
+      }
+    },
+    {
+      "persona": "Cliente Particular (Cumpleaños Julio 2027)",
+      "status": "PASSED",
+      "durationMs": 590,
+      "validations": {
+        "mariachiLandingLoaded": true
+      }
+    }
+  ]
+}

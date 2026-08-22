@@ -22,6 +22,7 @@
         "@next-auth/prisma-adapter": "^1.0.7",
         "@paypal/checkout-server-sdk": "^1.0.3",
         "@paypal/paypal-server-sdk": "^2.3.0",
+        "@prisma/client": "^6.19.3",
         "@react-three/drei": "^9.121.5",
         "@react-three/fiber": "^8.17.10",
         "@stripe/stripe-js": "^9.12.1",
@@ -44,6 +45,7 @@
         "next": "^16.2.12",
         "next-themes": "^0.4.6",
         "postgres": "^3.4.9",
+        "prisma": "^6.19.3",
         "puppeteer": "^24.42.0",
         "puppeteer-extra": "^3.3.6",
         "puppeteer-extra-plugin-stealth": "^2.10.4",
@@ -63,9 +65,7 @@
         "valibot": "^1.4.0",
         "whisper-node": "^1.1.1",
         "zod": "^4.4.3",
-        "zustand": "^5.0.13",
-        "@prisma/client": "^6.19.3",
-        "prisma": "^6.19.3"
+        "zustand": "^5.0.13"
     },
     "devDependencies": {
         "@prisma/client": "^6.19.3",
@@ -80,6 +80,7 @@
         "eslint": "^10.8.0",
         "eslint-config-next": "^0.2.4",
         "firebase-admin": "^14.2.0",
+        "playwright": "^1.62.1",
         "postcss": "^8.4.35",
         "prisma": "^6.19.3",
         "tailwindcss": "^3.4.1",

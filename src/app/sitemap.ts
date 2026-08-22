@@ -61,6 +61,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/alquiler-equipos-informaticos`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
     { url: `${baseUrl}/alquiler-escenarios/alquiler-tarima`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
     { url: `${baseUrl}/alquiler-estructuras-truss`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/arsenal/luces-navidad`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/b2g/alumbrado-navideno`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
   ];
 
   // 2. CATEGORÍAS & GUÍAS ESTRATÉGICAS
@@ -172,7 +174,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'pantalla-led',
     'alquiler-sonido',
     'altavoces-line-array',
-    'iluminacion-dmx'
+    'iluminacion-dmx',
+    'luces-navidad'
   ];
 
   primaryArsenalItems.forEach(itemSlug => {
@@ -190,7 +193,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const b2gCanonicalPages: MetadataRoute.Sitemap = [];
   const b2gEventTypes = [
     'fiestas-patronales',
-    'festivales'
+    'festivales',
+    'alumbrado-navideno'
   ];
 
   b2gEventTypes.forEach(eventSlug => {
@@ -247,7 +251,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // 10. PILAR PROGRAMÁTICO S-CLASS: [vertical]/[intent] — NEURO-FUNNEL SEO NODES (INCLUYE GSC HARVEST)
+  // 10. PILAR PROGRAMÁTICO S-CLASS: [vertical]/[intent] — NEURO-FUNNEL SEO NODES (INCLUYE GSC HARVEST & DEMETRIO)
   const neuroFunnelProgrammaticPages: MetadataRoute.Sitemap = [
     { vertical: 'bodas', intent: 'madrid-precios-musica-directo' },
     { vertical: 'bodas', intent: 'fincas-toledo-sonorizacion-gala' },
@@ -261,14 +265,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { vertical: 'corporativo', intent: 'cena-gala-empresarial-madrid' },
     { vertical: 'corporativo', intent: 'alquiler-pantallas-led-madrid' },
     { vertical: 'corporativo', intent: 'sonorizacion-eventos-barcelona-valles' },
+    { vertical: 'corporativo', intent: 'decoracion-navidena-centros-comerciales' },
     { vertical: 'quinceaneras', intent: 'fiestas-15-anos-dj-iluminacion' },
     { vertical: 'cumpleanos', intent: 'mariachi-sorpresa-domicilio-madrid' },
     { vertical: 'vimume', intent: 'musicoterapia-centros-mayores-madrid' },
     { vertical: 'vimume', intent: 'envejecimiento-activo-musicoterapia' },
     { vertical: 'ayuntamientos', intent: 'conciertos-fiestas-patronales-lcsp' },
     { vertical: 'ayuntamientos', intent: 'sonorizacion-actos-institucionales' },
+    { vertical: 'ayuntamientos', intent: 'alumbrado-navideno-luces-licitacion-lcsp' },
     { vertical: 'fincas', intent: 'opiniones-quinta-malpica-sonorizacion' },
     { vertical: 'fincas', intent: 'finca-los-afligidos-musica-directo' },
+    { vertical: 'fincas', intent: 'iluminacion-navidena-fincas-eventos' },
   ].map(node => ({
     url: `${baseUrl}/${node.vertical}/${node.intent}`,
     lastModified: now,
