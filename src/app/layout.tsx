@@ -21,8 +21,6 @@ import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
 import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
-import AstraOracle from "@/components/sclass/AstraOracle";
-import UniversalCommandPalette from "@/components/sclass/UniversalCommandPalette";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
 
 export const metadata: Metadata = {
@@ -91,8 +89,6 @@ export default function RootLayout({
                           <BespokePricerModal />
                           <OmniSearchModal />
                           <DynamicContextBar />
-                          <AstraOracle />
-                          <UniversalCommandPalette />
                         </div>
                       </SmoothScrollProvider>
                     </EventCartProvider>
