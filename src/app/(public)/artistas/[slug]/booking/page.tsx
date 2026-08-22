@@ -5,16 +5,25 @@ import { notFound } from 'next/navigation';
 import { ShieldCheck, Zap, ArrowRight, Calendar, CreditCard } from 'lucide-react';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Reserva Inmediata | Talent OS',
   description: 'Bloqueo de fecha y reserva de talento mediante el gatillo de 1€.',
 };
 
-export default async function ArtistBookingPage({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+export default async function ArtistBookingPage({ params }: PageProps) {
+  const { slug } = await params;
   let artist;
   try {
     artist = await prisma.artistProfile.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
     });
   } catch (error) {
     console.error("❌ [TALENT OS] Error al cargar datos para reserva:", error);

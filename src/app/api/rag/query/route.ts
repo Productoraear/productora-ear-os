@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/services/auth_nexus';
 import { gravitationalIngestor, DocumentNode } from '@/lib/services/rag/GravitationalIngestionEngine';
 import { eternalMemory } from '@/lib/intelligence/EternalMemory';
-import ragDatabase from '@/data/ear-rag-database.json';
+import fs from 'fs';
+import path from 'path';
 
 // ============================================================================
 // 🌌 SANITIZADOR DE PAYLOAD RAG S-CLASS (TOKEN & NETWORK EFFICIENCY)
@@ -20,6 +21,19 @@ function sanitizeRagNode(node: DocumentNode) {
     tags: node.tags || [],
     snippet
   };
+}
+
+function loadLocalRagFallback(): any[] {
+  try {
+    const dbPath = path.join(process.cwd(), 'src', 'data', 'ear-rag-database.json');
+    if (fs.existsSync(dbPath)) {
+      const raw = fs.readFileSync(dbPath, 'utf-8');
+      return JSON.parse(raw);
+    }
+  } catch (err) {
+    console.warn('⚠️ [RAG FALLBACK] No se pudo leer ear-rag-database.json desde disco:', err);
+  }
+  return [];
 }
 
 async function executeRagSearch(query: string, limit: number = 10) {
@@ -43,14 +57,15 @@ async function executeRagSearch(query: string, limit: number = 10) {
       cached: false
     };
   } else {
-    // Fallback secundario directo sobre ear-rag-database.json
+    // Fallback secundario directo sobre ear-rag-database.json leído bajo demanda
+    const localDb = loadLocalRagFallback();
     const lowerQuery = query.toLowerCase();
     const terms = lowerQuery.split(/\s+/).filter(t => t.length > 2);
 
-    const scored = (ragDatabase as any[])
+    const scored = localDb
       .map(node => {
         let score = 0;
-        const text = `${node.title} ${node.content} ${node.tags?.join(' ') || ''}`.toLowerCase();
+        const text = `${node.title || ''} ${node.content || ''} ${node.tags?.join(' ') || ''}`.toLowerCase();
         terms.forEach(term => {
           if (text.includes(term)) score += 1;
         });
@@ -63,7 +78,7 @@ async function executeRagSearch(query: string, limit: number = 10) {
     payload = {
       success: true,
       source: 'local_rag_database_direct',
-      totalIndexed: ragDatabase.length,
+      totalIndexed: localDb.length,
       totalFiltered: scored.length,
       results: scored.map(sanitizeRagNode),
       cached: false

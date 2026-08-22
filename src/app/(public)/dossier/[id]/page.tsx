@@ -10,9 +10,11 @@ import { createClient } from '@/lib/supabase/server';
 import { Zap, ShieldCheck, Calendar, MapPin, CheckCircle } from 'lucide-react';
 import { ApproveDossierButton } from '@/app/components/dossier/ApproveDossierButton';
 
+export const dynamic = 'force-dynamic';
+
 interface Props {
-  params: { id: string };
-  searchParams: { token?: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ token?: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -23,13 +25,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function DossierPage({ params, searchParams }: Props) {
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
   const supabase = createClient();
   
   // 🔐 FETCH SECURE (ID + Token validation could be added here)
   const { data: dossier, error } = await supabase
     .from('dossier_proposals')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', resolvedParams.id)
     .single();
 
   if (error || !dossier) notFound();
@@ -119,7 +123,7 @@ export default async function DossierPage({ params, searchParams }: Props) {
             {/* ⚡ SERVER ACTION CALL */}
             <ApproveDossierButton 
               dossierId={dossier.id} 
-              token={searchParams.token} 
+              token={resolvedSearchParams.token} 
             />
           </div>
         </footer>

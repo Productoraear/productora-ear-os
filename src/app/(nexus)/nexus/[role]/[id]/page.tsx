@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useEarStore } from '@/store/useEarStore';
 
-export default function NexusNodePage({ params }: { params: { role: string; id: string } }) {
+export default function NexusNodePage({ params }: { params: Promise<{ role: string; id: string }> }) {
+  const resolvedParams = React.use(params);
   const router = useRouter();
   const addXp = useEarStore((state) => state.addXp);
   const addInvestment = useEarStore((state) => state.addInvestment);
@@ -18,16 +19,16 @@ export default function NexusNodePage({ params }: { params: { role: string; id: 
       roi: Math.floor(Math.random() * 400 + 150),
       reliability: Math.floor(Math.random() * 20 + 80),
     });
-  }, [params.id]);
+  }, [resolvedParams.id]);
 
   const handleClaim = () => {
     setIsSyncing(true);
     
     // Inyección en la Bóveda S-Class
     addInvestment({
-      id: params.id,
-      name: `Nodo ${params.role.toUpperCase()} Alpha`,
-      type: params.role as any,
+      id: resolvedParams.id,
+      name: `Nodo ${resolvedParams.role.toUpperCase()} Alpha`,
+      type: resolvedParams.role as any,
       cost: metrics.roi * 10, // Costo derivado del ROI
       roiProjected: metrics.roi,
       auraLevel: metrics.aura,
@@ -53,7 +54,7 @@ export default function NexusNodePage({ params }: { params: { role: string; id: 
       <nav className="w-full px-8 py-6 border-b border-white/5 flex justify-between items-center z-10 relative backdrop-blur-md bg-[#050505]/50">
         <div className="font-syne font-bold text-xl tracking-[0.2em] text-white">EAR<span className="text-[#d4a855]">OS</span></div>
         <div className="flex items-center space-x-3">
-          <span className="text-xs uppercase tracking-widest text-white/50 font-inter">NEXUS LINK: {params.id}</span>
+          <span className="text-xs uppercase tracking-widest text-white/50 font-inter">NEXUS LINK: {resolvedParams.id}</span>
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]" />
         </div>
       </nav>
@@ -72,7 +73,7 @@ export default function NexusNodePage({ params }: { params: { role: string; id: 
               <h1 className="text-6xl lg:text-7xl font-black tracking-tighter leading-[1.1] mb-6 font-syne">
                 HOLOGRAMA <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/80 to-white/40">
-                  {params.role.toUpperCase()}
+                  {resolvedParams.role.toUpperCase()}
                 </span>
               </h1>
               <p className="text-white/60 text-lg leading-relaxed font-manrope max-w-lg">
@@ -111,7 +112,7 @@ export default function NexusNodePage({ params }: { params: { role: string; id: 
                 <div className="space-y-6 mb-12 font-manrope">
                   <div className="flex items-center justify-between border-b border-black/10 pb-4">
                     <span className="text-black/50 uppercase tracking-widest text-xs font-bold">Firma Digital</span>
-                    <span className="font-bold text-black bg-black/5 px-3 py-1 rounded-md text-sm">{params.id.substring(0, 8)}...</span>
+                    <span className="font-bold text-black bg-black/5 px-3 py-1 rounded-md text-sm">{resolvedParams.id.substring(0, 8)}...</span>
                   </div>
                   <div className="flex items-center justify-between border-b border-black/10 pb-4">
                     <span className="text-black/50 uppercase tracking-widest text-xs font-bold">Integridad de Nodo</span>

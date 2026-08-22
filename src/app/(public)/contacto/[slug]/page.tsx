@@ -60,9 +60,9 @@ const SLUG_MAP: Record<string, { title: string; category: string; description: s
 };
 
 interface ContactoSlugPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 function ContactoSlugContent({ slug }: { slug: string }) {
@@ -229,7 +229,8 @@ function ContactoSlugContent({ slug }: { slug: string }) {
 }
 
 export default function ContactoSlugPage({ params }: ContactoSlugPageProps) {
-  const slug = params.slug;
+  const resolvedParams = React.use(params);
+  const slug = resolvedParams.slug;
 
   return (
     <main className="bg-background text-foreground min-h-screen selection:bg-primary/30 relative">
