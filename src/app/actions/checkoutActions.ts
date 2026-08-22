@@ -14,6 +14,7 @@ export interface EliteCheckoutInput {
   origin: string;      // Dirección del evento o base de origen (e.g. "Madrid, España")
   destination: string; // Dirección del destino (e.g. "Barcelona, España")
   eventDate: string;   // Fecha seleccionada
+  formation?: 'solista' | 'duo' | 'cuarteto' | 'gran_show';
 }
 
 // 🛡️ SCHEMA DE VALIDACIÓN ESTRICTO CON ZOD
@@ -23,6 +24,7 @@ const EliteCheckoutSchema = z.object({
   origin: z.string().min(1, "El origen es obligatorio"),
   destination: z.string().min(1, "El destino es obligatorio"),
   eventDate: z.string().min(1, "La fecha de evento es obligatoria"),
+  formation: z.enum(['solista', 'duo', 'cuarteto', 'gran_show']).optional().default('solista'),
 });
 
 /**
@@ -68,16 +70,28 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   let isAuthorized = false;
   let artistName = "";
   let baseFee = 1200; // Tarifa base estándar del Roster de Élite
+  let costPerKm = 0.75; // Default cost per km
 
   // A. Buscar en el Roster de Artistas (Edwin Agudelo y Co.)
   const artist = await prisma.artistProfile.findUnique({
     where: { id: artistId },
-    select: { id: true, displayName: true },
+    select: { id: true, displayName: true, slug: true },
   });
 
   if (artist) {
     isAuthorized = true;
     artistName = artist.displayName ?? "";
+    
+    // FORENSIC STRIPE REVENUE SEAL: Edwin Agudelo Pricing Engine
+    if (artist.slug === "edwin-agudelo" || artistName.toLowerCase().includes("edwin agudelo")) {
+        costPerKm = 0.35;
+        const form = parsed.data.formation || 'solista';
+        if (form === 'solista') baseFee = 350;
+        else if (form === 'duo') baseFee = 550;
+        else if (form === 'cuarteto') baseFee = 900;
+        else if (form === 'gran_show') baseFee = 1800;
+        else baseFee = 350;
+    }
   } else {
     // B. Buscar en perfiles de proveedores verificados
     const provider = await prisma.providerProfile.findFirst({
@@ -109,7 +123,7 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
     origin,
     destination,
     baseFee,
-    costPerKm: 0.75, // Costo de transporte por KM de instrumentación/caballos
+    costPerKm: costPerKm, // Updated to dynamically pull from Edwin Agudelo configuration
     depositMode: "fixed",
     depositValue: 150, // Garantía mínima
   });
