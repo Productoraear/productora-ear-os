@@ -3,6 +3,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
+import ChauffeurVipView from '@/features/chauffeur/ui/ChauffeurVipView';
 import { PROVINCIAS, GUIAS } from '@/lib/constants/seo-data';
 import { generateSemanticPageData, resolveGeoLocation } from '@/lib/seo/semantic-engine';
 import madridAlquilerCatalog from '@/data/madridalquiler_catalog.json';
@@ -204,17 +205,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   );
 
   if (vipItem) {
-    return (
-      <BespokeTemplate
-        title={`${vipItem.name} | Quality VIP Solutions`}
-        description={vipItem.description}
-        location="Madrid"
-        province="Madrid"
-        category={vipItem.category}
-        serviceId={vipItem.id}
-        isApex={true}
-      />
-    );
+    return <ChauffeurVipView location="Madrid" />;
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -309,6 +300,11 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const serviceSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : slug.slice(1).join('-');
     
     const { cityName } = resolveGeoLocation(provinceSlug);
+
+    if (/chofer|conductor|transfer|coche|transporte-vip/.test(serviceSlug)) {
+      return <ChauffeurVipView location={cityName} />;
+    }
+
     const semantic = generateSemanticPageData(slug, cityName);
 
     return (
@@ -342,6 +338,11 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const serviceSlug = isLastProv ? slug.slice(0, slug.length - 1).join('-') : slug.join('-');
 
     const { cityName } = resolveGeoLocation(provinceSlug);
+
+    if (/chofer|conductor|transfer|coche|transporte-vip/.test(primaryPrefix) || /chofer|conductor|transfer|coche|transporte-vip/.test(serviceSlug)) {
+      return <ChauffeurVipView location={cityName} />;
+    }
+
     const semantic = generateSemanticPageData(slug, cityName);
 
     return (

@@ -16,52 +16,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // 1. Redirecciones de URLs Legadas de WordPress / Directorios Antiguos
-      {
-        source: '/alquiler-pantalla-led/:path*',
-        destination: '/arsenal',
-        permanent: true,
-      },
-      {
-        source: '/pantalla-led/:path*',
-        destination: '/arsenal',
-        permanent: true,
-      },
-      {
-        source: '/pantallas-led/:path*',
-        destination: '/arsenal',
-        permanent: true,
-      },
-      {
-        source: '/alquiler-sonido/:path*',
-        destination: '/arsenal',
-        permanent: true,
-      },
-      {
-        source: '/alquiler-iluminacion/:path*',
-        destination: '/arsenal',
-        permanent: true,
-      },
-      {
-        source: '/servicios/:path*',
-        destination: '/bodas',
-        permanent: true,
-      },
-      {
-        source: '/categoria/:path*',
-        destination: '/bodas',
-        permanent: true,
-      },
-      {
-        source: '/category/:path*',
-        destination: '/bodas',
-        permanent: true,
-      },
-      {
-        source: '/tag/:path*',
-        destination: '/bodas',
-        permanent: true,
-      },
+      // 1. Sanitización de WordPress y Escaneos Obsoletos
       {
         source: '/wp-content/:path*',
         destination: '/',
