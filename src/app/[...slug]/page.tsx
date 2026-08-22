@@ -3,8 +3,9 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
 import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
-import { PROVINCIAS } from '@/lib/constants/seo-data';
+import { PROVINCIAS, GUIAS } from '@/lib/constants/seo-data';
 import { generateSemanticPageData, resolveGeoLocation } from '@/lib/seo/semantic-engine';
+import madridAlquilerCatalog from '@/data/madridalquiler_catalog.json';
 
 export const dynamicParams = true;
 export const revalidate = 3600;
@@ -50,6 +51,45 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const rootPrefix = slug[0].toLowerCase();
   if (EXACT_ROOT_STATIC_ROUTES.has(rootPrefix) && slug.length === 1) {
     return {};
+  }
+
+  const rawPath = '/' + slug.join('/').toLowerCase();
+
+  // 1. Coincidencia con catálogo de alquiler de Madrid
+  const catalogItem = madridAlquilerCatalog.find(
+    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+  );
+  if (catalogItem) {
+    return {
+      title: `${catalogItem.name} | Productora EAR`,
+      description: catalogItem.description,
+      alternates: {
+        canonical: `https://www.productoraear.com${catalogItem.canonicalUrl}`,
+      },
+      openGraph: {
+        title: `${catalogItem.name} | Productora EAR`,
+        description: catalogItem.description,
+        url: `https://www.productoraear.com${catalogItem.canonicalUrl}`,
+        images: [catalogItem.image || '/og-image-vimume.jpg'],
+        siteName: 'Productora EAR',
+        locale: 'es_ES',
+        type: 'website'
+      }
+    };
+  }
+
+  // 2. Coincidencia con Guías
+  if (rootPrefix === 'guias' && slug.length >= 2) {
+    const guide = GUIAS.find(g => g.slug === slug[1].toLowerCase());
+    if (guide) {
+      return {
+        title: `${guide.nombre} | Productora EAR`,
+        description: guide.descripcion,
+        alternates: {
+          canonical: `https://www.productoraear.com/guias/${guide.slug}`,
+        }
+      };
+    }
   }
 
   // Determinar la ubicación para enriquecer metadatos
@@ -98,7 +138,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   if (!slug || slug.length === 0) notFound();
 
   const primaryPrefix = slug[0].toLowerCase();
-  const rawPath = slug.join('/').toLowerCase();
+  const rawPath = '/' + slug.join('/').toLowerCase();
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 1. NEUTRALIZACIÓN INMEDIATA DE ESCANEOS MALICIOSOS / OBSOLETOS (404 LIMPIO)
@@ -115,10 +155,52 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 2. PROTOCOLO DE REDIRECCIÓN 301 PERMANENTE (ANTI-CANIBALIZACIÓN QUIRÚRGICA)
+  // 2. COINCIDENCIA DIRECTA CON CATÁLOGO TÉCNICO DE ALQUILER (16 URLS CANÓNICAS)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const catalogItem = madridAlquilerCatalog.find(
+    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+  );
+
+  if (catalogItem) {
+    return (
+      <BespokeTemplate
+        title={`${catalogItem.name} en Madrid`}
+        description={catalogItem.description}
+        location="Madrid"
+        province="Madrid"
+        category={catalogItem.category}
+        serviceId={catalogItem.id}
+        isApex={true}
+      />
+    );
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 3. GUÍAS ESTRATÉGICAS (/guias/[slug])
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (primaryPrefix === 'guias') {
+    const guideSlug = slug.length >= 2 ? slug[1].toLowerCase() : slug[0].toLowerCase();
+    const guide = GUIAS.find(g => g.slug === guideSlug);
+    if (guide) {
+      return (
+        <BespokeTemplate
+          title={guide.nombre}
+          description={guide.descripcion}
+          location="Madrid"
+          province="Madrid"
+          category="Guías Estratégicas"
+          serviceId={guide.slug}
+          isApex={true}
+        />
+      );
+    }
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 4. PROTOCOLO DE REDIRECCIÓN 301 PERMANENTE (ANTI-CANIBALIZACIÓN QUIRÚRGICA)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  // 2.A. Rutas Legadas de Artículos (/articulo/*, /noticias/*, /post/*)
+  // 4.A. Rutas Legadas de Artículos (/articulo/*, /noticias/*, /post/*)
   if (primaryPrefix === 'articulo' || primaryPrefix === 'noticias' || primaryPrefix === 'post' || primaryPrefix === 'blog-post') {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || 'madrid';
@@ -136,7 +218,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     }
   }
 
-  // 2.B. Rutas Legadas de Bodas / Weddings / Production (/weddings/*, /bodas/*, /production/*)
+  // 4.B. Rutas Legadas de Bodas / Weddings / Production (/weddings/*, /bodas/*, /production/*)
   if ((primaryPrefix === 'weddings' || primaryPrefix === 'bodas' || primaryPrefix === 'production') && slug.length >= 2) {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || (slug.length >= 3 && PROVINCIAS.includes(slug[2].toLowerCase()) ? slug[2].toLowerCase() : 'madrid');
@@ -150,13 +232,13 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     }
   }
 
-  // 2.C. Rutas Legadas con Sufijos Especiales como /arsenal(1)/*
+  // 4.C. Rutas Legadas con Sufijos Especiales como /arsenal(1)/*
   if (primaryPrefix.startsWith('arsenal(') || primaryPrefix.startsWith('servicios(')) {
     const detectedProv = findProvinceInString(rawPath) || 'madrid';
     redirect(`/arsenal/pantalla-led/${detectedProv}`, RedirectType.replace);
   }
 
-  // 2.D. Inversión Territorial (/madrid/pantalla-led -> /arsenal/pantalla-led/madrid)
+  // 4.D. Inversión Territorial (/madrid/pantalla-led -> /arsenal/pantalla-led/madrid)
   const isProvincia = PROVINCIAS.includes(primaryPrefix);
   if (isProvincia && slug.length >= 2) {
     const province = primaryPrefix;
@@ -174,10 +256,10 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 3. PILARES CANÓNICOS SANEADOS & MATRIZ RELACIONAL S-CLASS
+  // 5. PILARES CANÓNICOS SANEADOS & MATRIZ RELACIONAL S-CLASS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  // 3.A. SERVICIOS ARTÍSTICOS & RELACIONALES (/servicios/[servicio]/[provincia])
+  // 5.A. SERVICIOS ARTÍSTICOS & RELACIONALES (/servicios/[servicio]/[provincia])
   if (primaryPrefix === 'servicios') {
     const lastSeg = slug[slug.length - 1].toLowerCase();
     const isLastProv = PROVINCIAS.includes(lastSeg);
@@ -199,10 +281,13 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 3.B. RUTAS DIRECTAS ULTRA-AMIGABLES POR INTENCIÓN DE BÚSQUEDA PURA
-  // Permite URLs directas como /mariachis/madrid, /mariachis/cumpleanos-madre/albacete, /alquiler-pantalla-led/madrid
+  // 5.B. RUTAS DIRECTAS ULTRA-AMIGABLES POR INTENCIÓN DE BÚSQUEDA PURA
   const directFriendlyPrefixes = new Set([
-    'mariachis', 'mariachi', 'serenatas', 'serenata', 'alquiler-pantalla-led', 'pantallas-led', 'pantalla-led',
+    'mariachis', 'mariachi', 'serenatas', 'serenata',
+    'alquiler-pantalla-led', 'pantallas-led', 'pantalla-led',
+    'alquiler-tv-monitor-led-madrid', 'alquilar-equipos-de-sonido-en-madrid',
+    'alquiler-iluminacion-eventos', 'alquiler-camaras-profesionales',
+    'alquiler-equipos-informaticos', 'alquiler-escenarios', 'alquiler-estructuras-truss',
     'sonorizacion-eventos', 'sonorizacion', 'wedding-planners', 'wedding-planner', 'dj-boda', 'alquiler-sonido'
   ]);
 
@@ -227,7 +312,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 3.C. ARSENAL TÉCNICO / PANTALLAS LED / SONIDO (/arsenal/[equipo]/[provincia])
+  // 5.C. ARSENAL TÉCNICO / PANTALLAS LED / SONIDO (/arsenal/[equipo]/[provincia])
   if (primaryPrefix === 'arsenal') {
     const lastSeg = slug[slug.length - 1].toLowerCase();
     const isLastProv = PROVINCIAS.includes(lastSeg);
@@ -249,7 +334,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 3.D. B2G INSTITUCIONAL / FESTEJOS PATRONALES (/b2g/[evento]/[provincia])
+  // 5.D. B2G INSTITUCIONAL / FESTEJOS PATRONALES (/b2g/[evento]/[provincia])
   if (primaryPrefix === 'b2g') {
     const lastSeg = slug[slug.length - 1].toLowerCase();
     const isLastProv = PROVINCIAS.includes(lastSeg);
@@ -271,7 +356,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 3.E. LANDINGS PROVINCIALES PURAS (/[provincia])
+  // 5.E. LANDINGS PROVINCIALES PURAS (/[provincia])
   if (isProvincia && slug.length === 1) {
     const { cityName } = resolveGeoLocation(primaryPrefix);
     const semantic = generateSemanticPageData(slug, cityName);
@@ -288,6 +373,6 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     );
   }
 
-  // 4. FALLBACK CONTROLADO: Si la ruta no concuerda con ningún patrón
+  // 6. FALLBACK CONTROLADO: Si la ruta no concuerda con ningún patrón
   notFound();
 }

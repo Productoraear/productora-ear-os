@@ -19,6 +19,9 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
   category = 'mariachis',
   location: locationProp = 'Madrid',
   province: provinceProp = 'Madrid',
+  title,
+  description,
+  serviceId,
 }) => {
   // Conexión corregida al Hook exportado formalmente por SharedContext
   let setIsPricerOpen: ((open: boolean) => void) | undefined;
@@ -73,13 +76,19 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
           </span>
         </div>
         <h1 className="text-4xl md:text-6xl font-black mt-2 text-white tracking-tight uppercase">
-          {safeCategory} en{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] to-amber-100">
-            {capitalizedLocation}
-          </span>
+          {title ? (
+            title
+          ) : (
+            <>
+              {safeCategory} en{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] to-amber-100">
+                {capitalizedLocation}
+              </span>
+            </>
+          )}
         </h1>
         <p className="text-neutral-400 mt-4 text-lg max-w-3xl leading-relaxed">
-          {fallbackDesc}
+          {description || fallbackDesc}
         </p>
       </header>
 
