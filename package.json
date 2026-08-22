@@ -63,7 +63,8 @@
         "valibot": "^1.4.0",
         "whisper-node": "^1.1.1",
         "zod": "^4.4.3",
-        "zustand": "^5.0.13"
+        "zustand": "^5.0.13",
+        "@prisma/client": "^6.19.3"
     },
     "devDependencies": {
         "@prisma/client": "^6.19.3",
