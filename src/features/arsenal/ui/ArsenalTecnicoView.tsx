@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -12,7 +12,6 @@ import {
   Plus, 
   Check, 
   Trash2, 
-  FileSpreadsheet, 
   Phone, 
   Calendar, 
   ArrowRight, 
@@ -20,233 +19,43 @@ import {
   ShieldCheck, 
   Box, 
   Send,
-  HelpCircle
+  HelpCircle,
+  Search,
+  Camera,
+  Gamepad2,
+  Sliders,
+  CheckCircle2,
+  Clock,
+  Truck,
+  Wrench,
+  Info
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import MADRID_CATALOG from '@/data/madridalquiler_catalog.json';
 
 export interface ArsenalItem {
   id: string;
   name: string;
-  category: 'Pantallas LED' | 'Monitores & TV' | 'Sonido Profesional' | 'Iluminación' | 'Vídeo & IT' | 'Escenarios';
+  category: 'Pantallas LED' | 'Monitores & TV' | 'Sonido Profesional' | 'Iluminación' | 'Fotomatón & Photocall' | 'Entretenimiento & Gaming' | 'Vídeo & IT' | 'Escenarios';
   description: string;
   priceDisplay: string;
   priceNumeric: number;
-  unitType: 'm²' | 'unidad' | 'metro';
+  unitType: 'm²' | 'unidad' | 'metro' | 'evento';
   canonicalUrl: string;
   image: string;
   specs: string[];
+  availability?: string;
+  provider?: string;
 }
 
-export const ARSENAL_CATALOG: ArsenalItem[] = [
-  // Pantallas LED
-  {
-    id: 'muro-led-p26',
-    name: 'Muro LED Interior P2.6 High-Refresh',
-    category: 'Pantallas LED',
-    description: 'Resolución cristalina para distancias cortas. Ideal para congresos e IFEMA.',
-    priceDisplay: '120€ / m²',
-    priceNumeric: 120,
-    unitType: 'm²',
-    canonicalUrl: '/alquiler-pantalla-led/pantalla-led-interior',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop',
-    specs: ['Pitch P2.6mm', 'Refresh Rate 3840Hz', 'Brillo 1000 nits', 'Chasis de aluminio fundido']
-  },
-  {
-    id: 'lienzo-led-exterior-ip65',
-    name: 'Lienzo LED Exterior IP65 High-Brightness',
-    category: 'Pantallas LED',
-    description: 'Visibilidad total bajo luz solar directa. Estructura reforzada para festivales.',
-    priceDisplay: '150€ / m²',
-    priceNumeric: 150,
-    unitType: 'm²',
-    canonicalUrl: '/alquiler-pantalla-led/pantallas-led-exterior',
-    image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop',
-    specs: ['Protección IP65', 'Brillo 5500 nits', 'Resistencia viento 20m/s', 'Montaje rápido curvable']
-  },
-  {
-    id: 'suelo-led-interactivo',
-    name: 'Suelo LED Interactivo Reforzado',
-    category: 'Pantallas LED',
-    description: 'Soporta peso de vehículos. Sensores capacitivos para stands de automoción y galas.',
-    priceDisplay: '200€ / m²',
-    priceNumeric: 200,
-    unitType: 'm²',
-    canonicalUrl: '/alquiler-pantalla-led/pantalla-led-suelo',
-    image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop',
-    specs: ['Carga 2.000 kg/m²', 'Vidrio templado antideslizante', 'Tracking reactivo en vivo']
-  },
-  {
-    id: 'pantalla-led-curva-flexible',
-    name: 'Pantalla LED Curva / Flexible',
-    category: 'Pantallas LED',
-    description: 'Arquitectura visual orgánica para escenarios de autor y diseños envolventes.',
-    priceDisplay: '180€ / m²',
-    priceNumeric: 180,
-    unitType: 'm²',
-    canonicalUrl: '/alquiler-pantalla-led/pantallas-led-curva-flexibles',
-    image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop',
-    specs: ['Curvatura convexa/cóncava ±15°', 'Grosor ultra delgado', 'Modulación magnética']
-  },
-
-  // Monitores & TV
-  {
-    id: 'monitor-98-4k',
-    name: 'Monitor Gran Formato 98" 4K Ultra-Thin',
-    category: 'Monitores & TV',
-    description: 'Sustituye la proyección con máxima nitidez. Panel profesional 24/7 sin reflejos.',
-    priceDisplay: '450€',
-    priceNumeric: 450,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-tv-monitor-led-madrid/alquiler-monitores-98',
-    image: 'https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=800&auto=format&fit=crop',
-    specs: ['Resolución 3840x2160', 'Operación 24/7', 'Soporte peana o pared incluido']
-  },
-  {
-    id: 'monitor-85-4k',
-    name: 'Monitor 85" 4K Smart HDR',
-    category: 'Monitores & TV',
-    description: 'Equilibrio perfecto entre tamaño e impacto visual para salas VIP y conferencias.',
-    priceDisplay: '320€',
-    priceNumeric: 320,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-tv-monitor-led-madrid/alquiler-monitores-85',
-    image: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=800&auto=format&fit=crop',
-    specs: ['HDR10+ Pro', 'Conectividad HDMI/Wireless', 'Marco ultradelgado']
-  },
-  {
-    id: 'pantalla-tactil-65',
-    name: 'Pantalla Táctil Interactiva 65"',
-    category: 'Monitores & TV',
-    description: 'Navegación fluida para catálogos digitales, apps interactivas y ferias comerciales.',
-    priceDisplay: '180€',
-    priceNumeric: 180,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-tv-monitor-led-madrid/alquiler-pantallas-tactiles',
-    image: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop',
-    specs: ['20 puntos táctiles', 'Vidrio antirreflejo 4mm', 'Windows/Android dual']
-  },
-
-  // Sonido Profesional
-  {
-    id: 'line-array-vtx-a8',
-    name: 'Sistema Line Array VTX A8',
-    category: 'Sonido Profesional',
-    description: 'Presión sonora controlada para eventos de alta gama con dispersión milimétrica.',
-    priceDisplay: '850€',
-    priceNumeric: 850,
-    unitType: 'unidad',
-    canonicalUrl: '/alquilar-equipos-de-sonido-en-madrid/alquiler-altavoces',
-    image: 'https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=800&auto=format&fit=crop',
-    specs: ['Directividad 110°', 'Etapas Crown I-Tech HD', 'Presión 12 W/pax certificada']
-  },
-  {
-    id: 'microfonia-shure-axient',
-    name: 'Microfonía Digital Shure Axient',
-    category: 'Sonido Profesional',
-    description: 'Blindaje contra interferencias de espectro para ponentes VIP y directos críticos.',
-    priceDisplay: '95€',
-    priceNumeric: 95,
-    unitType: 'unidad',
-    canonicalUrl: '/alquilar-equipos-de-sonido-en-madrid/microfonos',
-    image: 'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop',
-    specs: ['Frecuencia Diversity', 'Cápsulas KSM9 / Beta 58', 'Monitoreo RF en tiempo real']
-  },
-  {
-    id: 'traduccion-simultanea',
-    name: 'Sistema de Traducción Simultánea',
-    category: 'Sonido Profesional',
-    description: 'Sistemas infrarrojos Bosch para cumbres internacionales y cabinas bilingües.',
-    priceDisplay: '450€',
-    priceNumeric: 450,
-    unitType: 'unidad',
-    canonicalUrl: '/alquilar-equipos-de-sonido-en-madrid/alquiler-traduccion-simultanea',
-    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop',
-    specs: ['Hasta 32 canales de idioma', 'Receptores digitales ergonómicos', 'Infrarrojo inmune a luces']
-  },
-
-  // Iluminación
-  {
-    id: 'cabeza-movil-15r',
-    name: 'Cabeza Móvil Beam/Spot 15R Pro',
-    category: 'Iluminación',
-    description: 'Efectos aéreos definidos, gobos y prismas rotativos para galas y directos.',
-    priceDisplay: '75€',
-    priceNumeric: 75,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-iluminacion-eventos/alquiler-cabezas-moviles',
-    image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop',
-    specs: ['Lámpara 15R 300W', 'Prisma 8+16 caras', 'Control DMX512 / Wireless']
-  },
-  {
-    id: 'laser-rgb-10w',
-    name: 'Sistema Láser RGB 10W',
-    category: 'Iluminación',
-    description: 'Geometría lumínica de precisión para branding corporativo y shows de impacto.',
-    priceDisplay: '180€',
-    priceNumeric: 180,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-iluminacion-eventos/iluminacion-laser',
-    image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop',
-    specs: ['Potencia 10.000mW', 'Escáner 40 kpps', 'Control Pangolin Beyond']
-  },
-
-  // Vídeo & IT
-  {
-    id: 'camara-blackmagic-ursa',
-    name: 'Cámara Blackmagic URSA Broadcast',
-    category: 'Vídeo & IT',
-    description: 'Calidad televisiva 4K para streaming profesional, realización y grabaciones.',
-    priceDisplay: '350€',
-    priceNumeric: 350,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-camaras-profesionales/alquiler-blackmagic-ursa',
-    image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?q=80&w=800&auto=format&fit=crop',
-    specs: ['Sensor 4K HDR', 'Montura B4 / EF', 'Conectividad SDI 12G']
-  },
-  {
-    id: 'laptop-edicion-pro',
-    name: 'Estación de Edición / Laptop Pro',
-    category: 'Vídeo & IT',
-    description: 'Equipos informáticos de alta gama configurados para control y streaming sin cortes.',
-    priceDisplay: '120€',
-    priceNumeric: 120,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-equipos-informaticos',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop',
-    specs: ['GPU RTX 4080 / Apple M3 Max', '64GB RAM', 'Licencias vMix / Resolume']
-  },
-
-  // Escenarios
-  {
-    id: 'tarima-rosco-2x1',
-    name: 'Tarima Rosco 2x1m Reforzada',
-    category: 'Escenarios',
-    description: 'Certificación oficial de carga pesada. Superficie antideslizante con patas regulables.',
-    priceDisplay: '25€',
-    priceNumeric: 25,
-    unitType: 'unidad',
-    canonicalUrl: '/alquiler-escenarios/alquiler-tarima',
-    image: 'https://images.unsplash.com/photo-1464375117522-1311d6a5b81f?q=80&w=800&auto=format&fit=crop',
-    specs: ['Carga 750 kg/m²', 'Madera abedul 22mm', 'Altura de 20cm a 140cm']
-  },
-  {
-    id: 'truss-global-sq4112',
-    name: 'Estructura Truss Global SQ-4112',
-    category: 'Escenarios',
-    description: 'Soporte modular de aluminio estructural para rigging de iluminación y pantallas.',
-    priceDisplay: '15€ / metro',
-    priceNumeric: 15,
-    unitType: 'metro',
-    canonicalUrl: '/alquiler-estructuras-truss',
-    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop',
-    specs: ['Aleación EN-AW 6082 T6', 'Cuadrado 29x29cm', 'Homologación TÜV']
-  }
-];
+export const ARSENAL_CATALOG: ArsenalItem[] = MADRID_CATALOG as ArsenalItem[];
 
 export const ArsenalTecnicoView: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [planoTecnico, setPlanoTecnico] = useState<{ item: ArsenalItem; quantity: number }[]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activeItemModal, setActiveItemModal] = useState<ArsenalItem | null>(null);
 
   const categories = [
     'Todos',
@@ -254,15 +63,26 @@ export const ArsenalTecnicoView: React.FC = () => {
     'Monitores & TV',
     'Sonido Profesional',
     'Iluminación',
+    'Fotomatón & Photocall',
+    'Entretenimiento & Gaming',
     'Vídeo & IT',
     'Escenarios'
   ];
 
-  const filteredItems = selectedCategory === 'Todos'
-    ? ARSENAL_CATALOG
-    : ARSENAL_CATALOG.filter(item => item.category === selectedCategory);
+  const filteredItems = useMemo(() => {
+    return ARSENAL_CATALOG.filter(item => {
+      const matchesCategory = selectedCategory === 'Todos' || item.category === selectedCategory;
+      const q = searchQuery.toLowerCase();
+      const matchesSearch = !q || 
+        item.name.toLowerCase().includes(q) || 
+        item.description.toLowerCase().includes(q) || 
+        item.specs.some(s => s.toLowerCase().includes(q));
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchQuery]);
 
-  const handleAddToPlano = (item: ArsenalItem) => {
+  const handleAddToPlano = (item: ArsenalItem, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setPlanoTecnico(prev => {
       const existing = prev.find(p => p.item.id === item.id);
       if (existing) {
@@ -301,7 +121,7 @@ export const ArsenalTecnicoView: React.FC = () => {
       .join('\n');
 
     const messageLines = [
-      `⚡ *PLANO TÉCNICO & ARSENAL RESERVADO — EAR OS 2026*`,
+      `⚡ *PLANO TÉCNICO & ARSENAL RESERVADO — EAR OS*`,
       `─────────────────────────────`,
       `📍 *Destino / Evento:* Cobertura Central Madrid & Nacional`,
       `💰 *Inversión Base Estimada:* ${totalEstimatedBudget} €`,
@@ -309,47 +129,69 @@ export const ArsenalTecnicoView: React.FC = () => {
       `📋 *EQUIPAMIENTO & ACTIVOS SELECCIONADOS:*`,
       itemsList,
       ``,
-      `🛡️ *GARANTÍAS INCLUIDAS:*`,
+      `🛡️ *CONDICIONES & GARANTÍAS S-CLASS:*`,
       `• Montaje Certificado y Cableado Oculto`,
-      `• Técnico de Guardia / Redundancia In Situ`,
+      `• Asistencia Técnica In Situ / Sustitución en <60 min`,
       `• Póliza de Responsabilidad Civil de 1.000.000 €`,
       `─────────────────────────────`,
-      `💬 *Mensaje:* "Hola Edwin, solicito cotización formal y confirmación de disponibilidad técnica para este despliegue."`
+      `💬 *Mensaje:* "Hola Edwin, solicito confirmación de disponibilidad inmediata de stock y bloqueo formal de fecha para este despliegue."`
     ];
 
     return `https://wa.me/34693693048?text=${encodeURIComponent(messageLines.join('\n'))}`;
   };
 
   return (
-    <div className="w-full bg-[#050505] text-white selection:bg-[#ecb613]/30 font-sans pb-24">
+    <div className="w-full bg-[#050505] text-white selection:bg-[#ecb613]/30 font-sans pb-28">
       
       {/* 1. HERO SECTION: EL ARSENAL TÉCNICO */}
-      <section className="relative pt-10 pb-12 px-4 md:px-8 max-w-7xl mx-auto space-y-6 text-center">
+      <section className="relative pt-12 pb-10 px-4 md:px-8 max-w-7xl mx-auto space-y-6 text-center">
         
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black tracking-[0.4em] uppercase font-mono">
           <Box size={14} className="animate-spin" />
-          <span>Infraestructura de Contexto 360</span>
+          <span>Infraestructura Audiovisual Integral & Hub Madrid</span>
         </div>
 
-        <h1 className="text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-white font-syne leading-none">
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white font-syne leading-none">
           El Arsenal <span className="text-[#ecb613]">Técnico</span>
         </h1>
 
-        <p className="text-white/70 text-sm sm:text-lg max-w-3xl mx-auto leading-relaxed">
-          Hemos absorbido las mejores capacidades técnicas para ofrecerte un despliegue sin fisuras bajo el dominio <strong>productoraear.com</strong>. No alquilamos equipos, <strong>construimos el entorno de tu éxito</strong>.
+        <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
+          Catálogo integral de <strong>Pantallas LED, Sonido Profesional, Monitores 4K, Iluminación, Fotomatón 360º, Simuladores y Gaming</strong>. Stock central inmediato en Madrid con montaje, asistencia y cobertura para eventos corporativos, congresos, ferias, bodas y fiestas privadas.
         </p>
 
-        {/* 2. CATEGORY PILLS BAR & PLANO TÉCNICO TRIGGER */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pt-8 border-t border-white/5">
+        {/* 2. SEARCH & CONTROLS */}
+        <div className="max-w-2xl mx-auto pt-2">
+          <div className="relative flex items-center">
+            <Search className="absolute left-4 text-white/40" size={18} />
+            <input 
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Buscar altavoces, pantallas 85, simuladores F1, fotomatón 360, proyectores..."
+              className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-[#0a0a0f] border border-white/10 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#ecb613] transition-all font-mono"
+            />
+            {searchQuery && (
+              <button 
+                onClick={() => setSearchQuery('')}
+                className="absolute right-4 text-xs text-white/40 hover:text-white"
+              >
+                Limpiar
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* 3. CATEGORY PILLS BAR & PLANO TÉCNICO TRIGGER */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 border-t border-white/5">
           
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
                   selectedCategory === cat
-                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-bold'
                     : 'bg-[#0e0e14] text-white/60 hover:text-white hover:bg-white/5 border border-white/5'
                 }`}
               >
@@ -361,7 +203,7 @@ export const ArsenalTecnicoView: React.FC = () => {
           {/* Trigger Botón Plano Técnico */}
           <button
             onClick={() => setIsDrawerOpen(true)}
-            className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-[#0e0e14] border border-[#ecb613]/30 hover:border-[#ecb613] text-white transition-all cursor-pointer"
+            className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-[#0e0e14] border border-[#ecb613]/30 hover:border-[#ecb613] text-white transition-all cursor-pointer shrink-0"
           >
             <div className="p-1.5 rounded-lg bg-[#ecb613]/10 text-[#ecb613]">
               <Layers size={16} />
@@ -378,86 +220,284 @@ export const ArsenalTecnicoView: React.FC = () => {
 
       </section>
 
-      {/* 3. CATALOG GRID */}
+      {/* 4. CATALOG GRID */}
       <section className="max-w-7xl mx-auto px-4 md:px-8 pt-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredItems.map((item) => {
-            const inPlano = planoTecnico.find(p => p.item.id === item.id);
-            return (
-              <div
-                key={item.id}
-                className="rounded-3xl bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/40 transition-all flex flex-col justify-between overflow-hidden group shadow-xl"
-              >
-                <div>
-                  {/* Image Preview */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-black/60">
-                    <img 
-                      src={item.image} 
-                      alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-black/20" />
-                    
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#ecb613] text-[9px] font-black uppercase tracking-wider font-mono border border-white/10">
-                      {item.category}
-                    </span>
-                  </div>
+        {filteredItems.length === 0 ? (
+          <div className="py-20 text-center space-y-4">
+            <Box size={48} className="text-white/20 mx-auto" />
+            <h3 className="text-lg font-bold text-white uppercase font-syne">No se encontraron equipos</h3>
+            <p className="text-sm text-white/40 max-w-md mx-auto">
+              No hay coincidencias para &quot;{searchQuery}&quot;. Prueba con otro término o consulta disponibilidad personalizada con nuestra centralita técnica.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredItems.map((item) => {
+              const inPlano = planoTecnico.find(p => p.item.id === item.id);
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setActiveItemModal(item)}
+                  className="rounded-3xl bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between overflow-hidden group shadow-xl cursor-pointer"
+                >
+                  <div>
+                    {/* Image Preview */}
+                    <div className="relative aspect-[16/10] overflow-hidden bg-black/60">
+                      <img 
+                        src={item.image} 
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-black/20" />
+                      
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#ecb613] text-[9px] font-black uppercase tracking-wider font-mono border border-white/10">
+                        {item.category}
+                      </span>
 
-                  {/* Card Content */}
-                  <div className="p-6 space-y-3">
-                    <h3 className="text-base font-black uppercase tracking-tight text-white font-syne group-hover:text-[#ecb613] transition-colors leading-tight">
-                      {item.name}
-                    </h3>
-                    
-                    <p className="text-xs text-white/60 leading-relaxed line-clamp-2">
-                      {item.description}
-                    </p>
-
-                    <div className="pt-2 border-t border-white/5 flex items-baseline justify-between">
-                      <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Inversión Base</span>
-                      <span className="text-base font-black text-[#ecb613] font-mono">{item.priceDisplay}</span>
+                      <span className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-semibold">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        Stock Madrid
+                      </span>
                     </div>
 
-                    {/* Specs Tags */}
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {item.specs.slice(0, 2).map((spec, i) => (
-                        <span key={i} className="text-[9px] font-mono text-white/40 bg-white/5 px-2 py-0.5 rounded">
-                          {spec}
-                        </span>
-                      ))}
+                    {/* Card Content */}
+                    <div className="p-5 space-y-3">
+                      <h3 className="text-sm font-black uppercase tracking-tight text-white font-syne group-hover:text-[#ecb613] transition-colors leading-snug">
+                        {item.name}
+                      </h3>
+                      
+                      <p className="text-xs text-white/60 leading-relaxed line-clamp-2">
+                        {item.description}
+                      </p>
+
+                      <div className="pt-2 border-t border-white/5 flex items-baseline justify-between">
+                        <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Inversión Base</span>
+                        <span className="text-base font-black text-[#ecb613] font-mono">{item.priceDisplay}</span>
+                      </div>
+
+                      {/* Specs Tags */}
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {item.specs.slice(0, 2).map((spec, i) => (
+                          <span key={i} className="text-[9px] font-mono text-white/50 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                            {spec}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Card CTA */}
-                <div className="p-6 pt-0">
-                  <button
-                    onClick={() => handleAddToPlano(item)}
-                    className={`w-full py-3 px-4 rounded-xl font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                      inPlano
-                        ? 'bg-emerald-950/60 border border-emerald-500/40 text-emerald-400'
-                        : 'bg-white/5 hover:bg-[#ecb613] hover:text-black text-white'
-                    }`}
-                  >
-                    {inPlano ? (
-                      <>
-                        <Check size={14} /> Añadido ({inPlano.quantity}x)
-                      </>
-                    ) : (
-                      <>
-                        <Plus size={14} /> Añadir al Plano Técnico
-                      </>
-                    )}
-                  </button>
-                </div>
+                  {/* Card Actions */}
+                  <div className="p-5 pt-0 flex gap-2">
+                    <button
+                      onClick={(e) => handleAddToPlano(item, e)}
+                      className={`flex-1 py-3 px-3 rounded-xl font-black text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        inPlano
+                          ? 'bg-emerald-950/60 border border-emerald-500/40 text-emerald-400'
+                          : 'bg-white/5 hover:bg-[#ecb613] hover:text-black text-white border border-white/5'
+                      }`}
+                    >
+                      {inPlano ? (
+                        <>
+                          <Check size={14} /> En Plano ({inPlano.quantity})
+                        </>
+                      ) : (
+                        <>
+                          <Plus size={14} /> Añadir al Plano
+                        </>
+                      )}
+                    </button>
+                    
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveItemModal(item);
+                      }}
+                      className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/60 hover:text-white border border-white/5 cursor-pointer"
+                      title="Ver Ficha y Condiciones"
+                    >
+                      <Info size={14} />
+                    </button>
+                  </div>
 
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      {/* 5. CONDICIONES DE CONTRATACIÓN & GARANTÍA S-CLASS */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 pt-20">
+        <div className="p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-b from-[#0e0e14] to-[#08080c] border border-white/10 space-y-8">
+          
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/10">
+            <div>
+              <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-[0.3em] font-bold block mb-1">
+                Garantía Operativa & SLA
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-black uppercase text-white font-syne">
+                Condiciones de Contratación & <span className="text-[#ecb613]">Despliegue</span>
+              </h2>
+            </div>
+            <a
+              href="https://wa.me/34693693048?text=Hola%20Edwin,%20deseo%20consultar%20condiciones%20especiales%20de%20alquiler%20audiovisual."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-xs font-black uppercase tracking-wider transition-all font-mono self-start md:self-auto"
+            >
+              <Phone size={14} />
+              <span>Contactar con Centralita</span>
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-6 rounded-2xl bg-black/40 border border-white/5 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+                <Truck size={20} />
               </div>
-            );
-          })}
+              <h3 className="text-sm font-bold text-white uppercase font-syne">Logística 24/7 en Madrid</h3>
+              <p className="text-xs text-white/60 leading-relaxed">
+                Entrega, descarga y recogida puntual en la Comunidad de Madrid, IFEMA, fincas de Toledo, Guadalajara, Segovia y ámbito nacional.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-black/40 border border-white/5 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <Wrench size={20} />
+              </div>
+              <h3 className="text-sm font-bold text-white uppercase font-syne">Montaje Certificado</h3>
+              <p className="text-xs text-white/60 leading-relaxed">
+                Técnicos especialistas en sonido, iluminación y vídeo. Cableado oculto, pruebas acústicas y configuración de red/streaming.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-black/40 border border-white/5 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                <Clock size={20} />
+              </div>
+              <h3 className="text-sm font-bold text-white uppercase font-syne">Sustitución en &lt;60 min</h3>
+              <p className="text-xs text-white/60 leading-relaxed">
+                Compromiso de redundancia y guardia técnica. Repuesto inmediato y asistencia in situ para garantizar 0 fallos durante tu evento.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-black/40 border border-white/5 space-y-3">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                <ShieldCheck size={20} />
+              </div>
+              <h3 className="text-sm font-bold text-white uppercase font-syne">Póliza RC 1.000.000€</h3>
+              <p className="text-xs text-white/60 leading-relaxed">
+                Todos los equipos y operativas cuentan con seguro de responsabilidad civil integral y homologaciones CE/TÜV para recintos públicos.
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* 4. PLANO TÉCNICO SLIDE-OVER DRAWER */}
+      {/* 6. MODAL FICHA TÉCNICA DETALLADA */}
+      <AnimatePresence>
+        {activeItemModal && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveItemModal(null)}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 p-4 flex items-center justify-center"
+            >
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-2xl bg-[#0e0e14] border border-white/15 rounded-3xl overflow-hidden shadow-2xl space-y-6 p-6 sm:p-8 max-h-[90vh] overflow-y-auto"
+              >
+                <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+                  <div>
+                    <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">
+                      {activeItemModal.category}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-syne">
+                      {activeItemModal.name}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => setActiveItemModal(null)}
+                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/60 hover:text-white"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black/60 relative">
+                  <img 
+                    src={activeItemModal.image} 
+                    alt={activeItemModal.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md font-mono text-sm font-black text-[#ecb613] border border-white/10">
+                    {activeItemModal.priceDisplay}
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-xs font-mono uppercase text-white/40 tracking-wider mb-1">Descripción del Activo</h4>
+                    <p className="text-sm text-white/80 leading-relaxed">
+                      {activeItemModal.description}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-mono uppercase text-white/40 tracking-wider mb-2">Especificaciones Técnicas</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {activeItemModal.specs.map((spec, i) => (
+                        <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-black/40 border border-white/5 text-xs text-white/70">
+                          <CheckCircle2 size={14} className="text-[#ecb613] shrink-0" />
+                          <span>{spec}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-1">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613]">
+                      <ShieldCheck size={14} />
+                      <span className="font-bold">Condiciones de Servicio Incluidas</span>
+                    </div>
+                    <p className="text-xs text-white/50 leading-relaxed">
+                      Revisión técnica previa, cables de conexión, soporte técnico de guardia y seguro de RC profesional.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/10">
+                  <button
+                    onClick={() => {
+                      handleAddToPlano(activeItemModal);
+                      setActiveItemModal(null);
+                    }}
+                    className="flex-1 py-3.5 bg-[#ecb613] hover:bg-[#d9a40e] text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer font-syne"
+                  >
+                    <Plus size={16} />
+                    <span>Añadir a mi Plano Técnico</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveItemModal(null)}
+                    className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-mono text-xs uppercase tracking-wider rounded-xl transition-all"
+                  >
+                    Cerrar
+                  </button>
+                </div>
+
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* 7. PLANO TÉCNICO SLIDE-OVER DRAWER */}
       <AnimatePresence>
         {isDrawerOpen && (
           <>
@@ -509,7 +549,7 @@ export const ArsenalTecnicoView: React.FC = () => {
                       Plano en Blanco
                     </p>
                     <p className="text-xs text-white/30 max-w-xs mx-auto">
-                      Selecciona pantallas, audio o iluminación del arsenal para modular tu despliegue técnico.
+                      Selecciona pantallas, audio, iluminación, fotomatón o gaming del arsenal para modular tu despliegue técnico.
                     </p>
                   </div>
                 ) : (
@@ -573,14 +613,14 @@ export const ArsenalTecnicoView: React.FC = () => {
                     href={generateWhatsAppMessage()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-4.5 bg-[#25D366] hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 transition-all shadow-xl cursor-pointer"
+                    className="w-full py-4 bg-[#25D366] hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 transition-all shadow-xl cursor-pointer"
                   >
                     <Send size={16} />
                     <span>Transmitir Plano a Centralita</span>
                   </a>
 
                   <p className="text-[10px] text-center text-white/40 font-mono">
-                    Incluye supervisión técnica y transporte en Madrid y Toledo.
+                    Incluye supervisión técnica, montaje y transporte en Madrid y península.
                   </p>
                 </div>
               )}

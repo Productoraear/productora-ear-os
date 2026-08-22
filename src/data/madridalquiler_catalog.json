@@ -1,0 +1,616 @@
+[
+  {
+    "id": "muro-led-p26",
+    "name": "Muro Pantalla LED Interior P2.6 High-Refresh",
+    "category": "Pantallas LED",
+    "description": "Pantallas LED de alta resolución para interiores. Pitch P2.6mm con tasa de refresco de 3840Hz. Ideal para ferias IFEMA, congresos corporativos y escenografías de televisión.",
+    "priceDisplay": "120€ / m²",
+    "priceNumeric": 120,
+    "unitType": "m²",
+    "canonicalUrl": "/alquiler-pantalla-led/pantalla-led-interior",
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Pitch P2.6mm Ultra HD",
+      "Refresh Rate 3840Hz sin parpadeos",
+      "Brillo 1.200 nits calibrado",
+      "Chasis magnético de aluminio fundido",
+      "Procesador Novastar 4K incluido"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "lienzo-led-exterior-ip65",
+    "name": "Pantalla LED Exterior IP65 High-Brightness P3.9",
+    "category": "Pantallas LED",
+    "description": "Lienzo LED exterior con certificación IP65 estanca y brillo ultra alto de 5.500 nits. Visibilidad perfecta bajo luz solar directa en festivales y eventos deportivos.",
+    "priceDisplay": "150€ / m²",
+    "priceNumeric": 150,
+    "unitType": "m²",
+    "canonicalUrl": "/alquiler-pantalla-led/pantallas-led-exterior",
+    "image": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Certificación IP65 estanca",
+      "Brillo 5.500 nits sol directo",
+      "Resistencia a viento hasta 25 m/s",
+      "Estructura Ground Support certificada",
+      "Escalador y procesador de vídeo profesional"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "suelo-led-interactivo",
+    "name": "Suelo LED Interactivo Reforzado con Sensores de Presión",
+    "category": "Pantallas LED",
+    "description": "Suelo LED de alta resistencia capaz de soportar vehículos de hasta 2.000 kg/m². Incorpora sensores capacitivos y reactivos para experiencias inmersivas en galas y ferias.",
+    "priceDisplay": "200€ / m²",
+    "priceNumeric": 200,
+    "unitType": "m²",
+    "canonicalUrl": "/alquiler-pantalla-led/pantalla-led-suelo",
+    "image": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Carga máxima 2.000 kg/m²",
+      "Vidrio templado antideslizante",
+      "Tracking de pisadas reactivo en tiempo real",
+      "Software interactivo para juegos y efectos",
+      "Conexión Plug & Play"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "pantalla-led-curva-flexible",
+    "name": "Pantalla LED Curva y Flexible Cóncava / Convexa",
+    "category": "Pantallas LED",
+    "description": "Módulos LED de arquitectura flexible que permiten ángulos cóncavos y convexos de hasta ±15°. Ideal para diseños envolventes de autor, tótems cilíndricos y stands premium.",
+    "priceDisplay": "180€ / m²",
+    "priceNumeric": 180,
+    "unitType": "m²",
+    "canonicalUrl": "/alquiler-pantalla-led/pantallas-led-curva-flexibles",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Curvatura ajustable ±15°",
+      "Módulos ultrafinos y ligeros",
+      "Fijación magnética rápida",
+      "Resolución 4K sin distorsión"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "monitor-98-4k",
+    "name": "Monitor Gran Formato 98\" 4K HDR con Soporte de Pie",
+    "category": "Monitores & TV",
+    "description": "Pantalla gigante 98 pulgadas 4K Ultra HD profesional. Sustituye la proyección en salas con mucha luz. Incluye peana móvil de diseño con ruedas y gestión de cableado oculta.",
+    "priceDisplay": "450€ / día",
+    "priceNumeric": 450,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler-tv-monitor-led-madrid/alquiler-monitores-98",
+    "image": "https://images.unsplash.com/photo-1593784991095-a205069470b6?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Diagonal 98\" (248 cm)",
+      "Resolución 4K UHD 3840x2160",
+      "Brillo 500 cd/m² antirreflejos",
+      "Entradas HDMI 2.1, USB, DisplayPort",
+      "Peana reforzada con ruedas y altura regulable"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "monitor-85-4k",
+    "name": "Monitor Profesional 85\" 4K Ultra Slim con Peana",
+    "category": "Monitores & TV",
+    "description": "Monitor de 85 pulgadas perfecto para presentaciones de empresa, ponencias, stands y bodas. Panel comercial de operación continua 24/7 sin reflejos.",
+    "priceDisplay": "320€ / día",
+    "priceNumeric": 320,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler-tv-monitor-led-madrid/alquiler-monitores-85",
+    "image": "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Diagonal 85\" (215 cm)",
+      "Resolución 4K UHD",
+      "Panel IPS con ángulo de visión 178°",
+      "Soporte de suelo de aluminio negro mate"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "monitor-75-65-55",
+    "name": "Pantallas TV LED 55\", 65\" y 75\" 4K para Stands y Eventos",
+    "category": "Monitores & TV",
+    "description": "Monitores versátiles de 55, 65 y 75 pulgadas para ferias, recepciones, bodas y salas auxiliares. Opciones de montaje en soporte de suelo o pared.",
+    "priceDisplay": "110€ / día",
+    "priceNumeric": 110,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler-tv-monitor-led-madrid/alquiler-monitores-varios",
+    "image": "https://images.unsplash.com/photo-1461151304267-38535e780c79?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Tamaños disponibles: 55\", 65\", 75\"",
+      "Resolución 4K Smart TV / Modo Comercial",
+      "Reproducción multimedia en bucle por USB",
+      "Incluye soporte de pie de diseño"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "monitores-tactiles-interactivos",
+    "name": "Tótems y Monitores Táctiles Interactivos 55\" / 65\"",
+    "category": "Monitores & TV",
+    "description": "Pantallas táctiles capacitivas multipunto de 10 a 20 toques simultáneos. Orientación horizontal o vertical tipo tótem. Ideal para catálogos digitales, registros y gamificación en ferias.",
+    "priceDisplay": "220€ / día",
+    "priceNumeric": 220,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler-tv-monitor-led-madrid/alquiler-pantallas-tactiles",
+    "image": "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Tecnología táctil capacitiva 10 toques",
+      "Sistema operativo Windows 11 / Android integrado",
+      "Vidrio templado antihuellas",
+      "Soporte vertical tótem o peana inclinable"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "altavoces-autoamplificados-rcf",
+    "name": "Equipo de Altavoces Autoamplificados RCF / JBL (1.000W - 2.800W)",
+    "category": "Sonido Profesional",
+    "description": "Pareja de altavoces autoamplificados de alta fidelidad con trípodes y cableado. Cobertura acústica pura para conferencias, cócteles, discursos y fiestas.",
+    "priceDisplay": "130€ / día",
+    "priceNumeric": 130,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquilar-equipos-de-sonido-en-madrid/alquiler-altavoces",
+    "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Potencia 1.400W Peak por altavoz",
+      "SPL máximo 130 dB",
+      "Conos de 12\" o 15\" con motor de agudos",
+      "Incluye 2 trípodes y cables XLR/Jack"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "subwoofers-graves-18",
+    "name": "Subwoofer Activo Profesional 18\" (1.500W RMS)",
+    "category": "Sonido Profesional",
+    "description": "Refuerzo de subgraves profundos para música en directo, discomóviles y conciertos. DSP integrado con filtro crossover y control de fase.",
+    "priceDisplay": "95€ / día",
+    "priceNumeric": 95,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquilar-equipos-de-sonido-en-madrid/alquiler-subwoofer",
+    "image": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Woofer de 18\" Bass Reflex",
+      "Potencia 1.500W RMS / 3.000W Peak",
+      "Respuesta en frecuencia: 30 Hz - 120 Hz",
+      "SPL Max: 136 dB"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "parlantes-bateria-portatil",
+    "name": "Altavoz Portátil a Batería con Micrófono Inalámbrico (Bose / JBL)",
+    "category": "Sonido Profesional",
+    "description": "Sistema de audio ultraportátil con batería de hasta 10 horas de autonomía y Bluetooth. Perfecto para ceremonias en fincas, exteriores sin enchufes y discursos exprés.",
+    "priceDisplay": "80€ / día",
+    "priceNumeric": 80,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquilar-equipos-de-sonido-en-madrid/altavoz-bateria",
+    "image": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Autonomía de 8 a 12 horas",
+      "Receptor bluetooth y entradas combinadas",
+      "Micrófono inalámbrico de mano incluido",
+      "Asa telescópica y ruedas para transporte"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "microfonia-shure-inalambrica",
+    "name": "Set de Micrófonos Inalámbricos Shure / Sennheiser (Mano, Diadema, Solapa)",
+    "category": "Sonido Profesional",
+    "description": "Microfonía inalámbrica digital UHF con escaneo automático de frecuencias libres de interferencias. Cápsulas Shure SM58 / Beta58 / DPA para ponentes y cantantes.",
+    "priceDisplay": "45€ / unidad",
+    "priceNumeric": 45,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquilar-equipos-de-sonido-en-madrid/microfonos",
+    "image": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Frecuencia UHF digital True Diversity",
+      "Alcance >100 metros en línea de visión",
+      "Opciones: Mano, Diadema color carne, Solapa lavalier",
+      "Baterías recargables de larga duración"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "mesas-mezclas-yamaha-behringer",
+    "name": "Mesa de Mezclas Digital / Analógica (Yamaha, Behringer X32 / XR18)",
+    "category": "Sonido Profesional",
+    "description": "Mesas de audio con procesador de efectos, ecualización paramétrica y control inalámbrico mediante iPad/tablet para control técnico a distancia.",
+    "priceDisplay": "75€ / día",
+    "priceNumeric": 75,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/mesas-mezcla/",
+    "image": "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Canales: desde 8 hasta 32 canales",
+      "Preamplificadores MIDAS / Yamaha de bajo ruido",
+      "Conexión USB / Grabación multipista",
+      "Control remoto por WiFi en modelos digitales"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "discomovil-completa-dj",
+    "name": "Pack Discomóvil Profesional con DJ, Sonido e Iluminación",
+    "category": "Sonido Profesional",
+    "description": "Montaje integral para bodas, aniversarios y fiestas privadas. Incluye cabina DJ retroiluminada, sonido de 2.000W a 5.000W, puente de luces, máquina de humo y DJ profesional.",
+    "priceDisplay": "450€ / evento",
+    "priceNumeric": 450,
+    "unitType": "evento",
+    "canonicalUrl": "/dj-para-eventos-en-madrid/",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Cabina DJ de diseño con frontales LED",
+      "Sistema de sonido adaptado al aforo (hasta 300 pax)",
+      "Estructura de iluminación con cabezas móviles y láser",
+      "DJ animador con repertorio a medida"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "cabezas-moviles-beam-wash",
+    "name": "Pack Cabezas Móviles Beam / Wash LED DMX",
+    "category": "Iluminación",
+    "description": "Cabezas móviles de alta potencia con ruedas de gobos, prisma rotativo y mezcla de color RGBW. Programables para espectáculos, conciertos y bodas.",
+    "priceDisplay": "90€ / pareja",
+    "priceNumeric": 90,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler-iluminacion-eventos/alquiler-cabezas-moviles",
+    "image": "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Lámpara 7R / LED 150W-250W ultra brillante",
+      "Movimiento Pan 540° / Tilt 270° ultrarrápido",
+      "Prisma circular de 8/16 caras",
+      "Control automático, al ritmo de la música o por consola DMX"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "focos-par-led-bateria",
+    "name": "Focos PAR LED a Batería Inalámbricos Uplighting (Pack 4/8 uds)",
+    "category": "Iluminación",
+    "description": "Focos de baño de color arquitectural 100% inalámbricos con batería y control inalámbrico. Ideales para iluminar columnas, jardines, fachadas y paredes en bodas y fincas.",
+    "priceDisplay": "110€ / pack 4",
+    "priceNumeric": 110,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/focos/",
+    "image": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Autonomía de 12 a 18 horas a batería",
+      "LEDs 6 en 1 RGBWA+UV",
+      "Control inalámbrico por mando o app móvil",
+      "Cero cables de corriente ni señal"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "laser-show-discoteca",
+    "name": "Láser Show Gráfico RGB Multicolor Alta Potencia",
+    "category": "Iluminación",
+    "description": "Láseres profesionales para espectáculos visuales, proyección de logotipos y túneles volumétricos en discotecas y grandes eventos.",
+    "priceDisplay": "85€ / día",
+    "priceNumeric": 85,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler-iluminacion-eventos/iluminacion-laser",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Potencia 2W a 5W RGB",
+      "Modos: Show volumétrico, textos y logos personalizados",
+      "Control ILDA y DMX",
+      "Certificación de seguridad láser"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "maquinas-humo-chispas",
+    "name": "Efectos Especiales: Humo Bajo (Nube), Niebla Hazer y Chispas Frías (Sparkular)",
+    "category": "Iluminación",
+    "description": "Efectos especiales homologados para bodas (baile nupcial sobre nube), presentaciones de producto y escenarios. Máquinas de chispas frías 100% seguras para interiores.",
+    "priceDisplay": "120€ / máquina",
+    "priceNumeric": 120,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/maquinas-humo/",
+    "image": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Humo bajo denso sin residuos",
+      "Chispas frías sin pirotecnia aptas para interior",
+      "Líquido y consumibles homologados incluidos",
+      "Disparo por control remoto inalámbrico"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "fotomaton-360-plataforma",
+    "name": "Fotomatón 360º Plataforma Giratoria con Vídeo en Cámara Lenta",
+    "category": "Fotomatón & Photocall",
+    "description": "La atracción estrella para bodas y eventos corporativos. Plataforma de vídeo 360 con brazo rotatorio automático, cámara HD/4K, iluminación aro LED, atrezo divertido y descarga instantánea por QR/AirDrop.",
+    "priceDisplay": "390€ / 3 horas",
+    "priceNumeric": 390,
+    "unitType": "evento",
+    "canonicalUrl": "/alquiler/fotomaton-360/",
+    "image": "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Capacidad para 3-5 personas simultáneas",
+      "Efectos Slow-Motion, Boomerang y música personalizada",
+      "Descarga al instante por código QR, WhatsApp y AirDrop",
+      "Incluye 1 técnico operador durante todo el servicio",
+      "Atrezo premium (gafas, pistolas de burbujas, carteles)"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "fotomaton-clasico-cabina-totem",
+    "name": "Fotomatón Clásico Tótem Vintage con Impresión Térmica Ilimitada",
+    "category": "Fotomatón & Photocall",
+    "description": "Tótem fotográfico con cámara réflex profesional DSLR, flash de estudio e impresora térmica ultrarrápida. Fotos impresas ilimitadas en tiras personalizadas con el logo o nombres de los novios.",
+    "priceDisplay": "350€ / 3 horas",
+    "priceNumeric": 350,
+    "unitType": "evento",
+    "canonicalUrl": "/alquiler/fotomaton/",
+    "image": "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Fotos impresas ilimitadas en papel fotográfico de alta calidad",
+      "Cámara Réflex Canon DSLR y flash profesional",
+      "Diseño personalizado del marco de las fotos",
+      "Libro de firmas para dedicatorias y pen drive con todas las fotos",
+      "Atrezo cómico y variado incluido"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "photocall-personalizado-truss",
+    "name": "Photocall Personalizado con Estructura Autoportante e Iluminación",
+    "category": "Fotomatón & Photocall",
+    "description": "Lona o textil impreso de alta resolución en gran formato (2x2m, 3x2.4m o a medida) con estructura de truss oculta y focos de iluminación frontal para alfombras rojas.",
+    "priceDisplay": "190€ / evento",
+    "priceNumeric": 190,
+    "unitType": "evento",
+    "canonicalUrl": "/alquiler/photocall-eventos/",
+    "image": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Impresión en lona o tela antiarrugas mate",
+      "Estructura autoportante de montaje rápido",
+      "Focos de iluminación LED para fotografías sin sombras",
+      "Opciones de alfombra roja y catenarias doradas"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "simulador-conduccion-f1-gt",
+    "name": "Simulador de Conducción F1 / Rally con Cockpit, Volante Force Feedback y Pantalla Curva",
+    "category": "Entretenimiento & Gaming",
+    "description": "Simulador de carreras profesional con asiento baquet deportivo, volante y pedalera Fanatec/Thrustmaster con vibración real y pantalla panorámica inmersiva. El polo de atracción indiscutible en ferias y eventos de empresa.",
+    "priceDisplay": "380€ / día",
+    "priceNumeric": 380,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/simuladores-conduccion/",
+    "image": "https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Chasis de aluminio reforzado con asiento baquet real",
+      "Volante con Force Feedback y cambio por levas",
+      "Juegos oficiales: F1 24, Gran Turismo 7, Assetto Corsa",
+      "Pantalla curva de 49\" o TV 4K de 55\""
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "gafas-realidad-virtual-vr",
+    "name": "Puesto de Realidad Virtual VR Inmersivo (Meta Quest 3 / HTC Vive)",
+    "category": "Entretenimiento & Gaming",
+    "description": "Gafas de Realidad Virtual de última generación con mandos táctiles y catálogo de juegos y experiencias inmersivas (montañas rusas, competiciones, recorridos virtuales).",
+    "priceDisplay": "190€ / día",
+    "priceNumeric": 190,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/gafas-virtuales/",
+    "image": "https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Gafas Meta Quest 3 / HTC Vive Pro sin cables",
+      "Pantalla réplica externa para que el público vea la acción",
+      "Más de 30 experiencias y videojuegos preinstalados",
+      "Técnico dinamizador opcional"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "videoconsolas-gaming-ps5-switch",
+    "name": "Alquiler de Videoconsolas Gaming (PlayStation 5, Xbox Series X, Nintendo Switch)",
+    "category": "Entretenimiento & Gaming",
+    "description": "Puestos de videojuegos completos con consola de última generación, 4 mandos inalámbricos, pantalla TV 4K y los mejores juegos multijugador (FIFA/EA FC, Mario Kart, Just Dance, Smash Bros).",
+    "priceDisplay": "140€ / día",
+    "priceNumeric": 140,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/videoconsolas/",
+    "image": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Consola PS5 / Xbox Series X / Nintendo Switch OLED",
+      "4 mandos oficiales inalámbricos",
+      "TV 4K de 55\" con soporte de pie incluido",
+      "Catálogo de juegos multijugador listos para jugar"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "karaoke-profesional-discomovil",
+    "name": "Sistema de Karaoke Profesional con 50.000 Canciones, Pantalla y Micros",
+    "category": "Entretenimiento & Gaming",
+    "description": "Equipo de karaoke completo con base de datos de miles de canciones en español e inglés, pantalla para letras, altavoces potentes y 2 micrófonos inalámbricos profesionales.",
+    "priceDisplay": "195€ / día",
+    "priceNumeric": 195,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/karaoke/",
+    "image": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Software profesional de karaoke con buscador instantáneo",
+      "Más de 50.000 temas actualizados de todos los géneros",
+      "Pantalla de 43\"/55\" para seguimiento de letra",
+      "2 micrófonos inalámbricos y mesa de mezclas con efectos de voz"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "maquina-baile-arcade",
+    "name": "Máquinas de Baile Arcade Dance Dance Revolution para Eventos",
+    "category": "Entretenimiento & Gaming",
+    "description": "Plataforma doble de baile interactiva con pantalla frontal y sistema de luces. Diversión garantizada y competición sana en fiestas de empresa, ferias y celebraciones familiares.",
+    "priceDisplay": "290€ / día",
+    "priceNumeric": 290,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/entretenimiento/",
+    "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Plataforma reforzada metálica para 2 jugadores",
+      "Pantalla de gran formato con altavoces integrados",
+      "Diferentes niveles de dificultad",
+      "Diseño retro futurista con iluminación LED"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "portatiles-pc-gaming",
+    "name": "Alquiler de Ordenadores Portátiles y PCs Sobremesa Gaming / Workstation",
+    "category": "Vídeo & IT",
+    "description": "Equipos informáticos configurados para secretarías técnicas, eventos online, edición de vídeo en vivo y acreditaciones en congresos.",
+    "priceDisplay": "65€ / día",
+    "priceNumeric": 65,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/portatiles/",
+    "image": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Procesadores Intel Core i7/i9 o AMD Ryzen 7",
+      "Memoria RAM: 16 GB - 64 GB con disco SSD NVMe",
+      "Tarjetas gráficas NVIDIA RTX para vídeo/gráficos",
+      "Windows 11 Pro y paquete Office instalado"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "apple-imac-macbook-ipad",
+    "name": "Ecosistema Apple: MacBook Pro, iMac 24\"/27\" y iPads / Tablets",
+    "category": "Vídeo & IT",
+    "description": "Alquiler de dispositivos Apple para ponentes, diseñadores, cabinas de control y puestos de acreditación o encuestas en eventos corporativos.",
+    "priceDisplay": "45€ - 120€ / día",
+    "priceNumeric": 80,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/apple/",
+    "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "MacBook Pro chips M2/M3",
+      "iMacs 4.5K / 5K Retina",
+      "iPads y tablets Android con soporte antirrobo para mostrador",
+      "Cargadores y adaptadores multipuerto incluidos"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "set-streaming-video-podcast",
+    "name": "Equipo Integral de Streaming y Grabación de Podcast / Webinar",
+    "category": "Vídeo & IT",
+    "description": "Kit broadcast profesional para emisión en directo por YouTube, Zoom, Teams o plataformas privadas. Cámaras Blackmagic 4K/6K, mezclador ATEM Mini Pro, iluminación de estudio y microfonía Shure SM7B.",
+    "priceDisplay": "320€ / día",
+    "priceNumeric": 320,
+    "unitType": "unidad",
+    "canonicalUrl": "/servicios-de-video-streaming-para-eventos-emision-en-directo-por-internet-para-empresas/",
+    "image": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Cámaras Blackmagic Studio 4K con óptica profesional",
+      "Switcher / Mezclador Blackmagic ATEM Mini Pro ISO",
+      "Microfonía Shure SM7B / PodMic con brazos articulados",
+      "Codificador de streaming hardware redundante"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "proyectores-laser-pantallas",
+    "name": "Proyectores Láser de Alta Definición (5.000 a 12.000 Lúmenes) y Pantallas de Proyección",
+    "category": "Vídeo & IT",
+    "description": "Proyectores láser para auditorios, salas de reuniones y bodas. Pantallas de proyección con marco truss o trípode autodesplegable para proyección frontal y retro.",
+    "priceDisplay": "140€ / día",
+    "priceNumeric": 140,
+    "unitType": "unidad",
+    "canonicalUrl": "/alquiler/proyectores-y-pantallas/",
+    "image": "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Tecnología láser de encendido instantáneo y colores vivos",
+      "Resolución Full HD y 4K UHD",
+      "Pantallas desde 2m hasta 5m de ancho (front/retro)",
+      "Conectividad HDMI, VGA y HDBaseT para largas distancias"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "escenarios-tarimas-homologadas",
+    "name": "Tarimas de Escenario Homologadas Guil / Nivoflex (Módulos 2x1m)",
+    "category": "Escenarios",
+    "description": "Tarimas antideslizantes de alta resistencia certificadas para escenarios de conciertos, pasarelas de moda, mesas presidenciales y atriles. Alturas regulables de 20cm a 120cm con escaleras y faldón ignífugo.",
+    "priceDisplay": "35€ / m²",
+    "priceNumeric": 35,
+    "unitType": "m²",
+    "canonicalUrl": "/alquiler-escenarios/alquiler-tarima",
+    "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Capacidad de carga 750 kg/m² certificada",
+      "Superficie de madera contrachapada de abedul antideslizante e hidrófuga",
+      "Patas telescópicas regulables en altura",
+      "Incluye faldón perimetral negro ignífugo y escaleras de acceso"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  },
+  {
+    "id": "estructuras-truss-aluminio",
+    "name": "Estructuras Truss de Aluminio Cuadradas y Circulares (Truss 29x29)",
+    "category": "Escenarios",
+    "description": "Estructuras modulares de aluminio extrusionado para colgado de luces, pantallas LED, lonas de photocall y techos de escenario. Montajes certificados y seguros.",
+    "priceDisplay": "15€ / metro lineal",
+    "priceNumeric": 15,
+    "unitType": "metro",
+    "canonicalUrl": "/alquiler-estructuras-truss",
+    "image": "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=800&auto=format&fit=crop",
+    "specs": [
+      "Aluminio de alta aleación EN-AW 6082 T6",
+      "Perfiles cuadrados de 290x290 mm con tubos principales de 50 mm",
+      "Bases pesadas estabilizadoras de acero",
+      "Torres elevadoras telescópicas VMB / Kuzar homologadas"
+    ],
+    "availability": "En Stock Inmediato (Stock Madrid Central)",
+    "provider": "Madrid Alquiler (Even Audiovisual) - Hub Partner Madrid"
+  }
+]
