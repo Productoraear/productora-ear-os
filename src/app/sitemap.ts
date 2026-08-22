@@ -63,6 +63,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/alquiler-estructuras-truss`, lastModified: now, priority: 0.85, changeFrequency: 'weekly' },
     { url: `${baseUrl}/arsenal/luces-navidad`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
     { url: `${baseUrl}/b2g/alumbrado-navideno`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/servicios/chofer-vip`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/servicios/alquiler-coches-con-conductor`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
+    { url: `${baseUrl}/servicios/transfer-aeropuerto-madrid`, lastModified: now, priority: 0.90, changeFrequency: 'weekly' },
   ];
 
   // 2. CATEGORÍAS & GUÍAS ESTRATÉGICAS
@@ -98,7 +101,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'edwin-caballo',
     'iluminacion-espectacular',
     'produccion-audiovisual',
-    'dj-premium'
+    'dj-premium',
+    'chofer-vip',
+    'alquiler-coches-con-conductor'
   ];
 
   primaryServices.forEach(serviceSlug => {
@@ -237,7 +242,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'sonorizacion-boda',
     'iluminacion-boda',
     'maestros-de-ceremonia',
-    'decoracion-espacios'
+    'decoracion-espacios',
+    'coches-de-boda'
   ];
 
   weddingServices.forEach(serv => {
@@ -251,7 +257,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // 10. PILAR PROGRAMÁTICO S-CLASS: [vertical]/[intent] — NEURO-FUNNEL SEO NODES (INCLUYE GSC HARVEST & DEMETRIO)
+  // 10. PILAR PROGRAMÁTICO S-CLASS: [vertical]/[intent] — NEURO-FUNNEL SEO NODES (INCLUYE GSC, DEMETRIO & QUALITY VIP)
   const neuroFunnelProgrammaticPages: MetadataRoute.Sitemap = [
     { vertical: 'bodas', intent: 'madrid-precios-musica-directo' },
     { vertical: 'bodas', intent: 'fincas-toledo-sonorizacion-gala' },
@@ -260,12 +266,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { vertical: 'bodas', intent: 'mariachi-para-bodas-en-barcelona' },
     { vertical: 'bodas', intent: 'alquiler-equipo-sonido-mallorca' },
     { vertical: 'bodas', intent: 'equipos-de-sonido-para-eventos-galicia' },
+    { vertical: 'bodas', intent: 'alquiler-coche-boda-chofer-madrid' },
     { vertical: 'corporativo', intent: 'eventos-empresa-madrid-sonido-dj' },
     { vertical: 'corporativo', intent: 'presentacion-producto-audiovisual' },
     { vertical: 'corporativo', intent: 'cena-gala-empresarial-madrid' },
     { vertical: 'corporativo', intent: 'alquiler-pantallas-led-madrid' },
     { vertical: 'corporativo', intent: 'sonorizacion-eventos-barcelona-valles' },
     { vertical: 'corporativo', intent: 'decoracion-navidena-centros-comerciales' },
+    { vertical: 'corporativo', intent: 'alquiler-mercedes-clase-v-chofer-madrid' },
+    { vertical: 'corporativo', intent: 'transporte-vip-artistas-giras' },
     { vertical: 'quinceaneras', intent: 'fiestas-15-anos-dj-iluminacion' },
     { vertical: 'cumpleanos', intent: 'mariachi-sorpresa-domicilio-madrid' },
     { vertical: 'vimume', intent: 'musicoterapia-centros-mayores-madrid' },

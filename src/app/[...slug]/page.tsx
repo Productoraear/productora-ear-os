@@ -6,6 +6,7 @@ import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate'
 import { PROVINCIAS, GUIAS } from '@/lib/constants/seo-data';
 import { generateSemanticPageData, resolveGeoLocation } from '@/lib/seo/semantic-engine';
 import madridAlquilerCatalog from '@/data/madridalquiler_catalog.json';
+import qualityVipCatalog from '@/data/qualityvipsolutions_catalog.json';
 
 export const dynamicParams = true;
 export const revalidate = 3600;
@@ -71,6 +72,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         description: catalogItem.description,
         url: `https://www.productoraear.com${catalogItem.canonicalUrl}`,
         images: [catalogItem.image || '/og-image-vimume.jpg'],
+        siteName: 'Productora EAR',
+        locale: 'es_ES',
+        type: 'website'
+      }
+    };
+  }
+
+  // 1.B. Coincidencia con catálogo Quality VIP Solutions
+  const vipItem = qualityVipCatalog.find(
+    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+  );
+  if (vipItem) {
+    return {
+      title: `${vipItem.name} | Quality VIP Solutions · Productora EAR`,
+      description: vipItem.description,
+      alternates: {
+        canonical: `https://www.productoraear.com${vipItem.canonicalUrl}`,
+      },
+      openGraph: {
+        title: `${vipItem.name} | Quality VIP Solutions`,
+        description: vipItem.description,
+        url: `https://www.productoraear.com${vipItem.canonicalUrl}`,
+        images: [vipItem.image || '/og-image-vimume.jpg'],
         siteName: 'Productora EAR',
         locale: 'es_ES',
         type: 'website'
@@ -155,7 +179,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 2. COINCIDENCIA DIRECTA CON CATÁLOGO TÉCNICO DE ALQUILER (16 URLS CANÓNICAS)
+  // 2. COINCIDENCIA DIRECTA CON CATÁLOGOS TÉCNICOS Y SERVICIOS VIP (MADRID ALQUILER & QUALITY VIP)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const catalogItem = madridAlquilerCatalog.find(
     (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
@@ -170,6 +194,24 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
         province="Madrid"
         category={catalogItem.category}
         serviceId={catalogItem.id}
+        isApex={true}
+      />
+    );
+  }
+
+  const vipItem = qualityVipCatalog.find(
+    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+  );
+
+  if (vipItem) {
+    return (
+      <BespokeTemplate
+        title={`${vipItem.name} | Quality VIP Solutions`}
+        description={vipItem.description}
+        location="Madrid"
+        province="Madrid"
+        category={vipItem.category}
+        serviceId={vipItem.id}
         isApex={true}
       />
     );
@@ -288,6 +330,8 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     'alquiler-tv-monitor-led-madrid', 'alquilar-equipos-de-sonido-en-madrid',
     'alquiler-iluminacion-eventos', 'alquiler-camaras-profesionales',
     'alquiler-equipos-informaticos', 'alquiler-escenarios', 'alquiler-estructuras-truss',
+    'chofer-vip', 'alquiler-coches-con-conductor', 'transfer-aeropuerto-madrid',
+    'coches-de-boda', 'transporte-vip',
     'sonorizacion-eventos', 'sonorizacion', 'wedding-planners', 'wedding-planner', 'dj-boda', 'alquiler-sonido'
   ]);
 
