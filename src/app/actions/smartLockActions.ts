@@ -121,7 +121,7 @@ export async function createSmartLockCheckoutAction(input: {
         email: input.email,
         phone: input.phone || '',
       },
-      success_url: `${baseUrl}/${input.vertical}/${input.intentSlug}?lock=success&session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}&vertical=${input.vertical}&intent=${input.intentSlug}`,
       cancel_url: `${baseUrl}/${input.vertical}/${input.intentSlug}?lock=cancelled`,
     });
 

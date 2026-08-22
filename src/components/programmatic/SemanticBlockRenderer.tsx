@@ -3,8 +3,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShieldCheck, Zap, Mic2, Volume2, Lock, ArrowRight } from 'lucide-react';
+import LaserTunnelFunnel from './LaserTunnelFunnel';
 import AnticipationWidget from './AnticipationWidget';
-import StripeSmartLockCta from './StripeSmartLockCta';
 
 interface SemanticBlockRendererProps {
   vertical: string;
@@ -180,7 +180,7 @@ export default function SemanticBlockRenderer({ vertical, intent }: SemanticBloc
 
   return (
     <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden selection:bg-[#ecb613]/30">
-      {/* 2036 CSS Mesh Gradient Background (Zero Video Bandwidth) */}
+      {/* Mesh Gradient Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <motion.div
           animate={{ x: ['-20%', '25%', '-15%', '-20%'], y: ['-10%', '35%', '5%', '-10%'], scale: [1, 1.2, 0.95, 1] }}
@@ -197,7 +197,6 @@ export default function SemanticBlockRenderer({ vertical, intent }: SemanticBloc
           transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-[-20%] left-[20%] w-[60%] h-[50%] bg-blue-900/12 blur-[120px] rounded-full"
         />
-        {/* Film Noise Grid */}
         <div
           className="absolute inset-0 opacity-[0.02] mix-blend-overlay"
           style={{ backgroundImage: `radial-gradient(#ecb613 1px, transparent 1px)`, backgroundSize: '40px 40px' }}
@@ -205,38 +204,51 @@ export default function SemanticBlockRenderer({ vertical, intent }: SemanticBloc
         <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-[#050505]" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 sm:py-32 lg:px-8 space-y-20">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 space-y-16">
 
-        {/* ━━━ Block 1: HeroIntentBlock ━━━ */}
+        {/* ━━━ Block 1: Hero Intent Block ━━━ */}
         <motion.div {...fadeUp} className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/20 text-[#ecb613] text-xs font-mono uppercase tracking-widest mb-8">
-            <Zap className="w-3 h-3" />
-            <span>Intención: {formattedIntent}</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono uppercase tracking-widest mb-6">
+            <Zap className="w-3.5 h-3.5" />
+            <span>Intención Directa: {formattedIntent}</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white to-neutral-500 font-syne">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-neutral-500 font-syne">
             {data.hero}
           </h1>
-          <p className="text-lg md:text-xl text-neutral-400 leading-relaxed">
+          <p className="text-base sm:text-lg text-neutral-400 leading-relaxed max-w-2xl mx-auto">
             {data.sub}
           </p>
         </motion.div>
 
-        {/* ━━━ Block 2: Pain Points & Solutions (Diagnostic View) ━━━ */}
+        {/* ━━━ Block 2: TÚNEL LÁSER DE RESERVA INLINE (ANTI-DISTRACTION FUNNEL) ━━━ */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+        >
+          <LaserTunnelFunnel
+            vertical={vertical}
+            intentSlug={intent}
+            basePrice={data.priceBase}
+          />
+        </motion.div>
+
+        {/* ━━━ Block 3: Pain Points & Solutions (Diagnostic View) ━━━ */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto"
         >
           {/* Pain Points */}
-          <div className="bg-rose-950/15 backdrop-blur-xl border border-rose-500/20 rounded-3xl p-8 space-y-5">
-            <h3 className="text-lg font-bold text-rose-300 font-mono uppercase tracking-wider flex items-center gap-2">
+          <div className="bg-rose-950/15 backdrop-blur-xl border border-rose-500/20 rounded-3xl p-6 sm:p-8 space-y-4">
+            <h3 className="text-base font-bold text-rose-300 font-mono uppercase tracking-wider flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-              Puntos de Fricción que Eliminamos
+              Fricciones que Eliminamos de Raíz
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {data.painPoints.map((pain, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-neutral-300 leading-relaxed">
+                <li key={i} className="flex items-start gap-3 text-xs sm:text-sm text-neutral-300 leading-relaxed">
                   <span className="text-rose-400 font-mono font-bold mt-0.5">0{i + 1}</span>
                   <span>{pain}</span>
                 </li>
@@ -245,15 +257,15 @@ export default function SemanticBlockRenderer({ vertical, intent }: SemanticBloc
           </div>
 
           {/* Solutions */}
-          <div className="bg-emerald-950/15 backdrop-blur-xl border border-emerald-500/20 rounded-3xl p-8 space-y-5">
-            <h3 className="text-lg font-bold text-emerald-300 font-mono uppercase tracking-wider flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4" />
-              Solución Técnica Blindada (12 W/pax)
+          <div className="bg-emerald-950/15 backdrop-blur-xl border border-emerald-500/20 rounded-3xl p-6 sm:p-8 space-y-4">
+            <h3 className="text-base font-bold text-emerald-300 font-mono uppercase tracking-wider flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              Garantía S-Class & Cobertura Acústica 12 W/pax
             </h3>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {data.solutions.map((sol, i) => (
-                <li key={i} className="flex items-start gap-3 text-sm text-neutral-300 leading-relaxed">
-                  <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                <li key={i} className="flex items-start gap-3 text-xs sm:text-sm text-neutral-300 leading-relaxed">
+                  <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <span>{sol}</span>
                 </li>
               ))}
@@ -261,95 +273,52 @@ export default function SemanticBlockRenderer({ vertical, intent }: SemanticBloc
           </div>
         </motion.div>
 
-        {/* ━━━ Block 3: RealPriceLockBlock & Tech Rider (SMART-LOCK BLUR GATE) ━━━ */}
+        {/* ━━━ Block 4: Rider Técnico y Equipamiento Oficial ━━━ */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
-          className="relative"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="max-w-5xl mx-auto bg-[#0a0a0d] border border-white/10 rounded-3xl p-6 sm:p-8"
         >
-          {/* 🔒 Blurred Content Layer (visible but unreadable until paid/bypassed) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 select-none pointer-events-none blur-md opacity-60">
-            {/* Tech Rider */}
-            <div className="bg-[#09090d]/80 backdrop-blur-2xl border border-white/5 rounded-3xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Mic2 className="w-6 h-6 text-purple-400" />
-                <h2 className="text-2xl font-bold font-syne">Rider Técnico Asegurado</h2>
-              </div>
-              <ul className="space-y-4 text-neutral-300">
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                  <span>Configuración: <strong className="text-white">{data.gear}</strong></span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                  <span>{data.gearDetail}</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                  <span>Presión Acústica S-Class: garantía matemática de <strong className="text-white">12 W/pax</strong>.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                  <span>Plan de Redundancia: equipos de backup in-situ (Cero Fallos).</span>
-                </li>
-              </ul>
-            </div>
-
-            {/* Price Lock (Blurred) */}
-            <div className="bg-gradient-to-br from-[#09090d] to-[#ecb613]/5 border border-[#ecb613]/20 rounded-3xl p-8 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4">
-                <Lock className="w-8 h-8 text-[#ecb613]/30" />
-              </div>
-              <div className="space-y-1 mb-2">
-                <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest">{data.guaranteeBadge}</span>
-                <h2 className="text-xl font-bold text-neutral-400">Inversión Transparente</h2>
-              </div>
-              <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-5xl font-black text-white font-syne">{data.priceBase} €</span>
-                <span className="text-neutral-500 text-sm">/ tarifa base</span>
-              </div>
-              <p className="text-xs text-neutral-500 mb-6">
-                Hasta {data.priceMax.toLocaleString('es-ES')} € (ensamble completo). Desplazamiento: radio 50km incluido, fuera: +0.35€/km.
-              </p>
-            </div>
+          <div className="flex items-center gap-3 mb-4">
+            <Mic2 className="w-5 h-5 text-[#ecb613]" />
+            <h3 className="text-lg sm:text-xl font-bold font-syne text-white">Rider Técnico Homologado Productora EAR</h3>
           </div>
-
-          {/* 🔐 Smart-Lock CTA Overlay (on top of blurred content) */}
-          <div className="absolute inset-0 flex items-center justify-center p-4">
-            <div className="w-full max-w-2xl">
-              <StripeSmartLockCta
-                vertical={vertical}
-                intentSlug={intent}
-                priceBase={data.priceBase}
-              />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm text-neutral-300 font-mono">
+            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <span className="text-neutral-500 block text-xs">Configuración Principal:</span>
+              <strong className="text-white">{data.gear}</strong>
+            </div>
+            <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5">
+              <span className="text-neutral-500 block text-xs">Procesamiento & Mezcla:</span>
+              <strong className="text-white">{data.gearDetail}</strong>
             </div>
           </div>
         </motion.div>
 
-        {/* ━━━ Block 4: AlsoAskedDisclosureFaq ━━━ */}
+        {/* ━━━ Block 5: Preguntas Frecuentes Directas ━━━ */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mx-auto space-y-6"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="max-w-3xl mx-auto space-y-4"
         >
-          <div className="text-center">
-            <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">Preguntas Frecuentes — AlsoAsked</span>
-            <h2 className="text-2xl font-bold font-syne text-white mt-1">Lo que la Gente Pregunta en Google</h2>
+          <div className="text-center mb-6">
+            <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">Respuestas Claras</span>
+            <h3 className="text-xl font-bold font-syne text-white mt-1">Preguntas Frecuentes</h3>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {data.faq.map((item, i) => (
               <details
                 key={i}
                 className="group bg-[#09090d]/80 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden hover:border-white/10 transition-colors"
               >
-                <summary className="px-6 py-4 cursor-pointer list-none flex items-center justify-between text-white font-medium text-sm">
+                <summary className="px-5 py-4 cursor-pointer list-none flex items-center justify-between text-white font-medium text-xs sm:text-sm">
                   <span>{item.q}</span>
-                  <span className="text-neutral-500 group-open:rotate-45 transition-transform text-lg">+</span>
+                  <span className="text-neutral-500 group-open:rotate-45 transition-transform text-base">+</span>
                 </summary>
-                <div className="px-6 pb-5 text-sm text-neutral-400 leading-relaxed border-t border-white/5 pt-4">
+                <div className="px-5 pb-4 text-xs text-neutral-400 leading-relaxed border-t border-white/5 pt-3">
                   {item.a}
                 </div>
               </details>
@@ -358,7 +327,7 @@ export default function SemanticBlockRenderer({ vertical, intent }: SemanticBloc
         </motion.div>
       </div>
 
-      {/* Block 5: Anticipation Widget (Proactive Neuromarketing Bubble) */}
+      {/* Anticipation Widget */}
       <AnticipationWidget vertical={vertical} />
     </div>
   );
