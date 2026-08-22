@@ -31,7 +31,7 @@ docs
 scripts
 logs
 scratch
-tools
+/tools
 tmp
 src/data/catalog/ADN_EAR_INDEX.json
 src/lib/NUCLEO_DATA
