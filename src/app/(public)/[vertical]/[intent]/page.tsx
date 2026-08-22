@@ -7,7 +7,7 @@ import SemanticBlockRenderer from '@/components/programmatic/SemanticBlockRender
 // SITEMAP SEMÁNTICO: Verticales y Combinaciones de Intención
 // Cada nodo genera una URL única e indexable por Google.
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const VALID_VERTICALS = ['bodas', 'corporativo', 'quinceaneras', 'vimume', 'ayuntamientos', 'cumpleanos', 'serenatas'] as const;
+const VALID_VERTICALS = ['bodas', 'corporativo', 'quinceaneras', 'vimume', 'ayuntamientos', 'cumpleanos', 'serenatas', 'fincas'] as const;
 
 interface SEONode {
   vertical: string;
@@ -22,10 +22,15 @@ const SEO_NODES: SEONode[] = [
   { vertical: 'bodas', intent: 'fincas-toledo-sonorizacion-gala', title: 'Sonorización para Fincas en Toledo | Bodas de Gala', description: 'Cobertura acústica 12 W/pax para fincas rurales en Toledo. Desplazamiento incluido en 50km. Rider Bose F1 + Behringer XR18.' },
   { vertical: 'bodas', intent: 'serenata-sorpresa-pedida-mano', title: 'Serenata Sorpresa para Pedida de Mano | Edwin Agudelo', description: 'Serenata de gala con llegada sincronizada por GPS y repertorio a la carta. Desde 350€ con equipo autónomo inalámbrico.' },
   { vertical: 'bodas', intent: 'mariachi-bodas-precios-espana', title: 'Mariachi para Bodas en España | Precios y Repertorio', description: 'Grupo mariachi profesional para bodas. Solista desde 350€, dúo 550€, ensamble completo desde 1.800€. Cobertura nacional.' },
+  { vertical: 'bodas', intent: 'mariachi-para-bodas-en-barcelona', title: 'Mariachi para Bodas en Barcelona | Edwin Agudelo Tenor', description: 'Contratación directa de Mariachi y Tenor S-Class para bodas en Barcelona y Cataluña. Tarifa solista desde 350€, repertorio a la carta y sonido Bose F1.' },
+  { vertical: 'bodas', intent: 'alquiler-equipo-sonido-mallorca', title: 'Alquiler de Equipos de Sonido en Mallorca para Bodas y Eventos', description: 'Sonorización S-Class en Mallorca e Islas Baleares. Line Array Bose F1, microfonía inalámbrica Shure y logística con técnico dedicado.' },
+  { vertical: 'bodas', intent: 'equipos-de-sonido-para-eventos-galicia', title: 'Equipos de Sonido para Eventos y Bodas en Galicia | Pontevedra', description: 'Alquiler y sonorización profesional en Galicia, Pontevedra y A Coruña. Cobertura climática exterior, presión acústica 12 W/pax y música en directo.' },
   // Corporativo
   { vertical: 'corporativo', intent: 'eventos-empresa-madrid-sonido-dj', title: 'Sonido Profesional para Eventos Corporativos Madrid', description: 'Sonorización corporativa S-Class con SLA de cero fallos. Factura NIF inmediata, streaming redundante y técnico FOH dedicado.' },
   { vertical: 'corporativo', intent: 'presentacion-producto-audiovisual', title: 'Producción Audiovisual para Lanzamientos de Producto', description: 'Sincronización Timecode SMPTE de sonido, iluminación y visuales. Array lineal + robótica Beam/Wash desde 1.800€.' },
   { vertical: 'corporativo', intent: 'cena-gala-empresarial-madrid', title: 'Música para Cenas de Gala Empresarial | Madrid', description: 'Ambientación musical y sonorización de alta fidelidad para cenas de gala. Microfonía DPA y PA L-Acoustics. Presupuesto cerrado.' },
+  { vertical: 'corporativo', intent: 'alquiler-pantallas-led-madrid', title: 'Alquiler de Pantallas LED en Madrid | Gran Formato P2.6 / P3.9', description: 'Alquiler de pantallas LED gigantes de interior y exterior en Madrid. Tótems 4K, muros interactivos y procesadores Novastar con técnico in-situ.' },
+  { vertical: 'corporativo', intent: 'sonorizacion-eventos-barcelona-valles', title: 'Sonorización de Eventos en Barcelona y El Vallès | 12 W/pax', description: 'Sonido profesional para eventos corporativos y bandas en Barcelona y Vallès. Garantía de presión acústica 12 W/pax, consolas digitales y cero fallos.' },
   // Quinceañeras y Cumpleaños
   { vertical: 'quinceaneras', intent: 'fiestas-15-anos-dj-iluminacion', title: 'DJ e Iluminación para Fiestas de 15 Años', description: 'Set híbrido: vals mariachi + DJ urbano con cabina LED DMX. PA 2.000W con subwoofers activos desde 450€.' },
   { vertical: 'cumpleanos', intent: 'mariachi-sorpresa-domicilio-madrid', title: 'Mariachi Sorpresa a Domicilio en Madrid', description: 'Serenata sorpresa con Edwin Agudelo. Llegada coordinada, repertorio personalizado y equipo portátil HiFi. Desde 350€.' },
@@ -35,6 +40,9 @@ const SEO_NODES: SEONode[] = [
   // Ayuntamientos B2G
   { vertical: 'ayuntamientos', intent: 'conciertos-fiestas-patronales-lcsp', title: 'Conciertos para Fiestas Patronales | LCSP', description: 'Presupuesto cerrado bajo contrato menor LCSP (<15.000€). Memoria técnica, seguro RC 600.000€ y PA 12.000W.' },
   { vertical: 'ayuntamientos', intent: 'sonorizacion-actos-institucionales', title: 'Sonorización para Actos Institucionales | Ayuntamientos', description: 'PA profesional para plazas y auditorios municipales. Certificado de solidez, pliego técnico y logística integral.' },
+  // Fincas Singulares
+  { vertical: 'fincas', intent: 'opiniones-quinta-malpica-sonorizacion', title: 'Sonorización y Música en Quinta Malpica | Opiniones y Rider', description: 'Estudio de acústica y música en directo para eventos en Quinta Malpica. Cobertura uniforme 12 W/pax, microfonía sin acoples y solista desde 350€.' },
+  { vertical: 'fincas', intent: 'finca-los-afligidos-musica-directo', title: 'Música en Directo y Sonorización en Finca Los Afligidos', description: 'Producción musical y técnica para bodas en Finca Los Afligidos. Ensamble de mariachi, tenor Edwin Agudelo y PA Bose F1 con cero distorsión.' },
 ];
 
 export function generateStaticParams() {

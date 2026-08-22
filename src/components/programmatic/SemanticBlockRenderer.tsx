@@ -142,6 +142,30 @@ const VERTICAL_CONTENT_MAP: Record<string, VerticalContent> = {
       { q: '¿Pueden adaptarse a contratos menores?', a: 'Todos nuestros paquetes B2G están diseñados para encajar en el marco LCSP de contrato menor (<15.000€).' },
     ],
   },
+  fincas: {
+    hero: 'Acústica Impecable para Fincas y Espacios Exclusivos',
+    sub: 'Estudios de sonorización, cobertura acústica 12 W/pax y música en directo para fincas singulares. Quinta Malpica, Finca Los Afligidos, Las Granadas Coronadas y espacios rústicos.',
+    gear: 'Line Array Bose F1 Model 812 + Shure Axient + dB Technologies',
+    gearDetail: 'Calibración SPL in-situ para espacios abiertos y salones acristalados, cableado camuflado y generadores insonorizados.',
+    priceBase: 350,
+    priceMax: 2500,
+    guaranteeBadge: 'Garantía Acústica Fincas',
+    painPoints: [
+      'Espacios abiertos con viento que dispersan el sonido y arruinan los discursos y ceremonias.',
+      'Salones con eco o reverberación excesiva que vuelven la música ininteligible.',
+      'Limitaciones de potencia eléctrica o normativa municipal de decibelios en fincas aisladas.',
+    ],
+    solutions: [
+      'Líneas de retardo y arrays lineales Bose F1 orientados matemáticamente para cero dispersión.',
+      'Calibración SPL en tiempo real respetando los límites de ruido y garantizando inteligibilidad total.',
+      'Sistemas de amplificación de alta eficiencia con estabilizadores de corriente para fincas rústicas.',
+    ],
+    faq: [
+      { q: '¿Cómo sonorizan fincas al aire libre o con salones rústicos?', a: 'Realizamos un estudio acústico previo y desplegamos Line Arrays Bose F1 con presión de 12 W/pax, asegurando cobertura uniforme sin puntos ciegos ni ecos.' },
+      { q: '¿Tienen experiencia en Quinta Malpica, Finca Los Afligidos o Las Granadas Coronadas?', a: 'Sí, conocemos la morfología acústica, acometidas eléctricas y distribución de espacios de las principales fincas de eventos en España.' },
+      { q: '¿La música en directo incluye el equipo de sonido para la finca?', a: 'Sí. Todos nuestros montajes para fincas incluyen PA completa, microfonía inalámbrica para la ceremonia/discursos y técnico FOH durante todo el evento.' },
+    ],
+  },
 };
 
 const fadeUp = {

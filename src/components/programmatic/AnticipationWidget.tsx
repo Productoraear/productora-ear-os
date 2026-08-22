@@ -69,6 +69,12 @@ export default function AnticipationWidget({ vertical }: AnticipationWidgetProps
           label: 'Documentación LCSP',
           text: 'Expediente listo para contrato menor LCSP (<15.000€): memoria técnica, certificado de solidez, seguro RC 600.000€ y factura con NIF.',
         };
+      case 'fincas':
+        return {
+          icon: <Volume2 className="w-5 h-5 text-amber-400" />,
+          label: 'Acústica de Espacio Abierto',
+          text: '¿Finca al aire libre o con salones de piedra? Calibramos in-situ con Line Arrays Bose F1 para anular el viento y el eco, garantizando 12 W/pax uniforme.',
+        };
       default:
         return {
           icon: <Zap className="w-5 h-5 text-amber-400" />,

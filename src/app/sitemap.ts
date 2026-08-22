@@ -247,21 +247,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     });
   });
 
-  // 10. PILAR PROGRAMÁTICO S-CLASS: [vertical]/[intent] — NEURO-FUNNEL SEO NODES
+  // 10. PILAR PROGRAMÁTICO S-CLASS: [vertical]/[intent] — NEURO-FUNNEL SEO NODES (INCLUYE GSC HARVEST)
   const neuroFunnelProgrammaticPages: MetadataRoute.Sitemap = [
     { vertical: 'bodas', intent: 'madrid-precios-musica-directo' },
     { vertical: 'bodas', intent: 'fincas-toledo-sonorizacion-gala' },
     { vertical: 'bodas', intent: 'serenata-sorpresa-pedida-mano' },
     { vertical: 'bodas', intent: 'mariachi-bodas-precios-espana' },
+    { vertical: 'bodas', intent: 'mariachi-para-bodas-en-barcelona' },
+    { vertical: 'bodas', intent: 'alquiler-equipo-sonido-mallorca' },
+    { vertical: 'bodas', intent: 'equipos-de-sonido-para-eventos-galicia' },
     { vertical: 'corporativo', intent: 'eventos-empresa-madrid-sonido-dj' },
     { vertical: 'corporativo', intent: 'presentacion-producto-audiovisual' },
     { vertical: 'corporativo', intent: 'cena-gala-empresarial-madrid' },
+    { vertical: 'corporativo', intent: 'alquiler-pantallas-led-madrid' },
+    { vertical: 'corporativo', intent: 'sonorizacion-eventos-barcelona-valles' },
     { vertical: 'quinceaneras', intent: 'fiestas-15-anos-dj-iluminacion' },
     { vertical: 'cumpleanos', intent: 'mariachi-sorpresa-domicilio-madrid' },
     { vertical: 'vimume', intent: 'musicoterapia-centros-mayores-madrid' },
     { vertical: 'vimume', intent: 'envejecimiento-activo-musicoterapia' },
     { vertical: 'ayuntamientos', intent: 'conciertos-fiestas-patronales-lcsp' },
     { vertical: 'ayuntamientos', intent: 'sonorizacion-actos-institucionales' },
+    { vertical: 'fincas', intent: 'opiniones-quinta-malpica-sonorizacion' },
+    { vertical: 'fincas', intent: 'finca-los-afligidos-musica-directo' },
   ].map(node => ({
     url: `${baseUrl}/${node.vertical}/${node.intent}`,
     lastModified: now,
