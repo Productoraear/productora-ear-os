@@ -396,4 +396,58 @@ model EquipmentInventory {
   suitableForPax Int      @default(300)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-}
+}
+
+// ==========================================
+// SMART-LOCK FUNNEL & RECOVERY LOOP (v3.5)
+// ==========================================
+
+enum SmartLockStatus {
+  PENDING_PAYMENT
+  ACTIVE_LOCKED
+  EXPIRED_WALLET
+  EXPIRED_EXTENDED
+  CONVERTED_CONTRACT
+  REFUNDED
+}
+
+/// Micro-compromiso de 10 € con Price-Lock 72h, wallet recovery y bypass de urgencia.
+model SmartLock {
+  id                  String          @id @default(cuid())
+  email               String
+  phone               String?
+  ipAddress           String?
+  vertical            String          // bodas, corporativo, vimume, etc.
+  intentSlug          String          // madrid-precios-musica-directo
+  stripeSessionId     String?         @unique
+  stripePaymentIntent String?         @unique
+  amountCents         Int             @default(1000) // 10.00 EUR
+  currency            String          @default("EUR")
+  status              SmartLockStatus @default(PENDING_PAYMENT)
+  lockedAt            DateTime?       // Momento en que se activó el lock
+  expiresAt           DateTime?       // lockedAt + 72h
+  walletBalance       Float           @default(0.0) // Saldo a favor tras expiración
+  walletExpiresAt     DateTime?       // walletBalance válido 1 año
+  urgencyBypassed     Boolean         @default(false) // true si P0 eliminó la barrera
+  recoveryEmailSent   Boolean         @default(false) // true si se envió el Lead Magnet
+  contractConverted   Boolean         @default(false)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@index([email], name: "idx_smartlock_email")
+  @@index([status], name: "idx_smartlock_status")
+  @@index([stripeSessionId], name: "idx_smartlock_stripe")
+}
+
+/// Anti-abuso: 1 Lead Magnet por IP/Email de por vida.
+model LeadMagnetLog {
+  id          String   @id @default(cuid())
+  email       String
+  ipAddress   String
+  vertical    String?
+  deliveredAt DateTime @default(now())
+
+  @@unique([email], name: "unique_magnet_email")
+  @@unique([ipAddress], name: "unique_magnet_ip")
+}
+

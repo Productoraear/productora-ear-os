@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShieldCheck, Zap, Mic2, Volume2, Lock, ArrowRight } from 'lucide-react';
 import AnticipationWidget from './AnticipationWidget';
+import StripeSmartLockCta from './StripeSmartLockCta';
 
 interface SemanticBlockRendererProps {
   vertical: string;
@@ -236,64 +237,69 @@ export default function SemanticBlockRenderer({ vertical, intent }: SemanticBloc
           </div>
         </motion.div>
 
-        {/* ━━━ Block 3: RealPriceLockBlock & Tech Rider ━━━ */}
+        {/* ━━━ Block 3: RealPriceLockBlock & Tech Rider (SMART-LOCK BLUR GATE) ━━━ */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] }}
+          className="relative"
         >
-          {/* Tech Rider */}
-          <div className="bg-[#09090d]/80 backdrop-blur-2xl border border-white/5 rounded-3xl p-8 hover:border-white/10 transition-colors">
-            <div className="flex items-center gap-3 mb-6">
-              <Mic2 className="w-6 h-6 text-purple-400" />
-              <h2 className="text-2xl font-bold font-syne">Rider Técnico Asegurado</h2>
+          {/* 🔒 Blurred Content Layer (visible but unreadable until paid/bypassed) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 select-none pointer-events-none blur-md opacity-60">
+            {/* Tech Rider */}
+            <div className="bg-[#09090d]/80 backdrop-blur-2xl border border-white/5 rounded-3xl p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <Mic2 className="w-6 h-6 text-purple-400" />
+                <h2 className="text-2xl font-bold font-syne">Rider Técnico Asegurado</h2>
+              </div>
+              <ul className="space-y-4 text-neutral-300">
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
+                  <span>Configuración: <strong className="text-white">{data.gear}</strong></span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
+                  <span>{data.gearDetail}</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
+                  <span>Presión Acústica S-Class: garantía matemática de <strong className="text-white">12 W/pax</strong>.</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
+                  <span>Plan de Redundancia: equipos de backup in-situ (Cero Fallos).</span>
+                </li>
+              </ul>
             </div>
-            <ul className="space-y-4 text-neutral-300">
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                <span>Configuración: <strong className="text-white">{data.gear}</strong></span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                <span>{data.gearDetail}</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                <span>Presión Acústica S-Class: garantía matemática de <strong className="text-white">12 W/pax</strong>.</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#10b981] shrink-0 mt-0.5" />
-                <span>Plan de Redundancia: equipos de backup in-situ (Cero Fallos).</span>
-              </li>
-            </ul>
+
+            {/* Price Lock (Blurred) */}
+            <div className="bg-gradient-to-br from-[#09090d] to-[#ecb613]/5 border border-[#ecb613]/20 rounded-3xl p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4">
+                <Lock className="w-8 h-8 text-[#ecb613]/30" />
+              </div>
+              <div className="space-y-1 mb-2">
+                <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest">{data.guaranteeBadge}</span>
+                <h2 className="text-xl font-bold text-neutral-400">Inversión Transparente</h2>
+              </div>
+              <div className="flex items-baseline gap-2 mb-1">
+                <span className="text-5xl font-black text-white font-syne">{data.priceBase} €</span>
+                <span className="text-neutral-500 text-sm">/ tarifa base</span>
+              </div>
+              <p className="text-xs text-neutral-500 mb-6">
+                Hasta {data.priceMax.toLocaleString('es-ES')} € (ensamble completo). Desplazamiento: radio 50km incluido, fuera: +0.35€/km.
+              </p>
+            </div>
           </div>
 
-          {/* Price Lock */}
-          <div className="bg-gradient-to-br from-[#09090d] to-[#ecb613]/5 border border-[#ecb613]/20 rounded-3xl p-8 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-4">
-              <Lock className="w-8 h-8 text-[#ecb613]/30 group-hover:text-[#ecb613] transition-colors" />
+          {/* 🔐 Smart-Lock CTA Overlay (on top of blurred content) */}
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            <div className="w-full max-w-2xl">
+              <StripeSmartLockCta
+                vertical={vertical}
+                intentSlug={intent}
+                priceBase={data.priceBase}
+              />
             </div>
-            <div className="space-y-1 mb-2">
-              <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest">{data.guaranteeBadge}</span>
-              <h2 className="text-xl font-bold text-neutral-400">Inversión Transparente</h2>
-            </div>
-            <div className="flex items-baseline gap-2 mb-1">
-              <span className="text-5xl font-black text-white font-syne">{data.priceBase} €</span>
-              <span className="text-neutral-500 text-sm">/ tarifa base</span>
-            </div>
-            <p className="text-xs text-neutral-500 mb-6">
-              Hasta {data.priceMax.toLocaleString('es-ES')} € (ensamble completo). Desplazamiento: radio 50km incluido, fuera: +0.35€/km.
-            </p>
-            <a
-              href="https://wa.me/34693693048?text=Quiero%20reservar%20para%20mi%20evento"
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-4 rounded-xl bg-[#ecb613] hover:bg-[#d4a311] text-black font-bold tracking-wide transition-all shadow-[0_0_40px_-10px_#ecb613] flex items-center justify-center gap-2"
-            >
-              <span>Bloquear Fecha (Depósito 30%)</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
           </div>
         </motion.div>
 
