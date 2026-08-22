@@ -78,6 +78,7 @@ model User {
   rank              String?
   artistProfile     artistProfile?
   clientProfile     clientProfile?
+  providerProfile   providerProfile?
   auraWallet        auraWallet?
   commissionLedgers commissionLedger[]
   createdAt         DateTime           @default(now())
@@ -226,29 +227,113 @@ model WaybillItem {
 }
 
 model providerProfile {
-  id                   String         @id @default(cuid())
-  slug String? @unique
-  name                 String?        @unique
-  companyName          String?        @default("")
-  category             VendorCategory @default(FINCA_ALQUILER)
+  id                   String            @id @default(cuid())
+  slug                 String?           @unique
+  name                 String?           @unique
+  companyName          String?           @default("")
+  category             VendorCategory    @default(FINCA_ALQUILER)
   city                 String?
   location             String?
+  province             String?           @default("Madrid / Toledo")
   phone                String?
   email                String?
-  userId               String?        @unique
+  userId               String?           @unique
+  user                 User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
   stripeAccountId      String?
-  isVerified           Boolean        @default(false)
-  roiGuaranteeScore    Float?         @default(0.0)
-  roiProjected         Float?         @default(0.0)
-  technicalReliability Float?         @default(0.0)
-  auraLevel            Float?         @default(0.0)
-  claimStatus          ClaimStatus    @default(GHOST_UNCLAIMED)
-  claimToken           String?        @unique
+  isVerified           Boolean           @default(false)
+  roiGuaranteeScore    Float?            @default(0.0)
+  roiProjected         Float?            @default(0.0)
+  technicalReliability Float?            @default(0.0)
+  auraLevel            Float?            @default(0.0)
+  claimStatus          ClaimStatus       @default(GHOST_UNCLAIMED)
+  claimToken           String?           @unique
+  rating               Float             @default(5.0)
+  reviewsCount         Int               @default(0)
+  basePrice            Float             @default(500.0)
+  description          String?           @db.Text
+  status               String            @default("DRAFT") // DRAFT, ACTIVE_VERIFIED, SUSPENDED
+  claimedAt            DateTime?
+
+  // Relaciones (Aislamiento Multi-Tenant & Operaciones)
   waybills             waybill[]
-  createdAt            DateTime       @default(now())
-  updatedAt            DateTime       @updatedAt
+  mediaAssets          MediaAsset[]
+  quota                ProviderQuota?
+  packages             ProviderPackage[]
+  technicalRider       TechnicalRider?
+  auditLogs            ProviderAuditLog[]
+
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
 
   @@index([category], name: "idx_provider_category")
+  @@index([category, rating(sort: Desc)], name: "idx_provider_cat_rating")
+}
+
+// ==================================================
+// 🏢 MÓDULO MULTI-TENANT S-CLASS (PROVEEDORES)
+// ==================================================
+
+model MediaAsset {
+  id              String          @id @default(cuid())
+  providerId      String
+  url             String
+  type            String          // IMAGE, VIDEO, DOCUMENT
+  sizeBytes       Float           // Float evita serialización BigInt en Next.js
+  displayOrder    Int             @default(0)
+  createdAt       DateTime        @default(now())
+
+  provider        providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId], name: "idx_media_provider")
+}
+
+model ProviderQuota {
+  id                  String          @id @default(cuid())
+  providerId          String          @unique
+  tier                String          @default("FREE") // FREE, GOLD, S_CLASS
+  maxStorageMB        Int             @default(15) // Límite en Megabytes
+  currentStorageBytes Float           @default(0)
+  maxPhotos           Int             @default(10)
+
+  provider            providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model TechnicalRider {
+  id                    String          @id @default(cuid())
+  providerId            String          @unique
+  powerRequirementWatts Int             @default(3000)
+  mixerModel            String          @default("Behringer XR18")
+  micSystem             String          @default("Shure Axient Digital")
+  paSpeakers            String          @default("Bose F1 Model 812")
+
+  provider              providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model ProviderPackage {
+  id                  String          @id @default(cuid())
+  providerId          String
+  name                String
+  basePrice           Float
+  servicesIncluded    String          @db.Text // Array de strings serializado
+  
+  provider            providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId], name: "idx_package_provider")
+}
+
+model ProviderAuditLog {
+  id           String          @id @default(cuid())
+  providerId   String
+  changedBy    String
+  field        String
+  oldValue     String          @db.Text
+  newValue     String          @db.Text
+  snapshotHash String
+  createdAt    DateTime        @default(now())
+
+  provider     providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId], name: "idx_audit_provider")
 }
 
 model workspace {
