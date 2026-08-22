@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useTransition } from 'react';
 import Link from 'next/link';
 import { 
   Sparkles, ShieldCheck, Zap, PhoneCall, Truck, Award, 
-  Eye, Layers, Search, Filter, CheckCircle2, ChevronRight, Download
+  Eye, Layers, Search, Filter, CheckCircle2, ChevronRight, Lock, Loader2, CreditCard
 } from 'lucide-react';
 import type { ChristmasLightingProduct } from '@/data/luces-navidad';
+import { createB2GLightingCheckout } from '@/app/actions/vipCheckoutActions';
 
 interface Props {
   products: ChristmasLightingProduct[];
@@ -16,6 +17,8 @@ interface Props {
 export default function ChristmasLightingCatalogView({ products, categories }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [pendingSku, setPendingSku] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
@@ -30,10 +33,35 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
     });
   }, [products, selectedCategory, searchQuery]);
 
+  const handleSmartLock = (prod: ChristmasLightingProduct) => {
+    setPendingSku(prod.sku);
+    startTransition(async () => {
+      try {
+        const res = await createB2GLightingCheckout({
+          sku: prod.sku,
+          productName: prod.name,
+          category: prod.category,
+          cataloguePage: prod.cataloguePage,
+          priceNumeric: prod.priceNumeric,
+          municipality: 'Sede Municipal / Corporativa',
+          priceLockMode: 'SMART_LOCK_10EUR'
+        });
+
+        if (res?.url) {
+          window.location.href = res.url;
+        }
+      } catch (err: any) {
+        alert(err.message || 'Error al conectar con la pasarela Stripe.');
+      } finally {
+        setPendingSku(null);
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black">
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          1. HERO S-CLASS: ALUMBRADO NAVIDEÑO OFICIAL DEMETRIO 2025
+          1. HERO S-CLASS: ALUMBRADO NAVIDEÑO & MOTIVOS MONUMENTALES
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="relative pt-28 pb-16 px-4 sm:px-6 lg:px-8 border-b border-white/10 overflow-hidden">
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#ecb613]/10 blur-[140px] rounded-full pointer-events-none" />
@@ -41,7 +69,7 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-semibold uppercase tracking-widest mb-6">
             <Sparkles className="w-3.5 h-3.5" />
-            Catálogo Oficial Demetrio 2025 · Distribuidor Homologado Productora EAR
+            División Alumbrado Monumental & Arquitectura Lumínica S-Class · Productora EAR
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
@@ -52,7 +80,7 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
           </h1>
 
           <p className="max-w-3xl mx-auto text-base sm:text-lg text-neutral-400 font-light leading-relaxed mb-8">
-            Catálogo técnico oficial con capturas directas de las 145 páginas del fabricante. Motivos 3D transitables, conos y árboles gigantes, arcos de calle y tecnología Twinkly Pro Smart LED para Ayuntamientos (LCSP) y grandes superficies.
+            Catálogo técnico oficial con capturas de alta definición de las 145 páginas del catálogo técnico. Motivos 3D transitables, conos y árboles gigantes, arcos de calle y tecnología Twinkly Pro Smart LED para Ayuntamientos (LCSP) y grandes superficies.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 text-xs sm:text-sm text-neutral-300 mb-10">
@@ -69,7 +97,7 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
 
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="https://wa.me/34682141077?text=Hola%2C%20solicito%20presupuesto%20del%20cat%C3%A1logo%20de%20luces%20de%20Navidad%20Demetrio%202025"
+              href="https://wa.me/34682141077?text=Hola%2C%20solicito%20presupuesto%20y%20memoria%20t%C3%A9cnica%20de%20alumbrado%20monumental%20de%20Navidad%20Productora%20EAR"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[#ecb613] to-[#d4af37] text-black font-bold text-sm hover:brightness-110 transition-all shadow-xl shadow-[#ecb613]/20"
@@ -81,7 +109,7 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
       </section>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          2. FILTROS POR CATEGORÍA REAL DEL CATÁLOGO
+          2. FILTROS POR CATEGORÍA
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-8">
@@ -90,7 +118,7 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
             <input
               type="text"
-              placeholder="Buscar por referencia (CR BEAR...), nombre o dimensiones..."
+              placeholder="Buscar por referencia (CR BEAR...), nombre o medidas..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#ecb613]"
@@ -136,83 +164,98 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
         </div>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. GRID DE PRODUCTOS CON CAPTURAS REALES DEL CATÁLOGO
+            3. GRID DE PRODUCTOS CON CAPTURAS DEL CATÁLOGO & STRIPE SMART-LOCK
            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((prod) => (
-            <div 
-              key={prod.id}
-              className="group bg-[#0d0d0d] border border-white/10 rounded-2xl overflow-hidden hover:border-[#ecb613]/60 transition-all flex flex-col justify-between"
-            >
-              <div>
-                {/* Visual Card con Imagen Real del Catálogo */}
-                <div className="relative h-56 w-full overflow-hidden bg-black flex items-center justify-center">
-                  <img 
-                    src={prod.image} 
-                    alt={prod.name}
-                    loading="lazy"
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-80" />
-                  
-                  <div className="absolute top-3 left-3">
-                    <span className="px-2.5 py-1 rounded-md bg-black/90 backdrop-blur-md border border-[#ecb613]/40 font-mono text-[10px] text-[#ecb613] font-bold">
-                      Ref: {prod.sku}
-                    </span>
+          {filteredProducts.map((prod) => {
+            const isLockingThis = isPending && pendingSku === prod.sku;
+            return (
+              <div 
+                key={prod.id}
+                className="group bg-[#0d0d0d] border border-white/10 rounded-2xl overflow-hidden hover:border-[#ecb613]/60 transition-all flex flex-col justify-between"
+              >
+                <div>
+                  {/* Visual Card con Captura Oficial */}
+                  <div className="relative h-56 w-full overflow-hidden bg-black flex items-center justify-center">
+                    <img 
+                      src={prod.image} 
+                      alt={prod.name}
+                      loading="lazy"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-80" />
+                    
+                    <div className="absolute top-3 left-3">
+                      <span className="px-2.5 py-1 rounded-md bg-black/90 backdrop-blur-md border border-[#ecb613]/40 font-mono text-[10px] text-[#ecb613] font-bold">
+                        Ref: {prod.sku}
+                      </span>
+                    </div>
+
+                    <div className="absolute top-3 right-3">
+                      <span className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-white/10 text-[10px] text-white">
+                        Pág. {prod.cataloguePage || '1'}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="absolute top-3 right-3">
-                    <span className="px-2 py-0.5 rounded bg-black/80 backdrop-blur-md border border-white/10 text-[10px] text-white">
-                      Pág. {prod.cataloguePage || '1'}
+                  <div className="p-4">
+                    <span className="text-[10px] text-[#ecb613] font-mono uppercase tracking-wider block mb-1">
+                      {prod.category}
                     </span>
-                  </div>
-                </div>
 
-                <div className="p-4">
-                  <span className="text-[10px] text-[#ecb613] font-mono uppercase tracking-wider block mb-1">
-                    {prod.category}
-                  </span>
+                    <h3 className="text-sm font-bold text-white mb-2 group-hover:text-[#ecb613] transition-colors line-clamp-2">
+                      {prod.name}
+                    </h3>
 
-                  <h3 className="text-sm font-bold text-white mb-2 group-hover:text-[#ecb613] transition-colors line-clamp-2">
-                    {prod.name}
-                  </h3>
+                    <p className="text-xs text-neutral-400 mb-3 line-clamp-2">
+                      {prod.description}
+                    </p>
 
-                  <p className="text-xs text-neutral-400 mb-3 line-clamp-2">
-                    {prod.description}
-                  </p>
-
-                  <div className="space-y-1 text-xs text-neutral-300 bg-white/[0.02] p-2.5 rounded-lg border border-white/5 mb-2 font-mono">
-                    <div className="flex justify-between">
-                      <span className="text-neutral-500">Medidas:</span>
-                      <span className="font-medium text-right text-white">{prod.dimensions || 'Ver ficha'}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-neutral-500">Voltaje:</span>
-                      <span className="font-medium text-white">{prod.voltage || '24V'}</span>
-                    </div>
-                    {prod.powerWatts && (
+                    <div className="space-y-1 text-xs text-neutral-300 bg-white/[0.02] p-2.5 rounded-lg border border-white/5 mb-2 font-mono">
                       <div className="flex justify-between">
-                        <span className="text-neutral-500">Potencia:</span>
-                        <span className="font-medium text-white">{prod.powerWatts} W</span>
+                        <span className="text-neutral-500">Medidas:</span>
+                        <span className="font-medium text-right text-white">{prod.dimensions || 'Ver ficha'}</span>
                       </div>
-                    )}
+                      <div className="flex justify-between">
+                        <span className="text-neutral-500">Voltaje:</span>
+                        <span className="font-medium text-white">{prod.voltage || '24V'}</span>
+                      </div>
+                      {prod.powerWatts && (
+                        <div className="flex justify-between">
+                          <span className="text-neutral-500">Potencia:</span>
+                          <span className="font-medium text-white">{prod.powerWatts} W</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="p-4 pt-0 flex items-center justify-between border-t border-white/5 mt-2">
-                <div className="text-xs font-bold text-[#ecb613]">
-                  {prod.priceDisplay || 'Cotización a Medida'}
+                <div className="p-4 pt-0 space-y-2 border-t border-white/5 mt-2">
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs font-bold text-[#ecb613] font-mono">
+                      {prod.priceDisplay || 'Cotización a Medida'}
+                    </div>
+                    <Link
+                      href={`/arsenal/luces-navidad/${prod.id}`}
+                      className="inline-flex items-center gap-1 text-xs font-semibold text-white hover:text-[#ecb613] transition-colors bg-white/5 hover:bg-white/10 px-2.5 py-1.5 rounded-lg border border-white/10"
+                    >
+                      <Eye className="w-3 h-3 text-[#ecb613]" /> Ficha
+                    </Link>
+                  </div>
+
+                  {/* Botón Smart-Lock Stripe 10€ */}
+                  <button
+                    onClick={() => handleSmartLock(prod)}
+                    disabled={isPending}
+                    className="w-full py-2 rounded-xl bg-[#ecb613]/10 hover:bg-[#ecb613] text-[#ecb613] hover:text-black border border-[#ecb613]/30 font-mono text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  >
+                    {isLockingThis ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Lock className="w-3.5 h-3.5" />}
+                    Smart-Lock 72h (10 €)
+                  </button>
                 </div>
-                <Link
-                  href={`/arsenal/luces-navidad/${prod.id}`}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-white hover:text-[#ecb613] transition-colors bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10"
-                >
-                  <Eye className="w-3 h-3 text-[#ecb613]" /> Ficha Técnica
-                </Link>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {filteredProducts.length === 0 && (
@@ -226,14 +269,14 @@ export default function ChristmasLightingCatalogView({ products, categories }: P
         {/* Banner de Licitaciones */}
         <div className="mt-16 text-center p-10 bg-gradient-to-br from-[#111] to-[#080808] border border-[#ecb613]/30 rounded-3xl">
           <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">
-            Expediente Técnico Completo & Licitaciones Municipales
+            Expediente Técnico Completo & Licitaciones Municipales LCSP · Productora EAR
           </h3>
           <p className="text-sm text-neutral-400 mb-8 max-w-2xl mx-auto">
             Facilitamos memorias técnicas visadas, certificados de homologación UNE-EN 60598, ensayos de resistencia a vientos y suministro con o sin montaje bajo contrato menor LCSP (&lt;15.000€).
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="https://wa.me/34682141077?text=Hola%2C%20solicito%20el%20expediente%20t%C3%A9cnico%20y%20precios%20del%20cat%C3%A1logo%20de%20luces%20de%20Navidad%20Demetrio%202025"
+              href="https://wa.me/34682141077?text=Hola%2C%20solicito%20el%20expediente%20t%C3%A9cnico%20y%20precios%20del%20cat%C3%A1logo%20de%20alumbrado%20monumental%20de%20Navidad%20Productora%20EAR"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#ecb613] text-black font-bold text-sm hover:brightness-110 transition-all shadow-lg"

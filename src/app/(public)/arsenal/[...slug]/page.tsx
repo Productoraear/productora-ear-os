@@ -5,10 +5,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { 
   Sparkles, ShieldCheck, Zap, PhoneCall, ArrowLeft, CheckCircle2, 
-  ChevronRight, Truck, Award, Eye, FileSpreadsheet, Layers, Download
+  ChevronRight, Truck, Award, Eye, FileSpreadsheet, Layers, Download, Lock
 } from 'lucide-react';
 import { CHRISTMAS_LIGHTING_PRODUCTS, CHRISTMAS_LIGHTING_CATEGORIES } from '@/data/luces-navidad';
 import ChristmasLightingCatalogView from '@/features/catalog/ui/ChristmasLightingCatalogView';
+import LightingDetailActions from '@/features/catalog/ui/LightingDetailActions';
 import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
 import { PROVINCIAS } from '@/lib/constants/seo-data';
 import { resolveGeoLocation } from '@/lib/seo/semantic-engine';
@@ -31,13 +32,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (primary === 'luces-navidad') {
     if (slug.length === 1) {
       return {
-        title: 'Catálogo Oficial Luces de Navidad 2025 | Alumbrado Monumental Demetrio & EAR',
-        description: 'Catálogo técnico oficial de 358 referencias con capturas de alta definición del fabricante. Iluminación monumental para Ayuntamientos (LCSP), centros comerciales y fincas.',
+        title: 'Catálogo Oficial Alumbrado Monumental & Luces de Navidad 2025 | Productora EAR',
+        description: 'Catálogo técnico oficial de 358 referencias en alta definición. Iluminación monumental para Ayuntamientos (LCSP), centros comerciales y fincas.',
         alternates: {
           canonical: 'https://www.productoraear.com/arsenal/luces-navidad',
         },
         openGraph: {
-          title: 'Catálogo Oficial Luces de Navidad 2025 | Alumbrado Monumental Demetrio & EAR',
+          title: 'Catálogo Oficial Alumbrado Monumental & Luces de Navidad 2025 | Productora EAR',
           description: '358 referencias de iluminación navideña monumental, motivos 3D transitables y tecnología Twinkly Pro.',
           images: ['/images/demetrio/page_2.jpg'],
           type: 'website'
@@ -52,13 +53,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     
     if (product) {
       return {
-        title: `${product.name} (Ref: ${product.sku}) | Luces de Navidad Demetrio 2025`,
+        title: `${product.name} (Ref: ${product.sku}) | Productora EAR Alumbrado Monumental`,
         description: `${product.description} Medidas: ${product.dimensions}. IP: ${product.ipRating}. Voltaje: ${product.voltage}. Suministro e instalación Productora EAR.`,
         alternates: {
           canonical: `https://www.productoraear.com${product.canonicalUrl}`,
         },
         openGraph: {
-          title: `${product.name} | Catálogo Demetrio 2025`,
+          title: `${product.name} | Productora EAR S-Class`,
           description: product.description,
           images: [product.image || '/images/demetrio/page_2.jpg'],
           type: 'website'
@@ -97,7 +98,7 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 2. FICHA TÉCNICA INDIVIDUAL CON CAPTURA REAL DEL CATÁLOGO (/arsenal/luces-navidad/[id])
+  // 2. FICHA TÉCNICA INDIVIDUAL CON CAPTURA DEL CATÁLOGO (/arsenal/luces-navidad/[id])
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   if (primary === 'luces-navidad' && slug.length >= 2) {
     const productId = slug[1].toLowerCase();
@@ -120,17 +121,17 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
               href="/arsenal/luces-navidad"
               className="inline-flex items-center gap-2 text-sm text-neutral-400 hover:text-[#ecb613] transition-colors"
             >
-              <ArrowLeft className="w-4 h-4" /> Volver al Catálogo Oficial de Luces de Navidad
+              <ArrowLeft className="w-4 h-4" /> Volver al Catálogo de Alumbrado Monumental
             </Link>
 
             <span className="text-xs font-mono text-neutral-500">
-              Página {product.cataloguePage || '1'} / 145 · Catálogo 2025
+              Página {product.cataloguePage || '1'} / 145 · Catálogo Oficial S-Class
             </span>
           </div>
 
           <div className="bg-[#0d0d0d] border border-white/10 rounded-3xl overflow-hidden p-6 sm:p-10 mb-12 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
-              {/* Product Visual - Captura Oficial del PDF */}
+              {/* Product Visual - Captura Oficial */}
               <div className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[450px]">
                 <img 
                   src={product.image} 
@@ -155,7 +156,7 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
               <div className="lg:col-span-5 flex flex-col justify-between">
                 <div>
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[11px] font-mono uppercase tracking-widest mb-3">
-                    <Sparkles className="w-3 h-3" />
+                    <Sparkles className="w-3.5 h-3.5" />
                     {product.category}
                   </div>
 
@@ -195,19 +196,16 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
                   </div>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-                  <div>
-                    <span className="text-[10px] text-neutral-500 uppercase block font-mono">Tarifa Oficial Distribuidor</span>
-                    <span className="text-2xl font-black text-[#ecb613]">{product.priceDisplay || 'Bajo Presupuesto'}</span>
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-neutral-500 uppercase block font-mono">Tarifa Oficial Distribuidor</span>
+                      <span className="text-2xl font-black text-[#ecb613]">{product.priceDisplay || 'Bajo Presupuesto'}</span>
+                    </div>
+                    <span className="text-xs text-neutral-400 font-mono">Suministro & Montaje</span>
                   </div>
-                  <a
-                    href={`https://wa.me/34682141077?text=Hola%2C%20solicito%20cotizaci%C3%B3n%20y%20plazo%20para%20la%20referencia%20${encodeURIComponent(product.sku)}%20(${encodeURIComponent(product.name)})`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#ecb613] to-[#d4af37] text-black font-bold text-xs hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20"
-                  >
-                    <PhoneCall className="w-4 h-4" /> Solicitar Presupuesto LCSP
-                  </a>
+
+                  <LightingDetailActions product={product} />
                 </div>
               </div>
             </div>
