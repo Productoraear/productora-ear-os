@@ -1,7 +1,7 @@
-# EAR OS - INSTALADOR MULTI-MARCA DE 1 CLIC PARA DJS v4.10
-# Universal Cue Bridge - Selector de Marca + Generico + Watcher de Sesiones
+# EAR OS - INSTALADOR MULTI-MARCA DE 1 CLIC PARA DJS v4.11
+# Universal Cue Bridge - Selector de Marca + Generico + Watcher + Editor Visual
 # Ejecucion: PowerShell -ExecutionPolicy Bypass -File .\scripts\install-ear-cue-bridge.ps1
-# Con marca:  .\install-ear-cue-bridge.ps1 -Brand VirtualDJ -DjName "DJ Edwin"
+# Con marca:  .\install-ear-cue-bridge.ps1 -Brand VirtualDJ -DjName "DJ Edwin" -OpenUI
 
 param(
     [string]$DjName = "",
@@ -9,7 +9,9 @@ param(
     [ValidateSet("Auto","VirtualDJ","Rekordbox","Serato","Traktor","Denon","Generic","")]
     [string]$Brand  = "",
     [string]$GenericPath = "",
-    [switch]$SkipWatcher
+    [switch]$SkipWatcher,
+    [switch]$OpenUI,
+    [switch]$NonInteractive
 )
 
 $ErrorActionPreference = "SilentlyContinue"
@@ -399,7 +401,7 @@ try {
 # ===== STEP 6: RESUMEN FINAL =====
 Write-Host ""
 Write-Host "==================================================================" -ForegroundColor DarkYellow
-Write-Host "  INSTALACION COMPLETADA - EAR OS UNIVERSAL CUE BRIDGE v4.10" -ForegroundColor Green
+Write-Host "  INSTALACION COMPLETADA - EAR OS UNIVERSAL CUE BRIDGE v4.11" -ForegroundColor Green
 Write-Host "==================================================================" -ForegroundColor DarkYellow
 Write-Host ""
 Write-Host "  Modo:           $Brand" -ForegroundColor White
@@ -411,9 +413,28 @@ $ollamaStatus = if ($ollamaReady) { "ACTIVO - GPU Offloading habilitado" } else 
 Write-Host "  Ollama Local:   $ollamaStatus" -ForegroundColor White
 Write-Host ""
 Write-Host "  PROXIMOS PASOS:" -ForegroundColor Yellow
-Write-Host "  1. Edita ear-dj-config.json con tus datos reales" -ForegroundColor DarkGray
+Write-Host "  1. Edita tus datos facilmente desde la Interfaz Grafica Visual" -ForegroundColor DarkGray
 Write-Host "  2. Activa el watcher con PowerShell" -ForegroundColor DarkGray
 Write-Host "  3. Pincha una sesion y el certificado SHA-256 se generara al cerrar." -ForegroundColor DarkGray
 Write-Host ""
+
+# Preguntar por apertura de GUI visual
+$shouldOpen = $false
+if ($OpenUI) {
+    $shouldOpen = $true
+} elseif (-not $NonInteractive) {
+    $answer = Read-Host "  Deseas abrir el editor visual de configuracion ahora? (S/N) [Default: S]"
+    if (-not $answer -or $answer -eq "S" -or $answer -eq "s" -or $answer -eq "Y" -or $answer -eq "y") {
+        $shouldOpen = $true
+    }
+}
+
+if ($shouldOpen) {
+    $guiLauncher = Join-Path $PSScriptRoot "open-config-ui.ps1"
+    if (Test-Path $guiLauncher) {
+        & $guiLauncher
+    }
+}
+
 Write-Host "  2026 Productora EAR S.L. - edwinagudelo.es" -ForegroundColor DarkGray
 Write-Host ""

@@ -1,6 +1,6 @@
 # 🎧 EAR OS — Guía de Onboarding para DJs & Proof of Play
 
-> **Versión:** 4.8 · **Fecha:** Agosto 2026  
+> **Versión:** 4.11 · **Fecha:** Agosto 2026  
 > **Cumplimiento:** LPI 1/1996 · SGAE · AIE · AGEDI · RGPD
 
 ---
@@ -20,18 +20,19 @@ Al terminar tu bolo, subes el historial exportado de tu software DJ y en **menos
 | **Rekordbox** | `.xml`, `.txt` | ✅ |
 | **Traktor Pro** | `.nml` | ✅ |
 | **Denon Engine** | `.csv` | ✅ |
+| **Genérico (Cualquiera)** | Carpeta personalizada (`.m3u`, `.csv`, `.xml`, `.txt`) | ✅ Modo Watcher |
 
 ---
 
-## ⚡ Instalación en 1 Clic
+## ⚡ Instalación en 1 Clic & Editor Visual S-Class
 
 ### Requisitos Previos
 
 - Windows 10/11 con PowerShell 5.1+
-- Al menos un software DJ instalado
+- Al menos un software DJ instalado o carpeta de historiales
 - Cuenta de correo electrónico activa
 
-### Comando de Instalación
+### Comando de Instalación (Menú Interactivo)
 
 Abre PowerShell y ejecuta:
 
@@ -39,24 +40,23 @@ Abre PowerShell y ejecuta:
 PowerShell -ExecutionPolicy Bypass -File .\scripts\install-ear-cue-bridge.ps1
 ```
 
-O con nombre artístico y NIF precargados:
+O abre directamente la **Interfaz Gráfica Visual (GUI)** en tu navegador:
 
 ```powershell
-.\scripts\install-ear-cue-bridge.ps1 -DjName "DJ Edwin" -DjNif "71758247K"
+PowerShell -ExecutionPolicy Bypass -File .\scripts\open-config-ui.ps1
 ```
 
-### ¿Qué hace el instalador?
-
-1. **Crea la estructura** `%USERPROFILE%\.ear-os\` con subcarpetas para historial y certificados.
-2. **Detecta automáticamente** el software DJ instalado en tu PC.
-3. **Genera** `ear-dj-config.json` con tu perfil y los datos del venue.
-4. **Registra** un watcher en segundo plano para procesar historiales automáticamente.
+### ¿Qué hace la Interfaz Gráfica Visual (`open-config-ui.ps1`)?
+- 🎧 **Pestaña 1 (Perfil DJ):** Permite configurar nombre artístico, DNI/NIF, códigos SGAE/AIE y moneda sin tocar código JSON.
+- 🏛️ **Pestaña 2 (Datos del Venue):** Establece el nombre del local, CIF, dirección y coordenadas GPS para el cálculo del canon.
+- ⚙️ **Pestaña 3 (Automatización & Watcher):** Activa/pausa el auto-generado de certificados SHA-256 y la aceleración Ollama GPU.
+- 💾 **Botón "Guardar Configuración S-Class":** Sobrescribe en tiempo real `%USERPROFILE%\.ear-os\ear-dj-config.json` a través del micro-servidor local.
 
 ---
 
 ## 📋 Esquema de Configuración `ear-dj-config.json`
 
-Una vez instalado, edita el archivo de configuración con tus datos reales:
+El archivo de configuración gestionado por la GUI visual contiene la siguiente estructura:
 
 ```json
 {

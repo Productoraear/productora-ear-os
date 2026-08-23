@@ -21,6 +21,7 @@ scripts/token.json
 .turbo/
 ARCHIVE_RECOVERY/
 *.html
+!docs/config-editor.html
 *.htm
 *.meta.json
 scripts/vampire_mass_extracted.json
