@@ -76,7 +76,7 @@ export async function createVipChauffeurCheckout(input: VipChauffeurCheckoutInpu
     conceptDesc = `Servicio completo de chófer de representación S-Class en ${location}.`;
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -211,7 +211,7 @@ export async function createSupplierUnlockCheckout(input: SupplierUnlockCheckout
   const conceptTitle = `Smart-Lock 72h · Desbloqueo Ficha y Contacto Directo: ${supplierName}`;
   const conceptDesc = `Acceso inmediato al canal de contacto directo, teléfono auditado, disponibilidad en tiempo real y Garantía de 0 Fallos EAR OS S-Class para ${category} en ${city}.`;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
   const returnPath = slug ? `/proveedores/${slug}` : '/proveedores';
 
   const session = await stripe.checkout.sessions.create({

@@ -23,8 +23,8 @@ export async function createCheckoutSession(params: { amount: number; concept: s
         },
       ],
       metadata: params.metadata,
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com'}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com'}/dashboard`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com'}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com'}/dashboard`,
     });
 
     if (!session.url) {

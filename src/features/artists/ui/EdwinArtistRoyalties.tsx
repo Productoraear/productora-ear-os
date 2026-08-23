@@ -136,7 +136,7 @@ export const EdwinArtistRoyalties: React.FC = () => {
           address: 'Auditorio Central',
           city: 'Málaga / Madrid',
           gpsCoordinates: '36.7213,-4.4214',
-          ownerEmail: 'booking@edwinagudelo.es'
+          ownerEmail: 'booking@productoraear.com'
         });
         setCertificate(cert);
       }

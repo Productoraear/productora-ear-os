@@ -79,7 +79,7 @@ export async function createVenueSubscriptionCheckout(input: VenueSubscriptionIn
   const unitAmount = billingCycle === "yearly" ? tier.yearlyPrice * 100 : tier.monthlyPrice * 100;
   const interval = billingCycle === "yearly" ? "year" : "month";
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.productoraear.com";
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -149,7 +149,7 @@ export async function createArtistRoyaltyTrackerCheckout(input: ArtistRoyaltyTra
   const unitAmount = billingCycle === "yearly" ? 9900 : 1000; // 10 €/mes o 99 €/año
   const interval = billingCycle === "yearly" ? "year" : "month";
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.productoraear.com";
 
   try {
     const session = await stripe.checkout.sessions.create({

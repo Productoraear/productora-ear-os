@@ -362,7 +362,7 @@ export default function ReclamarRegaliasPage() {
                   type="email" 
                   value={artistData.email}
                   onChange={(e) => setArtistData({ ...artistData, email: e.target.value })}
-                  placeholder="booking@edwinagudelo.es"
+                  placeholder="booking@productoraear.com"
                   className="w-full bg-black/60 border border-white/10 rounded-xl p-2.5 text-white focus:border-[#ecb613] outline-none"
                 />
               </div>

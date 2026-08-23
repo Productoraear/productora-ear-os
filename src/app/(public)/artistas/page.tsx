@@ -60,6 +60,13 @@ export default function ArtistasHubPage() {
             >
               <ShieldCheck size={14} /> Acceso Astra OS (E-Manager)
             </button>
+
+            <a
+              href="/artistas/dashboard"
+              className="px-4 py-2.5 rounded-xl text-xs font-mono font-bold uppercase transition-all flex items-center gap-2 text-[#ecb613] hover:bg-[#ecb613]/10 border border-[#ecb613]/30"
+            >
+              <Sparkles size={14} /> Cabina & Portal Freemium
+            </a>
           </div>
         </div>
       </section>

@@ -52,11 +52,19 @@ export class CueSheetGenerator {
 
     // Payload de firma criptográfica
     const rawPayload = `${certificateId}|${venue.venueNif}|${venue.gpsCoordinates || '36.5101,-4.8824'}|${session.totalTracks}|${issuedAt}|EAR_OS_SOVEREIGN`;
-    const encoder = new TextEncoder();
-    const data = encoder.encode(rawPayload);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const sha256Proof = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    let sha256Proof = '';
+    
+    if (typeof globalThis !== 'undefined' && globalThis.crypto?.subtle) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(rawPayload);
+      const hashBuffer = await globalThis.crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      sha256Proof = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase();
+    } else {
+      // Fallback Node.js crypto
+      const nodeCrypto = require('crypto');
+      sha256Proof = nodeCrypto.createHash('sha256').update(rawPayload).digest('hex').toUpperCase();
+    }
 
     const startTime = session.startTime || new Date(Date.now() - session.totalDurationSeconds * 1000).toISOString();
     const endTime = session.endTime || issuedAt;
