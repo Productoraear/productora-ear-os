@@ -30,8 +30,17 @@ const B2GLightingCheckoutSchema = z.object({
   priceLockMode: z.enum(['SMART_LOCK_10EUR', 'DEPOSIT_RESERVATION']).default('SMART_LOCK_10EUR')
 });
 
+const SupplierUnlockCheckoutSchema = z.object({
+  supplierId: z.string().min(1),
+  supplierName: z.string().min(1),
+  category: z.string().default('Servicio S-Class'),
+  city: z.string().default('España'),
+  slug: z.string().optional()
+});
+
 export type VipChauffeurCheckoutInput = z.infer<typeof VipChauffeurCheckoutSchema>;
 export type B2GLightingCheckoutInput = z.infer<typeof B2GLightingCheckoutSchema>;
+export type SupplierUnlockCheckoutInput = z.infer<typeof SupplierUnlockCheckoutSchema>;
 
 /**
  * 🚘 STRIPE CHECKOUT: FLOTA VIP & CHÓFER S-CLASS
@@ -178,3 +187,71 @@ export async function createB2GLightingCheckout(input: B2GLightingCheckoutInput)
     url: session.url
   };
 }
+
+/**
+ * 🛡️ STRIPE CHECKOUT: SUPPLIER BLUR-LOCK & DESBLOQUEO DE CONTACTO DIRECTO (10 €)
+ * Bloquea la fuga de datos y cobra 10 € (Smart-Lock 72h) para revelar teléfono, email y contratación directa con garantía 0 Fallos.
+ */
+export async function createSupplierUnlockCheckout(input: SupplierUnlockCheckoutInput) {
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for")?.split(",")[0].trim() || "127.0.0.1";
+
+  if (isRateLimited(ip, 15, 60000)) {
+    throw new Error("Límite de solicitudes alcanzado. Por favor, inténtelo de nuevo en un minuto.");
+  }
+
+  const parsed = SupplierUnlockCheckoutSchema.safeParse(input);
+  if (!parsed.success) {
+    throw new Error(`Datos de desbloqueo inválidos: ${parsed.error.issues.map(e => e.message).join(", ")}`);
+  }
+
+  const { supplierId, supplierName, category, city, slug } = parsed.data;
+
+  const chargeAmount = 10; // 10 € Desbloqueo Smart-Lock 72h
+  const conceptTitle = `Smart-Lock 72h · Desbloqueo Ficha y Contacto Directo: ${supplierName}`;
+  const conceptDesc = `Acceso inmediato al canal de contacto directo, teléfono auditado, disponibilidad en tiempo real y Garantía de 0 Fallos EAR OS S-Class para ${category} en ${city}.`;
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+  const returnPath = slug ? `/proveedores/${slug}` : '/proveedores';
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    mode: 'payment',
+    line_items: [
+      {
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: conceptTitle,
+            description: conceptDesc,
+          },
+          unit_amount: Math.round(chargeAmount * 100),
+        },
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      type: 'SUPPLIER_CONTACT_UNLOCK',
+      supplierId,
+      supplierName,
+      category,
+      city,
+      slug: slug || '',
+      depositPaid: '10'
+    },
+    success_url: `${baseUrl}${returnPath}?unlocked=true&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}${returnPath}`,
+  });
+
+  if (!session.url) {
+    throw new Error('No se pudo generar la sesión de pago de Stripe.');
+  }
+
+  logger.info({ event: "SUPPLIER_UNLOCK_CHECKOUT_CREATED", sessionId: session.id, supplierId, chargeAmount });
+
+  return {
+    sessionId: session.id,
+    url: session.url
+  };
+}
+

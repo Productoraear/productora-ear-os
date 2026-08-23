@@ -28,11 +28,13 @@ import { Metadata } from 'next';
 import fs from 'fs';
 import path from 'path';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { SupplierBlurLock } from '@/components/ui/SupplierBlurLock';
 
 export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ unlocked?: string; session_id?: string }>;
 }
 
 function cleanText(text: string | undefined | null): string {
@@ -154,8 +156,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function ProviderDetailPage({ params }: PageProps) {
+export default async function ProviderDetailPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
+  const sParams = searchParams ? await searchParams : {};
+  const isUnlocked = sParams?.unlocked === 'true';
   const rawProvider = await getProviderData(slug);
 
   if (!rawProvider) {
@@ -172,9 +176,16 @@ export default async function ProviderDetailPage({ params }: PageProps) {
     );
   }
 
-  const name = cleanText(rawProvider.name);
+  const rawName = cleanText(rawProvider.name);
   const category = cleanText(rawProvider.atomic_specs?.category || rawProvider.category || 'Música / DJ');
   const location = cleanText(rawProvider.atomic_specs?.location || rawProvider.address || `${rawProvider.province || 'Madrid'}, España`);
+  const providerIdShort = (rawProvider.id || slug).substring(0, 8).toUpperCase();
+  
+  // MÁSCARA DE IDENTIDAD S-CLASS (P0 ANTI-FUGA)
+  const displayName = isUnlocked 
+    ? rawName 
+    : `Proveedor Verificado S-Class #${providerIdShort} — ${category} ${location.split(',')[0]}`;
+
   const rating = rawProvider.atomic_specs?.metrics?.rating || rawProvider.rating || 5.0;
   const reviewsCount = rawProvider.atomic_specs?.metrics?.reviewCount || rawProvider.reviews || 27;
   const priceDisplay = rawProvider.atomic_specs?.price || `Precio desde ${rawProvider.basePrice || 900}€`;
@@ -247,8 +258,8 @@ export default async function ProviderDetailPage({ params }: PageProps) {
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tight text-white font-syne">
-                {name}
+              <h1 className="text-2xl sm:text-4xl font-black uppercase italic tracking-tight text-white font-syne">
+                {displayName}
               </h1>
 
               <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-zinc-300">
@@ -281,7 +292,7 @@ export default async function ProviderDetailPage({ params }: PageProps) {
               <div className="sm:col-span-7 relative h-full overflow-hidden bg-zinc-900">
                 <img 
                   src={gallery[0]} 
-                  alt={name} 
+                  alt={displayName} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
                 <div className="absolute top-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-xl border border-white/10 text-[#ecb613]">
@@ -294,7 +305,7 @@ export default async function ProviderDetailPage({ params }: PageProps) {
                 <div className="relative overflow-hidden bg-zinc-900">
                   <img 
                     src={gallery[1] || gallery[0]} 
-                    alt={`${name} evento`} 
+                    alt={`${displayName} evento`} 
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
                   />
                   <div className="absolute top-3 right-3 flex items-center gap-2">
@@ -310,7 +321,7 @@ export default async function ProviderDetailPage({ params }: PageProps) {
                 <div className="relative overflow-hidden bg-zinc-900">
                   <img 
                     src={gallery[2] || gallery[0]} 
-                    alt={`${name} montaje`} 
+                    alt={`${displayName} montaje`} 
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
                   />
                   {/* Botones Flotantes en la foto inferior */}
@@ -438,6 +449,50 @@ export default async function ProviderDetailPage({ params }: PageProps) {
           {/* Right Area: Sticky Booking Card (Span 4) */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
             
+            {/* 🛡️ SUPPLIER BLUR-LOCK (P0 ANTI-FUGA & REVENUE ENGINE) */}
+            <SupplierBlurLock
+              supplierId={rawProvider.id || slug}
+              supplierName={rawName}
+              category={category}
+              city={location.split(',')[0]}
+              slug={slug}
+              isUnlocked={isUnlocked}
+            >
+              <div className="p-6 sm:p-8 rounded-[2.5rem] bg-gradient-to-b from-[#141418] to-[#09090d] border border-emerald-500/40 shadow-[0_0_50px_rgba(16,185,129,0.15)] space-y-6">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full text-xs font-mono font-bold uppercase">
+                  <ShieldCheck size={14} />
+                  <span>Contacto Directo Desbloqueado (Garantía Activa)</span>
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Tarifa Oficial Homologada</span>
+                  <div className="p-4 bg-black/60 rounded-2xl border border-white/10 text-center">
+                    <span className="text-2xl sm:text-3xl font-black font-syne text-white tracking-tight">
+                      {priceDisplay}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <Link
+                    href={`/checkout/presupuesto?proveedor=${slug}&precio=${rawProvider.basePrice || 900}`}
+                    className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-[#ecb613] text-black font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
+                  >
+                    <span>Contratar con Split Soberano (80/10/10)</span>
+                    <ArrowRight size={16} />
+                  </Link>
+
+                  <a
+                    href={CENTRALITA.tel}
+                    className="w-full py-3.5 px-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+                  >
+                    <Phone size={14} className="text-[#ecb613]" />
+                    <span>Llamar a Centralita ({CENTRALITA.display})</span>
+                  </a>
+                </div>
+              </div>
+            </SupplierBlurLock>
+
             <div className="p-6 sm:p-8 rounded-[2.5rem] bg-gradient-to-b from-[#141418] to-[#09090d] border border-[#ecb613]/40 shadow-[0_0_50px_rgba(236,182,19,0.15)] space-y-6">
               
               {/* Tarifa base */}
@@ -456,17 +511,9 @@ export default async function ProviderDetailPage({ params }: PageProps) {
                   href={`/checkout/presupuesto?proveedor=${slug}&precio=${rawProvider.basePrice || 900}`}
                   className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 hover:from-rose-500 hover:to-[#ecb613] text-white font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-rose-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
                 >
-                  <span>Solicitar Presupuesto</span>
+                  <span>Solicitar Presupuesto Oficial</span>
                   <ArrowRight size={16} />
                 </Link>
-
-                <a
-                  href={CENTRALITA.tel}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
-                >
-                  <Phone size={14} className="text-[#ecb613]" />
-                  <span>Llamar a Centralita ({CENTRALITA.display})</span>
-                </a>
               </div>
 
               {/* Social Proof Bullets */}
