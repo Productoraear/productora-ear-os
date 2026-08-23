@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   BanknotesIcon, 
   ShieldCheckIcon, 
@@ -9,8 +9,13 @@ import {
   SparklesIcon,
   CheckBadgeIcon,
   ClockIcon,
-  ArrowTrendingUpIcon
+  ArrowTrendingUpIcon,
+  DocumentCheckIcon,
+  ArrowUpTrayIcon,
+  MusicalNoteIcon
 } from '@heroicons/react/24/outline';
+import { UniversalCueBridge, CueSessionReport } from '@/lib/UniversalCueBridge';
+import { CueSheetGenerator, ProofOfPlayCertificate, VenueMetadata } from '@/lib/cue-sheet-generator';
 
 interface RoyaltyRecord {
   id: string;
@@ -82,9 +87,15 @@ const INITIAL_ROYALTIES: RoyaltyRecord[] = [
 ];
 
 export const EdwinArtistRoyalties: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'ROYALTIES' | 'CUE_BRIDGE'>('ROYALTIES');
   const [filter, setFilter] = useState<'ALL' | 'LIQUIDADO' | 'PENDIENTE_EVENTO'>('ALL');
   const [isRequestingPayout, setIsRequestingPayout] = useState(false);
   const [payoutSuccess, setPayoutSuccess] = useState(false);
+
+  // Cue Bridge State
+  const [cueReport, setCueReport] = useState<CueSessionReport | null>(null);
+  const [certificate, setCertificate] = useState<ProofOfPlayCertificate | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const filteredRecords = INITIAL_ROYALTIES.filter(r => {
     if (filter === 'ALL') return true;
@@ -108,6 +119,40 @@ export const EdwinArtistRoyalties: React.FC = () => {
     }, 1200);
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const content = event.target?.result as string;
+      if (content) {
+        const report = UniversalCueBridge.parse(content, file.name);
+        setCueReport(report);
+        
+        const cert = await CueSheetGenerator.generateCertificate(report, {
+          venueName: 'Gala Edwin Agudelo Directo',
+          venueNif: 'B-71758247',
+          address: 'Auditorio Central',
+          city: 'Málaga / Madrid',
+          gpsCoordinates: '36.7213,-4.4214',
+          ownerEmail: 'booking@edwinagudelo.es'
+        });
+        setCertificate(cert);
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleDownloadCertificate = () => {
+    if (!certificate) return;
+    const html = CueSheetGenerator.renderPrintableHtml(certificate);
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, '_blank');
+    if (win) win.focus();
+  };
+
   return (
     <div className="w-full max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 bg-[#050505] text-zinc-100 font-sans">
       {/* HEADER S-CLASS */}
@@ -117,7 +162,7 @@ export const EdwinArtistRoyalties: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono font-bold tracking-widest uppercase mb-3">
               <ShieldCheckIcon className="w-4 h-4" />
-              Split Soberano 80/10/10 Certificado
+              Split Soberano 80/10/10 & Proof of Play SHA-256
             </div>
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white font-syne">
               Portal Financiero & <span className="text-[#ecb613]">Royalties de Autor</span>
@@ -188,77 +233,182 @@ export const EdwinArtistRoyalties: React.FC = () => {
         </div>
       </div>
 
-      {/* FILTER & TABLE SECTION */}
-      <div className="bg-zinc-900/50 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md">
-        <div className="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h3 className="text-lg font-bold text-white font-syne">Desglose de Liquidaciones & Contratos</h3>
-            <p className="text-xs text-zinc-400 mt-0.5">Trazabilidad matemática inmutable con reparto soberano</p>
-          </div>
-
-          <div className="flex items-center gap-2 bg-black/60 p-1 rounded-xl border border-white/10 text-xs font-mono">
-            <button
-              onClick={() => setFilter('ALL')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${filter === 'ALL' ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white'}`}
-            >
-              Todos ({INITIAL_ROYALTIES.length})
-            </button>
-            <button
-              onClick={() => setFilter('LIQUIDADO')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${filter === 'LIQUIDADO' ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white'}`}
-            >
-              Liquidados
-            </button>
-            <button
-              onClick={() => setFilter('PENDIENTE_EVENTO')}
-              className={`px-3 py-1.5 rounded-lg transition-all ${filter === 'PENDIENTE_EVENTO' ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white'}`}
-            >
-              En Custodia
-            </button>
-          </div>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-black/60 text-zinc-400 text-xs uppercase font-mono tracking-wider border-b border-white/5">
-              <tr>
-                <th className="p-4 sm:px-6">Evento / Contrato</th>
-                <th className="p-4">Fecha</th>
-                <th className="p-4">Bruto Facturado</th>
-                <th className="p-4 text-[#ecb613]">Split Artista (80%)</th>
-                <th className="p-4">Estado</th>
-                <th className="p-4 sm:pr-6 text-right">Firma SHA-256</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5 text-zinc-300 font-mono text-xs">
-              {filteredRecords.map((item) => (
-                <tr key={item.id} className="hover:bg-white/[0.02] transition-colors">
-                  <td className="p-4 sm:px-6">
-                    <div className="font-bold text-white font-sans text-sm">{item.event}</div>
-                    <div className="text-[11px] text-zinc-400">{item.client} • {item.id}</div>
-                  </td>
-                  <td className="p-4 text-zinc-400">{item.date}</td>
-                  <td className="p-4 font-semibold text-zinc-200">{item.totalGross.toFixed(2)} €</td>
-                  <td className="p-4 font-bold text-[#ecb613] text-sm">{item.artistNet.toFixed(2)} €</td>
-                  <td className="p-4">
-                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase inline-flex items-center gap-1 ${
-                      item.status === 'LIQUIDADO' 
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                        : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                    }`}>
-                      {item.status === 'LIQUIDADO' ? <CheckBadgeIcon className="w-3.5 h-3.5" /> : <ClockIcon className="w-3.5 h-3.5" />}
-                      {item.status}
-                    </span>
-                  </td>
-                  <td className="p-4 sm:pr-6 text-right font-mono text-[10px] text-zinc-400">
-                    <span className="bg-black/50 px-2 py-1 rounded border border-white/5">{item.sha256Proof}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* TABS SELECTOR */}
+      <div className="flex items-center gap-3 border-b border-white/10 pb-3">
+        <button
+          onClick={() => setActiveTab('ROYALTIES')}
+          className={`px-5 py-2.5 rounded-xl text-xs font-mono uppercase font-bold tracking-wider transition-all cursor-pointer ${
+            activeTab === 'ROYALTIES' 
+              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20' 
+              : 'text-zinc-400 hover:text-white bg-white/5'
+          }`}
+        >
+          Liquidaciones & Contratos
+        </button>
+        <button
+          onClick={() => setActiveTab('CUE_BRIDGE')}
+          className={`px-5 py-2.5 rounded-xl text-xs font-mono uppercase font-bold tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+            activeTab === 'CUE_BRIDGE' 
+              ? 'bg-cyan-500 text-black font-extrabold shadow-lg shadow-cyan-500/20' 
+              : 'text-zinc-400 hover:text-white bg-white/5'
+          }`}
+        >
+          <DocumentCheckIcon className="w-4 h-4" />
+          Universal Cue Bridge & Reclamo SGAE
+        </button>
       </div>
+
+      {/* TAB 1: ROYALTIES TABLE */}
+      {activeTab === 'ROYALTIES' && (
+        <div className="bg-zinc-900/50 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-md animate-in fade-in duration-200">
+          <div className="p-6 border-b border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h3 className="text-lg font-bold text-white font-syne">Desglose de Liquidaciones & Contratos</h3>
+              <p className="text-xs text-zinc-400 mt-0.5">Trazabilidad matemática inmutable con reparto soberano</p>
+            </div>
+
+            <div className="flex items-center gap-2 bg-black/60 p-1 rounded-xl border border-white/10 text-xs font-mono">
+              <button
+                onClick={() => setFilter('ALL')}
+                className={`px-3 py-1.5 rounded-lg transition-all ${filter === 'ALL' ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white'}`}
+              >
+                Todos ({INITIAL_ROYALTIES.length})
+              </button>
+              <button
+                onClick={() => setFilter('LIQUIDADO')}
+                className={`px-3 py-1.5 rounded-lg transition-all ${filter === 'LIQUIDADO' ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white'}`}
+              >
+                Liquidados
+              </button>
+              <button
+                onClick={() => setFilter('PENDIENTE_EVENTO')}
+                className={`px-3 py-1.5 rounded-lg transition-all ${filter === 'PENDIENTE_EVENTO' ? 'bg-[#ecb613] text-black font-bold' : 'text-zinc-400 hover:text-white'}`}
+              >
+                En Custodia
+              </button>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-black/60 text-zinc-400 text-xs uppercase font-mono tracking-wider border-b border-white/5">
+                <tr>
+                  <th className="p-4 sm:px-6">Evento / Contrato</th>
+                  <th className="p-4">Fecha</th>
+                  <th className="p-4">Bruto Facturado</th>
+                  <th className="p-4 text-[#ecb613]">Split Artista (80%)</th>
+                  <th className="p-4">Estado</th>
+                  <th className="p-4 sm:pr-6 text-right">Firma SHA-256</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5 text-zinc-300 font-mono text-xs">
+                {filteredRecords.map((item) => (
+                  <tr key={item.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="p-4 sm:px-6">
+                      <div className="font-bold text-white font-sans text-sm">{item.event}</div>
+                      <div className="text-[11px] text-zinc-400">{item.client} • {item.id}</div>
+                    </td>
+                    <td className="p-4 text-zinc-400">{item.date}</td>
+                    <td className="p-4 font-semibold text-zinc-200">{item.totalGross.toFixed(2)} €</td>
+                    <td className="p-4 font-bold text-[#ecb613] text-sm">{item.artistNet.toFixed(2)} €</td>
+                    <td className="p-4">
+                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase inline-flex items-center gap-1 ${
+                        item.status === 'LIQUIDADO' 
+                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                          : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                      }`}>
+                        {item.status === 'LIQUIDADO' ? <CheckBadgeIcon className="w-3.5 h-3.5" /> : <ClockIcon className="w-3.5 h-3.5" />}
+                        {item.status}
+                      </span>
+                    </td>
+                    <td className="p-4 sm:pr-6 text-right font-mono text-[10px] text-zinc-400">
+                      <span className="bg-black/50 px-2 py-1 rounded border border-white/5">{item.sha256Proof}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
+      {/* TAB 2: CUE BRIDGE & PROOF OF PLAY */}
+      {activeTab === 'CUE_BRIDGE' && (
+        <div className="bg-gradient-to-b from-zinc-950 to-black border border-cyan-500/30 rounded-3xl p-6 sm:p-8 backdrop-blur-md space-y-6 animate-in fade-in duration-200">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-white/10 pb-5">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+                <DocumentCheckIcon className="w-4 h-4" />
+                Proof of Play & SGAE Reporting
+              </div>
+              <h3 className="text-2xl font-bold text-white font-syne">
+                Auditoría de Historial DJ & Emisión de Certificado Visado
+              </h3>
+              <p className="text-xs text-zinc-400 mt-1 max-w-xl">
+                Carga los sets sonados en tus directos para emitir el certificado SHA-256 y reclamar el 100% de los derechos de ejecución a SGAE y AIE.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleFileUpload} 
+                accept=".txt,.csv,.xml,.nml,.m3u,.m3u8" 
+                className="hidden" 
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="px-5 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg shadow-cyan-500/20 flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <ArrowUpTrayIcon className="w-4 h-4" />
+                Importar Cue-Sheet DJ
+              </button>
+            </div>
+          </div>
+
+          {cueReport && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 rounded-2xl bg-black/60 border border-white/10 text-xs font-mono">
+                <div>
+                  <span className="text-zinc-500 uppercase block text-[10px]">Motor Detectado</span>
+                  <span className="text-white font-bold text-sm">{cueReport.softwareDetected}</span>
+                </div>
+                <div>
+                  <span className="text-zinc-500 uppercase block text-[10px]">Obras Auditadas</span>
+                  <span className="text-cyan-400 font-bold text-sm">{cueReport.totalTracks} Tracks</span>
+                </div>
+                <div>
+                  <span className="text-zinc-500 uppercase block text-[10px]">Duración Total</span>
+                  <span className="text-[#ecb613] font-bold text-sm">{cueReport.totalDurationFormatted}</span>
+                </div>
+              </div>
+
+              {certificate && (
+                <div className="p-5 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-emerald-400 text-xs font-mono font-bold">
+                      <CheckBadgeIcon className="w-4 h-4" />
+                      <span>Acta Generada: {certificate.certificateId}</span>
+                    </div>
+                    <p className="text-xs text-zinc-300 font-mono">
+                      Firma Digital: <code className="text-[#ecb613]">{certificate.sha256Proof.substring(0, 24)}...</code>
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={handleDownloadCertificate}
+                    className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-600/20 flex items-center gap-2 transition-all cursor-pointer shrink-0"
+                  >
+                    <ArrowDownTrayIcon className="w-4 h-4" />
+                    Descargar Certificado Oficial SGAE
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

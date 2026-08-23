@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   PlayIcon, 
   PauseIcon, 
@@ -9,8 +9,14 @@ import {
   SparklesIcon,
   MusicalNoteIcon,
   BuildingStorefrontIcon,
-  CheckBadgeIcon
+  CheckBadgeIcon,
+  ArrowUpTrayIcon,
+  DocumentCheckIcon,
+  DocumentArrowDownIcon,
+  ClockIcon
 } from '@heroicons/react/24/outline';
+import { UniversalCueBridge, CueSessionReport } from '@/lib/UniversalCueBridge';
+import { CueSheetGenerator, ProofOfPlayCertificate, VenueMetadata } from '@/lib/cue-sheet-generator';
 
 interface Track {
   id: string;
@@ -61,10 +67,26 @@ const VENUE_CATALOG: Track[] = [
   }
 ];
 
+const DEFAULT_VENUE: VenueMetadata = {
+  venueName: 'Finca La Concepción (Marbella)',
+  venueNif: 'B-29884102',
+  address: 'Ctra. de Istán km 2',
+  city: 'Marbella (Málaga)',
+  gpsCoordinates: '36.5101,-4.8824',
+  ownerEmail: 'eventos@fincalaconcepcion.com',
+  licenseNumber: 'LIC-EAR-2026-098'
+};
+
 export const VenueSoundtrackPlayer: React.FC = () => {
   const [currentTrack, setCurrentTrack] = useState<Track>(VENUE_CATALOG[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
+  
+  // Cue Bridge State
+  const [cueReport, setCueReport] = useState<CueSessionReport | null>(null);
+  const [certificate, setCertificate] = useState<ProofOfPlayCertificate | null>(null);
+  const [isGeneratingCert, setIsGeneratingCert] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const togglePlay = (track?: Track) => {
     if (track && track.id !== currentTrack.id) {
@@ -83,6 +105,38 @@ export const VenueSoundtrackPlayer: React.FC = () => {
     }, 800);
   };
 
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const content = event.target?.result as string;
+      if (content) {
+        const report = UniversalCueBridge.parse(content, file.name);
+        setCueReport(report);
+        
+        // Auto-generate Proof-of-Play Certificate
+        setIsGeneratingCert(true);
+        const cert = await CueSheetGenerator.generateCertificate(report, DEFAULT_VENUE);
+        setCertificate(cert);
+        setIsGeneratingCert(false);
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleDownloadCertificate = () => {
+    if (!certificate) return;
+    const html = CueSheetGenerator.renderPrintableHtml(certificate);
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, '_blank');
+    if (win) {
+      win.focus();
+    }
+  };
+
   return (
     <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 bg-[#050505] text-zinc-100 font-sans">
       {/* HEADER HERO */}
@@ -91,13 +145,13 @@ export const VenueSoundtrackPlayer: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-3">
               <BuildingStorefrontIcon className="w-4 h-4" />
-              SaaS B2B Music Licensor & Venue Sound
+              SaaS B2B Music Licensor & Universal Cue Bridge
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-syne">
               Reproductor B2B para <span className="text-cyan-400">Fincas & Discotecas</span>
             </h2>
             <p className="text-sm sm:text-base text-zinc-400 mt-2 max-w-2xl leading-relaxed">
-              Catálogo musical exclusivo 100% libre de conflictos SGAE con blindaje fonográfico y reporting directo para hostelería de alto standing.
+              Catálogo musical exclusivo 100% libre de conflictos SGAE con parser universal de historiales DJ y emisión instantánea de actas de ejecución con firma SHA-256.
             </p>
           </div>
 
@@ -164,6 +218,113 @@ export const VenueSoundtrackPlayer: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* 🎧 UNIVERSAL CUE BRIDGE MODULE (REKORDBOX, SERATO, TRAKTOR, VIRTUALDJ) */}
+      <div className="bg-gradient-to-r from-zinc-950 via-zinc-900 to-black border border-[#ecb613]/30 rounded-3xl p-6 sm:p-8 backdrop-blur-md space-y-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-white/10 pb-5">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 text-[#ecb613] text-xs font-mono font-bold uppercase tracking-wider mb-2">
+              <DocumentCheckIcon className="w-4 h-4" />
+              Universal Cue Bridge Engine
+            </div>
+            <h3 className="text-2xl font-bold text-white font-syne">
+              Auditor Forense de Sesiones DJ & Proof of Play
+            </h3>
+            <p className="text-xs text-zinc-400 mt-1 max-w-xl">
+              Arrastra tu historial de <strong className="text-zinc-200">Rekordbox (.txt, .xml)</strong>, <strong className="text-zinc-200">Serato (.csv)</strong>, <strong className="text-zinc-200">Traktor (.nml)</strong> o <strong className="text-zinc-200">VirtualDJ (.m3u)</strong> para generar el certificado firmado con SHA-256.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleFileUpload} 
+              accept=".txt,.csv,.xml,.nml,.m3u,.m3u8" 
+              className="hidden" 
+            />
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="px-5 py-3 bg-[#ecb613] hover:bg-[#d4a855] text-black font-extrabold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg shadow-[#ecb613]/20 flex items-center gap-2 transition-all cursor-pointer"
+            >
+              <ArrowUpTrayIcon className="w-4 h-4" />
+              Cargar Historial DJ
+            </button>
+          </div>
+        </div>
+
+        {/* CUE REPORT & CERTIFICATE PREVIEW */}
+        {cueReport && (
+          <div className="space-y-4 animate-in fade-in duration-300">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-black/60 border border-white/10 text-xs font-mono">
+              <div>
+                <span className="text-zinc-500 uppercase block text-[10px]">Software Detectado</span>
+                <span className="text-white font-bold text-sm">{cueReport.softwareDetected}</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 uppercase block text-[10px]">Total Temas Sonados</span>
+                <span className="text-[#ecb613] font-bold text-sm">{cueReport.totalTracks} Obras</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 uppercase block text-[10px]">Duración Total</span>
+                <span className="text-zinc-300 font-bold text-sm">{cueReport.totalDurationFormatted}</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 uppercase block text-[10px]">Recinto Auditado</span>
+                <span className="text-cyan-400 font-bold text-sm">{DEFAULT_VENUE.venueName}</span>
+              </div>
+            </div>
+
+            {certificate && (
+              <div className="p-5 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-emerald-400 text-xs font-mono font-bold">
+                    <CheckBadgeIcon className="w-4 h-4" />
+                    <span>Certificado Emitido: {certificate.certificateId}</span>
+                  </div>
+                  <p className="text-xs text-zinc-300 font-mono">
+                    Firma SHA-256: <code className="text-[#ecb613]">{certificate.sha256Proof.substring(0, 24)}...</code>
+                  </p>
+                </div>
+
+                <button
+                  onClick={handleDownloadCertificate}
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg shadow-emerald-600/20 flex items-center gap-2 transition-all cursor-pointer shrink-0"
+                >
+                  <DocumentArrowDownIcon className="w-4 h-4" />
+                  Descargar Acta Oficial SGAE/AIE
+                </button>
+              </div>
+            )}
+
+            {/* TRACKLIST PARSED TABLE */}
+            <div className="max-h-60 overflow-y-auto rounded-xl border border-white/5 bg-black/40">
+              <table className="w-full text-left text-xs font-mono">
+                <thead className="bg-white/5 text-zinc-400 text-[10px] uppercase sticky top-0">
+                  <tr>
+                    <th className="p-3">#</th>
+                    <th className="p-3">Título</th>
+                    <th className="p-3">Artista</th>
+                    <th className="p-3">Duración</th>
+                    <th className="p-3">Formato</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-zinc-300">
+                  {cueReport.tracks.map((t) => (
+                    <tr key={t.orderIndex} className="hover:bg-white/[0.02]">
+                      <td className="p-3 text-zinc-500">{t.orderIndex}</td>
+                      <td className="p-3 font-bold text-white">{t.title}</td>
+                      <td className="p-3 text-[#d4a855]">{t.artist}</td>
+                      <td className="p-3 text-zinc-400">{t.durationFormatted || '3:00'}</td>
+                      <td className="p-3 text-zinc-500">{t.sourceFormat}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* TRACKLIST CATALOG */}
