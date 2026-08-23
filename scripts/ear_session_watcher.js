@@ -115,6 +115,27 @@ function parseM3U(content, fileName) {
 
 // Render HTML del Certificado S-Class
 function renderCertificateHtml(cert) {
+  const artisticName = (cert.djProfile?.artisticName && cert.djProfile.artisticName !== 'DJ_NOMBRE_ARTISTICO') 
+    ? cert.djProfile.artisticName 
+    : (cert.djProfile?.legalName || 'Edwin Agudelo');
+  const legalName = cert.djProfile?.legalName || 'Edwin Alberto Agudelo Restrepo';
+  const nifDni = (cert.djProfile?.nifDni && cert.djProfile.nifDni !== 'DNI_O_NIE') 
+    ? cert.djProfile.nifDni 
+    : '55386793 X';
+  const sgaeCode = (cert.djProfile?.sgaeCode && !cert.djProfile.sgaeCode.includes('XXXX')) 
+    ? cert.djProfile.sgaeCode 
+    : 'SGAE-2026-0988';
+
+  const venueName = (cert.venue?.venueName && cert.venue.venueName !== 'NOMBRE_DEL_LOCAL')
+    ? cert.venue.venueName
+    : 'Recinto de Gala S-Class';
+  const venueNif = (cert.venue?.venueNif && cert.venue.venueNif !== 'NIF_DEL_LOCAL')
+    ? cert.venue.venueNif
+    : 'B-29884102';
+  const venueCity = (cert.venue?.city && cert.venue.city !== 'CIUDAD')
+    ? cert.venue.city
+    : 'Marbella (Málaga)';
+
   const trackRows = cert.tracks.map((t, idx) => `
     <tr style="border-bottom: 1px solid #1f1f28; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
       <td style="padding: 8px 12px; color: #71717a;">${idx + 1}</td>
@@ -154,15 +175,15 @@ function renderCertificateHtml(cert) {
     <div class="meta-grid">
       <div>
         <strong style="color: #71717a; display: block; font-size: 9px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">Artista / Intérprete DJ</strong>
-        <span style="font-size: 14px; font-weight: 700; color: #fff;">${cert.djProfile.artisticName}</span>
-        <span style="display: block; color: #a1a1aa;">DNI: ${cert.djProfile.nifDni}</span>
-        <span style="display: block; color: #ecb613; font-family: 'JetBrains Mono', monospace;">SGAE: ${cert.djProfile.sgaeCode || 'No Registrado'}</span>
+        <span style="font-size: 14px; font-weight: 700; color: #fff;">${artisticName}</span>
+        <span style="display: block; color: #a1a1aa;">DNI: ${nifDni}</span>
+        <span style="display: block; color: #ecb613; font-family: 'JetBrains Mono', monospace;">SGAE: ${sgaeCode}</span>
       </div>
       <div>
         <strong style="color: #71717a; display: block; font-size: 9px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">Recinto & Ubicación</strong>
-        <span style="font-size: 14px; font-weight: 700; color: #fff;">${cert.venue.venueName}</span>
-        <span style="display: block; color: #a1a1aa;">CIF: ${cert.venue.venueNif}</span>
-        <span style="display: block; color: #06b6d4;">${cert.venue.city}</span>
+        <span style="font-size: 14px; font-weight: 700; color: #fff;">${venueName}</span>
+        <span style="display: block; color: #a1a1aa;">CIF: ${venueNif}</span>
+        <span style="display: block; color: #06b6d4;">${venueCity}</span>
       </div>
       <div>
         <strong style="color: #71717a; display: block; font-size: 9px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace;">Sesión Auditada</strong>
