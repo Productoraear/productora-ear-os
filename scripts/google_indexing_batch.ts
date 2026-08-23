@@ -39,6 +39,10 @@ export async function executeBatchIndexing() {
   if (priorityRoutes.length === 0) {
     priorityRoutes = [
       '/',
+      '/artistas/reclamar-regalias',
+      '/artistas/dashboard',
+      '/artistas/edwin-agudelo',
+      '/cotizador',
       '/blog/b2g',
       '/blog/b2g?municipio=Ayuntamiento%20de%20Navalcarnero&presupuesto=14107.50&cpv=51313000-9',
       '/blog/b2g?municipio=Ayuntamiento%20de%20M%C3%A9ntrida&presupuesto=13205.00&cpv=85312000-9',
@@ -50,7 +54,6 @@ export async function executeBatchIndexing() {
       '/servicios/orquesta-fiestas-patronales/madrid',
       '/servicios/orquesta-fiestas-patronales/toledo',
       '/vimume',
-      '/artistas/edwin-agudelo',
       '/contacto'
     ];
   }

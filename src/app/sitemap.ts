@@ -21,6 +21,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const corePages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
     { url: `${baseUrl}/artistas/edwin-agudelo`, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
+    { url: `${baseUrl}/artistas/reclamar-regalias`, lastModified: now, priority: 1.0, changeFrequency: 'daily' },
+    { url: `${baseUrl}/artistas/dashboard`, lastModified: now, priority: 0.95, changeFrequency: 'daily' },
     { url: `${baseUrl}/the-signal`, lastModified: now, priority: 0.95, changeFrequency: 'daily' },
     { url: `${baseUrl}/eventos`, lastModified: now, priority: 0.95, changeFrequency: 'daily' },
     { url: `${baseUrl}/bodas`, lastModified: now, priority: 0.95, changeFrequency: 'daily' },

@@ -32,7 +32,7 @@ export async function createBookingCheckout(input: unknown) {
   });
 
   const payload = StripeCheckoutSchema.parse(input);
-  const origin = (await headers()).get("origin") ?? "https://productoraear.com";
+  const origin = (await headers()).get("origin") ?? "https://www.productoraear.com";
 
   const user = await prisma.user.findUnique({
     where: { id: payload.clientId },

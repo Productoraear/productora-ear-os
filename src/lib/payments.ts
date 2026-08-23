@@ -60,8 +60,8 @@ export const createArtistVerificationSession = async (params: { amount: number; 
       },
     ],
     mode: 'payment',
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/cancel`,
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.productoraear.com'}/success`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'https://www.productoraear.com'}/cancel`,
     metadata: {
       type: 'artist_verification',
       artistId: params.artistId

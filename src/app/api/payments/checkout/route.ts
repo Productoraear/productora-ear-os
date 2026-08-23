@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   try {
     const { amount, concept, metadata: clientMeta } = await req.json();
 
-    const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+    const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
 
     // Cálculo del Split 80/10/10
     const totalCents = Math.round(Number(amount) * 100);

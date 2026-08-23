@@ -156,8 +156,8 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
       origin: origin,
       destination: destination,
     },
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3007"}/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3007"}/contacto`,
+    success_url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://www.productoraear.com"}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://www.productoraear.com"}/contacto`,
   });
 
   logger.info({ event: "CHECKOUT_SESSION_CREATED", sessionId: session.id, ip });

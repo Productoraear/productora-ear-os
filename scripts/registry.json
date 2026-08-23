@@ -1,0 +1,34 @@
+{
+  "version": "4.23",
+  "last_updated": "2026-08-23T20:48:00+02:00",
+  "tools": {
+    "whisper_gpu_batch_transcriber": {
+      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/whisper_gpu_batch_transcriber.py",
+      "purpose": "Batch audio/video transcription using faster-whisper with hardware offloading, automatic resume/skip, RAG injection, and real-time OLED HTML status dashboard.",
+      "inputs": ["H:/00_PRODUCTORA_EAR/BODEGA_CUARENTENA/RESCATE_FINAL/AUDIO", "H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/TRANSCRIPCIONES_AUDIO", "H:/incubadora despegue/DANI_ARAGON_FORMACION"],
+      "outputs": ["H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/TRANSCRIPCIONES_AUDIO/*.txt", "src/data/ear-rag-database.json", "C:/Users/M2-W10/.ear-os/whisper_transcription.log", "C:/Users/M2-W10/Desktop/EAR_OS_WHISPER_STATUS.html"],
+      "cli_command": "python H:/EAR_OS_V2/EAR_OS_V2/scripts/whisper_gpu_batch_transcriber.py"
+    },
+    "ztm_purist_archivist": {
+      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/ztm_purist_archivist.py",
+      "purpose": "ZTM physical file relocation, SHA-256 deduplication, and RAG recycling daemon.",
+      "inputs": ["H:/00_PRODUCTORA_EAR", "H:/SANTUARIO_EAR", "C:/Users/M2-W10/Documents"],
+      "outputs": ["H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT", "src/data/ear-rag-database.json", "docs/digests/RECYCLED_ASSETS_DIGEST.json"],
+      "cli_command": "python H:/EAR_OS_V2/EAR_OS_V2/scripts/ztm_purist_archivist.py"
+    },
+    "ingest_arsenal_and_b2b_rag": {
+      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/ingest_arsenal_and_b2b_rag.py",
+      "purpose": "Ingests commercial B2B, pricing, and hardware catalog into cognitive RAG database.",
+      "inputs": ["src/data/pricing-tiers.json", "src/data/arsenal-catalog.json"],
+      "outputs": ["src/data/ear-rag-database.json"],
+      "cli_command": "python H:/EAR_OS_V2/EAR_OS_V2/scripts/ingest_arsenal_and_b2b_rag.py"
+    },
+    "google_indexing_batch": {
+      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/google_indexing_batch.ts",
+      "purpose": "Exports and sends priority URLs (/artistas/reclamar-regalias, /artistas/dashboard, services, B2G) to Google Search Console / Indexing API under canonical www.productoraear.com.",
+      "inputs": [".next/prerender-manifest.json", "src/app/sitemap.ts"],
+      "outputs": ["scripts/priority_urls_indexing.json"],
+      "cli_command": "npx tsx H:/EAR_OS_V2/EAR_OS_V2/scripts/google_indexing_batch.ts"
+    }
+  }
+}

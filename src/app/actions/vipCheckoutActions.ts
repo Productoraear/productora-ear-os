@@ -146,7 +146,7 @@ export async function createB2GLightingCheckout(input: B2GLightingCheckoutInput)
   const conceptTitle = `Smart-Lock 72h · Bloqueo de Stock & Tarifa LCSP (Ref: ${sku})`;
   const conceptDesc = `Reserva oficial de stock de fábrica y emisión de memoria técnica visada para ${productName} (${municipality}). Depósito compensable en pliego final.`;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
