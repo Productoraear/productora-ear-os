@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      return new NextResponse(pngBuffer, {
+      return new NextResponse(new Uint8Array(pngBuffer), {
         status: 200,
         headers: {
           "Content-Type": "image/png",
