@@ -40,10 +40,7 @@ export const AffiliatesPanel = () => {
       }).filter(Boolean) as Affiliate[];
       setReferrals(data);
     }, (error) => {
-        setReferrals([
-            { id: '1', name: 'Alfonso R.', commission: 450, status: 'pending', source: 'IG Lead', date: '21/04' },
-            { id: '2', name: 'Marta G.', commission: 1200, status: 'pending', source: 'Web Dir', date: '21/04' }
-        ]);
+        setReferrals([]);
     });
     return () => unsubscribe();
   }, []);

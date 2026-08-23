@@ -33,9 +33,9 @@ export const VampirePanel = () => {
     const [loading, setLoading] = useState(true);
     const [isTransmuting, setIsTransmuting] = useState(false);
     const [stats, setStats] = useState({
-        scanned: 14041,
-        efficiency: 98.4,
-        threats: 3
+        scanned: 0,
+        efficiency: 0,
+        threats: 0
     });
 
     const handleTransmute = async () => {

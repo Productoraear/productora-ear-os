@@ -27,7 +27,11 @@ type UserEvent = z.infer<typeof EventSchema>;
 
 export const CROPanel = () => {
   const [events, setEvents] = useState<UserEvent[]>([]);
-  const stats = { visits: 12482, checkout: 1452, paid: 384 };
+  const stats = { 
+    visits: events.length, 
+    checkout: events.filter(e => e.type === 'CHECKOUT').length, 
+    paid: events.filter(e => e.type === 'PAID').length 
+  };
 
   useEffect(() => {
     const q = query(collection(db, 'user_events'), orderBy('timestamp', 'desc'), limit(15));

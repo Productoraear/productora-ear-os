@@ -1,7 +1,20 @@
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import Script from "next/script";
+import { Fraunces, Montserrat } from "next/font/google";
 import "./globals.css";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 // Provider Imports
 import { SharedProvider } from "@/app/context/SharedContext";
@@ -52,10 +65,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" suppressHydrationWarning className="dark scroll-smooth">
+    <html 
+      lang="es" 
+      suppressHydrationWarning 
+      className={`dark scroll-smooth ${fraunces.variable} ${montserrat.variable}`}
+    >
       <head />
       <body 
-        className="antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans"
+        className={`antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans ${fraunces.variable} ${montserrat.variable}`}
         suppressHydrationWarning
       >
         {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (

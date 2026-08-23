@@ -192,22 +192,26 @@ export default function SmartMarketplaceNav() {
     <div className="w-full space-y-16">
       
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          1. DUAL SEARCH BAR HERO BOX (CON MEGA MENÚ Y SELECTOR DE PROVINCIAS)
+          1. DUAL SEARCH BAR HERO BOX (S-CLASS OLED & GLASS SURFACE)
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div className="max-w-4xl mx-auto text-center space-y-6">
         <div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white font-syne tracking-tight mb-2">
-            Encuentra todo lo que necesitas para tu boda
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-montserrat font-bold tracking-[0.25em] uppercase mb-4">
+            <Sparkles className="w-3 h-3" />
+            <span>RED DE PROVEEDORES & PRODUCCIÓN HOMOLOGADA</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-francia tracking-tight mb-2">
+            Encuentra Servicios Homologados y Producción de Gala
           </h2>
-          <p className="text-sm sm:text-base text-neutral-400 font-light">
-            ¡Tienes más de <strong className="text-white font-semibold">65.000 proveedores y servicios S-Class</strong> verificados para elegir!
+          <p className="text-sm sm:text-base text-zinc-300 font-normal font-montserrat max-w-2xl mx-auto">
+            Fincas, catering de alta escuela, artistas de conservatorio y equipamiento acústico con garantía de ejecución.
           </p>
         </div>
 
-        {/* Dual Search Input Container */}
+        {/* Dual Search Input Container — S-Class Dark Glass Surface */}
         <form 
           onSubmit={handleSearch}
-          className="relative bg-white rounded-3xl p-2 shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col md:flex-row items-stretch gap-2 text-neutral-800"
+          className="relative bg-[#0c0c12]/95 border border-white/15 rounded-3xl p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.9)] flex flex-col md:flex-row items-stretch gap-2 text-white focus-within:border-[#ecb613]/50 focus-within:shadow-[0_0_35px_rgba(236,182,19,0.15)] transition-all backdrop-blur-2xl"
         >
           {/* Input 1: Servicio / Categoría / Nombre */}
           <div ref={categoryRef} className="relative flex-1">
@@ -216,29 +220,29 @@ export default function SmartMarketplaceNav() {
                 setIsCategoryDropdownOpen(prev => !prev);
                 setIsLocationDropdownOpen(false);
               }}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-white/[0.04] transition-colors cursor-pointer"
             >
-              <Search className="w-5 h-5 text-neutral-400 shrink-0" />
+              <Search className="w-5 h-5 text-[#ecb613] shrink-0" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onFocus={() => setIsCategoryDropdownOpen(true)}
-                placeholder="Busca por nombre o por categoría"
-                className="w-full bg-transparent text-sm sm:text-base font-medium text-neutral-900 placeholder-neutral-500 focus:outline-none cursor-pointer"
+                placeholder="Busca por servicio, artista o categoría..."
+                className="w-full bg-transparent text-sm sm:text-base font-medium text-white placeholder-zinc-500 focus:outline-none cursor-pointer"
               />
             </div>
 
-            {/* Mega Menú Dropdown de Categorías Jerárquicas */}
+            {/* Mega Menú Dropdown de Categorías Jerárquicas — S-Class Dark */}
             {isCategoryDropdownOpen && (
-              <div className="absolute top-full left-0 right-0 md:w-[750px] bg-white border border-neutral-200 rounded-3xl shadow-2xl p-6 z-50 text-left mt-2 animate-in fade-in max-h-[75vh] overflow-y-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-neutral-700">
+              <div className="absolute top-full left-0 right-0 md:w-[750px] bg-[#0e0e16] border border-white/15 rounded-3xl shadow-2xl p-6 z-50 text-left mt-2 animate-in fade-in max-h-[75vh] overflow-y-auto backdrop-blur-3xl">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-zinc-300">
                   
                   {/* Col 1: Lugares & Fincas */}
                   <div className="space-y-3">
                     <div 
                       onClick={() => handleSelectCategory('Lugares para Boda', '/bodas/fincas-toledo-sonorizacion-gala')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pb-1 border-b border-neutral-100 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pb-1 border-b border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Building2 className="w-4 h-4 text-[#ecb613]" />
                       <span>Lugares para Boda</span>
@@ -248,7 +252,7 @@ export default function SmartMarketplaceNav() {
                         <div 
                           key={sub}
                           onClick={() => handleSelectCategory(sub)}
-                          className="hover:text-[#d4af37] hover:translate-x-1 transition-all cursor-pointer font-medium"
+                          className="text-zinc-400 hover:text-[#ecb613] hover:translate-x-1 transition-all cursor-pointer font-normal"
                         >
                           {sub}
                         </div>
@@ -257,7 +261,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Catering Gourmet')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pt-3 border-t border-neutral-100 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pt-3 border-t border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Utensils className="w-4 h-4 text-[#ecb613]" />
                       <span>Catering Gourmet</span>
@@ -268,7 +272,7 @@ export default function SmartMarketplaceNav() {
                   <div className="space-y-3">
                     <div 
                       onClick={() => handleSelectCategory('Música para Boda', '/artistas/edwin-agudelo')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pb-1 border-b border-neutral-100 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pb-1 border-b border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Music className="w-4 h-4 text-[#ecb613]" />
                       <span>Música & Artistas</span>
@@ -284,7 +288,7 @@ export default function SmartMarketplaceNav() {
                         <div 
                           key={item.title}
                           onClick={() => handleSelectCategory(item.title, item.url)}
-                          className="hover:text-[#d4af37] hover:translate-x-1 transition-all cursor-pointer font-medium"
+                          className="text-zinc-400 hover:text-[#ecb613] hover:translate-x-1 transition-all cursor-pointer font-normal"
                         >
                           {item.title}
                         </div>
@@ -293,7 +297,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Coches de Boda & Chófer VIP', '/servicios/chofer-vip')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pt-2 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pt-2 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Car className="w-4 h-4 text-[#ecb613]" />
                       <span>Coches de Boda VIP</span>
@@ -301,7 +305,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Fotógrafos de Autor')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pt-1 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pt-1 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Camera className="w-4 h-4 text-[#ecb613]" />
                       <span>Fotógrafos & Vídeo 4K</span>
@@ -309,7 +313,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Autobuses & Minivans')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pt-1 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pt-1 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Bus className="w-4 h-4 text-[#ecb613]" />
                       <span>Autobuses para Invitados</span>
@@ -317,7 +321,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Mobiliario & Carpas')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pt-1 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pt-1 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Layers className="w-4 h-4 text-[#ecb613]" />
                       <span>Mobiliario & Carpas</span>
@@ -328,7 +332,7 @@ export default function SmartMarketplaceNav() {
                   <div className="space-y-3">
                     <div 
                       onClick={() => handleSelectCategory('Food Trucks & Mesas Dulces')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pb-1 border-b border-neutral-100 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pb-1 border-b border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Cake className="w-4 h-4 text-[#ecb613]" />
                       <span>Food Truck & Dulces</span>
@@ -336,7 +340,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Floristerías & Ramos')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Flower2 className="w-4 h-4 text-[#ecb613]" />
                       <span>Floristerías</span>
@@ -344,7 +348,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Joyería & Alianzas')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Crown className="w-4 h-4 text-[#ecb613]" />
                       <span>Joyería & Alianzas</span>
@@ -352,7 +356,7 @@ export default function SmartMarketplaceNav() {
 
                     <div 
                       onClick={() => handleSelectCategory('Novias & Alta Costura')}
-                      className="flex items-center gap-2 font-bold text-neutral-900 text-sm pt-2 hover:text-[#d4af37] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 font-bold text-white text-sm pt-2 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Heart className="w-4 h-4 text-[#ecb613]" />
                       <span>Novias & Trajes</span>
@@ -362,7 +366,7 @@ export default function SmartMarketplaceNav() {
                         <div 
                           key={sub}
                           onClick={() => handleSelectCategory(sub)}
-                          className="hover:text-[#d4af37] hover:translate-x-1 transition-all cursor-pointer font-medium"
+                          className="text-zinc-400 hover:text-[#ecb613] hover:translate-x-1 transition-all cursor-pointer font-normal"
                         >
                           {sub}
                         </div>
@@ -371,17 +375,17 @@ export default function SmartMarketplaceNav() {
                   </div>
                 </div>
 
-                {/* Banner de Sorteo / Garantía */}
-                <div className="mt-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between gap-4">
+                {/* Banner S-Class Care */}
+                <div className="mt-6 p-4 rounded-2xl bg-[#14141e] border border-[#ecb613]/25 flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <PartyPopper className="w-8 h-8 text-[#d4af37] shrink-0" />
+                    <ShieldCheck className="w-7 h-7 text-[#ecb613] shrink-0" />
                     <div>
-                      <h4 className="text-xs font-bold text-neutral-900">Gana 5.000 € para tu boda con EAR OS</h4>
-                      <p className="text-[11px] text-neutral-600">Al reservar cualquiera de nuestros servicios homologados entras automáticamente en el sorteo mensual.</p>
+                      <h4 className="text-xs font-bold text-white">Garantía de Solvencia S-Class</h4>
+                      <p className="text-[11px] text-zinc-400">Todos los proveedores cuentan con verificación técnica y póliza de responsabilidad civil.</p>
                     </div>
                   </div>
-                  <span className="px-3 py-1.5 rounded-xl bg-[#ecb613] text-black font-bold text-xs uppercase tracking-wider shrink-0">
-                    S-Class Care
+                  <span className="px-3.5 py-1.5 rounded-xl bg-[#ecb613] text-black font-bold text-xs uppercase tracking-wider shrink-0 font-montserrat">
+                    S-Class Shield
                   </span>
                 </div>
               </div>
@@ -389,35 +393,35 @@ export default function SmartMarketplaceNav() {
           </div>
 
           {/* Input 2: Selector de Ubicación / Provincia */}
-          <div ref={locationRef} className="relative md:w-72 border-t md:border-t-0 md:border-l border-neutral-200">
+          <div ref={locationRef} className="relative md:w-72 border-t md:border-t-0 md:border-l border-white/10">
             <div 
               onClick={() => {
                 setIsLocationDropdownOpen(prev => !prev);
                 setIsCategoryDropdownOpen(false);
               }}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-white/[0.04] transition-colors cursor-pointer"
             >
-              <span className="text-xs text-neutral-400 font-bold uppercase">en</span>
+              <span className="text-xs text-[#ecb613] font-bold uppercase">en</span>
               <input
                 type="text"
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
                 onFocus={() => setIsLocationDropdownOpen(true)}
                 placeholder="Dónde (Provincia)"
-                className="w-full bg-transparent text-sm sm:text-base font-medium text-neutral-900 placeholder-neutral-500 focus:outline-none cursor-pointer"
+                className="w-full bg-transparent text-sm sm:text-base font-medium text-white placeholder-zinc-500 focus:outline-none cursor-pointer"
               />
-              <MapPin className="w-4 h-4 text-neutral-400 shrink-0" />
+              <MapPin className="w-4 h-4 text-zinc-400 shrink-0" />
             </div>
 
-            {/* Dropdown de Provincias */}
+            {/* Dropdown de Provincias — S-Class Dark */}
             {isLocationDropdownOpen && (
-              <div className="absolute top-full left-0 right-0 md:w-80 bg-white border border-neutral-200 rounded-3xl shadow-2xl p-4 z-50 text-left mt-2 animate-in fade-in max-h-80 overflow-y-auto">
-                <div className="flex items-center border-b border-neutral-100 pb-2 mb-3">
+              <div className="absolute top-full left-0 right-0 md:w-80 bg-[#0e0e16] border border-white/15 rounded-3xl shadow-2xl p-4 z-50 text-left mt-2 animate-in fade-in max-h-80 overflow-y-auto backdrop-blur-3xl">
+                <div className="flex items-center border-b border-white/10 pb-2 mb-3">
                   <button
                     type="button"
                     onClick={() => setLocationTab('provincia')}
                     className={`flex-1 py-1.5 text-xs font-bold text-center border-b-2 transition-all ${
-                      locationTab === 'provincia' ? 'border-[#ecb613] text-neutral-900' : 'border-transparent text-neutral-400'
+                      locationTab === 'provincia' ? 'border-[#ecb613] text-[#ecb613]' : 'border-transparent text-zinc-400'
                     }`}
                   >
                     España (Provincias)
@@ -426,7 +430,7 @@ export default function SmartMarketplaceNav() {
                     type="button"
                     onClick={() => setLocationTab('internacional')}
                     className={`flex-1 py-1.5 text-xs font-bold text-center border-b-2 transition-all ${
-                      locationTab === 'internacional' ? 'border-[#ecb613] text-neutral-900' : 'border-transparent text-neutral-400'
+                      locationTab === 'internacional' ? 'border-[#ecb613] text-[#ecb613]' : 'border-transparent text-zinc-400'
                     }`}
                   >
                     Destinos VIP
@@ -439,7 +443,7 @@ export default function SmartMarketplaceNav() {
                       key={prov}
                       type="button"
                       onClick={() => handleSelectLocation(prov)}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs text-neutral-700 hover:bg-neutral-100 hover:text-black font-medium transition-colors flex items-center justify-between"
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs text-zinc-300 hover:bg-white/10 hover:text-white font-medium transition-colors flex items-center justify-between"
                     >
                       <span>{prov}</span>
                       {selectedLocation === prov && <Check className="w-3.5 h-3.5 text-[#ecb613]" />}
@@ -450,12 +454,12 @@ export default function SmartMarketplaceNav() {
             )}
           </div>
 
-          {/* Botón de Búsqueda */}
+          {/* Botón de Búsqueda S-Class */}
           <button
             type="submit"
-            className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-[#ecb613] to-[#d4af37] text-black font-extrabold text-sm sm:text-base hover:brightness-110 transition-all shadow-lg shadow-[#ecb613]/30 cursor-pointer flex items-center justify-center gap-2"
+            className="px-8 py-3.5 rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-extrabold font-montserrat text-sm sm:text-base transition-all shadow-lg shadow-[#ecb613]/25 hover:shadow-[0_0_30px_rgba(236,182,19,0.4)] cursor-pointer flex items-center justify-center gap-2 shrink-0"
           >
-            <Search className="w-4 h-4" />
+            <Search className="w-4 h-4 text-black stroke-[2.5]" />
             <span>Buscar</span>
           </button>
         </form>
@@ -466,8 +470,8 @@ export default function SmartMarketplaceNav() {
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
-          <h3 className="text-xl sm:text-2xl font-bold text-white font-syne">
-            Empieza a contratar tus proveedores
+          <h3 className="text-xl sm:text-2xl font-bold text-white font-francia">
+            Servicios & Proveedores Homologados
           </h3>
         </div>
 
@@ -486,12 +490,12 @@ export default function SmartMarketplaceNav() {
             <Link
               key={idx}
               href={catItem.url}
-              className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#ecb613]/50 hover:bg-white/[0.06] transition-all flex items-center gap-4 group"
+              className="p-4 rounded-2xl bg-[#0c0c12]/90 border border-white/10 hover:border-[#ecb613]/50 hover:bg-[#151520] transition-all flex items-center gap-4 group"
             >
               <div className="p-3 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/20 group-hover:scale-110 transition-transform">
                 <catItem.icon className="w-5 h-5 text-[#ecb613]" />
               </div>
-              <span className="text-sm font-bold text-white group-hover:text-[#ecb613] transition-colors">
+              <span className="text-sm font-bold text-white group-hover:text-[#ecb613] transition-colors font-montserrat">
                 {catItem.title}
               </span>
             </Link>
@@ -500,7 +504,7 @@ export default function SmartMarketplaceNav() {
 
         {/* Otras Categorías (Pills) */}
         <div className="pt-2 border-t border-white/10">
-          <span className="text-[11px] font-mono uppercase text-neutral-400 font-bold block mb-3">
+          <span className="text-[11px] font-mono uppercase text-zinc-400 font-bold block mb-3">
             Otras Categorías S-Class:
           </span>
           <div className="flex flex-wrap items-center gap-2">
@@ -512,7 +516,7 @@ export default function SmartMarketplaceNav() {
               <button
                 key={tag}
                 onClick={() => handleSelectCategory(tag)}
-                className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-xs text-neutral-300 transition-all font-medium cursor-pointer"
+                className="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-xs text-zinc-300 transition-all font-medium cursor-pointer"
               >
                 {tag}
               </button>
@@ -527,7 +531,7 @@ export default function SmartMarketplaceNav() {
       <div className="max-w-7xl mx-auto relative">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white font-syne">
+            <h3 className="text-xl sm:text-2xl font-bold text-white font-francia">
               Espacios y Banquetes por Zona
             </h3>
             <p className="text-xs text-neutral-400 mt-0.5">

@@ -22,9 +22,27 @@ module.exports = {
           foreground: "var(--muted-foreground)",
         },
         border: "var(--border)",
-        // Keep original brand colors as fallback/utilities
+        // 🏛️ EAR OS 60-30-10 S-CLASS COLOR SYSTEM
+        // 60% Dominant (OLED Black / Obsidian Canvas)
         obsidian: "#050505",
+        onyx: "#08080a",
+        canvas: "#050505",
+
+        // 30% Secondary (Bento Structures, Panels & Muted Silver Texts)
+        "surface-bento": "#0e0e12",
+        "surface-panel": "#141418",
+        "surface-elevated": "#1c1c22",
+        "border-subtle": "rgba(255, 255, 255, 0.08)",
+        "border-glass": "rgba(255, 255, 255, 0.14)",
+        "text-secondary": "#9ca3af",
+
+        // 10% Accent (Imperial Gold Focal Points & Conversion CTAs)
         gold: "#ecb613",
+        "gold-imperial": "#ecb613",
+        "gold-light": "#f5c538",
+        "gold-dark": "#b38805",
+        "gold-glow": "rgba(236, 182, 19, 0.25)",
+
         // Stitch Semantic Tokens (Additive)
         "on-surface-variant": "#d0c5af",
         "surface-bright": "#3a3939",
@@ -42,9 +60,16 @@ module.exports = {
         "outline-variant": "#4d4635",
       },
       fontFamily: {
-        "headline": ["Newsreader", "serif"],
-        "body": ["Inter", "sans-serif"],
-        "label": ["Space Grotesk", "sans-serif"]
+        francia: ["var(--font-fraunces)", "Fraunces", "serif"],
+        fraunces: ["var(--font-fraunces)", "Fraunces", "serif"],
+        montserrat: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
+        headline: ["var(--font-fraunces)", "Fraunces", "serif"],
+        display: ["var(--font-fraunces)", "Fraunces", "serif"],
+        serif: ["var(--font-fraunces)", "Fraunces", "serif"],
+        body: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
+        sans: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
+        label: ["Space Grotesk", "sans-serif"],
+        syne: ["var(--font-fraunces)", "Syne", "sans-serif"],
       },
       borderRadius: {
         "DEFAULT": "0px", 
