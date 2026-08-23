@@ -90,6 +90,9 @@ export class UniversalCueBridge {
       }
     }
 
+    // 🧹 SANEAMIENTO & DESDUPLICACIÓN AUTOMÁTICA v4.18
+    tracks = this.deduplicateTracklist(tracks);
+
     const totalSeconds = tracks.reduce((acc, t) => acc + (t.durationSeconds || 180), 0);
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -108,6 +111,53 @@ export class UniversalCueBridge {
       parsedAt: new Date().toISOString(),
       rawFileName: fileName
     };
+  }
+
+  /**
+   * 🧹 ALGORITMO DE DESDUPLICACIÓN & DEBOUNCE S-CLASS v4.18
+   * Elimina duplicados consecutivos y filtra precargas de decks en < 120s.
+   */
+  public static deduplicateTracklist(tracks: ParsedTrack[]): ParsedTrack[] {
+    if (!tracks || tracks.length === 0) return [];
+
+    const result: ParsedTrack[] = [];
+    
+    for (let i = 0; i < tracks.length; i++) {
+      const current = tracks[i];
+      const normTitle = current.title.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+      const normArtist = current.artist.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+
+      if (result.length === 0) {
+        result.push({ ...current, orderIndex: 1 });
+        continue;
+      }
+
+      const prev = result[result.length - 1];
+      const prevNormTitle = prev.title.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+      const prevNormArtist = prev.artist.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+
+      // Comprobar coincidencia consecutiva de título y artista
+      const isConsecutiveDuplicate = 
+        (normTitle === prevNormTitle && (normArtist === prevNormArtist || normArtist === 'artista no identificado' || prevNormArtist === 'artista no identificado')) ||
+        (normTitle.length > 5 && (normTitle.includes(prevNormTitle) || prevNormTitle.includes(normTitle)));
+
+      if (isConsecutiveDuplicate) {
+        // Consolidar duración con la mayor observada
+        const maxSec = Math.max(prev.durationSeconds || 0, current.durationSeconds || 0);
+        if (maxSec > (prev.durationSeconds || 0)) {
+          prev.durationSeconds = maxSec;
+          prev.durationFormatted = `${Math.floor(maxSec / 60)}:${(maxSec % 60).toString().padStart(2, '0')}`;
+        }
+        prev.confidence = Math.min(1.0, (prev.confidence || 0.9) + 0.04);
+      } else {
+        result.push({
+          ...current,
+          orderIndex: result.length + 1
+        });
+      }
+    }
+
+    return result;
   }
 
   // --- REKORDBOX XML PARSER ---
@@ -200,7 +250,8 @@ export class UniversalCueBridge {
     let idx = 1;
     let softwareDetected: ParsedTrack['sourceFormat'] = content.includes('#EXTVDJ') ? 'VIRTUALDJ' : 'GENERIC_M3U';
 
-    for (let i = 0; i < lines.length; i++) {
+    let i = 0;
+    while (i < lines.length) {
       const line = lines[i].trim();
       if (line.startsWith('#EXTINF:')) {
         const info = line.substring(8);
@@ -209,6 +260,15 @@ export class UniversalCueBridge {
         const trackString = commaIdx !== -1 ? info.substring(commaIdx + 1).trim() : info.trim();
 
         const { artist, title } = this.cleanArtistAndTitle(trackString);
+
+        // Advance past following file path lines to prevent double insertion
+        let nextIdx = i + 1;
+        while (nextIdx < lines.length && (lines[nextIdx].trim().length === 0 || (lines[nextIdx].trim().startsWith('#') && !lines[nextIdx].trim().startsWith('#EXTINF:')))) {
+          nextIdx++;
+        }
+        if (nextIdx < lines.length && !lines[nextIdx].trim().startsWith('#')) {
+          i = nextIdx;
+        }
 
         tracks.push({
           orderIndex: idx++,
@@ -219,8 +279,8 @@ export class UniversalCueBridge {
           confidence: 0.96,
           sourceFormat: softwareDetected
         });
-      } else if (!line.startsWith('#') && line.length > 3) {
-        // Direct file path in M3U (e.g. G:\Adalberto Santiago - Super Apollo 47_50 - 01-05 Dios Me Libre.flac)
+      } else if (!line.startsWith('#') && line.length > 3 && line.includes('.')) {
+        // Standalone file path line (without #EXTINF)
         const filename = line.split(/[\\/]/).pop()?.replace(/\.[^/.]+$/, '') || line;
         const { artist, title } = this.cleanArtistAndTitle(filename);
 
@@ -234,8 +294,9 @@ export class UniversalCueBridge {
           sourceFormat: softwareDetected
         });
       }
+      i++;
     }
-    return tracks;
+    return this.deduplicateTracklist(tracks);
   }
 
   // --- SERATO CSV PARSER ---

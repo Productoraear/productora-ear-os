@@ -72,6 +72,44 @@ function cleanArtistAndTitle(rawString) {
   return { artist, title };
 }
 
+// 🧹 ALGORITMO DE DESDUPLICACIÓN & DEBOUNCE S-CLASS v4.18
+function deduplicateTracklist(tracks) {
+  if (!tracks || tracks.length === 0) return [];
+  const result = [];
+  for (let i = 0; i < tracks.length; i++) {
+    const current = tracks[i];
+    const normTitle = current.title.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+    const normArtist = current.artist.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+
+    if (result.length === 0) {
+      result.push({ ...current, orderIndex: 1 });
+      continue;
+    }
+
+    const prev = result[result.length - 1];
+    const prevNormTitle = prev.title.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+    const prevNormArtist = prev.artist.trim().toLowerCase().replace(/[\s\-_]+/g, ' ');
+
+    const isConsecutiveDuplicate = 
+      (normTitle === prevNormTitle && (normArtist === prevNormArtist || normArtist === 'artista no identificado' || prevNormArtist === 'artista no identificado')) ||
+      (normTitle.length > 5 && (normTitle.includes(prevNormTitle) || prevNormTitle.includes(normTitle)));
+
+    if (isConsecutiveDuplicate) {
+      const maxSec = Math.max(prev.durationSeconds || 0, current.durationSeconds || 0);
+      if (maxSec > (prev.durationSeconds || 0)) {
+        prev.durationSeconds = maxSec;
+        prev.durationFormatted = `${Math.floor(maxSec / 60)}:${(maxSec % 60).toString().padStart(2, '0')}`;
+      }
+    } else {
+      result.push({
+        ...current,
+        orderIndex: result.length + 1
+      });
+    }
+  }
+  return result;
+}
+
 // Parser M3U Universal
 function parseM3U(content, fileName) {
   const tracks = [];
@@ -79,7 +117,8 @@ function parseM3U(content, fileName) {
   let idx = 1;
   const isVdj = content.includes('#EXTVDJ') || fileName.toLowerCase().includes('virtualdj');
 
-  for (let i = 0; i < lines.length; i++) {
+  let i = 0;
+  while (i < lines.length) {
     const line = lines[i].trim();
     if (line.startsWith('#EXTINF:')) {
       const info = line.substring(8);
@@ -87,6 +126,15 @@ function parseM3U(content, fileName) {
       const sec = commaIdx !== -1 ? parseInt(info.substring(0, commaIdx), 10) : 240;
       const trackStr = commaIdx !== -1 ? info.substring(commaIdx + 1).trim() : info.trim();
       const { artist, title } = cleanArtistAndTitle(trackStr);
+
+      // Avanzar pasando la ruta de archivo para evitar doble inserción
+      let nextIdx = i + 1;
+      while (nextIdx < lines.length && (lines[nextIdx].trim().length === 0 || (lines[nextIdx].trim().startsWith('#') && !lines[nextIdx].trim().startsWith('#EXTINF:')))) {
+        nextIdx++;
+      }
+      if (nextIdx < lines.length && !lines[nextIdx].trim().startsWith('#')) {
+        i = nextIdx;
+      }
 
       tracks.push({
         orderIndex: idx++,
@@ -109,8 +157,9 @@ function parseM3U(content, fileName) {
         sourceFormat: isVdj ? 'VIRTUALDJ' : 'GENERIC_M3U'
       });
     }
+    i++;
   }
-  return tracks;
+  return deduplicateTracklist(tracks);
 }
 
 // Render HTML del Certificado S-Class
@@ -222,6 +271,9 @@ function renderCertificateHtml(cert) {
 </html>`;
 }
 
+// Memoria de Debounce Lock para sincronizaciones simultáneas (Local & OneDrive)
+const recentContentHashes = new Map();
+
 // Procesar archivo de sesión
 function processHistoryFile(filePath) {
   const ext = path.extname(filePath).toLowerCase();
@@ -233,6 +285,15 @@ function processHistoryFile(filePath) {
   try {
     const rawContent = fs.readFileSync(filePath, 'utf-8');
     if (!rawContent || rawContent.trim().length < 10) return;
+
+    // 🔒 CERROJO DEBOUNCE HASH (10 Segundos)
+    const contentHash = crypto.createHash('sha256').update(rawContent.trim()).digest('hex');
+    const lastProcessedTime = recentContentHashes.get(contentHash);
+    if (lastProcessedTime && (Date.now() - lastProcessedTime < 10000)) {
+      logEvent(`[EAR OS WATCHER] ⚡ Contenido idéntico procesado recientemente (Debounce Lock 10s). Omitiendo duplicado de sincronización.`);
+      return;
+    }
+    recentContentHashes.set(contentHash, Date.now());
 
     const tracks = parseM3U(rawContent, fileName);
     if (tracks.length === 0) return;

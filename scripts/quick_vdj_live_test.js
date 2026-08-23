@@ -96,11 +96,12 @@ function cleanArtistAndTitle(rawString) {
   return { artist, title };
 }
 
-const parsedTracks = [];
+let parsedTracks = [];
 const lines = m3uContent.split('\n');
 let orderIdx = 1;
 
-for (let i = 0; i < lines.length; i++) {
+let i = 0;
+while (i < lines.length) {
   const line = lines[i].trim();
   if (line.startsWith('#EXTINF:')) {
     const info = line.substring(8);
@@ -108,6 +109,14 @@ for (let i = 0; i < lines.length; i++) {
     const sec = commaIdx !== -1 ? parseInt(info.substring(0, commaIdx), 10) : 240;
     const trackStr = commaIdx !== -1 ? info.substring(commaIdx + 1).trim() : info.trim();
     const { artist, title } = cleanArtistAndTitle(trackStr);
+
+    let nextIdx = i + 1;
+    while (nextIdx < lines.length && (lines[nextIdx].trim().length === 0 || (lines[nextIdx].trim().startsWith('#') && !lines[nextIdx].trim().startsWith('#EXTINF:')))) {
+      nextIdx++;
+    }
+    if (nextIdx < lines.length && !lines[nextIdx].trim().startsWith('#')) {
+      i = nextIdx;
+    }
 
     parsedTracks.push({
       orderIndex: orderIdx++,
@@ -118,7 +127,38 @@ for (let i = 0; i < lines.length; i++) {
       confidence: 0.99,
       sourceFormat: 'VIRTUALDJ'
     });
+  } else if (!line.startsWith('#') && line.length > 4 && line.includes('.')) {
+    const filename = line.split(/[\\/]/).pop()?.replace(/\.[^/.]+$/, '') || line;
+    const { artist, title } = cleanArtistAndTitle(filename);
+
+    parsedTracks.push({
+      orderIndex: orderIdx++,
+      title,
+      artist,
+      durationSeconds: 240,
+      durationFormatted: '4:00',
+      confidence: 0.95,
+      sourceFormat: 'VIRTUALDJ'
+    });
   }
+  i++;
+}
+
+// 🧹 DESDUPLICACIÓN
+const dedupMap = [];
+for (const track of parsedTracks) {
+  const normTitle = track.title.toLowerCase().trim();
+  const last = dedupMap[dedupMap.length - 1];
+  if (!last || last.title.toLowerCase().trim() !== normTitle) {
+    dedupMap.push({ ...track, orderIndex: dedupMap.length + 1 });
+  }
+}
+parsedTracks = dedupMap;
+
+// 🔒 ASSERTION DE UNICIDAD ESTRICTA (v4.18)
+const uniqueTitles = new Set(parsedTracks.map(t => t.title.toLowerCase()));
+if (uniqueTitles.size !== parsedTracks.length || parsedTracks.length !== 5) {
+  throw new Error(`[ERROR UNICIDAD] Se esperaban 5 pistas únicas, pero se encontraron ${parsedTracks.length} con ${uniqueTitles.size} títulos únicos.`);
 }
 
 const elapsedHr = process.hrtime(startTime);
