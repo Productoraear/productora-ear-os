@@ -211,7 +211,7 @@ def load_whisper_directml_engine():
         feature_extractor=processor.feature_extractor,
         max_new_tokens=128,
         chunk_length_s=30,
-        batch_size=8,
+        batch_size=1,
         return_timestamps=True
     )
     
@@ -435,8 +435,12 @@ def main():
         start_t = time.time()
 
         try:
-            # Transcribe con el pipeline de DirectML ONNX
-            res = pipe(str(audio_path), generate_kwargs={"language": "es", "task": "transcribe"})
+            # Cargar audio de forma 100% segura usando FFmpeg/Whisper a buffer float32
+            import whisper
+            audio_array = whisper.load_audio(str(audio_path))
+            
+            # Transcribe con el pipeline de DirectML ONNX sobre la memoria de la GPU
+            res = pipe(audio_array, generate_kwargs={"language": "es", "task": "transcribe"})
             
             full_text = res.get("text", "") if isinstance(res, dict) else str(res)
             full_text = " ".join(full_text.split()).strip()

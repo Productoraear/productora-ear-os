@@ -91,6 +91,746 @@
     }
   },
   {
+    "id": "prov-sonomusic-madrid-official",
+    "name": "Producciones Sonomusic Madrid",
+    "phone": "+34 600 000 000",
+    "website": "https://producciones-sonomusic.com",
+    "category": "sonido",
+    "province": "madrid",
+    "verified": true,
+    "source": "sonomusic_vampirized_official",
+    "isPreferred": true,
+    "rank": 2,
+    "badge": "PROVEEDOR HOMOLOGADO SONIDO & ILUMINACIÓN",
+    "basePrice": 84,
+    "rating": "4.9",
+    "reviews": 84,
+    "sla": "12 W/pax Homologado + Montaje Madrid",
+    "img": "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-DISCOMOVIL-1.png",
+    "gallery": [
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-DISCOMOVIL-1.png",
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-KARAOKE-2.png",
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-6.png",
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-3-y-5.png",
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-4.png",
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/09/PACK-SONIDO-1-y-2.png",
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-DISCOMOVIL-2.png",
+      "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-KARAOKE-1.png"
+    ],
+    "description": "Alquiler de equipos de sonido, iluminación para eventos, discomóvil, karaoke y backline profesional en Madrid. Cobertura acústica garantizada y montaje in-situ.",
+    "description_full": "Proveedor integral homologado de Productora EAR para eventos en la Comunidad de Madrid. Dispone de sistemas line array, altavoces autoamplificados, microfonía inalámbrica, iluminación robótica DMX, estructuras truss y tarimas Guil homologadas con cálculo de carga.",
+    "address": "Madrid, Comunidad de Madrid",
+    "catalog_items_count": 24,
+    "catalog": [
+      {
+        "id": "sonomusic-pack-discomovil-1",
+        "slug": "pack-discomovil-1",
+        "title": "Pack Discomóvil 1",
+        "category": "discomovil",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-discomovil-1/",
+        "original_price_eur": 360.0,
+        "ear_catalog_price_eur": 432.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Discomóvil 1 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-DISCOMOVIL-1.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:29.160300"
+      },
+      {
+        "id": "sonomusic-pack-karaoke-2",
+        "slug": "pack-karaoke-2",
+        "title": "Pack Karaoke 2",
+        "category": "karaoke",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-karaoke-2/",
+        "original_price_eur": 190.0,
+        "ear_catalog_price_eur": 228.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Karaoke 2 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-KARAOKE-2.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:29.968852"
+      },
+      {
+        "id": "sonomusic-pack-de-sonido-6",
+        "slug": "pack-de-sonido-6",
+        "title": "Pack Sonido 6",
+        "category": "sonido",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-sonido-6/",
+        "original_price_eur": 200.0,
+        "ear_catalog_price_eur": 240.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido 6 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-6.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:30.822186"
+      },
+      {
+        "id": "sonomusic-pack-de-sonido-5",
+        "slug": "pack-de-sonido-5",
+        "title": "Pack Sonido 5",
+        "category": "sonido",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-sonido-5/",
+        "original_price_eur": 150.0,
+        "ear_catalog_price_eur": 180.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido 5 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-3-y-5.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:31.682577"
+      },
+      {
+        "id": "sonomusic-pack-de-sonido-4",
+        "slug": "pack-de-sonido-4",
+        "title": "Pack Sonido 4",
+        "category": "sonido",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-sonido-4/",
+        "original_price_eur": 140.0,
+        "ear_catalog_price_eur": 168.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido 4 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-4.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:32.544542"
+      },
+      {
+        "id": "sonomusic-pack-de-sonido-2",
+        "slug": "pack-de-sonido-2",
+        "title": "Pack Sonido 2",
+        "category": "sonido",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-sonido-2/",
+        "original_price_eur": 80.0,
+        "ear_catalog_price_eur": 96.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido 2 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/09/PACK-SONIDO-1-y-2.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:33.356945"
+      },
+      {
+        "id": "sonomusic-pack-discomovil-2",
+        "slug": "pack-discomovil-2",
+        "title": "Pack Discomóvil 2",
+        "category": "discomovil",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-discomovil-2/",
+        "original_price_eur": 840.0,
+        "ear_catalog_price_eur": 1008.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Discomóvil 2 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-DISCOMOVIL-2.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:34.128203"
+      },
+      {
+        "id": "sonomusic-pack-karaoke-1",
+        "slug": "pack-karaoke-1",
+        "title": "Pack Karaoke 1",
+        "category": "karaoke",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-karaoke-1/",
+        "original_price_eur": 140.0,
+        "ear_catalog_price_eur": 168.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Karaoke 1 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-KARAOKE-1.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:34.918716"
+      },
+      {
+        "id": "sonomusic-pack-de-sonido-3",
+        "slug": "pack-de-sonido-3",
+        "title": "Pack Sonido 3",
+        "category": "sonido",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-sonido-3/",
+        "original_price_eur": 90.0,
+        "ear_catalog_price_eur": 108.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido 3 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-3-y-5.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:35.734218"
+      },
+      {
+        "id": "sonomusic-pack-de-sonido-1",
+        "slug": "pack-de-sonido-1",
+        "title": "Pack Sonido 1",
+        "category": "sonido",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-sonido-1/",
+        "original_price_eur": 70.0,
+        "ear_catalog_price_eur": 84.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido 1 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/09/PACK-SONIDO-1-y-2.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:36.568710"
+      },
+      {
+        "id": "sonomusic-pack-de-sonido-7",
+        "slug": "pack-de-sonido-7",
+        "title": "Pack Sonido 7",
+        "category": "sonido",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-sonido-7/",
+        "original_price_eur": 160.0,
+        "ear_catalog_price_eur": 192.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido 7 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2024/10/SONIDO-7-9-600x600.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:37.476010"
+      },
+      {
+        "id": "sonomusic-pack-backline-1",
+        "slug": "pack-backline-1",
+        "title": "Pack Backline 1",
+        "category": "backline",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-backline-1/",
+        "original_price_eur": 160.0,
+        "ear_catalog_price_eur": 192.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Backline 1 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-BACKLINE.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:38.235302"
+      },
+      {
+        "id": "sonomusic-pack-concierto-5",
+        "slug": "pack-concierto-5",
+        "title": "Pack Concierto 5",
+        "category": "concierto",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-concierto-5/",
+        "original_price_eur": 1170.0,
+        "ear_catalog_price_eur": 1404.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Concierto 5 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2024/10/CONCIERTO-5-1-600x600.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:39.043082"
+      },
+      {
+        "id": "sonomusic-pack-concierto-4",
+        "slug": "pack-concierto-4",
+        "title": "Pack Concierto 4",
+        "category": "concierto",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-concierto-4/",
+        "original_price_eur": 610.0,
+        "ear_catalog_price_eur": 732.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Concierto 4 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2024/10/CONCIERTO-4-2-600x600.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:39.812968"
+      },
+      {
+        "id": "sonomusic-pack-concierto-3",
+        "slug": "pack-concierto-3",
+        "title": "Pack Concierto 3",
+        "category": "concierto",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-concierto-3/",
+        "original_price_eur": 1400.0,
+        "ear_catalog_price_eur": 1680.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Concierto 3 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/CONCIERTO-3-600x600.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:40.540608"
+      },
+      {
+        "id": "sonomusic-pack-concierto-2",
+        "slug": "pack-concierto-2",
+        "title": "Pack Concierto 2",
+        "category": "concierto",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-concierto-2/",
+        "original_price_eur": 650.0,
+        "ear_catalog_price_eur": 780.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Concierto 2 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/CONCIERTO-1-Y-2-1-600x600.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:41.330815"
+      },
+      {
+        "id": "sonomusic-pack-concierto-1",
+        "slug": "pack-concierto-1",
+        "title": "Pack Concierto 1",
+        "category": "concierto",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-concierto-1/",
+        "original_price_eur": 500.0,
+        "ear_catalog_price_eur": 600.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Concierto 1 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/CONCIERTO-1-Y-2-1-600x600.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:42.145900"
+      },
+      {
+        "id": "sonomusic-pack-de-iluminacion-3",
+        "slug": "pack-de-iluminacion-3",
+        "title": "Pack Iluminación 3",
+        "category": "iluminacion",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-iluminacion-3/",
+        "original_price_eur": 450.0,
+        "ear_catalog_price_eur": 540.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Iluminación 3 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-ILUMINACION-3.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:42.904353"
+      },
+      {
+        "id": "sonomusic-pack-de-iluminacion-2",
+        "slug": "pack-de-iluminacion-2",
+        "title": "Pack Iluminación 2",
+        "category": "iluminacion",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-iluminacion-2/",
+        "original_price_eur": 170.0,
+        "ear_catalog_price_eur": 204.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Iluminación 2 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-ILUMINACION-2.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:43.673412"
+      },
+      {
+        "id": "sonomusic-pack-de-iluminacion-1",
+        "slug": "pack-de-iluminacion-1",
+        "title": "Pack Iluminación 1",
+        "category": "iluminacion",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-de-iluminacion-1/",
+        "original_price_eur": 120.0,
+        "ear_catalog_price_eur": 144.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Iluminación 1 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-ILUMINACION-1.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:44.408975"
+      },
+      {
+        "id": "sonomusic-pack-sonido-iluminacion-3",
+        "slug": "pack-sonido-iluminacion-3",
+        "title": "Pack Sonido + Iluminación 3",
+        "category": "iluminacion",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-sonido-iluminacion-3/",
+        "original_price_eur": 700.0,
+        "ear_catalog_price_eur": 840.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido + Iluminación 3 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-ILUMINACION-3.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:45.245870"
+      },
+      {
+        "id": "sonomusic-pack-sonido-iluminacion-2",
+        "slug": "pack-sonido-iluminacion-2",
+        "title": "Pack Sonido + Iluminación 2",
+        "category": "iluminacion",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-sonido-iluminacion-2/",
+        "original_price_eur": 310.0,
+        "ear_catalog_price_eur": 372.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido + Iluminación 2 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-ILUMINACION-2.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:46.002853"
+      },
+      {
+        "id": "sonomusic-pack-sonido-iluminacion-1",
+        "slug": "pack-sonido-iluminacion-1",
+        "title": "Pack Sonido + Iluminación 1",
+        "category": "iluminacion",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-sonido-iluminacion-1/",
+        "original_price_eur": 200.0,
+        "ear_catalog_price_eur": 240.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Sonido + Iluminación 1 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2023/10/PACK-SONIDO-ILUMINACION-1.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:46.740665"
+      },
+      {
+        "id": "sonomusic-pack-iluminacion-4",
+        "slug": "pack-iluminacion-4",
+        "title": "Pack Iluminación 4",
+        "category": "iluminacion",
+        "url_source": "https://producciones-sonomusic.com/producto/pack-iluminacion-4/",
+        "original_price_eur": 990.0,
+        "ear_catalog_price_eur": 1188.0,
+        "markup_applied": "+20%",
+        "watts_rms": null,
+        "pax_recommended": null,
+        "description": "Pack Iluminación 4 profesional para eventos en Madrid.",
+        "features": [
+          "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+          "Packs de sonido",
+          "Packs de iluminación",
+          "Packs Karaoke",
+          "Packs Sonido + Iluminación",
+          "Packs Backline",
+          "Packs Concierto / Discomóvil",
+          "Servicios",
+          "Alquiler",
+          "Nosotros"
+        ],
+        "images": [
+          "https://producciones-sonomusic.com/wp-content/uploads/2026/08/Sonomusic-2-600x600.png"
+        ],
+        "vampirized_at": "2026-08-23T21:53:47.631617"
+      }
+    ],
+    "services_list": [
+      "Alquiler de Equipos de Sonido Profesional (Packs desde 84€)",
+      "Iluminación Espectacular DMX y Cabezas Móviles",
+      "Packs de Discomóvil con Cabina DJ y Sonorización",
+      "Packs de Karaoke Profesional para Fiestas Privadas",
+      "Packs de Concierto y Sonorización de Bandas",
+      "Alquiler de Backline (Baterías, Amplificadores, Teclados)"
+    ],
+    "vampirized": true,
+    "last_updated": "2026-08-23T21:53:47.904517"
+  },
+  {
     "id": "prov-1",
     "name": "24 Film Studio",
     "phone": "703831064",
