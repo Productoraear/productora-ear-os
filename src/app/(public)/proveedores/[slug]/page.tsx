@@ -399,6 +399,74 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               </div>
             </section>
 
+            {/* 📦 CATÁLOGO DE PACKS & EQUIPAMIENTO OFICIAL (+20% EAR) */}
+            {Array.isArray(rawProvider.catalog) && rawProvider.catalog.length > 0 && (
+              <section id="catalogo" className="space-y-4 pt-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">Catálogo Oficial Homologado</span>
+                    <h3 className="text-2xl font-bold font-syne text-white uppercase">Packs de Sonido, Iluminación y Directo ({rawProvider.catalog.length})</h3>
+                  </div>
+                  <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono rounded-full font-bold">
+                    Tarifas Oficiales EAR (+20%)
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {rawProvider.catalog.map((item: any, idx: number) => (
+                    <div key={idx} className="p-5 bg-[#09090d] border border-white/10 hover:border-[#ecb613]/40 rounded-3xl space-y-4 transition-all group flex flex-col justify-between">
+                      <div className="space-y-3">
+                        {item.images && item.images[0] && (
+                          <div className="h-36 w-full rounded-2xl overflow-hidden bg-black/40 relative">
+                            <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                            {item.watts_rms && (
+                              <span className="absolute top-2 left-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-md border border-white/10 text-white text-[10px] font-mono rounded-lg">
+                                {item.watts_rms} W RMS
+                              </span>
+                            )}
+                            {item.pax_recommended && (
+                              <span className="absolute top-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-md border border-white/10 text-[#ecb613] text-[10px] font-mono rounded-lg">
+                                Hasta {item.pax_recommended} PAX
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        <div>
+                          <span className="text-[10px] font-mono text-zinc-500 uppercase">{item.category}</span>
+                          <h4 className="text-base font-bold text-white font-syne mt-0.5">{item.title}</h4>
+                        </div>
+
+                        {item.features && item.features.length > 0 && (
+                          <ul className="space-y-1.5 text-xs text-zinc-400 font-light">
+                            {item.features.slice(0, 3).map((f: string, fIdx: number) => (
+                              <li key={fIdx} className="flex items-start gap-2">
+                                <span className="text-[#ecb613] font-bold">✓</span>
+                                <span className="line-clamp-1">{cleanText(f)}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+
+                      <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+                        <div>
+                          <span className="text-[9px] font-mono text-zinc-500 block">Tarifa Oficial EAR</span>
+                          <span className="text-lg font-black text-white font-mono">{item.ear_catalog_price_eur || item.original_price_eur} €</span>
+                        </div>
+                        <Link
+                          href={`/checkout/presupuesto?proveedor=${slug}&pack=${encodeURIComponent(item.title)}&precio=${item.ear_catalog_price_eur || item.original_price_eur}`}
+                          className="px-4 py-2 bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-mono text-xs font-bold uppercase rounded-xl transition-all"
+                        >
+                          Reservar
+                        </Link>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
             {/* SECCIÓN FAQ (PREGUNTAS FRECUENTES) */}
             <section id="faq" className="space-y-4 pt-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">

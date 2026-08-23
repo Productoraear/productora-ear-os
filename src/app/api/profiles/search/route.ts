@@ -14,26 +14,86 @@ let cachedCategoryCounts: Record<string, number> | null = null;
 function loadMasterProviders(): any[] {
   if (cachedProviders) return cachedProviders;
 
+  let merged: any[] = [];
+  const seenIds = new Set<string>();
+
+  // 1. Curated / Vampirized SSOT Providers (Sonomusic, Edwin Agudelo, etc.)
+  try {
+    const curatedPath = path.join(process.cwd(), 'src', 'data', 'all_providers_database.json');
+    if (fs.existsSync(curatedPath)) {
+      const raw = fs.readFileSync(curatedPath, 'utf-8');
+      const list = JSON.parse(raw);
+      list.forEach((p: any) => {
+        const id = p.id || p.slug;
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          merged.push({
+            id: p.id || p.slug,
+            name: p.name,
+            slug: p.slug || (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+            category: p.category === 'sonido' ? 'AUDIO_LUCES' : (p.category || 'SERVICIOS_EVENTOS'),
+            phone: p.phone,
+            pricing: {
+              rentalBasePrice: p.basePrice || 84,
+              currency: 'EUR'
+            },
+            metrics: {
+              rating: parseFloat(p.rating || '4.9'),
+              reviewCount: p.reviews || 84,
+              verificationLevel: 'S_CLASS_HOMOLOGADO'
+            },
+            location: {
+              address: p.address || 'Madrid, España',
+              city: 'Madrid',
+              province: p.province || 'Madrid'
+            },
+            media: {
+              coverImage: p.img || (p.gallery && p.gallery[0]) || 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=800',
+              gallery: p.gallery || []
+            },
+            technicalSpecs: {
+              maxPax: 500,
+              acousticPowerRequiredWatts: 2000
+            },
+            description: p.description || '',
+            claimToken: `claim_${p.id}_sclass`
+          });
+        }
+      });
+    }
+  } catch (e) {
+    console.warn('[SEARCH_API] Error cargando all_providers_database:', e);
+  }
+
+  // 2. Harvested Directory
   try {
     const jsonPath = path.join(process.cwd(), 'src', 'data', 'bodas-vendors-harvested.json');
     if (fs.existsSync(jsonPath)) {
       const raw = fs.readFileSync(jsonPath, 'utf-8');
-      cachedProviders = JSON.parse(raw);
-      
-      // Calcular conteos de categorías
-      const counts: Record<string, number> = { ALL: (cachedProviders || []).length };
-      (cachedProviders || []).forEach((p: any) => {
-        const cat = p.category || 'SERVICIOS_EVENTOS';
-        counts[cat] = (counts[cat] || 0) + 1;
+      const list = JSON.parse(raw);
+      list.forEach((p: any) => {
+        const id = p.id || p.slug;
+        if (id && !seenIds.has(id)) {
+          seenIds.add(id);
+          merged.push(p);
+        }
       });
-      cachedCategoryCounts = counts;
-
-      return cachedProviders || [];
     }
   } catch (e) {
     console.warn('[SEARCH_API] Error cargando bodas-vendors-harvested:', e);
   }
-  return [];
+
+  cachedProviders = merged;
+
+  // Calcular conteos de categorías
+  const counts: Record<string, number> = { ALL: merged.length };
+  merged.forEach((p: any) => {
+    const cat = p.category || 'SERVICIOS_EVENTOS';
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  cachedCategoryCounts = counts;
+
+  return cachedProviders || [];
 }
 
 export async function GET(request: Request) {
