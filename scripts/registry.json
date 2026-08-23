@@ -64,5 +64,12 @@
     "input": "https://producciones-sonomusic.com/product-sitemap.xml",
     "output": "src/data/catalog_sonomusic_vampirized.json & src/data/all_providers_database.json",
     "cli_command": "python scripts/vampire_scrapers/vampirize_sonomusic.py"
+  },
+  "vampirize_sonomusic_99pct_deep": {
+    "path": "scripts/vampire_scrapers/vampirize_sonomusic_99pct_deep.py",
+    "purpose": "Vampiriza el 99%+ de la web de Sonomusic (articulos tecnicos, Watts RMS, riders, 24 packs) e inyecta en RAG y digest ZTM",
+    "input": "Sitemap y 34 URLs clave de https://producciones-sonomusic.com/",
+    "output": "src/data/ear-rag-database.json & docs/digests/SONOMUSIC_DEEP_TECHNICAL_DIGEST.json",
+    "cli_command": "python scripts/vampire_scrapers/vampirize_sonomusic_99pct_deep.py"
   }
 }
