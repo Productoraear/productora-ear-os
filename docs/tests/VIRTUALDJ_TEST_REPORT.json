@@ -1,0 +1,202 @@
+{
+  "_meta": {
+    "generatedBy": "EAR OS Universal Cue Bridge Test Runner v4.7",
+    "generatedAt": "2026-08-23T15:52:52.019Z",
+    "testType": "VIRTUALDJ_M3U_SIMULATION",
+    "verdict": "PASS"
+  },
+  "certificate": {
+    "certificateId": "EAR-CERT-MT5ZKI7M-2TWA",
+    "issuedAt": "2026-08-23T15:52:52.018Z",
+    "sha256Proof": "8726965A17BBD28CCC49C42FDE146E6E2910099A430DEF976E40E46EF1907757",
+    "venue": {
+      "venueName": "Finca La Concepción — Salón de los Naranjos",
+      "venueNif": "B-29884102",
+      "address": "Ctra. de Istán km 2, 29611 Istán, Málaga",
+      "city": "Marbella (Málaga)",
+      "gpsCoordinates": "36.5101,-4.8824",
+      "ownerEmail": "eventos@fincalaconcepcion.com",
+      "licenseNumber": "LIC-SGAE-2026-098",
+      "maxCapacity": 350
+    },
+    "session": {
+      "softwareDetected": "VIRTUALDJ",
+      "totalTracks": 12,
+      "totalDurationFormatted": "47m 43s",
+      "startTime": "2026-08-23T15:05:09.019Z",
+      "endTime": "2026-08-23T15:52:52.018Z"
+    },
+    "tracks": [
+      {
+        "orderIndex": 1,
+        "title": "Algún Día Mamá (Gala Sinfónica)",
+        "artist": "Edwin Agudelo",
+        "durationSeconds": 225,
+        "durationFormatted": "3:45",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 2,
+        "title": "Mi Propia Realidad (Mariachi Clásico)",
+        "artist": "Edwin Agudelo",
+        "durationSeconds": 240,
+        "durationFormatted": "4:00",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 3,
+        "title": "Vivir Mi Vida (DJ Edwin Live Remix)",
+        "artist": "Marc Anthony",
+        "durationSeconds": 198,
+        "durationFormatted": "3:18",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 4,
+        "title": "La Bicicleta",
+        "artist": "Carlos Vives & Shakira",
+        "durationSeconds": 210,
+        "durationFormatted": "3:30",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 5,
+        "title": "Gasolina (EAR Festival Edit)",
+        "artist": "Daddy Yankee",
+        "durationSeconds": 185,
+        "durationFormatted": "3:05",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 6,
+        "title": "Frecuencia 432Hz Theta Wave",
+        "artist": "VIMUME Neural Healing",
+        "durationSeconds": 330,
+        "durationFormatted": "5:30",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 7,
+        "title": "Tití Me Preguntó (DJ Edwin Extended)",
+        "artist": "Bad Bunny",
+        "durationSeconds": 195,
+        "durationFormatted": "3:15",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 8,
+        "title": "La Bilirrubina (Tropical Gala Set)",
+        "artist": "Juan Luis Guerra",
+        "durationSeconds": 260,
+        "durationFormatted": "4:20",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 9,
+        "title": "Propuesta Indecente (Bachata Elegance)",
+        "artist": "Romeo Santos",
+        "durationSeconds": 215,
+        "durationFormatted": "3:35",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 10,
+        "title": "Serenata Imperial de Gala",
+        "artist": "Edwin Agudelo & Solistas EAR",
+        "durationSeconds": 275,
+        "durationFormatted": "4:35",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 11,
+        "title": "Vida de Rico (Acoustic Live)",
+        "artist": "Camilo",
+        "durationSeconds": 190,
+        "durationFormatted": "3:10",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      },
+      {
+        "orderIndex": 12,
+        "title": "Amanecer en Málaga (Bossa Nova Lounge)",
+        "artist": "Edwin Agudelo",
+        "durationSeconds": 340,
+        "durationFormatted": "5:40",
+        "confidence": 0.95,
+        "sourceFormat": "VIRTUALDJ"
+      }
+    ],
+    "reportingEntities": [
+      "SGAE (Sociedad General de Autores y Editores)",
+      "AIE (Artistas Intérpretes o Ejecutantes)",
+      "AGEDI (Asociación de Gestión de Derechos Intelectuales)"
+    ],
+    "splitDistribution": {
+      "artistsPoolShare": "70% Fondo Directo Artistas & Compositores",
+      "earInfrastructureShare": "20% Canon Servidores & Redundancia N+1 EAR OS",
+      "vimumeResearchShare": "10% Fondo de Investigación Acústica & Salud VIMUME"
+    },
+    "legalDeclaration": "Certificamos bajo fe de sistema digital auditado que la lista adjunta de 12 obras musicales fue ejecutada en el recinto 'Finca La Concepción — Salón de los Naranjos' (CIF/NIF: B-29884102, Dirección: Ctra. de Istán km 2, 29611 Istán, Málaga, GPS: 36.5101,-4.8824) con las garantías de la Ley de Propiedad Intelectual española (Real Decreto Legislativo 1/1996). Firma SHA-256 verificable en nodo EAR OS.",
+    "dispatchStatus": "DISPATCHED_TO_VENUE"
+  },
+  "assertions": [
+    {
+      "name": "Software Detection",
+      "expected": "VIRTUALDJ",
+      "actual": "VIRTUALDJ",
+      "pass": true
+    },
+    {
+      "name": "Track Count > 0",
+      "expected": ">0",
+      "actual": 12,
+      "pass": true
+    },
+    {
+      "name": "SHA-256 Length",
+      "expected": 64,
+      "actual": 64,
+      "pass": true
+    },
+    {
+      "name": "Certificate ID Format",
+      "expected": "EAR-CERT-*",
+      "actual": "EAR-CERT-MT5ZKI7M-2TWA",
+      "pass": true
+    },
+    {
+      "name": "Venue NIF Populated",
+      "expected": "B-29884102",
+      "actual": "B-29884102",
+      "pass": true
+    },
+    {
+      "name": "Legal Declaration Present",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "name": "All Tracks Have Artists",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "name": "Duration > 30min",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    }
+  ]
+}
