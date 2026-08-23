@@ -190,6 +190,16 @@ export default function ReclamarRegaliasPage() {
               <DocumentArrowDownIcon className="w-5 h-5 text-cyan-400" />
               <span>Descargar Conector 1-Clic (.ps1)</span>
             </a>
+
+            <a
+              href="/api/tools/qr-cue-bridge"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-5 py-4 bg-zinc-900/80 hover:bg-zinc-800 text-[#ecb613] border border-[#ecb613]/30 font-bold text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
+              <ShieldCheckIcon className="w-4 h-4" />
+              <span>Ver QR para Cabina</span>
+            </a>
           </div>
 
           {/* Social Proof Live Counter */}
