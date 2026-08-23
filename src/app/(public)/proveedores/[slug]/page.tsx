@@ -146,13 +146,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const provider = await getProviderData(slug);
   if (!provider) return { title: 'Proveedor Homologado | Productora EAR' };
 
-  const name = cleanText(provider.name);
+  const providerIdShort = (provider.id || slug).substring(0, 8).toUpperCase();
+  const category = cleanText(provider.atomic_specs?.category || provider.category || 'Sonido & Iluminación');
   const location = cleanText(provider.atomic_specs?.location || provider.province || 'Madrid');
 
   return {
-    title: `${name} | Proveedor de Bodas & Eventos en ${location} (EAR OS)`,
-    description: `Ficha oficial de ${name}. Consulta precios desde ${provider.basePrice || 900}€, opiniones 5.0, disponibilidad y cotización inmediata con Price-Lock 72h.`,
-    keywords: [name, 'dj bodas madrid', 'proveedor bodas.net', 'musica bodas', 'productora ear']
+    title: `Proveedor Homologado S-Class #${providerIdShort} (${category} · ${location}) | Productora EAR`,
+    description: `Ficha técnica oficial de proveedor homologado por Productora EAR en ${location}. Cobertura acústica garantizada (12 W/pax), seguro de RC y reserva oficial con Price-Lock 72h.`,
+    keywords: ['proveedor homologado ear', 'sonido eventos madrid', 'iluminacion bodas madrid', 'alquiler equipos sonido', 'productora ear']
   };
 }
 
@@ -176,15 +177,14 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
     );
   }
 
-  const rawName = cleanText(rawProvider.name);
-  const category = cleanText(rawProvider.atomic_specs?.category || rawProvider.category || 'Música / DJ');
+  const category = cleanText(rawProvider.atomic_specs?.category || rawProvider.category || 'Música & Sonido');
   const location = cleanText(rawProvider.atomic_specs?.location || rawProvider.address || `${rawProvider.province || 'Madrid'}, España`);
   const providerIdShort = (rawProvider.id || slug).substring(0, 8).toUpperCase();
   
-  // MÁSCARA DE IDENTIDAD S-CLASS (P0 ANTI-FUGA)
+  // 🏛️ MÁSCARA DE IDENTIDAD S-CLASS (P0 ANTI-FUGA SOVEREIGN SHIELD)
   const displayName = isUnlocked 
-    ? rawName 
-    : `Proveedor Verificado S-Class #${providerIdShort} — ${category} ${location.split(',')[0]}`;
+    ? `División Técnica Homologada #${providerIdShort} · ${category}`
+    : `Proveedor Homologado S-Class #${providerIdShort} — ${category} (${location.split(',')[0]})`;
 
   const rating = rawProvider.atomic_specs?.metrics?.rating || rawProvider.rating || 5.0;
   const reviewsCount = rawProvider.atomic_specs?.metrics?.reviewCount || rawProvider.reviews || 27;
@@ -520,7 +520,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             {/* 🛡️ SUPPLIER BLUR-LOCK (P0 ANTI-FUGA & REVENUE ENGINE) */}
             <SupplierBlurLock
               supplierId={rawProvider.id || slug}
-              supplierName={rawName}
+              supplierName={`Proveedor Homologado #${providerIdShort}`}
               category={category}
               city={location.split(',')[0]}
               slug={slug}
