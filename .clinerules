@@ -34,3 +34,17 @@
 - **Valoración Base Semilla**: 1,11 M€ a 1,40 M€ Pre-Money (80% Technical Derisking alcanzado).
 - **Umbral 1 (4.900 € MRR)**: 100 Proveedores B2B activos a 49 €/mes -> Desbloqueo hacia horquilla 2,5 M€ – 4,0 M€.
 - **Umbral 2 (90.000 € GMV)**: 20 Contratos B2G adjudicados bajo Art. 118 LCSP.
+
+## 6. Hardware Local & Ollama GPU Offloading (v4.10)
+- **Workstation**: PC Windows con AMD Radeon RX 7900 XTX (24 GB VRAM).
+- **Ollama Endpoint**: `http://localhost:11434` — Modelos preferidos: `qwen2.5-coder:32b`, fallback `llama3.1:latest`.
+- **REGLA DE ENRUTAMIENTO**: Para tareas de extracción masiva de datos, indexación RAG, lectura de logs, parsing off-context y clasificación semántica de archivos, DELEGAR la ejecución a la instancia de Ollama local para preservar el contexto del agente principal y evitar consumo innecesario de tokens API en la nube.
+- **Casos de Uso Locales**: Batch ingestion de PDFs/Word/MD, ZTM Purist Archivist sweeps, parseo de historiales DJ, generación de resúmenes semánticos para `ear-rag-database.json`.
+- **Regla de Preservación**: La GPU local procesa; la nube razona. Nunca invertir esta prioridad.
+
+## 7. Universal Cue Bridge & Proof of Play B2B (v4.10)
+- **Parser Universal**: `src/lib/UniversalCueBridge.ts` — Soporta VirtualDJ, Serato, Rekordbox, Traktor, Denon Engine y formato genérico.
+- **Generador Forense**: `src/lib/cue-sheet-generator.ts` — Acta de Ejecución Pública con firma SHA-256, NIF Venue, GPS, SGAE/AIE/AGEDI.
+- **Instalador DJ 1-Click**: `scripts/install-ear-cue-bridge.ps1` — Selector multi-marca con 6 opciones + auto-detección + Ollama GPU check.
+- **Test Runner**: `scripts/test_virtualdj_bridge.js` — 8/8 assertions PASS, exporta visado HTML al Desktop.
+- **Watcher de Sesiones**: `~/.ear-os/ear-session-watcher.ps1` — FileSystemWatcher en segundo plano para auto-procesar historiales al cerrar sesión DJ.

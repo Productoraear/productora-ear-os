@@ -1,14 +1,14 @@
 {
   "_meta": {
     "generatedBy": "EAR OS Universal Cue Bridge Test Runner v4.7",
-    "generatedAt": "2026-08-23T15:52:52.019Z",
+    "generatedAt": "2026-08-23T16:02:56.255Z",
     "testType": "VIRTUALDJ_M3U_SIMULATION",
     "verdict": "PASS"
   },
   "certificate": {
-    "certificateId": "EAR-CERT-MT5ZKI7M-2TWA",
-    "issuedAt": "2026-08-23T15:52:52.018Z",
-    "sha256Proof": "8726965A17BBD28CCC49C42FDE146E6E2910099A430DEF976E40E46EF1907757",
+    "certificateId": "EAR-CERT-MT5ZXGFY-V7AU",
+    "issuedAt": "2026-08-23T16:02:56.254Z",
+    "sha256Proof": "6A8556FF87EE7B6566A275F21E874311F6ABEF0774968E28668F8A25D5682964",
     "venue": {
       "venueName": "Finca La Concepción — Salón de los Naranjos",
       "venueNif": "B-29884102",
@@ -23,8 +23,8 @@
       "softwareDetected": "VIRTUALDJ",
       "totalTracks": 12,
       "totalDurationFormatted": "47m 43s",
-      "startTime": "2026-08-23T15:05:09.019Z",
-      "endTime": "2026-08-23T15:52:52.018Z"
+      "startTime": "2026-08-23T15:15:13.255Z",
+      "endTime": "2026-08-23T16:02:56.254Z"
     },
     "tracks": [
       {
@@ -171,7 +171,7 @@
     {
       "name": "Certificate ID Format",
       "expected": "EAR-CERT-*",
-      "actual": "EAR-CERT-MT5ZKI7M-2TWA",
+      "actual": "EAR-CERT-MT5ZXGFY-V7AU",
       "pass": true
     },
     {
