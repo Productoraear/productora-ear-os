@@ -1,14 +1,9 @@
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
- * 🎧 EAR OS — REAL-TIME SESSION WATCHER & AUTO-CERTIFICATE ENGINE v4.13
+ * 🎧 EAR OS — REAL-TIME MULTI-PATH SESSION WATCHER & EVENT LOGGER v4.17
  * ═══════════════════════════════════════════════════════════════════════════════
- * Monitorea carpetas de historial DJ (VirtualDJ, Serato, Rekordbox, Traktor).
- * Al detectar un nuevo .m3u/.csv/.nml/.xml:
- *   1. Parsea el tracklist en sub-100ms con UniversalCueBridge.
- *   2. Genera firma criptográfica SHA-256 inmutable.
- *   3. Exporta acta visada al Escritorio (~/Desktop/EAR_OS_SESION_[FECHA].html)
- *      y a ~/.ear-os/certificates/.
- *   4. Archiva el fichero original en ~/.ear-os/session-history/.
+ * Monitorea de forma continua y simultánea todas las rutas posibles de VirtualDJ
+ * (Local, OneDrive, Carpetas de Usuario) y exporta actas visadas en tiempo real.
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
@@ -17,11 +12,23 @@ const path   = require('path');
 const os     = require('os');
 const crypto = require('crypto');
 
-const CONFIG_PATH   = path.join(os.homedir(), '.ear-os', 'ear-dj-config.json');
-const CERTS_DIR     = path.join(os.homedir(), '.ear-os', 'certificates');
-const HISTORY_DIR   = path.join(os.homedir(), '.ear-os', 'session-history');
-const DESKTOP_DIR   = path.join(os.homedir(), 'Desktop');
-const WATCHER_LOG   = path.join(os.homedir(), '.ear-os', 'watcher.log');
+const HOME          = os.homedir();
+const CONFIG_PATH   = path.join(HOME, '.ear-os', 'ear-dj-config.json');
+const CERTS_DIR     = path.join(HOME, '.ear-os', 'certificates');
+const HISTORY_DIR   = path.join(HOME, '.ear-os', 'session-history');
+const WATCHER_LOG   = path.join(HOME, '.ear-os', 'watcher.log');
+
+// Posibles ubicaciones del Escritorio (Local + OneDrive)
+const DESKTOP_PATHS = [
+  path.join(HOME, 'Desktop'),
+  path.join(HOME, 'OneDrive', 'Desktop'),
+  path.join(HOME, 'OneDrive - Personal', 'Desktop')
+].filter(p => fs.existsSync(p));
+
+// Asegurar directorios de la bóveda
+[CERTS_DIR, HISTORY_DIR, path.dirname(WATCHER_LOG)].forEach(dir => {
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+});
 
 function logEvent(msg) {
   const line = `[${new Date().toISOString()}] ${msg}\n`;
@@ -31,12 +38,7 @@ function logEvent(msg) {
   console.log(msg);
 }
 
-// Asegurar directorios
-[CERTS_DIR, HISTORY_DIR, DESKTOP_DIR].forEach(dir => {
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-});
-
-// Cargar Configuración
+// Cargar Configuración Local
 function loadConfig() {
   if (fs.existsSync(CONFIG_PATH)) {
     try {
@@ -51,7 +53,7 @@ function loadConfig() {
   };
 }
 
-// Limpieza de Artista y Título
+// Limpieza y Extracción de Artista y Título
 function cleanArtistAndTitle(rawString) {
   let text = rawString.trim().replace(/^[0-9]+[\.\-\)\s_]+/, '').trim();
   let artist = 'Artista No Identificado';
@@ -70,7 +72,7 @@ function cleanArtistAndTitle(rawString) {
   return { artist, title };
 }
 
-// Parser M3U
+// Parser M3U Universal
 function parseM3U(content, fileName) {
   const tracks = [];
   const lines = content.split('\n');
@@ -111,7 +113,7 @@ function parseM3U(content, fileName) {
   return tracks;
 }
 
-// Render HTML Certificate
+// Render HTML del Certificado S-Class
 function renderCertificateHtml(cert) {
   const trackRows = cert.tracks.map((t, idx) => `
     <tr style="border-bottom: 1px solid #1f1f28; font-family: 'JetBrains Mono', monospace; font-size: 11px;">
@@ -144,7 +146,7 @@ function renderCertificateHtml(cert) {
 <body>
   <div class="container">
     <div class="header">
-      <div class="badge">ACTA DE EJECUCIÓN PÚBLICA AUTOMÁTICA · EAR OS S-CLASS v4.13</div>
+      <div class="badge">ACTA DE EJECUCIÓN PÚBLICA AUTOMÁTICA · EAR OS S-CLASS v4.17</div>
       <h1 style="font-family: 'Syne', sans-serif; margin: 10px 0 4px 0; font-size: 24px; color: #fff;">Certificado Forense de Repertorio & Proof of Play</h1>
       <p style="margin: 0; font-size: 12px; color: #a1a1aa; font-family: 'JetBrains Mono', monospace;">ID Documento: <strong style="color: #fff;">${cert.certificateId}</strong> | Emitido: ${new Date(cert.issuedAt).toLocaleString('es-ES')}</p>
     </div>
@@ -199,13 +201,13 @@ function renderCertificateHtml(cert) {
 </html>`;
 }
 
-// Procesar un archivo de historial
+// Procesar archivo de sesión
 function processHistoryFile(filePath) {
   const ext = path.extname(filePath).toLowerCase();
   if (!['.m3u', '.m3u8', '.csv', '.xml', '.nml', '.txt'].includes(ext)) return;
 
   const fileName = path.basename(filePath);
-  console.log(`[EAR OS WATCHER] Procesando nuevo historial detectado: ${fileName}`);
+  logEvent(`\n[EVENTO DETECTADO] Archivo modificado: ${filePath}`);
 
   try {
     const rawContent = fs.readFileSync(filePath, 'utf-8');
@@ -242,51 +244,71 @@ function processHistoryFile(filePath) {
 
     const htmlContent = renderCertificateHtml(certObj);
 
-    // 1. Guardar en Desktop
-    const desktopHtmlPath = path.join(DESKTOP_DIR, `EAR_OS_SESION_${todayStr}_${timestamp}.html`);
-    fs.writeFileSync(desktopHtmlPath, htmlContent, 'utf-8');
+    // 1. Guardar en todos los Escritorios detectados (Local + OneDrive)
+    const targetDesktops = [
+      path.join(HOME, 'Desktop'),
+      path.join(HOME, 'OneDrive', 'Desktop'),
+      path.join(HOME, 'OneDrive - Personal', 'Desktop')
+    ];
+
+    targetDesktops.forEach(desk => {
+      if (fs.existsSync(desk)) {
+        const deskFile = path.join(desk, `EAR_OS_SESION_${todayStr}_${timestamp}.html`);
+        fs.writeFileSync(deskFile, htmlContent, 'utf-8');
+        logEvent(`[EAR OS WATCHER] 💻 Guardado en Escritorio: ${deskFile}`);
+      }
+    });
 
     // 2. Guardar en ~/.ear-os/certificates
     const certFilePath = path.join(CERTS_DIR, `${certificateId}.html`);
     fs.writeFileSync(certFilePath, htmlContent, 'utf-8');
 
-    // 3. Archivar copia del historial
+    // 3. Archivar copia en ~/.ear-os/session-history
     const archivedHistoryPath = path.join(HISTORY_DIR, `[${todayStr}]_${fileName}`);
     fs.copyFileSync(filePath, archivedHistoryPath);
 
     logEvent(`[EAR OS WATCHER] ✅ Certificado SHA-256 Emitido: ${certificateId}`);
-    logEvent(`[EAR OS WATCHER] 💻 Guardado en Desktop: ${desktopHtmlPath}`);
+    logEvent(`[EAR OS WATCHER] 🔒 Firma Hash: ${sha256Proof.substring(0, 32)}...`);
     logEvent(`[EAR OS WATCHER] 🏛️ Guardado en Bóveda: ${certFilePath}`);
   } catch (err) {
     logEvent(`[EAR OS WATCHER] ❌ Error procesando ${filePath}: ${err.message}`);
   }
 }
 
-// Iniciar Vigilancia Continua
+// Iniciar Vigilancia Multi-Ruta
 function startWatcher() {
   const config = loadConfig();
-  const watchDirs = [];
+  const potentialPaths = [
+    path.join(HOME, 'Documents', 'VirtualDJ', 'History'),
+    path.join(HOME, 'OneDrive', 'Documents', 'VirtualDJ', 'History'),
+    path.join(HOME, 'OneDrive - Personal', 'Documents', 'VirtualDJ', 'History'),
+    path.join(HOME, 'Documents', 'Rekordbox'),
+    path.join(HOME, 'Music', '_Serato_'),
+    path.join(HOME, 'Documents', 'Native Instruments', 'Traktor Pro')
+  ];
 
-  // Directorio por defecto de VirtualDJ
-  const vdjHistoryDir = path.join(os.homedir(), 'Documents', 'VirtualDJ', 'History');
-  if (fs.existsSync(vdjHistoryDir)) watchDirs.push(vdjHistoryDir);
-
-  // Directorios configurados en detectedSoftware
+  // Agregar directorios configurados
   if (config.detectedSoftware) {
     Object.values(config.detectedSoftware).forEach(sw => {
-      if (sw.historyDirectory && fs.existsSync(sw.historyDirectory) && !watchDirs.includes(sw.historyDirectory)) {
-        watchDirs.push(sw.historyDirectory);
+      if (sw.historyDirectory && !potentialPaths.includes(sw.historyDirectory)) {
+        potentialPaths.push(sw.historyDirectory);
       }
     });
   }
 
+  // Filtrar solo las carpetas existentes
+  const watchDirs = potentialPaths.filter(p => fs.existsSync(p));
+
   console.log(`═══════════════════════════════════════════════════════════════`);
-  console.log(`  🎧 EAR OS — REAL-TIME SESSION WATCHER ACTIVO (v4.13)`);
-  console.log(`  Monitoreando ${watchDirs.length} carpeta(s) de historial DJ:`);
-  watchDirs.forEach(d => console.log(`  - ${d}`));
+  console.log(`  🎧 EAR OS — REAL-TIME MULTI-PATH SESSION WATCHER (v4.17)`);
+  console.log(`  Directorios activos bajo vigilancia continua:`);
+  watchDirs.forEach(d => console.log(`  ✓ ${d}`));
+  if (watchDirs.length === 0) {
+    console.log(`  [!] Ninguna carpeta DJ encontrada en rutas estándar.`);
+  }
   console.log(`═══════════════════════════════════════════════════════════════`);
 
-  const processedFiles = new Map(); // path -> mtime
+  const processedFiles = new Map();
 
   function checkDir(dir) {
     if (!fs.existsSync(dir)) return;
@@ -301,47 +323,42 @@ function startWatcher() {
           const lastMtime = processedFiles.get(fullPath);
           if (!lastMtime || stats.mtimeMs > lastMtime) {
             processedFiles.set(fullPath, stats.mtimeMs);
-            // Delay 500ms to ensure writer finished writing
             setTimeout(() => {
               if (fs.existsSync(fullPath)) {
                 processHistoryFile(fullPath);
               }
-            }, 500);
+            }, 300);
           }
         } catch (e) {}
       });
     } catch (err) {}
   }
 
-  // Populate initial mtimes so we don't re-certify ancient files on boot
+  // Registrar mtimes iniciales
   watchDirs.forEach(dir => {
-    if (fs.existsSync(dir)) {
-      try {
-        fs.readdirSync(dir).forEach(f => {
-          const fullPath = path.join(dir, f);
-          try {
-            const stats = fs.statSync(fullPath);
-            processedFiles.set(fullPath, stats.mtimeMs);
-          } catch (e) {}
-        });
-      } catch (e) {}
-    }
+    try {
+      fs.readdirSync(dir).forEach(f => {
+        const fullPath = path.join(dir, f);
+        try {
+          const stats = fs.statSync(fullPath);
+          processedFiles.set(fullPath, stats.mtimeMs);
+        } catch (e) {}
+      });
+    } catch (e) {}
   });
 
-  // 1. fs.watch for instant notification
+  // Watchers fs.watch + Sondeo periódico cada 1.5s
   watchDirs.forEach(dir => {
     try {
       fs.watch(dir, () => checkDir(dir));
     } catch (err) {}
   });
 
-  // 2. Polling interval every 2 seconds as robust fallback
   setInterval(() => {
     watchDirs.forEach(dir => checkDir(dir));
-  }, 2000);
+  }, 1500);
 }
 
-// Ejecutar si se llama directamente
 if (require.main === module) {
   startWatcher();
 }
