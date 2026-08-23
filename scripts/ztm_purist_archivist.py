@@ -3,13 +3,14 @@ import sys
 import json
 import hashlib
 import shutil
-import re
+import time
 from datetime import datetime
 
 VAULT_BASE = r"H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT"
 MANIFEST_PATH = r"H:\EAR_OS_V2\EAR_OS_V2\scripts\.archived_manifest.json"
 PROCESSED_HASHES_PATH = r"H:\EAR_OS_V2\EAR_OS_V2\scripts\.processed_hashes.json"
 RAG_DB_PATH = r"H:\EAR_OS_V2\EAR_OS_V2\src\data\ear-rag-database.json"
+DIGEST_PATH = r"H:\EAR_OS_V2\EAR_OS_V2\docs\digests\RECYCLED_ASSETS_DIGEST.json"
 
 TARGET_SCAN_DIRS = [
     r"H:\00_PRODUCTORA_EAR\BODEGA_CUARENTENA",
@@ -61,7 +62,7 @@ def extract_semantic_summary(filepath, ext):
     try:
         if ext in ['.md', '.txt', '.json', '.csv', '.html', '.htm', '.py', '.ts', '.tsx', '.js']:
             with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-                sample = f.read(4000)
+                sample = f.read(3000)
         elif ext == '.pdf':
             try:
                 import fitz
@@ -76,17 +77,18 @@ def extract_semantic_summary(filepath, ext):
     except Exception:
         sample = os.path.basename(filepath)
 
-    cleaned = " ".join(sample.split())[:350]
+    cleaned = " ".join(sample.split())[:300]
     return cleaned
 
 def run_ztm_sweep():
     print("=" * 80)
-    print("ANTIGRAVITY OMEGA — BUCLE ZTM DE ARCHIVO FÍSICO & ABSORCIÓN COGNITIVA")
+    print("ANTIGRAVITY OMEGA — BUCLE ZTM DE ARCHIVO FÍSICO & RECICLAJE SEMÁNTICO (v4.20)")
     print(f"Bóveda Central: {VAULT_BASE}")
     print("=" * 80)
 
     os.makedirs(VAULT_BASE, exist_ok=True)
     os.makedirs(os.path.dirname(MANIFEST_PATH), exist_ok=True)
+    os.makedirs(os.path.dirname(DIGEST_PATH), exist_ok=True)
 
     manifest = {}
     if os.path.exists(MANIFEST_PATH):
@@ -127,6 +129,8 @@ def run_ztm_sweep():
     relocated_count = 0
     pointers_count = 0
     today_str = datetime.now().strftime("%Y-%m-%d")
+
+    new_recycled_nodes = []
 
     for scan_root in TARGET_SCAN_DIRS:
         if not os.path.exists(scan_root):
@@ -179,7 +183,7 @@ def run_ztm_sweep():
 
                     rag_node_id = f"ZTM-PTR-{file_hash[:12]}"
                     if rag_node_id not in rag_ids:
-                        rag_docs.append({
+                        node = {
                             "id": rag_node_id,
                             "tipo": "POINTER_MULTIMEDIA_PESADO",
                             "categoria": category,
@@ -188,8 +192,10 @@ def run_ztm_sweep():
                             "sha256": file_hash,
                             "tamaño_mb": round(file_size / (1024 * 1024), 2),
                             "estado": "PRESERVADO_EN_ORIGEN"
-                        })
+                        }
+                        rag_docs.append(node)
                         rag_ids.add(rag_node_id)
+                        new_recycled_nodes.append(node)
                 else:
                     content_sample = extract_semantic_summary(filepath, ext)
                     category = detect_category(f, content_sample)
@@ -216,7 +222,7 @@ def run_ztm_sweep():
 
                         rag_node_id = f"ZTM-DOC-{file_hash[:12]}"
                         if rag_node_id not in rag_ids:
-                            rag_docs.append({
+                            node = {
                                 "id": rag_node_id,
                                 "tipo": "DOCUMENTO_ABSORBIDO_ZTM",
                                 "categoria": category,
@@ -226,8 +232,10 @@ def run_ztm_sweep():
                                 "sha256": file_hash,
                                 "extension": ext,
                                 "fecha_absorcion": today_str
-                            })
+                            }
+                            rag_docs.append(node)
                             rag_ids.add(rag_node_id)
+                            new_recycled_nodes.append(node)
                     except Exception as err:
                         print(f"Error reubicando {filepath}: {err}")
                         continue
@@ -235,14 +243,6 @@ def run_ztm_sweep():
                 processed_count += 1
                 if processed_count % 25 == 0:
                     print(f">> [ZTM PROGRESS] {processed_count} archivos procesados ({relocated_count} reubicados en bóveda, {pointers_count} punteros multimedia)...", flush=True)
-                    # Periodic save of manifests and RAG
-                    try:
-                        with open(MANIFEST_PATH, 'w', encoding='utf-8') as f:
-                            json.dump(manifest, f, indent=2, ensure_ascii=False)
-                        with open(PROCESSED_HASHES_PATH, 'w', encoding='utf-8') as f:
-                            json.dump(hashes, f, indent=2, ensure_ascii=False)
-                    except Exception:
-                        pass
 
     # Save outputs
     with open(MANIFEST_PATH, 'w', encoding='utf-8') as f:
@@ -258,13 +258,34 @@ def run_ztm_sweep():
         with open(RAG_DB_PATH, 'w', encoding='utf-8') as f:
             json.dump(raw_rag, f, indent=2, ensure_ascii=False)
 
+    # Generar Digest Compacto de Reciclaje Semántico
+    digest_data = {
+        "version": "4.20",
+        "generatedAt": datetime.now().isoformat(),
+        "totalNodesInRag": len(rag_docs),
+        "totalArchivedFiles": len(manifest),
+        "newNodesProcessedInRun": len(new_recycled_nodes),
+        "sampleNodes": new_recycled_nodes[:10] if new_recycled_nodes else rag_docs[-10:]
+    }
+
+    with open(DIGEST_PATH, 'w', encoding='utf-8') as f:
+        json.dump(digest_data, f, indent=2, ensure_ascii=False)
+
     print("\n" + "=" * 80)
-    print("DICTAMEN ZTM PURIST ARCHIVIST:")
+    print("DICTAMEN ZTM PURIST ARCHIVIST & SEMANTIC DIGEST:")
     print(f"Archivos Nuevos Procesados: {processed_count}")
     print(f"Archivos Físicamente Reubicados en Bóveda: {relocated_count}")
     print(f"Punteros de Medios Preservados: {pointers_count}")
     print(f"Total Nodos en RAG Database: {len(rag_docs)}")
+    print(f"Digest Semántico Actualizado en: {DIGEST_PATH}")
     print("=" * 80)
 
 if __name__ == "__main__":
-    run_ztm_sweep()
+    is_continuous = "--continuous" in sys.argv or "--loop" in sys.argv
+    if is_continuous:
+        print("[ZTM DAEMON] Iniciando bucle continuo de reciclaje semántico (intervalo: 60s)...")
+        while True:
+            run_ztm_sweep()
+            time.sleep(60)
+    else:
+        run_ztm_sweep()

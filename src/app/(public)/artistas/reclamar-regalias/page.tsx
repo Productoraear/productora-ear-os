@@ -165,15 +165,35 @@ export default function ReclamarRegaliasPage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white font-syne leading-[1.1]">
-            Tu música suena en salas todos los fines de semana y las entidades de gestión <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-300 to-yellow-500">se quedan con tu dinero.</span>
+            Tu música suena en salas y eventos. <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-300 to-yellow-500">Recupera el 100% de tus regalías en 30 segundos.</span>
           </h1>
 
           <p className="text-base sm:text-xl text-zinc-400 font-normal max-w-3xl mx-auto leading-relaxed">
-            Sube el historial de tu controladora (<strong className="text-zinc-200">Pioneer, VirtualDJ, Serato, Traktor, Denon</strong>). Generamos el expediente forense criptográfico con firma SHA-256 e iniciamos la reclamación formal del <span className="text-[#ecb613] font-bold">100% de tus derechos de ejecución pública</span>.
+            Instala el conector silencioso <strong className="text-zinc-200">Cue Bridge de 1-Clic</strong> o sube el historial de tu controladora (<strong className="text-zinc-200">VirtualDJ, Pioneer, Serato, Traktor, Denon</strong>). Certificación forense SHA-256 amparada por el Art. 108 de la LPI.
           </p>
 
+          {/* CTAs Principales de Captación */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <a
+              href="/artistas/dashboard"
+              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-[#ecb613] to-[#d4a855] text-black font-extrabold text-sm font-mono uppercase tracking-wider rounded-xl shadow-xl shadow-[#ecb613]/25 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
+              <SparklesIcon className="w-5 h-5" />
+              <span>Auditar Mi Último Bolo Gratis</span>
+            </a>
+
+            <a
+              href="/api/tools/download-cue-bridge"
+              download="install-ear-cue-bridge.ps1"
+              className="w-full sm:w-auto px-6 py-4 bg-zinc-900 hover:bg-zinc-800 text-white border border-white/10 font-bold text-sm font-mono uppercase tracking-wider rounded-xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
+            >
+              <DocumentArrowDownIcon className="w-5 h-5 text-cyan-400" />
+              <span>Descargar Conector 1-Clic (.ps1)</span>
+            </a>
+          </div>
+
           {/* Social Proof Live Counter */}
-          <div className="inline-flex flex-wrap items-center justify-center gap-6 p-4 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl">
+          <div className="inline-flex flex-wrap items-center justify-center gap-6 p-4 rounded-2xl bg-zinc-900/80 border border-white/10 backdrop-blur-xl shadow-2xl mt-4">
             <div className="flex items-center gap-2 text-left">
               <div className="w-3 h-3 rounded-full bg-emerald-400 animate-ping" />
               <div>
