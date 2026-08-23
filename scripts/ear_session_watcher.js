@@ -21,6 +21,15 @@ const CONFIG_PATH   = path.join(os.homedir(), '.ear-os', 'ear-dj-config.json');
 const CERTS_DIR     = path.join(os.homedir(), '.ear-os', 'certificates');
 const HISTORY_DIR   = path.join(os.homedir(), '.ear-os', 'session-history');
 const DESKTOP_DIR   = path.join(os.homedir(), 'Desktop');
+const WATCHER_LOG   = path.join(os.homedir(), '.ear-os', 'watcher.log');
+
+function logEvent(msg) {
+  const line = `[${new Date().toISOString()}] ${msg}\n`;
+  try {
+    fs.appendFileSync(WATCHER_LOG, line, 'utf-8');
+  } catch (e) {}
+  console.log(msg);
+}
 
 // Asegurar directorios
 [CERTS_DIR, HISTORY_DIR, DESKTOP_DIR].forEach(dir => {
@@ -245,11 +254,11 @@ function processHistoryFile(filePath) {
     const archivedHistoryPath = path.join(HISTORY_DIR, `[${todayStr}]_${fileName}`);
     fs.copyFileSync(filePath, archivedHistoryPath);
 
-    console.log(`[EAR OS WATCHER] ✅ Certificado SHA-256 Emitido: ${certificateId}`);
-    console.log(`[EAR OS WATCHER] 💻 Guardado en Desktop: ${desktopHtmlPath}`);
-    console.log(`[EAR OS WATCHER] 🏛️ Guardado en Bóveda: ${certFilePath}`);
+    logEvent(`[EAR OS WATCHER] ✅ Certificado SHA-256 Emitido: ${certificateId}`);
+    logEvent(`[EAR OS WATCHER] 💻 Guardado en Desktop: ${desktopHtmlPath}`);
+    logEvent(`[EAR OS WATCHER] 🏛️ Guardado en Bóveda: ${certFilePath}`);
   } catch (err) {
-    console.error(`[EAR OS WATCHER] ❌ Error procesando ${filePath}:`, err.message);
+    logEvent(`[EAR OS WATCHER] ❌ Error procesando ${filePath}: ${err.message}`);
   }
 }
 

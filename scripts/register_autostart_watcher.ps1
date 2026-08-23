@@ -29,10 +29,13 @@ Write-Host ""
 if ($Register -or (-not $Unregister -and -not $Status)) {
     Write-Host "[1/3] Creando lanzador VBS ultra-silencioso en Carpeta de Inicio..." -ForegroundColor Cyan
 
+    $nodeExe = (Get-Command node -ErrorAction SilentlyContinue).Source
+    if (-not $nodeExe) { $nodeExe = "C:\Program Files\nodejs\node.exe" }
+
     $vbsContent = @"
 Set WshShell = CreateObject("WScript.Shell")
 WshShell.CurrentDirectory = "$PSScriptRoot"
-WshShell.Run "node ""$WATCHER_SCRIPT""", 0, False
+WshShell.Run """$nodeExe"" ""$WATCHER_SCRIPT""", 0, False
 "@
 
     $vbsContent | Out-File -FilePath $VBS_LAUNCHER -Encoding ascii -Force
@@ -42,7 +45,7 @@ WshShell.Run "node ""$WATCHER_SCRIPT""", 0, False
     Get-Process node -ErrorAction SilentlyContinue | Where-Object { $_.CommandLine -like "*ear_session_watcher.js*" } | Stop-Process -Force
 
     Write-Host "[2/3] Iniciando proceso de vigilancia en segundo plano (Hidden)..." -ForegroundColor Cyan
-    Start-Process "wscript.exe" -ArgumentList "`"$VBS_LAUNCHER`"" -WindowStyle Hidden
+    Start-Process -FilePath $nodeExe -ArgumentList "`"$WATCHER_SCRIPT`"" -WorkingDirectory $PSScriptRoot -WindowStyle Hidden
     Start-Sleep -Seconds 1
 
     Write-Host "[3/3] Verificando estado del watcher..." -ForegroundColor Cyan
