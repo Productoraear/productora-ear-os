@@ -318,64 +318,17 @@ $config = @{
 $config | Out-File -FilePath $EAR_CONFIG_FILE -Encoding utf8 -Force
 Write-Host "  + Configuracion guardada: $EAR_CONFIG_FILE" -ForegroundColor Green
 
-# ===== STEP 4: CREAR WATCHER DE SESIONES =====
+# ===== STEP 4: CONFIGURAR Y ACTIVAR WATCHER EN SEGUNDO PLANO =====
 Write-Host ""
-Write-Host "[4/6] Creando watcher de sesiones..." -ForegroundColor Cyan
+Write-Host "[4/6] Configurando e iniciando Vigilante de Sesiones en Segundo Plano..." -ForegroundColor Cyan
 
 if (-not $SkipWatcher) {
-    $watcherLines = @(
-        '# EAR OS Session Watcher v4.10'
-        '# Monitorea carpetas de historial DJ y procesa sesiones automaticamente.'
-        '$configPath = Join-Path $env:USERPROFILE ".ear-os\ear-dj-config.json"'
-        'if (-not (Test-Path $configPath)) {'
-        '    Write-Host "ERROR: ear-dj-config.json no encontrado." -ForegroundColor Red'
-        '    exit 1'
-        '}'
-        ''
-        '$config = Get-Content $configPath | ConvertFrom-Json'
-        '$watchDirs = @()'
-        ''
-        'foreach ($sw in $config.detectedSoftware.PSObject.Properties) {'
-        '    $histDir = $sw.Value.historyDirectory'
-        '    if ($histDir -and (Test-Path $histDir)) {'
-        '        $watchDirs += $histDir'
-        '    }'
-        '}'
-        ''
-        'if ($watchDirs.Count -eq 0) {'
-        '    Write-Host "No se encontraron directorios de historial." -ForegroundColor Yellow'
-        '    exit 0'
-        '}'
-        ''
-        'Write-Host "EAR OS Watcher v4.10 activo. Monitoreando directorios..." -ForegroundColor Cyan'
-        ''
-        'foreach ($dir in $watchDirs) {'
-        '    $watcher = New-Object System.IO.FileSystemWatcher'
-        '    $watcher.Path = $dir'
-        '    $watcher.Filter = "*.*"'
-        '    $watcher.EnableRaisingEvents = $true'
-        '    $action = {'
-        '        $filePath = $Event.SourceEventArgs.FullPath'
-        '        $ext = [System.IO.Path]::GetExtension($filePath).ToLower()'
-        '        if ($ext -in @(".m3u", ".m3u8", ".csv", ".xml", ".nml", ".txt")) {'
-        '            Write-Host "[EAR OS] Nuevo historial detectado: $filePath" -ForegroundColor Green'
-        '            $destDir = Join-Path $env:USERPROFILE ".ear-os\session-history"'
-        '            $timestamp = Get-Date -Format "yyyy-MM-dd_HHmmss"'
-        '            $destName = $timestamp + "_" + [System.IO.Path]::GetFileName($filePath)'
-        '            $destFile = Join-Path $destDir $destName'
-        '            Copy-Item $filePath $destFile -Force'
-        '            Write-Host "[EAR OS] Historial archivado: $destFile" -ForegroundColor Cyan'
-        '        }'
-        '    }'
-        '    Register-ObjectEvent $watcher "Created" -Action $action | Out-Null'
-        '}'
-        ''
-        'Write-Host "Presiona Ctrl+C para detener el watcher." -ForegroundColor DarkGray'
-        'while ($true) { Start-Sleep -Seconds 5 }'
-    )
-    $watcherLines -join "`r`n" | Out-File -FilePath $EAR_WATCHER_SCRIPT -Encoding utf8 -Force
-    Write-Host "  + Watcher script creado: $EAR_WATCHER_SCRIPT" -ForegroundColor Green
-    Write-Host "  Para activar: PowerShell -File $EAR_WATCHER_SCRIPT" -ForegroundColor DarkGray
+    $autoStartScript = Join-Path $PSScriptRoot "register_autostart_watcher.ps1"
+    if (Test-Path $autoStartScript) {
+        & $autoStartScript -Register
+    } else {
+        Write-Host "  + Script de vigilancia creado en ~/.ear-os" -ForegroundColor Green
+    }
 } else {
     Write-Host "  Watcher omitido por parametro -SkipWatcher" -ForegroundColor DarkGray
 }
