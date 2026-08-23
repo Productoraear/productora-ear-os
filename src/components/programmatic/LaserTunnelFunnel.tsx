@@ -34,23 +34,232 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
   const [isPending, startTransition] = useTransition();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Generador dinámico de los 3 Packs S-Class según vertical
+  // Generador dinámico de los 3 Packs S-Class según INTENT y vertical
   const packs: TierPack[] = React.useMemo(() => {
     const formattedTitle = intentSlug.replace(/-/g, ' ');
+    const slug = (intentSlug || '').toLowerCase();
 
-    if (vertical === 'bodas') {
+    // 1. Chófer VIP / Vehículos Nupciales / Mercedes
+    if (slug.includes('coche') || slug.includes('chofer') || slug.includes('mercedes') || slug.includes('transporte-vip')) {
       return [
         {
           id: 'bronze',
-          name: 'Bronze Essential',
-          subtitle: 'Ceremonia o Cóctel Acústico Íntimo',
-          price: basePrice,
+          name: 'Mercedes Clase E Executive',
+          subtitle: 'Traslado Directo Punto a Punto con Chófer',
+          price: 180,
           deposit10: 10,
-          deposit30: Math.round(basePrice * 0.3),
+          deposit30: 54,
+          features: [
+            'Mercedes-Benz Clase E de alta representación',
+            'Chófer uniformado con protocolo de apertura',
+            'Agua mineral, toallitas y Wi-Fi 5G',
+            'Margen de espera de 20 minutos incluido',
+            'Garantía Price-Lock 72 horas'
+          ]
+        },
+        {
+          id: 'gold',
+          name: 'Mercedes Clase S / Maybach Nupcial',
+          subtitle: 'Servicio de Boda 4h (Recogida + Ceremonia + Finca)',
+          badge: 'MÁS ELEGIDO',
+          recommended: true,
+          price: 450,
+          deposit10: 10,
+          deposit30: 135,
+          features: [
+            'Mercedes Clase S Limousine / Maybach nupcial',
+            'Chófer de gala con traje oscuro y guantes',
+            'Botella de champán frío para los recién casados',
+            'Hasta 4 horas de servicio y 100 km en Madrid',
+            'Coordinación con fotógrafo y wedding planner'
+          ]
+        },
+        {
+          id: 'platinum',
+          name: 'Mercedes Clase V VIP 8h Disposición',
+          subtitle: 'Jornada Completa 7 Plazas (Directivos / Giras)',
+          badge: 'MÁXIMO ESPACIO',
+          price: 850,
+          deposit10: 10,
+          deposit30: 255,
+          features: [
+            'Mercedes Clase V Extra Larga (7 Plazas VIP)',
+            'Configuración salón vis-à-vis con tomas 230V',
+            'Hasta 8 horas de disposición continua',
+            'Conductor bilingüe para delegaciones internacionales',
+            'Seguro de transporte de pasajeros ampliado'
+          ]
+        }
+      ];
+    }
+
+    // 2. Pantallas LED
+    if (slug.includes('pantalla') || slug.includes('led')) {
+      return [
+        {
+          id: 'bronze',
+          name: 'Tótem LED 4K 65-85"',
+          subtitle: 'Punto de Información o Photocall Digital',
+          price: 450,
+          deposit10: 10,
+          deposit30: 135,
+          features: [
+            'Tótem de diseño vertical ultraplano 4K',
+            'Reproductor multimedia USB/HDMI integrado',
+            'Transporte y montaje en Madrid incluido',
+            'Garantía Price-Lock 72 horas'
+          ]
+        },
+        {
+          id: 'gold',
+          name: 'Muro LED Interior P2.6 (3x2m)',
+          subtitle: 'Escenario, Keynotes y Convenciones',
+          badge: 'MÁS ELEGIDO',
+          recommended: true,
+          price: 1450,
+          deposit10: 10,
+          deposit30: 435,
+          features: [
+            'Muro LED P2.6 alta definición (1.000 nits)',
+            'Procesador Novastar VX con escalador 4K',
+            'Estructura truss autoestable certificada',
+            'Técnico operador de vídeo in-situ',
+            'Entradas HDMI/SDI redundantes'
+          ]
+        },
+        {
+          id: 'platinum',
+          name: 'Pantalla Gigante Exterior P3.9 (5x3m)',
+          subtitle: 'Festivales, Plazas y Eventos Masivos',
+          badge: 'ALTO BRILLO',
+          price: 2800,
+          deposit10: 10,
+          deposit30: 840,
+          features: [
+            'Cabinets IP65 (>4.500 nits) visibles bajo sol directo',
+            'Estructura ground-stack con cálculo de viento',
+            'Realización multicámara y streaming en directo',
+            'Equipo técnico completo de montaje y emisión'
+          ]
+        }
+      ];
+    }
+
+    // 3. Alumbrado Navideño / Luces LCSP
+    if (slug.includes('navid') || slug.includes('alumbrado') || slug.includes('luces')) {
+      return [
+        {
+          id: 'bronze',
+          name: 'Ambientación Micro-LED Fincas',
+          subtitle: 'Cortinas Lumínicas y Arbolado IP67',
+          price: 850,
+          deposit10: 10,
+          deposit30: 255,
+          features: [
+            'Guirnaldas y cortinas de micro-LED IP67',
+            'Montaje profesional con cuadros estancos',
+            'Bajo consumo energético A++',
+            'Garantía Price-Lock 72 horas'
+          ]
+        },
+        {
+          id: 'gold',
+          name: 'Proyecto Iluminación 3D Twinkly Pro',
+          subtitle: 'Árbol 3D Gigante + Show de Luces Interactivo',
+          badge: 'ALTA VISIBILIDAD',
+          recommended: true,
+          price: 2900,
+          deposit10: 10,
+          deposit30: 870,
+          features: [
+            'Árbol cónico 3D o photocall monumental transitable',
+            'Animaciones personalizadas con logo o colores de marca',
+            'Montaje nocturno sin interferencia comercial',
+            'Mantenimiento técnico durante la campaña'
+          ]
+        },
+        {
+          id: 'platinum',
+          name: 'Licitación Monumental LCSP',
+          subtitle: 'Alumbrado Integral de Calles y Plazas (<15k€)',
+          badge: 'B2G COMPLIANCE',
+          price: 7500,
+          deposit10: 10,
+          deposit30: 2250,
+          features: [
+            'Arcos de calle + motivos de farolas + Árbol 10.6m',
+            'Memoria técnica visada y seguro RC 600.000 €',
+            'Montaje con elevadores homologados y retirada tras Reyes',
+            'Factura electrónica en formato FACe'
+          ]
+        }
+      ];
+    }
+
+    // 4. VIMUME / Musicoterapia
+    if (vertical === 'vimume' || slug.includes('musicoterapia') || slug.includes('envejecimiento')) {
+      return [
+        {
+          id: 'bronze',
+          name: 'Sesión Piloto Diagnóstica',
+          subtitle: 'Evaluación de Respuesta Neurocognitiva (45 min)',
+          price: 290,
+          deposit10: 10,
+          deposit30: 87,
+          features: [
+            'Músicoterapeuta acreditado en directo',
+            'Cancionero biográfico adaptado a los residentes',
+            'Monitores HiFi con volumen regulado (<75 dB)',
+            'Informe inicial de impacto emocional'
+          ]
+        },
+        {
+          id: 'gold',
+          name: 'Ciclo Mensual VIMUME (4 Sesiones)',
+          subtitle: 'Programa de Mantenimiento y Estimulación Continua',
+          badge: 'RECOMENDADO CENTROS',
+          recommended: true,
+          price: 990,
+          deposit10: 10,
+          deposit30: 297,
+          features: [
+            '4 Sesiones semanales de estimulación evocativa',
+            'Telemetría de respuesta afectiva y sociabilidad',
+            'Informe evolutivo mensual para el equipo médico',
+            'Certificado de buenas prácticas VIMUME'
+          ]
+        },
+        {
+          id: 'platinum',
+          name: 'Programa Institucional Senior Anual',
+          subtitle: 'Implementación Clínica Integral y Conciertos Familiares',
+          badge: 'IMPACTO CLÍNICO',
+          price: 2400,
+          deposit10: 10,
+          deposit30: 720,
+          features: [
+            'Ciclo intensivo trimestral + Concierto intergeneracional',
+            'Formación en estimulación musical al personal auxiliar',
+            'Estudio de impacto clínico avalado por el comité VIMUME'
+          ]
+        }
+      ];
+    }
+
+    // 5. Default Bodas / Música en Directo
+    if (vertical === 'bodas' || slug.includes('mariachi') || slug.includes('serenata')) {
+      return [
+        {
+          id: 'bronze',
+          name: 'Bronze Solista S-Class',
+          subtitle: 'Ceremonia o Cóctel Acústico Íntimo (45-60 min)',
+          price: basePrice || 350,
+          deposit10: 10,
+          deposit30: Math.round((basePrice || 350) * 0.3),
           features: [
             'Edwin Agudelo Solista (Voz y Guitarra)',
             'Sonorización Bose S1 Pro compacta',
-            '45-60 minutos de repertorio romántico',
+            '45-60 minutos de repertorio romántico y mariachi',
             '1 Canción personalizada para entrada de novios',
             'Garantía Price-Lock 72 horas'
           ]
@@ -61,9 +270,9 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
           subtitle: 'Ceremonia + Cóctel + Sonorización de Banquete',
           badge: 'MÁS ELEGIDO',
           recommended: true,
-          price: Math.round(basePrice * 1.6),
+          price: Math.round((basePrice || 350) * 1.6),
           deposit10: 10,
-          deposit30: Math.round(basePrice * 1.6 * 0.3),
+          deposit30: Math.round((basePrice || 350) * 1.6 * 0.3),
           features: [
             'Edwin Agudelo Dúo Armónico (Voz + Piano/Chelo)',
             'Line Array Bose F1 Model 812 (12 W/pax)',
@@ -74,30 +283,33 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
         },
         {
           id: 'platinum',
-          name: 'Platinum Apex Gala',
-          subtitle: 'Producción Integral 360 (Directo + DJ + Luces)',
-          badge: 'EXPERIENCIA TOTAL',
-          price: Math.round(basePrice * 3.2),
+          name: 'Platinum Gran Show Mariachi',
+          subtitle: 'Ensamble Completo 6 Músicos + Trajes Charros de Gala',
+          badge: 'GRAN ESPECTÁCULO',
+          price: 1800,
           deposit10: 10,
-          deposit30: Math.round(basePrice * 3.2 * 0.3),
+          deposit30: 540,
           features: [
-            'Ensamble Cuarteto Acústico + DJ de Gala S-Class',
-            'Sonido concert-grade + Cabina DJ de diseño',
-            'Iluminación robótica DMX sincronizada',
-            'Técnico FOH y stage manager dedicado',
+            'Ensamble Mariachi de 6 Maestros de Conservatorio',
+            'Trompetas, violines, vihuela, guitarrón y voz principal',
+            'Sonorización multicanal Bose F1 y técnico de audio',
+            'Show dinámico interactivo con los invitados',
             'Seguro de Responsabilidad Civil 300.000 €'
           ]
         }
       ];
-    } else if (vertical === 'corporativo') {
+    }
+
+    // 6. Corporativo
+    if (vertical === 'corporativo') {
       return [
         {
           id: 'bronze',
           name: 'Corporate Keynote',
           subtitle: 'Atril, Sonorización Vocal y Streaming HD',
-          price: basePrice,
+          price: basePrice || 500,
           deposit10: 10,
-          deposit30: Math.round(basePrice * 0.3),
+          deposit30: Math.round((basePrice || 500) * 0.3),
           features: [
             'Microfonía Shure Axient Digital (2 Canales)',
             'Consola digital Behringer XR18 y 2 monitores',
@@ -111,9 +323,9 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
           subtitle: 'Junta General, Gala Anual o Presentación VIP',
           badge: 'ESTÁNDAR EMPRESA',
           recommended: true,
-          price: Math.round(basePrice * 1.8),
+          price: Math.round((basePrice || 500) * 1.8),
           deposit10: 10,
-          deposit30: Math.round(basePrice * 1.8 * 0.3),
+          deposit30: Math.round((basePrice || 500) * 1.8 * 0.3),
           features: [
             'PA Line Array calibrada con presión 12 W/pax',
             'Pantalla LED P2.9 de alta definición',
@@ -126,9 +338,9 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
           name: 'Corporate Apex Convention',
           subtitle: 'Convención Multidía & Gala de Entrega de Premios',
           badge: 'BROADCAST 360',
-          price: Math.round(basePrice * 3.5),
+          price: Math.round((basePrice || 500) * 3.5),
           deposit10: 10,
-          deposit30: Math.round(basePrice * 3.5 * 0.3),
+          deposit30: Math.round((basePrice || 500) * 3.5 * 0.3),
           features: [
             'Infraestructura técnica para hasta 1.500 asistentes',
             'Realización multicámara 4K y streaming global',
@@ -137,53 +349,53 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
           ]
         }
       ];
-    } else {
-      // Default Generic Vertical Laser Packs
-      return [
-        {
-          id: 'bronze',
-          name: 'Pack Básico Garantizado',
-          subtitle: `Servicio esencial para ${formattedTitle}`,
-          price: basePrice,
-          deposit10: 10,
-          deposit30: Math.round(basePrice * 0.3),
-          features: [
-            'Equipamiento oficial verificado S-Class',
-            'Montaje y transporte asegurado',
-            'Garantía de precio congelado 72h'
-          ]
-        },
-        {
-          id: 'gold',
-          name: 'Pack Profesional S-Class',
-          subtitle: `Formato recomendado para ${formattedTitle}`,
-          badge: 'MÁS POPULAR',
-          recommended: true,
-          price: Math.round(basePrice * 1.5),
-          deposit10: 10,
-          deposit30: Math.round(basePrice * 1.5 * 0.3),
-          features: [
-            'Mayor cobertura técnica y asistencia in-situ',
-            'Plan B de contingencia técnica sin coste extra',
-            'Certificado de cumplimiento y factura oficial'
-          ]
-        },
-        {
-          id: 'platinum',
-          name: 'Pack Élite Total',
-          subtitle: `Máxima potencia y exclusividad para ${formattedTitle}`,
-          badge: 'PREMIUM',
-          price: Math.round(basePrice * 2.8),
-          deposit10: 10,
-          deposit30: Math.round(basePrice * 2.8 * 0.3),
-          features: [
-            'Producción técnica integral con stage manager',
-            'Atención prioritaria Concierge 24/7',
-            'Seguro de cobertura ampliada'
-          ]
-        }
-      ];
     }
+
+    // Default Fallback
+    return [
+      {
+        id: 'bronze',
+        name: 'Pack Básico Garantizado',
+        subtitle: `Servicio esencial para ${formattedTitle}`,
+        price: basePrice || 350,
+        deposit10: 10,
+        deposit30: Math.round((basePrice || 350) * 0.3),
+        features: [
+          'Equipamiento oficial verificado S-Class',
+          'Montaje y transporte asegurado',
+          'Garantía de precio congelado 72h'
+        ]
+      },
+      {
+        id: 'gold',
+        name: 'Pack Profesional S-Class',
+        subtitle: `Formato recomendado para ${formattedTitle}`,
+        badge: 'MÁS POPULAR',
+        recommended: true,
+        price: Math.round((basePrice || 350) * 1.5),
+        deposit10: 10,
+        deposit30: Math.round((basePrice || 350) * 1.5 * 0.3),
+        features: [
+          'Mayor cobertura técnica y asistencia in-situ',
+          'Plan B de contingencia técnica sin coste extra',
+          'Certificado de cumplimiento y factura oficial'
+        ]
+      },
+      {
+        id: 'platinum',
+        name: 'Pack Élite Total',
+        subtitle: `Máxima potencia y exclusividad para ${formattedTitle}`,
+        badge: 'PREMIUM',
+        price: Math.round((basePrice || 350) * 2.8),
+        deposit10: 10,
+        deposit30: Math.round((basePrice || 350) * 2.8 * 0.3),
+        features: [
+          'Producción técnica integral con stage manager',
+          'Atención prioritaria Concierge 24/7',
+          'Seguro de cobertura ampliada'
+        ]
+      }
+    ];
   }, [vertical, intentSlug, basePrice]);
 
   const activePack = packs.find(p => p.id === selectedTier) || packs[1];
