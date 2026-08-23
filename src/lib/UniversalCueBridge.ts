@@ -198,24 +198,17 @@ export class UniversalCueBridge {
     const tracks: ParsedTrack[] = [];
     const lines = content.split('\n');
     let idx = 1;
+    let softwareDetected: ParsedTrack['sourceFormat'] = content.includes('#EXTVDJ') ? 'VIRTUALDJ' : 'GENERIC_M3U';
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i].trim();
       if (line.startsWith('#EXTINF:')) {
-        // Format: #EXTINF:seconds,Artist - Title
         const info = line.substring(8);
         const commaIdx = info.indexOf(',');
         const seconds = commaIdx !== -1 ? parseInt(info.substring(0, commaIdx), 10) : 180;
         const trackString = commaIdx !== -1 ? info.substring(commaIdx + 1).trim() : info.trim();
 
-        let artist = 'Artista No Identificado';
-        let title = trackString;
-
-        if (trackString.includes(' - ')) {
-          const parts = trackString.split(' - ');
-          artist = parts[0].trim();
-          title = parts.slice(1).join(' - ').trim();
-        }
+        const { artist, title } = this.cleanArtistAndTitle(trackString);
 
         tracks.push({
           orderIndex: idx++,
@@ -223,8 +216,22 @@ export class UniversalCueBridge {
           artist,
           durationSeconds: isNaN(seconds) || seconds <= 0 ? 180 : seconds,
           durationFormatted: `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`,
+          confidence: 0.96,
+          sourceFormat: softwareDetected
+        });
+      } else if (!line.startsWith('#') && line.length > 3) {
+        // Direct file path in M3U (e.g. G:\Adalberto Santiago - Super Apollo 47_50 - 01-05 Dios Me Libre.flac)
+        const filename = line.split(/[\\/]/).pop()?.replace(/\.[^/.]+$/, '') || line;
+        const { artist, title } = this.cleanArtistAndTitle(filename);
+
+        tracks.push({
+          orderIndex: idx++,
+          title,
+          artist,
+          durationSeconds: 240,
+          durationFormatted: '4:00',
           confidence: 0.95,
-          sourceFormat: 'GENERIC_M3U'
+          sourceFormat: softwareDetected
         });
       }
     }
@@ -382,5 +389,30 @@ export class UniversalCueBridge {
       return parts[0] * 3600 + parts[1] * 60 + parts[2];
     }
     return 180;
+  }
+
+  public static cleanArtistAndTitle(rawString: string): { artist: string; title: string } {
+    let text = rawString.trim();
+    // Remove leading numbering like "1. ", "01 - "
+    text = text.replace(/^[0-9]+[\.\-\)\s_]+/, '').trim();
+
+    let artist = 'Artista No Identificado';
+    let title = text;
+
+    if (text.includes(' - ')) {
+      const parts = text.split(' - ').map(p => p.trim());
+      artist = parts[0];
+      
+      // If 3 parts like "Adalberto Santiago - Super Apollo 47_50 - 01-05 Dios Me Libre"
+      if (parts.length >= 3) {
+        const lastPart = parts[parts.length - 1];
+        // Clean track numbers like "01-05 Dios Me Libre" -> "Dios Me Libre"
+        title = lastPart.replace(/^[0-9]+[\-_][0-9]+\s*/, '').replace(/^[0-9]+\s*/, '').trim();
+      } else {
+        title = parts[1].replace(/^[0-9]+[\-_][0-9]+\s*/, '').replace(/^[0-9]+\s*/, '').trim();
+      }
+    }
+
+    return { artist, title };
   }
 }
