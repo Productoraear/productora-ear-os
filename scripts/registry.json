@@ -97,5 +97,17 @@
       "docs/ad_engine/GOOGLE_ADS_CAMPAIGNS_MASTER.md"
     ],
     "cli_command": "python scripts/ad_engine/generate_google_ads_campaigns.py"
+  },
+  "free_llm_suite_launcher": {
+    "path": "scripts/free_llm_suite_launcher.py",
+    "purpose": "Orquesta y lanza el proxy Free Claude Code y resume todos los recursos de IA gratuitos y locales para la RX 7900 XTX",
+    "inputs": [
+      "tools/free-claude-code/.env"
+    ],
+    "outputs": [
+      "http://localhost:8000/v1",
+      "docs/free_llm_resources/GUIA_MAESTRA_RECURSOS_LLM_GRATIS.md"
+    ],
+    "cli_command": "python scripts/free_llm_suite_launcher.py"
   }
 }
