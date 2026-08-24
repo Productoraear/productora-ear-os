@@ -71,5 +71,18 @@
     "input": "Sitemap y 34 URLs clave de https://producciones-sonomusic.com/",
     "output": "src/data/ear-rag-database.json & docs/digests/SONOMUSIC_DEEP_TECHNICAL_DIGEST.json",
     "cli_command": "python scripts/vampire_scrapers/vampirize_sonomusic_99pct_deep.py"
+  },
+  "sanitize_and_transcribe_gpu": {
+    "path": "scripts/sanitize_and_transcribe_gpu.py",
+    "purpose": "Transcripción GPU DirectML forzada en español (language='spanish') con PyTorch DirectML en AMD Radeon RX 7900 XTX",
+    "inputs": [
+      "H:/EAR_OS_V2/public/media",
+      "H:/EAR_OS_V2/VERTICAL_ARTISTAS",
+      "H:/EAR_OS_V2/VERTICAL_INCUBADORA_VAMPIRIZADA"
+    ],
+    "outputs": [
+      "H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/TRANSCRIPCIONES_AUDIO/*.txt"
+    ],
+    "cli_command": "python scripts/sanitize_and_transcribe_gpu.py"
   }
 }
