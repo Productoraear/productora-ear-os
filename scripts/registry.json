@@ -84,5 +84,18 @@
       "H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/TRANSCRIPCIONES_AUDIO/*.txt"
     ],
     "cli_command": "python scripts/sanitize_and_transcribe_gpu.py"
+  },
+  "generate_google_ads_campaigns": {
+    "path": "scripts/ad_engine/generate_google_ads_campaigns.py",
+    "purpose": "Compila el grafo de intencion de busqueda y transcribe audios RAG a campanas Google Ads (Search & Performance Max) con 10/10 Quality Score y CSV de importacion",
+    "inputs": [
+      "src/data/ear-rag-database.json"
+    ],
+    "outputs": [
+      "src/data/google_ads_campaigns_master.json",
+      "src/data/google_ads_editor_import.csv",
+      "docs/ad_engine/GOOGLE_ADS_CAMPAIGNS_MASTER.md"
+    ],
+    "cli_command": "python scripts/ad_engine/generate_google_ads_campaigns.py"
   }
 }
