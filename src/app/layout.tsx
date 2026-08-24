@@ -35,6 +35,8 @@ import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
+import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
+import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
@@ -96,6 +98,7 @@ export default function RootLayout({
                       <SmoothScrollProvider>
                         <SpatialIntelligence />
                         <div className="min-h-screen relative flex flex-col">
+                          <GeoStructuredData />
                           <SovereignNavbar />
                           <main className="flex-grow">
                             {children}
@@ -106,6 +109,7 @@ export default function RootLayout({
                           <BespokePricerModal />
                           <OmniSearchModal />
                           <DynamicContextBar />
+                          <FloatingWhatsAppCta />
                         </div>
                       </SmoothScrollProvider>
                     </EventCartProvider>
