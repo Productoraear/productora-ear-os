@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { useTripwire } from '@/hooks/useTripwire';
 import { useEventCart } from '@/context/EventCartContext';
+import { CouponBono150Complementos } from '@/components/promotions/CouponBono150Complementos';
 
 function CheckoutPresupuestoContent() {
   const searchParams = useSearchParams();
@@ -249,6 +250,9 @@ function CheckoutPresupuestoContent() {
               )}
             </div>
           </div>
+
+          {/* 🎁 BONO DIRECTO 150€ EN COMPLEMENTOS PARA SOLISTA PREMIUM */}
+          <CouponBono150Complementos />
 
           {/* Bloque Financiero y CTA */}
           <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
