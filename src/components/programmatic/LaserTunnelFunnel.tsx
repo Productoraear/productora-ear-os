@@ -246,55 +246,58 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
       ];
     }
 
-    // 5. Default Bodas / Música en Directo
-    if (vertical === 'bodas' || slug.includes('mariachi') || slug.includes('serenata')) {
+    // 5. Default Bodas / Música en Directo / Fiestas Privadas y Ocasiones Emocionales
+    if (vertical === 'bodas' || slug.includes('mariachi') || slug.includes('serenata') || slug.includes('musica') || slug.includes('directo')) {
       return [
         {
           id: 'bronze',
-          name: 'Bronze Solista S-Class',
-          subtitle: 'Ceremonia o Cóctel Acústico Íntimo (45-60 min)',
-          price: basePrice || 350,
+          name: 'Solista Premium S-Class · Edwin Agudelo',
+          subtitle: 'Cumpleaños, Fiestas Privadas, Día de la Madre/Padre & San Valentín',
+          badge: 'SERVICIO DESTACADO EMOCIONAL',
+          price: 350,
           deposit10: 10,
-          deposit30: Math.round((basePrice || 350) * 0.3),
+          deposit30: 105,
           features: [
-            'Edwin Agudelo Solista (Voz y Guitarra)',
-            'Sonorización Bose S1 Pro compacta',
-            '45-60 minutos de repertorio romántico y mariachi',
-            '1 Canción personalizada para entrada de novios',
-            'Garantía Price-Lock 72 horas'
+            'Edwin Agudelo Solista (Voz Principal y Guitarra de Gala)',
+            'Sonorización Bose S1 Pro / dB Technologies (12 W/pax)',
+            'Repertorio personalizado: Serenatas, Boleros, Rancheras y Pop Latino',
+            'Dedicatoria emotiva especial (Día Madre/Padre, Cumpleaños, San Valentín)',
+            'Microfonía inalámbrica Shure Beta 87A',
+            'Garantía Price-Lock 72h y 0 Fallos'
           ]
         },
         {
           id: 'gold',
-          name: 'Gold Signature S-Class',
-          subtitle: 'Ceremonia + Cóctel + Sonorización de Banquete',
-          badge: 'MÁS ELEGIDO',
+          name: 'Quinteto de Gala S-Class (Mínimo 5 Músicos)',
+          subtitle: 'Formato Oficial Mínimo de Grupo para Bodas, Fiestas Patronales y Galas',
+          badge: 'MÍNIMO 5 MÚSICOS GARANTIZADOS',
           recommended: true,
-          price: Math.round((basePrice || 350) * 1.6),
+          price: 750,
           deposit10: 10,
-          deposit30: Math.round((basePrice || 350) * 1.6 * 0.3),
+          deposit30: 225,
           features: [
-            'Edwin Agudelo Dúo Armónico (Voz + Piano/Chelo)',
-            'Line Array Bose F1 Model 812 (12 W/pax)',
-            'Microfonía inalámbrica Shure Beta 87A para votos',
-            'Plan B redundante in-situ (Cero Fallos)',
-            'Coordinación directa con Wedding Planner'
+            'Ensamble Oficial de 5 Músicos de Conservatorio',
+            'Edwin Agudelo (Voz) + 2 Trompetas + Vihuela + Guitarrón',
+            'Trajes Charros de Gran Gala Mexicana / Esmoquin Formal',
+            'Sonorización multicanal Bose F1 Model 812 con técnico de audio',
+            'Show dinámico interactivo con dedicatorias y pase entre invitados',
+            'Seguro de Responsabilidad Civil de 300.000 €'
           ]
         },
         {
           id: 'platinum',
-          name: 'Platinum Gran Show Mariachi',
-          subtitle: 'Ensamble Completo 6 Músicos + Trajes Charros de Gala',
+          name: 'Gran Show Orquesta & Mariachi Imperial (7-8 Músicos)',
+          subtitle: 'Festivales, Grandes Bodas y Eventos Corporativos Monumentales',
           badge: 'GRAN ESPECTÁCULO',
           price: 1800,
           deposit10: 10,
           deposit30: 540,
           features: [
-            'Ensamble Mariachi de 6 Maestros de Conservatorio',
-            'Trompetas, violines, vihuela, guitarrón y voz principal',
-            'Sonorización multicanal Bose F1 y técnico de audio',
-            'Show dinámico interactivo con los invitados',
-            'Seguro de Responsabilidad Civil 300.000 €'
+            'Agrupación completa de 7 a 8 Maestros en directo',
+            'Sección completa de cuerdas (Violines), vientos (Trompetas) y ritmo',
+            'Montaje de sonido Line Array con microfonía inalámbrica para toda la banda',
+            '2 Pases de concierto de gran formato con espectáculo bailable',
+            'Coordinación técnica de producción integral'
           ]
         }
       ];

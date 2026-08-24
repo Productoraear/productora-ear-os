@@ -83,18 +83,33 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
     checkoutAction: 'createSmartLockCheckout'
   },
 
-  // 5. CACHÉ SOLISTA BASE (EDWIN AGUDELO)
-  ARTIST_SOLO_EDWIN_AGUDELO: {
-    id: 'prod_artist_edwin_agudelo_base',
-    sku: 'EAR-ROSTER-EA-350',
-    name: 'Contratación Oficial Solista · Edwin Agudelo',
+  // 5. CACHÉ SOLISTA PREMIUM (EDWIN AGUDELO) & OCASIONES EMOCIONALES
+  ARTIST_SOLO_PREMIUM_EDWIN_AGUDELO: {
+    id: 'prod_artist_edwin_agudelo_solista_premium',
+    sku: 'EAR-ROSTER-EA-SOLO-PREMIUM-350',
+    name: 'Solista Premium S-Class · Edwin Agudelo (Cumpleaños, Fiestas Privadas, Día de la Madre/Padre, San Valentín)',
     category: 'BODAS_Y_EVENTOS',
     priceEur: 350.00,
     unitAmountCents: 35000,
     billingType: 'SPLIT_SETTLEMENT',
     split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
-    description: 'Actuación musical solista en directo con repertorio S-Class y calibración acústica de 12 W/pax (+0,75 €/km).',
-    targetLandings: ['/artistas/edwin-agudelo', '/artistas/[slug]', '/checkout/presupuesto'],
+    description: 'Servicio destacado para aniversarios, Día de la Madre, Día del Padre, San Valentín y fiestas privadas. Actuación solista con voz y guitarra, repertorio emocional a la carta y sonorización Bose (12 W/pax).',
+    targetLandings: ['/artistas/edwin-agudelo', '/bodas/madrid/musica-en-directo', '/checkout/presupuesto', '/cotizador'],
+    checkoutAction: 'createBookingCheckout'
+  },
+
+  // 5.1. FORMATO GRUPO OFICIAL · QUINTETO DE GALA (MÍNIMO 5 MÚSICOS OBLIGATORIO)
+  ARTIST_GROUP_QUINTET_5_MUSICIANS: {
+    id: 'prod_artist_edwin_agudelo_quinteto_5_musicos',
+    sku: 'EAR-ROSTER-EA-QUINTET-5M-750',
+    name: 'Quinteto de Gala S-Class · Edwin Agudelo (Mínimo 5 Músicos Obligatorio)',
+    category: 'BODAS_Y_EVENTOS',
+    priceEur: 750.00,
+    unitAmountCents: 75000,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Formato mínimo oficial para agrupaciones de directo: Ensamble de 5 músicos profesionales de conservatorio (Voz Principal + 2 Trompetas + Vihuela + Guitarrón) con trajes charros de gala y sonorización multicanal.',
+    targetLandings: ['/artistas/edwin-agudelo', '/bodas/madrid/musica-en-directo', '/checkout/presupuesto', '/cotizador'],
     checkoutAction: 'createBookingCheckout'
   },
 

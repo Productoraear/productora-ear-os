@@ -125,6 +125,59 @@ export const EdwinEcosystemHero: React.FC = () => {
               </div>
             </div>
 
+            {/* 👑 FORMATOS OFICIALES DE CONTRATACIÓN S-CLASS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+              {/* Formato 1: Solista Premium */}
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-[#0e0e14] to-[#15151e] border border-[#ecb613]/30 flex flex-col justify-between space-y-3">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-[#ecb613] text-black px-2.5 py-0.5 rounded-full font-mono">
+                      SERVICIO DESTACADO
+                    </span>
+                    <span className="text-xl font-black text-[#ecb613] font-mono">350 €</span>
+                  </div>
+                  <h4 className="text-base font-black uppercase text-white font-syne">
+                    Solista Premium S-Class
+                  </h4>
+                  <p className="text-xs text-white/70 leading-relaxed">
+                    Especial para <strong>Cumpleaños, Fiestas Privadas, Día de la Madre, Día del Padre y San Valentín</strong>. Voz y guitarra con sonido Bose y dedicatoria personalizada.
+                  </p>
+                </div>
+                <Link
+                  href="/cotizador?formato=solista-premium"
+                  className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-[#ecb613] text-white hover:text-black font-black text-xs uppercase tracking-wider transition-all text-center flex items-center justify-center gap-2"
+                >
+                  <span>Reservar Solista (350 €)</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+
+              {/* Formato 2: Quinteto Mínimo 5 Músicos */}
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-[#0e0e14] to-[#15151e] border border-white/10 flex flex-col justify-between space-y-3">
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-white/10 text-white/80 px-2.5 py-0.5 rounded-full font-mono border border-white/10">
+                      MÍNIMO 5 MÚSICOS
+                    </span>
+                    <span className="text-xl font-black text-white font-mono">750 €</span>
+                  </div>
+                  <h4 className="text-base font-black uppercase text-white font-syne">
+                    Quinteto de Gala S-Class
+                  </h4>
+                  <p className="text-xs text-white/70 leading-relaxed">
+                    Formato oficial de agrupación para <strong>Bodas, Ferias y Galas</strong>. 5 Maestros (Voz + 2 Trompetas + Vihuela + Guitarrón) con trajes charros y sonido multicanal.
+                  </p>
+                </div>
+                <Link
+                  href="/cotizador?formato=quinteto-5-musicos"
+                  className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-[#ecb613] text-white hover:text-black font-black text-xs uppercase tracking-wider transition-all text-center flex items-center justify-center gap-2"
+                >
+                  <span>Reservar Quinteto (750 €)</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+
           </div>
         </div>
 

@@ -77,3 +77,79 @@ export async function calculateGeoPricing(params: {
     depositAmount
   };
 }
+
+export type OccasionType = 
+  | 'CUMPLEANOS' 
+  | 'FIESTA_PRIVADA' 
+  | 'DIA_DE_LA_MADRE' 
+  | 'DIA_DEL_PADRE' 
+  | 'SAN_VALENTIN' 
+  | 'ANIVERSARIO' 
+  | 'BODA' 
+  | 'CORPORATIVO' 
+  | 'GENERAL';
+
+export interface EdwinPricingInput {
+  origin: GeoCoordinates | string;
+  destination: GeoCoordinates | string;
+  isSolistaPremium?: boolean;
+  musiciansCount?: number; // Mínimo 5 si es grupo
+  occasion?: OccasionType | string;
+  costPerKm?: number;
+}
+
+/**
+ * 👑 MOTOR DE PRICING OFICIAL EDWIN AGUDELO S-CLASS
+ * Regla Inmutable:
+ * - Solista Premium: 350 € base (Cumpleaños, Fiestas Privadas, Día de la Madre/Padre, San Valentín).
+ * - Formato Grupo: MÍNIMO 5 MÚSICOS OBLIGATORIO (750 € base, +100 € por músico adicional).
+ * - Distancia: 0,75 €/km desde Madrid.
+ */
+export async function calculateEdwinAgudeloFormatPricing(params: EdwinPricingInput) {
+  const {
+    origin = "Madrid, España",
+    destination,
+    isSolistaPremium = true,
+    musiciansCount = 1,
+    occasion = 'GENERAL',
+    costPerKm = 0.75
+  } = params;
+
+  let baseFee = 350; // Solista Premium
+  let effectiveMusicians = 1;
+  let formatLabel = "Solista Premium S-Class (Edwin Agudelo)";
+
+  if (!isSolistaPremium || musiciansCount > 1) {
+    // Regla de Negocio: Mínimo 5 músicos obligatorio para formatos de grupo
+    effectiveMusicians = Math.max(5, musiciansCount);
+    baseFee = 750 + (effectiveMusicians - 5) * 100;
+    formatLabel = `Quinteto de Gala S-Class (${effectiveMusicians} Músicos Mínimo)`;
+  } else {
+    // Solista Premium con ajuste por ocasión especial si aplica
+    formatLabel = `Solista Premium S-Class · Ocasión: ${occasion}`;
+  }
+
+  const geoRes = await calculateGeoPricing({
+    artistId: 'edwin-agudelo',
+    origin,
+    destination,
+    baseFee,
+    costPerKm,
+    depositMode: 'percentage',
+    depositValue: 30 // 30% reserva o 10€ Smart-Lock
+  });
+
+  return {
+    ...geoRes,
+    baseFee,
+    effectiveMusicians,
+    formatLabel,
+    occasion,
+    split: {
+      providerAmount: Math.round(geoRes.totalAmount * 0.80 * 100) / 100, // 80% Artista
+      platformEarAmount: Math.round(geoRes.totalAmount * 0.10 * 100) / 100, // 10% EAR OS
+      affiliateVimumeAmount: Math.round(geoRes.totalAmount * 0.10 * 100) / 100 // 10% VIMUME
+    }
+  };
+}
+

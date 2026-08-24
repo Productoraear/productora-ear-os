@@ -334,6 +334,118 @@ const SPECIFIC_INTENT_MAP: Record<string, SemanticBlockContent> = {
       { q: '¿Se puede contratar una sesión piloto de prueba?', a: 'Sí. Disponemos de sesión diagnóstica inicial desde 290€ para que la dirección y terapeutas ocupacionales evalúen el impacto en los residentes.' },
     ],
   },
+
+  // ── 14. Cumpleaños y Fiestas Privadas · Solista Premium ──
+  'serenata-cumpleanos-fiestas-privadas-edwin-agudelo': {
+    hero: 'Solista Premium S-Class para Cumpleaños y Fiestas Privadas · Edwin Agudelo',
+    sub: 'Sorprende al homenajeado con la voz en directo de Edwin Agudelo. Entrada sorpresa, repertorio personalizado (Rancheras, Boleros, Pop Latino) y equipo de sonido Bose autónomo desde 350€.',
+    gear: 'Columna HiFi Bose / dB Technologies + Microfonía Inalámbrica Shure Beta',
+    gearDetail: 'Sonorización calibrada a 12 W/pax sin cables molestos, ideal para salones privados, chalets, jardines y restaurantes.',
+    priceBase: 350,
+    priceMax: 750,
+    guaranteeBadge: 'Sorpresa Emocional 100%',
+    painPoints: [
+      'Fiestas monótonas que no consiguen emocionar ni crear un momento memorable para el cumpleañero.',
+      'Músicos informales que llegan tarde y arruinan el factor sorpresa.',
+      'Sonido estridente que impide a los invitados conversar cómodamente.',
+    ],
+    solutions: [
+      'Entrada sorpresa coordinada al segundo por WhatsApp con dedicatoria personalizada.',
+      'Repertorio emocionante que pone a cantar y brindar a todas las generaciones de la familia.',
+      'Presión acústica equilibrada y limpia para disfrutar de la música sin taparse los oídos.',
+    ],
+    faq: [
+      { q: '¿Cómo se organiza la sorpresa en el cumpleaños?', a: 'Nos coordinamos con el anfitrión por WhatsApp. Edwin Agudelo espera discretamente y entra cantando la canción favorita del cumpleañero o las tradicionales "Mañanitas" en el instante clave.' },
+      { q: '¿Qué duración tiene la actuación?', a: 'El pase estándar de Solista Premium incluye de 45 a 60 minutos de actuación ininterrumpida con interacción directa, dedicatorias y fotos con los invitados.' },
+      { q: '¿Qué repertorio se puede solicitar?', a: 'Clásicos de mariachi ("El Rey", "Cielito Lindo", "Si nos dejan"), boleros románticos ("Gema", "Bésame Mucho"), baladas pop y temas personalizados a petición.' },
+    ],
+  },
+
+  // ── 15. Día de la Madre · Serenata de Gala ──
+  'dia-de-la-madre-serenata-edwin-agudelo': {
+    hero: 'Serenata Inolvidable Día de la Madre · Edwin Agudelo Solista Premium',
+    sub: 'El regalo más emocionante para el Día de la Madre. Una serenata íntima en directo en su domicilio, restaurante o jardín con las canciones que marcaron su vida desde 350€.',
+    gear: 'Sonido Acústico HiFi Bose + Traje de Gran Gala + Microfonía Shure',
+    gearDetail: 'Elegancia máxima, entrega de ramo floral durante la actuación y dedicatoria personalizada.',
+    priceBase: 350,
+    priceMax: 750,
+    guaranteeBadge: 'Emoción y Lágrimas de Felicidad',
+    painPoints: [
+      'Regalos materiales repetitivos que no transmiten el agradecimiento y amor que merece una madre.',
+      'Falta de disponibilidad de artistas de calidad en fechas clave de alta demanda como el Día de la Madre.',
+    ],
+    solutions: [
+      'Una experiencia viva e irrepetible que queda grabada para siempre en la memoria de toda la familia.',
+      'Reserva anticipada garantizada con Price-Lock 72h y puntualidad milimétrica.',
+    ],
+    faq: [
+      { q: '¿Se puede realizar en el domicilio particular o en un restaurante?', a: 'Sí. Nos adaptamos perfectamente a salones de casa, portales, terrazas o restaurantes privados en Madrid y alrededores.' },
+      { q: '¿Qué temas especiales se cantan para las madres?', a: 'Interpretaciones sentidas de "Madrecita Querida", "Amor Eterno", "Mi Querida Madre", "Hermoso Cariño", "Señora Señora" y baladas inolvidables.' },
+    ],
+  },
+
+  // ── 16. Día del Padre · Homenaje de Gala ──
+  'dia-del-padre-serenata-edwin-agudelo': {
+    hero: 'Homenaje Musical Día del Padre · Edwin Agudelo Solista Premium',
+    sub: 'El homenaje definitivo para papá con sus rancheras y boleros favoritos en directo. Potencia vocal, emoción y categoría desde 350€.',
+    gear: 'Sistema Bose S1 Pro + Guitarra Electroacústica + Traje Formal Charro',
+    gearDetail: 'Sonorización impecable para almuerzos familiares, bodegas y celebraciones privadas.',
+    priceBase: 350,
+    priceMax: 750,
+    guaranteeBadge: 'Homenaje S-Class Garantizado',
+    painPoints: [
+      'Dificultad para encontrar un regalo original y con valor sentimental para el Día del Padre.',
+    ],
+    solutions: [
+      'Un espectáculo exclusivo y cercano donde papá canta y brinda con sus canciones predilectas.',
+    ],
+    faq: [
+      { q: '¿Qué canciones son las preferidas para los padres?', a: '"El Rey", "Mi Viejo", "A mi manera", "Camino de Guanajuato", "Volver Volver" y boleros clásicos de Javier Solís.' },
+    ],
+  },
+
+  // ── 17. San Valentín & Aniversarios · Serenata Romántica ──
+  'regalo-san-valentin-aniversario-edwin-agudelo': {
+    hero: 'Serenata Romántica de San Valentín & Aniversarios · Edwin Agudelo',
+    sub: 'Declara tu amor con una serenata privada de máxima categoría. Canciones a la carta para cenas románticas, pedidas y aniversarios íntimos desde 350€.',
+    gear: 'Microfonía Shure Axient Digital + Columna Bose + Luces Cálidas Íntimas',
+    gearDetail: 'Ambiente íntimo ultra-cuidado para crear el momento romántico perfecto.',
+    priceBase: 350,
+    priceMax: 750,
+    guaranteeBadge: 'Romance 100% S-Class',
+    painPoints: [
+      'Cenas de San Valentín monótonas sin un elemento sorpresa diferenciador.',
+    ],
+    solutions: [
+      'Aparición sorpresa de Edwin Agudelo cantando vuestra canción especial en el momento del postre o brindis.',
+    ],
+    faq: [
+      { q: '¿Cómo coordinar la serenata en un restaurante o hotel?', a: 'Contactamos previamente con el maître o recepción del hotel para organizar el acceso discreto de Edwin Agudelo sin arruinar la sorpresa.' },
+    ],
+  },
+
+  // ── 18. Quinteto Mariachi Oficial · Mínimo 5 Músicos ──
+  'quinteto-mariachi-minimo-5-musicos-madrid': {
+    hero: 'Quinteto de Gala Mariachi S-Class · Mínimo 5 Músicos Garantizados',
+    sub: 'Formato oficial de agrupación en directo con Edwin Agudelo + 2 Trompetas + Vihuela + Guitarrón. Gran potencia y empaque visual para bodas, ferias y fiestas patronales desde 750€.',
+    gear: 'Sonorización Multicanal Bose F1 + Microfonía Shure para Vientos y Voces',
+    gearDetail: '5 Músicos uniformados con trajes charros de gran gala mexicana, sonidista in-situ y seguro RC 300.000€.',
+    priceBase: 750,
+    priceMax: 1800,
+    guaranteeBadge: 'Mínimo 5 Músicos por Contrato',
+    painPoints: [
+      'Agrupaciones piratas que anuncian mariachi y aparecen 2 o 3 personas sin trompetas reales ni potencia sonora.',
+      'Falta de empaque y sonido pobre en espacios grandes o al aire libre.',
+    ],
+    solutions: [
+      'Garantía contractual de 5 músicos profesionales en escenario (Voz + 2 Trompetas + Vihuela + Guitarrón).',
+      'Sonorización calibrada a 12 W/pax con sistema Line Array para una pegada acústica impecable.',
+    ],
+    faq: [
+      { q: '¿Por qué Productora EAR exige un mínimo de 5 músicos para grupos?', a: 'Porque la instrumentación completa del mariachi y la orquesta requiere la base armónica del guitarrón y la vihuela junto a dos trompetas afinadas para entregar el sonido potente y majestuoso que define un espectáculo de calidad S-Class.' },
+      { q: '¿El quinteto se puede ampliar a 7 u 8 músicos?', a: 'Sí. Disponemos de formación extendida agregando sección de violines y arpa para eventos masivos y bodas de gran formato.' },
+    ],
+  },
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
