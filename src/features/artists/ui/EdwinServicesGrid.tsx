@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import { 
   Cake, Heart, Sparkles, Users, Award, Video, 
-  CheckCircle2, ArrowRight, ShieldCheck, Clock, Crown, Zap, Gift
+  CheckCircle2, ArrowRight, ShieldCheck, Clock, Crown, Phone, MessageCircle, Gift, Star
 } from 'lucide-react';
-import Link from 'next/link';
-import { ROUTES } from '@/lib/routes';
 import { CENTRALITA } from '@/lib/phone-constants';
 
 interface HistoricalService {
   id: string;
   title: string;
   badge: string;
+  priceTag: string;
   icon: React.ReactNode;
   subtitle: string;
   description: string;
@@ -27,62 +25,66 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'cumpleanos',
     title: 'Mariachis para Cumpleaños',
     badge: 'Sorpresa Emocional',
+    priceTag: 'Desde 350 € · Solista / 750 € Quinteto',
     icon: <Cake className="text-[#ecb613]" size={28} />,
     subtitle: 'Impacto directo en ventana, balcón, restaurante o salón',
-    description: 'La sorpresa definitiva para celebrar la vida. Llegada coordinada con la complicidad de los organizadores para irrumpir cantando "Las Mañanitas" en el momento exacto.',
+    description: 'La sorpresa definitiva para celebrar la vida. Llegada milimétricamente cronometrada para irrumpir cantando "Las Mañanitas" en el instante exacto. Ramo de flores o sombrero charro disponible con bono.',
     highlights: [
-      'Entrada sorpresa milimétricamente cronometrada',
-      'Las Mañanitas, El Rey, Cielito Lindo y dedicatoria',
-      'Fotos de recuerdo con trajes charros de gala',
-      'Desplazamiento a domicilio o local privado'
+      'Entrada sorpresa coordinada en secreto',
+      'Las Mañanitas, El Rey, Cielito Lindo y dedicatoria emotiva',
+      'Sesión de fotos de recuerdo con trajes charros de gran gala',
+      'Sonorización Bose HiFi incluida (cero distorsión acústica)'
     ],
-    repertoire: 'Las Mañanitas, En Tu Día, El Rey, Felicidades',
+    repertoire: 'Las Mañanitas, En Tu Día, El Rey, Felicidades, Cielito Lindo',
     quoteSlug: 'cumpleanos'
   },
   {
     id: 'bodas',
     title: 'Regalo de Boda & Compromiso',
     badge: 'Máxima Distinción',
+    priceTag: 'Desde 350 € · Solista / 750 € Quinteto 5M',
     icon: <Heart className="text-[#ecb613]" size={28} />,
     subtitle: 'La serenata inolvidable para la ceremonia o el cóctel',
-    description: 'Un regalo de alta etiqueta para los novios. Ya sea como sorpresa tras el "Sí, quiero", apertura del cóctel en jardines o irrupción festiva en la barra libre.',
+    description: 'Un regalo de alta etiqueta para los novios. Irrupción mágica tras el "Sí, quiero", apertura del cóctel en jardines o explosión de alegría en la barra libre.',
     highlights: [
-      'Repertorio lírico romántico de autor',
+      'Repertorio lírico romántico de autor con voz de tenor',
       'Sonorización invisible Bose F1 sin cables a la vista',
-      'Coordinación con el equipo de wedding planners',
-      'Respeto a los limitadores acústicos de la finca'
+      'Coordinación total con wedding planners y fincas',
+      'Seguro de Responsabilidad Civil de 300.000 € incluido'
     ],
-    repertoire: 'Si Nos Dejan, Motivos, Sabes Una Cosa, Bésame Mucho',
+    repertoire: 'Si Nos Dejan, Motivos, Sabes Una Cosa, Bésame Mucho, Volver Volver',
     quoteSlug: 'bodas'
   },
   {
-    id: 'quince-anos',
-    title: 'Fiesta de Quince Años (XV)',
-    badge: 'Rito Tradicional',
-    icon: <Sparkles className="text-[#ecb613]" size={28} />,
-    subtitle: 'El protocolo de gala tradicional para la quinceañera',
-    description: 'El homenaje más solemne y emotivo para celebrar los 15 años. Entrada triunfal con el vals tradicional interpretado en directo por el mariachi imperial.',
+    id: 'cancion-video-personalizado',
+    title: 'Canción & Vídeo Dedicatoria 4K',
+    badge: 'Exclusivo Estudio de Grabación',
+    priceTag: '150 € (O GRATIS con Cupón EDWIN150)',
+    icon: <Video className="text-[#ecb613]" size={28} />,
+    subtitle: 'Composición inédita con la historia y nombres del homenajeado',
+    description: 'Un regalo eterno. Edwin Agudelo compone e interpreta en estudio profesional una canción personalizada con las anécdotas, nombres y fechas de tu ser querido, entregada en vídeo 4K de alta definición.',
     highlights: [
-      'Vals de gala con el padre y padrinos en directo',
-      'Serenata de entrega de ramo y última muñeca',
-      'Formación de etiqueta con botonadura de plata',
-      'Show alegre para abrir el baile con los invitados'
+      'Letra inédita y arreglos orquestales a medida en estudio',
+      'Vídeo dedicatoria cinematográfica 4K con fotos familiares',
+      'Entrega digital exprés por enlace privado o proyección en vivo',
+      '100% bonificable con el cupón EDWIN150-COMPLEMENTOS'
     ],
-    repertoire: 'Quince Primaveras, De Niña a Mujer, Mi Niña Bonita',
-    quoteSlug: 'quince-anos'
+    repertoire: 'Canción Inédita Personalizada o Clásicos con Dedicatoria',
+    quoteSlug: 'cancion-personalizada'
   },
   {
     id: 'madre-padre',
     title: 'Día de la Madre y del Padre',
     badge: 'Gratitud Familiar',
+    priceTag: 'Desde 350 € · Incluye Ramo Floral con Cupón',
     icon: <Users className="text-[#ecb613]" size={28} />,
     subtitle: 'El abrazo musical que agradece toda una vida',
-    description: 'Homenaje de profunda emoción para padres y abuelos. Canciones que tocan la fibra y celebran el esfuerzo de toda una familia reunida en torno a la música tradicional.',
+    description: 'Homenaje de profunda emoción para padres y abuelos. Canciones que tocan la fibra más íntima y celebran el esfuerzo de toda una familia reunida en torno a la música tradicional.',
     highlights: [
-      'Interpretación de "Algún Día Mamá" por Edwin Agudelo',
+      'Interpretación estelar de "Algún Día Mamá" por Edwin Agudelo',
       'Repertorio nostálgico de la época dorada mexicana',
       'Ambiente entrañable y cercano para todas las edades',
-      'Formato adaptable a domicilios, jardines o restaurantes'
+      'Adaptable a domicilios, jardines, residencias o restaurantes'
     ],
     repertoire: 'Amor Eterno, Mi Querido Viejo, Algún Día Mamá, Madrecita Querida',
     quoteSlug: 'dia-de-la-madre'
@@ -91,6 +93,7 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     id: 'caballo',
     title: 'Show Cantando a Caballo',
     badge: 'Espectáculo Ecuestre Único',
+    priceTag: 'Consultar Fechas y Finca',
     icon: <Award className="text-[#ecb613]" size={28} />,
     subtitle: 'Fusión de alta escuela ecuestre y mariachi de gala',
     description: 'Un espectáculo único en Europa. Edwin Agudelo fusiona la doma clásica con el mariachi imperial a lomos de caballos de pura raza española y aztecas.',
@@ -100,24 +103,25 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
       'Sonorización inalámbrica Shure Axient anti-viento',
       'Ideal para plazas de toros, fincas y festejos patronales'
     ],
-    repertoire: 'El Patas Blancas, Caballo Prieto Azabache, La Mula Bronca',
+    repertoire: 'El Patas Blancas, Caballo Prieto Azabache, La Mula Bronca, El Rey',
     quoteSlug: 'show-caballo'
   },
   {
-    id: 'serenata-virtual',
-    title: 'Serenata Virtual & Canción a Medida',
-    badge: 'Cobertura Global',
-    icon: <Video className="text-[#ecb613]" size={28} />,
-    subtitle: 'Vídeo-serenata en 4K y canciones personalizadas',
-    description: 'Llega al corazón de tus seres queridos sin importar la distancia. Edwin Agudelo graba en estudio profesional un saludo personalizado y las canciones solicitadas.',
+    id: 'quince-anos',
+    title: 'Quinceañeras & Aniversarios de Oro',
+    badge: 'Rito de Gala Tradicional',
+    priceTag: 'Desde 350 € · Solista / 750 € Quinteto',
+    icon: <Sparkles className="text-[#ecb613]" size={28} />,
+    subtitle: 'El protocolo solemne y emotivo para fechas históricas',
+    description: 'El homenaje más solemne y alegre para celebrar los 15 años o los 50 años de matrimonio. Entrada triunfal con el vals tradicional y entrega de recuerdos.',
     highlights: [
-      'Vídeo masterizado en 4K DCI con dedicatoria expresa',
-      'Opción de composición de letra inédita a medida',
-      'Entrega digital exprés en 24-48 horas por enlace privado',
-      'Conexión en directo vía Zoom/Streaming si se desea'
+      'Vals de gala con el padre y padrinos en directo',
+      'Serenata de entrega de ramo y sombrero charro',
+      'Formación de etiqueta con botonadura de plata',
+      'Show bailable para encender la fiesta con los invitados'
     ],
-    repertoire: 'Canción Inédita Personalizada o Clásicos a Petición',
-    quoteSlug: 'serenata-virtual'
+    repertoire: 'Quince Primaveras, De Niña a Mujer, Mi Niña Bonita, Danzón N° 2',
+    quoteSlug: 'quince-anos'
   }
 ];
 
@@ -125,7 +129,7 @@ const VALUE_PROPOSITIONS = [
   {
     icon: <Heart size={20} className="text-[#ecb613]" />,
     title: 'Empatía y Repertorio a Medida',
-    desc: 'Cada homenaje es único. Acordamos contigo el orden de los temas y los momentos clave para asegurar lágrimas de alegría y diversión.'
+    desc: 'Cada homenaje es único. Acordamos contigo el orden de los temas y los momentos clave para asegurar lágrimas de emoción y diversión.'
   },
   {
     icon: <Clock size={20} className="text-[#ecb613]" />,
@@ -134,14 +138,40 @@ const VALUE_PROPOSITIONS = [
   },
   {
     icon: <ShieldCheck size={20} className="text-[#ecb613]" />,
-    title: 'Mariachi en Positivo',
-    desc: 'Letras de calidad humana, eliminando cualquier vestigio de machismo o violencia. Música tradicional cantada con respeto y dignidad.'
+    title: 'Garantía 0 Fallos & Trajes de Gala',
+    desc: 'Botonaduras de plata auténticas, músicos de conservatorio y sonido Bose HiFi 12 W/pax. La opción mejor valorada de España (4.9★).'
+  }
+];
+
+const COMPETITOR_COMPARISON = [
+  {
+    feature: 'Formato Mínimo Mariachi Completo',
+    edwin: '5 Músicos de Conservatorio Garantizados (750 €)',
+    others: 'Envían 2 o 3 aficionados sin trompeta'
+  },
+  {
+    feature: 'Transparencia de Tarifas',
+    edwin: 'Tarifas Públicas Cerradas (Solista 350 € / Quinteto 750 €)',
+    others: 'Precios ocultos que inflan al llegar al evento'
+  },
+  {
+    feature: 'Canción Inédita & Vídeo 4K de Regalo',
+    edwin: 'Sí (Bono 150 € con cupón EDWIN150)',
+    others: 'No disponible / Cobran extras abusivos'
+  },
+  {
+    feature: 'Sonorización Profesional',
+    edwin: 'Bose HiFi / Line Array 12 W/pax + Micros Shure',
+    others: 'Altavoces portátiles a batería con distorsión'
+  },
+  {
+    feature: 'Seguro de Responsabilidad Civil',
+    edwin: 'Cobertura oficial de 300.000 € para fincas y salas',
+    others: 'Sin seguro legal para eventos'
   }
 ];
 
 export const EdwinServicesGrid: React.FC = () => {
-  const [selectedService, setSelectedService] = useState<string | null>(null);
-
   return (
     <section className="py-24 px-6 bg-[#050505] relative overflow-hidden">
       {/* Glow ambiental */}
@@ -152,13 +182,13 @@ export const EdwinServicesGrid: React.FC = () => {
         {/* CABECERA */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 text-[#ecb613] text-[9px] font-black uppercase tracking-[0.4em]">
-            <Crown size={14} /> Ecosistema de Ocasiones Históricas
+            <Crown size={14} /> La Opción Nº 1 Más Recomendada en Google
           </div>
           <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter text-white font-syne">
-            6 Formatos para Momentos <span className="text-[#ecb613]">Inolvidables</span>
+            Servicios Exclusivos de <span className="text-[#ecb613]">Edwin Agudelo</span>
           </h2>
           <p className="text-white/60 text-sm md:text-base leading-relaxed">
-            Desde serenatas íntimas bajo la ventana hasta espectáculos ecuestres de gran formato. Dos décadas llevando emoción pura a toda España y Europa.
+            Desde canciones personalizadas en estudio y serenatas íntimas hasta espectáculos ecuestres a caballo. Dos décadas de trayectoria intachable en España y Europa.
           </p>
         </div>
 
@@ -206,7 +236,12 @@ export const EdwinServicesGrid: React.FC = () => {
                   <h3 className="text-2xl font-black uppercase tracking-tight text-white font-syne">
                     {srv.title}
                   </h3>
-                  <p className="text-[10px] font-mono uppercase text-[#ecb613]/80 font-bold">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] font-mono uppercase text-[#ecb613] font-bold">
+                      {srv.priceTag}
+                    </span>
+                  </div>
+                  <p className="text-[10px] font-mono uppercase text-white/40 font-bold">
                     {srv.subtitle}
                   </p>
                 </div>
@@ -227,26 +262,87 @@ export const EdwinServicesGrid: React.FC = () => {
 
                 {/* Repertorio clave */}
                 <div className="p-3 bg-white/5 rounded-xl border border-white/5 space-y-1">
-                  <span className="text-[8px] font-mono uppercase text-white/40 block font-bold">Repertorio Destacado</span>
+                  <span className="text-[8px] font-mono uppercase text-white/40 block font-bold">Repertorio & Estilo</span>
                   <span className="text-[10px] text-[#ecb613] font-mono italic block">{srv.repertoire}</span>
                 </div>
               </div>
 
-              {/* Botón de Cotización / Reserva */}
-              <div className="pt-6 mt-6 border-t border-white/5 relative z-10">
+              {/* Botones de Conversión Rápida (Llamada + WhatsApp) */}
+              <div className="pt-6 mt-6 border-t border-white/5 space-y-2 relative z-10">
                 <a
-                  href={`https://wa.me/34693693048?text=Hola%20Edwin,%20me%20gustaría%20solicitar%20información%20y%20reservar%20el%20servicio%20de%20${encodeURIComponent(srv.title)}`}
+                  href={`https://wa.me/34693693048?text=Hola%20Edwin,%20deseo%20reservar%20${encodeURIComponent(srv.title)}%20y%20aplicar%20el%20bono%20de%20150€%20EDWIN150-COMPLEMENTOS`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-3.5 px-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#ecb613] hover:text-black hover:border-[#ecb613] text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95 group/btn"
+                  className="w-full py-3 px-4 rounded-xl bg-[#25D366] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all hover:brightness-110 active:scale-95 shadow-[0_4px_15px_rgba(37,211,102,0.2)]"
                 >
-                  <span>Consultar Disponibilidad</span>
-                  <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                  <MessageCircle size={14} />
+                  <span>WhatsApp Inmediato</span>
+                </a>
+
+                <a
+                  href={CENTRALITA.tel}
+                  className="w-full py-2.5 px-4 rounded-xl bg-white/5 border border-white/10 hover:bg-[#ecb613] hover:text-black hover:border-[#ecb613] text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-95"
+                >
+                  <Phone size={13} />
+                  <span>Llamar al +34 693 693 048</span>
                 </a>
               </div>
 
             </div>
           ))}
+        </div>
+
+        {/* TABLA COMPARATIVA GOOGLE TOP 10 (POR QUÉ SOMOS LA OPCIÓN Nº 1) */}
+        <div className="p-8 md:p-12 rounded-[2.5rem] bg-[#09090d] border border-[#ecb613]/20 space-y-8 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 text-[#ecb613] text-xs font-mono font-bold uppercase tracking-widest">
+              <Star size={14} className="fill-[#ecb613]" /> Comparativa de Calidad Real en Google España
+            </div>
+            <h3 className="text-2xl md:text-4xl font-black uppercase text-white font-syne">
+              ¿Por qué Edwin Agudelo es la <span className="text-[#ecb613]">Elección Segura</span>?
+            </h3>
+            <p className="text-white/60 text-xs md:text-sm">
+              Frente a ofertas dudosas de internet, blindamos cada contratación con contrato legal, trajes charros auténticos y puntualidad matemática.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="border-b border-white/10 text-white/50 font-mono uppercase text-[10px]">
+                  <th className="py-4 px-4">Garantía de Servicio</th>
+                  <th className="py-4 px-4 text-[#ecb613] font-bold">👑 Edwin Agudelo / Productora EAR</th>
+                  <th className="py-4 px-4 text-white/40">Otros Mariachis en Internet</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5 text-white/80">
+                {COMPETITOR_COMPARISON.map((row, i) => (
+                  <tr key={i} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="py-4 px-4 font-bold text-white font-syne">{row.feature}</td>
+                    <td className="py-4 px-4 text-emerald-400 font-medium">{row.edwin}</td>
+                    <td className="py-4 px-4 text-white/40 italic">{row.others}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* CTA FINAL DE LLAMADA INMEDIATA */}
+          <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-3 h-3 rounded-full bg-emerald-500 animate-ping" />
+              <span className="text-xs text-white/80 font-mono">
+                Línea Directa Abierta: <strong>+34 693 693 048</strong> • Reserva tu fecha antes de que se agote.
+              </span>
+            </div>
+            <a
+              href="tel:+34693693048"
+              className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#ecb613] to-[#d4a010] text-black font-black text-xs uppercase tracking-wider hover:scale-105 transition-transform flex items-center gap-2 shadow-[0_4px_20px_rgba(236,182,19,0.3)]"
+            >
+              <Phone size={15} />
+              <span>Llamar Directamente a Edwin</span>
+            </a>
+          </div>
         </div>
 
       </div>
