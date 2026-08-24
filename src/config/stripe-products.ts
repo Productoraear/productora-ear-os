@@ -8,10 +8,11 @@ export interface StripeProductDefinition {
   id: string;
   sku: string;
   name: string;
-  category: 'ARTISTAS_FREEMIUM' | 'PROVEEDORES_B2B' | 'B2G_AYUNTAMIENTOS' | 'BODAS_Y_EVENTOS' | 'SONIDO_E_ILUMINACION' | 'LOGISTICA_VIP';
+  category: 'ARTISTAS_FREEMIUM' | 'PROVEEDORES_B2B' | 'B2G_AYUNTAMIENTOS' | 'BODAS_Y_EVENTOS' | 'SONIDO_E_ILUMINACION' | 'LOGISTICA_VIP' | 'REGALOS_Y_OCASIONES';
   priceEur: number;
   unitAmountCents: number;
   billingType: 'ONE_TIME_PAYMENT' | 'SMART_LOCK_DEPOSIT' | 'SUBSCRIPTION_RECURRING' | 'SPLIT_SETTLEMENT';
+  isHero?: boolean;
   split: {
     providerPercent: number; // 80%
     platformEarPercent: number; // 10%
@@ -23,7 +24,53 @@ export interface StripeProductDefinition {
 }
 
 export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
-  // 1. EMBกระDO ARTISTAS & CLAIM
+  // 1. PRODUCTO HERO ESTRELLA: SOLISTA PREMIUM (350 €)
+  EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO: {
+    id: 'prod_edwin_agudelo_solista_premium_hero',
+    sku: 'EAR-HERO-SOLO-PREMIUM-350',
+    name: 'Edwin Agudelo · Solista Premium (350 €)',
+    category: 'REGALOS_Y_OCASIONES',
+    priceEur: 350.00,
+    unitAmountCents: 35000,
+    billingType: 'SPLIT_SETTLEMENT',
+    isHero: true,
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Producto HERO Oficial para Regalos Emocionales, Cumpleaños, Fiestas Privadas, San Valentín, Día de la Madre y Día del Padre. Voz principal y guitarra de gala en directo con repertorio a la carta, dedicatoria personalizada y sonorización Bose HiFi calibrada a 12 W/pax (+0,75 €/km fuera de Madrid).',
+    targetLandings: [
+      '/regalos/dia-de-la-madre',
+      '/regalos/dia-del-padre',
+      '/regalos/san-valentin',
+      '/regalos/cumpleanos',
+      '/artistas/edwin-agudelo',
+      '/bodas/madrid/musica-en-directo',
+      '/checkout/presupuesto',
+      '/cotizador'
+    ],
+    checkoutAction: 'createBookingCheckout'
+  },
+
+  // 2. FORMATO MÍNIMO GRUPO: QUINTETO PRO (5 MÚSICOS OBLIGATORIO)
+  MARIACHI_QUINTETO_PRO_5M: {
+    id: 'prod_mariachi_quinteto_pro_5m',
+    sku: 'EAR-MAR-QUINTETO-PRO-5M-750',
+    name: 'Edwin Agudelo · Quinteto Pro Mariachi & Música en Directo (Mínimo 5 Músicos)',
+    category: 'BODAS_Y_EVENTOS',
+    priceEur: 750.00,
+    unitAmountCents: 75000,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Formato mínimo oficial de Mariachi y Música en Directo S-Class: 5 Músicos de Conservatorio en escenario (Edwin Agudelo Voz Principal + 2 Trompetas + Vihuela + Guitarrón) con trajes charros de gran gala mexicana, microfonía multicanal Shure Axient y seguro de Responsabilidad Civil de 300.000 €.',
+    targetLandings: [
+      '/artistas/edwin-agudelo',
+      '/bodas/madrid/musica-en-directo',
+      '/bodas/madrid/mariachis',
+      '/checkout/presupuesto',
+      '/cotizador'
+    ],
+    checkoutAction: 'createBookingCheckout'
+  },
+
+  // 3. EMBกระDO ARTISTAS & CLAIM FREEMIUM
   ARTIST_VERIFICATION: {
     id: 'prod_artist_verification_sclass',
     sku: 'EAR-ART-VERIF-01',
@@ -38,7 +85,7 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
     checkoutAction: 'createArtistVerificationCheckout'
   },
 
-  // 2. SUPPLIER BLUR-LOCK (B2B)
+  // 4. SUPPLIER BLUR-LOCK (B2B)
   SUPPLIER_CONTACT_UNLOCK: {
     id: 'prod_supplier_blur_lock_10',
     sku: 'EAR-SUP-LOCK-10',
@@ -53,7 +100,7 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
     checkoutAction: 'createSupplierUnlockCheckout'
   },
 
-  // 3. LICITACIONES PÚBLICAS B2G & ALUMBRADO
+  // 5. LICITACIONES PÚBLICAS B2G & ALUMBRADO
   B2G_LIGHTING_SMART_LOCK: {
     id: 'prod_b2g_lighting_smart_lock',
     sku: 'EAR-B2G-LIGHT-10',
@@ -68,7 +115,7 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
     checkoutAction: 'createB2GLightingCheckout'
   },
 
-  // 4. SMART-LOCK 72H RESERVA DE FECHA GENERAL
+  // 6. SMART-LOCK 72H RESERVA DE FECHA GENERAL
   SMART_LOCK_EVENT_DEPOSIT: {
     id: 'prod_smart_lock_deposit_10',
     sku: 'EAR-EVENT-LOCK-10',
@@ -83,37 +130,7 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
     checkoutAction: 'createSmartLockCheckout'
   },
 
-  // 5. CACHÉ SOLISTA PREMIUM (EDWIN AGUDELO) & OCASIONES EMOCIONALES
-  ARTIST_SOLO_PREMIUM_EDWIN_AGUDELO: {
-    id: 'prod_artist_edwin_agudelo_solista_premium',
-    sku: 'EAR-ROSTER-EA-SOLO-PREMIUM-350',
-    name: 'Solista Premium S-Class · Edwin Agudelo (Cumpleaños, Fiestas Privadas, Día de la Madre/Padre, San Valentín)',
-    category: 'BODAS_Y_EVENTOS',
-    priceEur: 350.00,
-    unitAmountCents: 35000,
-    billingType: 'SPLIT_SETTLEMENT',
-    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
-    description: 'Servicio destacado para aniversarios, Día de la Madre, Día del Padre, San Valentín y fiestas privadas. Actuación solista con voz y guitarra, repertorio emocional a la carta y sonorización Bose (12 W/pax).',
-    targetLandings: ['/artistas/edwin-agudelo', '/bodas/madrid/musica-en-directo', '/checkout/presupuesto', '/cotizador'],
-    checkoutAction: 'createBookingCheckout'
-  },
-
-  // 5.1. FORMATO GRUPO OFICIAL · QUINTETO DE GALA (MÍNIMO 5 MÚSICOS OBLIGATORIO)
-  ARTIST_GROUP_QUINTET_5_MUSICIANS: {
-    id: 'prod_artist_edwin_agudelo_quinteto_5_musicos',
-    sku: 'EAR-ROSTER-EA-QUINTET-5M-750',
-    name: 'Quinteto de Gala S-Class · Edwin Agudelo (Mínimo 5 Músicos Obligatorio)',
-    category: 'BODAS_Y_EVENTOS',
-    priceEur: 750.00,
-    unitAmountCents: 75000,
-    billingType: 'SPLIT_SETTLEMENT',
-    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
-    description: 'Formato mínimo oficial para agrupaciones de directo: Ensamble de 5 músicos profesionales de conservatorio (Voz Principal + 2 Trompetas + Vihuela + Guitarrón) con trajes charros de gala y sonorización multicanal.',
-    targetLandings: ['/artistas/edwin-agudelo', '/bodas/madrid/musica-en-directo', '/checkout/presupuesto', '/cotizador'],
-    checkoutAction: 'createBookingCheckout'
-  },
-
-  // 6. PACKS DE SONIDO E ILUMINACIÓN HOMOLOGADOS (+20% EAR)
+  // 7. PACKS DE SONIDO E ILUMINACIÓN HOMOLOGADOS (+20% EAR)
   PACK_SONIDO_1_300W: {
     id: 'prod_pack_sonido_1',
     sku: 'EAR-SON-PK01',
@@ -180,34 +197,6 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
     checkoutAction: 'POST /api/payments/checkout'
   },
 
-  // 7. MARIACHIS & MÚSICA EN VIVO
-  MARIACHI_MEXICANTO: {
-    id: 'prod_mariachi_mexicanto',
-    sku: 'EAR-MAR-MEX-290',
-    name: 'Mariachi Mexicanto S-Class (Formato 4 Músicos)',
-    category: 'BODAS_Y_EVENTOS',
-    priceEur: 290.00,
-    unitAmountCents: 29000,
-    billingType: 'SPLIT_SETTLEMENT',
-    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
-    description: 'Show de mariachi tradicional mexicano en directo para bodas, cumpleaños y serenatas.',
-    targetLandings: ['/bodas/madrid/musica-en-directo', '/checkout/presupuesto', '/cotizador'],
-    checkoutAction: 'POST /api/payments/checkout'
-  },
-  MARIACHI_VARGAS_MADRID: {
-    id: 'prod_mariachi_vargas',
-    sku: 'EAR-MAR-VAR-350',
-    name: 'Mariachi Vargas de Madrid (Formato Quinteto Gran Gala)',
-    category: 'BODAS_Y_EVENTOS',
-    priceEur: 350.00,
-    unitAmountCents: 35000,
-    billingType: 'SPLIT_SETTLEMENT',
-    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
-    description: 'Quinteto de gala con trompetas, vihuela, guitarrón y voces armonizadas.',
-    targetLandings: ['/bodas/madrid/musica-en-directo', '/checkout/presupuesto', '/cotizador'],
-    checkoutAction: 'POST /api/payments/checkout'
-  },
-
   // 8. LOGÍSTICA VIP & CHÓFER
   CHAUFFEUR_VIP_TRANSFER: {
     id: 'prod_chauffeur_vip_transfer',
@@ -228,6 +217,16 @@ export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
  * Helper para backward-compatibility
  */
 export const STRIPE_PRODUCTS = {
+  solistaPremiumHero: {
+    id: STRIPE_MASTER_CATALOG.EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO.id,
+    price: STRIPE_MASTER_CATALOG.EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO.unitAmountCents,
+    name: STRIPE_MASTER_CATALOG.EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO.name
+  },
+  quintetoPro5M: {
+    id: STRIPE_MASTER_CATALOG.MARIACHI_QUINTETO_PRO_5M.id,
+    price: STRIPE_MASTER_CATALOG.MARIACHI_QUINTETO_PRO_5M.unitAmountCents,
+    name: STRIPE_MASTER_CATALOG.MARIACHI_QUINTETO_PRO_5M.name
+  },
   artistVerification: {
     id: STRIPE_MASTER_CATALOG.ARTIST_VERIFICATION.id,
     price: STRIPE_MASTER_CATALOG.ARTIST_VERIFICATION.unitAmountCents,
