@@ -1,6 +1,7 @@
 export interface GeoLocation {
   id: string;
   name: string;
+  cityName?: string;
   province: string;
   region: string;
   slug: string;
@@ -20,19 +21,30 @@ export interface SemanticPageData {
 }
 
 export const GEO_DATABASE: Record<string, GeoLocation> = {
-  madrid: { id: "1", name: "Madrid", province: "Madrid", region: "Comunidad de Madrid", slug: "madrid" },
-  "el-escorial": { id: "2", name: "El Escorial", province: "Madrid", region: "Comunidad de Madrid", slug: "el-escorial" },
-  toledo: { id: "3", name: "Toledo", province: "Toledo", region: "Castilla-La Mancha", slug: "toledo" },
-  mentrida: { id: "4", name: "Méntrida", province: "Toledo", region: "Castilla-La Mancha", slug: "mentrida" },
-  aranjuez: { id: "5", name: "Aranjuez", province: "Madrid", region: "Comunidad de Madrid", slug: "aranjuez" },
-  "alcala-de-henares": { id: "6", name: "Alcalá de Henares", province: "Madrid", region: "Comunidad de Madrid", slug: "alcala-de-henares" }
+  madrid: { id: "1", name: "Madrid", cityName: "Madrid", province: "Madrid", region: "Comunidad de Madrid", slug: "madrid" },
+  "el-escorial": { id: "2", name: "El Escorial", cityName: "El Escorial", province: "Madrid", region: "Comunidad de Madrid", slug: "el-escorial" },
+  toledo: { id: "3", name: "Toledo", cityName: "Toledo", province: "Toledo", region: "Castilla-La Mancha", slug: "toledo" },
+  mentrida: { id: "4", name: "Méntrida", cityName: "Méntrida", province: "Toledo", region: "Castilla-La Mancha", slug: "mentrida" },
+  aranjuez: { id: "5", name: "Aranjuez", cityName: "Aranjuez", province: "Madrid", region: "Comunidad de Madrid", slug: "aranjuez" },
+  "alcala-de-henares": { id: "6", name: "Alcalá de Henares", cityName: "Alcalá de Henares", province: "Madrid", region: "Comunidad de Madrid", slug: "alcala-de-henares" }
 };
 
-export function resolveGeoLocation(slugs: string[] | string): GeoLocation | null {
+export function resolveGeoLocation(slugs: string[] | string): GeoLocation {
   const target = Array.isArray(slugs) ? slugs[slugs.length - 1] : slugs;
-  if (!target) return null;
+  if (!target) return { id: "0", name: "Madrid", cityName: "Madrid", province: "Madrid", region: "Comunidad de Madrid", slug: "madrid" };
   const normalized = target.toLowerCase().trim();
-  return GEO_DATABASE[normalized] || null;
+  if (GEO_DATABASE[normalized]) {
+    return { ...GEO_DATABASE[normalized], cityName: GEO_DATABASE[normalized].name };
+  }
+  const formatted = normalized.charAt(0).toUpperCase() + normalized.slice(1);
+  return {
+    id: normalized,
+    name: formatted,
+    cityName: formatted,
+    province: formatted,
+    region: formatted,
+    slug: normalized
+  };
 }
 
 export function generateSemanticPageData(slugs: string[] | string): SemanticPageData {

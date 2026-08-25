@@ -26,7 +26,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const provinceSlug = isLastProv ? lastSeg : 'madrid';
   const serviceSlug = isLastProv ? slug.slice(0, slug.length - 1).join('-') : slug.join('-');
 
-  const { cityName } = resolveGeoLocation(provinceSlug);
+  const geo = resolveGeoLocation(provinceSlug);
+  const cityName = geo?.cityName || geo?.name || (provinceSlug ? provinceSlug.charAt(0).toUpperCase() + provinceSlug.slice(1) : 'Madrid');
 
   if (/chofer|conductor|transfer|coche|transporte-vip/.test(fullPath)) {
     return {
@@ -57,7 +58,8 @@ export default async function ServiciosCatchAllPage({ params }: PageProps) {
   const provinceSlug = isLastProv ? lastSeg : 'madrid';
   const serviceSlug = isLastProv ? slug.slice(0, slug.length - 1).join('-') : slug.join('-');
 
-  const { cityName } = resolveGeoLocation(provinceSlug);
+  const geo = resolveGeoLocation(provinceSlug);
+  const cityName = geo?.cityName || geo?.name || (provinceSlug ? provinceSlug.charAt(0).toUpperCase() + provinceSlug.slice(1) : 'Madrid');
 
   if (/chofer|conductor|transfer|coche|transporte-vip/.test(fullPath)) {
     return <ChauffeurVipView location={cityName} />;

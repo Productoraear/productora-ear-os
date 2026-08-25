@@ -288,7 +288,8 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
   const provinceSlug = isLastProv ? lastSeg : 'madrid';
   const equipmentSlug = isLastProv ? slug.slice(0, slug.length - 1).join('-') : slug.join('-');
 
-  const { cityName } = resolveGeoLocation(provinceSlug);
+  const geo = resolveGeoLocation(provinceSlug);
+  const cityName = geo?.cityName || geo?.name || (provinceSlug ? provinceSlug.charAt(0).toUpperCase() + provinceSlug.slice(1) : 'Madrid');
 
   return (
     <BespokeTemplate
