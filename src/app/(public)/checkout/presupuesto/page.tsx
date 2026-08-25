@@ -16,11 +16,13 @@ import {
   SlidersHorizontal,
   AlertTriangle,
   RotateCcw,
-  Check
+  Check,
+  PenTool
 } from 'lucide-react';
 import { useTripwire } from '@/hooks/useTripwire';
 import { useEventCart } from '@/context/EventCartContext';
 import { CouponBono150Complementos } from '@/components/promotions/CouponBono150Complementos';
+import { DigitalSignatureModal } from '@/features/contracts/ui/DigitalSignatureModal';
 
 function CheckoutPresupuestoContent() {
   const searchParams = useSearchParams();
@@ -35,6 +37,7 @@ function CheckoutPresupuestoContent() {
   const [isTampered, setIsTampered] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isCustomizing, setIsCustomizing] = useState(false);
+  const [isSignModalOpen, setIsSignModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -270,8 +273,17 @@ function CheckoutPresupuestoContent() {
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-6 py-4 rounded-2xl border border-[#ecb613]/40 bg-[#ecb613]/5 hover:bg-[#ecb613]/10 text-[#ecb613] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all font-mono"
               >
-                📄 Previsualizar Dossier PDF
+                📄 Dossier PDF
               </a>
+
+              <button
+                type="button"
+                onClick={() => setIsSignModalOpen(true)}
+                className="w-full sm:w-auto px-6 py-4 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all font-mono cursor-pointer"
+              >
+                <PenTool size={16} />
+                <span>Firmar Contrato Digital</span>
+              </button>
 
               <button
                 onClick={handlePayDeposit}
@@ -294,7 +306,7 @@ function CheckoutPresupuestoContent() {
             </div>
           </div>
           <div className="text-right">
-            <span className="text-[10px] text-zinc-400 font-mono">🔒 Depósito seguro Stripe 10 € con Price-Lock 72h garantizado</span>
+            <span className="text-[10px] text-zinc-400 font-mono">🔒 Depósito seguro Stripe 10 € con Price-Lock 72h y Firma Digital eIDAS garantizados</span>
           </div>
 
           {error && (
@@ -304,6 +316,18 @@ function CheckoutPresupuestoContent() {
           )}
         </div>
       </div>
+
+      {/* MODAL DE FIRMA DIGITAL S-CLASS */}
+      <DigitalSignatureModal
+        isOpen={isSignModalOpen}
+        onClose={() => setIsSignModalOpen(false)}
+        quoteHash={quoteHash || `0x${Date.now().toString(16)}`}
+        serviceName={quoteData?.artist || 'Producción Técnica Audiovisual y Actuación S-Class'}
+        totalAmount={quoteData?.estimatedTotal || 1240}
+        eventDate={quoteData?.eventDate || new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0]}
+        location={quoteData?.location || 'Madrid'}
+        isB2G={!!quoteData?.isB2G}
+      />
     </main>
   );
 }

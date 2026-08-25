@@ -16,6 +16,10 @@ export async function GET(req: NextRequest) {
   const cpv = searchParams.get('cpv') || '92300000-4 (Servicios de Espectáculos y Técnicos)';
   const dir3 = searchParams.get('dir3') || 'L01451688';
   const isB2G = searchParams.get('b2g') === 'true' || !!searchParams.get('municipio') || !!searchParams.get('cpv');
+  const isSigned = searchParams.get('signed') === 'true';
+  const signer = searchParams.get('signer') || '';
+  const sigId = searchParams.get('sigId') || '';
+  const sigDate = searchParams.get('sigDate') || '';
 
   let quote = PriceLockEngine.generateQuote({
     serviceName: service,
@@ -407,11 +411,21 @@ export async function GET(req: NextRequest) {
           <span style="font-size: 9px; color: #888;">Certificado Digital Emitido / FacturaE FACe</span>
         </div>
       </div>
-      <div class="signature-box">
-        <span>Por la Entidad ${isB2G ? 'Municipal' : 'Contratante'} / Docusign:</span>
-        <div style="font-size: 11px; color: #aaa; border-bottom: 1px solid #333; padding-bottom: 4px;">
-          Firma Electrónica / Aceptación de Presupuesto
-        </div>
+      <div class="signature-box" style="${isSigned ? 'border-color: #10b981; background: rgba(16, 185, 129, 0.08);' : ''}">
+        <span>Por la Entidad ${isB2G ? 'Municipal' : 'Contratante'} / Firma Digital:</span>
+        ${isSigned ? `
+          <div style="font-size: 11px; font-weight: 700; color: #10b981;">
+            ✓ FIRMADO DIGITALMENTE: ${signer}<br>
+            <span style="font-size: 9px; color: #aaa; font-family: 'JetBrains Mono', monospace;">
+              Ref: ${sigId} · ${new Date(sigDate || Date.now()).toLocaleString('es-ES')}<br>
+              eIDAS (Reglamento UE 910/2014) · Verificado
+            </span>
+          </div>
+        ` : `
+          <div style="font-size: 11px; color: #aaa; border-bottom: 1px solid #333; padding-bottom: 4px;">
+            Firma Electrónica / Aceptación de Presupuesto
+          </div>
+        `}
       </div>
     </div>
 
