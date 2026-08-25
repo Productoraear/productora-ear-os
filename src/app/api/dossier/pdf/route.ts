@@ -7,12 +7,15 @@ export const runtime = 'nodejs';
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const token = searchParams.get('token');
-  const service = searchParams.get('service') || 'Producción Técnica Audiovisual y Actuación Musical';
-  const location = searchParams.get('location') || 'Madrid';
+  const service = searchParams.get('service') || searchParams.get('objeto') || 'Producción Técnica Audiovisual y Actuación Musical';
+  const location = searchParams.get('location') || searchParams.get('municipio') || 'Madrid';
   const date = searchParams.get('date') || new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
-  const total = Number(searchParams.get('total')) || 1240;
+  const total = Number(searchParams.get('total') || searchParams.get('presupuesto')) || 1240;
   const pax = Number(searchParams.get('pax')) || 150;
-  const clientName = searchParams.get('client') || 'Dirección de Contratación';
+  const clientName = searchParams.get('client') || searchParams.get('municipio') || 'Dirección de Contratación';
+  const cpv = searchParams.get('cpv') || '92300000-4 (Servicios de Espectáculos y Técnicos)';
+  const dir3 = searchParams.get('dir3') || 'L01451688';
+  const isB2G = searchParams.get('b2g') === 'true' || !!searchParams.get('municipio') || !!searchParams.get('cpv');
 
   let quote = PriceLockEngine.generateQuote({
     serviceName: service,
@@ -21,6 +24,7 @@ export async function GET(req: NextRequest) {
     baseAmount: total,
     pax,
     clientName,
+    isB2G,
   });
 
   if (token) {
@@ -39,7 +43,7 @@ export async function GET(req: NextRequest) {
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Dossier Oficial S-Class & Price-Lock | Productora EAR</title>
+  <title>Dossier ${isB2G ? 'Técnico LCSP Art. 118' : 'Oficial S-Class'} | Productora EAR</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
     
@@ -60,7 +64,7 @@ export async function GET(req: NextRequest) {
     }
     
     .container {
-      max-width: 800px;
+      max-width: 820px;
       margin: 0 auto;
       border: 2px solid #ecb613;
       border-radius: 24px;
@@ -75,12 +79,13 @@ export async function GET(req: NextRequest) {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%) rotate(-30deg);
-      font-size: 110px;
+      font-size: 90px;
       font-weight: 900;
       color: rgba(236, 182, 19, 0.03);
       pointer-events: none;
       z-index: 0;
       text-transform: uppercase;
+      white-space: nowrap;
     }
     
     header {
@@ -122,7 +127,7 @@ export async function GET(req: NextRequest) {
     }
     
     .section-title {
-      font-size: 13px;
+      font-size: 12px;
       color: #ecb613;
       font-family: 'JetBrains Mono', monospace;
       text-transform: uppercase;
@@ -136,7 +141,7 @@ export async function GET(req: NextRequest) {
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 16px;
       margin-bottom: 25px;
       position: relative;
       z-index: 1;
@@ -146,11 +151,11 @@ export async function GET(req: NextRequest) {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
-      padding: 18px;
+      padding: 16px;
     }
     
     .card h3 {
-      font-size: 11px;
+      font-size: 10px;
       color: #777;
       text-transform: uppercase;
       margin-bottom: 6px;
@@ -158,7 +163,7 @@ export async function GET(req: NextRequest) {
     }
     
     .card p {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
       color: #fff;
     }
@@ -193,18 +198,40 @@ export async function GET(req: NextRequest) {
     }
     
     .total-row {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       color: #ecb613;
       background: rgba(236, 182, 19, 0.05);
     }
     
+    .ods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 25px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+    }
+
+    .ods-card {
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: #bbb;
+    }
+    .ods-card strong {
+      color: #ecb613;
+      display: block;
+      margin-bottom: 4px;
+    }
+
     .signatures {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 30px;
-      margin-top: 35px;
-      padding-top: 25px;
+      margin-top: 30px;
+      padding-top: 20px;
       border-top: 1px dashed rgba(255, 255, 255, 0.15);
       position: relative;
       z-index: 1;
@@ -214,7 +241,7 @@ export async function GET(req: NextRequest) {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
       padding: 15px;
-      min-height: 100px;
+      min-height: 90px;
       background: rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
@@ -279,42 +306,60 @@ export async function GET(req: NextRequest) {
 </head>
 <body>
   <div class="container">
-    <div class="watermark">S-CLASS 72H</div>
+    <div class="watermark">${isB2G ? 'LCSP ART. 118' : 'S-CLASS 72H'}</div>
 
     <header>
       <div class="brand">
         <h1>PRODUCTORA EAR</h1>
-        <p>QUALITY VIP SOLUTIONS, SL · NIF: B87910311</p>
-        <p>Central de Producción: ${CENTRALITA.display}</p>
+        <p>QUALITY VIP SOLUTIONS, SL · NIF: B87910311 · ROLECE Inscrito</p>
+        <p>Central de Producción y Despacho: ${CENTRALITA.display}</p>
       </div>
       <div class="badge">
-        Price-Lock SHA-256 Activo
+        ${isB2G ? 'Adjudicación Directa <15.000 €' : 'Price-Lock SHA-256 Activo'}
       </div>
     </header>
 
-    <div class="section-title">01. Identificación y Localización de la Producción</div>
+    <div class="section-title">01. Identificación y Parámetros del Expediente</div>
     <div class="grid">
       <div class="card">
-        <h3>Cliente / Entidad Solicitante</h3>
+        <h3>${isB2G ? 'Órgano de Contratación / Municipio' : 'Cliente / Entidad'}</h3>
         <p>${quote.client.name}</p>
       </div>
       <div class="card">
-        <h3>Ubicación / Finca / Espacio</h3>
+        <h3>Ubicación / Sede</h3>
         <p>${quote.client.location}</p>
       </div>
       <div class="card">
-        <h3>Fecha Reservada</h3>
+        <h3>Fecha de Ejecución Prevista</h3>
         <p>${quote.client.eventDate}</p>
       </div>
       <div class="card">
-        <h3>Aforo Homologado (12 W/pax)</h3>
-        <p>${quote.technicalSpecs.pax} PAX · ${quote.technicalSpecs.acousticWatts} W RMS</p>
+        <h3>${isB2G ? 'Código CPV Oficial' : 'Aforo Homologado (12 W/pax)'}</h3>
+        <p>${isB2G ? cpv : `${quote.technicalSpecs.pax} PAX · ${quote.technicalSpecs.acousticWatts} W RMS`}</p>
       </div>
     </div>
 
-    <div class="section-title">02. Configuración Técnica & Rider Homologado</div>
+    ${isB2G ? `
+    <div class="section-title">02. Marco Legal & Alineación ODS Agenda 2030</div>
+    <div class="ods-grid">
+      <div class="ods-card">
+        <strong>ODS 3: Salud y Bienestar</strong>
+        Protocolo VIMUME de estimulación neuroacústica (&lt;75 dB) para residencias y mayores.
+      </div>
+      <div class="ods-card">
+        <strong>ODS 8: Trabajo Decente</strong>
+        Contratación directa 100% regularizada en Régimen de Artistas y Split Soberano.
+      </div>
+      <div class="ods-card">
+        <strong>ODS 11: Ciudades Sostenibles</strong>
+        Dinamización cultural territorial y vertebración rural en municipios.
+      </div>
+    </div>
+    ` : ''}
+
+    <div class="section-title">${isB2G ? '03' : '02'}. Configuración Técnica & Rider Homologado</div>
     <div class="card" style="margin-bottom: 25px;">
-      <h3>Equipamiento Audiovisual Asignado</h3>
+      <h3>Equipamiento Audiovisual & Póliza de Cobertura</h3>
       <p style="font-size: 13px; font-weight: 500; color: #ddd; margin-bottom: 8px;">
         ${quote.technicalSpecs.riderSummary}
       </p>
@@ -323,27 +368,27 @@ export async function GET(req: NextRequest) {
       </p>
     </div>
 
-    <div class="section-title">03. Liquidación Económica & Split Soberano</div>
+    <div class="section-title">${isB2G ? '04' : '03'}. Liquidación Económica & Memoria Justificativa</div>
     <div class="table-container card" style="padding: 0; overflow: hidden;">
       <table>
         <thead>
           <tr>
-            <th>Concepto</th>
+            <th>Objeto del Servicio</th>
             <th>Base Imponible</th>
             <th>IVA (21%)</th>
-            <th>Total (€)</th>
+            <th>Total Liquidable (€)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>${quote.client.name} — ${service}</td>
+            <td>${service}</td>
             <td>${quote.pricing.subtotal.toFixed(2)} €</td>
             <td>${quote.pricing.vatAmount.toFixed(2)} €</td>
             <td>${quote.pricing.totalAmount.toFixed(2)} €</td>
           </tr>
           <tr class="total-row">
-            <td colspan="3">DEPÓSITO DE BLOQUEO DE FECHA (Price-Lock 72h)</td>
-            <td>${quote.pricing.depositRequired.toFixed(2)} €</td>
+            <td colspan="3">${isB2G ? 'IMPORTE TOTAL CONTRATO MENOR (ART. 118 LCSP)' : 'DEPÓSITO DE BLOQUEO DE FECHA (Price-Lock 72h)'}</td>
+            <td>${isB2G ? `${quote.pricing.totalAmount.toFixed(2)} €` : `${quote.pricing.depositRequired.toFixed(2)} €`}</td>
           </tr>
         </tbody>
       </table>
@@ -351,7 +396,7 @@ export async function GET(req: NextRequest) {
 
     <div class="hash-seal">
       SELLO CRIPTOGRÁFICO: ${quote.hash}<br>
-      VÁLIDO HASTA: ${quote.expiresAt} · VERIFICACIÓN OFICIAL DE DISPONIBILIDAD
+      VÁLIDO HASTA: ${quote.expiresAt} · ${isB2G ? `EXPEDIENTE DIR3: ${dir3}` : 'VERIFICACIÓN OFICIAL DE DISPONIBILIDAD'}
     </div>
 
     <div class="signatures">
@@ -359,11 +404,11 @@ export async function GET(req: NextRequest) {
         <span>Por la Dirección Técnica (Productora EAR):</span>
         <div style="font-size: 11px; font-weight: 700; color: #ecb613;">
           Edwin Agudelo · Dirección General<br>
-          <span style="font-size: 9px; color: #888;">Certificado Digital Emitido</span>
+          <span style="font-size: 9px; color: #888;">Certificado Digital Emitido / FacturaE FACe</span>
         </div>
       </div>
       <div class="signature-box">
-        <span>Por la Entidad Contratante / Docusign:</span>
+        <span>Por la Entidad ${isB2G ? 'Municipal' : 'Contratante'} / Docusign:</span>
         <div style="font-size: 11px; color: #aaa; border-bottom: 1px solid #333; padding-bottom: 4px;">
           Firma Electrónica / Aceptación de Presupuesto
         </div>
@@ -371,7 +416,7 @@ export async function GET(req: NextRequest) {
     </div>
 
     <div class="no-print">
-      <button class="btn-print" onclick="window.print()">🖨️ Descargar e Imprimir PDF Oficial</button>
+      <button class="btn-print" onclick="window.print()">🖨️ Descargar e Imprimir Dossier Oficial</button>
     </div>
   </div>
 </body>

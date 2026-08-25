@@ -1,12 +1,27 @@
 const http = require('http');
 
 const testCases = [
-  { url: 'http://localhost:3007/arsenal/pantallas-led-p29/madrid', forbidden: ['undefined', 'Alzheimer'] },
-  { url: 'http://localhost:3007/arsenal/sonido-bose-f1/barcelona', forbidden: ['undefined', 'Alzheimer'] },
-  { url: 'http://localhost:3007/servicios/edwin-agudelo-solista/valencia', forbidden: ['undefined', 'Alzheimer'] },
-  { url: 'http://localhost:3007/bodas/malaga/dj-eventos', forbidden: ['undefined', 'Licitacion'] },
-  { url: 'http://localhost:3007/b2g/fiestas-patronales/avila', forbidden: ['undefined', 'Novia'] },
-  { url: 'http://localhost:3007/vimume', forbidden: ['undefined', 'Licitacion'] }
+  // 1. Rutas Core de Verticales y Arsenal
+  { url: 'http://localhost:3007/arsenal/pantallas-led-p29/madrid', mustHave: 'Pantallas LED', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/arsenal/sonido-bose-f1/barcelona', mustHave: 'Bose', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/servicios/edwin-agudelo-solista/valencia', mustHave: 'Valencia', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/bodas/malaga/dj-eventos', mustHave: 'Malaga', forbidden: ['Licitacion'] },
+  { url: 'http://localhost:3007/b2g/fiestas-patronales/avila', mustHave: 'Avila', forbidden: ['Novia'] },
+  { url: 'http://localhost:3007/vimume', mustHave: 'VIMUME', forbidden: ['Licitacion'] },
+
+  // 2. Barrido de Validación Categorial de Proveedores
+  { url: 'http://localhost:3007/proveedores?cat=foto', mustHave: 'Foto', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=finca', mustHave: 'Fincas', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=catering', mustHave: 'Catering', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=decoracion', mustHave: 'Decoración', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=musica', mustHave: 'Música', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=sonido', mustHave: 'Sonido', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=wedding', mustHave: 'Wedding Planners', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=moda', mustHave: 'Moda', forbidden: ['Alzheimer'] },
+  { url: 'http://localhost:3007/proveedores?cat=transporte', mustHave: 'Transporte', forbidden: ['Alzheimer'] },
+
+  // 3. Dossier PDF Generator Endpoint
+  { url: 'http://localhost:3007/api/dossier/pdf?location=Madrid&total=1450', mustHave: 'PRODUCTORA EAR', forbidden: ['undefined'] }
 ];
 
 async function checkUrl(test) {
@@ -15,25 +30,28 @@ async function checkUrl(test) {
       let data = '';
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
-        // Remove Next.js RSC Flight stream scripts to avoid false positives with React internal '$undefined'
         const visibleHtml = data.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+        const hasMust = test.mustHave ? new RegExp(test.mustHave, 'i').test(visibleHtml) : true;
         const found = test.forbidden.filter(word => new RegExp(`\\b${word}\\b`, 'i').test(visibleHtml));
-        if (found.length > 0) {
+        
+        if (!hasMust) {
+          console.log(`❌ FALTA CONTENIDO: ${test.url} -> Esperaba: ${test.mustHave}`);
+        } else if (found.length > 0) {
           console.log(`❌ FUGA DETECTADA: ${test.url} -> Encontrado: ${found.join(', ')}`);
         } else {
-          console.log(`✅ OK: ${test.url}`);
+          console.log(`✅ OK (${res.statusCode}): ${test.url}`);
         }
         resolve();
       });
-    }).on('error', () => {
-      console.log(`⚠️ Servidor no activo en ${test.url}`);
+    }).on('error', (err) => {
+      console.log(`⚠️ Servidor local no activo en ${test.url}: ${err.message}`);
       resolve();
     });
   });
 }
 
 (async () => {
-  console.log('=== BARRIDO AUTOMÁTICO DE RUTAS LOCALES ===');
+  console.log('=== BARRIDO AUTOMÁTICO DE VALIDACIÓN CATEGORIAL EN LOCAL ===');
   for (const test of testCases) {
     await checkUrl(test);
   }

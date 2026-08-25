@@ -312,17 +312,28 @@ function ProveedoresDirectoryContent() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-black/60 border-t border-white/5 space-y-2">
+                <div className="p-4 bg-black/60 border-t border-white/5 flex gap-2">
                   <button
                     onClick={(e) => { e.stopPropagation(); openModal(item); }}
-                    className={`w-full font-extrabold text-xs py-3 rounded-2xl uppercase transition-all shadow-md cursor-pointer font-mono ${
+                    className={`flex-1 font-extrabold text-xs py-3 rounded-2xl uppercase transition-all shadow-md cursor-pointer font-mono ${
                       item.isPreferred
                         ? 'bg-[#ecb613] text-black hover:bg-amber-400'
-                        : 'bg-neutral-900 text-white hover:bg-[#ecb613] hover:text-black border border-white/10'
+                        : 'bg-neutral-900 text-white hover:bg-white/10 border border-white/10'
                     }`}
                   >
-                    Ver Ficha Completa & Fotos
+                    Ver Ficha
                   </button>
+
+                  <a
+                    href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero verificar disponibilidad para ${item.name} en ${item.province ? item.province.charAt(0).toUpperCase() + item.province.slice(1).toLowerCase() : 'Madrid'}.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black border border-emerald-500/30 transition-all flex items-center justify-center cursor-pointer"
+                    title="Consultar por WhatsApp"
+                  >
+                    <PhoneCall size={16} />
+                  </a>
                 </div>
               </article>
             ))}
@@ -421,12 +432,13 @@ function ProveedoresDirectoryContent() {
                   <span className="text-2xl font-black text-[#ecb613] font-mono">Desde {activeModalProvider.basePrice || 650} €</span>
                 </div>
                 <a
-                  href={`https://wa.me/34693693048?text=Hola%20Productora%20EAR,%20deseo%20bloquear%20reserva%20para%20${encodeURIComponent(activeModalProvider.name)}`}
+                  href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero verificar disponibilidad para ${activeModalProvider.name} en ${activeModalProvider.province ? activeModalProvider.province.charAt(0).toUpperCase() + activeModalProvider.province.slice(1).toLowerCase() : 'Madrid'}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full md:w-auto bg-gradient-to-r from-amber-300 via-[#ecb613] to-amber-500 hover:brightness-110 text-black font-black text-xs px-8 py-4 rounded-2xl uppercase transition-all text-center shadow-lg shadow-[#ecb613]/20 font-mono cursor-pointer"
+                  className="w-full md:w-auto bg-gradient-to-r from-amber-300 via-[#ecb613] to-amber-500 hover:brightness-110 text-black font-black text-xs px-8 py-4 rounded-2xl uppercase transition-all text-center shadow-lg shadow-[#ecb613]/20 font-mono cursor-pointer flex items-center justify-center gap-2"
                 >
-                  Bloquear Reserva en WhatsApp
+                  <PhoneCall size={16} />
+                  <span>Verificar Disponibilidad en WhatsApp</span>
                 </a>
               </div>
             </div>
