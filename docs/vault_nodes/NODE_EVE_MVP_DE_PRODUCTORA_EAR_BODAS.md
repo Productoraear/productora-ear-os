@@ -1,0 +1,28 @@
+---
+title: "EVE_MVP_DE_PRODUCTORA_EAR_BODAS.docx"
+level: "L3_VERTICAL_MERCADO"
+category: "BODAS_ELITE"
+sha256: "31d2915e58a8ed75d0391240b705b7d9c7519c4f699f58c51d1c91c5ead43f78"
+archived_date: "2026-08-25T11:28:04.026966"
+original_path: "D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\RECURSOS\EVE_MVP_DE_PRODUCTORA_EAR_BODAS.docx"
+vault_path: "H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L3_VERTICAL_MERCADO\BODAS_ELITE\20260825_L3_VERTICAL_MERCADO_EVE_MVP_DE_PRODUCTORA_EAR_BODAS.docx"
+tags:
+  - ear-os/vault
+  - level/l3_vertical_mercado
+  - category/bodas_elite
+---
+
+# 📜 EVE_MVP_DE_PRODUCTORA_EAR_BODAS.docx
+
+- **Nivel Ontológico:** [[L3_VERTICAL_MERCADO]]
+- **Categoría Maestro:** [[BODAS_ELITE]]
+- **Hash SHA-256:** `31d2915e58a8ed75d0391240b705b7d9c7519c4f699f58c51d1c91c5ead43f78`
+- **Ubicación Bóveda:** `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L3_VERTICAL_MERCADO\BODAS_ELITE\20260825_L3_VERTICAL_MERCADO_EVE_MVP_DE_PRODUCTORA_EAR_BODAS.docx`
+
+## 🔍 Resumen Semántico
+[Documento DOCX detectado]
+
+## 🔗 Relaciones Bidireccionales
+- Relacionado con: [[EAR_OS_UNIFIED_KNOWLEDGE_GRAPH]]
+- Ecosistema: [[Productora EAR]]
+- Módulo: [[L3_VERTICAL_MERCADO]]

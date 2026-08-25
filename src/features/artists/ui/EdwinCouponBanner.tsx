@@ -67,15 +67,23 @@ export const EdwinCouponBanner: React.FC = () => {
 
               <div 
                 onClick={handleCopy}
-                className="w-full py-3 px-4 rounded-xl bg-white/5 border border-[#ecb613]/40 text-[#ecb613] font-mono font-black text-sm tracking-wider flex items-center justify-between cursor-pointer hover:bg-white/10 transition-all group"
+                className={`w-full py-3.5 px-4 rounded-xl border font-mono font-black text-sm tracking-wider flex items-center justify-between cursor-pointer transition-all duration-300 ${
+                  copied 
+                    ? 'bg-emerald-500/20 border-emerald-400 text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]' 
+                    : 'bg-white/5 border-[#ecb613]/40 text-[#ecb613] hover:bg-white/10'
+                }`}
               >
-                <span>{couponCode}</span>
-                {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} className="text-white/40 group-hover:text-white" />}
+                <span>{copied ? "¡COPIADO!" : couponCode}</span>
+                {copied ? <Check size={18} className="text-emerald-400 animate-pulse" /> : <Copy size={16} className="text-white/40 group-hover:text-white" />}
               </div>
 
-              {copied && (
-                <span className="text-[10px] text-emerald-400 font-mono font-bold">
+              {copied ? (
+                <span className="text-[11px] text-emerald-400 font-mono font-bold animate-bounce block">
                   ✓ ¡Código copiado al portapapeles!
+                </span>
+              ) : (
+                <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-white/30 block">
+                  Haz clic para copiar código
                 </span>
               )}
 

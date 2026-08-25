@@ -1,0 +1,53 @@
+---
+title: "D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_170118724045030021.pdf"
+level: "L6_PRODUCTO_HOMOLOGADO"
+category: "EDWIN_AGUDELO"
+sha256: "145190f68ece83058a0e495909d4b035bed7700ee39c382242e75942ec88834a"
+archived_date: "2026-08-25T11:28:04.095737"
+original_path: "D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_170118724045030021.pdf"
+vault_path: "H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L6_PRODUCTO_HOMOLOGADO\EDWIN_AGUDELO\20260825_L6_PRODUCTO_HOMOLOGADO_D_OS_AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS_AZUL_0_INBOX_Documentos_170118724045030021.pdf"
+tags:
+  - ear-os/vault
+  - level/l6_producto_homologado
+  - category/edwin_agudelo
+---
+
+# 📜 D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_170118724045030021.pdf
+
+- **Nivel Ontológico:** [[L6_PRODUCTO_HOMOLOGADO]]
+- **Categoría Maestro:** [[EDWIN_AGUDELO]]
+- **Hash SHA-256:** `145190f68ece83058a0e495909d4b035bed7700ee39c382242e75942ec88834a`
+- **Ubicación Bóveda:** `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L6_PRODUCTO_HOMOLOGADO\EDWIN_AGUDELO\20260825_L6_PRODUCTO_HOMOLOGADO_D_OS_AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS_AZUL_0_INBOX_Documentos_170118724045030021.pdf`
+
+## 🔍 Resumen Semántico
+DATOS  PERSONALES:
+Nombre:
+EDWIN ALBERTO
+Apellidos:
+AGUDELO RESTREPO
+Lugar de nacimiento:
+AMAGÁ (ANTIOQUIA)
+País de nacimiento:
+COLOMBIA
+Sexo (h/m):
+H
+Correo electrónico:
+romanticoyranchero@hotmail
+.es
+RESGUARDO DE INSCRIPCIÓN EN LA PRUEBA DE CONOCIMIENTOS CONSTITUCIONALES Y 
+SOCIOCULTURALES DE ESPAÑA (CCSE)
+En esta hoja encontrará los detalles de su inscripción. Por favor, revíselos detenidamente. Dichos datos 
+serán los que aparezcan en toda documentación asociada a esta prueba y sus certificaciones. Recuerde 
+que debe presentarla el día de la prueba CCSE pues le será requerida por el centro de examen CCSE 
+para la realización de la misma.
+CÓDIGO DE INSCRIPCIÓN:
+170118724045030021
+NÚMERO DE PASAPORTE / NIE / DOCUMENTO IDENTIFICATIVO:
+X3102116Z
+CÓDIGO DE CLIENTE DEL INSTITUTO CERVANTES:
+0
+
+## 🔗 Relaciones Bidireccionales
+- Relacionado con: [[EAR_OS_UNIFIED_KNOWLEDGE_GRAPH]]
+- Ecosistema: [[Productora EAR]]
+- Módulo: [[L6_PRODUCTO_HOMOLOGADO]]

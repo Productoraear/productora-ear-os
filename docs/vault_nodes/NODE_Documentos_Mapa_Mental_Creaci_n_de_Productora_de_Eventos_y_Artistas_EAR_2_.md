@@ -1,0 +1,55 @@
+---
+title: "Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) (2).pdf"
+level: "L3_VERTICAL_MERCADO"
+category: "CORPORATIVO"
+sha256: "d6ad3bcd4f3b457c2652f08bbe0f3068f00eac3cb78d8fe9cb0f4188dfc492cd"
+archived_date: "2026-08-25T11:28:04.019119"
+original_path: "D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) (2).pdf"
+vault_path: "H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L3_VERTICAL_MERCADO\CORPORATIVO\20260825_L3_VERTICAL_MERCADO_Documentos_Mapa_Mental_Creaci_n_de_Productora_de_Eventos_y_Artistas_EAR_2_.pdf"
+tags:
+  - ear-os/vault
+  - level/l3_vertical_mercado
+  - category/corporativo
+---
+
+# 📜 Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) (2).pdf
+
+- **Nivel Ontológico:** [[L3_VERTICAL_MERCADO]]
+- **Categoría Maestro:** [[CORPORATIVO]]
+- **Hash SHA-256:** `d6ad3bcd4f3b457c2652f08bbe0f3068f00eac3cb78d8fe9cb0f4188dfc492cd`
+- **Ubicación Bóveda:** `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L3_VERTICAL_MERCADO\CORPORATIVO\20260825_L3_VERTICAL_MERCADO_Documentos_Mapa_Mental_Creaci_n_de_Productora_de_Eventos_y_Artistas_EAR_2_.pdf`
+
+## 🔍 Resumen Semántico
+Mapa Mental: 
+Creación de 
+Productora de 
+Eventos y Artistas 
+(EAR)
+**Mapa Mental: Creación de 
+Productora de Eventos y Artistas 
+(EAR)**
+**Objetivo Principal**
+**Facilitar el camino para que artistas 
+emergentes vivan de su arte y brindar servicios 
+integrales para la planificación y visibilidad de 
+eventos.**
+**I. Planificación de la Productora**
+**1. Investigación de Mercado**
+Encuestas y análisis de la demanda.
+Estudio de la competencia en el sector de 
+eventos y artistas.
+**2. Identificación de Público Objetivo**
+Perfil demográfico y preferencias del público 
+objetivo.
+Segmentación de artistas emergentes y 
+empresas interesadas en eventos.
+**3. Modelo de Negocio**
+Estrategias para ingresos: comisiones, tarifas de 
+servicio, paquetes.
+Definición de servicios específicos para artistas 
+
+
+## 🔗 Relaciones Bidireccionales
+- Relacionado con: [[EAR_OS_UNIFIED_KNOWLEDGE_GRAPH]]
+- Ecosistema: [[Productora EAR]]
+- Módulo: [[L3_VERTICAL_MERCADO]]

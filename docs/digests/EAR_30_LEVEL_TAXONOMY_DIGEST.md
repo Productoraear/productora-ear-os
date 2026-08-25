@@ -1,0 +1,85 @@
+# 🏛️ REPORTE DE EXTRACCIÓN FORENSE: MAPAS MENTALES Y TAXONOMÍA DE 30 NIVELES
+
+- **Total Documentos Analizados:** 18195
+- **Mapas Mentales Estructurales:** 813
+- **Árboles de Servicios y Productos:** 6138
+- **Documentación VIMUME & Neuroacústica:** 10795
+- **Matrices de Tarifas y Pricing:** 1763
+
+## 📌 Top Documentos Maestros Detectados
+
+- **Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) (2).pdf** (`.pdf` - 27841 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) (2).pdf`
+  - *SHA256:* `d6ad3bcd4f3b457c...`
+- **D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear.docx** (`.docx` - 1177479 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear.docx`
+  - *SHA256:* `8020984e980a6072...`
+- **D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear_1.docx** (`.docx` - 1177479 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear_1.docx`
+  - *SHA256:* `8020984e980a6072...`
+- **D_OS AZUL_0_INBOX_Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) (2)_1.pdf** (`.pdf` - 27841 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_0_INBOX_Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) (2)_1.pdf`
+  - *SHA256:* `d6ad3bcd4f3b457c...`
+- **D_OS AZUL_0_INBOX_Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) 3 (2)_1.pdf** (`.pdf` - 26890 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_0_INBOX_Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR) 3 (2)_1.pdf`
+  - *SHA256:* `002802d0c768dc6d...`
+- **D_OS AZUL_0_INBOX_Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR)2 (2)_1.pdf** (`.pdf` - 29219 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_0_INBOX_Documentos_Mapa Mental Creación de Productora de Eventos y Artistas (EAR)2 (2)_1.pdf`
+  - *SHA256:* `e79439b66a9e4711...`
+- **D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_AQUI COMO SE USA PARA MAPAS MENTALES.docx** (`.docx` - 12452 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_AQUI COMO SE USA PARA MAPAS MENTALES.docx`
+  - *SHA256:* `96fcb69624503e7d...`
+- **D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_AQUI COMO SE USA PARA MAPAS MENTALES_1.docx** (`.docx` - 12452 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_AQUI COMO SE USA PARA MAPAS MENTALES_1.docx`
+  - *SHA256:* `96fcb69624503e7d...`
+- **D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear.docx** (`.docx` - 1177479 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear.docx`
+  - *SHA256:* `8020984e980a6072...`
+- **D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear_1.docx** (`.docx` - 1177479 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_El modelo Canvas basado en mapa de empatia productora ear_1.docx`
+  - *SHA256:* `8020984e980a6072...`
+- **Documentos_MAPA ESTRATEGIA DE VENTA DE TICKETS.pdf** (`.pdf` - 39447 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\ESTRATEGIA_INTERNA_Y_EXTERNA\Documentos_MAPA ESTRATEGIA DE VENTA DE TICKETS.pdf`
+  - *SHA256:* `8b18ff0bbf3de4c8...`
+- **Documentos_MAPA ESTRATEGIA DE VENTA DE TICKETS_1.pdf** (`.pdf` - 39447 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\ESTRATEGIA_INTERNA_Y_EXTERNA\Documentos_MAPA ESTRATEGIA DE VENTA DE TICKETS_1.pdf`
+  - *SHA256:* `8b18ff0bbf3de4c8...`
+- **MAPA ESTRATEGIA DE VENTA DE TICKETS (2).pdf** (`.pdf` - 39447 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\ESTRATEGIA_INTERNA_Y_EXTERNA\MAPA ESTRATEGIA DE VENTA DE TICKETS (2).pdf`
+  - *SHA256:* `8b18ff0bbf3de4c8...`
+- **MAPA ESTRATEGIA DE VENTA DE TICKETS.pdf** (`.pdf` - 39447 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\ESTRATEGIA_INTERNA_Y_EXTERNA\MAPA ESTRATEGIA DE VENTA DE TICKETS.pdf`
+  - *SHA256:* `8b18ff0bbf3de4c8...`
+- **MAPA ESTRATEGIA DE VENTA DE TICKETS_1.pdf** (`.pdf` - 39447 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\ESTRATEGIA_INTERNA_Y_EXTERNA\MAPA ESTRATEGIA DE VENTA DE TICKETS_1.pdf`
+  - *SHA256:* `8b18ff0bbf3de4c8...`
+- **ART_GUION-EXPOSICION-ALMA-ARTISTICA-DANI-ARAGON-ZOOM.pdf** (`.pdf` - 3786691 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\ART_GUION-EXPOSICION-ALMA-ARTISTICA-DANI-ARAGON-ZOOM.pdf`
+  - *SHA256:* `c7b833ed37de76d3...`
+- **guion-exposicion-alma-artistica-dani-aragon-zoom.pdf** (`.pdf` - 3786691 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\guion-exposicion-alma-artistica-dani-aragon-zoom.pdf`
+  - *SHA256:* `c7b833ed37de76d3...`
+- **guion-exposicion-alma-artistica-dani-aragon-zoom_1.pdf** (`.pdf` - 3786691 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\guion-exposicion-alma-artistica-dani-aragon-zoom_1.pdf`
+  - *SHA256:* `c7b833ed37de76d3...`
+- **guion-exposicion-alma-artistica-dani-aragon-zoom_1_LIMPIO.pdf** (`.pdf` - 3786691 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\guion-exposicion-alma-artistica-dani-aragon-zoom_1_LIMPIO.pdf`
+  - *SHA256:* `c7b833ed37de76d3...`
+- **guion-exposicion-alma-artistica-dani-aragon-zoom_LIMPIO.pdf** (`.pdf` - 3786691 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\guion-exposicion-alma-artistica-dani-aragon-zoom_LIMPIO.pdf`
+  - *SHA256:* `c7b833ed37de76d3...`
+- **Guiones para Beni Terán Viaje musical por la memoria.docx** (`.docx` - 772704 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\01_VERTICAL_EVENTOS\BODAS\PROTOCOLOS\Guiones para Beni Terán Viaje musical por la memoria.docx`
+  - *SHA256:* `4b006582f089260f...`
+- **PRO_APP_INTERACTIVA_VIAJE_MUSICAL_POR_LA_MEMORIA.docx** (`.docx` - 363109 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\PRO_APP_INTERACTIVA_VIAJE_MUSICAL_POR_LA_MEMORIA.docx`
+  - *SHA256:* `c58d711c8b993ae6...`
+- **PRO_ESTRUCTURA_DE_CÁLCULO_PROYECTO_PILOTO_VIAJE_MUSICA.pdf** (`.pdf` - 4333145 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\PRO_ESTRUCTURA_DE_CÁLCULO_PROYECTO_PILOTO_VIAJE_MUSICA.pdf`
+  - *SHA256:* `34d1e18c9114c012...`
+- **PRO_JLOPEZAVITFM0617MEMORIA.pdf** (`.pdf` - 2461715 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\PRO_JLOPEZAVITFM0617MEMORIA.pdf`
+  - *SHA256:* `cb6b900ec363a89c...`
+- **PRO_METODOLOGÍA_VIMUME.docx** (`.docx` - 20019 bytes)
+  - *Ruta:* `D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\PRO_METODOLOGÍA_VIMUME.docx`
+  - *SHA256:* `c9dbb3243f42753e...`

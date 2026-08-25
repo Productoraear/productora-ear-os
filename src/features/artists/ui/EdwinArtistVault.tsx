@@ -23,7 +23,7 @@ import { EdwinCouponBanner } from './EdwinCouponBanner';
 import { EdwinEcosystemHero } from './EdwinEcosystemHero';
 
 export const EdwinArtistVault: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'BIO' | 'HITOS' | 'VIMUME'>('BIO');
+  const [activeTab, setActiveTab] = useState<'BIO' | 'EL_SILENCIO' | 'HITOS' | 'VIMUME'>('BIO');
 
   return (
     <div className="bg-[#050505] text-white overflow-hidden selection:bg-[#ecb613]/30 font-sans">
@@ -84,18 +84,26 @@ export const EdwinArtistVault: React.FC = () => {
               <h2 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter font-syne">Trayectoria Tridimensional</h2>
             </div>
             
-            <div className="flex bg-white/5 border border-white/10 rounded-2xl p-1 shrink-0">
+            <div className="flex bg-white/5 border border-white/10 rounded-2xl p-1 shrink-0 overflow-x-auto max-w-full">
               <button
                 onClick={() => setActiveTab('BIO')}
-                className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                className={`px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
                   activeTab === 'BIO' ? 'bg-[#ecb613] text-black font-black' : 'text-white/60 hover:text-white'
                 }`}
               >
                 Orígenes y Garra
               </button>
               <button
+                onClick={() => setActiveTab('EL_SILENCIO')}
+                className={`px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
+                  activeTab === 'EL_SILENCIO' ? 'bg-[#ecb613] text-black font-black' : 'text-white/60 hover:text-white'
+                }`}
+              >
+                El Silencio Justificado
+              </button>
+              <button
                 onClick={() => setActiveTab('HITOS')}
-                className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                className={`px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
                   activeTab === 'HITOS' ? 'bg-[#ecb613] text-black font-black' : 'text-white/60 hover:text-white'
                 }`}
               >
@@ -103,7 +111,7 @@ export const EdwinArtistVault: React.FC = () => {
               </button>
               <button
                 onClick={() => setActiveTab('VIMUME')}
-                className={`px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                className={`px-4 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap ${
                   activeTab === 'VIMUME' ? 'bg-[#ecb613] text-black font-black' : 'text-white/60 hover:text-white'
                 }`}
               >
@@ -113,7 +121,7 @@ export const EdwinArtistVault: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-7 space-y-8">
+            <div className="lg:col-span-7 space-y-8 min-h-[350px]">
               {activeTab === 'BIO' && (
                 <motion.div 
                   initial={{ opacity: 0, x: -20 }}
@@ -130,6 +138,29 @@ export const EdwinArtistVault: React.FC = () => {
                   </p>
                   <p className="text-white/60 text-sm leading-relaxed italic border-l-2 border-[#ecb613] pl-6 py-2">
                     "Empezar no es fácil. Trabajé en aluminio, en motos, conduje mi propio taxi, y fui encargado de grandes discotecas en España. Desde allí diseñé y coordiné la producción técnica de 37 grandes conciertos internacionales. Fue en esos escenarios donde comprendí el inmenso poder del mariachi al cantar junto a agrupaciones como Águilas de Plata."
+                  </p>
+                </motion.div>
+              )}
+
+              {activeTab === 'EL_SILENCIO' && (
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="space-y-6"
+                >
+                  <h3 className="text-3xl font-black uppercase text-[#ecb613] font-syne">¿Por qué he estado callado 2 años?</h3>
+                  <p className="text-white/70 text-base leading-relaxed">
+                    Un artista no debe ser solo una voz; debe ser el arquitecto de su propia comunidad. Después de décadas en los escenarios, sentí que la música debía trascender el aplauso fugaz. Durante más de 2 años no hubo redes sociales, ni lanzamientos estridentes. 
+                  </p>
+                  <p className="text-white/70 text-base leading-relaxed">
+                    <strong>No estaba descansando. Estaba construyendo.</strong>
+                  </p>
+                  <p className="text-white/70 text-base leading-relaxed">
+                    Codifiqué desde cero <strong>EAR OS</strong>, una infraestructura soberana para proteger el valor de mi arte sin depender de intermediarios. Paralelamente, desarrollé <strong>VIMUME</strong> (Viaje Musical por la Memoria), un protocolo neuroacústico para llevar dignidad y estimulación a las personas mayores en residencias.
+                  </p>
+                  <p className="text-white/60 text-sm leading-relaxed italic border-l-2 border-[#ecb613] pl-6 py-2">
+                    "Mi silencio fue estratégico. Ser parte de mi comunidad hoy significa apoyar a un cantautor-empresario que no compite por precio, sino que utiliza el 10% de cada reserva para financiar musicoterapia para quienes han olvidado todo, menos la música de su juventud. Esto es arte con propósito real."
                   </p>
                 </motion.div>
               )}
@@ -189,12 +220,15 @@ export const EdwinArtistVault: React.FC = () => {
                   transition={{ duration: 0.5 }}
                   className="space-y-6"
                 >
-                  <h3 className="text-3xl font-black uppercase text-[#ecb613] font-syne">Estimulación Sensorial y Memoria Afectiva</h3>
+                  <h3 className="text-3xl font-black uppercase text-[#ecb613] font-syne">Ciencia y Legado: Viaje Musical por la Memoria</h3>
                   <p className="text-white/70 text-base leading-relaxed">
-                    Edwin Agudelo es el pilar transaccional y humano de <strong>VIMUME</strong>, la innovadora plataforma de estimulación sensorial y reminiscencia a través de la música tradicional para la Silver Economy.
+                    Como CEO y arquitecto de <strong>VIMUME</strong>, he transformado la música tradicional en una herramienta terapéutica de alto impacto para luchar contra la soledad no deseada en la Silver Economy.
                   </p>
                   <p className="text-white/70 text-base leading-relaxed">
-                    Las interpretaciones de Edwin, calibradas acústicamente con frecuencias estimulantes, son utilizadas en centros de día y residencias para promover el envejecimiento activo, estimular la memoria afectiva y fomentar el bienestar integral mediante terapias no farmacológicas.
+                    Mis interpretaciones están calibradas neuroacústicamente por debajo de 75 dB para proteger a nuestros mayores. Trabajamos en alianza con la <strong>Academia</strong> (estudiantes de Musicoterapia, Gerontología y Terapia Ocupacional) y bajo la estricta validación de médicos y familiares para recopilar métricas clínicas frente al Alzheimer.
+                  </p>
+                  <p className="text-white/60 text-sm leading-relaxed italic border-l-2 border-[#ecb613] pl-6 py-2">
+                    "Este proyecto trasciende mi propia voz. Con miras a escalar hacia el IMSERSO y Fondos Europeos, al contratar mi espectáculo de gala, el 10% del beneficio se destina automáticamente a financiar musicoterapia para quienes sostienen nuestra historia. Tú celebras; ellos recuerdan."
                   </p>
                 </motion.div>
               )}

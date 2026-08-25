@@ -7,6 +7,8 @@
     "build/",
     "logs/",
     "quarantine/",
-    "BASE_DE_CONOCIMIENTO/"
+    "BASE_DE_CONOCIMIENTO/",
+    "src/data/ear-rag-database.json",
+    "TRANSCRIPCIONES_AUDIO/"
   ]
 }

@@ -1,50 +1,40 @@
-# 🏛️ REGISTRO DE MEMORIA PERSISTENTE — EAR OS V2 (S-CLASS CANONICAL)
-# Framework: obra/superpowers v5.0.5 + Anthropic Security Guidance v2.1.0
+# 🏛️ REGISTRO DE MEMORIA PERSISTENTE & GOBERNANZA AGÉNTICA — EAR OS V2 (SENIOR HIGH-END FULL-EQUIP)
+# Framework: obra/superpowers v5.0.5 + Anthropic Security Guidance v2.1.0 + Modo CEO Activo
 
-## 1. Contexto del Sistema y Arquitectura
-- **Proyecto**: EAR OS V2 (Plataforma de Eventos, Sonorización e Inteligencia B2B/B2G).
-- **Pila Técnica**: Next.js App Router (15+), TypeScript Strict (Exit Code 0 PASS), Tailwind CSS, Stripe Connect SDK, Prisma ORM, Firebase Firestore.
+## 1. Identidad, Entorno y Pila Tecnológica S-Class
+- **Proyecto**: EAR OS V2 — Ecosistema Soberano de Monetización Musical, Sonorización de Élite y Neurociencia VIMUME.
+- **Pila Técnica**: Next.js App Router (14.2+ / 16.3+), TypeScript Strict Mode (`tsc --noEmit` Code 0 obligatorio), Tailwind CSS, Stripe Connect SDK v14, Prisma ORM, DirectML ONNX Runtime.
 - **Paleta Inmutable OLED**: True Black (`#050505`), Dark Surface (`#09090d`), Oro Imperial (`#ecb613`), Púrpura Astra (`#a855f7`).
 - **Tipografías**: Syne (Display/Monumental), Inter (Cuerpo/Técnico), JetBrains Mono (Métricas/Hashes).
-- **SSOT**: `EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md` y `docs/release/EAR_OS_MASTER_TECHNICAL_BLUEPRINT_100_POINTS.md`.
+- **SSOT UNIFICADO**: `EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md` y `docs/EAR_OS_MASTER_HANDOFF_SOVEREIGN_SSOT.md`.
 
-## 2. Reglas de Negocio y Fosos Inmutables
+## 2. Reglas Core de Negocio & Matemáticas Inmutables
+- **Tarifa Base Solista (Edwin Agudelo)**: **350 € inmutable**. Prohibida cualquier guerra de precios a la baja.
+- **Multiplicadores Dinámicos**: Base (350 €) + Kilometraje (0,35 €/km + peajes) + Músicos adicionales (Trío +250 €, Quinteto +400 €) + Rider S-Class (Bose F1, dB Technologies, Shure Beta).
 - **Split Soberano**: 80% Proveedor/Artista / 10% EAR OS Infraestructura / 10% VIMUME Impacto Social.
-- **Física Acústica**: 12 W/pax de presión acústica homologada (Riders Bose F1 Model 812 / Shure Axient Digital).
-- **Catálogo Soberano**: 24.869 proveedores verificados sin backlinks salientes en 14 MB (`src/data/bodas-vendors-harvested.json`).
-- **Marco B2G**: Contratos Menores bajo el Art. 118 LCSP (<15.000 € + IVA) con certificado de exclusividad artística (Art. 168.a.2º LCSP).
+- **Depósito de Reserva Reembolsable**: 100 € mediante Checkout Session de Stripe con Price-Lock SHA-256.
+- **Supplier Blur-Lock (P0)**: Anonimización y protección estricta de proveedores homologados hasta confirmación del pago.
+- **Física Acústica**: 12 W/pax de presión acústica homologada (Garantía "0 Fallos" para eventos corporativos y bodas).
+- **Marco B2G (VIMUME)**: Contratos Menores bajo el Art. 118 LCSP (<15.000 € + IVA) y procedimiento abierto simplificado con facturación electrónica FACE.
 - **Seguro de Responsabilidad Civil**: Cobertura de 1.000.000 € en todas las operaciones.
 
-## 3. Blindaje de Seguridad Perimetral (Anthropic Guidance v2.1.0)
-- **8/8 Vectores Sellados**: Command Injection, Process Subshell, Path Traversal, SQL Injection, Hardcoded Secrets, XSS, Broken Auth, Insecure Webhooks.
-- **Firma HMAC SHA-256 en Stripe**: Verificación criptográfica obligatoria sobre `rawBody` (`stripe.webhooks.constructEvent`). En producción (`NODE_ENV === 'production'`), cualquier fallo de firma rechaza con HTTP 400 inmediato sin bypass.
-- **Anti-Path Traversal**: Sanitización estricta de slugs y tokens con regex `/[^a-zA-Z0-9_-]/g`.
-- **Cero Secretos en Código**: `process.env.STRIPE_SECRET_KEY` y `process.env.STRIPE_WEBHOOK_SECRET` invocados estrictamente en servidor.
+## 3. Blindaje de Seguridad Perimetral (8 Vectores Anthropic)
+- **1. Command Injection**: Prohibido `eval()` o ejecución de comandos dinámicos sin sanitizar.
+- **2. Process Subshell**: Subprocesos estrictamente sin shell (`subprocess.run(shell=False)`).
+- **3. Path Traversal**: Sanitización obligatoria de slugs y tokens con regex `/[^a-zA-Z0-9_-]/g`.
+- **4. SQL Injection**: Uso exclusivo de ORM estricto (Prisma) con tipado rígido.
+- **5. Hardcoded Secrets**: Prohibido escribir secretos en frontend; `STRIPE_SECRET_KEY` exclusivamente en backend.
+- **6. XSS & Script Injection**: Escapado automático mediante React DOM.
+- **7. Broken Auth**: Tokens criptográficos `claim_{slug}_10x` para perfiles B2B.
+- **8. Insecure Webhooks**: Verificación criptográfica HMAC SHA-256 obligatoria sobre `rawBody` (`stripe.webhooks.constructEvent`). En producción, fallo de firma = HTTP 400 inmediato.
 
-## 4. Directivas Agénticas y de Ejecución (obra/superpowers)
-- **Compilación Obligatoria**: Ejecutar `npx tsc --noEmit` antes de cerrar cualquier bloque o commit (Exit Code 0 obligatorio).
-- **Verificación de Perfiles**: Usar `claim_{slug}_10x` para la autenticación de perfiles B2B en `/reclamar-perfil`.
-- **Despacho Controlado (Rate-Limiter)**: Envíos con retraso de 45-90s entre contactos para proteger reputación de dominio (SPF/DKIM/DMARC).
-- **Subagentes Activos**:
-  - `scripts/outbound_b2b_microbatch_agent.py`: Generador de micro-lotes salientes B2B.
-  - `scripts/outbound_dispatcher_queue.py`: Despachador con telemetría y calentamiento de dominio.
-  - `scripts/b2g_placsp_bidder.py`: Cosechador de licitaciones de contratación menor PLACSP (<15.000 €).
+## 4. Hardware Bare-Metal Local & Zero-Token Memory (ZTM)
+- **Workstation**: PC Windows con AMD Radeon RX 7900 XTX (24 GB VRAM) sobre DirectML / ONNX Runtime.
+- **Protocolo ZTM**: Prohibido saturar la ventana de contexto de los modelos con archivos crudos > 2.000 tokens (.pdf, .docx, .json). Toda ingesta masiva se delega a scripts en `/scripts` o GPU bare-metal.
+- **Base Cognitiva RAG**: `src/data/ear-rag-database.json` con 30.139 nodos cognitivos verificados bit a bit sin alucinaciones.
+- **Regla de Preservación**: La GPU local procesa; la nube razona. Coste marginal por token = 0,00 €.
 
-## 5. Valoración Financiera (Criterio Berkshire Hathaway Owner Earnings)
-- **Valoración Base Semilla**: 1,11 M€ a 1,40 M€ Pre-Money (80% Technical Derisking alcanzado).
-- **Umbral 1 (4.900 € MRR)**: 100 Proveedores B2B activos a 49 €/mes -> Desbloqueo hacia horquilla 2,5 M€ – 4,0 M€.
-- **Umbral 2 (90.000 € GMV)**: 20 Contratos B2G adjudicados bajo Art. 118 LCSP.
-
-## 6. Hardware Local & Ollama GPU Offloading (v4.10)
-- **Workstation**: PC Windows con AMD Radeon RX 7900 XTX (24 GB VRAM).
-- **Ollama Endpoint**: `http://localhost:11434` — Modelos preferidos: `qwen2.5-coder:32b`, fallback `llama3.1:latest`.
-- **REGLA DE ENRUTAMIENTO**: Para tareas de extracción masiva de datos, indexación RAG, lectura de logs, parsing off-context y clasificación semántica de archivos, DELEGAR la ejecución a la instancia de Ollama local para preservar el contexto del agente principal y evitar consumo innecesario de tokens API en la nube.
-- **Casos de Uso Locales**: Batch ingestion de PDFs/Word/MD, ZTM Purist Archivist sweeps, parseo de historiales DJ, generación de resúmenes semánticos para `ear-rag-database.json`.
-- **Regla de Preservación**: La GPU local procesa; la nube razona. Nunca invertir esta prioridad.
-
-## 7. Universal Cue Bridge & Proof of Play B2B (v4.10)
-- **Parser Universal**: `src/lib/UniversalCueBridge.ts` — Soporta VirtualDJ, Serato, Rekordbox, Traktor, Denon Engine y formato genérico.
-- **Generador Forense**: `src/lib/cue-sheet-generator.ts` — Acta de Ejecución Pública con firma SHA-256, NIF Venue, GPS, SGAE/AIE/AGEDI.
-- **Instalador DJ 1-Click**: `scripts/install-ear-cue-bridge.ps1` — Selector multi-marca con 6 opciones + auto-detección + Ollama GPU check.
-- **Test Runner**: `scripts/test_virtualdj_bridge.js` — 8/8 assertions PASS, exporta visado HTML al Desktop.
-- **Watcher de Sesiones**: `~/.ear-os/ear-session-watcher.ps1` — FileSystemWatcher en segundo plano para auto-procesar historiales al cerrar sesión DJ.
+## 5. Directivas de Ejecución Senior Full-Equip
+- **Zero AI Slop**: Todo desarrollo debe tener un propósito directo en la captación, cotización o facturación de bolos.
+- **Compilación Obligatoria**: Antes de cerrar cualquier tarea, ejecutar `npx tsc --noEmit` y confirmar Exit Code 0.
+- **Prioridad Absoluta**: Facturación Inmediata (Modo YOLO) > Tracción Orgánica (SEO/GEO 572 URLs) > Integridad de Código > Nuevas Funcionalidades.
