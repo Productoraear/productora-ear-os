@@ -40,3 +40,4 @@ system-prompts-and-models-of-ai-tools-main/
 /scripts/tools/
 !src/features/astra/components/tools/
 .models/
+src/adn_vault_staging/

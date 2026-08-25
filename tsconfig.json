@@ -59,6 +59,7 @@
     "scratch",
     "scripts",
     "src/adn_vault",
+    "src/adn_vault_staging",
     "dist",
     "build"
   ]
