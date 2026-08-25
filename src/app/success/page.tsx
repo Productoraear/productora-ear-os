@@ -183,17 +183,26 @@ function SuccessVoucherContent() {
 
           {/* Certificate Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-white/10 relative z-10">
-            <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
               <button
                 onClick={handlePrint}
                 className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 border border-white/10 w-full sm:w-auto cursor-pointer"
               >
-                <Printer className="w-4 h-4 text-[#ecb613]" /> Imprimir / Guardar PDF
+                <Printer className="w-4 h-4 text-[#ecb613]" /> Imprimir Certificado
               </button>
+
+              <a
+                href={`/api/dossier/pdf?location=${encodeURIComponent(provincia)}&service=Reserva+Confirmada+S-Class`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 py-3 rounded-xl bg-[#ecb613]/10 hover:bg-[#ecb613]/20 text-[#ecb613] border border-[#ecb613]/30 font-semibold text-xs transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
+              >
+                <FileText className="w-4 h-4" /> Ver Dossier Oficial (PDF)
+              </a>
             </div>
 
             <a
-              href={`https://wa.me/34682141077?text=${whatsappMessage}`}
+              href={`https://wa.me/34693693048?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#ecb613] to-[#d4af37] text-black font-extrabold text-xs sm:text-sm hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 w-full sm:w-auto"

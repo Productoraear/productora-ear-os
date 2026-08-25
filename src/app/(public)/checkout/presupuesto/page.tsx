@@ -263,11 +263,20 @@ function CheckoutPresupuestoContent() {
               </span>
             </div>
 
-            <div className="w-full sm:w-auto flex flex-col items-end gap-2">
+            <div className="w-full sm:w-auto flex flex-wrap items-center justify-end gap-3">
+              <a
+                href={`/api/dossier/pdf?location=${encodeURIComponent(quoteData?.location || 'Madrid')}&total=${quoteData?.estimatedTotal || 1240}&pax=${quoteData?.pax || 150}&service=${encodeURIComponent(quoteData?.artist || 'Producción Técnica S-Class')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 py-4 rounded-2xl border border-[#ecb613]/40 bg-[#ecb613]/5 hover:bg-[#ecb613]/10 text-[#ecb613] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all font-mono"
+              >
+                📄 Previsualizar Dossier PDF
+              </a>
+
               <button
                 onClick={handlePayDeposit}
                 disabled={loading}
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#ecb613] hover:bg-[#d9a50f] text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-3 transition-all shadow-xl shadow-[#ecb613]/20 disabled:opacity-50"
+                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#ecb613] hover:bg-[#d9a50f] text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-3 transition-all shadow-xl shadow-[#ecb613]/20 disabled:opacity-50 cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -282,8 +291,10 @@ function CheckoutPresupuestoContent() {
                   </>
                 )}
               </button>
-              <span className="text-[10px] text-zinc-400 font-mono">🔒 Pago seguro SSL de 10 € deducible de la liquidación final</span>
             </div>
+          </div>
+          <div className="text-right">
+            <span className="text-[10px] text-zinc-400 font-mono">🔒 Depósito seguro Stripe 10 € con Price-Lock 72h garantizado</span>
           </div>
 
           {error && (
