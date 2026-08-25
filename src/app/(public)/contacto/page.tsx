@@ -271,7 +271,7 @@ function ContactoContent() {
 
 export default function ContactoPage() {
   return (
-    <main className="min-h-screen bg-[#050505]">
+    <main className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pb-40">
       <Suspense fallback={<div className="p-20 text-center text-white/30">Cargando Centro de Contacto...</div>}>
         <ContactoContent />
       </Suspense>

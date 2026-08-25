@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { Lock, KeyRound, ArrowRight, AlertCircle, Mail, Smartphone, ShieldCheck, UserCheck, Edit3 } from 'lucide-react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Lock, KeyRound, ArrowRight, AlertCircle, Mail, Smartphone, ShieldCheck, Edit3 } from 'lucide-react';
 
-export default function OmniAuthLoginPage() {
+function OmniAuthLoginForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
   const [mounted, setMounted] = useState(false);
 
   const [authRole, setAuthRole] = useState<'admin' | 'editor'>('admin');
@@ -18,7 +19,7 @@ export default function OmniAuthLoginPage() {
   const [loading, setLoading] = useState(false);
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
 
-  const fromPath = searchParams ? searchParams.get('from') : '/admin';
+  const fromPath = searchParams.get('from') || '/admin';
 
   useEffect(() => {
     setMounted(true);
@@ -108,7 +109,7 @@ export default function OmniAuthLoginPage() {
 
   return (
     <div suppressHydrationWarning className="min-h-screen bg-neutral-950 text-white flex items-center justify-center p-4 font-sans selection:bg-amber-500 selection:text-black">
-      <div className="max-w-md w-full bg-neutral-900/95 border border-neutral-800 rounded-3xl p-8 shadow-2xl backdrop-blur-2xl">
+      <div className="max-w-md w-full bg-neutral-950/95 border border-neutral-800 rounded-3xl p-8 shadow-2xl backdrop-blur-2xl">
         
         {/* CABECERA */}
         <div className="text-center mb-6">
@@ -196,7 +197,6 @@ export default function OmniAuthLoginPage() {
         {/* PASO 2: VERIFICACIÓN 2FA PARA ADMIN */}
         {step === 2 && authRole === 'admin' && (
           <form onSubmit={handleStep2} className="space-y-4">
-            
             {/* OPCIONES DE MÉTODO 2FA */}
             <div className="grid grid-cols-2 gap-2">
               <button
@@ -260,5 +260,13 @@ export default function OmniAuthLoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function OmniAuthLoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-neutral-950 flex items-center justify-center text-amber-400 font-mono text-xs">Cargando Identidad S-Class...</div>}>
+      <OmniAuthLoginForm />
+    </Suspense>
   );
 }
