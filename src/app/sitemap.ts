@@ -1,65 +1,46 @@
 import { MetadataRoute } from 'next';
-import { PROVINCIAS, SERVICIOS, OCASIONES } from '@/lib/constants/seo-data';
+import { PROVINCIAS, SERVICIOS } from '@/lib/constants/seo-data';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+const LOCALIDADES_TOP = [
+  'alcala-de-henares', 'alcobendas', 'alcorcon', 'aranjuez', 'arganda-del-rey',
+  'collado-villalba', 'fuenlabrada', 'getafe', 'las-rozas', 'leganes',
+  'mahadahonda', 'mostoles', 'parla', 'pozuelo-de-alarcon', 'san-sebastian-de-los-reyes',
+  'talavera-de-la-reina', 'illescas', 'mentrida', 'torrijos', 'otero'
+];
+
+const extractSlug = (item: any): string | null => {
+  if (!item) return null;
+  if (typeof item === 'string') return item;
+  return item.slug || item.id || String(item);
+};
+
+export async function generateSitemaps() {
+  const provList = Array.isArray(PROVINCIAS) ? PROVINCIAS : [];
+  return provList.map((_, index) => ({ id: index }));
+}
+
+export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.productoraear.com';
+  const provList = Array.isArray(PROVINCIAS) ? PROVINCIAS : [];
+  const targetProv = provList[id] || provList[0] || 'madrid';
+  const provSlug = extractSlug(targetProv);
 
-  const extractSlug = (item: any): string | null => {
-    if (!item) return null;
-    if (typeof item === 'string') return item;
-    return item.slug || item.id || String(item);
-  };
+  const sitemapEntries: MetadataRoute.Sitemap = [];
+  const servList = Array.isArray(SERVICIOS) ? SERVICIOS : [];
 
-  // 1. Rutas Estáticas
-  const staticRoutes: MetadataRoute.Sitemap = [
-    '',
-    '/bodas',
-    '/eventos',
-    '/mobile-fusion',
-    '/checkout/presupuesto',
-    '/vimume',
-    '/proveedores',
-    '/ocasiones/ayuntamientos',
-    '/artistas/edwin-agudelo',
-    '/artistas/cumpleanos',
-    '/soberania-tecnica',
-    '/arsenal',
-    '/empresarios',
-    '/chofer',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === '' ? 'daily' : 'weekly',
-    priority: route === '' ? 1.0 : 0.8,
-  }));
+  for (const serv of servList) {
+    const servSlug = extractSlug(serv);
+    if (provSlug && servSlug) {
+      sitemapEntries.push({
+        url: `${baseUrl}/bodas/${provSlug}/${servSlug}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      });
 
-  // 2. Matriz Bodas (Provincias x Servicios)
-  const weddingRoutes: MetadataRoute.Sitemap = [];
-  if (Array.isArray(PROVINCIAS) && Array.isArray(SERVICIOS)) {
-    for (const prov of PROVINCIAS) {
-      const provSlug = extractSlug(prov);
-      for (const serv of SERVICIOS) {
-        const servSlug = extractSlug(serv);
-        if (provSlug && servSlug) {
-          weddingRoutes.push({
-            url: `${baseUrl}/bodas/${provSlug}/${servSlug}`,
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.7,
-          });
-        }
-      }
-    }
-  }
-
-  // 3. Matriz Ocasiones / Eventos (Si existen en seo-data)
-  const ocasionRoutes: MetadataRoute.Sitemap = [];
-  if (Array.isArray(OCASIONES)) {
-    for (const oc of OCASIONES) {
-      const ocSlug = extractSlug(oc);
-      if (ocSlug) {
-        ocasionRoutes.push({
-          url: `${baseUrl}/ocasiones/${ocSlug}`,
+      for (const mun of LOCALIDADES_TOP) {
+        sitemapEntries.push({
+          url: `${baseUrl}/bodas/${provSlug}/${servSlug}/${mun}`,
           lastModified: new Date(),
           changeFrequency: 'monthly',
           priority: 0.6,
@@ -68,5 +49,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  return [...staticRoutes, ...weddingRoutes, ...ocasionRoutes];
+  return sitemapEntries;
 }
