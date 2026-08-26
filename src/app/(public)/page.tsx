@@ -160,7 +160,7 @@ export default function Home() {
   // 7. Render Mode: S-Class Master Gateway Original
   return (
     <div className="bg-[#050505] text-white overflow-hidden flex flex-col min-h-screen">
-      <CinematicHeroSClass />
+      <CinematicHeroSClass onProfileIgnite={handleIgnition} />
 
       <div className="border-y border-white/5 bg-[#0a0a0a]/80 py-4 px-6 overflow-x-auto no-scrollbar">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-6 min-w-[700px]">
