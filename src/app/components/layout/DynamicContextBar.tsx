@@ -1,12 +1,19 @@
 "use client";
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { useSovereignRole } from '@/shared/hooks/useSovereignRole';
 import { FileText, MapPin, Calendar, Heart, Shield, Award, Users, Volume2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function DynamicContextBar() {
+  const pathname = usePathname();
   const { role, isB2G, isArtist } = useSovereignRole();
+
+  // En la raíz, admin y checkout nunca se muestra esta barra flotante
+  if (pathname === '/' || pathname?.startsWith('/admin') || pathname?.startsWith('/checkout')) {
+    return null;
+  }
 
   // Novia / B2C / Client / Guest
   if (role === 'ROLE_CLIENT' || role === 'ROLE_GUEST') {
