@@ -1,22 +1,12 @@
-"use client";
+'use client';
 
-import React from 'react';
+import React, { useState, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Heart, 
-  ArrowRight, 
-  Music, 
-  Star, 
-  Gift, 
-  Home, 
-  Sparkles,
-  Zap,
-  Mic2,
-  CalendarDays,
-  User,
-  MessageSquare
+  Gift, Home, Star, Sparkles, Mic2, CalendarDays, User, MessageSquare 
 } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 const fadeIn = {
   initial: { opacity: 0, y: 30 },
@@ -25,11 +15,11 @@ const fadeIn = {
   transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as any }
 };
 
-/**
- * 🏛️ VIMUME EVENTS & DOMICILIOS PAGE - LUMINOUS FAMILY REFACTOR
- * Concept: "Música para el Alma" (Music for the Soul)
- */
-export default function EventosYDomiciliosPage() {
+function VimumeEventosContent() {
+  const searchParams = useSearchParams();
+  const initialType = searchParams.get('tipo') || 'familiar';
+  const [activeTab, setActiveTab] = useState(initialType);
+
   const experiences = [
     { title: "Celebraciones con Sentido", desc: "Cumpleaños, aniversarios y reuniones familiares donde la música recupera los momentos más felices.", icon: Gift, color: "#3b82f6" },
     { title: "Acompañamiento en Domicilio", desc: "Sesiones privadas diseñadas para el bienestar emocional y la estimulación cognitiva en el hogar.", icon: Home, color: "#2dd4bf" },
@@ -38,8 +28,6 @@ export default function EventosYDomiciliosPage() {
 
   return (
     <main className="bg-[#fdfcf8] min-h-screen text-[#1a1a1a] selection:bg-[#3b82f6]/10 relative overflow-hidden">
-      
-      {/* 🚀 HERO */}
       <section className="px-6 pt-56 pb-40 relative">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#3b82f6]/5 blur-[200px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" />
         <div className="max-w-7xl mx-auto relative z-10">
@@ -48,7 +36,7 @@ export default function EventosYDomiciliosPage() {
               {...fadeIn}
               className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[#3b82f6]/5 border border-[#3b82f6]/10 text-[#3b82f6] text-[11px] font-black uppercase tracking-[0.4em]"
             >
-              <User size={14} /> SERVICIO PRIVADO & FAMILIAR VIMUME
+              <User size={14} /> SERVICIO PRIVADO & FAMILIAR VIMUME ({activeTab.toUpperCase()})
             </motion.div>
             
             <h1 className="text-7xl md:text-[10rem] font-black uppercase italic tracking-tighter leading-[0.75]">
@@ -70,7 +58,6 @@ export default function EventosYDomiciliosPage() {
         </div>
       </section>
 
-      {/* ⚡ EXPERIENCE GRID: Stations of Connection */}
       <section className="px-6 py-40 bg-white border-y border-black/5 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-10">
@@ -79,7 +66,8 @@ export default function EventosYDomiciliosPage() {
                 key={i} 
                 {...fadeIn}
                 transition={{ delay: i * 0.1 }}
-                className="p-16 bg-[#fdfcf8] border border-black/[0.03] rounded-[4rem] space-y-12 hover:border-[#3b82f6]/30 hover:shadow-2xl hover:shadow-[#3b82f6]/5 transition-all group flex flex-col justify-between"
+                onClick={() => setActiveTab(exp.title.toLowerCase())}
+                className="p-16 bg-[#fdfcf8] border border-black/[0.03] rounded-[4rem] space-y-12 hover:border-[#3b82f6]/30 hover:shadow-2xl hover:shadow-[#3b82f6]/5 transition-all group flex flex-col justify-between cursor-pointer"
               >
                 <div className="space-y-10">
                   <div className="w-20 h-20 rounded-[2.5rem] bg-black/5 flex items-center justify-center group-hover:bg-[#1a1a1a] group-hover:text-white transition-all">
@@ -95,59 +83,14 @@ export default function EventosYDomiciliosPage() {
           </div>
         </div>
       </section>
-
-      {/* 🏺 THE ART OF REMINISCENCE: Emotional Depth */}
-      <section className="px-6 py-40 relative">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-24 items-center">
-            <div className="space-y-12">
-              <h2 className="text-5xl md:text-8xl font-black uppercase italic tracking-tighter leading-[0.8] text-[#1a1a1a]">
-                El Mariachi <br />
-                <span className="text-[#3b82f6]/20">como terapia</span> <br />
-                del recuerdo.
-              </h2>
-              <p className="text-2xl text-[#1a1a1a]/40 italic leading-relaxed text-left max-w-xl">
-                Nuestra especialización en música popular y folclórica permite una conexión profunda con la memoria de los participantes.
-              </p>
-              <ul className="space-y-6">
-                {["Repertorio personalizado biográfico", "Terapeutas músicos de excelencia", "Impacto emocional certificado", "Clima de celebración y respeto"].map((item, i) => (
-                  <li key={i} className="flex items-center gap-5 text-[11px] font-black uppercase tracking-[0.4em] text-[#3b82f6] text-left">
-                    <Sparkles size={16} /> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <motion.div 
-              {...fadeIn}
-              transition={{ delay: 0.2 }}
-              className="relative"
-            >
-              <div className="aspect-[4/5] rounded-[5rem] bg-white border border-black/5 flex items-center justify-center relative overflow-hidden group shadow-2xl shadow-black/[0.02]">
-                <Mic2 size={150} className="text-[#1a1a1a]/5 group-hover:scale-110 transition-transform duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-white/90 via-transparent to-transparent" />
-                <div className="absolute bottom-16 left-16">
-                  <p className="text-[11px] font-black uppercase tracking-[0.5em] text-[#3b82f6] mb-3">VIMUME PRIVATE</p>
-                  <p className="text-3xl font-black uppercase italic tracking-tighter text-[#1a1a1a]">Excelencia Artística</p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* 📞 CTA: Closing with Hope */}
-      <section className="px-6 py-60 text-center relative overflow-hidden border-t border-black/5 bg-white">
-        <div className="max-w-5xl mx-auto space-y-16">
-          <MessageSquare size={100} className="mx-auto text-[#3b82f6] opacity-10" />
-          <h2 className="text-6xl md:text-[10rem] font-black uppercase italic tracking-tighter leading-[0.75] text-[#1a1a1a]">Un regalo <br /><span className="text-[#3b82f6]/20">para siempre.</span></h2>
-          <div className="pt-8">
-            <Link href="/vimume/contacto" className="inline-flex px-16 py-8 bg-[#1a1a1a] text-white font-black uppercase italic tracking-tighter rounded-full hover:bg-[#3b82f6] transition-all shadow-2xl shadow-[#3b82f6]/20 text-2xl">
-              Agendar Sesión Terapéutica
-            </Link>
-          </div>
-        </div>
-      </section>
     </main>
+  );
+}
+
+export default function EventosYDomiciliosPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#fdfcf8]" />}>
+      <VimumeEventosContent />
+    </Suspense>
   );
 }

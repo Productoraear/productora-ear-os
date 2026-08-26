@@ -11,12 +11,12 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { InstantNeuralTunnelModal, TunnelProfile } from './InstantNeuralTunnelModal';
+import { useNeuralTunnelStore } from '@/store/useNeuralTunnelStore';
 
-// 👑 4 PERFILES SOBERANOS PRINCIPALES
 export const SOVEREIGN_PROFILES = [
   {
     id: 'particulares',
-    profileKey: 'CLIENT' as TunnelProfile,
+    profileKey: 'solista' as TunnelProfile,
     name: 'Particulares & Bodas',
     tag: 'UNIO // B2C ÉLITE',
     badge: 'MÁS SOLICITADO',
@@ -33,7 +33,7 @@ export const SOVEREIGN_PROFILES = [
   },
   {
     id: 'diplomaticos',
-    profileKey: 'B2G' as TunnelProfile,
+    profileKey: 'b2b' as TunnelProfile,
     name: 'Diplomáticos & B2G',
     tag: 'INSTITUCIONAL // LCSP',
     badge: 'ART. 118 LCSP',
@@ -50,7 +50,7 @@ export const SOVEREIGN_PROFILES = [
   },
   {
     id: 'corporativo',
-    profileKey: 'PARTNER' as TunnelProfile,
+    profileKey: 'b2b' as TunnelProfile,
     name: 'Corporativo & Fincas',
     tag: 'PLANNERS // B2B PARTNERS',
     badge: 'SPLIT 10% PARTNER',
@@ -67,7 +67,7 @@ export const SOVEREIGN_PROFILES = [
   },
   {
     id: 'vimume',
-    profileKey: 'B2G' as TunnelProfile,
+    profileKey: 'vimume' as TunnelProfile,
     name: 'VIMUME Neuroacústica',
     tag: 'SILVER ECONOMY // SALUD',
     badge: 'IMPACTO SOCIAL',
@@ -84,9 +84,7 @@ export const SOVEREIGN_PROFILES = [
   }
 ];
 
-// 🌟 CATÁLOGO DE EXPERIENCIAS SLIDER CON FOTOGRAFÍA CURADA 100%
 export const ECOSYSTEM_ITEMS = [
-  // 1. GASTRONOMÍA & BRASAS LIVE FIRE (100% FOTOS DEDICADAS)
   {
     id: 'bbq-iberico',
     category: 'bbq',
@@ -157,8 +155,6 @@ export const ECOSYSTEM_ITEMS = [
     description: 'Hortalizas de temporada a la parrilla, berenjenas con miso y piña asada con canela y ron.',
     specs: ['Parrilla vegetal separada', 'Aceites infusionados', 'Romesco artesano']
   },
-
-  // 2. MÚSICA & TALENTO SOBERANO
   {
     id: 'music-solista',
     category: 'music',
@@ -201,8 +197,6 @@ export const ECOSYSTEM_ITEMS = [
     description: 'La formación más imponente: trompetas de gala, sección completa de cuerdas y potencia escénica monumental.',
     specs: ['Line Array d&b 8000W', 'Iluminación robotizada', 'Rider homologado']
   },
-
-  // 3. HARDWARE & ARSENAL B2B
   {
     id: 'arsenal-led',
     category: 'arsenal',
@@ -219,7 +213,7 @@ export const ECOSYSTEM_ITEMS = [
   }
 ];
 
-export default function SovereignMasterEcosystemExperience() {
+export function SovereignMasterEcosystemExperience() {
   const [activeCategory, setActiveCategory] = useState<'all' | 'bbq' | 'music' | 'arsenal'>('all');
   const [selectedItem, setSelectedItem] = useState(ECOSYSTEM_ITEMS[0]);
   const [pax, setPax] = useState(80);
@@ -227,6 +221,7 @@ export default function SovereignMasterEcosystemExperience() {
   const [locked, setLocked] = useState(false);
 
   const sliderRef = useRef<HTMLDivElement | null>(null);
+  const { openTunnel, isOpen } = useNeuralTunnelStore();
 
   const filteredItems = activeCategory === 'all' 
     ? ECOSYSTEM_ITEMS 
@@ -247,14 +242,9 @@ export default function SovereignMasterEcosystemExperience() {
   const acousticWatts = pax * 12;
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen selection:bg-[#ecb613] selection:text-black font-sans pb-24">
-      
-      {/* Dynamic Aura */}
+    <div className="bg-[#050505] text-white min-h-screen selection:bg-[#ecb613] selection:text-black font-sans pb-24 relative">
       <div className="fixed top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#ecb613]/10 blur-[150px] pointer-events-none rounded-full" />
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          1. TOP HERO: ECOSISTEMA SOBERANO & ACCESOS A LOS 4 PERFILES
-         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="pt-24 sm:pt-28 pb-8 px-4 sm:px-6 max-w-7xl mx-auto text-center relative z-20">
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/80 border border-[#ecb613]/40 shadow-[0_0_30px_rgba(236,182,19,0.15)] backdrop-blur-xl mb-4">
           <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-pulse" />
@@ -271,7 +261,16 @@ export default function SovereignMasterEcosystemExperience() {
           Desde bodas privadas de élite y catering de brasas vivas hasta licitaciones institucionales B2G y terapia neuroacústica VIMUME.
         </p>
 
-        {/* 🎴 4 SOVEREIGN GATEWAYS (GRID ACCESOS DIRECTOS) */}
+        <div className="mt-6 flex justify-center">
+          <button 
+            onClick={openTunnel}
+            className="px-8 py-3.5 bg-[#ecb613] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(236,182,19,0.3)] flex items-center gap-2 border border-[#ecb613]/80"
+          >
+            <Zap size={16} className="fill-black" />
+            <span>{isOpen ? 'Túnel Neural Desplegado' : 'Desplegar Túnel Neural S-Class'}</span>
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 text-left">
           {SOVEREIGN_PROFILES.map((prof) => {
             const Icon = prof.icon;
@@ -322,7 +321,6 @@ export default function SovereignMasterEcosystemExperience() {
                   </p>
                 </div>
 
-                {/* Sub-enlaces navegables */}
                 <div className="relative z-10 pt-4 border-t border-white/10 mt-3 space-y-1.5">
                   <div className="flex flex-wrap gap-1">
                     {prof.directLinks.map((link, i) => (
@@ -351,12 +349,7 @@ export default function SovereignMasterEcosystemExperience() {
         </div>
       </section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          2. DESLIZADOR INTERACTIVO TOUCH (CAROUSEL DE EXPERIENCIAS S-CLASS)
-         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="py-8 px-4 sm:px-6 max-w-7xl mx-auto relative z-20">
-        
-        {/* Header de Categorías & Controles Deslizador */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-white/10 pb-4">
           <div>
             <div className="flex items-center gap-2">
@@ -370,7 +363,6 @@ export default function SovereignMasterEcosystemExperience() {
             </h2>
           </div>
 
-          {/* Category Filter Pills & Arrows */}
           <div className="flex items-center gap-3 w-full md:w-auto justify-between">
             <div className="flex items-center gap-1.5 bg-[#111118] p-1.5 rounded-2xl border border-white/10">
               {[
@@ -398,7 +390,6 @@ export default function SovereignMasterEcosystemExperience() {
               })}
             </div>
 
-            {/* Slider Navigation Buttons */}
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => scrollSlider('left')}
@@ -418,7 +409,6 @@ export default function SovereignMasterEcosystemExperience() {
           </div>
         </div>
 
-        {/* 📱 HORIZONTAL TOUCH SNAP SLIDER (DESLIZADOR S-CLASS) */}
         <div 
           ref={sliderRef}
           className="flex gap-4 overflow-x-auto no-scrollbar pb-4 pt-1 snap-x snap-mandatory scroll-smooth"
@@ -436,7 +426,6 @@ export default function SovereignMasterEcosystemExperience() {
                 }`}
               >
                 <div>
-                  {/* Top Badge & Rating */}
                   <div className="flex items-center justify-between mb-3">
                     <span className="px-2.5 py-0.5 rounded-full bg-[#ecb613] text-black text-[8px] font-mono font-black uppercase">
                       {item.badge}
@@ -448,7 +437,6 @@ export default function SovereignMasterEcosystemExperience() {
                     </div>
                   </div>
 
-                  {/* High-res Image Preview */}
                   <div className="h-40 rounded-2xl overflow-hidden bg-black/60 relative mb-3 border border-white/10">
                     <img 
                       src={item.image} 
@@ -464,7 +452,6 @@ export default function SovereignMasterEcosystemExperience() {
                     </div>
                   </div>
 
-                  {/* Title & Description */}
                   <h3 className="text-base font-black uppercase text-white font-syne line-clamp-1">
                     {item.title}
                   </h3>
@@ -475,7 +462,6 @@ export default function SovereignMasterEcosystemExperience() {
                     {item.description}
                   </p>
 
-                  {/* Specs List */}
                   <div className="space-y-1 mt-3 pt-2.5 border-t border-white/5">
                     {item.specs.map((spec, sIdx) => (
                       <div key={sIdx} className="flex items-center gap-1.5 text-[10px] font-mono text-white/70">
@@ -486,7 +472,6 @@ export default function SovereignMasterEcosystemExperience() {
                   </div>
                 </div>
 
-                {/* Bottom Selection Status */}
                 <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
                   <span className="text-sm font-black text-[#ecb613] font-mono">
                     {item.price} € <span className="text-[9px] font-light text-white/50">{item.unit}</span>
@@ -506,12 +491,8 @@ export default function SovereignMasterEcosystemExperience() {
         </div>
       </section>
 
-      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          3. CALCULADOR EN VIVO & GATILLO DE CIERRE STRIPE
-         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <section className="py-6 px-4 sm:px-6 max-w-4xl mx-auto relative z-20">
         <div className="bg-[#0f0f18] p-6 sm:p-8 rounded-3xl border border-white/15 shadow-2xl space-y-6">
-          
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/10 pb-4">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#ecb613] block">
@@ -529,7 +510,6 @@ export default function SovereignMasterEcosystemExperience() {
             </div>
           </div>
 
-          {/* Sliders: Pax & Km */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {isPerPax && (
               <div className="space-y-2">
@@ -570,7 +550,6 @@ export default function SovereignMasterEcosystemExperience() {
             </div>
           </div>
 
-          {/* Breakdown Box */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-black/60 p-4 rounded-2xl border border-white/10">
             <div>
               <span className="text-[9px] font-mono text-white/40 uppercase block">Presupuesto Total</span>
@@ -590,7 +569,6 @@ export default function SovereignMasterEcosystemExperience() {
             </div>
           </div>
 
-          {/* CTA Slide-to-Lock & WhatsApp */}
           <div className="space-y-3 pt-2">
             <div 
               onClick={() => setLocked(!locked)}
@@ -620,6 +598,9 @@ export default function SovereignMasterEcosystemExperience() {
         </div>
       </section>
 
+      <InstantNeuralTunnelModal />
     </div>
   );
 }
+
+export default SovereignMasterEcosystemExperience;
