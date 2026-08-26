@@ -18,8 +18,9 @@ const ConfiguradorBespoke = dynamic(() => import('@/modules/SClassScreens/Config
 const TacticalTracker = dynamic(() => import('@/app/components/SClass/TacticalTracker').then(mod => mod.TacticalTracker), { ssr: false });
 const RouteGovernancePanel = dynamic(() => import('@/app/(nexus)/admin/rutas/page'), { ssr: false });
 const ProVimumeDashboard = dynamic(() => import('@/modules/SClassScreens/PRO_VIMUMEDASHBOARD_2').then(m => m.default || m), { ssr: false });
+const MobileFusionAdminStudio = dynamic(() => import('@/components/admin/MobileFusionAdminStudio'), { ssr: false });
 
-type AdminTab = 'nexus' | 'financial' | 'hunter' | 'vimume' | 'configurador' | 'estado' | 'rutas';
+type AdminTab = 'nexus' | 'mobile-studio' | 'financial' | 'hunter' | 'vimume' | 'configurador' | 'estado' | 'rutas';
 
 export default function UnifiedAdminCommandCenter() {
   const [activeTab, setActiveTab] = useState<AdminTab>('nexus');
@@ -44,6 +45,7 @@ export default function UnifiedAdminCommandCenter() {
 
   const tabs = [
     { id: 'nexus', label: 'Centro de Mando', icon: Activity },
+    { id: 'mobile-studio', label: 'Mobile Fusion Studio', icon: Sparkles },
     { id: 'financial', label: 'Ledger Financiero', icon: DollarSign },
     { id: 'hunter', label: 'Hunter Licitaciones', icon: Radar },
     { id: 'vimume', label: 'Panel VIMUME Astra', icon: Sparkles },
@@ -129,6 +131,17 @@ export default function UnifiedAdminCommandCenter() {
                   <FinancialPanel />
                 </div>
               </div>
+            </motion.div>
+          )}
+
+          {activeTab === 'mobile-studio' && (
+            <motion.div
+              key="mobile-studio"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+            >
+              <MobileFusionAdminStudio />
             </motion.div>
           )}
 
