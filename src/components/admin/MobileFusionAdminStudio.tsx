@@ -22,6 +22,8 @@ import Archetype10_SovereignFusionMaster from '../mobile-fusion/Archetype10_Sove
 import Combo1_VipWeddingGala from '../mobile-fusion/Combo1_VipWeddingGala';
 import EditorialCuratedHeroSClass from '../sclass/EditorialCuratedHeroSClass';
 import DynamicLegoSimulatorRenderer from '../mobile-fusion/DynamicLegoSimulatorRenderer';
+import LuxuryMarketplaceExperience from '../sclass/LuxuryMarketplaceExperience';
+import AcousticAtlasSClassExperience from '../sclass/AcousticAtlasSClassExperience';
 
 // 5 Combos Maestros Sugeridos
 export const PRESET_COMBOS = [
@@ -99,36 +101,50 @@ export const PRESET_COMBOS = [
 
 export const HOMEPAGE_SCREENS = [
   {
+    id: 'luxury-marketplace',
+    name: '1. Luxury Marketplace & Live Fire (Dribbble S-Class)',
+    badge: 'LUJO & LIVE FIRE',
+    desc: 'Catálogo de alta costura: Música de Conservatorio, Brasas & Ahumados en Vivo, Pantallas LED y Cotizador Interactivo.',
+    icon: Flame
+  },
+  {
+    id: 'acoustic-atlas',
+    name: '2. Acoustic Atlas & Tour Journeys (Exploración)',
+    badge: 'ATLAS & TRAYECTORIA',
+    desc: 'Visualizador de giras 2026-2024, mapa interactivo de cobertura y suite de garantías acústicas.',
+    icon: Compass
+  },
+  {
     id: 'editorial-curated',
-    name: '1. Curated 4-Profiles Editorial (Alta Moda & Bento)',
+    name: '3. Curated 4-Profiles Editorial (Alta Moda & Bento)',
     badge: 'MOMENTO WOW S-CLASS',
     desc: 'Portada editorial de lujo con tipografía de impacto + Suite interactiva Bento para los 4 perfiles soberanos (UNIO, Arsenal, The Signal, VIMUME).',
     icon: Sparkles
   },
   {
     id: 'mobile-fusion',
-    name: '2. Mobile Fusion Combo 1 (VIP Wedding Gala)',
+    name: '4. Mobile Fusion Combo 1 (VIP Wedding Gala)',
     badge: 'MÁXIMA CONVERSIÓN',
     desc: 'Dynamic Island + Tinder Swipe + Timeline Bodas.net + Slide-to-Lock 100€ directo en la Home.',
     icon: Smartphone
   },
   {
     id: 'classic',
-    name: '3. S-Class Master Gateway (Original)',
+    name: '5. S-Class Master Gateway (Original)',
     badge: 'AUTORIDAD & SEO',
     desc: 'Hero Cinemático + Tarjeta de Honor Edwin Agudelo (Paciente Cero) + Túnel Neural.',
     icon: Award
   },
   {
     id: 'bento-airbnb',
-    name: '4. Bento Airbnb Luxury Stays',
+    name: '6. Bento Airbnb Luxury Stays',
     badge: 'CURADURÍA & SPLIT',
     desc: 'Galería Bento Glass, Superhost verificado, selector de fecha/pax y desglose transparente 80/10/10.',
     icon: Layers
   },
   {
     id: 'storyselling',
-    name: '5. Storyselling Emotion Reel',
+    name: '7. Storyselling Emotion Reel',
     badge: 'VÍDEO SOCIAL',
     desc: 'Reel audiovisual vertical inmersivo con drawer flotante de cotización y chat WhatsApp.',
     icon: Play
@@ -223,11 +239,13 @@ export default function MobileFusionAdminStudio() {
   // Render the live preview dynamically in the iPhone simulator
   const renderCustomPreview = () => {
     if (activeTab === 'homepage') {
+      if (activeHomepageMode === 'luxury-marketplace') return <LuxuryMarketplaceExperience isSimulator={true} />;
+      if (activeHomepageMode === 'acoustic-atlas') return <AcousticAtlasSClassExperience isSimulator={true} />;
       if (activeHomepageMode === 'editorial-curated') return <EditorialCuratedHeroSClass isSimulator={true} />;
       if (activeHomepageMode === 'mobile-fusion') return <Combo1_VipWeddingGala />;
       if (activeHomepageMode === 'bento-airbnb') return <Archetype3_AirbnbBento />;
       if (activeHomepageMode === 'storyselling') return <Archetype9_StorysellingStream />;
-      return <EditorialCuratedHeroSClass isSimulator={true} />;
+      return <LuxuryMarketplaceExperience isSimulator={true} />;
     }
 
     if (activeTab === 'editorial-lego') {
