@@ -10,11 +10,13 @@ import {
   Calendar, Eye, Check, ArrowUpRight, Radio, Landmark
 } from 'lucide-react';
 import Link from 'next/link';
+import { InstantNeuralTunnelModal, TunnelProfile } from './InstantNeuralTunnelModal';
 
 // 👑 4 PERFILES SOBERANOS PRINCIPALES
 export const SOVEREIGN_PROFILES = [
   {
     id: 'particulares',
+    profileKey: 'CLIENT' as TunnelProfile,
     name: 'Particulares & Bodas',
     tag: 'UNIO // B2C ÉLITE',
     badge: 'MÁS SOLICITADO',
@@ -31,6 +33,7 @@ export const SOVEREIGN_PROFILES = [
   },
   {
     id: 'diplomaticos',
+    profileKey: 'B2G' as TunnelProfile,
     name: 'Diplomáticos & B2G',
     tag: 'INSTITUCIONAL // LCSP',
     badge: 'ART. 118 LCSP',
@@ -47,6 +50,7 @@ export const SOVEREIGN_PROFILES = [
   },
   {
     id: 'corporativo',
+    profileKey: 'PARTNER' as TunnelProfile,
     name: 'Corporativo & Fincas',
     tag: 'PLANNERS // B2B PARTNERS',
     badge: 'SPLIT 10% PARTNER',
@@ -63,6 +67,7 @@ export const SOVEREIGN_PROFILES = [
   },
   {
     id: 'vimume',
+    profileKey: 'B2G' as TunnelProfile,
     name: 'VIMUME Neuroacústica',
     tag: 'SILVER ECONOMY // SALUD',
     badge: 'IMPACTO SOCIAL',
