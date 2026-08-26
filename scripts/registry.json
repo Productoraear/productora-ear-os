@@ -1,113 +1,20 @@
 {
-  "version": "4.23",
-  "last_updated": "2026-08-23T20:48:00+02:00",
-  "tools": {
-    "whisper_gpu_batch_transcriber": {
-      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/whisper_gpu_batch_transcriber.py",
-      "purpose": "Batch audio/video transcription using faster-whisper with hardware offloading, automatic resume/skip, RAG injection, and real-time OLED HTML status dashboard.",
-      "inputs": [
-        "H:/00_PRODUCTORA_EAR/BODEGA_CUARENTENA/RESCATE_FINAL/AUDIO",
-        "H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/TRANSCRIPCIONES_AUDIO",
-        "H:/incubadora despegue/DANI_ARAGON_FORMACION"
-      ],
-      "outputs": [
-        "H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/TRANSCRIPCIONES_AUDIO/*.txt",
-        "src/data/ear-rag-database.json",
-        "C:/Users/M2-W10/.ear-os/whisper_transcription.log",
-        "C:/Users/M2-W10/Desktop/EAR_OS_WHISPER_STATUS.html"
-      ],
-      "cli_command": "python H:/EAR_OS_V2/EAR_OS_V2/scripts/whisper_gpu_batch_transcriber.py"
+  "tools": [
+    {
+      "name": "ingest_gsc_zip_batch.py",
+      "path": "scripts/ingest_gsc_zip_batch.py",
+      "purpose": "Ingesta por lotes de archivos ZIP de Google Search Console y cálculo de métricas de oportunidad.",
+      "inputs": "Archivos ZIP de Search Console en Downloads",
+      "outputs": "src/data/telemetry/gsc-performance-data.json",
+      "cli": "python scripts/ingest_gsc_zip_batch.py"
     },
-    "ztm_purist_archivist": {
-      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/ztm_purist_archivist.py",
-      "purpose": "ZTM physical file relocation, SHA-256 deduplication, and RAG recycling daemon.",
-      "inputs": [
-        "H:/00_PRODUCTORA_EAR",
-        "H:/SANTUARIO_EAR",
-        "C:/Users/M2-W10/Documents"
-      ],
-      "outputs": [
-        "H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT",
-        "src/data/ear-rag-database.json",
-        "docs/digests/RECYCLED_ASSETS_DIGEST.json"
-      ],
-      "cli_command": "python H:/EAR_OS_V2/EAR_OS_V2/scripts/ztm_purist_archivist.py"
-    },
-    "ingest_arsenal_and_b2b_rag": {
-      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/ingest_arsenal_and_b2b_rag.py",
-      "purpose": "Ingests commercial B2B, pricing, and hardware catalog into cognitive RAG database.",
-      "inputs": [
-        "src/data/pricing-tiers.json",
-        "src/data/arsenal-catalog.json"
-      ],
-      "outputs": [
-        "src/data/ear-rag-database.json"
-      ],
-      "cli_command": "python H:/EAR_OS_V2/EAR_OS_V2/scripts/ingest_arsenal_and_b2b_rag.py"
-    },
-    "google_indexing_batch": {
-      "path": "H:/EAR_OS_V2/EAR_OS_V2/scripts/google_indexing_batch.ts",
-      "purpose": "Exports and sends priority URLs (/artistas/reclamar-regalias, /artistas/dashboard, services, B2G) to Google Search Console / Indexing API under canonical www.productoraear.com.",
-      "inputs": [
-        ".next/prerender-manifest.json",
-        "src/app/sitemap.ts"
-      ],
-      "outputs": [
-        "scripts/priority_urls_indexing.json"
-      ],
-      "cli_command": "npx tsx H:/EAR_OS_V2/EAR_OS_V2/scripts/google_indexing_batch.ts"
+    {
+      "name": "analyze_gsc_intelligence.py",
+      "path": "scripts/analyze_gsc_intelligence.py",
+      "purpose": "Análisis ejecutivo y clusterización semántica de queries y páginas líderes de GSC.",
+      "inputs": "src/data/telemetry/gsc-performance-data.json",
+      "outputs": "Consola / Resumen ejecutivo",
+      "cli": "python scripts/analyze_gsc_intelligence.py"
     }
-  },
-  "vampirize_sonomusic": {
-    "path": "scripts/vampire_scrapers/vampirize_sonomusic.py",
-    "purpose": "Vampiriza el catalogo de Sonomusic Madrid (+20% markup) e inyecta en all_providers_database.json y RAG",
-    "input": "https://producciones-sonomusic.com/product-sitemap.xml",
-    "output": "src/data/catalog_sonomusic_vampirized.json & src/data/all_providers_database.json",
-    "cli_command": "python scripts/vampire_scrapers/vampirize_sonomusic.py"
-  },
-  "vampirize_sonomusic_99pct_deep": {
-    "path": "scripts/vampire_scrapers/vampirize_sonomusic_99pct_deep.py",
-    "purpose": "Vampiriza el 99%+ de la web de Sonomusic (articulos tecnicos, Watts RMS, riders, 24 packs) e inyecta en RAG y digest ZTM",
-    "input": "Sitemap y 34 URLs clave de https://producciones-sonomusic.com/",
-    "output": "src/data/ear-rag-database.json & docs/digests/SONOMUSIC_DEEP_TECHNICAL_DIGEST.json",
-    "cli_command": "python scripts/vampire_scrapers/vampirize_sonomusic_99pct_deep.py"
-  },
-  "sanitize_and_transcribe_gpu": {
-    "path": "scripts/sanitize_and_transcribe_gpu.py",
-    "purpose": "Transcripción GPU DirectML forzada en español (language='spanish') con PyTorch DirectML en AMD Radeon RX 7900 XTX",
-    "inputs": [
-      "H:/EAR_OS_V2/public/media",
-      "H:/EAR_OS_V2/VERTICAL_ARTISTAS",
-      "H:/EAR_OS_V2/VERTICAL_INCUBADORA_VAMPIRIZADA"
-    ],
-    "outputs": [
-      "H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/TRANSCRIPCIONES_AUDIO/*.txt"
-    ],
-    "cli_command": "python scripts/sanitize_and_transcribe_gpu.py"
-  },
-  "generate_google_ads_campaigns": {
-    "path": "scripts/ad_engine/generate_google_ads_campaigns.py",
-    "purpose": "Compila el grafo de intencion de busqueda y transcribe audios RAG a campanas Google Ads (Search & Performance Max) con 10/10 Quality Score y CSV de importacion",
-    "inputs": [
-      "src/data/ear-rag-database.json"
-    ],
-    "outputs": [
-      "src/data/google_ads_campaigns_master.json",
-      "src/data/google_ads_editor_import.csv",
-      "docs/ad_engine/GOOGLE_ADS_CAMPAIGNS_MASTER.md"
-    ],
-    "cli_command": "python scripts/ad_engine/generate_google_ads_campaigns.py"
-  },
-  "free_llm_suite_launcher": {
-    "path": "scripts/free_llm_suite_launcher.py",
-    "purpose": "Orquesta y lanza el proxy Free Claude Code y resume todos los recursos de IA gratuitos y locales para la RX 7900 XTX",
-    "inputs": [
-      "tools/free-claude-code/.env"
-    ],
-    "outputs": [
-      "http://localhost:8000/v1",
-      "docs/free_llm_resources/GUIA_MAESTRA_RECURSOS_LLM_GRATIS.md"
-    ],
-    "cli_command": "python scripts/free_llm_suite_launcher.py"
-  }
+  ]
 }
