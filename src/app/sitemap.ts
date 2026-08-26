@@ -14,24 +14,44 @@ const extractSlug = (item: any): string | null => {
   return item.slug || item.id || String(item);
 };
 
-export async function generateSitemaps() {
-  const provList = Array.isArray(PROVINCIAS) ? PROVINCIAS : [];
-  return provList.map((_, index) => ({ id: index }));
-}
-
-export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.productoraear.com';
   const provList = Array.isArray(PROVINCIAS) ? PROVINCIAS : [];
-  const targetProv = provList[id] || provList[0] || 'madrid';
-  const provSlug = extractSlug(targetProv);
-
-  const sitemapEntries: MetadataRoute.Sitemap = [];
   const servList = Array.isArray(SERVICIOS) ? SERVICIOS : [];
 
-  for (const serv of servList) {
-    const servSlug = extractSlug(serv);
-    if (provSlug && servSlug) {
-      sitemapEntries.push({
+  const staticRoutes: MetadataRoute.Sitemap = [
+    '',
+    '/bodas',
+    '/eventos',
+    '/mobile-fusion',
+    '/checkout/presupuesto',
+    '/vimume',
+    '/proveedores',
+    '/ocasiones/ayuntamientos',
+    '/artistas/edwin-agudelo',
+    '/artistas/cumpleanos',
+    '/soberania-tecnica',
+    '/arsenal',
+    '/empresarios',
+    '/chofer',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: route === '' ? 'daily' : 'weekly',
+    priority: route === '' ? 1.0 : 0.8,
+  }));
+
+  const programmaticRoutes: MetadataRoute.Sitemap = [];
+
+  for (const prov of provList) {
+    const provSlug = extractSlug(prov);
+    if (!provSlug) continue;
+
+    for (const serv of servList) {
+      const servSlug = extractSlug(serv);
+      if (!servSlug) continue;
+
+      programmaticRoutes.push({
         url: `${baseUrl}/bodas/${provSlug}/${servSlug}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
@@ -39,7 +59,7 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
       });
 
       for (const mun of LOCALIDADES_TOP) {
-        sitemapEntries.push({
+        programmaticRoutes.push({
           url: `${baseUrl}/bodas/${provSlug}/${servSlug}/${mun}`,
           lastModified: new Date(),
           changeFrequency: 'monthly',
@@ -49,5 +69,5 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
     }
   }
 
-  return sitemapEntries;
+  return [...staticRoutes, ...programmaticRoutes];
 }
