@@ -98,10 +98,11 @@ export default function Home() {
                     <ChevronRight size={16} />
                   </Link>
                   <Link
-                    href="/cotizador?items=cuarteto-gala"
-                    className="py-3.5 px-6 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[48px] transition-all"
+                    href="/mobile-fusion"
+                    className="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#ecb613]/20 to-purple-500/20 hover:bg-white/15 border border-[#ecb613]/50 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 min-h-[48px] transition-all shadow-lg"
                   >
-                    <span>Cotizar Formato Directo</span>
+                    <Sparkles size={16} className="text-[#ecb613]" />
+                    <span>📱 10 Diseños Mobile-First (Airbnb + Uber + Tinder + Bodas)</span>
                   </Link>
                 </div>
               </div>
