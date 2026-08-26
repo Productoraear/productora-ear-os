@@ -1,6 +1,6 @@
 import { SovereignMobileHUD } from '@/components/sclass/SovereignMobileHUD';
 import type { Metadata, Viewport } from "next";
-import { Suspense } from "react";
+
 import Script from "next/script";
 import { Fraunces, Montserrat } from "next/font/google";
 import "./globals.css";
