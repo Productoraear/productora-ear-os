@@ -160,7 +160,7 @@ export default function Home() {
   // 7. Render Mode: S-Class Master Gateway Original
   return (
     <div className="bg-[#050505] text-white overflow-hidden flex flex-col min-h-screen">
-      <CinematicHeroSClass onProfileIgnite={handleIgnition} />
+      <CinematicHeroSClass />
 
       <div className="border-y border-white/5 bg-[#0a0a0a]/80 py-4 px-6 overflow-x-auto no-scrollbar">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-6 min-w-[700px]">
@@ -185,11 +185,16 @@ export default function Home() {
         </div>
       </div>
 
-      <section id="neural-tunnel-section" className="relative py-12 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <CinematicTunnelIgnition onSelectProfile={handleIgnition} />
-        </div>
-      </section>
+      {activeProfile && (
+        <section id="neural-tunnel-section" className="relative py-12 px-4 sm:px-6">
+          <div className="max-w-7xl mx-auto">
+            <CinematicTunnelIgnition 
+              profileContext={activeProfile}
+              onClose={() => setActiveProfile(null)}
+            />
+          </div>
+        </section>
+      )}
     </div>
   );
 }

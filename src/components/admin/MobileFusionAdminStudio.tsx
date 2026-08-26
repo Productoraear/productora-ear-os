@@ -6,7 +6,7 @@ import {
   Smartphone, Sliders, Sparkles, CheckCircle2, 
   Layers, Save, RotateCcw, Zap, Heart, Radio, 
   ShieldCheck, Volume2, ArrowRight, Eye, Play, Award,
-  Home as HomeIcon, Check, Palette, Compass
+  Home as HomeIcon, Check, Palette, Compass, Flame
 } from 'lucide-react';
 
 import Archetype1_TinderDeck from '../mobile-fusion/Archetype1_TinderDeck';
