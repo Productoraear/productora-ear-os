@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { 
   Home, Sliders, Calendar, Users, Zap, ShieldCheck, 
   X, MapPin, Music, Sparkles 
@@ -11,6 +12,7 @@ import { useEcosystemFilterStore } from '@/store/useEcosystemFilterStore';
 export function SovereignMobileHUD() {
   const [isExpanded, setIsExpanded] = useState(false);
   const { guests, setGuests, category, setCategory } = useEcosystemFilterStore();
+  const router = useRouter();
 
   const sheetVariants: Variants = {
     hidden: { y: '100%', opacity: 0, scale: 0.95 },
@@ -110,7 +112,10 @@ export function SovereignMobileHUD() {
               </div>
 
               <button 
-                onClick={() => setIsExpanded(false)}
+                onClick={() => {
+                  setIsExpanded(false);
+                  router.push('/eventos');
+                }}
                 className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ecb613] to-[#d99f0b] text-black font-black uppercase text-xs tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all"
               >
                 <Zap size={16} />
@@ -120,13 +125,20 @@ export function SovereignMobileHUD() {
           )}
         </AnimatePresence>
 
+        {/* NAVEGACIÓN INFERIOR CON RUTAS ACTIVAS */}
         <div className="w-full h-16 bg-black/80 backdrop-blur-2xl border border-white/15 rounded-2xl flex items-center justify-around px-2 shadow-2xl pointer-events-auto">
-          <button className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors">
+          <button 
+            onClick={() => router.push('/')}
+            className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors"
+          >
             <Home size={20} />
             <span className="text-[9px] font-mono">Inicio</span>
           </button>
           
-          <button className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors">
+          <button 
+            onClick={() => router.push('/checkout/presupuesto')}
+            className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors"
+          >
             <Calendar size={20} />
             <span className="text-[9px] font-mono">Fechas</span>
           </button>
@@ -140,12 +152,18 @@ export function SovereignMobileHUD() {
             </motion.div>
           </button>
 
-          <button className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors">
+          <button 
+            onClick={() => router.push('/ocasiones/ayuntamientos')}
+            className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors"
+          >
             <ShieldCheck size={20} />
             <span className="text-[9px] font-mono">Garantía</span>
           </button>
 
-          <button className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors">
+          <button 
+            onClick={() => router.push('/vimume')}
+            className="flex flex-col items-center gap-1 w-16 text-white/50 hover:text-white transition-colors"
+          >
             <Sparkles size={20} />
             <span className="text-[9px] font-mono">Oráculo</span>
           </button>

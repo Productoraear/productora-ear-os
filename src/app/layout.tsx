@@ -1,6 +1,5 @@
 import { SovereignMobileHUD } from '@/components/sclass/SovereignMobileHUD';
 import type { Metadata, Viewport } from "next";
-
 import Script from "next/script";
 import { Fraunces, Montserrat } from "next/font/google";
 import "./globals.css";
@@ -17,7 +16,6 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-// Provider Imports
 import { SharedProvider } from "@/app/context/SharedContext";
 import { RoleSkinProvider } from "@/app/context/RoleSkinProvider";
 import { SovereignProvider } from "@/shared/context/SovereignContext";
@@ -27,11 +25,8 @@ import SmoothScrollProvider from '@/app/context/SmoothScrollProvider';
 import { ThemeProvider } from "@/app/context/ThemeContext";
 import { TenantRoleProvider } from "@/contexts/TenantRoleContext";
 
-// Component Imports
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
-import EarBottomNav from "@/app/components/layout/EarBottomNav";
 import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
-import DynamicContextBar from "@/app/components/layout/DynamicContextBar";
 import OmniSearchModal from '@/app/components/ui/OmniSearchModal';
 import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
@@ -105,12 +100,10 @@ export default function RootLayout({
                             {children}
                           </main>
                           <SovereignFooter />
-                          <EarBottomNav />
                           <HummingbirdFlight />
                           <BespokePricerModal />
                           <OmniSearchModal />
                           <FloatingWhatsAppCta />
-                          {/* INYECCIÓN DEL HUD NATIVO S-CLASS */}
                           <SovereignMobileHUD />
                         </div>
                       </SmoothScrollProvider>
