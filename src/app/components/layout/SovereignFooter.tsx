@@ -1,17 +1,37 @@
 import Link from 'next/link';
 
 export default function SovereignFooter() {
-  const topProvinces = [
-    'Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Zaragoza', 'Málaga', 'Murcia', 'Palma',
-    'Las Palmas', 'Bilbao', 'Alicante', 'Córdoba', 'Valladolid', 'Vigo', 'Gijón', 'Granada',
-    'Vitoria', 'A Coruña', 'Elche', 'Oviedo', 'Badalona', 'Terrassa', 'Cartagena', 'Sabadell'
+  const provinces = [
+    { name: 'Madrid', slug: 'madrid' },
+    { name: 'Barcelona', slug: 'barcelona' },
+    { name: 'Valencia', slug: 'valencia' },
+    { name: 'Sevilla', slug: 'sevilla' },
+    { name: 'Zaragoza', slug: 'zaragoza' },
+    { name: 'Málaga', slug: 'malaga' },
+    { name: 'Murcia', slug: 'murcia' },
+    { name: 'Palma', slug: 'baleares' },
+    { name: 'Las Palmas', slug: 'las-palmas' },
+    { name: 'Bilbao', slug: 'vizcaya' },
+    { name: 'Alicante', slug: 'alicante' },
+    { name: 'Córdoba', slug: 'cordoba' },
+    { name: 'Valladolid', slug: 'valladolid' },
+    { name: 'Vigo', slug: 'pontevedra' },
+    { name: 'Gijón', slug: 'asturias' },
+    { name: 'Granada', slug: 'granada' },
+    { name: 'Vitoria', slug: 'alava' },
+    { name: 'A Coruña', slug: 'a-coruna' },
+    { name: 'Elche', slug: 'alicante' },
+    { name: 'Oviedo', slug: 'asturias' },
+    { name: 'Badalona', slug: 'barcelona' },
+    { name: 'Terrassa', slug: 'barcelona' },
+    { name: 'Cartagena', slug: 'murcia' },
+    { name: 'Sabadell', slug: 'barcelona' }
   ];
 
   return (
     <footer className="bg-[#050505] border-t border-white/10 pt-16 pb-24">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12">
         
-        {/* Bloque 1: Identidad Limpia */}
         <div className="space-y-4">
           <h3 className="text-xl font-fraunces font-black text-white uppercase">Productora EAR</h3>
           <p className="text-white/50 text-sm leading-relaxed max-w-sm">
@@ -22,7 +42,6 @@ export default function SovereignFooter() {
           </div>
         </div>
 
-        {/* Bloque 2: Enlaces Rápidos (SEO Amigables) */}
         <div className="space-y-4">
           <h4 className="text-white font-bold uppercase text-sm mb-4 tracking-wider">Servicios</h4>
           <ul className="space-y-2 text-sm text-white/50">
@@ -34,21 +53,21 @@ export default function SovereignFooter() {
           </ul>
         </div>
 
-        {/* Bloque 3: Cobertura Territorial Dinámica */}
         <div className="space-y-4">
-          <h4 className="text-white font-bold uppercase text-sm mb-4 tracking-wider">Cobertura Nacional</h4>
+          <h4 className="text-white font-bold uppercase text-sm mb-4 tracking-wider">Red Territorial de Cobertura</h4>
           <div className="grid grid-cols-3 gap-2">
-            {topProvinces.map((prov) => (
+            {provinces.map((prov) => (
               <Link 
-                key={prov} 
-                href={`/eventos/${prov.toLowerCase().replace(/\s+/g, '-')}`}
+                key={prov.name} 
+                href={`/bodas/${prov.slug}/eventos`}
                 className="text-xs text-white/40 hover:text-white transition-colors truncate"
               >
-                {prov}
+                {prov.name}
               </Link>
             ))}
           </div>
         </div>
+
       </div>
     </footer>
   );
