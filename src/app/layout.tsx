@@ -39,9 +39,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  title: "EarOS :: Sistema Operativo de Eventos & Matchmaking",
-  description: "Plataforma de soberanía operativa, booking y contratación para Productora EAR.",
-  keywords: ["EarOS", "Productora EAR", "Edwin Agudelo", "S-Class", "Logistics OS"],
+  title: "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G",
+  description: "Plataforma de producción técnica, alquiler de audiovisuales, música para bodas y licitaciones públicas de festejos.",
+  keywords: ["alquiler equipos sonido madrid", "mariachi para bodas", "produccion eventos ayuntamientos", "pantallas led exterior", "Productora EAR"],
   authors: [{ name: "EAR OS Core" }],
   icons: {
     icon: "/favicon.svg",

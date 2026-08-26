@@ -13,7 +13,6 @@ export default function NexusAdminPage() {
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col md:flex-row pt-16">
       
-      {/* BOTÓN FLOTANTE MÓVIL */}
       <div className="md:hidden p-4 bg-[#0a0a0f] border-b border-white/10 flex justify-between items-center">
         <span className="font-mono text-xs text-[#ecb613] font-bold uppercase">Astra OS // Nexus</span>
         <button 
@@ -24,7 +23,6 @@ export default function NexusAdminPage() {
         </button>
       </div>
 
-      {/* OVERLAY DE CIERRE */}
       {isDrawerOpen && (
         <div 
           onClick={() => setIsDrawerOpen(false)}
@@ -32,7 +30,6 @@ export default function NexusAdminPage() {
         />
       )}
 
-      {/* DRAWER RESPONSIVE */}
       <aside className={`
         fixed md:static inset-y-0 left-0 z-[120]
         w-72 bg-[#0a0a0f] border-r border-white/10 p-6
@@ -91,7 +88,6 @@ export default function NexusAdminPage() {
         </div>
       </aside>
 
-      {/* ÁREA DE CONTENIDO PRINCIPAL */}
       <main className="flex-grow p-4 md:p-8 space-y-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-white/10 pb-6">
           <div>

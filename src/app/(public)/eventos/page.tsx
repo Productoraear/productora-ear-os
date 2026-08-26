@@ -3,11 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { 
-  Heart, Building2, Landmark, Music, Zap, ShieldCheck, 
-  ArrowRight, Sparkles, Utensils, Flame, Users, Sliders,
-  CheckCircle2, ChevronRight, Award, Volume2
-} from 'lucide-react';
+import { Sparkles, CheckCircle2, ChevronRight, Zap, Sliders } from 'lucide-react';
 import { useEcosystemFilterStore } from '@/store/useEcosystemFilterStore';
 
 interface ServiceNode {
@@ -95,7 +91,7 @@ const SERVICE_NODES: ServiceNode[] = [
     category: 'salud',
     tag: 'IMPACTO SOCIAL // NEUROACÚSTICA',
     title: 'Proyecto VIMUME (Viaje Musical por la Memoria)',
-    subtitle: 'Estimulación Cognitive 40Hz para Mayores',
+    subtitle: 'Estimulación Cognitiva 40Hz para Mayores',
     description: 'Protocolo clínico no invasivo mediante estimulación neuroacústica y canciones del recuerdo en directo. Diseñado para Residencias y Centros de Día.',
     specs: ['Edwin Agudelo Solista en Vivo', 'Memoria de Impacto Social', 'Subvencionable 100% por IRPF/Social', 'Acústica Médica Calibrada <75 dB'],
     price: 'Bonificado / Subvencionado',
@@ -149,7 +145,6 @@ export default function EventosPage() {
     <div className="min-h-screen bg-[#050505] text-white pt-24 pb-28 px-4">
       <div className="max-w-7xl mx-auto space-y-12">
         
-        {/* CABECERA CON VISIÓN DE ALTA DENSIDAD */}
         <div className="space-y-4 border-b border-white/10 pb-8">
           <div className="inline-flex items-center gap-2 border border-[#ecb613]/40 bg-[#ecb613]/10 px-3.5 py-1.5 rounded-full text-xs font-mono text-[#ecb613] uppercase tracking-wider font-bold">
             <Sparkles size={14} /> Ecosistema de Servicios S-Class // Multi-Nodo Accesible
@@ -162,7 +157,6 @@ export default function EventosPage() {
           </p>
         </div>
 
-        {/* NAVEGACIÓN POR CATEGORÍAS (SELECTOR DE TÚNEL NEURAL) */}
         <div className="flex flex-wrap gap-2.5">
           {[
             { id: 'todos', label: 'Todos los Servicios (8)' },
@@ -185,7 +179,6 @@ export default function EventosPage() {
           ))}
         </div>
 
-        {/* GRID DE MATRIZ DENSE: CADA TARJETA ES UN CLIC DIRECTO */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {filteredNodes.map(node => (
             <div 
@@ -193,8 +186,6 @@ export default function EventosPage() {
               className="bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 md:p-8 flex flex-col justify-between hover:border-[#ecb613]/60 transition-all duration-300 shadow-2xl relative overflow-hidden group"
             >
               <div className="space-y-5">
-                
-                {/* CABECERA DE LA TARJETA */}
                 <div className="flex flex-wrap justify-between items-start gap-2 border-b border-white/5 pb-4">
                   <span className="text-[10px] font-mono text-[#ecb613] font-bold tracking-widest uppercase bg-[#ecb613]/10 border border-[#ecb613]/30 px-3 py-1 rounded-full">
                     {node.tag}
@@ -209,7 +200,6 @@ export default function EventosPage() {
                   </div>
                 </div>
 
-                {/* TÍTULO Y DESCRIPCIÓN RICA (ABSORCIÓN TOTAL) */}
                 <div>
                   <h3 className="text-2xl md:text-3xl font-fraunces font-black text-white group-hover:text-[#ecb613] transition-colors leading-tight">
                     {node.title}
@@ -222,7 +212,6 @@ export default function EventosPage() {
                   </p>
                 </div>
 
-                {/* LISTA DE ESPECIFICACIONES TÉCNICAS */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
                   {node.specs.map((spec, idx) => (
                     <div key={idx} className="flex items-center gap-2 text-xs text-white/80 font-montserrat">
@@ -231,10 +220,8 @@ export default function EventosPage() {
                     </div>
                   ))}
                 </div>
-
               </div>
 
-              {/* BOTONES DE ACCIÓN MÚLTIPLE (CLICS AL SERVICIO Y TÚNEL NEURAL) */}
               <div className="pt-6 mt-6 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Link
                   href={node.targetUrl}
@@ -252,12 +239,10 @@ export default function EventosPage() {
                   <span>Cotizar en Vivo</span>
                 </button>
               </div>
-
             </div>
           ))}
         </div>
 
-        {/* ACCESO DIRECTO AL MOTOR DE FILTROS EN EL BOTTOM */}
         <div className="bg-gradient-to-r from-black via-[#0a0a0f] to-black border border-white/15 rounded-3xl p-8 text-center space-y-4 shadow-2xl">
           <h3 className="text-2xl font-fraunces font-black text-white uppercase">
             ¿Busca una solución combinada o un presupuesto a medida?

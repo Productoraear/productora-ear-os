@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  Building2, FileText, ShieldCheck, CheckCircle2, Music, 
+  Building2, FileText, ShieldCheck, Music, 
   Zap, Download, Award, HeartHandshake, ArrowRight, PhoneCall,
   Sparkles, Users, Gift
 } from 'lucide-react';
@@ -12,7 +12,6 @@ export default function AyuntamientosPage() {
   const [population, setPopulation] = useState<number>(3500);
   const [selectedFormat, setSelectedFormat] = useState<'menor' | 'licitacion'>('menor');
 
-  // Lógica de estimación presupuestaria LCSP (Art. 118 <15.000€)
   const estimatedBudget = selectedFormat === 'menor' 
     ? Math.min(14900, Math.max(2800, Math.floor(population * 2.1))) 
     : Math.max(18000, Math.floor(population * 3.8));
@@ -21,7 +20,6 @@ export default function AyuntamientosPage() {
     <div className="min-h-screen bg-[#050505] text-white pt-24 pb-20 px-4">
       <div className="max-w-7xl mx-auto space-y-16">
         
-        {/* HEADER B2G: COBERTURA PARA +8.000 MUNICIPIOS */}
         <div className="border-b border-white/10 pb-12">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="bg-[#ecb613]/10 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5">
@@ -49,7 +47,6 @@ export default function AyuntamientosPage() {
           </p>
         </div>
 
-        {/* PACTO DE CONSENSO MUNICIPAL: FESTEJOS + ASUNTOS SOCIALES (VIMUME GRATIS EN EXCLUSIVA) */}
         <div className="relative overflow-hidden bg-gradient-to-r from-purple-950/40 via-[#0a0a0f] to-amber-950/30 border-2 border-[#ecb613]/40 rounded-3xl p-6 md:p-10 shadow-[0_0_50px_rgba(236,182,19,0.15)]">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
@@ -101,7 +98,6 @@ export default function AyuntamientosPage() {
           </div>
         </div>
 
-        {/* CATÁLOGO DE NECESIDADES MUNICIPALES - TODOS LOS BLOQUES SON HIPERVÍNCULOS REALES */}
         <div className="space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="text-3xl font-fraunces font-black text-white uppercase">
@@ -113,8 +109,6 @@ export default function AyuntamientosPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            {/* 1. FIESTAS PATRONALES Y ORQUESTAS -> ARTISTAS EDWIN AGUDELO */}
             <Link 
               href="/artistas/edwin-agudelo"
               className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/10 hover:border-[#ecb613]/60 transition-all group"
@@ -133,7 +127,6 @@ export default function AyuntamientosPage() {
               </span>
             </Link>
 
-            {/* 2. ALQUILER DE LUCES DE NAVIDAD -> AUDIOVISUALES */}
             <Link 
               href="/alquiler-equipos-sonido-audiovisuales"
               className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/10 hover:border-blue-400/60 transition-all group"
@@ -152,7 +145,6 @@ export default function AyuntamientosPage() {
               </span>
             </Link>
 
-            {/* 3. ENTRETENIMIENTO PARA MAYORES -> VIMUME */}
             <Link 
               href="/vimume"
               className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/10 hover:border-pink-400/60 transition-all group"
@@ -171,7 +163,6 @@ export default function AyuntamientosPage() {
               </span>
             </Link>
 
-            {/* 4. AUDIOVISUALES Y PANTALLAS -> AUDIOVISUALES */}
             <Link 
               href="/alquiler-equipos-sonido-audiovisuales"
               className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between hover:bg-white/10 hover:border-emerald-400/60 transition-all group"
@@ -189,11 +180,9 @@ export default function AyuntamientosPage() {
                 Equipamiento B2G <ArrowRight size={12} />
               </span>
             </Link>
-
           </div>
         </div>
 
-        {/* SIMULADOR DE CONTRATACIÓN PÚBLICA */}
         <div className="bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-6">
             <div>
@@ -262,7 +251,7 @@ export default function AyuntamientosPage() {
                 href="https://wa.me/34693693048?text=Hola,%20solicito%20presupuesto%20para%20Ayuntamiento"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3.5 bg-[#ecb613] hover:bg-yellow-400 text-black font-black uppercase text-xs rounded-xl transition-colors flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-[#ecb613] hover:bg-yellow-400 text-black font-black uppercase text-xs rounded-xl transition-colors flex items-center justify-center gap-2 font-bold"
               >
                 <PhoneCall size={16} /> Contactar con Secretaría Técnica
               </a>
@@ -276,13 +265,11 @@ export default function AyuntamientosPage() {
           </div>
         </div>
 
-        {/* GARANTÍA DE SOLVENCIA - TODOS LOS BLOQUES HI PERLINCADOS A SOBERANÍA TÉCNICA */}
         <div className="bg-[#0a0a0f] border border-white/10 rounded-3xl p-8">
           <h3 className="text-xs font-mono text-emerald-400 uppercase tracking-widest mb-6">
             Garantías Administrativas Auditoras (Inspeccionar Documentación)
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
             <Link 
               href="/soberania-tecnica" 
               className="bg-black/40 border border-white/5 p-5 rounded-2xl space-y-2 hover:border-emerald-500/50 hover:bg-white/5 transition-all group"
@@ -318,7 +305,6 @@ export default function AyuntamientosPage() {
               <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">Memorias Técnicas</h4>
               <p className="text-xs text-white/50">Documentación redactada para mesas de contratación.</p>
             </Link>
-
           </div>
         </div>
 
