@@ -65,7 +65,7 @@ export type HomepageScreenMode =
 
 export default function Home() {
   const [activeProfile, setActiveProfile] = useState<ProfileContext | null>(null);
-  const [homepageMode, setHomepageMode] = useState<HomepageScreenMode>('editorial-curated');
+  const [homepageMode, setHomepageMode] = useState<HomepageScreenMode>('luxury-marketplace');
 
   // Load configured active homepage mode from localStorage / admin studio
   useEffect(() => {
@@ -73,6 +73,8 @@ export default function Home() {
       const savedMode = localStorage.getItem('ear_active_homepage_screen') as HomepageScreenMode;
       if (savedMode && ['editorial-curated', 'luxury-marketplace', 'acoustic-atlas', 'classic', 'mobile-fusion', 'bento-airbnb', 'storyselling'].includes(savedMode)) {
         setHomepageMode(savedMode);
+      } else {
+        setHomepageMode('luxury-marketplace');
       }
     } catch (e) {}
 

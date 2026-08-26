@@ -111,7 +111,53 @@ function ProveedoresDirectoryContent() {
   };
 
   const filteredProviders = useMemo(() => {
-    return providersData.filter((p: any) => {
+    const sclassBbq = [
+      {
+        id: 'sclass-bbq-iberico',
+        name: 'Catering de Brasas S-Class: Ritual Ibérico de Gala',
+        category: 'catering',
+        province: 'Madrid',
+        description: 'Estación de showcooking de fuego vivo con cortes ibéricos seleccionados (secreto, pluma, presa y panceta curada) a la brasa de encina. Incluye sonorización Bose F1 de cortesía y registro sanitario homologado RGEAA.',
+        price: '45 €/pax',
+        rating: 5.0,
+        reviews: 48,
+        img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
+        isPreferred: true,
+        badge: 'HOMOLOGADO S-CLASS'
+      },
+      {
+        id: 'sclass-bbq-argentino',
+        name: 'Catering de Brasas: Asado Argentino Tradicional',
+        category: 'catering',
+        province: 'Madrid',
+        description: 'Asado de tira, entraña, vacío, mollejas crocantes y chimichurri macerado 48h. Espadas criollas y asadores de campeonato mundial.',
+        price: '55 €/pax',
+        rating: 4.98,
+        reviews: 36,
+        img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80',
+        isPreferred: true,
+        badge: 'ALTA DISTINCIÓN'
+      },
+      {
+        id: 'sclass-bbq-ancestral',
+        name: 'Catering Ancestral al Fuego & a la Cruz',
+        category: 'catering',
+        province: 'Madrid',
+        description: 'Cordero lechal y costillares enteros en domo de leña viva con cocción lenta de 8 horas. El monumento gastronómico definitivo para bodas y galas.',
+        price: '65 €/pax',
+        rating: 5.0,
+        reviews: 29,
+        img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=800&auto=format&fit=crop&q=80',
+        isPreferred: true,
+        badge: 'EXPERIENCIA MONUMENTAL'
+      }
+    ];
+
+    const baseList = selectedCategory === 'catering' || selectedCategory === 'ALL'
+      ? [...sclassBbq, ...providersData]
+      : providersData;
+
+    return baseList.filter((p: any) => {
       // 1. Filtrado Estricto de Categoría
       const matchCat =
         selectedCategory === 'ALL' ||

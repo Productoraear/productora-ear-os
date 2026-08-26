@@ -108,7 +108,6 @@ export default function RootLayout({
                           <HummingbirdFlight />
                           <BespokePricerModal />
                           <OmniSearchModal />
-                          <DynamicContextBar />
                           <FloatingWhatsAppCta />
                         </div>
                       </SmoothScrollProvider>
