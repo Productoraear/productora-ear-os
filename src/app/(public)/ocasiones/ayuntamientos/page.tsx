@@ -7,6 +7,7 @@ import {
   Zap, Download, Award, HeartHandshake, ArrowRight, PhoneCall,
   Sparkles, Users, Gift
 } from 'lucide-react';
+import { B2GGovFaqAccordion } from '@/components/seo/B2GGovFaqAccordion';
 
 export default function AyuntamientosPage() {
   const [population, setPopulation] = useState<number>(3500);
@@ -49,7 +50,6 @@ export default function AyuntamientosPage() {
 
         <div className="relative overflow-hidden bg-gradient-to-r from-purple-950/40 via-[#0a0a0f] to-amber-950/30 border-2 border-[#ecb613]/40 rounded-3xl p-6 md:p-10 shadow-[0_0_50px_rgba(236,182,19,0.15)]">
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
             <div className="lg:col-span-8 space-y-4">
               <div className="inline-flex items-center gap-2 bg-[#ecb613] text-black font-black text-[10px] uppercase px-3 py-1 rounded-full">
                 <Gift size={14} /> Cláusula Exclusiva de Consenso Municipal
@@ -89,12 +89,11 @@ export default function AyuntamientosPage() {
                 href="https://wa.me/34693693048?text=Hola,%20queremos%20información%20sobre%20el%20Pacto%20Exclusivo%20VIMUME%20para%20Ayuntamientos"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 bg-[#ecb613] hover:bg-yellow-400 text-black font-black uppercase text-xs rounded-xl transition-colors inline-block"
+                className="w-full py-3 bg-[#ecb613] hover:bg-yellow-400 text-black font-black uppercase text-xs rounded-xl transition-colors inline-block font-bold"
               >
                 Activar Consenso Municipal
               </a>
             </div>
-
           </div>
         </div>
 
@@ -182,6 +181,9 @@ export default function AyuntamientosPage() {
             </Link>
           </div>
         </div>
+
+        {/* INYECCIÓN DEL COMPONENTE DE FAQ Y SCHEMA ORG */}
+        <B2GGovFaqAccordion />
 
         <div className="bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-6">
