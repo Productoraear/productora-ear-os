@@ -1,3 +1,4 @@
+import { SovereignMobileHUD } from '@/components/sclass/SovereignMobileHUD';
 import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import Script from "next/script";
@@ -109,6 +110,8 @@ export default function RootLayout({
                           <BespokePricerModal />
                           <OmniSearchModal />
                           <FloatingWhatsAppCta />
+                          {/* INYECCIÓN DEL HUD NATIVO S-CLASS */}
+                          <SovereignMobileHUD />
                         </div>
                       </SmoothScrollProvider>
                     </EventCartProvider>
