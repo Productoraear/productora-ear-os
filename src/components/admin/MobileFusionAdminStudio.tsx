@@ -21,6 +21,7 @@ import Archetype9_StorysellingStream from '../mobile-fusion/Archetype9_Storysell
 import Archetype10_SovereignFusionMaster from '../mobile-fusion/Archetype10_SovereignFusionMaster';
 import Combo1_VipWeddingGala from '../mobile-fusion/Combo1_VipWeddingGala';
 import EditorialCuratedHeroSClass from '../sclass/EditorialCuratedHeroSClass';
+import DynamicLegoSimulatorRenderer from '../mobile-fusion/DynamicLegoSimulatorRenderer';
 
 // 5 Combos Maestros Sugeridos
 export const PRESET_COMBOS = [
@@ -219,7 +220,7 @@ export default function MobileFusionAdminStudio() {
     } catch (e) {}
   };
 
-  // Render the hybrid live preview based on config
+  // Render the live preview dynamically in the iPhone simulator
   const renderCustomPreview = () => {
     if (activeTab === 'homepage') {
       if (activeHomepageMode === 'editorial-curated') return <EditorialCuratedHeroSClass isSimulator={true} />;
@@ -233,55 +234,40 @@ export default function MobileFusionAdminStudio() {
       return <EditorialCuratedHeroSClass isSimulator={true} />;
     }
 
-    if (customConfig.discovery === 'all-in-one') {
-      return <Archetype10_SovereignFusionMaster />;
+    if (activeTab === 'custom') {
+      return <DynamicLegoSimulatorRenderer config={customConfig} />;
     }
-    if (customConfig.discovery === 'tinder-deck') {
-      return <Archetype1_TinderDeck />;
+
+    if (activeTab === 'presets') {
+      if (selectedPresetId === 'combo-wedding-vip') return <Combo1_VipWeddingGala />;
+      if (selectedPresetId === 'combo-b2b-logistics') return <Archetype2_UberRadar />;
+      if (selectedPresetId === 'combo-airbnb-luxe') return <Archetype3_AirbnbBento />;
+      if (selectedPresetId === 'combo-storyselling') return <Archetype9_StorysellingStream />;
+      if (selectedPresetId === 'combo-all-in-one') return <Archetype10_SovereignFusionMaster />;
     }
-    if (customConfig.discovery === 'bento-stays') {
-      return <Archetype3_AirbnbBento />;
-    }
-    if (customConfig.discovery === 'story-reel') {
-      return <Archetype9_StorysellingStream />;
-    }
-    if (customConfig.discovery === 'fast-match') {
-      return <Archetype6_FastMatchDispatch />;
-    }
-    if (customConfig.logistics === 'uber-radar') {
-      return <Archetype2_UberRadar />;
-    }
-    if (customConfig.logistics === 'bodas-timeline') {
-      return <Archetype4_BodasTimeline />;
-    }
-    if (customConfig.logistics === 'acoustic-matrix') {
-      return <Archetype8_AcousticPressureMatrix />;
-    }
-    if (customConfig.logistics === 'moodboard') {
-      return <Archetype7_WeddingMoodboardConcierge />;
-    }
+
     return <Combo1_VipWeddingGala />;
   };
 
   return (
-    <div className="bg-[#08080c] border border-white/10 rounded-3xl p-4 sm:p-8 space-y-8 text-white">
+    <div className="bg-[#08080c] border border-white/10 rounded-3xl p-4 sm:p-8 space-y-6 text-white max-w-full overflow-hidden">
       
       {/* 👑 HEADER ADMIN STUDIO */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-white/10 pb-6">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-white/10 pb-5">
         <div>
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-full bg-[#ecb613] text-black text-[10px] font-black uppercase tracking-widest font-mono">
-              ESTUDIO LEGO S-CLASS
+              ESTUDIO MODULAR S-CLASS
             </span>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold">
-              MODO CEO & REVENUE ACTIVO
+              MODO CEO ACTIVO
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-syne mt-2">
-            Configurador de Portada & Estudio Modular 4 Perfiles
+          <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white font-syne mt-1.5">
+            Configurador de Portada & Estudio Lego 4 Perfiles
           </h2>
-          <p className="text-xs sm:text-sm text-white/50">
-            Elige qué experiencia ve el público al ingresar (Editorial Alta Moda, Combo 1, Bento o Clásico) y calibra los efectos parallax y glassmorphism.
+          <p className="text-xs text-white/50">
+            Personaliza en caliente la experiencia de inicio y comprueba la interactividad instantánea en el simulador.
           </p>
         </div>
 
@@ -294,7 +280,7 @@ export default function MobileFusionAdminStudio() {
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-bold"
             >
               <CheckCircle2 size={14} />
-              <span>Configuración Guardada</span>
+              <span>Guardado</span>
             </motion.div>
           )}
 
@@ -308,62 +294,62 @@ export default function MobileFusionAdminStudio() {
         </div>
       </div>
 
-      {/* 🎛️ STUDIO SUB-NAVIGATION TABS */}
-      <div className="flex items-center gap-1.5 bg-[#111116] p-1.5 rounded-2xl border border-white/10 max-w-3xl overflow-x-auto no-scrollbar">
+      {/* 🎛️ STUDIO SUB-NAVIGATION TABS (CLEAN, NO OVERLAPPING) */}
+      <div className="flex flex-wrap items-center gap-2 bg-[#111116] p-2 rounded-2xl border border-white/10 w-full">
         <button
           onClick={() => setActiveTab('homepage')}
-          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
             activeTab === 'homepage' 
               ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white'
+              : 'text-white/60 hover:text-white hover:bg-white/5'
           }`}
         >
           <HomeIcon size={14} />
-          <span>Pantalla de Inicio Activa</span>
+          <span>Portada Activa</span>
         </button>
 
         <button
           onClick={() => setActiveTab('editorial-lego')}
-          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
             activeTab === 'editorial-lego' 
               ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white'
+              : 'text-white/60 hover:text-white hover:bg-white/5'
           }`}
         >
           <Sparkles size={14} />
-          <span>Lego 4 Perfiles (Editorial)</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('presets')}
-          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
-            activeTab === 'presets' 
-              ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white'
-          }`}
-        >
-          <Compass size={14} />
-          <span>Combos Mobile (5)</span>
+          <span>Lego 4 Perfiles</span>
         </button>
 
         <button
           onClick={() => setActiveTab('custom')}
-          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
             activeTab === 'custom' 
               ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white'
+              : 'text-white/60 hover:text-white hover:bg-white/5'
           }`}
         >
           <Sliders size={14} />
-          <span>Mezclador Mobile</span>
+          <span>Mezclador Lego</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('presets')}
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+            activeTab === 'presets' 
+              ? 'bg-[#ecb613] text-black shadow-md' 
+              : 'text-white/60 hover:text-white hover:bg-white/5'
+          }`}
+        >
+          <Compass size={14} />
+          <span>5 Combos Mobile</span>
         </button>
 
         <button
           onClick={() => setActiveTab('catalog')}
-          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
             activeTab === 'catalog' 
               ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white'
+              : 'text-white/60 hover:text-white hover:bg-white/5'
           }`}
         >
           <Layers size={14} />
@@ -372,48 +358,48 @@ export default function MobileFusionAdminStudio() {
       </div>
 
       {/* 🚀 MAIN STUDIO GRID: CONTROLS (LEFT) + LIVE MOBILE PREVIEW (RIGHT) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* LEFT COLUMN: CONTROLS & SETTINGS (7 COLS) */}
-        <div className="lg:col-span-7 space-y-6">
+        <div className="lg:col-span-7 space-y-5">
           
           {/* TAB 0: HOMEPAGE SCREEN SELECTOR */}
           {activeTab === 'homepage' && (
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
                 SELECCIONA LA PANTALLA ACTIVA PARA LA RAÍZ (https://productoraear.com/)
               </span>
 
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {HOMEPAGE_SCREENS.map(screen => {
                   const isSelected = screen.id === activeHomepageMode;
                   return (
                     <div
                       key={screen.id}
                       onClick={() => handleSetHomepageScreen(screen.id)}
-                      className={`p-4 rounded-3xl border cursor-pointer transition-all flex items-start justify-between ${
+                      className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-start justify-between ${
                         isSelected 
-                          ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-xl shadow-[#ecb613]/10 scale-[1.01]' 
+                          ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-lg shadow-[#ecb613]/10 scale-[1.01]' 
                           : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
                       }`}
                     >
-                      <div className="space-y-1 pr-4">
+                      <div className="space-y-1 pr-3">
                         <div className="flex items-center gap-2">
                           <span className="px-2 py-0.5 rounded bg-[#ecb613] text-black text-[9px] font-black font-mono">
                             {screen.badge}
                           </span>
-                          <h4 className="text-sm font-black text-white uppercase">{screen.name}</h4>
+                          <h4 className="text-xs sm:text-sm font-black text-white uppercase">{screen.name}</h4>
                         </div>
                         <p className="text-xs text-white/60 font-light">{screen.desc}</p>
                       </div>
 
                       {isSelected ? (
-                        <div className="px-3 py-1.5 rounded-xl bg-[#ecb613] text-black font-mono font-bold text-xs flex items-center gap-1 shrink-0">
-                          <Check size={14} className="stroke-[3]" />
+                        <div className="px-2.5 py-1 rounded-lg bg-[#ecb613] text-black font-mono font-bold text-[10px] flex items-center gap-1 shrink-0">
+                          <Check size={12} className="stroke-[3]" />
                           <span>ACTIVA</span>
                         </div>
                       ) : (
-                        <button className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 font-mono text-xs shrink-0 border border-white/10">
+                        <button className="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 font-mono text-[10px] shrink-0 border border-white/10">
                           ACTIVAR
                         </button>
                       )}
@@ -426,7 +412,7 @@ export default function MobileFusionAdminStudio() {
 
           {/* TAB 1: LEGO EDITORIAL 4-PROFILES CUSTOMIZER */}
           {activeTab === 'editorial-lego' && (
-            <div className="space-y-5 bg-[#0e0e13] p-5 rounded-3xl border border-white/10">
+            <div className="space-y-4 bg-[#0e0e13] p-5 rounded-3xl border border-white/10">
               <div className="border-b border-white/10 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded bg-[#ecb613] text-black text-[9px] font-black font-mono">
@@ -442,7 +428,7 @@ export default function MobileFusionAdminStudio() {
               </div>
 
               {/* 1. Default Profile on Load */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   1. Perfil Predeterminado al Cargar
                 </label>
@@ -469,13 +455,13 @@ export default function MobileFusionAdminStudio() {
               </div>
 
               {/* 2. Theme Styling */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   2. Paleta Estética & Glassmorphism
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { id: 'dark-luxury', label: 'True Black OLED & Gold' },
+                    { id: 'dark-luxury', label: 'True Black OLED' },
                     { id: 'champagne-gold', label: 'Champagne Satin' },
                     { id: 'minimal-noir', label: 'Minimalist Noir' }
                   ].map(opt => (
@@ -495,14 +481,14 @@ export default function MobileFusionAdminStudio() {
               </div>
 
               {/* 3. Parallax Micro-interactions */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   3. Efectos Parallax & Profundidad 3D
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   {[
                     { id: true, label: '✨ Parallax 3D Activo' },
-                    { id: false, label: 'Estático / Rendimiento Máximo' }
+                    { id: false, label: 'Estático / Rendimiento' }
                   ].map((opt, i) => (
                     <button
                       key={i}
@@ -520,7 +506,7 @@ export default function MobileFusionAdminStudio() {
               </div>
 
               {/* 4. Action CTA */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   4. Gatillo de Cierre & Despacho
                 </label>
@@ -547,64 +533,20 @@ export default function MobileFusionAdminStudio() {
             </div>
           )}
 
-          {/* TAB 2: PRESETS COMBOS */}
-          {activeTab === 'presets' && (
-            <div className="space-y-3">
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
-                SELECCIONA UNA COMBINACIÓN MAESTRA PRECONFIGURADA
-              </span>
-              
-              <div className="space-y-3">
-                {PRESET_COMBOS.map(preset => {
-                  const isSelected = preset.id === selectedPresetId;
-                  return (
-                    <div
-                      key={preset.id}
-                      onClick={() => handleApplyPreset(preset)}
-                      className={`p-4 rounded-3xl border cursor-pointer transition-all relative overflow-hidden ${
-                        isSelected 
-                          ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-xl shadow-[#ecb613]/10' 
-                          : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
-                      }`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 rounded bg-[#ecb613] text-black text-[9px] font-black font-mono">
-                              {preset.badge}
-                            </span>
-                            <h3 className="text-sm font-black text-white uppercase">{preset.name}</h3>
-                          </div>
-                          <p className="text-xs text-white/60 font-light">{preset.tagline}</p>
-                        </div>
-
-                        {isSelected && (
-                          <div className="w-6 h-6 rounded-full bg-[#ecb613] text-black flex items-center justify-center shrink-0">
-                            <CheckCircle2 size={16} />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* TAB 3: LEGO CUSTOM MIXER */}
+          {/* TAB 2: LEGO CUSTOM MIXER (INTERACTIVE REACTIVE SELECTIONS) */}
           {activeTab === 'custom' && (
-            <div className="space-y-5 bg-[#0e0e13] p-5 rounded-3xl border border-white/10">
+            <div className="space-y-4 bg-[#0e0e13] p-5 rounded-3xl border border-white/10">
               <div className="border-b border-white/10 pb-3">
                 <h3 className="text-sm font-black uppercase text-white font-syne">
-                  Personalización Bloque a Bloque
+                  Mezclador Lego Modular
                 </h3>
                 <p className="text-xs text-white/50">
-                  Modifica cada componente de la interfaz y observa el cambio en el simulador en vivo.
+                  Modifica cada bloque. El simulador de la derecha cambiará de forma inmediata.
                 </p>
               </div>
 
               {/* 1. Header Block */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   1. Bloque de Cabecera (Header)
                 </label>
@@ -619,7 +561,7 @@ export default function MobileFusionAdminStudio() {
                       onClick={() => setCustomConfig({ ...customConfig, header: opt.id as any })}
                       className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
                         customConfig.header === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
                           : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
                       }`}
                     >
@@ -630,7 +572,7 @@ export default function MobileFusionAdminStudio() {
               </div>
 
               {/* 2. Discovery Block */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   2. Descubrimiento de Artistas & Formatos
                 </label>
@@ -646,7 +588,7 @@ export default function MobileFusionAdminStudio() {
                       onClick={() => setCustomConfig({ ...customConfig, discovery: opt.id as any })}
                       className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
                         customConfig.discovery === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
                           : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
                       }`}
                     >
@@ -657,7 +599,7 @@ export default function MobileFusionAdminStudio() {
               </div>
 
               {/* 3. Logistics Block */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   3. Motor de Logística & Presupuesto
                 </label>
@@ -673,7 +615,7 @@ export default function MobileFusionAdminStudio() {
                       onClick={() => setCustomConfig({ ...customConfig, logistics: opt.id as any })}
                       className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
                         customConfig.logistics === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
                           : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
                       }`}
                     >
@@ -684,7 +626,7 @@ export default function MobileFusionAdminStudio() {
               </div>
 
               {/* 4. Action CTA Block */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
                   4. Gatillo de Cierre & Reserva (CTA)
                 </label>
@@ -699,7 +641,7 @@ export default function MobileFusionAdminStudio() {
                       onClick={() => setCustomConfig({ ...customConfig, cta: opt.id as any })}
                       className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
                         customConfig.cta === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
                           : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
                       }`}
                     >
@@ -707,6 +649,50 @@ export default function MobileFusionAdminStudio() {
                     </button>
                   ))}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: PRESETS COMBOS */}
+          {activeTab === 'presets' && (
+            <div className="space-y-3">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
+                SELECCIONA UNA COMBINACIÓN MAESTRA PRECONFIGURADA
+              </span>
+              
+              <div className="space-y-2.5">
+                {PRESET_COMBOS.map(preset => {
+                  const isSelected = preset.id === selectedPresetId;
+                  return (
+                    <div
+                      key={preset.id}
+                      onClick={() => handleApplyPreset(preset)}
+                      className={`p-3.5 rounded-2xl border cursor-pointer transition-all relative overflow-hidden ${
+                        isSelected 
+                          ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-lg shadow-[#ecb613]/10' 
+                          : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-1 pr-2">
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded bg-[#ecb613] text-black text-[9px] font-black font-mono">
+                              {preset.badge}
+                            </span>
+                            <h3 className="text-xs sm:text-sm font-black text-white uppercase">{preset.name}</h3>
+                          </div>
+                          <p className="text-xs text-white/60 font-light">{preset.tagline}</p>
+                        </div>
+
+                        {isSelected && (
+                          <div className="w-5 h-5 rounded-full bg-[#ecb613] text-black flex items-center justify-center shrink-0">
+                            <CheckCircle2 size={14} />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -759,7 +745,7 @@ export default function MobileFusionAdminStudio() {
           </div>
 
           {/* iPhone Pro Frame Simulator */}
-          <div className="relative w-full max-w-[360px] h-[720px] rounded-[3rem] bg-[#0c0c12] border-[7px] border-[#20202a] shadow-2xl overflow-hidden flex flex-col ring-1 ring-white/10">
+          <div className="relative w-full max-w-[360px] h-[700px] rounded-[3rem] bg-[#0c0c12] border-[7px] border-[#20202a] shadow-2xl overflow-hidden flex flex-col ring-1 ring-white/10">
             {/* Dynamic Island Bar */}
             <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-4 bg-black rounded-full z-50 flex items-center justify-center">
               <div className="w-2 h-2 rounded-full bg-[#181822] mr-1.5" />

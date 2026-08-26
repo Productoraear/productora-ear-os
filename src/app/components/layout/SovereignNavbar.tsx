@@ -33,8 +33,8 @@ const SovereignNavbar = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isSearchOpen]);
 
-  // En la raíz inicial (Gateway Soberano) no se muestra ningún menú para forzar identificación
-  if (pathname === '/') {
+  // En la raíz inicial y en rutas de administración (/admin) no se muestra la barra pública
+  if (pathname === '/' || pathname?.startsWith('/admin')) {
     return null;
   }
 

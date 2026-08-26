@@ -1,26 +1,30 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { MessageCircle, Gift, Sparkles, X } from 'lucide-react';
 
 /**
  * 📲 FLOATING WHATSAPP CTA BAR (S-CLASS INSTANT CONVERSION)
- * Barra flotante responsive para garantizar cero fricción de contacto hacia WhatsApp (+34 693 693 048)
- * con el recordatorio del Bono de 150 € en complementos.
+ * Barra flotante responsive no invasiva (oculta automáticamente en Admin y Checkout)
  */
 export const FloatingWhatsAppCta: React.FC = () => {
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
   useEffect(() => {
-    // Mostrar tras 2 segundos de lectura
+    // Mostrar tras 5 segundos de lectura solo en páginas públicas
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 2000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
-  if (!isVisible || isDismissed) return null;
+  // Nunca mostrar en rutas de administración ni en pasarela de checkout
+  if (!isVisible || isDismissed || pathname?.startsWith('/admin') || pathname?.startsWith('/checkout')) {
+    return null;
+  }
 
   const whatsappUrl = "https://wa.me/34693693048?text=" + encodeURIComponent(
     "Hola Edwin, deseo información para mi evento y aplicar el Bono de 150€ con el cupón EDWIN150-COMPLEMENTOS."

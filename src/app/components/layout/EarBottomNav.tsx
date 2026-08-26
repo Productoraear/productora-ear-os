@@ -11,8 +11,8 @@ const EarBottomNav: React.FC = () => {
   const pathname = usePathname();
   const { cart } = useEventCart();
 
-  // En la raíz inicial (Gateway Soberano) no se muestra ningún menú
-  if (pathname === '/') {
+  // En la raíz inicial y en rutas de administración o checkout no se muestra el dock público
+  if (pathname === '/' || pathname?.startsWith('/admin') || pathname?.startsWith('/checkout')) {
     return null;
   }
 
