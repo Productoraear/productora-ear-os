@@ -222,15 +222,15 @@ export default function MobileFusionAdminStudio() {
   // Render the hybrid live preview based on config
   const renderCustomPreview = () => {
     if (activeTab === 'homepage') {
-      if (activeHomepageMode === 'editorial-curated') return <EditorialCuratedHeroSClass />;
+      if (activeHomepageMode === 'editorial-curated') return <EditorialCuratedHeroSClass isSimulator={true} />;
       if (activeHomepageMode === 'mobile-fusion') return <Combo1_VipWeddingGala />;
       if (activeHomepageMode === 'bento-airbnb') return <Archetype3_AirbnbBento />;
       if (activeHomepageMode === 'storyselling') return <Archetype9_StorysellingStream />;
-      return <EditorialCuratedHeroSClass />;
+      return <EditorialCuratedHeroSClass isSimulator={true} />;
     }
 
     if (activeTab === 'editorial-lego') {
-      return <EditorialCuratedHeroSClass />;
+      return <EditorialCuratedHeroSClass isSimulator={true} />;
     }
 
     if (customConfig.discovery === 'all-in-one') {

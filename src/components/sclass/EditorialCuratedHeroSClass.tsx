@@ -18,6 +18,10 @@ export interface EditorialConfig {
   ctaAction: 'slide-lock' | 'cotizador' | 'whatsapp';
 }
 
+interface EditorialHeroProps {
+  isSimulator?: boolean;
+}
+
 const PROFILE_CATEGORIES = [
   {
     id: 'unio',
@@ -137,13 +141,13 @@ const PROFILE_CATEGORIES = [
   }
 ];
 
-export default function EditorialCuratedHeroSClass() {
+export default function EditorialCuratedHeroSClass({ isSimulator = false }: EditorialHeroProps) {
   const [activeProfileId, setActiveProfileId] = useState<'unio' | 'arsenal' | 'signal' | 'vimume'>('unio');
   const [likedItems, setLikedItems] = useState<Record<string, boolean>>({});
   const [isPlayingAudio, setIsPlayingAudio] = useState<string | null>(null);
   
-  // Mobile Tab Switcher: 'editorial' (Left Card) vs 'bento' (Right Card)
-  const [mobileViewTab, setMobileViewTab] = useState<'editorial' | 'bento'>('bento');
+  // Mobile View Switcher
+  const [mobileViewTab, setMobileViewTab] = useState<'editorial' | 'bento'>('editorial');
 
   // Load configuration from localStorage if defined in Admin Studio
   useEffect(() => {
@@ -170,17 +174,242 @@ export default function EditorialCuratedHeroSClass() {
     setIsPlayingAudio(prev => prev === id ? null : id);
   };
 
+  // =========================================================================
+  // 1. PURE MOBILE VIEW (FOR SIMULATOR & SCREENS < 1024PX)
+  // =========================================================================
+  if (isSimulator) {
+    return (
+      <div className="w-full h-full min-h-full bg-[#050505] text-white flex flex-col justify-between p-3.5 overflow-x-hidden overflow-y-auto no-scrollbar relative select-none">
+        
+        {/* Dynamic Glow */}
+        <div 
+          className="absolute -top-10 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full blur-[90px] opacity-25 pointer-events-none transition-colors duration-700"
+          style={{ backgroundColor: activeCategory.color }}
+        />
+
+        {/* Top Mini Switcher Pill */}
+        <div className="w-full mb-3 relative z-20">
+          <div className="grid grid-cols-2 bg-[#121218] p-1 rounded-2xl border border-white/15 shadow-lg">
+            <button
+              onClick={() => setMobileViewTab('editorial')}
+              className={`py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold transition-all flex items-center justify-center gap-1 ${
+                mobileViewTab === 'editorial' 
+                  ? 'bg-[#ecb613] text-black shadow-md' 
+                  : 'text-white/60 hover:text-white'
+              }`}
+            >
+              <Compass size={12} />
+              <span>1. Portada Editorial</span>
+            </button>
+
+            <button
+              onClick={() => setMobileViewTab('bento')}
+              className={`py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold transition-all flex items-center justify-center gap-1 ${
+                mobileViewTab === 'bento' 
+                  ? 'bg-[#ecb613] text-black shadow-md' 
+                  : 'text-white/60 hover:text-white'
+              }`}
+            >
+              <LayoutGrid size={12} />
+              <span>2. Catálogo Bento</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 📱 TAB 1: EDITORIAL COVER */}
+        {mobileViewTab === 'editorial' ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex-1 flex flex-col justify-between rounded-3xl p-5 bg-gradient-to-b from-[#14141a] via-[#0d0d12] to-[#060608] border border-white/15 shadow-2xl relative overflow-hidden"
+          >
+            {/* Header Badge */}
+            <div className="flex items-center justify-between">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#ecb613] text-black text-[9px] font-black uppercase font-mono tracking-widest">
+                S-CLASS EDITORIAL
+              </span>
+              <span className="text-[10px] text-white/50 font-mono">
+                2026 GALA
+              </span>
+            </div>
+
+            {/* Editorial Title */}
+            <div className="my-6 space-y-3">
+              <h2 className="text-2xl font-black uppercase tracking-tight leading-none text-white font-syne">
+                {activeCategory.coverTitle.split(' ')[0]} <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/90 to-white/40 italic">
+                  {activeCategory.coverTitle.split(' ').slice(1).join(' ')}
+                </span>
+              </h2>
+              <p className="text-white/60 text-xs leading-relaxed font-light">
+                {activeCategory.coverSubtitle}
+              </p>
+            </div>
+
+            {/* Actions */}
+            <div className="space-y-2.5">
+              <button
+                onClick={() => setMobileViewTab('bento')}
+                className="w-full py-3.5 px-4 rounded-full bg-white text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:bg-[#ecb613] transition-all active:scale-95"
+              >
+                <span>Explorar los 4 Perfiles</span>
+                <ArrowRight size={14} />
+              </button>
+
+              <div className="flex items-center justify-between text-[9px] font-mono text-white/40 pt-1">
+                <span>● 12 W/pax Homologados</span>
+                <span>Split 80/10/10</span>
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          /* 📱 TAB 2: BENTO CURATED CATALOG */
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex-1 flex flex-col justify-between rounded-3xl p-3.5 bg-[#0a0a0f] border border-white/15 shadow-2xl relative overflow-hidden"
+          >
+            {/* Top Brand Bar */}
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-full bg-[#ecb613]/20 border border-[#ecb613]/40 flex items-center justify-center text-[#ecb613] font-bold text-[10px] font-syne">
+                    EA
+                  </div>
+                  <div>
+                    <h4 className="text-[10px] font-black uppercase text-white tracking-wide flex items-center gap-1">
+                      Edwin Agudelo <CheckCircle2 size={10} className="text-[#ecb613]" />
+                    </h4>
+                    <span className="text-[8px] text-white/40 font-mono">Dirección de Producción</span>
+                  </div>
+                </div>
+
+                <span className="text-[9px] text-[#ecb613] font-mono font-bold flex items-center gap-1">
+                  <ShieldCheck size={11} /> Cero Fallos
+                </span>
+              </div>
+
+              {/* 4 Profile Category Pills */}
+              <div className="grid grid-cols-4 gap-1">
+                {PROFILE_CATEGORIES.map(cat => {
+                  const isSelected = cat.id === activeProfileId;
+                  const IconComp = cat.icon;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => setActiveProfileId(cat.id as any)}
+                      className={`py-1.5 px-1 rounded-xl border flex flex-col items-center justify-center gap-0.5 transition-all ${
+                        isSelected 
+                          ? 'bg-white text-black font-black border-white shadow-md scale-[1.02]' 
+                          : 'bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/10'
+                      }`}
+                    >
+                      <IconComp size={13} className={isSelected ? 'text-black' : 'text-white/70'} />
+                      <span className="text-[8px] uppercase tracking-wider font-mono font-bold truncate max-w-full">
+                        {cat.pill}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Bento Card List (No Horizontal Overflow) */}
+            <div className="space-y-2 my-2 flex-1 overflow-y-auto no-scrollbar max-h-[360px]">
+              {activeCategory.items.map(item => {
+                const isLiked = likedItems[item.id];
+                const isAudioPlaying = isPlayingAudio === item.id;
+
+                return (
+                  <div
+                    key={item.id}
+                    className="rounded-2xl bg-gradient-to-b from-[#13131a] to-[#0d0d12] border border-white/10 p-2.5 shadow-md flex items-center gap-2.5"
+                  >
+                    {/* Thumbnail */}
+                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/40 shrink-0">
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        onClick={(e) => toggleAudio(item.id, e)}
+                        className="absolute bottom-1 right-1 p-1 rounded-full bg-black/80 text-white text-[8px]"
+                      >
+                        {isAudioPlaying ? <Pause size={8} /> : <Play size={8} />}
+                      </button>
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[8px] font-mono text-[#ecb613] uppercase font-bold truncate">
+                          {item.tag}
+                        </span>
+                        <button
+                          onClick={(e) => toggleLike(item.id, e)}
+                          className={`p-1 rounded-full ${isLiked ? 'text-rose-400' : 'text-white/30'}`}
+                        >
+                          <Heart size={10} className={isLiked ? 'fill-rose-400' : ''} />
+                        </button>
+                      </div>
+
+                      <h5 className="text-[10px] font-black uppercase text-white truncate font-syne">
+                        {item.title}
+                      </h5>
+                      <p className="text-[8px] text-white/50 truncate mb-1">
+                        {item.subtitle}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-black text-[#ecb613] font-mono">
+                          {item.price}
+                        </span>
+                        <Link
+                          href={`https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20quiero%20reservar%20${encodeURIComponent(item.title)}.`}
+                          className="px-2 py-0.5 rounded bg-white/10 hover:bg-[#ecb613] hover:text-black text-white text-[8px] font-mono font-bold flex items-center gap-0.5"
+                        >
+                          <span>Bloquear</span>
+                          <ArrowUpRight size={8} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bottom Bar */}
+            <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[9px]">
+              <span className="text-white/50 font-mono">● Temporada 2026</span>
+              <button
+                onClick={() => setMobileViewTab('editorial')}
+                className="text-[#ecb613] font-mono font-bold hover:underline"
+              >
+                ← Ver Portada
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // 2. FULL RESPONSIVE VIEW (FOR HOMEPAGE & LARGE SCREENS)
+  // =========================================================================
   return (
-    <div className="relative w-full max-w-full overflow-x-hidden bg-[#050505] text-white flex flex-col items-center justify-center p-2.5 sm:p-6 lg:p-8">
+    <div className="relative w-full max-w-full overflow-x-hidden bg-[#050505] text-white flex flex-col items-center justify-center p-3 sm:p-6 lg:p-8">
       
-      {/* Dynamic Ambient Background Glow */}
+      {/* Dynamic Glow */}
       <div 
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[600px] lg:w-[900px] h-[350px] rounded-full blur-[100px] sm:blur-[140px] opacity-25 pointer-events-none transition-colors duration-1000"
         style={{ backgroundColor: activeCategory.color }}
       />
       <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none opacity-40" />
 
-      {/* 📱 MOBILE NAVIGATION PILL (ONLY VISIBLE ON MOBILE / SIMULATOR) */}
+      {/* 📱 MOBILE NAVIGATION PILL (VISIBLE ON SMALL SCREENS ONLY) */}
       <div className="lg:hidden w-full max-w-[340px] mb-3 relative z-20">
         <div className="grid grid-cols-2 bg-[#121218] p-1 rounded-2xl border border-white/15 shadow-xl">
           <button
@@ -209,12 +438,10 @@ export default function EditorialCuratedHeroSClass() {
         </div>
       </div>
 
-      {/* Main Luxury Frame (Responsive Grid: Stack on Mobile, Side-by-Side on Desktop) */}
+      {/* Main Luxury Frame */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 items-stretch">
         
-        {/* ============================================================ */}
-        {/* LEFT COLUMN: EDITORIAL MAGAZINE COVER (MOMENTUM WOW)          */}
-        {/* ============================================================ */}
+        {/* LEFT COLUMN: EDITORIAL MAGAZINE COVER */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -222,7 +449,6 @@ export default function EditorialCuratedHeroSClass() {
             mobileViewTab === 'editorial' ? 'flex' : 'hidden lg:flex'
           }`}
         >
-          {/* Subtle Corner Badge */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 sm:gap-2">
               <span className="px-2.5 sm:px-3 py-1 rounded-full bg-[#ecb613] text-black text-[9px] sm:text-[10px] font-black uppercase tracking-widest font-mono">
@@ -237,7 +463,6 @@ export default function EditorialCuratedHeroSClass() {
             </div>
           </div>
 
-          {/* Editorial Big Typography (Responsive clamp) */}
           <div className="space-y-3 sm:space-y-4 my-4 sm:my-6">
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-[1.05] text-white font-syne break-words">
               {activeCategory.coverTitle.split(' ')[0]} <br />
@@ -246,12 +471,11 @@ export default function EditorialCuratedHeroSClass() {
               </span>
             </h1>
 
-            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light line-clamp-3 sm:line-clamp-none">
+            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
               {activeCategory.coverSubtitle}
             </p>
           </div>
 
-          {/* Action Row */}
           <div className="space-y-3 pt-2">
             <div className="flex flex-col sm:flex-row gap-2.5">
               <button
@@ -286,9 +510,7 @@ export default function EditorialCuratedHeroSClass() {
           </div>
         </motion.div>
 
-        {/* ============================================================ */}
-        {/* RIGHT COLUMN: BENTO INTERACTIVE SUITE (4 SOVEREIGN PROFILES)  */}
-        {/* ============================================================ */}
+        {/* RIGHT COLUMN: BENTO INTERACTIVE SUITE */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -296,7 +518,6 @@ export default function EditorialCuratedHeroSClass() {
             mobileViewTab === 'bento' ? 'flex' : 'hidden lg:flex'
           }`}
         >
-          {/* Top User / Brand Chip */}
           <div className="space-y-3">
             <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
               <div className="flex items-center gap-2.5">
@@ -320,7 +541,7 @@ export default function EditorialCuratedHeroSClass() {
               </Link>
             </div>
 
-            {/* Category Selector Pills (4 Sovereign Profiles - Fluid & Responsive) */}
+            {/* Category Selector Pills */}
             <div className="grid grid-cols-4 gap-1.5">
               {PROFILE_CATEGORIES.map(cat => {
                 const isSelected = cat.id === activeProfileId;
@@ -345,7 +566,7 @@ export default function EditorialCuratedHeroSClass() {
             </div>
           </div>
 
-          {/* Curated Bento Cards (Fluid Grid without Horizontal Overflow) */}
+          {/* Curated Bento Grid */}
           <div className="space-y-2.5 my-3 flex-1">
             <div className="flex items-center justify-between px-1">
               <span className="text-[9px] font-mono uppercase tracking-widest text-white/50 truncate max-w-[180px]">
@@ -366,7 +587,6 @@ export default function EditorialCuratedHeroSClass() {
                     key={item.id}
                     className="group relative rounded-2xl bg-gradient-to-b from-[#13131a] to-[#0d0d12] border border-white/10 p-3 hover:border-white/25 transition-all shadow-md flex flex-col justify-between"
                   >
-                    {/* Top Tag & Like Button */}
                     <div className="flex items-start justify-between mb-1.5">
                       <span className="px-2 py-0.5 rounded-full bg-white/10 text-[#ecb613] text-[8px] font-mono font-black uppercase truncate max-w-[120px]">
                         {item.tag}
@@ -381,14 +601,12 @@ export default function EditorialCuratedHeroSClass() {
                       </button>
                     </div>
 
-                    {/* Image Thumbnail */}
                     <div className="relative h-20 rounded-xl overflow-hidden mb-2 bg-black/40">
                       <img 
                         src={item.image} 
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85 group-hover:opacity-100"
                       />
-                      {/* Audio Button */}
                       <button
                         onClick={(e) => toggleAudio(item.id, e)}
                         className="absolute bottom-1.5 right-1.5 px-2 py-0.5 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-[8px] font-mono flex items-center gap-1 hover:bg-[#ecb613] hover:text-black transition-all"
@@ -398,7 +616,6 @@ export default function EditorialCuratedHeroSClass() {
                       </button>
                     </div>
 
-                    {/* Content */}
                     <div>
                       <h4 className="text-[11px] font-black uppercase text-white truncate font-syne">
                         {item.title}
@@ -407,7 +624,6 @@ export default function EditorialCuratedHeroSClass() {
                         {item.subtitle}
                       </p>
 
-                      {/* Price & Booking Button */}
                       <div className="flex items-center justify-between pt-1.5 border-t border-white/10">
                         <span className="text-xs font-black text-[#ecb613] font-mono">
                           {item.price}
@@ -427,7 +643,6 @@ export default function EditorialCuratedHeroSClass() {
             </div>
           </div>
 
-          {/* Bottom Fast Action Bar */}
           <div className="pt-2 border-t border-white/10 flex items-center justify-between">
             <div className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
