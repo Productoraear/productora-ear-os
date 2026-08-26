@@ -767,7 +767,7 @@ export default function MobileFusionAdminStudio() {
             </div>
 
             {/* Screen Content */}
-            <div className="flex-1 overflow-y-auto no-scrollbar pt-5 relative flex flex-col bg-[#050505]">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar pt-5 relative flex flex-col bg-[#050505] w-full max-w-full">
               {activeTab === 'catalog' ? (
                 catalogArchetypeIndex === 1 ? <Archetype1_TinderDeck /> :
                 catalogArchetypeIndex === 2 ? <Archetype2_UberRadar /> :
