@@ -69,10 +69,9 @@ export const EdwinArtistVault: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. BÓVEDA MULTIMEDIA: REPRODUCTOR DUAL S-CLASS & GALERÍA DE 6 CAPAS */}
-      <section id="legacy-player-section" className="py-20 px-6 max-w-7xl mx-auto space-y-20">
+      {/* 3. BÓVEDA MULTIMEDIA: REPRODUCTOR MAESTRO S-CLASS (CERO RUIDO REDUNDANTE) */}
+      <section id="legacy-player-section" className="py-16 px-6 max-w-7xl mx-auto">
         <EdwinLegacyPlayer />
-        <EdwinVaultGalleryGrid />
       </section>
 
       {/* 4. TRAYECTORIA TRIDIMENSIONAL & HITOS */}

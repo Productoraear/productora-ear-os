@@ -19,6 +19,11 @@ const CinematicTunnelIgnition = dynamic(
 
 import CinematicHeroSClass from '@/components/sclass/CinematicHeroSClass';
 
+const SovereignMasterEcosystemExperience = dynamic(
+  () => import('@/components/sclass/SovereignMasterEcosystemExperience'),
+  { ssr: false }
+);
+
 const EditorialCuratedHeroSClass = dynamic(
   () => import('@/components/sclass/EditorialCuratedHeroSClass'),
   { ssr: false }
@@ -55,9 +60,10 @@ const Archetype9_StorysellingStream = dynamic(
 );
 
 export type HomepageScreenMode = 
-  | 'editorial-curated' 
+  | 'sovereign-master'
   | 'luxury-marketplace'
   | 'acoustic-atlas'
+  | 'editorial-curated' 
   | 'classic' 
   | 'mobile-fusion' 
   | 'bento-airbnb' 
@@ -65,16 +71,16 @@ export type HomepageScreenMode =
 
 export default function Home() {
   const [activeProfile, setActiveProfile] = useState<ProfileContext | null>(null);
-  const [homepageMode, setHomepageMode] = useState<HomepageScreenMode>('luxury-marketplace');
+  const [homepageMode, setHomepageMode] = useState<HomepageScreenMode>('sovereign-master');
 
   // Load configured active homepage mode from localStorage / admin studio
   useEffect(() => {
     try {
       const savedMode = localStorage.getItem('ear_active_homepage_screen') as HomepageScreenMode;
-      if (savedMode && ['editorial-curated', 'luxury-marketplace', 'acoustic-atlas', 'classic', 'mobile-fusion', 'bento-airbnb', 'storyselling'].includes(savedMode)) {
+      if (savedMode && ['sovereign-master', 'luxury-marketplace', 'acoustic-atlas', 'editorial-curated', 'classic', 'mobile-fusion', 'bento-airbnb', 'storyselling'].includes(savedMode)) {
         setHomepageMode(savedMode);
       } else {
-        setHomepageMode('luxury-marketplace');
+        setHomepageMode('sovereign-master');
       }
     } catch (e) {}
 
@@ -105,11 +111,11 @@ export default function Home() {
     { title: 'Mariachis en Madrid', href: '/servicios/mariachis/madrid', tag: 'LOCAL' },
   ];
 
-  // 1. Render Mode: Luxury Marketplace (Inspirado en Dribbble S-Class: Música, Brasas, Pantallas, Cotizador)
-  if (homepageMode === 'luxury-marketplace') {
+  // 1. Render Mode: Sovereign Master Ecosystem (4 Perfiles + Deslizador Brasas/Música + Cotizador)
+  if (homepageMode === 'sovereign-master' || homepageMode === 'luxury-marketplace') {
     return (
       <div className="bg-[#050505] min-h-screen text-white flex flex-col">
-        <LuxuryMarketplaceExperience />
+        <SovereignMasterEcosystemExperience />
       </div>
     );
   }

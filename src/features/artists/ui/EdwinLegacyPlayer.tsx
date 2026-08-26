@@ -310,7 +310,7 @@ export const EdwinLegacyPlayer: React.FC = () => {
         <div className="relative z-10 space-y-6">
           <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-purple-500/30 bg-black shadow-2xl">
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${currentTrack.youtubeId}?autoplay=1&rel=0&modestbranding=1&enablejsapi=1`}
+              src={`https://www.youtube-nocookie.com/embed/${currentTrack.youtubeId}?autoplay=${isPlaying ? 1 : 0}&rel=0&modestbranding=1&enablejsapi=1`}
               title={currentTrack.title}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
