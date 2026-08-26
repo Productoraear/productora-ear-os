@@ -422,7 +422,7 @@ export default function PacienteCeroDashboardPage() {
               </div>
 
               <div className="p-4 rounded-2xl bg-white/[0.02] border border-dashed border-white/10 flex items-center justify-between text-xs font-mono text-white/50">
-                <span>Rango de Datos: {gscPerformanceData.meta.dateRange}</span>
+                <span>Rango de Datos: {(gscPerformanceData.meta as any)?.dateRange || '2026-08-24 a 2026-08-26'}</span>
                 <span className="text-[10px] text-white/30">Para actualizar: <code className="text-[#ecb613]">npm run gsc:ingest</code></span>
               </div>
             </div>

@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { 
   Sparkles, ShieldCheck, ArrowRight, Phone, MessageCircle, 
   Crown, Heart, Building2, Boxes, Mic2, FileText, CheckCircle2, 
-  Calendar, Star, Music, Award, Users, ChevronRight
+  Calendar, Star, Music, Award, Users, ChevronRight, Sliders
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import type { ProfileContext } from '@/app/components/SClassScreens/CinematicTunnelIgnition';
@@ -19,8 +19,51 @@ const CinematicTunnelIgnition = dynamic(
 
 import CinematicHeroSClass from '@/components/sclass/CinematicHeroSClass';
 
+const MobileFusionContainer = dynamic(
+  () => import('@/components/mobile-fusion/MobileFusionContainer'),
+  { ssr: false }
+);
+
+const Combo1_VipWeddingGala = dynamic(
+  () => import('@/components/mobile-fusion/Combo1_VipWeddingGala'),
+  { ssr: false }
+);
+
+const Archetype3_AirbnbBento = dynamic(
+  () => import('@/components/mobile-fusion/Archetype3_AirbnbBento'),
+  { ssr: false }
+);
+
+const Archetype9_StorysellingStream = dynamic(
+  () => import('@/components/mobile-fusion/Archetype9_StorysellingStream'),
+  { ssr: false }
+);
+
+export type HomepageScreenMode = 'classic' | 'mobile-fusion' | 'bento-airbnb' | 'storyselling';
+
 export default function Home() {
   const [activeProfile, setActiveProfile] = useState<ProfileContext | null>(null);
+  const [homepageMode, setHomepageMode] = useState<HomepageScreenMode>('classic');
+
+  // Load configured active homepage mode from localStorage / admin studio
+  useEffect(() => {
+    try {
+      const savedMode = localStorage.getItem('ear_active_homepage_screen') as HomepageScreenMode;
+      if (savedMode && ['classic', 'mobile-fusion', 'bento-airbnb', 'storyselling'].includes(savedMode)) {
+        setHomepageMode(savedMode);
+      }
+    } catch (e) {}
+
+    const handleStorageChange = () => {
+      try {
+        const updatedMode = localStorage.getItem('ear_active_homepage_screen') as HomepageScreenMode;
+        if (updatedMode) setHomepageMode(updatedMode);
+      } catch (e) {}
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   const handleIgnition = (profile: ProfileContext) => {
     setActiveProfile(profile);
@@ -28,6 +71,7 @@ export default function Home() {
       document.getElementById('neural-tunnel-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   };
+
   const occasionLinks = [
     { title: 'Bodas de Gala', href: '/artistas/bodas', tag: 'B2C VIP' },
     { title: 'Cumpleaños & Fiestas', href: '/artistas/cumpleanos', tag: 'FAMILIAR' },
@@ -37,6 +81,34 @@ export default function Home() {
     { title: 'Mariachis en Madrid', href: '/servicios/mariachis/madrid', tag: 'LOCAL' },
   ];
 
+  // 1. Render Mode: Mobile Fusion Hub as Homepage
+  if (homepageMode === 'mobile-fusion') {
+    return (
+      <div className="bg-[#050505] min-h-screen">
+        <MobileFusionContainer />
+      </div>
+    );
+  }
+
+  // 2. Render Mode: Bento Airbnb Curated Experience as Homepage
+  if (homepageMode === 'bento-airbnb') {
+    return (
+      <div className="bg-[#050505] min-h-screen py-6 px-4 max-w-lg mx-auto">
+        <Archetype3_AirbnbBento />
+      </div>
+    );
+  }
+
+  // 3. Render Mode: Storyselling Stream as Homepage
+  if (homepageMode === 'storyselling') {
+    return (
+      <div className="bg-[#050505] min-h-screen max-w-lg mx-auto">
+        <Archetype9_StorysellingStream />
+      </div>
+    );
+  }
+
+  // 4. Render Mode: Classic S-Class Gateway
   return (
     <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-[#ecb613] selection:text-black">
       
@@ -151,41 +223,6 @@ export default function Home() {
         </AnimatePresence>
       </section>
 
-      {/* 🎯 HUBS POR OCASIÓN Y DEMANDA TRANSACCIONAL */}
-      <section className="px-4 sm:px-6 py-16 relative z-10">
-        <div className="max-w-6xl mx-auto space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
-            <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613]">DEMANDA ORGÁNICA</span>
-              <h2 className="text-2xl sm:text-4xl font-black uppercase italic tracking-tight text-white font-syne">
-                Páginas de Ocasión & Contratación
-              </h2>
-            </div>
-            <Link
-              href="/cotizador"
-              className="text-xs font-black uppercase tracking-widest text-[#ecb613] hover:underline flex items-center gap-1 min-h-[44px]"
-            >
-              <span>Ver Cotizador Integral →</span>
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {occasionLinks.map(occ => (
-              <Link
-                key={occ.href}
-                href={occ.href}
-                className="bg-[#0e0e0e] border border-white/10 hover:border-[#ecb613]/50 rounded-2xl p-5 flex items-center justify-between group transition-all min-h-[64px]"
-              >
-                <div className="space-y-1">
-                  <span className="text-[8px] font-mono uppercase tracking-widest text-zinc-400 block">{occ.tag}</span>
-                  <span className="text-sm font-black uppercase tracking-tight text-white group-hover:text-[#ecb613] transition-colors">{occ.title}</span>
-                </div>
-                <ChevronRight size={16} className="text-zinc-500 group-hover:text-[#ecb613] transition-colors" />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

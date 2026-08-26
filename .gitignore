@@ -38,6 +38,8 @@ system-prompts-and-models-of-ai-tools-main/
 # Ignore root tools directory while explicitly keeping astra components tools
 /tools/
 /scripts/tools/
+g s console/extracted_batch/
+
 !src/features/astra/components/tools/
 .models/
 src/adn_vault_staging/

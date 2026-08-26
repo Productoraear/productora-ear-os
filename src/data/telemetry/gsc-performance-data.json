@@ -2,7 +2,10 @@
   "meta": {
     "lastIngestedAt": "2026-08-26T14:19:47.138603",
     "sourceZipsCount": 4,
-    "extractedFilesCount": 28
+    "extractedFilesCount": 28,
+    "dateRange": "2026-08-24 a 2026-08-26",
+    "searchType": "WEB",
+    "sourceDirectory": "Google Search Console"
   },
   "totals": {
     "totalClicks": 3,

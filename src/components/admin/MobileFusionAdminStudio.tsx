@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Smartphone, Sliders, Sparkles, CheckCircle2, 
   Layers, Save, RotateCcw, Zap, Heart, Radio, 
-  ShieldCheck, Volume2, ArrowRight, Eye, Play, Award
+  ShieldCheck, Volume2, ArrowRight, Eye, Play, Award,
+  Home as HomeIcon, Check
 } from 'lucide-react';
 
 import Archetype1_TinderDeck from '../mobile-fusion/Archetype1_TinderDeck';
@@ -18,6 +19,7 @@ import Archetype7_WeddingMoodboardConcierge from '../mobile-fusion/Archetype7_We
 import Archetype8_AcousticPressureMatrix from '../mobile-fusion/Archetype8_AcousticPressureMatrix';
 import Archetype9_StorysellingStream from '../mobile-fusion/Archetype9_StorysellingStream';
 import Archetype10_SovereignFusionMaster from '../mobile-fusion/Archetype10_SovereignFusionMaster';
+import Combo1_VipWeddingGala from '../mobile-fusion/Combo1_VipWeddingGala';
 
 // 5 Combos Maestros Sugeridos
 export const PRESET_COMBOS = [
@@ -93,6 +95,37 @@ export const PRESET_COMBOS = [
   }
 ];
 
+export const HOMEPAGE_SCREENS = [
+  {
+    id: 'classic',
+    name: '1. S-Class Master Gateway (Original)',
+    badge: 'AUTORIDAD & SEO',
+    desc: 'Hero Cinemático + Tarjeta de Honor Edwin Agudelo (Paciente Cero) + Túnel Neural.',
+    icon: Award
+  },
+  {
+    id: 'mobile-fusion',
+    name: '2. Mobile Fusion Combo 1 (VIP Wedding Gala)',
+    badge: 'MÁXIMA CONVERSIÓN',
+    desc: 'Dynamic Island + Tinder Swipe + Timeline Bodas.net + Slide-to-Lock 100€ directo en la Home.',
+    icon: Sparkles
+  },
+  {
+    id: 'bento-airbnb',
+    name: '3. Bento Airbnb Luxury Stays',
+    badge: 'CURADURÍA & SPLIT',
+    desc: 'Galería Bento Glass, Superhost verificado, selector de fecha/pax y desglose transparente 80/10/10.',
+    icon: Layers
+  },
+  {
+    id: 'storyselling',
+    name: '4. Storyselling Emotion Reel',
+    badge: 'VÍDEO SOCIAL',
+    desc: 'Reel audiovisual vertical inmersivo con drawer flotante de cotización y chat WhatsApp.',
+    icon: Play
+  }
+];
+
 export interface CustomMixerConfig {
   header: 'dynamic-island' | 'radar-telemetry' | 'minimal-glass';
   discovery: 'tinder-deck' | 'bento-stays' | 'story-reel' | 'fast-match' | 'all-in-one';
@@ -102,8 +135,9 @@ export interface CustomMixerConfig {
 }
 
 export default function MobileFusionAdminStudio() {
-  const [activeTab, setActiveTab] = useState<'presets' | 'custom' | 'catalog'>('presets');
+  const [activeTab, setActiveTab] = useState<'homepage' | 'presets' | 'custom' | 'catalog'>('homepage');
   const [selectedPresetId, setSelectedPresetId] = useState('combo-wedding-vip');
+  const [activeHomepageMode, setActiveHomepageMode] = useState<string>('classic');
   
   const [customConfig, setCustomConfig] = useState<CustomMixerConfig>({
     header: 'dynamic-island',
@@ -119,12 +153,26 @@ export default function MobileFusionAdminStudio() {
   // Load persisted config from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('ear_mobile_fusion_config');
-      if (saved) {
-        setCustomConfig(JSON.parse(saved));
+      const savedConfig = localStorage.getItem('ear_mobile_fusion_config');
+      if (savedConfig) {
+        setCustomConfig(JSON.parse(savedConfig));
+      }
+      const savedHome = localStorage.getItem('ear_active_homepage_screen');
+      if (savedHome) {
+        setActiveHomepageMode(savedHome);
       }
     } catch (e) {}
   }, []);
+
+  const handleSetHomepageScreen = (screenId: string) => {
+    setActiveHomepageMode(screenId);
+    try {
+      localStorage.setItem('ear_active_homepage_screen', screenId);
+      window.dispatchEvent(new Event('storage'));
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 2500);
+    } catch (e) {}
+  };
 
   const handleApplyPreset = (preset: typeof PRESET_COMBOS[0]) => {
     setSelectedPresetId(preset.id);
@@ -146,6 +194,13 @@ export default function MobileFusionAdminStudio() {
 
   // Render the hybrid live preview based on config
   const renderCustomPreview = () => {
+    if (activeTab === 'homepage') {
+      if (activeHomepageMode === 'mobile-fusion') return <Combo1_VipWeddingGala />;
+      if (activeHomepageMode === 'bento-airbnb') return <Archetype3_AirbnbBento />;
+      if (activeHomepageMode === 'storyselling') return <Archetype9_StorysellingStream />;
+      return <Combo1_VipWeddingGala />;
+    }
+
     if (customConfig.discovery === 'all-in-one') {
       return <Archetype10_SovereignFusionMaster />;
     }
@@ -173,7 +228,7 @@ export default function MobileFusionAdminStudio() {
     if (customConfig.logistics === 'moodboard') {
       return <Archetype7_WeddingMoodboardConcierge />;
     }
-    return <Archetype10_SovereignFusionMaster />;
+    return <Combo1_VipWeddingGala />;
   };
 
   return (
@@ -191,10 +246,10 @@ export default function MobileFusionAdminStudio() {
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-syne mt-2">
-            Configurador Dinámico de Experiencias Mobile
+            Configurador de Pantalla de Inicio & Mobile Studio
           </h2>
           <p className="text-xs sm:text-sm text-white/50">
-            Combina los bloques de Airbnb, Uber, Tinder y Bodas.net según tus preferencias. Guarda cambios y compruébalos en tiempo real.
+            Elige qué pantalla ve el público al entrar a la raíz (Home /) y personaliza los módulos táctiles en tiempo real.
           </p>
         </div>
 
@@ -222,10 +277,22 @@ export default function MobileFusionAdminStudio() {
       </div>
 
       {/* 🎛️ STUDIO SUB-NAVIGATION TABS */}
-      <div className="flex items-center gap-2 bg-[#111116] p-1.5 rounded-2xl border border-white/10 max-w-xl">
+      <div className="flex items-center gap-1.5 bg-[#111116] p-1.5 rounded-2xl border border-white/10 max-w-2xl overflow-x-auto no-scrollbar">
+        <button
+          onClick={() => setActiveTab('homepage')}
+          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+            activeTab === 'homepage' 
+              ? 'bg-[#ecb613] text-black shadow-md' 
+              : 'text-white/60 hover:text-white'
+          }`}
+        >
+          <HomeIcon size={14} />
+          <span>Pantalla de Inicio Activa</span>
+        </button>
+
         <button
           onClick={() => setActiveTab('presets')}
-          className={`flex-1 py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
+          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
             activeTab === 'presets' 
               ? 'bg-[#ecb613] text-black shadow-md' 
               : 'text-white/60 hover:text-white'
@@ -237,7 +304,7 @@ export default function MobileFusionAdminStudio() {
 
         <button
           onClick={() => setActiveTab('custom')}
-          className={`flex-1 py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
+          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
             activeTab === 'custom' 
               ? 'bg-[#ecb613] text-black shadow-md' 
               : 'text-white/60 hover:text-white'
@@ -249,14 +316,14 @@ export default function MobileFusionAdminStudio() {
 
         <button
           onClick={() => setActiveTab('catalog')}
-          className={`flex-1 py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
+          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
             activeTab === 'catalog' 
               ? 'bg-[#ecb613] text-black shadow-md' 
               : 'text-white/60 hover:text-white'
           }`}
         >
           <Layers size={14} />
-          <span>Catálogo (10 Diseños)</span>
+          <span>Catálogo 10 Arquetipos</span>
         </button>
       </div>
 
@@ -266,6 +333,53 @@ export default function MobileFusionAdminStudio() {
         {/* LEFT COLUMN: CONTROLS & SETTINGS (7 COLS) */}
         <div className="lg:col-span-7 space-y-6">
           
+          {/* TAB 0: HOMEPAGE SCREEN SELECTOR */}
+          {activeTab === 'homepage' && (
+            <div className="space-y-4">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
+                SELECCIONA LA PANTALLA ACTIVA PARA LA RAÍZ (https://productoraear.com/)
+              </span>
+
+              <div className="space-y-3">
+                {HOMEPAGE_SCREENS.map(screen => {
+                  const isSelected = screen.id === activeHomepageMode;
+                  return (
+                    <div
+                      key={screen.id}
+                      onClick={() => handleSetHomepageScreen(screen.id)}
+                      className={`p-4 rounded-3xl border cursor-pointer transition-all flex items-start justify-between ${
+                        isSelected 
+                          ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-xl shadow-[#ecb613]/10 scale-[1.01]' 
+                          : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      <div className="space-y-1 pr-4">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded bg-[#ecb613] text-black text-[9px] font-black font-mono">
+                            {screen.badge}
+                          </span>
+                          <h4 className="text-sm font-black text-white uppercase">{screen.name}</h4>
+                        </div>
+                        <p className="text-xs text-white/60 font-light">{screen.desc}</p>
+                      </div>
+
+                      {isSelected ? (
+                        <div className="px-3 py-1.5 rounded-xl bg-[#ecb613] text-black font-mono font-bold text-xs flex items-center gap-1 shrink-0">
+                          <Check size={14} className="stroke-[3]" />
+                          <span>ACTIVA</span>
+                        </div>
+                      ) : (
+                        <button className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 font-mono text-xs shrink-0 border border-white/10">
+                          ACTIVAR
+                        </button>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* TAB 1: PRESETS COMBOS */}
           {activeTab === 'presets' && (
             <div className="space-y-3">
