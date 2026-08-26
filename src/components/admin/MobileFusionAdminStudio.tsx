@@ -6,7 +6,7 @@ import {
   Smartphone, Sliders, Sparkles, CheckCircle2, 
   Layers, Save, RotateCcw, Zap, Heart, Radio, 
   ShieldCheck, Volume2, ArrowRight, Eye, Play, Award,
-  Home as HomeIcon, Check
+  Home as HomeIcon, Check, Palette, Compass
 } from 'lucide-react';
 
 import Archetype1_TinderDeck from '../mobile-fusion/Archetype1_TinderDeck';
@@ -20,6 +20,7 @@ import Archetype8_AcousticPressureMatrix from '../mobile-fusion/Archetype8_Acous
 import Archetype9_StorysellingStream from '../mobile-fusion/Archetype9_StorysellingStream';
 import Archetype10_SovereignFusionMaster from '../mobile-fusion/Archetype10_SovereignFusionMaster';
 import Combo1_VipWeddingGala from '../mobile-fusion/Combo1_VipWeddingGala';
+import EditorialCuratedHeroSClass from '../sclass/EditorialCuratedHeroSClass';
 
 // 5 Combos Maestros Sugeridos
 export const PRESET_COMBOS = [
@@ -97,29 +98,36 @@ export const PRESET_COMBOS = [
 
 export const HOMEPAGE_SCREENS = [
   {
-    id: 'classic',
-    name: '1. S-Class Master Gateway (Original)',
-    badge: 'AUTORIDAD & SEO',
-    desc: 'Hero Cinemático + Tarjeta de Honor Edwin Agudelo (Paciente Cero) + Túnel Neural.',
-    icon: Award
+    id: 'editorial-curated',
+    name: '1. Curated 4-Profiles Editorial (Alta Moda & Bento)',
+    badge: 'MOMENTO WOW S-CLASS',
+    desc: 'Portada editorial de lujo con tipografía de impacto + Suite interactiva Bento para los 4 perfiles soberanos (UNIO, Arsenal, The Signal, VIMUME).',
+    icon: Sparkles
   },
   {
     id: 'mobile-fusion',
     name: '2. Mobile Fusion Combo 1 (VIP Wedding Gala)',
     badge: 'MÁXIMA CONVERSIÓN',
     desc: 'Dynamic Island + Tinder Swipe + Timeline Bodas.net + Slide-to-Lock 100€ directo en la Home.',
-    icon: Sparkles
+    icon: Smartphone
+  },
+  {
+    id: 'classic',
+    name: '3. S-Class Master Gateway (Original)',
+    badge: 'AUTORIDAD & SEO',
+    desc: 'Hero Cinemático + Tarjeta de Honor Edwin Agudelo (Paciente Cero) + Túnel Neural.',
+    icon: Award
   },
   {
     id: 'bento-airbnb',
-    name: '3. Bento Airbnb Luxury Stays',
+    name: '4. Bento Airbnb Luxury Stays',
     badge: 'CURADURÍA & SPLIT',
     desc: 'Galería Bento Glass, Superhost verificado, selector de fecha/pax y desglose transparente 80/10/10.',
     icon: Layers
   },
   {
     id: 'storyselling',
-    name: '4. Storyselling Emotion Reel',
+    name: '5. Storyselling Emotion Reel',
     badge: 'VÍDEO SOCIAL',
     desc: 'Reel audiovisual vertical inmersivo con drawer flotante de cotización y chat WhatsApp.',
     icon: Play
@@ -134,10 +142,17 @@ export interface CustomMixerConfig {
   cta: 'slide-lock' | 'sticky-gold' | 'whatsapp-agenda';
 }
 
+export interface EditorialHeroConfig {
+  themeStyle: 'dark-luxury' | 'champagne-gold' | 'minimal-noir';
+  parallaxEnabled: boolean;
+  activeDefaultProfile: 'unio' | 'arsenal' | 'signal' | 'vimume';
+  ctaAction: 'slide-lock' | 'cotizador' | 'whatsapp';
+}
+
 export default function MobileFusionAdminStudio() {
-  const [activeTab, setActiveTab] = useState<'homepage' | 'presets' | 'custom' | 'catalog'>('homepage');
+  const [activeTab, setActiveTab] = useState<'homepage' | 'editorial-lego' | 'presets' | 'custom' | 'catalog'>('homepage');
   const [selectedPresetId, setSelectedPresetId] = useState('combo-wedding-vip');
-  const [activeHomepageMode, setActiveHomepageMode] = useState<string>('classic');
+  const [activeHomepageMode, setActiveHomepageMode] = useState<string>('editorial-curated');
   
   const [customConfig, setCustomConfig] = useState<CustomMixerConfig>({
     header: 'dynamic-island',
@@ -145,6 +160,13 @@ export default function MobileFusionAdminStudio() {
     logistics: 'bodas-timeline',
     authority: 'superhost-split',
     cta: 'slide-lock'
+  });
+
+  const [editorialConfig, setEditorialConfig] = useState<EditorialHeroConfig>({
+    themeStyle: 'dark-luxury',
+    parallaxEnabled: true,
+    activeDefaultProfile: 'unio',
+    ctaAction: 'slide-lock'
   });
 
   const [catalogArchetypeIndex, setCatalogArchetypeIndex] = useState(1);
@@ -156,6 +178,10 @@ export default function MobileFusionAdminStudio() {
       const savedConfig = localStorage.getItem('ear_mobile_fusion_config');
       if (savedConfig) {
         setCustomConfig(JSON.parse(savedConfig));
+      }
+      const savedEditorial = localStorage.getItem('ear_editorial_hero_config');
+      if (savedEditorial) {
+        setEditorialConfig(JSON.parse(savedEditorial));
       }
       const savedHome = localStorage.getItem('ear_active_homepage_screen');
       if (savedHome) {
@@ -187,6 +213,7 @@ export default function MobileFusionAdminStudio() {
   const handleSaveCustom = () => {
     try {
       localStorage.setItem('ear_mobile_fusion_config', JSON.stringify(customConfig));
+      localStorage.setItem('ear_editorial_hero_config', JSON.stringify(editorialConfig));
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2500);
     } catch (e) {}
@@ -195,10 +222,15 @@ export default function MobileFusionAdminStudio() {
   // Render the hybrid live preview based on config
   const renderCustomPreview = () => {
     if (activeTab === 'homepage') {
+      if (activeHomepageMode === 'editorial-curated') return <EditorialCuratedHeroSClass />;
       if (activeHomepageMode === 'mobile-fusion') return <Combo1_VipWeddingGala />;
       if (activeHomepageMode === 'bento-airbnb') return <Archetype3_AirbnbBento />;
       if (activeHomepageMode === 'storyselling') return <Archetype9_StorysellingStream />;
-      return <Combo1_VipWeddingGala />;
+      return <EditorialCuratedHeroSClass />;
+    }
+
+    if (activeTab === 'editorial-lego') {
+      return <EditorialCuratedHeroSClass />;
     }
 
     if (customConfig.discovery === 'all-in-one') {
@@ -239,17 +271,17 @@ export default function MobileFusionAdminStudio() {
         <div>
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-full bg-[#ecb613] text-black text-[10px] font-black uppercase tracking-widest font-mono">
-              ESTUDIO MOBILE-FIRST S-CLASS
+              ESTUDIO LEGO S-CLASS
             </span>
             <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-mono font-bold">
-              MODO ADMIN ACTIVO
+              MODO CEO & REVENUE ACTIVO
             </span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white font-syne mt-2">
-            Configurador de Pantalla de Inicio & Mobile Studio
+            Configurador de Portada & Estudio Modular 4 Perfiles
           </h2>
           <p className="text-xs sm:text-sm text-white/50">
-            Elige qué pantalla ve el público al entrar a la raíz (Home /) y personaliza los módulos táctiles en tiempo real.
+            Elige qué experiencia ve el público al ingresar (Editorial Alta Moda, Combo 1, Bento o Clásico) y calibra los efectos parallax y glassmorphism.
           </p>
         </div>
 
@@ -277,7 +309,7 @@ export default function MobileFusionAdminStudio() {
       </div>
 
       {/* 🎛️ STUDIO SUB-NAVIGATION TABS */}
-      <div className="flex items-center gap-1.5 bg-[#111116] p-1.5 rounded-2xl border border-white/10 max-w-2xl overflow-x-auto no-scrollbar">
+      <div className="flex items-center gap-1.5 bg-[#111116] p-1.5 rounded-2xl border border-white/10 max-w-3xl overflow-x-auto no-scrollbar">
         <button
           onClick={() => setActiveTab('homepage')}
           className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
@@ -291,6 +323,18 @@ export default function MobileFusionAdminStudio() {
         </button>
 
         <button
+          onClick={() => setActiveTab('editorial-lego')}
+          className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
+            activeTab === 'editorial-lego' 
+              ? 'bg-[#ecb613] text-black shadow-md' 
+              : 'text-white/60 hover:text-white'
+          }`}
+        >
+          <Sparkles size={14} />
+          <span>Lego 4 Perfiles (Editorial)</span>
+        </button>
+
+        <button
           onClick={() => setActiveTab('presets')}
           className={`py-2 px-4 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 ${
             activeTab === 'presets' 
@@ -298,8 +342,8 @@ export default function MobileFusionAdminStudio() {
               : 'text-white/60 hover:text-white'
           }`}
         >
-          <Sparkles size={14} />
-          <span>Combos Sugeridos (5)</span>
+          <Compass size={14} />
+          <span>Combos Mobile (5)</span>
         </button>
 
         <button
@@ -311,7 +355,7 @@ export default function MobileFusionAdminStudio() {
           }`}
         >
           <Sliders size={14} />
-          <span>Mezclador Lego</span>
+          <span>Mezclador Mobile</span>
         </button>
 
         <button
@@ -323,7 +367,7 @@ export default function MobileFusionAdminStudio() {
           }`}
         >
           <Layers size={14} />
-          <span>Catálogo 10 Arquetipos</span>
+          <span>10 Arquetipos</span>
         </button>
       </div>
 
@@ -380,7 +424,130 @@ export default function MobileFusionAdminStudio() {
             </div>
           )}
 
-          {/* TAB 1: PRESETS COMBOS */}
+          {/* TAB 1: LEGO EDITORIAL 4-PROFILES CUSTOMIZER */}
+          {activeTab === 'editorial-lego' && (
+            <div className="space-y-5 bg-[#0e0e13] p-5 rounded-3xl border border-white/10">
+              <div className="border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded bg-[#ecb613] text-black text-[9px] font-black font-mono">
+                    ESTÉTICA ALTA MODA // BENTO
+                  </span>
+                </div>
+                <h3 className="text-sm font-black uppercase text-white font-syne mt-1">
+                  Calibrador Lego de la Portada Editorial 4 Perfiles
+                </h3>
+                <p className="text-xs text-white/50">
+                  Configura el perfil predeterminado, la paleta estética de cristal y el gatillo de conversión.
+                </p>
+              </div>
+
+              {/* 1. Default Profile on Load */}
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
+                  1. Perfil Predeterminado al Cargar
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {[
+                    { id: 'unio', label: '💍 UNIO (Bodas)' },
+                    { id: 'arsenal', label: '🏢 Arsenal (B2B)' },
+                    { id: 'signal', label: '⚡ The Signal' },
+                    { id: 'vimume', label: '🧠 VIMUME 40Hz' }
+                  ].map(opt => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setEditorialConfig({ ...editorialConfig, activeDefaultProfile: opt.id as any })}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-center transition-all ${
+                        editorialConfig.activeDefaultProfile === opt.id 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2. Theme Styling */}
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
+                  2. Paleta Estética & Glassmorphism
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: 'dark-luxury', label: 'True Black OLED & Gold' },
+                    { id: 'champagne-gold', label: 'Champagne Satin' },
+                    { id: 'minimal-noir', label: 'Minimalist Noir' }
+                  ].map(opt => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setEditorialConfig({ ...editorialConfig, themeStyle: opt.id as any })}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
+                        editorialConfig.themeStyle === opt.id 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3. Parallax Micro-interactions */}
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
+                  3. Efectos Parallax & Profundidad 3D
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { id: true, label: '✨ Parallax 3D Activo' },
+                    { id: false, label: 'Estático / Rendimiento Máximo' }
+                  ].map((opt, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setEditorialConfig({ ...editorialConfig, parallaxEnabled: opt.id })}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
+                        editorialConfig.parallaxEnabled === opt.id 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Action CTA */}
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold uppercase text-[#ecb613] block">
+                  4. Gatillo de Cierre & Despacho
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { id: 'slide-lock', label: 'Slide-to-Lock 100€' },
+                    { id: 'cotizador', label: 'Cotizador Dinámico' },
+                    { id: 'whatsapp', label: 'WhatsApp Despacho' }
+                  ].map(opt => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setEditorialConfig({ ...editorialConfig, ctaAction: opt.id as any })}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
+                        editorialConfig.ctaAction === opt.id 
+                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
+                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 2: PRESETS COMBOS */}
           {activeTab === 'presets' && (
             <div className="space-y-3">
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
@@ -424,7 +591,7 @@ export default function MobileFusionAdminStudio() {
             </div>
           )}
 
-          {/* TAB 2: LEGO CUSTOM MIXER */}
+          {/* TAB 3: LEGO CUSTOM MIXER */}
           {activeTab === 'custom' && (
             <div className="space-y-5 bg-[#0e0e13] p-5 rounded-3xl border border-white/10">
               <div className="border-b border-white/10 pb-3">
@@ -544,7 +711,7 @@ export default function MobileFusionAdminStudio() {
             </div>
           )}
 
-          {/* TAB 3: RAW 10 ARCHETYPES CATALOG */}
+          {/* TAB 4: RAW 10 ARCHETYPES CATALOG */}
           {activeTab === 'catalog' && (
             <div className="space-y-3">
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
@@ -600,7 +767,7 @@ export default function MobileFusionAdminStudio() {
             </div>
 
             {/* Screen Content */}
-            <div className="flex-1 overflow-hidden pt-5 relative flex flex-col bg-[#050505]">
+            <div className="flex-1 overflow-y-auto no-scrollbar pt-5 relative flex flex-col bg-[#050505]">
               {activeTab === 'catalog' ? (
                 catalogArchetypeIndex === 1 ? <Archetype1_TinderDeck /> :
                 catalogArchetypeIndex === 2 ? <Archetype2_UberRadar /> :

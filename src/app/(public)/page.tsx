@@ -19,6 +19,11 @@ const CinematicTunnelIgnition = dynamic(
 
 import CinematicHeroSClass from '@/components/sclass/CinematicHeroSClass';
 
+const EditorialCuratedHeroSClass = dynamic(
+  () => import('@/components/sclass/EditorialCuratedHeroSClass'),
+  { ssr: false }
+);
+
 const MobileFusionContainer = dynamic(
   () => import('@/components/mobile-fusion/MobileFusionContainer'),
   { ssr: false }
@@ -39,17 +44,17 @@ const Archetype9_StorysellingStream = dynamic(
   { ssr: false }
 );
 
-export type HomepageScreenMode = 'classic' | 'mobile-fusion' | 'bento-airbnb' | 'storyselling';
+export type HomepageScreenMode = 'editorial-curated' | 'classic' | 'mobile-fusion' | 'bento-airbnb' | 'storyselling';
 
 export default function Home() {
   const [activeProfile, setActiveProfile] = useState<ProfileContext | null>(null);
-  const [homepageMode, setHomepageMode] = useState<HomepageScreenMode>('classic');
+  const [homepageMode, setHomepageMode] = useState<HomepageScreenMode>('editorial-curated');
 
   // Load configured active homepage mode from localStorage / admin studio
   useEffect(() => {
     try {
       const savedMode = localStorage.getItem('ear_active_homepage_screen') as HomepageScreenMode;
-      if (savedMode && ['classic', 'mobile-fusion', 'bento-airbnb', 'storyselling'].includes(savedMode)) {
+      if (savedMode && ['editorial-curated', 'classic', 'mobile-fusion', 'bento-airbnb', 'storyselling'].includes(savedMode)) {
         setHomepageMode(savedMode);
       }
     } catch (e) {}
@@ -81,7 +86,16 @@ export default function Home() {
     { title: 'Mariachis en Madrid', href: '/servicios/mariachis/madrid', tag: 'LOCAL' },
   ];
 
-  // 1. Render Mode: Mobile Fusion Hub as Homepage
+  // 1. Render Mode: Editorial Curated Hero S-Class (Momento WOW + 4 Perfiles Bento)
+  if (homepageMode === 'editorial-curated') {
+    return (
+      <div className="bg-[#050505] min-h-screen text-white flex flex-col">
+        <EditorialCuratedHeroSClass />
+      </div>
+    );
+  }
+
+  // 2. Render Mode: Mobile Fusion Hub as Homepage
   if (homepageMode === 'mobile-fusion') {
     return (
       <div className="bg-[#050505] min-h-screen">
@@ -90,7 +104,7 @@ export default function Home() {
     );
   }
 
-  // 2. Render Mode: Bento Airbnb Curated Experience as Homepage
+  // 3. Render Mode: Bento Airbnb Curated Experience as Homepage
   if (homepageMode === 'bento-airbnb') {
     return (
       <div className="bg-[#050505] min-h-screen py-6 px-4 max-w-lg mx-auto">
@@ -99,7 +113,7 @@ export default function Home() {
     );
   }
 
-  // 3. Render Mode: Storyselling Stream as Homepage
+  // 4. Render Mode: Storyselling Stream as Homepage
   if (homepageMode === 'storyselling') {
     return (
       <div className="bg-[#050505] min-h-screen max-w-lg mx-auto">
@@ -108,7 +122,7 @@ export default function Home() {
     );
   }
 
-  // 4. Render Mode: Classic S-Class Gateway
+  // 5. Render Mode: Classic S-Class Gateway
   return (
     <div className="bg-[#050505] text-white min-h-screen flex flex-col selection:bg-[#ecb613] selection:text-black">
       
