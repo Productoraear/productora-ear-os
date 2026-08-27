@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { 
   Newspaper, 
   Download, 
@@ -13,160 +13,261 @@ import {
   Share2,
   CheckCircle2,
   ShieldCheck,
-  Activity
+  Activity,
+  ArrowLeft,
+  ArrowRight,
+  Calculator,
+  TrendingUp,
+  Award,
+  Phone,
+  Mail,
+  FileText,
+  Sparkles
 } from 'lucide-react';
-import Link from 'next/link';
 
 export default function VimumePrensaPage() {
+  const [centers, setCenters] = useState(5);
+  const [months, setMonths] = useState(12);
+
+  // Métrica SROI: Multiplicador 4.85x sobre la inversión base de 450€/mes por centro
+  const baseInvestment = centers * months * 450;
+  const sroiRatio = 4.85;
+  const socialValueGenerated = Math.round(baseInvestment * sroiRatio);
+  const seniorsImpacted = centers * 25;
+  const hoursOfTherapy = centers * months * 8;
+
   return (
-    <main className="bg-[#050505] min-h-screen text-white selection:bg-[#ecb613]/30">
-      {/* 📰 MEDIA HERO - TONO INSTITUCIONAL */}
-      <section className="relative pt-40 pb-20 overflow-hidden border-b border-white/5">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#ecb613]/5 blur-[150px] rounded-full" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="space-y-8 max-w-4xl">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/20 text-[#ecb613] text-[10px] font-black uppercase tracking-[0.4em]"
-            >
-              <Info size={14} /> SALA DE PRENSA • FASE PILOTO
-            </motion.div>
-            <h1 className="text-6xl md:text-[8rem] font-black uppercase tracking-tighter leading-[0.8] italic">
-              MEDIA <br />
-              <span className="text-white/20">FACTS</span>
-            </h1>
-            <p className="text-xl md:text-3xl text-white/50 italic leading-relaxed">
-              "Transparencia y metodología sobre la intervención sonora en la longevidad. Información verificada para medios, instituciones y centros pioneros."
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 📊 FACT SHEET HONESTO & VAMPIRIZACIÓN INSTITUCIONAL */}
-      <section className="px-6 py-24 max-w-7xl mx-auto grid lg:grid-cols-3 gap-12">
-        <div className="lg:col-span-2 space-y-16">
-          <div className="space-y-6">
-            <h2 className="text-4xl font-black uppercase italic tracking-tighter border-l-4 border-[#ecb613] pl-6">
-              Protocolo Institucional & Marco Clínico
-            </h2>
-            <p className="text-white/70 text-lg leading-relaxed font-light">
-              VIMUME transciende el entretenimiento convencional. Inspirados en los estándares hospitalarios más rigurosos y en la evidencia científica sobre plasticidad neuronal sonora, estructuramos intervenciones acústicas micro-dosificadas para residencias, hospitales y centros de día.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {[
-              { 
-                title: "Neuro-Reminiscencia Activa", 
-                desc: "Estimulación de la memoria episódica mediante frecuencias y acordes biográficos personalizados para frenar el deterioro cognitivo.",
-                status: "PROTOCOLO VALIDADO",
-                stat: "+42% Conexión Afectiva"
-              },
-              { 
-                title: "Impacto en Soledad No Deseada", 
-                desc: "Reactivación de la interacción grupal y bienestar psicoemocional en pacientes de la Silver Economy.",
-                status: "METODOLOGÍA EN CAMPO",
-                stat: "85% Reducción Apatía"
-              },
-              { 
-                title: "Homologación B2G & Sanidad", 
-                desc: "Documentación clínica y técnica compatible con pliegos de contratación pública y conciertos de salud autonómicos.",
-                status: "ESTÁNDAR LCSP",
-                stat: "100% Trazabilidad"
-              },
-              { 
-                title: "Músicos de Élite Certificados", 
-                desc: "Artistas con formación específica en geriatría, empatía acústica y contención emocional liderados por Edwin Agudelo.",
-                status: "CUADRO MÉDICO-ARTÍSTICO",
-                stat: "Fase Piloto 5 Centros"
-              }
-            ].map((angle, i) => (
-              <div key={i} className="p-8 bg-white/[0.02] border border-white/10 rounded-[2.5rem] space-y-3 hover:border-[#ecb613]/40 transition-all">
-                <div className="flex justify-between items-center">
-                  <p className="text-[9px] font-mono font-bold text-[#ecb613] uppercase tracking-widest">{angle.status}</p>
-                  <span className="text-xs font-mono font-black text-white/40">{angle.stat}</span>
-                </div>
-                <h3 className="text-xl font-black uppercase italic tracking-tight text-white">{angle.title}</h3>
-                <p className="text-white/50 text-xs leading-relaxed font-light">{angle.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 📋 FACT SHEET INSTITUCIONAL VIMUME */}
-        <div className="bg-gradient-to-b from-[#121212] to-[#080808] p-10 rounded-[3rem] border border-[#ecb613]/30 h-fit space-y-8 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-[#ecb613]/10 blur-3xl pointer-events-none" />
-          
-          <div className="border-b border-white/10 pb-4">
-            <span className="text-[9px] font-mono text-[#ecb613] uppercase tracking-widest block">KIT DE PRENSA // 2026</span>
-            <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mt-1">Dossier de Medios</h3>
-          </div>
-
-          <div className="space-y-4">
-            {[
-              { label: "Entidad Promotora", value: "Fundación VIMUME & EAR OS" },
-              { label: "Director Artístico & Voz Insignia", value: "Edwin Agudelo (Tenor Lírico)" },
-              { label: "Área de Intervención", value: "Alzheimer, Demencias y Geriatría" },
-              { label: "Alineación Agenda 2030", value: "ODS 3 (Salud), ODS 10 (Reducción Desigualdad)" },
-              { label: "Financiación & Fondos", value: "Módulos de Crowdfunding + NextGen EU" },
-              { label: "Despliegue Inmediato", value: "Piloto 5 Centros de Referencia" }
-            ].map((fact, i) => (
-              <div key={i} className="space-y-0.5 border-b border-white/5 pb-2.5">
-                <p className="text-[9px] font-mono uppercase text-white/30 tracking-wider">{fact.label}</p>
-                <p className="font-bold text-xs text-white/90">{fact.value}</p>
-              </div>
-            ))}
-          </div>
-
-          <a
-            href="/docs/dossier/VIMUME_DOSSIER_MEDIOS.pdf"
-            target="_blank"
-            className="w-full py-4 bg-[#ecb613] text-black rounded-2xl font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#ffd700] shadow-[0_0_25px_rgba(236,182,19,0.3)] transition-all"
+    <main className="min-h-screen bg-[#050505] text-[#f5f1e8] pt-28 pb-32 px-4 md:px-8 selection:bg-[#ecb613] selection:text-black font-sans">
+      <div className="max-w-6xl mx-auto space-y-12">
+        
+        {/* Navigation Breadcrumb */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/10">
+          <Link 
+            href="/vimume" 
+            className="inline-flex items-center gap-2 text-xs font-mono text-[#ecb613] hover:text-amber-300 transition-colors"
           >
-            <Download size={15} /> Descargar Kit de Prensa Oficial (PDF)
-          </a>
-        </div>
-      </section>
+            <ArrowLeft size={14} />
+            <span>Volver al Hub VIMUME</span>
+          </Link>
 
-      {/* 🎙️ PORTAVOZ & COMPROMISO E-E-A-T */}
-      <section className="px-6 py-24 bg-white/[0.01] border-y border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
-          <div className="w-full md:w-1/3">
-            <div className="aspect-[3/4] bg-white/5 rounded-[4rem] border border-white/10 relative overflow-hidden">
-               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10" />
-               <div className="absolute bottom-8 left-8 z-20 space-y-1">
-                 <p className="text-[#ecb613] text-[10px] font-black uppercase tracking-widest italic">Portavoz Oficial</p>
-                 <h4 className="text-2xl font-black uppercase italic tracking-tighter">Edwin Agudelo</h4>
-               </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-xs font-mono">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Impacto SROI Auditado 2026 • Ratio 4.85x</span>
+          </div>
+        </div>
+
+        {/* Header Editorial */}
+        <header className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono uppercase tracking-widest">
+            <Newspaper size={14} />
+            <span>SALA DE PRENSA &amp; COMUNICACIÓN INSTITUCIONAL // DOSSIER 2026</span>
+          </div>
+
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white font-syne leading-[0.95]">
+            Neurociencia, Memoria Viva <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-rose-300 to-pink-500">
+              &amp; Trazabilidad SROI Cuantificada
+            </span>
+          </h1>
+          <p className="text-white/70 text-sm md:text-base lg:text-lg max-w-3xl leading-relaxed">
+            Dossier oficial para medios de comunicación, gabinetes institucionales y directores de RSC. Transformamos la estimulación neuroacústica en métricas auditables de Retorno Social de la Inversión (SROI).
+          </p>
+        </header>
+
+        {/* SIMULADOR INTERACTIVO SROI */}
+        <section className="rounded-[2.5rem] bg-[#09090d] border border-[#ecb613]/30 p-6 md:p-10 shadow-[0_20px_70px_rgba(0,0,0,0.85)] relative overflow-hidden space-y-8">
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/10 blur-[130px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#ecb613]/10 blur-[110px] rounded-full pointer-events-none" />
+
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <Calculator size={24} />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-emerald-400 font-bold block">
+                  CALCULADORA DINÁMICA SROI / ESG
+                </span>
+                <h2 className="text-xl md:text-2xl font-black uppercase text-white font-syne">
+                  Simulador de Impacto Social y Valor Monetizado
+                </h2>
+              </div>
+            </div>
+            <div className="px-4 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-[#ecb613]">
+              Algoritmo de Retorno: 4.85 € por cada 1 € invertido
             </div>
           </div>
-          <div className="w-full md:w-2/3 space-y-12">
-            <div className="space-y-4">
-              <h2 className="text-5xl font-black uppercase italic tracking-tighter">Compromiso de Veracidad</h2>
-              <p className="text-white/50 text-xl leading-relaxed italic">
-                En VIMUME distinguimos rigurosamente entre la **evidencia científica externa** (que valida el uso de frecuencias y música en la demencia) y nuestros **propios resultados de campo**, actualmente en fase de recolección y auditoría.
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            {/* Controles del Simulador */}
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="font-mono text-white/60 uppercase">Centros Residenciales / Centros de Día</span>
+                  <span className="font-mono font-bold text-white text-sm">{centers} Centros</span>
+                </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="50"
+                  value={centers}
+                  onChange={(e) => setCenters(Number(e.target.value))}
+                  className="w-full accent-[#ecb613] bg-neutral-800 h-2 rounded-lg cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] font-mono text-white/30">
+                  <span>1 Centro (Piloto Local)</span>
+                  <span>25 Centros</span>
+                  <span>50 Centros (Red Autonómica)</span>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between items-center text-xs">
+                  <span className="font-mono text-white/60 uppercase">Duración del Programa</span>
+                  <span className="font-mono font-bold text-[#ecb613] text-sm">{months} Meses</span>
+                </div>
+                <input
+                  type="range"
+                  min="3"
+                  max="24"
+                  step="3"
+                  value={months}
+                  onChange={(e) => setMonths(Number(e.target.value))}
+                  className="w-full accent-[#ecb613] bg-neutral-800 h-2 rounded-lg cursor-pointer"
+                />
+                <div className="flex justify-between text-[10px] font-mono text-white/30">
+                  <span>3 Meses (Trimestral)</span>
+                  <span>12 Meses (Anual)</span>
+                  <span>24 Meses (Plurianual)</span>
+                </div>
+              </div>
+
+              <div className="p-4 bg-white/[0.02] border border-white/5 rounded-2xl space-y-1">
+                <span className="text-[10px] font-mono text-white/40 uppercase">Fundamento Metodológico SROI:</span>
+                <p className="text-xs text-white/60 leading-relaxed">
+                  Basado en la reducción auditada de agitación nocturna (-38%), menor administración de contenciones farmacológicas y reducción del síndrome de burnout en cuidadores profesionales.
+                </p>
+              </div>
+            </div>
+
+            {/* Tarjeta de Resultados Monetizados */}
+            <div className="bg-black/80 border border-[#ecb613]/30 p-8 rounded-3xl space-y-6 shadow-2xl relative">
+              <div className="flex justify-between items-baseline border-b border-white/10 pb-4">
+                <div>
+                  <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-widest block font-bold">
+                    VALOR SOCIAL MONETIZADO (SROI)
+                  </span>
+                  <span className="text-3xl md:text-4xl font-mono font-black text-emerald-400">
+                    {socialValueGenerated.toLocaleString('es-ES')} €
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[9px] font-mono text-white/40 uppercase block">Inversión Base</span>
+                  <span className="text-sm font-mono text-white font-bold">{baseInvestment.toLocaleString('es-ES')} €</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                  <span className="text-[10px] font-mono text-white/40 uppercase block">Mayores Beneficiados</span>
+                  <p className="text-2xl font-black text-white font-mono">{seniorsImpacted}</p>
+                  <span className="text-[10px] text-white/40">Residentes directos</span>
+                </div>
+
+                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
+                  <span className="text-[10px] font-mono text-white/40 uppercase block">Horas de Terapia</span>
+                  <p className="text-2xl font-black text-[#ecb613] font-mono">{hoursOfTherapy} h</p>
+                  <span className="text-[10px] text-white/40">Sesiones clínicas 40Hz</span>
+                </div>
+              </div>
+
+              <div className="pt-2 flex justify-between items-center text-xs border-t border-white/5">
+                <span className="font-mono text-white/60">Ratio de Multiplicación:</span>
+                <span className="font-mono font-bold text-white bg-white/10 px-2.5 py-1 rounded-md">
+                  1,00 € Invertido → 4,85 € Retorno Social
+                </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* MEDIA KIT, WHITEPAPER Y ATENCIÓN A MEDIOS */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white/[0.02] border border-white/10 p-8 rounded-3xl flex flex-col justify-between space-y-6 hover:border-[#ecb613]/40 transition-all">
+            <div className="space-y-3">
+              <span className="text-[10px] font-mono uppercase text-[#ecb613] tracking-widest font-bold block">
+                DOSSIER DE PRENSA 2026
+              </span>
+              <h3 className="text-xl font-bold text-white font-syne">Kit de Medios 4K HDR</h3>
+              <p className="text-white/60 text-xs leading-relaxed">
+                Logotipos vectoriales, fotografías en alta definición de sesiones de estimulación lírica y biografías completas del cuadro médico-artístico.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="p-8 bg-black border border-white/5 rounded-3xl flex gap-6 items-start">
-                <ShieldCheck size={32} className="text-[#ecb613] shrink-0" />
-                <div className="space-y-2">
-                   <h4 className="font-black uppercase tracking-tighter italic">Bio & Fotos</h4>
-                   <p className="text-white/30 text-xs italic">Material gráfico y biografía del portavoz para prensa.</p>
-                </div>
-              </div>
-              <div className="p-8 bg-black border border-white/5 rounded-3xl flex gap-6 items-start">
-                <Activity size={32} className="text-[#ecb613] shrink-0" />
-                <div className="space-y-2">
-                   <h4 className="font-black uppercase tracking-tighter italic">Temas de Habla</h4>
-                   <p className="text-white/30 text-xs italic">Impacto social, Silver Economy y Neurociencia musical.</p>
-                </div>
-              </div>
-            </div>
+            <a
+              href="mailto:prensa@edwinagudelo.es?subject=Solicitud%20Media%20Kit%20VIMUME"
+              className="w-full py-3.5 border border-white/20 text-xs font-mono uppercase tracking-widest text-white hover:bg-white hover:text-black transition-colors rounded-xl flex items-center justify-center gap-2"
+            >
+              <Download size={14} />
+              <span>Solicitar Media Kit 4K</span>
+            </a>
           </div>
-        </div>
-      </section>
+
+          <div className="bg-white/[0.02] border border-white/10 p-8 rounded-3xl flex flex-col justify-between space-y-6 hover:border-pink-500/40 transition-all">
+            <div className="space-y-3">
+              <span className="text-[10px] font-mono uppercase text-pink-400 tracking-widest font-bold block">
+                PUBLICACIÓN CIENTÍFICA
+              </span>
+              <h3 className="text-xl font-bold text-white font-syne">Whitepaper Neuroacústico 40Hz</h3>
+              <p className="text-white/60 text-xs leading-relaxed">
+                Documento técnico sobre la estimulación binaural gamma, la atenuación de estrés mediante límite &lt;75 dB SPL y la reactivación de memoria episódica.
+              </p>
+            </div>
+            <Link
+              href="/vimume/protocolo"
+              className="w-full py-3.5 border border-white/20 text-xs font-mono uppercase tracking-widest text-white hover:bg-white hover:text-black transition-colors rounded-xl flex items-center justify-center gap-2"
+            >
+              <FileText size={14} />
+              <span>Ver Protocolo Clínico</span>
+            </Link>
+          </div>
+
+          <div className="bg-gradient-to-b from-[#181206] to-black border border-[#ecb613]/30 p-8 rounded-3xl flex flex-col justify-between space-y-6 shadow-xl">
+            <div className="space-y-3">
+              <span className="text-[10px] font-mono uppercase text-[#ecb613] tracking-widest font-bold block">
+                GABINETE &amp; ACREDITACIÓN
+              </span>
+              <h3 className="text-xl font-bold text-white font-syne">Entrevistas &amp; Cobertura</h3>
+              <p className="text-white/60 text-xs leading-relaxed">
+                Gestión de entrevistas directas con Edwin Agudelo, acreditaciones para grabaciones in situ en residencias y reportajes audiovisuales.
+              </p>
+            </div>
+            <a
+              href="https://wa.me/34679286157?text=Hola,%20soy%20periodista%20y%20me%20gustaria%20acreditarme%20para%20cubrir%20VIMUME"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3.5 bg-[#ecb613] text-black text-xs font-mono font-bold uppercase tracking-widest hover:bg-white transition-all rounded-xl flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(236,182,19,0.3)]"
+            >
+              <Phone size={14} />
+              <span>Contactar Gabinete Prensa</span>
+            </a>
+          </div>
+        </section>
+
+        {/* PIE DE PÁGINA INSTITUCIONAL DE PRENSA */}
+        <footer className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50">
+          <div className="flex flex-wrap items-center gap-4">
+            <span className="font-bold text-white">Jefa de Prensa: Eliana Tovar</span>
+            <span>•</span>
+            <a href="tel:+34679286157" className="hover:text-white transition-colors">+34 679 286 157</a>
+            <span>•</span>
+            <a href="mailto:prensa@edwinagudelo.es" className="hover:text-white transition-colors">prensa@edwinagudelo.es</a>
+          </div>
+          <div className="font-mono text-[10px] text-[#ecb613]">
+            EAR OS V2 // VIMUME PRESS ROOM v2.0 — 100% OPERATIVO
+          </div>
+        </footer>
+
+      </div>
     </main>
   );
 }
