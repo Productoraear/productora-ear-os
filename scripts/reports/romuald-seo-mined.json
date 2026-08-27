@@ -1,0 +1,577 @@
+{
+  "timestamp": "2026-08-27T18:12:38.487Z",
+  "targetDirectory": "H:\\ROMUALD_FONS_BIGSEO",
+  "totalFilesScannedWithSEO": 101,
+  "topTermsCount": 64,
+  "detectedTermsFrequency": {
+    "SEO": 205,
+    "SEOLISTA": 11,
+    "DESEO": 9,
+    "PASEO": 8,
+    "SEORTEO": 5,
+    "SEOREBUFO": 4,
+    "SEOLOOP": 4,
+    "SEOS": 4,
+    "SEOHASTAG": 3,
+    "SEOEXTRACTO": 3,
+    "SEOENLACE": 3,
+    "SEOMOSTRAR": 3,
+    "SEOTIMESTAMP": 3,
+    "SEOCLIPS": 3,
+    "TCNICAS_SEO_PARA_CANALES_DE_GAMING_ARTE_Y_VIRALES": 3,
+    "DESEOS": 2,
+    "SEOINC": 2,
+    "SEOFRAME": 2,
+    "SEOHORA": 2,
+    "SEORESULTADO": 2,
+    "SEOENCUESTA": 2,
+    "SEOLAUNCH": 2,
+    "SEOREPESCA": 2,
+    "PESCASEO": 2,
+    "SEOINICIO": 2,
+    "SEOPREGUNTAS": 2,
+    "SEOMARCO": 2,
+    "SEOSPRINT": 2,
+    "SEOGIRO": 2,
+    "SEOREMORA": 2,
+    "SEOCARA": 2,
+    "SEOEMPALME": 2,
+    "SEOMARCA": 2,
+    "SEOTUBER": 2,
+    "SEOFLECHA": 2,
+    "SEOFRANJA": 2,
+    "SEOZOOM": 2,
+    "7_TRUCOS_SEO_PARA_CRECER_EN_INSTAGRAM_2019": 2,
+    "SEOCOLABORACIONES": 2,
+    "SEODEDO": 2,
+    "SEOMENU": 2,
+    "SEORESET": 2,
+    "SEOCANAL": 2,
+    "SEOEXPLOSI": 2,
+    "SEO_690147013": 2,
+    "_CURSO_SEO_8": 2,
+    "_CURSO_SEO_12": 2,
+    "SEOTADO": 2,
+    "EL_MEJOR_SEO_DEL_MUNDO_CONFIGURA_EL_PLUGIN_YOAST_SEO_DE_WORDPRESS_2019": 2,
+    "_CURSO_SEO_5": 2,
+    "SEO_524467820": 2,
+    "_CURSO_SEO_7": 2,
+    "LOS_SECRETOS_SEO_DE_LAS_METAS_NOINDEX_NOFOLLOW": 2,
+    "QU_ES_EL_SEO_BLACKHAT": 2,
+    "QU_ES_EL_SEO_PARA_LOS_FURIOSOS_": 2,
+    "_CURSO_SEO_1": 2,
+    "SALSEO_Y_MANIPULACIN_EN_YOUTUBE": 2,
+    "ROMUALFONSEXPERTOSEO": 2,
+    "_CURSO_SEO_4": 2,
+    "_SEOCRETO_COMENTARIOS": 2,
+    "TEDESEOLOMEJOR": 2,
+    "SEOCRETO": 2,
+    "LLAMATAVIXSEO": 1,
+    "EXPERTOSEO": 1
+  },
+  "detailedMatchesSample": [
+    {
+      "file": "02 Un paseo por la interfaz OK.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\02 Un paseo por la interfaz OK.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "paseo"
+      ]
+    },
+    {
+      "file": "02 Un paseo por la interfaz.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\02 Un paseo por la interfaz.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "paseo"
+      ]
+    },
+    {
+      "file": "03 TANTOS DESEOS DE ELLA.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\03 TANTOS DESEOS DE ELLA.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "deseos"
+      ]
+    },
+    {
+      "file": "07 COMO DESEO SER TU AMOR.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\07 COMO DESEO SER TU AMOR.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "deseo"
+      ]
+    },
+    {
+      "file": "10. Seoincógnita.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10. Seoincógnita.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoinc"
+      ]
+    },
+    {
+      "file": "10.5.Seohastag.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.5.Seohastag.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seohastag"
+      ]
+    },
+    {
+      "file": "10.6.Seoextracto.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.6.Seoextracto.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seoextracto"
+      ]
+    },
+    {
+      "file": "10.7. Seoenlace.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.7. Seoenlace.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seoenlace"
+      ]
+    },
+    {
+      "file": "10.8. Seomostrar.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.8. Seomostrar.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seomostrar"
+      ]
+    },
+    {
+      "file": "10.9. Seotimestamp.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.9. Seotimestamp.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seotimestamp"
+      ]
+    },
+    {
+      "file": "11. Seoframe.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11. Seoframe.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoframe"
+      ]
+    },
+    {
+      "file": "11. SEOHora.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11. SEOHora.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seohora"
+      ]
+    },
+    {
+      "file": "11.3. Temática SEOLista.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.3. Temática SEOLista.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seolista"
+      ]
+    },
+    {
+      "file": "11.4. Creacion y Optimizacion Seolista.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.4. Creacion y Optimizacion Seolista.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seolista"
+      ]
+    },
+    {
+      "file": "11.7. Mantenimiento Seolista.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.7. Mantenimiento Seolista.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seolista"
+      ]
+    },
+    {
+      "file": "11.8. Encuentra tu seolista.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.8. Encuentra tu seolista.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seolista"
+      ]
+    },
+    {
+      "file": "12. SEOResultado.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\12. SEOResultado.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoresultado"
+      ]
+    },
+    {
+      "file": "13. Seorebufo.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\13. Seorebufo.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seorebufo"
+      ]
+    },
+    {
+      "file": "14. SEOClips.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\14. SEOClips.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seoclips"
+      ]
+    },
+    {
+      "file": "17.4. SeoEncuesta.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.4. SeoEncuesta.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoencuesta"
+      ]
+    },
+    {
+      "file": "17.5. Seolaunch.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.5. Seolaunch.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seolaunch"
+      ]
+    },
+    {
+      "file": "17.6. SeoRepesca.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.6. SeoRepesca.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seorepesca"
+      ]
+    },
+    {
+      "file": "17.7. Seorteo.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.7. Seorteo.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seorteo"
+      ]
+    },
+    {
+      "file": "18.2. Seo Offpage-001-007.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\18.2. Seo Offpage-001-007.txt",
+      "matchCount": 3,
+      "sampleMatches": [
+        "seo"
+      ]
+    },
+    {
+      "file": "3. PescaSEO.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\3. PescaSEO.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "pescaseo"
+      ]
+    },
+    {
+      "file": "3. SEOInicio.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\3. SEOInicio.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoinicio"
+      ]
+    },
+    {
+      "file": "3. Seopreguntas.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\3. Seopreguntas.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seopreguntas"
+      ]
+    },
+    {
+      "file": "4. SEOLoop.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. SEOLoop.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoloop"
+      ]
+    },
+    {
+      "file": "4. Seomarco.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. Seomarco.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seomarco"
+      ]
+    },
+    {
+      "file": "4. Seosprint.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. Seosprint.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seosprint"
+      ]
+    },
+    {
+      "file": "4. SEOTrailer.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. SEOTrailer.txt",
+      "matchCount": 1,
+      "sampleMatches": [
+        "seo"
+      ]
+    },
+    {
+      "file": "5. Seogiro.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\5. Seogiro.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seogiro"
+      ]
+    },
+    {
+      "file": "5. SEOLoop.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\5. SEOLoop.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoloop"
+      ]
+    },
+    {
+      "file": "5. Seoremora.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\5. Seoremora.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoremora"
+      ]
+    },
+    {
+      "file": "6. Seocara.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. Seocara.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seocara"
+      ]
+    },
+    {
+      "file": "6. SEOEmpalme.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. SEOEmpalme.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoempalme"
+      ]
+    },
+    {
+      "file": "6. SEOMarca.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. SEOMarca.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seomarca"
+      ]
+    },
+    {
+      "file": "6. Seotuber.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. Seotuber.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seotuber"
+      ]
+    },
+    {
+      "file": "7. Seoflecha.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. Seoflecha.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoflecha"
+      ]
+    },
+    {
+      "file": "7. SEOFranja.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. SEOFranja.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seofranja"
+      ]
+    },
+    {
+      "file": "7. Seorteo.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. Seorteo.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seorteo"
+      ]
+    },
+    {
+      "file": "7. SEOZoom.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. SEOZoom.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seozoom"
+      ]
+    },
+    {
+      "file": "7_TRUCOS_SEO_para_CRECER_en_INSTAGRAM_2019(youtube.com).txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7_TRUCOS_SEO_para_CRECER_en_INSTAGRAM_2019(youtube.com).txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "7_trucos_seo_para_crecer_en_instagram_2019"
+      ]
+    },
+    {
+      "file": "8. Seocolaboraciones.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. Seocolaboraciones.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seocolaboraciones"
+      ]
+    },
+    {
+      "file": "8. Seodedo.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. Seodedo.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seodedo"
+      ]
+    },
+    {
+      "file": "8. SEOMenu.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. SEOMenu.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seomenu"
+      ]
+    },
+    {
+      "file": "8. SEOReset.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. SEOReset.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoreset"
+      ]
+    },
+    {
+      "file": "9. SEOCanal.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\9. SEOCanal.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seocanal"
+      ]
+    },
+    {
+      "file": "9. Seoexplosión.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\9. Seoexplosión.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seoexplosi"
+      ]
+    },
+    {
+      "file": "9. Seorebufo Plus.txt",
+      "path": "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\9. Seorebufo Plus.txt",
+      "matchCount": 2,
+      "sampleMatches": [
+        "seorebufo"
+      ]
+    }
+  ],
+  "allFilesList": [
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\02 Un paseo por la interfaz OK.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\02 Un paseo por la interfaz.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\03 TANTOS DESEOS DE ELLA.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\07 COMO DESEO SER TU AMOR.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10. Seoincógnita.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.5.Seohastag.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.6.Seoextracto.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.7. Seoenlace.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.8. Seomostrar.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\10.9. Seotimestamp.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11. Seoframe.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11. SEOHora.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.3. Temática SEOLista.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.4. Creacion y Optimizacion Seolista.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.7. Mantenimiento Seolista.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\11.8. Encuentra tu seolista.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\12. SEOResultado.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\13. Seorebufo.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\14. SEOClips.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.4. SeoEncuesta.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.5. Seolaunch.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.6. SeoRepesca.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\17.7. Seorteo.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\18.2. Seo Offpage-001-007.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\3. PescaSEO.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\3. SEOInicio.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\3. Seopreguntas.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. SEOLoop.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. Seomarco.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. Seosprint.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\4. SEOTrailer.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\5. Seogiro.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\5. SEOLoop.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\5. Seoremora.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. Seocara.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. SEOEmpalme.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. SEOMarca.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\6. Seotuber.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. Seoflecha.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. SEOFranja.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. Seorteo.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7. SEOZoom.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\7_TRUCOS_SEO_para_CRECER_en_INSTAGRAM_2019(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. Seocolaboraciones.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. Seodedo.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. SEOMenu.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\8. SEOReset.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\9. SEOCanal.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\9. Seoexplosión.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\9. Seorebufo Plus.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Arquitectura SILO y lógica de URLS - Curso SEO #9.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Clase 1 Los Fundamentos del SEO.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Clase 1 Los Fundamentos del SEO_522070419.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Clase 5 Estrategias en contenido SEO.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Clase 5 Estrategias en contenido SEO_690147013.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Clase 8 SEO e Inteligencia Artificial.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Clase 8 SEO e Inteligencia Artificial_497786381.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Cmo_BUSCAR_y_ENCONTRAR_PALABRAS_CLAVE_para_los_artculos_de_tu_web_-_Curso_SEO_8(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Cmo_POSICIONAR_una_WEB_en_GOOGLE_2019_-_CURSO_SEO_12(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\COMO DESEO SER TU AMOR.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Cómo BUSCAR y ENCONTRAR PALABRAS CLAVE para los artículos de tu web - Curso SEO #8.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\CÓMO CONSEGUIR SEO NEGATIVO GRATIS!! - #ASCOseries.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Cómo elegir el DOMINIO PERFECTO para tu web - Curso SEO #2.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Cómo POSICIONAR tu PÁGINA WEB NICHO en GOOGLE con SEO __(Actualizado 2020).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Cómo POSICIONAR tu PÁGINA WEB NICHO en GOOGLE con SEO 💥(Actualizado 2020).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Cómo POSICIONAR una WEB en GOOGLE 2020 - CURSO SEO #12.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\El_MEJOR_SEO_del_MUNDO_configura_el_Plugin_YOAST_SEO_de_Wordpress_2019(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Episodio 2 Un paseo por la interfaz OK.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\FormatFactorycomo deseo ser tu amor (2).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\FormatFactorycomo deseo ser tu amor.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\GANA MÁS TRÁFICO con tu Página de Inicio  - CURSO SEO #11.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\HE RECONSIDERADO MI OPINIÓN SOBRE LOS PACKS SEO - #RomuTV Ep. 1.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\HOSTING GRATIS y de calidad para FURIOSOS!!! - CURSO SEO #5.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\HOSTING_GRATIS_y_de_calidad_para_FURIOSOS_-_CURSO_SEO_5(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Introducción a La Ecuación SEO.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Introducción a La Ecuación SEO_524467820.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\LOS 8 MEJORES PLUGINS PARA WORDPRESS 2020 - CURSO SEO #7.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Los SECRETOS SEO de las metas NOINDEX NOFOLLOW!!!.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\LOS_8_MEJORES_PLUGINS_PARA_WORDPRESS_2018_-_CURSO_SEO_7(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Los_SECRETOS_SEO_de_las_metas_NOINDEX_NOFOLLOW(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Mi Mejor Consejo para los Estudiantes de SEO.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\NAVEGACIÓN WEB por CLUSTERS y SORPRESA! - CURSO SEO #10.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Paseo por las nubes (2).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Qu_es_el_SEO_BLACKHAT(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Qu_es_el_SEO_para_los_FURIOSOS_-_Curso_SEO_1(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Salseo_y_Manipulacin_en_YouTube(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\SEMRUSH GRATIS para posicionar tu web ____ - Curso SEO #4.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\SEMRUSH GRATIS para posicionar tu web 🔥🔥 - Curso SEO #4.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\SEMRUSH_GRATIS_para_posicionar_tu_web__-_Curso_SEO_4(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\SEO para PDFs ¡¡No te creerás lo que puedes conseguir!! __  - #RomuCAST 001.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\SEO para PDFs ¡¡No te creerás lo que puedes conseguir!! 😱  - #RomuCAST 001.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Tcnicas_SEO_para_canales_de_GAMING_ARTE_y_VIRALES(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Tcnica_Psicolgica_para_que_Vean_y_Comenten_tus_Videos_en_Youtube_-_SEOCRETO_comentarios(youtube.com).txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\tedeseolomejor.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\TUTORIAL WORDPRESS completo en Español 2020 (ACTUALIZADO!)- CURSO SEO #6.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\Técnica Psicológica para que Vean y Comenten tus Videos en Youtube - SEOCRETO comentarios.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\VERDADES Y MENTIRAS SOBRE TSA y SEO - #RomuTV Ep. 13.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\¡PRESENTAMOS LA REESCRITURA SEO! - Proyecto Relojes 003 #RomuTV Ep. 30.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\¿LOS DOMINIOS EMD CON LA PALABRA EXACTA SEO POSICIONAN - #ASCOseries.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\¿Qué DOMINIOS posicionan MEJOR para el SEO - Curso SEO #3.txt",
+    "H:\\ROMUALD_FONS_BIGSEO\\TRANSCRIPCIONES_ROMUALD\\¿Qué es el SEO para los FURIOSOS - Curso SEO #1.txt"
+  ]
+}
