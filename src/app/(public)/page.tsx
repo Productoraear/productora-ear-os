@@ -59,8 +59,14 @@ const Archetype9_StorysellingStream = dynamic(
   { ssr: false }
 );
 
+const SplineHeroSClass = dynamic(
+  () => import('@/components/ui/SplineHeroSClass').then(m => m.SplineHeroSClass),
+  { ssr: false }
+);
+
 export type HomepageScreenMode = 
   | 'sovereign-master'
+  | 'spline-3d'
   | 'luxury-marketplace'
   | 'acoustic-atlas'
   | 'editorial-curated' 
@@ -115,6 +121,16 @@ export default function Home() {
   if (homepageMode === 'sovereign-master' || homepageMode === 'luxury-marketplace') {
     return (
       <div className="bg-[#050505] min-h-screen text-white flex flex-col">
+        <SovereignMasterEcosystemExperience />
+      </div>
+    );
+  }
+
+  // 1.5. Render Mode: Spline 3D Scene + Spotlight S-Class
+  if (homepageMode === 'spline-3d') {
+    return (
+      <div className="bg-[#050505] min-h-screen text-white flex flex-col pt-16">
+        <SplineHeroSClass />
         <SovereignMasterEcosystemExperience />
       </div>
     );
