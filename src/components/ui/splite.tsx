@@ -1,17 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'spline-viewer': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement> & { url?: string },
-        HTMLElement
-      >;
-    }
-  }
-}
+// @ts-ignore
+const Spline = lazy(() => import('@splinetool/react-spline'));
 
 interface SplineSceneProps {
   scene: string;
@@ -19,29 +11,40 @@ interface SplineSceneProps {
 }
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
-  const [isMounted, setIsMounted] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-    if (!document.querySelector('script[src*="spline-viewer"]')) {
-      const script = document.createElement('script');
-      script.type = 'module';
-      script.src = 'https://unpkg.com/@splinetool/viewer@1.9.72/build/spline-viewer.js';
-      document.head.appendChild(script);
-    }
+    setMounted(true);
   }, []);
 
-  if (!isMounted) {
+  if (!mounted) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-black/40 backdrop-blur-sm">
-        <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="w-full h-full flex items-center justify-center bg-black/40 backdrop-blur-sm min-h-[300px]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-white/20 border-t-[#ecb613] rounded-full animate-spin" />
+          <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">Iniciando Motor 3D...</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className={`relative w-full h-full ${className || ''}`}>
-      <spline-viewer url={scene} style={{ width: '100%', height: '100%' }} />
-    </div>
+    <Suspense 
+      fallback={
+        <div className="w-full h-full flex items-center justify-center bg-black/40 backdrop-blur-sm min-h-[300px]">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-2 border-white/20 border-t-[#ecb613] rounded-full animate-spin" />
+            <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">Cargando Escena 3D...</span>
+          </div>
+        </div>
+      }
+    >
+      <Spline 
+        scene={scene}
+        className={className}
+      />
+    </Suspense>
   );
 }
+
+export default SplineScene;
