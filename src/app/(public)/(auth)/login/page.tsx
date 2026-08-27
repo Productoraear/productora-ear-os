@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Lock, KeyRound, ArrowRight, AlertCircle, Mail, Smartphone, ShieldCheck, Edit3 } from 'lucide-react';
+import { Lock, KeyRound, ArrowRight, AlertCircle, Mail, Smartphone, ShieldCheck, Edit3, UserCheck } from 'lucide-react';
+import { SignIn2 } from '@/components/ui/clean-minimal-sign-in';
 
 function OmniAuthLoginForm() {
   const searchParams = useSearchParams();
@@ -10,7 +11,7 @@ function OmniAuthLoginForm() {
 
   const [mounted, setMounted] = useState(false);
 
-  const [authRole, setAuthRole] = useState<'admin' | 'editor'>('admin');
+  const [authRole, setAuthRole] = useState<'admin' | 'editor' | 'partner'>('admin');
   const [step, setStep] = useState<1 | 2>(1);
   const [password, setPassword] = useState('');
   const [code2fa, setCode2fa] = useState('');
@@ -121,38 +122,63 @@ function OmniAuthLoginForm() {
         </div>
 
         {/* SELECTOR DE PERFIL DE ENTRADA */}
-        <div className="grid grid-cols-2 gap-2 mb-6">
+        <div className="grid grid-cols-3 gap-2 mb-6">
           <button
             type="button"
             onClick={() => { setAuthRole('admin'); setStep(1); setError(null); }}
-            className={`p-3 rounded-xl border text-left transition flex items-center gap-2 ${
+            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
               authRole === 'admin' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
             }`}
           >
-            <ShieldCheck className="w-4 h-4 text-amber-400" />
+            <ShieldCheck className="w-4 h-4 text-amber-400 mb-1" />
             <div>
-              <div className="text-xs font-bold">ADMINISTRADOR</div>
-              <div className="text-[9px] text-neutral-500">2FA + Control Total</div>
+              <div className="text-[11px] font-bold">ADMIN</div>
+              <div className="text-[8px] text-neutral-500">2FA Total</div>
             </div>
           </button>
 
           <button
             type="button"
             onClick={() => { setAuthRole('editor'); setStep(1); setError(null); }}
-            className={`p-3 rounded-xl border text-left transition flex items-center gap-2 ${
+            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
               authRole === 'editor' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
             }`}
           >
-            <Edit3 className="w-4 h-4 text-amber-400" />
+            <Edit3 className="w-4 h-4 text-amber-400 mb-1" />
             <div>
-              <div className="text-xs font-bold">EDITOR</div>
-              <div className="text-[9px] text-neutral-500">Gestión Contenidos</div>
+              <div className="text-[11px] font-bold">EDITOR</div>
+              <div className="text-[8px] text-neutral-500">Contenido</div>
+            </div>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => { setAuthRole('partner'); setError(null); }}
+            className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
+              authRole === 'partner' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
+            }`}
+          >
+            <UserCheck className="w-4 h-4 text-amber-400 mb-1" />
+            <div>
+              <div className="text-[11px] font-bold">PARTNERS</div>
+              <div className="text-[8px] text-neutral-500">Clientes</div>
             </div>
           </button>
         </div>
 
-        {/* PASO 1 */}
-        {step === 1 && (
+        {/* MODO PARTNERS / CLIENTES (CLEAN MINIMAL SIGN IN) */}
+        {authRole === 'partner' && (
+          <div className="w-full">
+            <SignIn2 
+              onSuccess={(email) => {
+                router.push('/panel');
+              }} 
+            />
+          </div>
+        )}
+
+        {/* PASO 1 (ADMIN / EDITOR) */}
+        {authRole !== 'partner' && step === 1 && (
           <form onSubmit={handleStep1} className="space-y-4">
             <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl text-xs font-mono text-neutral-400 flex items-center justify-between">
               <span className="truncate">Destino: {fromPath}</span>
