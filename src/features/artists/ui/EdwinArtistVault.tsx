@@ -279,7 +279,7 @@ export const EdwinArtistVault: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. LOS 6 SERVICIOS HISTÓRICOS & PROPUESTA DE VALOR */}
+      {/* 5. LOS 8 SERVICIOS HISTÓRICOS & PROPUESTA DE VALOR */}
       <EdwinServicesGrid />
 
       {/* 6. BONO DE 150€ EN COMPLEMENTOS */}

@@ -14,25 +14,43 @@ const CULTURE_TOPICS = [
     title: 'Orígenes del Mariachi (Siglo XVIII)',
     tagline: 'Patrimonio Cultural Inmaterial de la Humanidad (UNESCO 2011)',
     content: `
-El mariachi nace en el occidente de México (región de Cocula y Tecalitlán, Jalisco) durante el siglo XVIII, fruto del mestizaje entre instrumentos de cuerda europeos traídos en el Virreinato de la Nueva España (vihuela, guitarra de golpe, arpa, violines) y la lírica popular campesina. Con la incorporación posterior de las trompetas a mediados del siglo XX en la época de oro del cine mexicano, el mariachi adquirió su proyección sinfónica monumental.
+En el actual México, el proceso de conformación de las diversas manifestaciones del son (incluido el son jalisciense que influiría al mariachi contemporáneo) tiene al menos tres siglos de desarrollo, remontándose a la Nueva España. El mariachi nace en el occidente de México (Cocula y Tecalitlán, Jalisco) del mestizaje entre instrumentos de cuerda europeos (vihuela, guitarra de golpe, arpa, violines) y la lírica popular campesina. En la segunda mitad del siglo XVIII el término ya aparece documentado, adquiriendo con la trompeta en el siglo XX su dimensión sinfónica monumental.
     `.trim()
   },
   {
     id: 'festival',
     icon: <Landmark className="text-[#ecb613]" size={24} />,
     title: 'Festival Internacional de Guadalajara',
-    tagline: 'El epicentro mundial de la música y la charrería en Jalisco',
+    tagline: 'El Encuentro Internacional del Mariachi y la Charrería en Jalisco',
     content: `
-Celebrado anualmente en Guadalajara (México), es el mayor encuentro global donde los mejores mariachis del planeta (Mariachi Vargas de Tecalitlán, Mariachi Nuevo Tecalitlán) se congregan. Edwin Agudelo bebe directamente de esta escuela canónica, adoptando las técnicas de afinación coral, arreglos de metales y respeto a las tonalidades tradicionales en cada actuación en España y Europa.
+Guadalajara (Jalisco, México) celebra anualmente el más grande y simbólico festival en honor al género del mariachi. Es el epicentro donde se congregan las mejores agrupaciones del mundo (Mariachi Vargas de Tecalitlán, Mariachi Nuevo Tecalitlán) junto a orquestas filarmónicas. Edwin Agudelo traslada este rigor de conservatorio y pureza estilística a cada escenario y evento en España y Europa.
     `.trim()
   },
   {
     id: 'traje-charro',
     icon: <Shirt className="text-[#ecb613]" size={24} />,
-    title: 'El Traje Charro & Botonadura de Plata',
-    tagline: 'Diferencia histórica entre faena y gala imperial',
+    title: 'Trajes, Atuendos y Botonaduras de Plata',
+    tagline: 'Diferencia histórica entre traje de campo y Gran Gala',
     content: `
-El traje de charro no es un disfraz, es un atuendo de honor regulado por la Federación Mexicana de Charrería. Mientras que el traje de faena se utilizaba en el campo, el traje de Gran Gala que viste Edwin Agudelo se compone de paño fino de lana pura, chaquetilla corta ajustada, pantalón con doble botonadura de plata cincelada a mano, cinturón piteado y sombrero de fieltro con galón de oro y plata.
+Los músicos del mariachi adoptaron el traje de charro como máxima seña de identidad. Originalmente vestían mantas de algodón y sombreros de paja y palma en el campo, pero evolucionaron al traje del jinete vaquero de gala. El traje oficial de Gran Gala que viste Edwin Agudelo se compone de chaqueta corta entallada, pantalones con doble botonadura de plata cincelada a mano, cinturón piteado y sombrero charro de fieltro fino con galón bordado.
+    `.trim()
+  },
+  {
+    id: 'guia-contratacion',
+    icon: <Shield className="text-[#ecb613]" size={24} />,
+    title: 'Guía para Contratar un Mariachi de Élite',
+    tagline: 'Formaciones de 5 a 13 Músicos · Precios Claros Sin Sorpresas',
+    content: `
+¿Cuántas personas conforman un mariachi profesional? En nuestro caso llevamos como base la figura del mariachi moderno: desde solista y cuarteto hasta formaciones completas de 5 a 13 maestros de conservatorio (2-4 violines, 2 trompetas, vihuela, guitarrón y voz tenor). El precio es transparente y cerrado, garantizando puntualidad milimétrica, trajes impecables y sonido de alta fidelidad 12 W/pax sin distorsión.
+    `.trim()
+  },
+  {
+    id: 'diferencia-charro',
+    icon: <Music className="text-[#ecb613]" size={24} />,
+    title: '¿Cuál es la Diferencia entre Charros y Mariachis?',
+    tagline: 'Dos símbolos nacionales de gallardía y música',
+    content: `
+La regla de oro para dirigirse a un Charro es no confundirlo con un Mariachi. La charrería es el deporte y arte ecuestre tradicional de México (gallardía, doma y lazo nacidos en las haciendas coloniales), mientras que el mariachi es la manifestación musical y poética que adoptó el traje de charro de gala como estandarte ante el mundo. Edwin Agudelo rinde homenaje a ambos en sus espectáculos cantando a caballo.
     `.trim()
   }
 ];
@@ -76,8 +94,8 @@ export const EdwinMariachiCulture: React.FC = () => {
           </p>
         </div>
 
-        {/* 3 TARJETAS DE CULTURA */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* 5 TARJETAS DE CULTURA & DIVULGACIÓN HISTÓRICA */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {CULTURE_TOPICS.map((topic) => (
             <div
               key={topic.id}
