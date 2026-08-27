@@ -122,6 +122,40 @@ const HISTORICAL_SERVICES: HistoricalService[] = [
     ],
     repertoire: 'Quince Primaveras, De Niña a Mujer, Mi Niña Bonita, Danzón N° 2',
     quoteSlug: 'quince-anos'
+  },
+  {
+    id: 'serenata-virtual',
+    title: 'Serenata Virtual & Streaming HD',
+    badge: 'Conexión Sin Fronteras',
+    priceTag: 'Desde 120 € · En Directo 100% Interactivo',
+    icon: <Video className="text-[#ecb613]" size={28} />,
+    subtitle: 'Videollamada en directo con el homenajeado en cualquier parte del mundo',
+    description: 'Un detalle especial para la persona que quieres, amas y admiras desde cualquier rincón del planeta. Edwin Agudelo conecta en directo vía Zoom, Meet o WhatsApp interpretando las canciones más emotivas con dedicatoria personalizada.',
+    highlights: [
+      'Conexión privada en alta fidelidad de audio y vídeo HD',
+      'Interpretación de 3 a 5 canciones con dedicatoria personalizada',
+      'Participación de familiares conectados desde diferentes países',
+      'Grabación íntegra de la sesión en MP4 para recuerdo eterno'
+    ],
+    repertoire: 'Las Mañanitas, Cielito Lindo, Si Nos Dejan, Motivos, El Rey',
+    quoteSlug: 'serenata-virtual'
+  },
+  {
+    id: 'cancion-personalizada',
+    title: 'Canción Inédita Personalizada',
+    badge: 'Obra de Autor Registrada',
+    priceTag: '150 € · Grabación en Estudio',
+    icon: <Heart className="text-[#ecb613]" size={28} />,
+    subtitle: 'Composición musical exclusiva con los nombres y anécdotas de tu historia',
+    description: 'Un regalo diferente y exclusivo que llega directo al corazón. Edwin Agudelo escribe e interpreta una canción única basada en vuestra historia de amor, gratitud o superación, grabada profesionalmente con arreglos de conservatorio.',
+    highlights: [
+      'Entrevista previa para capturar anécdotas, nombres y fechas clave',
+      'Composición y producción en estudio con masterización profesional',
+      'Entrega de audio WAV/MP3 de alta resolución y letra en pergamino digital',
+      '100% canjeable como complemento en eventos presenciales'
+    ],
+    repertoire: 'Composición Original a Medida · Arreglos de Tenor y Cuerdas',
+    quoteSlug: 'cancion-personalizada'
   }
 ];
 
