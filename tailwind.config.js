@@ -52,6 +52,14 @@ module.exports = {
         "gold-dark": "#b38805",
         "gold-glow": "rgba(236, 182, 19, 0.25)",
 
+        // 🎬 CINEMATIC MONOCHROME SYSTEM (SQUARESPACE ULTRA-LUXURY SPEC)
+        obsidian: "#000000",
+        paper: "#ffffff",
+        charcoal: "#2f2f2f",
+        ash: "#898989",
+        fog: "#dddddd",
+        slate: "#999999",
+
         // Stitch Semantic Tokens (Additive)
         "on-surface-variant": "#d0c5af",
         "surface-bright": "#3a3939",
