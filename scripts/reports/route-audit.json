@@ -1,0 +1,26 @@
+{
+  "/eventos": {
+    "route": "/eventos",
+    "status": 200
+  },
+  "/ocasiones/ayuntamientos": {
+    "route": "/ocasiones/ayuntamientos",
+    "status": 200
+  },
+  "/artistas/edwin-agudelo": {
+    "route": "/artistas/edwin-agudelo",
+    "status": 200
+  },
+  "/catering-brasas": {
+    "route": "/catering-brasas",
+    "status": 404
+  },
+  "/alquiler-equipos-sonido-audiovisuales": {
+    "route": "/alquiler-equipos-sonido-audiovisuales",
+    "status": 200
+  },
+  "/admin/nexus": {
+    "route": "/admin/nexus",
+    "status": 307
+  }
+}

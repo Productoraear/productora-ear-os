@@ -1,0 +1,26 @@
+{
+  "/eventos": {
+    "mobileOverflow": false,
+    "desktopOverflow": false
+  },
+  "/ocasiones/ayuntamientos": {
+    "mobileOverflow": false,
+    "desktopOverflow": false
+  },
+  "/artistas/edwin-agudelo": {
+    "mobileOverflow": false,
+    "desktopOverflow": false
+  },
+  "/catering-brasas": {
+    "mobileOverflow": false,
+    "desktopOverflow": false
+  },
+  "/alquiler-equipos-sonido-audiovisuales": {
+    "mobileOverflow": false,
+    "desktopOverflow": false
+  },
+  "/admin/nexus": {
+    "mobileOverflow": false,
+    "desktopOverflow": false
+  }
+}
