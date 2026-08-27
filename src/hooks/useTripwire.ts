@@ -27,38 +27,57 @@ export const useTripwire = () => {
         if (initialized.current) return;
         initialized.current = true;
 
-        // Listeners para reactividad en tiempo real (Dashboard)
-        const unsubLeads = onSnapshot(
-            query(collection(db, "ear_leads"), limit(1)), 
-            (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === "added" && !snapshot.metadata.hasPendingWrites) {
-                        igniteTripwire("lead", change.doc.data());
-                    }
-                });
-            },
-            (err) => {
-                console.warn('⚠️ [useTripwire] Leads fallback activo:', err.message);
-            }
-        );
+        // Solo activar listeners en tiempo real si existe sesión autenticada o credenciales
+        let unsubLeads = () => {};
+        let unsubOrders = () => {};
 
-        const unsubOrders = onSnapshot(
-            query(collection(db, "ear_orders"), limit(1)), 
-            (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === "added" && !snapshot.metadata.hasPendingWrites) {
-                        igniteTripwire("order", change.doc.data());
+        try {
+            unsubLeads = onSnapshot(
+                query(collection(db, "ear_leads"), limit(1)), 
+                (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === "added" && !snapshot.metadata.hasPendingWrites) {
+                            igniteTripwire("lead", change.doc.data());
+                        }
+                    });
+                },
+                (err) => {
+                    // Failsafe silencioso para sesiones públicas sin permisos de lectura en colecciones privadas
+                    if (process.env.NODE_ENV === 'development' && err.code !== 'permission-denied') {
+                        console.debug('[useTripwire] Leads listener status:', err.code);
                     }
-                });
-            },
-            (err) => {
-                console.warn('⚠️ [useTripwire] Orders fallback activo:', err.message);
-            }
-        );
+                }
+            );
+        } catch (e) {
+            // Failsafe ante fallo de inicialización
+        }
+
+        try {
+            unsubOrders = onSnapshot(
+                query(collection(db, "ear_orders"), limit(1)), 
+                (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === "added" && !snapshot.metadata.hasPendingWrites) {
+                            igniteTripwire("order", change.doc.data());
+                        }
+                    });
+                },
+                (err) => {
+                    // Failsafe silencioso para sesiones públicas sin permisos de lectura en colecciones privadas
+                    if (process.env.NODE_ENV === 'development' && err.code !== 'permission-denied') {
+                        console.debug('[useTripwire] Orders listener status:', err.code);
+                    }
+                }
+            );
+        } catch (e) {
+            // Failsafe ante fallo de inicialización
+        }
 
         return () => {
-            unsubLeads();
-            unsubOrders();
+            try {
+                unsubLeads();
+                unsubOrders();
+            } catch (e) {}
         };
     }, [igniteTripwire]);
 

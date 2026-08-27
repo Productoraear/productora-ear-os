@@ -84,7 +84,7 @@ export const FinancialPanel = () => {
                 pendingOrders: pending
             });
         }, (error) => {
-            console.error("Financial Telemetry Error:", error);
+            console.warn("⚠️ [FinancialPanel] Firestore fallback activo:", error.message);
         });
 
         return () => unsubscribe();

@@ -68,7 +68,7 @@ export const VampirePanel = () => {
             setIntelFeed(data);
             setLoading(false);
         }, (err) => {
-            console.error("Vampire Synapse Error:", err);
+            console.warn("⚠️ [VampirePanel] Firestore fallback activo:", err.message);
             setLoading(false);
         });
 
