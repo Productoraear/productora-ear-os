@@ -83,7 +83,7 @@ export class SClassPricingEngine {
       logisticCost,
       urgencyMultiplier: multiplier,
       finalTotal: parseFloat(finalTotal.toFixed(2)),
-      depositAmount: 0.50, // Garantía unitaria de prueba de campo (50 céntimos)
+      depositAmount: 100, // Depósito Stripe S-Class reembolsable con Price-Lock SHA-256 (100 €)
       split,
       technicalSpecs,
       sha256Token
