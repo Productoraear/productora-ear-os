@@ -2,6 +2,17 @@
 
 import { useEffect, useState } from 'react';
 
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'spline-viewer': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement> & { url?: string },
+        HTMLElement
+      >;
+    }
+  }
+}
+
 interface SplineSceneProps {
   scene: string;
   className?: string;
@@ -30,7 +41,6 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
 
   return (
     <div className={`relative w-full h-full ${className || ''}`}>
-      {/* @ts-ignore custom element */}
       <spline-viewer url={scene} style={{ width: '100%', height: '100%' }} />
     </div>
   );
