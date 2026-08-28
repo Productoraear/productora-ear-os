@@ -145,14 +145,14 @@ const GlassCard: React.FC<{ title: string, icon: any, children: React.ReactNode,
     <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`bg-white/5 border border-white/10 rounded-[2rem] p-6 backdrop-blur-xl hover:border-white/20 transition-all ${className}`}
+        className={`bg-[#081226]/80 border border-[#AAD6CD]/20 rounded-[2rem] p-6 backdrop-blur-xl hover:border-[#AAD6CD]/50 transition-all shadow-[0_10px_35px_rgba(8,18,38,0.8)] ${className}`}
     >
         <div className="flex items-center justify-between mb-6">
-            <h3 className="text-sm font-black uppercase tracking-widest text-gray-400 flex items-center gap-3">
-                <Icon size={18} className="text-ear-gold" />
+            <h3 className="text-sm font-black uppercase tracking-widest text-zinc-300 flex items-center gap-3">
+                <Icon size={18} className="text-[#AAD6CD]" />
                 {title}
             </h3>
-            <ArrowUpRight size={16} className="text-gray-600" />
+            <ArrowUpRight size={16} className="text-[#AAD6CD]/50" />
         </div>
         <div className="h-full">
             {children}
@@ -161,17 +161,17 @@ const GlassCard: React.FC<{ title: string, icon: any, children: React.ReactNode,
 );
 
 const RoleSelector: React.FC<{ active: Role, onSelect: (r: Role) => void }> = ({ active, onSelect }) => (
-    <div className="flex flex-wrap gap-2 mb-12 p-2 bg-black/40 border border-white/5 rounded-3xl backdrop-blur-3xl overflow-x-auto">
+    <div className="flex flex-wrap gap-2 mb-12 p-2 bg-[#081226]/90 border border-[#AAD6CD]/20 rounded-3xl backdrop-blur-3xl overflow-x-auto shadow-[0_4px_25px_rgba(8,18,38,0.8)]">
         {ROLES.map((role) => (
             <button
                 key={role.id}
                 onClick={() => onSelect(role.id)}
-                className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all font-black uppercase tracking-widest text-[10px] whitespace-nowrap ${active === role.id
-                    ? 'bg-ear-gold text-black scale-105 shadow-[0_0_20px_rgba(218,165,32,0.3)]'
-                    : 'text-gray-500 hover:text-white hover:bg-white/5'
+                className={`flex items-center gap-3 px-6 py-3 rounded-2xl transition-all font-black uppercase tracking-widest text-[10px] whitespace-nowrap cursor-pointer ${active === role.id
+                    ? 'bg-[#258DCD] text-white scale-105 shadow-[0_0_20px_rgba(37,141,205,0.45)] border border-[#258DCD]'
+                    : 'text-zinc-400 hover:text-[#AAD6CD] hover:bg-[#0c1a36]'
                     }`}
             >
-                <role.icon size={14} />
+                <role.icon size={14} className={active === role.id ? 'text-white' : 'text-[#AAD6CD]/70'} />
                 {role.label}
             </button>
         ))}
@@ -217,25 +217,35 @@ export const VimumeDashboard: React.FC = () => {
         <div className="w-full space-y-6">
             <div className="min-h-screen bg-[#050505] pt-6 pb-20 px-2 md:px-6">
                 <div className="max-w-[1600px] mx-auto">
-                    {/* HEADER STATUS */}
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
+                    {/* HEADER STATUS CON LAS 3 ESFERAS DE LUZ CORPORATIVAS */}
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6 p-6 rounded-3xl bg-gradient-to-r from-[#081226] via-[#040914] to-[#081226] border border-[#AAD6CD]/25 shadow-[0_10px_40px_rgba(8,18,38,0.9)]">
                         <div>
-                            <div className="flex items-center gap-3 mb-2">
-                                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                <span className="text-[10px] font-black uppercase tracking-[0.4em] text-green-500">ASTRA VIMUME INTELLIGENCE Online</span>
+                            <div className="flex flex-wrap items-center gap-4 mb-2">
+                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#AAD6CD]/10 border border-[#AAD6CD]/30 text-[#AAD6CD] text-[9px] font-mono font-bold uppercase">
+                                    <span className="w-2 h-2 rounded-full bg-[#AAD6CD] animate-pulse shadow-[0_0_8px_#AAD6CD]" />
+                                    <span>Sistema OK</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#258DCD]/10 border border-[#258DCD]/30 text-[#258DCD] text-[9px] font-mono font-bold uppercase">
+                                    <span className="w-2 h-2 rounded-full bg-[#258DCD] animate-ping shadow-[0_0_8px_#258DCD]" />
+                                    <span>Proceso Activo</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FF455B]/10 border border-[#FF455B]/30 text-[#FF455B] text-[9px] font-mono font-bold uppercase">
+                                    <span className="w-2 h-2 rounded-full bg-[#FF455B] shadow-[0_0_8px_#FF455B]" />
+                                    <span>Telemetría Crítica</span>
+                                </div>
                             </div>
-                            <h1 className="text-5xl font-display font-black uppercase italic tracking-tighter">
-                                DASHBOARD <span className="text-ear-gold">ASTRA</span>
+                            <h1 className="text-4xl sm:text-5xl font-display font-black uppercase italic tracking-tighter text-white">
+                                DASHBOARD <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#AAD6CD] to-[#258DCD]">NEXUS ASTRA</span>
                             </h1>
                         </div>
 
                         <div className="flex items-center gap-4">
                             <div className="text-right">
-                                <p className="text-[10px] text-gray-500 uppercase font-black">Escalado 2026 Ready</p>
-                                <p className="text-xs font-bold font-mono">NODE_ASTRA_V2.5</p>
+                                <p className="text-[10px] text-[#AAD6CD]/70 uppercase font-black tracking-widest">Escalado 2026 Ready</p>
+                                <p className="text-xs font-bold font-mono text-white">NODE_ASTRA_DIAMOND_V3</p>
                             </div>
-                            <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center">
-                                <Settings size={20} className="text-ear-gold" />
+                            <div className="w-12 h-12 bg-[#040914] border border-[#AAD6CD]/30 rounded-2xl flex items-center justify-center text-[#AAD6CD] shadow-[0_0_15px_rgba(170,214,205,0.2)]">
+                                <Settings size={20} />
                             </div>
                         </div>
                     </div>

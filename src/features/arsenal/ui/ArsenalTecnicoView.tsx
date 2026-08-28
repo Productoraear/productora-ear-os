@@ -162,18 +162,18 @@ export const ArsenalTecnicoView: React.FC = () => {
         {/* 2. SEARCH & CONTROLS */}
         <div className="max-w-2xl mx-auto pt-2">
           <div className="relative flex items-center">
-            <Search className="absolute left-4 text-white/40" size={18} />
+            <Search className="absolute left-4 text-[#AAD6CD]/60" size={18} />
             <input 
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar altavoces, pantallas 85, simuladores F1, fotomatón 360, proyectores..."
-              className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-[#0a0a0f] border border-white/10 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#ecb613] transition-all font-mono"
+              className="w-full pl-11 pr-4 py-3.5 rounded-2xl bg-[#081226] border border-[#AAD6CD]/20 text-white placeholder-white/40 text-sm focus:outline-none focus:border-[#258DCD] focus:ring-1 focus:ring-[#258DCD] transition-all font-mono shadow-[0_4px_20px_rgba(8,18,38,0.6)]"
             />
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery('')}
-                className="absolute right-4 text-xs text-white/40 hover:text-white"
+                className="absolute right-4 text-xs text-[#AAD6CD]/70 hover:text-white"
               >
                 Limpiar
               </button>
@@ -191,8 +191,8 @@ export const ArsenalTecnicoView: React.FC = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer ${
                   selectedCategory === cat
-                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 font-bold'
-                    : 'bg-[#0e0e14] text-white/60 hover:text-white hover:bg-white/5 border border-white/5'
+                    ? 'bg-[#258DCD] text-white shadow-[0_0_20px_rgba(37,141,205,0.4)] border border-[#258DCD]'
+                    : 'bg-[#081226] text-white/70 hover:text-[#AAD6CD] hover:bg-[#0c1a36] border border-[#AAD6CD]/20'
                 }`}
               >
                 {cat}
@@ -203,14 +203,14 @@ export const ArsenalTecnicoView: React.FC = () => {
           {/* Trigger Botón Plano Técnico */}
           <button
             onClick={() => setIsDrawerOpen(true)}
-            className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-[#0e0e14] border border-[#ecb613]/30 hover:border-[#ecb613] text-white transition-all cursor-pointer shrink-0"
+            className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-[#081226] border border-[#AAD6CD]/30 hover:border-[#258DCD] hover:shadow-[0_0_20px_rgba(37,141,205,0.25)] text-white transition-all cursor-pointer shrink-0"
           >
-            <div className="p-1.5 rounded-lg bg-[#ecb613]/10 text-[#ecb613]">
+            <div className="p-1.5 rounded-lg bg-[#258DCD]/15 text-[#258DCD]">
               <Layers size={16} />
             </div>
             <div className="text-left font-mono">
               <span className="text-[10px] text-white/50 uppercase tracking-widest block">Plano Técnico</span>
-              <span className="text-xs font-black text-[#ecb613]">
+              <span className="text-xs font-black text-[#AAD6CD]">
                 {planoTecnico.length} {planoTecnico.length === 1 ? 'Módulo' : 'Módulos'} ({totalEstimatedBudget}€)
               </span>
             </div>
@@ -224,7 +224,7 @@ export const ArsenalTecnicoView: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 md:px-8 pt-4">
         {filteredItems.length === 0 ? (
           <div className="py-20 text-center space-y-4">
-            <Box size={48} className="text-white/20 mx-auto" />
+            <Box size={48} className="text-[#AAD6CD]/20 mx-auto" />
             <h3 className="text-lg font-bold text-white uppercase font-syne">No se encontraron equipos</h3>
             <p className="text-sm text-white/40 max-w-md mx-auto">
               No hay coincidencias para &quot;{searchQuery}&quot;. Prueba con otro término o consulta disponibilidad personalizada con nuestra centralita técnica.
@@ -238,7 +238,7 @@ export const ArsenalTecnicoView: React.FC = () => {
                 <div
                   key={item.id}
                   onClick={() => setActiveItemModal(item)}
-                  className="rounded-3xl bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between overflow-hidden group shadow-xl cursor-pointer"
+                  className="rounded-3xl bg-[#081226] border border-[#AAD6CD]/20 hover:border-[#AAD6CD]/60 hover:shadow-[0_10px_40px_-10px_rgba(8,18,38,0.9),0_0_25px_-5px_rgba(37,141,205,0.3)] transition-all duration-300 flex flex-col justify-between overflow-hidden group cursor-pointer"
                 >
                   <div>
                     {/* Image Preview */}
@@ -248,21 +248,21 @@ export const ArsenalTecnicoView: React.FC = () => {
                         alt={item.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-black/20" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#081226] via-transparent to-black/20" />
                       
-                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#ecb613] text-[9px] font-black uppercase tracking-wider font-mono border border-white/10">
+                      <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-[#081226]/90 backdrop-blur-md text-[#AAD6CD] text-[9px] font-black uppercase tracking-wider font-mono border border-[#AAD6CD]/30 shadow-sm">
                         {item.category}
                       </span>
 
-                      <span className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-[9px] font-mono font-semibold">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="absolute bottom-3 left-3 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#081226]/90 border border-[#AAD6CD]/40 text-[#AAD6CD] text-[9px] font-mono font-semibold backdrop-blur-md">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#AAD6CD] animate-pulse" />
                         Stock Madrid
                       </span>
                     </div>
 
                     {/* Card Content */}
                     <div className="p-5 space-y-3">
-                      <h3 className="text-sm font-black uppercase tracking-tight text-white font-syne group-hover:text-[#ecb613] transition-colors leading-snug">
+                      <h3 className="text-sm font-black uppercase tracking-tight text-white font-syne group-hover:text-[#AAD6CD] transition-colors leading-snug">
                         {item.name}
                       </h3>
                       
@@ -270,15 +270,15 @@ export const ArsenalTecnicoView: React.FC = () => {
                         {item.description}
                       </p>
 
-                      <div className="pt-2 border-t border-white/5 flex items-baseline justify-between">
+                      <div className="pt-2 border-t border-[#AAD6CD]/10 flex items-baseline justify-between">
                         <span className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Inversión Base</span>
-                        <span className="text-base font-black text-[#ecb613] font-mono">{item.priceDisplay}</span>
+                        <span className="text-base font-black text-[#AAD6CD] font-mono">{item.priceDisplay}</span>
                       </div>
 
                       {/* Specs Tags */}
                       <div className="flex flex-wrap gap-1.5 pt-1">
                         {item.specs.slice(0, 2).map((spec, i) => (
-                          <span key={i} className="text-[9px] font-mono text-white/50 bg-white/5 px-2 py-0.5 rounded border border-white/5">
+                          <span key={i} className="text-[9px] font-mono text-[#AAD6CD]/80 bg-[#040914] px-2 py-0.5 rounded border border-[#AAD6CD]/15">
                             {spec}
                           </span>
                         ))}
@@ -292,8 +292,8 @@ export const ArsenalTecnicoView: React.FC = () => {
                       onClick={(e) => handleAddToPlano(item, e)}
                       className={`flex-1 py-3 px-3 rounded-xl font-black text-[11px] uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                         inPlano
-                          ? 'bg-emerald-950/60 border border-emerald-500/40 text-emerald-400'
-                          : 'bg-white/5 hover:bg-[#ecb613] hover:text-black text-white border border-white/5'
+                          ? 'bg-[#AAD6CD]/15 border border-[#AAD6CD]/50 text-[#AAD6CD] shadow-[0_0_15px_rgba(170,214,205,0.2)]'
+                          : 'bg-[#258DCD] hover:bg-[#1e7ebd] text-white shadow-[0_0_20px_rgba(37,141,205,0.35)]'
                       }`}
                     >
                       {inPlano ? (
@@ -312,7 +312,7 @@ export const ArsenalTecnicoView: React.FC = () => {
                         e.stopPropagation();
                         setActiveItemModal(item);
                       }}
-                      className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/60 hover:text-white border border-white/5 cursor-pointer"
+                      className="p-3 rounded-xl bg-[#040914] hover:bg-[#0c1a36] text-[#AAD6CD] hover:text-white border border-[#AAD6CD]/20 cursor-pointer"
                       title="Ver Ficha y Condiciones"
                     >
                       <Info size={14} />
@@ -411,11 +411,11 @@ export const ArsenalTecnicoView: React.FC = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.95, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-2xl bg-[#0e0e14] border border-white/15 rounded-3xl overflow-hidden shadow-2xl space-y-6 p-6 sm:p-8 max-h-[90vh] overflow-y-auto"
+                className="w-full max-w-2xl bg-gradient-to-b from-[#081226] to-[#040914] border border-[#AAD6CD]/30 rounded-3xl overflow-hidden shadow-[0_20px_60px_rgba(8,18,38,0.95)] space-y-6 p-6 sm:p-8 max-h-[90vh] overflow-y-auto"
               >
-                <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+                <div className="flex items-start justify-between gap-4 border-b border-[#AAD6CD]/15 pb-4">
                   <div>
-                    <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">
+                    <span className="text-[10px] font-mono text-[#AAD6CD] uppercase tracking-widest font-bold">
                       {activeItemModal.category}
                     </span>
                     <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-syne">
@@ -424,45 +424,45 @@ export const ArsenalTecnicoView: React.FC = () => {
                   </div>
                   <button
                     onClick={() => setActiveItemModal(null)}
-                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/60 hover:text-white"
+                    className="p-2 rounded-xl bg-white/5 hover:bg-[#0c1a36] text-[#AAD6CD] hover:text-white border border-[#AAD6CD]/20"
                   >
                     ✕
                   </button>
                 </div>
 
-                <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black/60 relative">
+                <div className="aspect-[16/9] rounded-2xl overflow-hidden bg-black/60 relative border border-[#AAD6CD]/15">
                   <img 
                     src={activeItemModal.image} 
                     alt={activeItemModal.name}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md font-mono text-sm font-black text-[#ecb613] border border-white/10">
+                  <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-[#081226]/90 backdrop-blur-md font-mono text-sm font-black text-[#AAD6CD] border border-[#AAD6CD]/30">
                     {activeItemModal.priceDisplay}
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <h4 className="text-xs font-mono uppercase text-white/40 tracking-wider mb-1">Descripción del Activo</h4>
+                    <h4 className="text-xs font-mono uppercase text-[#AAD6CD]/60 tracking-wider mb-1">Descripción del Activo</h4>
                     <p className="text-sm text-white/80 leading-relaxed">
                       {activeItemModal.description}
                     </p>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-mono uppercase text-white/40 tracking-wider mb-2">Especificaciones Técnicas</h4>
+                    <h4 className="text-xs font-mono uppercase text-[#AAD6CD]/60 tracking-wider mb-2">Especificaciones Técnicas</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {activeItemModal.specs.map((spec, i) => (
-                        <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-black/40 border border-white/5 text-xs text-white/70">
-                          <CheckCircle2 size={14} className="text-[#ecb613] shrink-0" />
+                        <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#040914] border border-[#AAD6CD]/15 text-xs text-white/70">
+                          <CheckCircle2 size={14} className="text-[#AAD6CD] shrink-0" />
                           <span>{spec}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-1">
-                    <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613]">
+                  <div className="p-4 rounded-2xl bg-[#040914] border border-[#AAD6CD]/15 space-y-1">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#AAD6CD]">
                       <ShieldCheck size={14} />
                       <span className="font-bold">Condiciones de Servicio Incluidas</span>
                     </div>
@@ -472,20 +472,20 @@ export const ArsenalTecnicoView: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-white/10">
+                <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-[#AAD6CD]/15">
                   <button
                     onClick={() => {
                       handleAddToPlano(activeItemModal);
                       setActiveItemModal(null);
                     }}
-                    className="flex-1 py-3.5 bg-[#ecb613] hover:bg-[#d9a40e] text-black font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer font-syne"
+                    className="flex-1 py-3.5 bg-[#258DCD] hover:bg-[#1e7ebd] text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer font-syne shadow-[0_0_20px_rgba(37,141,205,0.4)]"
                   >
                     <Plus size={16} />
                     <span>Añadir a mi Plano Técnico</span>
                   </button>
                   <button
                     onClick={() => setActiveItemModal(null)}
-                    className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-mono text-xs uppercase tracking-wider rounded-xl transition-all"
+                    className="px-6 py-3.5 bg-[#040914] hover:bg-[#0c1a36] text-[#AAD6CD] font-mono text-xs uppercase tracking-wider rounded-xl transition-all border border-[#AAD6CD]/20"
                   >
                     Cerrar
                   </button>
@@ -516,26 +516,26 @@ export const ArsenalTecnicoView: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-full max-w-md bg-[#0a0a0f] border-l border-white/10 z-50 p-6 md:p-8 flex flex-col justify-between shadow-2xl overflow-y-auto"
+              className="fixed top-0 right-0 h-full w-full max-w-md bg-gradient-to-b from-[#081226] via-[#081226] to-[#040914] border-l border-[#AAD6CD]/25 z-50 p-6 md:p-8 flex flex-col justify-between shadow-2xl overflow-y-auto"
             >
               <div className="space-y-6">
                 
                 {/* Header */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div className="flex items-center justify-between border-b border-[#AAD6CD]/15 pb-4">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-xl bg-[#ecb613]/10 text-[#ecb613]">
+                    <div className="p-2 rounded-xl bg-[#258DCD]/15 text-[#258DCD]">
                       <Layers size={20} />
                     </div>
                     <div>
                       <h3 className="text-xl font-black uppercase text-white font-syne">Plano Técnico</h3>
-                      <p className="text-[10px] font-mono text-white/50 uppercase tracking-widest">
+                      <p className="text-[10px] font-mono text-[#AAD6CD]/70 uppercase tracking-widest">
                         Despliegue de Infraestructura Crítica
                       </p>
                     </div>
                   </div>
                   <button 
                     onClick={() => setIsDrawerOpen(false)}
-                    className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/60 hover:text-white cursor-pointer"
+                    className="p-2 rounded-xl bg-[#040914] hover:bg-[#0c1a36] text-[#AAD6CD] hover:text-white border border-[#AAD6CD]/20 cursor-pointer"
                   >
                     ✕
                   </button>
@@ -544,8 +544,8 @@ export const ArsenalTecnicoView: React.FC = () => {
                 {/* Items List */}
                 {planoTecnico.length === 0 ? (
                   <div className="py-16 text-center space-y-3">
-                    <Box size={40} className="text-white/20 mx-auto" />
-                    <p className="text-sm font-mono text-white/40 uppercase tracking-wider">
+                    <Box size={40} className="text-[#AAD6CD]/20 mx-auto" />
+                    <p className="text-sm font-mono text-[#AAD6CD]/50 uppercase tracking-wider">
                       Plano en Blanco
                     </p>
                     <p className="text-xs text-white/30 max-w-xs mx-auto">
@@ -557,19 +557,19 @@ export const ArsenalTecnicoView: React.FC = () => {
                     {planoTecnico.map(({ item, quantity }) => (
                       <div 
                         key={item.id}
-                        className="p-4 rounded-2xl bg-[#0e0e14] border border-white/5 flex items-center justify-between gap-3"
+                        className="p-4 rounded-2xl bg-[#040914] border border-[#AAD6CD]/15 flex items-center justify-between gap-3"
                       >
                         <div className="space-y-1">
                           <h4 className="text-xs font-bold text-white uppercase leading-tight">
                             {item.name}
                           </h4>
-                          <span className="text-[10px] font-mono text-[#ecb613] block">
+                          <span className="text-[10px] font-mono text-[#AAD6CD] block">
                             {item.priceDisplay} ({item.priceNumeric * quantity}€)
                           </span>
                         </div>
 
                         <div className="flex items-center gap-2 shrink-0">
-                          <div className="flex items-center bg-black/60 border border-white/10 rounded-lg p-1">
+                          <div className="flex items-center bg-[#081226] border border-[#AAD6CD]/20 rounded-lg p-1">
                             <button
                               onClick={() => handleUpdateQuantity(item.id, -1)}
                               className="px-2 py-0.5 text-xs text-white/60 hover:text-white"
@@ -603,10 +603,10 @@ export const ArsenalTecnicoView: React.FC = () => {
 
               {/* Total & Action Footer */}
               {planoTecnico.length > 0 && (
-                <div className="space-y-4 pt-6 border-t border-white/10">
+                <div className="space-y-4 pt-6 border-t border-[#AAD6CD]/15">
                   <div className="flex items-baseline justify-between font-mono">
                     <span className="text-xs uppercase tracking-widest text-white/50">Total Estimado Base</span>
-                    <span className="text-2xl font-black text-[#ecb613] font-syne">{totalEstimatedBudget}€</span>
+                    <span className="text-2xl font-black text-[#AAD6CD] font-syne">{totalEstimatedBudget}€</span>
                   </div>
 
                   <a

@@ -156,30 +156,30 @@ export default function StripeSmartLockCta({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.35 }}
-          className="p-8 rounded-3xl bg-gradient-to-br from-[#09090d] via-[#0a0a0f] to-amber-950/10 border border-[#ecb613]/30 shadow-2xl shadow-amber-950/20 space-y-6"
+          className="p-8 rounded-3xl bg-gradient-to-b from-[#081226] via-[#040914] to-[#000000] border border-[#AAD6CD]/30 shadow-2xl shadow-black/80 space-y-6"
         >
           {/* ── STATE: BLUR_LOCKED ── */}
           {state === 'BLUR_LOCKED' && (
             <div className="text-center space-y-5">
-              <div className="w-14 h-14 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] flex items-center justify-center mx-auto">
+              <div className="w-14 h-14 rounded-2xl bg-[#258DCD]/15 border border-[#258DCD]/30 text-[#AAD6CD] flex items-center justify-center mx-auto shadow-[0_0_20px_rgba(37,141,205,0.25)]">
                 <Lock size={26} />
               </div>
               <div>
-                <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest block mb-1">
+                <span className="text-[10px] font-mono text-[#AAD6CD] font-bold uppercase tracking-widest block mb-1">
                   Price-Lock SHA-256 & Dossier Técnico Cifrado
                 </span>
                 <h3 className="text-2xl font-black font-syne text-white">
                   Desbloquea el Rider Completo y Precios Exactos
                 </h3>
-                <p className="text-sm text-zinc-400 font-light mt-2 max-w-md mx-auto">
-                  Bloquea tu fecha durante 72h con un micro-compromiso de <strong className="text-[#ecb613]">10 €</strong> (descontable de la factura final o convertible en saldo EAR Wallet).
+                <p className="text-sm text-zinc-300 font-light mt-2 max-w-md mx-auto">
+                  Bloquea tu fecha durante 72h con un micro-compromiso de <strong className="text-[#AAD6CD]">10 €</strong> (descontable de la factura final o convertible en saldo EAR Wallet).
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button
                   onClick={handleStartUnlock}
-                  className="px-8 py-4 bg-[#ecb613] hover:bg-amber-400 text-black font-mono text-sm font-black uppercase rounded-2xl transition-all shadow-xl shadow-amber-950/40 flex items-center gap-2 hover:scale-105"
+                  className="px-8 py-4 bg-[#258DCD] hover:bg-[#1e7ebd] text-white font-mono text-sm font-black uppercase rounded-2xl transition-all shadow-[0_0_25px_rgba(37,141,205,0.4)] flex items-center gap-2 hover:scale-105"
                 >
                   <CreditCard size={16} />
                   <span>Desbloquear por 10 €</span>
@@ -187,10 +187,10 @@ export default function StripeSmartLockCta({
                 </button>
               </div>
 
-              <div className="flex items-center gap-4 text-[10px] font-mono text-zinc-500 justify-center">
-                <span className="flex items-center gap-1"><ShieldCheck size={12} className="text-emerald-400" /> 100% reembolsable</span>
-                <span className="flex items-center gap-1"><Clock size={12} className="text-blue-400" /> Price-Lock 72h</span>
-                <span className="flex items-center gap-1"><Wallet size={12} className="text-amber-400" /> Convertible a Wallet</span>
+              <div className="flex items-center gap-4 text-[10px] font-mono text-zinc-400 justify-center">
+                <span className="flex items-center gap-1"><ShieldCheck size={12} className="text-[#AAD6CD]" /> 100% reembolsable</span>
+                <span className="flex items-center gap-1"><Clock size={12} className="text-[#258DCD]" /> Price-Lock 72h</span>
+                <span className="flex items-center gap-1"><Wallet size={12} className="text-[#AAD6CD]" /> Convertible a Wallet</span>
               </div>
             </div>
           )}
@@ -199,7 +199,7 @@ export default function StripeSmartLockCta({
           {state === 'CAPTURE_CONTACT' && (
             <form onSubmit={handleContactSubmit} className="space-y-5">
               <div className="text-center">
-                <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest block">
+                <span className="text-[10px] font-mono text-[#AAD6CD] font-bold uppercase tracking-widest block">
                   Paso 1 de 2: Tu Contacto Prioritario
                 </span>
                 <h3 className="text-xl font-bold font-syne text-white mt-1">
@@ -214,7 +214,7 @@ export default function StripeSmartLockCta({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-5 py-3.5 bg-[#050505] border border-white/20 rounded-2xl text-sm font-mono text-white placeholder-zinc-500 focus:border-[#ecb613] outline-none"
+                  className="w-full px-5 py-3.5 bg-[#081226] border border-[#AAD6CD]/25 rounded-2xl text-sm font-mono text-white placeholder-zinc-500 focus:border-[#258DCD] outline-none"
                 />
                 <input
                   type="tel"

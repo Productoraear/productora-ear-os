@@ -177,9 +177,9 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
         <button
           onClick={handleLockPrice}
           disabled={loading}
-          className="w-full py-3 bg-white/5 border border-[#ecb613]/30 hover:bg-[#ecb613]/10 text-[#ecb613] rounded-2xl text-xs font-mono uppercase tracking-widest flex items-center justify-center gap-2 transition-all cursor-pointer"
+          className="w-full py-3.5 bg-[#081226] border border-[#AAD6CD]/30 hover:border-[#258DCD] hover:bg-[#0c1a36] text-[#AAD6CD] rounded-2xl text-xs font-mono uppercase tracking-widest flex items-center justify-center gap-2 transition-all cursor-pointer shadow-[0_4px_20px_rgba(8,18,38,0.7)]"
         >
-          <Lock className="w-4 h-4" /> Congelar Tarifa 72h con Hash SHA-256
+          <Lock className="w-4 h-4 text-[#258DCD]" /> Congelar Tarifa 72h con Hash SHA-256
         </button>
       ) : (
         <div className="space-y-4">
@@ -195,7 +195,7 @@ export const BespokePricer: React.FC<BespokePricerProps> = ({
           <button
             onClick={handleCheckout}
             disabled={loading}
-            className="w-full py-4 bg-[#ecb613] hover:bg-[#ffc61c] text-black rounded-2xl text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#ecb613]/20"
+            className="w-full py-4 bg-[#258DCD] hover:bg-[#1e7ebd] text-white rounded-2xl text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(37,141,205,0.4)]"
           >
             {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Abonar Garantía de Reserva (30%)'}
           </button>

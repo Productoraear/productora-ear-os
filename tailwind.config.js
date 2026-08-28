@@ -60,6 +60,13 @@ module.exports = {
         fog: "#dddddd",
         slate: "#999999",
 
+        // 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM)
+        "ear-cyan": "#AAD6CD",
+        "ear-blue": "#258DCD",
+        "ear-sapphire": "#081226",
+        "ear-sapphire-dark": "#040914",
+        "ear-coral": "#FF455B",
+
         // Stitch Semantic Tokens (Additive)
         "on-surface-variant": "#d0c5af",
         "surface-bright": "#3a3939",
@@ -75,6 +82,16 @@ module.exports = {
         "secondary": "#c6c6c6",
         "outline": "#99907c",
         "outline-variant": "#4d4635",
+      },
+      boxShadow: {
+        "glow-ear-blue": "0 0 25px rgba(37, 141, 205, 0.35)",
+        "glow-ear-cyan": "0 0 20px rgba(170, 214, 205, 0.25)",
+        "glow-ear-coral": "0 0 20px rgba(255, 69, 91, 0.35)",
+        "glow-ear-sapphire": "0 10px 40px -10px rgba(8, 18, 38, 0.8)",
+      },
+      backgroundImage: {
+        "grad-ear-sapphire": "linear-gradient(185deg, #081226 0%, #000000 100%)",
+        "grad-ear-cyan-blue": "linear-gradient(135deg, #AAD6CD 0%, #258DCD 100%)",
       },
       fontFamily: {
         francia: ["var(--font-fraunces)", "Fraunces", "serif"],
