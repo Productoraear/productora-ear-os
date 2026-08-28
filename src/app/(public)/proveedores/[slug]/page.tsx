@@ -29,6 +29,7 @@ import fs from 'fs';
 import path from 'path';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { SupplierBlurLock } from '@/components/ui/SupplierBlurLock';
+import { ClaimProfileTrigger } from '@/components/providers/ClaimProfileTrigger';
 
 export const dynamic = 'force-dynamic';
 
@@ -611,6 +612,18 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   <span className="text-emerald-400 font-bold">80% Proveedor / 10% EAR / 10% VIMUME</span>
                 </div>
               </div>
+
+              {/* 🛡️ RECLAMAR FICHA CON VERIFICACIÓN EN 2 PASOS */}
+              <ClaimProfileTrigger 
+                provider={{
+                  id: rawProvider.id || slug,
+                  name,
+                  slug,
+                  category,
+                  province: location.split(',')[0],
+                  phone
+                }}
+              />
 
             </div>
 

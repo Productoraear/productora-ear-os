@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import providersData from '@/data/all_providers_database.json';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';
 
 function normalizeCategory(inputCat: string | null): string {
   if (!inputCat) return 'ALL';
@@ -59,6 +60,7 @@ function ProveedoresDirectoryContent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeModalProvider, setActiveModalProvider] = useState<any>(null);
   const [activeGalleryImg, setActiveGalleryImg] = useState<string>('');
+  const [claimModalProvider, setClaimModalProvider] = useState<any>(null);
 
   useEffect(() => {
     if (urlCat) {
@@ -358,7 +360,7 @@ function ProveedoresDirectoryContent() {
                   </div>
                 </div>
 
-                <div className="p-4 bg-black/60 border-t border-white/5 flex gap-2">
+                <div className="p-4 bg-black/60 border-t border-white/5 flex gap-2 items-center">
                   <button
                     onClick={(e) => { e.stopPropagation(); openModal(item); }}
                     className={`flex-1 font-extrabold text-xs py-3 rounded-2xl uppercase transition-all shadow-md cursor-pointer font-mono ${
@@ -368,6 +370,14 @@ function ProveedoresDirectoryContent() {
                     }`}
                   >
                     Ver Ficha
+                  </button>
+
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setClaimModalProvider(item); }}
+                    className="p-3 rounded-2xl bg-[#ecb613]/10 hover:bg-[#ecb613] text-[#ecb613] hover:text-black border border-[#ecb613]/30 transition-all flex items-center justify-center cursor-pointer"
+                    title="Reclamar Ficha (2FA)"
+                  >
+                    <ShieldCheck size={16} />
                   </button>
 
                   <a
@@ -388,7 +398,7 @@ function ProveedoresDirectoryContent() {
 
         {/* PAGINATION */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 pt-8">
+          <div className="flex justify-center items-center gap-4 pt-12 pb-6">
             <button
               onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
               disabled={currentPage === 1}
@@ -396,7 +406,7 @@ function ProveedoresDirectoryContent() {
             >
               Anterior
             </button>
-            <span className="text-xs font-mono text-neutral-400 px-4">
+            <span className="text-xs font-mono text-neutral-400">
               Página <strong className="text-white">{currentPage}</strong> de <strong className="text-white">{totalPages}</strong>
             </span>
             <button
@@ -477,19 +487,41 @@ function ProveedoresDirectoryContent() {
                   <span className="text-xs text-neutral-500 uppercase font-mono block">Tarifa Oficial Garantizada</span>
                   <span className="text-2xl font-black text-[#ecb613] font-mono">Desde {activeModalProvider.basePrice || 650} €</span>
                 </div>
-                <a
-                  href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero verificar disponibilidad para ${activeModalProvider.name} en ${activeModalProvider.province ? activeModalProvider.province.charAt(0).toUpperCase() + activeModalProvider.province.slice(1).toLowerCase() : 'Madrid'}.`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full md:w-auto bg-gradient-to-r from-amber-300 via-[#ecb613] to-amber-500 hover:brightness-110 text-black font-black text-xs px-8 py-4 rounded-2xl uppercase transition-all text-center shadow-lg shadow-[#ecb613]/20 font-mono cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <PhoneCall size={16} />
-                  <span>Verificar Disponibilidad en WhatsApp</span>
-                </a>
+                <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+                  <button
+                    onClick={() => {
+                      setClaimModalProvider(activeModalProvider);
+                      setActiveModalProvider(null);
+                    }}
+                    className="px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-[#ecb613]/50 text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  >
+                    <ShieldCheck size={16} className="text-[#ecb613]" />
+                    <span>Reclamar Ficha (2FA)</span>
+                  </button>
+                  <a
+                    href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero verificar disponibilidad para ${activeModalProvider.name} en ${activeModalProvider.province ? activeModalProvider.province.charAt(0).toUpperCase() + activeModalProvider.province.slice(1).toLowerCase() : 'Madrid'}.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto bg-gradient-to-r from-amber-300 via-[#ecb613] to-amber-500 hover:brightness-110 text-black font-black text-xs px-6 py-3.5 rounded-2xl uppercase transition-all text-center shadow-lg shadow-[#ecb613]/20 font-mono cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <PhoneCall size={16} />
+                    <span>Verificar en WhatsApp</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         )}
+
+        {/* 🛡️ MODAL DE RECLAMAR FICHA (VERIFICACIÓN EN 2 PASOS) */}
+        <ClaimProviderModal
+          isOpen={!!claimModalProvider}
+          provider={claimModalProvider}
+          onClose={() => setClaimModalProvider(null)}
+          onClaimSuccess={(id, token) => {
+            console.log(`[CLAIM VERIFIED] Provider ${id} claimed with token ${token}`);
+          }}
+        />
       </main>
     </div>
   );
