@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { PRICING_CATALOG } from '@/lib/constants/pricing-catalog';
 import { SClassPricingEngine, SClassQuote } from '@/lib/pricing-engine';
+import { solveHungarian, buildCostMatrix, MatchRequirement, MatchCandidate } from '@/lib/matchmaker/hungarianAlgorithm';
 import { PriceLockBadge } from '@/features/finance/ui/PriceLockBadge';
 import { createDossierFromLead } from '@/app/actions/dossierActions';
 import { CENTRALITA } from '@/lib/phone-constants';

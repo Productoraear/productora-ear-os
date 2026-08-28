@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { Sparkles, Cpu, Box } from 'lucide-react';
 import Link from 'next/link';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
+import { solveHungarian, buildCostMatrix, MatchRequirement, MatchCandidate } from '@/lib/matchmaker/hungarianAlgorithm';
 import { MultiPricer } from '@/features/finance/ui/MultiPricer';
 
 export const metadata: Metadata = {
