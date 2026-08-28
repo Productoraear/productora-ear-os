@@ -178,6 +178,7 @@ const MultiPricerContent = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [showLeadForm, setShowLeadForm] = useState<boolean>(false);
+  const [showGuarantees, setShowGuarantees] = useState<boolean>(false);
 
   // Form State
   const [leadData, setLeadData] = useState({
@@ -763,131 +764,164 @@ const MultiPricerContent = () => {
       </div>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      {/* 🌟 BLOQUE DE REFUERZO DE VALOR (REUBICADO ABAJO DE LA CALCULADORA) */}
+      {/* 🌟 BLOQUE DE REFUERZO DE VALOR DESPLEGABLE S-CLASS */}
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      
-      {/* FASE 1: DIAGNÓSTICO DE RIESGO TÉCNICO & BLINDAJE 12 W/PAX */}
-      <div className="p-6 sm:p-8 rounded-[2.5rem] bg-[#09090d] border border-white/10 space-y-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/5 pb-4">
-          <div>
-            <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] tracking-widest block">
-              Garantía Técnica Inmutable
+      <div className="pt-2">
+        <button
+          onClick={() => setShowGuarantees(!showGuarantees)}
+          className="w-full py-4 px-6 rounded-2xl bg-[#0b0b10] border border-white/10 hover:border-[#ecb613]/40 flex items-center justify-between text-xs font-mono uppercase tracking-wider text-zinc-300 hover:text-white transition-all shadow-lg cursor-pointer group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-7 h-7 rounded-lg bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+              <Shield size={15} />
+            </div>
+            <span className="font-bold font-syne text-sm text-white group-hover:text-[#ecb613] transition-colors">
+              Blindaje Técnico S-Class & Protocolo de Cero Fallos (12 W/pax · RC 1M€ · OPCAT)
             </span>
-            <h2 className="text-xl font-black uppercase text-white font-syne">
-              ¿Por Qué Contratar el Estándar S-Class de Productora EAR?
-            </h2>
           </div>
-          <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
-            Blindaje 100% Certificado
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <Volume2 size={18} />
-            </div>
-            <h3 className="text-xs font-black uppercase text-white">Acústica 12 W/Pax</h3>
-            <p className="text-[11px] text-white/60 leading-relaxed">
-              Cero zonas sordas o volumen hiriente. Cobertura homogénea Bose F1 sin fatiga auditiva.
-            </p>
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-zinc-500 font-bold hidden sm:inline">
+              {showGuarantees ? 'Ocultar Auditoría' : 'Desplegar Auditoría'}
+            </span>
+            <ChevronDown size={16} className={`transition-transform duration-300 text-[#ecb613] ${showGuarantees ? 'rotate-180' : ''}`} />
           </div>
+        </button>
 
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-              <ShieldAlert size={18} />
-            </div>
-            <h3 className="text-xs font-black uppercase text-white">Normativa Local (OPCAT)</h3>
-            <p className="text-[11px] text-white/60 leading-relaxed">
-              Cero multas o precintos policiales por sobrepasar los límites de dB del ayuntamiento.
-            </p>
-          </div>
+        <AnimatePresence>
+          {showGuarantees && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-6 pt-4 overflow-hidden"
+            >
+              {/* FASE 1: DIAGNÓSTICO DE RIESGO TÉCNICO & BLINDAJE 12 W/PAX */}
+              <div className="p-6 sm:p-8 rounded-[2.5rem] bg-[#09090d] border border-white/10 space-y-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-white/5 pb-4">
+                  <div>
+                    <span className="text-[9px] font-mono font-bold uppercase text-[#ecb613] tracking-widest block">
+                      Garantía Técnica Inmutable
+                    </span>
+                    <h2 className="text-xl font-black uppercase text-white font-syne">
+                      ¿Por Qué Contratar el Estándar S-Class de Productora EAR?
+                    </h2>
+                  </div>
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full">
+                    Blindaje 100% Certificado
+                  </span>
+                </div>
 
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
-              <Shield size={18} />
-            </div>
-            <h3 className="text-xs font-black uppercase text-white">Póliza RC 1.000.000 €</h3>
-            <p className="text-[11px] text-white/60 leading-relaxed">
-              Cobertura legal e indemnizatoria completa requerida por fincas y recintos protegidos.
-            </p>
-          </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                      <Volume2 size={18} />
+                    </div>
+                    <h3 className="text-xs font-black uppercase text-white">Acústica 12 W/Pax</h3>
+                    <p className="text-[11px] text-white/60 leading-relaxed">
+                      Cero zonas sordas o volumen hiriente. Cobertura homogénea Bose F1 sin fatiga auditiva.
+                    </p>
+                  </div>
 
-          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
-            <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
-              <Zap size={18} />
-            </div>
-            <h3 className="text-xs font-black uppercase text-white">Shure Axient Anti-Acoples</h3>
-            <p className="text-[11px] text-white/60 leading-relaxed">
-              Microfonía digital con escaneo de frecuencias. Cero pitidos ni cortes en momentos clave.
-            </p>
-          </div>
-        </div>
-      </div>
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                    <div className="w-9 h-9 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+                      <ShieldAlert size={18} />
+                    </div>
+                    <h3 className="text-xs font-black uppercase text-white">Normativa Local (OPCAT)</h3>
+                    <p className="text-[11px] text-white/60 leading-relaxed">
+                      Cero multas o precintos policiales por sobrepasar los límites de dB del ayuntamiento.
+                    </p>
+                  </div>
 
-      {/* FASE 2: TABLA COMPARATIVA RIESGO AMATEUR VS. ESTÁNDAR S-CLASS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        {/* LA OPCIÓN CONVENCIONAL / AMATEUR */}
-        <div className="p-6 sm:p-8 rounded-[2.5rem] bg-rose-950/10 border border-rose-500/20 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
-              <XCircle size={18} />
-            </div>
-            <h3 className="text-base font-black uppercase text-rose-400 font-syne">
-              Riesgo de Contratación Amateur
-            </h3>
-          </div>
-          <ul className="space-y-2.5 text-xs text-white/70">
-            <li className="flex items-start gap-2">
-              <span className="text-rose-400 font-mono">✕</span>
-              <span>Músicos sin rider homologado ni ensayo técnico previo.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-rose-400 font-mono">✕</span>
-              <span>Riesgo de acoples y micrófonos que fallan durante los votos o discursos.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-rose-400 font-mono">✕</span>
-              <span>Volumen descontrolado que obliga a los invitados a gritar para conversar.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-rose-400 font-mono">✕</span>
-              <span>Posible corte de luz o salto de limitador acústico con sanción municipal.</span>
-            </li>
-          </ul>
-        </div>
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                    <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
+                      <Shield size={18} />
+                    </div>
+                    <h3 className="text-xs font-black uppercase text-white">Póliza RC 1.000.000 €</h3>
+                    <p className="text-[11px] text-white/60 leading-relaxed">
+                      Cobertura legal e indemnizatoria completa requerida por fincas y recintos protegidos.
+                    </p>
+                  </div>
 
-        {/* EL ESTÁNDAR EAR OS S-CLASS */}
-        <div className="p-6 sm:p-8 rounded-[2.5rem] bg-emerald-950/10 border border-emerald-500/20 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-              <CheckCircle2 size={18} />
-            </div>
-            <h3 className="text-base font-black uppercase text-emerald-400 font-syne">
-              Estándar Productora EAR (S-Class)
-            </h3>
-          </div>
-          <ul className="space-y-2.5 text-xs text-white/70">
-            <li className="flex items-start gap-2">
-              <span className="text-emerald-400 font-mono">✓</span>
-              <span>Tenor lírico de gala (Edwin Agudelo) con vestuario bordado y botonadura de plata.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-emerald-400 font-mono">✓</span>
-              <span>Sonorización calibrada a 12 W/pax con sistemas Bose F1 y DSP digital.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-emerald-400 font-mono">✓</span>
-              <span>Puntualidad garantizada con llegada T-120 min antes del inicio del evento.</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-emerald-400 font-mono">✓</span>
-              <span>95% de satisfacción auditada y custodia de depósito en Stripe Live.</span>
-            </li>
-          </ul>
-        </div>
+                  <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                    <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                      <Zap size={18} />
+                    </div>
+                    <h3 className="text-xs font-black uppercase text-white">Shure Axient Anti-Acoples</h3>
+                    <p className="text-[11px] text-white/60 leading-relaxed">
+                      Microfonía digital con escaneo de frecuencias. Cero pitidos ni cortes en momentos clave.
+                    </p>
+                  </div>
+                </div>
+              </div>
 
+              {/* FASE 2: TABLA COMPARATIVA RIESGO AMATEUR VS. ESTÁNDAR S-CLASS */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                {/* LA OPCIÓN CONVENCIONAL / AMATEUR */}
+                <div className="p-6 sm:p-8 rounded-[2.5rem] bg-rose-950/10 border border-rose-500/20 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                      <XCircle size={18} />
+                    </div>
+                    <h3 className="text-base font-black uppercase text-rose-400 font-syne">
+                      Riesgo de Contratación Amateur
+                    </h3>
+                  </div>
+                  <ul className="space-y-2.5 text-xs text-white/70">
+                    <li className="flex items-start gap-2">
+                      <span className="text-rose-400 font-mono">✕</span>
+                      <span>Músicos sin rider homologado ni ensayo técnico previo.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-rose-400 font-mono">✕</span>
+                      <span>Riesgo de acoples y micrófonos que fallan durante los votos o discursos.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-rose-400 font-mono">✕</span>
+                      <span>Volumen descontrolado que obliga a los invitados a gritar para conversar.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-rose-400 font-mono">✕</span>
+                      <span>Posible corte de luz o salto de limitador acústico con sanción municipal.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* EL ESTÁNDAR EAR OS S-CLASS */}
+                <div className="p-6 sm:p-8 rounded-[2.5rem] bg-emerald-950/10 border border-emerald-500/20 space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                      <CheckCircle2 size={18} />
+                    </div>
+                    <h3 className="text-base font-black uppercase text-emerald-400 font-syne">
+                      Estándar Productora EAR (S-Class)
+                    </h3>
+                  </div>
+                  <ul className="space-y-2.5 text-xs text-white/70">
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-mono">✓</span>
+                      <span>Tenor lírico de gala (Edwin Agudelo) con vestuario bordado y botonadura de plata.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-mono">✓</span>
+                      <span>Sonorización calibrada a 12 W/pax con sistemas Bose F1 y DSP digital.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-mono">✓</span>
+                      <span>Puntualidad garantizada con llegada T-120 min antes del inicio del evento.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-emerald-400 font-mono">✓</span>
+                      <span>95% de satisfacción auditada y custodia de depósito en Stripe Live.</span>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* 🚀 MODAL ULTRA-FILTROS AIRBNB STYLE */}
