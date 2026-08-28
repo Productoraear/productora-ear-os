@@ -8,7 +8,11 @@ import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackgrou
 import { CENTRALITA } from '@/lib/phone-constants';
 
 interface PageProps {
-  params: {
+  params: Promise<{
+    provincia: string;
+    servicio: string;
+    municipio: string;
+  }> | {
     provincia: string;
     servicio: string;
     municipio: string;
@@ -16,7 +20,11 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { provincia, servicio, municipio } = params;
+  const resolvedParams = await params;
+  const provincia = resolvedParams?.provincia || 'madrid';
+  const servicio = resolvedParams?.servicio || 'mariachi-gala';
+  const municipio = resolvedParams?.municipio || 'navalcarnero';
+
   const provKey = provincia.toLowerCase();
   const provData = PROVINCIAS_52_GRAPH[provKey];
   const provName = provData ? provData.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
@@ -41,8 +49,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default function LocalMunicipalityPage({ params }: PageProps) {
-  const { provincia, servicio, municipio } = params;
+export default async function LocalMunicipalityPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const provincia = resolvedParams?.provincia || 'madrid';
+  const servicio = resolvedParams?.servicio || 'mariachi-gala';
+  const municipio = resolvedParams?.municipio || 'navalcarnero';
+
   const provKey = provincia.toLowerCase();
   const provData = PROVINCIAS_52_GRAPH[provKey];
   const provName = provData ? provData.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
