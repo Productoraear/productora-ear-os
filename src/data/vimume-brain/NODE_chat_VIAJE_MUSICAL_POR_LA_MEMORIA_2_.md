@@ -1,0 +1,28 @@
+---
+title: "chat VIAJE MUSICAL POR LA MEMORIA (2).docx"
+level: "L20_IMPACTO_SOCIAL_VIMUME"
+category: "VIMUME_TERAPIA"
+sha256: "b8bd8ff43bf49c334d234c630872f52f1be3669a7781584c131b3768f322c0c2"
+archived_date: "2026-08-25T11:28:04.051554"
+original_path: "D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\CONSOLIDADO_VIMUME_FORENSE\chat VIAJE MUSICAL POR LA MEMORIA (2).docx"
+vault_path: "H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L20_IMPACTO_SOCIAL_VIMUME\VIMUME_TERAPIA\20260825_L20_IMPACTO_SOCIAL_VIMUME_chat_VIAJE_MUSICAL_POR_LA_MEMORIA_2_.docx"
+tags:
+  - ear-os/vault
+  - level/l20_impacto_social_vimume
+  - category/vimume_terapia
+---
+
+# 📜 chat VIAJE MUSICAL POR LA MEMORIA (2).docx
+
+- **Nivel Ontológico:** [[L20_IMPACTO_SOCIAL_VIMUME]]
+- **Categoría Maestro:** [[VIMUME_TERAPIA]]
+- **Hash SHA-256:** `b8bd8ff43bf49c334d234c630872f52f1be3669a7781584c131b3768f322c0c2`
+- **Ubicación Bóveda:** `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L20_IMPACTO_SOCIAL_VIMUME\VIMUME_TERAPIA\20260825_L20_IMPACTO_SOCIAL_VIMUME_chat_VIAJE_MUSICAL_POR_LA_MEMORIA_2_.docx`
+
+## 🔍 Resumen Semántico
+[Documento DOCX detectado]
+
+## 🔗 Relaciones Bidireccionales
+- Relacionado con: [[EAR_OS_UNIFIED_KNOWLEDGE_GRAPH]]
+- Ecosistema: [[Productora EAR]]
+- Módulo: [[L20_IMPACTO_SOCIAL_VIMUME]]

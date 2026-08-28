@@ -1,0 +1,611 @@
+# Mapa de proyecto — Auditoría 32B
+
+## Directorios raíz
+
+- _auditoria | C:\EAR_OS_V2\_auditoria | 08/03/2026 13:46:30
+- .firebase | C:\EAR_OS_V2\.firebase | 04/29/2026 14:21:39
+- .obsidian | C:\EAR_OS_V2\.obsidian | 05/19/2026 17:14:04
+- .vercel | C:\EAR_OS_V2\.vercel | 05/06/2026 20:12:09
+- 00_INBOX_COGNITIVO | C:\EAR_OS_V2\00_INBOX_COGNITIVO | 05/19/2026 16:36:13
+- 01_SSOT_Y_KERNELS | C:\EAR_OS_V2\01_SSOT_Y_KERNELS | 07/29/2026 11:10:12
+- 02_ARQUITECTURA_Y_MATRICES | C:\EAR_OS_V2\02_ARQUITECTURA_Y_MATRICES | 05/19/2026 16:36:25
+- 99_CUARENTENA_COGNITIVA | C:\EAR_OS_V2\99_CUARENTENA_COGNITIVA | 05/19/2026 16:36:13
+- ALMACEN_DE_CUARENTENA_6M | C:\EAR_OS_V2\ALMACEN_DE_CUARENTENA_6M | 07/30/2026 10:20:54
+- BASE_DE_CONOCIMIENTO | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO | 05/13/2026 10:53:49
+- CHAT CON AI STUDIO PARA EAR OS | C:\EAR_OS_V2\CHAT CON AI STUDIO PARA EAR OS | 07/31/2026 12:25:38
+- config | C:\EAR_OS_V2\config | 07/30/2026 10:57:14
+- CORE | C:\EAR_OS_V2\CORE | 04/22/2026 10:31:03
+- data_vault | C:\EAR_OS_V2\data_vault | 05/19/2026 16:22:09
+- design-vault | C:\EAR_OS_V2\design-vault | 05/11/2026 22:37:41
+- docs | C:\EAR_OS_V2\docs | 08/03/2026 09:54:04
+- e2e | C:\EAR_OS_V2\e2e | 07/28/2026 08:51:41
+- incubadora | C:\EAR_OS_V2\incubadora | 05/18/2026 15:55:28
+- infrastructure | C:\EAR_OS_V2\infrastructure | 05/15/2026 21:55:43
+- lib | C:\EAR_OS_V2\lib | 07/30/2026 10:56:27
+- logs | C:\EAR_OS_V2\logs | 05/19/2026 17:03:39
+- output | C:\EAR_OS_V2\output | 05/17/2026 19:38:45
+- prisma | C:\EAR_OS_V2\prisma | 07/28/2026 08:51:41
+- public | C:\EAR_OS_V2\public | 07/26/2026 21:59:18
+- quarantine | C:\EAR_OS_V2\quarantine | 05/19/2026 16:27:36
+- scripts | C:\EAR_OS_V2\scripts | 08/03/2026 11:28:48
+- src | C:\EAR_OS_V2\src | 07/28/2026 08:51:41
+- supabase | C:\EAR_OS_V2\supabase | 05/08/2026 08:51:25
+- sync_nexus | C:\EAR_OS_V2\sync_nexus | 04/29/2026 19:48:40
+
+## Resumen de extensiones
+
+- .html : 2211
+- .tsx : 385
+- .md : 307
+- .js : 243
+- .ts : 189
+- .json : 50
+- .mjs : 29
+- .py : 25
+- .ps1 : 20
+- .csv : 18
+- .woff2 : 16
+- .txt : 15
+- .sql : 14
+- .log : 13
+- .eml : 11
+- .cjs : 7
+- .svg : 6
+- .png : 5
+- .legacy : 5
+- .css : 4
+- .docx : 3
+- .production : 3
+- .bat : 3
+- [sin extensión] : 2
+- .local : 2
+- .rules : 2
+- .gitignore : 2
+- .env : 2
+- .cache : 2
+- .backup_2026-08-01 : 2
+- .xml : 2
+- .toml : 1
+- .vercelignore : 1
+- .tsbuildinfo : 1
+- .m4a : 1
+- .prisma : 1
+- .pdf : 1
+- .npmrc : 1
+- .ico : 1
+- .firebaserc : 1
+- .eslintignore : 1
+- .clinerules : 1
+- .clineignore : 1
+- .sh : 1
+- .yaml : 1
+
+## 50 archivos más grandes
+
+- 89268313 bytes | .csv | C:\EAR_OS_V2\data_vault\omni_audit_manifest.csv | 05/05/2026 15:43:20
+- 66783954 bytes | .json | C:\EAR_OS_V2\src\lib\NUCLEO_DATA\bodas_full.json | 11/28/2025 16:42:54
+- 64794648 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_70.md | 05/05/2026 15:58:09
+- 64794638 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_75.md | 05/05/2026 15:58:10
+- 64794636 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_86.md | 05/05/2026 15:58:14
+- 64794631 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_12.md | 05/05/2026 15:57:56
+- 64794629 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_3.md | 05/05/2026 15:57:53
+- 64794626 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_91.md | 05/05/2026 15:58:15
+- 64794621 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_16.md | 05/05/2026 15:57:57
+- 64794621 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_54.md | 05/05/2026 15:58:05
+- 64794612 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_22.md | 05/05/2026 15:57:59
+- 64794611 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_59.md | 05/05/2026 15:58:06
+- 64794607 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_63.md | 05/05/2026 15:58:08
+- 64794595 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_79.md | 05/05/2026 15:58:12
+- 64794589 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_31.md | 05/05/2026 15:58:01
+- 64713621 bytes | .json | C:\EAR_OS_V2\data_vault\backups\knowledgegraph.json | 03/06/2026 22:45:04
+- 64713621 bytes | .json | C:\EAR_OS_V2\data_vault\LOGS_MASTER_RAG.json | 03/06/2026 22:45:04
+- 63411127 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_24.md | 05/05/2026 15:57:59
+- 63411101 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_9.md | 05/05/2026 15:57:55
+- 60638152 bytes | .json | C:\EAR_OS_V2\data_vault\SESSION_OMEGA_RAG.json | 09/11/2025 11:15:19
+- 56349318 bytes | .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\EAR_OS_OMEGA_CODEX.md | 04/24/2026 13:25:56
+- 56275167 bytes | .json | C:\EAR_OS_V2\src\lib\NUCLEO_DATA\bodas_clean.json | 11/28/2025 22:10:40
+- 41280742 bytes | .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_D.csv (Resiliencia_Backups)\GENOMA_H_INTELLIGENCE.csv.csv | 04/30/2026 13:40:46
+- 39141972 bytes | .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_H.csv (Inteligencia_Astra)\GENOMA_H_INTELLIGENCE.csv | 04/30/2026 11:01:49
+- 30574013 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_65.md | 05/05/2026 15:58:08
+- 30574004 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_66.md | 05/05/2026 15:58:08
+- 30574001 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_81.md | 05/05/2026 15:58:12
+- 30573992 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_82.md | 05/05/2026 15:58:13
+- 30573986 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_49.md | 05/05/2026 15:58:04
+- 30573977 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_50.md | 05/05/2026 15:58:04
+- 30573975 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_67.md | 05/05/2026 15:58:09
+- 30573975 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_77.md | 05/05/2026 15:58:11
+- 30573968 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_13.md | 05/05/2026 15:57:56
+- 30573963 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_93.md | 05/05/2026 15:58:15
+- 30573963 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_83.md | 05/05/2026 15:58:13
+- 30573949 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_23.md | 05/05/2026 15:57:59
+- 30573948 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_61.md | 05/05/2026 15:58:06
+- 30573948 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_51.md | 05/05/2026 15:58:04
+- 30573944 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_64.md | 05/05/2026 15:58:08
+- 30573932 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_80.md | 05/05/2026 15:58:12
+- 30573926 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_33.md | 05/05/2026 15:58:01
+- 29694040 bytes | .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_H.csv | 04/30/2026 15:11:14
+- 29270958 bytes | .csv | C:\EAR_OS_V2\data_vault\audits\auditoria_forense_files.csv | 05/13/2026 16:58:22
+- 25709783 bytes | .m4a | C:\EAR_OS_V2\Cómo_jubilar_al_Cumpleaños y las mañanitas podcast.m4a | 08/01/2026 22:34:45
+- 23383355 bytes | .json | C:\EAR_OS_V2\data_vault\backups\legacyproviders.json | 03/03/2026 16:56:47
+- 23178109 bytes | .txt | C:\EAR_OS_V2\data_vault\hallazgos_god_mode.txt | 05/05/2026 14:11:58
+- 20662723 bytes | .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_114.md | 05/05/2026 15:58:35
+- 19273777 bytes | .json | C:\EAR_OS_V2\data_vault\backups\arsenalenriched.json | 03/06/2026 22:44:26
+- 15031104 bytes | .csv | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\deep_scan_files.csv | 04/24/2026 09:35:02
+- 13246768 bytes | .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build.log | 05/09/2026 08:22:03
+
+## package.json y tsconfig detectados
+
+- C:\EAR_OS_V2\package.json | 2795 bytes | 07/30/2026 10:31:47
+- C:\EAR_OS_V2\tsconfig.json | 942 bytes | 07/31/2026 17:34:00
+- C:\EAR_OS_V2\tsconfig.scripts.json | 314 bytes | 05/11/2026 18:15:05
+- C:\EAR_OS_V2\.firebase\productora-ear-backend\functions\package.json | 985 bytes | 04/29/2026 14:20:26
+
+## Documentación y scripts detectados
+
+- .txt | C:\EAR_OS_V2\.A hoja de ruta despues de la busqueda de datos .txt | 51655 bytes | 08/03/2026 10:51:35
+- .md | C:\EAR_OS_V2\00_MOC_MAESTRO.md | 377 bytes | 05/19/2026 16:36:21
+- .md | C:\EAR_OS_V2\AuraWallet.md | 0 bytes | 05/19/2026 17:17:57
+- .md | C:\EAR_OS_V2\CLINE_RULES_V2.md | 2197 bytes | 05/12/2026 10:57:53
+- .md | C:\EAR_OS_V2\CLINE_RULES_V3.md | 14069 bytes | 08/01/2026 20:41:52
+- .md | C:\EAR_OS_V2\DEPLOYCERTIFICATE.md | 1357 bytes | 05/14/2026 11:41:55
+- .ps1 | C:\EAR_OS_V2\Dominancia_EAR_SClass - copia.ps1 | 2856 bytes | 07/29/2026 17:56:38
+- .ps1 | C:\EAR_OS_V2\Dominancia_EAR_v2_LEGACY.ps1 | 9198 bytes | 07/31/2026 14:34:53
+- .ps1 | C:\EAR_OS_V2\Dominancia_EAR_v3_DOMINANCIA_OK.ps1 | 5058 bytes | 07/31/2026 15:59:42
+- .ps1 | C:\EAR_OS_V2\Dominancia_EAR_v3_PRE_COMPATIBILIDAD.ps1 | 4843 bytes | 07/31/2026 15:58:50
+- .ps1 | C:\EAR_OS_V2\Dominancia_EAR_v3.ps1 | 5030 bytes | 07/31/2026 16:04:44
+- .ps1 | C:\EAR_OS_V2\Dominancia_EAR.ps1 | 2742 bytes | 07/29/2026 09:55:55
+- .md | C:\EAR_OS_V2\EAR_OS_OMEGA_PROMPTS.md | 25405 bytes | 05/18/2026 17:59:06
+- .bat | C:\EAR_OS_V2\INICIAR_DOMINANCIA.bat | 582 bytes | 07/29/2026 10:30:23
+- .ps1 | C:\EAR_OS_V2\INICIAR_EAR_OS_CON_ERROR.ps1 | 3636 bytes | 07/31/2026 16:23:49
+- .ps1 | C:\EAR_OS_V2\INICIAR_EAR_OS.ps1 | 3604 bytes | 07/31/2026 16:26:04
+- .md | C:\EAR_OS_V2\INVENTARIO_TOTAL.md | 2179 bytes | 05/13/2026 09:54:08
+- .md | C:\EAR_OS_V2\README.md | 880 bytes | 05/11/2026 16:43:09
+- .ps1 | C:\EAR_OS_V2\recuperar_adn.ps1 | 4036 bytes | 07/29/2026 13:30:59
+- .md | C:\EAR_OS_V2\SEO_DOMINANCE_PLAN.md | 4385 bytes | 05/14/2026 11:46:37
+- .md | C:\EAR_OS_V2\SOVEREIGN_GENOMA.md | 1718 bytes | 05/14/2026 11:36:33
+- .txt | C:\EAR_OS_V2\.firebase\productora-ear-backend\functions\public\robots.txt | 109 bytes | 04/24/2026 21:48:21
+- .txt | C:\EAR_OS_V2\.firebase\productora-ear-backend\hosting\robots.txt | 142 bytes | 04/29/2026 14:20:07
+- .txt | C:\EAR_OS_V2\.vercel\README.txt | 520 bytes | 05/06/2026 20:12:09
+- .md | C:\EAR_OS_V2\01_SSOT_Y_KERNELS\CLINE_OMEGA_KERNEL.md | 7665 bytes | 05/18/2026 17:45:51
+- .md | C:\EAR_OS_V2\01_SSOT_Y_KERNELS\DATABASE_URL_CORRECTION_RUNBOOK.md | 5561 bytes | 05/19/2026 17:23:02
+- .md | C:\EAR_OS_V2\01_SSOT_Y_KERNELS\EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md | 2355 bytes | 07/30/2026 12:57:52
+- .ps1 | C:\EAR_OS_V2\01_SSOT_Y_KERNELS\recuperar_adn.ps1 | 1910 bytes | 07/29/2026 11:13:43
+- .md | C:\EAR_OS_V2\02_ARQUITECTURA_Y_MATRICES\01_MOC_FINANZAS_Y_STRIPE.md | 254 bytes | 05/19/2026 16:36:23
+- .md | C:\EAR_OS_V2\02_ARQUITECTURA_Y_MATRICES\02_MOC_LOGISTICA_FLEET.md | 234 bytes | 05/19/2026 16:36:25
+- .sh | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\check-integrity.sh | 106 bytes | 04/22/2026 20:13:06
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_1.md | 879385 bytes | 05/05/2026 15:57:53
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_10.md | 4684481 bytes | 05/05/2026 15:57:56
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_100.md | 3307265 bytes | 05/05/2026 15:58:30
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_101.md | 3307271 bytes | 05/05/2026 15:58:30
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_102.md | 831380 bytes | 05/05/2026 15:58:30
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_103.md | 825981 bytes | 05/05/2026 15:58:30
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_104.md | 1923538 bytes | 05/05/2026 15:58:30
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_105.md | 155688 bytes | 05/05/2026 15:58:31
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_107.md | 361736 bytes | 05/05/2026 15:58:32
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_108.md | 2786817 bytes | 05/05/2026 15:58:32
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_109.md | 1870474 bytes | 05/05/2026 15:58:34
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_11.md | 3792983 bytes | 05/05/2026 15:57:56
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_110.md | 5428169 bytes | 05/05/2026 15:58:34
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_111.md | 1409119 bytes | 05/05/2026 15:58:34
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_112.md | 1430623 bytes | 05/05/2026 15:58:34
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_113.md | 217453 bytes | 05/05/2026 15:58:34
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_114.md | 20662723 bytes | 05/05/2026 15:58:35
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_115.md | 1023443 bytes | 05/05/2026 15:58:35
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_116.md | 1568548 bytes | 05/05/2026 15:58:36
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_117.md | 1488416 bytes | 05/05/2026 15:58:41
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_118.md | 1116010 bytes | 05/05/2026 15:59:00
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_12.md | 64794631 bytes | 05/05/2026 15:57:56
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_128.md | 1877 bytes | 05/12/2026 10:54:44
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_13.md | 30573968 bytes | 05/05/2026 15:57:56
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_14.md | 7229230 bytes | 05/05/2026 15:57:56
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_15.md | 4378812 bytes | 05/05/2026 15:57:57
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_16.md | 64794621 bytes | 05/05/2026 15:57:57
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_17.md | 285335 bytes | 05/05/2026 15:57:57
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_18.md | 2229758 bytes | 05/05/2026 15:57:57
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_19.md | 3113814 bytes | 05/05/2026 15:57:58
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_2.md | 4378820 bytes | 05/05/2026 15:57:53
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_20.md | 2462595 bytes | 05/05/2026 15:57:58
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_21.md | 169675 bytes | 05/05/2026 15:57:58
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_22.md | 64794612 bytes | 05/05/2026 15:57:59
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_23.md | 30573949 bytes | 05/05/2026 15:57:59
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_24.md | 63411127 bytes | 05/05/2026 15:57:59
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_25.md | 3956475 bytes | 05/05/2026 15:58:00
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_26.md | 2085010 bytes | 05/05/2026 15:58:00
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_27.md | 2462588 bytes | 05/05/2026 15:58:00
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_28.md | 4378805 bytes | 05/05/2026 15:58:00
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_29.md | 2229751 bytes | 05/05/2026 15:58:00
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_3.md | 64794629 bytes | 05/05/2026 15:57:53
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_30.md | 1923558 bytes | 05/05/2026 15:58:00
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_31.md | 64794589 bytes | 05/05/2026 15:58:01
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_32.md | 15560 bytes | 05/05/2026 15:58:01
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_33.md | 30573926 bytes | 05/05/2026 15:58:01
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_34.md | 107898 bytes | 05/05/2026 15:58:01
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_35.md | 3053450 bytes | 05/05/2026 15:58:01
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_36.md | 5157537 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_37.md | 75823 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_38.md | 1898520 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_39.md | 1528899 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_4.md | 285343 bytes | 05/05/2026 15:57:53
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_40.md | 2084979 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_41.md | 3527941 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_42.md | 2462557 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_43.md | 4378774 bytes | 05/05/2026 15:58:02
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_44.md | 2229720 bytes | 05/05/2026 15:58:03
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_45.md | 7327731 bytes | 05/05/2026 15:58:03
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_46.md | 3078621 bytes | 05/05/2026 15:58:03
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_47.md | 3113777 bytes | 05/05/2026 15:58:03
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_48.md | 227457 bytes | 05/05/2026 15:58:04
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_49.md | 30573986 bytes | 05/05/2026 15:58:04
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_5.md | 2229766 bytes | 05/05/2026 15:57:54
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_50.md | 30573977 bytes | 05/05/2026 15:58:04
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_51.md | 30573948 bytes | 05/05/2026 15:58:04
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_52.md | 7229237 bytes | 05/05/2026 15:58:04
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_53.md | 2137 bytes | 05/05/2026 15:58:05
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_54.md | 64794621 bytes | 05/05/2026 15:58:05
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_55.md | 3307338 bytes | 05/05/2026 15:58:05
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_56.md | 217578 bytes | 05/05/2026 15:58:05
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_57.md | 3307308 bytes | 05/05/2026 15:58:06
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_58.md | 1923580 bytes | 05/05/2026 15:58:06
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_59.md | 64794611 bytes | 05/05/2026 15:58:06
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_6.md | 3113822 bytes | 05/05/2026 15:57:54
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_60.md | 15582 bytes | 05/05/2026 15:58:06
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_61.md | 30573948 bytes | 05/05/2026 15:58:06
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_62.md | 1096408 bytes | 05/05/2026 15:58:07
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_63.md | 64794607 bytes | 05/05/2026 15:58:08
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_64.md | 30573944 bytes | 05/05/2026 15:58:08
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_65.md | 30574013 bytes | 05/05/2026 15:58:08
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_66.md | 30574004 bytes | 05/05/2026 15:58:08
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_67.md | 30573975 bytes | 05/05/2026 15:58:09
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_68.md | 7229264 bytes | 05/05/2026 15:58:09
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_69.md | 2164 bytes | 05/05/2026 15:58:09
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_7.md | 2462603 bytes | 05/05/2026 15:57:54
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_70.md | 64794648 bytes | 05/05/2026 15:58:09
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_71.md | 3307365 bytes | 05/05/2026 15:58:09
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_72.md | 217686 bytes | 05/05/2026 15:58:10
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_73.md | 3307335 bytes | 05/05/2026 15:58:10
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_74.md | 1923607 bytes | 05/05/2026 15:58:10
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_75.md | 64794638 bytes | 05/05/2026 15:58:10
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_76.md | 15609 bytes | 05/05/2026 15:58:11
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_77.md | 30573975 bytes | 05/05/2026 15:58:11
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_78.md | 1003843 bytes | 05/05/2026 15:58:12
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_79.md | 64794595 bytes | 05/05/2026 15:58:12
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_8.md | 169695 bytes | 05/05/2026 15:57:55
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_80.md | 30573932 bytes | 05/05/2026 15:58:12
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_81.md | 30574001 bytes | 05/05/2026 15:58:12
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_82.md | 30573992 bytes | 05/05/2026 15:58:13
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_83.md | 30573963 bytes | 05/05/2026 15:58:13
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_84.md | 7229252 bytes | 05/05/2026 15:58:13
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_85.md | 2152 bytes | 05/05/2026 15:58:13
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_86.md | 64794636 bytes | 05/05/2026 15:58:14
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_87.md | 3307353 bytes | 05/05/2026 15:58:14
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_88.md | 217638 bytes | 05/05/2026 15:58:14
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_89.md | 3307323 bytes | 05/05/2026 15:58:14
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_9.md | 63411101 bytes | 05/05/2026 15:57:55
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_90.md | 1923595 bytes | 05/05/2026 15:58:14
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_91.md | 64794626 bytes | 05/05/2026 15:58:15
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_92.md | 15597 bytes | 05/05/2026 15:58:15
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_93.md | 30573963 bytes | 05/05/2026 15:58:15
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_94.md | 1439094 bytes | 05/05/2026 15:58:16
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_95.md | 1757644 bytes | 05/05/2026 15:58:16
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_96.md | 1677610 bytes | 05/05/2026 15:58:17
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_97.md | 1518494 bytes | 05/05/2026 15:58:28
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_98.md | 964353 bytes | 05/05/2026 15:58:29
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\EAR_OS_MAESTRO_PROMPTS_PARTE_99.md | 1479961 bytes | 05/05/2026 15:58:30
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\GENOMA_EAR_OS.md | 1045118 bytes | 05/12/2026 10:54:35
+- .ps1 | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\ignicion_rag.ps1 | 4477 bytes | 05/04/2026 23:23:25
+- .ps1 | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\ignicion.ps1 | 3078 bytes | 04/29/2026 19:48:40
+- .ps1 | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\archive\legacy_brain_dump\setup_sclass.ps1 | 1898 bytes | 04/20/2026 14:32:40
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\ESTRATEGIA\LOCAL_SEO_DOMINANCE_GUIDE.md | 2062 bytes | 05/13/2026 10:53:49
+- .md | C:\EAR_OS_V2\BASE_DE_CONOCIMIENTO\INDICACIONES_MAESTRAS\119_HISTORIA_Y_VISION.md | 2009 bytes | 05/11/2026 13:08:51
+- .txt | C:\EAR_OS_V2\CHAT CON AI STUDIO PARA EAR OS\con perplexity pro usando modelo kimi k3.txt | 88579 bytes | 08/01/2026 20:46:23
+- .txt | C:\EAR_OS_V2\CHAT CON AI STUDIO PARA EAR OS\CONTEXTO DE CONFIGURACION . CON CLINE Y ANYTHING LLM.txt | 119158 bytes | 07/30/2026 12:36:48
+- .txt | C:\EAR_OS_V2\data_vault\hallazgos_god_mode.txt | 23178109 bytes | 05/05/2026 14:11:58
+- .md | C:\EAR_OS_V2\data_vault\docs\ASTRA_BUSINESS_MODEL.md | 1685 bytes | 02/15/2026 11:03:21
+- .md | C:\EAR_OS_V2\data_vault\docs\DEPLOY_GUIDE.md | 4832 bytes | 02/10/2026 21:13:14
+- .md | C:\EAR_OS_V2\data_vault\docs\EAR_CORE_DIRECTIVES.md | 5096 bytes | 02/15/2026 11:00:22
+- .md | C:\EAR_OS_V2\data_vault\docs\EAR_CORE_OBJECTIVES.md | 1962 bytes | 02/15/2026 10:13:19
+- .md | C:\EAR_OS_V2\data_vault\docs\EAR_FIREBASE_RULES.md | 2142 bytes | 02/15/2026 11:38:48
+- .md | C:\EAR_OS_V2\data_vault\docs\EAR_PRODUCT_DEFINITION.md | 1446 bytes | 02/15/2026 11:03:18
+- .md | C:\EAR_OS_V2\data_vault\docs\EAR_QA_OPERATIONS_MANUAL.md | 3006 bytes | 02/15/2026 10:08:18
+- .md | C:\EAR_OS_V2\data_vault\docs\EAR_RECOVERY_PROTOCOL.md | 2108 bytes | 02/15/2026 11:00:24
+- .md | C:\EAR_OS_V2\data_vault\docs\EAR_SOURCE_INDEX.md | 1849 bytes | 02/15/2026 11:20:45
+- .md | C:\EAR_OS_V2\data_vault\docs\FREEZE_v2.1_REPORT.md | 1061 bytes | 02/12/2026 17:24:47
+- .md | C:\EAR_OS_V2\data_vault\docs\INFORME_FINAL_SKILL_CHAIN.md | 2604 bytes | 02/12/2026 19:37:54
+- .md | C:\EAR_OS_V2\data_vault\docs\NAV_MAP_EAR.md | 2947 bytes | 02/15/2026 10:08:33
+- .md | C:\EAR_OS_V2\data_vault\docs\README.md | 1707 bytes | 02/04/2026 16:14:47
+- .md | C:\EAR_OS_V2\data_vault\docs\TASK_BATCH_01.md | 2022 bytes | 02/15/2026 11:43:41
+- .md | C:\EAR_OS_V2\data_vault\docs\TASKS.md | 1425 bytes | 02/14/2026 22:37:34
+- .md | C:\EAR_OS_V2\docs\continuity_node.md | 2116 bytes | 05/06/2026 18:53:09
+- .md | C:\EAR_OS_V2\docs\EAR_OS_DESIGN_TOKENS.md | 1503 bytes | 05/15/2026 22:08:00
+- .md | C:\EAR_OS_V2\docs\EAR_OS_STYLE_AND_VERCEL_PREFLIGHT.md | 2496 bytes | 05/15/2026 22:06:36
+- .md | C:\EAR_OS_V2\docs\EAR_OS_VERCEL_CHECKLIST.md | 1462 bytes | 05/17/2026 21:30:26
+- .md | C:\EAR_OS_V2\docs\security-smoke-test.md | 2454 bytes | 05/13/2026 19:46:52
+- .md | C:\EAR_OS_V2\docs\V207_WEBHOOK_SECRETS.md | 618 bytes | 07/26/2026 02:13:27
+- .sql | C:\EAR_OS_V2\docs\architecture\fleet-os\fleet-db-schema.sql | 3778 bytes | 05/15/2026 16:55:20
+- .sql | C:\EAR_OS_V2\docs\architecture\logistics\supabase-postgis-init.sql | 2319 bytes | 05/15/2026 18:10:21
+- .js | C:\EAR_OS_V2\docs\architecture\vertical-artistas\talent-api-contracts.js | 2608 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\docs\architecture\vertical-artistas\talent-api-contracts.ts | 2985 bytes | 05/15/2026 17:16:58
+- .sql | C:\EAR_OS_V2\docs\architecture\vertical-artistas\talent-db-schema.sql | 4766 bytes | 05/15/2026 15:18:13
+- .csv | C:\EAR_OS_V2\docs\architecture\vertical-artistas\talent-router-matrix.csv | 836 bytes | 05/15/2026 15:18:28
+- .md | C:\EAR_OS_V2\docs\architecture\vertical-artistas\vertical-artists-manifest.md | 1963 bytes | 05/15/2026 15:42:04
+- .md | C:\EAR_OS_V2\docs\artists\firestore-schema.md | 3336 bytes | 05/17/2026 11:21:34
+- .rules | C:\EAR_OS_V2\docs\artists\firestore.rules | 1136 bytes | 05/17/2026 11:21:38
+- .docx | C:\EAR_OS_V2\docs\artists\manual-admin.docx | 670 bytes | 05/17/2026 11:16:19
+- .html | C:\EAR_OS_V2\docs\artists\manual-admin.html | 6275 bytes | 05/17/2026 11:16:12
+- .md | C:\EAR_OS_V2\docs\artists\manual-admin.md | 3348 bytes | 05/17/2026 11:16:00
+- .docx | C:\EAR_OS_V2\docs\artists\manual-usuario.docx | 581 bytes | 05/17/2026 11:16:15
+- .html | C:\EAR_OS_V2\docs\artists\manual-usuario.html | 7893 bytes | 05/17/2026 11:16:06
+- .md | C:\EAR_OS_V2\docs\artists\manual-usuario.md | 3039 bytes | 05/17/2026 11:15:54
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 10 05 h  Deploying EAR OS S-Class.md | 27779 bytes | 05/05/2026 10:05:22
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 10 23 h  Deploying EAR OS S-Class.md | 32320 bytes | 05/05/2026 10:23:46
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 10 40 h  Deploying EAR OS S-Class.md | 32522 bytes | 05/05/2026 10:40:37
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 10 59h  Deploying EAR OS S-Class.md | 20217 bytes | 05/05/2026 10:59:29
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 11  19 h Deploying EAR OS S-Class.md | 22162 bytes | 05/05/2026 11:19:49
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 12 01 h Deploying EAR OS S-Class.md | 9566 bytes | 05/05/2026 12:01:28
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 9 40 h  Deploying EAR OS S-Class.md | 21228 bytes | 05/05/2026 09:40:48
+- .md | C:\EAR_OS_V2\docs\contexto_historico\05 05 2026 Deploying EAR OS S-Class.md | 12746 bytes | 05/05/2026 08:54:03
+- .md | C:\EAR_OS_V2\docs\contexto_historico\06 05 2026  18 48 Resuming Supabase Infrastructure Sovereignty.md | 20203 bytes | 05/06/2026 18:48:42
+- .md | C:\EAR_OS_V2\docs\contexto_historico\06 05 21 17 hResuming Supabase Infrastructure Sovereignty.md | 46745 bytes | 05/06/2026 21:17:08
+- .md | C:\EAR_OS_V2\docs\contexto_historico\07 05 2026  10 48 Resuming Supabase Infrastructure Sovereignty.md | 965 bytes | 05/07/2026 10:50:35
+- .md | C:\EAR_OS_V2\docs\contexto_historico\07 05 2026  11  36 h Resuming Supabase Infrastructure Sovereignty.md | 2514 bytes | 05/07/2026 11:37:06
+- .md | C:\EAR_OS_V2\docs\contexto_historico\07 05 2026  12 10 h Resuming Supabase Infrastructure Sovereignty.md | 9656 bytes | 05/07/2026 12:10:57
+- .md | C:\EAR_OS_V2\docs\contexto_historico\07 05 2026  12 43 h Resuming Supabase Infrastructure Sovereignty.md | 15319 bytes | 05/07/2026 12:43:41
+- .md | C:\EAR_OS_V2\docs\contexto_historico\07 05 2026  13 58 h Resuming Supabase Infrastructure Sovereignty.md | 29664 bytes | 05/07/2026 13:38:31
+- .md | C:\EAR_OS_V2\docs\contexto_historico\08 05 2026  00 19 h Resuming Supabase Infrastructure Sovereignty.md | 22439 bytes | 05/08/2026 00:19:43
+- .md | C:\EAR_OS_V2\docs\contexto_historico\08 05 2026  23 02 h Resuming Supabase Infrastructure Sovereignty.md | 25204 bytes | 05/08/2026 23:04:45
+- .md | C:\EAR_OS_V2\docs\contexto_historico\08 05 2026  9 02 h Resuming Supabase Infrastructure Sovereignty.md | 25920 bytes | 05/08/2026 09:02:48
+- .md | C:\EAR_OS_V2\docs\contexto_historico\09  05 2026  08 02 h Resuming Supabase Infrastructure Sovereignty.md | 30839 bytes | 05/09/2026 08:16:56
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  11 40 h Resuming Supabase Infrastructure Sovereignty.md | 15375 bytes | 05/11/2026 11:40:37
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  11 47 h Resuming Supabase Infrastructure Sovereignty.md | 24404 bytes | 05/11/2026 11:47:21
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  12 09 h Resuming Supabase Infrastructure Sovereignty.md | 34567 bytes | 05/11/2026 12:10:04
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  12 39 h Resuming Supabase Infrastructure Sovereignty.md | 43270 bytes | 05/11/2026 12:39:48
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  12 48 h Resuming Supabase Infrastructure Sovereignty.md | 55039 bytes | 05/11/2026 12:48:39
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  13 02 h Resuming Supabase Infrastructure Sovereignty.md | 62332 bytes | 05/11/2026 13:03:02
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  13 34 h Resuming Supabase Infrastructure Sovereignty.md | 76636 bytes | 05/11/2026 13:34:49
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  13 42 h Resuming Supabase Infrastructure Sovereignty.md | 85546 bytes | 05/11/2026 13:42:55
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  13 57 h Resuming Supabase Infrastructure Sovereignty.md | 109497 bytes | 05/11/2026 13:57:38
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  14 31 h Resuming Supabase Infrastructure Sovereignty.md | 176305 bytes | 05/11/2026 14:31:56
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  15 21 h Resuming Supabase Infrastructure Sovereignty.md | 211831 bytes | 05/11/2026 15:21:22
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  17 21 h Resuming Supabase Infrastructure Sovereignty.md | 268747 bytes | 05/11/2026 17:29:12
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  18 01 h Resuming Supabase Infrastructure Sovereignty.md | 288200 bytes | 05/11/2026 18:02:06
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  18 18 h Resuming Supabase Infrastructure Sovereignty.md | 311390 bytes | 05/11/2026 18:19:04
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  18 33 h Resuming Supabase Infrastructure Sovereignty.md | 322968 bytes | 05/11/2026 18:33:16
+- .md | C:\EAR_OS_V2\docs\contexto_historico\11 05 2026  23 29 h Resuming Supabase Infrastructure Sovereignty.md | 178346 bytes | 05/11/2026 23:29:47
+- .md | C:\EAR_OS_V2\docs\contexto_historico\12 05 2026  10 59  h Resuming Supabase Infrastructure Sovereignty.md | 15259 bytes | 05/12/2026 10:59:33
+- .md | C:\EAR_OS_V2\docs\contexto_historico\12 05 2026  14 31 h Resuming Supabase Infrastructure Sovereignty.md | 20788 bytes | 05/12/2026 14:31:39
+- .md | C:\EAR_OS_V2\docs\contexto_historico\12 05 2026  15 0 3 h Resuming Supabase Infrastructure Sovereignty.md | 36913 bytes | 05/12/2026 15:03:05
+- .md | C:\EAR_OS_V2\docs\contexto_historico\12 05 2026  16 30 h Resuming Supabase Infrastructure Sovereignty.md | 93187 bytes | 05/12/2026 16:31:00
+- .md | C:\EAR_OS_V2\docs\contexto_historico\12 05 2026  17 21 h Resuming Supabase Infrastructure Sovereignty.md | 124079 bytes | 05/12/2026 17:22:09
+- .md | C:\EAR_OS_V2\docs\contexto_historico\12 05 2026  19 21 h Resuming Supabase Infrastructure Sovereignty.md | 7664 bytes | 05/12/2026 19:24:05
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  07  21 h Resuming Supabase Infrastructure Sovereignty.md | 6520 bytes | 05/13/2026 07:42:14
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  08 21 h Resuming Supabase Infrastructure Sovereignty.md | 52250 bytes | 05/13/2026 08:21:06
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  10 06  h Resuming Supabase Infrastructure Sovereignty.md | 125236 bytes | 05/13/2026 10:06:56
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  10 43 h Resuming Supabase Infrastructure Sovereignty.md | 155989 bytes | 05/13/2026 10:43:14
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  11 24 h Resuming Supabase Infrastructure Sovereignty.md | 206011 bytes | 05/13/2026 11:24:25
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  11 33 h Resuming Supabase Infrastructure Sovereignty.md | 209695 bytes | 05/13/2026 11:33:53
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  12 09 h Resuming Supabase Infrastructure Sovereignty.md | 263466 bytes | 05/13/2026 12:09:21
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  14 33 h Resuming Supabase Infrastructure Sovereignty.md | 333145 bytes | 05/13/2026 14:31:36
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  20 03 h Resuming Supabase Infrastructure Sovereignty.md | 78717 bytes | 05/13/2026 20:03:58
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  20 15 h Resuming Supabase Infrastructure Sovereignty.md | 106276 bytes | 05/13/2026 20:15:48
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  20 24 h Resuming Supabase Infrastructure Sovereignty.md | 127196 bytes | 05/13/2026 20:24:31
+- .md | C:\EAR_OS_V2\docs\contexto_historico\13 05 2026  22 42  h Resuming Supabase Infrastructure Sovereignty.md | 161242 bytes | 05/13/2026 22:43:36
+- .md | C:\EAR_OS_V2\docs\contexto_historico\14 05 2026  12 42  h Resuming Supabase Infrastructure Sovereignty.md | 140950 bytes | 05/14/2026 12:55:25
+- .md | C:\EAR_OS_V2\docs\contexto_historico\14 05 2026  19 42  h Resuming Supabase Infrastructure Sovereignty.md | 11576 bytes | 05/14/2026 19:40:21
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05  13 07 Forensic Audit Of VIMUME Corpus.md | 383766 bytes | 05/15/2026 13:07:36
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  10 22  h Resuming Supabase Infrastructure Sovereignty.md | 13763 bytes | 05/15/2026 10:22:31
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  10 27 h Resuming Supabase Infrastructure Sovereignty - copia.md | 75322 bytes | 05/15/2026 10:27:57
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  10 27 h Resuming Supabase Infrastructure Sovereignty.md | 75322 bytes | 05/15/2026 10:27:57
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  17 05 h Resuming Supabase Infrastructure Sovereignty - copia - copia.md | 470830 bytes | 05/15/2026 17:05:30
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  17 05 h Resuming Supabase Infrastructure Sovereignty - copia.md | 470830 bytes | 05/15/2026 17:05:30
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  17 05 h Resuming Supabase Infrastructure Sovereignty.md | 470830 bytes | 05/15/2026 17:05:30
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  22 05 h Resuming Supabase Infrastructure Sovereignty - copia - copia.md | 546868 bytes | 05/15/2026 22:15:18
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  22 05 h Resuming Supabase Infrastructure Sovereignty - copia.md | 546868 bytes | 05/15/2026 22:15:18
+- .md | C:\EAR_OS_V2\docs\contexto_historico\15 05 2026  22 05 h Resuming Supabase Infrastructure Sovereignty.md | 546868 bytes | 05/15/2026 22:15:18
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  10 40 h Resuming Supabase Infrastructure Sovereignty - copia - copia.md | 16429 bytes | 05/17/2026 10:40:57
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  10 40 h Resuming Supabase Infrastructure Sovereignty - copia.md | 16429 bytes | 05/17/2026 10:40:57
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  10 40 h Resuming Supabase Infrastructure Sovereignty.md | 16429 bytes | 05/17/2026 10:40:57
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  19 40 h Resuming Supabase Infrastructure Sovereignty - copia - copia.md | 217591 bytes | 05/17/2026 19:47:14
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  19 40 h Resuming Supabase Infrastructure Sovereignty - copia.md | 217591 bytes | 05/17/2026 19:47:14
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  19 40 h Resuming Supabase Infrastructure Sovereignty.md | 217591 bytes | 05/17/2026 19:47:14
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  21 00 h Resuming Supabase Infrastructure Sovereignty.md | 362411 bytes | 05/17/2026 21:00:49
+- .md | C:\EAR_OS_V2\docs\contexto_historico\17 05 2026  21 32 h Resuming Supabase Infrastructure Sovereignty.md | 365089 bytes | 05/17/2026 21:32:45
+- .md | C:\EAR_OS_V2\docs\contexto_historico\18 05 2026  11 22 h Resuming Supabase Infrastructure Sovereignty.md | 309820 bytes | 05/18/2026 11:25:35
+- .md | C:\EAR_OS_V2\docs\contexto_historico\18 05 2026  11 28 h Resuming Supabase Infrastructure Sovereignty.md | 316595 bytes | 05/18/2026 11:28:55
+- .md | C:\EAR_OS_V2\docs\contexto_historico\2 Ensamblaje Atómico EAR OS V2.md | 26167 bytes | 05/04/2026 13:33:35
+- .md | C:\EAR_OS_V2\docs\contexto_historico\3 Ensamblaje Atómico EAR OS V2.md | 88471 bytes | 05/04/2026 15:45:50
+- .md | C:\EAR_OS_V2\docs\contexto_historico\4 Ensamblaje Atómico EAR OS V2.md | 89091 bytes | 05/04/2026 15:53:15
+- .md | C:\EAR_OS_V2\docs\contexto_historico\CLINE_OMEGA_LOCAL_100_PROMPTS_RX7900XTX.md | 12935 bytes | 05/13/2026 17:31:26
+- .html | C:\EAR_OS_V2\docs\contexto_historico\ear-antigravity-fleet-simulation.html | 21267 bytes | 05/15/2026 18:42:53
+- .csv | C:\EAR_OS_V2\docs\contexto_historico\landings-200 - copia - copia.csv | 14114 bytes | 05/17/2026 19:39:13
+- .csv | C:\EAR_OS_V2\docs\contexto_historico\landings-200 - copia.csv | 14114 bytes | 05/17/2026 19:39:13
+- .csv | C:\EAR_OS_V2\docs\contexto_historico\landings-200.csv | 14114 bytes | 05/17/2026 19:39:13
+- .txt | C:\EAR_OS_V2\docs\contexto_historico\Lee el índice del SSOT y dime la fa.txt | 9801 bytes | 05/13/2026 17:48:50
+- .html | C:\EAR_OS_V2\docs\contexto_historico\manual-admin - copia - copia.html | 1494 bytes | 05/17/2026 10:58:51
+- .html | C:\EAR_OS_V2\docs\contexto_historico\manual-admin - copia.html | 1494 bytes | 05/17/2026 10:58:51
+- .html | C:\EAR_OS_V2\docs\contexto_historico\manual-admin.html | 1494 bytes | 05/17/2026 10:58:51
+- .html | C:\EAR_OS_V2\docs\contexto_historico\manual-usuario - copia - copia.html | 1577 bytes | 05/17/2026 10:59:30
+- .html | C:\EAR_OS_V2\docs\contexto_historico\manual-usuario - copia.html | 1577 bytes | 05/17/2026 10:59:30
+- .html | C:\EAR_OS_V2\docs\contexto_historico\manual-usuario.html | 1577 bytes | 05/17/2026 10:59:30
+- .md | C:\EAR_OS_V2\docs\forensics\hermes-vimume\inventory.md | 2106 bytes | 05/15/2026 11:13:06
+- .md | C:\EAR_OS_V2\docs\forensics\hermes-vimume\knowledge-vault-map.md | 1454 bytes | 05/15/2026 11:03:24
+- .json | C:\EAR_OS_V2\docs\forensics\hermes-vimume\manifest.json | 1058 bytes | 05/15/2026 11:13:15
+- .csv | C:\EAR_OS_V2\docs\forensics\hermes-vimume\navigation-matrix.csv | 809 bytes | 05/15/2026 11:03:32
+- .md | C:\EAR_OS_V2\docs\forensics\hermes-vimume\reconciliation.md | 1282 bytes | 05/15/2026 11:13:13
+- .md | C:\EAR_OS_V2\docs\forensics\hermes-vimume\runtime-reality-check.md | 1440 bytes | 05/15/2026 11:13:11
+- .md | C:\EAR_OS_V2\docs\forensics\hermes-vimume\security-audit.md | 988 bytes | 05/15/2026 11:03:28
+- .md | C:\EAR_OS_V2\docs\forensics\hermes-vimume\trace.md | 1449 bytes | 05/15/2026 11:13:09
+- .md | C:\EAR_OS_V2\docs\forensics\hermes-vimume\v182-audit.md | 3481 bytes | 05/15/2026 11:31:10
+- .md | C:\EAR_OS_V2\docs\forensics\vimume-vertical-lock\final-audit.md | 2806 bytes | 05/15/2026 12:35:32
+- .md | C:\EAR_OS_V2\docs\forensics\vimume-vertical-lock\formal-audit-status.md | 2330 bytes | 05/15/2026 12:51:22
+- .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_C.csv | 62130 bytes | 04/30/2026 15:00:28
+- .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_D.csv | 62130 bytes | 04/30/2026 15:08:49
+- .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_H.csv | 29694040 bytes | 04/30/2026 15:11:14
+- .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_C.csv (Operaciones)\GENOMA_C_INTELLIGENCE.csv | 38373 bytes | 04/30/2026 13:35:20
+- .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_D.csv (Resiliencia_Backups)\GENOMA_H_INTELLIGENCE.csv.csv | 41280742 bytes | 04/30/2026 13:40:46
+- .csv | C:\EAR_OS_V2\docs\genomas\GENOMA_H.csv (Inteligencia_Astra)\GENOMA_H_INTELLIGENCE.csv | 39141972 bytes | 04/30/2026 11:01:49
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\00_brief_producto.md | 373 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\01_estrategia_lanzamiento.md | 366 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\02_funnel_y_crm_consentimiento.md | 449 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\03_produccion_contenido.md | 415 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\04_catalogo_nombres.md | 493 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\05_legal_privacidad_sorteo.md | 440 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\06_metricas_y_experimentos.md | 392 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\iniciativas\edwin-birthday-engine\07_backlog_aprobacion.md | 462 bytes | 08/01/2026 22:51:39
+- .md | C:\EAR_OS_V2\docs\interconexiones\EAR_OS_BIT_GENOME.md | 304 bytes | 07/28/2026 07:57:36
+- .md | C:\EAR_OS_V2\docs\interconexiones\EAR_OS_GENOMA_GRAPH.md | 297 bytes | 07/28/2026 00:00:01
+- .json | C:\EAR_OS_V2\docs\interconexiones\SYNC_STATE.json | 54 bytes | 07/29/2026 09:50:43
+- .md | C:\EAR_OS_V2\docs\marketing\google_business_posts_drafts.md | 1804 bytes | 05/13/2026 13:28:49
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\00-Index\Indice Central.md | 2040 bytes | 05/18/2026 17:08:28
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\01-Arquitectura\Esquema General.md | 2176 bytes | 05/18/2026 17:08:32
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\01-Arquitectura\Matriz de Permisos.md | 1943 bytes | 05/18/2026 17:08:40
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\01-Arquitectura\Webhook de Stripe Connect.md | 2459 bytes | 05/18/2026 17:08:36
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\02-Seguridad_y_Hardening\Checklist de Hardening.md | 1596 bytes | 05/18/2026 17:08:44
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\03-Roadmap_y_Fases\EAR OS Strategic Roadmap.md | 1650 bytes | 05/18/2026 17:08:48
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\04-Runbooks_y_Despliegues\Runbook de Deploy a Vercel.md | 1542 bytes | 05/18/2026 17:08:53
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\04-Runbooks_y_Despliegues\Runbook de Rollback.md | 1463 bytes | 05/18/2026 17:08:57
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\05-Registros_y_Decisiones\ADR Plantilla.md | 1398 bytes | 05/18/2026 17:09:06
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\05-Registros_y_Decisiones\Postmortem Plantilla.md | 1646 bytes | 05/18/2026 17:09:11
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\05-Registros_y_Decisiones\Release v1.0.0.md | 1408 bytes | 05/18/2026 17:09:01
+- .md | C:\EAR_OS_V2\docs\memoria EAR OS\06-Legado_y_Contexto\Historia de Edwin Agudelo.md | 2234 bytes | 05/18/2026 17:09:16
+- .md | C:\EAR_OS_V2\docs\release\ANTIGRAVITY_OMEGA_V2_1_PROPOSED.md | 17113 bytes | 08/03/2026 09:55:30
+- .md | C:\EAR_OS_V2\docs\release\CLINE_MVP_RULES.md | 1556 bytes | 08/03/2026 10:51:05
+- .md | C:\EAR_OS_V2\docs\release\FORENSIC_AUDIT_EVIDENCE.md | 1498 bytes | 08/03/2026 10:20:01
+- .md | C:\EAR_OS_V2\docs\release\MVP_EXECUTION_QUEUE.md | 4716 bytes | 08/03/2026 10:51:03
+- .md | C:\EAR_OS_V2\docs\release\MVP_GO_NO_GO_CHECKLIST.md | 1415 bytes | 08/03/2026 10:02:21
+- .md | C:\EAR_OS_V2\docs\release\MVP_RELEASE_DOSSIER.md | 2677 bytes | 08/03/2026 10:51:07
+- .md | C:\EAR_OS_V2\docs\release\OMEGA_V2_1_SSOT_DIFF.md | 820 bytes | 08/03/2026 10:02:40
+- .md | C:\EAR_OS_V2\docs\release\ROUTE_AUTH_MATRIX.md | 1842 bytes | 08/03/2026 10:50:57
+- .md | C:\EAR_OS_V2\docs\release\TECHNICAL_DEBT_REGISTER.md | 1465 bytes | 08/03/2026 10:01:55
+- .md | C:\EAR_OS_V2\docs\security\HARDENING_CHECKLIST_SCLASS.md | 8525 bytes | 05/18/2026 16:48:29
+- .md | C:\EAR_OS_V2\incubadora\2026-05-18_PROMPTS_PARTE_1.md | 879385 bytes | 05/05/2026 15:57:53
+- .md | C:\EAR_OS_V2\incubadora\2026-05-18_PROMPTS_PARTE_10.md | 4684481 bytes | 05/05/2026 15:57:56
+- .txt | C:\EAR_OS_V2\logs\compilation_history\tsc_errors.txt | 50212 bytes | 05/15/2026 17:21:14
+- .md | C:\EAR_OS_V2\output\documentacion-hermes\manual-admin.md | 8623 bytes | 05/17/2026 11:01:45
+- .md | C:\EAR_OS_V2\output\documentacion-hermes\manual-usuario.md | 8553 bytes | 05/17/2026 11:01:38
+- .md | C:\EAR_OS_V2\output\documentacion-hermes\README.md | 2600 bytes | 05/17/2026 11:01:29
+- .md | C:\EAR_OS_V2\output\talent-os-seo\sitemap-final.md | 268 bytes | 05/17/2026 19:46:21
+- .md | C:\EAR_OS_V2\output\talent-os-seo\talent_os_seo_dominance.md | 2004 bytes | 05/17/2026 19:46:21
+- .md | C:\EAR_OS_V2\output\talent-os-seo\talent_os_seo_inventory.md | 37195 bytes | 05/17/2026 19:54:44
+- .txt | C:\EAR_OS_V2\public\robots.txt | 109 bytes | 04/24/2026 21:48:21
+- .pdf | C:\EAR_OS_V2\public\assets\docs\edwin-rider.pdf | 45 bytes | 07/26/2026 21:59:18
+- .py | C:\EAR_OS_V2\scripts\01_ESCANER_FORENSE_ADN.py | 3244 bytes | 04/04/2026 15:41:13
+- .ps1 | C:\EAR_OS_V2\scripts\03_configurar_supabase_env_seguro.ps1 | 0 bytes | 08/01/2026 20:00:58
+- .ps1 | C:\EAR_OS_V2\scripts\04_verificar_supabase_env_seguro.ps1 | 0 bytes | 08/01/2026 20:03:08
+- .py | C:\EAR_OS_V2\scripts\7179a7d0c0dbabf7c4a090c75a02a329_organizer.py | 5250 bytes | 02/25/2026 12:33:13
+- .py | C:\EAR_OS_V2\scripts\8b48933ad7b2bfea44ce4a33cb2e648a_move_dups.py | 7054 bytes | 02/25/2026 08:43:25
+- .py | C:\EAR_OS_V2\scripts\99831ff239497eeb6cb3b0fa6b4327c1_database.py | 2261 bytes | 02/25/2026 12:32:47
+- .mjs | C:\EAR_OS_V2\scripts\audit_links.mjs | 4913 bytes | 05/18/2026 16:14:26
+- .py | C:\EAR_OS_V2\scripts\Buscador avanzado.py | 4333 bytes | 03/08/2026 19:15:45
+- .js | C:\EAR_OS_V2\scripts\cazador_fantasma.js | 5145 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\cazador_fantasma.ts | 5366 bytes | 04/16/2026 17:20:03
+- .py | C:\EAR_OS_V2\scripts\ClasificadorForense.py | 10178 bytes | 12/04/2025 09:18:49
+- .py | C:\EAR_OS_V2\scripts\CLI windows.py | 1392 bytes | 05/01/2026 10:38:15
+- .json | C:\EAR_OS_V2\scripts\credentials.json | 459 bytes | 05/18/2026 15:44:08
+- .py | C:\EAR_OS_V2\scripts\eml_parser.py | 3678 bytes | 05/18/2026 15:55:28
+- .PS1 | C:\EAR_OS_V2\scripts\IGNICION_EAR.PS1 | 2867 bytes | 05/01/2026 14:50:18
+- .js | C:\EAR_OS_V2\scripts\indexador_forense.js | 2129 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\indexador_forense.ts | 2252 bytes | 05/04/2026 15:52:31
+- .ps1 | C:\EAR_OS_V2\scripts\Iniciar_obsidian_earos.ps1 | 2516 bytes | 05/19/2026 16:57:52
+- .js | C:\EAR_OS_V2\scripts\intelligence_scan_route.js | 3512 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\intelligence_scan_route.ts | 603 bytes | 07/30/2026 17:23:36
+- .ps1 | C:\EAR_OS_V2\scripts\inventory_audit.ps1 | 4578 bytes | 05/19/2026 17:03:34
+- .js | C:\EAR_OS_V2\scripts\knowledge-ingestion.js | 2462 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\knowledge-ingestion.ts | 2831 bytes | 03/21/2026 15:10:34
+- .js | C:\EAR_OS_V2\scripts\list_models.js | 815 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\list_models.ts | 784 bytes | 05/08/2026 22:12:02
+- .bat | C:\EAR_OS_V2\scripts\optimizar_ia_gpu.bat | 1570 bytes | 05/14/2026 18:28:35
+- .mjs | C:\EAR_OS_V2\scripts\purge_v207_b1_fixed.mjs | 2401 bytes | 05/19/2026 16:26:36
+- .mjs | C:\EAR_OS_V2\scripts\purge_v207_b1.mjs | 3084 bytes | 05/19/2026 16:21:44
+- .py | C:\EAR_OS_V2\scripts\safe_gmail_extractor.py | 3571 bytes | 05/18/2026 15:46:04
+- .sql | C:\EAR_OS_V2\scripts\security-smoke-test.sql | 4268 bytes | 05/13/2026 19:46:42
+- .js | C:\EAR_OS_V2\scripts\stress-test-pricing.js | 1856 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\stress-test-pricing.ts | 48 bytes | 07/29/2026 22:53:41
+- .json | C:\EAR_OS_V2\scripts\stress-test-tsconfig.json | 48 bytes | 07/29/2026 22:55:42
+- .js | C:\EAR_OS_V2\scripts\telegramService.js | 961 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\telegramService.ts | 1176 bytes | 03/23/2026 14:13:20
+- .js | C:\EAR_OS_V2\scripts\test-memory-persistence.js | 491 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\test-memory-persistence.ts | 48 bytes | 07/29/2026 22:57:30
+- .json | C:\EAR_OS_V2\scripts\token.json | 734 bytes | 05/18/2026 15:46:34
+- .js | C:\EAR_OS_V2\scripts\vantage-registry.js | 2482 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\vantage-registry.ts | 2325 bytes | 03/16/2026 18:11:01
+- .py | C:\EAR_OS_V2\scripts\Vimume_Deep_Scanner.py | 5230 bytes | 04/11/2026 10:16:41
+- .py | C:\EAR_OS_V2\scripts\Whisper_Wisdom_Injection.py | 1752 bytes | 04/11/2026 12:23:01
+- .mjs | C:\EAR_OS_V2\scripts\database\check_tables.mjs | 864 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\database\check_vector_support.mjs | 1117 bytes | 04/29/2026 19:48:40
+- .js | C:\EAR_OS_V2\scripts\database\codex_ingestion.js | 1923 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\database\find_rag_content.mjs | 988 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\database\find_table.mjs | 993 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\database\inspect_table.mjs | 697 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\database\leviatan_ingest.mjs | 4039 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\database\try_sql.mjs | 855 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\database\vimume_deep_ingestion.mjs | 2188 bytes | 04/29/2026 19:48:40
+- .js | C:\EAR_OS_V2\scripts\ingestion\omega_indexer.js | 1791 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\ingestion\omega_indexer.ts | 1771 bytes | 05/05/2026 10:23:05
+- .js | C:\EAR_OS_V2\scripts\ingestion\omega_ingestor.js | 4228 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\ingestion\omega_ingestor.ts | 3973 bytes | 05/11/2026 12:22:00
+- .mjs | C:\EAR_OS_V2\scripts\tools\clean_sessions.mjs | 1379 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\debug_embeddings.mjs | 1536 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\extract_sessions.mjs | 1347 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\extract_vimume_sessions.mjs | 1270 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\list_available_models.mjs | 740 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\list_models.mjs | 571 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\mine_vimume_protocol.mjs | 948 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\test_api.mjs | 823 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\test_astra_rag.mjs | 2254 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\test_fetch.mjs | 892 bytes | 04/29/2026 19:48:40
+- .mjs | C:\EAR_OS_V2\scripts\tools\test_insert.mjs | 745 bytes | 04/29/2026 19:48:40
+- .py | C:\EAR_OS_V2\scripts\vampire_scrapers\competitor_vampire.py | 3658 bytes | 04/24/2026 10:54:45
+- .js | C:\EAR_OS_V2\scripts\vampirization\seed_products.js | 3302 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\scripts\vampirization\seed_products.ts | 47 bytes | 07/29/2026 22:59:29
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\.instructions.md | 6594 bytes | 04/22/2026 13:24:57
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\BLUEPRINT_SCLASS.md | 4791 bytes | 05/04/2026 15:26:35
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build_error.log | 659262 bytes | 05/06/2026 18:34:06
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build_full_v2.log | 98798 bytes | 05/11/2026 11:30:45
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build_full_v3.log | 96748 bytes | 05/11/2026 11:31:26
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build_full_v4.log | 95564 bytes | 05/11/2026 11:33:46
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build_full.log | 98048 bytes | 05/11/2026 11:30:24
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build_success_v1.log | 107816 bytes | 05/11/2026 11:35:21
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\build.log | 13246768 bytes | 05/09/2026 08:22:03
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\CONSOLIDACION_PASO_4.md | 2335 bytes | 04/24/2026 11:11:43
+- .txt | C:\EAR_OS_V2\src\infrastructure\docs\archive\dev_logs.txt | 44278 bytes | 04/29/2026 19:52:14
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\EAR_OS_MASTER_PROMPTS.md | 4001 bytes | 05/05/2026 12:41:17
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\EAR_OS_OMEGA_CODEX.md | 56349318 bytes | 04/24/2026 13:25:56
+- .txt | C:\EAR_OS_V2\src\infrastructure\docs\archive\EVE_URLS_DESDE_BODAS.txt | 1116 bytes | 05/02/2026 15:51:58
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\IMPERIO_MAPA_ESTRUCTURAL.md | 3782 bytes | 04/29/2026 19:52:14
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\IMPERIUM_OMEGA_ROADMAP.md | 9581 bytes | 04/24/2026 13:40:06
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\instrucciones_ejecucion.md | 1497 bytes | 04/24/2026 13:20:21
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\lint_final.log | 127182 bytes | 05/11/2026 11:34:45
+- .log | C:\EAR_OS_V2\src\infrastructure\docs\archive\lint_full.log | 127536 bytes | 05/11/2026 11:34:26
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\MANUAL_CLINE_RX7900_XTX.md | 48358 bytes | 04/29/2026 19:48:40
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\README_SOVEREIGN.md | 2306 bytes | 04/19/2026 14:21:21
+- .txt | C:\EAR_OS_V2\src\infrastructure\docs\archive\reporte_forense_ear.txt | 13082 bytes | 05/03/2026 00:48:57
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\SEGUIMIENTO_DE_MISION_V5.md | 1882 bytes | 05/07/2026 18:15:59
+- .txt | C:\EAR_OS_V2\src\infrastructure\docs\archive\setup_sclass.ps1.txt | 1898 bytes | 04/20/2026 14:31:52
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\TESTAMENTO_CLINE_V2.md | 1895 bytes | 05/11/2026 14:13:12
+- .md | C:\EAR_OS_V2\src\infrastructure\docs\archive\TESTAMENTO_CLINE.md | 6978 bytes | 04/29/2026 19:48:40
+- .ps1 | C:\EAR_OS_V2\src\lib\v.ps1 | 344 bytes | 04/29/2026 19:52:14
+- .js | C:\EAR_OS_V2\src\lib\scripts\vampire-parser.js | 6732 bytes | 07/28/2026 08:51:41
+- .ts | C:\EAR_OS_V2\src\lib\scripts\vampire-parser.ts | 5809 bytes | 05/18/2026 20:54:28
+- .md | C:\EAR_OS_V2\src\lib\services\scrapers\README_SCRAPER.md | 1510 bytes | 02/06/2026 08:56:29
+- .txt | C:\EAR_OS_V2\src\lib\services\scrapers\requirements_scraper.txt | 66 bytes | 02/06/2026 08:55:56
+- .js | C:\EAR_OS_V2\src\scripts\batch_nexus_link.js | 3125 bytes | 07/28/2026 08:51:42
+- .ts | C:\EAR_OS_V2\src\scripts\batch_nexus_link.ts | 2871 bytes | 05/06/2026 18:45:54
+- .js | C:\EAR_OS_V2\src\scripts\e2e_swarm_checkout.js | 983 bytes | 07/28/2026 08:51:42
+- .ts | C:\EAR_OS_V2\src\scripts\e2e_swarm_checkout.ts | 928 bytes | 05/07/2026 11:41:27
+- .js | C:\EAR_OS_V2\src\scripts\phantomIngestor.js | 4041 bytes | 07/28/2026 08:51:42
+- .ts | C:\EAR_OS_V2\src\scripts\phantomIngestor.ts | 4026 bytes | 05/15/2026 17:20:53
+- .js | C:\EAR_OS_V2\src\scripts\phantomScraper.js | 2659 bytes | 07/28/2026 08:51:42
+- .ts | C:\EAR_OS_V2\src\scripts\phantomScraper.ts | 2478 bytes | 05/06/2026 18:27:10
+- .js | C:\EAR_OS_V2\src\scripts\vampire-runner.js | 704 bytes | 07/28/2026 08:51:42
+- .ts | C:\EAR_OS_V2\src\scripts\vampire-runner.ts | 654 bytes | 05/18/2026 10:31:06
+- .md | C:\EAR_OS_V2\sync_nexus\STITCH_DIRECTIVE_01.md | 1993 bytes | 04/29/2026 19:48:40
+- .md | C:\EAR_OS_V2\sync_nexus\STITCH_DIRECTIVE_02_VIMUME.md | 2609 bytes | 04/29/2026 19:48:40
+- .md | C:\EAR_OS_V2\_auditoria\baseline_build.md | 912 bytes | 07/30/2026 17:17:49
+- .ps1 | C:\EAR_OS_V2\_auditoria\run_auditoria.ps1 | 8307 bytes | 07/31/2026 12:01:48
+- .bat | C:\EAR_OS_V2\_auditoria\legacy_scripts_no_ejecutarFIX_EAR_OS.bat\FIX_EAR_OS.bat | 1419 bytes | 04/21/2026 22:55:42
+
+## Límites aplicados
+
+- HECHO_VERIFICADO: no se leyó contenido de .env ni .env.local.
+- HECHO_VERIFICADO: node_modules, .git, .next, turbo, ARCHIVE_RECOVERY y auditoria_32b fueron excluidos del inventario.
+- SUPUESTO: los nombres y metadatos reflejan la estructura actual a la fecha de la auditoría.
