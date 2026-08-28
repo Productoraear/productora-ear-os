@@ -44,8 +44,24 @@ export const metadata: Metadata = {
   keywords: ["alquiler equipos sonido madrid", "mariachi para bodas", "produccion eventos ayuntamientos", "pantallas led exterior", "Productora EAR"],
   authors: [{ name: "EAR OS Core" }],
   icons: {
-    icon: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: "https://lh3.googleusercontent.com/a/ACg8ocJF7O8ZaJG4WsLPfVaVe5f5Gmu80nOoea2teuOAs-s9sq53uNk=s288-c-no",
+    apple: "https://lh3.googleusercontent.com/a/ACg8ocJF7O8ZaJG4WsLPfVaVe5f5Gmu80nOoea2teuOAs-s9sq53uNk=s288-c-no",
+  },
+  openGraph: {
+    title: "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G",
+    description: "Plataforma de producción técnica, alquiler de audiovisuales, música para bodas y licitaciones públicas de festejos.",
+    url: "https://www.productoraear.com",
+    siteName: "Productora EAR // EAR OS",
+    images: [
+      {
+        url: "https://lh3.googleusercontent.com/a/ACg8ocJF7O8ZaJG4WsLPfVaVe5f5Gmu80nOoea2teuOAs-s9sq53uNk=s288-c-no",
+        width: 288,
+        height: 288,
+        alt: "Logo Oficial EAR OS"
+      }
+    ],
+    locale: "es_ES",
+    type: "website"
   },
   verification: {
     google: "aqeccjF8QKJSCm93Jb2C1rP8qvyhat2yLtJkrhFSGfU",

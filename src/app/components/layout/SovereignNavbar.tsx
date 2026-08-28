@@ -66,10 +66,14 @@ const SovereignNavbar = () => {
         {/* LOGO & BRAND */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className={cn(
-            "w-10 h-10 rounded-full flex items-center justify-center transition-transform group-hover:scale-105",
-            role === 'ROLE_B2G' ? "bg-gradient-to-br from-blue-400 to-blue-700 shadow-[0_0_20px_rgba(59,130,246,0.4)]" : "bg-gradient-to-br from-[#ecb613] to-[#8a6b0d] shadow-[0_0_20px_rgba(236,182,19,0.4)]"
+            "w-10 h-10 rounded-full overflow-hidden border p-0.5 flex items-center justify-center transition-transform group-hover:scale-105",
+            role === 'ROLE_B2G' ? "border-blue-400/60 shadow-[0_0_20px_rgba(59,130,246,0.4)]" : "border-[#ecb613]/60 shadow-[0_0_20px_rgba(236,182,19,0.4)]"
           )}>
-            <span className="text-black font-bold text-xl font-syne">E</span>
+            <img 
+              src="https://lh3.googleusercontent.com/a/ACg8ocJF7O8ZaJG4WsLPfVaVe5f5Gmu80nOoea2teuOAs-s9sq53uNk=s288-c-no" 
+              alt="EAR OS Logo" 
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
           <span className="text-lg md:text-xl font-bold font-syne tracking-tighter text-white">
             {role === 'ROLE_B2G' ? "EarOS B2G" : "EarOS"}

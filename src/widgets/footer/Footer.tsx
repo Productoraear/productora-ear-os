@@ -41,11 +41,13 @@ const Footer: React.FC = () => {
           {/* Brand & Socials */}
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-8">
-               <div className="w-12 h-12 bg-[#ecb613] rounded-xl flex items-center justify-center text-black shadow-[0_0_20px_rgba(212,168,85,0.3)]">
-                 <Shield size={24} />
-               </div>
-               <h2 className="text-3xl font-black uppercase tracking-tighter text-white">
-                 VIMUME <span className="text-[#ecb613]">OS</span>
+               <img 
+                 src="https://lh3.googleusercontent.com/a/ACg8ocJF7O8ZaJG4WsLPfVaVe5f5Gmu80nOoea2teuOAs-s9sq53uNk=s288-c-no" 
+                 alt="EAR OS Logo" 
+                 className="w-12 h-12 rounded-xl object-cover border border-[#ecb613]/50 shadow-[0_0_20px_rgba(212,168,85,0.3)]"
+               />
+               <h2 className="text-3xl font-black uppercase tracking-tighter text-white font-syne">
+                 EAR <span className="text-[#ecb613]">OS V2</span>
                </h2>
             </div>
             <p className="text-white/40 font-body max-w-sm mb-10 leading-relaxed text-sm">
