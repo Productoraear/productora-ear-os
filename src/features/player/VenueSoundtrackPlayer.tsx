@@ -81,6 +81,7 @@ export const VenueSoundtrackPlayer: React.FC = () => {
   const [currentTrack, setCurrentTrack] = useState<Track>(VENUE_CATALOG[0]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   
   // Cue Bridge State
   const [cueReport, setCueReport] = useState<CueSessionReport | null>(null);
@@ -89,11 +90,31 @@ export const VenueSoundtrackPlayer: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const togglePlay = (track?: Track) => {
+    const selected = track || currentTrack;
     if (track && track.id !== currentTrack.id) {
       setCurrentTrack(track);
       setIsPlaying(true);
+      if (audioRef.current) {
+        audioRef.current.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+        audioRef.current.volume = 1.0;
+        audioRef.current.muted = false;
+        audioRef.current.play().catch(e => console.error("Audio playback error:", e));
+      }
     } else {
-      setIsPlaying(!isPlaying);
+      if (isPlaying) {
+        audioRef.current?.pause();
+        setIsPlaying(false);
+      } else {
+        if (audioRef.current) {
+          audioRef.current.volume = 1.0;
+          audioRef.current.muted = false;
+          audioRef.current.play().then(() => {
+            setIsPlaying(true);
+          }).catch(e => console.error("Audio playback error:", e));
+        } else {
+          setIsPlaying(true);
+        }
+      }
     }
   };
 
@@ -139,6 +160,12 @@ export const VenueSoundtrackPlayer: React.FC = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8 space-y-8 bg-[#050505] text-zinc-100 font-sans">
+      <audio 
+        ref={audioRef} 
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" 
+        preload="metadata" 
+        onEnded={() => setIsPlaying(false)} 
+      />
       {/* HEADER HERO */}
       <div className="bg-gradient-to-br from-zinc-900 via-black to-[#050505] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl relative overflow-hidden backdrop-blur-2xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
