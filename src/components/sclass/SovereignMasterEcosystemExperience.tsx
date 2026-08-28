@@ -242,19 +242,19 @@ export function SovereignMasterEcosystemExperience() {
   const acousticWatts = pax * 12;
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen selection:bg-[#ecb613] selection:text-black font-sans pb-24 relative">
-      <div className="fixed top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#ecb613]/10 blur-[150px] pointer-events-none rounded-full" />
+    <div className="bg-[#050505] text-white min-h-screen selection:bg-[#258DCD] selection:text-white font-sans pb-24 relative">
+      <div className="fixed top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#258DCD]/10 blur-[150px] pointer-events-none rounded-full" />
 
       <section className="pt-24 sm:pt-28 pb-8 px-4 sm:px-6 max-w-7xl mx-auto text-center relative z-20">
-        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/80 border border-[#ecb613]/40 shadow-[0_0_30px_rgba(236,182,19,0.15)] backdrop-blur-xl mb-4">
-          <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-pulse" />
-          <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-zinc-300">
-            PRODUCTORA EAR // ECOSISTEMA S-CLASS 360°
+        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#081226] border border-[#AAD6CD]/30 shadow-[0_0_30px_rgba(37,141,205,0.2)] backdrop-blur-xl mb-4">
+          <span className="w-2 h-2 rounded-full bg-[#AAD6CD] animate-pulse shadow-[0_0_10px_#AAD6CD]" />
+          <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-[#AAD6CD]">
+            PRODUCTORA EAR // ECOSISTEMA HIGH-TECH S-CLASS 360°
           </span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white font-syne max-w-5xl mx-auto leading-[1.1]">
-          Arquitectura de <span className="text-[#ecb613] italic">Eventos, Fuego & Música</span> de Gala
+          Arquitectura de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#AAD6CD] via-[#258DCD] to-white italic">Eventos, Fuego & Música</span> de Gala
         </h1>
 
         <p className="text-xs sm:text-base text-zinc-300 font-light max-w-3xl mx-auto mt-3 leading-relaxed">
@@ -264,9 +264,9 @@ export function SovereignMasterEcosystemExperience() {
         <div className="mt-6 flex justify-center">
           <button 
             onClick={openTunnel}
-            className="px-8 py-3.5 bg-[#ecb613] text-black font-mono font-bold text-xs uppercase tracking-wider rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(236,182,19,0.3)] flex items-center gap-2 border border-[#ecb613]/80"
+            className="px-8 py-3.5 bg-[#258DCD] text-white font-mono font-bold text-xs uppercase tracking-wider rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(37,141,205,0.4)] flex items-center gap-2 border border-[#AAD6CD]/40 cursor-pointer"
           >
-            <Zap size={16} className="fill-black" />
+            <Zap size={16} className="fill-white" />
             <span>{isOpen ? 'Túnel Neural Desplegado' : 'Desplegar Túnel Neural S-Class'}</span>
           </button>
         </div>
@@ -277,7 +277,7 @@ export function SovereignMasterEcosystemExperience() {
             return (
               <div
                 key={prof.id}
-                className="p-5 rounded-3xl bg-gradient-to-b from-[#12121c] to-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/60 transition-all group flex flex-col justify-between shadow-xl relative overflow-hidden"
+                className="p-5 rounded-3xl bg-gradient-to-b from-[#081226] to-[#040914] border border-[#AAD6CD]/20 hover:border-[#AAD6CD]/60 hover:shadow-[0_10px_40px_-10px_rgba(8,18,38,0.9),0_0_25px_-5px_rgba(37,141,205,0.3)] transition-all duration-300 group flex flex-col justify-between shadow-xl relative overflow-hidden"
               >
                 <div 
                   className="absolute inset-0 opacity-15 group-hover:opacity-25 transition-opacity bg-cover bg-center pointer-events-none mix-blend-luminosity"
@@ -321,23 +321,23 @@ export function SovereignMasterEcosystemExperience() {
                   </p>
                 </div>
 
-                <div className="relative z-10 pt-4 border-t border-white/10 mt-3 space-y-1.5">
+                <div className="relative z-10 pt-4 border-t border-[#AAD6CD]/15 mt-3 space-y-1.5">
                   <div className="flex flex-wrap gap-1">
                     {prof.directLinks.map((link, i) => (
                       <Link
                         key={i}
                         href={link.href}
-                        className="px-2 py-0.5 rounded-lg bg-white/5 hover:bg-white/15 text-[9px] font-mono text-white/80 transition-colors flex items-center gap-0.5"
+                        className="px-2 py-0.5 rounded-lg bg-[#040914] hover:bg-[#0c1a36] text-[9px] font-mono text-[#AAD6CD] transition-colors flex items-center gap-0.5 border border-[#AAD6CD]/15"
                       >
                         <span>{link.label}</span>
-                        <ArrowUpRight size={8} className="opacity-50" />
+                        <ArrowUpRight size={8} className="opacity-70 text-[#258DCD]" />
                       </Link>
                     ))}
                   </div>
 
                   <Link
                     href={prof.href}
-                    className="w-full py-2.5 px-3 rounded-xl bg-white/10 group-hover:bg-[#ecb613] group-hover:text-black font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-between transition-all mt-2"
+                    className="w-full py-2.5 px-3 rounded-xl bg-[#258DCD]/20 hover:bg-[#258DCD] text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-between transition-all mt-2 border border-[#258DCD]/30"
                   >
                     <span>Entrar al Portal</span>
                     <ArrowRight size={13} />
@@ -350,13 +350,13 @@ export function SovereignMasterEcosystemExperience() {
       </section>
 
       <section className="py-8 px-4 sm:px-6 max-w-7xl mx-auto relative z-20">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-white/10 pb-4">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-[#AAD6CD]/15 pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded bg-[#ecb613] text-black font-mono font-black text-[9px] uppercase">
+              <span className="px-2.5 py-0.5 rounded bg-[#081226] border border-[#AAD6CD]/40 text-[#AAD6CD] font-mono font-black text-[9px] uppercase shadow-[0_0_10px_rgba(170,214,205,0.2)]">
                 CATÁLOGO DE ALTA COSTURA
               </span>
-              <span className="text-xs font-mono text-emerald-400">● 100% Garantía Cero Fallos</span>
+              <span className="text-xs font-mono text-[#AAD6CD]">● 100% Garantía Cero Fallos</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black uppercase text-white font-syne mt-1">
               Deslizador de Brasas, Música & Hardware
@@ -364,7 +364,7 @@ export function SovereignMasterEcosystemExperience() {
           </div>
 
           <div className="flex items-center gap-3 w-full md:w-auto justify-between">
-            <div className="flex items-center gap-1.5 bg-[#111118] p-1.5 rounded-2xl border border-white/10">
+            <div className="flex items-center gap-1.5 bg-[#081226] p-1.5 rounded-2xl border border-[#AAD6CD]/20 shadow-[0_4px_20px_rgba(8,18,38,0.6)]">
               {[
                 { id: 'all', label: 'Todo', icon: Sparkles },
                 { id: 'bbq', label: 'Brasas', icon: Flame },
@@ -377,10 +377,10 @@ export function SovereignMasterEcosystemExperience() {
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id as any)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1 ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1 cursor-pointer ${
                       isSelected 
-                        ? 'bg-[#ecb613] text-black shadow-md' 
-                        : 'text-white/50 hover:text-white'
+                        ? 'bg-[#258DCD] text-white shadow-[0_0_15px_rgba(37,141,205,0.4)]' 
+                        : 'text-white/60 hover:text-[#AAD6CD] hover:bg-[#0c1a36]'
                     }`}
                   >
                     <Icon size={12} />
@@ -393,14 +393,14 @@ export function SovereignMasterEcosystemExperience() {
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => scrollSlider('left')}
-                className="w-9 h-9 rounded-xl bg-[#111118] border border-white/10 hover:border-white/30 flex items-center justify-center text-white active:scale-95 transition-all"
+                className="w-9 h-9 rounded-xl bg-[#081226] border border-[#AAD6CD]/20 hover:border-[#AAD6CD]/50 flex items-center justify-center text-[#AAD6CD] active:scale-95 transition-all cursor-pointer"
                 title="Deslizar a la izquierda"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 onClick={() => scrollSlider('right')}
-                className="w-9 h-9 rounded-xl bg-[#111118] border border-white/10 hover:border-white/30 flex items-center justify-center text-white active:scale-95 transition-all"
+                className="w-9 h-9 rounded-xl bg-[#081226] border border-[#AAD6CD]/20 hover:border-[#AAD6CD]/50 flex items-center justify-center text-[#AAD6CD] active:scale-95 transition-all cursor-pointer"
                 title="Deslizar a la derecha"
               >
                 <ChevronRight size={16} />
@@ -421,66 +421,66 @@ export function SovereignMasterEcosystemExperience() {
                 onClick={() => setSelectedItem(item)}
                 className={`min-w-[290px] sm:min-w-[340px] max-w-[340px] rounded-3xl p-4 transition-all cursor-pointer snap-start flex flex-col justify-between border relative overflow-hidden group ${
                   isSelected 
-                    ? 'bg-gradient-to-b from-[#1c1c28] to-[#0e0e15] border-[#ecb613] shadow-2xl shadow-[#ecb613]/15 scale-[1.01]' 
-                    : 'bg-[#0d0d14] border-white/10 hover:border-white/20'
+                    ? 'bg-gradient-to-b from-[#081226] to-[#040914] border-[#258DCD] shadow-[0_10px_40px_-10px_rgba(8,18,38,0.9),0_0_25px_-5px_rgba(37,141,205,0.35)] scale-[1.01]' 
+                    : 'bg-[#081226]/80 border-[#AAD6CD]/15 hover:border-[#AAD6CD]/40'
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#ecb613] text-black text-[8px] font-mono font-black uppercase">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#258DCD] text-white text-[8px] font-mono font-black uppercase shadow-[0_0_10px_rgba(37,141,205,0.3)]">
                       {item.badge}
                     </span>
-                    <div className="flex items-center gap-1 text-xs font-mono text-amber-400">
-                      <Star size={12} className="fill-amber-400" />
+                    <div className="flex items-center gap-1 text-xs font-mono text-[#AAD6CD]">
+                      <Star size={12} className="fill-[#AAD6CD]" />
                       <span className="font-bold">{item.rating}</span>
                       <span className="text-white/40">({item.reviews})</span>
                     </div>
                   </div>
 
-                  <div className="h-40 rounded-2xl overflow-hidden bg-black/60 relative mb-3 border border-white/10">
+                  <div className="h-40 rounded-2xl overflow-hidden bg-black/60 relative mb-3 border border-[#AAD6CD]/15">
                     <img 
                       src={item.image} 
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#081226]/90 via-transparent to-transparent" />
                     
                     <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center text-[10px] font-mono text-white">
-                      <span className="bg-black/70 px-2 py-0.5 rounded-md border border-white/10">
+                      <span className="bg-[#081226]/90 px-2 py-0.5 rounded-md border border-[#AAD6CD]/25 text-[#AAD6CD]">
                         {item.price} € / {item.unit.split(' ')[0]}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="text-base font-black uppercase text-white font-syne line-clamp-1">
+                  <h3 className="text-base font-black uppercase text-white font-syne line-clamp-1 group-hover:text-[#AAD6CD] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs font-mono text-[#ecb613] truncate mt-0.5">
+                  <p className="text-xs font-mono text-[#AAD6CD] truncate mt-0.5">
                     {item.subtitle}
                   </p>
                   <p className="text-xs text-white/60 font-light mt-2 line-clamp-2 leading-relaxed">
                     {item.description}
                   </p>
 
-                  <div className="space-y-1 mt-3 pt-2.5 border-t border-white/5">
+                  <div className="space-y-1 mt-3 pt-2.5 border-t border-[#AAD6CD]/10">
                     {item.specs.map((spec, sIdx) => (
                       <div key={sIdx} className="flex items-center gap-1.5 text-[10px] font-mono text-white/70">
-                        <Check size={11} className="text-emerald-400 shrink-0" />
+                        <Check size={11} className="text-[#AAD6CD] shrink-0" />
                         <span className="truncate">{spec}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-                  <span className="text-sm font-black text-[#ecb613] font-mono">
+                <div className="mt-4 pt-3 border-t border-[#AAD6CD]/15 flex items-center justify-between">
+                  <span className="text-sm font-black text-[#AAD6CD] font-mono">
                     {item.price} € <span className="text-[9px] font-light text-white/50">{item.unit}</span>
                   </span>
 
                   <button className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold uppercase transition-all ${
                     isSelected 
-                      ? 'bg-[#ecb613] text-black shadow-md' 
-                      : 'bg-white/5 text-white/70 hover:bg-white/10 border border-white/10'
+                      ? 'bg-[#258DCD] text-white shadow-[0_0_15px_rgba(37,141,205,0.4)]' 
+                      : 'bg-[#040914] text-[#AAD6CD] hover:bg-[#0c1a36] border border-[#AAD6CD]/20'
                   }`}>
                     {isSelected ? '✓ Seleccionado' : 'Cotizar'}
                   </button>
@@ -492,10 +492,10 @@ export function SovereignMasterEcosystemExperience() {
       </section>
 
       <section className="py-6 px-4 sm:px-6 max-w-4xl mx-auto relative z-20">
-        <div className="bg-[#0f0f18] p-6 sm:p-8 rounded-3xl border border-white/15 shadow-2xl space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/10 pb-4">
+        <div className="bg-gradient-to-b from-[#081226] via-[#040914] to-[#000000] p-6 sm:p-8 rounded-3xl border border-[#AAD6CD]/25 shadow-[0_20px_60px_rgba(8,18,38,0.95)] space-y-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-[#AAD6CD]/15 pb-4">
             <div>
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#ecb613] block">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#AAD6CD] block">
                 COTIZACIÓN INSTANTÁNEA EN VIVO
               </span>
               <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-syne mt-0.5">
@@ -504,7 +504,7 @@ export function SovereignMasterEcosystemExperience() {
             </div>
 
             <div className="text-right">
-              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+              <span className="text-[10px] font-mono text-[#AAD6CD] bg-[#040914] px-2.5 py-1 rounded-full border border-[#AAD6CD]/30">
                 Split 80/10/10 Soberano
               </span>
             </div>
@@ -515,7 +515,7 @@ export function SovereignMasterEcosystemExperience() {
               <div className="space-y-2">
                 <div className="flex justify-between text-xs font-mono text-white/80">
                   <span>Número de Invitados / Comensales</span>
-                  <span className="text-[#ecb613] font-bold text-sm">{pax} PAX</span>
+                  <span className="text-[#AAD6CD] font-bold text-sm">{pax} PAX</span>
                 </div>
                 <input 
                   type="range" 
@@ -523,7 +523,7 @@ export function SovereignMasterEcosystemExperience() {
                   max={400} 
                   value={pax} 
                   onChange={e => setPax(Number(e.target.value))}
-                  className="w-full accent-[#ecb613] h-1.5 bg-white/10 rounded-lg cursor-pointer"
+                  className="w-full accent-[#258DCD] h-1.5 bg-[#040914] rounded-lg cursor-pointer border border-[#AAD6CD]/20"
                 />
                 <span className="text-[10px] font-mono text-white/40 block">
                   Potencia Acústica Calibrada: {acousticWatts}W RMS (12 W/pax)
@@ -534,7 +534,7 @@ export function SovereignMasterEcosystemExperience() {
             <div className="space-y-2">
               <div className="flex justify-between text-xs font-mono text-white/80">
                 <span>Distancia Desplazamiento desde Madrid</span>
-                <span className="text-[#ecb613] font-bold text-sm">{distanceKm} KM</span>
+                <span className="text-[#AAD6CD] font-bold text-sm">{distanceKm} KM</span>
               </div>
               <input 
                 type="range" 
@@ -542,7 +542,7 @@ export function SovereignMasterEcosystemExperience() {
                 max={300} 
                 value={distanceKm} 
                 onChange={e => setDistanceKm(Number(e.target.value))}
-                className="w-full accent-[#ecb613] h-1.5 bg-white/10 rounded-lg cursor-pointer"
+                className="w-full accent-[#258DCD] h-1.5 bg-[#040914] rounded-lg cursor-pointer border border-[#AAD6CD]/20"
               />
               <span className="text-[10px] font-mono text-white/40 block">
                 Radio Provincial: {distanceKm <= 30 ? 'Desplazamiento Incluido' : `+${Math.round((distanceKm - 30) * 0.95)}€ Km`}
@@ -550,14 +550,14 @@ export function SovereignMasterEcosystemExperience() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-black/60 p-4 rounded-2xl border border-white/10">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-[#040914] p-4 rounded-2xl border border-[#AAD6CD]/20">
             <div>
               <span className="text-[9px] font-mono text-white/40 uppercase block">Presupuesto Total</span>
-              <span className="text-lg font-black text-[#ecb613] font-mono">{totalQuote} €</span>
+              <span className="text-lg font-black text-[#AAD6CD] font-mono">{totalQuote} €</span>
             </div>
             <div>
               <span className="text-[9px] font-mono text-white/40 uppercase block">Depósito Stripe</span>
-              <span className="text-lg font-black text-emerald-400 font-mono">100 €</span>
+              <span className="text-lg font-black text-[#258DCD] font-mono">100 €</span>
             </div>
             <div>
               <span className="text-[9px] font-mono text-white/40 uppercase block">Resto en Evento</span>
@@ -565,7 +565,7 @@ export function SovereignMasterEcosystemExperience() {
             </div>
             <div>
               <span className="text-[9px] font-mono text-white/40 uppercase block">Price-Lock SHA-256</span>
-              <span className="text-xs font-bold text-blue-400 font-mono">Bloqueo 72h</span>
+              <span className="text-xs font-bold text-[#AAD6CD] font-mono">Bloqueo 72h</span>
             </div>
           </div>
 
@@ -575,7 +575,7 @@ export function SovereignMasterEcosystemExperience() {
               className={`w-full py-4 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
                 locked 
                   ? 'bg-emerald-500 text-black shadow-xl shadow-emerald-500/25' 
-                  : 'bg-gradient-to-r from-[#ecb613] to-[#d99f0b] text-black shadow-xl shadow-[#ecb613]/25 hover:brightness-110 active:scale-95'
+                  : 'bg-[#258DCD] hover:bg-[#1e7ebd] text-white shadow-[0_0_30px_rgba(37,141,205,0.4)] active:scale-95'
               }`}
             >
               <div className="flex items-center gap-2">
@@ -589,7 +589,7 @@ export function SovereignMasterEcosystemExperience() {
               href={`https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20quiero%20reservar%20${encodeURIComponent(selectedItem.title)}%20para%20${pax}%20asistentes%20(${totalQuote}%E2%82%AC).`}
               target="_blank"
               rel="noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+              className="w-full py-3 px-4 rounded-xl bg-[#040914] hover:bg-[#0c1a36] border border-[#AAD6CD]/20 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
             >
               <MessageCircle size={14} className="text-[#25D366]" />
               <span>Despachar Payload Directo a WhatsApp (+34 693 693 048)</span>
