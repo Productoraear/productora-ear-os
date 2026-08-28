@@ -94,6 +94,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/artistas/edwin-agudelo`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/proveedores`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/arsenal`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/catering-brasas`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${baseUrl}/ocasiones/ayuntamientos`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     
     // Ecosistema VIMUME (100% Cobertura)
