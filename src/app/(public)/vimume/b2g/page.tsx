@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { VimumeB2GCompiler } from '@/features/b2g/ui/VimumeB2GCompiler';
+import { VimumeOntologyExplorer } from '@/features/vimume/ui/VimumeOntologyExplorer';
 
 export const metadata: Metadata = {
   title: 'VIMUME B2G | Generador de Memorias Art. 118 LCSP (<15.000 €)',
@@ -92,6 +93,11 @@ export default function VimumeB2GPage() {
         {/* COMPILADOR INTERACTIVO B2G */}
         <section className="space-y-4">
           <VimumeB2GCompiler />
+        </section>
+
+        {/* BASE DE CONOCIMIENTO // ONTOLOGÍA DE 100 NIVELES SEMÁNTICOS */}
+        <section className="space-y-4">
+          <VimumeOntologyExplorer />
         </section>
 
         {/* PILARES TÉCNICOS Y JURÍDICOS PARA FISCALIZACIÓN */}

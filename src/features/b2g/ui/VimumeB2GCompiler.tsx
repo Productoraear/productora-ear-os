@@ -24,6 +24,12 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { 
+  getClinicalJustificationText, 
+  getLegalLcspJustificationText, 
+  getSroiJustificationText, 
+  getTechnicalRiderJustificationText 
+} from '@/lib/constants/vimume-100-levels';
 
 interface VIMUMEProgramPreset {
   id: string;
@@ -152,30 +158,31 @@ VERIFICACIÓN CRIPTOGRÁFICA SHA-256: ${Math.random().toString(36).substring(2)}
 - Período de Ejecución: ${fechaEvento}.
 - Justificación de la Necesidad Pública: Implementación de un programa de estimulación neurocognitiva y bienestar psicoemocional para personas mayores del municipio, orientado a prevenir el aislamiento social, combatir la Soledad No Deseada y ralentizar el deterioro cognitivo mediante terapia de reminiscencia sonora y frecuencias 40Hz.
 
-3. JUSTIFICACIÓN DE LA SINGULARIDAD Y EXCLUSIVIDAD ARTÍSTICO-CIENTÍFICA:
-- Dirección Artística: A cargo de Edwin Agudelo (Tenor Lírico homologado, especializado en técnica vocal y empatía neuroacústica gerontológica).
-- Metodología Exclusiva VIMUME: Protocolo acústico de neuro-reminiscencia activa registrado, con emisión sonora calibrada bajo estricto límite de seguridad física (<75 dB SPL) para evitar sobreestimulación sensorial en personas con demencias o Alzheimer.
-- Singularidad: Los servicios requeridos no son sustituibles por animación convencional de ocio, requiriendo acreditación técnica, rider electroacústico calibrado a 12 W/pax y bitácora de impacto emocional.
+3. FUNDAMENTACIÓN NEUROCLÍNICA Y MARCO OMS 2021-2030 (BLOQUE ONTOLÓGICO A):
+${getClinicalJustificationText()}
 
-4. DESGLOSE ECONÓMICO Y JUSTIFICACIÓN DE PRECIO CIERTO:
+4. FUNDAMENTACIÓN JURÍDICA, SINGULARIDAD Y ARTÍCULO 118 LCSP (BLOQUE ONTOLÓGICO F):
+- Dirección Artística: A cargo de Edwin Agudelo (Tenor Lírico homologado, especializado en técnica vocal y empatía neuroacústica gerontológica).
+- Justificación LCSP:
+${getLegalLcspJustificationText()}
+
+5. RETORNO SOCIAL DE LA INVERSIÓN (SROI) Y SPLIT SOBERANO (BLOQUE ONTOLÓGICO G):
+- Ratio SROI Auditado: 1,00 € invertido = 4,85 € de impacto social y ahorro farmacológico.
+${getSroiJustificationText()}
+
+6. DESGLOSE ECONÓMICO Y JUSTIFICACIÓN DE PRECIO CIERTO:
 - Base Imponible (Presupuesto Licitado): ${ofertaSugerida.toLocaleString('es-ES', { minimumFractionDigits: 2 })} € (IVA excluido)
 - Impuesto sobre el Valor Añadido (IVA 21%): ${ivaCalculado.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €
 - IMPORTE TOTAL ADJUDICABLE (IVA INCLUIDO): ${totalConIVA.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €
 - Declaración de No Superación de Límites: El valor estimado del contrato es inferior al umbral legal de 15.000,00 € establecido para contratos menores de servicios en el artículo 118.1 de la Ley 9/2017 (LCSP), no habiéndose producido fraccionamiento de gasto alguno.
 
-5. PRESCRIPCIONES TÉCNICAS, DE CALIDAD Y SEGURIDAD:
-a) Presión Acústica Controlada: Garantía de no superación de 75 dB SPL en recintos cerrados de centros de día y residencias.
-b) Infraestructura: Sistema Line Array Bose F1 / Sistemas electroacústicos calibrados a 12 W/pax y microfonía profesional digital Shure Axient/Beta 87A con inmunidad a radiofrecuencias.
-c) Póliza de Responsabilidad Civil: Cobertura de RC patronal y general vigente por 1.000.000,00 €.
-d) Cumplimiento Normativo: Empresa y cuadro artístico inscritos en el ROLECE, con certificados vigentes de hallarse al corriente en sus obligaciones con la Seguridad Social (TGSS) y la Agencia Tributaria (AEAT).
-e) Protección de Datos: Cumplimiento estricto del RGPD (UE 2016/679) y Ley Orgánica 3/2018 (LOPDGDD) en el tratamiento de telemetría de bienestar sin almacenamiento de datos médicos sensibles.
+7. PRESCRIPCIONES TÉCNICAS, DE CALIDAD Y SEGURIDAD ACÚSTICA (BLOQUE ONTOLÓGICO I):
+${getTechnicalRiderJustificationText()}
+- Póliza de Responsabilidad Civil: Cobertura de RC patronal y general vigente por 1.000.000,00 €.
+- Cumplimiento Normativo: Empresa y cuadro artístico inscritos en el ROLECE, con certificados vigentes de hallarse al corriente con la TGSS y la AEAT.
+- Protección de Datos: Cumplimiento estricto del RGPD (UE 2016/679) y Ley Orgánica 3/2018 (LOPDGDD).
 
-6. ALINEACIÓN CON LA ESTRATEGIA DE ENVEJECIMIENTO ACTIVO Y ODS 2030:
-- ODS 3 (Salud y Bienestar): Fomento de la salud mental, estimulación neuronal y bienestar afectivo de la tercera edad.
-- ODS 10 (Reducción de las Desigualdades): Acceso universal a cultura de excelencia para colectivos vulnerables o dependientes.
-- ODS 11 (Comunidades Sostenibles): Humanización y cohesión intergeneracional en el tejido municipal.
-
-7. INFORME DE INSUFICIENCIA DE MEDIOS MUNICIPALES:
+8. INFORME DE INSUFICIENCIA DE MEDIOS MUNICIPALES:
 Se certifica que la entidad contratante no dispone de personal artístico-lírico cualificado en plantilla ni de equipamiento electroacústico homologado de neuro-reminiscencia para desarrollar el presente programa de forma interna, resultando necesaria la contratación externa de Productora EAR / VIMUME.
 
 ================================================================================
