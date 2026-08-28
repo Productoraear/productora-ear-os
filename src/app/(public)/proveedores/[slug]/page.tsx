@@ -617,11 +617,11 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               <ClaimProfileTrigger 
                 provider={{
                   id: rawProvider.id || slug,
-                  name,
+                  name: displayName,
                   slug,
                   category,
                   province: location.split(',')[0],
-                  phone
+                  phone: rawProvider.phone || ''
                 }}
               />
 
