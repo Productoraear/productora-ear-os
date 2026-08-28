@@ -242,54 +242,57 @@ export function SovereignMasterEcosystemExperience() {
   const acousticWatts = pax * 12;
 
   return (
-    <div className="bg-[#050505] text-white min-h-screen selection:bg-[#258DCD] selection:text-white font-sans pb-24 relative">
-      <div className="fixed top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#258DCD]/10 blur-[150px] pointer-events-none rounded-full" />
+    <div className="bg-[#050505] text-white min-h-screen selection:bg-[#ecb613] selection:text-black font-sans pb-24 relative overflow-hidden">
+      {/* Dynamic Ambient Luminescence */}
+      <div className="fixed top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#ecb613]/10 via-[#258DCD]/5 to-transparent blur-[160px] pointer-events-none rounded-full" />
 
-      <section className="pt-24 sm:pt-28 pb-8 px-4 sm:px-6 max-w-7xl mx-auto text-center relative z-20">
-        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#081226] border border-[#AAD6CD]/30 shadow-[0_0_30px_rgba(37,141,205,0.2)] backdrop-blur-xl mb-4">
-          <span className="w-2 h-2 rounded-full bg-[#AAD6CD] animate-pulse shadow-[0_0_10px_#AAD6CD]" />
-          <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-[#AAD6CD]">
-            PRODUCTORA EAR // ECOSISTEMA HIGH-TECH S-CLASS 360°
+      {/* 1. HERO SECTION S-CLASS */}
+      <section className="pt-24 sm:pt-28 pb-10 px-4 sm:px-6 max-w-7xl mx-auto text-center relative z-20">
+        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0d0d12]/90 border border-[#ecb613]/30 shadow-[0_0_35px_rgba(236,182,19,0.15)] backdrop-blur-xl mb-6">
+          <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-pulse shadow-[0_0_10px_#ecb613]" />
+          <span className="text-[10px] font-mono font-bold tracking-[0.3em] uppercase text-zinc-200">
+            PRODUCTORA EAR // ECOSISTEMA S-CLASS 360°
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white font-syne max-w-5xl mx-auto leading-[1.1]">
-          Arquitectura de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#AAD6CD] via-[#258DCD] to-white italic">Eventos, Fuego & Música</span> de Gala
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tight text-white font-syne max-w-5xl mx-auto leading-[1.05]">
+          Arquitectura de <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white italic">Eventos, Fuego & Música</span> de Gala
         </h1>
 
-        <p className="text-xs sm:text-base text-zinc-300 font-light max-w-3xl mx-auto mt-3 leading-relaxed">
-          Desde bodas privadas de élite y catering de brasas vivas hasta licitaciones institucionales B2G y terapia neuroacústica VIMUME.
+        <p className="text-sm sm:text-base text-zinc-400 font-light max-w-3xl mx-auto mt-4 leading-relaxed">
+          Producción técnica integral, shows líricos de autor, catering de brasas vivas y protocolo clínico neuroacústico VIMUME con estándar de cero fallos.
         </p>
 
-        <div className="mt-6 flex justify-center">
+        <div className="mt-8 flex justify-center">
           <button 
             onClick={openTunnel}
-            className="px-8 py-3.5 bg-[#258DCD] text-white font-mono font-bold text-xs uppercase tracking-wider rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(37,141,205,0.4)] flex items-center gap-2 border border-[#AAD6CD]/40 cursor-pointer"
+            className="px-9 py-4 bg-gradient-to-r from-[#ecb613] to-[#d4a00e] text-black font-mono font-bold text-xs uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(236,182,19,0.35)] flex items-center gap-2.5 border border-amber-300/40 cursor-pointer"
           >
-            <Zap size={16} className="fill-white" />
+            <Zap size={16} className="fill-black" />
             <span>{isOpen ? 'Túnel Neural Desplegado' : 'Desplegar Túnel Neural S-Class'}</span>
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 text-left">
+        {/* 2. 4 PROFILES BENTO GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12 text-left">
           {SOVEREIGN_PROFILES.map((prof) => {
             const Icon = prof.icon;
             return (
               <div
                 key={prof.id}
-                className="p-5 rounded-3xl bg-gradient-to-b from-[#081226] to-[#040914] border border-[#AAD6CD]/20 hover:border-[#AAD6CD]/60 hover:shadow-[0_10px_40px_-10px_rgba(8,18,38,0.9),0_0_25px_-5px_rgba(37,141,205,0.3)] transition-all duration-300 group flex flex-col justify-between shadow-xl relative overflow-hidden"
+                className="p-6 rounded-[2rem] bg-gradient-to-b from-[#111118] via-[#0b0b10] to-[#07070a] border border-white/10 hover:border-[#ecb613]/50 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9),0_0_30px_-5px_rgba(236,182,19,0.15)] transition-all duration-400 group flex flex-col justify-between shadow-2xl relative overflow-hidden"
               >
                 <div 
-                  className="absolute inset-0 opacity-15 group-hover:opacity-25 transition-opacity bg-cover bg-center pointer-events-none mix-blend-luminosity"
+                  className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-cover bg-center pointer-events-none mix-blend-luminosity duration-700"
                   style={{ backgroundImage: `url(${prof.image})` }}
                 />
 
-                <div className="relative z-10 space-y-3">
+                <div className="relative z-10 space-y-4">
                   <div className="flex items-center justify-between">
                     <div 
-                      className="p-2.5 rounded-2xl border"
+                      className="p-3 rounded-2xl border backdrop-blur-md"
                       style={{ 
-                        backgroundColor: `${prof.accentColor}15`, 
+                        backgroundColor: `${prof.accentColor}18`, 
                         borderColor: `${prof.accentColor}40`,
                         color: prof.accentColor 
                       }}
@@ -298,10 +301,10 @@ export function SovereignMasterEcosystemExperience() {
                     </div>
 
                     <span 
-                      className="text-[8px] font-mono font-black uppercase px-2.5 py-0.5 rounded-full border"
+                      className="text-[9px] font-mono font-black uppercase px-3 py-1 rounded-full border backdrop-blur-md"
                       style={{ 
-                        backgroundColor: `${prof.accentColor}10`, 
-                        borderColor: `${prof.accentColor}30`,
+                        backgroundColor: `${prof.accentColor}12`, 
+                        borderColor: `${prof.accentColor}35`,
                         color: prof.accentColor 
                       }}
                     >
@@ -310,37 +313,37 @@ export function SovereignMasterEcosystemExperience() {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-black uppercase text-white font-syne">{prof.name}</h3>
-                    <p className="text-[10px] font-mono uppercase tracking-wider" style={{ color: prof.accentColor }}>
+                    <h3 className="text-xl font-black uppercase text-white font-syne">{prof.name}</h3>
+                    <p className="text-[10px] font-mono uppercase tracking-widest mt-0.5" style={{ color: prof.accentColor }}>
                       {prof.tag}
                     </p>
                   </div>
 
-                  <p className="text-xs text-white/60 font-light line-clamp-2">
+                  <p className="text-xs text-zinc-400 font-light line-clamp-2 leading-relaxed">
                     {prof.desc}
                   </p>
                 </div>
 
-                <div className="relative z-10 pt-4 border-t border-[#AAD6CD]/15 mt-3 space-y-1.5">
-                  <div className="flex flex-wrap gap-1">
+                <div className="relative z-10 pt-5 border-t border-white/10 mt-4 space-y-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {prof.directLinks.map((link, i) => (
                       <Link
                         key={i}
                         href={link.href}
-                        className="px-2 py-0.5 rounded-lg bg-[#040914] hover:bg-[#0c1a36] text-[9px] font-mono text-[#AAD6CD] transition-colors flex items-center gap-0.5 border border-[#AAD6CD]/15"
+                        className="px-2.5 py-1 rounded-xl bg-white/5 hover:bg-white/15 text-[10px] font-mono text-zinc-300 transition-colors flex items-center gap-1 border border-white/5"
                       >
                         <span>{link.label}</span>
-                        <ArrowUpRight size={8} className="opacity-70 text-[#258DCD]" />
+                        <ArrowUpRight size={10} className="opacity-60" />
                       </Link>
                     ))}
                   </div>
 
                   <Link
                     href={prof.href}
-                    className="w-full py-2.5 px-3 rounded-xl bg-[#258DCD]/20 hover:bg-[#258DCD] text-white font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-between transition-all mt-2 border border-[#258DCD]/30"
+                    className="w-full py-3 px-4 rounded-xl bg-white/10 group-hover:bg-[#ecb613] group-hover:text-black font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-between transition-all mt-3 border border-white/10 group-hover:border-[#ecb613]"
                   >
                     <span>Entrar al Portal</span>
-                    <ArrowRight size={13} />
+                    <ArrowRight size={14} />
                   </Link>
                 </div>
               </div>
@@ -349,22 +352,23 @@ export function SovereignMasterEcosystemExperience() {
         </div>
       </section>
 
-      <section className="py-8 px-4 sm:px-6 max-w-7xl mx-auto relative z-20">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 border-b border-[#AAD6CD]/15 pb-4">
+      {/* 3. SLIDER CATALOGUE */}
+      <section className="py-10 px-4 sm:px-6 max-w-7xl mx-auto relative z-20">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 border-b border-white/10 pb-6">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded bg-[#081226] border border-[#AAD6CD]/40 text-[#AAD6CD] font-mono font-black text-[9px] uppercase shadow-[0_0_10px_rgba(170,214,205,0.2)]">
+              <span className="px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] font-mono font-bold text-[9px] uppercase tracking-wider">
                 CATÁLOGO DE ALTA COSTURA
               </span>
-              <span className="text-xs font-mono text-[#AAD6CD]">● 100% Garantía Cero Fallos</span>
+              <span className="text-xs font-mono text-emerald-400">● Garantía 0 Fallos</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black uppercase text-white font-syne mt-1">
+            <h2 className="text-3xl sm:text-4xl font-black uppercase text-white font-syne mt-2">
               Deslizador de Brasas, Música & Hardware
             </h2>
           </div>
 
           <div className="flex items-center gap-3 w-full md:w-auto justify-between">
-            <div className="flex items-center gap-1.5 bg-[#081226] p-1.5 rounded-2xl border border-[#AAD6CD]/20 shadow-[0_4px_20px_rgba(8,18,38,0.6)]">
+            <div className="flex items-center gap-1.5 bg-[#0e0e14] p-1.5 rounded-2xl border border-white/10 shadow-lg">
               {[
                 { id: 'all', label: 'Todo', icon: Sparkles },
                 { id: 'bbq', label: 'Brasas', icon: Flame },
@@ -377,33 +381,33 @@ export function SovereignMasterEcosystemExperience() {
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id as any)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                    className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                       isSelected 
-                        ? 'bg-[#258DCD] text-white shadow-[0_0_15px_rgba(37,141,205,0.4)]' 
-                        : 'text-white/60 hover:text-[#AAD6CD] hover:bg-[#0c1a36]'
+                        ? 'bg-[#ecb613] text-black shadow-[0_0_20px_rgba(236,182,19,0.3)] font-black' 
+                        : 'text-zinc-400 hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    <Icon size={12} />
+                    <Icon size={13} />
                     <span>{cat.label}</span>
                   </button>
                 );
               })}
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => scrollSlider('left')}
-                className="w-9 h-9 rounded-xl bg-[#081226] border border-[#AAD6CD]/20 hover:border-[#AAD6CD]/50 flex items-center justify-center text-[#AAD6CD] active:scale-95 transition-all cursor-pointer"
+                className="w-10 h-10 rounded-xl bg-[#0e0e14] border border-white/10 hover:border-[#ecb613]/50 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
                 title="Deslizar a la izquierda"
               >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={18} />
               </button>
               <button
                 onClick={() => scrollSlider('right')}
-                className="w-9 h-9 rounded-xl bg-[#081226] border border-[#AAD6CD]/20 hover:border-[#AAD6CD]/50 flex items-center justify-center text-[#AAD6CD] active:scale-95 transition-all cursor-pointer"
+                className="w-10 h-10 rounded-xl bg-[#0e0e14] border border-white/10 hover:border-[#ecb613]/50 flex items-center justify-center text-white active:scale-95 transition-all cursor-pointer"
                 title="Deslizar a la derecha"
               >
-                <ChevronRight size={16} />
+                <ChevronRight size={18} />
               </button>
             </div>
           </div>
@@ -411,7 +415,7 @@ export function SovereignMasterEcosystemExperience() {
 
         <div 
           ref={sliderRef}
-          className="flex gap-4 overflow-x-auto no-scrollbar pb-4 pt-1 snap-x snap-mandatory scroll-smooth"
+          className="flex gap-6 overflow-x-auto no-scrollbar pb-6 pt-1 snap-x snap-mandatory scroll-smooth"
         >
           {filteredItems.map(item => {
             const isSelected = selectedItem.id === item.id;
@@ -419,68 +423,68 @@ export function SovereignMasterEcosystemExperience() {
               <div
                 key={item.id}
                 onClick={() => setSelectedItem(item)}
-                className={`min-w-[290px] sm:min-w-[340px] max-w-[340px] rounded-3xl p-4 transition-all cursor-pointer snap-start flex flex-col justify-between border relative overflow-hidden group ${
+                className={`min-w-[300px] sm:min-w-[350px] max-w-[350px] rounded-[2rem] p-5 transition-all duration-300 cursor-pointer snap-start flex flex-col justify-between border relative overflow-hidden group shadow-xl ${
                   isSelected 
-                    ? 'bg-gradient-to-b from-[#081226] to-[#040914] border-[#258DCD] shadow-[0_10px_40px_-10px_rgba(8,18,38,0.9),0_0_25px_-5px_rgba(37,141,205,0.35)] scale-[1.01]' 
-                    : 'bg-[#081226]/80 border-[#AAD6CD]/15 hover:border-[#AAD6CD]/40'
+                    ? 'bg-gradient-to-b from-[#181822] via-[#0f0f15] to-[#0a0a0e] border-[#ecb613] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.9),0_0_30px_rgba(236,182,19,0.2)] scale-[1.02]' 
+                    : 'bg-[#0b0b10] border-white/10 hover:border-white/20'
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#258DCD] text-white text-[8px] font-mono font-black uppercase shadow-[0_0_10px_rgba(37,141,205,0.3)]">
+                  <div className="flex items-center justify-between mb-3.5">
+                    <span className="px-3 py-1 rounded-full bg-[#ecb613] text-black text-[9px] font-mono font-black uppercase shadow-sm">
                       {item.badge}
                     </span>
-                    <div className="flex items-center gap-1 text-xs font-mono text-[#AAD6CD]">
-                      <Star size={12} className="fill-[#AAD6CD]" />
+                    <div className="flex items-center gap-1.5 text-xs font-mono text-amber-400">
+                      <Star size={13} className="fill-amber-400" />
                       <span className="font-bold">{item.rating}</span>
-                      <span className="text-white/40">({item.reviews})</span>
+                      <span className="text-zinc-500">({item.reviews})</span>
                     </div>
                   </div>
 
-                  <div className="h-40 rounded-2xl overflow-hidden bg-black/60 relative mb-3 border border-[#AAD6CD]/15">
+                  <div className="h-44 rounded-2xl overflow-hidden bg-black/60 relative mb-4 border border-white/10">
                     <img 
                       src={item.image} 
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#081226]/90 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
                     
-                    <div className="absolute bottom-2 left-2 right-2 flex justify-between items-center text-[10px] font-mono text-white">
-                      <span className="bg-[#081226]/90 px-2 py-0.5 rounded-md border border-[#AAD6CD]/25 text-[#AAD6CD]">
+                    <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center text-[10px] font-mono text-white">
+                      <span className="bg-black/80 px-2.5 py-1 rounded-lg border border-white/10 font-bold backdrop-blur-md">
                         {item.price} € / {item.unit.split(' ')[0]}
                       </span>
                     </div>
                   </div>
 
-                  <h3 className="text-base font-black uppercase text-white font-syne line-clamp-1 group-hover:text-[#AAD6CD] transition-colors">
+                  <h3 className="text-base font-black uppercase text-white font-syne line-clamp-1 group-hover:text-[#ecb613] transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs font-mono text-[#AAD6CD] truncate mt-0.5">
+                  <p className="text-xs font-mono text-[#ecb613] truncate mt-0.5">
                     {item.subtitle}
                   </p>
-                  <p className="text-xs text-white/60 font-light mt-2 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-zinc-400 font-light mt-2.5 line-clamp-2 leading-relaxed">
                     {item.description}
                   </p>
 
-                  <div className="space-y-1 mt-3 pt-2.5 border-t border-[#AAD6CD]/10">
+                  <div className="space-y-1.5 mt-4 pt-3 border-t border-white/10">
                     {item.specs.map((spec, sIdx) => (
-                      <div key={sIdx} className="flex items-center gap-1.5 text-[10px] font-mono text-white/70">
-                        <Check size={11} className="text-[#AAD6CD] shrink-0" />
+                      <div key={sIdx} className="flex items-center gap-2 text-[10px] font-mono text-zinc-300">
+                        <Check size={12} className="text-emerald-400 shrink-0" />
                         <span className="truncate">{spec}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-[#AAD6CD]/15 flex items-center justify-between">
-                  <span className="text-sm font-black text-[#AAD6CD] font-mono">
-                    {item.price} € <span className="text-[9px] font-light text-white/50">{item.unit}</span>
+                <div className="mt-5 pt-3.5 border-t border-white/10 flex items-center justify-between">
+                  <span className="text-base font-black text-[#ecb613] font-mono">
+                    {item.price} € <span className="text-[10px] font-light text-zinc-400">{item.unit}</span>
                   </span>
 
-                  <button className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold uppercase transition-all ${
+                  <button className={`px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase transition-all ${
                     isSelected 
-                      ? 'bg-[#258DCD] text-white shadow-[0_0_15px_rgba(37,141,205,0.4)]' 
-                      : 'bg-[#040914] text-[#AAD6CD] hover:bg-[#0c1a36] border border-[#AAD6CD]/20'
+                      ? 'bg-[#ecb613] text-black shadow-md font-black' 
+                      : 'bg-white/5 text-white/80 hover:bg-white/15 border border-white/10'
                   }`}>
                     {isSelected ? '✓ Seleccionado' : 'Cotizar'}
                   </button>
@@ -491,31 +495,32 @@ export function SovereignMasterEcosystemExperience() {
         </div>
       </section>
 
-      <section className="py-6 px-4 sm:px-6 max-w-4xl mx-auto relative z-20">
-        <div className="bg-gradient-to-b from-[#081226] via-[#040914] to-[#000000] p-6 sm:p-8 rounded-3xl border border-[#AAD6CD]/25 shadow-[0_20px_60px_rgba(8,18,38,0.95)] space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-[#AAD6CD]/15 pb-4">
+      {/* 4. LIVE INTERACTIVE QUOTATION BOX S-CLASS */}
+      <section className="py-8 px-4 sm:px-6 max-w-4xl mx-auto relative z-20">
+        <div className="bg-gradient-to-b from-[#111118] via-[#0c0c12] to-[#07070a] p-7 sm:p-10 rounded-[2.5rem] border border-white/15 shadow-[0_25px_70px_rgba(0,0,0,0.95)] space-y-7">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-white/10 pb-5">
             <div>
-              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#AAD6CD] block">
+              <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#ecb613] block">
                 COTIZACIÓN INSTANTÁNEA EN VIVO
               </span>
-              <h3 className="text-xl sm:text-2xl font-black uppercase text-white font-syne mt-0.5">
+              <h3 className="text-2xl sm:text-3xl font-black uppercase text-white font-syne mt-1">
                 {selectedItem.title}
               </h3>
             </div>
 
             <div className="text-right">
-              <span className="text-[10px] font-mono text-[#AAD6CD] bg-[#040914] px-2.5 py-1 rounded-full border border-[#AAD6CD]/30">
+              <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/30 font-bold">
                 Split 80/10/10 Soberano
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
             {isPerPax && (
-              <div className="space-y-2">
-                <div className="flex justify-between text-xs font-mono text-white/80">
+              <div className="space-y-2.5">
+                <div className="flex justify-between text-xs font-mono text-white">
                   <span>Número de Invitados / Comensales</span>
-                  <span className="text-[#AAD6CD] font-bold text-sm">{pax} PAX</span>
+                  <span className="text-[#ecb613] font-black text-sm">{pax} PAX</span>
                 </div>
                 <input 
                   type="range" 
@@ -523,18 +528,18 @@ export function SovereignMasterEcosystemExperience() {
                   max={400} 
                   value={pax} 
                   onChange={e => setPax(Number(e.target.value))}
-                  className="w-full accent-[#258DCD] h-1.5 bg-[#040914] rounded-lg cursor-pointer border border-[#AAD6CD]/20"
+                  className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
                 />
-                <span className="text-[10px] font-mono text-white/40 block">
+                <span className="text-[10px] font-mono text-zinc-400 block">
                   Potencia Acústica Calibrada: {acousticWatts}W RMS (12 W/pax)
                 </span>
               </div>
             )}
 
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-mono text-white/80">
+            <div className="space-y-2.5">
+              <div className="flex justify-between text-xs font-mono text-white">
                 <span>Distancia Desplazamiento desde Madrid</span>
-                <span className="text-[#AAD6CD] font-bold text-sm">{distanceKm} KM</span>
+                <span className="text-[#ecb613] font-black text-sm">{distanceKm} KM</span>
               </div>
               <input 
                 type="range" 
@@ -542,56 +547,56 @@ export function SovereignMasterEcosystemExperience() {
                 max={300} 
                 value={distanceKm} 
                 onChange={e => setDistanceKm(Number(e.target.value))}
-                className="w-full accent-[#258DCD] h-1.5 bg-[#040914] rounded-lg cursor-pointer border border-[#AAD6CD]/20"
+                className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
               />
-              <span className="text-[10px] font-mono text-white/40 block">
+              <span className="text-[10px] font-mono text-zinc-400 block">
                 Radio Provincial: {distanceKm <= 30 ? 'Desplazamiento Incluido' : `+${Math.round((distanceKm - 30) * 0.95)}€ Km`}
               </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-[#040914] p-4 rounded-2xl border border-[#AAD6CD]/20">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 bg-black/60 p-5 rounded-2xl border border-white/10">
             <div>
-              <span className="text-[9px] font-mono text-white/40 uppercase block">Presupuesto Total</span>
-              <span className="text-lg font-black text-[#AAD6CD] font-mono">{totalQuote} €</span>
+              <span className="text-[9px] font-mono text-zinc-400 uppercase block">Presupuesto Total</span>
+              <span className="text-xl font-black text-[#ecb613] font-mono">{totalQuote} €</span>
             </div>
             <div>
-              <span className="text-[9px] font-mono text-white/40 uppercase block">Depósito Stripe</span>
-              <span className="text-lg font-black text-[#258DCD] font-mono">100 €</span>
+              <span className="text-[9px] font-mono text-zinc-400 uppercase block">Depósito Stripe</span>
+              <span className="text-xl font-black text-emerald-400 font-mono">100 €</span>
             </div>
             <div>
-              <span className="text-[9px] font-mono text-white/40 uppercase block">Resto en Evento</span>
-              <span className="text-lg font-black text-white font-mono">{totalQuote - 100} €</span>
+              <span className="text-[9px] font-mono text-zinc-400 uppercase block">Resto en Evento</span>
+              <span className="text-xl font-black text-white font-mono">{totalQuote - 100} €</span>
             </div>
             <div>
-              <span className="text-[9px] font-mono text-white/40 uppercase block">Price-Lock SHA-256</span>
-              <span className="text-xs font-bold text-[#AAD6CD] font-mono">Bloqueo 72h</span>
+              <span className="text-[9px] font-mono text-zinc-400 uppercase block">Price-Lock SHA-256</span>
+              <span className="text-xs font-bold text-blue-400 font-mono">Bloqueo 72h</span>
             </div>
           </div>
 
-          <div className="space-y-3 pt-2">
+          <div className="space-y-3.5 pt-2">
             <div 
               onClick={() => setLocked(!locked)}
-              className={`w-full py-4 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
+              className={`w-full py-4.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
                 locked 
-                  ? 'bg-emerald-500 text-black shadow-xl shadow-emerald-500/25' 
-                  : 'bg-[#258DCD] hover:bg-[#1e7ebd] text-white shadow-[0_0_30px_rgba(37,141,205,0.4)] active:scale-95'
+                  ? 'bg-emerald-500 text-black shadow-2xl shadow-emerald-500/30' 
+                  : 'bg-gradient-to-r from-[#ecb613] via-amber-400 to-[#d4a00e] text-black shadow-[0_0_40px_rgba(236,182,19,0.35)] hover:brightness-110 active:scale-98'
               }`}
             >
-              <div className="flex items-center gap-2">
-                <Lock size={16} />
+              <div className="flex items-center gap-2.5">
+                <Lock size={18} />
                 <span>{locked ? '✓ FECHA BLOQUEADA 72H EN STRIPE' : 'DESLIZAR PARA BLOQUEAR FECHA'}</span>
               </div>
-              <span className="font-mono text-base">100 €</span>
+              <span className="font-mono text-base font-black">100 €</span>
             </div>
 
             <a
               href={`https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20quiero%20reservar%20${encodeURIComponent(selectedItem.title)}%20para%20${pax}%20asistentes%20(${totalQuote}%E2%82%AC).`}
               target="_blank"
               rel="noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-[#040914] hover:bg-[#0c1a36] border border-[#AAD6CD]/20 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+              className="w-full py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all"
             >
-              <MessageCircle size={14} className="text-[#25D366]" />
+              <MessageCircle size={15} className="text-[#25D366]" />
               <span>Despachar Payload Directo a WhatsApp (+34 693 693 048)</span>
             </a>
           </div>
