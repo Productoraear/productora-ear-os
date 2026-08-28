@@ -15,6 +15,14 @@
       "inputs": "src/data/telemetry/gsc-performance-data.json",
       "outputs": "Consola / Resumen ejecutivo",
       "cli": "python scripts/analyze_gsc_intelligence.py"
+    },
+    {
+      "name": "parse_takeout_gemini.py",
+      "path": "scripts/parse_takeout_gemini.py",
+      "purpose": "Ingestión forense ZTM de Google Takeout (Gemini chats). Extrae pepitas de oro (reglas de negocio, storyselling, desarrollo) e inyecta en ear-rag-database.json. Mueve crudos al EAR_ABSORBED_VAULT.",
+      "inputs": "docs/raw_takeout/ (archivos .json, .html o .zip de Google Takeout)",
+      "outputs": "src/data/ear-rag-database.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\Gemini_Takeout\\",
+      "cli": "python scripts/parse_takeout_gemini.py"
     }
   ]
 }

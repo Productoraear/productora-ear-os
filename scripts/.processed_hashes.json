@@ -43,5 +43,40 @@
     "sha256": "075c4e1d601a19d3dbb3ee55f65426bc86aae6b48d0ae6af179c2919fa122021",
     "path": "D:\\Migracion_C\\M2-W10\\Downloads\\https___www.productoraear.com_-Performance-on-Search-2026-08-24 (1).zip",
     "processed_at": "2026-08-26T14:19:47.090522"
+  },
+  "20e3b977d34e53901971d50735d344c0b674482a236adb7327fb1470b8d7272f": {
+    "file": "gemini_gems_data.html",
+    "processed_at": "2026-08-28T19:52:41.436734",
+    "nuggets_found": 1
+  },
+  "de4826ef7eca43a87f6d0400677f534d5a24bf799c6b6642b3c04049441a91ea": {
+    "file": "gemini_scheduled_actions_data.html",
+    "processed_at": "2026-08-28T19:52:41.437234",
+    "nuggets_found": 0
+  },
+  "1df783bf143f8a29d60de0ba2766eb5e4f48bc983a85699cff2ea7427d172276": {
+    "file": "conversation_1773662437.txt",
+    "processed_at": "2026-08-28T19:52:41.441265",
+    "nuggets_found": 1
+  },
+  "ac6122031bbc472fb659e9e1f4951cdb7b163ef222aacaa5163db5cdb56f5e05": {
+    "file": "conversation_1774366740.txt",
+    "processed_at": "2026-08-28T19:52:41.467265",
+    "nuggets_found": 1
+  },
+  "822be6ded0e86d9a706d1568f9eb8c367c4ed80c2304e81e35c6551a90c27a92": {
+    "file": "conversation_1787131838.txt",
+    "processed_at": "2026-08-28T19:52:41.467765",
+    "nuggets_found": 1
+  },
+  "511edcfe344fe62df1e7da47f82f5c7ff6a03a78df67ca9b4ab92f799b0642b4": {
+    "file": "conversation_1787147532.txt",
+    "processed_at": "2026-08-28T19:52:41.468265",
+    "nuggets_found": 0
+  },
+  "b0731a2d2cedcc253f702b8509f5cd34c00ec0b23f157390935860fd60f04df2": {
+    "file": "instrucciones para web Ear desde Gemini 3 pro.md",
+    "processed_at": "2026-08-28T19:57:46.684746",
+    "nuggets_found": 119
   }
 }
