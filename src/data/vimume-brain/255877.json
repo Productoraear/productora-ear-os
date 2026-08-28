@@ -1,0 +1,87 @@
+{
+  "provider_id": "255877",
+  "name": "Olmet Games",
+  "category": "Animación",
+  "location": "Madrid",
+  "description": "Olmet Games crean escape rooms y concursos para bodas y eventos especiales, y hace ya 5 años que empezaron esta aventura. Así, crean escape rooms personalizados según cada pareja.\n¿Qué servicios podrán ofrecerte?\nEn Olmet Games romperan con lo tradicional con concursos como Furor o Pasapalabra, y añadiendo también juegos para los más peques de la boda.Buscan nuevas formas de involucrar a todos los invitados. De este modo, unirán diversión y romanticismo para generar anécdotas inolvidables. Están convencidos de que un buen juego es la mejor manera de sorprender.",
+  "phone": null,
+  "email": null,
+  "website": "https://maps.google.com/?q=40.4499, -3.70108",
+  "images": [
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/png/quizerofotorec_1_255877-173194349277066.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/jpeg/whatsapp-image-2023-11-14-at-22-31-14-1_1_255877-172417387641939.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/jpeg/whatsapp-image-2023-11-14-at-22-31-15-1-1_1_255877-172417387680224.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/jpg/il-1140xn-3009592932-bv5c-e1679915624243_1_255877-172417418464963.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/jpeg/whatsapp-image-2023-11-14-at-22-31-15-2_1_255877-172417387646565.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/png/furorweb3_1_255877-173194343566141.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/png/furorweb2_1_255877-173194343585869.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/png/furorweb_1_255877-173194343484321.jpeg",
+    "https://cdn0.bodas.net/vendor/55877/3_2/1920/png/karaokissfotopresentacion-copia2_1_255877-173384327263062.jpeg"
+  ],
+  "pricing_min": 400,
+  "pricing_max": null,
+  "faqs": [
+    {
+      "question": "¿Qué tipo de animación ofreces?",
+      "answer": "Para niños                            \n\n                                Para adultos                            \n\n                                Otros (Escape room, escape room personalizado, quiz sobre los novios, Wedding Karaokiss, concurso Furor, concurso Pasapalabra, concurso ruleta de la suerte, concurso personalizado y escape room infantil)"
+    },
+    {
+      "question": "¿Qué incluye el pack de boda?",
+      "answer": "Diseño, transporte, montaje, técnico, gamemaster/presentador y realización"
+    },
+    {
+      "question": "¿Con cuánta antelación debo ponerme en contacto contigo?",
+      "answer": "2 meses de antelación"
+    },
+    {
+      "question": "¿Qué otros servicios ofreces?",
+      "answer": "Monitor infantil                            \n\n                                Otros"
+    },
+    {
+      "question": "¿Tienes posibilidad de desplazarte?",
+      "answer": "Sí, toda España"
+    },
+    {
+      "question": "¿Existe algún cargo por desplazamiento?",
+      "answer": "Sí, entre 50 y 200€ según distancia"
+    },
+    {
+      "question": "¿Cuánto tiempo dura la actuación?",
+      "answer": "Juegos desde 15 minutos hasta 1 hora y media"
+    },
+    {
+      "question": "¿Cuánto tiempo necesitas para preparar la actuación?",
+      "answer": "30 minutos"
+    },
+    {
+      "question": "¿Trabajas solo o cuentas con un equipo de profesionales?",
+      "answer": "Somos un equipo"
+    },
+    {
+      "question": "¿Realizas actuaciones al aire libre?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Cobras por horas o por evento?",
+      "answer": "Evento"
+    },
+    {
+      "question": "Si fuese necesario, ¿podrías trabajar horas extra?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Cómo cobras las horas extra?",
+      "answer": "Dependiendo del servicio"
+    },
+    {
+      "question": "¿Cómo se efectúa el pago?",
+      "answer": "Cualquier medio de pago"
+    }
+  ],
+  "verified": false,
+  "eco_certified": false,
+  "tier": "FREE",
+  "source_file": "olmet-games--e255877.htm",
+  "extracted_at": "2025-11-27T11:18:16.252Z",
+  "completeness_score": 80
+}

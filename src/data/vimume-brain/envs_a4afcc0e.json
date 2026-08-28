@@ -1,0 +1,560 @@
+ipt><script>
+var reduced = '/articles/category';
+</script>
+<script>
+window.reducedUrl = '/articles/category';
+</script>
+<script>
+var _comscore = _comscore || []
+var comscoreScript = function () {
+var s = document.createElement('script'), el = document.getElementsByTagName('script')[0]
+s.defer = true
+s.src = (document.location.protocol == 'https:' ? 'https://sb' : 'http://b') + '.scorecardresearch.com/cs/6156116/beacon.js'
+el.parentNode.insertBefore(s, el)
+}
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+comscoreScript()
+})
+document.getElementsByTagName('body')[0].addEventListener('IABTcDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+document.getElementsByTagName('body')[0].addEventListener('nonIABCountryDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+comscoreScript()
+}
+</script>
+<script>
+window.contextTraits = {};
+</script>
+<script>
+function trackExperimentViewed(experimentId, bucketingId, variantId, eventProperties) {
+window.analytics.track('Experiment Viewed', {
+...eventProperties,
+experimentId,
+bucketingId,
+variantId
+})
+}
+</script>
+<script>
+!function () {
+const ga4ClientIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'client_id', resolve)
+});
+const ga4SessionIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_id', resolve)
+});
+const ga4SessionNumberPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_number', resolve)
+});
+var segmentLoaded = false;
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0";;analytics.SNIPPET_VERSION="4.15.3";
+}}();
+var segmentScript = function () {
+if (segmentLoaded) {
+return;
+}
+if (window.analytics && window.analytics.initialized === true) {
+return;
+}
+segmentLoaded = true;
+(async () => {
+let ga4ClientId, ga4SessionId, ga4SessionNumber = null;
+[ga4ClientId, ga4SessionId, ga4SessionNumber] = await Promise.all([ga4ClientIdPromise, ga4SessionIdPromise, ga4SessionNumberPromise]);
+const pageProperties = {"reduced":"\/articles\/category","gpAnonId":"2faa1ae2-b846-4000-82e6-08cd18663f24","loggedVendorUUID":"587e0718-0168-4bc7-9b54-bfbcc0c68a82","isMasquerading":false,"platform":"desktop web","section":"\/articles\/category","build_product":"content"};
+const analyticsGroupOpt = isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true;
+const targetedAdsOpt = isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true;
+const socialMediaOpt = isCookieGroupAllowed(CONSENT_SOCIAL_MEDIA_GROUP) === true;
+const saleOfDataOpt = analyticsGroupOpt && targetedAdsOpt && socialMediaOpt
+// Adding Segment middleware
+analytics.addSourceMiddleware(function (middlewareIntermediate) {
+var payload = middlewareIntermediate.payload,
+next = middlewareIntermediate.next,
+namespace;
+if (payload.obj.type === 'identify') {
+namespace = 'traits'
+} else {
+namespace = 'properties'
+}
+if (!payload.obj[namespace]) {
+console.warn('[ga4 segment patch] Analytics event does not contain namespace property: ' + namespace);
+next(payload);
+return
+}
+payload.obj[namespace].ga_session_id = ga4SessionId;
+payload.obj[namespace].ga_session_number = ga4SessionNumber;
+payload.obj[namespace].ga_client_id = ga4ClientId;
+payload.obj[namespace].ga4_session_id = ga4SessionId;
+payload.obj[namespace].ga4_session_number = ga4SessionNumber;
+payload.obj[namespace].ga4_client_id = ga4ClientId;
+payload.obj.context.data_processing_options = !targetedAdsOpt;
+if (payload.obj.type === 'page') {
+payload.obj[namespace]['event_id'] = 'pageview_' + window.userGlobals.gp_anon_id + '_' + '3e81cf72-4433-47ec-8297-1862dea62398'
+}
+if (!payload.obj[namespace].loggedUserUUID && window.userGlobals?.user_uuid) {
+payload.obj[namespace].loggedUserUUID = window.userGlobals.user_uuid
+}
+const getCookieIsFunction = typeof getCookie === 'function';
+const tkwwOpCookie = getCookieIsFunction ? getCookie('tkww_op') : null;
+if (!payload.obj.context.tkww_op && tkwwOpCookie) {
+payload.obj.context.tkww_op = tkwwOpCookie;
+}
+const globalExtraPropertiesForSegmentTracking = typeof window.globalExtraPropertiesForSegmentTracking === 'object'
+? window.globalExtraPropertiesForSegmentTracking : {};
+for (const key in globalExtraPropertiesForSegmentTracking) {
+if (globalExtraPropertiesForSegmentTracking.hasOwnProperty(key) && !payload.obj[namespace][key]) {
+payload.obj[namespace][key] = globalExtraPropertiesForSegmentTracking[key];
+}
+}
+let globalPageProperties = [];
+let globalPagePropertiesExcludedEventNames = {};
+try {
+globalPageProperties = JSON.parse('["appVersion","frmInsert","gpAnonId","loggedUserUUID","loggedVendorUUID","platform","reduced","section","build_product","experimentVariants"]');
+globalPagePropertiesExcludedEventNames = JSON.parse('[]');
+} catch(e) {
+console.error(`Segment init error: ${e.message}`);
+}
+for (const key in globalPageProperties) {
+const field = globalPageProperties[key];
+const isExcluded = globalPagePropertiesExcludedEventNames[field]?.includes(payload.obj.event) ?? false;
+if (!payload.obj[namespace][field] && pageProperties[field] && !isExcluded) {
+payload.obj[namespace][field] = pageProperties[field];
+}
+}
+payload.obj['context']['traits'] = payload.obj['context']['traits'] || {};
+for (const [key, value] of Object.entries(window.contextTraits)) {
+payload.obj['context']['traits'][key] = value;
+}
+if (getCookieIsFunction) {
+const cookies = {
+'epik': '_epik',
+'ttclid': 'ttclid',
+'_ttp': '_ttp',
+'gclid': 'gclid',
+};
+for (const [traitKey, cookieName] of Object.entries(cookies)) {
+const value = getCookie(cookieName);
+if (value) {
+payload.obj['context']['traits'][traitKey] = value;
+}
+}
+}
+if (!payload.obj['userId']) {
+payload.obj['userId'] = payload.obj[namespace]['loggedUserUUID']
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace]['non_interaction'] = !!parseInt(payload.obj[namespace]['nonInteraction'])
+}
+// override context variables if exists in window.trackingContext is defined and updated
+if (typeof window.trackingContext === 'object') {
+const overrideObjectProperties = (object, newObjectValues) => {
+for (const [key, value] of Object.entries(newObjectValues)) {
+if (typeof value === 'object' && typeof object[key] === 'object') {
+overrideObjectProperties(object[key], value);
+} else {
+object[key] = value;
+}
+}
+return object;
+};
+payload.obj = overrideObjectProperties(payload.obj, window.trackingContext);
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace] = standardizePropertyNames(payload.obj[namespace])
+}
+next(payload);
+});
+var integrationsConfig = {
+All: analyticsGroupOpt,
+'Segment.io': true,
+'Google Analytics 4': analyticsGroupOpt,
+'Facebook Conversions API (Actions)': targetedAdsOpt
+};
+window.analytics.load("ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0", { integrations: integrationsConfig });
+window.analytics.page(null, pageProperties);
+const experiments = (window.pageGlobals && window.pageGlobals.experiments) ? window.pageGlobals.experiments : {};
+Object.keys(experiments).forEach(exp => {
+trackExperimentViewed(
+experiments[exp].experimentId,
+window.userGlobals ? window.userGlobals[experiments[exp].bucketingType] : null,
+experiments[exp].variantId
+)
+})
+})();
+};
+var standardizePropertyNames = function (properties) {
+let origKey, value
+if (properties instanceof Array) {
+for (origKey in properties) {
+value = properties[origKey]
+if (typeof value === 'object') {
+value = standardizePropertyNames(value)
+}
+properties[origKey] = value
+}
+} else {
+for (origKey in properties) {
+if (properties.hasOwnProperty(origKey)) {
+let snakeCaseKey = origKey
+.trim()
+.replace(/-/g, '_')
+.replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+.replace(/([a-z])([A-Z])/g, '$1_$2')
+.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+.replace(/ /g, '_')
+.toLowerCase()
+.substring(0, 100)
+if (isPropertyNameSnakeCase(origKey) && origKey !== snakeCaseKey) {
+delete properties[origKey]
+}
+properties[snakeCaseKey] = properties[origKey]
+}
+}
+}
+return properties
+};
+var isPropertyNameSnakeCase = function (propertyName) {
+const standardFormatRegex = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+return standardFormatRegex.test(propertyName);
+};
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+segmentScript();
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+segmentScript();
+}
+}();
+</script>
+<div class="dnone">
+<script>
+gtag('event', 'page_view', {"ARTICLES_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1,"send_to":"adwords","user_id":"e78903"});
+</script>              <script>
+var facebookScript = function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.defer=1;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)};
+var toExecuteAfterFbInit = function () {
+var hasGlobals = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.facebook
+var globalFacebook = hasGlobals ? parent.pageGlobals.common.remarketing.facebook : {};
+var isLoaded = globalFacebook.isLoaded === true;
+if (!isLoaded) {
+parent.fbq('init', '1434721056835089', {}, {});
+globalFacebook.isLoaded = true;
+}
+parent.fbq('track', 'PageView', {"ARTICLES_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1}, {eventID: 'pageview_' + window.userGlobals.gp_anon_id + '_' + '3e81cf72-4433-47ec-8297-1862dea62398'}); parent.fbq('dataProcessingOptions', ['LDU'], 0, 0);
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+});
+if (parent.isCookieGroupAllowed(parent.CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+}
+</script>             <script>
+var pinterestScript = function() {
+!function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(
+Array.prototype.slice.call(arguments))};var
+n=window.pintrk;n.queue=[],n.version='3.0';var
+t=document.createElement('script');t.defer=1,t.src=e;var
+r=document.getElementsByTagName('script')[0];r.parentNode.insertBefore(t,r)}}('https://s.pinimg.com/ct/core.js');
+var hasGlobalsPinterest = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.pinterest;
+var globalPinterest = hasGlobalsPinterest ? parent.pageGlobals.common.remarketing.pinterest : {};
+var isLoaded = globalPinterest.isLoaded === true;
+if (!isLoaded) {
+parent.pintrk('load', 2613978159206);
+globalPinterest.isLoaded = true;
+}
+var isTracked = globalPinterest.isTracked === true;
+if (!isTracked) {
+globalPinterest.isTracked = true;
+parent.pintrk('page');
+parent.pintrk('track', 'custom', {"ARTICLES_NAV":"1","LOGGED":"0","EMPRESA":"1","EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":"1","send_to":"adwords"});
+}
+}
+/* Listener of the OneTrust callback when user accepts the cookies */
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+pinterestScript();
+});
+/* Wrap of the Analytics script that checks the consent of the user and the default country configuration */
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+pinterestScript();
+}
+</script>             <script>
+var executeBingScript = function () {
+return (function(w,d,t,r,u) {
+var f,n,i;
+w[u] = w[u]||[], f = function() {
+var o = {ti: "355036992", enableAutoSpaTracking: true};
+o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad")
+},
+n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function() {
+var s = this.readyState;
+s&&s !== "loaded"&&s !== "complete" || (f(), n.onload = n. onreadystatechange=null)
+},
+i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n,i)
+}) (window, document, "script", "//bat.bing.com/bat.js", "uetq");
+}
+var pushBingScript = function () {
+window.uetq = window.uetq || [];
+window.uetq.push ('event', '', {});
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+executeBingScript();
+pushBingScript();
+});
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+executeBingScript();
+pushBingScript();
+}
+</script>     </div>
+<script type="text/javascript" src="https://cdn1.bodas.net/assets/js/newRelicRum.js?siteVersion=symfnw-ES171-1-20241219-010_www_m_" async></script>
+<script>
+window.addEventListener('newRelicScriptLoaded', function() {
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+newRelicScript("307408989");
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+newRelicScript("307408989");
+}
+});
+</script>
+<script type="application/ld+json">
+{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bodas","item":"https:\/\/www.bodas.net\/"},{"@type":"ListItem","position":2,"name":"Ideas boda","item":"https:\/\/www.bodas.net\/articulos"},{"@type":"ListItem","position":3,"name":"Los servicios para tu boda","item":"https:\/\/www.bodas.net\/articulos\/los-servicios-para-tu-boda--t4"}]}            </script>
+<script type="application/ld+json">
+[{"@context":"http:\/\/schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https:\/\/www.bodas.net\/articulos\/drones-para-bodas--c3364","image":"https:\/\/cdn0.bodas.net\/articles\/images\/vendor\/3\/2\/3\/0\/6\/dji-0153_1_232306-170136658245025.jpg"},{"@type":"ListItem","position":2,"url":"https:\/\/www.bodas.net\/articulos\/videos-boda-economicos--c8628","image":"https:\/\/cdn0.bodas.net\/articles\/images\/8\/4\/9\/9\/img_99948\/es.png"},{"@type":"ListItem","position":3,"url":"https:\/\/www.bodas.net\/articulos\/video-booth-360-para-bodas--c8268","image":"https:\/\/cdn0.bodas.net\/articles\/images\/real-wedding\/5\/7\/8\/4337216.jpg"},{"@type":"ListItem","position":4,"url":"https:\/\/www.bodas.net\/articulos\/si-no-quereis-que-ninguno-de-vuestros-familiares-y-amigos-se-pierda-la-boda-apostad-por-el-streaming--c6835","image":"https:\/\/cdn0.bodas.net\/articles\/images\/7\/5\/0\/3\/img_43057\/-tds2731.jpg"},{"@type":"ListItem","position":5,"url":"https:\/\/www.bodas.net\/articulos\/tipos-de-videos-de-boda--c146","image":"https:\/\/cdn0.bodas.net\/articles\/images\/vendor\/7\/2\/2\/0\/3\/20507791-1385754301501369-3791757551853852512-o_1_72203.jpg"},{"@type":"ListItem","position":6,"url":"https:\/\/www.bodas.net\/articulos\/videos-de-boda-romanticos--c469","image":"https:\/\/cdn0.bodas.net\/articles\/images\/real-wedding\/2\/7\/5\/3126947.jpg"},{"@type":"ListItem","position":7,"url":"https:\/\/www.bodas.net\/articulos\/la-importancia-de-los-videos-de-boda--c144","image":"https:\/\/cdn0.bodas.net\/articles\/images\/real-wedding\/2\/3\/5\/271904.jpg"},{"@type":"ListItem","position":8,"url":"https:\/\/www.bodas.net\/articulos\/4-tendencias-en-videos-de-boda--c2637","image":"https:\/\/cdn0.bodas.net\/img_g\/articulos-a-fotos\/pareja-novios-boda-alianzas\/video-de-la-boda3.jpg"},{"@type":"ListItem","position":9,"url":"https:\/\/www.bodas.net\/articulos\/ideas-originales-para-vuestro-video-de-boda--c1066","image":"https:\/\/cdn0.bodas.net\/img_e_59201\/5\/9\/2\/0\/1\/-mgl4327_1_59201.jpg"},{"@type":"ListItem","position":10,"url":"https:\/\/www.bodas.net\/articulos\/claves-para-contratar-el-video--c3063","image":"https:\/\/cdn0.bodas.net\/img_e_34916\/3\/4\/9\/1\/6\/cid-505742e3-04fa-44f0-a435-cc41cadc0aabhome_1_34916.jpg"},{"@type":"ListItem","position":11,"url":"https:\/\/www.bodas.net\/articulos\/todos-los-videos-de-tu-boda--c2609","image":"https:\/\/cdn0.bodas.net\/articles\/images\/vendor\/4\/9\/4\/0\/5\/foto-miret0031_1_49405.jpg"},{"@type":"ListItem","position":12,"url":"https:\/\/www.bodas.net\/articulos\/video-de-boda-lifestyle--c2511","image":"https:\/\/cdn0.bodas.net\/articles\/images\/5\/7\/6\/9\/img_9675\/nr5-1-34388.jpg"},{"@type":"ListItem","position":13,"url":"https:\/\/www.bodas.net\/articulos\/consigue-un-video-de-boda-original--c1613","image":"https:\/\/cdn0.bodas.net\/img_e_20917\/2\/0\/9\/1\/7\/40.jpg"},{"@type":"ListItem","position":14,"url":"https:\/\/www.bodas.net\/articulos\/videos-de-boda-lipdub--c1097","image":"https:\/\/cdn0.bodas.net\/emp\/fotos\/1\/0\/9\/7\/video-boda-lipdub_c1097.jpg"},{"@type":"ListItem","position":15,"url":"https:\/\/www.bodas.net\/articulos\/la-importancia-del-video-de-boda--c1078","image":"https:\/\/cdn0.bodas.net\/emp\/fotos\/1\/0\/7\/8\/image001-c1077_c1078.jpg"},{"@type":"ListItem","position":16,"url":"https:\/\/www.bodas.net\/articulos\/video-de-boda-si-o-no--c991","image":"https:\/\/cdn0.bodas.net\/img_e_59307\/5\/9\/3\/0\/7\/-mg-9161_1_59307.jpg"}]}]            </script>
+<script type="text/javascript"  src="/c-O80A/xtX/qkH/G2361fZl/EaaOt8fNLDVQictu/Hls2Ag/NEs/-bm0mYXYB"></script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            # Productora EAR: Documento Maestro
+
+## 1. Plan de Negocio y Estructura
+
+### 1.1. Misión
+Descripción de la empresa y su misión.
+En Productora EAR, nos dedicamos a ofrecer servicios integrales de producción audiovisual para satisfacer las necesidades de nuestros clientes. Desde equipos de sonido e iluminación hasta servicios de grabación y producción, estamos aquí para hacer que tus producciones sean extraordinarias.
+
+En EAR, una productora recientemente establecida, carecemos de numerosas valoraciones de nuestros artistas y clientes en este momento. Esta ausencia no refleja una falta de calidad, confianza o profesionalismo; más bien, indica el inicio de nuestra travesía con entusiasmo, energía y un fuerte compromiso de hacer las cosas correctamente. Evitamos recurrir a valoraciones falsas o ficticias, generadas por tecnologías avanzadas que simplemente engañan al lector. Nos proponemos que nos conozcas a través de nuestro trabajo, de nuestra pasión y de nuestra responsabilidad. Queremos que seas tú quien evalúe nuestra propuesta con honestidad y sinceridad. Buscamos que formes parte de nuestra historia, de nuestro crecimiento y de nuestro éxito. ¿Te animas a colaborar con nosotros?
+
+### 1.2. Personal Técnico
+- **Técnicos Audiovisuales**:
+  - Planificación de los conceptos creativos.
+  - Organización de los medios necesarios.
+  - Gestión de los recursos y control presupuestario.
+  - Supervisión de contenido y realización.
+  - Edición de contenido (foto, video, iluminación, sonido).
+- **Técnicos de Sonido**:
+  - Acondicionamiento de instalaciones.
+  - Diseño de los planes de trabajo de cada proyecto.
+  - Compromiso y resolución de problemas.
+  - Conocimientos técnicos.
+- **Técnico de Luces**:
+  - Acondicionamiento de instalaciones.
+  - Diseño de los planes de trabajo de cada proyecto.
+  - Compromiso y resolución de problemas.
+  - Conocimientos técnicos.
+- **Fotógrafos**:
+  - Captura de momentos clave del evento.
+  - Edición de fotografías.
+  - Colaboración con el equipo de marketing para la promoción del evento.
+- **Operador de Cámara**:
+  - Captura de video durante el evento.
+  - Edición de video.
+  - Colaboración con el equipo de marketing para la promoción del evento.
+- **DJ**:
+  - Creación de ambiente musical durante el evento.
+  - Colaboración con el equipo de sonido para asegurar la calidad del audio.
+
+---
+
+## 2. Catálogo de Servicios
+
+### 2.1. Planificación y Gestión de Eventos
+- **Planificación de Eventos**: Descripción de cómo se planifican los eventos.
+- **Desarrollo de Eventos**: Descripción de cómo se desarrollan los eventos.
+- **Gestión de Eventos**: Planificamos y coordinamos eventos, vendemos entradas, promocionamos eventos y más.
+- **Producción y Coordinación**: Ofrecemos servicios completos de producción y coordinación para garantizar que tu evento se desarrolle sin problemas. Nuestro equipo experto se encarga de todos los aspectos logísticos, desde la planificación inicial hasta la ejecución.
+
+### 2.2. Alquiler de Equipos
+
+#### 2.2.1. Equipos Informáticos
+- **Ordenadores Portátiles para Teletrabajo y Eventos**: Ofrecemos una variedad de ordenadores portátiles de alta calidad y equipados con las últimas tecnologías.
+- **Ordenadores Sobremesa (PC) para Teletrabajo y Eventos**: Ofrecemos ordenadores de sobremesa potentes y fiables para tareas que requieren un alto rendimiento.
+- **MacBook Pro para Eventos**: El MacBook Pro es conocido por su diseño elegante, rendimiento potente y excelente duración de la batería.
+- **Apple iPad para Eventos**: Opción popular por su portabilidad y facilidad de uso.
+- **Soportes iPad para Eventos y Ferias**: Soportes robustos, seguros y versátiles.
+
+#### 2.2.2. Equipos Audiovisuales
+- **Equipos de Sonido**:
+  - **Altavoces**: Alta calidad para garantizar un sonido claro y potente. Desde sistemas compactos hasta arrays lineales para grandes conciertos.
+  - **Micrófonos**: De mano, de solapa, inalámbricos y de condensador para cubrir todas las necesidades.
+  - **Mezcladores de Sonido**: Digital y analógico para un control preciso de la mezcla de audio.
+  - **Amplificadores**: Para mejorar la calidad y potencia del sonido.
+  - **Reproductores, Ecualizadores, Cajas Acústicas**.
+- **Equipos de Iluminación**:
+  - **Luces de Escenario**: Sistemas de iluminación LED, cabezas móviles, efectos especiales (Focos Quarzo, Fresnel, Panoramas, Recorte, Par LED RGBW, Barras LED RGB, Robots, Láser Disco).
+- **Equipos de Video y Proyección**:
+  - **Cámaras de Video**: Amplia selección de cámaras profesionales de alta definición y cinematográficas, con accesorios como trípodes, estabilizadores y drones.
+  - **Proyectores**: Alta resolución y brillo para presentaciones impactantes.
+  - **Pantallas**: Pantallas LED modulares, de retroproyección y táctiles interactivas.
+- **Escenarios y Estructuras**:
+  - **Escenarios**: Diferentes tamaños y alturas.
+  - **Estructuras**: Tarimas modulares (2x1), estructuras de truss para iluminación y sonido.
+
+#### 2.2.3. Accesorios para Videojuegos y Entretenimiento
+- **Batería de Videojuegos**: Para juegos de música y ritmo.
+- **Guitarra de Videojuegos**: Para juegos de música y ritmo.
+- **Volante de Videojuegos**: Para juegos de carreras.
+- **Realidad Virtual**: Cascos de realidad virtual para una experiencia de juego inmersiva.
+- **Sistemas de Karaoke**.
+
+### 2.3. Grabación y Producción Audiovisual
+- **Grabación de Música**: Estudio de grabación equipado con tecnología de última generación.
+- **Producción de Videos**: Conceptualización, filmación, edición y postproducción.
+- **Edición de Sonido y Video**: Expertos para mejorar la calidad de audio y video.
+- **Tipos de Video**:
+  - Videoclips (Cinematográficos, para lanzamientos, promoción).
+  - Videos Promocionales.
+  - Videos de Presentación de Productos o Servicios.
+  - Videos Corporativos.
+  - Videos Institucionales.
+  - Videos de Comunicación Interna.
+
+### 2.4. Merchandising
+- Ayudamos a los artistas a diseñar y producir mercancía como camisetas, pósters y otros productos.
+- **Diseño de Productos**: Colaboración con artistas para diseñar productos únicos.
+- **Producción de Merchandising**: Nos encargamos de la producción y logística.
+
+### 2.5. Servicios de Asesoramiento
+- **Para Artistas**:
+  - **Gestión de Carrera Artística**: Orientación y asesoramiento para alcanzar objetivos profesionales.
+  - **Protección de Derechos de Autor**: Asesoramiento legal sobre propiedad intelectual.
+  - **Negociación de Contratos**: Ayuda para negociar contratos justos.
+  - **Planificación Financiera**: Administración de ingresos y maximización de rentabilidad.
+  - **Desarrollo de Mentalidad Empresarial**: Talleres sobre habilidades empresariales y de gestión.
+  - **Branding y Marketing Personal**: Estrategias para promover la marca y aumentar la visibilidad.
+  - **Desarrollo de Habilidades de Networking**: Oportunidades de networking y colaboración.
+
+---
+
+## 3. Marketing y Contenido
+
+### 3.1. Campañas de Marketing
+- Descripción de cómo se realizan las campañas de marketing para la visibilidad de los eventos.
+
+### 3.2. Slogans y Mensajes
+- Eleva tu evento con nuestra experiencia y calidad premium.
+- Expertos en hacer tus eventos inolvidables.
+- Tu socio ideal para eventos espectaculares.
+- Ofrecemos asesoramiento especializado para artistas y eventos exclusivos.
+- Haz que tu evento sea inolvidable con nuestra calidad y experiencia incomparables.
+- Deja de sobrevivir del arte, vive dignamente de tu arte.
+
+### 3.3. Guiones e Ideas de Contenido
+- **Guion 7: La Ausencia del Abuelo**: (Contenido no especificado).
+- Ideas para imágenes de distintos servicios (videoclips, videos corporativos, etc).
+- Creación de contenidos fáciles de rodar u obtener: videos cortos, imágenes, infografías, artículos.
+
+---
+
+## 4. Desarrollo del Sitio Web (Notas Técnicas)
+
+### 4.1. Plataforma y Tecnologías
+- **CMS**: WordPress con Divi o Elementor. Opción B: Headless CMS (Strapi) con React y Node.js.
+- **Plugins**: WooCommerce, Content Views Pro, Formularios Personalizados, Plugins de SEO (Redsys para Bizum, Stripe para Google Pay).
+- **Alojamiento**: Servidor con capacidad adecuada para el tráfico esperado.
+
+### 4.2. Estructura General del Sitio
+- **Página de Inicio**:
+  - Título, subtítulo, introducción.
+  - Botones de Acción (CTAs): "Nuestros Servicios", "Portafolio", "Contacta".
+  - Menú de Navegación a Unidades de Negocio.
+  - Elementos Visuales: Imágenes y videos representativos.
+  - Botón WhatsApp y Pop-up de suscripción.
+- **Unidades de Negocio (con Landing Pages individuales)**:
+  - **Artistas**: Catálogo, perfiles, formación, blog, formulario de inscripción.
+  - **Bodas**: Planificador, agenda, catálogo de servicios/proveedores (similar a Bodas.net).
+  - **Eventos**: Calendario, listado de eventos, formulario para proponer eventos.
+  - **Proyectos**: Páginas para cada proyecto con objetivos, avances.
+  - **Alquiler de Equipos**: Catálogo de equipos, formulario de reserva.
+- **Página de Contacto**: Formulario e información de contacto.
+- **Página de Tienda (WooCommerce)**.
+
+### 4.3. Funcionalidades Específicas
+- **Formularios Personalizados**: Para cada unidad de negocio (Contacto, Artistas, Bodas, Eventos, Alquiler).
+- **Carrito de Compras (WooCommerce)**: Con métodos de pago (PayPal, Google Pay, Bizum).
+- **Calculadora de Costes**:
+  - Campos para tarifa (Básico, Medio, Premium), horas adicionales, etc.
+  - Cálculo de distancia para dietas y hospedaje (100€ por día si > 100km).
+  - Cálculo de IVA (21%).
+- **Interlinking y Navegación**: Menús claros, CTAs estratégicos.
+- **Experiencia de Usuario (UX)**: Diseño responsivo, elementos visuales agradables, calendario interactivo.
+- **Áreas de Usuario**: Login para Artistas, Novios, Proveedores.
+
+### 4.4. Propuesta de Diseño
+- **Estilo**: Fondo gris claro, borde rojo en forma de diamante, texto negro, fuente Montserrat.
+- **Estructura HTML**: Uso de `header`, `nav`, `main`, `section`, `footer`.
+
+### 4.5. Plan de Desarrollo (Fases)
+1.  **Antes del Desarrollo**: Reunión inicial, análisis de requisitos, planificación del proyecto, arquitectura del sitio (mapa del sitio, wireframes), diseño UI (mockups).
+2.  **Durante el Desarrollo**: Desarrollo Front-End (HTML/CSS/JS), Desarrollo Back-End (WordPress, PHP, MySQL), Integración de funcionalidades (WooCommerce, etc.), Carga de contenido.
+3.  **Después del Desarrollo**: Pruebas (usabilidad, compatibilidad), Lanzamiento, Estrategia de Marketing, Capacitación y Soporte, Mantenimiento.
+
+---
+
+## 5. Proyecto: "Viaje Musical por la Memoria"
+
+### 5.1. Descripción y Objetivos
+- Proyecto social enfocado en la aplicación de musicoterapia para personas mayores en centros de día y residencias.
+- **Objetivos**:
+  - Convertir visitantes en clientes fidelizados.
+  - Crear una plataforma informativa y profesional.
+  - Posicionar a EAR como referente en musicoterapia.
+
+### 5.2. Público Objetivo
+- Mayores y sus Familias.
+- Cuidadores y Terapeutas.
+- Administración Pública y Fundaciones.
+- Empresarios y Inversores.
+
+### 5.3. Plan de Contenidos
+- **Videos Testimonios**: Entrevistas a familiares, personal y mayores.
+- **Mini-documentales**: Mostrando la aplicación de la musicoterapia y sus beneficios.
+- **Artículos de Blog**: "Beneficios de la música en la memoria", "Historias de vida y música".
+- **Infografías**: Sobre el impacto de la musicoterapia.
+- **Podcast con expertos**: Neurociencia, musicoterapia, etc.
+
+### 5.4. Estrategia de Lanzamiento y Comunicación
+- **Canales**: Redes Sociales (Facebook, Instagram, LinkedIn), YouTube, Página Web, Email Marketing.
+- **Pre-lanzamiento**: Campaña de expectativa, contacto con medios, webinar.
+- **Lanzamiento**: Evento principal en un centro, transmisión en vivo.
+- **Post-lanzamiento**: Publicación de contenidos, encuestas, ajustes de estrategia.
+
+### 5.5. Financiación
+- **Presupuesto inicial**: 5000€.
+- **Fuentes**: Crowdfunding, patrocinios, subvenciones, inversiones privadas.
+
+### 5.6. Medición de Éxito (KPIs)
+- Reacciones en redes sociales, tráfico web, registros, contrataciones.
+- Satisfacción del usuario (encuestas).
+
+---
+
+## 6. Documentos y Propuestas
+
+### 6.1. Borrador de Contrato de Servicios
+- **Objeto del Contrato**: Organización del evento “Fiesta de Colombia”.
+- **Duración**.
+- **Obligaciones de La Productora**: Conceptualizar, gestionar, coordinar, supervisar.
+- **Obligaciones del Cliente**: Facilitar información, proveer recursos financieros.
+- **Honorarios y Forma de Pago**: Definir porcentajes y plazos.
+- **Cláusulas**: Exclusividad, Propiedad Intelectual, Confidencialidad, Terminación, Resolución de Conflictos.
+
+### 6.2. Propuesta de Marketing Digital
+- **Servicio**: Diseño de página web completo.
+- **Tiempo de Trabajo**: 3 Meses (90 días).
+- **Costo**: 2599$ USD.
+- **Formas de Pago**: Cuentas Europeas, Western Union, Zelle, Bs, Paypal (+comisión).
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              

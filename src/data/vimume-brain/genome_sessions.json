@@ -1,0 +1,13 @@
+{
+  "protocol": "OMEGA-52",
+  "meta": {
+    "status": "SOVEREIGN",
+    "version": "5.0"
+  },
+  "sessions": [
+    {"id": 1, "title": "EL DESPERTAR DEL ARQUITECTO", "type": "EMANAGER", "xp": 500},
+    {"id": 2, "title": "RESONANCIA CLINICA VIMUME", "type": "VIMUME", "xp": 750},
+    {"id": 3, "title": "LOGISTICA DEL ARSENAL", "type": "OPERACIONES", "xp": 400},
+    {"id": 4, "title": "FOTOSINTESIS DE TOKENS", "type": "IA", "xp": 1000}
+  ]
+}

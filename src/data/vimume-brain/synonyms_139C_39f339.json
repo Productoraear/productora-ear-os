@@ -1,0 +1,999 @@
+{
+    "MENU_COMMANDS": {
+        "30": [
+            "contour",
+            "aperçu"
+        ],
+        "331": [
+            "conversion de type",
+            "convertir en texte captif",
+            "convertir en texte de point"
+        ],
+        "EACH": [
+            "commande",
+            "commande de menu"
+        ],
+        "object > RepeatOptionsMenuGroup > Make Symmetry Repeat": [
+            "symétrie",
+            "en miroir"
+        ],
+        "effect > Live Vector 3D and Materials > Live Adobe Geometry3D Extrude": [
+            "3d"
+        ],
+        "effect > Live Vector 3D and Materials > Live Adobe Geometry3D Revolve": [
+            "3d"
+        ],
+        "effect > Live Vector 3D and Materials > Live Adobe Geometry3D Inflate": [
+            "3d"
+        ],
+        "effect > Live Vector 3D and Materials > Live Adobe Geometry3D Rotate": [
+            "3d"
+        ],
+        "effect > Live Vector 3D and Materials > Live Adobe Geometry3D Materials": [
+            "3d"
+        ],
+        "effect > Live Vector 3D and Materials > Live Live Vector 3D (Classic) > Live 3DExtrude": [
+            "3d"
+        ],
+        "effect > Live Vector 3D and Materials > Live Live Vector 3D (Classic) > Live 3DRevolve": [
+            "3d"
+        ],
+        "effect > Live Vector 3D and Materials > Live Live Vector 3D (Classic) > Live 3DRotate": [
+            "3d"
+        ]
+    },
+    "TOOLS": {
+        "EACH": [
+            "outil",
+            "outils"
+        ],
+        "Adobe Select Tool": [
+            "faire glisser",
+            "déplacer",
+            "faire pivoter",
+            "mettre à l’échelle",
+            "transformer",
+            "modifier la forme",
+            "modifier la forme",
+            "sélectionner des objets",
+            "sélectionner plusieurs objets"
+        ],
+        "Adobe Direct Select Tool": [
+            "changer de forme",
+            "point d’ancrage",
+            "modifier la forme",
+            "modifier la forme",
+            "sélection"
+        ],
+        "Adobe Pen Tool": [
+            "tracé",
+            "tracés",
+            "dessiner un tracé",
+            "dessiner la sélection",
+            "tracé continu",
+            "courbe",
+            "segment courbe",
+            "plume",
+            "vectorisation",
+            "outil plume",
+            "tracé incurvé",
+            "ligne courbe",
+            "points d’ancrage",
+            "outil plume",
+            "tracer une ligne",
+            "lignes droites",
+            "outil de dessin"
+        ],
+        "Adobe Curvature Tool": [
+            "courbe",
+            "angle",
+            "outil de dessin"
+        ],
+        "Adobe Rectangle Shape Tool": [
+            "forme",
+            "outil",
+            "carré",
+            "redimensionner",
+            "dessiner des formes",
+            "outil de dessin",
+            "outil trait",
+            "outil trait"
+        ],
+        "Adobe Brush Tool": [
+            "contour",
+            "contours",
+            "brosse",
+            "pinceau"
+        ],
+        "Adobe Blob Brush Tool": [
+            "contour",
+            "contours",
+            "brosse",
+            "pinceau",
+            "forme de tache"
+        ],
+        "Adobe Type Tool": [
+            "texte",
+            "outil Texte",
+            "outil Texte",
+            "texte horizontal",
+            "texte vertical",
+            "mots horizontaux",
+            "texte à l’horizontale",
+            "texte horizontal",
+            "police horizontale",
+            "lettres de texte horizontal",
+            "lettrage horizontal",
+            "outil Texte horizontal"
+        ],
+        "Adobe Rotate Tool": [
+            "déplacer un objet",
+            "faire pivoter un objet",
+            "faire pivoter une image",
+            "incliner la vue",
+            "vue inclinée",
+            "naviguer",
+            "changer de vue",
+            "outil Rotation de l’affichage",
+            "outils de navigation",
+            "outil pour naviguer"
+        ],
+        "Adobe Eraser Tool": [
+            "supprimer",
+            "supprimer",
+            "couper",
+            "tranche",
+            "outil de modification"
+        ],
+        "Adobe Shape Builder Tool": [
+            "personnaliser",
+            "forme",
+            "associer",
+            "fusionner",
+            "outil de dessin"
+        ],
+        "Adobe Gradient Vector Tool": [
+            "couleur",
+            "peinture",
+            "mélange",
+            "ombre",
+            "outil de dessin"
+        ],
+        "Adobe Eyedropper Tool": [
+            "outil Pipette",
+            "pipette de couleur",
+            "pipette de couleur",
+            "sélecteur de couleurs",
+            "échantillonneur de couleur unique",
+            "prélever une nuance de couleur",
+            "outil Pipette",
+            "sélectionner une couleur",
+            "choisir une couleur",
+            "outil de modification"
+        ],
+        "Adobe Width Tool": [
+            "trait",
+            "contour",
+            "tracé"
+        ],
+        "Adobe Blend Tool": [
+            "fusionner",
+            "mélanger des couleurs",
+            "remodeler",
+            "outil de modification"
+        ],
+        "Adobe Crop Tool": [
+            "zone de travail",
+            "illustration",
+            "outil sélection"
+        ],
+        "Adobe Zoom Tool": [
+            "agrandir",
+            "développer",
+            "agrandir"
+        ],
+        "Adobe Freehand Tool": [
+            "dessin",
+            "contour",
+            "trait",
+            "tracé",
+            "vectorisation",
+            "outil Crayon",
+            "outil de dessin"
+        ],
+        "Adobe Ellipse Shape Tool": [
+            "cercle",
+            "arrondir",
+            "ovale",
+            "dessiner des formes",
+            "outil de dessin"
+        ],
+        "Adobe Line Tool": [
+            "trait",
+            "contour",
+            "tracé",
+            "outil trait"
+        ],
+        "Adobe Anchor Point Tool": [
+            "point",
+            "direction",
+            "outil de dessin"
+        ],
+        "Adobe Rotate Canvas Tool": [
+            "angle",
+            "plan de travail",
+            "aperçu"
+        ],
+        "Adobe Direct Lasso Tool": [
+            "sélection au lasso",
+            "sélection au lasso",
+            "sélection à main levée",
+            "lasso à main levée",
+            "outil Lasso"
+        ],
+        "Adobe Scale Tool": [
+            "règle",
+            "mettre à l’échelle le plan de travail",
+            "mettre à l’échelle des objets",
+            "modifier des objets"
+        ],
+        "Adobe Path Type Tool": [
+            "texte",
+            "outil Texte",
+            "outil Texte",
+            "texte horizontal",
+            "texte vertical",
+            "mots horizontaux",
+            "texte à l’horizontale",
+            "texte horizontal",
+            "police horizontale",
+            "lettres de texte horizontal",
+            "lettrage horizontal",
+            "outil Texte horizontal",
+            "texte sur tracé",
+            "texte sur ligne",
+            "texte sur courbe",
+            "texte sur tracé",
+            "texte sur ligne",
+            "texte sur courbe",
+            "texte aligné au tracé",
+            "texte parallèle à la ligne",
+            "texte aligné sur la courbe",
+            "saisie alignée sur le tracé",
+            "saisie parallèle à la ligne",
+            "saisie parallèle à la courbe"
+        ],
+        "Adobe Scroll Tool": [
+            "sélectionner",
+            "récupérer",
+            "sélectionner un objet",
+            "saisir et objet",
+            "défilement horizontal",
+            "défilement vertical",
+            "outil de navigation",
+            "outil pour naviguer"
+        ],
+        "Adobe Reflect Tool": [
+            "miroir",
+            "symétrie",
+            "outil de modification",
+            "faire une image en miroir",
+            "utiliser l’outil de réflexion",
+            "symétrie d’objets"
+        ],
+        "Adobe Shear Tool": [
+            "rogner",
+            "raser",
+            "recadrer",
+            "marié",
+            "outil de modification"
+        ],
+        "Adobe Scissors Tool": [
+            "couper",
+            "couper",
+            "couper",
+            "forme",
+            "mouler",
+            "outil de modification"
+        ],
+        "Adobe Measure Tool": [
+            "règles",
+            "grilles",
+            "repères",
+            "comptage",
+            "mètre",
+            "taille"
+        ],
+        "Adobe Page Tool": [
+            "outil de navigation",
+            "outil plan de travail",
+            "ajouter des pages",
+            "créer plusieurs pages"
+        ],
+        "Adobe Direct Object Select Tool": [
+            "sélectionner des objets",
+            "sélectionner plusieurs objets",
+            "sélectionner des groupes",
+            "des groupes d'objets",
+            "outils de sélection"
+        ],
+        "Adobe Add Anchor Point Tool": [
+            "inclure le point d’ancrage",
+            "insérer le point d’ancrage",
+            "créer un point d’ancrage",
+            "outil de dessin"
+        ],
+        "Adobe Delete Anchor Point Tool": [
+            "supprimer le point d’ancrage",
+            "annuler le point d’ancrage",
+            "outil de dessin"
+        ],
+        "Adobe Column Graph Tool": [
+            "graphique à barres",
+            "schéma",
+            "histogramme",
+            "outil de dessin"
+        ],
+        "Adobe Stacked Column Graph Tool": [
+            "graphique à barres verticales alignées",
+            "graphique à colonnes",
+            "outil de dessin"
+        ],
+        "Adobe Line Graph Tool": [
+            "outil de dessin",
+            "outil graphique à barres",
+            "panneau données du graphique"
+        ],
+        "Adobe Pie Graph Tool": [
+            "outil de dessin",
+            "graphique circulaire",
+            "graphique circulaire 3D",
+            "graphique sectoriel"
+        ],
+        "Adobe Area Graph Tool": [
+            "graphique à couches",
+            "graphique de surface",
+            "créer des graphismes",
+            "graphique de surface interactif"
+        ],
+        "Adobe Scatter Graph Tool": [
+            "outil de dessin",
+            "outil graphe",
+            "diffusion dans Illustrator",
+            "graphiques à bulles",
+            "graphiques de dispersion"
+        ],
+        "Adobe Bar Graph Tool": [
+            "outil de dessin",
+            "graphique à barres",
+            "graphique à barres modifiable",
+            "faire un graphique à barres",
+            "graphique à barres empilées"
+        ],
+        "Adobe Stacked Bar Graph Tool": [
+            "outil de dessin",
+            "graphique à barres empilées",
+            "graphique à barres verticales empilées",
+            "graphique en barres radial"
+        ],
+        "Adobe Radar Graph Tool": [
+            "graphique en barres radial",
+            "graphique à barres radial",
+            "faire des tableaux et des graphiques"
+        ],
+        "Adobe Area Type Tool": [
+            "outil Texte",
+            "outil Texte",
+            "texte captif",
+            "type de paragraphe"
+        ],
+        "Adobe Vertical Type Tool": [
+            "outil Texte",
+            "outil Texte",
+            "modifier l’orientation du texte",
+            "texte vertical"
+        ],
+        "Adobe Vertical Area Type Tool": [
+            "outil Texte",
+            "outil Texte",
+            "texte captif vertical",
+            "texte curviligne",
+            "texte curviligne vertical"
+        ],
+        "Adobe Vertical Path Type Tool": [
+            "outil Texte",
+            "outil Texte",
+            "texte curviligne",
+            "texte curviligne vertical"
+        ],
+        "Adobe Touch Type Tool": [
+            "outil Texte",
+            "outil Texte",
+            "déplacer le texte",
+            "mettre le texte à l’échelle",
+            "faire pivoter les caractères",
+            "rotation du texte de"
+        ],
+        "Adobe Puppet Warp Tool": [
+            "outil de modification",
+            "transformer une illustration",
+            "outil de marionnette",
+            "déformation de la marionnette",
+            "transformer des graphiques vectoriels"
+        ],
+        "Adobe Symbol Sprayer Tool": [
+            "pulvérisation de symboles",
+            "outil symbole",
+            "pulvériser des jeux de symbole"
+        ],
+        "Adobe Symbol Shifter Tool": [
+            "glissement de symboles",
+            "outil symboles"
+        ],
+        "Adobe Symbol Scruncher Tool": [
+            "outil de dessin",
+            "outil espacement",
+            "outil symboles"
+        ],
+        "Adobe Symbol Sizer Tool": [
+            "outil de dessin",
+            "outil symboles",
+            "outil de redimensionnement",
+            "outil pour la taille"
+        ],
+        "Adobe Symbol Spinner Tool": [
+            "outil de dessin",
+            "outil de rotation",
+            "outil symboles"
+        ],
+        "Adobe Symbol Stainer Tool": [
+            "outil de dessin",
+            "outil coloration",
+            "outil symboles"
+        ],
+        "Adobe Symbol Screener Tool": [
+            "outil de dessin",
+            "outil transparence",
+            "outil symboles"
+        ],
+        "Adobe Symbol Styler Tool": [
+            "outil de dessin",
+            "outil de styliste",
+            "outil symboles"
+        ],
+        "Adobe Magic Wand Tool": [
+            "outil sélection",
+            "outil sélection rapide",
+            "outil de sélection d’objet",
+            "sélectionner un outil sujet",
+            "outil d’isolation"
+        ],
+        "Adobe Freehand Smooth Tool": [
+            "outil de dessin",
+            "lignes lisses dessinées à la main",
+            "outil de lissage"
+        ],
+        "Adobe Freehand Erase Tool": [
+            "outil gomme",
+            "couper une forme"
+        ],
+        "Adobe Corner Join Tool": [
+            "outil jonction",
+            "outil de jointure",
+            "outil de correspondance",
+            "jointure et rognage de tracés",
+            "joindre les points"
+        ],
+        "Adobe Slice Tool": [
+            "outil de raccord",
+            "outil de rognage",
+            "outil de division",
+            "outil de coupe",
+            "outil de découpe",
+            "outil de dessin"
+        ],
+        "Adobe Slice Select Tool": [
+            "outil de raccord",
+            "outil de rognage",
+            "outil de division",
+            "outil de coupe",
+            "outil de découpe",
+            "outil de dessin"
+        ],
+        "Adobe Knife Tool": [
+            "outil de raccord",
+            "outil de rognage",
+            "outil de division",
+            "outil de coupe",
+            "outil de découpe",
+            "outil de modification"
+        ],
+        "Adobe Reshape Tool": [
+            "outil de modification",
+            "modifier l’outil forme",
+            "modifier l’outil"
+        ],
+        "Adobe Planar Paintbucket Tool": [
+            "outil pot de peinture",
+            "pot de peinture dynamique"
+        ],
+        "Adobe Planar Face Select Tool": [
+            "outil de sélection de peinture",
+            "outil peinture dynamique",
+            "outil de dessin"
+        ],
+        "Adobe Shaper Tool": [
+            "outil de modification",
+            "outil d’empilage",
+            "outil forme",
+            "outil concepteur de forme"
+        ],
+        "Adobe Free Transform Tool": [
+            "outil de modification",
+            "outil de distorsion",
+            "déformer les objets",
+            "transformer une illustration"
+        ],
+        "Perspective Grid Tool": [
+            "outil de perspective",
+            "définir les grilles de perspective",
+            "créer une perspective"
+        ],
+        "Perspective Selection Tool": [
+            "outil de dessin",
+            "outil de perspective",
+            "créer une perspective"
+        ],
+        "Adobe Shape Construction Regular Polygon Tool": [
+            "outil de dessin",
+            "outil rectangle",
+            "outil concepteur de forme",
+            "hexagone régulier",
+            "faire une forme en polygone",
+            "triangle",
+            "pentagone",
+            "hexagone",
+            "heptagone",
+            "octogone",
+            "nonagone",
+            "décagone",
+            "dessiner des formes"
+        ],
+        "Adobe Shape Construction Star Tool": [
+            "outil de modification",
+            "outil rectangle",
+            "créer des formes en étoile",
+            "outil conception de forme",
+            "outil étoile"
+        ],
+        "Adobe Rounded Rectangle Tool": [
+            "outil de modification",
+            "outil rectangle",
+            "rectangle courbe",
+            "coins arrondis"
+        ],
+        "Adobe Shape Construction Spiral Tool": [
+            "outil de modification",
+            "outil circulaire",
+            "outil de cercle"
+        ],
+        "Adobe Warp Tool": [
+            "outil de modification",
+            "outil de courbe",
+            "outil de distorsion",
+            "outil de simplification"
+        ],
+        "Adobe New Twirl Tool": [
+            "outil de modification",
+            "outil rotation",
+            "outil de torsion",
+            "outil de simplification"
+        ],
+        "Adobe Pucker Tool": [
+            "outil de modification",
+            "outil de réduction",
+            "outil de distorsion",
+            "outil de fluidité",
+            "outil de simplification"
+        ],
+        "Adobe Bloat Tool": [
+            "outil de modification",
+            "outil de simplification",
+            "outil de distorsion",
+            "outil de fluidité"
+        ],
+        "Adobe Scallop Tool": [
+            "outil de modification",
+            "outil complexité",
+            "outil de distorsion",
+            "outil de fluidité"
+        ],
+        "Adobe Cyrstallize Tool": [
+            "outil de modification",
+            "outil complexité",
+            "outil de distorsion",
+            "outil de fluidité"
+        ],
+        "Adobe Wrinkle Tool": [
+            "outil de modification",
+            "outil de distorsion",
+            "outil de fluidité",
+            "outil complexité",
+            "déformer les tracés"
+        ],
+        "Adobe Mesh Editing Tool": [
+            "outils de peinture",
+            "outil de modification de filet",
+            "outil d’enveloppe de maillage"
+        ],
+        "Adobe Flare Tool": [
+            "outil de dessin",
+            "outil halo d’objectif",
+            "outil d’effets halo",
+            "outil rectangle"
+        ],
+        "Adobe Arc Tool": [
+            "outil de dessin",
+            "outil trait",
+            "outil trait"
+        ],
+        "Adobe Rectangular Grid Tool": [
+            "outil de dessin",
+            "outil trait",
+            "outil trait"
+        ],
+        "Adobe Polar Grid Tool": [
+            "outil de dessin",
+            "outil trait",
+            "outil trait",
+            "outil de grille circulaire"
+        ]
+    },
+    "PANELS": {
+        "EACH": [
+            "panneau",
+            "panneaux"
+        ],
+        "Align": [
+            "aligner des objets",
+            "répartir",
+            "répartir des objets",
+            "répartir l’espacement",
+            "aligner et répartir"
+        ],
+        "AdobeGradientEditor": [
+            "dégradé linéaire",
+            "dégradé radial",
+            "dégradé de forme libre"
+        ],
+        "Transform": [
+            "rayon",
+            "modifier les formes",
+            "modifier"
+        ],
+        "AdobePropertiesPanel": [
+            "épaisseur du trait",
+            "épaisseur du contour",
+            "épaisseur de contour",
+            "modifier les plans de travail",
+            "repères",
+            "règle et grilles",
+            "options de découpage",
+            "format de document",
+            "préférences"
+        ],
+        "Pathfinder": [
+            "associer",
+            "fusionner",
+            "combiner des objets",
+            "fusionner des objets",
+            "panneau pathfinder",
+            "formes composées",
+            "effet pathfinder"
+        ],
+        "Color": [
+            "ajouter une couleur",
+            "supprimer la couleur",
+            "sélectionner une couleur",
+            "choisir une couleur",
+            "sélectionner une couleur",
+            "mélange de couleurs"
+        ],
+        "Appearance": [
+            "ajouter un contour",
+            "ajouter un contour",
+            "panneau aspect",
+            "éléments de style"
+        ],
+        "3D and Materials": [
+            "3d",
+            "plan",
+            "extrusion",
+            "révolution",
+            "dilater",
+            "biseau",
+            "axe",
+            "éclairage",
+            "ombre",
+            "substance",
+            "isométrique",
+            "volume"
+        ],
+        "Actions": [
+            "panneau actions",
+            "étapes",
+            "mesures"
+        ],
+        "AdobeAltGlyphsPanel": [
+            "caractère spécial",
+            "panneau caractères",
+            "glyphes des polices",
+            "variantes de glyphes",
+            "glyphes, panneau"
+        ],
+        "AdobeBrush": [
+            "pinceau",
+            "contour",
+            "brosse",
+            "pinceau",
+            "forme de tache"
+        ],
+        "AdobeCharStyles": [
+            "styles de lettres",
+            "mise en forme de caractères",
+            "modifier le style de caractère",
+            "importer un style de caractère"
+        ],
+        "AdobeColorGuidePanel": [
+            "Nuancier",
+            "groupes de couleurs",
+            "thèmes chromatiques",
+            "modifier la couleur",
+            "redéfinir les couleurs de l’illustration"
+        ],
+        "AdobeFlatteningPreview": [
+            "aperçu de la transparence",
+            "illustration avec transparence",
+            "aplatissement des transparences"
+        ],
+        "AdobeHorizontalTabPanel": [
+            "présentation du panneau onglet",
+            "taquets de tabulation",
+            "onglets paramètres",
+            "répétition de tabulations",
+            "déplacer les onglets",
+            "supprimer des onglets",
+            "tabulations décimales",
+            "point de conduite"
+        ],
+        "AdobeLayerPalette": [
+            "panneau calques",
+            "attributs d’aspect",
+            "ajouter des calques",
+            "ajouter des sous-calques",
+            "gérer les calques"
+        ],
+        "AdobeObjectAttributes": [
+            "attributs d’aspect",
+            "panneau aspect",
+            "créer des effets spéciaux",
+            "panneau des attributs"
+        ],
+        "AdobeOpenTypeFont": [
+            "polices trueType",
+            "caractères alternatifs",
+            "police multiplateforme",
+            "panneau opentype",
+            "caractères spéciaux"
+        ],
+        "AdobeParaStyles": [
+            "styles de lettres",
+            "mise en forme du paragraphe",
+            "modifier le style de paragraphe",
+            "importer un style de paragraphe"
+        ],
+        "AdobeSeparationPreview": [
+            "séparations des couleurs",
+            "imprimer les séparations de couleurs",
+            "aperçu de la surimpression"
+        ],
+        "AdobeSwatch_": [
+            "paragraphe",
+            "styles de caractère",
+            "icônes de couleur",
+            "teintes",
+            "dégradés",
+            "motifs",
+            "guide des couleurs"
+        ],
+        "AdobeVariablesPanel": [
+            "panneau variables",
+            "fusion des données",
+            "fusionner fichier de source de données"
+        ],
+        "AdobeVerticalTabPanel": [
+            "présentation du panneau onglet",
+            "taquets de tabulation",
+            "onglets paramètres",
+            "répétition de tabulations",
+            "déplacer les onglets",
+            "supprimer des onglets",
+            "tabulations décimales",
+            "point de conduite"
+        ],
+        "Artboards": [
+            "plusieurs plans de travail",
+            "ajouter des plans de travail",
+            "créer un plan de travail"
+        ],
+        "CCX Commenting UXP Webview": [
+            "partage et commentaires",
+            "ajouter des annotations",
+            "partager les commentaires",
+            "partage pour révision",
+            "zone de commentaires"
+        ],
+        "CSS": [
+            "feuille de style",
+            "feuilles de style en cascade",
+            "propriétés de style",
+            "voir le code css",
+            "extraire le code css"
+        ],
+        "CSXSExtension_com.adobe.DesignLibraries.angular_0": [
+            "bibliothèque ccl",
+            "bibliothèque creative cloud",
+            "partager la bibliothèque",
+            "actifs de bibliothèque"
+        ],
+        "Character": [
+            "lettre",
+            "style",
+            "texte",
+            "texte",
+            "police"
+        ],
+        "Document Info": [
+            "infos générales du fichier",
+            "propriétés de document",
+            "préférences",
+            "attributs"
+        ],
+        "Export": [
+            "importer et exporter des actifs",
+            "publier des actifs",
+            "copier des ressources",
+            "exportation groupée"
+        ],
+        "Info": [
+            "panneau informations",
+            "propriétés",
+            "préférences",
+            "attributs"
+        ],
+        "Links": [
+            "liens, panneau",
+            "mise à jour du lien",
+            "réédition de lien"
+        ],
+        "Magic Wand": [
+            "sélection",
+            "sélection rapide",
+            "sélection d’objet",
+            "sélectionner un sujet"
+        ],
+        "NamedStyle": [
+            "noms de styles",
+            "attributs d’aspect",
+            "bibliothèques de styles graphiques",
+            "créer des styles graphiques"
+        ],
+        "Navigator": [
+            "voir l’illustration",
+            "aperçu",
+            "zone de vignette"
+        ],
+        "Paragraph": [
+            "mettre en forme le paragraphe",
+            "styles de paragraphe",
+            "espacement des paragraphes",
+            "aligner le paragraphe",
+            "panneau paragraphe"
+        ],
+        "PatternOptionsPanel": [
+            "options de motif",
+            "modifier des motifs",
+            "création de motif",
+            "modification des flux de travail"
+        ],
+        "SVGInteractivity": [
+            "panneau d’interactivité svg",
+            "format svg",
+            "utiliser svg",
+            "importer des effets à un fichier svg"
+        ],
+        "Stroke": [
+            "appliquer le trait",
+            "vectoriser le contour",
+            "modifier la largeur du contour"
+        ],
+        "Symbols": [
+            "Insérer symbole",
+            "panneau symboles",
+            "bibliothèques de symboles",
+            "créer des symboles personnalisés"
+        ],
+        "Transparency": [
+            "opacité",
+            "arrière-plan transparent",
+            "grille de transparence"
+        ],
+        "Vectorize": [
+            "vectoriser des images raster",
+            "vectorisation d’images dans illustrator",
+            "convertir l’image en vecteur"
+        ],
+        "ccx-timeline": [
+            "informations sur la version",
+            "rétablir la version précédente",
+            "restaurer la version",
+            "afficher la version"
+        ]
+    },
+    "ACTIONS": {
+        "sketchToVector": [
+            "tracer et vectoriser",
+            "vectoriser les esquisses",
+            "convertir les dessins en vecteur",
+            "doodle",
+            "vectoriser une image pixellisée",
+            "redimensionner l’illustration",
+            "vectoriser",
+            "vectoriser"
+        ],
+        "retroText": [
+            "effet de texte vintage",
+            "polices de caractères classiques",
+            "typographie stylisée",
+            "texte suranné",
+            "effet de texte groovy",
+            "effet de texte",
+            "texte 3D"
+        ],
+        "neonGlowText": [
+            "texte fluorescent",
+            "texte voyant",
+            "texte lumineux",
+            "texte flamboyant",
+            "typographie éclatante",
+            "effet de texte",
+            "double éclairage",
+            "polices de caractères mises en avant",
+            "texte néon vif",
+            "texte 3D"
+        ],
+        "oldSchoolText": [
+            "texte stylisé",
+            "texte suranné",
+            "motif de texte ancien",
+            "typographie vintage",
+            "effet de texte",
+            "polices de caractères classiques",
+            "panneau old school"
+        ],
+        "reColor": [
+            "réappliquer une couleur",
+            "réappliquer la couleur",
+            "redéfinir les couleurs de l’illustration",
+            "couleurs de l’harmonie",
+            "harmonie de couleurs",
+            "couleur",
+            "nuanciers",
+            "thèmes chromatiques",
+            "couleur",
+            "bibliothèque de couleurs",
+            "roue chromatique",
+            "teinte"
+        ]
+    }
+}

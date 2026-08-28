@@ -1,0 +1,24 @@
+  <i class="svgIcon app-svg-async svgIcon__angleDown countrySelector__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>        </button>
+</div>
+</section>
+<section class="copyrightFooter">
+<img src="https://www.bodas.net/assets/img/footer/tkww_logo_KO.png" srcset="https://www.bodas.net/assets/img/footer/tkww_logo_KO_2x.png 2x"  alt="ww logo"  width="140" height="48" loading="lazy"  >
+<p>&copy; 2024 Bodas.net</p>
+</section>
+</div>
+</footer>
+<script>
+var pageGlobals = {
+reduced: '/vendors/list/sector/province'
+,                                                             currentPageData:{"resultVendorsIds":[139131,156847,88354,29458,23738,207808,56308,32994,156385,154383,244508,245738,26514,80032,90736,119509,14529,26515,49414,26164,4880,26666,194785,99072],"zOrigen":1}
+,                                                             loggedUserInfo:{"isLogged":false}
+,                                                             common:{"environment":{"countryCode":"ES","isJsArchitectureEnabled":true,"isCookieLessEnabled":false,"isInternationalOnePage":true,"subdomain":"www.bodas.net","subdomainCommunity":"https:\/\/comunidad.bodas.net\/","isCurrentPageInCustomSubdomain":false,"isGoogleIdentityServicesLibraryEnabled":true,"isWebVitalsEnabled":false,"isDebugCoreWebVitalsEnabled":false,"isDevel":false,"showAppPusher":true},"platform":{"reducedPlatform":"","isDesktop":true,"isMobile":false,"isApp":false,"mobilePlatform":"mobile","apps":{"appVersion":null,"usersApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isShowNativeLoginEnabled":false,"areHappyMomentsEnabled":true,"isNativeShareAvailable":false,"isListingCounterFiltersEnabled":false}},"vendorsApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isIOSProxyBarsFullControlEnabled":false}},"isAppUsersNativeSignUpLayerEnabled":false}},"remarketing":{"facebook":{"isPixelEnabled":true,"isEnabled":true,"isLoaded":false,"tracker":"experiment"},"pinterest":{"isEnabled":true,"isLoaded":false}},"analytics":{"isEcommerceEnabled":true}}
+,                                                             experiments:[]
+};
+</script>
+<script>
+    var userGlobals = {
+                                            gp_anon_id: '2faa1ae2-b846-4000-82e6-08cd18663f24'            
+                                    };
+</script>
+<script> globals = { country: "España", countryCode: "ES", locale: "es_ES", language: "es", tracking: { universalAnalytics: {"C

@@ -1,0 +1,116 @@
+{
+  "provider_id": "253469",
+  "name": "Le Mirage",
+  "category": "Finca",
+  "location": "Riudoms, Tarragona",
+  "description": "Le Mirage es una finca situada en Riudoms, Tarragona, rodeada de olivos centenarios, a 5 kilómetros de las espectaculares playas de Cambrils.\n¿Qué os ofrecen?\nLe Mirage te ofrece un espacio mágico para la celebración de vuestro día especial. Un bonito jardín, el estanque, la piscina… ofrecerán imágenes espectaculares para el recuerdo.\nPonen a disposición todo tipo de servicios, como catering, fotógrafo, DJ, carpas... El interior consta de 6 habitaciones dobles, amplia cocina, salón comedor, lavandería, baños... donde podréis preparar vuestro evento o descansar tras ese día genial.",
+  "phone": null,
+  "email": null,
+  "website": "https://maps.google.com/?q=41.1315, 1.05558",
+  "images": [
+    "https://cdn0.bodas.net/vendor/53469/3_2/1920/jpg/img-8119_1_253469-172000347065880.jpeg",
+    "https://cdn0.bodas.net/vendor/53469/3_2/1920/jpeg/img-8213_1_253469-172000349339618.jpeg",
+    "https://cdn0.bodas.net/vendor/53469/3_2/1920/jpg/estanque_1_253469-172000355378030.jpeg",
+    "https://cdn0.bodas.net/vendor/53469/3_2/1920/jpg/img-8122_1_253469-172000356997921.jpeg",
+    "https://cdn0.bodas.net/vendor/53469/3_2/1920/jpg/img-8134_1_253469-172000358538552.jpeg",
+    "https://cdn0.bodas.net/vendor/53469/3_2/1920/jpg/img-8194_1_253469-172000358665927.jpeg"
+  ],
+  "pricing_min": 2,
+  "pricing_max": null,
+  "faqs": [
+    {
+      "question": "¿De qué espacios dispones?",
+      "answer": "Salones de banquetes                            \n\n                                Terraza                            \n\n                                Zona ajardinada                            \n\n                                Carpa                            \n\n                                Capilla                            \n\n                                Cocina para uso del catering                            \n\n                                Zona de baile                            \n\n                                Piscina                            \n\n                                Espacio para la ceremonia civil                            \n\n                                Parking"
+    },
+    {
+      "question": "¿Qué servicios ofreces?",
+      "answer": "Banquete                            \n\n                                Ceremonia                            \n\n                                Fotografía                            \n\n                                Música                            \n\n                                Transporte                            \n\n                                Decoración"
+    },
+    {
+      "question": "Localización:",
+      "answer": "Cerca del mar                            \n\n                                En el campo"
+    },
+    {
+      "question": "¿Dispones de alojamiento para invitados?",
+      "answer": "Sí, casa de 525 m² y 6 habitaciones"
+    },
+    {
+      "question": "¿Celebras más de un evento al día?",
+      "answer": "No"
+    },
+    {
+      "question": "¿Qué incluye el menú?",
+      "answer": "Catering a escoger"
+    },
+    {
+      "question": "¿Es posible alquilar únicamente el espacio, sin el servicio de restauración?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Dispones de catering/cocina propia?",
+      "answer": "Ambos"
+    },
+    {
+      "question": "¿Qué tipo de cocina sirves?",
+      "answer": "De mercado                            \n\n                                Tradicional, típica regional                            \n\n                                De autor                            \n\n                                De fusión"
+    },
+    {
+      "question": "¿Es posible adaptar o modificar los menús?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Dispones de menús especiales?",
+      "answer": "Vegetarianos                            \n\n                                Veganos                            \n\n                                Diabéticos                            \n\n                                Hipertensos                            \n\n                                Alérgicos                            \n\n                                Celíacos"
+    },
+    {
+      "question": "¿Sirves también la tarta de boda?",
+      "answer": "Sí"
+    },
+    {
+      "question": "¿Puedo llevar mi propia tarta de boda? ¿Tiene algún recargo?",
+      "answer": "No"
+    },
+    {
+      "question": "¿Cómo funciona la barra libre?",
+      "answer": "Cantidad total fija (con límite de hora)"
+    },
+    {
+      "question": "¿Tienes límite de hora en las celebraciones?",
+      "answer": "Sí, 02:00"
+    },
+    {
+      "question": "Exclusividad fotógrafo:",
+      "answer": "No"
+    },
+    {
+      "question": "Exclusividad música:",
+      "answer": "No"
+    },
+    {
+      "question": "Exclusividad catering:",
+      "answer": "No"
+    },
+    {
+      "question": "¿Existe algún pago fijo por el lugar?",
+      "answer": "No"
+    },
+    {
+      "question": "¿Cuál es el recargo en caso de no llegar al mínimo de invitados?",
+      "answer": "Cantidad mínima alquiler del espacio: 2.000 €"
+    },
+    {
+      "question": "¿Cómo se efectúa el pago?",
+      "answer": "50% a la reserva, y el resto 24 h antes del evento, transferencia y Bizum"
+    },
+    {
+      "question": "¿Dispones de acceso para personas con discapacidad?",
+      "answer": "Sí"
+    }
+  ],
+  "verified": false,
+  "eco_certified": false,
+  "tier": "FREE",
+  "source_file": "le-mirage--e253469.htm",
+  "extracted_at": "2025-11-27T11:16:53.462Z",
+  "completeness_score": 80
+}

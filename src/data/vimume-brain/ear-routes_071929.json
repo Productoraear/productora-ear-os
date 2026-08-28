@@ -1,0 +1,668 @@
+[
+    {
+        "type": "CORE",
+        "path": "/",
+        "title": "Portal Home",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/contacto",
+        "title": "Contacto Oficial",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/about",
+        "title": "Sobre la Productora",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/directorio",
+        "title": "Directorio Global",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/prensa",
+        "title": "Sala de Prensa",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/terms",
+        "title": "Términos y Condiciones",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/privacy",
+        "title": "Política de Privacidad",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/checkout",
+        "title": "Checkout Seguro",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/success",
+        "title": "Confirmación de Orden",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/dossier",
+        "title": "Dossier Oficial",
+        "status": "LIVE"
+    },
+    {
+        "type": "CORE",
+        "path": "/dossier-seo",
+        "title": "Dossier SEO Dominance",
+        "status": "LIVE"
+    },
+    {
+        "type": "B2B",
+        "path": "/empresarios",
+        "title": "Empresarios & Partners",
+        "status": "LIVE"
+    },
+    {
+        "type": "B2B",
+        "path": "/ayuntamientos-premium",
+        "title": "Ayuntamientos Premium",
+        "status": "LIVE"
+    },
+    {
+        "type": "B2B",
+        "path": "/wedding-planners",
+        "title": "Hub Wedding Planners",
+        "status": "LIVE"
+    },
+    {
+        "type": "B2B",
+        "path": "/business",
+        "title": "EAR Business Solutions",
+        "status": "LIVE"
+    },
+    {
+        "type": "B2B",
+        "path": "/comparativas-premium",
+        "title": "Comparativas Premium",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROD",
+        "path": "/bodas",
+        "title": "Bodas (Legado)",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROD",
+        "path": "/eventos",
+        "title": "Ingeniería de Eventos",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROD",
+        "path": "/arsenal-forense",
+        "title": "Arsenal Hardware",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROD",
+        "path": "/fitur",
+        "title": "Producción FITUR",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROD",
+        "path": "/metodologia",
+        "title": "Metodología Forense",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROD",
+        "path": "/briefing-institucional",
+        "title": "Briefing Institucional",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROD",
+        "path": "/mundo-mariachi",
+        "title": "Legacy Mariachi Website",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMIA",
+        "path": "/academia",
+        "title": "Academy Matrix Home",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMIA",
+        "path": "/academia/formacion",
+        "title": "Formación Artistas",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMIA",
+        "path": "/guia-estrategica",
+        "title": "Guía Estratégica 2026",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMIA",
+        "path": "/incubadora",
+        "title": "Incubadora de Talentos",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMIA",
+        "path": "/afiliados",
+        "title": "Dashboard Afiliados",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMIA",
+        "path": "/vimume-dashboard",
+        "title": "Vimume Dashboard",
+        "status": "LIVE"
+    },
+    {
+        "type": "INTEL",
+        "path": "/ops/war-room",
+        "title": "War Room Dashboard",
+        "status": "SECURE"
+    },
+    {
+        "type": "INTEL",
+        "path": "/ops/emanager",
+        "title": "eManager Studio",
+        "status": "SECURE"
+    },
+    {
+        "type": "INTEL",
+        "path": "/journal",
+        "title": "Journal Forense",
+        "status": "LIVE"
+    },
+    {
+        "type": "INTEL",
+        "path": "/casos-exito",
+        "title": "Casos de Éxito",
+        "status": "LIVE"
+    },
+    {
+        "type": "INTEL",
+        "path": "/forensic-audit",
+        "title": "Auditoría Forense",
+        "status": "SECURE"
+    },
+    {
+        "type": "INTEL",
+        "path": "/subasta",
+        "title": "Subasta San Valentín",
+        "status": "LIVE"
+    },
+    {
+        "type": "INTEL",
+        "path": "/ops/stress-test",
+        "title": "War Room Stress Test",
+        "status": "SECURE"
+    },
+    {
+        "type": "SOLUTIONS",
+        "path": "/profesor-ia",
+        "title": "Profesor de IA Musical",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-madrid",
+        "title": "DJ Bodas Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-barcelona",
+        "title": "DJ Bodas Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-sevilla",
+        "title": "DJ Bodas Sevilla",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-valencia",
+        "title": "DJ Bodas Valencia",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-malaga",
+        "title": "DJ Bodas Málaga",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-ibiza",
+        "title": "DJ Bodas Ibiza",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-marbella",
+        "title": "DJ Bodas Marbella",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-bilbao",
+        "title": "DJ Bodas Bilbao",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-mallorca",
+        "title": "DJ Bodas Mallorca",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-alicante",
+        "title": "DJ Bodas Alicante",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-tenerife",
+        "title": "DJ Bodas Tenerife",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-las-palmas",
+        "title": "DJ Bodas Las Palmas",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-granada",
+        "title": "DJ Bodas Granada",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-zaragoza",
+        "title": "DJ Bodas Zaragoza",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-murcia",
+        "title": "DJ Bodas Murcia",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-cordoba",
+        "title": "DJ Bodas Córdoba",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-valladolid",
+        "title": "DJ Bodas Valladolid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-san-sebastian",
+        "title": "DJ Bodas San Sebastián",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/dj-bodas-coruna",
+        "title": "DJ Bodas Coruña",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_DEEP",
+        "path": "/arsenal/dj-bodas-eventos-corporativos-madrid",
+        "title": "DJ Corp Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_DEEP",
+        "path": "/arsenal/dj-bodas-eventos-corporativos-barcelona",
+        "title": "DJ Corp Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_DEEP",
+        "path": "/arsenal/dj-bodas-fiestas-privadas-madrid",
+        "title": "DJ Privado Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_DEEP",
+        "path": "/arsenal/dj-bodas-fiestas-privadas-barcelona",
+        "title": "DJ Privado Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-madrid",
+        "title": "Iluminación Bodas Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-barcelona",
+        "title": "Iluminación Bodas Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-marbella",
+        "title": "Iluminación Bodas Marbella",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-sevilla",
+        "title": "Iluminación Bodas Sevilla",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-valencia",
+        "title": "Iluminación Bodas Valencia",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-malaga",
+        "title": "Iluminación Bodas Málaga",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-ibiza",
+        "title": "Iluminación Bodas Ibiza",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/iluminacion-bodas-mallorca",
+        "title": "Iluminación Bodas Mallorca",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/sonido-premium-madrid",
+        "title": "Sonido Premium Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/sonido-premium-barcelona",
+        "title": "Sonido Premium Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/sonido-premium-ibiza",
+        "title": "Sonido Premium Ibiza",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/sonido-premium-sevilla",
+        "title": "Sonido Premium Sevilla",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/sonido-premium-valencia",
+        "title": "Sonido Premium Valencia",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/sonido-premium-malaga",
+        "title": "Sonido Premium Málaga",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/violines-electricos-madrid",
+        "title": "Violines Eléctricos Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/violines-electricos-barcelona",
+        "title": "Violines Eléctricos Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/violines-electricos-marbella",
+        "title": "Violines Eléctricos Marbella",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/violines-electricos-sevilla",
+        "title": "Violines Eléctricos Sevilla",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/violines-electricos-valencia",
+        "title": "Violines Eléctricos Valencia",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/banda-jazz-madrid",
+        "title": "Banda Jazz Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/banda-jazz-barcelona",
+        "title": "Banda Jazz Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/banda-jazz-sevilla",
+        "title": "Banda Jazz Sevilla",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/banda-jazz-valencia",
+        "title": "Banda Jazz Valencia",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/streaming-multi-camara-madrid",
+        "title": "Streaming Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/streaming-multi-camara-barcelona",
+        "title": "Streaming Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/video-mapping-3d-madrid",
+        "title": "Video Mapping Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "SEO_GEO",
+        "path": "/arsenal/video-mapping-3d-barcelona",
+        "title": "Video Mapping Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/marketing-musical",
+        "title": "Curso: Marketing Musical",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/ingenieria-sonido",
+        "title": "Curso: Ingeniería Sonido",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/negocio-eventos",
+        "title": "Curso: Negocio Eventos",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/psicologia-escenica",
+        "title": "Curso: Psicología Escénica",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/produccion-tecnica",
+        "title": "Curso: Producción Técnica",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/neurobranding",
+        "title": "Curso: Neurobranding",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/gestion-fans",
+        "title": "Curso: Gestión de Fans",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/contratos-legales",
+        "title": "Curso: Contratos Legales",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/iluminacion-forense",
+        "title": "Curso: Iluminación Forense",
+        "status": "LIVE"
+    },
+    {
+        "type": "ACADEMY_DEEP",
+        "path": "/academia/protocolo-vimume",
+        "title": "Curso: Protocolo VIMUME",
+        "status": "LIVE"
+    },
+    {
+        "type": "WEDDINGS_DEEP",
+        "path": "/weddings/fincas-exclusivas-madrid",
+        "title": "Fincas Exclusive Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "WEDDINGS_DEEP",
+        "path": "/weddings/fincas-exclusivas-barcelona",
+        "title": "Fincas Exclusive Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "WEDDINGS_DEEP",
+        "path": "/weddings/fincas-exclusivas-marbella",
+        "title": "Fincas Exclusive Marbella",
+        "status": "LIVE"
+    },
+    {
+        "type": "WEDDINGS_DEEP",
+        "path": "/weddings/catering-premium-bodas",
+        "title": "Catering Premium Bodas",
+        "status": "LIVE"
+    },
+    {
+        "type": "WEDDINGS_DEEP",
+        "path": "/weddings/fotografia-vogue-style",
+        "title": "Fotografía Vogue Style",
+        "status": "LIVE"
+    },
+    {
+        "type": "PRODUCTION_DEEP",
+        "path": "/production/pantalla-led-gigante-madrid",
+        "title": "LED Gigante Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "PRODUCTION_DEEP",
+        "path": "/production/pantalla-led-gigante-barcelona",
+        "title": "LED Gigante Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "PRODUCTION_DEEP",
+        "path": "/production/sonido-line-array-l-acoustics",
+        "title": "Sonido L-Acoustics",
+        "status": "LIVE"
+    },
+    {
+        "type": "PRODUCTION_DEEP",
+        "path": "/production/iluminacion-robotica-diseno",
+        "title": "Iluminación Robótica",
+        "status": "LIVE"
+    },
+    {
+        "type": "VENUES_DEEP",
+        "path": "/venues/espacios-corporativos-madrid",
+        "title": "Venues Corp Madrid",
+        "status": "LIVE"
+    },
+    {
+        "type": "VENUES_DEEP",
+        "path": "/venues/espacios-corporativos-barcelona",
+        "title": "Venues Corp Barcelona",
+        "status": "LIVE"
+    },
+    {
+        "type": "VENUES_DEEP",
+        "path": "/venues/espacios-corporativos-valencia",
+        "title": "Venues Corp Valencia",
+        "status": "LIVE"
+    },
+    {
+        "type": "PROTOCOL",
+        "path": "/vault/arsenal-protocol.html",
+        "title": "Protocolo Arsenal Técnico",
+        "status": "SECURE"
+    },
+    {
+        "type": "PROTOCOL",
+        "path": "/vault/business-protocol.html",
+        "title": "Protocolo Business 360",
+        "status": "SECURE"
+    }
+]

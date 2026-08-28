@@ -1,0 +1,61 @@
+﻿{
+  "programName": "99 Días Haciendo Clic: De Artista a Empresario S-Class",
+  "version": "2.0.26 (Neural Edition)",
+  "totalModules": 99,
+  "modules": [
+    {
+      "day": 1,
+      "title": "El Método Nike para Artistas: Crecimiento Exponencial",
+      "type": "MINDSET",
+      "status": "unlocked",
+      "contentPath": "0001_metodo_nike.md",
+      "summary": "Cómo dejar de pedir permiso y empezar a ejecutar con la mentalidad de una multinacional desde el día cero.",
+      "actionable": "Define tu 'Just Do It' operativo de hoy."
+    },
+    {
+      "day": 18,
+      "title": "Venta para Expertos de Élite: El Proceso Invisible",
+      "type": "SALES",
+      "status": "locked",
+      "contentPath": "0018_venta_elite.md",
+      "summary": "La psicología detrás de cerrar tratos de alto ticket sin parecer que estás vendiendo.",
+      "actionable": "Auditoría de tu script de ventas actual."
+    },
+    {
+      "day": 24,
+      "title": "La Paradoja de los 10.000€: Por qué es más fácil cobrar caro",
+      "type": "STRATEGY",
+      "status": "locked",
+      "contentPath": "0024_paradoja_10k.md",
+      "summary": "Análisis de economía de comportamiento: El cliente de lujo da menos problemas y genera más margen.",
+      "actionable": "Reestructuración de tu escalera de valor."
+    },
+    {
+      "day": 60,
+      "title": "El Prompt Multiplicador: IA como Socio",
+      "type": "AI_LEVERAGE",
+      "status": "locked",
+      "contentPath": "0060_prompt_multiplicador.md",
+      "summary": "Cómo usar Antigravity y Astra para clonarte a ti mismo operativa y creativamente.",
+      "actionable": "Configura tu primer agente autónomo."
+    },
+    {
+      "day": 69,
+      "title": "Tu Estilo como Ventaja Defensible (Moat)",
+      "type": "BRANDING",
+      "status": "locked",
+      "contentPath": "0069_estilo_defensible.md",
+      "summary": "En un mundo de IA, tu 'imperfección' humana y estilo único es lo único que no se puede copiar.",
+      "actionable": "Define tus 3 rasgos de marca innegociables."
+    },
+    {
+      "day": 80,
+      "title": "Trust Architecture & Océanos Azules",
+      "type": "MARKET_DOMINANCE",
+      "status": "locked",
+      "contentPath": "0080_trust_architecture.md",
+      "summary": "Cómo construir un ecosistema (VIMUME) donde la competencia se vuelve irrelevante.",
+      "actionable": "Diseña tu protocolo de confianza institucional."
+    }
+  ]
+}

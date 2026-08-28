@@ -1,0 +1,5464 @@
+﻿{
+	"identification": "net.maxon.fileid.descriptiondefinition",
+	"content": {
+		"_dbVersion": 6,
+		"_db": [
+			"net.maxon.attribute.children",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "子级"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.color",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "颜色"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.flags",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "标志"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.geometry",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "几何"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.index",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "索引"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.lifetime",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "寿命"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.material",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "材质"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.matrix",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.nodepath",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "节点路径"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.objects",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对象"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.ratio",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "比率"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.sourceindex",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "来源索引"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.sqrmatrix",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "旋转/缩放/斜切"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.translation",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "转换"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.attribute.velocity",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "速度"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.datatype.enum.alignaxis",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对齐轴心"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis#enum#none"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "无"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis#enum#xpos"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "+X"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis#enum#xneg"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "-X"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis#enum#ypos"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "+Y"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis#enum#yneg"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "-Y"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis#enum#zpos"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "+Z"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "alignaxis#enum#zneg"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "-Z"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.datatype.instancematrixmode",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 0
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "参考变换模式"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "NONE"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "忽略变换"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "LOCAL"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "使用本地变换"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "GLOBAL"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "使用全局变换"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.indexarrayfromstring",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 0
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.group"
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.group"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "mode"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "模式"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "mode#enum#index"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "索引"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "mode#enum#pair"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "索引对"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "stringin"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "字符"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "array"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "数组"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "来自字符串的索引数组"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.node.align",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "axis"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "轴心"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "axis#enum#x"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "X"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "axis#enum#y"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Y"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "axis#enum#z"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Z"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "direction"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "方向"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "secondary"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "朝向"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "out"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对齐"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.node.fieldevaluator",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "field"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "域"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "domain"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "定义域"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "matrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "position"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "位置"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "result"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "结果"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "域评估"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.node.objectcontainer",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.container"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.container"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "nodepath"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "节点路径"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "result"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "包"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "组装对象包"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Object, Container, Structure, Create, Build"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.addpackage",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "package"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "包"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "添加包算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Package, Object"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.addpackages",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "packages"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "包"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "添加包数组算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Package, Object"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.base",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.bypassable"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.bypassable"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.showtag"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "显示标签"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.input"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.output"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "算子组"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Group, Template"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.children",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "array"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "数组"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "packages"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "包"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "children"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "子级"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.operatoroverride"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.operatoroverride"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "子级算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Child, Children, Hierarchy,  Parent"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.color",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "color"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "颜色"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.operatoroverride"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.operatoroverride"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "颜色算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Color, Colour, Assign, Set"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.filter",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "filter"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "移除"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.operatoroverride"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.operatoroverride"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "过滤算子"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.instance",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "matrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "link"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "参考"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "matrixmode"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "参考变换模式"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "实例"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.lookat",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "target"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "目标"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.operatoroverride"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.operatoroverride"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "看向算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Matrix, Assign, Set, PSR, Position, Scale, Rotation, Transform, Move"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.matrix",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "matrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "local"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "局部变换"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.operatoroverride"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.operatoroverride"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵算子"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Matrix, Assign, Set, Transform, Position, Scale, Rotation, Transform, Move"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.null",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.objectbase"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.objectbase"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "空对象"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.objectbase",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.objectbase.children"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "子级"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.objectbase.children#command#addvariadicport"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "添加子集"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.objectbase.children#command#removevariadicport"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "移除子集"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.objectbase.matrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对象基础组"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Group, Template"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.objectgroup",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.objectbase"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.objectbase"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "objectinput"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对象"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对象组"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Group, Template"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.root",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.objectbase"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.objectbase"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "场景根"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.op.stack",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.op.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.neutron.op.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "stack"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "栈"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "栈算子"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.operatoroverride",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.base.group.object"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "算子"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.portbundle.extra",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.result"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "函数结果"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "adjustedmatrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "调整矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "adjustedparentmatrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "调整父级矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "额外端口"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.portbundle.object",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.object.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "matrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "sqrmatrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "旋转/缩放/剪切"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "translation"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "位置"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "parentmatrix"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "母矩阵"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "filter"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "过滤"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "geometry"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "几何"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "children"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "子级"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "color"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "颜色"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "material"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "材质"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "domain"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "范围"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.effector.effectstrength"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "效果强度"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.neutron.effector.fieldstrength"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "域强度"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对象包"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.neutron.unittestscene",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "group"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "buttongroup"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "单元测试"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "identifier"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "单元测试 ID"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "command"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "load"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "载入单元测试"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "command"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "write"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "编写单元测试"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "command"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "run"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "运行单元测试"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "command"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "runcurrent"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "运行当前单元测试"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "reference"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "参考"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "suggestedreference"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "建议参考"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "enableheatmap"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "热图测试"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "result"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "单元测试结果"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "场景节点"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.node.instantiation",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.instantiation.node"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "节点"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.instantiation.enable"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "启用"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "实例化节点"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.node.lcvbase",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.base"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.base"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "group"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.lcvbase.initial"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "初始化"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "group"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.lcvbase.previous"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "上一个"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "group"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.lcvbase.next"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "下一个"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "group"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.lcvbase.final"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "最终"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "types"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "类型"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "types#command#addvariadicport"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "添加输入"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "string"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "types#command#removevariadicport"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "移除输入"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "循环传输取值"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.node.loopcarriedvalue",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.lcvbase"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.lcvbase"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.aggregation"
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.aggregation"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "循环传输取值"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "Loop, Memory, Hold, Repeat, Recursion, Aggregation, lcv"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.node.memory",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {
+					"referenceDataType": "net.maxon.interface.datadictionary-C",
+					"_impl": {
+						"_mode": 1,
+						"_keyType": "net.maxon.datatype.internedid",
+						"_fastData": []
+					}
+				},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.lcvbase"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.lcvbase"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "domain"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "范围"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "lifetime"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "寿命"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "内存"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "History, Memory, Store, Remember"
+								}
+							]
+						}
+					}
+				]
+			},
+			"net.maxon.node.sum",
+			{
+				"referenceClassType": "net.maxon.class.datadescriptiondefinition",
+				"_info": {},
+				"_description": [
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "include"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.node.aggregation"
+								},
+								"net.maxon.description.data.base.generateignoreheader",
+								{
+									"dataType": "bool",
+									"content": true
+								},
+								"net.maxon.description.data.base.include",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "net.maxon.node.aggregation"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "datatype"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "数据类型"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "values"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "取值"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "attribute"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "out"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "结果"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.name"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "对流求和"
+								}
+							]
+						}
+					},
+					{
+						"referenceDataType": "net.maxon.interface.datadictionary-C",
+						"_impl": {
+							"_mode": 1,
+							"_keyType": "net.maxon.datatype.internedid",
+							"_fastData": [
+								"net.maxon.description.base.command",
+								{
+									"dataType": "net.maxon.datatype.id",
+									"content": "exportedstring"
+								},
+								"net.maxon.description.base.identifier",
+								{
+									"dataType": "net.maxon.datatype.internedid",
+									"content": "net.maxon.object.base.tags"
+								},
+								"net.maxon.description.string.base.translatedstring",
+								{
+									"dataType": "net.maxon.interface.string-C",
+									"content": "sum"
+								}
+							]
+						}
+					}
+				]
+			}
+		]
+	}
+}

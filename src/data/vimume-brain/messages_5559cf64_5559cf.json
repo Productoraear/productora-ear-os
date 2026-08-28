@@ -1,0 +1,947 @@
+<li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                                            
+<div class="header-join">
+    <a class="header-join-link" href="https://www.bodas.net/users-login.php">Accede</a>
+    <a
+        class="header-join-link app-ua-track-event"
+        href="https://www.bodas.net/users-signup.php"
+         data-track-c='SignUpTracking'  data-track-a='a-step1'  data-track-l='d-desktop+s-site_header'  data-track-s=''  data-track-v='0'  data-track-ni='0'     >
+        Regístrate    </a>
+</div>
+                    
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/vestidos-fiesta" class="selected ">
+                            Vestidos de Fiesta                        </a>
+                                                        </li>
+                            <li   >
+                                            Vestidos de Fiesta de Alicia Rueda Atelier                                                        </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper pr0 pb0 pl0">
+    <div class="headings-intro">
+        <h1>Vestidos de Fiesta de Alicia Rueda Atelier</h1>
+                    <span class="count block mb10 ">
+                56 vestidos            </span>
+            </div>
+    </div>
+
+
+<form class="app-dress-filters-form" action="/cat-DressList.php">
+    <input type="hidden" name="type" autocomplete="off" value="2"/>
+            <input type="hidden" name="collection" autocomplete="off" id="collection" value=""/>
+            <input type="hidden" name="designer" autocomplete="off" id="designer" value="483"/>
+            <input type="hidden" name="silhouette" autocomplete="off" id="silhouette" value=""/>
+            <input type="hidden" name="neckline" autocomplete="off" id="neckline" value=""/>
+            <input type="hidden" name="suitStyle" autocomplete="off" id="suitStyle" value=""/>
+            <input type="hidden" name="length" autocomplete="off" id="length" value=""/>
+            <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value=""/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-fiesta">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Alicia Rueda Atelier                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343684" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/izaro--v343684">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/izaro--v343684">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/izaro--mfvr722604.jpg"   alt="IZARO , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/izaro--v343684"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>IZARO </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343686" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/harper-hope--v343686">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/harper-hope--v343686">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/harper-hope--mfvr722608.jpg"   alt="HARPER - HOPE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/harper-hope--v343686"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>HARPER - HOPE </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343676" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/lydia--v343676">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/lydia--v343676">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/lydia--mfvr722588.jpg"   alt="LYDIA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/lydia--v343676"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>LYDIA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343674" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/maddie--v343674">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/maddie--v343674">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/maddie--mfvr722584.jpg"   alt="MADDIE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/maddie--v343674"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MADDIE </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343672" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/neli-francesca--v343672">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/neli-francesca--v343672">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/neli-francesca--mfvr722580.jpg"   alt="NELI -  FRANCESCA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/neli-francesca--v343672"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>NELI -  FRANCESCA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343718" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tanya--v343718">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tanya--v343718">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/tanya--mfvr722676.jpg"   alt="TANYA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tanya--v343718"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>TANYA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343716" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tabitha--v343716">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tabitha--v343716">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/tabitha--mfvr722670.jpg"   alt="TABITHA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tabitha--v343716"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>TABITHA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343714" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/sophia--v343714">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/sophia--v343714">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/sophia--mfvr722666.jpg"   alt="SOPHIA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/sophia--v343714"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>SOPHIA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343712" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/rosemary--v343712">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/rosemary--v343712">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/rosemary--mfvr722662.jpg"   alt="ROSEMARY , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/rosemary--v343712"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ROSEMARY </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343710" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tara--v343710">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tara--v343710">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/tara--mfvr722658.jpg"   alt="TARA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/tara--v343710"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>TARA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343708" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/adele-ada--v343708">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/adele-ada--v343708">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/adele-ada--mfvr722652.jpg"   alt="ADELE - ADA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/adele-ada--v343708"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ADELE - ADA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+    <div class="pure-u-1-4">
+            <div id="div-gpt-ad-1334158298810-0" class="dfp-center comment" style="min-height: 1px;"  ></div>
+            <script>
+                    // Set display timeout to avoid problems when infinite scroll adds new content to DOM
+                    googletag.cmd.push(function () {
+                        
+                        // Set display timeout to avoid problems when infinite scroll adds new content to DOM. Method refreshAdSlot only exist on lazy load integration
+                        setTimeout(function () {
+                            googletag.display('div-gpt-ad-1334158298810-0');
+
+                                                    }, 0);
+                    });
+            </script>
+            </div>        <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343706" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alazne--v343706">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alazne--v343706">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/alazne--mfvr722648.jpg"   alt="ALAZNE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alazne--v343706"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ALAZNE </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343704" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alberta--v343704">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alberta--v343704">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/alberta--mfvr722644.jpg"   alt="ALBERTA, 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alberta--v343704"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ALBERTA</span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343702" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alisa--v343702">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alisa--v343702">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/alisa--mfvr722640.jpg"   alt="ALISA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/alisa--v343702"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ALISA </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343700" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/charlize-rudy--v343700">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/charlize-rudy--v343700">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/charlize-rudy--mfvr722636.jpg"   alt="CHARLIZE - RUDY , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/charlize-rudy--v343700"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>CHARLIZE - RUDY </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343698" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/daysy--v343698">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/daysy--v343698">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/daysy--mfvr722632.jpg"   alt="DAYSY , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/daysy--v343698"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>DAYSY </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343696" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/erika--v343696">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/erika--v343696">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/erika--mfvr722628.jpg"   alt="ERIKA, 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/erika--v343696"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ERIKA</span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343694" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/faith-esme--v343694">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/faith-esme--v343694">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/faith-esme--mfvr722624.jpg"   alt="FAITH -  ESME , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/faith-esme--v343694"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>FAITH -  ESME </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343692" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/francesca-iris--v343692">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/francesca-iris--v343692">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/francesca-iris--mfvr722620.jpg"   alt="FRANCESCA  - IRIS , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/francesca-iris--v343692"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>FRANCESCA  - IRIS </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343690" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/gia--v343690">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/gia--v343690">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/gia--mfvr722616.jpg"   alt="GIA, 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/gia--v343690"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>GIA</span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343688" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/ginger--v343688">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/ginger--v343688">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/ginger--mfvr722612.jpg"   alt="GINGER, 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/ginger--v343688"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>GINGER</span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="343682" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/jade--v343682">
+                    <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/jade--v343682">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/alicia-rueda-atelier/jade--mfvr722600.jpg"   alt="JADE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center ">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier/jade--v343682"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>JADE </span>
+                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+    <div class="pure-u-1-4">
+            <div id="div-gpt-ad-1334158298810-1" class="dfp-center comment" style="min-height: 1px;"  ></div>
+            <script>
+                    // Set display timeout to avoid problems when infinite scroll adds new content to DOM
+                    googletag.cmd.push(function () {
+                        
+                        // Set display timeout to avoid problems when infinite scroll adds new content to DOM. Method refreshAdSlot only exist on lazy load integration
+                        setTimeout(function () {
+                            googletag.display('div-gpt-ad-1334158298810-1');
+
+                                                    }, 0);
+                    });
+            </script>
+            </div></div>
+
+                            <div class="mb10 pagination">
+            <ul>
+            
+            
+                                                <li><span class="pagination__page pagination__next app-link" data-href='https://www.bodas.net/cat-DressList.php?type=2&designer=483&NumPage=2'>Siguiente<i class="svgIcon app-svg-async svgIcon__angleRight "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleRight.svg" data-svg-lazyload="1"></i></span></li>
+                                    </ul>
+    </div>
+            
+                    </div>
+    </div>
+</div>
+
+
+    
+    <div class="dress-footer-filter bg">
+        <div class="wrapper">
+                    
+                                        <p class="ui-list-title">Vestidos de Fiesta de Alicia Rueda Atelier por temporada</p>
+                        <div class="box-related-list">
+                <ul class="pure-g-r">
+                                                                                    <li class="pure-u-1-4">
+                            <div>
+                                <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier--d483/2023--y2023">Vestidos de Fiesta  de Alicia Rueda Atelier 2023</a>
+                                <span>26</span>
+                            </div>
+                        </li>
+                                            <li class="pure-u-1-4">
+                            <div>
+                                <a href="https://www.bodas.net/vestidos-fiesta/alicia-rueda-atelier--d483/2022--y2022">Vestidos de Fiesta  de Alicia Rueda Atelier 2022</a>
+                                <span>30</span>
+                            </div>
+                        </li>
+                                    </ul>
+            </div>
+
+        
+                            </div>
+    </div>
+
+
+        <div class="dnone app-dresses-load-no-index-ajax"  data-type='2'  data-designer='483' ></div>
+
+        
+<script>
+    var catalogSectionTraceOn = true;
+    var catalogTracesVars = catalogTracesVars || {};
+
+    catalogTracesVars.section    = '2';
+    catalogTracesVars.idItem     = '0';
+    catalogTracesVars.itemType   = '2';
+    catalogTracesVars.idDesigner = '483';
+    catalogTracesVars.isMobile = false;
+</script>
+
+<script>
+    var catalogImpressionsAndClicksTraceOn = true;
+    var catalogTracesVars = catalogTracesVars || {};
+
+    catalogTracesVars.itemType = '2';
+</script>
+
+<script>
+    var catalogFiltersTraceOn = true;
+    var catalogTracesVars = catalogTracesVars || {};
+
+    catalogTracesVars.itemType = '2';
+</script>
+
+</main>
+
+
+<div class="app-footer">
+    <script>
+  if (typeof(window.userLayersToShow) === "undefined" || (typeof(window.userLayersToShow) !== "undefined" && typeof(window.userLayersToShow.name) === "undefined")) {
+      window.userLayersToShow = {
+        name:
+                    "contest"
+              }
+  }
+</script>
+
+    
+    
+
+            <footer class="layoutFooter">
+    <div class="linkingFooter">
+        <section class="corporativeLinks">
+    <div class="linkingFooter__title">Información</div>
+    <ul>
+        <li>
+                    <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es/reporting/">Contactar</span>
+                </li>
+        <li>
+            <a rel="nofollow" href="https://www.bodas.net/condiciones-legales.php">Condiciones legales</a>
+        </li>
+                    <li>
+                <a rel="nofollow" href="https://www.bodas.net/legal/privacy.php">Aviso de privacidad</a>
+            </li>
+                            <li>
+                <a rel="nofollow" href="https://www.bodas.net/legal/cookies.php">Aviso de cookies</a>
+            </li>
+                <li>
+            <a class="ot-sdk-show-settings">Do not sell my personal info</a>
+        </li>
+                    <li>
+                <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es/transparency">Centro de transparencia</span>
+            </li>
+            <li>
+                <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es">Centro legal</span>
+            </li>
+                <li>
+                            <a rel="nofollow" href="https://www.bodas.net/emp-Acceso.php">Alta empresas</a>
+                    </li>
+        <li>
+            <a href="https://www.bodas.net/aboutus/aboutus.php">¿Quiénes somos?</a>
+        </li>
+        <li>
+            <span class="app-link-blank pointer" data-href="https://www.theknotww.com/careers/">Careers</span>
+        </li>
+                        <li>
+            <a href="https://www.bodas.net/web-boda">Web de boda</a>
+        </li>
+    </ul>
+</section>
+        
+    <section class="appsLinks app-footer-download-links">
+        <div class="linkingFooter__title">Descárgate la app</div>
+        <div class="appsLinks__description">
+                <img src="https://cdn1.bodas.net/assets/img/dropdown/app.png" srcset="https://cdn1.bodas.net/assets/img/dropdown/app@2x.png 2x" class="appsLinks__imago" alt="App icon"  width="48" height="48" loading="lazy"  >
+            Organiza tu boda donde y cuando quieras        </div>
+        <ul class="appsLinks__list">
+            <li class="app-store-badge-ios">
+                <a rel="nofollow noopener noreferrer" target="_blank" href="https://app.appsflyer.com/id598636207?pid=WP-iOS-ES&c=WP-ES-LANDINGS&s=es"
+                   title="App Store">
+                        <img src="https://cdn1.bodas.net/assets/img/footer/appstore.png" srcset="https://cdn1.bodas.net/assets/img/footer/appstore@2x.png 2x"  alt="App Store"  width="140" height="42" loading="lazy"  >
+                </a>
+            </li>
+            <li class="app-store-badge-android">
+                <a rel="nofollow noopener noreferrer" target="_blank"
+                   href="https://app.appsflyer.com/net.bodas.launcher?pid=WP-Android-ES&c=WP-ES-LANDINGS" title="Google Play">
+                        <img src="https://cdn1.bodas.net/assets/img/footer/googleplay.png" srcset="https://cdn1.bodas.net/assets/img/footer/googleplay@2x.png 2x"  alt="Google Play"  width="140" height="42" loading="lazy"  >
+                </a>
+            </li>
+        </ul>
+    </section>
+            <section class="socialLinks">
+        <div class="linkingFooter__title">Síguenos en</div>
+        <ul class="socialLinks__list">
+                            <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://www.facebook.com/bodasnet" title="Facebook" target="_blank"><i class="svgIcon app-svg-async svgIcon__facebook "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/facebook.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://twitter.com/bodasnet" title="Twitter" target="_blank"><i class="svgIcon app-svg-async svgIcon__twitter "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/twitter.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://pinterest.com/bodasnet" title="Pinterest" target="_blank"><i class="svgIcon app-svg-async svgIcon__pinterest "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/pinterest.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://instagram.com/bodasnet" title="Instagram" target="_blank"><i class="svgIcon app-svg-async svgIcon__instagram "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/instagram.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://www.youtube.com/user/bodasnet/featured" title="Youtube" target="_blank"><i class="svgIcon app-svg-async svgIcon__youtube-filled "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/youtube-filled.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://www.tiktok.com/@bodas.net" title="TikTok" target="_blank"><i class="svgIcon app-svg-async svgIcon__tiktok-logo "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/tiktok-logo.svg" data-svg-lazyload="1"></i></a></li>
+                    </ul>
+    </section>
+        <section class="countrySelector">
+    <div class="linkingFooter__title">Selecciona un país</div>
+    <div class="countrySelector__wrapper">
+                <div class="app-footer-country-selector-toggle countrySelector__dropdown">
+            <img src="https://cdn1.bodas.net/assets/img/flags/country-selector/es.png" width="18" height="12" class="countrySelector__flag" alt="España" loading="lazy">
+            España            <i class="svgIcon svgIcon__angleDown countrySelector__icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i>        </div>
+    </div>
+</section>
+        
+<section class="copyrightFooter">
+        <img src="https://cdn1.bodas.net/assets/img/footer/tkww_logo_KO.png" srcset="https://cdn1.bodas.net/assets/img/footer/tkww_logo_KO_2x.png 2x"  alt="ww logo"  width="140"  loading="lazy"  >
+    <p>&copy; 2024 Bodas.net</p>
+</section>    </div>
+</footer>    
+            <div id="app-common-layer" class="modal dnone" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    <div id="app-va-modal" class="modal fade dnone" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    
+    <div id="fb-root"></div>
+
+    <script>
+                                </script>
+
+    
+<script>
+    var pageGlobals = {
+                                            reduced: '/catalog/list'            
+                            ,                                                             currentPageData:[]            
+                            ,                                                             loggedUserInfo:{"isLogged":false,"userId":"","isMarried":false}            
+                            ,                                                             common:{"environment":{"countryCode":"ES","isJsArchitectureEnabled":true,"isCookieLessEnabled":false,"isInternationalOnePage":true,"subdomain":"www.bodas.net","subdomainCommunity":"https:\/\/comunidad.bodas.net\/","isCurrentPageInCustomSubdomain":false,"isGoogleIdentityServicesLibraryEnabled":true,"isWebVitalsEnabled":false,"isDebugCoreWebVitalsEnabled":false,"isDevel":false,"showAppPusher":true},"platform":{"reducedPlatform":"","isDesktop":true,"isMobile":false,"isApp":false,"mobilePlatform":"mobile","apps":{"appVersion":null,"usersApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isShowNativeLoginEnabled":false,"areHappyMomentsEnabled":true,"isNativeShareAvailable":false,"isListingCounterFiltersEnabled":false}},"vendorsApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isIOSProxyBarsFullControlEnabled":false}},"isAppUsersNativeSignUpLayerEnabled":false}},"remarketing":{"facebook":{"isPixelEnabled":true,"isEnabled":true,"isLoaded":false,"tracker":"experiment"},"pinterest":{"isEnabled":true,"isLoaded":false}},"analytics":{"isEcommerceEnabled":true}}            
+                            ,                                                             experiments:[]            
+                                    };
+</script>
+
+<script>
+    var userGlobals = {
+                                            gp_anon_id: '2faa1ae2-b846-4000-82e6-08cd18663f24'            
+                                    };
+</script>
+
+
+<script defer src="https://www.bodas.net/builds/desktop/js/symfnw-ES171-1-20241219-010_www_m_/common.js"></script>
+
+
+<script defer src="https://www.bodas.net/builds/desktop/js/symfnw-ES171-1-20241219-010_www_m_/WebBundleDesktopDresses.js"></script>
+
+<script>
+    (function (w) {
+                w.desktopInMobile = "0";
+    })(window);
+</script>
+
+
+    <div id="app-pusher-vendors-users-notification-alert" class="pusher-notification dnone"></div>
+    <div id="app-chat-container" class="pusher-container"></div>
+    <script>
+                    window.pusher = {
+              actorJson : '{\u0022id\u0022:null,\u0022name\u0022:\u0022An\\u00f3nimo\u0022,\u0022avatar\u0022:\u0022https:\\/\\/cdn1.bodas.net\\/assets\\/img\\/user\\/150x150\\/user-nodefined-150.jpg\u0022,\u0022avatarSvg\u0022:null,\u0022type\u0022:\u0022anonymous\u0022}',
+              customOptions : {
+                disableChat : false,
+                disableUserVendorNotifications : false,
+                isChatbotEnabled: true,
+                openOnLoad: false,
+                canInitConversation: true,
+                isPersistentStorageEnabled: true,
+                disableAppChat: false              }
+            };
+            </script>
+
+
+    
+    <script>var analyticsManager = (function() {var _storedAnalyticsEvents = [];function queueEvent(func) {_storedAnalyticsEvents.push(func);}function trackQueuedEvents() {while (_storedAnalyticsEvents.length > 0) {var queuedEvent = _storedAnalyticsEvents.shift();queuedEvent();}}return {queueEvent : queueEvent,trackQueuedEvents : trackQueuedEvents,}})();</script>
+<script>
+    var reduced = '/catalog/list';
+    </script>
+
+
+<script>
+  var _comscore = _comscore || []
+
+  var comscoreScript = function () {
+    var s = document.createElement('script'), el = document.getElementsByTagName('script')[0]
+    s.defer = true
+    s.src = (document.location.protocol == 'https:' ? 'https://sb' : 'http://b') + '.scorecardre

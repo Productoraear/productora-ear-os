@@ -1,0 +1,4908 @@
+{
+  "id": "102019aa642344f72fba5d21077e65bfcbb",
+  "batch": [
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Anthonytents"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Carpas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Anthonytents"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Carpas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Antigua Harinera"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Antiguedades La Rueca"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Antiguedades La Rueca"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Antolín Bus"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Antonio López"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Decoración"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": "Antonio López - Iluminación"
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Antonio López"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Decoración"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": "Antonio López - Iluminación"
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "AO-Concept Alcalá Ortiz"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Trajes de Fiesta"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "AO-Concept Alcalá Ortiz"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Trajes de Fiesta"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "AOVEland"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "AOVEland"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Apolo Shishas Catering"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Animación"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aqua Vitae Cocktails"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Food Truck"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aqua Vitae Cocktails"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Food Truck"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aralia"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arantza Hotela"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Árbore da Veira"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 9511
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 3
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arcal Estudios"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Fotógrafo"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arcos de Quejana"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Hotel"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arcos de Quejana"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Hotel"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Area Eventos"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Música"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 18
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 24
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aretxamendi"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 6
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 7
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aroa Micropigmentación Centro de Estética"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Belleza"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aroa Micropigmentación Centro de Estética"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Belleza"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aroma de Abeja"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Detalles y Regalos"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aroma de Azúcar"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Pastelería"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arosa Casa"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Decoración"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arosa Casa"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Decoración"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Art made in heaven"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arte Entre Pilares"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Mobiliario"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 30
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 60
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arteinversión"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artencuentro"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artesania del tocado"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Complementos"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artesania del tocado"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Complementos"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artesanías Valencia"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Complementos"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artesanías Valencia"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Complementos"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artigot Catering"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Catering"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artikane"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artikane"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artist Foto Video"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Fotógrafo"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artist Foto Video"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Fotógrafo"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Artomaña Txakolina"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arturo Cordero"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Fotógrafo"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 70
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 200
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arturo Peluqueros"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Belleza"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arturo Peluqueros"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Belleza"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arway S of Tebrandi"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Arway S of Tebrandi"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Lista de Bodas"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Asador del Real"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Asador del Real"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Asmara Viajes"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Viajes de Novios"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aspaldiko"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Atenas Playa"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Restaurante"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Atenas Playa"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Restaurante"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Atlantis ¡más que vacaciones!"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Viajes de Novios"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Atlantis ¡más que vacaciones!"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Viajes de Novios"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Audiovisuart"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Fotógrafo"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Audiovisuart"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Fotógrafo"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aura Catering Premium"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Catering"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 28
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 1
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aurbús"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Auro Floral"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Florista"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": "Auro Floral - flores preservadas"
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Australia Viajes"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Viajes de Novios"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Auto Di Lusso"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Auto Di Lusso"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autobuses J.Carlos"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autobuses J.Carlos"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autobuses Madrazo"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 30
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 9
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autobuses Madrazo"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 30
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 9
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Chaos"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Esteban Rivas, Madrid"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": "Autocares Esteban Rivas"
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Frahemar"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Frahemar"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Granero"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Hermanos Bravo Vázquez"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Jiménez Dorado"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Juvicar"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Laina Tour"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Milo"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares N. R. Ruiz"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares N. R. Ruiz"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Vázquez"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 30
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 35
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autocares Vázquez"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 30
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 35
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autopullmans Travidi"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autopullmans Travidi"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autos Gonzalez"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autos Gonzalez"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autos González Ourense"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Autos González Ourense"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Auxai Tartas"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Pastelería"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "AV Proyectores"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Mobiliario"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Avaguel"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Trajes de Novio"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Avaguel"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Trajes de Novio"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Avango Bus"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Transporte"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Awa Studio"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Decoración"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Aymar Vitivinícoles"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Finca"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 0
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 70
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Ayoze Castellano Peluqueros"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Belleza"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Ayoze Castellano Peluqueros"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Belleza"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Azúcar y Yo"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Pastelería"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Azúcar y Yo"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Pastelería"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    },
+    {
+      "structured": [
+        {
+          "type": 1,
+          "name": "name",
+          "string": "Azul Colibri by Aiala"
+        },
+        {
+          "type": 1,
+          "name": "category",
+          "string": "Wedding Planner"
+        },
+        {
+          "type": 2,
+          "name": "pricing_min",
+          "number": 846
+        },
+        {
+          "type": 2,
+          "name": "pricing_max",
+          "number": 4000
+        },
+        {
+          "type": 1,
+          "name": "location",
+          "string": ""
+        },
+        {
+          "type": 3,
+          "name": "verified",
+          "bool": false
+        },
+        {
+          "type": 3,
+          "name": "eco_certified",
+          "bool": false
+        },
+        {
+          "type": 100,
+          "name": "tier",
+          "enumeration": 1
+        },
+        {
+          "type": 2,
+          "name": "average_rating",
+          "number": 0
+        }
+      ]
+    }
+  ],
+  "format": {
+    "structured": true
+  }
+}

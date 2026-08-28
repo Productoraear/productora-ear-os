@@ -1,0 +1,42 @@
+[
+  {
+    "id": "lead-001",
+    "type": "PLENO",
+    "title": "Ayuntamiento de Navalcarnero: Prioridad Mayores (Fiestas 2025)",
+    "amount": "12.500€",
+    "deadline": "Próxima Licitación Q3",
+    "match": 98,
+    "status": "HOT",
+    "description": "El alcalde declaró a los mayores como prioridad absoluta. Oportunidad para inyectar Pack Irresistible (Eventos + VIMUME)."
+  },
+  {
+    "id": "lead-002",
+    "type": "BOE",
+    "title": "Subvenciones Ministerio de Ciencia: Innovación en Musicoterapia",
+    "amount": "45.000€",
+    "deadline": "Vence en 22 días",
+    "match": 92,
+    "status": "HOT",
+    "description": "Línea de ayudas para proyectos con base neurocientífica (40Hz) y ROI social medible."
+  },
+  {
+    "id": "lead-003",
+    "type": "B2B",
+    "title": "Residencia DomusVi (Toledo/Méntrida): Diferenciación Premium",
+    "amount": "3.500€/mes",
+    "deadline": "Inmediato",
+    "match": 85,
+    "status": "WARM",
+    "description": "Necesidad detectada de justificar tarifas altas frente a competencia low-cost mediante protocolo clínico."
+  },
+  {
+    "id": "lead-004",
+    "type": "PLENO",
+    "title": "Ayuntamiento de Boadilla: Plan Soledad No Deseada",
+    "amount": "18.000€",
+    "deadline": "En estudio",
+    "match": 89,
+    "status": "WARM",
+    "description": "Partida presupuestaria detectada en actas de pleno para 'Envejecimiento Activo'."
+  }
+]

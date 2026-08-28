@@ -4,26 +4,19 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Heart, 
-  Zap, 
+  Users, 
+  Music, 
   Building2, 
-  ShieldCheck, 
   ArrowRight, 
-  Sparkles, 
-  Award, 
-  ChevronRight,
-  TrendingUp,
-  Music,
-  Users,
-  Layers,
-  Flame,
-  Radio
+  ShieldCheck, 
+  Radio,
+  Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
-import type { ProfileContext } from '@/app/components/SClassScreens/CinematicTunnelIgnition';
+import { useRouter } from 'next/navigation';
 
-interface ProfileJourney {
+export interface ProfileJourney {
   id: string;
-  contextProfile: ProfileContext;
   name: string;
   badge: string;
   subtitle: string;
@@ -32,7 +25,6 @@ interface ProfileJourney {
   href: string;
   icon: any;
   accentColor: string;
-  bgGradient: string;
   bgImage: string;
   stats: { label: string; value: string }[];
 }
@@ -40,52 +32,46 @@ interface ProfileJourney {
 const PROFILES: ProfileJourney[] = [
   {
     id: 'unio',
-    contextProfile: 'CLIENT',
     name: 'UNIO',
-    badge: 'B2C ÉLITE // NOVIOS & PARTICULARES',
+    badge: 'B2C ÉLITE // NOVIOS',
     subtitle: 'MÚSICA & SONORIZACIÓN NUPCIAL',
     description: 'Músicos de conservatorio y sonido de alta fidelidad para ceremonias y cócteles inolvidables. Configura tu presupuesto cerrado al instante con Price-Lock de 72 horas y sin sorpresas.',
-    ctaText: 'Activar Túnel Nupcial (1 Min)',
-    href: '/bodas',
+    ctaText: 'Activar Túnel de Cotización',
+    href: '/cotizador?mode=bespoke&role=cliente',
     icon: Heart,
     accentColor: '#ecb613',
-    bgGradient: 'from-amber-950/40 via-black/80 to-[#050505]',
     bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
     stats: [
       { label: 'Garantía Acústica', value: '12 W/pax' },
-      { label: 'Presupuesto', value: 'Precio Fijo (72h)' }
+      { label: 'Price-Lock', value: '72h SHA-256' }
     ]
   },
   {
     id: 'planners',
-    contextProfile: 'PARTNER',
     name: 'PLANNERS',
-    badge: 'B2B PARTNERS // FINCAS & VENUES',
+    badge: 'B2B PARTNERS // VENUES',
     subtitle: 'RED DE FINCAS & ESPACIOS EXCLUSIVOS',
-    description: 'Eleva el estándar sonoro de tu espacio recomendando producción técnica de máxima solvencia. Obtén comisiones transparentes con liquidaciones automáticas cada domingo.',
-    ctaText: 'Verificar Ficha & Alianzas',
+    description: 'Eleva el estándar sonoro de tu espacio recomendando producción técnica de máxima solvencia. Accede a nuestro directorio homologado y gestiona tu perfil con verificación en 2 pasos.',
+    ctaText: 'Directorio & Reclamar Ficha',
     href: '/proveedores',
     icon: Users,
     accentColor: '#10b981',
-    bgGradient: 'from-emerald-950/40 via-black/80 to-[#050505]',
     bgImage: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop',
     stats: [
       { label: 'Comisión Partner', value: '10% Directo' },
-      { label: 'Liquidación', value: 'Semanal Stripe' }
+      { label: 'Verificación', value: '2FA Activo' }
     ]
   },
   {
     id: 'artist',
-    contextProfile: 'ARTIST',
     name: 'THE SIGNAL',
-    badge: 'ARTISTAS // DIAMANTES ROJOS',
+    badge: 'ARTISTAS // ROSTER',
     subtitle: 'ROSTER S-CLASS & EDWIN AGUDELO',
     description: 'Accede a producciones de primer nivel sin intermediarios abusivos. Retén el 80% de tus honorarios bajo contrato soberano homologado y auditoría acústica continua.',
     ctaText: 'Entrar a The Signal',
     href: '/artistas/edwin-agudelo',
     icon: Music,
     accentColor: '#a855f7',
-    bgGradient: 'from-purple-950/40 via-black/80 to-[#050505]',
     bgImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
     stats: [
       { label: 'Split Artista', value: '80% Neto' },
@@ -94,16 +80,14 @@ const PROFILES: ProfileJourney[] = [
   },
   {
     id: 'b2g',
-    contextProfile: 'B2G',
     name: 'VIMUME',
-    badge: 'B2G INSTITUCIONAL // AYUNTAMIENTOS',
+    badge: 'B2G // AYUNTAMIENTOS',
     subtitle: 'ESTIMULACIÓN 40HZ & LCSP ART. 118',
     description: 'Protocolo de neuroestimulación acústica <75 dB para residencias de mayores y centros de día. Tramitación directa por contrato menor LCSP sin fricción burocrática.',
     ctaText: 'Desplegar Protocolo B2G',
     href: '/ocasiones/ayuntamientos',
     icon: Building2,
     accentColor: '#3b82f6',
-    bgGradient: 'from-blue-950/40 via-black/80 to-[#050505]',
     bgImage: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop',
     stats: [
       { label: 'Tramitación', value: 'Art. 118 LCSP' },
@@ -112,28 +96,23 @@ const PROFILES: ProfileJourney[] = [
   }
 ];
 
-interface CinematicHeroProps {
-  onProfileIgnite?: (profile: ProfileContext) => void;
-}
-
-export default function CinematicHeroSClass({ onProfileIgnite }: CinematicHeroProps) {
+export default function CinematicHeroSClass() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const router = useRouter();
 
-  const handleCardClick = (p: ProfileJourney) => {
-    if (onProfileIgnite) {
-      onProfileIgnite(p.contextProfile);
-    }
+  const handleCardNavigation = (href: string) => {
+    router.push(href);
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-[#050505] text-white flex flex-col justify-between overflow-hidden selection:bg-[#ecb613] selection:text-black">
+    <section className="relative w-full min-h-[85vh] bg-[#050505] text-white flex flex-col justify-between overflow-hidden selection:bg-[#ecb613] selection:text-black pb-8">
       
-      {/* 👑 TOP BADGE: PROTOCOLO S-CLASS DE CONFIANZA */}
+      {/* 👑 TOP BADGE & HERO HEADLINE */}
       <div className="pt-24 sm:pt-28 pb-6 px-4 z-20 flex flex-col items-center justify-center text-center">
         <div className="inline-flex items-center gap-2.5 px-6 py-2 bg-black/80 border border-[#ecb613]/40 rounded-full shadow-[0_0_35px_rgba(236,182,19,0.15)] backdrop-blur-xl group hover:border-[#ecb613] transition-all">
           <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-pulse" />
           <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-zinc-300">
-            PROTOCOLO S-CLASS // AUDITORÍA ACÚSTICA & TÚNEL NEURAL
+            PROTOCOLO S-CLASS // AUDITORÍA ACÚSTICA & CONVERSIÓN DIRECTA
           </span>
         </div>
 
@@ -141,12 +120,12 @@ export default function CinematicHeroSClass({ onProfileIgnite }: CinematicHeroPr
           SISTEMA OPERATIVO DE <span className="text-[#ecb613] italic">EVENTOS & MATCHMAKING</span>
         </h1>
         <p className="text-xs sm:text-sm text-zinc-300 font-light max-w-2xl mt-3 leading-relaxed">
-          Selecciona uno de los 4 perfiles para desplegar el <strong className="text-[#ecb613]">Túnel Neural</strong> interactivo en la 2ª pantalla o navega directamente a su arquitectura especializada.
+          Selecciona tu perfil para acceder directamente a la experiencia especializada con cálculo de potencia, tarifas homologadas y bloqueo de fecha.
         </p>
       </div>
 
-      {/* 🎴 4-COLUMN SPLIT SCREEN EXPERIENCE (DESKTOP) & TOUCH CARDS (MOBILE) */}
-      <div className="w-full flex-1 px-4 lg:px-8 pb-14 z-20 max-w-7xl mx-auto flex flex-col justify-center">
+      {/* 🎴 4 SOVEREIGN GATEWAYS (DIRECT 1-CLICK EXPERIENCE) */}
+      <div className="w-full flex-1 px-4 lg:px-8 pb-8 z-20 max-w-7xl mx-auto flex flex-col justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 h-full min-h-[480px]">
           {PROFILES.map((p) => {
             const Icon = p.icon;
@@ -157,15 +136,15 @@ export default function CinematicHeroSClass({ onProfileIgnite }: CinematicHeroPr
                 key={p.id}
                 onMouseEnter={() => setHoveredId(p.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                onClick={() => handleCardClick(p)}
+                onClick={() => handleCardNavigation(p.href)}
                 className={`relative rounded-3xl overflow-hidden border transition-all duration-500 flex flex-col justify-between p-6 sm:p-7 cursor-pointer group ${
                   isHovered 
-                    ? 'border-[#ecb613] shadow-[0_0_40px_rgba(236,182,19,0.25)] scale-[1.02]' 
+                    ? 'border-[#ecb613] shadow-[0_0_50px_rgba(236,182,19,0.3)] scale-[1.02]' 
                     : 'border-white/10 hover:border-white/30 bg-[#09090d]/80'
                 }`}
                 style={{
                   background: isHovered 
-                    ? `linear-gradient(180deg, ${p.accentColor}15 0%, #050505 100%)` 
+                    ? `linear-gradient(180deg, ${p.accentColor}18 0%, #050505 100%)` 
                     : undefined
                 }}
               >
@@ -230,30 +209,22 @@ export default function CinematicHeroSClass({ onProfileIgnite }: CinematicHeroPr
                   </div>
                 </div>
 
-                {/* Bottom Section: Action CTA Button */}
-                <div className="relative z-10 pt-1 space-y-1.5">
-                  <button
+                {/* Bottom Section: Direct Action CTA Button */}
+                <div className="relative z-10 pt-2">
+                  <Link
+                    href={p.href}
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleCardClick(p);
                     }}
-                    className="w-full py-3 px-3.5 rounded-2xl font-black text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-all duration-300 group-hover:shadow-lg active:scale-95"
+                    className="w-full py-3.5 px-4 rounded-2xl font-black text-xs font-mono uppercase tracking-wider flex items-center justify-between transition-all duration-300 shadow-md group-hover:shadow-lg active:scale-95 text-center cursor-pointer"
                     style={{
-                      backgroundColor: isHovered ? p.accentColor : 'rgba(255,255,255,0.06)',
+                      backgroundColor: isHovered ? p.accentColor : 'rgba(255,255,255,0.08)',
                       color: isHovered ? '#000' : '#fff',
-                      border: `1px solid ${isHovered ? p.accentColor : 'rgba(255,255,255,0.1)'}`
+                      border: `1px solid ${isHovered ? p.accentColor : 'rgba(255,255,255,0.15)'}`
                     }}
                   >
                     <span>{p.ctaText}</span>
-                    <Radio size={14} className={isHovered ? 'animate-pulse' : ''} />
-                  </button>
-
-                  <Link
-                    href={p.href}
-                    onClick={(e) => e.stopPropagation()}
-                    className="w-full text-center text-[9px] font-mono text-white/40 hover:text-white block pt-1 underline"
-                  >
-                    Ir a página completa ({p.href}) →
+                    <ArrowRight size={15} className={`transition-transform duration-300 ${isHovered ? 'translate-x-1' : ''}`} />
                   </Link>
                 </div>
               </motion.div>

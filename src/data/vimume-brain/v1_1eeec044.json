@@ -1,0 +1,457 @@
+"  >
+</a>
+</li>
+</ul>
+</section>
+<section class="socialLinks">
+<div class="linkingFooter__title">Síguenos en</div>
+<ul class="socialLinks__list">
+<li>
+<a class="socialLinks__item"
+rel="nofollow noopener noreferrer"
+href="https://www.facebook.com/bodasnet"
+title="Facebook"
+target="_blank">
+<i class="svgIcon app-svg-async svgIcon__facebook "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/facebook.svg" data-svg-lazyload="1"></i>                    </a>
+</li>
+<li>
+<a class="socialLinks__item"
+rel="nofollow noopener noreferrer"
+href="https://twitter.com/bodasnet"
+title="Twitter"
+target="_blank">
+<i class="svgIcon app-svg-async svgIcon__twitter "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/twitter.svg" data-svg-lazyload="1"></i>                    </a>
+</li>
+<li>
+<a class="socialLinks__item"
+rel="nofollow noopener noreferrer"
+href="https://pinterest.com/bodasnet"
+title="Pinterest"
+target="_blank">
+<i class="svgIcon app-svg-async svgIcon__pinterest "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/pinterest.svg" data-svg-lazyload="1"></i>                    </a>
+</li>
+<li>
+<a class="socialLinks__item"
+rel="nofollow noopener noreferrer"
+href="https://instagram.com/bodasnet"
+title="Instagram"
+target="_blank">
+<i class="svgIcon app-svg-async svgIcon__instagram "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/instagram.svg" data-svg-lazyload="1"></i>                    </a>
+</li>
+<li>
+<a class="socialLinks__item"
+rel="nofollow noopener noreferrer"
+href="https://www.youtube.com/user/bodasnet/featured"
+title="Youtube"
+target="_blank">
+<i class="svgIcon app-svg-async svgIcon__youtube-filled "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/youtube-filled.svg" data-svg-lazyload="1"></i>                    </a>
+</li>
+<li>
+<a class="socialLinks__item"
+rel="nofollow noopener noreferrer"
+href="https://www.tiktok.com/@bodas.net"
+title="Tiktok"
+target="_blank">
+<i class="svgIcon app-svg-async svgIcon__tiktok-logo "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/tiktok-logo.svg" data-svg-lazyload="1"></i>                    </a>
+</li>
+</ul>
+</section>
+<section class="countrySelector">
+<div class="linkingFooter__title">Selecciona un país</div>
+<div class="countrySelector__wrapper">
+<button type="button" class="button button--block app-footer-country-selector-toggle countrySelector__dropdown">
+<img src="https://www.bodas.net/assets/img/flags/country-selector/es.png"
+width="18"
+height="12"
+class="countrySelector__flag"
+alt="España"
+loading="lazy">
+España            <i class="svgIcon app-svg-async svgIcon__angleDown countrySelector__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>        </button>
+</div>
+</section>
+<section class="copyrightFooter">
+<img src="https://www.bodas.net/assets/img/footer/tkww_logo_KO.png" srcset="https://www.bodas.net/assets/img/footer/tkww_logo_KO_2x.png 2x"  alt="ww logo"  width="140" height="48" loading="lazy"  >
+<p>&copy; 2024 Bodas.net</p>
+</section>
+</div>
+</footer>
+<script>
+var pageGlobals = {
+reduced: '/vendors/item/profile'
+,                                                             currentPageData:{"vendorId":6757,"price":1,"currency":"EUR","city":"La Zubia","region":"Granada","country":"ES","sector":"Organizaci\u00f3n Bodas","address":{"city":"La Zubia","region":"Granada","country":"ES","postal_code":"18002","addr1":"Recogidas"},"hasButtonLead":"1"}
+,                                                             loggedUserInfo:{"isLogged":false}
+,                                                             common:{"environment":{"countryCode":"ES","isJsArchitectureEnabled":true,"isCookieLessEnabled":false,"isInternationalOnePage":true,"subdomain":"www.bodas.net","subdomainCommunity":"https:\/\/comunidad.bodas.net\/","isCurrentPageInCustomSubdomain":false,"isGoogleIdentityServicesLibraryEnabled":true,"isWebVitalsEnabled":false,"isDebugCoreWebVitalsEnabled":false,"isDevel":false,"showAppPusher":true},"platform":{"reducedPlatform":"","isDesktop":true,"isMobile":false,"isApp":false,"mobilePlatform":"mobile","apps":{"appVersion":null,"usersApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isShowNativeLoginEnabled":false,"areHappyMomentsEnabled":true,"isNativeShareAvailable":false,"isListingCounterFiltersEnabled":false}},"vendorsApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isIOSProxyBarsFullControlEnabled":false}},"isAppUsersNativeSignUpLayerEnabled":false}},"remarketing":{"facebook":{"isPixelEnabled":true,"isEnabled":true,"isLoaded":false,"tracker":"experiment"},"pinterest":{"isEnabled":true,"isLoaded":false}},"analytics":{"isEcommerceEnabled":true}}
+,                                                             experiments:[]
+};
+</script>
+<script>
+    var userGlobals = {
+                                            gp_anon_id: '2faa1ae2-b846-4000-82e6-08cd18663f24'            
+                            ,                                                             vendor_id_empresa: '78903'            
+                            ,                                                             vendor_uuid: '587e0718-0168-4bc7-9b54-bfbcc0c68a82'            
+                                    };
+</script>
+<script> globals = { country: "España", countryCode: "ES", locale: "es_ES", language: "es", tracking: { universalAnalytics: {"CUSTOM_DIMENSION_REDUCED":5,"CUSTOM_DIMENSION_UID":6,"CUSTOM_DIMENSION_VENDOR_ID":15,"CUSTOM_DIMENSION_LISTING_ID":16,"CUSTOM_DIMENSION_FRM_INSERT":17,"CUSTOM_DIMENSION_HOTEL_ID":18,"CUSTOM_DIMENSION_LEAD_CATEGORY_ID":20,"CUSTOM_DIMENSION_LEAD_GROUP_ID":21,"CUSTOM_DIMENSION_DIRECTORY_SCORE_ID":24,"CUSTOM_DIMENSION_DIRECTORY_LISTING_DETAIL":26,"CUSTOM_DIMENSION_DIRECTORY_LISTING_ID":27,"CUSTOM_DIMENSION_DIRECTORY_STYLE":31,"CUSTOM_DIMENSION_PLATFORM":28,"CUSTOM_DIMENSION_SECTION":29,"CUSTOM_DIMENSION_FILTERS":30,"CUSTOM_DIMENSION_PARENT_LEAD_ID":32,"CUSTOM_DIMENSION_PARENT_VENDOR_ID":33,"CUSTOM_DIMENSION_SEGMENT_EXTRA_DATA":999}, analytics: {"DOMAIN_DESKTOP":"d-desktop","DOMAIN_MOBILE":"d-mobile"}, leadTracking: {"SECTION_FORM":"s-form","SECTION_FORM_2STEPS":"s-form-2steps","SECTION_MULTILEAD_CATEGORY":"s-multicategory_","SECTION_VENUE_LIST_VRM":"s-venue-list-vrm","SECTION_VENUE_LIST_VRM_SLIDER":"s-venue-list-vrm-slider","ACTION_RUN":"a-run","ACTION_RUN_CUPON":"a-run-cupon","ACTION_RUN_EVENT":"a-run-event","ACTION_RUN_HALF":"a-run-half","ACTION_RUN_CUPON_HALF":"a-run-cupon-half","ACTION_RUN_EVENT_HALF":"a-run-event-half","ACTION_RUN_NO_AUTH":"a-run-no-auth","ACTION_RUN_CUPON_NO_AUTH":"a-run-cupon-no-auth","ACTION_RUN_EVENT_NO_AUTH":"a-run-event-no-auth","ACTION_SHOW_STEP2_NO_AUTH":"a-step2-no-auth","ACTION_SHOW_CUPON_STEP2_NO_AUTH":"a-step2-cupon-no-auth","ACTION_SHOW_EVENT_STEP2_NO_AUTH":"a-step2-event-no-auth","ACTION_CANCEL_HALF":"a-cancel-half","ACTION_CANCEL_CUPON_HALF":"a-cancel-cupon-half","ACTION_CANCEL_EVENT_HALF":"a-cancel-event-half","ACTION_CANCEL_STEP1_NO_AUTH":"a-cancel-step1-no-auth","ACTION_CANCEL_CUPON_STEP1_NO_AUTH":"a-cancel-step1-cupon-no-auth","ACTION_CANCEL_EVENT_STEP1_NO_AUTH":"a-cancel-step1-event-no-auth","ACTION_CANCEL_STEP2_NO_AUTH":"a-cancel-step2-no-auth","ACTION_CANCEL_CUPON_STEP2_NO_AUTH":"a-cancel-step2-cupon-no-auth","ACTION_CANCEL_EVENT_STEP2_NO_AUTH":"a-cancel-step2-event-no-auth","ACTION_EDIT_HALF":"a-edit-half","ACTION_EDIT_CUPON_HALF":"a-edit-cupon-half","ACTION_EDIT_EVENT_HALF":"a-edit-event-half","ACTION_RUN_MULTILEAD":"a-run-multi","ACTION_STEP1_MULTILEAD":"a-step1-multi","ACTION_SHOW":"a-show","ACTION_SHOW_VLIST":"a-show-vlist","ACTION_STEP1_VLIST":"a-step1-vlist","ACTION_RUN_VLIST":"a-run-vlist"}, isUnifiedImpressionTracking : "" }, formInsert: {"MOBILE_UNKNOWN":50,"DESKTOP_MULTI_CATEGORY_LEAD":73,"DESKTOP_VENUE_LIST_VRM":84}, zonaOrigen: {"ID_MOBILE_MY_VENDORS_MULTILEAD_CATEGORY":194,"ID_MOBILE_BOOKED_VENDOR_MULTILEAD_CATEGORY":195,"ID_MOBILE_REQUEST_BOOKED_VENDOR_MULTILEAD_CATEGORY":199,"ID_APP_REQUEST_BOOKED_VENDOR_MULTILEAD_CATEGORY":1210,"ID_MOBILE_MY_VENDORS_VENUE_LIST_VRM":197,"ID_MOBILE_BOOKED_VENDOR_VENUE_LIST_VRM":198,"ID_MOBILE_REQUEST_BOOKED_VENDOR_VENUE_LIST_VRM":200,"ID_APP_REQUEST_BOOKED_VENDOR_VENUE_LIST_VRM":1211}, navigationTraces: {"ID_ACTION_VIEW":1,"ID_ACTION_SHOW_CONTACT_FORM":4,"ID_TYPE_EMPRESAS":1}, subdomain : "www.bodas.net", subdomainMobile: "www.bodas.net", subdomain_secure: "https://www.bodas.net", subdomain_cdn_img : "https://cdn1.bodas.net", subdomain_cdn_css : "https://cdn1.bodas.net", prevGrupoUrl : "bodas/", Request_Cookie_domain : "bodas.net", SUBDOMAIN_MAIL: "www.bodas.net", REQUEST_COUNTRY: "España", REQUEST_CURRENCY: "€", REQUEST_CURRENCY_PRECISION: "2", USER_TOOLS_CURRENCY_PRECISION : "0", Request_FB_AppID : "127038310647837", Request_Map_Zoom_Max : "16", Request_Language : "es", Request_Country : "ES", Request_URL_keygen : "bodas", Request_prevurl_model : "1", Request_id_project : "1", Request_mis_empresas : "1", Request_AnalyticsEcommerceEnabled : "1", Request_Wedding_Awards_Edition : "2024", Request_Show_Opiniones_Negativas: "1", timezone : '1', currency_before: '', currency_after: '€', reduced : '', link_sections: [ "https://www.bodas.net/organizador-bodas", "https://www.bodas.net/bodas/banquetes", "https://www.bodas.net/bodas/proveedores", "https://www.bodas.net/bodas/novias", "https://www.bodas.net/bodas/novios", "https://www.bodas.net/articulos", "https://comunidad.bodas.net/" ], Request_Pusher_Key : "48a9ef133bca1658eae4", Request_Pusher_Cluster : "eu", Request_Url_Condiciones_Legales : "https://www.bodas.net/condiciones-legales.php", Request_Url_Politica_Privacidad : "https://www.bodas.net/legal/privacy.php", Request_Remove_Image_Sizes_Comunidad: true, isMobile : false, environment : "PROD", isDynamicServing: true, minChars : "75", isUSProject : false, googleLoginClientId: '508880869914-1dj0ue02ng96vt595l0k6pvh3hjsnkuv.apps.googleusercontent.com', Request_SiteVersion: "symfnw-ES171-1-20241219-010_www_m_", fbGraphApiVersion: "v19.0", isWWProject: false, isDestinationWeddingEnabled : 1, isCookieLessEnabled : false, isResponsiveEnabled : true, minCharactersNameAllowed: 2, RolesGroupEnabled: false, isSmartLockEnabled: false, isGoogleIdentityServiceLibraryEnabled: true, isGoogleIdentityServiceContinueTextEnabled: true }; globals.separators = { decimal: ",", thousand: "." }; globals.listas = { filter_max: 1000, filter_step: 50, lemonWayNoDocLimitByTransaction: 250, lemonWayNoDocWalletMax: 2500 }; globals.promos = { Type_Descuento: 6, Type_Black_Friday: 8, Type_Black_Friday_Regalos: 9, Type_Black_Friday_Oferta: 10, Black_Friday_EndPromos: '27/11/2023', Black_Friday_TitlePlaceholder: 'Ejemplos: \u002250% dto en tu Pack Boda\u0022 o \u0022Complementos de regalo\u0022' }; globals.catalogTraces = { sources : { DESKTOP : 0, MOBILE : 1, APP : 2, }, isMobile : false, isApp : typeof isUsersAppVersion !== 'undefined' && isUsersAppVersion }; globals.urls = { tools : { tables : 'https://www.bodas.net/tools/Tables', reviews: 'https://www.bodas.net/tools/Recomendacion' }, vendors_menu : { dashboard : 'https://www.bodas.net/emp-Menu.php', call_tracking : 'https://www.bodas.net/emp-ModifPhone.php', employees: 'https://www.bodas.net/emp-Empleados.php', message_item: 'https://www.bodas.net/emp-AdminSolicitudesShow.php', revocer_password_submit: '/emp-RecuperaPasswordRun.php' }, cross_domain_local_storage: { basil: 'https://www.bodas.net/cross-domain-local-storage/basil' } }; globals.tenor = { apikey: '2E59UFS9OTZ6' }; globals.smileys = [{"SIGLA":";)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_winking.png"},{"SIGLA":":)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_smile.png"},{"SIGLA":":D","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_laugh.png"},{"SIGLA":"XD","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_xd.png"},{"SIGLA":":S","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_atonished.png"},{"SIGLA":":P","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_tongue.png"},{"SIGLA":":|","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_amazing.png"},{"SIGLA":":-*","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_kiss.png"},{"SIGLA":":O","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_surprise.png"},{"SIGLA":":@","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_angry.png"},{"SIGLA":"8-)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_sexy.png"},{"SIGLA":":?(","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_cry.png"},{"SIGLA":":(","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_sad.png"},{"SIGLA":"&lt;3","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_heart.png"},{"SIGLA":"(:3)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_catface.png"},{"SIGLA":":&dollar;","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_shame.png"},{"SIGLA":"_love_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_love.png"},{"SIGLA":"-_-?","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_ups.png"},{"SIGLA":"_diam_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_diamond.png"},{"SIGLA":"_cake_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_cake.png"},{"SIGLA":"_ring_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_ring.png"},{"SIGLA":"_flower_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_flower.png"},{"SIGLA":"_gift_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_gift.png"},{"SIGLA":"_star_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_star.png"}]; globals.vendors = { haveLogoInGallery: false, }; globals.appleSignIn = { clientId: 'net.bodas.applesignin', returnUrl: 'https://www.bodas.net', }; /** * added for custom dimension support on legacy tracking functions */ globals.UniversalAnalyticsDimensions = {"CUSTOM_DIMENSION_REDUCED":5,"CUSTOM_DIMENSION_UID":6,"CUSTOM_DIMENSION_VENDOR_ID":15,"CUSTOM_DIMENSION_LISTING_ID":16,"CUSTOM_DIMENSION_FRM_INSERT":17,"CUSTOM_DIMENSION_HOTEL_ID":18,"CUSTOM_DIMENSION_LEAD_CATEGORY_ID":20,"CUSTOM_DIMENSION_LEAD_GROUP_ID":21,"CUSTOM_DIMENSION_DIRECTORY_SCORE_ID":24,"CUSTOM_DIMENSION_DIRECTORY_LISTING_DETAIL":26,"CUSTOM_DIMENSION_DIRECTORY_LISTING_ID":27,"CUSTOM_DIMENSION_DIRECTORY_STYLE":31,"CUSTOM_DIMENSION_PLATFORM":28,"CUSTOM_DIMENSION_SECTION":29,"CUSTOM_DIMENSION_FILTERS":30,"CUSTOM_DIMENSION_PARENT_LEAD_ID":32,"CUSTOM_DIMENSION_PARENT_VENDOR_ID":33,"CUSTOM_DIMENSION_SEGMENT_EXTRA_DATA":999}; globals.seo = { allowDeindexedMarketplaceSearchesWithoutGroupId: true, }; </script> <script> String.prototype.sprintf = function() { var args = arguments; var pos = 0; return this.replace(/\%s/g, function(match, number) { pos++; return typeof args[pos-1] != 'undefined' ? args[pos-1] : match ; }); }; function __ (string) { return string } function _s() { var msg = arguments[0]; return String.prototype.sprintf.apply(msg, Array.prototype.slice.call(arguments, 1)); } function _n (single, plural, value) { var string = ''; var value = parseInt(value); if (value === 1) { string = single.replace('%s', value); } else { string = plural.replace('%s', value); } return string; } function _ns (single, plural, value, value2) { var string = _n(single, plural, value); return _s(string, value2); } </script>
+<script defer src="https://www.bodas.net/builds/desktop/js/symfnw-ES171-1-20241219-010_www_m_/WebBundleResponsiveMarketplaceStorefront.js"></script>
+<script>
+if (typeof(window.userLayersToShow) === "undefined" || (typeof(window.userLayersToShow) !== "undefined" && typeof(window.userLayersToShow.name) === "undefined")) {
+window.userLayersToShow = {
+name:
+null
+}
+}
+</script>
+<div id="app-chat-container" class="pusher-container pusher-mobile   "></div>
+<script>
+window.pusher = {
+actorJson : '{\u0022id\u0022:78903,\u0022name\u0022:\u0022Productora EAR\u0022,\u0022avatar\u0022:\u0022https:\\/\\/cdn0.bodas.net\\/emp\\/fotos\\/7\\/8\\/9\\/0\\/3\\/edwin-agudelo-canta-a-novios_1_78903_v3.jpg\u0022,\u0022avatarSvg\u0022:null,\u0022type\u0022:\u0022vendor\u0022}',
+customOptions : {
+disableUserVendorNotifications : false,
+disableChat : false,
+isMobile : true,
+isAppAndroid : false,
+isAppNativeApiEnabled : false,
+isAppIos : false,
+isAppBarsEnabled : false,
+isAppReferrerEnabled : false,
+forceMinimizeChat : false,
+chatNeedsSpecialClass : false,
+appShowCloseButton : false,
+fixedBar : false,
+isChatbotEnabled: true,
+openOnLoad: false,
+canInitConversation: false,
+isPersistentStorageEnabled: true,
+disableAppChat: false            }
+};
+</script>
+<script>var analyticsManager = (function() {var _storedAnalyticsEvents = [];function queueEvent(func) {_storedAnalyticsEvents.push(func);}function trackQueuedEvents() {while (_storedAnalyticsEvents.length > 0) {var queuedEvent = _storedAnalyticsEvents.shift();queuedEvent();}}return {queueEvent : queueEvent,trackQueuedEvents : trackQueuedEvents,}})();</script><script>
+var reduced = '/vendors/item/profile';
+</script>
+<script>
+window.reducedUrl = '/vendors/item/profile';
+</script>
+<script>
+var _comscore = _comscore || []
+var comscoreScript = function () {
+var s = document.createElement('script'), el = document.getElementsByTagName('script')[0]
+s.defer = true
+s.src = (document.location.protocol == 'https:' ? 'https://sb' : 'http://b') + '.scorecardresearch.com/cs/6156116/beacon.js'
+el.parentNode.insertBefore(s, el)
+}
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+comscoreScript()
+})
+document.getElementsByTagName('body')[0].addEventListener('IABTcDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+document.getElementsByTagName('body')[0].addEventListener('nonIABCountryDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+comscoreScript()
+}
+</script>
+<script>
+window.contextTraits = {};
+</script>
+<script>
+function trackExperimentViewed(experimentId, bucketingId, variantId, eventProperties) {
+window.analytics.track('Experiment Viewed', {
+...eventProperties,
+experimentId,
+bucketingId,
+variantId
+})
+}
+</script>
+<script>
+!function () {
+const ga4ClientIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'client_id', resolve)
+});
+const ga4SessionIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_id', resolve)
+});
+const ga4SessionNumberPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_number', resolve)
+});
+var segmentLoaded = false;
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0";;analytics.SNIPPET_VERSION="4.15.3";
+}}();
+var segmentScript = function () {
+if (segmentLoaded) {
+return;
+}
+if (window.analytics && window.analytics.initialized === true) {
+return;
+}
+segmentLoaded = true;
+(async () => {
+let ga4ClientId, ga4SessionId, ga4SessionNumber = null;
+[ga4ClientId, ga4SessionId, ga4SessionNumber] = await Promise.all([ga4ClientIdPromise, ga4SessionIdPromise, ga4SessionNumberPromise]);
+const pageProperties = {"categoryId":"group_id:2,sector_id:28,province_id:3021,town_id:812521","vendorId":6757,"vendorListingId":25037,"reduced":"\/vendors\/item\/profile","gpAnonId":"2faa1ae2-b846-4000-82e6-08cd18663f24","loggedVendorUUID":"587e0718-0168-4bc7-9b54-bfbcc0c68a82","vendor_id":6757,"category_group_id":2,"category_id":28,"region_adm1_id":126,"city_id":812521,"region_id":3021,"product_tier":"Free","vendor_visibility_tier":"Free","vendor_completion_status":1,"bvc_plus":0,"isMasquerading":false,"platform":"desktop web","section":"\/vendors\/item\/profile","build_product":"marketplace"};
+const analyticsGroupOpt = isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true;
+const targetedAdsOpt = isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true;
+const socialMediaOpt = isCookieGroupAllowed(CONSENT_SOCIAL_MEDIA_GROUP) === true;
+const saleOfDataOpt = analyticsGroupOpt && targetedAdsOpt && socialMediaOpt
+// Adding Segment middleware
+analytics.addSourceMiddleware(function (middlewareIntermediate) {
+var payload = middlewareIntermediate.payload,
+next = middlewareIntermediate.next,
+namespace;
+if (payload.obj.type === 'identify') {
+namespace = 'traits'
+} else {
+namespace = 'properties'
+}
+if (!payload.obj[namespace]) {
+console.warn('[ga4 segment patch] Analytics event does not contain namespace property: ' + namespace);
+next(payload);
+return
+}
+payload.obj[namespace].ga_session_id = ga4SessionId;
+payload.obj[namespace].ga_session_number = ga4SessionNumber;
+payload.obj[namespace].ga_client_id = ga4ClientId;
+payload.obj[namespace].ga4_session_id = ga4SessionId;
+payload.obj[namespace].ga4_session_number = ga4SessionNumber;
+payload.obj[namespace].ga4_client_id = ga4ClientId;
+payload.obj.context.data_processing_options = !targetedAdsOpt;
+if (payload.obj.type === 'page') {
+payload.obj[namespace]['event_id'] = 'pageview_' + window.userGlobals.gp_anon_id + '_' + '2660046d-b477-41dd-bb8f-3438ede1bc34'
+}
+if (!payload.obj[namespace].loggedUserUUID && window.userGlobals?.user_uuid) {
+payload.obj[namespace].loggedUserUUID = window.userGlobals.user_uuid
+}
+const getCookieIsFunction = typeof getCookie === 'function';
+const tkwwOpCookie = getCookieIsFunction ? getCookie('tkww_op') : null;
+if (!payload.obj.context.tkww_op && tkwwOpCookie) {
+payload.obj.context.tkww_op = tkwwOpCookie;
+}
+const globalExtraPropertiesForSegmentTracking = typeof window.globalExtraPropertiesForSegmentTracking === 'object'
+? window.globalExtraPropertiesForSegmentTracking : {};
+for (const key in globalExtraPropertiesForSegmentTracking) {
+if (globalExtraPropertiesForSegmentTracking.hasOwnProperty(key) && !payload.obj[namespace][key]) {
+payload.obj[namespace][key] = globalExtraPropertiesForSegmentTracking[key];
+}
+}
+let globalPageProperties = [];
+let globalPagePropertiesExcludedEventNames = {};
+try {
+globalPageProperties = JSON.parse('["appVersion","frmInsert","gpAnonId","loggedUserUUID","loggedVendorUUID","platform","reduced","section","build_product","experimentVariants","vendor_id","category_group_id","category_id","region_adm1_id","city_id","region_id","product_tier","vendor_visibility_tier"]');
+globalPagePropertiesExcludedEventNames = JSON.parse('[]');
+} catch(e) {
+console.error(`Segment init error: ${e.message}`);
+}
+for (const key in globalPageProperties) {
+const field = globalPageProperties[key];
+const isExcluded = globalPagePropertiesExcludedEventNames[field]?.includes(payload.obj.event) ?? false;
+if (!payload.obj[namespace][field] && pageProperties[field] && !isExcluded) {
+payload.obj[namespace][field] = pageProperties[field];
+}
+}
+payload.obj['context']['traits'] = payload.obj['context']['traits'] || {};
+for (const [key, value] of Object.entries(window.contextTraits)) {
+payload.obj['context']['traits'][key] = value;
+}
+if (getCookieIsFunction) {
+const cookies = {
+'epik': '_epik',
+'ttclid': 'ttclid',
+'_ttp': '_ttp',
+'gclid': 'gclid',
+};
+for (const [traitKey, cookieName] of Object.entries(cookies)) {
+const value = getCookie(cookieName);
+if (value) {
+payload.obj['context']['traits'][traitKey] = value;
+}
+}
+}
+if (!payload.obj['userId']) {
+payload.obj['userId'] = payload.obj[namespace]['loggedUserUUID']
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace]['non_interaction'] = !!parseInt(payload.obj[namespace]['nonInteraction'])
+}
+// override context variables if exists in window.trackingContext is defined and updated
+if (typeof window.trackingContext === 'object') {
+const overrideObjectProperties = (object, newObjectValues) => {
+for (const [key, value] of Object.entries(newObjectValues)) {
+if (typeof value === 'object' && typeof object[key] === 'object') {
+overrideObjectProperties(object[key], value);
+} else {
+object[key] = value;
+}
+}
+return object;
+};
+payload.obj = overrideObjectProperties(payload.obj, window.trackingContext);
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace] = standardizePropertyNames(payload.obj[namespace])
+}
+next(payload);
+});
+var integrationsConfig = {
+All: analyticsGroupOpt,
+'Segment.io': true,
+'Google Analytics 4': analyticsGroupOpt,
+'Facebook Conversions API (Actions)': targetedAdsOpt
+};
+window.analytics.load("ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0", { integrations: integrationsConfig });
+window.analytics.page(null, pageProperties);
+const experiments = (window.pageGlobals && window.pageGlobals.experiments) ? window.pageGlobals.experiments : {};
+Object.keys(experiments).forEach(exp => {
+trackExperimentViewed(
+experiments[exp].experimentId,
+window.userGlobals ? window.userGlobals[experiments[exp].bucketingType] : null,
+experiments[exp].variantId
+)
+})
+})();
+};
+var standardizePropertyNames = function (properties) {
+let origKey, value
+if (properties instanceof Array) {
+for (origKey in properties) {
+value = properties[origKey]
+if (typeof value === 'object') {
+value = standardizePropertyNames(value)
+}
+properties[origKey] = value
+}
+} else {
+for (origKey in properties) {
+if (properties.hasOwnProperty(origKey)) {
+let snakeCaseKey = origKey
+.trim()
+.replace(/-/g, '_')
+.replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+.replace(/([a-z])([A-Z])/g, '$1_$2')
+.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+.replace(/ /g, '_')
+.toLowerCase()
+.substring(0, 100)
+if (isPropertyNameSnakeCase(origKey) && origKey !== snakeCaseKey) {
+delete properties[origKey]
+}
+properties[snakeCaseKey] = properties[origKey]
+}
+}
+}
+return properties
+};
+var isPropertyNameSnakeCase = function (propertyName) {
+const standardFormatRegex = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+return standardFormatRegex.test(propertyName);
+};
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+segmentScript();
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+segmentScript();
+}
+}();
+</script>
+<div class="dnone">
+<script>
+gtag('event', 'page_view', {"VENUES_NAV":1,"VENDORS_28_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1,"send_to":"adwords","user_id":"e78903"});
+</script>              <script>
+var facebookScript = function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.defer=1;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)};
+var toExecuteAfterFbInit = function () {
+var hasGlobals = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.facebook
+var globalFacebook = hasGlobals ? parent.pageGlobals.common.remarketing.facebook : {};
+var isLoaded = globalFacebook.isLoaded === true;
+if (!isLoaded) {
+parent.fbq('init', '1434721056835089', {}, {});
+globalFacebook.isLoaded = true;
+}
+parent.fbq('track', 'PageView', {"VENUES_NAV":1,"VENDORS_28_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1}, {eventID: 'pageview_' + window.userGlobals.gp_anon_id + '_' + '2660046d-b477-41dd-bb8f-3438ede1bc34'}); parent.fbq('dataProcessingOptions', ['LDU'], 0, 0);
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+});
+if (parent.isCookieGroupAllowed(parent.CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+}
+</script>             <script>
+var pinterestScript = function() {
+!function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(
+Array.prototype.slice.call(arguments))};var
+n=window.pintrk;n.queue=[],n.version='3.0';var
+t=document.createElement('script');t.defer=1,t.src=e;var
+r=document.getElementsByTagName('script')[0];r.parentNode.insertBefore(t,r)}}('https://s.pinimg.com/ct/core.js');
+var hasGlobalsPinterest = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.pinterest;
+var globalPinterest = hasGlobalsPinterest ? parent.pageGlobals.common.remarketing.pinterest : {};
+var isLoaded = globalPinterest.isLoaded === true;
+if (!isLoaded) {
+parent.pintrk('load', 2613978159206);
+globalPinterest.isLoaded = true;
+}
+var isTracked = globalPinterest.isTracked === true;
+if (!isTracked) {
+globalPinterest.isTracked = true;
+parent.pintrk('page');
+parent.pintrk('track', 'custom', {"VENUES_NAV":"1","VENDORS_28_NAV":"1","LOGGED":"0","EMPRESA":"1","EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":"1","send_to":"adwords"});
+}
+}
+/* Listener of the OneTrust callback when user accepts the cookies */
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+pinterestScript();
+});
+/* Wrap of the Analytics script that checks the consent of the user and the default country configuration */
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+pinterestScript();
+}
+</script>             <script>
+var executeBingScript = function () {
+return (function(w,d,t,r,u) {
+var f,n,i;
+w[u] = w[u]||[], f = function() {
+var o = {ti: "355036992", enableAutoSpaTracking: true};
+o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad")
+},
+n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function() {
+var s = this.readyState;
+s&&s !== "loaded"&&s !== "complete" || (f(), n.onload = n. onreadystatechange=null)
+},
+i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n,i)
+}) (window, document, "script", "//bat.bing.com/bat.js", "uetq");
+}
+var pushBingScript = function () {
+window.uetq = window.uetq || [];
+window.uetq.push ('event', '', {});
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+executeBingScript();
+pushBingScript();
+});
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+executeBingScript();
+pushBingScript();
+}
+</script>     </div>
+<script type="text/javascript" src="https://cdn1.bodas.net/assets/js/newRelicRum.js?siteVersion=symfnw-ES171-1-20241219-010_www_m_" async></script>
+<script>
+window.addEventListener('newRelicScriptLoaded', function() {
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+newRelicScript("307408989");
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+newRelicScript("307408989");
+}
+});
+</script>
+<script type="application/ld+json">
+{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bodas","item":"https:\/\/www.bodas.net\/"},{"@type":"ListItem","position":2,"name":"Organizaci\u00f3n Bodas","item":"https:\/\/www.bodas.net\/bodas\/proveedores\/organizacion-bodas"},{"@type":"ListItem","position":3,"name":"Granada","item":"https:\/\/www.bodas.net\/bodas\/proveedores\/organizacion-bodas\/granada"},{"@type":"ListItem","position":4,"name":"La Zubia","item":"https:\/\/www.bodas.net\/bodas\/proveedores\/organizacion-bodas\/granada\/la-zubia"}]}            </script>
+<script type="application/ld+json">
+[{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/1v9a6816_1_6757-166089733987530.webp","url":"https:\/\/www.bodas.net\/organizacion-bodas\/alhambra-weddings--e6757","name":"Alhambra Weddings","address":{"@type":"PostalAddress","postalCode":"18002","addressLocality":"La Zubia","addressRegion":"Granada","streetAddress":"Recogidas"},"geo":{"@type":"GeoCoordinates","latitude":37.17009999999999791953086969442665576934814453125,"longitude":-3.60578999999999982861709213466383516788482666015625},"aggregateRating":{"@type":"AggregateRating","reviewCount":51,"ratingValue":"5.0","worstRating":0,"bestRating":5},"image":[{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/1v9a6816_1_6757-166089733987530.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/1v9a7552_1_6757-166089728674528.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/palacio-de-los-cordova_1_6757-161177154313635.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/1v9a7278_1_6757-166089775813499.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/1v9a7334_1_6757-166089807939627.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/luces-cordovas_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/i-k8xvnvq-x3_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/13498146-515139872022005-1124136161920360926-o_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/boda-en-la-alhambra_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/20140706-184744_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/140621-krismoya-es-175_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/140621-krismoya-es-320_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/10602520-10204596177207860-1745557096-o_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/13907055-1174773635898142-3393975803899855606-n_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/i-dplsnbt-x3_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/i-j6x57g2-x3_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/i-k9rqrrb-x3_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/i-n4gf4ct-x3_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/i-nc9pfpp-x3_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/detalles-deco-4_1_6757.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/boda-187-1_1_6757-160819606286483.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/boda-698_1_6757-160819610163678.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/convite-6_1_6757-160819615198870.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/img-20210929-074953-849_1_6757-166369200135039.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/fb-img-1631531386965_1_6757-166369204381469.webp","width":960,"height":640},{"@type":"ImageObject","url":"https:\/\/cdn0.bodas.net\/vendor\/6757\/3_2\/960\/jpg\/logotipo-digital_1_6757-166089792297879.webp","width":960,"height":640}],"review":[{"@type":"Review","datePublished":"2024-11-18","description":"El trabajo del equipo de AW, especialmente de Ana, nuestra oficiante, fue impecable. Pudimos personalizar al 100% nuestro gui\u00f3n, contando con aportaciones y sugerencias que incorpor\u00e1bamos o no, seg\u00fan nuestro criterio Ana fue puntual y cort\u00e9s. Utiliz\u00f3 muy bien la entonaci\u00f3n, manejando a la perfecci\u00f3n las pausas y los gestos Gracias.","author":{"@type":"Person","name":"Jos\u00e9 I."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2024-11-11","description":"Mi pareja y yo hemos tenido la ceremonia que siempre nos hab\u00edamos imaginado y todo gracias a \u00c1ngeles, que entendi\u00f3 perfectamente lo que quer\u00edamos y nos acompa\u00f1o en un momento tan especial de nuestras vidas como oficiante. Super recomendable para una boda civil como fue la nuestra. Nos reunimos con ella para ensayar unas semanas antes y la verdad que fue una elecci\u00f3n estupenda porque con sus consejos nos quedamos muy tranquilos de cara al gran d\u00eda. Y como no pod\u00eda ser de otra forma, el d\u00eda de la boda sali\u00f3 todo de maravilla gracias a ella. Eternamente agradecidos!!","author":{"@type":"Person","name":"Andrea M."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2024-07-24","description":"Cuando mi prometido (ahora esposo) y yo nos comprometimos, sab\u00edamos que ten\u00edamos que celebrar nuestra boda en Granada. Fue un largo viaje hasta el gran d\u00eda y ahora, mirando hacia atr\u00e1s, no podemos imaginarnos trabajando con nadie m\u00e1s que \u00c1ngeles. Desde la primera llamada con ella, sentimos una conexi\u00f3n instant\u00e1nea: fue c\u00e1lida y apreciamos que se tomara el tiempo para comprender nuestra visi\u00f3n de nuestra boda. Ella respet\u00f3 nuestro presupuesto y estaba lista con opciones rentables para lo que busc\u00e1bamos. Cuando empezamos a planificar nuestra boda est\u00e1bamos un poco aprensivos porque no est\u00e1bamos f\u00edsicamente en Granada, pero cuando iniciamos el proceso con \u00c1ngeles nos dimos cuenta de que no hab\u00eda nada de qu\u00e9 preocuparnos. Fue muy f\u00e1cil trabajar con \u00c1ngeles. Ella fue muy receptiva y siempre tuvo tiempo para realizar videollamadas con nosotros; nunca hubo problemas con la comunicaci\u00f3n a pesar de la diferencia horaria. Ella siempre nos brind\u00f3 diferentes opciones, comparti\u00f3 sus opiniones y nos orient\u00f3 sin ning\u00fan tipo de presi\u00f3n. Apreciamos que ella siempre dejara la decisi\u00f3n final en nuestras manos. El d\u00eda de la boda, \u00c1ngeles y su equipo se encargaron de todo, hasta el \u00faltimo detalle: sab\u00edamos que no ten\u00edamos nada de qu\u00e9 preocuparnos. \u00a1No hay duda de que \u00c1ngeles es la mejor organizadora de bodas en Granada! A las parejas que est\u00e9n pensando en casarse en Granada, mi marido y yo os recomendamos de todo coraz\u00f3n trabajar con Alhambra Weddings (\u00c1ngeles). Nuestra boda fue todo lo que esper\u00e1bamos que fuera. Fue \u00edntimo, divertido y, lo m\u00e1s importante, libre de estr\u00e9s para m\u00ed, mi esposo y nuestros invitados. Con \u00c1ngeles y su equipo, est\u00e1s en buenas manos. \u00a1Puedes confiar en que ella har\u00e1 realidad la boda de tus sue\u00f1os como lo hizo con la nuestra! ---------------------------------------------------------------------------------------------------------- When my fianc\u00e9 (now husband) and I got engaged, we knew that we had to have our wedding in Granada. It was a long journey to the big","author":{"@type":"Person","name":"Sarrah V."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2023-10-30","description":"La mejor elecci\u00f3n que pudimos realizar. \u00c1ngeles hizo de nuestra ceremonia la m\u00e1s especial y emotiva que se pudiera imaginar. Todos los invitados lo comentaban creo un ambiente s\u00faper m\u00e1gico . Muchas gracias por hacer que as\u00ed fuera","author":{"@type":"Person","name":"Jose M."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2023-10-03","description":"\u00c1ngeles simplemente es la mejor. Desde la primera conversaci\u00f3n que tuvimos ella supo perfectamente lo que \u00edbamos buscando y lo que quer\u00edamos. Ten\u00edamos clar\u00edsimo que nos quer\u00edamos casar en Granada pero no sab\u00edamos c\u00f3mo organizarlo todo viviendo en el extranjero. Nos pusimos en las mejores manos. Durante todo el proceso \u00c1ngeles nos ha guiado con mucho cari\u00f1o y siempre respectando nuestros gustos y decisiones. Tambi\u00e9n fue nuestra maestra de ceremonias y fue una ceremonia biling\u00fce preciosa. Se nota la experiencia y la profesionalidad. No podr\u00edamos estar m\u00e1s agradecidos \u2764\ufe0f","author":{"@type":"Person","name":"Oscar E."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2023-10-02","description":"Hicieron un trabajo brillante, nos casamos el pasado 23 de Junio y consiguieron que nos olvid\u00e1ramos de todo, s\u00f3lo disfrutar y dejar que todo marchara como ellas ten\u00edan previsto, te permite disfrutar de la boda sin preocuparte de nada. Contratamos tambi\u00e9n el servicio de oficiante y lo recomendamos 100%, varios invitados nos felicitaron por la ceremonia, consiguieron crear un ambiente m\u00e1gico","author":{"@type":"Person","name":"Ana"},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2023-07-12","description":"\u00c1ngeles ofici\u00f3 nuestra boda. Fue muy profesional en todo momento y estuvo pendiente de nosotros para que no faltara ning\u00fan detalle. Dise\u00f1amos nuestra ceremonia previamente con ella, a\u00f1adiendo detalles personales que hicieron la boda preciosa. Nos transmiti\u00f3 mucha confianza desde el primer momento que la conocimos y aunque surgieron algunos imprevistos con los horarios, ella supo adaptarse y transmitirnos calma en los momentos clave. \u00a1Muchas gracias \u00c1ngeles, nos encant\u00f3 que participaras de este d\u00eda tan especial para nosotros!","author":{"@type":"Person","name":"Ana J."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2023-07-05","description":"Agradecemos a \u00c1ngeles y a su equipo en Alhambra Weddings por hacer realidad nuestro sue\u00f1o de boda en Granada. Su atenci\u00f3n a cada detalle, conocimiento local y habilidad para adaptarse fueron clave. Ahorraron dinero y nos brindaron tranquilidad. Gracias, \u00c1ngeles, por crear recuerdos inolvidables. Recomendamos Alhambra Weddings al 1000%","author":{"@type":"Person","name":"Javier R."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2022-11-15","description":"\u00c1ngeles me hizo una boda preciosa, super emotiva, hubo risas, lloros es toda una profesional es super recomendable 100%","author":{"@type":"Person","name":"Paqui P."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2022-10-12","description":"Contratamos sus servicios como maestra de ceremonias en nuestra ceremonia civil, desde el primer momento \u00c1ngeles estuvo a nuestra disposici\u00f3n y nos resolvi\u00f3 todas las dudas que pudi\u00e9ramos tener, nos present\u00f3 varios guiones de ceremonia y no hubo inconvenientes con los cambios solicitados tambi\u00e9n se encarg\u00f3 de ayudar y a acomodar a los invitados a su llegada. La ceremonia fue preciosa, no tengo palabras para expresar lo bonita que fue, no par\u00e9 de recibir alabanzas de los invitados sobre lo bonita que hab\u00eda sido la ceremonia y el poema que recit\u00f3 Angeles. He de decir que fui de las que a priori pens\u00e9 en dejar la ceremonia en manos de alg\u00fan familiar que la dirigiese pero para los nuevos novios que lo est\u00e9is pensando os recomiendo much\u00edsimo contratar estos servicios y dejar algo tan importante en las manos de profesionales de esta talla, para m\u00ed fue el momento m\u00e1s especial de toda la boda .","author":{"@type":"Person","name":"Fatima A."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2022-09-21","description":"Nos hemos casado hace 3 d\u00edas y hemos contado con el trabajo de \u00c1ngeles como maestra de ceremonias. Todo ha salido genial; la ceremonia, totalmente personalizada, ella se adapta perfectamente a lo que quieres y tambi\u00e9n te da muchas ideas. Estamos muy contentos con el resultado, una ceremonia muy natural y emotiva.","author":{"@type":"Person","name":"Irene"},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2022-09-12","description":"No pod\u00eda faltar \u00c1ngeles. Hace que todo sea m\u00e1s f\u00e1cil y el resultado es impresionante. Tu d\u00eda se convierte en el mejor de los regalos. Todo el mundo contento. Much\u00edsimas gracias.","author":{"@type":"Person","name":"Bea"},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2022-07-13","description":"Cuando se trabaja con profesionalidad, cari\u00f1o y pasi\u00f3n, se consigue un resultado tan perfecto como el que ha hecho \u00c1ngeles en nuestra boda. Gracias por oficiar nuestro d\u00eda. eres una profesional de 10.","author":{"@type":"Person","name":"Maria J."},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2021-11-12","description":"\u00a1Mi ya marido conoc\u00eda el trabajo de \u00c1ngeles de antes y desde el principio ten\u00edamos claro que ella ten\u00eda que estar en nuestro d\u00eda! Y, sin duda, un acierto 100%. Nos anim\u00f3 y acompa\u00f1\u00f3 incluso en los peores momentos como cuando hubo que cancelar y cambiar fechas por el Covid. \u00a1Es cercana, dulce y sin duda mi boda sin ella y su bonita ceremonia no habr\u00eda sido lo mismo!","author":{"@type":"Person","name":"Yolanda"},"reviewRating":{"@type":"Rating","ratingValue":"5.0","bestRating":5,"worstRating":0}},{"@type":"Review","datePublished":"2021-09-26","description":"\u00a1Trabajar con Alhambra Weddings fue la mejor bendici\u00f3n para lograr la boda de nuestros sue\u00

@@ -1,0 +1,163 @@
+{
+  "governance": {
+    "updatedAt": "2026-08-15T23:54:00.000Z",
+    "updatedBy": "SuperAdmin",
+    "defaultPublicFallback": "/login"
+  },
+  "routes": [
+    {
+      "path": "/",
+      "name": "Gateway Soberano (Home)",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Puerta de entrada principal, enrutador de intención y presentación insignia de Edwin Agudelo."
+    },
+    {
+      "path": "/servicios",
+      "name": "Ecosistema de Matchmaking & Atmósferas",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Simulador de presión sonora acústica (12W/PAX), catálogo ZK y túnel neural."
+    },
+    {
+      "path": "/artistas",
+      "name": "Roster Exclusivo & Swipe Matcher",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Catálogo de formatos en directo con motor interactivo de selección tipo Tinder."
+    },
+    {
+      "path": "/artistas/edwin-agudelo",
+      "name": "Dossier Oficial Edwin Agudelo",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Paciente Cero, formatos de gala mariachi y espectáculo ecuestre de alta escuela."
+    },
+    {
+      "path": "/arsenal",
+      "name": "Arsenal Técnico S-Class",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Hardware PA Bose, microfonía inalámbrica Shure Axient e iluminación para eventos."
+    },
+    {
+      "path": "/cotizador",
+      "name": "Calculadora de Costes en Vivo (MultiPricer)",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Tarifas dinámicas en tiempo real con recargos territoriales por provincia y aforo."
+    },
+    {
+      "path": "/checkout/presupuesto",
+      "name": "Pasarela Price-Lock 72h (Depósito Stripe)",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Bloqueo atómico de fecha en calendario y congelación de tarifa con depósito de 10 €."
+    },
+    {
+      "path": "/contacto",
+      "name": "Centralita & Asistencia Táctica",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Atención directa telefónica (+34 682 91 82 82) y canal de guardia WhatsApp."
+    },
+    {
+      "path": "/ocasiones/bodas",
+      "name": "Landing de Gala: Bodas & Enlaces VIP",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Propuesta integral para novios, ceremonias nupciales y cócteles prémium."
+    },
+    {
+      "path": "/ocasiones/corporativo",
+      "name": "Landing B2B: Convenciones & Marcas",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Producción técnica y shows de impacto para empresas y multinacionales."
+    },
+    {
+      "path": "/ocasiones/ayuntamientos",
+      "name": "Landing B2G: Licitaciones & Fiestas Patronales",
+      "category": "PÚBLICO",
+      "isPublic": true,
+      "description": "Cumplimiento estricto de la Ley LCSP, facturación electrónica FACe y grandes formatos."
+    },
+    {
+      "path": "/vimume",
+      "name": "Fundación VIMUME (Hub Principal)",
+      "category": "VIMUME",
+      "isPublic": true,
+      "description": "Neuro-Reminiscencia y musicoterapia basada en evidencia para la Silver Economy."
+    },
+    {
+      "path": "/vimume/prensa",
+      "name": "Sala de Prensa & Dossier Clínico VIMUME",
+      "category": "VIMUME",
+      "isPublic": true,
+      "description": "Kit de medios, impacto ODS 2030 y convocatoria piloto para residencias y hospitales."
+    },
+    {
+      "path": "/admin",
+      "name": "Centro de Mando Supremo (Dashboard Integral)",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Panel unificado con pestañas: Telemetría, Ledger Financiero, Hunter B2G, Bespoke y Gobernanza."
+    },
+    {
+      "path": "/admin/nexus",
+      "name": "Nexus Real Cockpit",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Supervisión de salud del sistema, uptime de servidores y telemetría de red."
+    },
+    {
+      "path": "/admin/configurador",
+      "name": "Configurador Bespoke de Infraestructura",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Armado logístico de flotas, tarimas modulares y contingencias técnicas."
+    },
+    {
+      "path": "/admin/estado",
+      "name": "Tactical Tracker (Dominancia Global)",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Supervisión y control de los 10 estratos soberanos del sistema."
+    },
+    {
+      "path": "/admin/crm",
+      "name": "Matriz CRM & Ledger de Comisiones",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Base de datos de promotores, comisiones de afiliados y contratos mercantiles."
+    },
+    {
+      "path": "/admin/flota",
+      "name": "Gestión de Flota & Cartas de Porte Digitales",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Seguimiento GPS de furgonetas, rutas de gira y waybills de transporte."
+    },
+    {
+      "path": "/admin/hunter",
+      "name": "Hunter Radar Phantom (PLACSP / BOE / BOP)",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Escaneo automático de adjudicaciones públicas y alertas tempranas de licitaciones."
+    },
+    {
+      "path": "/admin/oraculo",
+      "name": "Oráculo Predictivo Astra & Yield Management",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Algoritmos de fijación dinámica de precios y proyección de ingresos."
+    },
+    {
+      "path": "/admin/rutas",
+      "name": "Gobernanza de URLs & Control de Acceso",
+      "category": "ADMINISTRACIÓN",
+      "isPublic": false,
+      "description": "Interruptor maestro para activar o privatizar cualquier pantalla del ecosistema."
+    }
+  ]
+}
