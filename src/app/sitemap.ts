@@ -145,9 +145,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.6
     });
+    municipalRoutes.push({
+      url: `${baseUrl}/bodas/madrid/catering-brasas/${pueblo}`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6
+    });
     // Toledo y Castilla-La Mancha
     municipalRoutes.push({
       url: `${baseUrl}/bodas/toledo/mariachi-gala/${pueblo}`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.6
+    });
+    municipalRoutes.push({
+      url: `${baseUrl}/bodas/toledo/catering-brasas/${pueblo}`,
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.6
