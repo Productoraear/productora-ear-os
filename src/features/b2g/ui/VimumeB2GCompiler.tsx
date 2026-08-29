@@ -1,596 +1,244 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Building2, 
-  FileText, 
-  Download, 
-  Copy, 
-  Check, 
-  Sparkles, 
+  generateVimumeTender, 
+  B2GTenderInput, 
+  B2GTenderOutput, 
+  B2G_PRESETS 
+} from '@/lib/vimume/b2g-tender-engine';
+import { 
   ShieldCheck, 
-  ArrowRight, 
-  Calendar, 
-  MapPin, 
-  Award, 
-  Layers,
-  Printer,
-  Phone,
-  Heart,
-  Brain,
-  Sliders,
-  CheckCircle2,
-  AlertTriangle
+  Copy, 
+  Download, 
+  Printer, 
+  AlertTriangle, 
+  Building2 
 } from 'lucide-react';
-import { CENTRALITA } from '@/lib/phone-constants';
-import { 
-  getClinicalJustificationText, 
-  getLegalLcspJustificationText, 
-  getSroiJustificationText, 
-  getTechnicalRiderJustificationText 
-} from '@/lib/constants/vimume-100-levels';
 
-interface VIMUMEProgramPreset {
-  id: string;
-  name: string;
-  department: string;
-  objeto: string;
-  presupuestoBase: number;
-  duration: string;
-  sessions: number;
-  description: string;
-}
+export function VimumeB2GCompiler() {
+  const [formData, setFormData] = useState<B2GTenderInput>({
+    entityName: 'Ayuntamiento de Toledo',
+    department: 'Concejalía de Asuntos Sociales y Tercera Edad',
+    dir3Code: 'L01450078',
+    programPreset: 'PILOTO_TRIMESTRAL',
+    customBudget: 4200
+  });
 
-const PRESETS: VIMUMEProgramPreset[] = [
-  {
-    id: 'piloto-trimestral',
-    name: 'Piloto Trimestral 5 Centros / Residencias',
-    department: 'Concejalía de Bienestar Social y Mayores',
-    objeto: 'Programa Piloto de Estimulación Neuroacústica y Envejecimiento Activo VIMUME (12 Sesiones)',
-    presupuestoBase: 4200,
-    duration: '3 meses',
-    sessions: 12,
-    description: 'Ciclo de 12 sesiones clínicas de estimulación 40Hz y reminiscencia lírica para 120 mayores en centros municipales.'
-  },
-  {
-    id: 'anti-soledad',
-    name: 'Programa Integral Anti-Soledad No Deseada',
-    department: 'Concejalía de Servicios Sociales y Familia',
-    objeto: 'Intervención Psicosocial y Neuroacústica contra la Soledad No Deseada en Población Senior (24 Sesiones)',
-    presupuestoBase: 8400,
-    duration: '6 meses',
-    sessions: 24,
-    description: 'Reactivación relacional y emocional comunitaria con seguimiento de empatía reactiva y telemetría familiar.'
-  },
-  {
-    id: 'gala-dia-mayor',
-    name: 'Gala Institucional Día del Mayor + Protocolo VIMUME',
-    department: 'Concejalía de Festejos y Tercera Edad',
-    objeto: 'Gala Artística e Intervención Sonora Conmemorativa del Día Internacional de las Personas Mayores',
-    presupuestoBase: 2800,
-    duration: 'Jornada Única',
-    sessions: 2,
-    description: 'Concierto de Gala lírico con Edwin Agudelo (Tenor Lírico) + sesión comunitaria neuroacústica <75 dB SPL.'
-  },
-  {
-    id: 'plan-anual-max',
-    name: 'Plan Anual Municipal de Estimulación Cognitiva (Techo LCSP)',
-    department: 'Concejalía de Sanidad y Bienestar Social',
-    objeto: 'Servicio Anual de Terapia de Reminiscencia Musical y Estimulación Cerebral para la Red Municipal de Centros de Día',
-    presupuestoBase: 14250,
-    duration: '12 meses',
-    sessions: 40,
-    description: 'Cobertura anual intensiva para frenar el deterioro cognitivo leve-moderado. Ajustado al 95% del límite legal del Art. 118 LCSP.'
-  }
-];
+  const [activeTab, setActiveTab] = useState<'DRAFT' | 'LEGAL' | 'CLINICAL' | 'SROI' | 'RIDER' | 'SECRETARY'>('DRAFT');
+  const [copied, setCopied] = useState(false);
 
-export const VimumeB2GCompiler: React.FC = () => {
-  const [selectedPresetId, setSelectedPresetId] = useState<string>('piloto-trimestral');
-  const [municipio, setMunicipio] = useState('Ayuntamiento de Toledo');
-  const [concejalia, setConcejalia] = useState('Concejalía de Bienestar Social y Mayores');
-  const [centroDestino, setCentroDestino] = useState('Red Municipal de Centros de Mayores y Centros de Día');
-  const [objetoContrato, setObjetoContrato] = useState(PRESETS[0].objeto);
-  const [presupuestoMax, setPresupuestoMax] = useState<number>(4200);
-  const [fechaEvento, setFechaEvento] = useState('Cuarto Trimestre 2026');
-  const [codigoDIR3, setCodigoDIR3] = useState('L01451688');
-  const [cpv, setCpv] = useState('85320000-8 (Servicios de Bienestar Social)');
-  const [beneficiarios, setBeneficiarios] = useState(150);
+  const output: B2GTenderOutput = generateVimumeTender(formData);
 
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [generatedDossier, setGeneratedDossier] = useState<string | null>(null);
-  const [expedienteHash, setExpedienteHash] = useState<string>('');
-  const [hasCopied, setHasCopied] = useState(false);
-
-  const selectPreset = (preset: VIMUMEProgramPreset) => {
-    setSelectedPresetId(preset.id);
-    setConcejalia(preset.department);
-    setObjetoContrato(preset.objeto);
-    setPresupuestoMax(preset.presupuestoBase);
+  const handlePresetSelect = (presetKey: keyof typeof B2G_PRESETS) => {
+    const preset = B2G_PRESETS[presetKey];
+    setFormData(prev => ({
+      ...prev,
+      programPreset: presetKey,
+      customBudget: preset.basePrice
+    }));
   };
 
-  const ofertaSugerida = Math.min(presupuestoMax, 14950);
-  const ivaCalculado = Math.round(ofertaSugerida * 0.21 * 100) / 100;
-  const totalConIVA = Math.round((ofertaSugerida + ivaCalculado) * 100) / 100;
-
-  const handleGenerate = async () => {
-    setIsGenerating(true);
-    const randomHex = Math.random().toString(36).substring(2, 8).toUpperCase();
-    const expId = `EXP-VIMUME-B2G-${randomHex}-2026`;
-    setExpedienteHash(expId);
-
-    // Call API in background for audit logging
-    try {
-      fetch('/api/b2g/dossier-generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          municipio,
-          presupuestoMax: ofertaSugerida,
-          cpv,
-          objeto: objetoContrato,
-          codigoDIR3
-        })
-      }).catch(() => {});
-    } catch {
-      // Non-blocking
-    }
-
-    setTimeout(() => {
-      const doc = `================================================================================
-EXPEDIENTE DE CONTRATACIÓN MENOR DE SERVICIOS - ARTÍCULO 118 LCSP
-PROGRAMA INSTITUCIONAL VIMUME // ESTIMULACIÓN NEUROACÚSTICA Y ENVEJECIMIENTO ACTIVO
-EXPEDIENTE NÚMERO: ${expId}
-VERIFICACIÓN CRIPTOGRÁFICA SHA-256: ${Math.random().toString(36).substring(2)}${Math.random().toString(36).substring(2)}
-================================================================================
-
-1. ÓRGANO CONTRATANTE Y DATOS ADMINISTRATIVOS:
-- Entidad Contratante: ${municipio}
-- Unidad Promotora: ${concejalia}
-- Centros Destinatarios: ${centroDestino}
-- Código DIR3 Municipal: ${codigoDIR3}
-- Código CPV Principal: ${cpv}
-- Población Beneficiaria Estimada: ${beneficiarios} usuarios del municipio.
-
-2. OBJETO Y ALCANCE DEL CONTRATO:
-- Objeto: ${objetoContrato}.
-- Modalidad: Contrato Menor de Servicios regulado en el Art. 118 de la Ley 9/2017 de Contratos del Sector Público (LCSP).
-- Período de Ejecución: ${fechaEvento}.
-- Justificación de la Necesidad Pública: Implementación de un programa de estimulación neurocognitiva y bienestar psicoemocional para personas mayores del municipio, orientado a prevenir el aislamiento social, combatir la Soledad No Deseada y ralentizar el deterioro cognitivo mediante terapia de reminiscencia sonora y frecuencias 40Hz.
-
-3. FUNDAMENTACIÓN NEUROCLÍNICA Y MARCO OMS 2021-2030 (BLOQUE ONTOLÓGICO A):
-${getClinicalJustificationText()}
-
-4. FUNDAMENTACIÓN JURÍDICA, SINGULARIDAD Y ARTÍCULO 118 LCSP (BLOQUE ONTOLÓGICO F):
-- Dirección Artística: A cargo de Edwin Agudelo (Tenor Lírico homologado, especializado en técnica vocal y empatía neuroacústica gerontológica).
-- Justificación LCSP:
-${getLegalLcspJustificationText()}
-
-5. RETORNO SOCIAL DE LA INVERSIÓN (SROI) Y SPLIT SOBERANO (BLOQUE ONTOLÓGICO G):
-- Ratio SROI Auditado: 1,00 € invertido = 4,85 € de impacto social y ahorro farmacológico.
-${getSroiJustificationText()}
-
-6. DESGLOSE ECONÓMICO Y JUSTIFICACIÓN DE PRECIO CIERTO:
-- Base Imponible (Presupuesto Licitado): ${ofertaSugerida.toLocaleString('es-ES', { minimumFractionDigits: 2 })} € (IVA excluido)
-- Impuesto sobre el Valor Añadido (IVA 21%): ${ivaCalculado.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €
-- IMPORTE TOTAL ADJUDICABLE (IVA INCLUIDO): ${totalConIVA.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €
-- Declaración de No Superación de Límites: El valor estimado del contrato es inferior al umbral legal de 15.000,00 € establecido para contratos menores de servicios en el artículo 118.1 de la Ley 9/2017 (LCSP), no habiéndose producido fraccionamiento de gasto alguno.
-
-7. PRESCRIPCIONES TÉCNICAS, DE CALIDAD Y SEGURIDAD ACÚSTICA (BLOQUE ONTOLÓGICO I):
-${getTechnicalRiderJustificationText()}
-- Póliza de Responsabilidad Civil: Cobertura de RC patronal y general vigente por 1.000.000,00 €.
-- Cumplimiento Normativo: Empresa y cuadro artístico inscritos en el ROLECE, con certificados vigentes de hallarse al corriente con la TGSS y la AEAT.
-- Protección de Datos: Cumplimiento estricto del RGPD (UE 2016/679) y Ley Orgánica 3/2018 (LOPDGDD).
-
-8. INFORME DE INSUFICIENCIA DE MEDIOS MUNICIPALES:
-Se certifica que la entidad contratante no dispone de personal artístico-lírico cualificado en plantilla ni de equipamiento electroacústico homologado de neuro-reminiscencia para desarrollar el presente programa de forma interna, resultando necesaria la contratación externa de Productora EAR / VIMUME.
-
-================================================================================
-EXPEDIENTE HOMOLOGADO POR PRODUCTORA EAR // DIVISIÓN B2G INSTITUCIONAL
-Centralita de Atención a Secretarías e Intervenciones: +34 693 693 048
-Email Oficial de Licitaciones: b2g@productoraear.com | www.edwinagudelo.es/vimume/b2g
-Sede Operativa: Calle Tórtola 5, Encinasola (Toledo) • Cobertura Nacional
-================================================================================`;
-
-      setGeneratedDossier(doc);
-      setIsGenerating(false);
-    }, 450);
+  const handleBudgetChange = (val: number) => {
+    setFormData(prev => ({
+      ...prev,
+      customBudget: val
+    }));
   };
 
   const handleCopy = () => {
-    if (!generatedDossier) return;
-    navigator.clipboard.writeText(generatedDossier);
-    setHasCopied(true);
-    setTimeout(() => setHasCopied(false), 3000);
+    navigator.clipboard.writeText(output.sections.dossierCompletoMarkdown);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownload = () => {
-    if (!generatedDossier) return;
-    const blob = new Blob([generatedDossier], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `Expediente_Art118_VIMUME_${municipio.replace(/\s+/g, '_')}_2026.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+  const handleDownload = (format: 'md' | 'txt') => {
+    const element = document.createElement('a');
+    const file = new Blob([output.sections.dossierCompletoMarkdown], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = `${output.expedienteId}_PLIEGO_OFICIAL_VIMUME.${format}`;
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   };
 
   const handlePrint = () => {
-    if (!generatedDossier) return;
-    const printWindow = window.open('', '_blank', 'width=850,height=900');
-    if (printWindow) {
-      printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <title>Expediente Art. 118 LCSP - VIMUME ${municipio}</title>
-          <style>
-            @page { size: A4; margin: 20mm; }
-            body { 
-              font-family: 'Courier New', Courier, monospace; 
-              font-size: 11px; 
-              line-height: 1.5; 
-              color: #000; 
-              background: #fff; 
-              padding: 20px;
-            }
-            .header-box {
-              border: 2px solid #000;
-              padding: 12px;
-              margin-bottom: 20px;
-              text-align: center;
-              font-weight: bold;
-            }
-            pre {
-              white-space: pre-wrap;
-              word-wrap: break-word;
-              font-family: inherit;
-            }
-            .footer-sign {
-              margin-top: 40px;
-              display: flex;
-              justify-content: space-between;
-            }
-            .sign-box {
-              width: 45%;
-              border-top: 1px solid #000;
-              text-align: center;
-              padding-top: 10px;
-              font-size: 10px;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="header-box">
-            DOCUMENTO TÉCNICO ADMINISTRATIVO DE CONTRATACIÓN MENOR<br/>
-            ARTÍCULO 118 LEY 9/2017 (LCSP) • EXPEDIENTE: ${expedienteHash || 'EXP-VIMUME-2026'}
-          </div>
-          <pre>${generatedDossier}</pre>
-          <div class="footer-sign">
-            <div class="sign-box">
-              POR EL ÓRGANO CONTRATANTE<br/>
-              ${municipio}<br/>
-              (Firma y Sello Digital)
-            </div>
-            <div class="sign-box">
-              POR LA ENTIDAD ADJUDICATARIA<br/>
-              PRODUCTORA EAR / VIMUME<br/>
-              (Firma y Sello de Homologación)
-            </div>
-          </div>
-          <script>
-            window.onload = function() { window.print(); }
-          </script>
-        </body>
-        </html>
-      `);
-      printWindow.document.close();
-    }
+    window.print();
   };
 
-  const whatsappMessage = encodeURIComponent(
-    `🏛️ *SOLICITUD DE TRAMITACIÓN B2G ART. 118 LCSP*\n\n` +
-    `*Organismo:* ${municipio}\n` +
-    `*Concejalía:* ${concejalia}\n` +
-    `*Objeto:* ${objetoContrato}\n` +
-    `*Importe Propuesto:* ${ofertaSugerida.toLocaleString('es-ES')} € + IVA (${totalConIVA.toLocaleString('es-ES')} € Total)\n` +
-    `*DIR3:* ${codigoDIR3}\n` +
-    `*Expediente:* ${expedienteHash || 'Generado en Portal VIMUME B2G'}\n\n` +
-    `Por favor, confirmar disponibilidad técnica y envío de certificado de exclusividad y solvencia para fiscalización en intervención.`
-  );
-
   return (
-    <div className="space-y-8">
-      {/* SELECTOR DE PROGRAMAS PREDEFINIDOS */}
-      <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-            1. Seleccionar Modalidad o Crear a Medida
-          </span>
-          <span className="text-[10px] font-mono text-white/40">
-            Marco Art. 118 LCSP (&lt;15.000 €)
-          </span>
-        </div>
+    <div className="w-full max-w-7xl mx-auto p-4 md:p-6 space-y-6 bg-[#050505] text-white font-sans">
+      <div className="border border-[#1f1f1f] bg-[#0a0a0a] rounded-xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-900/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative z-10">
+          <div>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-3 py-1 bg-emerald-950/80 text-emerald-400 border border-emerald-800/50 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5" /> Homologado Art. 118 LCSP (&lt;15.000 €)
+              </span>
+              <span className="px-3 py-1 bg-blue-950/80 text-blue-400 border border-blue-800/50 rounded-full text-xs font-semibold tracking-wider">
+                Ratio SROI 4.85x
+              </span>
+            </div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-white">
+              Compilador de Expedientes B2G VIMUME
+            </h1>
+            <p className="text-gray-400 text-sm mt-1">
+              Generador de pliegos técnicos, memoria neuroclínica y justificación jurídica para Ayuntamientos y Consejerías.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {PRESETS.map((preset) => {
-            const isSelected = selectedPresetId === preset.id;
-            return (
-              <button
-                key={preset.id}
-                type="button"
-                onClick={() => selectPreset(preset)}
-                className={`p-5 rounded-2xl border text-left transition-all relative overflow-hidden flex flex-col justify-between ${
-                  isSelected
-                    ? 'bg-gradient-to-b from-[#ecb613]/15 to-white/5 border-[#ecb613] shadow-[0_0_25px_rgba(236,182,19,0.15)]'
-                    : 'bg-white/[0.03] border-white/10 hover:border-white/20 hover:bg-white/[0.05]'
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[9px] font-mono font-bold text-[#ecb613] uppercase">
-                      {preset.duration} • {preset.sessions} Ses.
-                    </span>
-                    {isSelected && <CheckCircle2 size={14} className="text-[#ecb613]" />}
-                  </div>
-                  <h4 className="text-sm font-bold text-white leading-tight font-syne">
-                    {preset.name}
-                  </h4>
-                  <p className="text-white/50 text-[11px] leading-relaxed line-clamp-2">
-                    {preset.description}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-white/5 flex items-baseline justify-between">
-                  <span className="text-xs font-mono font-black text-white">
-                    {preset.presupuestoBase.toLocaleString('es-ES')} €
-                  </span>
-                  <span className="text-[9px] font-mono text-white/40">+ IVA 21%</span>
-                </div>
-              </button>
-            );
-          })}
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={handleCopy}
+              className="px-4 py-2 bg-[#1a1a1a] hover:bg-[#252525] border border-gray-800 rounded-lg text-xs font-medium flex items-center gap-2 transition-all"
+            >
+              <Copy className="w-4 h-4 text-gray-400" />
+              {copied ? '¡Copiado!' : 'Copiar Dossier'}
+            </button>
+            <button
+              onClick={() => handleDownload('md')}
+              className="px-4 py-2 bg-[#1a1a1a] hover:bg-[#252525] border border-gray-800 rounded-lg text-xs font-medium flex items-center gap-2 transition-all"
+            >
+              <Download className="w-4 h-4 text-emerald-400" />
+              Descargar .MD
+            </button>
+            <button
+              onClick={handlePrint}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-xs font-medium flex items-center gap-2 transition-all text-white shadow-lg shadow-blue-900/30"
+            >
+              <Printer className="w-4 h-4" />
+              Imprimir A4
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* PANEL PRINCIPAL DEL COMPILADOR */}
-      <div className="rounded-[2.5rem] bg-[#09090d] border border-[#ecb613]/30 p-6 md:p-10 shadow-[0_20px_70px_rgba(0,0,0,0.85)] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-rose-500/10 blur-[140px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-[#ecb613]/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1 space-y-4 bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-5">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 flex items-center gap-2">
+            <Building2 className="w-4 h-4 text-blue-400" /> Parámetros del Municipio
+          </h2>
 
-        {/* CABECERA DEL PANEL */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6 mb-8">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-              <Building2 size={24} />
-            </div>
+          <div className="space-y-3 text-sm">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613] block font-mono">
-                  AUTO-COMPILADOR B2G EXPRESS
-                </span>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  Adjudicación Directa &lt;24h
-                </span>
+              <label className="block text-xs text-gray-400 mb-1">Entidad Municipal / Proponente</label>
+              <input
+                type="text"
+                value={formData.entityName}
+                onChange={e => setFormData({ ...formData, entityName: e.target.value })}
+                className="w-full bg-[#121212] border border-gray-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500 text-sm"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Concejalía / Departamento</label>
+              <input
+                type="text"
+                value={formData.department}
+                onChange={e => setFormData({ ...formData, department: e.target.value })}
+                className="w-full bg-[#121212] border border-gray-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500 text-sm"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Código DIR3 (Intervención Municipal)</label>
+              <input
+                type="text"
+                value={formData.dir3Code || ''}
+                onChange={e => setFormData({ ...formData, dir3Code: e.target.value })}
+                placeholder="Ej: L01450078"
+                className="w-full bg-[#121212] border border-gray-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500 text-sm font-mono"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Selección de Preset Institucional</label>
+              <div className="space-y-2">
+                {(Object.keys(B2G_PRESETS) as Array<keyof typeof B2G_PRESETS>).map(key => {
+                  const preset = B2G_PRESETS[key];
+                  const isSelected = formData.programPreset === key;
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => handlePresetSelect(key)}
+                      className={`w-full text-left p-2.5 rounded-lg border transition-all text-xs ${
+                        isSelected 
+                          ? 'bg-blue-950/40 border-blue-500 text-white' 
+                          : 'bg-[#121212] border-gray-800 text-gray-400 hover:border-gray-700'
+                      }`}
+                    >
+                      <div className="font-semibold">{preset.name}</div>
+                      <div className="text-[11px] text-gray-500">{preset.basePrice.toLocaleString('es-ES')} € (IVA excl.)</div>
+                    </button>
+                  );
+                })}
               </div>
-              <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white font-syne">
-                Pliego de Prescripciones Técnicas y Memoria Art. 118 LCSP
-              </h3>
+            </div>
+
+            <div>
+              <label className="block text-xs text-gray-400 mb-1">Importe Personalizado (€ IVA excluido)</label>
+              <input
+                type="number"
+                value={formData.customBudget || ''}
+                onChange={e => handleBudgetChange(Number(e.target.value))}
+                className="w-full bg-[#121212] border border-gray-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-blue-500 text-sm font-mono"
+              />
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="bg-white/5 px-4 py-2 rounded-xl border border-white/10 text-right">
-              <span className="text-[9px] font-mono text-white/40 block uppercase">Oferta Base (sin IVA)</span>
-              <span className="text-base font-mono font-black text-[#ecb613]">
-                {ofertaSugerida.toLocaleString('es-ES')} €
-              </span>
-            </div>
-            <div className="bg-white/5 px-4 py-2 rounded-xl border border-white/10 text-right">
-              <span className="text-[9px] font-mono text-white/40 block uppercase">Total Adjudicable (21% IVA)</span>
-              <span className="text-base font-mono font-black text-white">
-                {totalConIVA.toLocaleString('es-ES')} €
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* FORMULARIO EDITABLE */}
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Organismo / Ayuntamiento Licitante
-            </label>
-            <input
-              type="text"
-              value={municipio}
-              onChange={(e) => setMunicipio(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613]"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Concejalía / Unidad Gestora
-            </label>
-            <input
-              type="text"
-              value={concejalia}
-              onChange={(e) => setConcejalia(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613]"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Centros Destino / Instalaciones
-            </label>
-            <input
-              type="text"
-              value={centroDestino}
-              onChange={(e) => setCentroDestino(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613]"
-            />
-          </div>
-
-          <div className="space-y-1.5 lg:col-span-2">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Objeto del Contrato de Servicios
-            </label>
-            <input
-              type="text"
-              value={objetoContrato}
-              onChange={(e) => setObjetoContrato(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613]"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Presupuesto Base (€ s/IVA, máx 14.999€)
-            </label>
-            <input
-              type="number"
-              value={presupuestoMax}
-              max={14999}
-              min={350}
-              onChange={(e) => setPresupuestoMax(Number(e.target.value))}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613] font-mono"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Período de Ejecución Previsto
-            </label>
-            <input
-              type="text"
-              value={fechaEvento}
-              onChange={(e) => setFechaEvento(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613]"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Código DIR3 Municipal (FacturaE)
-            </label>
-            <input
-              type="text"
-              value={codigoDIR3}
-              onChange={(e) => setCodigoDIR3(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613] font-mono"
-            />
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-mono font-bold uppercase text-white/50 block">
-              Código CPV Oficial
-            </label>
-            <input
-              type="text"
-              value={cpv}
-              onChange={(e) => setCpv(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-[#ecb613] font-mono"
-            />
-          </div>
-        </div>
-
-        {/* BOTÓN DE ACCIÓN PRINCIPAL */}
-        <div className="relative z-10 pt-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-white/60 text-xs">
-            <ShieldCheck size={16} className="text-emerald-400" />
-            <span>Validez jurídica conforme a Ley 9/2017 LCSP • Seguro RC 1.000.000 € • ROLECE Activo</span>
-          </div>
-
-          <button
-            onClick={handleGenerate}
-            disabled={isGenerating}
-            className="w-full sm:w-auto py-4 px-8 rounded-2xl bg-gradient-to-r from-[#ecb613] to-amber-400 text-black font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(236,182,19,0.3)] font-mono"
-          >
-            <Sparkles size={16} />
-            <span>{isGenerating ? 'Compilando Pliego Oficial...' : 'Compilar Pliego Art. 118 LCSP'}</span>
-          </button>
-        </div>
-
-        {/* ÁREA DE PREVISUALIZACIÓN Y ACCIONES DEL PLIEGO GENERADO */}
-        <AnimatePresence>
-          {generatedDossier && (
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="relative z-10 space-y-6 pt-8 border-t border-white/10 mt-8"
-            >
-              {/* Barra de herramientas del documento */}
-              <div className="flex flex-wrap items-center justify-between gap-4 bg-white/5 p-4 rounded-2xl border border-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <FileText size={20} />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-white">Expediente {expedienteHash}</span>
-                      <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">
-                        Listo para Tramitación
-                      </span>
-                    </div>
-                    <span className="text-[10px] font-mono text-white/40">
-                      Importe Licitado: {ofertaSugerida.toLocaleString('es-ES')} € + IVA ({totalConIVA.toLocaleString('es-ES')} € Total)
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    onClick={handleCopy}
-                    className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold transition-all flex items-center gap-1.5"
-                  >
-                    {hasCopied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
-                    <span>{hasCopied ? '¡Copiado!' : 'Copiar'}</span>
-                  </button>
-
-                  <button
-                    onClick={handleDownload}
-                    className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold transition-all flex items-center gap-1.5"
-                  >
-                    <Download size={14} />
-                    <span>Descargar TXT</span>
-                  </button>
-
-                  <button
-                    onClick={handlePrint}
-                    className="px-4 py-2 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-lg"
-                  >
-                    <Printer size={14} />
-                    <span>Imprimir / PDF Oficial</span>
-                  </button>
-
-                  <a
-                    href={`https://wa.me/34693693048?text=${whatsappMessage}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-mono font-bold transition-all flex items-center gap-1.5 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
-                  >
-                    <Phone size={14} />
-                    <span>Tramitar con Centralita B2G</span>
-                  </a>
-                </div>
+          {output.financialSummary.adjustedCeilingApplied && (
+            <div className="p-3 bg-amber-950/40 border border-amber-800/60 rounded-lg flex items-start gap-2.5 text-xs text-amber-300">
+              <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-amber-400" />
+              <div>
+                <span className="font-semibold block mb-0.5">Control Estricto Techo LCSP</span>
+                El importe introducido sobrepasaba los 15.000,00 €. Se ha ajustado automáticamente al 95% del límite legal (14.250,00 €) para permitir la adjudicación directa por Contrato Menor.
               </div>
-
-              {/* Visor tipo consola/documento legal */}
-              <div className="relative">
-                <pre className="w-full bg-black/80 border border-white/10 rounded-2xl p-6 md:p-8 text-[11px] font-mono text-white/90 overflow-x-auto whitespace-pre-wrap max-h-[500px] leading-relaxed select-all">
-                  {generatedDossier}
-                </pre>
-              </div>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+        </div>
+
+        <div className="lg:col-span-2 space-y-4 flex flex-col">
+          <div className="flex flex-wrap gap-1 border-b border-gray-800 pb-2">
+            {[
+              { id: 'DRAFT', label: 'Dossier Completo' },
+              { id: 'LEGAL', label: 'Art. 118 LCSP' },
+              { id: 'CLINICAL', label: 'Evidencia 40Hz' },
+              { id: 'SROI', label: 'Split & SROI 4.85x' },
+              { id: 'RIDER', label: 'Rider <75 dB' },
+              { id: 'SECRETARY', label: 'Intervención DIR3' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-[#121212] text-gray-400 hover:text-white hover:bg-[#1a1a1a]'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex-1 bg-[#0a0a0a] border border-[#1f1f1f] rounded-xl p-6 font-mono text-xs leading-relaxed text-gray-300 overflow-y-auto max-h-[600px] whitespace-pre-wrap selection:bg-blue-900 selection:text-white">
+            {activeTab === 'DRAFT' && output.sections.dossierCompletoMarkdown}
+            {activeTab === 'LEGAL' && output.sections.justificacionJuridicaLCSP}
+            {activeTab === 'CLINICAL' && output.sections.fundamentacionNeuroclinica}
+            {activeTab === 'SROI' && output.sections.desgloseSROI}
+            {activeTab === 'RIDER' && output.sections.prescripcionesTecnicas}
+            {activeTab === 'SECRETARY' && output.sections.fichaIntervencionMunicipal}
+          </div>
+
+          <div className="p-3 bg-[#0a0a0a] border border-[#1f1f1f] rounded-lg flex flex-col sm:flex-row justify-between items-center gap-2 text-[11px] text-gray-500 font-mono">
+            <div>EXPEDIENTE: <span className="text-gray-300">{output.expedienteId}</span></div>
+            <div>SHA-256: <span className="text-emerald-400">{output.sha256Hash.substring(0, 24)}...</span></div>
+          </div>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default VimumeB2GCompiler;

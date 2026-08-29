@@ -1,36 +1,88 @@
 {
+  "system": "EAR OS V2 Local Agent Registry",
+  "version": "4.0.0",
+  "updatedAt": "2026-08-30T00:00:00Z",
   "tools": [
     {
+      "id": "ingest_gsc_zip_batch",
       "name": "ingest_gsc_zip_batch.py",
       "path": "scripts/ingest_gsc_zip_batch.py",
       "purpose": "Ingesta por lotes de archivos ZIP de Google Search Console y cálculo de métricas de oportunidad.",
-      "inputs": "Archivos ZIP de Search Console en Downloads",
+      "inputs": ["Archivos ZIP de Search Console en Downloads"],
       "outputs": "src/data/telemetry/gsc-performance-data.json",
       "cli": "python scripts/ingest_gsc_zip_batch.py"
     },
     {
+      "id": "analyze_gsc_intelligence",
       "name": "analyze_gsc_intelligence.py",
       "path": "scripts/analyze_gsc_intelligence.py",
       "purpose": "Análisis ejecutivo y clusterización semántica de queries y páginas líderes de GSC.",
-      "inputs": "src/data/telemetry/gsc-performance-data.json",
+      "inputs": ["src/data/telemetry/gsc-performance-data.json"],
       "outputs": "Consola / Resumen ejecutivo",
       "cli": "python scripts/analyze_gsc_intelligence.py"
     },
     {
+      "id": "parse_takeout_gemini",
       "name": "parse_takeout_gemini.py",
       "path": "scripts/parse_takeout_gemini.py",
-      "purpose": "Ingestión forense ZTM de Google Takeout (Gemini chats). Extrae pepitas de oro (reglas de negocio, storyselling, desarrollo) e inyecta en ear-rag-database.json. Mueve crudos al EAR_ABSORBED_VAULT.",
-      "inputs": "docs/raw_takeout/ (archivos .json, .html o .zip de Google Takeout)",
+      "purpose": "Headless parsing de archivos masivos Takeout (.json, .html, .md) hacia ear-rag-database.json con vaulting automático.",
+      "inputs": ["docs/raw_takeout/"],
       "outputs": "src/data/ear-rag-database.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\Gemini_Takeout\\",
       "cli": "python scripts/parse_takeout_gemini.py"
     },
     {
+      "id": "ingest_mariachi_dominance_batch",
       "name": "ingest_mariachi_dominance_batch.py",
       "path": "scripts/ingest_mariachi_dominance_batch.py",
       "purpose": "Ingesta masiva ZTM de GSC zips, AlsoAsked CSVs y Catálogo Demetrio en H:\\ para dominancia de mariachis 24/7 y eventos.",
-      "inputs": "8 archivos de inteligencia en H:\\ (GSC zips, AlsoAsked CSVs, Demetrio PDF)",
+      "inputs": ["8 archivos de inteligencia en H:\\"],
       "outputs": "src/data/ear-rag-database.json + src/data/telemetry/gsc-performance-data.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MERCADO_Y_SEO_MARIACHIS\\",
       "cli": "python scripts/ingest_mariachi_dominance_batch.py"
+    },
+    {
+      "id": "full_pc_forensic_ear_sweeper",
+      "name": "full_pc_forensic_ear_sweeper.py",
+      "path": "scripts/full_pc_forensic_ear_sweeper.py",
+      "purpose": "Barrido forense ZTM de TODO el PC (todas las unidades). Detecta activos de inteligencia EAR/Edwin Agudelo/VIMUME, inyecta nodos <300 tokens en ear-rag-database.json y reubica crudos a EAR_ABSORBED_VAULT por categoría.",
+      "inputs": ["Sistema de archivos completo (todas las unidades) con lista negra estricta"],
+      "outputs": "src/data/ear-rag-database.json + scripts/.archived_manifest.json + scripts/.processed_hashes.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\{Categoria}\\",
+      "cli": "python scripts/full_pc_forensic_ear_sweeper.py"
+    },
+    {
+      "id": "semantic_distiller_and_quarantine",
+      "name": "semantic_distiller_and_quarantine.py",
+      "path": "scripts/semantic_distiller_and_quarantine.py",
+      "purpose": "Destilador cognitivo de 3 capas: fusión canónica en RAG, santuario de intangibles y bodega de cuarentena con TTL 365 días.",
+      "inputs": ["H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\"],
+      "outputs": "src/data/ear-rag-database.json + scripts/.quarantine_manifest.json + H:\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA_1_ANO\\",
+      "cli": "python scripts/semantic_distiller_and_quarantine.py"
+    },
+    {
+      "id": "b2g_tender_diagnostics",
+      "name": "b2g-tender-engine.ts",
+      "path": "src/lib/vimume/b2g-tender-engine.ts",
+      "purpose": "Suite de autodiagnóstico del motor B2G de Contratos Menores (Art. 118 LCSP).",
+      "inputs": ["B2GTenderInput"],
+      "outputs": "B2GTenderOutput",
+      "cli": "npx tsx -e \"import { runVimumeTenderDiagnostics } from './src/lib/vimume/b2g-tender-engine'; console.log(runVimumeTenderDiagnostics());\""
+    },
+    {
+      "id": "astra_diagnostics",
+      "name": "astra-conversation-engine.ts",
+      "path": "src/lib/astra/astra-conversation-engine.ts",
+      "purpose": "Suite de autodiagnóstico de la Centralita 24/7 Astra AI para desacople de objeciones y cierres Stripe 100 €.",
+      "inputs": ["AstraMessageInput"],
+      "outputs": "AstraMessageOutput",
+      "cli": "npx tsx -e \"import { runAstraDiagnostics } from './src/lib/astra/astra-conversation-engine'; console.log(JSON.stringify(runAstraDiagnostics(), null, 2));\""
+    },
+    {
+      "id": "geo_acoustic_diagnostics",
+      "name": "geo-acoustic-radar.ts",
+      "path": "src/lib/geo/geo-acoustic-radar.ts",
+      "purpose": "Master Geo-Acoustic Radar & Fleet Dispatcher (Reto 3): Rider acústico S-Class (12 W/pax, Bose F1/S1 Pro, límite VIMUME <75 dB SPL) + logística desde Hub Méntrida (1,50 €/km desde km 50, suplemento hotelero 120 €) con firma SHA-256.",
+      "inputs": ["VenueAcousticInput"],
+      "outputs": "GeoAcousticOutput",
+      "cli": "npx tsx -e \"import { runGeoAcousticDiagnostics } from './src/lib/geo/geo-acoustic-radar'; console.log(JSON.stringify(runGeoAcousticDiagnostics(), null, 2));\""
     }
   ]
 }

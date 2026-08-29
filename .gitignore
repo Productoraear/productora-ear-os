@@ -38,6 +38,9 @@ system-prompts-and-models-of-ai-tools-main/
 # Ignore root tools directory while explicitly keeping astra components tools
 /tools/
 /scripts/tools/
+__pycache__/
+*.pyc
+*.tmp*
 g s console/extracted_batch/
 
 !src/features/astra/components/tools/

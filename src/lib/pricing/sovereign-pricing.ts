@@ -6,6 +6,9 @@ export const SUPLEMENTO_TRIO = 250;
 export const SUPLEMENTO_QUINTETO = 400;
 export const DEPOSITO_STRIPE = 100;
 
+/** Split Soberano Inmutable: 80% Artista / 10% EAR OS / 10% VIMUME. */
+export const SPLIT_SOBERANO = { artist: 0.8, earOs: 0.1, vimume: 0.1 } as const;
+
 export type FormatType = 'solista' | 'trio' | 'quinteto';
 export type SoundRiderType = 'standard' | 'bose_f1_elite';
 
@@ -41,8 +44,8 @@ export function calculateSovereignQuote(input: SovereignQuoteInput): SovereignQu
   const depositRequired = DEPOSITO_STRIPE;
   const remainingBalance = totalBudget - depositRequired;
 
-  const artist80 = Math.round(totalBudget * 0.8);
-  const earOs10 = Math.round(totalBudget * 0.1);
+  const artist80 = Math.round(totalBudget * SPLIT_SOBERANO.artist);
+  const earOs10 = Math.round(totalBudget * SPLIT_SOBERANO.earOs);
   const vimume10 = totalBudget - artist80 - earOs10;
 
   const payloadToHash = `${input.format}|${input.distanceKm}|${totalBudget}|${DEPOSITO_STRIPE}`;
