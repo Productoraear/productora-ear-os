@@ -1,16 +1,12 @@
 {
   "meta": {
-    "lastIngestedAt": "2026-08-26T14:19:47.138603",
-    "sourceZipsCount": 4,
-    "extractedFilesCount": 28,
-    "dateRange": "2026-08-24 a 2026-08-26",
-    "searchType": "WEB",
-    "sourceDirectory": "Google Search Console"
+    "lastIngestedAt": "2026-08-29T12:24:16.982113",
+    "sourceDirectory": "H:\\EAR_OS_V2\\EAR_OS_V2\\g s console\\extracted_batch"
   },
   "totals": {
-    "totalClicks": 3,
-    "totalImpressions": 8341,
-    "averageCtr": 0.04,
+    "totalClicks": 1,
+    "totalImpressions": 4584,
+    "averageCtr": 0.02,
     "totalUniqueQueries": 980,
     "totalUniquePages": 729
   },
@@ -18,491 +14,811 @@
     {
       "query": "vestidos de novia houghton",
       "clicks": 0,
-      "impressions": 70,
+      "impressions": 31,
       "ctr": 0.0,
-      "position": 6.6,
-      "opportunityScore": 92.23
+      "position": 6.7,
+      "opportunityScore": 40.36
     },
     {
       "query": "torre villa tea",
       "clicks": 0,
-      "impressions": 56,
+      "impressions": 27,
       "ctr": 0.0,
-      "position": 10.0,
-      "opportunityScore": 50.94
+      "position": 10.3,
+      "opportunityScore": 23.89
     },
     {
       "query": "listas de boda cádiz",
       "clicks": 0,
-      "impressions": 17,
+      "impressions": 8,
       "ctr": 0.0,
-      "position": 5.5,
-      "opportunityScore": 26.15
-    },
-    {
-      "query": "listas de boda asturias",
-      "clicks": 0,
-      "impressions": 15,
-      "ctr": 0.0,
-      "position": 5.5,
-      "opportunityScore": 22.93
-    },
-    {
-      "query": "bamboo rent",
-      "clicks": 0,
-      "impressions": 15,
-      "ctr": 0.0,
-      "position": 7.2,
-      "opportunityScore": 18.35
-    },
-    {
-      "query": "finca alubian",
-      "clicks": 0,
-      "impressions": 16,
-      "ctr": 0.0,
-      "position": 9.0,
-      "opportunityScore": 16.07
-    },
-    {
-      "query": "la rueca antiguedades",
-      "clicks": 0,
-      "impressions": 12,
-      "ctr": 0.0,
-      "position": 6.8,
-      "opportunityScore": 15.48
+      "position": 6.0,
+      "opportunityScore": 11.43
     },
     {
       "query": "opiniones de torre villa tea",
       "clicks": 0,
-      "impressions": 15,
+      "impressions": 9,
       "ctr": 0.0,
-      "position": 8.8,
-      "opportunityScore": 15.38
-    },
-    {
-      "query": "cortijo molino de pavia",
-      "clicks": 0,
-      "impressions": 14,
-      "ctr": 0.0,
-      "position": 8.2,
-      "opportunityScore": 15.26
-    },
-    {
-      "query": "fotomadriz",
-      "clicks": 0,
-      "impressions": 18,
-      "ctr": 0.0,
-      "position": 10.9,
-      "opportunityScore": 15.15
+      "position": 8.0,
+      "opportunityScore": 10.0
     },
     {
       "query": "alquiler pantalla led",
       "clicks": 0,
-      "impressions": 119,
+      "impressions": 74,
       "ctr": 0.0,
-      "position": 78.9,
-      "opportunityScore": 14.89
+      "position": 77.9,
+      "opportunityScore": 9.38
+    },
+    {
+      "query": "listas de boda asturias",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 5.5,
+      "opportunityScore": 9.23
     },
     {
       "query": "finca los alparaisos",
       "clicks": 0,
-      "impressions": 13,
+      "impressions": 9,
       "ctr": 0.0,
-      "position": 7.7,
-      "opportunityScore": 14.87
+      "position": 8.9,
+      "opportunityScore": 9.1
     },
     {
-      "query": "finca navafria",
+      "query": "bamboo rent",
       "clicks": 0,
-      "impressions": 17,
+      "impressions": 7,
       "ctr": 0.0,
-      "position": 12.6,
-      "opportunityScore": 12.52
+      "position": 7.3,
+      "opportunityScore": 8.44
     },
     {
       "query": "alquiler pantallas led",
       "clicks": 0,
-      "impressions": 90,
+      "impressions": 60,
       "ctr": 0.0,
-      "position": 74.5,
-      "opportunityScore": 11.93
+      "position": 72.7,
+      "opportunityScore": 8.15
     },
     {
-      "query": "vestidos de novia divina sposa",
+      "query": "la rueca antiguedades",
       "clicks": 0,
-      "impressions": 28,
+      "impressions": 6,
       "ctr": 0.0,
-      "position": 22.8,
-      "opportunityScore": 11.78
+      "position": 7.3,
+      "opportunityScore": 7.2
+    },
+    {
+      "query": "finca alubian",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 9.0,
+      "opportunityScore": 7.0
     },
     {
       "query": "alquiler pantallas led mallorca",
       "clicks": 0,
-      "impressions": 44,
+      "impressions": 27,
       "ctr": 0.0,
-      "position": 38.3,
-      "opportunityScore": 11.2
+      "position": 38.7,
+      "opportunityScore": 6.79
     },
     {
-      "query": "jota fierro",
-      "clicks": 0,
-      "impressions": 12,
-      "ctr": 0.0,
-      "position": 10.0,
-      "opportunityScore": 10.91
-    },
-    {
-      "query": "el vivar de la granja",
-      "clicks": 0,
-      "impressions": 10,
-      "ctr": 0.0,
-      "position": 8.2,
-      "opportunityScore": 10.91
-    },
-    {
-      "query": "atelier de bodas granada",
-      "clicks": 0,
-      "impressions": 15,
-      "ctr": 0.0,
-      "position": 13.0,
-      "opportunityScore": 10.75
-    },
-    {
-      "query": "finca fontaiña",
+      "query": "fotomadriz",
       "clicks": 0,
       "impressions": 8,
       "ctr": 0.0,
-      "position": 6.5,
-      "opportunityScore": 10.67
-    },
-    {
-      "query": "finca los chicos",
-      "clicks": 0,
-      "impressions": 12,
-      "ctr": 0.0,
-      "position": 10.3,
-      "opportunityScore": 10.63
+      "position": 10.9,
+      "opportunityScore": 6.73
     },
     {
       "query": "alquiler de pantallas gigantes para eventos",
       "clicks": 0,
-      "impressions": 53,
+      "impressions": 33,
       "ctr": 0.0,
-      "position": 50.3,
-      "opportunityScore": 10.34
-    },
-    {
-      "query": "hacienda by el campillo",
-      "clicks": 0,
-      "impressions": 12,
-      "ctr": 0.0,
-      "position": 10.6,
-      "opportunityScore": 10.32
-    },
-    {
-      "query": "alqueria balada",
-      "clicks": 0,
-      "impressions": 12,
-      "ctr": 0.0,
-      "position": 11.2,
-      "opportunityScore": 9.8
-    },
-    {
-      "query": "santos complejo hostelero",
-      "clicks": 0,
-      "impressions": 12,
-      "ctr": 0.0,
-      "position": 12.0,
-      "opportunityScore": 9.23
+      "position": 49.8,
+      "opportunityScore": 6.5
     },
     {
       "query": "alquiler de pantallas led para eventos",
       "clicks": 0,
-      "impressions": 59,
+      "impressions": 37,
       "ctr": 0.0,
-      "position": 63.8,
-      "opportunityScore": 9.1
+      "position": 64.0,
+      "opportunityScore": 5.69
+    },
+    {
+      "query": "cortijo molino de pavia",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 8.2,
+      "opportunityScore": 5.43
     },
     {
       "query": "alquiler pantalla gigante",
       "clicks": 0,
-      "impressions": 53,
+      "impressions": 32,
       "ctr": 0.0,
-      "position": 57.8,
-      "opportunityScore": 9.02
+      "position": 58.0,
+      "opportunityScore": 5.42
     },
     {
-      "query": "pazo de lama",
+      "query": "santos complejo hostelero",
       "clicks": 0,
-      "impressions": 9,
+      "impressions": 7,
       "ctr": 0.0,
-      "position": 9.0,
-      "opportunityScore": 9.0
+      "position": 12.0,
+      "opportunityScore": 5.38
     },
     {
-      "query": "fixdate - invitaciones digitales premium",
+      "query": "alquiler de pantallas led",
       "clicks": 0,
-      "impressions": 9,
+      "impressions": 41,
       "ctr": 0.0,
-      "position": 9.7,
-      "opportunityScore": 8.39
+      "position": 75.3,
+      "opportunityScore": 5.37
     },
     {
       "query": "alquiler pantallas led eventos",
       "clicks": 0,
-      "impressions": 56,
+      "impressions": 37,
+      "ctr": 0.0,
+      "position": 68.8,
+      "opportunityScore": 5.3
+    },
+    {
+      "query": "finca navafria",
+      "clicks": 0,
+      "impressions": 7,
+      "ctr": 0.0,
+      "position": 12.6,
+      "opportunityScore": 5.16
+    },
+    {
+      "query": "finca los chicos",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 10.7,
+      "opportunityScore": 5.14
+    },
+    {
+      "query": "vestidos de novia divina sposa",
+      "clicks": 0,
+      "impressions": 12,
+      "ctr": 0.0,
+      "position": 23.0,
+      "opportunityScore": 5.0
+    },
+    {
+      "query": "fixdate - invitaciones digitales premium",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 9.2,
+      "opportunityScore": 4.9
+    },
+    {
+      "query": "alquiler pantalla led madrid",
+      "clicks": 0,
+      "impressions": 30,
+      "ctr": 0.0,
+      "position": 64.9,
+      "opportunityScore": 4.55
+    },
+    {
+      "query": "jota fierro",
+      "clicks": 0,
+      "impressions": 5,
+      "ctr": 0.0,
+      "position": 10.0,
+      "opportunityScore": 4.55
+    },
+    {
+      "query": "pantallas gigantes para eventos",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 54.5,
+      "opportunityScore": 4.51
+    },
+    {
+      "query": "pantallas gigantes alquiler",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 62.6,
+      "opportunityScore": 4.4
+    },
+    {
+      "query": "catering para bodas en rivas",
+      "clicks": 0,
+      "impressions": 12,
+      "ctr": 0.0,
+      "position": 26.3,
+      "opportunityScore": 4.39
+    },
+    {
+      "query": "alquiler pantallas led madrid",
+      "clicks": 0,
+      "impressions": 29,
+      "ctr": 0.0,
+      "position": 65.9,
+      "opportunityScore": 4.34
+    },
+    {
+      "query": "alquiler de pantallas gigantes",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 63.6,
+      "opportunityScore": 4.34
+    },
+    {
+      "query": "atelier de bodas granada",
+      "clicks": 0,
+      "impressions": 6,
+      "ctr": 0.0,
+      "position": 12.8,
+      "opportunityScore": 4.34
+    },
+    {
+      "query": "pantalla led gigante madrid",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 63.6,
+      "opportunityScore": 4.33
+    },
+    {
+      "query": "catering para bautizos en rivas",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 36.1,
+      "opportunityScore": 4.32
+    },
+    {
+      "query": "alquiler pantallas gigantes precios",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 64.8,
+      "opportunityScore": 4.25
+    },
+    {
+      "query": "alquiler de pantalla led para eventos",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 64.6,
+      "opportunityScore": 4.12
+    },
+    {
+      "query": "mariachis murcia",
+      "clicks": 0,
+      "impressions": 13,
+      "ctr": 0.0,
+      "position": 30.7,
+      "opportunityScore": 4.1
+    },
+    {
+      "query": "alquiler pantallas led gigantes",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 65.8,
+      "opportunityScore": 4.04
+    },
+    {
+      "query": "precio alquiler pantalla led gigante",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 63.4,
+      "opportunityScore": 4.04
+    },
+    {
+      "query": "alquiler pantallas eventos",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 63.6,
+      "opportunityScore": 4.02
+    },
+    {
+      "query": "alquiler pantallas gigantes",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 67.4,
+      "opportunityScore": 3.95
+    },
+    {
+      "query": "alquiler pantallas gigantes madrid",
+      "clicks": 0,
+      "impressions": 24,
+      "ctr": 0.0,
+      "position": 59.8,
+      "opportunityScore": 3.95
+    },
+    {
+      "query": "alquiler de pantalla gigante",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 65.0,
+      "opportunityScore": 3.94
+    },
+    {
+      "query": "alquiler de pantallas led para eventos madrid",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 65.7,
+      "opportunityScore": 3.9
+    },
+    {
+      "query": "pantalla gigantes",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 66.1,
+      "opportunityScore": 3.88
+    },
+    {
+      "query": "alquiler de pantallas led precios",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 69.2,
+      "opportunityScore": 3.85
+    },
+    {
+      "query": "alquiler de pantallas led gigantes",
+      "clicks": 0,
+      "impressions": 26,
       "ctr": 0.0,
       "position": 66.5,
-      "opportunityScore": 8.29
+      "opportunityScore": 3.85
+    },
+    {
+      "query": "alquiler pantalla gigante precio",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 63.9,
+      "opportunityScore": 3.85
+    },
+    {
+      "query": "alquiler pantalla led gigante",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 67.5,
+      "opportunityScore": 3.79
+    },
+    {
+      "query": "pantallas gigantes para conciertos",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 70.9,
+      "opportunityScore": 3.75
     }
   ],
   "topPerformingQueries": [
     {
       "query": "alquiler pantalla led",
       "clicks": 0,
-      "impressions": 119,
+      "impressions": 74,
       "ctr": 0.0,
-      "position": 78.9,
-      "opportunityScore": 14.89
+      "position": 77.9,
+      "opportunityScore": 9.38
     },
     {
       "query": "alquiler pantallas led",
       "clicks": 0,
-      "impressions": 90,
+      "impressions": 60,
       "ctr": 0.0,
-      "position": 74.5,
-      "opportunityScore": 11.93
-    },
-    {
-      "query": "vestidos de novia houghton",
-      "clicks": 0,
-      "impressions": 70,
-      "ctr": 0.0,
-      "position": 6.6,
-      "opportunityScore": 92.23
-    },
-    {
-      "query": "wedding planner barcelona",
-      "clicks": 0,
-      "impressions": 69,
-      "ctr": 0.0,
-      "position": 87.6,
-      "opportunityScore": 7.79
+      "position": 72.7,
+      "opportunityScore": 8.15
     },
     {
       "query": "alquiler de pantallas led",
       "clicks": 0,
-      "impressions": 63,
+      "impressions": 41,
       "ctr": 0.0,
-      "position": 75.1,
-      "opportunityScore": 8.28
+      "position": 75.3,
+      "opportunityScore": 5.37
     },
     {
       "query": "alquiler de pantallas led para eventos",
       "clicks": 0,
-      "impressions": 59,
+      "impressions": 37,
       "ctr": 0.0,
-      "position": 63.8,
-      "opportunityScore": 9.1
+      "position": 64.0,
+      "opportunityScore": 5.69
     },
     {
       "query": "alquiler pantallas led eventos",
       "clicks": 0,
-      "impressions": 56,
+      "impressions": 37,
       "ctr": 0.0,
-      "position": 66.5,
-      "opportunityScore": 8.29
-    },
-    {
-      "query": "torre villa tea",
-      "clicks": 0,
-      "impressions": 56,
-      "ctr": 0.0,
-      "position": 10.0,
-      "opportunityScore": 50.94
+      "position": 68.8,
+      "opportunityScore": 5.3
     },
     {
       "query": "alquiler de pantallas gigantes para eventos",
       "clicks": 0,
-      "impressions": 53,
+      "impressions": 33,
       "ctr": 0.0,
-      "position": 50.3,
-      "opportunityScore": 10.34
+      "position": 49.8,
+      "opportunityScore": 6.5
     },
     {
       "query": "alquiler pantalla gigante",
       "clicks": 0,
-      "impressions": 53,
+      "impressions": 32,
       "ctr": 0.0,
-      "position": 57.8,
-      "opportunityScore": 9.02
+      "position": 58.0,
+      "opportunityScore": 5.42
     },
     {
-      "query": "alquiler pantallas led madrid",
+      "query": "vestidos de novia houghton",
       "clicks": 0,
-      "impressions": 50,
+      "impressions": 31,
       "ctr": 0.0,
-      "position": 66.6,
-      "opportunityScore": 7.39
+      "position": 6.7,
+      "opportunityScore": 40.36
     },
     {
       "query": "alquiler pantalla led madrid",
       "clicks": 0,
-      "impressions": 48,
+      "impressions": 30,
       "ctr": 0.0,
-      "position": 66.2,
-      "opportunityScore": 7.14
+      "position": 64.9,
+      "opportunityScore": 4.55
     },
     {
-      "query": "wedding planner sevilla",
+      "query": "wedding planner barcelona",
       "clicks": 0,
-      "impressions": 46,
+      "impressions": 30,
       "ctr": 0.0,
-      "position": 72.2,
-      "opportunityScore": 6.28
+      "position": 87.8,
+      "opportunityScore": 3.38
     },
     {
-      "query": "alquiler pantallas gigantes precios",
+      "query": "alquiler pantallas led madrid",
       "clicks": 0,
-      "impressions": 45,
+      "impressions": 29,
       "ctr": 0.0,
-      "position": 65.4,
-      "opportunityScore": 6.78
-    },
-    {
-      "query": "alquiler pantallas led mallorca",
-      "clicks": 0,
-      "impressions": 44,
-      "ctr": 0.0,
-      "position": 38.3,
-      "opportunityScore": 11.2
-    },
-    {
-      "query": "wedding planner girona",
-      "clicks": 0,
-      "impressions": 44,
-      "ctr": 0.0,
-      "position": 58.7,
-      "opportunityScore": 7.37
-    },
-    {
-      "query": "alquiler de pantallas gigantes",
-      "clicks": 0,
-      "impressions": 42,
-      "ctr": 0.0,
-      "position": 62.5,
-      "opportunityScore": 6.62
-    },
-    {
-      "query": "pantalla led gigante madrid",
-      "clicks": 0,
-      "impressions": 42,
-      "ctr": 0.0,
-      "position": 59.7,
-      "opportunityScore": 6.92
-    },
-    {
-      "query": "pantallas led alquiler",
-      "clicks": 0,
-      "impressions": 42,
-      "ctr": 0.0,
-      "position": 73.9,
-      "opportunityScore": 5.61
-    },
-    {
-      "query": "alquiler pantallas leds",
-      "clicks": 0,
-      "impressions": 42,
-      "ctr": 0.0,
-      "position": 75.8,
-      "opportunityScore": 5.47
-    },
-    {
-      "query": "alquiler de pantallas led precios",
-      "clicks": 0,
-      "impressions": 41,
-      "ctr": 0.0,
-      "position": 69.8,
-      "opportunityScore": 5.79
-    },
-    {
-      "query": "pantalla gigantes",
-      "clicks": 0,
-      "impressions": 41,
-      "ctr": 0.0,
-      "position": 65.8,
-      "opportunityScore": 6.14
-    },
-    {
-      "query": "alquiler pantalla led gigante",
-      "clicks": 0,
-      "impressions": 41,
-      "ctr": 0.0,
-      "position": 66.5,
-      "opportunityScore": 6.08
+      "position": 65.9,
+      "opportunityScore": 4.34
     },
     {
       "query": "pantallas gigantes alquiler",
       "clicks": 0,
-      "impressions": 40,
+      "impressions": 28,
       "ctr": 0.0,
-      "position": 62.4,
-      "opportunityScore": 6.31
+      "position": 62.6,
+      "opportunityScore": 4.4
+    },
+    {
+      "query": "alquiler de pantallas gigantes",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 63.6,
+      "opportunityScore": 4.34
+    },
+    {
+      "query": "pantalla led gigante madrid",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 63.6,
+      "opportunityScore": 4.33
+    },
+    {
+      "query": "alquiler pantallas gigantes precios",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 64.8,
+      "opportunityScore": 4.25
+    },
+    {
+      "query": "pantallas led alquiler",
+      "clicks": 0,
+      "impressions": 28,
+      "ctr": 0.0,
+      "position": 73.9,
+      "opportunityScore": 3.74
+    },
+    {
+      "query": "torre villa tea",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 10.3,
+      "opportunityScore": 23.89
+    },
+    {
+      "query": "alquiler pantallas led mallorca",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 38.7,
+      "opportunityScore": 6.79
     },
     {
       "query": "alquiler de pantalla led para eventos",
       "clicks": 0,
-      "impressions": 40,
+      "impressions": 27,
       "ctr": 0.0,
-      "position": 63.1,
-      "opportunityScore": 6.24
+      "position": 64.6,
+      "opportunityScore": 4.12
     },
     {
       "query": "alquiler pantallas led gigantes",
       "clicks": 0,
-      "impressions": 40,
+      "impressions": 27,
       "ctr": 0.0,
-      "position": 63.8,
-      "opportunityScore": 6.18
-    },
-    {
-      "query": "alquiler de pantallas led gigantes",
-      "clicks": 0,
-      "impressions": 40,
-      "ctr": 0.0,
-      "position": 64.6,
-      "opportunityScore": 6.1
-    },
-    {
-      "query": "alquiler pantalla gigante precio",
-      "clicks": 0,
-      "impressions": 40,
-      "ctr": 0.0,
-      "position": 63.6,
-      "opportunityScore": 6.19
-    },
-    {
-      "query": "wedding planner en barcelona",
-      "clicks": 0,
-      "impressions": 40,
-      "ctr": 0.0,
-      "position": 85.4,
-      "opportunityScore": 4.63
+      "position": 65.8,
+      "opportunityScore": 4.04
     },
     {
       "query": "alquiler pantallas gigantes",
       "clicks": 0,
-      "impressions": 39,
+      "impressions": 27,
       "ctr": 0.0,
-      "position": 63.7,
-      "opportunityScore": 6.03
+      "position": 67.4,
+      "opportunityScore": 3.95
+    },
+    {
+      "query": "alquiler de pantallas led precios",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 69.2,
+      "opportunityScore": 3.85
+    },
+    {
+      "query": "pantallas gigantes para conciertos",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 70.9,
+      "opportunityScore": 3.75
+    },
+    {
+      "query": "alquiler pantallas leds",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 74.5,
+      "opportunityScore": 3.58
+    },
+    {
+      "query": "pantallas led en madrid",
+      "clicks": 0,
+      "impressions": 27,
+      "ctr": 0.0,
+      "position": 78.1,
+      "opportunityScore": 3.41
+    },
+    {
+      "query": "precio alquiler pantalla led gigante",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 63.4,
+      "opportunityScore": 4.04
+    },
+    {
+      "query": "alquiler pantallas eventos",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 63.6,
+      "opportunityScore": 4.02
+    },
+    {
+      "query": "alquiler de pantalla gigante",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 65.0,
+      "opportunityScore": 3.94
+    },
+    {
+      "query": "alquiler de pantallas led para eventos madrid",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 65.7,
+      "opportunityScore": 3.9
+    },
+    {
+      "query": "pantalla gigantes",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 66.1,
+      "opportunityScore": 3.88
+    },
+    {
+      "query": "alquiler de pantallas led gigantes",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 66.5,
+      "opportunityScore": 3.85
+    },
+    {
+      "query": "alquiler pantalla led gigante",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 67.5,
+      "opportunityScore": 3.79
+    },
+    {
+      "query": "alquiler de pantallas en madrid",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 68.3,
+      "opportunityScore": 3.75
+    },
+    {
+      "query": "pantalla led alquiler",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 75.9,
+      "opportunityScore": 3.38
+    },
+    {
+      "query": "alquiler de pantallas para eventos precio",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 76.3,
+      "opportunityScore": 3.36
+    },
+    {
+      "query": "pantallas gigantes para eventos",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 54.5,
+      "opportunityScore": 4.51
+    },
+    {
+      "query": "alquiler pantalla gigante precio",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 63.9,
+      "opportunityScore": 3.85
+    },
+    {
+      "query": "alquiler pantalla gigante led",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 67.8,
+      "opportunityScore": 3.63
+    },
+    {
+      "query": "alquiler pantallas",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 71.4,
+      "opportunityScore": 3.45
+    },
+    {
+      "query": "alquiler pantallas led precios",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 73.5,
+      "opportunityScore": 3.35
+    },
+    {
+      "query": "pantallas led madrid",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 83.6,
+      "opportunityScore": 2.96
+    },
+    {
+      "query": "alquiler pantallas gigantes madrid",
+      "clicks": 0,
+      "impressions": 24,
+      "ctr": 0.0,
+      "position": 59.8,
+      "opportunityScore": 3.95
+    },
+    {
+      "query": "alquiler pantalla led exterior",
+      "clicks": 0,
+      "impressions": 24,
+      "ctr": 0.0,
+      "position": 70.8,
+      "opportunityScore": 3.34
+    },
+    {
+      "query": "alquiler pantallas led para eventos precios",
+      "clicks": 0,
+      "impressions": 24,
+      "ctr": 0.0,
+      "position": 72.3,
+      "opportunityScore": 3.27
+    },
+    {
+      "query": "alquiler equipos de sonido galicia",
+      "clicks": 0,
+      "impressions": 23,
+      "ctr": 0.0,
+      "position": 64.8,
+      "opportunityScore": 3.5
+    },
+    {
+      "query": "alquiler pantallas de led",
+      "clicks": 0,
+      "impressions": 23,
+      "ctr": 0.0,
+      "position": 72.9,
+      "opportunityScore": 3.11
+    },
+    {
+      "query": "alquiler de pantallas leds",
+      "clicks": 0,
+      "impressions": 23,
+      "ctr": 0.0,
+      "position": 76.7,
+      "opportunityScore": 2.96
+    },
+    {
+      "query": "mejor floristería en getafe",
+      "clicks": 0,
+      "impressions": 22,
+      "ctr": 0.0,
+      "position": 65.9,
+      "opportunityScore": 3.29
+    },
+    {
+      "query": "alquiler de pantallas",
+      "clicks": 0,
+      "impressions": 22,
+      "ctr": 0.0,
+      "position": 66.5,
+      "opportunityScore": 3.26
+    },
+    {
+      "query": "alquiler pantalla 80 pulgadas",
+      "clicks": 0,
+      "impressions": 22,
+      "ctr": 0.0,
+      "position": 72.6,
+      "opportunityScore": 2.99
     }
   ],
   "topPages": [
     {
       "page": "https://www.productoraear.com/arsenal/pantalla-led/madrid",
       "clicks": 0,
-      "impressions": 2372,
+      "impressions": 1423,
       "ctr": 0.0,
       "position": 69.4
     },
@@ -514,34 +830,6 @@
       "position": 66.1
     },
     {
-      "page": "https://www.productoraear.com/bodas/sevilla/wedding-planners",
-      "clicks": 0,
-      "impressions": 197,
-      "ctr": 0.0,
-      "position": 73.3
-    },
-    {
-      "page": "https://www.productoraear.com/bodas/madrid/wedding-planners",
-      "clicks": 0,
-      "impressions": 152,
-      "ctr": 0.0,
-      "position": 84.0
-    },
-    {
-      "page": "https://www.productoraear.com/bodas/barcelona/wedding-planners",
-      "clicks": 0,
-      "impressions": 145,
-      "ctr": 0.0,
-      "position": 85.9
-    },
-    {
-      "page": "https://www.productoraear.com/bodas/madrid/dj-eventos",
-      "clicks": 0,
-      "impressions": 140,
-      "ctr": 0.0,
-      "position": 84.1
-    },
-    {
       "page": "https://www.productoraear.com/weddings/catering-boda-premium-rivas-vaciamadrid",
       "clicks": 0,
       "impressions": 139,
@@ -549,189 +837,357 @@
       "position": 32.6
     },
     {
-      "page": "https://www.productoraear.com/bodas/barcelona/dj-eventos",
+      "page": "https://www.productoraear.com/bodas/sevilla/wedding-planners",
       "clicks": 0,
-      "impressions": 122,
+      "impressions": 82,
       "ctr": 0.0,
-      "position": 84.4
+      "position": 73.5
     },
     {
       "page": "https://www.productoraear.com/arsenal/pantalla-led/palma",
       "clicks": 0,
-      "impressions": 117,
+      "impressions": 81,
       "ctr": 0.0,
-      "position": 57.5
+      "position": 61.5
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/barcelona/wedding-planners",
+      "clicks": 0,
+      "impressions": 66,
+      "ctr": 0.0,
+      "position": 85.3
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/madrid/wedding-planners",
+      "clicks": 0,
+      "impressions": 65,
+      "ctr": 0.0,
+      "position": 84.2
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/madrid/dj-eventos",
+      "clicks": 0,
+      "impressions": 60,
+      "ctr": 0.0,
+      "position": 83.8
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/barcelona/dj-eventos",
+      "clicks": 0,
+      "impressions": 58,
+      "ctr": 0.0,
+      "position": 83.5
     },
     {
       "page": "https://www.productoraear.com/bodas/barcelona/catering-gourmet",
       "clicks": 0,
-      "impressions": 114,
+      "impressions": 53,
       "ctr": 0.0,
-      "position": 65.3
+      "position": 64.4
     },
     {
-      "page": "https://www.productoraear.com/proveedores/prov-3797",
+      "page": "https://www.productoraear.com/eventos/bodas",
       "clicks": 0,
-      "impressions": 93,
+      "impressions": 47,
       "ctr": 0.0,
-      "position": 69.4
+      "position": 93.3
+    },
+    {
+      "page": "https://www.productoraear.com/servicios/wedding-planners/alcala",
+      "clicks": 0,
+      "impressions": 41,
+      "ctr": 0.0,
+      "position": 54.7
     },
     {
       "page": "https://www.productoraear.com/proveedores/prov-4875",
       "clicks": 0,
-      "impressions": 81,
+      "impressions": 40,
       "ctr": 0.0,
       "position": 9.8
     },
     {
       "page": "https://www.productoraear.com/servicios/wedding-planners/pontevedra",
       "clicks": 0,
-      "impressions": 71,
+      "impressions": 40,
       "ctr": 0.0,
-      "position": 59.1
+      "position": 63.3
     },
     {
-      "page": "https://www.productoraear.com/proveedores/prov-1383",
+      "page": "https://www.productoraear.com/proveedores/prov-3797",
       "clicks": 0,
-      "impressions": 71,
+      "impressions": 40,
       "ctr": 0.0,
-      "position": 43.8
-    },
-    {
-      "page": "https://www.productoraear.com/corporativo/sonorizacion-eventos-barcelona-valles",
-      "clicks": 0,
-      "impressions": 71,
-      "ctr": 0.0,
-      "position": 66.1
-    },
-    {
-      "page": "https://www.productoraear.com/proveedores/prov-3446",
-      "clicks": 0,
-      "impressions": 70,
-      "ctr": 0.0,
-      "position": 6.6
-    },
-    {
-      "page": "https://www.productoraear.com/eventos/bodas",
-      "clicks": 0,
-      "impressions": 63,
-      "ctr": 0.0,
-      "position": 95.2
-    },
-    {
-      "page": "https://www.productoraear.com/proveedores/prov-545",
-      "clicks": 0,
-      "impressions": 62,
-      "ctr": 0.0,
-      "position": 47.4
-    },
-    {
-      "page": "https://www.productoraear.com/bodas/sevilla/dj-eventos",
-      "clicks": 0,
-      "impressions": 62,
-      "ctr": 0.0,
-      "position": 78.8
-    },
-    {
-      "page": "https://www.productoraear.com/proveedores/prov-3227",
-      "clicks": 0,
-      "impressions": 62,
-      "ctr": 0.0,
-      "position": 68.3
-    },
-    {
-      "page": "https://www.productoraear.com/proveedores/prov-3109",
-      "clicks": 0,
-      "impressions": 60,
-      "ctr": 0.0,
-      "position": 71.7
+      "position": 68.7
     },
     {
       "page": "https://www.productoraear.com/coruna",
       "clicks": 0,
-      "impressions": 58,
+      "impressions": 35,
       "ctr": 0.0,
-      "position": 71.4
+      "position": 68.2
     },
     {
-      "page": "https://www.productoraear.com/proveedores/prov-2778",
+      "page": "https://www.productoraear.com/proveedores/prov-3446",
       "clicks": 0,
-      "impressions": 53,
+      "impressions": 31,
       "ctr": 0.0,
-      "position": 42.9
+      "position": 6.7
     },
     {
-      "page": "https://www.productoraear.com/bodas/jaen/catering-gourmet",
+      "page": "https://www.productoraear.com/proveedores/prov-1383",
       "clicks": 0,
-      "impressions": 49,
+      "impressions": 30,
       "ctr": 0.0,
-      "position": 55.8
+      "position": 44.0
     },
     {
-      "page": "https://www.productoraear.com/bodas/zaragoza/wedding-planners",
+      "page": "https://www.productoraear.com/corporativo/sonorizacion-eventos-barcelona-valles",
       "clicks": 0,
-      "impressions": 49,
+      "impressions": 30,
       "ctr": 0.0,
-      "position": 71.0
+      "position": 64.8
     },
     {
-      "page": "https://www.productoraear.com/servicios/wedding-planners/alcala",
+      "page": "https://www.productoraear.com/proveedores/prov-3109",
       "clicks": 0,
-      "impressions": 48,
+      "impressions": 28,
       "ctr": 0.0,
-      "position": 38.8
+      "position": 71.1
     },
     {
-      "page": "https://www.productoraear.com/bodas/malaga/dj-eventos",
+      "page": "https://www.productoraear.com/proveedores/prov-545",
       "clicks": 0,
-      "impressions": 48,
+      "impressions": 26,
       "ctr": 0.0,
-      "position": 66.3
+      "position": 48.6
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/sevilla/dj-eventos",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 78.9
+    },
+    {
+      "page": "https://www.productoraear.com/barcelona/sonorizacion-eventos",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 24.7
     },
     {
       "page": "https://www.productoraear.com/servicios/mariachis/cumpleanos-esposa/murcia",
       "clicks": 0,
-      "impressions": 45,
+      "impressions": 25,
       "ctr": 0.0,
-      "position": 44.9
+      "position": 43.2
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3227",
+      "clicks": 0,
+      "impressions": 25,
+      "ctr": 0.0,
+      "position": 68.6
+    },
+    {
+      "page": "https://www.productoraear.com/servicios/produccion-audiovisual/reus",
+      "clicks": 0,
+      "impressions": 24,
+      "ctr": 0.0,
+      "position": 66.8
+    },
+    {
+      "page": "https://www.productoraear.com/servicios/sonorizacion-eventos/barcelona",
+      "clicks": 0,
+      "impressions": 23,
+      "ctr": 0.0,
+      "position": 64.0
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/getafe-11",
+      "clicks": 0,
+      "impressions": 23,
+      "ctr": 0.0,
+      "position": 67.1
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/malaga/dj-eventos",
+      "clicks": 0,
+      "impressions": 22,
+      "ctr": 0.0,
+      "position": 66.0
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/jaen/catering-gourmet",
+      "clicks": 0,
+      "impressions": 21,
+      "ctr": 0.0,
+      "position": 55.6
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/zaragoza/wedding-planners",
+      "clicks": 0,
+      "impressions": 21,
+      "ctr": 0.0,
+      "position": 71.7
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-2778",
+      "clicks": 0,
+      "impressions": 20,
+      "ctr": 0.0,
+      "position": 43.5
     },
     {
       "page": "https://www.productoraear.com/proveedores/prov-1759",
       "clicks": 0,
-      "impressions": 45,
+      "impressions": 20,
       "ctr": 0.0,
-      "position": 45.1
+      "position": 45.9
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3040",
+      "clicks": 0,
+      "impressions": 19,
+      "ctr": 0.0,
+      "position": 58.5
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/valladolid/catering-gourmet",
+      "clicks": 0,
+      "impressions": 19,
+      "ctr": 0.0,
+      "position": 59.2
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-453",
+      "clicks": 0,
+      "impressions": 19,
+      "ctr": 0.0,
+      "position": 77.0
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/coruna/decoracion-espacios",
+      "clicks": 0,
+      "impressions": 18,
+      "ctr": 0.0,
+      "position": 46.2
+    },
+    {
+      "page": "https://www.productoraear.com/servicios/alquiler-coches-con-conductor/madrid",
+      "clicks": 0,
+      "impressions": 18,
+      "ctr": 0.0,
+      "position": 64.5
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/pontevedra-10",
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0.0,
+      "position": 54.2
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3135",
+      "clicks": 0,
+      "impressions": 17,
+      "ctr": 0.0,
+      "position": 62.2
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-539",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 30.8
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-534",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 42.8
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-291",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 49.3
+    },
+    {
+      "page": "https://www.productoraear.com/palma",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 60.8
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/malaga/iluminacion-boda",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 66.8
+    },
+    {
+      "page": "https://www.productoraear.com/servicios/mariachis/aniversario-suegra/murcia",
+      "clicks": 0,
+      "impressions": 16,
+      "ctr": 0.0,
+      "position": 66.8
     },
     {
       "page": "https://www.productoraear.com/bodas/malaga/wedding-planners",
       "clicks": 0,
-      "impressions": 42,
+      "impressions": 16,
       "ctr": 0.0,
-      "position": 74.9
+      "position": 75.4
+    },
+    {
+      "page": "https://www.productoraear.com/bodas/bilbao/wedding-planners",
+      "clicks": 0,
+      "impressions": 15,
+      "ctr": 0.0,
+      "position": 77.5
+    },
+    {
+      "page": "https://www.productoraear.com/rivas",
+      "clicks": 0,
+      "impressions": 15,
+      "ctr": 0.0,
+      "position": 93.9
+    },
+    {
+      "page": "https://www.productoraear.com/proveedores/prov-3119",
+      "clicks": 0,
+      "impressions": 14,
+      "ctr": 0.0,
+      "position": 49.5
     }
   ],
   "devices": [
     {
       "device": "Móviles",
-      "clicks": 11,
-      "impressions": 2454
+      "clicks": 5,
+      "impressions": 1142
     },
     {
       "device": "Ordenador",
-      "clicks": 2,
-      "impressions": 7182
+      "clicks": 1,
+      "impressions": 3828
     },
     {
       "device": "Tablet",
       "clicks": 0,
-      "impressions": 70
+      "impressions": 30
     }
   ],
   "countries": [
     {
       "country": "España",
-      "clicks": 12,
-      "impressions": 9475
+      "clicks": 5,
+      "impressions": 4888
     },
     {
       "country": "Marruecos",
@@ -741,67 +1197,67 @@
     {
       "country": "Estados Unidos",
       "clicks": 0,
-      "impressions": 34
+      "impressions": 18
     },
     {
       "country": "México",
       "clicks": 0,
-      "impressions": 30
+      "impressions": 15
     },
     {
       "country": "Reino Unido",
       "clicks": 0,
-      "impressions": 22
+      "impressions": 10
     },
     {
       "country": "Uruguay",
       "clicks": 0,
-      "impressions": 19
+      "impressions": 9
     },
     {
       "country": "La India",
       "clicks": 0,
-      "impressions": 17
+      "impressions": 9
     },
     {
       "country": "Chile",
       "clicks": 0,
-      "impressions": 19
+      "impressions": 8
     },
     {
       "country": "Suiza",
       "clicks": 0,
-      "impressions": 15
+      "impressions": 6
     },
     {
       "country": "Perú",
       "clicks": 0,
-      "impressions": 10
+      "impressions": 4
     },
     {
       "country": "Países Bajos",
       "clicks": 0,
-      "impressions": 9
+      "impressions": 4
     },
     {
       "country": "Argentina",
       "clicks": 0,
-      "impressions": 8
+      "impressions": 4
     },
     {
       "country": "Colombia",
       "clicks": 0,
-      "impressions": 8
+      "impressions": 3
     },
     {
       "country": "Portugal",
       "clicks": 0,
-      "impressions": 4
+      "impressions": 2
     },
     {
       "country": "Alemania",
       "clicks": 0,
-      "impressions": 5
+      "impressions": 2
     },
     {
       "country": "Brasil",
@@ -811,7 +1267,7 @@
     {
       "country": "Filipinas",
       "clicks": 0,
-      "impressions": 4
+      "impressions": 2
     },
     {
       "country": "Grecia",
@@ -826,27 +1282,27 @@
     {
       "country": "República Dominicana",
       "clicks": 0,
-      "impressions": 3
+      "impressions": 1
     },
     {
       "country": "Mozambique",
       "clicks": 0,
-      "impressions": 2
+      "impressions": 1
     },
     {
       "country": "Noruega",
       "clicks": 0,
-      "impressions": 2
+      "impressions": 1
     },
     {
       "country": "Japón",
       "clicks": 0,
-      "impressions": 2
+      "impressions": 1
     },
     {
       "country": "Arabia Saudí",
       "clicks": 0,
-      "impressions": 2
+      "impressions": 1
     },
     {
       "country": "Lituania",
@@ -861,12 +1317,12 @@
     {
       "country": "Corea del Sur",
       "clicks": 0,
-      "impressions": 3
+      "impressions": 1
     },
     {
       "country": "Argelia",
       "clicks": 0,
-      "impressions": 2
+      "impressions": 1
     },
     {
       "country": "Bangladés",
@@ -876,7 +1332,7 @@
     {
       "country": "Indonesia",
       "clicks": 0,
-      "impressions": 3
+      "impressions": 1
     }
   ]
 }

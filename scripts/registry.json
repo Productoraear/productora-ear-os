@@ -23,6 +23,14 @@
       "inputs": "docs/raw_takeout/ (archivos .json, .html o .zip de Google Takeout)",
       "outputs": "src/data/ear-rag-database.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\Gemini_Takeout\\",
       "cli": "python scripts/parse_takeout_gemini.py"
+    },
+    {
+      "name": "ingest_mariachi_dominance_batch.py",
+      "path": "scripts/ingest_mariachi_dominance_batch.py",
+      "purpose": "Ingesta masiva ZTM de GSC zips, AlsoAsked CSVs y Catálogo Demetrio en H:\\ para dominancia de mariachis 24/7 y eventos.",
+      "inputs": "8 archivos de inteligencia en H:\\ (GSC zips, AlsoAsked CSVs, Demetrio PDF)",
+      "outputs": "src/data/ear-rag-database.json + src/data/telemetry/gsc-performance-data.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MERCADO_Y_SEO_MARIACHIS\\",
+      "cli": "python scripts/ingest_mariachi_dominance_batch.py"
     }
   ]
 }

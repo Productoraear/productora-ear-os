@@ -1,13 +1,13 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { EdwinPricingEngine } from '@/components/booking/EdwinPricingEngine';
+import { SClassPricingTerminal } from '@/components/pricing/SClassPricingTerminal';
 import { EdwinLegacyPlayer } from '@/features/artists/ui/EdwinLegacyPlayer';
 import { Mic2, Star, ShieldCheck, Award, Sparkles, Music, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Edwin Agudelo | Tenor Lírico, Mariachi de Gala & Paciente Cero S-Class',
-  description: 'Contratación oficial de Edwin Agudelo para bodas, serenatas de gala y eventos institucionales. Sonorización Bose F1 12 W/pax, Price-Lock 72h y split soberano 80/10/10.',
+  description: 'Contratación oficial de Edwin Agudelo para bodas, serenatas de gala y eventos institucionales. Sonorización Bose F1 12 W/pax, Price-Lock SHA-256 y split soberano 80/10/10.',
 };
 
 export default function EdwinAgudeloPage() {
@@ -51,12 +51,12 @@ export default function EdwinAgudeloPage() {
             <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-400">
               <span className="px-3 py-1 bg-white/5 rounded-lg border border-white/10">Seguro RC 1.000.000 €</span>
               <span className="px-3 py-1 bg-white/5 rounded-lg border border-white/10">Split Soberano 80%</span>
-              <span className="px-3 py-1 bg-white/5 rounded-lg border border-white/10">Price-Lock 72h SHA-256</span>
+              <span className="px-3 py-1 bg-white/5 rounded-lg border border-white/10">Price-Lock SHA-256</span>
             </div>
           </div>
 
-          <div className="flex justify-center lg:justify-end">
-            <EdwinPricingEngine />
+          <div className="w-full flex justify-center lg:justify-end">
+            <SClassPricingTerminal />
           </div>
         </div>
 

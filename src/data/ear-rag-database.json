@@ -2922,5 +2922,575 @@
       }
     ],
     "last_updated": "2026-08-28T19:57:46.686747"
-  }
+  },
+  "documents": [
+    {
+      "id": "RAG-GSC-MARIACHIS-DOMINANCE-2026-08-29",
+      "tipo": "INTELIGENCIA_GSC_SEO",
+      "categoria": "DOMINANCIA_MARIACHIS_UBER_CENTRALITA",
+      "titulo": "GSC Search Intent & Oportunidades Mariachis 24/7",
+      "total_queries_indexadas": 980,
+      "top_oportunidades_mariachis": [
+        {
+          "query": "alquiler de pantallas led para eventos",
+          "clicks": 0.0,
+          "impressions": 59.0,
+          "avg_pos": 63.8
+        },
+        {
+          "query": "alquiler pantallas led eventos",
+          "clicks": 0.0,
+          "impressions": 56.0,
+          "avg_pos": 66.5
+        },
+        {
+          "query": "alquiler de pantallas gigantes para eventos",
+          "clicks": 0.0,
+          "impressions": 53.0,
+          "avg_pos": 50.3
+        },
+        {
+          "query": "alquiler pantallas led madrid",
+          "clicks": 0.0,
+          "impressions": 50.0,
+          "avg_pos": 66.6
+        },
+        {
+          "query": "alquiler pantalla led madrid",
+          "clicks": 0.0,
+          "impressions": 48.0,
+          "avg_pos": 66.2
+        },
+        {
+          "query": "alquiler pantallas gigantes precios",
+          "clicks": 0.0,
+          "impressions": 45.0,
+          "avg_pos": 65.4
+        },
+        {
+          "query": "pantalla led gigante madrid",
+          "clicks": 0.0,
+          "impressions": 42.0,
+          "avg_pos": 59.7
+        },
+        {
+          "query": "alquiler de pantallas led precios",
+          "clicks": 0.0,
+          "impressions": 41.0,
+          "avg_pos": 69.8
+        },
+        {
+          "query": "alquiler pantalla gigante precio",
+          "clicks": 0.0,
+          "impressions": 40.0,
+          "avg_pos": 63.6
+        },
+        {
+          "query": "alquiler de pantalla led para eventos",
+          "clicks": 0.0,
+          "impressions": 40.0,
+          "avg_pos": 63.1
+        },
+        {
+          "query": "alquiler pantallas eventos",
+          "clicks": 0.0,
+          "impressions": 39.0,
+          "avg_pos": 62.8
+        },
+        {
+          "query": "pantallas gigantes para eventos",
+          "clicks": 0.0,
+          "impressions": 39.0,
+          "avg_pos": 56.1
+        },
+        {
+          "query": "alquiler de pantallas led para eventos madrid",
+          "clicks": 0.0,
+          "impressions": 39.0,
+          "avg_pos": 68.1
+        },
+        {
+          "query": "pantallas led en madrid",
+          "clicks": 0.0,
+          "impressions": 38.0,
+          "avg_pos": 77.0
+        },
+        {
+          "query": "dj para bodas",
+          "clicks": 0.0,
+          "impressions": 37.0,
+          "avg_pos": 92.0
+        },
+        {
+          "query": "alquiler pantallas gigantes madrid",
+          "clicks": 0.0,
+          "impressions": 37.0,
+          "avg_pos": 58.5
+        },
+        {
+          "query": "alquiler pantallas led precios",
+          "clicks": 0.0,
+          "impressions": 37.0,
+          "avg_pos": 71.6
+        },
+        {
+          "query": "alquiler pantallas led para eventos precios",
+          "clicks": 0.0,
+          "impressions": 37.0,
+          "avg_pos": 72.6
+        },
+        {
+          "query": "alquiler de pantallas en madrid",
+          "clicks": 0.0,
+          "impressions": 37.0,
+          "avg_pos": 68.7
+        },
+        {
+          "query": "precio alquiler pantalla led gigante",
+          "clicks": 0.0,
+          "impressions": 36.0,
+          "avg_pos": 62.0
+        },
+        {
+          "query": "sonido profesional eventos",
+          "clicks": 0.0,
+          "impressions": 35.0,
+          "avg_pos": 88.7
+        },
+        {
+          "query": "alquiler pantallas led para eventos",
+          "clicks": 0.0,
+          "impressions": 34.0,
+          "avg_pos": 66.3
+        },
+        {
+          "query": "catering bodas barcelona",
+          "clicks": 0.0,
+          "impressions": 33.0,
+          "avg_pos": 62.9
+        },
+        {
+          "query": "pantallas led madrid",
+          "clicks": 0.0,
+          "impressions": 33.0,
+          "avg_pos": 83.4
+        },
+        {
+          "query": "alquiler de pantallas para eventos precio",
+          "clicks": 0.0,
+          "impressions": 33.0,
+          "avg_pos": 68.2
+        },
+        {
+          "query": "alquiler pantalla led precio",
+          "clicks": 0.0,
+          "impressions": 32.0,
+          "avg_pos": 72.7
+        },
+        {
+          "query": "precio alquiler pantalla led",
+          "clicks": 0.0,
+          "impressions": 28.0,
+          "avg_pos": 72.2
+        },
+        {
+          "query": "decoración floral bodas alicante",
+          "clicks": 0.0,
+          "impressions": 26.0,
+          "avg_pos": 49.1
+        },
+        {
+          "query": "alquiler pantallas para eventos",
+          "clicks": 0.0,
+          "impressions": 26.0,
+          "avg_pos": 52.7
+        },
+        {
+          "query": "dj bodas",
+          "clicks": 0.0,
+          "impressions": 26.0,
+          "avg_pos": 84.9
+        },
+        {
+          "query": "wedding planner madrid",
+          "clicks": 0.0,
+          "impressions": 25.0,
+          "avg_pos": 84.0
+        },
+        {
+          "query": "mariachis murcia",
+          "clicks": 0.0,
+          "impressions": 24.0,
+          "avg_pos": 29.8
+        },
+        {
+          "query": "animación bodas granada",
+          "clicks": 0.0,
+          "impressions": 24.0,
+          "avg_pos": 50.5
+        },
+        {
+          "query": "alquiler de pantallas para eventos",
+          "clicks": 0.0,
+          "impressions": 24.0,
+          "avg_pos": 57.1
+        },
+        {
+          "query": "pantallas para eventos alquiler",
+          "clicks": 0.0,
+          "impressions": 24.0,
+          "avg_pos": 68.5
+        },
+        {
+          "query": "alquiler carpas eventos cadiz",
+          "clicks": 0.0,
+          "impressions": 23.0,
+          "avg_pos": 38.9
+        },
+        {
+          "query": "carpas para bodas en cádiz",
+          "clicks": 0.0,
+          "impressions": 23.0,
+          "avg_pos": 43.2
+        },
+        {
+          "query": "sonorización eventos",
+          "clicks": 0.0,
+          "impressions": 23.0,
+          "avg_pos": 80.1
+        },
+        {
+          "query": "iluminacion eventos malaga",
+          "clicks": 0.0,
+          "impressions": 22.0,
+          "avg_pos": 66.0
+        },
+        {
+          "query": "listas de boda alicante",
+          "clicks": 0.0,
+          "impressions": 21.0,
+          "avg_pos": 25.5
+        }
+      ],
+      "top_paginas_lideres": [
+        {
+          "page": "https://www.productoraear.com/arsenal/pantalla-led/madrid",
+          "impressions": 2372.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/arsenal/pantalla-led/gijon",
+          "impressions": 239.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/sevilla/wedding-planners",
+          "impressions": 197.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/madrid/wedding-planners",
+          "impressions": 152.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/barcelona/wedding-planners",
+          "impressions": 145.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/madrid/dj-eventos",
+          "impressions": 140.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/weddings/catering-boda-premium-rivas-vaciamadrid",
+          "impressions": 139.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/barcelona/dj-eventos",
+          "impressions": 122.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/arsenal/pantalla-led/palma",
+          "impressions": 117.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/barcelona/catering-gourmet",
+          "impressions": 114.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-3797",
+          "impressions": 93.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-4875",
+          "impressions": 81.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-1383",
+          "impressions": 71.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/corporativo/sonorizacion-eventos-barcelona-valles",
+          "impressions": 71.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/servicios/wedding-planners/pontevedra",
+          "impressions": 71.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-3446",
+          "impressions": 70.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/eventos/bodas",
+          "impressions": 63.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-545",
+          "impressions": 62.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-3227",
+          "impressions": 62.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/sevilla/dj-eventos",
+          "impressions": 62.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-3109",
+          "impressions": 60.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/coruna",
+          "impressions": 58.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/proveedores/prov-2778",
+          "impressions": 53.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/zaragoza/wedding-planners",
+          "impressions": 49.0,
+          "clicks": 0.0
+        },
+        {
+          "page": "https://www.productoraear.com/bodas/jaen/catering-gourmet",
+          "impressions": 49.0,
+          "clicks": 0.0
+        }
+      ],
+      "fecha_extraccion": "2026-08-29"
+    },
+    {
+      "id": "RAG-ALSOASKED-MARIACHIS-BODAS-2026-08-29",
+      "tipo": "INTELIGENCIA_ALSOASKED_QUESTIONS",
+      "categoria": "DOMINANCIA_MARIACHIS_UBER_CENTRALITA",
+      "titulo": "Preguntas Frecuentes Reales y Objeciones de Mariachis y Bodas",
+      "total_preguntas": 17,
+      "preguntas_clave": [
+        "bodas y eventos en directo (mariachis, protocolo musical, canciones para banquetes, sorpresas para novios, precios y presupuesto, alquiler de espacios, coordinacion de eventos, sonido, catering, repertorio personalizado, duracion) |  |  |  | 0 | 0",
+        "¿Cuánto cobra un grupo musical para una boda? |  |  |  | 1 | 0 | es | es | 1 |  |",
+        "¿Cuánto suele costar una boda para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto cuesta la música en directo de una boda? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto cuesta un catering de boda para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 0 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto suele costar una boda para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto cuesta un servicio de catering para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto suele costar un catering para 50 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 3 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto cuesta una boda para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 4 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto suele costar un DJ para una boda? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 0 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto suele costar una boda para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto cobra un DJ por 5 horas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto se cobra por 3 horas de DJ? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 3 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto cobra DJ por evento? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 4 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto suele costar una wedding planner en España? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 0 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto suele costar una boda para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuánto cuesta una boda sencilla para 100 personas? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock"
+      ],
+      "fecha_extraccion": "2026-08-29"
+    },
+    {
+      "id": "RAG-ALSOASKED-VIMUME-RESIDENCIAS-2026-08-29",
+      "tipo": "INTELIGENCIA_ALSOASKED_VIMUME",
+      "categoria": "VIMUME_TERAPEUTICO_SENIOR",
+      "titulo": "AlsoAsked Estimulación Cognitiva y Musicoterapia Residencias Madrid",
+      "total_preguntas": 31,
+      "preguntas_clave": [
+        "musicoterapia para mayores (envejecimiento activo, alzheimer, estimulacion cognitiva o talleres en residencias) |  |  |  | 0 | 0",
+        "¿Qué actividades de musicoterapia son adecuadas para personas mayores? | Las actividades de musicoterapia para personas mayores usan el sonido, el ritmo y la melodía para mejorar la salud física, mental y emocional. Las dinámicas principales incluyen cantar canciones conocidas, tocar instrumentos de percusión sencilla, seguir ritmos con palmadas, bailar o mover el cuerpo de forma adaptada, y escuchar listas de música personalizada para evocar recuerdos.\nPara obtener una perspectiva visual sobre cómo estas dinámicas estimulan la memoria y la coordinación en los mayores, este video muestra ejercicios prácticos de ritmo y movimiento:\n13s\nMusicoterapia para mayores: ritmo y memoria\n280 mil reproducciones · hace 1 año\nTikTok · cd_salusmayores\n\nActividades de Expresión y Memoria\n\n• Reminiscencia musical: Escuchar canciones de la juventud del adulto mayor para activar recuerdos y fomentar la charla sobre su pasado.\n\n• Completar frases: Cantar un tema popular conocido y detenerse a mitad de la frase para que la persona adivine y diga la palabra que falta.\n\n• Duelos o cadenas de canciones: Una persona empieza a entonar una melodía y el participante debe continuarla con otra o seguir la letra.\n\nActividades de Movimiento y Ritmo\n\n• Percusión corporal y con objetos: Usar las palmas, los muslos o utensilios cotidianos (como cucharas de madera) para marcar el pulso de la música.\n\n• Uso de instrumentos sencillos: Tocar panderetas, maracas, triángulos o cajones de percusión para estimular la coordinación motora.\n\n• Baile adaptado o creativo: Mover los brazos, balancear el torso o usar cintas y pañuelos al ritmo de melodías alegres, incluso estando sentados.\n\nPara profundizar en cómo la música reduce la ansiedad y ayuda a conectar con personas que sufren de demencia, este reportaje ofrece más detalles sobre los efectos de esta terapia:\n9m\nMusicoterapia para conectar con los adultos mayores\nhace 10 meses\nYouTube · Huellas del Futuro\n\nActividades de Relajación\n\n• Escucha guiada y consciente: Reproducir temas suaves con respiraciones pausadas para disminuir los niveles de estrés e inducir la calma.\n\n• Baños sonoros o vibroacústica: Sentir la vibración directa de instrumentos de tono grave o cuencos tibetanos para relajar la tensión muscular. |  |  | 1 | 0 | es | es | 1 |  |",
+        "¿Qué actividades se hacen en musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son los 3 pilares de la música? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son 8 juegos recreativos para adultos mayores? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 3 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuál es la música que más estimula el cerebro? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 4 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué ejercicios puedo hacer para activar la mente de las personas mayores? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 5 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cómo ayudar a un adulto mayor con deterioro cognitivo? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 1 | 6 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son los 4 tipos principales de musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 0 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué actividades se hacen en musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son los 3 pilares de la música? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son 4 efectos de la música en el cerebro? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 3 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué dice la OMS sobre la musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 4 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cómo se hace la musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 5 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son las ramas de la musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 6 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué hace una musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 7 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son los beneficios de la musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 2 | 8 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cómo ayuda la musicoterapia a los pacientes con Alzheimer? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 0 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cómo estimular a un paciente con Alzheimer? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué beneficios tiene la musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué terapia se puede hacer a una persona con Alzheimer? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 3 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué música es buena para las personas con Alzheimer? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 4 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué tranquiliza a una persona con Alzheimer? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 5 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué música mejora la memoria? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 3 | 6 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cómo ayuda la musicoterapia a las personas de la tercera edad? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 0 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué actividades se hacen en musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 1 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son los 3 pilares de la música? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 2 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son las 4 funciones de la música? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 3 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Cuáles son 8 juegos recreativos para adultos mayores? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 4 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué dice la OMS sobre la musicoterapia? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 5 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock",
+        "¿Qué ejercicios puedo hacer para activar la mente de las personas mayores? | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | 4 | 6 | es | es | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock | Upgrade to Lite/Pro to unlock"
+      ],
+      "fecha_extraccion": "2026-08-29"
+    },
+    {
+      "id": "RAG-ALSOASKED-BULK-QUERIES-2026-08-29",
+      "tipo": "INTELIGENCIA_SEARCH_INTENT_BULK",
+      "categoria": "SEO_PROGRAMATICO_GEO",
+      "titulo": "AlsoAsked Bulk Queries - Intenciones de Búsqueda de Eventos",
+      "total_preguntas": 3,
+      "preguntas_muestra": [
+        "musica en directo para bodas (mariachis, protocolo musical, canciones para banquetes, sorpresas para novios, presupuesto)",
+        "fincas para bodas (alquiler de espacios, coordinacion de eventos, sonido para bodas, catering)",
+        "contratar mariachis bodas (precios, repertorio personalizado, sorpresas, duracion)"
+      ],
+      "fecha_extraccion": "2026-08-29"
+    },
+    {
+      "id": "RAG-CATALOGO-DEMETRIO-NAVIDAD-2025-2026-08-29",
+      "tipo": "CATALOGO_ILUMINACION_EVENTOS",
+      "categoria": "ARSENAL_TECNICO_Y_EQUIPOS",
+      "titulo": "Catálogo Luces de Navidad e Iluminación Espectacular Demetrio 2025",
+      "total_lineas": 200,
+      "resumen_items": [
+        "Catálogo 2025",
+        "607 77 14 00",
+        "MOTIVOS 3D",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "MOTIVOS 3D",
+        "MOTIVOS",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "TRANSPORTE",
+        "ESPECIAL",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "Estructura 3D",
+        "Estructura de aluminio",
+        "Guirnalda LED 24v",
+        "CR WLSNOWMAN 3D 24V",
+        "6,00 M",
+        "5,70 M",
+        "3,70 M",
+        "1100 W",
+        "150Kg",
+        "Aluminio",
+        "Guirnalda",
+        "( Malla PVC )",
+        "IP 65 / IP 44 Plug",
+        "Información de Producto",
+        "VÍDEO",
+        "12.500 €",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "TRANSPORTE",
+        "ESPECIAL",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "Estructura 3D con Espumillón",
+        "Estructura de aluminio pintado",
+        "Guirnalda LED 24v",
+        "CR BEAR DOOR 3D 24V",
+        "4,20 M",
+        "3,75 M",
+        "1,80 M",
+        "900 W",
+        "150 Kg",
+        "Aluminio",
+        "Guirnalda / Hilo Luminoso",
+        "( Espumillón )",
+        "IP 65 / IP 44 Plug",
+        "Información de Producto",
+        "VÍDEO",
+        "10.500 €",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "TRANSPORTE",
+        "ESPECIAL",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "CR PENDOOR 3D 24V",
+        "4,40 M",
+        "4,20 M",
+        "1,80 M",
+        "900 W",
+        "150 Kg",
+        "Aluminio",
+        "Guirnalda",
+        "( Malla PVC )",
+        "IP 65 / IP 44 Plug",
+        "Estructura 3D con Malla PVC y Espumillón",
+        "Estructura de aluminio pintado",
+        "Guirnalda LED 24v",
+        "Información de Producto",
+        "VÍDEO",
+        "7.500 €",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "TRANSPORTE",
+        "ESPECIAL",
+        "MOTIVOS 3D",
+        "FIGURAS 3D",
+        "MOTIVOS 3D",
+        "CR LTBEAR 3D 24V",
+        "3,90 M",
+        "2,77 M",
+        "0,60 M",
+        "900 W",
+        "150 Kg",
+        "Aluminio",
+        "Guirnalda",
+        "( Malla PVC )",
+        "IP 65 / IP 44 Plug",
+        "Estructura 3D con Malla PVC y Espumillón"
+      ],
+      "fecha_extraccion": "2026-08-29"
+    }
+  ]
 }
