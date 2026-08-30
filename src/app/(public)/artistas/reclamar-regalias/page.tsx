@@ -547,7 +547,7 @@ export default function ReclamarRegaliasPage() {
                   {billingCycle === "yearly" ? "1.900 €" : "199 €"}
                 </span>
                 <span className="text-xs text-zinc-400 font-mono"> / {billingCycle === "yearly" ? "año" : "mes"}</span>
-                <div className="text-[11px] text-purple-400 font-mono mt-1">Split Soberano 70/20/10 integrado</div>
+                <div className="text-[11px] text-purple-400 font-mono mt-1">Split Soberano 80/10/10 integrado</div>
               </div>
 
               <ul className="space-y-2.5 text-xs text-zinc-300 font-mono pt-4">

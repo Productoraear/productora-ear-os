@@ -83,6 +83,15 @@
       "inputs": ["VenueAcousticInput"],
       "outputs": "GeoAcousticOutput",
       "cli": "npx tsx -e \"import { runGeoAcousticDiagnostics } from './src/lib/geo/geo-acoustic-radar'; console.log(JSON.stringify(runGeoAcousticDiagnostics(), null, 2));\""
+    },
+    {
+      "id": "ultra_ui_auditor",
+      "name": "ultra_ui_auditor.py",
+      "path": "scripts/ultra_ui_auditor.py",
+      "purpose": "Auditoría integral de UI/SEO, meta tags, schema.org JSON-LD y consistencia comercial en rutas públicas de EAR OS V2.",
+      "inputs": ["src/app/(public)/"],
+      "outputs": "Consola / Reporte de conformidad S-Class",
+      "cli": "python scripts/ultra_ui_auditor.py"
     }
   ]
 }
