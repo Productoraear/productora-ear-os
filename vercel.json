@@ -5,6 +5,10 @@
       "schedule": "0 3 * * *"
     },
     {
+      "path": "/api/cron/b2g-hunter",
+      "schedule": "0 */6 * * *"
+    },
+    {
       "path": "/api/cron/b2g-telegram-hunter",
       "schedule": "0 7 * * *"
     }
