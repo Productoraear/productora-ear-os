@@ -92,6 +92,15 @@
       "inputs": ["src/app/(public)/"],
       "outputs": "Consola / Reporte de conformidad S-Class",
       "cli": "python scripts/ultra_ui_auditor.py"
+    },
+    {
+      "id": "process_daily_gsc_zip",
+      "name": "process_daily_gsc_zip.py",
+      "path": "scripts/process_daily_gsc_zip.py",
+      "purpose": "Ingestión diaria ZTM de Google Search Console ZIP con extracción de métricas, inyección canónica en RAG y vaulting en EAR_ABSORBED_VAULT.",
+      "inputs": ["H:\\*.zip (Search Console)"],
+      "outputs": "src/data/telemetry/gsc-performance-data.json + src/data/ear-rag-database.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MERCADO_Y_SEO_MARIACHIS\\",
+      "cli": "python scripts/process_daily_gsc_zip.py"
     }
   ]
 }

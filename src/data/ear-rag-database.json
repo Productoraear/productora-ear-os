@@ -57966,5 +57966,19 @@
     "archivos_fusionados_en_cluster": 4,
     "sha256": "a12e5597183d1a117b3fd1bb24ef519702659db0eaf7e99496c28e2b80e6612a",
     "fecha_destilacion": "2026-08-30"
+  },
+  {
+    "id": "GSC_TELEMETRY_2026_08_30",
+    "category": "MERCADO_Y_SEO_MARIACHIS",
+    "title": "Google Search Console Performance Report (2026-08-30)",
+    "summary": "Telemetría GSC de Productora EAR al 30/08/2026. Total 7 clics y 12084 impresiones. Oportunidades top en contratación de mariachis, bodas Madrid/Toledo y alquiler de pantallas LED.",
+    "keyMetrics": {
+      "clicks": 7,
+      "impressions": 12084,
+      "avgCtr": 0.06,
+      "topOpportunity": "vestidos de novia houghton"
+    },
+    "sha256": "8e9871d8f80520430ccab2e4e3c5f1a01bfe5264c294075a1ff4363a5db7e732",
+    "timestamp": "2026-08-30T14:17:10.138643Z"
   }
 ]
