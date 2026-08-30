@@ -9,6 +9,59 @@
     "uniqueQueries": 1000,
     "uniquePages": 1000
   },
+  "totals": {
+    "totalClicks": 7,
+    "totalImpressions": 12084,
+    "totalUniqueQueries": 1000,
+    "totalUniquePages": 1000,
+    "averageCtr": 0.06
+  },
+  "meta": {
+    "dateRange": "2026-08-24 a 2026-08-30",
+    "exportDate": "2026-08-30"
+  },
+  "topOpportunityQueries": [
+    {
+      "query": "vestidos de novia houghton",
+      "clicks": 0,
+      "impressions": 112,
+      "ctr": 0.0,
+      "position": 6.9,
+      "opportunityScore": 772.8
+    },
+    {
+      "query": "torre villa tea",
+      "clicks": 0,
+      "impressions": 55,
+      "ctr": 0.0,
+      "position": 10.0,
+      "opportunityScore": 550.0
+    },
+    {
+      "query": "finca alubian",
+      "clicks": 1,
+      "impressions": 41,
+      "ctr": 2.4,
+      "position": 8.6,
+      "opportunityScore": 352.6
+    },
+    {
+      "query": "finca fontaiña",
+      "clicks": 0,
+      "impressions": 26,
+      "ctr": 0.0,
+      "position": 7.0,
+      "opportunityScore": 182.0
+    },
+    {
+      "query": "atelier de bodas granada",
+      "clicks": 0,
+      "impressions": 21,
+      "ctr": 0.0,
+      "position": 12.1,
+      "opportunityScore": 254.1
+    }
+  ],
   "topQueries": [
     {
       "query": "finca torre valdeflores",
