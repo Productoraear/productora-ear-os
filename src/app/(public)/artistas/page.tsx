@@ -5,6 +5,7 @@ import { AstraNeuralExperience } from '@/app/components/SClassScreens/AstraNeura
 import TinderMatcherClient from '@/app/components/public/TinderMatcherClient';
 import { EdwinDossierHero } from '@/app/components/artistas/EdwinDossierHero';
 import { TheSignalOnboarding } from '@/app/components/artistas/TheSignalOnboarding';
+import SovereignRosterGrid from '@/components/marketplace/SovereignRosterGrid';
 import { Sparkles, ShieldCheck, UserCheck, Compass, Music, Flame } from 'lucide-react';
 
 export default function ArtistasHubPage() {
@@ -80,7 +81,12 @@ export default function ArtistasHubPage() {
             {/* DOSSIER HERO DEL PACIENTE CERO (EDWIN AGUDELO) */}
             <EdwinDossierHero />
 
-            {/* MATCHMAKER INTERACTIVO TINDER-MATCHER & ROSTER */}
+            {/* ROSTER RADAR INTERACTIVO DE 14 PROVEEDORES & AUDIO PREVIEW S-CLASS */}
+            <div className="border-t border-white/10 pt-12 space-y-6">
+              <SovereignRosterGrid />
+            </div>
+
+            {/* MATCHMAKER INTERACTIVO TINDER-MATCHER */}
             <div className="border-t border-white/10 pt-12 space-y-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                 <div>
@@ -88,7 +94,7 @@ export default function ArtistasHubPage() {
                     SELECCIÓN NEURAL DE ESPECTÁCULOS
                   </span>
                   <h2 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tight text-white font-syne mt-1">
-                    Roster Oficial & Matchmaker S-Class
+                    Matchmaker Rápido por Preferencias
                   </h2>
                 </div>
                 <p className="text-xs text-zinc-400 font-light max-w-md">
