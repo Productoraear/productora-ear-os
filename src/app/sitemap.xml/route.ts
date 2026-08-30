@@ -1,17 +1,9 @@
-import { SPANISH_MUNICIPALITIES } from '@/lib/geo/spanish-municipalities';
+import { MUNICIPALITIES_DATABASE, SERVICES_DATABASE } from '@/lib/geo/spanish-municipalities';
 
 export const dynamic = 'force-static';
 export const revalidate = 86400; // 24 hours
 
 const BASE_URL = 'https://www.productoraear.com';
-
-const CORE_SERVICES = [
-  'mariachi-gala',
-  'bodas-lujo',
-  'catering-brasas',
-  'alquiler-pantallas-led',
-  'sonido-iluminacion'
-];
 
 const TODAS_PROVINCIAS_52 = [
   'madrid', 'toledo', 'barcelona', 'valencia', 'sevilla', 'malaga', 'zaragoza', 'murcia',
@@ -43,7 +35,7 @@ export async function GET() {
 
   let xmlEntries = '';
 
-  // 1. Static Routes
+  // 1. Static Core Conversion Hubs
   for (const item of staticUrls) {
     xmlEntries += `
   <url>
@@ -54,7 +46,7 @@ export async function GET() {
   </url>`;
   }
 
-  // 2. Provincial Routes
+  // 2. Hubs Provinciales (52 Provincias)
   for (const prov of TODAS_PROVINCIAS_52) {
     xmlEntries += `
   <url>
@@ -65,12 +57,12 @@ export async function GET() {
   </url>`;
   }
 
-  // 3. Provincial Service Routes
+  // 3. Matriz Provincial x 7 Servicios de Alto Ticket
   for (const prov of TODAS_PROVINCIAS_52) {
-    for (const serv of CORE_SERVICES) {
+    for (const service of SERVICES_DATABASE) {
       xmlEntries += `
   <url>
-    <loc>${BASE_URL}/bodas/${prov}/${serv}</loc>
+    <loc>${BASE_URL}/bodas/${prov}/${service.slug}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -78,15 +70,18 @@ export async function GET() {
     }
   }
 
-  // 4. Strategic Municipalities
-  for (const muni of SPANISH_MUNICIPALITIES) {
-    for (const serv of CORE_SERVICES) {
+  // 4. Matriz Municipal Tier 1, Tier 2 y Tier 3 (Spokes de Alta Intención)
+  for (const muni of MUNICIPALITIES_DATABASE) {
+    for (const service of SERVICES_DATABASE) {
+      // Prioridad según Tier: Tier 1 = 0.8, Tier 2 = 0.7, Tier 3 = 0.6
+      const priority = muni.tier === 1 ? '0.8' : muni.tier === 2 ? '0.7' : '0.6';
+      
       xmlEntries += `
   <url>
-    <loc>${BASE_URL}/bodas/${muni.provinceSlug}/${serv}/${muni.slug}</loc>
+    <loc>${BASE_URL}/bodas/${muni.provinceSlug}/${service.slug}/${muni.slug}</loc>
     <lastmod>${now}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${muni.isCoreHub ? '0.8' : '0.6'}</priority>
+    <priority>${priority}</priority>
   </url>`;
     }
   }
