@@ -21,6 +21,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { LiveSonometryGuard } from '@/components/vimume/LiveSonometryGuard';
+import { B2GTenderFeedCard } from '@/components/admin/B2GTenderFeedCard';
 
 interface CuadrillaFleetItem {
   id: string;
@@ -42,7 +43,7 @@ export default function AdminFlotaPage() {
   const [selectedHub, setSelectedHub] = useState<string>('Méntrida (Hub Central)');
   const [filterStatus, setFilterStatus] = useState<string>('ALL');
   const [dispatchModalOpen, setDispatchModalOpen] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'FLEET' | 'SONOMETRY'>('FLEET');
+  const [activeTab, setActiveTab] = useState<'FLEET' | 'SONOMETRY' | 'B2G'>('FLEET');
 
   // Cuadrillas activas de la flota EAR OS
   const [cuadrillas, setCuadrillas] = useState<CuadrillaFleetItem[]>([
@@ -206,6 +207,16 @@ export default function AdminFlotaPage() {
           >
             🔊 Telemetría Acústica & Sonometría Guard
           </button>
+          <button
+            onClick={() => setActiveTab('B2G')}
+            className={`pb-3 text-xs font-mono font-bold uppercase tracking-wider transition-colors border-b-2 cursor-pointer ${
+              activeTab === 'B2G'
+                ? 'text-[#ecb613] border-[#ecb613]'
+                : 'text-gray-400 border-transparent hover:text-white'
+            }`}
+          >
+            🏛️ Licitaciones B2G · PLACSP
+          </button>
         </div>
 
         {/* CONTENIDO 1: MATRIZ DE CUADRILLAS */}
@@ -325,10 +336,15 @@ export default function AdminFlotaPage() {
               })}
             </div>
           </div>
-        ) : (
+        ) : activeTab === 'SONOMETRY' ? (
           /* CONTENIDO 2: SONOMETRÍA Y TELEMETRÍA EN VIVO */
           <div className="space-y-6">
             <LiveSonometryGuard />
+          </div>
+        ) : (
+          /* CONTENIDO 3: LICITACIONES B2G — ESCÁNER PLACSP */
+          <div className="space-y-6">
+            <B2GTenderFeedCard />
           </div>
         )}
       </div>
