@@ -3,6 +3,7 @@
 import React from 'react';
 import catalogData from '@/data/mariachis_catalog_clean.json';
 import { useSharedContext } from '@/app/context/SharedContext';
+import { AdjacentMunicipalitiesCrossLinker } from '@/components/geo/AdjacentMunicipalitiesCrossLinker';
 
 interface BespokeTemplateProps {
   keywords?: any;
@@ -230,6 +231,13 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
             </article>
           ))}
         </div>
+
+        {/* 🗺️ MALLA DE ENLAZADO INTERNO DINÁMICO (CROSS-LINKING REGIONAL) */}
+        <AdjacentMunicipalitiesCrossLinker
+          currentProvince={provinceProp || locationProp || 'madrid'}
+          currentLocation={locationProp || 'Madrid'}
+          currentServiceSlug={serviceId || 'mariachi-gala'}
+        />
       </main>
     </div>
   );
