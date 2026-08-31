@@ -47,3 +47,6 @@ g s console/extracted_batch/
 !src/features/astra/components/tools/
 .models/
 src/adn_vault_staging/
+scripts/nightcrawler_results/
+scripts/_*
+scripts/recyclable_assets_found.json
