@@ -24,6 +24,9 @@ export async function POST(req: Request) {
         : `Garantía de Bloqueo de Fecha 72h • Productora EAR • Hash: ${clientMeta?.sha256Token || '72H-LOCK'}`
     );
 
+    // Protocolo Hold & Ping: Pre-autorización bancaria de 7 días (capture_method: manual)
+    const isHoldAndPing = clientMeta?.hold_and_ping === true || clientMeta?.hold_and_ping === 'true';
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -32,7 +35,9 @@ export async function POST(req: Request) {
             currency: 'eur',
             product_data: {
               name: productName,
-              description: productDesc,
+              description: isHoldAndPing 
+                ? `[HOLD & PING 7 DÍAS] Bloqueo de 100,00 € con verificación asíncrona de disponibilidad • ${productDesc}`
+                : productDesc,
             },
             unit_amount: totalCents,
           },
@@ -40,6 +45,16 @@ export async function POST(req: Request) {
         },
       ],
       mode: 'payment',
+      payment_intent_data: isHoldAndPing ? {
+        capture_method: 'manual',
+        description: `EAR OS Hold & Ping Protocol — Preautorización 7 días (${productName})`,
+        metadata: {
+          hold_and_ping: 'true',
+          venue_phone: clientMeta?.venue_phone || '',
+          venue_name: clientMeta?.venue_name || '',
+          event_date: clientMeta?.event_date || '',
+        }
+      } : undefined,
       metadata: {
         source: 'EAR_OS_GOLD_V141',
         concept: concept || 'S-Class',
@@ -53,6 +68,7 @@ export async function POST(req: Request) {
         venue_id: clientMeta?.venue_id || '',
         is_b2g: clientMeta?.is_b2g ? 'true' : 'false',
         artist_tier: clientMeta?.artist_tier || '',
+        hold_and_ping: isHoldAndPing ? 'true' : 'false',
         split_platform: String(platformFeeCents),
         split_affiliate: String(Math.round(totalCents * 0.10)),
         split_provider: String(Math.round(totalCents * 0.80)),

@@ -8,8 +8,8 @@ export function middleware(request: NextRequest) {
   const hasToken = request.cookies.get('ear_admin_token')?.value;
   const role = request.cookies.get('ear_role')?.value;
 
-  // Rutas administrativas protegidas
-  if (pathname.startsWith('/admin') && (!hasSession || !hasToken)) {
+  // Rutas administrativas protegidas (excepto vista de telemetría /admin/vampire-view)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/vampire-view') && (!hasSession || !hasToken)) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('from', pathname);
     
