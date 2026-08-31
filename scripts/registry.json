@@ -94,13 +94,49 @@
       "cli": "python scripts/ultra_ui_auditor.py"
     },
     {
-      "id": "process_daily_gsc_zip",
-      "name": "process_daily_gsc_zip.py",
-      "path": "scripts/process_daily_gsc_zip.py",
-      "purpose": "Ingestión diaria ZTM de Google Search Console ZIP con extracción de métricas, inyección canónica en RAG y vaulting en EAR_ABSORBED_VAULT.",
-      "inputs": ["H:\\*.zip (Search Console)"],
-      "outputs": "src/data/telemetry/gsc-performance-data.json + src/data/ear-rag-database.json + H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MERCADO_Y_SEO_MARIACHIS\\",
-      "cli": "python scripts/process_daily_gsc_zip.py"
+      "id": "export_full_chat_markdown",
+      "name": "export_full_chat_markdown.py",
+      "path": "scripts/export_full_chat_markdown.py",
+      "purpose": "Exportador íntegro sin pérdidas de la crónica completa de la sesión a Markdown (docs/EAR_OS_MASTER_FULL_CHAT_CHRONICLE_SOVEREIGN.md).",
+      "inputs": ["C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\...\\transcript_full.jsonl"],
+      "outputs": "docs/EAR_OS_MASTER_FULL_CHAT_CHRONICLE_SOVEREIGN.md + H:\\EAR_OS_MASTER_FULL_CHAT_CHRONICLE_SOVEREIGN.md",
+      "cli": "python scripts/export_full_chat_markdown.py"
+    },
+    {
+      "id": "compact_vampire_json",
+      "name": "compact_vampire_json.py",
+      "path": "scripts/compact_vampire_json.py",
+      "purpose": "Compactador estructurado de vampirized_providers.json reduciendo su tamaño de 65MB a 11.9MB (-81.6%) sin pérdida de datos.",
+      "inputs": ["src/data/vampirized_providers.json"],
+      "outputs": "src/data/vampirized_providers.json (11.92 MB)",
+      "cli": "python scripts/compact_vampire_json.py"
+    },
+    {
+      "id": "preflight_live_check",
+      "name": "preflight_live_check.ts",
+      "path": "scripts/preflight_live_check.ts",
+      "purpose": "Suite de diagnóstico y auditoría forense pre-flight en producción: valida PostgreSQL, Stripe, 18 Sub-sitemaps y variables ENV.",
+      "inputs": ["Prisma DB, Stripe, Env"],
+      "outputs": "Consola / JSON Health Certificate",
+      "cli": "npx tsx scripts/preflight_live_check.ts"
+    },
+    {
+      "id": "migrate_json_to_prisma",
+      "name": "migrate_json_to_prisma.ts",
+      "path": "scripts/migrate_json_to_prisma.ts",
+      "purpose": "Ingesta masiva ACID de 11.690 proveedores en lotes de 500 a PostgreSQL/Supabase con sanitización UTF-8.",
+      "inputs": ["src/data/vampirized_providers.json"],
+      "outputs": "Supabase PostgreSQL Table VendorShadowProfile",
+      "cli": "npx tsx scripts/migrate_json_to_prisma.ts"
+    },
+    {
+      "id": "mirror_shadow_assets",
+      "name": "mirror_shadow_assets.py",
+      "path": "scripts/mirror_shadow_assets.py",
+      "purpose": "Descargador de imágenes de proveedores a CDN local public/assets/shadow_vendors eliminando hotlinking.",
+      "inputs": ["src/data/vampirized_providers.json"],
+      "outputs": "public/assets/shadow_vendors/*.jpg",
+      "cli": "python scripts/mirror_shadow_assets.py"
     }
   ]
 }
