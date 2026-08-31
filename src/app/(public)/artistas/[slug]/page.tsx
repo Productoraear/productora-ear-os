@@ -51,6 +51,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `Artista ${slug} | Productora EAR`,
     description: 'Perfil y rider técnico oficial en Productora EAR',
+    alternates: {
+      canonical: `https://www.productoraear.com/artistas/${slug}`,
+    },
   };
 }
 
