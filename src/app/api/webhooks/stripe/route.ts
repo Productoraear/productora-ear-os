@@ -203,6 +203,27 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // 📱 DISPARO AUTOMATIZADO WHATSAPP CLOUD API (HOLD & PING)
+  const vendorPhone = (md as any).providerPhone || (md as any).vendorPhone || (md as any).telephone;
+  const vendorName = (md as any).providerName || (md as any).vendorName || 'Proveedor Homologado';
+  const claimUrl = (md as any).claimUrl || `https://www.productoraear.com/reclamar-perfil?token=${(md as any).claimToken || session.id}`;
+
+  if (vendorPhone) {
+    try {
+      const { sendHoldAndPingTemplate } = await import('@/lib/whatsapp/whatsapp-client');
+      await sendHoldAndPingTemplate({
+        toPhone: vendorPhone,
+        vendorName,
+        totalAmountEur: amountTotal,
+        eventDate: eventDate || new Date().toLocaleDateString('es-ES'),
+        claimUrl
+      });
+      console.log(`📱 [HOLD & PING DISPATCH] WhatsApp disparado a ${vendorPhone}`);
+    } catch (waErr: any) {
+      console.warn('⚠️ [WHATSAPP DISPATCH] Fallback seguro:', waErr.message);
+    }
+  }
+
   console.log(`✅ [LEDGER SETTLED] ${amountTotal} € reconciliados con éxito.`);
   return NextResponse.json({ 
     success: true, 
