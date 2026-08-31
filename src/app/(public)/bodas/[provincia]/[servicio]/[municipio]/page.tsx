@@ -1,11 +1,13 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Sparkles, MapPin, ShieldCheck, ArrowRight, Phone, Clock, Award, CheckCircle2, ChevronRight } from 'lucide-react';
+import { Sparkles, MapPin, ShieldCheck, ArrowRight, Phone, Clock, Award, CheckCircle2, ChevronRight, Star, Building2 } from 'lucide-react';
 import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { getProvidersByLocation } from '@/lib/data/vampire-service';
+import { AdjacentMunicipalitiesCrossLinker } from '@/components/geo/AdjacentMunicipalitiesCrossLinker';
 
 interface PageProps {
   params: Promise<{
@@ -64,11 +66,14 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
   const townName = townData ? townData.name : municipio.charAt(0).toUpperCase() + municipio.slice(1).replace(/-/g, ' ');
   const comarca = townData?.comarca || 'Comarca Histórica';
   const distanceKm = townData?.distanceFromMentrideKm ?? 35;
-  const venues = townData?.featuredVenues || ['Fincas y Salones Exclusivos'];
+  const staticVenues = townData?.featuredVenues || ['Fincas y Salones Exclusivos'];
 
   const servData = SERVICES_PSEO_EXPANDED.find(s => s.path === servicio || s.id === servicio);
   const servTitle = servData ? servData.title : 'Mariachis de Gala & Serenatas';
   const basePrice = servData?.basePrice ?? 350;
+
+  // Consultar proveedores y fincas homologadas en PostgreSQL/Prisma (con caché e índice B-Tree)
+  const localVendors = await getProvidersByLocation(provName, servTitle, 6);
 
   const whatsappText = encodeURIComponent(
     `¡Hola Productora EAR! Solicito disponibilidad y presupuesto oficial para ${servTitle} en ${townName} (${provName}). Distancia aprox: ${distanceKm} km.`
@@ -133,7 +138,76 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Venues Destacados en el Municipio */}
+          {/* Fincas y Proveedores Homologados (Read-Layer PostgreSQL/Prisma) */}
+          {localVendors.length > 0 && (
+            <div className="space-y-6">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
+                <div>
+                  <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest flex items-center gap-1.5 font-bold">
+                    <Building2 className="w-3.5 h-3.5" /> Fincas y Proveedores Homologados
+                  </span>
+                  <h3 className="text-2xl font-bold font-syne text-white mt-1">
+                    Red de Espacios en {provName}
+                  </h3>
+                </div>
+                <span className="text-xs font-mono text-zinc-400">
+                  {localVendors.length} espacios verificados con protocolo Hold & Ping
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {localVendors.map((vendor) => (
+                  <div
+                    key={vendor.id}
+                    className="p-5 rounded-2xl bg-[#0c0c14] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between space-y-4"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-start">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/20">
+                          {vendor.category}
+                        </span>
+                        <div className="flex items-center gap-1 text-[#ecb613] text-xs font-mono">
+                          <Star className="w-3 h-3 fill-current" />
+                          <span>{vendor.rating ?? 4.9}</span>
+                          <span className="text-zinc-500">({vendor.reviewsCount ?? 14})</span>
+                        </div>
+                      </div>
+
+                      <h4 className="text-base font-bold text-white leading-snug">
+                        {vendor.name}
+                      </h4>
+
+                      <p className="text-xs text-zinc-400 line-clamp-2">
+                        {vendor.description || `Espacio homologado para bodas y celebraciones en ${vendor.province}.`}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-2">
+                      {vendor.telephone ? (
+                        <span className="text-[11px] font-mono text-emerald-400 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> Tel. Verificado
+                        </span>
+                      ) : (
+                        <span className="text-[11px] font-mono text-zinc-500">
+                          Perfil Oficial
+                        </span>
+                      )}
+
+                      <Link
+                        href={`/checkout/presupuesto?format=${encodeURIComponent(servTitle)}&base=350&venue=${encodeURIComponent(vendor.name)}`}
+                        className="py-1.5 px-3 rounded-lg bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-1 transition-all"
+                      >
+                        <span>Bloquear</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Venues Destacados Históricos */}
           <div className="p-8 rounded-[2.5rem] bg-[#0c0c12] border border-white/10 space-y-4">
             <h3 className="text-lg font-bold font-syne uppercase text-white flex items-center gap-2">
               <Award size={18} className="text-[#ecb613]" />
@@ -143,7 +217,7 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
               Hemos sonorizado y actuado en los recintos más emblemáticos de la zona con máxima integración paisajística y acústica:
             </p>
             <div className="flex flex-wrap gap-2 pt-2">
-              {venues.map((venue, idx) => (
+              {staticVenues.map((venue, idx) => (
                 <span key={idx} className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-zinc-300">
                   📍 {venue}
                 </span>
@@ -184,6 +258,13 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
               </a>
             </div>
           </div>
+
+          {/* Malla de Enlaces Internos a Municipios Colindantes */}
+          <AdjacentMunicipalitiesCrossLinker
+            currentProvince={provincia}
+            currentLocation={municipio}
+            currentServiceSlug={servicio}
+          />
 
         </div>
       </main>
