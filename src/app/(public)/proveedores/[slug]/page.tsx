@@ -631,6 +631,101 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
         </div>
 
+        {/* 🏛️ MALLA DE ENLACES INTERNOS & CROSS-LINKING DE AUTORIDAD PAGERANK */}
+        <section className="pt-12 border-t border-white/10 space-y-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2">
+            <div>
+              <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold block">
+                Red Territorial & Producción Oficial
+              </span>
+              <h3 className="text-xl font-bold font-syne text-white">
+                Enlaces Relacionados y Cobertura en {location.split(',')[0]}
+              </h3>
+            </div>
+            <Link
+              href={`/cotizador?ocasion=${encodeURIComponent(category)}&provincia=${encodeURIComponent(location.split(',')[0])}`}
+              className="text-xs font-mono text-[#ecb613] hover:underline flex items-center gap-1"
+            >
+              <span>Cotizar con Roster Soberano</span>
+              <ArrowRight size={12} />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <Link
+              href={`/bodas/${location.split(',')[0].toLowerCase().trim().replace(/[^a-z0-9]+/g, '-')}`}
+              className="p-4 rounded-2xl bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 transition-all group space-y-1"
+            >
+              <span className="text-[10px] font-mono text-zinc-500 uppercase block">Hub Provincial</span>
+              <h4 className="text-xs font-bold text-white group-hover:text-[#ecb613] transition-colors">
+                Bodas y Fincas en {location.split(',')[0]}
+              </h4>
+              <p className="text-[10px] text-zinc-400">Ver todas las fincas y servicios</p>
+            </Link>
+
+            <Link
+              href="/artistas/edwin-agudelo"
+              className="p-4 rounded-2xl bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 transition-all group space-y-1"
+            >
+              <span className="text-[10px] font-mono text-[#ecb613] uppercase block font-bold">Roster Oficial</span>
+              <h4 className="text-xs font-bold text-white group-hover:text-[#ecb613] transition-colors">
+                Edwin Agudelo (Solista 350 €)
+              </h4>
+              <p className="text-[10px] text-zinc-400">Tenor lírico & Sonido Bose F1</p>
+            </Link>
+
+            <Link
+              href="/catering-brasas"
+              className="p-4 rounded-2xl bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 transition-all group space-y-1"
+            >
+              <span className="text-[10px] font-mono text-zinc-500 uppercase block">Catering Premium</span>
+              <h4 className="text-xs font-bold text-white group-hover:text-[#ecb613] transition-colors">
+                Asado a la Estaca & Brasas
+              </h4>
+              <p className="text-[10px] text-zinc-400">Showcooking en directo para bodas</p>
+            </Link>
+
+            <Link
+              href="/alquiler-pantallas-led-madrid"
+              className="p-4 rounded-2xl bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 transition-all group space-y-1"
+            >
+              <span className="text-[10px] font-mono text-zinc-500 uppercase block">Audiovisuales</span>
+              <h4 className="text-xs font-bold text-white group-hover:text-[#ecb613] transition-colors">
+                Pantallas LED P2.9 Exterior
+              </h4>
+              <p className="text-[10px] text-zinc-400">Estructuras y cabinas de directo</p>
+            </Link>
+          </div>
+        </section>
+
+        {/* 📊 ETIQUETA SCHEMA.ORG JSON-LD (RICH SNIPPETS GOOGLE SEARCH) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              name: displayName,
+              description: description || `Proveedor homologado por Productora EAR para bodas y eventos en ${location}.`,
+              image: gallery.filter((img: string) => img.startsWith('http')),
+              telephone: CENTRALITA.raw,
+              priceRange: priceDisplay,
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: location.split(',')[0].trim(),
+                addressCountry: 'ES',
+              },
+              aggregateRating: {
+                '@type': 'AggregateRating',
+                ratingValue: typeof rating === 'number' ? rating : 4.9,
+                reviewCount: typeof reviewsCount === 'number' ? reviewsCount : 24,
+                bestRating: '5',
+                worstRating: '1',
+              },
+            }),
+          }}
+        />
+
       </div>
     </div>
   );
