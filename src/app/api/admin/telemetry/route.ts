@@ -19,7 +19,7 @@ export async function GET() {
       try {
         const [vendors, claimed, fleet, ledgerEntries] = await Promise.all([
           prisma.vendorShadowProfile.count(),
-          prisma.vendorShadowProfile.count({ where: { isClaimed: true } }),
+          prisma.vendorShadowProfile.count({ where: { status: 'VERIFIED_ACTIVE' } }),
           prisma.equipmentInventory.count(),
           prisma.commissionLedger.findMany({
             where: { status: 'PAID' },

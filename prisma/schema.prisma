@@ -375,16 +375,26 @@ model calendarBlock {
 }
 
 model VendorShadowProfile {
-  id              String   @id @default(uuid())
-  slug            String   @unique
-  rawName         String
-  description     String?
-  extractedImages String[]
-  claimToken      String   @unique
-  isClaimed       Boolean  @default(false)
-  sourceOrigin    String   @default("PARSED_LOCAL")
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id           String   @id @default(uuid())
+  shaHash      String   @unique
+  name         String
+  category     String
+  province     String
+  municipality String?
+  telephone    String?
+  priceRange   String?
+  rating       Float?
+  reviewsCount Int?
+  description  String?  @db.Text
+  imageUrls    String[]
+  claimToken   String   @unique
+  status       String   @default("GHOST_UNCLAIMED") // GHOST_UNCLAIMED | VERIFIED_ACTIVE
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([province, category], name: "idx_vendor_shadow_prov_cat")
+  @@index([claimToken], name: "idx_vendor_shadow_claim_token")
+  @@index([telephone], name: "idx_vendor_shadow_telephone")
 }
 
 model EquipmentInventory {
