@@ -33,6 +33,7 @@ import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligenc
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
+import { AIConciergeDock } from "@/components/chat/AIConciergeDock";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
@@ -120,6 +121,7 @@ export default function RootLayout({
                           <BespokePricerModal />
                           <OmniSearchModal />
                           <FloatingWhatsAppCta />
+                          <AIConciergeDock />
                           <SovereignMobileHUD />
                         </div>
                       </SmoothScrollProvider>
