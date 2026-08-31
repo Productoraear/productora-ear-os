@@ -20,6 +20,23 @@ export interface ProviderRecord {
   status: string;
 }
 
+let cachedLocalProviders: any[] | null = null;
+
+function getCachedFallbackProviders(): any[] {
+  if (cachedLocalProviders) return cachedLocalProviders;
+  try {
+    const jsonPath = path.join(process.cwd(), 'src', 'data', 'vampirized_providers.json');
+    if (fs.existsSync(jsonPath)) {
+      const raw = fs.readFileSync(jsonPath, 'utf-8');
+      cachedLocalProviders = JSON.parse(raw);
+      return cachedLocalProviders || [];
+    }
+  } catch (err) {
+    console.error('❌ [VAMPIRE SERVICE] Error cargando caché de proveedores:', err);
+  }
+  return [];
+}
+
 /**
  * 🏛️ READ-LAYER S-CLASS CON CACHÉ DE REACT E ISR
  * ===============================================
@@ -86,39 +103,35 @@ export const getProvidersByLocation = cache(
       }
     }
 
-    // 2. Fallback defensivo a vampirized_providers.json
+    // 2. Fallback defensivo a vampirized_providers.json (Con caché singleton en memoria)
     try {
-      const jsonPath = path.join(process.cwd(), 'src', 'data', 'vampirized_providers.json');
-      if (fs.existsSync(jsonPath)) {
-        const raw = fs.readFileSync(jsonPath, 'utf-8');
-        const jsonProviders: any[] = JSON.parse(raw);
+      const jsonProviders = getCachedFallbackProviders();
 
-        const filtered = jsonProviders
-          .filter((p) => {
-            const pProv = (p.provincia || p.province || '').toLowerCase();
-            const pCat = (p.category || '').toLowerCase();
-            const matchProv = !normProv || normProv === 'todas' || normProv === 'espana' || pProv.includes(normProv);
-            const matchCat = !normCat || normCat === 'all' || normCat === 'todos' || pCat.includes(normCat);
-            return matchProv && matchCat;
-          })
-          .slice(0, limit);
+      const filtered = jsonProviders
+        .filter((p) => {
+          const pProv = (p.provincia || p.province || '').toLowerCase();
+          const pCat = (p.category || '').toLowerCase();
+          const matchProv = !normProv || normProv === 'todas' || normProv === 'espana' || pProv.includes(normProv);
+          const matchCat = !normCat || normCat === 'all' || normCat === 'todos' || pCat.includes(normCat);
+          return matchProv && matchCat;
+        })
+        .slice(0, limit);
 
-        return filtered.map((p, idx) => ({
-          id: `fallback-${idx}`,
-          name: p.name || 'Proveedor Homologado',
-          category: p.category || 'Servicios para Eventos',
-          province: p.provincia || p.province || 'España',
-          municipality: p.municipality || null,
-          telephone: p.telephone || null,
-          priceRange: p.priceRange || p.price_range || null,
-          rating: p.rating || 4.8,
-          reviewsCount: p.reviewsCount || p.reviews_count || 12,
-          description: p.description || null,
-          imageUrls: Array.isArray(p.image_urls) ? p.image_urls : (p.images || []),
-          claimToken: p.claimToken || `EAR-CLAIM-${idx}`,
-          status: p.status || 'GHOST_UNCLAIMED',
-        }));
-      }
+      return filtered.map((p, idx) => ({
+        id: `fallback-${idx}`,
+        name: p.name || 'Proveedor Homologado',
+        category: p.category || 'Servicios para Eventos',
+        province: p.provincia || p.province || 'España',
+        municipality: p.municipality || null,
+        telephone: p.telephone || null,
+        priceRange: p.priceRange || p.price_range || null,
+        rating: p.rating || 4.8,
+        reviewsCount: p.reviewsCount || p.reviews_count || 12,
+        description: p.description || null,
+        imageUrls: Array.isArray(p.image_urls) ? p.image_urls : (p.images || []),
+        claimToken: p.claimToken || `EAR-CLAIM-${idx}`,
+        status: p.status || 'GHOST_UNCLAIMED',
+      }));
     } catch (fsError) {
       console.error('❌ [VAMPIRE SERVICE] Error en fallback JSON:', fsError);
     }
