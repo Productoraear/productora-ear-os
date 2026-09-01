@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { LiveSonometryGuard } from '@/components/vimume/LiveSonometryGuard';
 import { B2GTenderFeedCard } from '@/components/admin/B2GTenderFeedCard';
+import { FiturDiplomaticViewer } from '@/components/admin/FiturDiplomaticViewer';
 
 interface CuadrillaFleetItem {
   id: string;
@@ -43,7 +44,7 @@ export default function AdminFlotaPage() {
   const [selectedHub, setSelectedHub] = useState<string>('Méntrida (Hub Central)');
   const [filterStatus, setFilterStatus] = useState<string>('ALL');
   const [dispatchModalOpen, setDispatchModalOpen] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'FLEET' | 'SONOMETRY' | 'B2G'>('FLEET');
+  const [activeTab, setActiveTab] = useState<'FLEET' | 'SONOMETRY' | 'B2G' | 'FITUR'>('FLEET');
 
   // Cuadrillas activas de la flota EAR OS
   const [cuadrillas, setCuadrillas] = useState<CuadrillaFleetItem[]>([
@@ -217,6 +218,16 @@ export default function AdminFlotaPage() {
           >
             🏛️ Licitaciones B2G · PLACSP
           </button>
+          <button
+            onClick={() => setActiveTab('FITUR')}
+            className={`pb-3 text-xs font-mono font-bold uppercase tracking-wider transition-colors border-b-2 cursor-pointer ${
+              activeTab === 'FITUR'
+                ? 'text-amber-400 border-amber-400'
+                : 'text-gray-400 border-transparent hover:text-white'
+            }`}
+          >
+            🌍 FITUR 2026 · Embajadores Culturales (217)
+          </button>
         </div>
 
         {/* CONTENIDO 1: MATRIZ DE CUADRILLAS */}
@@ -341,10 +352,15 @@ export default function AdminFlotaPage() {
           <div className="space-y-6">
             <LiveSonometryGuard />
           </div>
-        ) : (
+        ) : activeTab === 'B2G' ? (
           /* CONTENIDO 3: LICITACIONES B2G — ESCÁNER PLACSP */
           <div className="space-y-6">
             <B2GTenderFeedCard />
+          </div>
+        ) : (
+          /* CONTENIDO 4: FITUR 2026 — EMBAJADORES CULTURALES (217 DESPACHOS) */
+          <div className="space-y-6">
+            <FiturDiplomaticViewer />
           </div>
         )}
       </div>
