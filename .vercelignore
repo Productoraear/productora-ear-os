@@ -36,6 +36,13 @@ tmp
 src/data/catalog/ADN_EAR_INDEX.json
 src/lib/NUCLEO_DATA
 src/scripts
+src/adn_vault_staging
+src/data/vimume-brain
+.firebase
+Marketing_Skills
+extracted_astra_neural
+_archive_cruft_2026
+g s console
 
 # Logs and environment files
 *.log
