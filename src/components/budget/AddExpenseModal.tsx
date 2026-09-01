@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Calendar, DollarSign, Tag, FileText } from 'lucide-react';
+import { X, Calendar, DollarSign, Tag, FileText, Building2 } from 'lucide-react';
 import { BudgetCategory, Vendor } from '@/types/budget';
 
 interface Props {
@@ -34,6 +34,8 @@ export default function AddExpenseModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.amount || Number(formData.amount) <= 0) return;
+
     await onSave({
       ...formData,
       amount: parseFloat(formData.amount),
@@ -57,36 +59,42 @@ export default function AddExpenseModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden">
-        <div className="flex items-center justify-between p-6 border-b bg-gradient-to-r from-rose-50 to-pink-50">
-          <h2 className="text-2xl font-bold text-gray-900">Nuevo Gasto</h2>
-          <button onClick={handleClose} className="p-2 hover:bg-white/50 rounded-xl transition-colors">
-            <X className="w-6 h-6" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div className="bg-[#09090d] border border-white/10 rounded-3xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-hidden">
+        <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/[0.02]">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613]">
+              <DollarSign size={18} />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-white font-syne uppercase tracking-wider">Nuevo Gasto / Reserva</h2>
+              <p className="text-[11px] font-mono text-white/40">Vincula proveedores y partidas al presupuesto</p>
+            </div>
+          </div>
+          <button onClick={handleClose} className="p-2 text-white/40 hover:text-white hover:bg-white/10 rounded-xl transition-colors">
+            <X size={18} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[calc(90vh-200px)] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[calc(90vh-180px)] overflow-y-auto">
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <FileText className="w-4 h-4" />
-              Descripción *
+            <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+              <FileText size={13} className="text-[#ecb613]" /> Concepto del Gasto *
             </label>
             <input
               type="text"
               required
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-transparent text-gray-900"
-              placeholder="Ej: Sonido Bose F1 Ceremonia"
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-white text-sm font-sans placeholder:text-white/20"
+              placeholder="Ej: Señal Solista Edwin Agudelo (350 € Base)"
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <DollarSign className="w-4 h-4" />
-                Cantidad (€) *
+              <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                <DollarSign size={13} className="text-[#ecb613]" /> Importe (€) *
               </label>
               <input
                 type="number"
@@ -94,39 +102,37 @@ export default function AddExpenseModal({
                 step="0.01"
                 value={formData.amount}
                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 text-gray-900"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-white text-sm font-jetbrains placeholder:text-white/20"
                 placeholder="0.00"
               />
             </div>
             <div>
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-                <Calendar className="w-4 h-4" />
-                Fecha *
+              <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                <Calendar size={13} className="text-[#ecb613]" /> Fecha *
               </label>
               <input
                 type="date"
                 required
                 value={formData.date}
                 onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 text-gray-900"
+                className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-white text-sm font-mono"
               />
             </div>
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <Tag className="w-4 h-4" />
-              Categoría *
+            <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+              <Tag size={13} className="text-[#ecb613]" /> Categoría del Presupuesto *
             </label>
             <select
               required
               value={formData.categoryId}
               onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 text-gray-900"
+              className="w-full px-4 py-3 bg-[#12121a] border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-white text-sm font-sans"
             >
-              <option value="">Seleccionar categoría</option>
+              <option value="">Seleccionar Categoría</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>
+                <option key={category.id} value={category.id} className="bg-[#12121a] text-white">
                   {category.icon || '📦'} {category.name}
                 </option>
               ))}
@@ -134,48 +140,47 @@ export default function AddExpenseModal({
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-              <Tag className="w-4 h-4" />
-              Proveedor (Opcional)
+            <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+              <Building2 size={13} className="text-[#a855f7]" /> Proveedor Homologado (Directorio EAR OS)
             </label>
             <select
               value={formData.vendorId}
               onChange={(e) => setFormData({ ...formData, vendorId: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 text-gray-900"
+              className="w-full px-4 py-3 bg-[#12121a] border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-white text-sm font-sans"
             >
-              <option value="">Seleccionar proveedor</option>
+              <option value="">Vincular Proveedor (Opcional)</option>
               {vendors.map((vendor) => (
-                <option key={vendor.id} value={vendor.id}>
-                  {vendor.name}
+                <option key={vendor.id} value={vendor.id} className="bg-[#12121a] text-white">
+                  {vendor.name} ({vendor.category || 'Servicio'})
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="text-sm font-semibold text-gray-700 mb-2 block">Notas (Opcional)</label>
+            <label className="text-xs font-mono uppercase text-white/60 mb-1.5 block">Notas / Observaciones del Rider</label>
             <textarea
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              rows={3}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-rose-500 text-gray-900"
-              placeholder="Detalles adicionales del contrato o rider..."
+              rows={2}
+              className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-white text-xs font-sans placeholder:text-white/20"
+              placeholder="Detalles sobre depósito Hold 100 €, acústica 12 W/pax o fechas..."
             />
           </div>
 
-          <div className="flex justify-end gap-4 pt-4 border-t">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
             <button
               type="button"
               onClick={handleClose}
-              className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+              className="px-5 py-2.5 bg-white/5 hover:bg-white/10 text-white/70 text-xs font-mono rounded-xl transition-colors"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-6 py-3 bg-gradient-to-r from-rose-500 to-pink-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+              className="px-6 py-2.5 bg-gradient-to-r from-[#ecb613] to-amber-500 hover:from-amber-500 hover:to-amber-400 text-black font-black text-xs font-mono uppercase tracking-wider rounded-xl shadow-lg shadow-[#ecb613]/20 transition-all transform hover:scale-[1.02]"
             >
-              Guardar Gasto
+              Registrar Gasto
             </button>
           </div>
         </form>

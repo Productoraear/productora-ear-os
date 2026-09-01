@@ -23,27 +23,30 @@ export async function GET() {
     });
 
     if (!budget) {
-      const defaultCategories = [
-        { name: 'Ceremonia', estimatedCost: 1225, order: 1, icon: '💍', color: '#F59E0B' },
-        { name: 'Banquete', estimatedCost: 139338, order: 2, icon: '🍽️', color: '#EF4444' },
-        { name: 'Música', estimatedCost: 10663, order: 3, icon: '🎵', color: '#8B5CF6' },
-        { name: 'Invitaciones', estimatedCost: 3112, order: 4, icon: '💌', color: '#EC4899' },
-        { name: 'Detalles de boda', estimatedCost: 3275, order: 5, icon: '🎁', color: '#14B8A6' },
-        { name: 'Flores y Decoración', estimatedCost: 7775, order: 6, icon: '🌸', color: '#F472B6' },
-        { name: 'Foto y Vídeo', estimatedCost: 18038, order: 7, icon: '📸', color: '#6366F1' },
-        { name: 'Transporte', estimatedCost: 8188, order: 8, icon: '🚗', color: '#3B82F6' },
-        { name: 'Joyería', estimatedCost: 5488, order: 9, icon: '💎', color: '#A855F7' },
-        { name: 'Novia y Complementos', estimatedCost: 14513, order: 10, icon: '👰', color: '#EC4899' },
-        { name: 'Novio y Complementos', estimatedCost: 7972, order: 11, icon: '🤵', color: '#3B82F6' },
-        { name: 'Belleza y Salud', estimatedCost: 1726, order: 12, icon: '💄', color: '#F59E0B' },
-        { name: 'Viaje de Novios', estimatedCost: 28687, order: 13, icon: '✈️', color: '#10B981' },
+      const cleanCategories = [
+        { name: 'Ceremonia & Protocolo', estimatedCost: 0, order: 1, icon: '💍', color: '#ecb613' },
+        { name: 'Espacio / Finca', estimatedCost: 0, order: 2, icon: '🏰', color: '#a855f7' },
+        { name: 'Catering & Banquete', estimatedCost: 0, order: 3, icon: '🍽️', color: '#f59e0b' },
+        { name: 'Música & Sonorización Bose', estimatedCost: 0, order: 4, icon: '🎙️', color: '#ecb613' },
+        { name: 'Foto & Vídeo Cinematográfico', estimatedCost: 0, order: 5, icon: '📸', color: '#3b82f6' },
+        { name: 'Flores & Decoración', estimatedCost: 0, order: 6, icon: '🌸', color: '#ec4899' },
+        { name: 'Iluminación & Efectos Especiales', estimatedCost: 0, order: 7, icon: '✨', color: '#8b5cf6' },
+        { name: 'Novia & Complementos', estimatedCost: 0, order: 8, icon: '👰', color: '#f43f5e' },
+        { name: 'Novio & Sastrería', estimatedCost: 0, order: 9, icon: '🤵', color: '#06b6d4' },
+        { name: 'Joyería & Alianzas', estimatedCost: 0, order: 10, icon: '💎', color: '#10b981' },
+        { name: 'Invitaciones & Papelería', estimatedCost: 0, order: 11, icon: '💌', color: '#eab308' },
+        { name: 'Transporte VIP / Cuadrillas', estimatedCost: 0, order: 12, icon: '🚗', color: '#6366f1' },
+        { name: 'Luna de Miel & Experiencias', estimatedCost: 0, order: 13, icon: '✈️', color: '#14b8a6' },
       ];
 
       budget = await prisma.budget.create({
         data: {
-          totalBudget: 250000,
+          totalBudget: 0,
+          finalCost: 0,
+          paidAmount: 0,
+          pendingAmount: 0,
           categories: {
-            create: defaultCategories,
+            create: cleanCategories,
           },
         },
         include: {
@@ -74,7 +77,11 @@ export async function PUT(request: NextRequest) {
       where: { id: budgetId },
       data: { totalBudget: Number(totalBudget) },
       include: {
-        categories: true,
+        categories: {
+          include: { expenses: true }
+        },
+        expenses: true,
+        payments: true
       },
     });
 
@@ -84,4 +91,3 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: 'Error al actualizar presupuesto' }, { status: 500 });
   }
 }
-
