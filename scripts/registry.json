@@ -146,6 +146,24 @@
       "inputs": ["D:\\EAR_VAULT\\VAMPIRIZADO_POR_GEMINI\\FITUR_2026_Expositores_EAR.json"],
       "outputs": "src/data/b2g/fitur_institutional_leads.json",
       "cli": "python scripts/ingest_fitur_institutional_leads.py"
+    },
+    {
+      "id": "generate_dossier_pdf",
+      "name": "generate_dossier_pdf.py",
+      "path": "scripts/generate_dossier_pdf.py",
+      "purpose": "Generación del Dossier Oficial de Embajadores Culturales en HTML y compilación a PDF A4 mediante Playwright.",
+      "inputs": ["Plantilla S-Class HTML"],
+      "outputs": "docs/dossiers/DOSSIER_OFICIAL_EMBAJADORES_CULTURALES_B2G.pdf + public/dossiers/dossier-embajadores-culturales-fitur-2026.pdf",
+      "cli": "python scripts/generate_dossier_pdf.py"
+    },
+    {
+      "id": "generate_diplomatic_dispatches",
+      "name": "generate_diplomatic_dispatches.py",
+      "path": "scripts/generate_diplomatic_dispatches.py",
+      "purpose": "Generador de 217 oficios diplomáticos individualizados con propuesta técnica y enlace al dossier para delegados de FITUR.",
+      "inputs": ["src/data/b2g/fitur_institutional_leads.json"],
+      "outputs": "src/data/b2g/diplomatic_dispatches_fitur26.json",
+      "cli": "python scripts/generate_diplomatic_dispatches.py"
     }
   ]
 }
