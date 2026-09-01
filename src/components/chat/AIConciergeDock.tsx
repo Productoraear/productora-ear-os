@@ -47,6 +47,13 @@ export function AIConciergeDock() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Escuchar evento global de apertura desde el HUD móvil o botones
+  useEffect(() => {
+    const handleOpen = () => setIsOpen(true);
+    window.addEventListener('open-ai-concierge', handleOpen);
+    return () => window.removeEventListener('open-ai-concierge', handleOpen);
+  }, []);
+
   // Cargar historial de LocalStorage al montar
   useEffect(() => {
     try {
@@ -147,10 +154,10 @@ export function AIConciergeDock() {
 
   return (
     <>
-      {/* Botón Flotante Tridimensional del Dock */}
+      {/* Botón Flotante Tridimensional del Dock (Solo visible en Desktop para no interferir con el HUD Móvil) */}
       {!isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-          <div className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c0c14]/90 border border-[#ecb613]/30 text-[11px] font-mono text-[#ecb613] shadow-2xl backdrop-blur-md animate-pulse">
+        <div className="hidden md:flex fixed bottom-6 right-6 z-50 items-center gap-3">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c0c14]/90 border border-[#ecb613]/30 text-[11px] font-mono text-[#ecb613] shadow-2xl backdrop-blur-md animate-pulse">
             <Sparkles className="w-3.5 h-3.5" />
             <span>AI Concierge Territorial</span>
           </div>
