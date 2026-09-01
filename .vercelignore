@@ -1,9 +1,38 @@
-# 🛡️ VERCEL DOMINANCE SHIELD V137 — WINDOWS-COMPATIBLE IGNORE
+# 🛡️ VERCEL DOMINANCE SHIELD V138 — ZERO-BLOAT S-CLASS IGNORE
 .next
 node_modules
 .git
 .vercel
 .firebase
+.models
+EAR_OS_CONTROL
+BASE_DE_CONOCIMIENTO
+00_INBOX_COGNITIVO
+data_vault
+design-vault
+sync_nexus
+Marketing_Skills
+ALMACEN_DE_CUARENTENA_6M
+_ALMACEN_DE_CUARENTENA_6M
+_auditoria
+quarantine
+docs
+scripts
+logs
+scratch
+tools
+/tools
+tmp
+extracted_astra_neural
+_archive_cruft_2026
+g s console
+
+# Heavy vaults inside src
+src/adn_vault_staging
+src/data/vimume-brain
+src/data/catalog/ADN_EAR_INDEX.json
+src/lib/NUCLEO_DATA
+src/scripts
 
 # Media and heavy binaries
 *.m4a
@@ -16,33 +45,6 @@ node_modules
 *.pdf
 *.csv
 *.xlsx
-
-# Knowledge and local DBs
-BASE_DE_CONOCIMIENTO
-data_vault
-design-vault
-sync_nexus
-EAR_OS_CONTROL
-Marketing_Skills
-ALMACEN_DE_CUARENTENA_6M
-_ALMACEN_DE_CUARENTENA_6M
-quarantine
-docs
-scripts
-logs
-scratch
-/tools
-tmp
-src/data/catalog/ADN_EAR_INDEX.json
-src/lib/NUCLEO_DATA
-src/scripts
-src/adn_vault_staging
-src/data/vimume-brain
-.firebase
-Marketing_Skills
-extracted_astra_neural
-_archive_cruft_2026
-g s console
 
 # Logs and environment files
 *.log
