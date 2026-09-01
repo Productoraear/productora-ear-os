@@ -321,8 +321,17 @@ def build_raw_queue() -> list[Job]:
     for cat_name, path_cat in BODAS_CATEGORIES:
         for prov_name, prov_slug in PROVINCIAS:
             queue.append(Job("bodas", cat_name, prov_name, bodas_url(path_cat, prov_slug)))
+            # Paginación profunda (páginas 2 a 5 para agotar todo el inventario provincial)
+            for page in range(2, 6):
+                p_url = f"{bodas_url(path_cat, prov_slug)}?page={page}"
+                queue.append(Job("bodas", f"{cat_name} (Pág {page})", prov_name, p_url))
+
     for hcat_name, hcat_slug in TUBODAHOLA_CATEGORIES:
         queue.append(Job("tubodahola", hcat_name, "Nacional/Luxury", tubodahola_url(hcat_slug)))
+        for page in range(2, 5):
+            h_url = f"{tubodahola_url(hcat_slug)}page/{page}/"
+            queue.append(Job("tubodahola", f"{hcat_name} (Pág {page})", "Nacional/Luxury", h_url))
+
     for fcat_name, fcat_slug in FANDERS_CATEGORIES:
         queue.append(Job("fanders", fcat_name, None, fanders_url(fcat_slug)))
     return queue

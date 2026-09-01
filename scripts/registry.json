@@ -137,6 +137,15 @@
       "inputs": ["src/data/vampirized_providers.json"],
       "outputs": "public/assets/shadow_vendors/*.jpg",
       "cli": "python scripts/mirror_shadow_assets.py"
+    },
+    {
+      "id": "ingest_fitur_institutional_leads",
+      "name": "ingest_fitur_institutional_leads.py",
+      "path": "scripts/ingest_fitur_institutional_leads.py",
+      "purpose": "Ingesta y clasificación de 967 expositores de FITUR 2026 (IFEMA) como leads de Embajadores Culturales B2G y Lujo MICE.",
+      "inputs": ["D:\\EAR_VAULT\\VAMPIRIZADO_POR_GEMINI\\FITUR_2026_Expositores_EAR.json"],
+      "outputs": "src/data/b2g/fitur_institutional_leads.json",
+      "cli": "python scripts/ingest_fitur_institutional_leads.py"
     }
   ]
 }
