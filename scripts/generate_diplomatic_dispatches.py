@@ -46,6 +46,7 @@ Productora EAR le ofrece un servicio llave en mano homologado bajo el régimen d
 2. RIDER ACÚSTICO BOSE F1 HOMOLOGADO: Columnas Bose F1 Model 812 calibradas a 12 W/pax con limitación estricta < 75 dB SPL, garantizando que el cuerpo diplomático pueda conversar con total nitidez.
 3. COBERTURA Y FACTURACIÓN ELECTRÓNICA: Póliza de Responsabilidad Civil de 1.000.000 €, altas en Régimen de Artistas y facturación oficial reglamentaria a través de la plataforma FACe con sus códigos DIR3.
 4. IMPACTO SOCIAL Y RETORNO SROI (4.85x): Liquidación soberana 80% directa a los artistas y 10% destinado a programas clínicos de musicoterapia VIMUME para mayores de su colectividad.
+5. RESPALDO A ARTISTAS DE SU DIÁSPORA (SIN COSTE ADICIONAL): Para saldar la histórica falta de medios que sufren los talentos de su colectividad en el exterior, cedemos nuestra infraestructura técnica completa (Bose F1 / Shure Axient) y la mentoría escénica de Edwin Agudelo para que los artistas de su comunidad participen con honores en su recepción sin sobrecoste presupuestario para la legación.
 
 ACREDITACIÓN INSTITUCIONAL PREVIA:
 Productora EAR y Edwin Agudelo cuentan con el aval histórico de representación diplomática acreditada (Oficio de Agradecimiento Oficial del Consulado General Central de Colombia en Madrid por la gala inaugural en el Teatro de La Latina ante la Señora Ministra de Relaciones Exteriores).

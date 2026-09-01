@@ -363,8 +363,18 @@ HTML_CONTENT = """<!DOCTYPE html>
           <td>El 10% del split financia talleres clínicos de musicoterapia para centros de mayores y personas en situación de vulnerabilidad vinculadas a la colectividad.</td>
           <td class="text-right font-mono">SROI 4.85x</td>
         </tr>
+        <tr>
+          <td><strong>Respaldo a Artistas Diáspora</strong></td>
+          <td><strong>SIN COSTE ADICIONAL</strong>: Cesión de la infraestructura técnica (Bose F1 / Shure Axient) y mentoría escénica de Edwin Agudelo para que artistas emergentes de su colectividad participen en sus recepciones de gala.</td>
+          <td class="text-right font-mono">Sin Coste Extra</td>
+        </tr>
       </tbody>
     </table>
+
+    <div class="legal-box" style="margin-top: 12px; border-left: 3.5px solid #d97706; background: #fffbeb;">
+      <strong>Compromiso con su Comunidad (Sin Coste Adicional para la Legación):</strong>
+      Históricamente, los consulados han deseado arropar a sus artistas en el exterior pero han carecido de presupuesto técnico y medios. Al contratar a Productora EAR, su delegación dota a los talentos de su colectividad en España de equipamiento de primer nivel y dirección artística profesional <strong>completamente bonificado</strong> dentro del mismo expediente.
+    </div>
 
     <h2>3. Cuadro Económico y Liquidación Soberana</h2>
     <p>
