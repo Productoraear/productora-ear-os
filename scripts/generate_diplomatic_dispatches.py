@@ -36,17 +36,19 @@ Marco Contractual: Contrato Menor de Servicios Artísticos (Art. 118 Ley 9/2017 
 
 Estimado/a {contact}:
 
-Con motivo de la presencia de {entity} en la próxima edición de FITUR en IFEMA Madrid, nos dirigimos a usted desde Productora EAR para presentarle formalmente el "Programa Soberano de Embajadores Culturales y Diplomacia Pública".
+Con motivo de la presencia de {entity} en la próxima edición de FITUR en IFEMA Madrid, nos dirigimos a usted desde Productora EAR para presentarle una propuesta operativa de alto impacto diseñada a la medida de su legación:
 
-Sabemos que su delegación requiere una representación escénica impecable durante los actos institucionales y recepciones de gala, y que simultáneamente existe el compromiso de visibilizar y dignificar a los mejores talentos y artistas de su comunidad en España.
+1. EDWIN AGUDELO COMO SU E-MANAGER INSTITUCIONAL:
+Ponemos a su entera disposición a Edwin Agudelo (+34 años de oficio escénico y aval diplomático acreditado) como su E-Manager y director artístico, coordinando la puesta en escena, protocolo y etiqueta de Estado durante sus actos en FITUR.
 
-Productora EAR le ofrece un servicio llave en mano homologado bajo el régimen de Contrato Menor (Art. 118 LCSP) por un importe cerrado de 14.250,00 € + IVA (tramitación directa sin concurso público):
+2. INVERSIÓN TÉCNICA EN SU STAND Y TARIFA BLINDADA (PROMEDIO 2 ÚLTIMOS AÑOS):
+El coste presupuestado se destina íntegramente a la dotación técnica que su stand requiere (sonido Bose F1 Model 812 a 12 W/pax < 75 dB SPL, iluminación escénica, microfonía Shure Axient y técnicos audiovisuales para montajes similares a sus ejercicios anteriores). Respetamos estrictamente en promedio el precio de sus últimos 2 años, sin sobrecostes.
 
-1. MENTORÍA ESCÉNICA Y DIRECCIÓN ARTÍSTICA: Supervisión directa a cargo del tenor lírico y productor Edwin Agudelo (+34 años de trayectoria escénica profesional), formando y preparando a los artistas de su colectividad para el protocolo y etiqueta de recepciones de Estado.
-2. RIDER ACÚSTICO BOSE F1 HOMOLOGADO: Columnas Bose F1 Model 812 calibradas a 12 W/pax con limitación estricta < 75 dB SPL, garantizando que el cuerpo diplomático pueda conversar con total nitidez.
-3. COBERTURA Y FACTURACIÓN ELECTRÓNICA: Póliza de Responsabilidad Civil de 1.000.000 €, altas en Régimen de Artistas y facturación oficial reglamentaria a través de la plataforma FACe con sus códigos DIR3.
-4. IMPACTO SOCIAL Y RETORNO SROI (4.85x): Liquidación soberana 80% directa a los artistas y 10% destinado a programas clínicos de musicoterapia VIMUME para mayores de su colectividad.
-5. RESPALDO A ARTISTAS DE SU DIÁSPORA (SIN COSTE ADICIONAL): Para saldar la histórica falta de medios que sufren los talentos de su colectividad en el exterior, cedemos nuestra infraestructura técnica completa (Bose F1 / Shure Axient) y la mentoría escénica de Edwin Agudelo para que los artistas de su comunidad participen con honores en su recepción sin sobrecoste presupuestario para la legación.
+3. PROGRAMA DE FORMACIÓN A 2 ARTISTAS DE SU COMUNIDAD (TOTALMENTE BONIFICADO):
+Elegimos a 2 artistas o agrupaciones emergentes de su colectividad en España para brindarles formación profesional durante 2 meses mediante 8 mentorías de alto impacto (valoradas en más de 1.000,00 €) impartidas por Edwin Agudelo. Diseñamos su encaje como Embajadores Culturales para que ofrezcan una muestra artística de gala que represente con máxima dignidad los valores e identidad de su país o región.
+
+4. LA VENTAJA SOBERANA:
+Su delegación resuelve la inversión técnica obligatoria de su stand en FITUR bajo el marco legal de Contrato Menor (Art. 118 LCSP < 15.000 € / 14.250,00 € + IVA vía FACe) y, al mismo tiempo, salda la histórica falta de apoyos y presupuesto hacia sus talentos en el exterior arropándolos con equipamiento de primer nivel sin ningún coste adicional para la entidad.
 
 ACREDITACIÓN INSTITUCIONAL PREVIA:
 Productora EAR y Edwin Agudelo cuentan con el aval histórico de representación diplomática acreditada (Oficio de Agradecimiento Oficial del Consulado General Central de Colombia en Madrid por la gala inaugural en el Teatro de La Latina ante la Señora Ministra de Relaciones Exteriores).
@@ -54,12 +56,12 @@ Productora EAR y Edwin Agudelo cuentan con el aval histórico de representación
 Puede consultar y descargar el Dossier Técnico Oficial y la Declaración Responsable en el siguiente enlace:
 {DOSSIER_URL}
 
-Quedamos a su disposición para coordinar una reunión técnica previa en el teléfono oficial de Productora EAR ({CENTRALITA}) o respondiendo directamente a esta comunicación.
+Quedamos a su disposición para coordinar los detalles técnicos y la selección de sus 2 artistas en el teléfono oficial de Productora EAR ({CENTRALITA}) o respondiendo directamente a esta comunicación.
 
 Atentamente,
 
 Edwin Agudelo
-Dirección Artística y Producción Institucional
+E-Manager & Dirección Artística Institucional
 Productora EAR — Madrid // Méntrida
 """
     return {

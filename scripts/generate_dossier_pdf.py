@@ -331,8 +331,10 @@ HTML_CONTENT = """<!DOCTYPE html>
       <div class="badge-protocol">PLIEGO TÉCNICO S-CLASS</div>
     </div>
 
-    <h2>2. Contenido Integral del Servicio</h2>
-    <p>El programa suministra todos los elementos requeridos para la representación institucional de su delegación:</p>
+    <h2>2. Contenido Integral del Servicio & Programa de Embajadores Culturales</h2>
+    <p>
+      El coste del expediente se destina íntegramente a la <strong>inversión técnica en su stand</strong> (sonido Bose F1, iluminación, técnicos audiovisuales y montajes similares a los de ejercicios anteriores), <strong>respetando el precio promedio de sus últimos 2 años</strong>. Como ventaja estratégica exclusiva y sin coste adicional, el programa incluye:
+    </p>
 
     <table>
       <thead>
@@ -344,36 +346,36 @@ HTML_CONTENT = """<!DOCTYPE html>
       </thead>
       <tbody>
         <tr>
-          <td><strong>Mentoría Escénica</strong></td>
-          <td>Dirección artística a cargo de <strong>Edwin Agudelo</strong> (+34 años de trayectoria escénica real). Ensayos de etiqueta, dicción, protocolo diplomático y repertorio de gala.</td>
-          <td class="text-right font-mono">100% Homologado</td>
+          <td><strong>Edwin Agudelo como E-Manager</strong></td>
+          <td>Dirección artística y gestión escénica institucional por <strong>Edwin Agudelo</strong> (+34 años de oficio real). Acompañamiento integral, protocolo diplomático y representación de los valores patrios de la delegación.</td>
+          <td class="text-right font-mono">E-Manager Asignado</td>
         </tr>
         <tr>
-          <td><strong>Rider Acústico Bose F1</strong></td>
-          <td>Columnas de dispersión vertical Bose F1 Model 812 + Shure Axient Digital. Presión controlada a <strong>12 W/pax</strong> y calibración de confort <strong>&lt; 75 dB SPL</strong>.</td>
-          <td class="text-right font-mono">Zero Distorsión</td>
+          <td><strong>Inversión Stand: Audio & Luz</strong></td>
+          <td>Montaje completo de stand similar a sus ejercicios anteriores: Columnas Bose F1 Model 812 + microfonía Shure Axient Digital e iluminación calibrada a <strong>12 W/pax</strong> y <strong>&lt; 75 dB SPL</strong>.</td>
+          <td class="text-right font-mono">Precio Promedio 2 Años</td>
         </tr>
         <tr>
-          <td><strong>Cobertura Jurídica</strong></td>
-          <td>Póliza de Responsabilidad Civil de 1.000.000 €, cumplimiento en PRL, altas en Régimen de Artistas y facturación oficial reglamentaria.</td>
-          <td class="text-right font-mono">Póliza 1.000.000 €</td>
+          <td><strong>Formación: 2 Artistas / 2 Meses</strong></td>
+          <td><strong>BONIFICADO (&gt; 1.000 € de valor)</strong>: Selección de 2 artistas emergentes de su colectividad/diáspora para cursar <strong>2 meses de formación con 8 mentorías de alto impacto</strong> con Edwin Agudelo.</td>
+          <td class="text-right font-mono">8 Mentorías Élite</td>
         </tr>
         <tr>
-          <td><strong>Impacto Terapéutico VIMUME</strong></td>
-          <td>El 10% del split financia talleres clínicos de musicoterapia para centros de mayores y personas en situación de vulnerabilidad vinculadas a la colectividad.</td>
-          <td class="text-right font-mono">SROI 4.85x</td>
+          <td><strong>Muestra Artística de Estado</strong></td>
+          <td>Puesta en escena de los 2 artistas en su stand/gala de FITUR con repertorio protocolar alineado con la identidad y valores de su país o región.</td>
+          <td class="text-right font-mono">Representación Oficial</td>
         </tr>
         <tr>
-          <td><strong>Respaldo a Artistas Diáspora</strong></td>
-          <td><strong>SIN COSTE ADICIONAL</strong>: Cesión de la infraestructura técnica (Bose F1 / Shure Axient) y mentoría escénica de Edwin Agudelo para que artistas emergentes de su colectividad participen en sus recepciones de gala.</td>
-          <td class="text-right font-mono">Sin Coste Extra</td>
+          <td><strong>Cobertura & Impacto VIMUME</strong></td>
+          <td>Póliza RC de 1.000.000 €, altas en Régimen de Artistas y 10% del split soberano destinado a estimulación neurocognitiva 40Hz para mayores de su colectividad.</td>
+          <td class="text-right font-mono">SROI 4.85x / Póliza 1M€</td>
         </tr>
       </tbody>
     </table>
 
     <div class="legal-box" style="margin-top: 12px; border-left: 3.5px solid #d97706; background: #fffbeb;">
-      <strong>Compromiso con su Comunidad (Sin Coste Adicional para la Legación):</strong>
-      Históricamente, los consulados han deseado arropar a sus artistas en el exterior pero han carecido de presupuesto técnico y medios. Al contratar a Productora EAR, su delegación dota a los talentos de su colectividad en España de equipamiento de primer nivel y dirección artística profesional <strong>completamente bonificado</strong> dentro del mismo expediente.
+      <strong>La Ventaja Diplomática Soberana (Inversión Eficiente + Apoyo a su Diáspora):</strong>
+      Su entidad realiza la inversión técnica habitual para su stand de FITUR (sonido, iluminación, técnicos) bajo tarifa blindada en el promedio de sus últimos 2 años. A cambio, recibe la dirección de Edwin Agudelo como <strong>E-Manager</strong> y resolvemos la histórica falta de apoyo a sus talentos locales: 2 artistas de su comunidad reciben 2 meses de formación y 8 mentorías profesionales para brillar en FITUR con rider de gala, sin que la legación gaste un solo euro extra.
     </div>
 
     <h2>3. Cuadro Económico y Liquidación Soberana</h2>

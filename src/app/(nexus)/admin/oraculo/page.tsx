@@ -164,21 +164,24 @@ Selecciona el perfil de consulta (Instituciones, Clientes, Artistas o Simulador)
   const generateAstraResponse = (query: string, role: StakeholderRole): { text: string; actionButton?: { label: string; url: string } } => {
     const q = query.toLowerCase();
 
-    // 1. INSTITUCIONES / DIPLOMACIA / APOYO ARTISTAS SIN COSTE ADICIONAL
-    if (q.includes('sin coste') || q.includes('apoyo') || q.includes('diáspora') || q.includes('comunidad') || (q.includes('artista') && role === 'INSTITUCIONES')) {
+    // 1. INSTITUCIONES / DIPLOMACIA / APOYO ARTISTAS SIN COSTE ADICIONAL / E-MANAGER
+    if (q.includes('sin coste') || q.includes('apoyo') || q.includes('diáspora') || q.includes('comunidad') || q.includes('emanager') || q.includes('e-manager') || (q.includes('artista') && role === 'INSTITUCIONES')) {
       return {
-        text: `🏛️ **CLÁUSULA DE RESPALDO Y DIGNIFICACIÓN A ARTISTAS DE LA DIÁSPORA (SIN COSTE ADICIONAL)**
+        text: `🏛️ **PROPUESTA A CONSULADOS Y EMBAJADAS EXPOSITORES DE FITUR**
 
-**Resumen Operativo:**
-Históricamente, los consulados y embajadas han deseado apoyar a sus artistas locales y en la diáspora, pero se han visto frenados por la falta de partidas presupuestarias para producción técnica y sonido.
+**1. Edwin Agudelo como E-Manager Institucional:**
+Ponemos a disposición de su delegación a **Edwin Agudelo** en calidad de E-Manager y director artístico (+34 años de tablas y aval diplomático acreditado ante cancillerías) para liderar la puesta en escena, protocolo y etiqueta de Estado.
 
-**La Solución Soberana EAR:**
-Al contratar a Productora EAR para la producción de su gala en FITUR o recepción oficial bajo el régimen de Contrato Menor (14.250 € + IVA):
-1. **Infraestructura de Gala Sin Coste Extra:** Ponemos a disposición de hasta 3 artistas o agrupaciones emergentes de su comunidad la infraestructura técnica completa (Columnas Bose F1 12 W/pax, microfonía Shure Axient, iluminación de conservatorio).
-2. **Mentoría Artística de Edwin Agudelo:** Ensayos de dicción, repertorio protocolar y etiqueta de Estado con el tenor lírico Edwin Agudelo (+34 años de tablas), resolviendo la brecha de preparación escénica.
-3. **Altas Laborales & Póliza de 1M€:** Cobertura de Seguridad Social en Régimen de Artistas y Responsabilidad Civil para todos los intervinientes.
+**2. Blindaje de Precio Histórico (Promedio 2 Últimos Años):**
+Respetamos en promedio el precio que su entidad haya invertido en sus montajes de los últimos 2 años, blindando la cotización frente a subidas inflacionarias.
 
-El cónsul o embajador cumple con su delegación y simultáneamente se convierte en mecenas y protector de sus talentos sin desembolsar un solo euro adicional.`,
+**3. El Coste es por la Inversión en su Stand:**
+El presupuesto se destina íntegramente a lo que su legación ya necesita contratar: montaje de su stand en FITUR, sonido Bose F1 Model 812 a 12 W/pax (< 75 dB SPL), iluminación escénica, microfonía Shure Axient y técnicos audiovisuales para montajes similares a los anteriores.
+
+**4. Formación a 2 Artistas de su Comunidad (Totalmente Bonificada, > 1.000 €):**
+Elegimos a **2 de sus artistas locales/diáspora** para brindarles formación durante **2 meses con 8 mentorías de alto impacto** (valoradas en más de 1.000,00 €) impartidas por Edwin Agudelo. Buscamos su encaje como **Embajadores Culturales** con propuestas escénicas para que representen y ofrezcan una muestra artística de gala alineada con los valores e identidad de su entidad.
+
+**La Ventaja Diplomática:** Su delegación cubre la inversión técnica que ya tenía prevista para FITUR y, al mismo tiempo, ayuda y dignifica a sus talentos locales sin ningún coste adicional para la misión.`,
         actionButton: {
           label: 'Descargar Dossier Oficial B2G (PDF)',
           url: '/dossiers/dossier-embajadores-culturales-fitur-2026.pdf'
