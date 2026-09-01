@@ -47,6 +47,9 @@ Productora EAR le ofrece un servicio llave en mano homologado bajo el régimen d
 3. COBERTURA Y FACTURACIÓN ELECTRÓNICA: Póliza de Responsabilidad Civil de 1.000.000 €, altas en Régimen de Artistas y facturación oficial reglamentaria a través de la plataforma FACe con sus códigos DIR3.
 4. IMPACTO SOCIAL Y RETORNO SROI (4.85x): Liquidación soberana 80% directa a los artistas y 10% destinado a programas clínicos de musicoterapia VIMUME para mayores de su colectividad.
 
+ACREDITACIÓN INSTITUCIONAL PREVIA:
+Productora EAR y Edwin Agudelo cuentan con el aval histórico de representación diplomática acreditada (Oficio de Agradecimiento Oficial del Consulado General Central de Colombia en Madrid por la gala inaugural en el Teatro de La Latina ante la Señora Ministra de Relaciones Exteriores).
+
 Puede consultar y descargar el Dossier Técnico Oficial y la Declaración Responsable en el siguiente enlace:
 {DOSSIER_URL}
 
@@ -64,10 +67,13 @@ Productora EAR — Madrid // Méntrida
         "contact_person": contact,
         "country_region": country,
         "ifema_stand": stand,
+        "sector": lead.get("sector", "Institucional"),
         "target_budget": 14250.0,
         "email_subject": subject,
         "dispatch_body": body,
         "dossier_pdf_url": DOSSIER_URL,
+        "navigable_urls": lead.get("navigable_urls", {}),
+        "consular_endorsement": "Oficio de Agradecimiento Oficial del Consulado General Central de Colombia en Madrid (Teatro de La Latina)",
         "status": "READY_TO_DISPATCH"
     }
 

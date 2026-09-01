@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LayoutDashboard, 
   Activity, 
@@ -15,7 +15,9 @@ import {
   Settings, 
   ShieldCheck, 
   LogOut,
-  Smartphone
+  Smartphone,
+  Menu,
+  X
 } from 'lucide-react';
 import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
@@ -36,6 +38,7 @@ const NAV_ITEMS = [
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -53,11 +56,11 @@ export function Sidebar() {
     window.location.href = '/';
   };
 
-  return (
-    <aside className="w-64 h-screen bg-[#0a0a0a] border-r border-white/5 flex flex-col sticky top-0 overflow-hidden z-[60] pointer-events-auto shadow-[20px_0_50px_rgba(0,0,0,0.5)]">
+  const navContent = (
+    <div className="flex flex-col h-full bg-[#0a0a0a]">
       {/* LOGO S-CLASS */}
-      <div className="p-6 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
-        <Link href="/admin" className="flex flex-col gap-0.5 group">
+      <div className="p-6 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent flex items-center justify-between">
+        <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex flex-col gap-0.5 group">
           <div className="font-serif italic font-black text-2xl tracking-tighter text-[#d4a855] group-hover:text-[#ecb613] transition-colors">
             S-CLASS
           </div>
@@ -65,6 +68,14 @@ export function Sidebar() {
             OPERATOR 01
           </div>
         </Link>
+        {/* Botón cerrar en móvil */}
+        <button
+          onClick={() => setMobileOpen(false)}
+          className="md:hidden p-2 rounded-xl text-zinc-400 hover:text-white bg-white/5"
+          aria-label="Cerrar menú lateral"
+        >
+          <X size={18} />
+        </button>
       </div>
 
       {/* NAVEGACIÓN */}
@@ -72,7 +83,11 @@ export function Sidebar() {
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.path;
           return (
-            <Link key={item.path} href={item.path}>
+            <Link 
+              key={item.path} 
+              href={item.path}
+              onClick={() => setMobileOpen(false)}
+            >
               <div className={`
                 group relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all duration-300
                 ${isActive 
@@ -113,6 +128,51 @@ export function Sidebar() {
           <span>Cerrar Sesión (Logout)</span>
         </button>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* BOTÓN FLOTANTE MÓVIL (VISIBLE SÓLO EN PANTALLAS PEQUEÑAS) */}
+      <div className="md:hidden fixed top-3 left-3 z-[70]">
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="p-2.5 rounded-xl bg-[#0e0e14]/90 backdrop-blur-md border border-white/15 text-[#d4a855] hover:text-white shadow-xl flex items-center gap-2 text-xs font-mono font-bold"
+          aria-label="Abrir menú de administración"
+        >
+          <Menu size={18} />
+          <span className="text-[10px] tracking-wider uppercase">Menu</span>
+        </button>
+      </div>
+
+      {/* SIDEBAR PERSISTENTE EN DESKTOP */}
+      <aside className="hidden md:flex w-64 h-screen bg-[#0a0a0a] border-r border-white/5 flex-col sticky top-0 overflow-hidden z-[60] pointer-events-auto shadow-[20px_0_50px_rgba(0,0,0,0.5)]">
+        {navContent}
+      </aside>
+
+      {/* DRAWER MÓVIL (SLIDE-OVER CON BACKDROP) */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+              className="md:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[75]"
+            />
+            <motion.aside
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="md:hidden fixed top-0 left-0 bottom-0 w-72 max-w-[85vw] z-[80] border-r border-white/10 shadow-2xl"
+            >
+              {navContent}
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

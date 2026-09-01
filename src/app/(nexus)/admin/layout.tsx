@@ -15,7 +15,7 @@ export default function AdminLayout({
         
         {/* CONTENIDO DINÁMICO */}
         <main className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto p-8 relative">
+          <div className="flex-1 overflow-y-auto p-4 md:p-8 pt-14 md:pt-8 relative">
             {/* Fondo de Grano y Gradientes Aura Onyx */}
             <div className="absolute inset-0 pointer-events-none opacity-20">
               <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#d4a855]/10 blur-[150px] rounded-full" />

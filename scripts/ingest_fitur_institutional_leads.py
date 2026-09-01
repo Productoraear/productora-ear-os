@@ -109,6 +109,36 @@ def main():
         elif classification["priority"] == "P1_VIP_CORPORATIVO":
             luxury_count += 1
 
+        from urllib.parse import quote_plus
+
+        encoded_company = quote_plus(empresa)
+        encoded_full_fitur = quote_plus(f"{empresa} FITUR 2026 IFEMA")
+        encoded_country = quote_plus(f"{item.get('pais_region', '')} portal oficial turismo")
+        encoded_contact = quote_plus(f"{item.get('contacto', '')} {empresa}")
+
+        # Portales turísticos oficiales conocidos
+        COUNTRY_PORTALS = {
+            "españa": "https://www.spain.info",
+            "colombia": "https://colombia.travel",
+            "mexico": "https://visitmexico.com",
+            "chile": "https://chile.travel",
+            "peru": "https://www.peru.travel",
+            "argentina": "https://www.argentina.travel",
+            "marruecos": "https://www.visitmorocco.com",
+            "china": "https://www.travelchina.gov.cn",
+            "francia": "https://www.france.fr",
+            "italia": "https://www.italia.it",
+            "portugal": "https://www.visitportugal.com",
+            "alemania": "https://www.germany.travel",
+            "reino unido": "https://www.visitbritain.com",
+            "japon": "https://www.japan.travel",
+            "brasil": "https://visitbrasil.com",
+            "republica dominicana": "https://www.godominicanrepublic.com",
+            "cuba": "https://www.autenticacuba.com"
+        }
+        country_clean = item.get("pais_region", "").lower().strip()
+        matched_portal = COUNTRY_PORTALS.get(country_clean, f"https://www.google.com/search?q={encoded_country}")
+
         lead_record = {
             "lead_id": f"FITUR26-{idx:04d}",
             "entity_name": empresa,
@@ -124,6 +154,15 @@ def main():
             "mentor_in_charge": "Edwin Agudelo (+34 años de trayectoria escénica y producción en directo)",
             "acoustic_rider": "Sistemas Bose F1 812 / S1 Pro (12 W/pax) + Microfonía Shure Axient/Beta 87A",
             "regulatory_framework": "Contrato Menor de Servicios Culturales (Art. 118 LCSP < 15.000 €)",
+            "consular_endorsement": "Acreditación histórica: Oficio de Agradecimiento del Consulado General Central de Colombia en Madrid a Edwin Agudelo (Gala Teatro de La Latina)",
+            "navigable_urls": {
+                "ifema_exhibitor_url": f"https://www.ifema.es/fitur/catalogo-expositores?q={encoded_company}",
+                "google_fitur_search_url": f"https://www.google.com/search?q={encoded_full_fitur}",
+                "official_website_search_url": f"https://www.google.com/search?q={encoded_company}+web+oficial",
+                "official_tourism_portal": matched_portal,
+                "fitur_10times_portal": "https://10times.com/es/fitur/exhibitors",
+                "contact_search_url": f"https://www.google.com/search?q={encoded_contact}"
+            },
             "created_at": datetime.now(timezone.utc).isoformat(),
             "source": "FITUR_2026_IFEMA_OFFICIAL_CATALOG"
         }

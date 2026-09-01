@@ -311,9 +311,13 @@ HTML_CONTENT = """<!DOCTYPE html>
       <strong>Productora EAR</strong> resuelve esta carencia transformando el encargo en un <strong>expediente administrativo homologado llave en mano</strong>: la institución formaliza un Contrato Menor regulado por el Artículo 118 de la Ley 9/2017 de Contratos del Sector Público, recibiendo dirección artística, equipamiento acústico de conservatorio y una justificación forense de Retorno Social de la Inversión (SROI = 4.85x).
     </p>
 
-    <div class="callout-box callout-gold">
-      <strong>Vía Administrativa Directa (Art. 118 LCSP):</strong>
-      Al fijar el importe base en <strong>14.250,00 € + IVA</strong> (ajuste al 95% del techo legal de 15.000 €), el expediente se tramita por adjudicación directa inmediata sin concurso público, sin riesgo de impugnación y con tramitación electrónica vía punto general de entrada de facturas <strong>FACe</strong>.
+    <div class="legal-box">
+      <strong>Vía Administrativa Directa (Art. 118 LCSP):</strong> Al fijar el importe base en <strong>14.250,00 € + IVA</strong> (ajuste al 95% del techo legal de 15.000 €), el expediente se tramita por adjudicación directa inmediata sin concurso público, sin riesgo de impugnación y con tramitación electrónica vía punto general de entrada de facturas <strong>FACe</strong>.
+    </div>
+
+    <div class="legal-box" style="margin-top: 12px; border-left: 3.5px solid #059669; background: #ecfdf5;">
+      <strong>Acreditación Diplomática Previa (Cuerpo Consular):</strong>
+      Oficio Oficial de Agradecimiento del <em>Consulado General Central de Colombia en Madrid</em> a Edwin Agudelo y sus Mariachis con motivo del Encuentro Cultural e Inauguración Consular en el Teatro de La Latina ante la Señora Ministra de Relaciones Exteriores. Rigor protocolar y etiqueta de Estado demostrados en recepciones consulares de primer nivel.
     </div>
   </div>
 
