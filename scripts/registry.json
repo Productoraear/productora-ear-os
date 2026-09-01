@@ -164,6 +164,15 @@
       "inputs": ["src/data/b2g/fitur_institutional_leads.json"],
       "outputs": "src/data/b2g/diplomatic_dispatches_fitur26.json",
       "cli": "python scripts/generate_diplomatic_dispatches.py"
+    },
+    {
+      "id": "vampirize_christmas_lighting_b2g",
+      "name": "vampirize_christmas_lighting_b2g.py",
+      "path": "scripts/vampirize_christmas_lighting_b2g.py",
+      "purpose": "Ingestor y estructurador de empresas de alumbrado navideño, fabricantes CNAE 2740 y licitaciones CPV 31522000 para contratos menores B2G.",
+      "inputs": ["H:\\catálogos de empresas de alumbrados navideños en E.md"],
+      "outputs": "src/data/admin/christmas_lighting_b2g.json",
+      "cli": "python scripts/vampirize_christmas_lighting_b2g.py"
     }
   ]
 }

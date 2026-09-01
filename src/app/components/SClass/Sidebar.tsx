@@ -17,7 +17,8 @@ import {
   LogOut,
   Smartphone,
   Menu,
-  X
+  X,
+  Lightbulb
 } from 'lucide-react';
 import { auth } from '@/lib/firebase';
 import { signOut } from 'firebase/auth';
@@ -29,6 +30,7 @@ const NAV_ITEMS = [
   { name: 'CAZADOR FANTASMA', icon: Target, path: '/admin/hunter' },
   { name: 'MATRIZ DE SOBERANOS', icon: Users, path: '/admin/crm' },
   { name: 'CONTROL DE FLOTA', icon: Truck, path: '/admin/flota' },
+  { name: 'ALUMBRADO NAVIDEÑO B2G', icon: Lightbulb, path: '/admin/iluminacion' },
   { name: 'ORÁCULO ASTRA', icon: Sparkles, path: '/admin/oraculo' },
   { name: 'ARSENAL MARKETING', icon: Megaphone, path: '/arsenal' },
   { name: 'CONFIGURADOR', icon: Settings, path: '/admin/configurador' },

@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "total_empresas": 8,
+    "sector": "Alumbrado Navideño y Festivo España (CPV 31522000 / CNAE 2740)",
+    "acceso": "CONFIDENCIAL_ADMIN_SOLO (Zero-Public-Leak)",
+    "normativa": "Contratos Menores Art. 118 LCSP (<15.000 € / Techo EAR: 14.250 €)",
+    "last_updated": "2026-09-01T07:28:32.339154+00:00"
+  },
+  "proveedores_iluminacion": [
+    {
+      "id": "B2G-LIGHT-203417138512",
+      "indice": 1,
+      "empresa": "Ximenez Group (Ximenez Iluminación / Ilmex)",
+      "cnae": "2740 - Fabricación de equipos de iluminación",
+      "ambito": "Nacional / Internacional (Puente Genil / Madrid / Barcelona)",
+      "cpv_activos": [
+        "31522000-1 Luces para árbol de Navidad",
+        "45316100-6 Instalación de alumbrado exterior"
+      ],
+      "capacidades": [
+        "Estructuras 3D Gigantes",
+        "Guirnaldas LED 24V Profesionales",
+        "Túneles de Luz y Sonido",
+        "Video Mapping e Iluminación Sostenible",
+        "Montaje Integral de Grandes Ciudades"
+      ],
+      "contacto_comercial": "licitaciones@ximenez.es",
+      "web": "https://ximenez.es",
+      "tipo_partner": "Gran Licitación / Partner Principal",
+      "stand_ferias": "FITUR Pabellón 7 / Festivales",
+      "catalogo_pdf": "https://ilmex.es/catalogos",
+      "sede_principal": "Puente Genil (Córdoba)",
+      "margen_estimado_subcontratacion": "30% - 45%",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    },
+    {
+      "id": "B2G-LIGHT-79ad8cb42e0b",
+      "indice": 2,
+      "empresa": "Prilux Iluminación (Grupo Prilux)",
+      "cnae": "2740 - Fabricación de lámparas y equipos de iluminación",
+      "ambito": "Nacional (Toledo / Madrid / Valencia / Sevilla)",
+      "cpv_activos": [
+        "31522000-1 Luces para árbol de Navidad",
+        "31527260-8 Iluminación decorativa para festejos"
+      ],
+      "capacidades": [
+        "Motivos luminosos para farolas",
+        "Cortinas LED de bajo consumo",
+        "Cielo estrellado y guirnaldas urbanas",
+        "Arcos de calle modulares y figuras 2D"
+      ],
+      "contacto_comercial": "proyectos@prilux.es",
+      "web": "https://grupoprilux.com",
+      "tipo_partner": "Fabricante / Suministro Rápido",
+      "stand_ferias": "MATELEC / Construtec",
+      "catalogo_pdf": "https://grupoprilux.com/es/descargas",
+      "sede_principal": "Toledo (Castilla-La Mancha)",
+      "margen_estimado_subcontratacion": "25% - 38%",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    },
+    {
+      "id": "B2G-LIGHT-caec0a0d4744",
+      "indice": 3,
+      "empresa": "Electromiño S.L.",
+      "cnae": "4321 - Instalaciones eléctricas",
+      "ambito": "Noroeste / Galicia / Castilla y León / Norte",
+      "cpv_activos": [
+        "45316100-6 Instalación de alumbrado exterior",
+        "31522000-1 Luces para árbol de Navidad"
+      ],
+      "capacidades": [
+        "Montaje integral de alumbrado municipal",
+        "Alquiler de motivos y arcos navideños",
+        "Mantenimiento 24/7 de averías en festejos",
+        "Cuadrillas homologadas con grúas cesta"
+      ],
+      "contacto_comercial": "info@electromino.com",
+      "web": "https://electromino.com",
+      "tipo_partner": "Instalador Homologado / Cuadrillas",
+      "stand_ferias": "Feria de Municipios",
+      "catalogo_pdf": "https://electromino.com/servicios",
+      "sede_principal": "O Porriño (Pontevedra)",
+      "margen_estimado_subcontratacion": "20% - 35%",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    },
+    {
+      "id": "B2G-LIGHT-4f0936b46610",
+      "indice": 4,
+      "empresa": "Adornos Viada / LucesDeNavidad.net",
+      "cnae": "4690 - Comercio al por mayor no especializado",
+      "ambito": "Distribución Mayorista España / Portugal (Stock 24h)",
+      "cpv_activos": [
+        "31522000-1 Luces de Navidad",
+        "31521300-4 Lámparas decorativas"
+      ],
+      "capacidades": [
+        "Guirnalda profesional extensible IP65",
+        "Mallas y redes LED para fachadas",
+        "Bolas gigantes transitables de paso",
+        "Conectores herméticos de seguridad IP67"
+      ],
+      "contacto_comercial": "profesional@lucesdenavidad.net",
+      "web": "https://lucesdenavidad.net",
+      "tipo_partner": "Mayorista Material / Stock 24h",
+      "stand_ferias": "Directorio B2B Mayorista",
+      "catalogo_pdf": "https://lucesdenavidad.net/catalogo/cat_completo_luces_Navidad.pdf",
+      "sede_principal": "Mataró (Barcelona)",
+      "margen_estimado_subcontratacion": "35% - 50%",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    },
+    {
+      "id": "B2G-LIGHT-629b37a0feb2",
+      "indice": 5,
+      "empresa": "Copyxsa Iluminación Artística",
+      "cnae": "2740 - Fabricación de equipos de iluminación",
+      "ambito": "Andalucía / Levante / Centro",
+      "cpv_activos": [
+        "31522000-1",
+        "45316100-6"
+      ],
+      "capacidades": [
+        "Ambientes inmersivos y figuras multicolor",
+        "Alumbrado para ferias patronales de verano",
+        "Arcos luminosos con microbombilla LED",
+        "Letreros luminosos institucionales personalizados"
+      ],
+      "contacto_comercial": "administracion@copyxsa.com",
+      "web": "https://copyxsa.com",
+      "tipo_partner": "Fabricante / Alquiler Festivo",
+      "stand_ferias": "Feria de Muestras",
+      "catalogo_pdf": "https://copyxsa.com/catalogo",
+      "sede_principal": "Sevilla",
+      "margen_estimado_subcontratacion": "28% - 40%",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    },
+    {
+      "id": "B2G-LIGHT-e9858135668a",
+      "indice": 6,
+      "empresa": "Il-lumina Mayorista LED",
+      "cnae": "4643 - Comercio al por mayor de electrónica y LED",
+      "ambito": "Nacional (Edificios municipales y grandes avenidas)",
+      "cpv_activos": [
+        "31522000-1",
+        "31518100-3 Focos proyectores"
+      ],
+      "capacidades": [
+        "Tubos neón flex LED 230V profesionales",
+        "Proyectores GOBO navideños con logotipo",
+        "Cascadas de luz para copas de árboles",
+        "Sistemas DMX de control de color musical"
+      ],
+      "contacto_comercial": "b2b@il-lumina.com",
+      "web": "https://www.il-lumina.com",
+      "tipo_partner": "Suministro Técnico",
+      "stand_ferias": "B2B Online",
+      "catalogo_pdf": "https://www.il-lumina.com/blog/luces-de-navidad-al-por-mayor/",
+      "sede_principal": "Valencia",
+      "margen_estimado_subcontratacion": "30% - 45%",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    },
+    {
+      "id": "B2G-LIGHT-dfca1f6160e8",
+      "indice": 7,
+      "empresa": "NavidadParaEmpresas.com",
+      "cnae": "4690 - Comercio mayorista de artículos festivos",
+      "ambito": "Nacional (Ayuntamientos, Centros Comerciales, Plazas)",
+      "cpv_activos": [
+        "31522000-1",
+        "39298900-6 Artículos de decoración navideña"
+      ],
+      "capacidades": [
+        "Árboles cónicos transitables gigantes (>12m)",
+        "Figuras hinchables y decorados escénicos",
+        "Bolas gigantes personalizadas con escudo municipal",
+        "Packs llave en mano de plaza consistorial"
+      ],
+      "contacto_comercial": "contacto@navidadparaempresas.com",
+      "web": "https://navidadparaempresas.com",
+      "tipo_partner": "Decoración Integral / Show Escénico",
+      "stand_ferias": "B2B Eventos",
+      "catalogo_pdf": "https://navidadparaempresas.com/catalogos",
+      "sede_principal": "Madrid",
+      "margen_estimado_subcontratacion": "25% - 40%",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    },
+    {
+      "id": "B2G-LIGHT-cfefad3028cc",
+      "indice": 8,
+      "empresa": "Gobierto Contratación — Radar CPV 31522000",
+      "cnae": "8411 - Actividades de la administración pública general",
+      "ambito": "España (Plataforma de Licitaciones Estatales y Municipales)",
+      "cpv_activos": [
+        "31522000-1 Luces para árbol de Navidad",
+        "45316100-6 Instalación de alumbrado exterior",
+        "31527260-8 Iluminación festiva"
+      ],
+      "capacidades": [
+        "Radar de expedientes de licitación abiertos",
+        "Alertas de contratos menores (<15.000 € Art. 118 LCSP)",
+        "Identificación de órganos de contratación y alcaldías",
+        "Historial de adjudicatarios y precios de referencia"
+      ],
+      "contacto_comercial": "licitaciones@productoraear.com",
+      "web": "https://contratos.gobierto.es/cpv/31522000?locale=es",
+      "tipo_partner": "Fuente Oficial de Oportunidades",
+      "stand_ferias": "PLACSP",
+      "catalogo_pdf": "https://contratos.gobierto.es/cpv/31522000",
+      "sede_principal": "Madrid (PLACSP / Gobierto)",
+      "margen_estimado_subcontratacion": "Arbitraje B2G directo",
+      "estado_homologacion": "AUDITADO_EAR_B2G",
+      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+    }
+  ]
+}
