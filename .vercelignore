@@ -1,4 +1,4 @@
-# 🛡️ VERCEL DOMINANCE SHIELD V138 — ZERO-BLOAT S-CLASS IGNORE
+# 🛡️ VERCEL DOMINANCE SHIELD V139 — ZERO-BLOAT S-CLASS IGNORE
 .next
 node_modules
 .git
@@ -16,11 +16,10 @@ ALMACEN_DE_CUARENTENA_6M
 _ALMACEN_DE_CUARENTENA_6M
 _auditoria
 quarantine
-docs
-scripts
-logs
-scratch
-tools
+/docs
+/scripts
+/logs
+/scratch
 /tools
 tmp
 extracted_astra_neural
@@ -29,7 +28,8 @@ g s console
 
 # Heavy vaults inside src
 src/adn_vault_staging
-src/data/vimume-brain
+src/data/vimume-brain/session-*
+src/data/vimume-brain/*.md
 src/data/catalog/ADN_EAR_INDEX.json
 src/lib/NUCLEO_DATA
 src/scripts
