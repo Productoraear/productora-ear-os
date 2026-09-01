@@ -24,6 +24,8 @@ import { EventCartProvider } from "@/context/EventCartContext";
 import SmoothScrollProvider from '@/app/context/SmoothScrollProvider';
 import { ThemeProvider } from "@/app/context/ThemeContext";
 import { TenantRoleProvider } from "@/contexts/TenantRoleContext";
+import { MobileExperienceProvider } from "@/lib/config/mobile-experience-store";
+import { DynamicMobileExperienceOrchestrator } from "@/components/mobile/DynamicMobileExperienceOrchestrator";
 
 import SovereignNavbar from "@/app/components/layout/SovereignNavbar";
 import HummingbirdFlight from "@/app/components/ambient/HummingbirdFlight";
@@ -103,33 +105,33 @@ export default function RootLayout({
         )}
         <ThemeProvider>
           <TenantRoleProvider>
-            <SharedProvider>
-              <RoleSkinProvider>
-                <SovereignProvider>
-                  <AtmosphereProvider>
-                    <EventCartProvider>
-                      <SmoothScrollProvider>
-                        <SpatialIntelligence />
-                        <div className="min-h-screen relative flex flex-col">
-                          <GeoStructuredData />
-                          <SovereignNavbar />
-                          <main className="flex-grow">
-                            {children}
-                          </main>
-                          <SovereignFooter />
-                          <HummingbirdFlight />
-                          <BespokePricerModal />
-                          <OmniSearchModal />
-                          <FloatingWhatsAppCta />
-                          <AIConciergeDock />
-                          <SovereignMobileHUD />
-                        </div>
-                      </SmoothScrollProvider>
-                    </EventCartProvider>
-                  </AtmosphereProvider>
-                </SovereignProvider>
-              </RoleSkinProvider>
-            </SharedProvider>
+            <MobileExperienceProvider>
+              <SharedProvider>
+                <RoleSkinProvider>
+                  <SovereignProvider>
+                    <AtmosphereProvider>
+                      <EventCartProvider>
+                        <SmoothScrollProvider>
+                          <SpatialIntelligence />
+                          <div className="min-h-screen relative flex flex-col">
+                            <GeoStructuredData />
+                            <SovereignNavbar />
+                            <main className="flex-grow">
+                              {children}
+                            </main>
+                            <SovereignFooter />
+                            <HummingbirdFlight />
+                            <BespokePricerModal />
+                            <OmniSearchModal />
+                            <DynamicMobileExperienceOrchestrator />
+                          </div>
+                        </SmoothScrollProvider>
+                      </EventCartProvider>
+                    </AtmosphereProvider>
+                  </SovereignProvider>
+                </RoleSkinProvider>
+              </SharedProvider>
+            </MobileExperienceProvider>
           </TenantRoleProvider>
         </ThemeProvider>
       </body>

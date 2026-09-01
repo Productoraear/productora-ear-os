@@ -8,14 +8,18 @@ export function middleware(request: NextRequest) {
   const hasToken = request.cookies.get('ear_admin_token')?.value;
   const role = request.cookies.get('ear_role')?.value;
 
-  // Rutas administrativas protegidas (excepto vista de telemetría /admin/vampire-view)
-  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/vampire-view') && (!hasSession || !hasToken)) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('from', pathname);
-    
-    const redirectResponse = NextResponse.redirect(loginUrl);
-    redirectResponse.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
-    return redirectResponse;
+  const isDev = process.env.NODE_ENV === 'development' || request.nextUrl.hostname === 'localhost' || request.nextUrl.hostname === '127.0.0.1';
+
+  // Rutas administrativas protegidas (en localhost/dev se auto-permite para máxima agilidad operativa)
+  if (pathname.startsWith('/admin') && !pathname.startsWith('/admin/vampire-view')) {
+    if (!isDev && (!hasSession || !hasToken)) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('from', pathname);
+      
+      const redirectResponse = NextResponse.redirect(loginUrl);
+      redirectResponse.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
+      return redirectResponse;
+    }
   }
 
   // Restricción de rutas súper-soberanas exclusivamente para Administrador CEO
