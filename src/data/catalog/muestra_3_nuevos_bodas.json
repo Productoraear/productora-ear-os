@@ -1,0 +1,107 @@
+[
+  {
+    "id": "vendor-live-001",
+    "name": "Ca n’Alzina - UAUU Weddings & Events",
+    "slug": "ca-n-alzina-uauu-weddings-events",
+    "category": "FINCAS_Y_ESPACIOS",
+    "phone": "+34 693 693 048",
+    "whatsapp": "+34 693 693 048",
+    "pricing": {
+      "minPricePerPax": 125.0,
+      "rentalBasePrice": 4500.0,
+      "currency": "EUR"
+    },
+    "metrics": {
+      "rating": 5.0,
+      "reviewCount": 48,
+      "verificationLevel": "S_CLASS_AUDITED"
+    },
+    "location": {
+      "city": "Barcelona",
+      "province": "Barcelona",
+      "country": "Spain"
+    },
+    "media": {
+      "coverImage": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80",
+      "gallery": []
+    },
+    "technicalSpecs": {
+      "maxPax": 350,
+      "acousticPowerRequiredWatts": 2500
+    },
+    "description": "Masía señorial histórica con arcadas de piedra natural y jardines panorámicos. Espacio homologado con protocolo acústico S-Class y póliza de RC de 1M€.",
+    "claimToken": "claim_ca-n-alzina-uauu",
+    "purgedBodasUrl": true,
+    "status": "APPROVED_FOR_INGESTION"
+  },
+  {
+    "id": "vendor-live-002",
+    "name": "Vil·la Minerva Espacio de Eventos",
+    "slug": "villa-minerva-espacio-eventos",
+    "category": "FINCAS_Y_ESPACIOS",
+    "phone": "+34 693 693 048",
+    "whatsapp": "+34 693 693 048",
+    "pricing": {
+      "minPricePerPax": 135.0,
+      "rentalBasePrice": 3800.0,
+      "currency": "EUR"
+    },
+    "metrics": {
+      "rating": 4.9,
+      "reviewCount": 62,
+      "verificationLevel": "S_CLASS_AUDITED"
+    },
+    "location": {
+      "city": "Maresme",
+      "province": "Barcelona",
+      "country": "Spain"
+    },
+    "media": {
+      "coverImage": "https://images.unsplash.com/photo-1544078741-7fe023a02e71?w=800&q=80",
+      "gallery": []
+    },
+    "technicalSpecs": {
+      "maxPax": 400,
+      "acousticPowerRequiredWatts": 3000
+    },
+    "description": "Finca mediterránea exclusiva rodeada de vegetación y salones de cristal. Cobertura acústica integral y alta gastronomía homologada.",
+    "claimToken": "claim_villa-minerva",
+    "purgedBodasUrl": true,
+    "status": "APPROVED_FOR_INGESTION"
+  },
+  {
+    "id": "vendor-live-003",
+    "name": "Viva Brasil Espectáculos & Danza",
+    "slug": "viva-brasil-espectaculos-danza",
+    "category": "MUSICA_VIVO",
+    "phone": "+34 693 693 048",
+    "whatsapp": "+34 693 693 048",
+    "pricing": {
+      "minPricePerPax": null,
+      "rentalBasePrice": 1250.0,
+      "currency": "EUR"
+    },
+    "metrics": {
+      "rating": 5.0,
+      "reviewCount": 35,
+      "verificationLevel": "S_CLASS_AUDITED"
+    },
+    "location": {
+      "city": "Madrid",
+      "province": "Madrid",
+      "country": "Spain"
+    },
+    "media": {
+      "coverImage": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=800&q=80",
+      "gallery": []
+    },
+    "technicalSpecs": {
+      "maxPax": 500,
+      "acousticPowerRequiredWatts": 4000
+    },
+    "description": "Compañía de batucada, músicos en vivo y bailarines brasileños para ambientación de bodas, cócteles y fiestas corporativas de alto impacto.",
+    "claimToken": "claim_viva-brasil",
+    "purgedBodasUrl": true,
+    "status": "APPROVED_FOR_INGESTION"
+  }
+]

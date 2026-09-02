@@ -44,11 +44,13 @@ H:\AI_MODELS_HUB/
 _archive_cruft_2026/
 extracted_astra_neural/
 scratch/
+# Bóvedas Temporales, Cuarentenas y Scrapers Crudos
+_archive_cruft_2026/
+extracted_astra_neural/
+scratch/
 crawler-output/
-src/empresa/incubadora-despegue/
-src/empresa/infraestructura-ai/
-src/empresa/02_Emanager_Formacion/
-src/empresa/productora-ear-core/00_PRODUCTORA_EAR/
+src/empresa/
+src/multimedia-produccion/
 **/BODEGA_CUARENTENA/
 **/RESCATE_FINAL/
 *.log
@@ -56,14 +58,16 @@ src/empresa/productora-ear-core/00_PRODUCTORA_EAR/
 # Bóvedas de Recuperación Masiva y Backups Crudos
 src/personal-y-artista/edwin-agudelo/04_Habitos_Y_Filosofia/
 src/personal-y-artista/edwin-agudelo/05_Sistema_Astra_Core/
-src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.json
-src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.md
-src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.txt
-src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.csv
-src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.bak
-src/personal-y-artista/edwin-agudelo/repertorio-y-ip/.*
+src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*
+!src/personal-y-artista/edwin-agudelo/repertorio-y-ip/matrix.ts
+!src/personal-y-artista/edwin-agudelo/repertorio-y-ip/vampire-runner.ts
+!src/personal-y-artista/edwin-agudelo/repertorio-y-ip/vampire-runner.js
+!src/personal-y-artista/edwin-agudelo/repertorio-y-ip/vampire-parser_eff953.ts
+!src/personal-y-artista/edwin-agudelo/repertorio-y-ip/paciente-cero-spider.ts
 src/data/vimume-brain/
 src/data/ear-30-level-taxonomy.json
+src/data/catalog/ADN_EAR_INDEX.json
+src/data/*.backup.json
 docs/
 Modelfile
 .clinerules

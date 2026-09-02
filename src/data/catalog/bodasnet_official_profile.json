@@ -1,0 +1,121 @@
+{
+  "provider_id": "e78903",
+  "name": "Productora EAR",
+  "alias_historico": "Edwin Agudelo",
+  "url_oficial": "https://www.bodas.net/musica/productora-ear--e78903",
+  "rating": 5.0,
+  "max_rating": 5.0,
+  "review_count": 4,
+  "recommendation_percentage": "100%",
+  "price_range": {
+    "min_eur": 150,
+    "max_eur": 10000,
+    "pricing_model": "Presupuesto a medida con Price-Lock 72h"
+  },
+  "location": {
+    "address": "Calle Bailén",
+    "city": "Alcorcón",
+    "postal_code": "28921",
+    "province": "Madrid",
+    "geo": {
+      "lat": 40.3495,
+      "lng": -3.83135
+    }
+  },
+  "hardware_y_tecnica": {
+    "sonido": "Equipo profesional Bose 2.000W hasta para 300 personas al aire libre con técnico de sonido in situ",
+    "microfonia": "Shure Axient Digital & Neumann (cero distorsión, THD < 0.1%)",
+    "garantia_escrita": "Compromiso de satisfacción por escrito + Póliza RC 1.000.000 €"
+  },
+  "pack_boda_incluye": [
+    "Show dedicado en la media hora inicial a los novios",
+    "Segunda salida personalizada complaciendo peticiones de invitados",
+    "Sesión fotográfica en alta calidad con el artista y músicos",
+    "Sistema de sonido Bose 2.000W y técnico de sonido dedicado",
+    "Ramo de flores ceremonial entregado al momento de entrada",
+    "Regalo sorpresa exclusivo integrado en la banda sonora del video",
+    "Garantía de satisfacción por escrito"
+  ],
+  "formatos_y_packs": [
+    {
+      "id": "solista-premium",
+      "name": "Show Solista Premium",
+      "musicos": 1,
+      "salidas": "2 salidas de 30 minutos",
+      "rider": "Bose 2.000W + Iluminación + Photocall sombreros",
+      "fotos": "Sesión fotográfica con Edwin Agudelo en alta resolución"
+    },
+    {
+      "id": "solista-express",
+      "name": "Show Solista Express",
+      "musicos": 1,
+      "salidas": "1 salida de 30 minutos",
+      "rider": "Bose 2.000W + Photocall temático",
+      "fotos": "Sesión fotográfica con Edwin Agudelo"
+    },
+    {
+      "id": "agrupacion-6",
+      "name": "Show con Agrupación de 6 Músicos (Mariachi / Banda)",
+      "musicos": 6,
+      "salidas": "1 hora continua de show",
+      "rider": "Sonido Line Array Bose / Electro-Voice + Photocall"
+    },
+    {
+      "id": "agrupacion-9-pro",
+      "name": "Show Agrupación 9 Músicos (Formato Profesional)",
+      "musicos": 9,
+      "salidas": "1 hora completa",
+      "rider": "Producción acústica integral para grandes galas"
+    },
+    {
+      "id": "agrupacion-13-premium",
+      "name": "Show Agrupación 13 Músicos (Formato Premium Gran Gala)",
+      "musicos": 13,
+      "salidas": "1 hora en 2 salidas de 30 minutos (adaptabilidad a protocolo)",
+      "rider": "Despliegue escénico con complementos rústicos, sombreros, sorteos y exclusividad absoluta en la fecha"
+    }
+  ],
+  "repertorio_destacado": [
+    "Cásate conmigo",
+    "Prometo",
+    "Hasta mi final",
+    "Algún día mamá (Inédita)",
+    "Te amaré toda la vida",
+    "Para siempre",
+    "Cuando manda el corazón",
+    "Si nos dejan",
+    "La mitad que me faltaba",
+    "La bikina",
+    "El rey"
+  ],
+  "resenas_verificadas": [
+    {
+      "autor": "Adriana & Sergio",
+      "fecha": "27/04/2024",
+      "rating": 5.0,
+      "titulo": "Nuestra Boda Sergio y Adriana",
+      "comentario": "No tenemos palabras para expresar la inmensa gratitud que tenemos hacia Edwin y su grupo, ya que recibimos el mejor servicio de Mariachis, de fotos y decoración que ha hecho nuestra noche de bodas la mejor e inolvidable. Estamos inmensamente agradecidos por todo lo que hicieron ese día."
+    },
+    {
+      "autor": "Eduardo",
+      "fecha": "03/11/2023",
+      "rating": 5.0,
+      "titulo": "Mi boda fue espectacular",
+      "comentario": "Muy agradecido por el espectacular show, cómo conecta a través de las emociones es increíble."
+    },
+    {
+      "autor": "Yanet",
+      "fecha": "03/04/2023",
+      "rating": 5.0,
+      "titulo": "Insuperable",
+      "comentario": "Por mucho que busques, no encontrarás a alguien tan profesional como Edwin."
+    },
+    {
+      "autor": "Alexandra",
+      "fecha": "12/10/2019",
+      "rating": 5.0,
+      "titulo": "Excelente grupo de mariachis",
+      "comentario": "Edwin es un gran profesional, lo habíamos oído anteriormente en actuaciones individuales y para nuestra boda se trajo a su grupo de mariachis y fue espectacular, ¡un gran recuerdo! Estoy segura de que volveremos a contar con ellos en futuras celebraciones."
+    }
+  ]
+}

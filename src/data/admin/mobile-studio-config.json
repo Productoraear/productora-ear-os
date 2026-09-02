@@ -1,0 +1,45 @@
+{
+  "activeMode": "SOVEREIGN_HUD_V5",
+  "features": {
+    "showRoleSwitcher": true,
+    "showJourneyBar": true,
+    "showAIConciergeFloating": false,
+    "showDirectWhatsAppButton": false,
+    "ambientGlow": true
+  },
+  "rolesEnabled": [
+    "novios",
+    "corporativo",
+    "artistas",
+    "b2g_institucional"
+  ],
+  "updatedAt": "2026-09-01T09:13:52.558Z",
+  "routingStrategy": "AUTONOMOUS_ADAPTIVE",
+  "banditTesting": {
+    "enabled": true,
+    "explorationRate": 0.3,
+    "weights": {
+      "SOVEREIGN_HUD_V5": 0.55,
+      "AI_CONCIERGE_DOCK": 0.25,
+      "CLASSIC_WHATSAPP": 0.15,
+      "MINIMAL_STEALTH": 0.05
+    }
+  },
+  "guardrails": {
+    "latencySlaMs": 1200,
+    "emergencyKillSwitch": false,
+    "shadowDomIsolation": true,
+    "degradeOnSlowConnection": true
+  },
+  "persona": {
+    "activeTone": "HIGH_VALUE_COMMERCIAL",
+    "contextBoundary": "SOVEREIGN_FULL_CATALOG",
+    "retentionPhone": "+34 693 693 048"
+  },
+  "telemetry": {
+    "effectiveContactRate": 16.4,
+    "avgTimeToInteractSec": 2.8,
+    "p95LatencyMs": 420,
+    "sessionChurnRate": 5.2
+  }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    
+    <!-- SEO & Metadata - Productora EAR -->
+    <title>Productora EAR | Alquiler Pantallas LED, Sonido & Streaming Madrid</title>
+    <meta name="description" content="Infraestructura técnica para eventos premium. Alquiler de pantallas LED, sonido Line Array, proyectores 20k y streaming broadcast en Madrid e IFEMA. Garantía de autoridad EAR.">
+    <meta name="keywords" content="alquiler pantallas led madrid, streaming para empresas, sonido profesional ifema, video mapping madrid, productora eventos técnicos, pantallas tactiles alquiler, monitores 98 pulgadas, pantallas led curvas">
+    <meta name="author" content="Productora EAR">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://productoraear.com/">
+    <meta property="og:title" content="Productora EAR | Arsenal Técnico & Realización Audiovisual">
+    <meta property="og:description" content="Despliegue de infraestructura crítica para eventos: LED, Sonido, Luz y Streaming 4K con soporte técnico 24/7 en Madrid.">
+    <meta property="og:image" content="https://picsum.photos/id/119/1200/630">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'display': ['Cinzel', 'serif'],
+              'body': ['Montserrat', 'sans-serif'],
+            },
+            colors: {
+              'ear-gold': '#D4AF37',
+              'ear-dark': '#0a0a0a',
+              'ear-purple': '#2e0249',
+              'ear-magic': '#570a57',
+            },
+            backgroundImage: {
+              'tomorrowland': "linear-gradient(to bottom, rgba(10,10,10,0.8), rgba(46,2,73,0.9)), url('https://picsum.photos/id/119/1920/1080')",
+              'gold-metallic': "linear-gradient(135deg, #D4AF37 0%, #FFF7CC 50%, #B8860B 100%)",
+            },
+            animation: {
+              'fade-in': 'fade-in 0.5s ease-out forwards',
+              'fade-in-up': 'fade-in-up 0.7s ease-out forwards',
+              'scale-in': 'scale-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
+              'spin-slow': 'spin 12s linear infinite',
+              'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
+            },
+            keyframes: {
+              'fade-in': { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+              'fade-in-up': { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+              'scale-in': { '0%': { opacity: '0', transform: 'scale(0.9)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+              'pulse-glow': { '0%, 100%': { opacity: '0.5', filter: 'blur(10px)' }, '50%': { opacity: '1', filter: 'blur(5px)' } }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body { background-color: #050505; color: #f3f3f3; overflow-x: hidden; scroll-behavior: smooth; }
+      .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+      .gold-glow { text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
+      .text-shadow-lg { text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+      * { transition-property: background-color, border-color, color, fill, stroke, transform, opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; }
+      .custom-scrollbar::-webkit-scrollbar { width: 3px; }
+      .custom-scrollbar::-webkit-scrollbar-track { background: #050505; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      ::selection { background: #D4AF37; color: #000; }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "lucide-react": "https://esm.sh/lucide-react@^0.475.0",
+        "react/": "https://esm.sh/react@^19.2.3/",
+        "react": "https://esm.sh/react@^19.2.3",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+        "react-dom": "https://esm.sh/react-dom@^19.2.3",
+        "@google/genai": "https://esm.sh/@google/genai@^1.33.0",
+        "react-router-dom": "https://esm.sh/react-router-dom@^7.1.3",
+        "@/": "./"
+      }
+    }
+    </script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,698 @@
+[
+  {
+    "id": "sonomusic-pack-discomovil-1",
+    "slug": "pack-discomovil-1",
+    "title": "Pack Discomóvil 1",
+    "category": "discomovil",
+    "original_price_eur": 360.0,
+    "ear_catalog_price_eur": 432.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Discomóvil 1 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-DISCOMOVIL-1.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:29.160300",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-karaoke-2",
+    "slug": "pack-karaoke-2",
+    "title": "Pack Karaoke 2",
+    "category": "karaoke",
+    "original_price_eur": 190.0,
+    "ear_catalog_price_eur": 228.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Karaoke 2 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-KARAOKE-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:29.968852",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-sonido-6",
+    "slug": "pack-de-sonido-6",
+    "title": "Pack Sonido 6",
+    "category": "sonido",
+    "original_price_eur": 200.0,
+    "ear_catalog_price_eur": 240.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido 6 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-6.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:30.822186",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-sonido-5",
+    "slug": "pack-de-sonido-5",
+    "title": "Pack Sonido 5",
+    "category": "sonido",
+    "original_price_eur": 150.0,
+    "ear_catalog_price_eur": 180.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido 5 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-3-y-5.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:31.682577",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-sonido-4",
+    "slug": "pack-de-sonido-4",
+    "title": "Pack Sonido 4",
+    "category": "sonido",
+    "original_price_eur": 140.0,
+    "ear_catalog_price_eur": 168.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido 4 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-4.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:32.544542",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-sonido-2",
+    "slug": "pack-de-sonido-2",
+    "title": "Pack Sonido 2",
+    "category": "sonido",
+    "original_price_eur": 80.0,
+    "ear_catalog_price_eur": 96.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido 2 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-1-y-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:33.356945",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-discomovil-2",
+    "slug": "pack-discomovil-2",
+    "title": "Pack Discomóvil 2",
+    "category": "discomovil",
+    "original_price_eur": 840.0,
+    "ear_catalog_price_eur": 1008.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Discomóvil 2 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-DISCOMOVIL-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:34.128203",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-karaoke-1",
+    "slug": "pack-karaoke-1",
+    "title": "Pack Karaoke 1",
+    "category": "karaoke",
+    "original_price_eur": 140.0,
+    "ear_catalog_price_eur": 168.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Karaoke 1 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-KARAOKE-1.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:34.918716",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-sonido-3",
+    "slug": "pack-de-sonido-3",
+    "title": "Pack Sonido 3",
+    "category": "sonido",
+    "original_price_eur": 90.0,
+    "ear_catalog_price_eur": 108.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido 3 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-3-y-5.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:35.734218",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-sonido-1",
+    "slug": "pack-de-sonido-1",
+    "title": "Pack Sonido 1",
+    "category": "sonido",
+    "original_price_eur": 70.0,
+    "ear_catalog_price_eur": 84.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido 1 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-1-y-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:36.568710",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-sonido-7",
+    "slug": "pack-de-sonido-7",
+    "title": "Pack Sonido 7",
+    "category": "sonido",
+    "original_price_eur": 160.0,
+    "ear_catalog_price_eur": 192.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido 7 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/SONIDO-7.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:37.476010",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-backline-1",
+    "slug": "pack-backline-1",
+    "title": "Pack Backline 1",
+    "category": "backline",
+    "original_price_eur": 160.0,
+    "ear_catalog_price_eur": 192.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Backline 1 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-BACKLINE.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:38.235302",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-concierto-5",
+    "slug": "pack-concierto-5",
+    "title": "Pack Concierto 5",
+    "category": "concierto",
+    "original_price_eur": 1170.0,
+    "ear_catalog_price_eur": 1404.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Concierto 5 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/CONCIERTO-5.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:39.043082",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-concierto-4",
+    "slug": "pack-concierto-4",
+    "title": "Pack Concierto 4",
+    "category": "concierto",
+    "original_price_eur": 610.0,
+    "ear_catalog_price_eur": 732.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Concierto 4 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/CONCIERTO-4.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:39.812968",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-concierto-3",
+    "slug": "pack-concierto-3",
+    "title": "Pack Concierto 3",
+    "category": "concierto",
+    "original_price_eur": 1400.0,
+    "ear_catalog_price_eur": 1680.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Concierto 3 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-CONCIERTO-3.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:40.540608",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-concierto-2",
+    "slug": "pack-concierto-2",
+    "title": "Pack Concierto 2",
+    "category": "concierto",
+    "original_price_eur": 650.0,
+    "ear_catalog_price_eur": 780.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Concierto 2 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-CONCIERTO-1-Y-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:41.330815",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-concierto-1",
+    "slug": "pack-concierto-1",
+    "title": "Pack Concierto 1",
+    "category": "concierto",
+    "original_price_eur": 500.0,
+    "ear_catalog_price_eur": 600.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Concierto 1 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-CONCIERTO-1-Y-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:42.145900",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-iluminacion-3",
+    "slug": "pack-de-iluminacion-3",
+    "title": "Pack Iluminación 3",
+    "category": "iluminacion",
+    "original_price_eur": 450.0,
+    "ear_catalog_price_eur": 540.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Iluminación 3 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-ILUMINACION-3.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:42.904353",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-iluminacion-2",
+    "slug": "pack-de-iluminacion-2",
+    "title": "Pack Iluminación 2",
+    "category": "iluminacion",
+    "original_price_eur": 170.0,
+    "ear_catalog_price_eur": 204.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Iluminación 2 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-ILUMINACION-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:43.673412",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-de-iluminacion-1",
+    "slug": "pack-de-iluminacion-1",
+    "title": "Pack Iluminación 1",
+    "category": "iluminacion",
+    "original_price_eur": 120.0,
+    "ear_catalog_price_eur": 144.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Iluminación 1 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-ILUMINACION-1.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:44.408975",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-sonido-iluminacion-3",
+    "slug": "pack-sonido-iluminacion-3",
+    "title": "Pack Sonido + Iluminación 3",
+    "category": "iluminacion",
+    "original_price_eur": 700.0,
+    "ear_catalog_price_eur": 840.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido + Iluminación 3 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-ILUMINACION-3.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:45.245870",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-sonido-iluminacion-2",
+    "slug": "pack-sonido-iluminacion-2",
+    "title": "Pack Sonido + Iluminación 2",
+    "category": "iluminacion",
+    "original_price_eur": 310.0,
+    "ear_catalog_price_eur": 372.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido + Iluminación 2 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-ILUMINACION-2.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:46.002853",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-sonido-iluminacion-1",
+    "slug": "pack-sonido-iluminacion-1",
+    "title": "Pack Sonido + Iluminación 1",
+    "category": "iluminacion",
+    "original_price_eur": 200.0,
+    "ear_catalog_price_eur": 240.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Sonido + Iluminación 1 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/PACK-SONIDO-ILUMINACION-1.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:46.740665",
+    "provider": "División Técnica Homologada EAR OS"
+  },
+  {
+    "id": "sonomusic-pack-iluminacion-4",
+    "slug": "pack-iluminacion-4",
+    "title": "Pack Iluminación 4",
+    "category": "iluminacion",
+    "original_price_eur": 990.0,
+    "ear_catalog_price_eur": 1188.0,
+    "markup_applied": "+20%",
+    "watts_rms": null,
+    "pax_recommended": null,
+    "description": "Pack Iluminación 4 profesional para eventos en Madrid.",
+    "features": [
+      "PacksPacks de sonidoPacks de iluminaciónPacks KaraokePacks Sonido + IluminaciónPacks BacklinePacks Concierto / Discomóvil",
+      "Packs de sonido",
+      "Packs de iluminación",
+      "Packs Karaoke",
+      "Packs Sonido + Iluminación",
+      "Packs Backline",
+      "Packs Concierto / Discomóvil",
+      "Servicios",
+      "Alquiler",
+      "Nosotros"
+    ],
+    "images": [
+      "/images/providers/sonomusic/sistema-truss.png"
+    ],
+    "vampirized_at": "2026-08-23T21:53:47.631617",
+    "provider": "División Técnica Homologada EAR OS"
+  }
+]
