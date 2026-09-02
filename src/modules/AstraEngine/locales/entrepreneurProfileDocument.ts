@@ -1,0 +1,1 @@
+﻿export const entrepreneurProfileDocument = "Perfil Emprendedor.";

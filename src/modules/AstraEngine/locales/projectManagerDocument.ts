@@ -1,0 +1,1 @@
+﻿export const projectManagerDocument = "Protocolo de Project Management.";

@@ -7,7 +7,7 @@ import {
   Sparkles, Heart, Building2, Music2, ShieldCheck, HeartPulse, 
   ArrowRight, PhoneCall, Sliders, Database, 
   Search, SlidersHorizontal, CreditCard, ChevronRight, CheckCircle2,
-  Volume2, Shield, Calendar, Users, Zap, X, Lock, Flame, Award, ExternalLink
+  Volume2, Shield, Calendar, Users, Zap, X, Lock, Flame, Award, ExternalLink, Activity
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { useSharedContext } from '@/app/context/SharedContext';
@@ -65,16 +65,43 @@ export default function HomePage() {
           </div>
         </Link>
 
-        {/* Acceso Buscador Discovery y Acciones Rápidas */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Acceso a la Suite de Herramientas de Élite (97%+) */}
+        <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap justify-end">
+          {/* Valhalla Admin Dashboard */}
+          <Link
+            href="/admin"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-500 hover:text-black text-amber-400 border border-amber-500/40 text-xs font-mono font-bold transition-all shadow-[0_0_15px_rgba(245,197,56,0.15)]"
+          >
+            <Shield className="w-3.5 h-3.5 text-amber-400" />
+            <span>Valhalla Admin</span>
+          </Link>
+
+          {/* The Signal Radar */}
+          <Link
+            href="/the-signal"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-purple-500/15 hover:bg-purple-500 hover:text-white text-purple-300 border border-purple-500/30 text-xs font-mono font-bold transition-all"
+          >
+            <Zap className="w-3.5 h-3.5 text-purple-400" />
+            <span>The Signal</span>
+          </Link>
+
+          {/* Command Center */}
+          <Link
+            href="/command-center"
+            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 hover:bg-emerald-500 hover:text-black text-emerald-400 border border-emerald-500/30 text-xs font-mono font-bold transition-all"
+          >
+            <Activity className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Command Center</span>
+          </Link>
+
           {/* Trigger Buscador Discovery (Ctrl+K) */}
           <button
             onClick={() => setIsSearchOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-amber-500/40 text-xs font-mono text-zinc-300 transition-all shadow-sm group"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-amber-500/40 text-xs font-mono text-zinc-300 transition-all shadow-sm group"
           >
             <Search className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
-            <span className="hidden sm:inline">Discovery</span>
-            <kbd className="hidden md:inline-block text-[10px] bg-black/60 border border-zinc-800 px-1.5 py-0.5 rounded text-zinc-500">
+            <span className="hidden lg:inline">Discovery</span>
+            <kbd className="hidden xl:inline-block text-[10px] bg-black/60 border border-zinc-800 px-1.5 py-0.5 rounded text-zinc-500">
               Ctrl+K
             </kbd>
           </button>
@@ -82,7 +109,7 @@ export default function HomePage() {
           {/* The Oracle */}
           <Link
             href="/oraculo"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-amber-400/90 transition-colors"
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-amber-400/90 transition-colors"
           >
             <Sparkles className="w-3 h-3 text-amber-400" />
             <span>Oráculo</span>
@@ -91,10 +118,10 @@ export default function HomePage() {
           {/* Vampirizador */}
           <Link
             href="/vampiro"
-            className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-cyan-400/90 transition-colors"
+            className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-cyan-400/90 transition-colors"
           >
             <Database className="w-3 h-3 text-cyan-400" />
-            <span>Vampirizador</span>
+            <span>Vampiro</span>
           </Link>
 
           {/* Centralita Telefónica */}
@@ -103,7 +130,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-zinc-300 transition-colors"
           >
             <PhoneCall className="w-3 h-3 text-emerald-400" />
-            <span className="hidden xl:inline">{CENTRALITA.display}</span>
+            <span className="hidden 2xl:inline">{CENTRALITA.display}</span>
           </a>
         </div>
       </header>
@@ -402,17 +429,39 @@ export default function HomePage() {
           </button>
 
           <Link
-            href="/cotizador"
-            className="hidden lg:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white text-[10px] transition-colors"
+            href="/admin"
+            className="hidden lg:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500 hover:text-black border border-amber-500/30 text-amber-400 font-bold text-[10px] transition-colors"
           >
-            <span>Cotizador Full</span>
+            <Shield className="w-3 h-3 text-amber-400" />
+            <span>Valhalla</span>
           </Link>
 
           <Link
-            href="/matcher"
-            className="hidden lg:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white text-[10px] transition-colors"
+            href="/arsenal-tactico"
+            className="hidden xl:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white text-[10px] transition-colors"
           >
-            <span>Matcher Full</span>
+            <span>Arsenal</span>
+          </Link>
+
+          <Link
+            href="/auditoria"
+            className="hidden xl:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white text-[10px] transition-colors"
+          >
+            <span>Auditoría</span>
+          </Link>
+
+          <Link
+            href="/toolkit-hub"
+            className="hidden 2xl:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white text-[10px] transition-colors"
+          >
+            <span>Toolkit Hub</span>
+          </Link>
+
+          <Link
+            href="/booking-engineering"
+            className="hidden 2xl:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-white text-[10px] transition-colors"
+          >
+            <span>Booking Eng</span>
           </Link>
 
           <Link

@@ -1,0 +1,1 @@
+﻿export const strategicCommunicatorDocument = "Manual de Comunicación.";

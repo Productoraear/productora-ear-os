@@ -1,0 +1,1 @@
+﻿export const managerProfileDocument = "Perfil de Manager Estratégico.";
