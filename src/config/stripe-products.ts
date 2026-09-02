@@ -1,1 +1,245 @@
-export * from '@/personal-y-artista/edwin-agudelo/repertorio-y-ip/stripe-products';
+/**
+ * 🏛️ MASTER STRIPE PRODUCTS & SERVICES REGISTRY (SSOT)
+ * Catálogo maestro de productos, servicios, tarifas y suscripciones vinculadas a Stripe en EAR OS.
+ * Define SKUs, conceptos de facturación, depósitos Smart-Lock, precios base y split soberano 80/10/10.
+ */
+
+export interface StripeProductDefinition {
+  id: string;
+  sku: string;
+  name: string;
+  category: 'ARTISTAS_FREEMIUM' | 'PROVEEDORES_B2B' | 'B2G_AYUNTAMIENTOS' | 'BODAS_Y_EVENTOS' | 'SONIDO_E_ILUMINACION' | 'LOGISTICA_VIP' | 'REGALOS_Y_OCASIONES';
+  priceEur: number;
+  unitAmountCents: number;
+  billingType: 'ONE_TIME_PAYMENT' | 'SMART_LOCK_DEPOSIT' | 'SUBSCRIPTION_RECURRING' | 'SPLIT_SETTLEMENT';
+  isHero?: boolean;
+  split: {
+    providerPercent: number; // 80%
+    platformEarPercent: number; // 10%
+    affiliateVimumePercent: number; // 10%
+  };
+  description: string;
+  targetLandings: string[];
+  checkoutAction: string;
+}
+
+export const STRIPE_MASTER_CATALOG: Record<string, StripeProductDefinition> = {
+  // 1. PRODUCTO HERO ESTRELLA: SOLISTA PREMIUM (350 €)
+  EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO: {
+    id: 'prod_edwin_agudelo_solista_premium_hero',
+    sku: 'EAR-HERO-SOLO-PREMIUM-350',
+    name: 'Edwin Agudelo · Solista Premium (350 €)',
+    category: 'REGALOS_Y_OCASIONES',
+    priceEur: 350.00,
+    unitAmountCents: 35000,
+    billingType: 'SPLIT_SETTLEMENT',
+    isHero: true,
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Producto HERO Oficial para Regalos Emocionales, Cumpleaños, Fiestas Privadas, San Valentín, Día de la Madre y Día del Padre. Voz principal y guitarra de gala en directo con repertorio a la carta, dedicatoria personalizada y sonorización Bose HiFi calibrada a 12 W/pax (+0,75 €/km fuera de Madrid).',
+    targetLandings: [
+      '/regalos/dia-de-la-madre',
+      '/regalos/dia-del-padre',
+      '/regalos/san-valentin',
+      '/regalos/cumpleanos',
+      '/artistas/edwin-agudelo',
+      '/bodas/madrid/musica-en-directo',
+      '/checkout/presupuesto',
+      '/cotizador'
+    ],
+    checkoutAction: 'createBookingCheckout'
+  },
+
+  // 2. FORMATO MÍNIMO GRUPO: QUINTETO PRO (5 MÚSICOS OBLIGATORIO)
+  MARIACHI_QUINTETO_PRO_5M: {
+    id: 'prod_mariachi_quinteto_pro_5m',
+    sku: 'EAR-MAR-QUINTETO-PRO-5M-750',
+    name: 'Edwin Agudelo · Quinteto Pro Mariachi & Música en Directo (Mínimo 5 Músicos)',
+    category: 'BODAS_Y_EVENTOS',
+    priceEur: 750.00,
+    unitAmountCents: 75000,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Formato mínimo oficial de Mariachi y Música en Directo S-Class: 5 Músicos de Conservatorio en escenario (Edwin Agudelo Voz Principal + 2 Trompetas + Vihuela + Guitarrón) con trajes charros de gran gala mexicana, microfonía multicanal Shure Axient y seguro de Responsabilidad Civil de 300.000 €.',
+    targetLandings: [
+      '/artistas/edwin-agudelo',
+      '/bodas/madrid/musica-en-directo',
+      '/bodas/madrid/mariachis',
+      '/checkout/presupuesto',
+      '/cotizador'
+    ],
+    checkoutAction: 'createBookingCheckout'
+  },
+
+  // 3. EMBกระDO ARTISTAS & CLAIM FREEMIUM
+  ARTIST_VERIFICATION: {
+    id: 'prod_artist_verification_sclass',
+    sku: 'EAR-ART-VERIF-01',
+    name: 'Validación de Artista S-Class (Claim de Perfil & Regalías)',
+    category: 'ARTISTAS_FREEMIUM',
+    priceEur: 1.00,
+    unitAmountCents: 100,
+    billingType: 'ONE_TIME_PAYMENT',
+    split: { providerPercent: 0, platformEarPercent: 100, affiliateVimumePercent: 0 },
+    description: 'Verificación oficial de identidad y activación del conector CUE Bridge para reparto de regalías.',
+    targetLandings: ['/artistas/reclamar-regalias', '/artistas/dashboard', '/reclamar-perfil'],
+    checkoutAction: 'createArtistVerificationCheckout'
+  },
+
+  // 4. SUPPLIER BLUR-LOCK (B2B)
+  SUPPLIER_CONTACT_UNLOCK: {
+    id: 'prod_supplier_blur_lock_10',
+    sku: 'EAR-SUP-LOCK-10',
+    name: 'Smart-Lock 72h · Desbloqueo Ficha y Contacto Directo',
+    category: 'PROVEEDORES_B2B',
+    priceEur: 10.00,
+    unitAmountCents: 1000,
+    billingType: 'SMART_LOCK_DEPOSIT',
+    split: { providerPercent: 0, platformEarPercent: 100, affiliateVimumePercent: 0 },
+    description: 'Acceso inmediato a los datos de contacto directo auditados y activación de la Garantía de 0 Fallos.',
+    targetLandings: ['/proveedores', '/proveedores/[slug]'],
+    checkoutAction: 'createSupplierUnlockCheckout'
+  },
+
+  // 5. LICITACIONES PÚBLICAS B2G & ALUMBRADO
+  B2G_LIGHTING_SMART_LOCK: {
+    id: 'prod_b2g_lighting_smart_lock',
+    sku: 'EAR-B2G-LIGHT-10',
+    name: 'Smart-Lock 72h · Bloqueo de Stock & Tarifa LCSP',
+    category: 'B2G_AYUNTAMIENTOS',
+    priceEur: 10.00,
+    unitAmountCents: 1000,
+    billingType: 'SMART_LOCK_DEPOSIT',
+    split: { providerPercent: 0, platformEarPercent: 100, affiliateVimumePercent: 0 },
+    description: 'Reserva oficial de stock de fábrica y emisión de memoria técnica visada para pliegos públicos.',
+    targetLandings: ['/arsenal/luces-navidad', '/corporativo/alquiler-pantallas-led-madrid'],
+    checkoutAction: 'createB2GLightingCheckout'
+  },
+
+  // 6. SMART-LOCK 72H RESERVA DE FECHA GENERAL
+  SMART_LOCK_EVENT_DEPOSIT: {
+    id: 'prod_smart_lock_deposit_10',
+    sku: 'EAR-EVENT-LOCK-10',
+    name: 'Smart-Lock 72h · Bloqueo de Fecha & Presupuesto Garantizado',
+    category: 'BODAS_Y_EVENTOS',
+    priceEur: 10.00,
+    unitAmountCents: 1000,
+    billingType: 'SMART_LOCK_DEPOSIT',
+    split: { providerPercent: 0, platformEarPercent: 100, affiliateVimumePercent: 0 },
+    description: 'Bloqueo exclusivo de fecha en calendario de producción con Price-Lock SHA-256 compensable en liquidación final.',
+    targetLandings: ['/bodas/madrid/dj-eventos', '/bodas/[provincia]/[servicio]', '/cotizador'],
+    checkoutAction: 'createSmartLockCheckout'
+  },
+
+  // 7. PACKS DE SONIDO E ILUMINACIÓN HOMOLOGADOS (+20% EAR)
+  PACK_SONIDO_1_300W: {
+    id: 'prod_pack_sonido_1',
+    sku: 'EAR-SON-PK01',
+    name: 'Pack Sonido 1 · 2x Altavoces 300W RMS',
+    category: 'SONIDO_E_ILUMINACION',
+    priceEur: 84.00,
+    unitAmountCents: 8400,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Sonorización básica para ceremonias y eventos hasta 50 PAX.',
+    targetLandings: ['/proveedores/prov-sonomusic-madrid-official', '/cotizador'],
+    checkoutAction: 'POST /api/payments/checkout'
+  },
+  PACK_SONIDO_4_1000W: {
+    id: 'prod_pack_sonido_4',
+    sku: 'EAR-SON-PK04',
+    name: 'Pack Sonido 4 · 2x Columnas PA 1000W RMS',
+    category: 'SONIDO_E_ILUMINACION',
+    priceEur: 168.00,
+    unitAmountCents: 16800,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Sistema estilizado de alta inteligibilidad vocal para cócteles y eventos hasta 150 PAX.',
+    targetLandings: ['/proveedores/prov-sonomusic-madrid-official', '/cotizador'],
+    checkoutAction: 'POST /api/payments/checkout'
+  },
+  PACK_DISCOMOVIL_1: {
+    id: 'prod_pack_discomovil_1',
+    sku: 'EAR-SON-DM01',
+    name: 'Pack Discomóvil 1 · Cabina DJ + PA + Iluminación LED',
+    category: 'SONIDO_E_ILUMINACION',
+    priceEur: 432.00,
+    unitAmountCents: 43200,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Montaje integral de discomóvil con cabina, sonido profesional y efectos de iluminación.',
+    targetLandings: ['/bodas/madrid/dj-eventos', '/proveedores/prov-sonomusic-madrid-official', '/cotizador'],
+    checkoutAction: 'POST /api/payments/checkout'
+  },
+  PACK_DISCOMOVIL_2_PREMIUM: {
+    id: 'prod_pack_discomovil_2',
+    sku: 'EAR-SON-DM02',
+    name: 'Pack Discomóvil 2 Premium · Gran Formato',
+    category: 'SONIDO_E_ILUMINACION',
+    priceEur: 1008.00,
+    unitAmountCents: 100800,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Producción de fiesta de gran envergadura con cabezas móviles DMX, truss y subwoofer reforzado.',
+    targetLandings: ['/bodas/madrid/dj-eventos', '/proveedores/prov-sonomusic-madrid-official', '/cotizador'],
+    checkoutAction: 'POST /api/payments/checkout'
+  },
+  PACK_CONCIERTO_3: {
+    id: 'prod_pack_concierto_3',
+    sku: 'EAR-SON-CC03',
+    name: 'Pack Concierto 3 · Producción Escenario Mediano',
+    category: 'SONIDO_E_ILUMINACION',
+    priceEur: 1680.00,
+    unitAmountCents: 168000,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Sonorización completa para bandas y festivales con microfonía Shure, monitores de suelo y técnico FOH.',
+    targetLandings: ['/proveedores/prov-sonomusic-madrid-official', '/cotizador'],
+    checkoutAction: 'POST /api/payments/checkout'
+  },
+
+  // 8. LOGÍSTICA VIP & CHÓFER
+  CHAUFFEUR_VIP_TRANSFER: {
+    id: 'prod_chauffeur_vip_transfer',
+    sku: 'EAR-LOG-TRF-120',
+    name: 'Transfer Aeropuerto Madrid-Barajas VIP (Mercedes Clase E/V)',
+    category: 'LOGISTICA_VIP',
+    priceEur: 120.00,
+    unitAmountCents: 12000,
+    billingType: 'SPLIT_SETTLEMENT',
+    split: { providerPercent: 80, platformEarPercent: 10, affiliateVimumePercent: 10 },
+    description: 'Traslado privado en vehículo de alta gama con chófer profesional bilingüe.',
+    targetLandings: ['/corporativo/alquiler-vehiculos-vip-madrid', '/checkout/presupuesto'],
+    checkoutAction: 'POST /api/payments/checkout'
+  }
+};
+
+/**
+ * Helper para backward-compatibility
+ */
+export const STRIPE_PRODUCTS = {
+  solistaPremiumHero: {
+    id: STRIPE_MASTER_CATALOG.EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO.id,
+    price: STRIPE_MASTER_CATALOG.EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO.unitAmountCents,
+    name: STRIPE_MASTER_CATALOG.EDWIN_AGUDELO_SOLISTA_PREMIUM_HERO.name
+  },
+  quintetoPro5M: {
+    id: STRIPE_MASTER_CATALOG.MARIACHI_QUINTETO_PRO_5M.id,
+    price: STRIPE_MASTER_CATALOG.MARIACHI_QUINTETO_PRO_5M.unitAmountCents,
+    name: STRIPE_MASTER_CATALOG.MARIACHI_QUINTETO_PRO_5M.name
+  },
+  artistVerification: {
+    id: STRIPE_MASTER_CATALOG.ARTIST_VERIFICATION.id,
+    price: STRIPE_MASTER_CATALOG.ARTIST_VERIFICATION.unitAmountCents,
+    name: STRIPE_MASTER_CATALOG.ARTIST_VERIFICATION.name
+  },
+  supplierUnlock: {
+    id: STRIPE_MASTER_CATALOG.SUPPLIER_CONTACT_UNLOCK.id,
+    price: STRIPE_MASTER_CATALOG.SUPPLIER_CONTACT_UNLOCK.unitAmountCents,
+    name: STRIPE_MASTER_CATALOG.SUPPLIER_CONTACT_UNLOCK.name
+  },
+  smartLock: {
+    id: STRIPE_MASTER_CATALOG.SMART_LOCK_EVENT_DEPOSIT.id,
+    price: STRIPE_MASTER_CATALOG.SMART_LOCK_EVENT_DEPOSIT.unitAmountCents,
+    name: STRIPE_MASTER_CATALOG.SMART_LOCK_EVENT_DEPOSIT.name
+  }
+};
