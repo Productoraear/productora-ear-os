@@ -111,6 +111,41 @@ export default function AyuntamientosPage() {
           </div>
         </section>
 
+        {/* Corredores y Propuestas Piloto */}
+        <section className="bg-neutral-900/60 border border-neutral-800 rounded-xl p-8 mb-8">
+          <h2 className="text-xl font-semibold text-amber-400 mb-2">4. Propuestas Parametrizadas y Expedientes Piloto</h2>
+          <p className="text-sm text-neutral-300 mb-4">
+            Consulte las propuestas técnicas y presupuestarias cerradas para municipios del corredor estratégico A-5 y comarca:
+          </p>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <a
+              href="/contratacion/ayuntamientos/navalcarnero"
+              className="p-4 bg-neutral-950/80 hover:bg-neutral-800/80 border border-neutral-800 hover:border-amber-500/50 rounded-lg transition-all block"
+            >
+              <div className="font-bold text-white flex justify-between items-center">
+                <span>Ayuntamiento de Navalcarnero (Madrid)</span>
+                <span className="text-xs text-amber-400 font-normal">2.800 € + IVA</span>
+              </div>
+              <p className="text-xs text-neutral-400 mt-1">
+                Plaza de Segovia / Teatro · Fiestas Patronales + VIMUME Senior
+              </p>
+            </a>
+
+            <a
+              href="/contratacion/ayuntamientos/mentrida"
+              className="p-4 bg-neutral-950/80 hover:bg-neutral-800/80 border border-neutral-800 hover:border-amber-500/50 rounded-lg transition-all block"
+            >
+              <div className="font-bold text-white flex justify-between items-center">
+                <span>Ayuntamiento de Méntrida (Toledo)</span>
+                <span className="text-xs text-amber-400 font-normal">1.950 € + IVA</span>
+              </div>
+              <p className="text-xs text-neutral-400 mt-1">
+                Sede Central · Tarifa base menor sin gastos de desplazamiento
+              </p>
+            </a>
+          </div>
+        </section>
+
         <div className="border border-amber-500/40 bg-gradient-to-r from-amber-500/10 to-transparent p-6 rounded-xl text-center">
           <h3 className="text-lg font-semibold text-white mb-2">Contacto Directo para Comisiones y Concejalías</h3>
           <p className="text-sm text-neutral-300 mb-4">Atención inmediata 24/7 para formalización de fechas y expedientes menores.</p>
