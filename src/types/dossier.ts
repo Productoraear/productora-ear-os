@@ -1,20 +1,39 @@
-// Stub de alta fidelidad generado para desbloquear compilación de LeadRouter
-export type LeadChannel = 'INSTITUTIONAL' | 'B2B' | 'OPERATIVE' | 'B2G' | 'B2C' | 'VIP';
+/**
+ * 📂 DOSSIER CONTRACTS - S-CLASS LEAD ROUTING
+ */
 
-export interface LeadRoutingResult {
-  success?: boolean;
-  route?: string;
-  assignedTo?: string;
-  channel?: LeadChannel;
-  reason?: string;
-  priority?: number;
-}
+export type LeadChannel = 'INSTITUTIONAL' | 'B2B' | 'OPERATIVE';
 
 export interface DossierProposal {
   id: string;
-  occasion?: string;
-  totalAmount?: number;
-  depositAmount?: number;
-  expires_at?: string;
-  [key: string]: any;
+  token: string; // Acceso controlado
+  status: 'draft' | 'sent' | 'approved' | 'pre-closed' | 'expired';
+  createdAt: string;
+  expiresAt: string;
+  approvedAt?: string;
+  reservationExpiresAt?: string;
+  
+  // Información de Contacto
+  contactName: string;
+  contactEmail: string;
+  organizationName?: string;
+  
+  // Contexto de Mercado
+  occasionSlug: string;
+  province?: string;
+  
+  // Selección de Activos
+  selectedAssets: string[]; // IDs de servicios
+  priorityScore: number; // 0-100
+  
+  // Ruteo Operativo
+  channel: LeadChannel;
+  routingReason: string;
+  telegramTarget: string; // Canal o Chat ID específico
+}
+
+export interface LeadRoutingResult {
+  channel: LeadChannel;
+  reason: string;
+  priority: number;
 }

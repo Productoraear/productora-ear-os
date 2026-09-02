@@ -1,34 +1,14 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Activity, MapPin, Radio, AlertTriangle, CheckCircle, Clock, Zap } from 'lucide-react';
+import { useTourTracking } from '../hooks/useTourTracking';
 
 interface LiveCommandCenterProps {
   tourId: string;
 }
 
 export const LiveCommandCenter: React.FC<LiveCommandCenterProps> = ({ tourId }) => {
-  const [status, setStatus] = useState({
-    phase: 'EN_RUTA',
-    speed: 92,
-    estimatedArrival: '19:45 CET',
-    progress: 68,
-    currentLocation: { lat: 40.4168, lng: -3.7038 },
-    anomalies: [] as string[],
-    lastPing: new Date()
-  });
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setStatus(prev => ({
-        ...prev,
-        lastPing: new Date(),
-        speed: 88 + Math.floor(Math.random() * 10)
-      }));
-    }, 10000);
-    return () => clearInterval(timer);
-  }, []);
+  const { status, isSimulating } = useTourTracking(tourId);
 
   const getPhaseColor = () => {
     switch (status.phase) {
@@ -62,7 +42,7 @@ export const LiveCommandCenter: React.FC<LiveCommandCenterProps> = ({ tourId }) 
       {/* Grid de Sensores */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Velocidad / ETA */}
-        <div className="bg-white/[0.02] p-6 rounded-2xl flex items-center gap-4 border border-white/5">
+        <div className="glass-panel p-6 rounded-2xl flex items-center gap-4 border-white/5">
           <Zap className="text-blue-500" size={32} />
           <div>
             <div className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">Velocidad de Convoy</div>
@@ -71,7 +51,7 @@ export const LiveCommandCenter: React.FC<LiveCommandCenterProps> = ({ tourId }) 
         </div>
 
         {/* ETA */}
-        <div className="bg-white/[0.02] p-6 rounded-2xl flex items-center gap-4 border border-white/5">
+        <div className="glass-panel p-6 rounded-2xl flex items-center gap-4 border-white/5">
           <Clock className="text-[#d4a855]" size={32} />
           <div>
             <div className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">ETA Objetivo</div>
@@ -80,7 +60,7 @@ export const LiveCommandCenter: React.FC<LiveCommandCenterProps> = ({ tourId }) 
         </div>
 
         {/* Progreso */}
-        <div className="bg-white/[0.02] p-6 rounded-2xl flex items-center gap-4 border border-white/5 relative overflow-hidden">
+        <div className="glass-panel p-6 rounded-2xl flex items-center gap-4 border-white/5 relative overflow-hidden">
           <div 
             className="absolute top-0 left-0 h-full bg-green-500/10 transition-all duration-1000" 
             style={{ width: `${status.progress}%` }}
@@ -95,6 +75,7 @@ export const LiveCommandCenter: React.FC<LiveCommandCenterProps> = ({ tourId }) 
 
       {/* Mapa Táctico Simulado */}
       <div className="h-64 rounded-2xl bg-white/[0.01] border border-white/5 flex items-center justify-center relative overflow-hidden group">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
         <div className="flex flex-col items-center gap-4 z-10">
           <MapPin size={48} className="text-[#d4a855] animate-bounce" />
           <div className="text-center">
@@ -120,7 +101,7 @@ export const LiveCommandCenter: React.FC<LiveCommandCenterProps> = ({ tourId }) 
         
         {status.anomalies.length === 0 ? (
           <div className="flex items-center gap-2 text-green-500/60 text-xs font-mono">
-            <CheckCircle size={14} /> Sistema Operando en Parámetros S-Class. Último ping: {status.lastPing.toLocaleTimeString()}
+            <CheckCircle size={14} /> Sistema Operando en Parámetros S-Class. Último ping: {status.lastPing ? status.lastPing.toLocaleTimeString() : '...'}
           </div>
         ) : (
           <div className="space-y-2">

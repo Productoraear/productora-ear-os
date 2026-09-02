@@ -1,0 +1,219 @@
+"Lee el índice del SSOT y dime la fase activa, los intocables y la siguiente validación obligatoria. No generes código todavía."
+
+"Haz preflight del proyecto: variables críticas, TypeScript, build, auth, pagos, sitemap y middleware. Devuélveme solo hallazgos verificables."
+
+"Lista los archivos CRITICAL relacionados con auth, pagos, SEO y datos. Clasifícalos y no modifiques nada aún."
+
+"Busca divergencias entre SSOT, código y despliegue. Marca cada una como HECHO, HIPÓTESIS o REQUIERE VALIDACIÓN."
+
+"Genera un mapa mínimo de rutas críticas del proyecto: públicas, admin, API y webhooks. Sin tocar código."
+
+"Dime qué módulo tocarías primero para reducir riesgo sistémico y justifica impacto, reversibilidad y coste."
+
+"Audita los secretos esperados en .env.local sin exponer valores. Señala faltantes por integración."
+
+"Haz una lectura forense de middleware, auth context y rutas protegidas. Devuelve solo riesgos reales."
+
+"Enumera los comandos de validación que se deben ejecutar antes y después de cualquier cambio."
+
+"Identifica qué partes del sistema parecen legado, residuo o cuarentena y qué evidencia falta para clasificarlas mejor."
+
+Fase 1 — soberanía de datos y auth (11-25)
+"Lee el esquema de datos y explícame qué tablas o colecciones sostienen identidad, pedidos, servicios y conocimiento."
+
+"Propón el contrato TypeScript para usuarios, membresías y tenants antes de tocar UI."
+
+"Redacta el SQL exacto para RLS de events y memberships con aislamiento por tenant_id. No generes React."
+
+"Audita la coexistencia Firebase/Supabase/Auth y marca solapamientos peligrosos. Sin reescribir todavía."
+
+"Genera un plan de migración de auth heredado a un modelo soberano sin romper sesiones activas."
+
+"Escribe las políticas mínimas RLS para lectura/escritura segura por rol. Devuelve SQL listo para pegar."
+
+"Define el flujo de sesión ideal para portal, dashboard y API protegida. Usa diagrama textual."
+
+"Inspecciona middleware y dime si protege realmente /portal, /admin, /dashboard y APIs sensibles."
+
+"Genera tests mentales de bypass para auth y dime qué controles faltan."
+
+"Propón un refactor mínimo para separar proveedor de auth, autorización y perfil de usuario."
+
+"Escribe el contrato de CurrentUser, Role, TenantMembership y SessionClaims en TypeScript."
+
+"Define la secuencia segura para mover una ruta pública a protegida sin romper navegación ni SEO."
+
+"Haz una auditoría de cookies, tokens y session storage esperado. Marca superficies de fuga."
+
+"Si faltan roles persistidos, diseña primero el esquema SQL y los tipos TS. No hagas UI aún."
+
+"Devuélveme checklist de smoke tests funcionales de auth para desktop y mobile."
+
+Fase 2 — estructura, refactor y legado (26-40)
+"Mapea la estructura actual por dominios: app, lib, services, features, hooks, panels, SEO, payments."
+
+"Clasifica los módulos candidatos a DUPLICATE, ORPHAN o RESIDUAL con evidencia."
+
+"Propón una reorganización mínima por dominio sin mover todavía archivos críticos."
+
+"Detecta imports rotos, rutas huérfanas o componentes aparentemente muertos."
+
+"Diseña un protocolo de cuarentena para módulos dudosos que no deben tocar el core."
+
+"Escribe un diff conceptual para separar UI de lógica en el dominio seleccionado."
+
+"Lee dos componentes solapados y dime cuál conservarías y por qué."
+
+"Genera un plan de absorción heredada usando adaptadores, no reescritura masiva."
+
+"Si hay sandbox, pages antiguas o rutas obsoletas, clasifícalas sin borrarlas aún."
+
+"Propón nombres y ubicaciones finales para servicios críticos tras refactor."
+
+"Detecta deuda técnica causada por archivos grandes, mezclas de responsabilidades o side effects."
+
+"Devuelve una tabla: archivo, responsabilidad, riesgo, acción recomendada, reversibilidad."
+
+"Haz una lectura de imports transitivos para un módulo crítico antes de moverlo."
+
+"Si una carpeta parece residual, busca referencias indirectas antes de sugerir borrado."
+
+"Cierra esta maniobra con rutas exactas, cambios mínimos y validaciones obligatorias."
+
+Fase 3 — pagos, ledger y conciliación (41-55)
+"Audita payments.ts, create-session y webhook. Distingue stubs, real y pendiente."
+
+"Escribe el contrato TypeScript para PaymentIntent, CheckoutSession, LedgerEntry y Refund."
+
+"Redacta el flujo ideal de Stripe: create session -> webhook -> ledger -> confirmación."
+
+"Genera el endpoint de webhook con validación de firma e idempotencia. Devuelve archivo listo."
+
+"Define los estados del ledger y sus transiciones permitidas."
+
+"Propón un split 80/10/10 modelado en datos, sin activar cobros reales."
+
+"Escribe el SQL o tipos necesarios para conciliación y auditoría de pagos."
+
+"Audita riesgos de cobro duplicado, webhook repetido o refund inconsistente."
+
+"Devuelve smoke tests para checkout, cancel, success, webhook y refund."
+
+"Propón rollback seguro si Stripe falla pero la UI debe seguir respondiendo."
+
+"Integra metadatos de order_id, user_id y tenant_id en la creación de checkout."
+
+"Escribe un manejador de errores para pagos que degrade con elegancia sin perder trazabilidad."
+
+"Separa pagos simulados de pagos reales sin romper imports existentes."
+
+"Diseña la capa PREPARED_NOT_AUTHORIZED para no activar motor financiero prematuramente."
+
+"Cierra pagos con diagnóstico, archivo, código, validación y riesgo residual."
+
+Fase 4 — SEO, sitemap e indexabilidad (56-70)
+"Audita robots, sitemap, metadata y canonicals. Devuelve hallazgos verificables."
+
+"Cuenta y clasifica las rutas indexables: core, programáticas, privadas, inválidas, vacías."
+
+"Propón reglas de exclusión para admin, API, staging y superficies no indexables."
+
+"Escribe un sitemap seguro para Next App Router con partición por dominios si hace falta."
+
+"Genera canonicals dinámicos correctos para rutas programáticas."
+
+"Audita thin content y páginas vacías que puedan penalizar indexación."
+
+"Propón estructura de metadata por vertical: Productora, VIMUME, Artistas."
+
+"Define estrategia ISR/SSR/Static para rutas masivas sin romper build."
+
+"Valida si una landing debe existir, redirigir, consolidarse o ir a cuarentena SEO."
+
+"Devuelve una tabla: ruta, intención, indexable sí/no, canonical, riesgo."
+
+"Diseña pruebas de crawlability para lanzamiento."
+
+"Detecta rutas residuales heredadas que hoy consumen presupuesto de rastreo."
+
+"Propón redirects 301 solo donde haya historia útil que preservar."
+
+"Escribe robots.ts o sitemap.ts listo para pegar, sin inventar rutas no verificadas."
+
+"Cierra SEO con evidencia, no con promesas de dominancia."
+
+Fase 5 — RAG, conocimiento e ingestión (71-80)
+"Audita la arquitectura RAG actual: embeddings, tabla/vector store, consulta y fallback."
+
+"Define el contrato de un KnowledgeChunk con source, domain, sensitivity y embedding metadata."
+
+"Escribe el flujo de ingestión: extracción, limpieza, chunking, embedding, persistencia."
+
+"Propón estrategia híbrida: keyword + semántica + filtros por dominio."
+
+"Diseña la RPC o consulta para traer top-k fragmentos con score y filtros."
+
+"Genera el endpoint de query que compute embedding en backend y no en cliente."
+
+"Define cómo degradar si Gemini o embeddings fallan."
+
+"Clasifica fuentes: operativas, comerciales, clínicas, legales, legacy."
+
+"Propón política para evitar contaminar el RAG con basura o duplicados."
+
+"Devuelve validaciones mínimas de relevancia, latencia y seguridad del RAG."
+
+Fase 6 — UI, webapp y calidad de producto (81-90)
+"Antes de escribir UI, define tipos, estados y contratos del componente."
+
+"Redacta un componente React completo listo para pegar, pero solo si el contrato ya está aprobado."
+
+"Si el bug es SSR/CSR, aísla navbar, footer, layout y componente sospechoso en ese orden."
+
+"Audita un componente por props inestables, side effects y mala hidratación."
+
+"Propón una mejora visual sin añadir complejidad ornamental ni romper performance."
+
+"Convierte un componente grande en contenedor + presentacionales con mínimo impacto."
+
+"Diseña skeleton, empty state y error state del módulo activo."
+
+"Valida accesibilidad básica: headings, focus, labels, keyboard, contrast."
+
+"Si hay motion, que sea funcional y compatible con reduced motion."
+
+"Cierra UI con archivo exacto, código listo, smoke test y rollback."
+
+Fase 7 — despliegue, operaciones y forense (91-100)
+"Haz auditoría predeploy: tsc, lint, build, rutas críticas, auth, pagos, sitemap."
+
+"Lista los bloqueantes de release ordenados por severidad."
+
+"Reconcília estado local, Git, despliegue y SSOT. No cierres fases sin pruebas."
+
+"Escribe checklist de release segura para Vercel o entorno objetivo."
+
+"Propón observabilidad mínima: logs, errores, webhooks, métricas."
+
+"Genera protocolo de rollback si el deploy rompe auth, SEO o pagos."
+
+"Haz autopsia del cambio más reciente: qué tocó, qué riesgo dejó, qué faltó validar."
+
+"Redacta actualización exacta para el SSOT con hechos verificados y riesgos remanentes."
+
+"Construye un mini expediente forense de la maniobra actual: diagnóstico, evidencia, validación, próximos movimientos."
+
+"Detente, evalúa deriva y dime el próximo paso de mayor retorno con menor riesgo."
+
+6. Cómo usar el manual siendo novato
+Empieza siempre con los prompts 1, 2 y 4 para saber dónde estás.
+
+Si vas a tocar base de datos o permisos, usa 13, 16 y 21 antes de tocar UI.
+
+Si vas a tocar pagos, empieza por 41, 43 y 48.
+
+Si vas a tocar SEO, empieza por 56, 57 y 65.
+
+Si vas a tocar un bug visual, usa 81, 84 y 90.
+
+Cada 3 a 5 movimientos, vuelve con resultados y reconciliamos la siguiente maniobra.

@@ -1,0 +1,1312 @@
+[
+  {
+    "file": "C:\\EAR_OS_V2\\scripts\\deep_pc_discovery.js",
+    "lines": 110,
+    "exportsCount": 0,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker",
+      "Bespoke Pricer & Price-Lock",
+      "Calculadora Acústica/Rider",
+      "UI Onyx / Divi Transmuter",
+      "Gestor de Talentos/Edwin",
+      "Ledger / Commission Split",
+      "RBAC / Sovereign Login"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\public\\TinderMatcherClient.tsx",
+    "lines": 551,
+    "exportsCount": 2,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker",
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClassScreens\\BespokeTemplate.tsx",
+    "lines": 398,
+    "exportsCount": 1,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Gestor de Talentos/Edwin",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\BespokePricer.tsx",
+    "lines": 229,
+    "exportsCount": 2,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\servicios\\[nicho]\\[ciudad]\\page.tsx",
+    "lines": 137,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\quotes\\lock\\route.ts",
+    "lines": 76,
+    "exportsCount": 1,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Calculadora Acústica/Rider",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\docs\\_meta\\document_registry.json",
+    "lines": 1850,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\MultiPricer.tsx",
+    "lines": 561,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\artists\\ui\\EdwinAgudeloDossier.tsx",
+    "lines": 534,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\services\\rag\\GravitationalIngestionEngine.ts",
+    "lines": 348,
+    "exportsCount": 6,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\page.tsx",
+    "lines": 306,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\page.tsx",
+    "lines": 254,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\schema.ts",
+    "lines": 252,
+    "exportsCount": 13,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\solistas\\page.tsx",
+    "lines": 246,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\edwin-agudelo\\page.tsx",
+    "lines": 237,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\scripts\\ingestion\\gravitational_vampirizer.js",
+    "lines": 218,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\orquestas\\page.tsx",
+    "lines": 218,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\scripts\\vampire_audit_sanitizer.ts",
+    "lines": 210,
+    "exportsCount": 1,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker",
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\ocasiones\\[slug]\\page.tsx",
+    "lines": 185,
+    "exportsCount": 0,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\empresarios\\page.tsx",
+    "lines": 176,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\schema.js",
+    "lines": 162,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\matrix.ts",
+    "lines": 153,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\matrix.js",
+    "lines": 138,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\services\\vampire\\SynonymOntology.ts",
+    "lines": 138,
+    "exportsCount": 4,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\PriceLockBadge.tsx",
+    "lines": 129,
+    "exportsCount": 1,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\seed-artists.ts",
+    "lines": 129,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\proveedores\\[slug]\\page.tsx",
+    "lines": 127,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "RBAC / Sovereign Login"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\seed-artists.js",
+    "lines": 120,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\components\\onboarding\\RoleSelectionGateway.tsx",
+    "lines": 115,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\Home.tsx",
+    "lines": 101,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\admin\\telemetry\\route.ts",
+    "lines": 92,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\layout.tsx",
+    "lines": 91,
+    "exportsCount": 3,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker",
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\expertise.ts",
+    "lines": 47,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\expertise.js",
+    "lines": 44,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider",
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\0cka7oyyv90nw.js",
+    "lines": 37,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\0d2bp~b3bc.pk.js",
+    "lines": 37,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock",
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\data_vault\\VIMUME_EXTRACTED_KNOWLEDGE.json",
+    "lines": 50124,
+    "exportsCount": 16,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\data_vault\\ear_os_infra_inventory.json",
+    "lines": 17281,
+    "exportsCount": 0,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\staging\\absorbed\\data_vault\\ear_os_infra_inventory.json",
+    "lines": 17281,
+    "exportsCount": 0,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\package-lock.json",
+    "lines": 11131,
+    "exportsCount": 0,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\functions\\package-lock.json",
+    "lines": 7599,
+    "exportsCount": 0,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\BASE_DE_CONOCIMIENTO\\archive\\legacy_brain_dump\\informe_auditoria_urls.json",
+    "lines": 2226,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\functions\\public\\data\\urls_sitemap.json",
+    "lines": 1829,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\data\\urls_sitemap.json",
+    "lines": 1829,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\incubadora\\2026-05-18_firebase_functions_sitemap.json",
+    "lines": 1829,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\incubadora\\2026-05-18_firebase_hosting_sitemap.json",
+    "lines": 1829,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\public\\data\\urls_sitemap.json",
+    "lines": 1829,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\data_vault\\EAR_BRAIN_KNOWLEDGE.json",
+    "lines": 591,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClass\\CommandCenterDashboard.tsx",
+    "lines": 466,
+    "exportsCount": 1,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\artists\\ArtistSEOSwarm.tsx",
+    "lines": 412,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\components\\DiviTransmuter.tsx",
+    "lines": 318,
+    "exportsCount": 7,
+    "capabilities": [
+      "UI Onyx / Divi Transmuter"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\dossier\\page.tsx",
+    "lines": 306,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\vimume\\faq\\page.tsx",
+    "lines": 290,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\output\\gravitational\\external_candidates_20260806_233929.json",
+    "lines": 288,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\output\\gravitational\\external_candidates_20260806_234322.json",
+    "lines": 288,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClass\\AuraWalletLedger.tsx",
+    "lines": 285,
+    "exportsCount": 1,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\actions\\matcherActions.ts",
+    "lines": 273,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\engines\\weddingMatchEngine.ts",
+    "lines": 267,
+    "exportsCount": 10,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\contacto\\[slug]\\page.tsx",
+    "lines": 261,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\OmegaCockpitPanel.tsx",
+    "lines": 255,
+    "exportsCount": 1,
+    "capabilities": [
+      "UI Onyx / Divi Transmuter"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\ForensicScanner.tsx",
+    "lines": 235,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\HunterPanel.tsx",
+    "lines": 228,
+    "exportsCount": 1,
+    "capabilities": [
+      "UI Onyx / Divi Transmuter"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\shows\\page.tsx",
+    "lines": 225,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\webhooks\\stripe\\route.ts",
+    "lines": 224,
+    "exportsCount": 1,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\actions\\commandCenterActions.ts",
+    "lines": 221,
+    "exportsCount": 2,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\blog-content.ts",
+    "lines": 214,
+    "exportsCount": 2,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\.obsidian\\workspace.json",
+    "lines": 205,
+    "exportsCount": 0,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\blog-content.js",
+    "lines": 204,
+    "exportsCount": 1,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\components\\admin\\NexusRealCockpit.tsx",
+    "lines": 203,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\engines\\weddingMatchEngine.js",
+    "lines": 194,
+    "exportsCount": 3,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\blog\\b2g\\page.tsx",
+    "lines": 193,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\infraestructura\\page.tsx",
+    "lines": 187,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\the-signal\\page.tsx",
+    "lines": 186,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\SovereignLogin.tsx",
+    "lines": 185,
+    "exportsCount": 1,
+    "capabilities": [
+      "RBAC / Sovereign Login"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\vimume\\inversion\\page.tsx",
+    "lines": 184,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\components\\widgets\\BookingCalculator.tsx",
+    "lines": 184,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\djs\\page.tsx",
+    "lines": 177,
+    "exportsCount": 2,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\scripts\\vampire-parser.ts",
+    "lines": 167,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\BASE_DE_CONOCIMIENTO\\archive\\legacy_brain_dump\\omni_extractor.js",
+    "lines": 164,
+    "exportsCount": 0,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\rentals.ts",
+    "lines": 164,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\rentals.js",
+    "lines": 158,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\widgets\\navigation\\SovereignNav.tsx",
+    "lines": 158,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\staging\\manifests\\absorbed_manifest_20260806_232626.json",
+    "lines": 156,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\staging\\manifests\\absorbed_manifest_20260806_232629.json",
+    "lines": 156,
+    "exportsCount": 0,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\academia\\page.tsx",
+    "lines": 156,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\vimume\\eventos\\page.tsx",
+    "lines": 154,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\scripts\\vampire-parser.js",
+    "lines": 154,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\booking-actions.ts",
+    "lines": 144,
+    "exportsCount": 0,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\entities\\market\\ui\\ProductNodeCard.tsx",
+    "lines": 134,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\booking-actions.js",
+    "lines": 125,
+    "exportsCount": 0,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\infraestructura\\mundial-2026\\page.tsx",
+    "lines": 108,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\pages\\PortalDashboard.tsx",
+    "lines": 108,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\categorias\\page.tsx",
+    "lines": 105,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\services\\ai\\AstraService.ts",
+    "lines": 105,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\servicios\\mariachis\\[provincia]\\page.tsx",
+    "lines": 103,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\constants\\seo-data.ts",
+    "lines": 102,
+    "exportsCount": 5,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\scripts\\restore-admin.ts",
+    "lines": 100,
+    "exportsCount": 0,
+    "capabilities": [
+      "RBAC / Sovereign Login"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\artists\\ui\\ManifestoSection.tsx",
+    "lines": 100,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClassScreens\\MediaShowcase.tsx",
+    "lines": 99,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\services\\scrapers\\cazador_fantasma.ts",
+    "lines": 98,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\constants\\seo-data.js",
+    "lines": 97,
+    "exportsCount": 5,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\scripts\\fitur_swarm_simulator.ts",
+    "lines": 95,
+    "exportsCount": 0,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\services\\ai\\AstraService.js",
+    "lines": 95,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\servicios\\mariachis\\[provincia]\\[evento]\\page.tsx",
+    "lines": 94,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\seo\\LocalBusinessSchema.tsx",
+    "lines": 88,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\scripts\\vampirization\\seed_products.js",
+    "lines": 87,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\layout\\DynamicContextBar.tsx",
+    "lines": 81,
+    "exportsCount": 1,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\config\\seo-matrix.ts",
+    "lines": 77,
+    "exportsCount": 4,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\components\\BookingCalculator.tsx",
+    "lines": 75,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\sitemap.ts",
+    "lines": 74,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\asset-vault\\ui\\AssetVaultLayout.tsx",
+    "lines": 74,
+    "exportsCount": 1,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\constants\\occasions.ts",
+    "lines": 72,
+    "exportsCount": 4,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\whatsapp.ts",
+    "lines": 72,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(nexus)\\admin\\nexus\\page.tsx",
+    "lines": 71,
+    "exportsCount": 1,
+    "capabilities": [
+      "UI Onyx / Divi Transmuter"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\b2g\\dossier-generate\\route.ts",
+    "lines": 71,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\fleet\\waybills\\generate\\route.ts",
+    "lines": 70,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\config\\seo-matrix.js",
+    "lines": 70,
+    "exportsCount": 4,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\next.config.js",
+    "lines": 68,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\eventos\\page.tsx",
+    "lines": 67,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\affiliates\\payout\\route.ts",
+    "lines": 67,
+    "exportsCount": 1,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\seo.ts",
+    "lines": 66,
+    "exportsCount": 3,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\rider\\audit\\route.ts",
+    "lines": 65,
+    "exportsCount": 1,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\aniversarios\\page.tsx",
+    "lines": 63,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\bodas\\page.tsx",
+    "lines": 63,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\cumpleanos\\page.tsx",
+    "lines": 63,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\cumpleaños\\page.tsx",
+    "lines": 63,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\ferias\\page.tsx",
+    "lines": 63,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\festivales\\page.tsx",
+    "lines": 63,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\output\\talent-os-seo\\sitemap-final.ts",
+    "lines": 61,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\presupuesto\\page.tsx",
+    "lines": 60,
+    "exportsCount": 2,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\constants\\occasions.js",
+    "lines": 57,
+    "exportsCount": 3,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\artists\\ArtistBio.tsx",
+    "lines": 56,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\BespokePricerModal.tsx",
+    "lines": 56,
+    "exportsCount": 1,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\output\\talent-os-seo\\sitemap-final.js",
+    "lines": 54,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\artists\\ArtistGallery.tsx",
+    "lines": 54,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\api\\payments\\checkout\\route.ts",
+    "lines": 53,
+    "exportsCount": 0,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\whatsapp.js",
+    "lines": 53,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\blog\\impacto-social\\page.tsx",
+    "lines": 51,
+    "exportsCount": 1,
+    "capabilities": [
+      "Tinder/Swipe Matchmaker"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\shared\\context\\sovereignDecisionEngine.ts",
+    "lines": 51,
+    "exportsCount": 4,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\shared\\context\\sovereignDecisionEngine.js",
+    "lines": 48,
+    "exportsCount": 4,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\features\\asset-vault\\ui\\MediaKitBento.tsx",
+    "lines": 47,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\seo.js",
+    "lines": 46,
+    "exportsCount": 2,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\astra-intelligence.js",
+    "lines": 41,
+    "exportsCount": 2,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\generateJsonLd.ts",
+    "lines": 41,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\generateJsonLd.js",
+    "lines": 38,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\pricing-engine.ts",
+    "lines": 38,
+    "exportsCount": 3,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\BASE_DE_CONOCIMIENTO\\CÓDICE_V2_SUMMARY.json",
+    "lines": 37,
+    "exportsCount": 0,
+    "capabilities": [
+      "Ledger / Commission Split"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\scripts\\stress-test-pricing.js",
+    "lines": 35,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\components\\spatial\\SpatialIntelligence.tsx",
+    "lines": 23,
+    "exportsCount": 1,
+    "capabilities": [
+      "Bespoke Pricer & Price-Lock"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\artists\\edwin-agudelo.js",
+    "lines": 22,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\artists\\edwin-agudelo.ts",
+    "lines": 22,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\pricing.ts",
+    "lines": 18,
+    "exportsCount": 3,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\artists.ts",
+    "lines": 17,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\artists.js",
+    "lines": 16,
+    "exportsCount": 1,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\data\\pricing.js",
+    "lines": 14,
+    "exportsCount": 3,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\17e447qc70vq5.js",
+    "lines": 10,
+    "exportsCount": 0,
+    "capabilities": [
+      "Calculadora Acústica/Rider"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\lib\\pricing-engine.js",
+    "lines": 10,
+    "exportsCount": 0,
+    "capabilities": [
+      "Gestor de Talentos/Edwin"
+    ]
+  },
+  {
+    "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\(auth)\\login\\page.tsx",
+    "lines": 8,
+    "exportsCount": 1,
+    "capabilities": [
+      "RBAC / Sovereign Login"
+    ]
+  }
+]

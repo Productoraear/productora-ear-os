@@ -1,0 +1,166 @@
+{
+  "auditTimestamp": "2026-08-27T20:24:41.072Z",
+  "engineVersion": "EAR_OS_V2_SCLASS_STAKEHOLDER_MINER_3.0",
+  "metrics": {
+    "totalEntitiesScanned": 9,
+    "totalBytesAnalyzed": 91932015,
+    "stakeholderBreakdown": {
+      "B2C_Clientes_Parejas_Bodas": 52,
+      "B2B_Proveedores_Fincas_Catering_Planners": 84,
+      "B2G_Ayuntamientos_Instituciones": 4,
+      "VIMUME_Salud_Residencias_Familias": 150,
+      "Artistas_Musicos_IngenierosSonido": 8,
+      "Afiliados_Comisionistas_Partners": 0
+    }
+  },
+  "scannedFiles": [
+    {
+      "role": "BBDD RAG & Base Cognitiva",
+      "category": "General",
+      "path": "src/data/ear-rag-database.json",
+      "sizeKb": 89628,
+      "detectedItems": 30144
+    },
+    {
+      "role": "Matriz pSEO 52 Provincias",
+      "category": "B2C_B2B_pSEO",
+      "path": "src/lib/constants/seo-data-hydrated.ts",
+      "sizeKb": 7,
+      "detectedItems": 1
+    },
+    {
+      "role": "Oportunidades y Pliegos B2G LCSP",
+      "category": "B2G_Ayuntamientos",
+      "path": "src/data/b2g_opportunities_database.json",
+      "sizeKb": 1,
+      "detectedItems": 4
+    },
+    {
+      "role": "Arsenal Audiovisual & Hardware",
+      "category": "Proveedores_Hardware",
+      "path": "src/data/madridalquiler_catalog.json",
+      "sizeKb": 31,
+      "detectedItems": 32
+    },
+    {
+      "role": "Taxonomía 30 Niveles Relacional",
+      "category": "Taxonomia_30L",
+      "path": "src/data/ear-30-level-taxonomy.json",
+      "sizeKb": 15,
+      "detectedItems": 5
+    },
+    {
+      "role": "Perfilado Conductual 50Q",
+      "category": "Perfilado_UX",
+      "path": "src/data/catalog/behavioral_profiling_50q.json",
+      "sizeKb": 14,
+      "detectedItems": 2
+    },
+    {
+      "role": "Índice de Búsqueda Global",
+      "category": "Search_Index",
+      "path": "src/data/global-search-index.ts",
+      "sizeKb": 18,
+      "detectedItems": 1
+    },
+    {
+      "role": "Servicios Históricos Edwin Agudelo",
+      "category": "Artistas_Talento",
+      "path": "src/features/artists/ui/EdwinServicesGrid.tsx",
+      "sizeKb": 19,
+      "detectedItems": 1
+    },
+    {
+      "role": "Protocolo Neuroacústico VIMUME",
+      "category": "VIMUME_Salud",
+      "path": "src/modules/SClassScreens/PRO_VIMUMEPAGE.tsx",
+      "sizeKb": 44,
+      "detectedItems": 1
+    }
+  ],
+  "stakeholderDirectory": {
+    "B2C_Clientes": {
+      "description": "Novios, particulares, familias para bodas, cumpleaños y serenatas",
+      "entrypoints": [
+        "/cotizador",
+        "/checkout/presupuesto",
+        "/servicios/mariachis/madrid"
+      ],
+      "keyFeatures": [
+        "Cotizador bespoke",
+        "Price-Lock SHA-256",
+        "Repertorio personalizado",
+        "Depósito 100€ Stripe"
+      ],
+      "pricingBase": "Solista 350€ + Desplazamiento (0.40€/km)"
+    },
+    "B2B_Proveedores_Fincas_Catering": {
+      "description": "Espacios de eventos, catering de brasas ancestrales, fotógrafos, fincas",
+      "entrypoints": [
+        "/proveedores?cat=finca",
+        "/proveedores?cat=catering",
+        "/fincas"
+      ],
+      "keyFeatures": [
+        "Split Soberano 80% Proveedor / 10% EAR / 10% VIMUME",
+        "Showcooking en directo",
+        "Homologación técnica"
+      ],
+      "hardwareIntegration": "Arsenal P2.9 Novastar 4K + Sonido 12 W/pax"
+    },
+    "B2G_Ayuntamientos_Instituciones": {
+      "description": "Concejalías de Festejos, Cultura y Bienestar Social",
+      "entrypoints": [
+        "/ocasiones/ayuntamientos",
+        "/b2g"
+      ],
+      "keyFeatures": [
+        "Generador de memorias técnicas",
+        "Art. 118 LCSP (<15.000€)",
+        "Adjudicación en <24h",
+        "Pliegos festejos patronales"
+      ],
+      "compliance": "Garantía '0 Fallos', homologación acústica y seguros RC de 600.000€"
+    },
+    "VIMUME_Salud_Residencias": {
+      "description": "Residencias de mayores, centros de día, neurólogos, terapeutas y familias",
+      "entrypoints": [
+        "/vimume",
+        "/vimume/centros",
+        "/vimume/prensa"
+      ],
+      "keyFeatures": [
+        "Protocolo 40Hz Gamma a <75 dB",
+        "Mapeo de la Banda Sonora Vital™",
+        "Portal familiar con vídeo-feedback"
+      ],
+      "fundingModel": "Financiación mixta: 10% Split EAR OS + Patrocinios RSC (Banca/Seguros/Telco)"
+    },
+    "Artistas_Talento_Tecnico": {
+      "description": "Edwin Agudelo (Tenor/Mariachi), músicos de conservatorio, técnicos de PA y pantallas",
+      "entrypoints": [
+        "/artistas/edwin-agudelo",
+        "/arsenal"
+      ],
+      "keyFeatures": [
+        "Bóveda de 8 servicios históricos",
+        "Liquidación instantánea de bolos",
+        "Control de riders acústicos Shure/Bose F1"
+      ],
+      "qualityStandard": "12 W/pax y presión acústica sin distorsión"
+    },
+    "Afiliados_Colaboradores": {
+      "description": "Agencias wedding planners, recintos asociados y embajadores culturales",
+      "entrypoints": [
+        "/login",
+        "/reclamar-perfil",
+        "/afiliados"
+      ],
+      "keyFeatures": [
+        "Tokens de atribución claim_{slug}_10x",
+        "Comisiones automáticas en Stripe",
+        "Dashboard de referidos"
+      ]
+    }
+  }
+}

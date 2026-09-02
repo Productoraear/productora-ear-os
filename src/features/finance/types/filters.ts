@@ -99,92 +99,104 @@ export function calculateFilterSurcharges(filters: SClassUltraFilters): {
     count++;
   }
 
-  if (filters.space.ceilingAcoustics === 'reverberacion-alta') {
-    specs.push('Filtro notch anti-feedback y ecualización de sala correctora');
-    count++;
-  }
-
   if (filters.space.noiseRestriction === 'limitador-opcat') {
-    specs.push('Conexión certificada a limitador sonométrico homologado (Cero cortes)');
+    specs.push('Compatibilidad con limitador acústico municipal OPCAT (Control de picos)');
+    count++;
+  } else if (filters.space.noiseRestriction === 'residencial-sensible') {
+    specs.push('Directividad cardioide para evitar fugas a zonas vecinales');
     count++;
   }
 
-  // 2. Electricidad & Accesos
+  // 2. Electricidad & Logística
   if (filters.electrical.powerSupply === 'grupo-electrogeno') {
-    specs.push('Generador silenciado estabilizado AVR (Protección N+1)');
-    surcharge += 190;
+    surcharge += 280;
+    specs.push('Cuadro de protección eléctrica con estabilizador para grupo electrógeno');
     count++;
   } else if (filters.electrical.powerSupply === 'trifasica-32a') {
-    specs.push('Cuadro eléctrico de acometida con protecciones diferenciales');
+    specs.push('Acometida CETAC Trifásica 32A/63A');
     count++;
   }
 
   if (filters.electrical.stageAccess === 'escaleras-sin-ascensor') {
-    specs.push('Equipo de carga y porteo manual cualificado');
-    surcharge += 80;
+    surcharge += 90;
+    specs.push('Plus de porteo técnico manual por tramos de escalera');
     count++;
   }
 
   if (filters.electrical.cableDistance === 'mayor-50m') {
-    specs.push('Tirada de manguera trifásica de gran sección (>50m) sin caída de tensión');
     surcharge += 60;
+    specs.push('Tirada de manguera de señal balanceada y corriente >50m');
     count++;
   }
 
   // 3. Rider & Iluminación
   if (filters.rider.lightingTier === 'robotica-led-cabezas') {
-    specs.push('Show Lumínico Robotizado con cabezas móviles DMX sincronizadas');
-    surcharge += 220;
+    surcharge += 350;
+    specs.push('Puente de iluminación DMX con 4 cabezas móviles Beam/Wash');
     count++;
   } else if (filters.rider.lightingTier === 'humo-denso-fuego-frio') {
-    specs.push('Efectos especiales: Humo bajo criogénico + Chispas frías Geyser (Safe Indoor)');
-    surcharge += 180;
+    surcharge += 450;
+    specs.push('Efectos especiales: Máquina de humo bajo criogénico + 2 fuentes de fuego frío');
     count++;
   } else if (filters.rider.lightingTier === 'arquitectonica-finca') {
-    specs.push('Iluminación arquitectónica perimetral inalámbrica a batería');
-    surcharge += 250;
+    surcharge += 400;
+    specs.push('Baño de color arquitectónico perimetral inalámbrico (IP65)');
     count++;
   }
 
   if (filters.rider.trussStructures === 'puente-luces-6x4') {
-    specs.push('Puente Truss de aluminio certificado 6x4m con cabestrantes');
-    surcharge += 290;
+    surcharge += 500;
+    specs.push('Estructura Trussing 6x4m homologada con visado de carga');
     count++;
   } else if (filters.rider.trussStructures === 'escenario-homologado') {
-    specs.push('Tarima escénica modular homologada con barandilla y falda');
-    surcharge += 450;
+    surcharge += 850;
+    specs.push('Tarima escénica homologada antideslizante con escalera de acceso');
     count++;
   }
 
-  // 4. Protocolo & Momentos
-  if (filters.protocol.performanceMoments.length > 2) {
-    const extraMoments = filters.protocol.performanceMoments.length - 2;
-    specs.push(`Cobertura multi-momento (${filters.protocol.performanceMoments.join(', ')})`);
-    surcharge += extraMoments * 90;
+  if (filters.rider.soundMicrophony.includes('solapa-diadema')) {
+    surcharge += 80;
+    specs.push('Micrófono de diadema Shure Axient Digital para oficiante/novios');
+    count++;
+  }
+  if (filters.rider.soundMicrophony.includes('grabacion-multipista')) {
+    surcharge += 220;
+    specs.push('Grabación multipista de audio directo en vivo 32-bit float');
     count++;
   }
 
+  // 4. Protocolo & Ensayos
   if (filters.protocol.rehearsalLevel === 'ensayo-dia-previo') {
-    specs.push('Desplazamiento técnico para ensayo general el día previo');
     surcharge += 180;
+    specs.push('Ensayo presencial con director técnico y novios en víspera del evento');
+    count++;
+  }
+  if (filters.protocol.performanceMoments.length > 2) {
+    surcharge += (filters.protocol.performanceMoments.length - 2) * 90;
+    specs.push(`Cobertura extendida para ${filters.protocol.performanceMoments.length} momentos del evento`);
     count++;
   }
 
-  // 5. Logística
+  // 5. Dietas & Pernocta
   if (filters.logistics.accommodationRequired) {
-    specs.push('Reserva hotelera y dietas de staff cubiertas por póliza EAR');
-    surcharge += 120;
+    surcharge += 250;
+    specs.push('Alojamiento y dietas de staff técnico y artistas garantizadas');
+    count++;
+  }
+  if (filters.logistics.cateringStaffOption === 'dieta-compensada') {
+    surcharge += 75;
+    specs.push('Dieta de staff compensada directamente en factura');
     count++;
   }
 
-  // 6. Compliance B2G
+  // 6. Compliance & Seguros
   if (filters.compliance.safetyInsurance === 'rc-ampliada-2m') {
-    specs.push('Póliza de Responsabilidad Civil ampliada hasta 2.000.000€');
-    surcharge += 60;
+    surcharge += 120;
+    specs.push('Póliza de Responsabilidad Civil ampliada a 2.000.000 €');
     count++;
-  } else if (filters.compliance.safetyInsurance === 'plan-prl-requerido') {
-    specs.push('Documentación de Coordinación de Actividades Empresariales y Plan PRL visado');
-    surcharge += 95;
+  }
+  if (filters.compliance.billingType === 'ayuntamiento-b2g') {
+    specs.push('Expediente y memoria administrativa Art. 118 LCSP con código DIR3');
     count++;
   }
 

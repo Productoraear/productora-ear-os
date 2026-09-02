@@ -1,0 +1,752 @@
+{
+    "value0":
+    {
+        "tabColumnWidth": 0.2196,
+        "tabButtonFontSize": 23.0,
+        "tabButtonHeight": 0.09,
+        "tabIconRelativePosition": 0.1035,
+        "tabTextRelativePosition": 0.31,
+        "tabHighlightWidth": 0.02495,
+        "itemRowHeight": 0.1137,
+        "tabContentMargin": 0.0371,
+        "itemLabelWidth": 0.325,
+        "tabs":
+        [
+            {
+                "label": "SEQUENCER",
+                "connectors": "SEQUENCER",
+                "icon": "Sequencer",
+                "visibility": "desktop, plugin, hardware",
+                "items":
+                [
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "PLAYBACK",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "INSTANT TRACK MUTE",
+                        "property": "InstantTrackMute"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "PLAY TRACK MUTE AND SOLO EVENTS",
+                        "property": "MuteSoloEventPlayEnable"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "RECORDING",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "REC ARM",
+                        "property": "RecArmModeBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "RECORD TRACK MUTE AND SOLO EVENTS",
+                        "property": "MuteSoloEventRecordEnable"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "RECORD PAD AFTERTOUCH EVENTS",
+                        "property": "AftertouchRecordEnable"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "PLACE EVENTS RECORDED DURING COUNT-IN AT START POINT",
+                        "property": "RecordEventsInCountIn"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "TRUNCATE DURATION",
+                        "property": "TruncateDurationModeBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "EDIT",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "Q-LINK SWING CONTROL APPLIES TC SETTINGS ON RELEASE",
+                        "property": "SwingAppliedOnRelease"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "DISPLAY RESOLUTION",
+                        "property": "DisplayAs96PPQN"
+                    }
+                ]
+            },
+            {
+                "label": "MIDI / SYNC",
+                "connectors": "MIDIANDSYNC",
+                "icon": "MIDI/Sync",
+                "visibility": "desktop, hardware",
+                "items":
+                [
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "heading",
+                        "label": "INPUT PORTS",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "midiinputdevicesettings",
+                        "label": "",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "heading",
+                        "label": "OUTPUT PORTS",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "midioutputdevicesettings",
+                        "label": "",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "checkbox",
+                        "label": "ENABLE MIDI PORTS WHEN DISCOVERED",
+                        "property": "AutoEnableForTracks"
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "midioutputdeviceselector",
+                        "label": "MIDI CONTROL MODE OUTPUT",
+                        "property": "ControllerModeOutput"
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "heading",
+                        "label": "SYNC RECEIVE",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "combobox",
+                        "label": "RECEIVE",
+                        "property": "SyncInSelectBridge"
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "checkbox",
+                        "label": "RECEIVE MMC",
+                        "property": "ReceiveMMC"
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "heading",
+                        "label": "SYNC SEND",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "combobox",
+                        "label": "SEND",
+                        "property": "SyncOutSelectBridge"
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "checkbox",
+                        "label": "SEND MMC",
+                        "property": "SendMMC"
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "combobox",
+                        "label": "MTC FRAME RATE",
+                        "property": "SendMtcFrameRateBridge"
+                    },
+                    {
+                        "visibility": "desktop, hardware",
+                        "type": "smpte",
+                        "label": "START TIME",
+                        "property": "MtcTimecodeOffset"
+                    }
+                ]
+            },
+            {
+                "label": "HARDWARE",
+                "connectors": "HARDWARE",
+                "icon": "Hardware",
+                "visibility": "desktop, plugin, hardware",
+                "items":
+                [
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "PAD SENSITIVITY",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "PAD THRESHOLD",
+                        "property": "CurrentThresholdPreset"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "PAD SENSITIVITY",
+                        "property": "CurrentGainPreset"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "PAD CURVE",
+                        "property": "CurrentCurvePreset"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "PAD RESPONSE",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "readonlyslider",
+                        "label": "VELOCITY",
+                        "property": "Velocity"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "readonlyslider",
+                        "label": "AFTERTOUCH",
+                        "property": "Aftertouch"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "CONTROLS",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "FOOTSWITCH 1",
+                        "property": "FootSwitch1Bridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "FOOTSWITCH 2",
+                        "property": "FootSwitch2Bridge"
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "combobox",
+                        "label": "MIDI CONTROL MODE OUTPUT",
+                        "property": "MidiCurrentPortBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "VU METER SOURCE",
+                        "property": "AudioSourceBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "SCREEN",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "SCREEN DIMMING",
+                        "property": "TimeoutMS"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "brightnessslider",
+                        "label": "SCREEN BRIGHTNESS",
+                        "property": "ScreenBrightnessLinear"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "SCREEN BRIGHTNESS",
+                        "property": "ScreenBrightnessDayNight"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "SCREEN BRIGHTNESS",
+                        "property": "ScreenBrightnessFourLevels"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "POWER ON SCREEN",
+                        "property": "PowerOnBehaviourBridge"
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "heading",
+                        "label": "DATE & TIME",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "datepicker",
+                        "label": "DATE",
+                        "property": "CurrentDate"
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "timepicker",
+                        "label": "TIME",
+                        "property": "CurrentTime"
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "combobox",
+                        "label": "TIME ZONE",
+                        "property": "TimeZoneBridge"
+                    }
+                ]
+            },
+            {
+                "label": "PROJECT DEFAULTS",
+                "connectors": "PROJECT DEFAULTS",
+                "icon": "Project",
+                "visibility": "desktop, plugin, hardware",
+                "items":
+                [
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "NEW PROJECT DIALOG",
+                        "property": "ShowNewProjectDialogAtStartupBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "PROJECT",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "numericentry",
+                        "label": "DEFAULT TEMPO",
+                        "property": "DefaultTempo"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "DEFAULT MASTER TEMPO",
+                        "property": "DefaultMasterTempo"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "SEQUENCE",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "numericentry",
+                        "label": "DEFAULT SEQUENCE BARS",
+                        "property": "DefaultSequenceLengthBars"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "numericentry",
+                        "label": "DEFAULT TIME SIGNATURE NUMERATOR",
+                        "property": "DefaultTimeSignatureNumerator"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "DEFAULT TIME SIGNATURE DENOMINATOR",
+                        "property": "DefaultTimeSignatureDenominator"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "PROGRAM",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "DEFAULT PAD SLICE",
+                        "property": "DefaultPadSlice"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "DEFAULT DRUM/KEYGROUP FILTER",
+                        "property": "DrumAndKeygroupFilterBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "customstring",
+                        "label": "DEFAULT PLUGIN SYNTH",
+                        "property": "DefaultPluginSynth"
+                    }
+                ]
+            },
+            {
+                "label": "PROJECT LOAD/SAVE",
+                "connectors": "AUTO LOAD/SAVE",
+                "icon": "AutoLoadSave",
+                "visibility": "desktop, plugin",
+                "items":
+                [
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "heading",
+                        "label": "AUTO LOAD",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "projectfilenameandbutton",
+                        "label": "AUTO LOAD FILE",
+                        "property": "AutoLoadFile"
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "heading",
+                        "label": "AUTO SAVE",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "checkbox",
+                        "label": "ENABLED",
+                        "property": "Enabled"
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "combobox",
+                        "label": "TIMEOUT",
+                        "property": "Timeout"
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "heading",
+                        "label": "TEMPLATE",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "projectfilenameandbutton",
+                        "label": "FILE",
+                        "property": "TemplateFile"
+                    }
+                ]
+            },
+            {
+                "label": "PROJECT LOAD/SAVE",
+                "connectors": "AUTO LOAD/SAVE",
+                "icon": "AutoLoadSave",
+                "visibility": "hardware",
+                "items":
+                [
+                    {
+                        "visibility": "hardware",
+                        "type": "heading",
+                        "label": "AUTO SAVE",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "checkbox",
+                        "label": "ENABLED",
+                        "property": "Enabled"
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "combobox",
+                        "label": "TIMEOUT",
+                        "property": "Timeout"
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "heading",
+                        "label": "TEMPLATE",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "hardware",
+                        "type": "projectfilenameandbutton",
+                        "label": "FILE",
+                        "property": "TemplateFile"
+                    }
+                ]
+            },
+            {
+                "label": "RECORD/EXPORT",
+                "connectors": "*",
+                "icon": "AutoLoadSave",
+                "visibility": "desktop, plugin, hardware",
+                "items":
+                [
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "AUDIO RECORDING",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "RECORDING BIT DEPTH",
+                        "property": "SamplingBitDepthBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "AUDIO BOUNCE",
+                        "property": "AudioBounceHeading"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "INCLUDE PROGRAM VOLUME/PAN SETTINGS",
+                        "property": "IncludeVolumePan"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "BYPASS PROGRAM EFFECTS PLUGINS",
+                        "property": "BypassEffects"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "numericentry",
+                        "label": "AUDIO TAIL LENGTH",
+                        "property": "AudioTailLengthSeconds"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "AUDIO EXPORT",
+                        "property": "RenderSource"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "MIDI EXPORT",
+                        "property": "RenderMIDISource"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "BOUNCE BIT DEPTH",
+                        "property": "BitDepth"
+                    }
+                ]
+            },
+            {
+                "label": "GENERAL",
+                "connectors": "OTHER",
+                "icon": "Other",
+                "visibility": "desktop, plugin, hardware",
+                "items":
+                [
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "TAP TEMPO",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "TAP TEMPO",
+                        "property": "TapsToAverage"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "FLASH TAP TEMPO LIGHT",
+                        "property": "TapTempoLight"
+                    },
+
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "MIDI/AUDIO INPUT",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "FILTER 'ALL NOTES OFF' CC",
+                        "property": "FilterAllNotesOffCC"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "PROGRAM CHANGE",
+                        "property": "ProgramChangeModeBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "MASTER OUTPUTS",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "VINTAGE MODE",
+                        "property": "EmulationTypeBridge"
+                    },
+
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "AUDITION & PREVIEW",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "numericentry",
+                        "label": "AUDITION AUTO PLAY",
+                        "property": "AutoPlayLength"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "AUDITION OUTPUTS",
+                        "property": "AuditionOutputChannel"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "CUE PREVIEW",
+                        "property": "CuePreviewOnChangeBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "SLICE PREVIEW",
+                        "property": "SlicePointPreviewOnChangeBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "heading",
+                        "label": "THREADING",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "checkbox",
+                        "label": "USE MULTIPLE CORES",
+                        "property": "MultiCoreEnabled"
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "numericentry",
+                        "label": "THREADS",
+                        "property": "Threads"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "AUDIO WARP AND BPM DETECT",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "numericentry",
+                        "label": "MAX NUM PROGRAMS",
+                        "property": "MaxNumPrograms"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "numericentry",
+                        "label": "MAX NUM AUDIO PROGRAMS",
+                        "property": "MaxNumAudioPrograms"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "AUDIO WARP ALGORITHM",
+                        "property": "WarpPropertiesAlgorithmBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "AUDIO TRACKS AUTO WARP",
+                        "property": "WarpEnabledByDefault"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "BPM DETECTION RANGE",
+                        "property": "BPMDetectionRangeBridge"
+                    },
+
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "heading",
+                        "label": "GENERAL",
+                        "property": ""
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "SHOW QLINKS STATUS WHEN TOUCHED",
+                        "property": "ShowQLinksStatusOverlay"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "combobox",
+                        "label": "BANK BUTTON PRESS",
+                        "property": "BankButtonPress"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "ENABLE SCRIPTING",
+                        "property": "ScriptingEnabled"
+                    },
+                    {
+                        "visibility": "desktop, plugin",
+                        "type": "combobox",
+                        "label": "DESKTOP SCREENSAVER DISABLE",
+                        "property": "ScreensaverPreventerBehaviourBridge"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "COLLECT USAGE STATISTICS",
+                        "property": "AnalyticsEnabled"
+                    },
+                    {
+                        "visibility": "desktop, plugin, hardware",
+                        "type": "checkbox",
+                        "label": "CONSOLIDATE PROJECT ON SAVE",
+                        "property": "ConsolidateReferencedFilesOnSave"
+                    }
+                ]
+            }
+        ]
+    }
+}

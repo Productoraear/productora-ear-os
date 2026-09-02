@@ -1,0 +1,559 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// ==========================================
+// ENUMS
+// ==========================================
+
+enum Role {
+  ADMIN
+  ARTIST
+  USER
+  COMMANDER
+  ARQUITECTO
+  FLEET_OPERATOR
+  OPERADOR
+  PROVIDER
+  EXPLORADOR
+  CLIENT
+  AFFILIATE
+}
+
+enum WaybillStatus {
+  PENDING
+  QUEUED
+  DISPATCHED
+  IN_TRANSIT
+  COMPLETED
+  CANCELLED
+}
+
+enum WaybillParticipantRole {
+  DRIVER
+  ARTIST
+  CLIENT
+  MANAGER
+}
+
+enum CommissionStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+enum ClaimStatus {
+  GHOST_UNCLAIMED
+  CLAIMED_PENDING_VERIFICATION
+  VERIFIED_ACTIVE
+}
+
+enum VendorCategory {
+  FINCA_ALQUILER
+  CATERING
+  DJ_DISCOMOVIL
+  BARRA_LIBRE
+  FOTOGRAFIA_VIDEO
+  FLORISTERIA
+  TRANSPORTE_AUTOBUS
+  DECORACION_ILUMINACION
+}
+
+// ==========================================
+// MODELOS CORE Y RELACIONES
+// ==========================================
+
+model User {
+  id                String             @id @default(cuid())
+  email             String             @unique
+  name              String?
+  displayName       String?
+  role              Role               @default(USER)
+  rank              String?
+  artistProfile     artistProfile?
+  clientProfile     clientProfile?
+  providerProfile   providerProfile?
+  auraWallet        auraWallet?
+  commissionLedgers commissionLedger[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model artistProfile {
+  id          String           @id @default(cuid())
+  userId      String           @unique
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug        String?          @unique
+  stageName   String?
+  displayName String?
+  bio         String?
+  status      String?          @default("PUBLISHED")
+  genres      String[]
+  riders      technicalRider[]
+  waybills    waybill[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model technicalRider {
+  id              String         @id @default(cuid())
+  artistProfileId String?
+  artistProfile   artistProfile? @relation(fields: [artistProfileId], references: [id], onDelete: Cascade)
+  artistId        String?
+  title           String?
+  version         Int            @default(1)
+  content         String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@unique([artistProfileId, version], name: "artistProfileId_version")
+  @@unique([artistId, version], name: "artistId_version")
+}
+
+model clientProfile {
+  id          String          @id @default(cuid())
+  userId      String          @unique
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName String?
+  waybills    waybill[]
+  contracts   smartContract[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model auraWallet {
+  id            String        @id @default(cuid())
+  userId        String        @unique
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  balance       Float         @default(0.0)
+  currency      String        @default("EUR")
+  walletAddress String?
+  transactions  Transaction[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([userId], name: "idx_wallet_user")
+}
+
+model Transaction {
+  id          String     @id @default(cuid())
+  walletId    String
+  wallet      auraWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+  amount      Float
+  type        String
+  description String?
+  createdAt   DateTime   @default(now())
+
+  @@index([walletId], name: "idx_transaction_wallet")
+}
+
+model commissionLedger {
+  id          String           @id @default(cuid())
+  userId      String?
+  user        User?            @relation(fields: [userId], references: [id])
+  amount      Float
+  currency    String           @default("EUR")
+  status      CommissionStatus @default(PENDING)
+  reference   String?
+  sourceEvent String?
+  description String?
+  notes       String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model smartContract {
+  id              String         @id @default(cuid())
+  title           String?
+  artistId        String?
+  userId          String?
+  clientProfileId String?
+  clientProfile   clientProfile? @relation(fields: [clientProfileId], references: [id])
+  workspaceId     String?
+  workspace       workspace?     @relation(fields: [workspaceId], references: [id])
+  stripeSessionId String?
+  deposit         Float?
+  contractTerms   String?
+  signedAt        DateTime?
+  status          String         @default("DRAFT")
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model waybill {
+  id                String           @id @default(cuid())
+  referenceCode     String?          @unique
+  bookingId         String?
+  status            WaybillStatus    @default(PENDING)
+  originLabel       String?
+  originLat         Float?
+  originLng         Float?
+  destinationLabel  String?
+  destination       String?
+  destinationLat    Float?
+  destinationLng    Float?
+  distanceMeters    Float?
+  startsAt          DateTime?
+  notes             String?
+  artistProfileId   String?
+  artistProfile     artistProfile?   @relation(fields: [artistProfileId], references: [id])
+  providerProfileId String?
+  providerProfile   providerProfile? @relation(fields: [providerProfileId], references: [id])
+  clientProfileId   String?
+  clientProfile     clientProfile?   @relation(fields: [clientProfileId], references: [id])
+  unitId            String?
+  unit              fleetUnit?       @relation(fields: [unitId], references: [id])
+  workspaceId       String?
+  workspace         workspace?       @relation(fields: [workspaceId], references: [id])
+  items             WaybillItem[]
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+}
+
+model WaybillItem {
+  id        String   @id @default(cuid())
+  waybillId String
+  waybill   waybill  @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  name      String
+  quantity  Int      @default(1)
+
+  @@index([waybillId], name: "idx_waybill_item")
+}
+
+model providerProfile {
+  id                   String            @id @default(cuid())
+  slug                 String?           @unique
+  name                 String?           @unique
+  companyName          String?           @default("")
+  category             VendorCategory    @default(FINCA_ALQUILER)
+  city                 String?
+  location             String?
+  province             String?           @default("Madrid / Toledo")
+  phone                String?
+  email                String?
+  userId               String?           @unique
+  user                 User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  stripeAccountId      String?
+  isVerified           Boolean           @default(false)
+  roiGuaranteeScore    Float?            @default(0.0)
+  roiProjected         Float?            @default(0.0)
+  technicalReliability Float?            @default(0.0)
+  auraLevel            Float?            @default(0.0)
+  claimStatus          ClaimStatus       @default(GHOST_UNCLAIMED)
+  claimToken           String?           @unique
+  rating               Float             @default(5.0)
+  reviewsCount         Int               @default(0)
+  basePrice            Float             @default(500.0)
+  description          String?           @db.Text
+  status               String            @default("DRAFT") // DRAFT, ACTIVE_VERIFIED, SUSPENDED
+  claimedAt            DateTime?
+
+  // Relaciones (Aislamiento Multi-Tenant & Operaciones)
+  waybills             waybill[]
+  mediaAssets          MediaAsset[]
+  quota                ProviderQuota?
+  packages             ProviderPackage[]
+  technicalRider       TechnicalRider?
+  auditLogs            ProviderAuditLog[]
+
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  @@index([category], name: "idx_provider_category")
+  @@index([category, rating(sort: Desc)], name: "idx_provider_cat_rating")
+}
+
+// ==================================================
+// 🏢 MÓDULO MULTI-TENANT S-CLASS (PROVEEDORES)
+// ==================================================
+
+model MediaAsset {
+  id              String          @id @default(cuid())
+  providerId      String
+  url             String
+  type            String          // IMAGE, VIDEO, DOCUMENT
+  sizeBytes       Float           // Float evita serialización BigInt en Next.js
+  displayOrder    Int             @default(0)
+  createdAt       DateTime        @default(now())
+
+  provider        providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId], name: "idx_media_provider")
+}
+
+model ProviderQuota {
+  id                  String          @id @default(cuid())
+  providerId          String          @unique
+  tier                String          @default("FREE") // FREE, GOLD, S_CLASS
+  maxStorageMB        Int             @default(15) // Límite en Megabytes
+  currentStorageBytes Float           @default(0)
+  maxPhotos           Int             @default(10)
+
+  provider            providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model TechnicalRider {
+  id                    String          @id @default(cuid())
+  providerId            String          @unique
+  powerRequirementWatts Int             @default(3000)
+  mixerModel            String          @default("Behringer XR18")
+  micSystem             String          @default("Shure Axient Digital")
+  paSpeakers            String          @default("Bose F1 Model 812")
+
+  provider              providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+}
+
+model ProviderPackage {
+  id                  String          @id @default(cuid())
+  providerId          String
+  name                String
+  basePrice           Float
+  servicesIncluded    String          @db.Text // Array de strings serializado
+  
+  provider            providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId], name: "idx_package_provider")
+}
+
+model ProviderAuditLog {
+  id           String          @id @default(cuid())
+  providerId   String
+  changedBy    String
+  field        String
+  oldValue     String          @db.Text
+  newValue     String          @db.Text
+  snapshotHash String
+  createdAt    DateTime        @default(now())
+
+  provider     providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId], name: "idx_audit_provider")
+}
+
+model workspace {
+  id             String          @id @default(cuid())
+  slug           String?         @unique
+  name           String?
+  fleetUnits     fleetUnit[]
+  waybills       waybill[]
+  smartContracts smartContract[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model fleetUnit {
+  id              String     @id @default(cuid())
+  unitCode        String?    @unique
+  code            String?    @unique
+  status          String     @default("IDLE")
+  currentLocation String?
+  workspaceId     String?
+  workspace       workspace? @relation(fields: [workspaceId], references: [id])
+  waybills        waybill[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model fleetTelemetryEvent {
+  id        String   @id @default(cuid())
+  unitId    String?
+  eventData String?
+  createdAt DateTime @default(now())
+}
+
+model calendarBlock {
+  id              String    @id @default(cuid())
+  artistProfileId String?
+  date            DateTime?
+  createdAt       DateTime  @default(now())
+}
+
+model VendorShadowProfile {
+  id           String   @id @default(uuid())
+  shaHash      String   @unique
+  name         String
+  category     String
+  province     String
+  municipality String?
+  telephone    String?
+  priceRange   String?
+  rating       Float?
+  reviewsCount Int?
+  description  String?  @db.Text
+  imageUrls    String[]
+  claimToken   String   @unique
+  status       String   @default("GHOST_UNCLAIMED") // GHOST_UNCLAIMED | VERIFIED_ACTIVE
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([province, category], name: "idx_vendor_shadow_prov_cat")
+  @@index([claimToken], name: "idx_vendor_shadow_claim_token")
+  @@index([telephone], name: "idx_vendor_shadow_telephone")
+}
+
+model EquipmentInventory {
+  id             String   @id @default(uuid())
+  modelName      String   // Ej: "Bose F1 Model 812"
+  serialNumber   String   @unique
+  category       String   // SOUND_PA, MIXER, MICROPHONE, LIGHTING
+  isAvailable    Boolean  @default(true)
+  suitableForPax Int      @default(300)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// ==========================================
+// SMART-LOCK FUNNEL & RECOVERY LOOP (v3.5)
+// ==========================================
+
+enum SmartLockStatus {
+  PENDING_PAYMENT
+  ACTIVE_LOCKED
+  EXPIRED_WALLET
+  EXPIRED_EXTENDED
+  CONVERTED_CONTRACT
+  REFUNDED
+}
+
+/// Micro-compromiso de 10 € con Price-Lock 72h, wallet recovery y bypass de urgencia.
+model SmartLock {
+  id                  String          @id @default(cuid())
+  email               String
+  phone               String?
+  ipAddress           String?
+  vertical            String          // bodas, corporativo, vimume, etc.
+  intentSlug          String          // madrid-precios-musica-directo
+  stripeSessionId     String?         @unique
+  stripePaymentIntent String?         @unique
+  amountCents         Int             @default(1000) // 10.00 EUR
+  currency            String          @default("EUR")
+  status              SmartLockStatus @default(PENDING_PAYMENT)
+  lockedAt            DateTime?       // Momento en que se activó el lock
+  expiresAt           DateTime?       // lockedAt + 72h
+  walletBalance       Float           @default(0.0) // Saldo a favor tras expiración
+  walletExpiresAt     DateTime?       // walletBalance válido 1 año
+  urgencyBypassed     Boolean         @default(false) // true si P0 eliminó la barrera
+  recoveryEmailSent   Boolean         @default(false) // true si se envió el Lead Magnet
+  contractConverted   Boolean         @default(false)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  @@index([email], name: "idx_smartlock_email")
+  @@index([status], name: "idx_smartlock_status")
+  @@index([stripeSessionId], name: "idx_smartlock_stripe")
+}
+
+/// Anti-abuso: 1 Lead Magnet por IP/Email de por vida.
+model LeadMagnetLog {
+  id          String   @id @default(cuid())
+  email       String
+  ipAddress   String
+  vertical    String?
+  deliveredAt DateTime @default(now())
+
+  @@unique([email], name: "unique_magnet_email")
+  @@unique([ipAddress], name: "unique_magnet_ip")
+}
+
+// ==========================================
+// MÓDULO DE PRESUPUESTO NUPCIAL & CONTROL FINANCIERO (10X BUDGET ENGINE)
+// ==========================================
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+  CANCELLED
+}
+
+model Budget {
+  id            String           @id @default(uuid())
+  totalBudget   Float            @default(250000)
+  finalCost     Float            @default(0)
+  paidAmount    Float            @default(0)
+  pendingAmount Float            @default(0)
+  currency      String           @default("EUR")
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  categories    BudgetCategory[]
+  expenses      Expense[]
+  payments      Payment[]
+
+  @@map("budgets")
+}
+
+model BudgetCategory {
+  id            String    @id @default(uuid())
+  name          String
+  description   String?
+  estimatedCost Float
+  finalCost     Float     @default(0)
+  paidAmount    Float     @default(0)
+  pendingAmount Float     @default(0)
+  percentage    Float     @default(0)
+  order         Int
+  icon          String?
+  color         String    @default("#3B82F6")
+  budgetId      String
+  budget        Budget    @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  expenses      Expense[]
+
+  @@index([budgetId])
+  @@map("budget_categories")
+}
+
+model Expense {
+  id          String         @id @default(uuid())
+  description String
+  amount      Float
+  date        DateTime
+  categoryId  String
+  vendorId    String?
+  notes       String?
+  budgetId    String
+  budget      Budget         @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  category    BudgetCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  vendor      Vendor?        @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  payments    Payment[]
+
+  @@index([categoryId])
+  @@index([budgetId])
+  @@map("expenses")
+}
+
+model Payment {
+  id          String        @id @default(uuid())
+  amount      Float
+  paymentDate DateTime
+  expenseId   String?
+  categoryId  String?
+  budgetId    String
+  status      PaymentStatus @default(PENDING)
+  dueDate     DateTime?
+  notes       String?
+  budget      Budget        @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  expense     Expense?      @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+
+  @@index([expenseId])
+  @@index([budgetId])
+  @@map("payments")
+}
+
+model Vendor {
+  id       String    @id @default(uuid())
+  name     String
+  email    String?
+  phone    String?
+  category String?
+  notes    String?
+  expenses Expense[]
+
+  @@map("vendors")
+}
+

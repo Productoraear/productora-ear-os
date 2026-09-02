@@ -18,7 +18,7 @@ export const PRICING_CATALOG: Record<string, FormatPricing> = {
     description: 'Formación estándar para celebraciones íntimas y homenajes.'
   },
   'premium-gala': {
-    id: 'cuarteto-gala',
+    id: 'cuarteto-gala', // Alias alineado con query param
     name: 'Espectáculo Premium Gala',
     basePrice: 750,
     duration: '90 minutos (2 pases)',

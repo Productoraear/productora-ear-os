@@ -1,24 +1,60 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
+import { db } from '@/lib/firebase';
 
+export const dynamic = 'force-dynamic';
+
+/**
+ * 🏥 HEALTH CHECK MONITOR - S-CLASS SYSTEM DIAGNOSTIC (V153)
+ * Resolves Postgres ping, Firebase configurations, and API keys validation.
+ */
 export async function GET() {
-  const masterPath = 'H:\\EAR_OS_V2\\data\\EAR_OS_MASTER_UNIFICADO.md';
-  let nodeCount = 0;
+  const timestamp = new Date().toISOString();
   
+  const status = {
+    status: 'healthy',
+    timestamp,
+    environment: process.env.NODE_ENV || 'production',
+    checks: {
+      postgres: 'UNKNOWN',
+      firebase: 'UNKNOWN',
+      stripe: 'UNKNOWN',
+      gemini: 'UNKNOWN'
+    },
+    latencyMs: 0
+  };
+
+  const startTime = Date.now();
+
+  // 1. PostgreSQL Database Ping Check
   try {
-    const stats = fs.statSync(masterPath);
-    // Verificación rápida de integridad del master unificado
-    nodeCount = stats.size > 0 ? 91 : 0;
-  } catch {
-    nodeCount = 0;
+    // Quick select raw statement to test pooling & credentials
+    await prisma.$queryRaw`SELECT 1`;
+    status.checks.postgres = 'UP';
+  } catch (err: any) {
+    status.status = 'unhealthy';
+    status.checks.postgres = `DOWN: ${err.message}`;
+    console.error('🚨 [HEALTH_MONITOR] PostgreSQL verification failed:', err.message);
   }
 
-  return NextResponse.json({
-    status: 'online',
-    ecosystem: 'EAR_OS_V2',
-    port: 3007,
-    master_nodes_loaded: nodeCount,
-    timestamp: new Date().toISOString()
-  });
+  // 2. Firebase Diagnostic Check
+  try {
+    if (db && db.app) {
+      status.checks.firebase = 'UP';
+    } else {
+      status.checks.firebase = 'MISCONFIGURED';
+    }
+  } catch (err: any) {
+    status.status = 'unhealthy';
+    status.checks.firebase = `DOWN: ${err.message}`;
+  }
+
+  // 3. Stripe & Gemini Credentials Verification
+  status.checks.stripe = process.env.STRIPE_SECRET_KEY ? 'CONFIGURED' : 'MISSING';
+  status.checks.gemini = process.env.GEMINI_API_KEY ? 'CONFIGURED' : 'MISSING';
+
+  status.latencyMs = Date.now() - startTime;
+
+  const responseStatus = status.status === 'healthy' ? 200 : 500;
+  return NextResponse.json(status, { status: responseStatus });
 }

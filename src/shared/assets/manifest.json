@@ -1,0 +1,29 @@
+{
+  "assets": [
+    {
+      "id": "edwin_hero_1975",
+      "type": "image",
+      "url": "https://images.unsplash.com/photo-1514525253361-b83f859b73c0",
+      "description": "Retrato de autoridad de Edwin Agudelo - Master Artist",
+      "tags": ["hero", "edwin-agudelo", "s-class"]
+    },
+    {
+      "id": "show_cantando_a_caballo_teaser",
+      "type": "video",
+      "url": "/videos/edwin_caballo_teaser.mp4",
+      "description": "Teaser del show ecuestre Cantando a Caballo",
+      "tags": ["show", "ecuestre", "high-resolution"],
+      "status": "pending_local_upload"
+    },
+    {
+      "id": "premio_gladiador_2021",
+      "type": "image",
+      "url": "/images/awards/gladiador_2021.jpg",
+      "description": "Certificación Premio Gladiadores en el Extranjero 2021",
+      "tags": ["award", "authority"],
+      "status": "pending_local_upload"
+    }
+  ],
+  "version": "1.0.0",
+  "last_vampirization": "2026-05-13T07:48:00Z"
+}

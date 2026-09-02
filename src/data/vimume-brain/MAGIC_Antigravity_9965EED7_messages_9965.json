@@ -1,0 +1,138 @@
+# EAR OS — COMPLETADOS (ARCHIVO HISTÓRICO)
+> Regla: Lo que entra aquí NO vuelve a PENDIENTES. Es victoria permanente.
+
+## ✅ FASE 1-5 — Base del sistema (completado Feb 2026)
+- [x] ear-gold unificado a #d4af37 en tailwind.config.js ✅ 22/02/2026
+- [x] 7 documentos fragmentados movidos a _LEGACY/ ✅ 22/02/2026
+- [x] 13 carpetas de negocio creadas en estructura EAR OS ✅ 22/02/2026
+- [x] DOI_01 canónico activo ✅ 22/02/2026
+- [x] Firebase Firestore — colecciones leads, artistas, eventos activas ✅
+- [x] Stripe webhooks desplegados ✅
+- [x] FASE 4: Motor de personalización y CRO implementado ✅
+- [x] FASE 5: Automatizaciones + lifecycle marketing + loyalty tiers ✅
+- [x] Sistema de afiliados y comisiones implementado ✅
+- [x] CRM / Centro de Mando dashboard activo ✅
+- [x] 1.524 URLs programáticas generadas en ear-routes.json ✅
+- [x] Scripts arsenal_factory.py, audit_1524.mjs, generate_sitemap.mjs activos ✅
+- [x] Identidad narrativa Edwin Agudelo inyectada en el sitio ✅
+
+---
+
+INSTRUCCIÓN 3 — PROTOCOLO DE ACTUALIZACIÓN:
+
+Cada vez que completes una sección del prompt de misión:
+1. Busca en EAR_PENDIENTES.md los ítems que acabas de resolver
+2. CORTA esos ítems de EAR_PENDIENTES.md
+3. PEGA esos ítems en EAR_COMPLETADO.md con la fecha de hoy
+4. Reporta: "📦 MOVIDO A COMPLETADO: [N ítems] → [lista]"
+
+Nunca dejes un ítem en PENDIENTES si está 100% resuelto.
+Nunca marques un ítem como completado si quedan sub-tareas abiertas.
+
+FIN DE INSTRUCCIÓN
+```
+
+
+***
+
+### 4. El gemelo digital desde la carpeta de inspiración — cómo entregarlo
+
+El problema que describes es el más importante de todos: tienes referencias visuales en `H:\EAR_OS_MASTER_2026\..ANTIGRAVITY INSPIRATE EN ESTO` y quieres que Antigravity las use como guía de diseño sin perder las ventajas injustas del sistema actual.[^4_4]
+
+**La carpeta de Drive compartida es el canal correcto.** Así es como lo haces:
+
+**Paso 1 — Organiza la carpeta de Drive así:**
+
+```
+📁 EAR_INSPIRACION_ANTIGRAVITY/
+├── 📁 01_REFERENCIAS_VISUALES/     ← pantallazos, PDFs, imágenes de lo que te inspira
+├── 📁 02_NUESTRO_SISTEMA_ACTUAL/   ← capturas de productoraear.com en estado actual
+├── 📁 03_ELEMENTOS_A_MANTENER/     ← capturas de lo que NO debe cambiar (menús, CTAs clave)
+└── 📄 BRIEF_GEMELO.md              ← el prompt que pego abajo
+```
+
+**Paso 2 — Crea el archivo `BRIEF_GEMELO.md` en esa carpeta con este contenido:**
+
+```
+OPERACIÓN: GEMELO DIGITAL — DISEÑO + VENTAJAS INJUSTAS
+════════════════════════════════════════════════════════
+
+OBJETIVO:
+Replicar el mejor diseño de las referencias visuales adjuntas
+en esta carpeta (01_REFERENCIAS_VISUALES/) manteniendo al 100%
+la arquitectura, menús, CTAs, ventajas injustas y
+funcionalidades ya construidas en productoraear.com.
+
+REGLA #1 — NUNCA SIMPLIFICAR:
+Las referencias visuales son inspiración de diseño, no de contenido.
+Lo que hay en productoraear.com es el MAESTRO de contenido y funcionalidad.
+Las referencias solo aportan: paleta, tipografía, layout, micro-animaciones,
+espaciado, jerarquía visual. Nada más.
+
+REGLA #2 — LO QUE NO SE TOCA:
+- Menú principal y su estructura de rutas
+- CTAs de WhatsApp y formularios (solo mejorar diseño visual)
+- Pricing tiers (350€ / 600€ / 900€+)
+- Garantía personal del fundador
+- Identidad de Edwin Agudelo (/sobre-edwin)
+- Sistema de roles (cliente / artista / administrador)
+- ear-gold: #d4af37 como color de acento principal
+- Todos los componentes del Centro de Mando
+
+REGLA #3 — LO QUE SÍ PUEDES MEJORAR:
+- Layout general de las páginas (más espacio, mejor jerarquía)
+- Tipografía (mantener dark mode, mejorar legibilidad)
+- Cards de servicios (más premium, más impacto visual)
+- Hero sections (más impacto en los primeros 3 segundos)
+- Micro-animaciones (entrada de secciones, hover states)
+- Mobile (prioritario: el 70% del tráfico es móvil)
+- Imágenes placeholder → preparar slots para fotos reales
+
+PROCESO DE TRABAJO:
+1. Analiza TODAS las imágenes en 01_REFERENCIAS_VISUALES/
+2. Extrae: paleta de colores, tipografías, espaciados, patrones de layout
+3. Analiza TODAS las capturas en 02_NUESTRO_SISTEMA_ACTUAL/
+4. Identifica cada componente existente
+5. Para cada componente: propón mejora visual basada en referencias
+   Formato: [Componente] → [Cambio propuesto] → [Referencia: imagen X]
+6. Implementa los cambios de mayor impacto primero (Hero, Cards, Mobile)
+7. Después de cada componente: captura screenshot y compara con original
+
+ENTREGABLES:
+- Lista de cambios aplicados con antes/después
+- Archivos .tsx modificados (solo los que cambiaron)
+- EAR_GEMELO_VISUAL.md con documentación de decisiones de diseño
+- npm run build: 0 errores antes de reportar sección como completada
+
+VENTAJAS INJUSTAS QUE DEBEN SOBREVIVIR AL REDISEÑO:
+✅ 1.524 URLs programáticas geo-localizadas
+✅ Formulario de calificación de 4 pasos con routing por tier
+✅ Centro de Mando con CRM, finanzas, afiliados, CRO
+✅ Sistema de artistas ASTRA / The Signal
+✅ Integración Stripe + Firebase activa
+✅ Lifecycle marketing + loyalty tiers
+✅ Arsenal Factory (generación automática de activos)
+✅ VIMUME integrado como proyecto de impacto social
+
+Si en algún punto una decisión de diseño amenaza alguna de
+estas ventajas → prioriza la ventaja sobre el diseño.
+Sin excepciones.
+
+════════════════════════════════════════════════════════
+```
+
+**Paso 3 — Lo que le dices a Antigravity en el chat:**
+
+> Lee el archivo `BRIEF_GEMELO.md` en la carpeta de Drive compartida. Luego analiza todas las imágenes de `01_REFERENCIAS_VISUALES/` y todas las capturas de `02_NUESTRO_SISTEMA_ACTUAL/`. Cuando hayas procesado todo, dime: (1) qué patrones de diseño extraes de las referencias, (2) qué componentes del sistema actual puedes mejorar visualmente sin tocar la funcionalidad, y (3) propón el orden de implementación por impacto. Empieza el trabajo componente a componente, no hagas todo a la vez.
+
+***
+
+## Resumen del sistema completo
+
+```
+TU FLUJO DE TRABAJO DESDE HOY:
+─────────────────────────────────────────────────────────
+1. Nuevas ideas o pendientes   → me los pegas aquí
+2. Yo los proceso y clasifico  → te devuelvo el ítem
+                                  listo para EAR_PENDIENTES.md
+3. Antigravity ej

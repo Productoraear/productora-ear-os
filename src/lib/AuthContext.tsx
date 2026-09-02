@@ -1,183 +1,95 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 import { 
-  User, 
   onAuthStateChanged, 
-  signInWithEmailAndPassword, 
+  User, 
+  GoogleAuthProvider, 
   signInWithPopup, 
-  GoogleAuthProvider,
-  signOut as firebaseSignOut,
-  createUserWithEmailAndPassword
-} from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+  signOut 
+} from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
-// ═══════════════════════════════════════════════════════════════
-// 🛡️ LISTA BLANCA DINÁSTICA - SOBERANÍA ABSOLUTA
-// Solo estos usuarios tienen ACCESO ROOT (Administrador Supremo)
-// ═══════════════════════════════════════════════════════════════
-const DYNASTY_WHITELIST = [
-  'productoraear@gmail.com',
-  'edwin.agudelo@productora-ear.com',       // Edwin Alberto Agudelo Restrepo  
-  'adriana.lenis@productora-ear.com',        // Luz Adriana Lenis Luna
-  'leire.agudelo@productora-ear.com',        // Leire Naiara Agudelo Espinosa
-];
-
-// Nombres display para validación extendida
-const DYNASTY_NAMES = [
-  'Edwin Alberto Agudelo Restrepo',
-  'Luz Adriana Lenis Luna',
-  'Leire Naiara Agudelo Espinosa',
-];
-
-export type AuthRole = 'root' | 'admin' | 'operator' | 'user' | 'guest';
-
-interface AuthState {
+interface AuthContextType {
   user: User | null;
+  isAdmin: boolean;
+  isPaid: boolean;
   loading: boolean;
-  authRole: AuthRole;
-  isDynasty: boolean;
-  isAuthenticated: boolean;
-  signInWithEmail: (email: string, password: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
-  registerWithEmail: (email: string, password: string) => Promise<void>;
-  signOut: () => Promise<void>;
-  error: string | null;
+  logout: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthState | undefined>(undefined);
+const AuthContext = createContext<AuthContextType>({ 
+  user: null, 
+  isAdmin: false, 
+  isPaid: false,
+  loading: true,
+  signInWithGoogle: async () => {},
+  logout: async () => {} 
+});
 
-/**
- * Determina el nivel de acceso según la Lista Blanca Dinástica.
- */
-function resolveAuthRole(user: User | null): AuthRole {
-  if (!user) return 'guest';
-  
-  const email = user.email?.toLowerCase() || '';
-  const displayName = user.displayName || '';
-  
-  // Validación Dinástica: email en whitelist O nombre en dynasty
-  const isDynasty = DYNASTY_WHITELIST.includes(email) || 
-                    DYNASTY_NAMES.some(name => 
-                      displayName.toLowerCase().includes(name.toLowerCase().split(' ')[0])
-                    );
-  
-  if (isDynasty) return 'root';
-  
-  // Cualquier otro usuario autenticado
-  return 'user';
-}
-
-function checkIsDynasty(user: User | null): boolean {
-  if (!user) return false;
-  const email = user.email?.toLowerCase() || '';
-  return DYNASTY_WHITELIST.includes(email) || 
-         DYNASTY_NAMES.some(name => 
-           (user.displayName || '').toLowerCase().includes(name.toLowerCase().split(' ')[0])
-         );
-}
-
-export function AuthProvider({ children }: { children: ReactNode }) {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isPaid, setIsPaid] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
+      
+      if (firebaseUser) {
+        try {
+          const idToken = await firebaseUser.getIdToken();
+          // 🔄 Señal UX cliente para pre-filtro Edge
+          document.cookie = "ear_auth_signal=1; path=/; SameSite=Lax";
+
+          // 🔄 Sincronización Segura con la Base de Datos Centralizada (Server Verificación)
+          const response = await fetch('/api/nexus/user/sync', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${idToken}`
+            },
+          });
+          
+          if (response.ok) {
+            const profile = await response.json();
+            setIsAdmin(profile.role === 'ADMIN');
+            setIsPaid(profile.rank !== 'NIVEL_0_EXPLORADOR');
+          } else {
+            console.warn('⚠️ [AUTH_CONTEXT] Fallo en sincronización de perfil DB.');
+          }
+        } catch (err) {
+          console.error('🛑 [AUTH_CONTEXT] Error crítico de sincronización:', err);
+        }
+      } else {
+        document.cookie = "ear_auth_signal=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;";
+        setIsAdmin(false);
+        setIsPaid(false);
+      }
+      
       setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
-  const signInWithEmail = async (email: string, password: string) => {
-    try {
-      setError(null);
-      setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (err: any) {
-      setError(err.message || 'Error de autenticación');
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const signInWithGoogle = async () => {
-    try {
-      setError(null);
-      setLoading(true);
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-    } catch (err: any) {
-      setError(err.message || 'Error con Google Sign-In');
-      throw err;
-    } finally {
-      setLoading(false);
-    }
+      try {
+          await signInWithPopup(auth, provider);
+      } catch (error) {
+          console.error("GÉNESIS_AUTH_FAILURE:", error);
+      }
   };
 
-  const registerWithEmail = async (email: string, password: string) => {
-    try {
-      setError(null);
-      setLoading(true);
-      await createUserWithEmailAndPassword(auth, email, password);
-    } catch (err: any) {
-      setError(err.message || 'Error al registrar');
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const signOut = async () => {
-    try {
-      await firebaseSignOut(auth);
-    } catch (err: any) {
-      setError(err.message || 'Error al cerrar sesión');
-    }
-  };
-
-  const authRole = resolveAuthRole(user);
-  const isDynasty = checkIsDynasty(user);
+  const logout = () => signOut(auth);
 
   return (
-    <AuthContext.Provider value={{
-      user,
-      loading,
-      authRole,
-      isDynasty,
-      isAuthenticated: !!user,
-      signInWithEmail,
-      signInWithGoogle,
-      registerWithEmail,
-      signOut,
-      error,
-    }}>
+    <AuthContext.Provider value={{ user, isAdmin, isPaid, loading, signInWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export function useAuth() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth debe usarse dentro de un AuthProvider');
-  }
-  return context;
-}
-
-/**
- * Hook de guardia: redirige si no tiene el rol mínimo requerido.
- */
-export function useRequireRole(minimumRole: AuthRole): boolean {
-  const { authRole, loading } = useAuth();
-  const roleHierarchy: AuthRole[] = ['guest', 'user', 'operator', 'admin', 'root'];
-  
-  if (loading) return false;
-  
-  const currentLevel = roleHierarchy.indexOf(authRole);
-  const requiredLevel = roleHierarchy.indexOf(minimumRole);
-  
-  return currentLevel >= requiredLevel;
-}
+export const useAuth = () => useContext(AuthContext);

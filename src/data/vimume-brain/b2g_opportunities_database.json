@@ -1,0 +1,42 @@
+[
+  {
+    "id": "EXP-2026-ALUM-MAD-01",
+    "title": "Suministro e instalación de alumbrado ornamentación navideña y festejos 2026-2027",
+    "entity": "Ayuntamiento de Móstoles (Madrid)",
+    "budget": 48500.0,
+    "cpv": "31527260-6",
+    "deadline": "2026-09-15",
+    "type": "Abierto Simplificado",
+    "category": "ALUMBRADO_NAVIDENO_Y_LUCES"
+  },
+  {
+    "id": "EXP-2026-VIM-TAL-04",
+    "title": "Programa de talleres de estimulación cognitiva a través de la música para centros de mayores",
+    "entity": "Ayuntamiento de Getafe - Concejalía de Mayores",
+    "budget": 14200.0,
+    "cpv": "85311100-3",
+    "deadline": "2026-09-10",
+    "type": "Contrato Menor LCSP",
+    "category": "VIMUME_SILVER_ECONOMY"
+  },
+  {
+    "id": "EXP-2026-ILUM-TOL-09",
+    "title": "Alquiler y montaje de luces de Navidad y estructuras de iluminación LED",
+    "entity": "Ayuntamiento de Illescas (Toledo)",
+    "budget": 32000.0,
+    "cpv": "31500000-1",
+    "deadline": "2026-09-20",
+    "type": "Abierto Simplificado",
+    "category": "ALUMBRADO_NAVIDENO_Y_LUCES"
+  },
+  {
+    "id": "EXP-2026-VIM-RES-02",
+    "title": "Servicio de dinamización musical y musicoterapia activa para residencias públicas",
+    "entity": "Consejería de Bienestar Social - Castilla-La Mancha",
+    "budget": 85000.0,
+    "cpv": "85320000-8",
+    "deadline": "2026-10-01",
+    "type": "Abierto",
+    "category": "VIMUME_SILVER_ECONOMY"
+  }
+]

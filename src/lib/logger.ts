@@ -1,23 +1,36 @@
-/**
- * 🛰️ EAR OS - S-CLASS SYSTEM LOGGER
- * Standardized isomorphic logger for server actions, API routes, and client telemetry.
- */
+type LogPayload = Record<string, any>;
 
+/**
+ * 📊 S-CLASS STRUCTURED LOGGER (FASE 205.GOD_MODE)
+ * Proporciona un formato estructurado JSON unificado para el monitoreo forense de logs en Vercel,
+ * asegurando cumplimiento de estándares de grado empresarial y erradicando logs amateur.
+ */
 export const logger = {
-  info: (message: any, ...meta: any[]) => {
-    console.log(`[INFO] ${new Date().toISOString()} -`, message, ...meta);
+  info(payload: LogPayload) {
+    console.log(
+      JSON.stringify({
+        level: "INFO",
+        timestamp: new Date().toISOString(),
+        ...payload,
+      })
+    );
   },
-  warn: (message: any, ...meta: any[]) => {
-    console.warn(`[WARN] ${new Date().toISOString()} -`, message, ...meta);
+  warn(payload: LogPayload) {
+    console.warn(
+      JSON.stringify({
+        level: "WARN",
+        timestamp: new Date().toISOString(),
+        ...payload,
+      })
+    );
   },
-  error: (message: any, ...meta: any[]) => {
-    console.error(`[ERROR] ${new Date().toISOString()} -`, message, ...meta);
-  },
-  debug: (message: any, ...meta: any[]) => {
-    if (process.env.NODE_ENV !== 'production') {
-      console.debug(`[DEBUG] ${new Date().toISOString()} -`, message, ...meta);
-    }
+  error(payload: LogPayload) {
+    console.error(
+      JSON.stringify({
+        level: "ERROR",
+        timestamp: new Date().toISOString(),
+        ...payload,
+      })
+    );
   },
 };
-
-export default logger;

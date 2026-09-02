@@ -1,0 +1,28 @@
+---
+title: "PRO_FINANCIADORES_EN_ESPAÑA_PARA_VIAJE_MUSICAL_POR_LA.docx"
+level: "L1_ECOSISTEMA_ROOT"
+category: "GENERAL"
+sha256: "6aafcce1dbdf7c52dba07c1f5caab0b841d5dd73e49c4f1d3fffa287b9777d5f"
+archived_date: "2026-08-25T11:28:04.030552"
+original_path: "D:\00_SILICON_VALLEY_MASTER_ARCHIVE\Disco_H\02_VERTICAL_VIMUME\PRO_FINANCIADORES_EN_ESPAÑA_PARA_VIAJE_MUSICAL_POR_LA.docx"
+vault_path: "H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L1_ECOSISTEMA_ROOT\GENERAL\20260825_L1_ECOSISTEMA_ROOT_PRO_FINANCIADORES_EN_ESPA_A_PARA_VIAJE_MUSICAL_POR_LA.docx"
+tags:
+  - ear-os/vault
+  - level/l1_ecosistema_root
+  - category/general
+---
+
+# 📜 PRO_FINANCIADORES_EN_ESPAÑA_PARA_VIAJE_MUSICAL_POR_LA.docx
+
+- **Nivel Ontológico:** [[L1_ECOSISTEMA_ROOT]]
+- **Categoría Maestro:** [[GENERAL]]
+- **Hash SHA-256:** `6aafcce1dbdf7c52dba07c1f5caab0b841d5dd73e49c4f1d3fffa287b9777d5f`
+- **Ubicación Bóveda:** `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\L1_ECOSISTEMA_ROOT\GENERAL\20260825_L1_ECOSISTEMA_ROOT_PRO_FINANCIADORES_EN_ESPA_A_PARA_VIAJE_MUSICAL_POR_LA.docx`
+
+## 🔍 Resumen Semántico
+[Documento DOCX detectado]
+
+## 🔗 Relaciones Bidireccionales
+- Relacionado con: [[EAR_OS_UNIFIED_KNOWLEDGE_GRAPH]]
+- Ecosistema: [[Productora EAR]]
+- Módulo: [[L1_ECOSISTEMA_ROOT]]

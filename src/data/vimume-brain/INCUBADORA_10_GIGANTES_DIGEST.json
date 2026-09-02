@@ -1,0 +1,16 @@
+{
+  "version": "4.15",
+  "timestamp": "2026-08-23T18:45:00Z",
+  "sourceVault": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT",
+  "strategicFramework": {
+    "model": "Incubadora EAR OS - Escalera de Valor & 10 Gigantes",
+    "principles": [
+      "1. Freemium (Zero-CAC): Herramienta de cabina 1-click para captación masiva de repertorios y fidelización de DJs",
+      "2. Categoría Paid / Pro: Desbloqueo de ficha S-Class, pasarela de reservas directas y defensa de regalías SHA-256",
+      "3. Venues & Fincas: Póliza anti-multas SGAE y certificado inmune de comunicación pública",
+      "4. Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME"
+    ],
+    "targetAudience": "DJs, Creadores, Orquestas, Fincas de Bodas y Hoteles B2B",
+    "sovereignDomain": "https://www.productoraear.com"
+  }
+}

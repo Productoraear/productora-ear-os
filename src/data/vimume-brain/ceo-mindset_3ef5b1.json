@@ -1,0 +1,17 @@
+﻿{
+  "branding": {
+    "slogan": "Tu mensajero de sentimientos",
+    "closing_question": "¿Se lo dices o se lo canto?",
+    "positioning": "El mejor Mariachi de España / Show de Alta Escuela"
+  },
+  "social_impact": {
+    "core_project": "VIMUME (Residencias de Ancianos)",
+    "target_audience": ["Madres", "Abuelas", "Esposas", "Hijas"]
+  },
+  "technical_standards": {
+    "audio_power": "3000 Watts RMS",
+    "microphone_set": ["BETA-57", "SM-58"],
+    "quality_seal": "Auditado por Unidad de Ingenieria T11"
+  },
+  "strategic_alliances": ["IMSERSO", "Banca", "Radios Internacionales"]
+}

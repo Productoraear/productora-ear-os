@@ -1,0 +1,906 @@
+{
+  "updatedAt": "2026-08-15T11:44:02.229Z",
+  "totalActiveModules": 158,
+  "coreCapabilities": {
+    "matchmaker": [
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\deep_pc_discovery.js",
+        "lines": 110,
+        "exportsCount": 0,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "UI Onyx / Divi Transmuter",
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split",
+          "RBAC / Sovereign Login"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\public\\TinderMatcherClient.tsx",
+        "lines": 551,
+        "exportsCount": 2,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\vampire_audit_sanitizer.ts",
+        "lines": 210,
+        "exportsCount": 1,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\layout.tsx",
+        "lines": 91,
+        "exportsCount": 3,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\data\\blog-content.ts",
+        "lines": 214,
+        "exportsCount": 2,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\data\\blog-content.js",
+        "lines": 204,
+        "exportsCount": 1,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\BASE_DE_CONOCIMIENTO\\archive\\legacy_brain_dump\\omni_extractor.js",
+        "lines": 164,
+        "exportsCount": 0,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\layout\\DynamicContextBar.tsx",
+        "lines": 81,
+        "exportsCount": 1,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\presupuesto\\page.tsx",
+        "lines": 60,
+        "exportsCount": 2,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\blog\\impacto-social\\page.tsx",
+        "lines": 51,
+        "exportsCount": 1,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker"
+        ]
+      }
+    ],
+    "pricer": [
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\deep_pc_discovery.js",
+        "lines": 110,
+        "exportsCount": 0,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "UI Onyx / Divi Transmuter",
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split",
+          "RBAC / Sovereign Login"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClassScreens\\BespokeTemplate.tsx",
+        "lines": 398,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\BespokePricer.tsx",
+        "lines": 229,
+        "exportsCount": 2,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\servicios\\[nicho]\\[ciudad]\\page.tsx",
+        "lines": 137,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\quotes\\lock\\route.ts",
+        "lines": 76,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\docs\\_meta\\document_registry.json",
+        "lines": 1850,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\services\\rag\\GravitationalIngestionEngine.ts",
+        "lines": 348,
+        "exportsCount": 6,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\ingestion\\gravitational_vampirizer.js",
+        "lines": 218,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\vampire_audit_sanitizer.ts",
+        "lines": 210,
+        "exportsCount": 1,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\services\\vampire\\SynonymOntology.ts",
+        "lines": 138,
+        "exportsCount": 4,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\PriceLockBadge.tsx",
+        "lines": 129,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\layout.tsx",
+        "lines": 91,
+        "exportsCount": 3,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\0cka7oyyv90nw.js",
+        "lines": 37,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\0d2bp~b3bc.pk.js",
+        "lines": 37,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\output\\gravitational\\external_candidates_20260806_233929.json",
+        "lines": 288,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\output\\gravitational\\external_candidates_20260806_234322.json",
+        "lines": 288,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\staging\\manifests\\absorbed_manifest_20260806_232626.json",
+        "lines": 156,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\staging\\manifests\\absorbed_manifest_20260806_232629.json",
+        "lines": 156,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\BespokePricerModal.tsx",
+        "lines": 56,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\spatial\\SpatialIntelligence.tsx",
+        "lines": 23,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock"
+        ]
+      }
+    ],
+    "acoustic": [
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\deep_pc_discovery.js",
+        "lines": 110,
+        "exportsCount": 0,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "UI Onyx / Divi Transmuter",
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split",
+          "RBAC / Sovereign Login"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\public\\TinderMatcherClient.tsx",
+        "lines": 551,
+        "exportsCount": 2,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\BespokePricer.tsx",
+        "lines": 229,
+        "exportsCount": 2,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\servicios\\[nicho]\\[ciudad]\\page.tsx",
+        "lines": 137,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\quotes\\lock\\route.ts",
+        "lines": 76,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\MultiPricer.tsx",
+        "lines": 561,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\artists\\ui\\EdwinAgudeloDossier.tsx",
+        "lines": 534,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\page.tsx",
+        "lines": 306,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\page.tsx",
+        "lines": 254,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\schema.ts",
+        "lines": 252,
+        "exportsCount": 13,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\solistas\\page.tsx",
+        "lines": 246,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\edwin-agudelo\\page.tsx",
+        "lines": 237,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\orquestas\\page.tsx",
+        "lines": 218,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\ocasiones\\[slug]\\page.tsx",
+        "lines": 185,
+        "exportsCount": 0,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\empresarios\\page.tsx",
+        "lines": 176,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\schema.js",
+        "lines": 162,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\matrix.ts",
+        "lines": 153,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\artists\\matrix.js",
+        "lines": 138,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\finance\\ui\\PriceLockBadge.tsx",
+        "lines": 129,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\proveedores\\[slug]\\page.tsx",
+        "lines": 127,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "RBAC / Sovereign Login"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\components\\onboarding\\RoleSelectionGateway.tsx",
+        "lines": 115,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\admin\\telemetry\\route.ts",
+        "lines": 92,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\data\\expertise.ts",
+        "lines": 47,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\data\\expertise.js",
+        "lines": 44,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Gestor de Talentos/Edwin"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\0cka7oyyv90nw.js",
+        "lines": 37,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\0d2bp~b3bc.pk.js",
+        "lines": 37,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\data_vault\\ear_os_infra_inventory.json",
+        "lines": 17281,
+        "exportsCount": 0,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\EAR_OS_CONTROL\\staging\\absorbed\\data_vault\\ear_os_infra_inventory.json",
+        "lines": 17281,
+        "exportsCount": 0,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\package-lock.json",
+        "lines": 11131,
+        "exportsCount": 0,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\functions\\package-lock.json",
+        "lines": 7599,
+        "exportsCount": 0,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\components\\admin\\NexusRealCockpit.tsx",
+        "lines": 203,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\blog\\b2g\\page.tsx",
+        "lines": 193,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\infraestructura\\page.tsx",
+        "lines": 187,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\the-signal\\page.tsx",
+        "lines": 186,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\artistas\\djs\\page.tsx",
+        "lines": 177,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\data\\rentals.ts",
+        "lines": 164,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\data\\rentals.js",
+        "lines": 158,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\academia\\page.tsx",
+        "lines": 156,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(public)\\infraestructura\\mundial-2026\\page.tsx",
+        "lines": 108,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\fitur_swarm_simulator.ts",
+        "lines": 95,
+        "exportsCount": 0,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\b2g\\dossier-generate\\route.ts",
+        "lines": 71,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\fleet\\waybills\\generate\\route.ts",
+        "lines": 70,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\rider\\audit\\route.ts",
+        "lines": 65,
+        "exportsCount": 1,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\.firebase\\productora-ear-backend\\hosting\\_next\\static\\chunks\\17e447qc70vq5.js",
+        "lines": 10,
+        "exportsCount": 0,
+        "capabilities": [
+          "Calculadora Acústica/Rider"
+        ]
+      }
+    ],
+    "uiEngine": [
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\deep_pc_discovery.js",
+        "lines": 110,
+        "exportsCount": 0,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "UI Onyx / Divi Transmuter",
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split",
+          "RBAC / Sovereign Login"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\components\\DiviTransmuter.tsx",
+        "lines": 318,
+        "exportsCount": 7,
+        "capabilities": [
+          "UI Onyx / Divi Transmuter"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\OmegaCockpitPanel.tsx",
+        "lines": 255,
+        "exportsCount": 1,
+        "capabilities": [
+          "UI Onyx / Divi Transmuter"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\HunterPanel.tsx",
+        "lines": 228,
+        "exportsCount": 1,
+        "capabilities": [
+          "UI Onyx / Divi Transmuter"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\(nexus)\\admin\\nexus\\page.tsx",
+        "lines": 71,
+        "exportsCount": 1,
+        "capabilities": [
+          "UI Onyx / Divi Transmuter"
+        ]
+      }
+    ],
+    "ledger": [
+      {
+        "file": "C:\\EAR_OS_V2\\scripts\\deep_pc_discovery.js",
+        "lines": 110,
+        "exportsCount": 0,
+        "capabilities": [
+          "Tinder/Swipe Matchmaker",
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "UI Onyx / Divi Transmuter",
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split",
+          "RBAC / Sovereign Login"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClassScreens\\BespokeTemplate.tsx",
+        "lines": 398,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\quotes\\lock\\route.ts",
+        "lines": 76,
+        "exportsCount": 1,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Calculadora Acústica/Rider",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\docs\\_meta\\document_registry.json",
+        "lines": 1850,
+        "exportsCount": 0,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\services\\vampire\\SynonymOntology.ts",
+        "lines": 138,
+        "exportsCount": 4,
+        "capabilities": [
+          "Bespoke Pricer & Price-Lock",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\seed-artists.ts",
+        "lines": 129,
+        "exportsCount": 0,
+        "capabilities": [
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\seed-artists.js",
+        "lines": 120,
+        "exportsCount": 0,
+        "capabilities": [
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\Home.tsx",
+        "lines": 101,
+        "exportsCount": 1,
+        "capabilities": [
+          "Gestor de Talentos/Edwin",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\admin\\telemetry\\route.ts",
+        "lines": 92,
+        "exportsCount": 2,
+        "capabilities": [
+          "Calculadora Acústica/Rider",
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClass\\CommandCenterDashboard.tsx",
+        "lines": 466,
+        "exportsCount": 1,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\components\\SClass\\AuraWalletLedger.tsx",
+        "lines": 285,
+        "exportsCount": 1,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\webhooks\\stripe\\route.ts",
+        "lines": 224,
+        "exportsCount": 1,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\actions\\commandCenterActions.ts",
+        "lines": 221,
+        "exportsCount": 2,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\.obsidian\\workspace.json",
+        "lines": 205,
+        "exportsCount": 0,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\booking-actions.ts",
+        "lines": 144,
+        "exportsCount": 0,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\actions\\booking-actions.js",
+        "lines": 125,
+        "exportsCount": 0,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\features\\asset-vault\\ui\\AssetVaultLayout.tsx",
+        "lines": 74,
+        "exportsCount": 1,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\affiliates\\payout\\route.ts",
+        "lines": 67,
+        "exportsCount": 1,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\app\\api\\payments\\checkout\\route.ts",
+        "lines": 53,
+        "exportsCount": 0,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\src\\lib\\astra-intelligence.js",
+        "lines": 41,
+        "exportsCount": 2,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      },
+      {
+        "file": "C:\\EAR_OS_V2\\BASE_DE_CONOCIMIENTO\\CÓDICE_V2_SUMMARY.json",
+        "lines": 37,
+        "exportsCount": 0,
+        "capabilities": [
+          "Ledger / Commission Split"
+        ]
+      }
+    ]
+  }
+}

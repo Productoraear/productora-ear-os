@@ -10,9 +10,10 @@ import {
 import { createVipChauffeurCheckout } from '@/app/actions/vipCheckoutActions';
 
 interface LaserTunnelFunnelProps {
-  vertical: string;
-  intentSlug: string;
-  basePrice: number;
+  vertical?: string;
+  intentSlug?: string;
+  basePrice?: number;
+  defaultProvincia?: string;
 }
 
 interface TierPack {
@@ -29,20 +30,21 @@ interface TierPack {
 
 export default function LaserTunnelFunnel({ 
   vertical = 'bodas', 
-  intentSlug = 'bodas-madrid-musica-directo', 
-  basePrice = 850 
+  intentSlug = 'bodas-de-gala', 
+  basePrice = 850,
+  defaultProvincia = 'Madrid'
 }: LaserTunnelFunnelProps) {
   const [selectedTier, setSelectedTier] = useState<string>('gold');
   const [eventDate, setEventDate] = useState<string>('');
-  const [city, setCity] = useState<string>('Madrid');
+  const [city, setCity] = useState<string>(defaultProvincia || 'Madrid');
   const [isPending, startTransition] = useTransition();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Generador dinámico de los 3 Packs S-Class según INTENT y vertical
   const packs: TierPack[] = React.useMemo(() => {
-    const safeSlug = (intentSlug || 'bodas-madrid-musica-directo').toLowerCase();
+    const safeSlug = intentSlug || 'bodas-de-gala';
     const formattedTitle = safeSlug.replace(/-/g, ' ');
-    const slug = safeSlug;
+    const slug = safeSlug.toLowerCase();
 
     // 1. Chófer VIP / Vehículos Nupciales / Mercedes
     if (slug.includes('coche') || slug.includes('chofer') || slug.includes('mercedes') || slug.includes('transporte-vip')) {
