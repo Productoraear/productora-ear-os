@@ -1,0 +1,43 @@
+{
+  "zona": "Eje Suroeste Madrid - Norte Toledo",
+  "riderTecnico": {
+    "pa": "Bose F1 Model 812 (Array Flexible)",
+    "mesa": "Behringer X-Air XR18 (Control Digital Autónomo)",
+    "microfonia": "Shure Beta 87A (Vocal Acreditada)",
+    "ventajaLogistica": "Producción propia sin alquileres externos. Ahorro de 800€ - 1.200€ al consistorio."
+  },
+  "municipios": [
+    {
+      "slug": "mentrida",
+      "nombre": "Méntrida",
+      "provincia": "Toledo",
+      "poblacion": 6000,
+      "distanciaKm": 0,
+      "espacio": "Plaza de España / Recinto Ferial",
+      "centroSenior": "Hogar del Jubilado y Centro de Mayores",
+      "tarifaBaseMenor": 1950,
+      "desglose": {
+        "showPatronal": 1450,
+        "programaVimume": 500,
+        "desplazamiento": 0
+      },
+      "justificacion": "Sede operativa central. Exención total de dietas y transporte bajo Contrato Menor."
+    },
+    {
+      "slug": "navalcarnero",
+      "nombre": "Navalcarnero",
+      "provincia": "Madrid",
+      "poblacion": 31000,
+      "distanciaKm": 18,
+      "espacio": "Plaza de Segovia / Plaza del Teatro",
+      "centroSenior": "Centro de Mayores y Residencia Municipal",
+      "tarifaBaseMenor": 2800,
+      "desglose": {
+        "showPatronal": 2100,
+        "programaVimume": 700,
+        "desplazamiento": 0
+      },
+      "justificacion": "Proximidad comarcal inmediata (A-5). Producción integral acústica sin intermediarios."
+    }
+  ]
+}
