@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "typeRoots": ["./node_modules/@types"],
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/app/**/*.ts",
+    "src/app/**/*.tsx",
+    "src/lib/**/*.ts",
+    "src/lib/**/*.tsx",
+    "src/components/**/*.ts",
+    "src/components/**/*.tsx",
+    "src/data/**/*.ts",
+    "src/personal-y-artista/edwin-agudelo/repertorio-y-ip/matrix.ts",
+    "src/personal-y-artista/edwin-agudelo/repertorio-y-ip/vampire-runner.ts",
+    "src/personal-y-artista/edwin-agudelo/repertorio-y-ip/vampire-parser_eff953.ts",
+    "src/personal-y-artista/edwin-agudelo/repertorio-y-ip/paciente-cero-spider.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/BODEGA_CUARENTENA/**",
+    "**/00_PRODUCTORA_EAR/**",
+    "**/_archive_cruft_2026/**",
+    "**/scratch/**"
+  ]
+}

@@ -1,0 +1,69 @@
+# ==============================================================================
+# S-CLASS CANONICAL EXCLUSIONS (EAR OS V2)
+# ==============================================================================
+node_modules/
+.next/
+out/
+build/
+dist/
+.cache/
+.vercel/
+.firebase/
+npm-debug.log*
+yarn-debug.log*
+*.tsbuildinfo
+
+# Secretos y Entornos
+.env
+.env.local
+.env.*.local
+
+# Modelos Locales y Binarios Pesados
+*.gguf
+*.bin
+*.pt
+*.safetensors
+*.exe
+*.dll
+*.lib
+*.cab
+*.vst*
+*.ezx
+*.iso
+H:\AI_MODELS_HUB/
+
+# Media y Archivos Masivos
+*.mp3
+*.mp4
+*.wav
+*.mov
+*.zip
+*.tar.gz
+
+# Bóvedas Temporales, Cuarentenas y Scrapers Crudos
+_archive_cruft_2026/
+extracted_astra_neural/
+scratch/
+crawler-output/
+src/empresa/incubadora-despegue/
+src/empresa/infraestructura-ai/
+src/empresa/02_Emanager_Formacion/
+src/empresa/productora-ear-core/00_PRODUCTORA_EAR/
+**/BODEGA_CUARENTENA/
+**/RESCATE_FINAL/
+*.log
+
+# Bóvedas de Recuperación Masiva y Backups Crudos
+src/personal-y-artista/edwin-agudelo/04_Habitos_Y_Filosofia/
+src/personal-y-artista/edwin-agudelo/05_Sistema_Astra_Core/
+src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.json
+src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.md
+src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.txt
+src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.csv
+src/personal-y-artista/edwin-agudelo/repertorio-y-ip/*.bak
+src/personal-y-artista/edwin-agudelo/repertorio-y-ip/.*
+src/data/vimume-brain/
+src/data/ear-30-level-taxonomy.json
+docs/
+Modelfile
+.clinerules
