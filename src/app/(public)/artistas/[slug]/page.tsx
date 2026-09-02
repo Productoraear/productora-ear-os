@@ -60,6 +60,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ArtistDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const variant = HIGH_VALUE_VARIANTS.find(v => v.slug === slug);
   
   const isEdwinOrMariachi = slug === 'edwin-agudelo' || slug.includes('mariachi') || slug.includes('agudelo') || Boolean(variant);
   const edwinSchema = isEdwinOrMariachi ? getEdwinAgudeloSchema() : null;

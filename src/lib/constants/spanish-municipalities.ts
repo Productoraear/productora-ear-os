@@ -396,3 +396,38 @@ export function generatePseoSlugs() {
 
   return routes;
 }
+
+export interface TownItem {
+  name: string;
+  slug: string;
+  comarca?: string;
+  distanceFromMentrideKm?: number;
+  featuredVenues?: string[];
+  [key: string]: any;
+}
+
+export const MUNICIPALITIES_DATASET: Record<string, TownItem[]> = MUNICIPALITIES_DATABASE.reduce((acc, m) => {
+  const key = m.provinceSlug || m.province.toLowerCase();
+  if (!acc[key]) acc[key] = [];
+  acc[key].push({
+    name: m.name,
+    slug: m.slug,
+    comarca: 'Comarca Histórica',
+    distanceFromMentrideKm: 35,
+    featuredVenues: ['Fincas y Salones Exclusivos']
+  });
+  return acc;
+}, {} as Record<string, TownItem[]>);
+
+export const SERVICES_PSEO_EXPANDED = SERVICES_DATABASE.map(s => ({
+  id: s.id,
+  name: s.title,
+  path: s.slug,
+  title: s.title,
+  slug: s.slug,
+  category: s.category,
+  averageTicket: s.averageTicket,
+  basePrice: s.averageTicket,
+  desc: s.title,
+  priceRange: `${s.averageTicket} € - ${s.averageTicket * 1.5} €`
+}));

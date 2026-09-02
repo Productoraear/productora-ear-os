@@ -1,5 +1,14 @@
+export interface AcademyLesson {
+  title: string;
+  time: string;
+  status: string;
+  progress: number;
+}
 
-import { AcademyLesson, AcademyTool } from '../types';
+export interface AcademyTool {
+  name: string;
+  cat: string;
+}
 
 export const ACADEMY_LESSONS: AcademyLesson[] = [
   { title: "Mentalidad de CEO Artístico", time: "45 min", status: "Completado", progress: 100 },

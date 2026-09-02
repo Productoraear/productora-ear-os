@@ -79,7 +79,7 @@ export default function AtmosphereMatcherClient() {
       // Ejecutar la acción de Stripe de forma segura en servidor (Tamper-Proof)
       const session = await createEliteCheckout({
         artistId: providerId,
-        clientId: user?.uid || "sys-guest-fallback",
+        clientId: (user as any)?.uid || (user as any)?.id || "sys-guest-fallback",
         origin: "Madrid, España",
         destination: "Toledo, España", // Default logístico estimado
         eventDate: formattedDate,

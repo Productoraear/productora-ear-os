@@ -32,3 +32,44 @@ export const BASE_SIGNAL: SovereignSignal = {
   isB2G: false,
   updatedAt: new Date().toISOString()
 };
+
+// 🏛️ CANONICAL APPLICATION DATA TYPES
+export interface BlogArticle {
+  id: number | string;
+  title: string;
+  excerpt: string;
+  category: string;
+  author: string;
+  date: string;
+  image: string;
+  icon?: any;
+  featured?: boolean;
+}
+
+export interface Stat {
+  label: string;
+  value: string | number;
+  suffix?: string;
+  description?: string;
+}
+
+export interface ExpertiseService {
+  title: string;
+  subtitle: string;
+  description: string;
+  items: string[];
+  icon: any;
+  color: string;
+}
+
+export interface AcademyLesson {
+  title: string;
+  time: string;
+  status: string;
+  progress: number;
+}
+
+export interface AcademyTool {
+  name: string;
+  cat: string;
+}
