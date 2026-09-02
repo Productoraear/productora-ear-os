@@ -68,6 +68,13 @@ src/data/vimume-brain/
 src/data/ear-30-level-taxonomy.json
 src/data/catalog/ADN_EAR_INDEX.json
 src/data/*.backup.json
+src/data/ear-rag-database.json
+src/data/all_providers_database.json
+src/data/bodas-vendors-harvested.json
+src/data/vampirized_providers.json
 docs/
 Modelfile
 .clinerules
+
+.vercel
+.env*
