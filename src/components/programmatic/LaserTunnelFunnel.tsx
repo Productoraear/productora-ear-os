@@ -27,7 +27,11 @@ interface TierPack {
   recommended?: boolean;
 }
 
-export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: LaserTunnelFunnelProps) {
+export default function LaserTunnelFunnel({ 
+  vertical = 'bodas', 
+  intentSlug = 'bodas-madrid-musica-directo', 
+  basePrice = 850 
+}: LaserTunnelFunnelProps) {
   const [selectedTier, setSelectedTier] = useState<string>('gold');
   const [eventDate, setEventDate] = useState<string>('');
   const [city, setCity] = useState<string>('Madrid');
@@ -36,8 +40,9 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
 
   // Generador dinámico de los 3 Packs S-Class según INTENT y vertical
   const packs: TierPack[] = React.useMemo(() => {
-    const formattedTitle = intentSlug.replace(/-/g, ' ');
-    const slug = (intentSlug || '').toLowerCase();
+    const safeSlug = (intentSlug || 'bodas-madrid-musica-directo').toLowerCase();
+    const formattedTitle = safeSlug.replace(/-/g, ' ');
+    const slug = safeSlug;
 
     // 1. Chófer VIP / Vehículos Nupciales / Mercedes
     if (slug.includes('coche') || slug.includes('chofer') || slug.includes('mercedes') || slug.includes('transporte-vip')) {
