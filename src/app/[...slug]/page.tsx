@@ -23,6 +23,7 @@ const EXACT_ROOT_STATIC_ROUTES = new Set([
   'about', 'academia', 'afiliados', 'artistas', 'artists', 'aviso-legal', 'ayuntamientos',
   'ayuntamientospremium', 'ayuntamientos-premium', 'blog', 'calculadora',
   'categorias', 'checkout', 'contacto', 'contratacion', 'cookies', 'cotizador', 'dossier', 'dossier-seo',
+  'ecosistema', 'estructura',
   'empresarios', 'infraestructura', 'journal', 'marketplace',
   'precios', 'presupuesto', 'privacidad', 'proveedores',
   'proyectos', 'reclamar-perfil', 'soberania-tecnica', 'social',

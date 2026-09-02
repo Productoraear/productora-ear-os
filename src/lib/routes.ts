@@ -52,6 +52,7 @@ export const ROUTES: Record<string, string> = {
   contacto: '/contacto',
   bodas: '/bodas',
   ayuntamientos: '/contratacion/ayuntamientos',
+  ecosistema: '/ecosistema',
   login: '/login',
   nexus: '/nexus',
   dashboard: '/dashboard',

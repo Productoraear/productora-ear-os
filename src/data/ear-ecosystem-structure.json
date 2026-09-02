@@ -1,0 +1,249 @@
+{
+  "version": "4.0.0-S-CLASS",
+  "name": "Productora EAR - Arquitectura Organizacional Soberana",
+  "root": {
+    "id": "root-ear",
+    "title": "Productora Ear",
+    "subtitle": "Ecosistema Central & Núcleo Soberano",
+    "route": "/",
+    "children": [
+      {
+        "id": "vert-artistas",
+        "title": "Artistas",
+        "category": "Talento & Representación",
+        "badge": "Talento",
+        "route": "/artistas",
+        "children": [
+          {
+            "id": "art-paciente-cero",
+            "title": "Paciente Cero (Edwin Agudelo)",
+            "route": "/artistas/edwin-agudelo",
+            "badge": "SSOT Master",
+            "isHero": true
+          },
+          {
+            "id": "art-academia",
+            "title": "Academia y Formación",
+            "route": "/studio",
+            "children": [
+              { "id": "acad-studio", "title": "EAR Studio", "route": "/studio/master-audio-01" },
+              { "id": "acad-cursos", "title": "Cursos y Masterclasses", "route": "/studio" },
+              { "id": "acad-logros", "title": "Logros y acreditaciones", "route": "/artistas/edwin-agudelo" }
+            ]
+          },
+          {
+            "id": "art-representacion",
+            "title": "Representación",
+            "route": "/artistas",
+            "children": [
+              { "id": "rep-solistas", "title": "Solistas", "route": "/artistas/edwin-agudelo" },
+              { "id": "rep-mariachi", "title": "Mariachi", "route": "/artistas/mariachi-gala" },
+              { "id": "rep-agrupaciones", "title": "Agrupaciones", "route": "/artistas" }
+            ]
+          },
+          {
+            "id": "art-giras",
+            "title": "Giras y Producción en Vivo",
+            "route": "/dashboard/operaciones/tour-001",
+            "children": [
+              { "id": "giras-waybills", "title": "Hojas de ruta (Waybills)", "route": "/api/fleet/waybills/wb-01" },
+              { "id": "giras-mando", "title": "Centro de mando de gira", "route": "/dashboard/operaciones/tour-001" }
+            ]
+          },
+          { "id": "art-empleo", "title": "Bolsa de empleo y casting", "route": "/artistas" },
+          { "id": "art-privada", "title": "Gestión Área privada y multimedia", "route": "/artistas/dashboard" }
+        ]
+      },
+      {
+        "id": "vert-eventos",
+        "title": "Eventos",
+        "category": "B2C & Social",
+        "badge": "Alto Ticket",
+        "route": "/bodas",
+        "children": [
+          {
+            "id": "evt-propios",
+            "title": "Propios",
+            "children": [
+              { "id": "evt-prop-conciertos", "title": "Conciertos" },
+              { "id": "evt-prop-festivales", "title": "Festivales de autor" },
+              { "id": "evt-prop-galas", "title": "Galas" }
+            ]
+          },
+          {
+            "id": "evt-terceros",
+            "title": "De terceros (Particulares / B2C)",
+            "route": "/bodas",
+            "children": [
+              { "id": "evt-terc-bodas", "title": "Bodas y enlaces", "route": "/bodas/madrid/musica-en-directo" },
+              { "id": "evt-terc-fechas", "title": "Fechas señaladas", "route": "/ocasiones/bodas" },
+              { "id": "evt-terc-dossiers", "title": "Dossiers interactivos de cotización", "route": "/cotizador" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vert-empresas",
+        "title": "Empresas",
+        "category": "B2B Corporativo & Arsenal",
+        "badge": "B2B Enterprise",
+        "route": "/ocasiones/corporativo",
+        "children": [
+          {
+            "id": "emp-clientes",
+            "title": "Clientes corporativos (Demanda B2B)",
+            "route": "/ocasiones/corporativo",
+            "children": [
+              { "id": "emp-cli-galas", "title": "Galas y cenas de empresa", "route": "/ocasiones/corporativo" },
+              { "id": "emp-cli-congresos", "title": "Congresos y ferias", "route": "/ocasiones/ferias" },
+              { "id": "emp-cli-lanzamientos", "title": "Lanzamientos de producto", "route": "/ocasiones/corporativo" }
+            ]
+          },
+          {
+            "id": "emp-proveedores",
+            "title": "Proveedores (Oferta / Arsenal)",
+            "route": "/arsenal",
+            "children": [
+              { "id": "emp-prov-sonido", "title": "Sonido e iluminación", "route": "/arsenal/sonido/madrid" },
+              { "id": "emp-prov-pantallas", "title": "Pantallas LED", "route": "/arsenal/pantallas-led/madrid" },
+              { "id": "emp-prov-catering", "title": "Catering y mobiliario", "route": "/proveedores/catering-madrid" },
+              { "id": "emp-prov-transporte", "title": "Transporte VIP", "route": "/servicios/transporte-vip/madrid" }
+            ]
+          },
+          { "id": "emp-privada", "title": "Gestión Área privada y multimedia", "route": "/proveedores" }
+        ]
+      },
+      {
+        "id": "vert-instituciones",
+        "title": "Instituciones",
+        "category": "B2G Sector Público / LCSP",
+        "badge": "B2G Público",
+        "route": "/contratacion/ayuntamientos",
+        "children": [
+          {
+            "id": "inst-ayuntamientos",
+            "title": "Ayuntamientos (Contratos Menores)",
+            "route": "/contratacion/ayuntamientos",
+            "children": [
+              {
+                "id": "inst-ayto-cat360",
+                "title": "Catálogo 360 de servicios municipales",
+                "children": [
+                  { "id": "inst-ayto-fiestas", "title": "Fiestas patronales", "route": "/contratacion/ayuntamientos/navalcarnero" },
+                  { "id": "inst-ayto-navidad", "title": "Navidad", "route": "/arsenal/luces-navidad/madrid" },
+                  { "id": "inst-ayto-av", "title": "Audiovisuales y pantallas", "route": "/arsenal/pantallas-led/madrid" }
+                ]
+              },
+              { "id": "inst-ayto-vimume", "title": "Proyecto VIMUME (Tercera edad)", "route": "/vimume/conocimiento/envejecimiento-activo" },
+              { "id": "inst-ayto-corredor", "title": "Corredor comarcal preferente", "route": "/contratacion/ayuntamientos/mentrida" }
+            ]
+          },
+          {
+            "id": "inst-gobiernos",
+            "title": "Gobiernos y Diputaciones (Licitaciones)",
+            "route": "/b2g",
+            "children": [
+              {
+                "id": "inst-gob-cat360",
+                "title": "Catálogo 360 de servicios",
+                "children": [
+                  { "id": "inst-gob-fitur", "title": "Ferias institucionales (FITUR)", "route": "/ocasiones/ferias" },
+                  { "id": "inst-gob-galas", "title": "Galas anuales", "route": "/b2g/madrid/galas-institucionales" },
+                  { "id": "inst-gob-cenas", "title": "Cenas de estado" },
+                  { "id": "inst-gob-recepciones", "title": "Recepciones diplomáticas" },
+                  { "id": "inst-gob-transporte", "title": "Transporte vip", "route": "/servicios/transporte-vip/madrid" },
+                  { "id": "inst-gob-navidad", "title": "Navidad", "route": "/arsenal/luces-navidad/madrid" }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "inst-fundaciones",
+            "title": "Fundaciones y Asociaciones",
+            "children": [
+              { "id": "inst-fund-acuerdos", "title": "Acuerdos de colaboración y sinergias" },
+              { "id": "inst-fund-patrocinios", "title": "Patrocinios y convenios marco" }
+            ]
+          },
+          {
+            "id": "inst-acreditacion",
+            "title": "Acreditación y Licitación Pública",
+            "children": [
+              { "id": "inst-acred-rolece", "title": "Certificación ROLECE y DEUC" },
+              { "id": "inst-acred-seguros", "title": "Seguros y solvencia técnica" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vert-vimume",
+        "title": "Proyecto Vimume",
+        "category": "Impacto Social & Silver Economy",
+        "badge": "40Hz Neuroacústica",
+        "route": "/vimume",
+        "children": [
+          {
+            "id": "vim-concepto",
+            "title": "Concepto central",
+            "route": "/vimume",
+            "children": [
+              { "id": "vim-conc-video", "title": "Video explicativo del proyecto", "route": "/vimume" },
+              { "id": "vim-conc-artistas", "title": "Artistas Vimume", "route": "/artistas/edwin-agudelo" },
+              { "id": "vim-conc-evento", "title": "Evento anual (\"Nuestros Héroes\")", "route": "/vimume/eventos" }
+            ]
+          },
+          {
+            "id": "vim-neuronal",
+            "title": "Sistema neuronal Navegable",
+            "route": "/vimume/conocimiento/musicoterapia-alzheimer",
+            "children": [
+              { "id": "vim-neu-familiares", "title": "Familiares", "route": "/vimume/conocimiento/envejecimiento-activo" },
+              { "id": "vim-neu-terapeutas", "title": "Terapeutas ocupacionales", "route": "/vimume/conocimiento/terapia-ocupacional" },
+              { "id": "vim-neu-empresas", "title": "Empresas de productos y servicios" },
+              { "id": "vim-neu-instituciones", "title": "Instituciones (Residencias y centros de día)", "route": "/vimume/conocimiento/agenda-2030-ods" }
+            ]
+          },
+          {
+            "id": "vim-financiacion",
+            "title": "Financiación y Voluntariado",
+            "children": [
+              { "id": "vim-fin-contrataciones", "title": "Contrataciones institucionales", "route": "/contratacion/ayuntamientos/navalcarnero" },
+              { "id": "vim-fin-donaciones", "title": "Donaciones y mecenazgo", "route": "/vimume/inversion" },
+              { "id": "vim-fin-crowdfunding", "title": "Crowdfunding" },
+              { "id": "vim-fin-voluntariado", "title": "Voluntariado" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "vert-nexus",
+        "title": "Nexus y Transaccional",
+        "category": "Fintech & Infraestructura",
+        "badge": "Smart-Lock",
+        "route": "/nexus",
+        "children": [
+          {
+            "id": "nex-prescriptores",
+            "title": "Red de prescriptores y comisiones",
+            "route": "/nexus",
+            "children": [
+              { "id": "nex-presc-artistas", "title": "Artistas", "route": "/nexus/artist/default-artist" },
+              { "id": "nex-presc-empresas", "title": "Empresas", "route": "/nexus/provider/default-provider" },
+              { "id": "nex-presc-fundaciones", "title": "Fundaciones" }
+            ]
+          },
+          {
+            "id": "nex-pasarela",
+            "title": "Pasarela Financiera Smart-Lock",
+            "route": "/cotizador",
+            "children": [
+              { "id": "nex-pas-deposito", "title": "Depósito y reserva de fecha", "route": "/cotizador" },
+              { "id": "nex-pas-pricelock", "title": "Garantía Price-Lock", "route": "/dossier/dossier-01" },
+              { "id": "nex-pas-split", "title": "Liquidaciones y split (80/10/10)" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

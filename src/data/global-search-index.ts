@@ -14,6 +14,21 @@ export interface SearchIndexItem {
 
 export const GLOBAL_SEARCH_INDEX: SearchIndexItem[] = [
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 0. ECOSISTEMA & ARQUITECTURA ORGANIZACIONAL (SSOT)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  {
+    id: 'srv-ecosistema',
+    title: 'Ecosistema Productora EAR · Mapa Mental & Jerarquías',
+    subtitle: 'Arquitectura organizacional de 6 macro-verticales, nodos operativos y mapeo de rutas web.',
+    category: 'servicios',
+    categoryLabel: 'Ecosistema',
+    url: '/ecosistema',
+    price: 'S-Class Core',
+    badge: 'Arquitectura',
+    keywords: ['ecosistema', 'estructura', 'organigrama', 'xmind', 'mapa mental', 'jerarquia', 'productora ear', 'verticales', 'paciente cero', 'vimume'],
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400&auto=format&fit=crop'
+  },
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 1. SERVICIOS & BODAS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   {
