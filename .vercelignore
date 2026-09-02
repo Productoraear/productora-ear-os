@@ -1,13 +1,15 @@
-node_modules
-.next
-out
-build
-dist
-.git
-.cache
-.firebase
+# ==============================================================================
+# S-CLASS CANONICAL VERCELIGNORE (EAR OS V2)
+# ==============================================================================
+# NOTA CRÍTICA: Todos los patrones de raíz DEBEN llevar '/' inicial
+# para evitar que colisionen con /src/lib, /src/config, /src/data, etc.
+# ==============================================================================
 
-# Archivos pesados y modelos
+/.git
+/.cache
+/.firebase
+
+# Archivos pesados y binarios
 *.gguf
 *.bin
 *.pt
@@ -26,56 +28,43 @@ dist
 *.zip
 *.tar.gz
 
-# Bóvedas no-web y cuarentenas en la raíz
-00_INBOX_COGNITIVO
-01_SSOT_Y_KERNELS
-02_ARQUITECTURA_Y_MATRICES
-99_CUARENTENA_COGNITIVA
-ALMACEN_DE_CUARENTENA_6M
-auditoria
-auditoria_32b
-auditoria_auth_matriz
-BASE_DE_CONOCIMIENTO
-"CHAT CON AI STUDIO PARA EAR OS"
-config
-CORE
-data
-data_vault
-design-vault
-docs
-e2e
-EAR_OS_CONTROL
-"g s console"
-incubadora
-infrastructure
-lib
-logs
-manifests
-Marketing_Skills
-output
-quarantine
-scratch
-scripts
-supabase
-sync_nexus
-system-prompts-and-models-of-ai-tools-main
-tools
-vault_secrets_backup
-_archive_cruft_2026
-extracted_astra_neural
-crawler-output
+# Bóvedas exclusivas de la raíz (NO AFECTAN /src)
+/00_INBOX_COGNITIVO/
+/01_SSOT_Y_KERNELS/
+/02_ARQUITECTURA_Y_MATRICES/
+/99_CUARENTENA_COGNITIVA/
+/ALMACEN_DE_CUARENTENA_6M/
+/auditoria/
+/auditoria_32b/
+/auditoria_auth_matriz/
+/BASE_DE_CONOCIMIENTO/
+/"CHAT CON AI STUDIO PARA EAR OS"/
+/CORE/
+/data/
+/data_vault/
+/design-vault/
+/docs/
+/e2e/
+/EAR_OS_CONTROL/
+/"g s console"/
+/incubadora/
+/infrastructure/
+/logs/
+/manifests/
+/Marketing_Skills/
+/output/
+/quarantine/
+/scratch/
+/scripts/
+/supabase/
+/sync_nexus/
+/system-prompts-and-models-of-ai-tools-main/
+/tools/
+/vault_secrets_backup/
+/_archive_cruft_2026/
+/extracted_astra_neural/
+/crawler-output/
 
-# Subcarpetas no-web dentro de src
-src/empresa
-src/multimedia-produccion
-src/personal-y-artista/edwin-agudelo/04_Habitos_Y_Filosofia
-src/personal-y-artista/edwin-agudelo/05_Sistema_Astra_Core
-src/data/vimume-brain
-src/data/catalog/ADN_EAR_INDEX.json
-src/data/*.backup.json
-src/data/ear-rag-database.json
-src/data/all_providers_database.json
-src/data/bodas-vendors-harvested.json
-src/data/vampirized_providers.json
-**/BODEGA_CUARENTENA
-**/RESCATE_FINAL
+# Cuarentenas
+**/BODEGA_CUARENTENA/
+**/RESCATE_FINAL/
