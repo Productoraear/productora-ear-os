@@ -5,11 +5,11 @@
 
 "use server";
 
-import { createClient } from '@/lib/supabase/server';
-import { sendTelegramNotification } from '@/lib/services/telegram';
-import { LeadRouter } from '@/lib/services/leads/LeadRouter';
-import { TrelloService } from '@/lib/services/trello';
-import { EmailService } from '@/lib/services/emailService';
+// GHOST_IMPORT_DISABLED: import { createClient } from '@/lib/supabase/server';
+// GHOST_IMPORT_DISABLED: import { sendTelegramNotification } from '@/lib/services/telegram';
+// GHOST_IMPORT_DISABLED: import { LeadRouter } from '@/lib/services/leads/LeadRouter';
+// GHOST_IMPORT_DISABLED: import { TrelloService } from '@/lib/services/trello';
+// GHOST_IMPORT_DISABLED: import { EmailService } from '@/lib/services/emailService';
 
 export async function approveDossier(dossierId: string, token: string) {
   const supabase = createClient();
