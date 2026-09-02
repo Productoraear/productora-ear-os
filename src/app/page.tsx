@@ -2,8 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   Sparkles, Heart, Building2, Music2, ShieldCheck, HeartPulse, 
-  ArrowRight, Network, Compass, PhoneCall, ChevronRight, CheckCircle2
+  ArrowRight, Network, Compass, PhoneCall, ChevronRight, CheckCircle2,
+  Sliders, Database, Bot, Cpu, Zap, Volume2
 } from 'lucide-react';
+import { CENTRALITA } from '@/lib/phone-constants';
 
 interface AccessCard {
   id: string;
@@ -126,8 +128,8 @@ export default function HomePage() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[300px] bg-cyan-500/5 blur-3xl pointer-events-none" />
 
-      {/* ── BARRA SUPERIOR VANGUARDISTA ── */}
-      <header className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between border-b border-zinc-900/80 backdrop-blur-md">
+      {/* ── BARRA SUPERIOR VANGUARDISTA CON ACCESOS VITALES ── */}
+      <header className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 flex flex-wrap items-center justify-between gap-4 border-b border-zinc-900/80 backdrop-blur-md">
         <Link href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 via-zinc-900 to-black border border-amber-500/40 p-2 flex items-center justify-center shadow-lg group-hover:border-amber-400 group-hover:shadow-[0_0_20px_rgba(245,197,56,0.25)] transition-all">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-400 group-hover:scale-110 transition-transform">
@@ -144,15 +146,33 @@ export default function HomePage() {
           </div>
         </Link>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+          {/* Herramienta Vital 1: The Oracle */}
+          <Link
+            href="/oraculo"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/15 hover:bg-amber-500 hover:text-black text-amber-400 border border-amber-500/40 text-xs font-mono tracking-wider font-bold transition-all shadow-[0_0_15px_rgba(245,197,56,0.15)]"
+          >
+            <Sparkles className="w-3.5 h-3.5 animate-spin" style={{ animationDuration: '6s' }} />
+            <span>The Oracle</span>
+          </Link>
+
+          {/* Herramienta Vital 2: El Vampirizador */}
+          <Link
+            href="/vampiro"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyan-500/10 hover:bg-cyan-500 hover:text-black text-cyan-400 border border-cyan-500/30 text-xs font-mono tracking-wider font-semibold transition-all shadow-sm"
+          >
+            <Database className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Vampirizador</span>
+            <span className="sm:hidden">Arsenal</span>
+          </Link>
+
           {/* Botón Destacado: Mapa Mental Ecosistema */}
           <Link
             href="/ecosistema"
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 hover:bg-amber-500 hover:text-black text-amber-400 border border-amber-500/30 text-xs font-mono tracking-wider font-semibold transition-all shadow-sm"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 text-xs font-mono tracking-wider transition-all shadow-sm"
           >
-            <Network className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Mapa Mental</span>
-            <span>Ecosistema</span>
+            <Network className="w-3.5 h-3.5 text-zinc-400" />
+            <span className="hidden md:inline">Ecosistema</span>
           </Link>
 
           <Link
@@ -160,14 +180,14 @@ export default function HomePage() {
             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 text-xs font-mono transition-colors"
           >
             <PhoneCall className="w-3 h-3 text-emerald-400" />
-            <span className="hidden md:inline">+34 693 693 048</span>
+            <span className="hidden lg:inline">{CENTRALITA.display}</span>
           </Link>
         </div>
       </header>
 
       {/* ── SECCIÓN CENTRAL: LOS 5 ACCESOS S-CLASS ── */}
-      <section className="relative z-10 w-full max-w-[1500px] mx-auto px-4 sm:px-6 py-10 sm:py-16 my-auto">
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+      <section className="relative z-10 w-full max-w-[1500px] mx-auto px-4 sm:px-6 py-10 sm:py-14 my-auto">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-400 text-xs font-mono uppercase tracking-widest mb-3">
             <Sparkles className="w-3 h-3 text-amber-400" />
             <span>Soberanía Técnica & Producción Ejecutiva</span>
@@ -241,21 +261,84 @@ export default function HomePage() {
             );
           })}
         </div>
+
+        {/* ── CONSOLA DUAL DE HERRAMIENTAS VITALES S-CLASS ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-10">
+          {/* Herramienta 1: The Oracle */}
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-amber-500/10 via-zinc-900/90 to-zinc-950 border border-amber-500/30 hover:border-amber-500/60 transition-all flex flex-col justify-between shadow-xl group">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-mono font-bold uppercase">
+                  <Sparkles className="w-3 h-3" />
+                  <span>Simulador Predictivo</span>
+                </span>
+                <span className="text-xs font-mono text-zinc-400">Audio 12 W/pax</span>
+              </div>
+              <h3 className="text-xl font-bold text-white font-serif mb-1 group-hover:text-amber-300 transition-colors">
+                The Oracle · Simulador de Presupuesto S-Class
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed mb-4">
+                Calcula en tiempo real la probabilidad de éxito de tu evento, ratio de potencia acústica para evitar la asfixia sonora y bloqueo de precio garantizado con Price-Lock 72h.
+              </p>
+            </div>
+            <div className="flex items-center justify-between pt-3 border-t border-zinc-800/80">
+              <span className="text-xs font-mono text-emerald-400 font-bold">● Simulación en Vivo Activa</span>
+              <Link
+                href="/oraculo"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-mono font-bold uppercase transition-all shadow-md"
+              >
+                <span>Abrir The Oracle</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Herramienta 2: El Vampirizador */}
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-cyan-500/10 via-zinc-900/90 to-zinc-950 border border-cyan-500/30 hover:border-cyan-500/60 transition-all flex flex-col justify-between shadow-xl group">
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 text-[10px] font-mono font-bold uppercase">
+                  <Database className="w-3 h-3" />
+                  <span>Crawler Forense de Mercado</span>
+                </span>
+                <span className="text-xs font-mono text-zinc-400">13.977 Registros</span>
+              </div>
+              <h3 className="text-xl font-bold text-white font-serif mb-1 group-hover:text-cyan-300 transition-colors">
+                El Vampirizador · Arsenal & Proveedores Homologados
+              </h3>
+              <p className="text-xs text-zinc-400 leading-relaxed mb-4">
+                Acceso a los catálogos técnicos de sonido Sonomusic, alumbrado monumental B2G Demetrio, flota de transporte VIP y tarifas soberanas con split 80/10/10 sin intermediarios.
+              </p>
+            </div>
+            <div className="flex items-center justify-between pt-3 border-t border-zinc-800/80">
+              <span className="text-xs font-mono text-cyan-400 font-bold">● Bóvedas Sincronizadas</span>
+              <Link
+                href="/vampiro"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black text-xs font-mono font-bold uppercase transition-all shadow-md"
+              >
+                <span>Explorar Arsenal</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* ── PIE DE PÁGINA MINIMALISTA ── */}
+      {/* ── PIE DE PÁGINA VANGUARDISTA ── */}
       <footer className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 border-t border-zinc-900/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-zinc-500 text-xs font-mono">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>EAR OS Bare-Metal · Despliegue Soberano 2026</span>
         </div>
 
-        <div className="flex items-center gap-4 text-[11px]">
+        <div className="flex items-center gap-4 text-[11px] flex-wrap justify-center">
+          <Link href="/oraculo" className="text-amber-400 hover:text-amber-300 transition-colors font-bold">The Oracle</Link>
+          <Link href="/vampiro" className="text-cyan-400 hover:text-cyan-300 transition-colors font-bold">Vampirizador</Link>
           <Link href="/ecosistema" className="hover:text-amber-400 transition-colors">Ecosistema</Link>
           <Link href="/contratacion/ayuntamientos" className="hover:text-amber-400 transition-colors">B2G</Link>
           <Link href="/artistas/edwin-agudelo" className="hover:text-amber-400 transition-colors">Paciente Cero</Link>
           <Link href="/vimume" className="hover:text-amber-400 transition-colors">VIMUME</Link>
-          <Link href="/privacidad" className="hover:text-amber-400 transition-colors">Privacidad</Link>
+          <Link href="/contacto" className="hover:text-amber-400 transition-colors">Contacto 24/7</Link>
         </div>
       </footer>
     </main>

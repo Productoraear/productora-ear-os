@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/app/context/ThemeContext';
+import OraculoPublicDrawer from '@/components/oraculo/OraculoPublicDrawer';
 
 export const metadata: Metadata = {
   title: 'Productora EAR · Ecosistema de Producción Musical, Eventos y VIMUME',
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className="bg-[#050505] text-zinc-100 min-h-screen selection:bg-amber-500 selection:text-black antialiased font-sans">
         <ThemeProvider>
           {children}
+          <OraculoPublicDrawer />
         </ThemeProvider>
       </body>
     </html>
