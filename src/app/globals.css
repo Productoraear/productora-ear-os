@@ -1,0 +1,413 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* --- 🏛️ EAR OS 60-30-10 S-CLASS (AURA ONYX & IMPERIAL GOLD) --- */
+    /* 60% Dominant Canvas (OLED Pure Black) */
+    --background: #050505;
+    --foreground: #f4f4f5;
+    
+    /* 30% Structure (Bento Surfaces, Cards & Borders) */
+    --card: #0d0d10;
+    --card-foreground: #e4e4e7;
+    --card-surface-elevated: #15151b;
+    --border: #22222a;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-glass: rgba(255, 255, 255, 0.14);
+    --muted: #16161c;
+    --muted-foreground: #9ca3af;
+    
+    /* 10% Accent (S-Class Imperial Gold) */
+    --primary: #ecb613;
+    --primary-foreground: #050505;
+    --primary-light: #f5c538;
+    --primary-dark: #b38805;
+    --primary-aura: rgba(236, 182, 19, 0.25);
+
+    /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
+    --color-ear-cyan: #AAD6CD;
+    --color-ear-blue: #258DCD;
+    --color-ear-sapphire: #081226;
+    --color-ear-sapphire-dark: #040914;
+    --color-ear-coral: #FF455B;
+
+    /* Gradientes & Resplandores Corporativos */
+    --grad-ear-sapphire: linear-gradient(185deg, #081226 0%, #000000 100%);
+    --glow-ear-blue: 0 0 25px rgba(37, 141, 205, 0.35);
+    --glow-ear-cyan: 0 0 20px rgba(170, 214, 205, 0.25);
+    --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
+
+    /* 🖋️ TIPOGRAFÍA SOBERANA: FRANCIA (FRAUNCES) + MONTSERRAT */
+    --font-francia: var(--font-fraunces), 'Fraunces', Georgia, serif;
+    --font-fraunces: var(--font-fraunces), 'Fraunces', Georgia, serif;
+    --font-montserrat: var(--font-montserrat), 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-syne: var(--font-fraunces), 'Syne', sans-serif;
+  }
+
+  .dark {
+    --background: #050505;
+    --foreground: #f4f4f5;
+    --card: #0d0d10;
+    --card-foreground: #e4e4e7;
+    --card-surface-elevated: #15151b;
+    --border: #22222a;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-glass: rgba(255, 255, 255, 0.14);
+    --muted: #16161c;
+    --muted-foreground: #9ca3af;
+    --primary: #ecb613;
+    --primary-foreground: #050505;
+    --primary-light: #f5c538;
+    --primary-dark: #b38805;
+    --primary-aura: rgba(236, 182, 19, 0.25);
+    
+    /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
+    --color-ear-cyan: #AAD6CD;
+    --color-ear-blue: #258DCD;
+    --color-ear-sapphire: #081226;
+    --color-ear-sapphire-dark: #040914;
+    --color-ear-coral: #FF455B;
+
+    --grad-ear-sapphire: linear-gradient(185deg, #081226 0%, #000000 100%);
+    --glow-ear-blue: 0 0 25px rgba(37, 141, 205, 0.35);
+    --glow-ear-cyan: 0 0 20px rgba(170, 214, 205, 0.25);
+    --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
+  }
+
+  *, *::before, *::after {
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    -moz-hyphens: none !important;
+    -ms-hyphens: none !important;
+  }
+
+  html, body, p, span, div, h1, h2, h3, h4, h5, h6, li, a, button, blockquote, cite, strong, em, b {
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    -moz-hyphens: none !important;
+    -ms-hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
+
+  body {
+    background-color: var(--background) !important;
+    color: var(--foreground) !important;
+    font-family: var(--font-montserrat);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-fraunces);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* 🕊️ VIMUME THEME - INHERITS SEMANTIC VARIABLES */
+  body.theme-vimume {
+    --background: #fdfcf8;
+    --foreground: #1a1a1a;
+  }
+}
+
+@layer components {
+  .aura-gold-gradient {
+    background: linear-gradient(135deg, var(--primary) 0%, #b38805 100%);
+  }
+
+  .text-gold-aura {
+    color: var(--primary);
+  }
+
+  .glass-panel {
+    background: var(--card);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    transition: all 0.5s ease;
+  }
+
+  .glass-panel:hover {
+    border-color: var(--primary);
+  }
+
+  /* Forzar contraste nítido absoluto en inputs, selects y formularios */
+  input, select, textarea {
+    color: #ffffff !important;
+    background-color: #121212 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: #ecb613 !important;
+    outline: none !important;
+  }
+
+  select option {
+    background-color: #181818 !important;
+    color: #ffffff !important;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+  }
+
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  /* 🏛️ 60-30-10 S-CLASS SYSTEM UTILITIES */
+  .bento-card-603010 {
+    background-color: var(--card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.75rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .bento-card-603010:hover {
+    border-color: rgba(236, 182, 19, 0.4);
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7), 0 0 25px -5px rgba(236, 182, 19, 0.15);
+  }
+
+  /* 🖋️ TIPOGRAFÍA FRANCIA + MONTSERRAT */
+  .font-francia {
+    font-family: var(--font-francia);
+  }
+
+  .font-montserrat {
+    font-family: var(--font-montserrat);
+  }
+
+  .heading-sclass-center {
+    font-family: var(--font-francia);
+    text-align: center;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    word-break: keep-all;
+  }
+
+  .text-story-justified {
+    font-family: var(--font-montserrat);
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: none !important;
+    -webkit-hyphens: none !important;
+    -moz-hyphens: none !important;
+    -ms-hyphens: none !important;
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+    text-wrap: pretty;
+    line-height: 1.9;
+    letter-spacing: -0.005em;
+  }
+
+  .badge-gold-10 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: #ecb613;
+    color: #050505;
+    font-family: var(--font-montserrat);
+    font-size: 0.625rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    box-shadow: 0 0 20px rgba(236, 182, 19, 0.35);
+  }
+
+  .btn-gold-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background-color: #ecb613;
+    color: #050505;
+    font-family: var(--font-montserrat);
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: 1rem;
+    box-shadow: 0 0 25px rgba(236, 182, 19, 0.3);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-gold-cta:hover {
+    background-color: #f5c538;
+    box-shadow: 0 0 35px rgba(236, 182, 19, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .btn-gold-cta:active {
+    transform: scale(0.98);
+  }
+
+  /* 💎 DIAMOND SYSTEM UTILITIES (60-30-10 HIGH-TECH AESTHETICS) */
+  .card-ear-sapphire {
+    background-color: var(--color-ear-sapphire);
+    border: 1px solid rgba(170, 214, 205, 0.18);
+    border-radius: 1.75rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .card-ear-sapphire:hover {
+    border-color: rgba(170, 214, 205, 0.45);
+    box-shadow: 0 12px 40px -10px rgba(8, 18, 38, 0.8), 0 0 25px -5px rgba(37, 141, 205, 0.25);
+  }
+
+  .badge-ear-cyan {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    background-color: rgba(170, 214, 205, 0.1);
+    border: 1px solid rgba(170, 214, 205, 0.3);
+    color: var(--color-ear-cyan);
+    font-family: var(--font-montserrat);
+    font-size: 0.625rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    box-shadow: 0 0 15px rgba(170, 214, 205, 0.15);
+  }
+
+  .btn-ear-blue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 2rem;
+    background-color: var(--color-ear-blue);
+    color: #ffffff;
+    font-family: var(--font-montserrat);
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border-radius: 1rem;
+    box-shadow: 0 0 25px rgba(37, 141, 205, 0.35);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-ear-blue:hover {
+    background-color: #1e7ebd;
+    box-shadow: 0 0 35px rgba(37, 141, 205, 0.55);
+    transform: translateY(-1px);
+  }
+
+  .btn-ear-blue:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Custom Scrollbar S-Class */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Lenis Smooth Scroll Configuration */
+html.lenis {
+  height: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* --- S-CLASS DYNAMIC LIGHT MODE PURGE OVERRIDES --- */
+.light main, 
+.light body,
+.light .bg-black, 
+.light .bg-\[\#050505\], 
+.light .bg-\[\#090909\],
+.light .bg-\[\#0a0a0a\], 
+.light .bg-\[\#0c0c0c\], 
+.light .bg-\[\#121212\],
+.light .bg-gradient-to-br {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+.light .bg-\[\#0b0b0b\],
+.light .bg-\[\#0b0b0b\]\/90,
+.light .bg-\[\#0b0b0b\]\/80,
+.light .bg-\[\#0b0b0b\]\/40,
+.light .bg-white\/\[0\.01\],
+.light .bg-white\/\[0\.02\],
+.light .bg-white\/\[0\.05\],
+.light .bg-white\/5,
+.light .bg-card,
+.light .bg-card\/80,
+.light .bg-card\/40 {
+  background-color: var(--card) !important;
+  color: var(--card-foreground) !important;
+  border-color: var(--border) !important;
+}
+
+.light .border-white\/5,
+.light .border-white\/10,
+.light .border-white\/15,
+.light .border-border {
+  border-color: var(--border) !important;
+}
+
+.light .text-white,
+.light .text-white\/80,
+.light .text-white\/70,
+.light .text-white\/60,
+.light .text-white\/50,
+.light .text-white\/40,
+.light .text-white\/30,
+.light .text-white\/20 {
+  color: var(--foreground) !important;
+}
+
+.light .text-white\/40,
+.light .text-white\/30,
+.light .text-white\/20 {
+  opacity: 0.6;
+}
