@@ -1,0 +1,32 @@
+{
+  "url": "https://www.mariachisentoledo.es",
+  "cluster": "mariachi profesional bodas toledo",
+  "statusCode": 500,
+  "title": "",
+  "metaDescription": "",
+  "h1": [],
+  "h2": [],
+  "h3": [],
+  "jsonLdSchemas": [],
+  "entityDensities": {
+    "tenor": 0,
+    "gala": 0,
+    "bodas de lujo": 0,
+    "fiestas patronales": 0,
+    "ayuntamientos": 0,
+    "bose": 0,
+    "directo": 0,
+    "vimume": 0,
+    "mariachi": 0,
+    "ranchera": 0,
+    "bolero": 0,
+    "face": 0,
+    "contrato menor": 0
+  },
+  "totalWordCount": 0,
+  "hasBoseRider": false,
+  "hasTenorClaim": false,
+  "hasB2GCoverage": false,
+  "hasIntergenerationalVimume": false,
+  "pricingSignals": "Bajo Coste / Subasta (<500€)"
+}

@@ -1,0 +1,41 @@
+{
+  "url": "https://www.mariachismadrid.es",
+  "cluster": "mariachis para eventos madrid",
+  "statusCode": 200,
+  "title": "mariachismadrid.es",
+  "metaDescription": "",
+  "h1": [],
+  "h2": [
+    "Mariachis",
+    "MARIACHIS MADRID",
+    "Contratación de Mariachis en Madrid",
+    "Enrique Mendoza",
+    "Mariachis Madrid",
+    "Roger Alberto",
+    "Músicos Mariachis Madrid",
+    "Mariachis Profesionales"
+  ],
+  "h3": [],
+  "jsonLdSchemas": [],
+  "entityDensities": {
+    "tenor": 0,
+    "gala": 0,
+    "bodas de lujo": 0,
+    "fiestas patronales": 0,
+    "ayuntamientos": 0,
+    "bose": 0,
+    "directo": 0,
+    "vimume": 0,
+    "mariachi": 2,
+    "ranchera": 0,
+    "bolero": 0,
+    "face": 0,
+    "contrato menor": 0
+  },
+  "totalWordCount": 170,
+  "hasBoseRider": false,
+  "hasTenorClaim": false,
+  "hasB2GCoverage": false,
+  "hasIntergenerationalVimume": false,
+  "pricingSignals": "Bajo Coste / Subasta (<500€)"
+}
