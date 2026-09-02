@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/app/context/ThemeContext';
+import { SharedProvider } from '@/app/context/SharedContext';
 import OraculoPublicDrawer from '@/components/oraculo/OraculoPublicDrawer';
 
 export const metadata: Metadata = {
@@ -26,8 +27,10 @@ export default function RootLayout({
     <html lang="es" className="dark scroll-smooth">
       <body className="bg-[#050505] text-zinc-100 min-h-screen selection:bg-amber-500 selection:text-black antialiased font-sans">
         <ThemeProvider>
-          {children}
-          <OraculoPublicDrawer />
+          <SharedProvider>
+            {children}
+            <OraculoPublicDrawer />
+          </SharedProvider>
         </ThemeProvider>
       </body>
     </html>
