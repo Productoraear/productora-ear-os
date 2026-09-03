@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import SovereignRosterGrid from "@/components/marketplace/SovereignRosterGrid";
 
 export const metadata: Metadata = {
@@ -255,10 +256,17 @@ export default function ArtistasPage() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              href="/artistas/edwin-agudelo"
+              style={{ background: "#ecb613", color: "#050505" }}
+              className="rounded-xl px-7 py-4 text-sm font-bold tracking-wide transition-all hover:scale-105 shadow-[0_0_25px_rgba(236,182,19,0.35)]"
+            >
+              Perfil Completo: Edwin Agudelo
+            </Link>
             <a
               href="#roster"
-              style={{ background: "#ecb613", color: "#050505" }}
-              className="rounded-xl px-7 py-4 text-sm font-bold tracking-wide transition-opacity hover:opacity-90"
+              style={{ border: "1px solid rgba(255,255,255,0.2)", color: "#FFFFFF" }}
+              className="rounded-xl px-7 py-4 text-sm font-semibold tracking-wide transition-opacity hover:opacity-80"
             >
               Explorar los 14 Formatos
             </a>

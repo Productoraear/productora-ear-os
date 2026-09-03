@@ -1,0 +1,36 @@
+import os
+
+# Configuración de ruta
+PATH_RAIZ = r"H:\EAR_OS_MASTER_2026"
+
+def ejecutar_radar():
+    conteo_pdfs = 0
+    conteo_words = 0
+    muestras_pdf = []
+
+    print(f"\n>>> Iniciando Radar en: {PATH_RAIZ}")
+    print("-" * 50)
+
+    for raiz, _, archivos in os.walk(PATH_RAIZ):
+        for f in archivos:
+            if f.lower().endswith(".pdf"):
+                conteo_pdfs += 1
+                if len(muestras_pdf) < 5: muestras_pdf.append(f)
+            elif f.lower().endswith(".docx"):
+                conteo_words += 1
+
+    print(f"RESULTADOS DEL RADAR:")
+    print(f"[*] Mapas Mentales (PDF) encontrados: {conteo_pdfs}")
+    print(f"[*] Documentos de apoyo (Word) encontrados: {conteo_words}")
+    print(f"\nEjemplos de PDFs encontrados:")
+    for m in muestras_pdf:
+        print(f"  - {m}")
+    print("-" * 50)
+    
+    if conteo_pdfs == 0:
+        print("ALERTA: No se detectaron PDFs. Revisa si están en una subcarpeta específica.")
+    else:
+        print("SISTEMA LISTO: Podemos proceder a la extracción de palabras clave.")
+
+if __name__ == "__main__":
+    ejecutar_radar()

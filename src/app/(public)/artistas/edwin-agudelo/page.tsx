@@ -27,7 +27,7 @@ export default function EdwinAgudeloPage() {
                 Edwin <span className="text-[#ecb613] italic">Agudelo</span>
               </h1>
               <p className="text-zinc-300 text-base md:text-lg leading-relaxed max-w-xl font-light mt-4">
-                Voz lírica de conservatorio, traje charro con botonadura de plata y producción técnica de alta fidelidad. Garantía de cero fallos acústicos para bodas, serenatas exclusivas y recepciones de Estado.
+                Tenor lírico, cantante y compositor con más de 25 años de trayectoria y oficio real sobre los escenarios. Traje de gala con botonadura de plata y producción técnica de alta fidelidad. Garantía de cero fallos acústicos para bodas, serenatas exclusivas y recepciones de Estado.
               </p>
             </div>
 
