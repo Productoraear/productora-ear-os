@@ -10,7 +10,10 @@
       "logistica_giras_14pax": 1,
       "produccion_tecnica_audiovisual": 1,
       "emanager_legal_monetizacion": 1
-    }
+    },
+    "total_formats_homologated": 14,
+    "split_sovereign": "80/10/10",
+    "deposit_stripe_eur": 100
   },
   "operational_thresholds": {
     "logistica_min_pax": 14,
@@ -210,6 +213,176 @@
         "Auditoría trimestral de recaudación por streaming y derechos de comunicación pública"
       ],
       "ingestion_timestamp": "2026-09-03T14:00:00.000Z"
+    }
+  ],
+  "roster_formats_sclass": [
+    {
+      "position": 1,
+      "id": "solista",
+      "name": "Solista de Gala (Edwin Agudelo)",
+      "provider": "Edwin Agudelo",
+      "price": 350,
+      "members": 1,
+      "wattsPerPax": 12,
+      "rider": "Bose S1 Pro / F1 812 + Shure Beta 87A",
+      "margin": 0.62,
+      "description": "Voz lírica de tenor y guitarra acústica. Formato insignia con base en Méntrida."
+    },
+    {
+      "position": 2,
+      "id": "duo",
+      "name": "Dúo Acústico",
+      "provider": "Productora EAR",
+      "price": 480,
+      "members": 2,
+      "wattsPerPax": 12,
+      "rider": "Bose F1 812 + XR18 + Shure Axient RF",
+      "margin": 0.6,
+      "description": "Voz y piano o guitarra con arreglos de cámara para eventos íntimos y corporativos."
+    },
+    {
+      "position": 3,
+      "id": "trio",
+      "name": "Trío de Cámara",
+      "provider": "Productora EAR",
+      "price": 600,
+      "members": 3,
+      "wattsPerPax": 12,
+      "rider": "Bose F1 812 + Monitorización In-Ear + Shure Beta",
+      "margin": 0.59,
+      "description": "Voz, guitarra y percusión suave para cócteles y ceremonias."
+    },
+    {
+      "position": 4,
+      "id": "cuarteto",
+      "name": "Cuarteto de Gala",
+      "provider": "Productora EAR",
+      "price": 750,
+      "members": 4,
+      "wattsPerPax": 12,
+      "rider": "Bose F1 812 + XR18 + 4 micros Shure",
+      "margin": 0.58,
+      "description": "Formación de cámara con cuerdas y vientos para galas y recepciones."
+    },
+    {
+      "position": 5,
+      "id": "quinteto",
+      "name": "Quinteto Mariachi de Gala",
+      "provider": "Productora EAR",
+      "price": 900,
+      "members": 5,
+      "wattsPerPax": 12,
+      "rider": "Bose F1 812 + Subwoofer F1 + XR18 Midas",
+      "margin": 0.58,
+      "description": "Voz tenor + 2 Trompetas + Vihuela + Guitarrón con trajes charros de gran gala."
+    },
+    {
+      "position": 6,
+      "id": "gran-ensamble",
+      "name": "Gran Ensamble Orquestal",
+      "provider": "Productora EAR",
+      "price": 1400,
+      "members": 10,
+      "wattsPerPax": 18,
+      "rider": "Doble Bose F1 812 + Subs duales + DMX",
+      "margin": 0.58,
+      "description": "Ensemble completo para festivales, patronales y grandes celebraciones."
+    },
+    {
+      "position": 7,
+      "id": "vimume-b2g",
+      "name": "VIMUME B2G Sociosanitario",
+      "provider": "VIMUME",
+      "price": 480,
+      "members": 2,
+      "wattsPerPax": 6,
+      "rider": "Bose S1 Pro < 75 dB SPL + Neuroacústica 40Hz",
+      "margin": 0.65,
+      "description": "Protocolo clínico para residencias y centros de día con techo Art. 118 LCSP."
+    },
+    {
+      "position": 8,
+      "id": "pantallas-led",
+      "name": "Pantallas LED P2.6",
+      "provider": "Técnica EAR",
+      "price": 250,
+      "members": 1,
+      "wattsPerPax": 0,
+      "rider": "Pared de vídeo modular P2.6 > 5.500 nits + NovaStar",
+      "margin": 0.7,
+      "description": "Vídeo mapping y visuales cinematográficos para directos y ceremonias."
+    },
+    {
+      "position": 9,
+      "id": "mariachi-femenino",
+      "name": "Mariachi Femenino",
+      "provider": "Productora EAR",
+      "price": 700,
+      "members": 5,
+      "wattsPerPax": 12,
+      "rider": "Bose F1 812 + 5 Shure inalámbricos + XR18",
+      "margin": 0.58,
+      "description": "Tradición y potencia vocal femenina con trajes charros bordados."
+    },
+    {
+      "position": 10,
+      "id": "discomovil-bose",
+      "name": "Discomóvil Bose F1 & DJ",
+      "provider": "Técnica EAR",
+      "price": 450,
+      "members": 1,
+      "wattsPerPax": 12,
+      "rider": "Bose F1 812 + Subwoofer F1 + Shure Axient + DJ Set",
+      "margin": 0.65,
+      "description": "DJ Set con columnas Bose F1, robótica DMX y barra libre de sonido."
+    },
+    {
+      "position": 11,
+      "id": "duo-clasico",
+      "name": "Dúo Clásico",
+      "provider": "Productora EAR",
+      "price": 380,
+      "members": 2,
+      "wattsPerPax": 10,
+      "rider": "Piano acústico/Nord Stage + Shure Beta 87A",
+      "margin": 0.6,
+      "description": "Voz lírica y piano clásico para momentos solemnes y liturgia."
+    },
+    {
+      "position": 12,
+      "id": "saxo-lounge",
+      "name": "Saxo Lounge VIP",
+      "provider": "Productora EAR",
+      "price": 400,
+      "members": 1,
+      "wattsPerPax": 10,
+      "rider": "Saxofón Shure Beta 98H/C + Bose S1 Pro",
+      "margin": 0.68,
+      "description": "Saxofón en directo sobre bases electrónicas para cócteles y sunsets."
+    },
+    {
+      "position": 13,
+      "id": "flamenco-pop",
+      "name": "Flamenco Pop Fusión",
+      "provider": "Productora EAR",
+      "price": 650,
+      "members": 4,
+      "wattsPerPax": 12,
+      "rider": "Bose F1 812 + XR18 + Microfonía Shure + Cajón",
+      "margin": 0.58,
+      "description": "Fusión de pop y raíz flamenca con palmas, guitarra y voz desgarrada."
+    },
+    {
+      "position": 14,
+      "id": "coro-rociero",
+      "name": "Coro Rociero de Gala",
+      "provider": "Productora EAR",
+      "price": 800,
+      "members": 8,
+      "wattsPerPax": 12,
+      "rider": "Sistema PA Bose F1 dual + 6 micros Shure",
+      "margin": 0.58,
+      "description": "Coro de voces para hermandades, romerías y actos religiosos."
     }
   ]
 }

@@ -30,10 +30,14 @@ import {
   Compass,
   Landmark,
   Shirt,
-  Info
+  Info,
+  Users,
+  Clock,
+  Check
 } from 'lucide-react';
 import BookingCalculator from '@/components/widgets/BookingCalculator';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { SCLASS_ROSTER_14_FORMATS, FormatPricing } from '@/lib/constants/pricing-catalog';
 
 interface ArtistCinematicProfileProps {
   name?: string;
@@ -42,7 +46,8 @@ interface ArtistCinematicProfileProps {
   videoUrl?: string;
 }
 
-type TabKey = 'MANIFIESTO' | 'REPERTORIO' | 'RIDER' | 'VIMUME' | 'TRAYECTORIA' | 'BOOKING';
+type TabKey = 'MANIFIESTO' | 'ROSTER_14' | 'REPERTORIO' | 'RIDER' | 'VIMUME' | 'TRAYECTORIA' | 'BOOKING';
+type RosterCategoryFilter = 'TODOS' | 'SOLISTA' | 'CAMARA' | 'ENSAMBLE' | 'ESPECIALIDAD' | 'TECNICA' | 'B2G';
 
 const REPERTOIRE_PILLARS = [
   {
@@ -133,6 +138,21 @@ export default function ArtistCinematicProfile({
   videoUrl = ''
 }: ArtistCinematicProfileProps) {
   const [activeTab, setActiveTab] = useState<TabKey>('MANIFIESTO');
+  const [rosterFilter, setRosterFilter] = useState<RosterCategoryFilter>('TODOS');
+  const [selectedFormatId, setSelectedFormatId] = useState<string>('solista-edwin-agudelo');
+
+  const filteredRoster = rosterFilter === 'TODOS'
+    ? SCLASS_ROSTER_14_FORMATS
+    : SCLASS_ROSTER_14_FORMATS.filter(f => f.category === rosterFilter);
+
+  const handleSelectFormatAndQuote = (formatId: string) => {
+    setSelectedFormatId(formatId);
+    setActiveTab('BOOKING');
+    setTimeout(() => {
+      const el = document.getElementById('cotizador-cierre');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
 
   return (
     <div className="relative min-h-screen bg-[#050507] text-white selection:bg-[#ecb613] selection:text-black font-sans">
@@ -248,8 +268,8 @@ export default function ArtistCinematicProfile({
                   <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">Conciertos Int.</span>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-[#0a0a0f] p-4 text-center">
-                  <span className="block font-syne text-2xl sm:text-3xl font-black text-[#AAD6CD]">12 W</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">Presión / Pax</span>
+                  <span className="block font-syne text-2xl sm:text-3xl font-black text-[#AAD6CD]">14</span>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">Formatos S-Class</span>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-[#0a0a0f] p-4 text-center">
                   <span className="block font-syne text-2xl sm:text-3xl font-black text-white">80/10/10</span>
@@ -259,23 +279,30 @@ export default function ArtistCinematicProfile({
 
               {/* CTAS DE ALTO VALOR */}
               <div className="flex flex-wrap items-center gap-4 pt-4">
-                <a
-                  href="#cotizador-cierre"
-                  className="rounded-xl bg-[#ecb613] px-8 py-4 font-mono text-xs font-black uppercase tracking-[0.2em] text-black shadow-[0_0_30px_rgba(236,182,19,0.3)] transition-all hover:scale-105 hover:bg-white flex items-center gap-3"
+                <button
+                  onClick={() => handleSelectFormatAndQuote('solista-edwin-agudelo')}
+                  className="rounded-xl bg-[#ecb613] px-8 py-4 font-mono text-xs font-black uppercase tracking-[0.2em] text-black shadow-[0_0_30px_rgba(236,182,19,0.3)] transition-all hover:scale-105 hover:bg-white flex items-center gap-3 cursor-pointer"
                 >
                   <Lock size={15} />
                   <span>Bloquear Fecha — Depósito 100 €</span>
-                </a>
+                </button>
+                <button
+                  onClick={() => setActiveTab('ROSTER_14')}
+                  className="rounded-xl border border-white/20 bg-white/5 px-6 py-4 font-mono text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-white/10 flex items-center gap-2 cursor-pointer"
+                >
+                  <Layers size={14} className="text-[#ecb613]" />
+                  <span>Explorar los 14 Formatos</span>
+                </button>
                 <a
                   href={`https://wa.me/34693693048?text=${encodeURIComponent(
-                    'Hola Productora EAR, deseo contratar a Edwin Agudelo tras revisar su Ficha Integral S-Class.'
+                    'Hola Productora EAR, deseo consultar disponibilidad para Edwin Agudelo y el Roster de 14 Formatos.'
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-xl border border-white/20 bg-white/5 px-6 py-4 font-mono text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-white/10 flex items-center gap-2"
+                  className="rounded-xl border border-[#AAD6CD]/40 bg-[#AAD6CD]/10 px-5 py-4 font-mono text-xs font-semibold uppercase tracking-widest text-[#AAD6CD] transition-colors hover:bg-[#AAD6CD]/20 flex items-center gap-2"
                 >
-                  <Phone size={14} className="text-[#ecb613]" />
-                  <span>Contacto Directo (+34 693 693 048)</span>
+                  <Phone size={14} />
+                  <span>WhatsApp (+34 693 693 048)</span>
                 </a>
               </div>
 
@@ -291,10 +318,11 @@ export default function ArtistCinematicProfile({
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 overflow-x-auto no-scrollbar">
           {(
             [
-              { key: 'MANIFIESTO', label: 'El Manifiesto & Biografía', icon: FileText },
+              { key: 'MANIFIESTO', label: 'Manifiesto & Biografía', icon: FileText },
+              { key: 'ROSTER_14', label: 'Roster Homologado (14 Formatos)', icon: Layers },
               { key: 'REPERTORIO', label: 'Repertorio & Catarsis', icon: Music },
               { key: 'RIDER', label: 'Rider Técnico S-Class', icon: Radio },
-              { key: 'VIMUME', label: 'Proyecto VIMUME (Neuroacústica)', icon: Activity },
+              { key: 'VIMUME', label: 'Proyecto VIMUME', icon: Activity },
               { key: 'TRAYECTORIA', label: 'Reconocimientos & Hitos', icon: Trophy },
               { key: 'BOOKING', label: 'Cotizador & Contratación', icon: Calendar }
             ] as const
@@ -403,7 +431,144 @@ export default function ArtistCinematicProfile({
           </motion.div>
         )}
 
-        {/* TAB 2: REPERTORIO Y CATARSIS EMOCIONAL */}
+        {/* TAB 2: ROSTER HOMOLOGADO (14 FORMATOS) */}
+        {activeTab === 'ROSTER_14' && (
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.3 }}
+            className="space-y-12"
+          >
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="max-w-3xl space-y-3">
+                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
+                  B. Catálogo Oficial Homologado
+                </span>
+                <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
+                  Roster Soberano de 14 Formatos
+                </h2>
+                <p className="text-white/60 text-base leading-relaxed">
+                  Tarifas suelo inmutables blindadas por contrato, presión acústica calculada a 12 W/pax, split soberano 80/10/10 y reserva instantánea con 100 € de depósito en Stripe con firma SHA-256.
+                </p>
+              </div>
+
+              {/* Filtros de Categoría */}
+              <div className="flex flex-wrap gap-2">
+                {(['TODOS', 'SOLISTA', 'CAMARA', 'ENSAMBLE', 'ESPECIALIDAD', 'TECNICA', 'B2G'] as const).map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setRosterFilter(cat)}
+                    className={`rounded-lg px-3 py-1.5 font-mono text-[11px] font-bold uppercase transition-all cursor-pointer ${
+                      rosterFilter === cat
+                        ? 'bg-[#ecb613] text-black shadow-md'
+                        : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* BENTO GRID DE LOS 14 FORMATOS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredRoster.map((format, index) => (
+                <div
+                  key={format.id}
+                  className="rounded-3xl border border-white/10 bg-[#09090d] p-7 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all group"
+                >
+                  <div className="space-y-4">
+                    {/* Header Card */}
+                    <div className="flex items-center justify-between">
+                      <span className="rounded-full bg-white/5 border border-white/10 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ecb613]">
+                        #{index + 1} · {format.category}
+                      </span>
+                      <span className="font-mono text-2xl font-black text-[#ecb613]">
+                        {format.basePrice} €
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="font-syne text-xl font-bold uppercase text-white group-hover:text-[#ecb613] transition-colors">
+                        {format.name}
+                      </h3>
+                      <div className="mt-2 flex flex-wrap items-center gap-3 font-mono text-[11px] text-white/50">
+                        <span className="flex items-center gap-1">
+                          <Users size={12} className="text-[#AAD6CD]" />
+                          {format.members} {format.members === 1 ? 'músico' : 'músicos'}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          <Clock size={12} className="text-[#AAD6CD]" />
+                          {format.duration}
+                        </span>
+                      </div>
+                    </div>
+
+                    <p className="text-xs text-white/65 leading-relaxed">
+                      {format.description}
+                    </p>
+
+                    {/* Especificaciones Técnicas y Acústicas */}
+                    <div className="rounded-2xl border border-white/5 bg-black/40 p-3.5 space-y-2 font-mono text-[11px]">
+                      <div className="flex items-center justify-between text-[#AAD6CD]">
+                        <span>Rider Acústico:</span>
+                        <strong>{format.wattsPerPax > 0 ? `${format.wattsPerPax} W/pax` : 'Visual 4K'}</strong>
+                      </div>
+                      <div className="flex items-center justify-between text-white/60">
+                        <span>Margen Operativo:</span>
+                        <span className="text-emerald-400 font-bold">&ge; {Math.round(format.minGrossMargin * 100)}%</span>
+                      </div>
+                      <div className="truncate text-white/40 text-[10px] border-t border-white/5 pt-1.5">
+                        {format.rider}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* CTA de la Card */}
+                  <div className="space-y-2 border-t border-white/10 pt-4">
+                    <button
+                      onClick={() => handleSelectFormatAndQuote(format.id)}
+                      className="w-full rounded-xl bg-white/10 py-3 text-center font-mono text-xs font-black uppercase tracking-wider text-white hover:bg-[#ecb613] hover:text-black transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                    >
+                      <Lock size={13} />
+                      <span>Cotizar & Bloquear (100 €)</span>
+                    </button>
+                    <div className="flex items-center justify-between text-[10px] font-mono text-white/40 px-1">
+                      <span>Split: 80/10/10</span>
+                      <span>Price-Lock SHA-256</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* BANNER DE RETENCIÓN DE ROSTER */}
+            <div className="rounded-3xl border border-[#ecb613]/30 bg-gradient-to-r from-[#0c0c12] via-[#12121c] to-[#0c0c12] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="space-y-2">
+                <span className="font-mono text-xs uppercase tracking-widest text-[#ecb613] font-bold">
+                  Soberanía de Contratación Centralizada
+                </span>
+                <h3 className="font-syne text-2xl font-black uppercase text-white">
+                  ¿Desea combinar múltiples formatos para su evento?
+                </h3>
+                <p className="text-xs text-white/60 max-w-2xl leading-relaxed">
+                  Podemos paquetizar Dúo de Ceremonia + Saxo Lounge para Cóctel + Boda Diamond 360 o Discomóvil Bose con tarifa combinada optimizada y gestión logística unificada desde Méntrida.
+                </p>
+              </div>
+              <a
+                href={`https://wa.me/34693693048?text=${encodeURIComponent('Hola Productora EAR, deseo cotizar un paquete con varios formatos del Roster.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="shrink-0 rounded-xl bg-[#ecb613] px-7 py-4 font-mono text-xs font-black uppercase tracking-widest text-black hover:bg-white transition-all shadow-lg shadow-[#ecb613]/20"
+              >
+                Paquete Multi-Formato Personalizado
+              </a>
+            </div>
+          </motion.div>
+        )}
+
+        {/* TAB 3: REPERTORIO Y CATARSIS EMOCIONAL */}
         {activeTab === 'REPERTORIO' && (
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
@@ -413,7 +578,7 @@ export default function ArtistCinematicProfile({
           >
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-                B. Diseño Acústico & Emoción
+                C. Diseño Acústico & Emoción
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
                 Repertorio y Catarsis Emocional
@@ -488,7 +653,7 @@ export default function ArtistCinematicProfile({
           </motion.div>
         )}
 
-        {/* TAB 3: RIDER TÉCNICO Y ARSENAL S-CLASS */}
+        {/* TAB 4: RIDER TÉCNICO Y ARSENAL S-CLASS */}
         {activeTab === 'RIDER' && (
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
@@ -498,7 +663,7 @@ export default function ArtistCinematicProfile({
           >
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-                C. Transparencia de Autoridad & Ficha Técnica
+                D. Transparencia de Autoridad & Ficha Técnica
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
                 Rider Técnico y Presión Acústica Innegociable
@@ -578,7 +743,7 @@ export default function ArtistCinematicProfile({
           </motion.div>
         )}
 
-        {/* TAB 4: IMPACTO SOCIOSANITARIO (PROYECTO VIMUME) */}
+        {/* TAB 5: IMPACTO SOCIOSANITARIO (PROYECTO VIMUME) */}
         {activeTab === 'VIMUME' && (
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
@@ -588,7 +753,7 @@ export default function ArtistCinematicProfile({
           >
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-                D. Propósito Superior & Retorno Social
+                E. Propósito Superior & Retorno Social
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
                 Proyecto VIMUME: Viaje Musical por la Memoria
@@ -648,7 +813,7 @@ export default function ArtistCinematicProfile({
           </motion.div>
         )}
 
-        {/* TAB 5: TRAYECTORIA Y RECONOCIMIENTOS */}
+        {/* TAB 6: TRAYECTORIA Y RECONOCIMIENTOS */}
         {activeTab === 'TRAYECTORIA' && (
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
@@ -658,7 +823,7 @@ export default function ArtistCinematicProfile({
           >
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-                E. Autoridad Institucional
+                F. Autoridad Institucional
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
                 Premios, Distinciones y Reconocimientos
@@ -716,7 +881,7 @@ export default function ArtistCinematicProfile({
           </motion.div>
         )}
 
-        {/* TAB 6: COTIZADOR & CIERRE TRANSACCIONAL */}
+        {/* TAB 7: COTIZADOR & CIERRE TRANSACCIONAL */}
         {activeTab === 'BOOKING' && (
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
@@ -726,90 +891,37 @@ export default function ArtistCinematicProfile({
           >
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-                F. Cierre Transaccional Inmediato
+                G. Cierre Transaccional Inmediato
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
-                Formatos Oficiales & Reserva con Depósito de 100 €
+                Cotización Dinámica de los 14 Formatos
               </h2>
               <p className="text-white/60 text-base leading-relaxed">
-                Seleccione el formato oficial de Edwin Agudelo, calcule el desplazamiento desde el Hub Central en Méntrida (Toledo) y bloquee su fecha con firma criptográfica SHA-256 en Stripe.
+                Seleccione el formato oficial deseado, calcule el desplazamiento exacto desde el Hub Central en Méntrida (Toledo) y bloquee su fecha con firma criptográfica SHA-256 en Stripe mediante el depósito reembolsable de 100 €.
               </p>
             </div>
 
-            {/* GRID DE FORMATOS S-CLASS */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              <div className="rounded-3xl border border-[#ecb613]/40 bg-[#09090d] p-6 space-y-4 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-[#ecb613] px-2.5 py-0.5 font-mono text-[9px] font-black uppercase text-black">
-                      Tarifa Base Solista
-                    </span>
-                    <span className="font-mono text-xl font-bold text-[#ecb613]">350,00 €</span>
-                  </div>
-                  <h3 className="font-syne text-lg font-bold text-white uppercase">Solista de Gala (Edwin Agudelo)</h3>
-                  <p className="text-xs text-white/60 leading-relaxed">
-                    Voz de tenor y guitarra acústica en vivo. Sistema de sonido Bose autónomo y microfonía Shure. Ideal para cumpleaños íntimos, aniversarios y serenatas exclusivas.
+            {/* COTIZADOR EMBEBIDO CON PRECARGA DE FORMATO */}
+            <div id="cotizador-cierre" className="rounded-3xl border border-white/10 bg-[#09090d] p-6 md:p-10 space-y-6 shadow-2xl">
+              <div className="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="font-mono text-xs uppercase tracking-widest text-[#ecb613] font-bold">
+                    Motor de Cotización Transaccional EAR OS v2
+                  </span>
+                  <h3 className="font-syne text-2xl font-black uppercase text-white mt-1">
+                    Calcular y Bloquear Fecha en 1-Clic
+                  </h3>
+                  <p className="text-xs text-white/50 mt-1">
+                    Tarifa suelo protegida, kilometraje forense (1,50 €/km &gt; 50 km) y suplemento de hotel (+120 €).
                   </p>
                 </div>
-                <div className="border-t border-white/10 pt-3 text-[11px] font-mono text-white/40">
-                  Depósito 100 € • Split 80/10/10
+                <div className="rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/10 px-4 py-2 text-right">
+                  <span className="font-mono text-[10px] uppercase text-[#ecb613] block">Garantía S-Class</span>
+                  <strong className="font-mono text-xs text-white">Margen Operativo &ge; 58%</strong>
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-white/10 bg-[#09090d] p-6 space-y-4 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-white/10 px-2.5 py-0.5 font-mono text-[9px] font-bold uppercase text-white/80">
-                      Mínimo 5 Músicos
-                    </span>
-                    <span className="font-mono text-xl font-bold text-white">750,00 €</span>
-                  </div>
-                  <h3 className="font-syne text-lg font-bold text-white uppercase">Quinteto de Gala Mariachi</h3>
-                  <p className="text-xs text-white/60 leading-relaxed">
-                    Voz principal + 2 Trompetas + Vihuela + Guitarrón. Trajes charros de gala impecables con botonadura de plata y ecualización multicanal Behringer XR18.
-                  </p>
-                </div>
-                <div className="border-t border-white/10 pt-3 text-[11px] font-mono text-white/40">
-                  Depósito 100 € • Ideal Bodas & Ferias
-                </div>
-              </div>
-
-              <div className="rounded-3xl border border-[#AAD6CD]/40 bg-[#09090d] p-6 space-y-4 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-[#AAD6CD] px-2.5 py-0.5 font-mono text-[9px] font-black uppercase text-black">
-                      Suelo Innegociable
-                    </span>
-                    <span className="font-mono text-xl font-bold text-[#AAD6CD]">3.800,00 €</span>
-                  </div>
-                  <h3 className="font-syne text-lg font-bold text-white uppercase">Boda S-Class Diamond 360</h3>
-                  <p className="text-xs text-white/60 leading-relaxed">
-                    Sonorización de 3 espacios simultáneos (Ceremonia, Cóctel y Baile), microfonía Axient RF, 18 W/pax en exteriores y actuación principal de Edwin Agudelo.
-                  </p>
-                </div>
-                <div className="border-t border-white/10 pt-3 text-[11px] font-mono text-white/40">
-                  Depósito 100 € • Bloqueo 72h Garantizado
-                </div>
-              </div>
-
-            </div>
-
-            {/* COTIZADOR EMBEBIDO */}
-            <div id="cotizador-cierre" className="rounded-3xl border border-white/10 bg-[#09090d] p-6 md:p-10 space-y-6">
-              <div className="border-b border-white/10 pb-4">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#ecb613] font-bold">
-                  Motor de Cotización Transaccional EAR OS v2
-                </span>
-                <h3 className="font-syne text-2xl font-black uppercase text-white mt-1">
-                  Calcular y Bloquear Fecha en 1-Clic
-                </h3>
-                <p className="text-xs text-white/50 mt-1">
-                  Cálculo automático de kilometraje desde Méntrida (1,50 €/km), suplemento hotelero (+120 €) y recargo acústico por aforo (12-18 W/pax).
-                </p>
-              </div>
-
-              <BookingCalculator />
+              <BookingCalculator initialFormatId={selectedFormatId} />
             </div>
 
           </motion.div>
@@ -821,8 +933,8 @@ export default function ArtistCinematicProfile({
       <footer className="border-t border-white/10 bg-[#070709] px-6 py-12 text-center sm:text-left text-xs text-white/50">
         <div className="mx-auto flex max-w-7xl flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1">
-            <p className="font-syne font-bold text-white text-sm uppercase">Productora EAR & Edwin Agudelo</p>
-            <p>Hub Central: Méntrida (Toledo) • Sede Operativa de Gestión y Logística 360.</p>
+            <p className="font-syne font-bold text-white text-sm uppercase">Productora EAR & Roster Soberano S-Class</p>
+            <p>Hub Central: Méntrida (Toledo) • 14 Formatos Homologados • Split Inmutable 80/10/10.</p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-6 font-mono text-[11px]">
             <a href={`tel:${CENTRALITA.display}`} className="text-white hover:text-[#ecb613]">

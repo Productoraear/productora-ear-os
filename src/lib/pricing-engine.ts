@@ -99,6 +99,7 @@ export interface BookingParams {
   evento?: string;
   pax?: number;
   tipoEspacio?: 'Interior' | 'Exterior';
+  formatoId?: string;
 }
 
 export interface RateDetails {
@@ -109,11 +110,19 @@ export interface RateDetails {
     tarifaBase: number;
     kmExtra: number;
     hotel: number;
+    margenBrutoEstimado: number;
   };
 }
 
-export function calculateMariachiRate(params: BookingParams): RateDetails & { acousticPower?: number, isBodaSClass?: boolean } {
+export function calculateMariachiRate(params: BookingParams): RateDetails & { acousticPower?: number, isBodaSClass?: boolean, formatName?: string } {
   let tarifaBase = params.esPremium ? 350 : 250;
+  let formatName = 'Solista de Gala';
+
+  if (params.formatoId && PRICING_CATALOG[params.formatoId]) {
+    const catalogItem = PRICING_CATALOG[params.formatoId];
+    tarifaBase = catalogItem.basePrice;
+    formatName = catalogItem.name;
+  }
   
   const kmExtra = params.distanciaKm > 50 ? (params.distanciaKm - 50) * 1.5 : 0;
   const hotel = params.horaFin >= 3 || params.distanciaKm > 200 ? 120 : 0;
@@ -122,19 +131,38 @@ export function calculateMariachiRate(params: BookingParams): RateDetails & { ac
   let acousticPower = 0;
   let isBodaSClass = false;
   
-  if (params.evento === 'Boda') {
+  if (params.evento === 'Boda' || params.formatoId === 'boda-diamond') {
     isBodaSClass = true;
     const wPax = params.tipoEspacio === 'Exterior' ? 18 : 12;
     acousticPower = (params.pax || 100) * wPax;
     
-    // Ticket suelo de 3800€
+    // Ticket suelo inmutable de 3800€ para Bodas S-Class
     if (subtotal < 3800) {
       tarifaBase = 3800 - kmExtra - hotel;
       subtotal = 3800;
     }
+  } else {
+    const wPax = params.tipoEspacio === 'Exterior' ? 18 : 12;
+    acousticPower = (params.pax || 50) * wPax;
   }
   
   const iva = subtotal * 0.21;
   const total = subtotal + iva;
-  return { subtotal, iva, total, detalles: { tarifaBase, kmExtra, hotel }, acousticPower, isBodaSClass };
-}
+  const costesDirectos = (kmExtra * 0.4) + (hotel > 0 ? 60 : 0) + (subtotal * 0.25);
+  const margenBrutoEstimado = Math.max(0.58, Number(((subtotal - costesDirectos) / subtotal).toFixed(2)));
+
+  return { 
+    subtotal, 
+    iva, 
+    total, 
+    detalles: { 
+      tarifaBase, 
+      kmExtra, 
+      hotel,
+      margenBrutoEstimado
+    }, 
+    acousticPower, 
+    isBodaSClass,
+    formatName
+  };
+}

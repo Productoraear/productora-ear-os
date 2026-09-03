@@ -7,7 +7,14 @@ import { motion } from 'framer-motion';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { generateWhatsAppLink } from '@/lib/whatsapp';
 
-export default function BookingCalculator() {
+import { SCLASS_ROSTER_14_FORMATS } from '@/lib/constants/pricing-catalog';
+
+interface BookingCalculatorProps {
+  initialFormatId?: string;
+}
+
+export default function BookingCalculator({ initialFormatId = 'solista-edwin-agudelo' }: BookingCalculatorProps) {
+  const [formatoId, setFormatoId] = useState<string>(initialFormatId);
   const [distanciaKm, setDistanciaKm] = useState<number>(0);
   const [horaFin, setHoraFin] = useState<number>(20);
   const [evento, setEvento] = useState<string>('Boda');
@@ -22,7 +29,8 @@ export default function BookingCalculator() {
     esPremium: true,
     evento,
     pax,
-    tipoEspacio
+    tipoEspacio,
+    formatoId
   });
 
   const handleCheckout = async () => {
@@ -33,14 +41,19 @@ export default function BookingCalculator() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           amount: priceDetails.total,
-          concept: `Mariachi Premium - ${evento}`,
+          concept: `${priceDetails.formatName || 'Formato S-Class'} - ${evento}`,
           provincia: provincia,
           evento: evento,
           artistId: 'edwin-agudelo',
           metadata: {
+            formato_id: formatoId,
+            format_name: priceDetails.formatName,
             km_recorridos: String(distanciaKm),
             necesita_hotel: priceDetails.detalles.hotel > 0 ? 'si' : 'no',
-            hora_finalizacion: String(horaFin)
+            hora_finalizacion: String(horaFin),
+            pax: String(pax),
+            potencia_acustica_w: String(priceDetails.acousticPower || 0),
+            margen_bruto: String(priceDetails.detalles.margenBrutoEstimado)
           }
         }),
       });
@@ -60,38 +73,54 @@ export default function BookingCalculator() {
   };
 
   return (
-    <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md shadow-2xl max-w-lg mx-auto text-white">
-      <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
-        <ShieldCheck className="text-green-500" /> Calculador S-Class
+    <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md shadow-2xl max-w-lg mx-auto text-white font-sans">
+      <h3 className="text-2xl font-bold mb-4 flex items-center gap-2 font-syne">
+        <ShieldCheck className="text-[#ecb613]" /> Calculador S-Class
       </h3>
       
       <div className="space-y-4 mb-6">
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-300">Provincia (Destino)</label>
+          <label className="block text-sm font-medium mb-1 text-gray-300 font-mono text-xs uppercase">Formato Homologado (14 Opciones)</label>
+          <select 
+            value={formatoId}
+            onChange={(e) => setFormatoId(e.target.value)}
+            className="w-full bg-black/60 border border-[#ecb613]/40 rounded-lg py-2.5 px-3 text-white focus:ring-2 focus:ring-[#ecb613] outline-none font-mono text-xs"
+          >
+            {SCLASS_ROSTER_14_FORMATS.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.name} — {f.basePrice} € ({f.members} {f.members === 1 ? 'músico' : 'músicos'})
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1 text-gray-300 font-mono text-xs uppercase">Provincia (Destino desde Hub Méntrida)</label>
           <div className="relative">
             <MapPin className="absolute left-3 top-2.5 w-5 h-5 text-gray-500" />
             <input 
               type="text"
               value={provincia}
               onChange={(e) => setProvincia(e.target.value)}
-              className="w-full bg-black/40 border border-white/20 rounded-lg py-2 pl-10 pr-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+              className="w-full bg-black/40 border border-white/20 rounded-lg py-2 pl-10 pr-4 text-white focus:ring-2 focus:ring-[#ecb613] outline-none text-sm"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-300">Tipo de Evento</label>
+          <label className="block text-sm font-medium mb-1 text-gray-300 font-mono text-xs uppercase">Tipo de Ocasión / Evento</label>
           <select 
             value={evento}
             onChange={(e) => setEvento(e.target.value)}
-            className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-[#ecb613] outline-none text-sm"
           >
-            <option value="Boda">Boda S-Class Diamond</option>
-            <option value="Cumpleaños">Cumpleaños (Mañanitas)</option>
-            <option value="Corporativo">Evento Corporativo</option>
-            <option value="Fiestas">Fiestas / Festival</option>
+            <option value="Boda">Boda S-Class Diamond (Suelo 3.800 €)</option>
+            <option value="Cumpleaños">Cumpleaños / Serenata / Aniversario</option>
+            <option value="Corporativo">Gala Corporativa / Cena de Empresa</option>
+            <option value="Fiestas">Fiestas Patronales / Festival Público</option>
           </select>
         </div>
+
 
         {evento === 'Boda' && (
           <div className="grid grid-cols-2 gap-4">

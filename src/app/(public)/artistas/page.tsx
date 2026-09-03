@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import ArtistCinematicProfile from "@/components/artists/ArtistCinematicProfile";
+import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
 
 export const metadata: Metadata = {
-  title: "Edwin Agudelo — Tenor, Productor & Roster S-Class | Productora EAR",
+  title: "Edwin Agudelo & Roster S-Class de 14 Formatos | Productora EAR",
   description:
-    "Ficha Integral de Edwin Agudelo: Tenor lírico, artista y compositor de amplia trayectoria y oficio real sobre el escenario. Rider técnico Shure Axient/Beta 87A, PA Bose F1 812 a 12 W/pax, fundador del Proyecto VIMUME y contratación directa con depósito Stripe de 100 € firmado SHA-256.",
+    "Catálogo oficial de Productora EAR: Edwin Agudelo y los 14 Formatos Homologados (Solista 350€, Dúo 480€, Trío 600€, Cuarteto 750€, Quinteto 900€, Gran Ensamble 1.400€, VIMUME B2G, Discomóvil Bose F1). Presión acústica garantizada a 12 W/pax, Split 80/10/10 y reserva directa con depósito Stripe de 100 €.",
   keywords: [
     "Edwin Agudelo",
-    "Edwin Agudelo cantante",
-    "contratar Edwin Agudelo",
-    "tenor lírico bodas",
-    "mariachi de gala Madrid Toledo",
-    "Productora EAR artistas",
-    "rider acustico Bose F1 812",
+    "Roster Productora EAR",
+    "14 formatos homologados",
+    "contratar mariachi Madrid Toledo",
+    "solista de gala 350",
+    "quinteto mariachi 900",
+    "boda s-class diamond 3800",
+    "rider acustico Bose F1",
     "Shure Beta 87A",
     "Proyecto VIMUME",
-    "musica para bodas de lujo",
     "Méntrida Toledo",
   ],
   alternates: { canonical: "https://www.productoraear.com/artistas" },
@@ -24,23 +25,23 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: "https://www.productoraear.com/artistas",
     siteName: "Productora EAR — EAR OS",
-    title: "Edwin Agudelo — Ficha Integral S-Class (Sony / Warner Standard)",
+    title: "Edwin Agudelo & Roster S-Class de 14 Formatos (Major Label Standard)",
     description:
-      "Voz, Oficio y Escenario. Rider técnico de concierto (Shure Beta 87A, Behringer XR18, Bose F1 812), repertorio de catarsis emocional y Proyecto VIMUME. Tarifa base desde 350 €.",
+      "Voz, Oficio y Escenario. Catálogo íntegro de 14 formatos homologados con tarifas suelo inmutables, acústica Bose a 12 W/pax y cierre transaccional con depósito Stripe de 100 €.",
     images: [
       {
         url: "https://www.productoraear.com/images/brand/ear_diamante_central.png",
         width: 1200,
         height: 630,
-        alt: "Edwin Agudelo - Master Artist Productora EAR",
+        alt: "Edwin Agudelo & Roster S-Class Productora EAR",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Edwin Agudelo — Tenor & Arquitecto Escénico S-Class",
+    title: "Edwin Agudelo & Roster S-Class — 14 Formatos Homologados",
     description:
-      "Ficha integral de artista: Repertorio, Rider técnico garantizado a 12 W/pax y cierre transaccional en 1-clic con depósito Stripe de 100 €.",
+      "14 formatos musicales y técnicos con rider Bose/Shure garantizado a 12 W/pax. Depósito reembolsable de 100 € con Price-Lock SHA-256.",
     images: ["https://www.productoraear.com/images/brand/ear_diamante_central.png"],
   },
 };
@@ -87,45 +88,19 @@ const artistSchema = {
       ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Formatos Oficiales de Contratación",
-        itemListElement: [
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Solista de Gala (Edwin Agudelo)",
-              description: "Voz de tenor y guitarra en directo con sonorización Bose S1 Pro / F1 812.",
-            },
-            price: "350.00",
-            priceCurrency: "EUR",
-            availability: "https://schema.org/InStock",
-            url: "https://www.productoraear.com/checkout/presupuesto?format=solista&base=350",
+        name: "Roster Soberano de 14 Formatos Homologados",
+        itemListElement: SCLASS_ROSTER_14_FORMATS.map((format) => ({
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: format.name,
+            description: `${format.description} Rider: ${format.rider}. Integrantes: ${format.members}. Presión: ${format.wattsPerPax} W/pax.`,
           },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Quinteto Tradicional de Mariachi",
-              description: "Voz principal + 2 Trompetas + Vihuela + Guitarrón con trajes charros de gala.",
-            },
-            price: "750.00",
-            priceCurrency: "EUR",
-            availability: "https://schema.org/InStock",
-            url: "https://www.productoraear.com/checkout/presupuesto?format=quinteto&base=750",
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Boda S-Class Diamond 360",
-              description: "Sonorización integral de 3 espacios (12-18 W/pax) y actuación central de Edwin Agudelo.",
-            },
-            price: "3800.00",
-            priceCurrency: "EUR",
-            availability: "https://schema.org/InStock",
-            url: "https://www.productoraear.com/checkout/presupuesto?format=boda-diamond&base=3800",
-          },
-        ],
+          price: `${format.basePrice}.00`,
+          priceCurrency: "EUR",
+          availability: "https://schema.org/InStock",
+          url: `https://www.productoraear.com/checkout/presupuesto?format=${format.id}&base=${format.basePrice}`,
+        })),
       },
     },
   ],
@@ -134,14 +109,14 @@ const artistSchema = {
 export default function ArtistasCinematicPage() {
   return (
     <main>
-      {/* Schema.org estructurado JSON-LD */}
+      {/* Schema.org estructurado JSON-LD con los 14 formatos */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(artistSchema) }}
       />
       <ArtistCinematicProfile
         name="Edwin Agudelo"
-        specialty="Voz, Oficio y Escenario · Tenor Lírico"
+        specialty="Voz, Oficio y Escenario · Tenor Lírico & Roster Soberano"
         imageUrl="/images/brand/ear_diamante_central.png"
       />
     </main>
