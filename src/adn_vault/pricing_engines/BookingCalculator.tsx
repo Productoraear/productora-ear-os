@@ -12,12 +12,17 @@ export default function BookingCalculator() {
   const [horaFin, setHoraFin] = useState<number>(20);
   const [evento, setEvento] = useState<string>('Boda');
   const [provincia, setProvincia] = useState<string>('Madrid');
+  const [pax, setPax] = useState<number>(100);
+  const [tipoEspacio, setTipoEspacio] = useState<'Interior' | 'Exterior'>('Interior');
   const [loading, setLoading] = useState(false);
 
   const priceDetails = calculateMariachiRate({
     distanciaKm: Number(distanciaKm),
     horaFin: Number(horaFin),
     esPremium: true,
+    evento,
+    pax,
+    tipoEspacio
   });
 
   const handleCheckout = async () => {
@@ -81,12 +86,38 @@ export default function BookingCalculator() {
             onChange={(e) => setEvento(e.target.value)}
             className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
           >
-            <option value="Boda">Boda</option>
+            <option value="Boda">Boda S-Class Diamond</option>
             <option value="Cumpleaños">Cumpleaños (Mañanitas)</option>
             <option value="Corporativo">Evento Corporativo</option>
             <option value="Fiestas">Fiestas / Festival</option>
           </select>
         </div>
+
+        {evento === 'Boda' && (
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-300">Invitados (Pax)</label>
+              <input 
+                type="number"
+                min="1"
+                value={pax}
+                onChange={(e) => setPax(Number(e.target.value))}
+                className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-300">Tipo de Espacio</label>
+              <select 
+                value={tipoEspacio}
+                onChange={(e) => setTipoEspacio(e.target.value as 'Interior' | 'Exterior')}
+                className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+              >
+                <option value="Interior">Interior (12W/pax)</option>
+                <option value="Exterior">Exterior (18W/pax)</option>
+              </select>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -131,6 +162,12 @@ export default function BookingCalculator() {
           <div className="flex justify-between text-amber-400">
             <span className="flex items-center gap-1"><Info className="w-4 h-4"/> Noche de Hotel</span>
             <span>{priceDetails.detalles.hotel.toFixed(2)} €</span>
+          </div>
+        )}
+        {priceDetails.isBodaSClass && priceDetails.acousticPower && (
+          <div className="flex justify-between text-emerald-400 border-t border-white/10 pt-2 mt-2">
+            <span className="flex items-center gap-1"><Info className="w-4 h-4"/> Potencia Acústica Req.</span>
+            <span>{priceDetails.acousticPower} W RMS</span>
           </div>
         )}
         <div className="border-t border-white/20 pt-2 flex justify-between text-gray-400 text-sm">

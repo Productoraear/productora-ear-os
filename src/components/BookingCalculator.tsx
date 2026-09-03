@@ -1,153 +1,220 @@
-'use client';
+"use client";
 
 import React, { useState } from 'react';
-import { createCheckoutSession } from '@/lib/payments';
-import { CouponBono150Complementos } from '@/components/promotions/CouponBono150Complementos';
-import { Sparkles, MapPin, Calendar, ShieldCheck } from 'lucide-react';
+import { calculateMariachiRate } from '@/lib/pricing-engine';
+import { MapPin, Clock, Info, ShieldCheck, CreditCard, Phone, MessageCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { CENTRALITA } from '@/lib/phone-constants';
+import { generateWhatsAppLink } from '@/lib/whatsapp';
 
-interface BookingCalculatorProps {
-  baseFare?: number;
-  distanceFromMadrid?: number;
-  eventEndTime?: string;
-}
+export default function BookingCalculator() {
+  const [distanciaKm, setDistanciaKm] = useState<number>(0);
+  const [horaFin, setHoraFin] = useState<number>(20);
+  const [evento, setEvento] = useState<string>('Boda');
+  const [provincia, setProvincia] = useState<string>('Madrid');
+  const [pax, setPax] = useState<number>(100);
+  const [tipoEspacio, setTipoEspacio] = useState<'Interior' | 'Exterior'>('Interior');
+  const [loading, setLoading] = useState(false);
 
-const BookingCalculator = ({ 
-  baseFare = 350, 
-  distanceFromMadrid = 0, 
-  eventEndTime = '' 
-}: BookingCalculatorProps) => {
-  const [distance, setDistance] = useState(distanceFromMadrid);
-  const [endTime, setEndTime] = useState(eventEndTime);
-  const [selectedFormat, setSelectedFormat] = useState<'SOLISTA' | 'QUINTETO'>('SOLISTA');
+  const priceDetails = calculateMariachiRate({
+    distanciaKm: Number(distanciaKm),
+    horaFin: Number(horaFin),
+    esPremium: true,
+    evento,
+    pax,
+    tipoEspacio
+  });
 
-  const currentBase = selectedFormat === 'SOLISTA' ? 350 : 750;
-
-  const calculateTotal = () => {
-    let total = currentBase;
-    total += distance * 0.75; // Tarifa oficial 0.75 €/km
-    if (distance > 200 && endTime && new Date(endTime).getHours() > 22) {
-      total += 150; // Hospedaje
-    }
-    return Math.round(total);
-  };
-
-  const handleReservation = async () => {
-    const totalFare = calculateTotal();
+  const handleCheckout = async () => {
+    setLoading(true);
     try {
-      await createCheckoutSession({ 
-        amount: totalFare, 
-        concept: selectedFormat === 'SOLISTA' 
-          ? 'Edwin Agudelo · Solista Premium S-Class' 
-          : 'Edwin Agudelo · Quinteto Pro Mariachi (Mínimo 5 Músicos)' 
+      const response = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: priceDetails.total,
+          concept: `Mariachi Premium - ${evento}`,
+          provincia: provincia,
+          evento: evento,
+          artistId: 'edwin-agudelo',
+          metadata: {
+            km_recorridos: String(distanciaKm),
+            necesita_hotel: priceDetails.detalles.hotel > 0 ? 'si' : 'no',
+            hora_finalizacion: String(horaFin)
+          }
+        }),
       });
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Error al iniciar el pago.');
+      }
     } catch (error) {
-      console.error('Error creating checkout session:', error);
+      console.error(error);
+      alert('Hubo un problema de conexión.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="bg-[#0a0a0f] text-white p-6 sm:p-8 rounded-3xl border border-[#ecb613]/30 shadow-2xl space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md shadow-2xl max-w-lg mx-auto text-white">
+      <h3 className="text-2xl font-bold mb-4 flex items-center gap-2">
+        <ShieldCheck className="text-green-500" /> Calculador S-Class
+      </h3>
+      
+      <div className="space-y-4 mb-6">
         <div>
-          <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest block">COTIZADOR EN TIEMPO REAL</span>
-          <h2 className="text-2xl sm:text-3xl font-black uppercase text-white font-syne">Calculadora de Reserva S-Class</h2>
-        </div>
-        <div className="p-2 rounded-xl bg-[#ecb613]/10 text-[#ecb613]">
-          <ShieldCheck size={24} />
-        </div>
-      </div>
-
-      {/* Selector de Formato */}
-      <div className="grid grid-cols-2 gap-3">
-        <button
-          type="button"
-          onClick={() => setSelectedFormat('SOLISTA')}
-          className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
-            selectedFormat === 'SOLISTA'
-              ? 'bg-[#ecb613]/15 border-[#ecb613] text-white shadow-lg'
-              : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-          }`}
-        >
-          <span className="text-[10px] font-mono text-[#ecb613] uppercase block font-bold">PRODUCTO HERO</span>
-          <span className="text-base font-black uppercase block">Solista Premium</span>
-          <span className="text-xs text-white/50">350 € Base · Cumpleaños & Fechas</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setSelectedFormat('QUINTETO')}
-          className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
-            selectedFormat === 'QUINTETO'
-              ? 'bg-[#ecb613]/15 border-[#ecb613] text-white shadow-lg'
-              : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-          }`}
-        >
-          <span className="text-[10px] font-mono text-emerald-400 uppercase block font-bold">MÍNIMO 5 MÚSICOS</span>
-          <span className="text-base font-black uppercase block">Quinteto Pro</span>
-          <span className="text-xs text-white/50">750 € Base · Bodas & Galas</span>
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="distance" className="block text-xs font-mono text-white/60 uppercase mb-2">
-            Distancia desde Madrid (km):
-          </label>
-          <input
-            type="number"
-            id="distance"
-            value={distance}
-            onChange={(e) => setDistance(Number(e.target.value))}
-            className="w-full p-3 bg-black/60 border border-white/10 rounded-xl text-white font-mono text-sm focus:border-[#ecb613] focus:outline-none"
-            placeholder="0"
-          />
+          <label className="block text-sm font-medium mb-1 text-gray-300">Provincia (Destino)</label>
+          <div className="relative">
+            <MapPin className="absolute left-3 top-2.5 w-5 h-5 text-gray-500" />
+            <input 
+              type="text"
+              value={provincia}
+              onChange={(e) => setProvincia(e.target.value)}
+              className="w-full bg-black/40 border border-white/20 rounded-lg py-2 pl-10 pr-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+            />
+          </div>
         </div>
 
         <div>
-          <label htmlFor="endTime" className="block text-xs font-mono text-white/60 uppercase mb-2">
-            Hora de finalización:
-          </label>
-          <input
-            type="datetime-local"
-            id="endTime"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            className="w-full p-3 bg-black/60 border border-white/10 rounded-xl text-white font-mono text-sm focus:border-[#ecb613] focus:outline-none"
-          />
+          <label className="block text-sm font-medium mb-1 text-gray-300">Tipo de Evento</label>
+          <select 
+            value={evento}
+            onChange={(e) => setEvento(e.target.value)}
+            className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+          >
+            <option value="Boda">Boda S-Class Diamond</option>
+            <option value="Cumpleaños">Cumpleaños (Mañanitas)</option>
+            <option value="Corporativo">Evento Corporativo</option>
+            <option value="Fiestas">Fiestas / Festival</option>
+          </select>
+        </div>
+
+        {evento === 'Boda' && (
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-300">Invitados (Pax)</label>
+              <input 
+                type="number"
+                min="1"
+                value={pax}
+                onChange={(e) => setPax(Number(e.target.value))}
+                className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1 text-gray-300">Tipo de Espacio</label>
+              <select 
+                value={tipoEspacio}
+                onChange={(e) => setTipoEspacio(e.target.value as 'Interior' | 'Exterior')}
+                className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+              >
+                <option value="Interior">Interior (12W/pax)</option>
+                <option value="Exterior">Exterior (18W/pax)</option>
+              </select>
+            </div>
+          </div>
+        )}
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1 text-gray-300">Distancia (KM desde Madrid)</label>
+            <input 
+              type="number"
+              min="0"
+              value={distanciaKm}
+              onChange={(e) => setDistanciaKm(Number(e.target.value))}
+              className="w-full bg-black/40 border border-white/20 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1 text-gray-300">Hora de Fin (24h)</label>
+            <div className="relative">
+              <Clock className="absolute left-3 top-2.5 w-5 h-5 text-gray-500" />
+              <input 
+                type="number"
+                min="0"
+                max="23"
+                value={horaFin}
+                onChange={(e) => setHoraFin(Number(e.target.value))}
+                className="w-full bg-black/40 border border-white/20 rounded-lg py-2 pl-10 pr-4 text-white focus:ring-2 focus:ring-green-500 outline-none"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Desglose */}
-      <div className="p-4 rounded-2xl bg-black/60 border border-white/5 space-y-2 text-xs font-mono">
-        <div className="flex justify-between text-white/70">
-          <span>Tarifa Base Oficial ({selectedFormat === 'SOLISTA' ? 'Solista Premium' : 'Quinteto Pro'}):</span>
-          <span className="text-white font-bold">{currentBase} €</span>
+      <div className="bg-black/60 rounded-lg p-4 space-y-2 mb-6 border border-white/10">
+        <div className="flex justify-between text-gray-300">
+          <span>Tarifa Base (Solista Premium)</span>
+          <span>{priceDetails.detalles.tarifaBase.toFixed(2)} €</span>
         </div>
-        <div className="flex justify-between text-white/70">
-          <span>Desplazamiento ({distance} km x 0,75 €/km):</span>
-          <span className="text-white font-bold">{Math.round(distance * 0.75)} €</span>
+        {priceDetails.detalles.kmExtra > 0 && (
+          <div className="flex justify-between text-gray-300">
+            <span>Kilometraje (+{distanciaKm}km)</span>
+            <span>{priceDetails.detalles.kmExtra.toFixed(2)} €</span>
+          </div>
+        )}
+        {priceDetails.detalles.hotel > 0 && (
+          <div className="flex justify-between text-amber-400">
+            <span className="flex items-center gap-1"><Info className="w-4 h-4"/> Noche de Hotel</span>
+            <span>{priceDetails.detalles.hotel.toFixed(2)} €</span>
+          </div>
+        )}
+        {priceDetails.isBodaSClass && priceDetails.acousticPower && (
+          <div className="flex justify-between text-emerald-400 border-t border-white/10 pt-2 mt-2">
+            <span className="flex items-center gap-1"><Info className="w-4 h-4"/> Potencia Acústica Req.</span>
+            <span>{priceDetails.acousticPower} W RMS</span>
+          </div>
+        )}
+        <div className="border-t border-white/20 pt-2 flex justify-between text-gray-400 text-sm">
+          <span>IVA (21%)</span>
+          <span>{priceDetails.iva.toFixed(2)} €</span>
         </div>
-        <div className="flex justify-between text-base pt-2 border-t border-white/10 text-white font-bold">
-          <span>Total Estimado con Garantía 0 Fallos:</span>
-          <span className="text-[#ecb613] text-xl">{calculateTotal()} €</span>
+        <div className="flex justify-between text-xl font-bold pt-1 text-white">
+          <span>Total Oficial</span>
+          <span>{priceDetails.total.toFixed(2)} €</span>
         </div>
       </div>
 
-      {/* Cupón 150€ si es Solista */}
-      {selectedFormat === 'SOLISTA' && (
-        <CouponBono150Complementos />
-      )}
-
-      <button
-        type="button"
-        onClick={handleReservation}
-        className="w-full py-4 rounded-2xl bg-[#ecb613] hover:bg-[#d9a50f] text-black font-black text-sm uppercase tracking-wider transition-all shadow-xl shadow-[#ecb613]/20 flex items-center justify-center gap-2 cursor-pointer"
+      <motion.button 
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        onClick={handleCheckout}
+        disabled={loading}
+        className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
       >
-        <Sparkles size={18} />
-        <span>Reservar con Stripe ({calculateTotal()} €)</span>
-      </button>
+        <CreditCard className="w-6 h-6" />
+        {loading ? 'Procesando S-Class...' : 'Reservar con Klarna / Tarjeta'}
+      </motion.button>
+
+      <div className="mt-4 grid grid-cols-2 gap-3">
+        <a 
+          href={CENTRALITA.tel}
+          className="flex items-center justify-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-lg font-bold transition-colors"
+        >
+          <Phone className="w-5 h-5 text-gray-400" />
+          Llamar
+        </a>
+        <a 
+          href={generateWhatsAppLink({
+            profile: 'edwin-agudelo',
+            service: `Mariachi Premium - ${evento}`,
+            location: provincia,
+            intent: `reserva con presupuesto estimado de ${priceDetails.total.toFixed(2)}€`,
+            slug: 'calculador'
+          }).url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20b858] text-white py-3 rounded-lg font-bold transition-colors"
+        >
+          <MessageCircle className="w-5 h-5" />
+          WhatsApp
+        </a>
+      </div>
     </div>
   );
-};
-
-export default BookingCalculator;
+}

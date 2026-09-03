@@ -2,16 +2,16 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
-import { 
-  Sparkles, 
-  ShieldCheck, 
-  Volume2, 
-  CheckCircle2, 
-  Download, 
-  Phone, 
-  ArrowRight, 
-  ArrowLeft, 
-  Heart, 
+import {
+  Sparkles,
+  ShieldCheck,
+  Volume2,
+  CheckCircle2,
+  Download,
+  Phone,
+  ArrowRight,
+  ArrowLeft,
+  Heart,
   Crown,
   MapPin,
   Sliders,
@@ -237,14 +237,14 @@ const ProviderCard: React.FC<SwipeCardProps> = ({ provider, onSwipe, onContactWh
       className="absolute top-0 left-0 w-full bg-[#0d0d14] border border-[#ecb613]/30 rounded-[2.5rem] overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.85)] cursor-grab active:cursor-grabbing select-none"
     >
       {/* Swipe Feedback */}
-      <motion.div 
+      <motion.div
         style={{ opacity: likeOpacity }}
         className="absolute top-6 right-6 z-30 px-4 py-2 bg-emerald-500 text-black font-black text-xs uppercase tracking-widest rounded-xl rotate-12 border-2 border-white shadow-xl"
       >
         ❤️ GUARDAR EN MI BODA
       </motion.div>
 
-      <motion.div 
+      <motion.div
         style={{ opacity: nopeOpacity }}
         className="absolute top-6 left-6 z-30 px-4 py-2 bg-zinc-800 text-white font-black text-xs uppercase tracking-widest rounded-xl -rotate-12 border border-white/20 shadow-xl"
       >
@@ -253,13 +253,13 @@ const ProviderCard: React.FC<SwipeCardProps> = ({ provider, onSwipe, onContactWh
 
       {/* Media & Header */}
       <div className="relative h-64 sm:h-72 w-full bg-black">
-        <img 
-          src={provider.img} 
-          alt={provider.name} 
+        <img
+          src={provider.img}
+          alt={provider.name}
           className="w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d14] via-[#0d0d14]/30 to-transparent" />
-        
+
         <div className="absolute top-4 left-4 flex flex-wrap gap-2">
           <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#ecb613]/50 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
             {provider.categoryLabel}
@@ -471,13 +471,13 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
         type: 'business_audit',
         source: `bodas_${province.toLowerCase()}`,
         section: `step_${currentStep}`,
-        data: { 
-          ...leadData, 
-          atmosphere: selectedAtmosphere, 
-          budget: totalBudget, 
-          guests: guestCount, 
-          matchesCount: matchedProviders.length, 
-          matches: matchedProviders.map(m => m.name) 
+        data: {
+          ...leadData,
+          atmosphere: selectedAtmosphere,
+          budget: totalBudget,
+          guests: guestCount,
+          matchesCount: matchedProviders.length,
+          matches: matchedProviders.map(m => m.name)
         },
         timestamp: new Date().toISOString()
       });
@@ -492,9 +492,9 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
 
   return (
     <div className="w-full bg-[#050505] text-white selection:bg-[#ecb613]/30 font-sans relative overflow-hidden py-10 px-4 md:px-8">
-      
+
       {/* Ambient Lighting */}
-      <div 
+      <div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[500px] blur-[160px] pointer-events-none transition-all duration-700"
         style={{ background: `radial-gradient(circle, ${activeAtmosphere.glow} 0%, transparent 70%)` }}
       />
@@ -504,9 +504,8 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
         {/* 🌟 STEP INDICATOR */}
         <div className="flex items-center justify-between max-w-2xl mx-auto border-b border-white/10 pb-4">
           <div className="flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${
-              currentStep >= 1 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
-            }`}>
+            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${currentStep >= 1 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
+              }`}>
               1
             </span>
             <span className="text-xs font-mono text-white/70 hidden sm:inline">Tu Visión</span>
@@ -515,9 +514,8 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
           <div className="w-8 sm:w-16 h-0.5 bg-white/10" />
 
           <div className="flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${
-              currentStep >= 2 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
-            }`}>
+            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${currentStep >= 2 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
+              }`}>
               2
             </span>
             <span className="text-xs font-mono text-white/70 hidden sm:inline">Atmósfera & Lugar</span>
@@ -526,9 +524,8 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
           <div className="w-8 sm:w-16 h-0.5 bg-white/10" />
 
           <div className="flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${
-              currentStep >= 3 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
-            }`}>
+            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${currentStep >= 3 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
+              }`}>
               3
             </span>
             <span className="text-xs font-mono text-white/70 hidden sm:inline">Tus Artistas</span>
@@ -537,9 +534,8 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
           <div className="w-8 sm:w-16 h-0.5 bg-white/10" />
 
           <div className="flex items-center gap-2">
-            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${
-              currentStep >= 4 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
-            }`}>
+            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold font-mono transition-all ${currentStep >= 4 ? 'bg-[#ecb613] text-black' : 'bg-white/10 text-white/40'
+              }`}>
               4
             </span>
             <span className="text-xs font-mono text-white/70 hidden sm:inline">Tu Propuesta</span>
@@ -550,7 +546,7 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
             PASO 1: TU VISIÓN & ASESORÍA PERSONALIZADA
         ========================================================================= */}
         {currentStep === 1 && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-8 text-center"
@@ -593,7 +589,7 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
               />
 
               {adviceGenerated && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   className="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-2 text-xs text-white/80 leading-relaxed font-light"
@@ -668,9 +664,8 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
                   <div
                     key={atm.id}
                     onClick={() => setSelectedAtmosphere(atm.id)}
-                    className={`p-6 sm:p-8 rounded-[2.5rem] bg-[#0c0c14] border transition-all cursor-pointer space-y-4 relative overflow-hidden group shadow-xl ${
-                      isSelected ? 'border-[#ecb613] shadow-[0_15px_40px_rgba(236,182,19,0.15)] bg-gradient-to-b from-[#161208] to-[#0c0c14]' : 'border-white/10 hover:border-white/30'
-                    }`}
+                    className={`p-6 sm:p-8 rounded-[2.5rem] bg-[#0c0c14] border transition-all cursor-pointer space-y-4 relative overflow-hidden group shadow-xl ${isSelected ? 'border-[#ecb613] shadow-[0_15px_40px_rgba(236,182,19,0.15)] bg-gradient-to-b from-[#161208] to-[#0c0c14]' : 'border-white/10 hover:border-white/30'
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <div className="text-4xl">{atm.icon}</div>
@@ -877,8 +872,8 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
                 onClick={() => setCurrentStep(4)}
                 className="text-xs font-mono text-white/50 hover:text-[#ecb613] transition-colors cursor-pointer"
               >
-                {matchedProviders.length > 0 
-                  ? `Ver mi selección actual (${matchedProviders.length} servicios guardados) →` 
+                {matchedProviders.length > 0
+                  ? `Ver mi selección actual (${matchedProviders.length} servicios guardados) →`
                   : 'Saltar directo a la propuesta final →'}
               </button>
             </div>
@@ -920,7 +915,7 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
                 </div>
               ) : (
                 matchedProviders.map((p) => (
-                  <div 
+                  <div
                     key={p.id}
                     className="p-6 rounded-3xl bg-[#0c0c14] border border-[#ecb613]/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl"
                   >

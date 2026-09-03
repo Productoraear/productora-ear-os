@@ -96,6 +96,9 @@ export interface BookingParams {
   distanciaKm: number;
   horaFin: number;
   esPremium: boolean;
+  evento?: string;
+  pax?: number;
+  tipoEspacio?: 'Interior' | 'Exterior';
 }
 
 export interface RateDetails {
@@ -109,12 +112,29 @@ export interface RateDetails {
   };
 }
 
-export function calculateMariachiRate(params: BookingParams): RateDetails {
-  const tarifaBase = params.esPremium ? 350 : 250;
+export function calculateMariachiRate(params: BookingParams): RateDetails & { acousticPower?: number, isBodaSClass?: boolean } {
+  let tarifaBase = params.esPremium ? 350 : 250;
+  
   const kmExtra = params.distanciaKm > 50 ? (params.distanciaKm - 50) * 1.5 : 0;
   const hotel = params.horaFin >= 3 || params.distanciaKm > 200 ? 120 : 0;
-  const subtotal = tarifaBase + kmExtra + hotel;
+  let subtotal = tarifaBase + kmExtra + hotel;
+  
+  let acousticPower = 0;
+  let isBodaSClass = false;
+  
+  if (params.evento === 'Boda') {
+    isBodaSClass = true;
+    const wPax = params.tipoEspacio === 'Exterior' ? 18 : 12;
+    acousticPower = (params.pax || 100) * wPax;
+    
+    // Ticket suelo de 3800€
+    if (subtotal < 3800) {
+      tarifaBase = 3800 - kmExtra - hotel;
+      subtotal = 3800;
+    }
+  }
+  
   const iva = subtotal * 0.21;
   const total = subtotal + iva;
-  return { subtotal, iva, total, detalles: { tarifaBase, kmExtra, hotel } };
+  return { subtotal, iva, total, detalles: { tarifaBase, kmExtra, hotel }, acousticPower, isBodaSClass };
 }
