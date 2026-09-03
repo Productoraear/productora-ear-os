@@ -1,7 +1,7 @@
 import React from 'react';
-import { Sidebar } from '@/components/SClass/Sidebar';
-import { AdminGlobalRibbon } from '@/components/SClass/AdminGlobalRibbon';
-import { TacticalTracker } from '@/components/SClass/TacticalTracker';
+import { Sidebar } from '@/components/sclass/Sidebar';
+import { AdminGlobalRibbon } from '@/components/sclass/AdminGlobalRibbon';
+import { TacticalTracker } from '@/components/sclass/TacticalTracker';
 import AuthGuard from '@/components/auth/AuthGuard';
 
 export default function AdminLayout({

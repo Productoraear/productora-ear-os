@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, onSnapshot, query, orderBy, limit, addDoc, serverTimestamp } from 'firebase/firestore';
-import SovereignMemoryTest from '@/components/SovereignMemoryTest';
+import SovereignMemoryTest from '@/app/components/SovereignMemoryTest';
 
 /**
  * 🕵️ MODULE: FORENSIC SCANNER (NEURAL_OS v4.02 // BIT_STREAM)

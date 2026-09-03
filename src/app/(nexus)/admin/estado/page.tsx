@@ -1,5 +1,5 @@
 "use client";
-import { TacticalTracker } from '@/components/SClass/TacticalTracker';
+import { TacticalTracker } from '@/components/sclass/TacticalTracker';
 
 export default function EstadoPage() {
   return (

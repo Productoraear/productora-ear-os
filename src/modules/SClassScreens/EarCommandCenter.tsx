@@ -11,7 +11,7 @@ import { ExpansionDashboard } from './ExpansionDashboard';
 import { SimuladorEscenarios } from './components/SimuladorEscenarios';
 import { BucleAprendizaje } from './components/BucleAprendizaje';
 import { SovereignSkeleton } from './components/SovereignSkeleton';
-import { TacticalTracker } from '@/components/SClass/TacticalTracker';
+import { TacticalTracker } from '@/components/sclass/TacticalTracker';
 import { DemandEngine } from './DemandEngine';
 import { AllianceNetwork } from './AllianceNetwork';
 import { AstraNeuralTwin } from './AstraNeuralTwin';
