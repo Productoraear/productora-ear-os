@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import NeuralGraph from '@/components/neural/NeuralGraph';
 import RoleHUD from '@/components/neural/RoleHUD';
-import RoleInspector from '@/components/neural/RoleInspector';
+import NodeInspector from '@/components/neural/NodeInspector';
 import TransmutationGesture from '@/components/neural/TransmutationGesture';
 import CinematicHeroSClass from '@/components/sclass/CinematicHeroSClass';
 import InstantNeuralTunnelModal from '@/components/sclass/InstantNeuralTunnelModal';
@@ -227,7 +227,7 @@ export default function Home() {
           {/* Panel Lateral / Inspector de Rol al Expandir */}
           {selectedRole && (
             <div className="absolute top-20 right-4 md:right-8 z-30 pointer-events-none max-w-full">
-              <RoleInspector
+              <NodeInspector
                 selectedRole={selectedRole}
                 selectedNode={selectedNode}
                 onClose={() => {

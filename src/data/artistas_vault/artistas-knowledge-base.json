@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "system": "EAR OS V2 // Artistas Knowledge Base & Operations 360",
+    "version": "1.0.0-GOLD",
+    "last_updated": "2026-09-03T14:01:00.060572",
+    "total_entries": 5,
+    "cluster_counts": {
+      "dani_aragon_crecimiento": 1,
+      "metodologia_61_99_dias": 1,
+      "logistica_giras_14pax": 1,
+      "produccion_tecnica_audiovisual": 1,
+      "emanager_legal_monetizacion": 1
+    }
+  },
+  "operational_thresholds": {
+    "logistica_min_pax": 14,
+    "logistica_margen_bruto": 0.42,
+    "habito_automatizacion_dias": 61,
+    "habito_identidad_clic_dias": 99,
+    "emanager_fee_base_mrr": 1500
+  },
+  "clusters_definition": {
+    "dani_aragon_crecimiento": {
+      "name": "Dani Aragón & Crecimiento Musical",
+      "description": "Estrategia de lanzamiento, base de fans, embudos de conversión musical y monetización directa.",
+      "seed_keywords": [
+        "estrategia de lanzamiento",
+        "base de fans",
+        "embudos de conversion",
+        "contenido magnetico",
+        "algoritmo de spotify",
+        "retencion de oyentes",
+        "pitch a curadores",
+        "monetizacion directa",
+        "dani aragon"
+      ]
+    },
+    "metodologia_61_99_dias": {
+      "name": "Metodología 61 y 99 Días Haciendo Clic",
+      "description": "Reprogramación de hábitos, resiliencia escénica y cambio de identidad artística.",
+      "seed_keywords": [
+        "61 dias",
+        "99 dias",
+        "haciendo clic",
+        "reprogramacion de habitos",
+        "resiliencia escenica",
+        "bloqueo creativo",
+        "autoconocimiento",
+        "micro-victorias",
+        "coherencia artistica",
+        "mentalidad profesional"
+      ]
+    },
+    "logistica_giras_14pax": {
+      "name": "Infraestructura, Giras & Logística (14 Plazas)",
+      "description": "Transporte en furgonetas de gran volumen de 14 plazas con backline integrado y optimización de márgenes.",
+      "seed_keywords": [
+        "furgoneta 14 plazas",
+        "convoy",
+        "transporte de gira",
+        "backline integrado",
+        "rutas interprovinciales",
+        "rider de directo",
+        "monitoreo in-ear",
+        "rack de microfonia",
+        "mesas digitales",
+        "gestion de dietas"
+      ]
+    },
+    "produccion_tecnica_audiovisual": {
+      "name": "Producción Técnica & Audiovisual",
+      "description": "Producción fonográfica, mezcla, máster y rodaje cinematográfico 4K.",
+      "seed_keywords": [
+        "produccion fonografica",
+        "mezcla y mastering",
+        "videoclip 4k",
+        "guion narrativo",
+        "plan de rodaje",
+        "sonorizacion acustica",
+        "microfonia shure",
+        "iluminacion dmx",
+        "acustica de escenario"
+      ]
+    },
+    "emanager_legal_monetizacion": {
+      "name": "Emanager, Marco Legal & Monetización",
+      "description": "Gestión de derechos conexos (AIE), autorales (SGAE), contratos y liquidación de cachés.",
+      "seed_keywords": [
+        "aie",
+        "sgae",
+        "derechos conexos",
+        "derechos de autor",
+        "contrato de representacion",
+        "liquidacion de caches",
+        "regimen de artistas",
+        "bolsa de empleo",
+        "emanager",
+        "patrocinios"
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "ART-SEED-001",
+      "source_file": "manual_estrategia_dani_aragon.md",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cluster": "dani_aragon_crecimiento",
+      "title": "Protocolo de Crecimiento y Embudos de Conversión para Artistas",
+      "summary": "Directrices maestras de Dani Aragón para optimizar el algoritmo de Spotify, retención de oyentes y creación de comunidad sin intermediarios.",
+      "content_clean": "La monetización del artista moderno exige pasar de mendigar escuchas a construir una base de superfans mediante embudos de retención progresiva y contenido magnético.",
+      "affinity_score": 0.95,
+      "tags": [
+        "dani_aragon",
+        "spotify",
+        "audiencia",
+        "monetizacion"
+      ],
+      "operational_rules": [
+        "Lanzamientos continuos cada 4 a 6 semanas",
+        "Retención mínima del 35% en los primeros 30 segundos en Spotify",
+        "Captación de correo directo para evitar la censura del algoritmo"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:00:00.000Z"
+    },
+    {
+      "id": "ART-SEED-002",
+      "source_file": "metodologia_61_99_dias_clic.md",
+      "sha256": "c71a39f691656b825a07c11cbcf946654a1a3641b00e3e232a537f59d6ab963d",
+      "cluster": "metodologia_61_99_dias",
+      "title": "Umbrales Neurológicos de Transformación: 61 y 99 Días Haciendo Clic",
+      "summary": "Metodología de anclaje de conducta artística. Automatización del proceso a los 61 días e identidad consolidada a los 99 días.",
+      "content_clean": "El talento sin estructura es entropía. El protocolo de 61 días ancla la disciplina de producción diaria. El umbral de 99 días redefine la autoimagen del artista como operador profesional.",
+      "affinity_score": 0.98,
+      "tags": [
+        "61_dias",
+        "99_dias",
+        "disciplina",
+        "mentalidad"
+      ],
+      "operational_rules": [
+        "Día 1 a 61: Consolidación de micro-victorias y rutina escénica innegociable",
+        "Día 62 a 99: Salto cuántico de identidad artística hacia el estándar S-Class",
+        "Evaluación semanal de coherencia y descarte de bloqueos creativos"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:00:00.000Z"
+    },
+    {
+      "id": "ART-SEED-003",
+      "source_file": "logistica_giras_convoy_14pax.md",
+      "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "cluster": "logistica_giras_14pax",
+      "title": "Economía de Convoy: Furgonetas de 14 Plazas y Backline Integrado",
+      "summary": "Estructura logística de Productora EAR para giras interprovinciales con ocupación mínima del 85% y margen del 42%.",
+      "content_clean": "El transporte no es un gasto, es la palanca que viabiliza el show. Con 14 plazas y espacio de carga para microfonía en rack, consolas y backline, se rentabilizan traslados de hasta 1.000 km.",
+      "affinity_score": 0.94,
+      "tags": [
+        "giras",
+        "logistica",
+        "14_plazas",
+        "backline"
+      ],
+      "operational_rules": [
+        "Punto de equilibrio: 12 pasajeros embarcados (85% de ocupación)",
+        "Margen bruto proyectado: 42% tras combustible y dietas",
+        "Check-in de backline y sistemas inalámbricos 2 horas antes de ruta"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:00:00.000Z"
+    },
+    {
+      "id": "ART-SEED-004",
+      "source_file": "produccion_audiovisual_4k_fonografica.md",
+      "sha256": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+      "cluster": "produccion_tecnica_audiovisual",
+      "title": "Estándar Cinematográfico 4K y Acústica de Alta Precisión",
+      "summary": "Protocolo de captura visual y registro sonoro multipista para producciones de catálogo EAR OS.",
+      "content_clean": "La estética cinematográfica monocromo y la fidelidad acústica en microfonía Shure Axient/Beta definen el sello inconfundible de las producciones de Productora EAR.",
+      "affinity_score": 0.92,
+      "tags": [
+        "audiovisual",
+        "4k",
+        "produccion",
+        "shure"
+      ],
+      "operational_rules": [
+        "Rodajes en 4K DCI con etalonaje de color S-Class",
+        "Grabación multicanal en directo con reserva dinámica > 18 dB",
+        "Entrega de masters DDP y archivos broadcast WAV 24-bit/48kHz"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:00:00.000Z"
+    },
+    {
+      "id": "ART-SEED-005",
+      "source_file": "emanager_servicios_marco_legal.md",
+      "sha256": "7c5e3170bc73099047970d4f3b7d159f8a3297a7e8412fffa3c3b0dfae38cbbe",
+      "cluster": "emanager_legal_monetizacion",
+      "title": "Emanager 360: Liquidación, Derechos Conexos y Bolsa de Empleo",
+      "summary": "Modelo de gestión artística integral con fee base de 1.500 €/mes MRR y liquidación puntual de cachés.",
+      "content_clean": "El servicio de Emanager en Productora EAR asume la defensa integral del artista: registro de catálogos en AIE y SGAE, confección de contratos y auditoría de recaudación.",
+      "affinity_score": 0.96,
+      "tags": [
+        "emanager",
+        "aie",
+        "sgae",
+        "contratos",
+        "mrr"
+      ],
+      "operational_rules": [
+        "Fee base de gestión: 1.500 € / mes MRR por artista en aceleración",
+        "Split estándar soberano: 80% Artista / 10% EAR OS / 10% VIMUME",
+        "Auditoría trimestral de recaudación por streaming y derechos de comunicación pública"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:00:00.000Z"
+    }
+  ]
+}

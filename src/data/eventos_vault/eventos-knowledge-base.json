@@ -1,0 +1,186 @@
+{
+  "metadata": {
+    "system": "EAR OS V2 // Eventos Knowledge Base & Production Engine 360",
+    "version": "1.0.0-GOLD",
+    "last_updated": "2026-09-03T14:06:21.569943",
+    "total_entries": 4,
+    "cluster_counts": {
+      "eventos_propios": 1,
+      "terceros_parejas_bodas": 1,
+      "fechas_senaladas": 1,
+      "riders_logistica_tecnica": 1
+    }
+  },
+  "operational_thresholds": {
+    "ticket_suelo_bodas_eur": 3800,
+    "margen_bruto_base_pct": 0.58,
+    "tasa_recontratacion_anual_pct": 0.3,
+    "coste_desplazamiento_km_eur": 0.45,
+    "tiempo_limite_preventa_propios_dias": 21,
+    "max_eventos_simultaneos_dia": 3
+  },
+  "clusters_definition": {
+    "eventos_propios": {
+      "name": "Eventos Propios (Conciertos & Festivales Boutique)",
+      "description": "Producción propia boutique (150 a 400 pax) con control de taquilla, punto de equilibrio dinámico a D-21 y sponsors.",
+      "seed_keywords": [
+        "conciertos propios",
+        "festivales boutique",
+        "ticketing",
+        "punto de equilibrio",
+        "plan de autoproteccion",
+        "dossier de patrocinio",
+        "sponsors",
+        "memorias economicas",
+        "hojas de liquidacion",
+        "aforo boutique"
+      ]
+    },
+    "terceros_parejas_bodas": {
+      "name": "De Terceros: Parejas & Bodas S-Class",
+      "description": "Paquetes cerrados de alto ticket (Silver, Gold, S-Class Diamond) con margen superior al 58% y minutado exhaustivo.",
+      "seed_keywords": [
+        "bodas 360",
+        "parejas",
+        "paquete silver",
+        "paquete gold",
+        "paquete diamond sclass",
+        "timing ceremonia",
+        "coctel",
+        "banquete",
+        "barra libre",
+        "contrato de reserva",
+        "musica en directo",
+        "fincas exclusivas"
+      ]
+    },
+    "fechas_senaladas": {
+      "name": "Fechas Señaladas & Recurrencia Desestacionalizada",
+      "description": "Día de la Madre, Padre, Aniversarios y Fin de Año con multiplicadores de demanda (1.8x a 2.5x) y recurrencia del 30%.",
+      "seed_keywords": [
+        "dia de la madre",
+        "dia del padre",
+        "aniversarios",
+        "serenatas privadas",
+        "navidad",
+        "nochevieja",
+        "campanadas",
+        "cotillon de gala",
+        "tarifas alta demanda",
+        "multiplicador de tarifa",
+        "recontratacion"
+      ]
+    },
+    "riders_logistica_tecnica": {
+      "name": "Riders & Logística Técnica",
+      "description": "Ingeniería de sonido (12 W/pax interior, 18 W/pax exterior), microfonía Shure Axient/Beta, iluminación DMX y checklists.",
+      "seed_keywords": [
+        "rider tecnico",
+        "potencia pa",
+        "12 w/pax",
+        "18 w/pax",
+        "bose f1",
+        "shure beta 87a",
+        "axient",
+        "glxd4",
+        "iluminacion dmx",
+        "tiempos de montaje",
+        "prueba de sonido"
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "EVT-SEED-001",
+      "source_file": "protocolo_produccion_propia_boutique_punto_muerto.md",
+      "sha256": "8a3e9c701b2f4c6e9d8a1f3e5b7c9d0a2f4e6b8d0c2e4a6f8b0d2e4a6c8e0b2a",
+      "cluster": "eventos_propios",
+      "title": "Protocolo de Viabilidad Dinámica en Formatos Boutique (150-400 Pax)",
+      "summary": "Métrica de punto de equilibrio a 21 días de la fecha de celebración. Cancelación o reestructuración preventiva si la preventa es inferior al 65% de aforo.",
+      "content_clean": "La gestión de riesgo en festivales y conciertos boutique de Productora EAR exige un cálculo de viabilidad matemática inflexible: los costes de recinto, sonido e indemnizaciones deben quedar cubiertos mediante sponsors y ticketing temprano antes del día D-21.",
+      "affinity_score": 0.96,
+      "tags": [
+        "eventos_propios",
+        "ticketing",
+        "viabilidad",
+        "sponsors",
+        "boutique"
+      ],
+      "operational_rules": [
+        "Aforo acotado entre 150 y 400 asistentes de alto valor percibido",
+        "Preventa mínima obligatoria del 65% a fecha D-21",
+        "Cobertura del 100% de costes técnicos mediante sponsors corporativos"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:05:00.000Z"
+    },
+    {
+      "id": "EVT-SEED-002",
+      "source_file": "catalogo_bodas_360_sclass_diamond.md",
+      "sha256": "3b2e5a7d9c1f4e6b8a0d2f4e6b8d0c2e4a6f8b0d2e4a6c8e0b2a4f6e8d0c2e4a",
+      "cluster": "terceros_parejas_bodas",
+      "title": "Arquitectura de Bodas 360 S-Class Diamond: Suelo 3.800 € y Margen ≥ 58%",
+      "summary": "Estandarización de 3 niveles de producción (Silver, Gold, Diamond S-Class) con ceremoniador, cóctel acústico, iluminación ambiental y DJ en directo.",
+      "content_clean": "El modelo de Bodas 360 en Productora EAR erradica la negociación a la baja. Se ofrece una experiencia inmersiva por zonas con microfonía Shure Axient para ceremonias sin acoples, música en directo con Edwin Agudelo durante el cóctel y banquete, y cierre con iluminación dinámica y fuegos fríos.",
+      "affinity_score": 0.98,
+      "tags": [
+        "bodas",
+        "alto_ticket",
+        "diamond",
+        "margen_58"
+      ],
+      "operational_rules": [
+        "Ticket suelo de entrada: 3.800 € netos por contrato",
+        "Margen bruto operativo mínimo: 58% tras costes directos de personal y furgón",
+        "Minutado minuto a minuto validado con la finca 15 días antes"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:05:00.000Z"
+    },
+    {
+      "id": "EVT-SEED-003",
+      "source_file": "desestacionalizacion_fechas_senaladas_madre_padre_aniversarios.md",
+      "sha256": "9d0a2f4e6b8d0c2e4a6f8b0d2e4a6c8e0b2a4f6e8d0c2e4a8a3e9c701b2f4c6e",
+      "cluster": "fechas_senaladas",
+      "title": "Desestacionalización Predictiva: Fechas Señaladas y Fidelización Anual",
+      "summary": "Campañas de serenatas y micro-conciertos para el Día de la Madre, Padre, Aniversarios y Galas de Nochevieja con 30% de recontratación anual.",
+      "content_clean": "En fechas de demanda inelástica, la capacidad técnica y artística de Productora EAR se cotiza con un factor multiplicador de hasta 2.5x. Los aniversarios de parejas y festividades familiares generan un 30% de recontratación con CAC cero entre noviembre y marzo.",
+      "affinity_score": 0.95,
+      "tags": [
+        "fechas_senaladas",
+        "madre_padre",
+        "aniversarios",
+        "nochevieja",
+        "recurrencia"
+      ],
+      "operational_rules": [
+        "Tasa de recontratación objetivo: 30% en aniversarios y fechas familiares",
+        "Multiplicador 1.8x a 2.5x en Nochevieja, Nochebuena y San Juan",
+        "Recordatorio de fidelización automatizado a D-45 de cada aniversario"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:05:00.000Z"
+    },
+    {
+      "id": "EVT-SEED-004",
+      "source_file": "rider_acustico_12w_pax_f1_shure.md",
+      "sha256": "2e4a6f8b0d2e4a6c8e0b2a4f6e8d0c2e4a8a3e9c701b2f4c6e3b2e5a7d9c1f4e",
+      "cluster": "riders_logistica_tecnica",
+      "title": "Rider Acústico Oficial: 12 W/pax Interiores / 18 W/pax Exteriores",
+      "summary": "Estándar de presión sonora, sistemas Bose F1 812 y checklist de montaje para garantizar directos impecables.",
+      "content_clean": "La regla inmutable de Productora EAR estipula 12 W de potencia RMS por asistente en recintos cubiertos y 18 W/pax en exteriores. Se utilizan sistemas de array flexible Bose F1 y microfonía vocal Shure Beta 87A y Axient para erradicar interferencias RF en fincas y espacios complejos.",
+      "affinity_score": 0.97,
+      "tags": [
+        "rider",
+        "12w_pax",
+        "18w_pax",
+        "bose_f1",
+        "shure_axient",
+        "acustica"
+      ],
+      "operational_rules": [
+        "Potencia PA calculada: 12 W/pax (Interiores) o 18 W/pax (Exteriores)",
+        "Escaneo de radiofrecuencias obligatorio 30 minutos antes del show",
+        "Checklist de tiempos: furgón en recinto D-3h, prueba de sonido D-1h"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:05:00.000Z"
+    }
+  ]
+}

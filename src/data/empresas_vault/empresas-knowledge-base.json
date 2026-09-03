@@ -1,0 +1,142 @@
+{
+  "metadata": {
+    "system": "EAR OS V2 // Empresas Knowledge Base & B2B Partner Hub",
+    "version": "1.0.0-GOLD",
+    "last_updated": "2026-09-03T14:31:09.839267",
+    "total_entries": 3,
+    "cluster_counts": {
+      "proveedores_y_fincas": 1,
+      "gestion_multimedia_b2b": 1,
+      "afiliados_y_comisiones": 1
+    }
+  },
+  "operational_thresholds": {
+    "fincas_homologadas_objetivo": 12,
+    "comision_minima_afiliado_pct": 0.1,
+    "comision_maxima_afiliado_pct": 0.15,
+    "max_concentracion_facturacion_finca_pct": 0.35,
+    "plazo_liquidacion_comision_dias": 7,
+    "sla_onboarding_express_minutos": 15
+  },
+  "clusters_definition": {
+    "proveedores_y_fincas": {
+      "name": "Proveedores Homologados & Fincas Partner",
+      "description": "Fichas técnicas de espacios, potencia eléctrica (kW), límites de sonido dBA/dBC y pólizas de RC.",
+      "seed_keywords": [
+        "finca partner",
+        "homologacion tecnica",
+        "potencia electrica",
+        "cetac trifasico",
+        "limite de sonido",
+        "dba",
+        "dbc",
+        "limitador acustico",
+        "acceso furgon 14 plazas",
+        "poliza rc",
+        "responsabilidad civil",
+        "fincas toledo",
+        "fincas madrid"
+      ]
+    },
+    "gestion_multimedia_b2b": {
+      "name": "Gestión de Área Privada & Multimedia B2B",
+      "description": "Press kits co-brandeados, rodajes cinematográficos 4K de espacios y cesión de derechos de imagen.",
+      "seed_keywords": [
+        "area privada b2b",
+        "press kit",
+        "assets 4k",
+        "video promocional espacio",
+        "galeria de alta resolucion",
+        "derechos de fijacion",
+        "cesion de imagen",
+        "co-branding ear"
+      ]
+    },
+    "afiliados_y_comisiones": {
+      "name": "Red de Afiliación & Comisiones Cruzadas",
+      "description": "Acuerdos de comisión transparente (10% a 15%), liquidación en 7 días hábiles y scoring de partners.",
+      "seed_keywords": [
+        "comisiones cruzadas",
+        "afiliados b2b",
+        "10 por ciento",
+        "15 por ciento",
+        "wedding planner partner",
+        "catering asociado",
+        "fotografo colaborador",
+        "scoring de partner",
+        "liquidacion automatica",
+        "autofactura b2b"
+      ]
+    }
+  },
+  "items": [
+    {
+      "id": "EMP-SEED-001",
+      "source_file": "protocolo_homologacion_fincas_seguridad_acustica.md",
+      "sha256": "4a1f3e5b7c9d0a2f4e6b8d0c2e4a6f8b0d2e4a6c8e0b2a8a3e9c701b2f4c6e9d",
+      "cluster": "proveedores_y_fincas",
+      "title": "Protocolo de Homologación de Fincas: Acometida Eléctrica y Límite Acústico",
+      "summary": "Requisitos obligatorios para admitir un espacio: mínimo 15 kW trifásico con toma CETAC 32A/16A, calibración del limitador dBA y póliza RC de 300.000 €.",
+      "content_clean": "La homologación técnica de fincas y espacios en Productora EAR elimina contingencias en directos. Se auditan las caídas de tensión de la red eléctrica, se mapean las zonas de dispersión sonora y se certifica que el convoy logístico de 14 plazas cuenta con radio de giro y acceso despejado.",
+      "affinity_score": 0.98,
+      "tags": [
+        "homologacion",
+        "fincas",
+        "potencia_kw",
+        "rc_300k",
+        "acustica"
+      ],
+      "operational_rules": [
+        "Acometida mínima certificada: 15 kW trifásicos independientes para audio y luces",
+        "Inspección acústica con sonómetro calibrado previo a la firma del convenio",
+        "Póliza de Responsabilidad Civil al corriente con cobertura mínima de 300.000 €"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:26:00.000Z"
+    },
+    {
+      "id": "EMP-SEED-002",
+      "source_file": "dossier_multimedia_b2b_press_kits_espacios.md",
+      "sha256": "1c4e6b8a0d2f4e6b8d0c2e4a6f8b0d2e4a6c8e0b2a4f6e8d0c2e4a3b2e5a7d9c",
+      "cluster": "gestion_multimedia_b2b",
+      "title": "Área Privada B2B: Press Kits y Contratos de Cesión de Imagen en 4K",
+      "summary": "Entrega de material audiovisual cinematográfico a espacios asociados. Los vídeos y fotos pesados se alojan externamente sin saturar el servidor.",
+      "content_clean": "El valor añadido para las fincas socias es la coproducción de contenido publicitario de alta gama: tomas aéreas con dron, iluminación arquitectónica en jardines y montajes de directos con el sello EAR, entregando press kits co-brandeados descargables con enlaces protegidos.",
+      "affinity_score": 0.95,
+      "tags": [
+        "multimedia",
+        "press_kit",
+        "video_4k",
+        "area_privada",
+        "cesion_imagen"
+      ],
+      "operational_rules": [
+        "Los binarios pesados (RAW, 4K) residen en almacenamiento externo o Cloudflare R2",
+        "Firma digital de cesión de imagen previa al rodaje en las instalaciones",
+        "Actualización semestral de los press kits para las campañas nupciales"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:26:00.000Z"
+    },
+    {
+      "id": "EMP-SEED-003",
+      "source_file": "convenio_afiliacion_comisiones_cruzadas_b2b.md",
+      "sha256": "8d0c2e4a6f8b0d2e4a6c8e0b2a4f6e8d0c2e4a8a3e9c701b2f4c6e9d0a2f4e6b",
+      "cluster": "afiliados_y_comisiones",
+      "title": "Reglamento de Comisiones Cruzadas: Liquidación en 7 Días y Scoring de Partner",
+      "summary": "Comisiones del 10% al 15% para wedding planners, fincas y caterings por evento cerrado. Liquidación a los 7 días de cobrada la fianza.",
+      "content_clean": "La red de afiliados de Productora EAR premia la recomendación profesional. Cada partner dispone de un código de trazabilidad único. Al formalizarse la reserva de una boda (mínimo 3.800 €), se devenga automáticamente una comisión de entre 380 € y 570 € netos, liquidada en 7 días hábiles.",
+      "affinity_score": 0.97,
+      "tags": [
+        "afiliados",
+        "comisiones_10_15",
+        "liquidaciones",
+        "scoring_partner"
+      ],
+      "operational_rules": [
+        "Comisión del 10% en paquete Silver/Gold y 15% en paquete S-Class Diamond",
+        "Liquidación bancaria automática en un plazo máximo de 7 días hábiles",
+        "Umbral de scoring: Partners con conversión < 25% entran en revisión formativa"
+      ],
+      "ingestion_timestamp": "2026-09-03T14:26:00.000Z"
+    }
+  ]
+}

@@ -599,3 +599,33 @@ export const MASTER_TAXONOMY: TaxonomyNode = {
     }
   ]
 };
+
+export type GraphRole = 'artistas' | 'eventos' | 'empresas' | 'instituciones' | 'vimume';
+
+export interface NodeTelemetry {
+  cluster: string;
+  ticketSuelo?: number | string;
+  margenBruto?: string;
+  umbralOperativo?: string;
+  frecuenciaHz?: number;
+  normativa?: string;
+  activeDocumentsCount?: number;
+  lastUpdated?: string;
+  metrics: MetricItem[];
+}
+
+export interface GraphNode extends SimulationNode {
+  telemetry?: NodeTelemetry;
+}
+
+export interface GraphLink extends SynapseLink {}
+
+export interface PhysicsConfig {
+  springLength: number;
+  springStrength: number;
+  repulsion: number;
+  damping: number;
+  centerGravity: number;
+  mouseRepulsionRadius: number;
+  mouseRepulsionStrength: number;
+}
