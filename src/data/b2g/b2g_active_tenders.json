@@ -1,0 +1,22 @@
+[
+  {
+    "id": "PLACE-2026-MUNICIPAL-081",
+    "entidad": "Ayuntamiento de Navalcarnero",
+    "objeto": "Suministro de Espectáculo Musical de Fiestas Patronales",
+    "presupuesto_licitacion": 12500.0,
+    "tipo_contrato": "Menor de Servicios (Art. 118 LCSP)",
+    "fecha_limite": "2026-09-15",
+    "viabilidad_doble_impacto": true,
+    "estado": "DETECTADO"
+  },
+  {
+    "id": "PLACE-2026-MUNICIPAL-082",
+    "entidad": "Ayuntamiento de Méntrida",
+    "objeto": "Programación Cultural y Actuación Lírica Fiestas Mayores",
+    "presupuesto_licitacion": 9800.0,
+    "tipo_contrato": "Menor de Servicios (Art. 118 LCSP)",
+    "fecha_limite": "2026-09-20",
+    "viabilidad_doble_impacto": true,
+    "estado": "DETECTADO"
+  }
+]
