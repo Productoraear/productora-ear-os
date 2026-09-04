@@ -153,7 +153,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
           cataloguePage: prod.cataloguePage,
           priceNumeric: prod.priceNumeric,
           municipality: 'Sede Municipal / Corporativa',
-          priceLockMode: 'SMART_LOCK_10EUR'
+          priceLockMode: 'SMART_LOCK_100EUR'
         });
 
         if (res?.url) {
@@ -178,7 +178,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
         <div className="max-w-7xl mx-auto relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-semibold uppercase tracking-widest mb-6">
             <Sparkles className="w-3.5 h-3.5" />
-            División Alumbrado Monumental & Arquitectura Lumínica S-Class · Productora EAR
+            Infraestructura Lumínica S-Class · División Alumbrado Monumental Productora EAR
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
@@ -188,19 +188,22 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
             </span>
           </h1>
 
-          <p className="max-w-3xl mx-auto text-base sm:text-lg text-neutral-400 font-light leading-relaxed mb-8">
-            Catálogo técnico oficial clasificado en 11 categorías de producto. Accede a las fichas técnicas instantáneas, memorias visadas para pliegos públicos LCSP y reserva de stock mediante Stripe Smart-Lock.
+          <p className="max-w-3xl mx-auto text-base sm:text-lg text-neutral-300 font-light leading-relaxed mb-8">
+            Catálogo técnico oficial de 652 referencias monumentales homologadas. En Productora EAR cada elemento vale con creces lo que ofrece: chasis reforzado de aluminio anodizado, micro-LED de alta densidad IP65/IP67, memorias visadas para pliegos públicos Art. 118 LCSP (&lt;14.250€) y reserva de stock mediante depósito transaccional Stripe Smart-Lock (100 €) con firma criptográfica SHA-256.
           </p>
 
           <div className="flex flex-wrap justify-center gap-4 text-xs sm:text-sm text-neutral-300 mb-8">
             <span className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10">
-              <ShieldCheck className="w-4 h-4 text-[#ecb613]" /> Pliegos LCSP / Contrato Menor (&lt;15.000€)
+              <ShieldCheck className="w-4 h-4 text-[#ecb613]" /> Pliegos LCSP / Contrato Menor (&lt;14.250€)
             </span>
             <span className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10">
-              <Zap className="w-4 h-4 text-[#ecb613]" /> Seguridad Eléctrica 24V / 230V · IP65/IP67
+              <Zap className="w-4 h-4 text-[#ecb613]" /> Seguridad Eléctrica Certificada 24V / 230V · IP65/IP67
             </span>
             <span className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10">
-              <Truck className="w-4 h-4 text-[#ecb613]" /> Logística, Grúa Pluma y Montaje Certificado
+              <Truck className="w-4 h-4 text-[#ecb613]" /> Logística Propia, Grúa Pluma y Montaje Visado
+            </span>
+            <span className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10">
+              <Award className="w-4 h-4 text-[#ecb613]" /> Póliza de Responsabilidad Civil 1.000.000 €
             </span>
           </div>
         </div>
@@ -400,14 +403,14 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                     </button>
                   </div>
 
-                  {/* Botón Smart-Lock Stripe 10€ */}
+                  {/* Botón Smart-Lock Stripe 100€ SHA-256 */}
                   <button
                     onClick={() => handleSmartLock(prod)}
                     disabled={isPending}
                     className="w-full py-2 rounded-xl bg-[#ecb613]/10 hover:bg-[#ecb613] text-[#ecb613] hover:text-black border border-[#ecb613]/30 font-mono text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
                   >
                     {isLockingThis ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Lock className="w-3.5 h-3.5" />}
-                    Smart-Lock 72h (10 €)
+                    Smart-Lock 72h (100 €)
                   </button>
                 </div>
               </div>
@@ -593,7 +596,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                     className="w-full py-3 rounded-xl bg-gradient-to-r from-[#ecb613] to-[#d4af37] text-black font-bold text-xs hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 disabled:opacity-50 font-mono uppercase tracking-wider cursor-pointer"
                   >
                     {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Lock className="w-4 h-4" />}
-                    Smart-Lock 72h (10 € Depósito)
+                    Smart-Lock 72h (100 € Depósito SHA-256)
                   </button>
 
                   <div className="flex gap-2">

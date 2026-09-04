@@ -159,16 +159,16 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
       setIsPricerOpen(true);
     } else {
       const text = encodeURIComponent(
-        `Hola Productora EAR, deseo cotización express para ${itemName} (${safeCategory.toUpperCase()}) en ${capitalizedLocation}. Precio estimado: desde ${basePrice}€.`
+        `Hola Productora EAR, deseo formalizar reserva S-Class para ${itemName} (${safeCategory.toUpperCase()}) en ${capitalizedLocation}. Presupuesto oficial: desde ${basePrice}€. Solicitamos verificación de rider acústico 12W/pax y póliza de 1M€ con Price-Lock SHA-256.`
       );
       window.open(`https://wa.me/34693693048?text=${text}`, '_blank');
     }
   };
 
   const fallbackDesc =
-    'Infraestructura técnica directa, operadores homologados y reserva con garantía en ' +
+    'Infraestructura técnica directa, operadores homologados y garantía absoluta de ejecución en ' +
     capitalizedLocation +
-    '.';
+    '. Cero riesgo, sonido calibrado 12 W/pax y póliza de responsabilidad civil de 1.000.000 €.';
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans p-6 md:p-12 pb-24">
@@ -176,7 +176,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
         <div className="flex items-center gap-2 mb-2">
           <span className="h-2 w-2 rounded-full bg-[#ecb613] animate-pulse"></span>
           <span className="text-xs font-bold tracking-widest text-[#ecb613] uppercase">
-            Productora EAR • S-Class Logistics OS
+            Productora EAR • S-Class Logistics OS · Garantía de Cero Fallo
           </span>
         </div>
         <h1 className="text-4xl md:text-6xl font-black mt-2 text-white tracking-tight uppercase">
@@ -191,17 +191,28 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
             </>
           )}
         </h1>
-        <p className="text-neutral-400 mt-4 text-lg max-w-3xl leading-relaxed">
+        <p className="text-neutral-300 mt-4 text-base md:text-lg max-w-3xl leading-relaxed">
           {description || fallbackDesc}
         </p>
+        <div className="mt-4 flex flex-wrap items-center gap-4 text-xs font-mono text-neutral-400">
+          <span className="flex items-center gap-1 text-emerald-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Póliza RC 1.000.000 €
+          </span>
+          <span>•</span>
+          <span className="text-amber-400">Rider Acústico 12 W/pax Bose F1</span>
+          <span>•</span>
+          <span className="text-blue-400">Split Soberano 80/10/10</span>
+          <span>•</span>
+          <span className="text-neutral-300">Depósito Stripe 100,00 € (Price-Lock SHA-256)</span>
+        </div>
       </header>
 
       <main className="max-w-6xl mx-auto space-y-8">
         <div className="flex items-center justify-between border-b border-neutral-800/80 pb-4">
           <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            <span>Catálogo Homologado</span>
-            <span className="text-xs bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/30 px-2 py-0.5 rounded-full font-mono">
-              {displayList.length} Disponibles
+            <span>Catálogo Oficial Homologado</span>
+            <span className="text-xs bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/30 px-2.5 py-0.5 rounded-full font-mono font-bold">
+              {displayList.length} Formatos S-Class
             </span>
           </h2>
         </div>
@@ -228,7 +239,7 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                     <span>
                       ⭐ {item.rating} ({item.reviews} reseñas)
                     </span>
-                    <span className="text-white font-semibold">{item.priceTag}</span>
+                    <span className="text-white font-semibold font-mono">{item.priceTag}</span>
                   </div>
                   <h3 className="text-lg font-bold text-white group-hover:text-[#ecb613] transition-colors">
                     {item.name}
@@ -243,9 +254,9 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
                 </div>
                 <button
                   onClick={() => handleCotizarExpress(item.name, item.basePrice)}
-                  className="w-full py-2.5 bg-neutral-800 hover:bg-[#ecb613] text-white hover:text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 active:scale-95 shadow-lg"
+                  className="w-full py-2.5 bg-neutral-800 hover:bg-[#ecb613] text-white hover:text-black font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-300 active:scale-95 shadow-lg flex items-center justify-center gap-2"
                 >
-                  Cotización Express Directa
+                  Contratación S-Class · Cero Riesgo
                 </button>
               </div>
             </article>

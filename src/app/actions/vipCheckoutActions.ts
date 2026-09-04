@@ -27,7 +27,7 @@ const B2GLightingCheckoutSchema = z.object({
   cataloguePage: z.number().optional().default(1),
   priceNumeric: z.number().nullable().optional(),
   municipality: z.string().optional().default('Sede Municipal / Corporativa'),
-  priceLockMode: z.enum(['SMART_LOCK_10EUR', 'DEPOSIT_RESERVATION']).default('SMART_LOCK_10EUR')
+  priceLockMode: z.enum(['SMART_LOCK_100EUR', 'SMART_LOCK_10EUR', 'DEPOSIT_RESERVATION']).default('SMART_LOCK_100EUR')
 });
 
 const SupplierUnlockCheckoutSchema = z.object({
@@ -142,9 +142,9 @@ export async function createB2GLightingCheckout(input: B2GLightingCheckoutInput)
 
   const { sku, productName, category, cataloguePage, priceNumeric, municipality } = parsed.data;
 
-  const chargeAmount = 10; // 10 € Smart-Lock
-  const conceptTitle = `Smart-Lock 72h · Bloqueo de Stock & Tarifa LCSP (Ref: ${sku})`;
-  const conceptDesc = `Reserva oficial de stock de fábrica y emisión de memoria técnica visada para ${productName} (${municipality}). Depósito compensable en pliego final.`;
+  const chargeAmount = 100; // 100,00 € Depósito Smart-Lock SHA-256 (SSOT Inmutable S-Class)
+  const conceptTitle = `Smart-Lock 72h · Bloqueo de Stock & Tarifa LCSP SHA-256 (Ref: ${sku})`;
+  const conceptDesc = `Depósito transaccional oficial de 100,00 € con firma criptográfica SHA-256 para reserva de stock de fábrica y emisión de memoria técnica visada para ${productName} (${municipality}). Compensable al 100% en factura o pliego de contratación.`;
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
 
