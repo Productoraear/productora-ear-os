@@ -34,8 +34,9 @@
       "title": "Despliegue de Rutas Magnates NDA y Ejecución del Cazador B2G",
       "command": "npx tsx scripts/inject_magnates_matrix.ts && python scripts/b2g_tender_hunter.py && npx tsc --noEmit && git add . && git commit -m \"feat(seo/b2g): inyectar 125 rutas de magnates NDA y activar sonda cazador licitaciones menores\" --allow-empty && git push origin main && git push vercel-repo main",
       "execution_command": "npx tsx scripts/inject_magnates_matrix.ts && python scripts/b2g_tender_hunter.py && npx tsc --noEmit && git add . && git commit -m \"feat(seo/b2g): inyectar 125 rutas de magnates NDA y activar sonda cazador licitaciones menores\" --allow-empty && git push origin main && git push vercel-repo main",
-      "status": "PENDING",
-      "error": null
+      "status": "COMPLETED",
+      "error": null,
+      "completed_at": "2026-09-04 19:50:12"
     }
   ],
   "global_constraints": {
