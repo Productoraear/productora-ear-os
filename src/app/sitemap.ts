@@ -132,5 +132,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn('[SITEMAP] Error leyendo all_providers_database:', err);
   }
 
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 6. VERTICAL 10: MAGNATES, FINCAS PRIVADAS & YATES (NDA) — 125 Rutas
+  //    Anti-OOM: sub-sitemap en /sitemaps/magnates-nda
+  //    Fuente: src/data/magnates_nda_routes.json
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  addEntry(`${BASE_URL}/artistas/edwin-agudelo/ultra-luxury-nda`, 0.75, 'monthly');
+
   return entries;
 }

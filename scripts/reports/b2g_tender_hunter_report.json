@@ -1,0 +1,12 @@
+{
+  "session_ts": "2026-09-04T20:02:39.344795",
+  "duration_s": 0.0,
+  "mode": "mock",
+  "ted_included": false,
+  "max_budget_eur": 14250.0,
+  "expedientes_gen": 9,
+  "doble_impacto_ops": 8,
+  "split_soberano": "80/10/10 INMUTABLE",
+  "techo_lcsp_eur": 14999.99,
+  "ajuste_prev_eur": 14250.0
+}
