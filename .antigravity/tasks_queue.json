@@ -30,10 +30,10 @@
   ],
   "tasks": [
     {
-      "id": "TAREA_10_GLOBAL_LUXURY_500",
-      "title": "Compilación y Despliegue de 500 Rutas Globales de Ultra-Lujo",
-      "command": "npx tsx scripts/inject_global_matrix.ts && npx tsc --noEmit && git add . && git commit -m \"feat(seo): inyectar 500 rutas globales de ultra-lujo (embajadas, vip clubs, hoteles 5* gl, destination weddings)\" --allow-empty && git push origin main && git push vercel-repo main",
-      "execution_command": "npx tsx scripts/inject_global_matrix.ts && npx tsc --noEmit && git add . && git commit -m \"feat(seo): inyectar 500 rutas globales de ultra-lujo (embajadas, vip clubs, hoteles 5* gl, destination weddings)\" --allow-empty && git push origin main && git push vercel-repo main",
+      "id": "TAREA_11_EQUESTRIAN_125",
+      "title": "Compilación y Despliegue de Vertical Ecuestre Internacional",
+      "command": "npx tsx scripts/inject_equestrian_matrix.ts && npx tsc --noEmit && git add . && git commit -m \"feat(seo): inyectar 125 rutas de ferias ecuestres y shows a caballo en europa\" --allow-empty && git push origin main && git push vercel-repo main",
+      "execution_command": "npx tsx scripts/inject_equestrian_matrix.ts && npx tsc --noEmit && git add . && git commit -m \"feat(seo): inyectar 125 rutas de ferias ecuestres y shows a caballo en europa\" --allow-empty && git push origin main && git push vercel-repo main",
       "status": "PENDING",
       "error": null
     }
