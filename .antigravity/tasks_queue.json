@@ -1,54 +1,221 @@
 {
   "_meta": {
-    "version": "1.0.0",
-    "generated_by": "ANTIGRAVITY System Orchestrator",
-    "generated_at": "2026-09-04T17:15:00+02:00",
-    "protocol": "BARE-METAL QWEN WORKER QUEUE",
-    "ssot_ref": "EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md",
-    "total_retos": 4,
-    "execution_mode": "SEQUENTIAL_STRICT"
+    "version": "2.0.0",
+    "generated_by": "ANTIGRAVITY System Orchestrator — MODO ARQUITECTO PURO",
+    "generated_at": "2026-09-04T17:27:00+02:00",
+    "protocol": "BARE-METAL QWEN WORKER — Zero-Token Memory (ZTM)",
+    "ssot_ref": "EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md | docs/EAR_OS_MASTER_HANDOFF_SOVEREIGN_SSOT.md",
+    "total_tareas": 4,
+    "execution_mode": "SEQUENTIAL_STRICT",
+    "executor": "CLINE + QWEN 3.8 (local GPU)",
+    "architect": "ANTIGRAVITY (design-only, no execution)"
   },
-  "tasks": [
+  "completed_retos": [
     {
       "id": "RETO_01_QR_VAMPIRE",
-      "priority": 1,
       "status": "COMPLETE",
-      "title": "Extracción Forense de QR Codes del Catálogo PDF de Luces de Navidad",
-      "script": "scripts/extract_pdf_qr_intel.py",
-      "inputs": ["H:\\EAR_OS_V2\\CATALOGO luces de navidad 2026 EAR.pdf"],
-      "outputs": ["src/data/luces_navidad_qr_metadata.json", "src/data/luces_navidad_2026_ear.json"],
-      "progress": "36 QR codes decoded. 234/652 products now have videoUrl. 128 newly enriched.",
-      "acceptance": ["luces_navidad_qr_metadata.json populated", "All hasVideo items have videoUrl"]
+      "summary": "36 QR codes decodificados, 234/652 productos con videoUrl, luces_navidad_qr_metadata.json generado"
     },
     {
       "id": "RETO_02_HTML_PURIFICATION",
-      "priority": 2,
       "status": "COMPLETE",
-      "title": "Vampirización y Purificación de HTMLs Locales de Proveedores",
-      "script": "scripts/vampirize_all_local_providers.py",
-      "outputs": ["src/data/all_providers_database.json (7516 providers)"]
+      "summary": "7.516 proveedores consolidados en all_providers_database.json (33.6 MB)"
     },
     {
       "id": "RETO_03_COMPILATION_SITEMAP",
-      "priority": 3,
       "status": "COMPLETE",
-      "title": "Compilación TypeScript Estricta y Sitemap SEO"
+      "summary": "npx tsc --noEmit Exit Code 0, sitemap generado"
     },
     {
       "id": "RETO_04_DEPLOY_GITHUB_VERCEL",
-      "priority": 4,
       "status": "COMPLETE",
-      "title": "Despliegue a GitHub + Vercel Production"
+      "summary": "Push a origin/main y vercel-repo/main verificado"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TAREA_01",
+      "priority": 1,
+      "status": "COMPLETED",
+      "title": "Ingesta Masiva de HTMLs Locales H:\\ e I:\\ hacia bodas-vendors-harvested.json",
+      "description": "Barrer TODOS los discos H:\\ e I:\\ buscando archivos HTML de proveedores. Extraer nombre, teléfono, localidad, provincia, geo, rating, precios, fotos y FAQs con regex ZTM. Purgar URLs de competidores y watermarks. Deduplicar por SHA-256 y nombre normalizado. Consolidar en bodas-vendors-harvested.json.",
+      "script": "scripts/vampirize_massive_html_vaults.py",
+      "execution_command": "python scripts/vampirize_massive_html_vaults.py",
+      "execution_flags": {
+        "dry_run": "python scripts/vampirize_massive_html_vaults.py --dry-run",
+        "limited": "python scripts/vampirize_massive_html_vaults.py --max 5000",
+        "drive_h_only": "python scripts/vampirize_massive_html_vaults.py --drive H",
+        "drive_i_only": "python scripts/vampirize_massive_html_vaults.py --drive I"
+      },
+      "scan_roots": [
+        "H:\\ARCHIVO_FRIO_ESTRUCTURAL",
+        "H:\\EAR_OS_V2",
+        "H:\\00_PRODUCTORA_EAR",
+        "H:\\INCUBADORA_EAR",
+        "H:\\BUNKER_EAR",
+        "I:\\",
+        "D:\\01_VERTICAL_EVENTOS"
+      ],
+      "inputs": [
+        "src/data/bodas-vendors-harvested.json (existing, 14.7MB base)",
+        "scripts/.processed_hashes.json (ZTM cache incremental)"
+      ],
+      "outputs": [
+        "src/data/bodas-vendors-harvested.json (enriched)",
+        "scripts/reports/vampire_massive_report.json (session report)",
+        "scripts/.processed_hashes.json (ZTM cache updated)"
+      ],
+      "acceptance_criteria": [
+        "bodas-vendors-harvested.json aumenta respecto a la base de 14.7MB",
+        "0 URLs de competidores (bodas.net, zankyou.es) en el output",
+        "0 watermarks o logos en arrays photos[]",
+        "SHA-256 cache actualizado para ejecuciones incrementales futuras",
+        "JSON válido — sin trailing commas, sin caracteres de control"
+      ],
+      "veto_triggers": [
+        "PROHIBIDO eval()",
+        "PROHIBIDO hardcoded secrets",
+        "PROHIBIDO modificar Split Soberano 80/10/10",
+        "PROHIBIDO incluir URLs con marca de agua o logos de competidores en output"
+      ],
+      "estimated_duration_minutes": 15,
+      "dependencies": [],
+      "error": null,
+      "completed_at": "2026-09-04 19:17:08"
+    },
+    {
+      "id": "TAREA_02",
+      "priority": 2,
+      "status": "COMPLETED",
+      "title": "Detección y Emparejamiento de Vídeos para 418 Productos sin videoUrl",
+      "description": "Buscar en carpetas locales de media (H:\\ e I:\\) archivos de vídeo (.mp4, .mov, .avi, .mkv) que coincidan por SKU o nombre con los 418 productos de luces_navidad_2026_ear.json que tienen hasVideo=false o no tienen videoUrl. Vincular localUrl o convertir a embed de Google Drive si el archivo ya está sincronizado en Drive.",
+      "script": "scripts/match_local_videos_to_catalog.py",
+      "execution_command": "python scripts/match_local_videos_to_catalog.py",
+      "algorithm": {
+        "step_1": "Cargar luces_navidad_2026_ear.json y filtrar productos sin videoUrl",
+        "step_2": "Scan recursivo de H:\\ e I:\\ para encontrar *.mp4, *.mov, *.avi, *.mkv",
+        "step_3": "Para cada video: extraer basename, limpiar y normalizar",
+        "step_4": "Fuzzy-match por SKU exacto O por nombre de producto (similaridad > 0.7)",
+        "step_5": "Si match encontrado: asignar localVideoPath + videoUrl (si drive link conocido)",
+        "step_6": "Guardar luces_navidad_2026_ear.json actualizado",
+        "step_7": "Generar scripts/reports/video_match_report.json con los emparejamientos"
+      },
+      "inputs": [
+        "src/data/luces_navidad_2026_ear.json",
+        "H:\\ (búsqueda recursiva de archivos de vídeo)",
+        "I:\\ (búsqueda recursiva de archivos de vídeo)"
+      ],
+      "outputs": [
+        "src/data/luces_navidad_2026_ear.json (videoUrl añadidos a productos restantes)",
+        "scripts/reports/video_match_report.json"
+      ],
+      "target_products": 418,
+      "target_fields": [
+        "videoUrl",
+        "localVideoPath",
+        "hasVideo"
+      ],
+      "acceptance_criteria": [
+        "Al menos 50 productos adicionales con videoUrl emparejado",
+        "hasVideo=true en todos los productos que tengan videoUrl",
+        "JSON válido y compilación TS limpia tras modificación"
+      ],
+      "veto_triggers": [
+        "PROHIBIDO eval()",
+        "NO modificar campos priceNumeric, priceDisplay o art_118_lcsp_compliant",
+        "NO tocar Split Soberano"
+      ],
+      "estimated_duration_minutes": 8,
+      "dependencies": [
+        "TAREA_01"
+      ],
+      "error": null,
+      "completed_at": "2026-09-04 19:18:31"
+    },
+    {
+      "id": "TAREA_03",
+      "priority": 3,
+      "status": "COMPLETED",
+      "title": "Validación TypeScript Estricta — npx tsc --noEmit",
+      "description": "Ejecutar compilación TypeScript estricta. Corregir CUALQUIER error de tipo antes de proceder al deploy. Exit Code 0 es requisito bloqueante.",
+      "script": "N/A — comando directo",
+      "execution_command": "npx tsc --noEmit",
+      "inputs": [
+        "Todo el código fuente TypeScript en src/"
+      ],
+      "outputs": [
+        "Exit Code 0 (requisito bloqueante)",
+        "Cero errores en stderr"
+      ],
+      "acceptance_criteria": [
+        "npx tsc --noEmit -> Exit Code 0",
+        "Sin errores TS2339, TS7006, TS2322 ni similares"
+      ],
+      "on_failure": "VETO_ESTRATEGICO_ACTIVADO — Corregir antes de continuar. NO hacer deploy con errores TS.",
+      "veto_triggers": [
+        "Exit Code != 0 bloquea TAREA_04"
+      ],
+      "estimated_duration_minutes": 2,
+      "dependencies": [
+        "TAREA_02"
+      ],
+      "completed_at": "2026-09-04 19:18:45"
+    },
+    {
+      "id": "TAREA_04",
+      "priority": 4,
+      "status": "PENDING",
+      "title": "Sincronización a Producción — Commit Dual + Push GitHub + Vercel",
+      "description": "Commit de todos los cambios de TAREA_01, TAREA_02 con mensaje estructurado. Push dual a origin/main (GitHub) y vercel-repo/main (Vercel). Verificar que el despliegue queda en estado Ready en el dashboard de Vercel.",
+      "script": "N/A — comandos git directos",
+      "execution_commands": [
+        "git add src/data/bodas-vendors-harvested.json src/data/luces_navidad_2026_ear.json scripts/reports/",
+        "git commit -m 'TAREA_01+02: Vampire massive HTML vaults + video match — providers +N, videoUrl +M'",
+        "git push origin main",
+        "git push vercel-repo main"
+      ],
+      "inputs": [
+        "src/data/bodas-vendors-harvested.json (updated)",
+        "src/data/luces_navidad_2026_ear.json (updated)",
+        "scripts/reports/ (new reports)"
+      ],
+      "outputs": [
+        "GitHub origin/main: nuevo commit con hash SHA verificable",
+        "Vercel: deployment status = Ready",
+        "productoraear.com: sin errores 500 en rutas /arsenal/luces-navidad/*"
+      ],
+      "acceptance_criteria": [
+        "git log --oneline -1 muestra el commit nuevo",
+        "Vercel dashboard -> Latest Deployment = Ready",
+        "curl https://productoraear.com/arsenal/luces-navidad -> HTTP 200"
+      ],
+      "on_failure": "Revisar build logs de Vercel. Ejecutar npx next build localmente para replicar el error.",
+      "veto_triggers": [
+        "PROHIBIDO deploy si TAREA_03 tiene Exit Code != 0",
+        "PROHIBIDO deploy si el commit incluye process.env.STRIPE_SECRET_KEY en texto plano"
+      ],
+      "estimated_duration_minutes": 3,
+      "dependencies": [
+        "TAREA_03"
+      ],
+      "command": "git add . ; git commit -m \"feat(harvest): consolidar 27.079 proveedores, video metadata 2026 y catalogo S-Class\" --allow-empty ; git push origin main ; git push vercel-repo main",
+      "execution_command": "git add . ; git commit -m \"feat(harvest): consolidar 27.079 proveedores, video metadata 2026 y catalogo S-Class\" --allow-empty ; git push origin main ; git push vercel-repo main",
+      "error": null
     }
   ],
   "global_constraints": {
     "typescript_strict": true,
     "tsc_exit_code_required": 0,
+    "next_build_validated": true,
     "no_eval": true,
     "no_hardcoded_secrets": true,
-    "split_soberano": "80/10/10",
-    "stripe_deposit": 100.00,
-    "visual_style": "Cinematic Monochrome S-Class"
+    "split_soberano": "80/10/10 INMUTABLE (AGENTS.md §2)",
+    "stripe_deposit_eur": 100.0,
+    "visual_style": "Cinematic Monochrome S-Class (True Black #050505 / Azul Electrico #258DCD)",
+    "reporting_format": "11-SECTION MANDATORY (AGENTS.md §7)",
+    "env_mandatory": [
+      "STRIPE_SECRET_KEY (via process.env — NUNCA hardcoded)",
+      "STRIPE_WEBHOOK_SECRET (via process.env — NUNCA hardcoded)"
+    ]
   }
 }
-
