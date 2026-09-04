@@ -194,7 +194,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `Proveedor Homologado S-Class #${providerIdShort} (${category} · ${location}) | Productora EAR`,
     description: `Ficha técnica oficial de proveedor homologado por Productora EAR en ${location}. Cobertura acústica garantizada (12 W/pax), seguro de RC y reserva oficial con Price-Lock 72h.`,
     alternates: {
-      canonical: `/proveedores/${slug.toLowerCase().trim()}`,
+      canonical: `https://www.productoraear.com/proveedores/${slug.toLowerCase().trim()}`,
     },
     keywords: ['proveedor homologado ear', 'sonido eventos madrid', 'iluminacion bodas madrid', 'alquiler equipos sonido', 'productora ear']
   };

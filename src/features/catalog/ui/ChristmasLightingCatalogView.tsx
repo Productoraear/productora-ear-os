@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { 
   Sparkles, ShieldCheck, Zap, PhoneCall, Truck, Award, 
   Eye, Layers, Search, Filter, CheckCircle2, ChevronRight, 
-  Lock, Loader2, CreditCard, X, ExternalLink, ChevronLeft, ArrowRight
+  Lock, Loader2, CreditCard, X, ExternalLink, ChevronLeft, ArrowRight,
+  Play, Video, FileText
 } from 'lucide-react';
 import type { ChristmasLightingProduct } from '@/data/luces-navidad';
 import { createB2GLightingCheckout } from '@/app/actions/vipCheckoutActions';
@@ -97,19 +98,29 @@ const CATEGORY_COVERS: Record<string, { page: number; image: string; desc: strin
 
 const ITEMS_PER_PAGE = 12;
 
+function getGoogleDriveEmbedUrl(url?: string): string | null {
+  if (!url) return null;
+  const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (match && match[1]) {
+    return `https://drive.google.com/file/d/${match[1]}/preview`;
+  }
+  return url;
+}
+
 export default function ChristmasLightingCatalogView({ products, categories, initialCategory = 'all' }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeModalProduct, setActiveModalProduct] = useState<ChristmasLightingProduct | null>(null);
-  const [modalTab, setModalTab] = useState<'product' | 'page'>('product');
+  const [modalTab, setModalTab] = useState<'product' | 'page' | 'video'>('product');
+  const [filterOnlyVideo, setFilterOnlyVideo] = useState<boolean>(false);
   const [pendingSku, setPendingSku] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  // Reset pagination when category or search changes
+  // Reset pagination when category, search or video filter changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, searchQuery, filterOnlyVideo]);
 
   // Lock scroll when modal is open
   useEffect(() => {
@@ -123,6 +134,10 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
     };
   }, [activeModalProduct]);
 
+  const totalWithVideo = useMemo(() => {
+    return products.filter((p) => Boolean(p.hasVideo || p.videoUrl)).length;
+  }, [products]);
+
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
       const matchCat = selectedCategory === 'all' || p.category === selectedCategory;
@@ -132,9 +147,10 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
         p.sku.toLowerCase().includes(q) || 
         p.description.toLowerCase().includes(q) ||
         (p.subcategory && p.subcategory.toLowerCase().includes(q));
-      return matchCat && matchSearch;
+      const matchVideo = !filterOnlyVideo || Boolean(p.hasVideo || p.videoUrl);
+      return matchCat && matchSearch && matchVideo;
     });
-  }, [products, selectedCategory, searchQuery]);
+  }, [products, selectedCategory, searchQuery, filterOnlyVideo]);
 
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
   const paginatedProducts = useMemo(() => {
@@ -291,16 +307,29 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
             />
           </div>
 
-          {/* Filtro activo */}
-          <div className="flex items-center gap-3">
+          {/* Filtros activos */}
+          <div className="flex flex-wrap items-center gap-3">
             {selectedCategory !== 'all' && (
               <button
                 onClick={() => setSelectedCategory('all')}
-                className="px-3 py-1.5 rounded-lg bg-red-950/60 border border-red-500/40 text-red-300 text-xs font-mono flex items-center gap-1.5 hover:bg-red-900/60 transition-colors"
+                className="px-3 py-1.5 rounded-lg bg-red-950/60 border border-red-500/40 text-red-300 text-xs font-mono flex items-center gap-1.5 hover:bg-red-900/60 transition-colors cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" /> Quitar Filtro ({selectedCategory})
               </button>
             )}
+
+            <button
+              type="button"
+              onClick={() => setFilterOnlyVideo(prev => !prev)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono flex items-center gap-1.5 transition-all border cursor-pointer ${
+                filterOnlyVideo 
+                  ? 'bg-red-600 border-red-400 text-white font-bold shadow-lg shadow-red-600/30 ring-1 ring-red-400' 
+                  : 'bg-white/5 border-white/10 text-neutral-300 hover:text-white hover:border-red-500/50'
+              }`}
+            >
+              <Play className={`w-3.5 h-3.5 ${filterOnlyVideo ? 'fill-current text-white' : 'text-red-400'}`} />
+              Solo con Vídeo {totalWithVideo > 0 && `(${totalWithVideo})`}
+            </button>
 
             <div className="text-xs text-neutral-400 font-mono flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -343,10 +372,23 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-80" />
                     
-                    <div className="absolute top-3 left-3">
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5">
                       <span className="px-2.5 py-1 rounded-md bg-black/90 backdrop-blur-md border border-[#ecb613]/40 font-mono text-[10px] text-[#ecb613] font-bold">
                         Ref: {prod.sku}
                       </span>
+                      {(prod.hasVideo || prod.videoUrl) && (
+                        <span 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveModalProduct(prod);
+                            setModalTab('video');
+                          }}
+                          className="px-2 py-0.5 rounded-md bg-red-600/90 hover:bg-red-500 text-white font-mono text-[10px] font-bold flex items-center gap-1 shadow-md cursor-pointer transition-colors"
+                          title="Ver vídeo oficial de demostración"
+                        >
+                          <Play className="w-2.5 h-2.5 fill-current" /> VÍDEO
+                        </span>
+                      )}
                     </div>
 
                     <div className="absolute top-3 right-3">
@@ -394,13 +436,31 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                       {prod.priceDisplay || 'Cotización a Medida'}
                     </div>
                     
-                    {/* Botón que abre el modal técnico instantáneo */}
-                    <button
-                      onClick={() => setActiveModalProduct(prod)}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-white hover:text-[#ecb613] transition-colors bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-lg border border-white/10 cursor-pointer"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-[#ecb613]" /> Ficha Técnica
-                    </button>
+                    <div className="flex items-center gap-1.5">
+                      {(prod.hasVideo || prod.videoUrl) && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveModalProduct(prod);
+                            setModalTab('video');
+                          }}
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-red-400 hover:text-red-300 transition-colors bg-red-950/50 hover:bg-red-900/60 px-2 py-1.5 rounded-lg border border-red-500/30 cursor-pointer"
+                          title="Ver vídeo oficial de demostración"
+                        >
+                          <Play className="w-3 h-3 fill-current text-red-400" /> Vídeo
+                        </button>
+                      )}
+                      {/* Botón que abre el modal técnico instantáneo */}
+                      <button
+                        onClick={() => {
+                          setModalTab('product');
+                          setActiveModalProduct(prod);
+                        }}
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-white hover:text-[#ecb613] transition-colors bg-white/5 hover:bg-white/10 px-2.5 py-1.5 rounded-lg border border-white/10 cursor-pointer"
+                      >
+                        <Eye className="w-3.5 h-3.5 text-[#ecb613]" /> Ficha
+                      </button>
+                    </div>
                   </div>
 
                   {/* Botón Smart-Lock Stripe 100€ SHA-256 */}
@@ -508,40 +568,84 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
 
             {/* Modal Body */}
             <div className="overflow-y-auto p-6 grid grid-cols-1 md:grid-cols-12 gap-6">
-              {/* Imagen Grande Oficial y Switcher de Lámina */}
-              <div className="md:col-span-7 flex flex-col gap-2">
-                <div className="rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[320px] max-h-[440px] relative">
-                  <img 
-                    src={modalTab === 'product' ? (activeModalProduct.image || activeModalProduct.pageImage) : (activeModalProduct.pageImage || activeModalProduct.image)} 
-                    alt={activeModalProduct.name} 
-                    className="w-full h-full object-contain max-h-[420px] rounded-xl transition-all duration-300"
-                  />
-                  {modalTab === 'page' && (
-                    <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#ecb613]/40 text-[10px] font-mono text-[#ecb613]">
-                      Lámina Oficial Catálogo 2026 · Pág. {activeModalProduct.cataloguePage || '1'}
+              {/* Imagen Grande Oficial, Iframe de Vídeo y Switcher de Lámina */}
+              <div className="md:col-span-7 flex flex-col gap-3">
+                <div className="rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[340px] max-h-[460px] relative">
+                  {modalTab === 'video' && activeModalProduct.videoUrl ? (
+                    <div className="w-full h-full flex flex-col justify-between items-center min-h-[340px]">
+                      <iframe 
+                        src={getGoogleDriveEmbedUrl(activeModalProduct.videoUrl) || ''} 
+                        title={activeModalProduct.videoTitle || 'Vídeo de demostración oficial'}
+                        className="w-full h-[320px] sm:h-[360px] rounded-xl border-0 bg-black"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                      />
+                      <div className="w-full mt-2 pt-2 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neutral-400 px-1">
+                        <span className="flex items-center gap-1.5 text-red-400 font-bold">
+                          <Play className="w-3.5 h-3.5 fill-current" /> Demostración Lumínica Real
+                        </span>
+                        <a 
+                          href={activeModalProduct.videoUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-[#ecb613] hover:underline flex items-center gap-1"
+                        >
+                          Abrir en Drive <ExternalLink className="w-3 h-3" />
+                        </a>
+                      </div>
                     </div>
+                  ) : (
+                    <>
+                      <img 
+                        src={modalTab === 'product' ? (activeModalProduct.image || activeModalProduct.pageImage) : (activeModalProduct.pageImage || activeModalProduct.image)} 
+                        alt={activeModalProduct.name} 
+                        className="w-full h-full object-contain max-h-[420px] rounded-xl transition-all duration-300"
+                      />
+                      {modalTab === 'page' && (
+                        <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#ecb613]/40 text-[10px] font-mono text-[#ecb613]">
+                          Lámina Oficial Catálogo 2026 · Pág. {activeModalProduct.cataloguePage || '1'}
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
 
                 {/* Tab Switcher */}
-                {activeModalProduct.pageImage && activeModalProduct.image !== activeModalProduct.pageImage && (
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setModalTab('product')}
-                      className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all ${modalTab === 'product' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'}`}
-                    >
-                      Foto Individual Producto
-                    </button>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setModalTab('product')}
+                    className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                      modalTab === 'product' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'
+                    }`}
+                  >
+                    Foto Individual
+                  </button>
+                  {activeModalProduct.pageImage && activeModalProduct.image !== activeModalProduct.pageImage && (
                     <button
                       type="button"
                       onClick={() => setModalTab('page')}
-                      className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all ${modalTab === 'page' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'}`}
+                      className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                        modalTab === 'page' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'
+                      }`}
                     >
-                      Lámina Completa Catálogo (Pág. {activeModalProduct.cataloguePage || '1'})
+                      Lámina (Pág. {activeModalProduct.cataloguePage || '1'})
                     </button>
-                  </div>
-                )}
+                  )}
+                  {(activeModalProduct.hasVideo || activeModalProduct.videoUrl) && (
+                    <button
+                      type="button"
+                      onClick={() => setModalTab('video')}
+                      className={`flex-1 min-w-[130px] py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        modalTab === 'video' 
+                          ? 'bg-red-600 text-white shadow-lg shadow-red-600/30 ring-2 ring-red-400' 
+                          : 'bg-red-950/50 text-red-300 hover:text-white border border-red-500/40'
+                      }`}
+                    >
+                      <Play className="w-3.5 h-3.5 fill-current text-white" /> Vídeo Oficial (Drive)
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Especificaciones */}
@@ -580,6 +684,27 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                       </div>
                     )}
                   </div>
+
+                  {(activeModalProduct.hasVideo || activeModalProduct.videoUrl) && (
+                    <div className="p-3 rounded-xl bg-red-950/30 border border-red-500/30 flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-full bg-red-600/20 border border-red-500/40 flex items-center justify-center text-red-400 shrink-0">
+                          <Play className="w-4 h-4 fill-current" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-white">Demostración en Vídeo</p>
+                          <p className="text-[10px] text-neutral-400">Grabación real del motivo encendido</p>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setModalTab('video')}
+                        className="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-mono text-xs font-bold transition-all shadow-md cursor-pointer shrink-0"
+                      >
+                        Ver Ahora
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-3 pt-2 border-t border-white/10">

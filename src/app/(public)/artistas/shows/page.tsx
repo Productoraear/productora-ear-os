@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: 'Shows de Impacto S-Class | Productora EAR',
   description: 'Contrata espectáculos ecuestres y bandas monumentales de mariachi. Edwin Agudelo cantando a caballo y ensambles masivos para eventos corporativos de gran escala.',
   alternates: {
-    canonical: 'https://productoraear.com/artistas/shows',
+    canonical: 'https://www.productoraear.com/artistas/shows',
   }
 };
 

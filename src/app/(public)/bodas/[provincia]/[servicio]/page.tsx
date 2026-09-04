@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${servTitle} en ${provName} | Tarifas Oficiales y Garantía EAR OS`,
     description: `Catálogo homologado de ${servTitle.toLowerCase()} en ${provName}. Proveedores verificados, sonorización 12 W/pax, Price-Lock 72h y reserva con depósito de 100 €.`,
     alternates: {
-      canonical: `/bodas/${provKey}/${servKey}`,
+      canonical: `https://www.productoraear.com/bodas/${provKey}/${servKey}`,
     },
     keywords: [
       `${servTitle} ${provName}`,

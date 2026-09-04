@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: 'Orquestas de Gala S-Class | Ensambles Productora EAR',
   description: 'Contrata las mejores agrupaciones y ensambles de mariachi en España. Puestas en escena soberbias dirigidas por Edwin Agudelo con trajes de charro de gala.',
   alternates: {
-    canonical: 'https://productoraear.com/artistas/orquestas',
+    canonical: 'https://www.productoraear.com/artistas/orquestas',
   }
 };
 

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   title: 'Contratar Cantantes Solistas S-Class | Productora EAR',
   description: 'Contrata solistas premium de mariachi y ranchera tradicional. Edwin Agudelo, solista insignia de gala. Equipamiento Bose de alta fidelidad y directos sin intermediarios.',
   alternates: {
-    canonical: 'https://productoraear.com/artistas/solistas',
+    canonical: 'https://www.productoraear.com/artistas/solistas',
   }
 };
 

@@ -29,7 +29,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     title: occasion.seoTitle,
     description: occasion.seoDescription,
     alternates: {
-      canonical: `https://ear-psi.vercel.app${occasion.canonicalPath}`,
+      canonical: `https://www.productoraear.com${occasion.canonicalPath}`,
     },
     openGraph: {
       title: occasion.seoTitle,

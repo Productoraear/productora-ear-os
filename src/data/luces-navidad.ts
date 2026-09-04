@@ -20,6 +20,8 @@ export interface ChristmasLightingProduct {
   material?: string;
   specialTransport: boolean;
   hasVideo: boolean;
+  videoUrl?: string;
+  videoTitle?: string;
   cataloguePage: number;
   provider: string;
   canonicalUrl: string;

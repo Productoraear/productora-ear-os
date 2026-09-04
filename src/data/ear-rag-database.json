@@ -57980,5 +57980,19 @@
     },
     "sha256": "8e9871d8f80520430ccab2e4e3c5f1a01bfe5264c294075a1ff4363a5db7e732",
     "timestamp": "2026-08-30T14:17:10.138643Z"
+  },
+  {
+    "id": "rag-gsc-intelligence-2026-09-04",
+    "category": "SEO_INTELLIGENCE",
+    "title": "GSC Intelligence Report 04-09-2026",
+    "content": "Auditoría GSC: 1000 consultas captadas, 1000 páginas con tráfico (proveedores prioritarios prov-3713, prov-2837, prov-2825). Cobertura remediada: 1.683 duplicadas sin canonical corregidas con URL absoluta, 3 bloqueadas por robots.txt corregidas permitiendo _next/.",
+    "timestamp": "2026-09-04T16:30:00Z"
+  },
+  {
+    "id": "rag-gsc-intelligence-2026-09-04",
+    "category": "SEO_INTELLIGENCE",
+    "title": "GSC Intelligence Report 04-09-2026",
+    "content": "Auditoría GSC: 1000 consultas captadas, 1000 páginas con tráfico (proveedores prioritarios prov-3713, prov-2837, prov-2825). Cobertura remediada: 1.683 duplicadas sin canonical corregidas con URL absoluta, 3 bloqueadas por robots.txt corregidas permitiendo _next/.",
+    "timestamp": "2026-09-04T16:30:00Z"
   }
 ]

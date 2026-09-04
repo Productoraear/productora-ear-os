@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${servTitle} en ${townName} (${provName}) | Calibración 12 W/pax & Price-Lock 72h`,
     description: `Contratación oficial de ${servTitle.toLowerCase()} en ${townName} (${provName}). Sonorización Bose F1, voz de tenor de Edwin Agudelo, Price-Lock 72h y garantía 0 fallos acústicos.`,
     alternates: {
-      canonical: `/bodas/${provKey}/${servicio}/${municipio.toLowerCase()}`,
+      canonical: `https://www.productoraear.com/bodas/${provKey}/${servicio}/${municipio.toLowerCase()}`,
     },
     keywords: [
       `${servTitle} ${townName}`,

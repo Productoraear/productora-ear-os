@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: 'DJs & Ingeniería Rítmica S-Class | Productora EAR',
   description: 'Contrata DJs profesionales y servicios de diseño de iluminación y sonido de gala para eventos corporativos, institucionales y fiestas exclusivas.',
   alternates: {
-    canonical: 'https://productoraear.com/artistas/djs',
+    canonical: 'https://www.productoraear.com/artistas/djs',
   }
 };
 
