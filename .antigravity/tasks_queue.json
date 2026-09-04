@@ -1,157 +1,34 @@
 {
   "_meta": {
-    "version": "4.0.0",
+    "version": "5.0.0",
     "generated_by": "ANTIGRAVITY System Orchestrator — MODO ARQUITECTO PURO v5.0",
-    "generated_at": "2026-09-04T20:00:00+02:00",
-    "protocol": "BARE-METAL QWEN WORKER — ZTM",
-    "executor": "CLINE + QWEN 3.8 (local GPU RX 7900 XTX)"
+    "generated_at": "2026-09-04T20:28:00+02:00",
+    "protocol": "BARE-METAL QWEN WORKER — ZTM CLOSED CYCLE"
   },
   "completed": [
-    {
-      "id": "TAREA_01",
-      "status": "COMPLETED",
-      "summary": "27.079 proveedores ingestados — bodas-vendors-harvested.json"
-    },
-    {
-      "id": "TAREA_02",
-      "status": "COMPLETED",
-      "summary": "Video matching 418 productos"
-    },
-    {
-      "id": "TAREA_03",
-      "status": "COMPLETED",
-      "summary": "npx tsc --noEmit -> Exit Code 0"
-    },
-    {
-      "id": "TAREA_04",
-      "status": "COMPLETED",
-      "summary": "Push dual. Commit 75d9bd0f. 628.182 lineas."
-    },
-    {
-      "id": "TAREA_05_FIX_SUBNODOS_PANEL",
-      "status": "COMPLETED",
-      "summary": "Sub-nodos acordeon expandible + pointer-events fix"
-    },
-    {
-      "id": "TAREA_06_SITEMAP_INDEX",
-      "status": "COMPLETED",
-      "summary": "Sitemap Index paginado — arquitectura anti-OOM"
-    },
-    {
-      "id": "TAREA_07_TSC_VALIDATION",
-      "status": "COMPLETED",
-      "summary": "Exit Code 0"
-    },
-    {
-      "id": "TAREA_08_DEPLOY_LIVE",
-      "status": "COMPLETED",
-      "summary": "Deploy Vercel — Ready"
-    }
+    { "id": "TAREA_01", "status": "COMPLETED", "summary": "27.079 proveedores ingestados — bodas-vendors-harvested.json" },
+    { "id": "TAREA_02", "status": "COMPLETED", "summary": "Video matching 418 productos — luces_navidad_2026_ear.json" },
+    { "id": "TAREA_03", "status": "COMPLETED", "summary": "npx tsc --noEmit -> Exit Code 0" },
+    { "id": "TAREA_04", "status": "COMPLETED", "summary": "Push dual origin+vercel-repo. Commit 75d9bd0f. 628.182 lineas." },
+    { "id": "TAREA_05_FIX_SUBNODOS_PANEL", "status": "COMPLETED", "summary": "Sub-nodos acordeon expandible + pointer-events fix. Deploy: 6878536" },
+    { "id": "TAREA_06_SITEMAP_INDEX", "status": "COMPLETED", "summary": "Sitemap Index 22k+ rutas + subnodos. Deploy: 8235f1c" },
+    { "id": "TAREA_07_TSC_VALIDATION", "status": "COMPLETED", "summary": "Exit Code 0" },
+    { "id": "TAREA_08_DEPLOY_LIVE", "status": "COMPLETED", "summary": "Deploy Vercel Ready" },
+    { "id": "TAREA_09_MAGNATES_MATRIX", "status": "COMPLETED", "summary": "125 rutas Magnates NDA + sitemap seccion 6. Deploys: d444bdc / 0285374" },
+    { "id": "TAREA_10_B2G_HUNTER", "status": "COMPLETED", "summary": "9 expedientes B2G cazados + Doble Impacto Municipal. Deploy: 32cfbce" },
+    { "id": "TAREA_11_TSC_VALIDATION", "status": "COMPLETED", "summary": "Exit Code 0" },
+    { "id": "TAREA_12_DEPLOY_FINAL", "status": "COMPLETED", "summary": "Deploy Ready. Commit: 32cfbce. Hash: feat(b2g/seo): consolidar matrix 125 magnates NDA" }
   ],
-  "tasks": [
-    {
-      "id": "TAREA_09_MAGNATES_MATRIX",
-      "priority": 1,
-      "status": "COMPLETED",
-      "title": "Inyectar Matriz 125 Rutas Magnates NDA (Vertical 10)",
-      "description": "Ejecutar inject_magnates_matrix.ts para generar magnates_nda_routes.json (125 rutas: 5 servicios x 25 enclaves globales) e inyectar Seccion §6 en sitemap.ts con estrategia Anti-OOM. NO crear ruta /artistas/[slug]/ultra-luxury-nda en este paso.",
-      "execution_command": "npx tsx scripts/inject_magnates_matrix.ts",
-      "inputs": [
-        "src/app/sitemap.ts (existente)"
-      ],
-      "outputs": [
-        "src/data/magnates_nda_routes.json (125 rutas tipadas)",
-        "src/app/sitemap.ts (Seccion 6 anadida)"
-      ],
-      "acceptance_criteria": [
-        "magnates_nda_routes.json contiene exactamente 125 entradas",
-        "sitemap.ts incluye comentario VERTICAL 10: MAGNATES",
-        "npx tsc --noEmit -> Exit Code 0 tras modificacion de sitemap.ts"
-      ],
-      "anti_oom_strategy": "Solo 1 entry hub en sitemap principal. 125 URLs completas en JSON para sub-sitemap paginado.",
-      "dependencies": [],
-      "completed_at": "2026-09-04 20:02:39"
-    },
-    {
-      "id": "TAREA_10_B2G_HUNTER",
-      "priority": 2,
-      "status": "COMPLETED",
-      "title": "Ejecutar Cazador Institucional B2G (PLACE / TED Tenders)",
-      "description": "Ejecutar b2g_tender_hunter.py en modo mock para generar expedientes de contratacion menor (Art. 118 LCSP < 14.250 EUR) con analisis de Doble Impacto Municipal. Extiende b2g_placsp_bidder.py sin duplicarlo.",
-      "execution_command": "python scripts/b2g_tender_hunter.py --mock",
-      "execution_command_ted": "python scripts/b2g_tender_hunter.py --mock --ted",
-      "outputs": [
-        "src/data/b2g/b2g_active_tenders.json (expedientes de contratacion menor)",
-        "src/data/b2g/b2g_doble_impacto_municipal.json (oportunidades Doble Impacto)",
-        "scripts/reports/b2g_tender_hunter_report.json"
-      ],
-      "acceptance_criteria": [
-        "b2g_active_tenders.json > 5 expedientes generados",
-        "Todos los expedientes tienen lcsp_art118_compliant: true",
-        "Split Soberano 80/10/10 en desglose de cada expediente",
-        "b2g_doble_impacto_municipal.json > 0 oportunidades detectadas"
-      ],
-      "veto_triggers": [
-        "PROHIBIDO que algun expediente tenga total_licitable_eur > 14.999,99 EUR"
-      ],
-      "dependencies": [
-        "TAREA_09_MAGNATES_MATRIX"
-      ],
-      "completed_at": "2026-09-04 20:02:46"
-    },
-    {
-      "id": "TAREA_11_TSC_VALIDATION",
-      "priority": 3,
-      "status": "COMPLETED",
-      "title": "Validacion TypeScript Estricta",
-      "execution_command": "npx tsc --noEmit",
-      "acceptance_criteria": [
-        "Exit Code 0",
-        "Cero errores en stderr"
-      ],
-      "on_failure": "VETO_ESTRATEGICO_ACTIVADO — bloquea TAREA_12",
-      "dependencies": [
-        "TAREA_10_B2G_HUNTER"
-      ],
-      "completed_at": "2026-09-04 20:03:00"
-    },
-    {
-      "id": "TAREA_12_DEPLOY_FINAL",
-      "priority": 4,
-      "status": "PENDING",
-      "title": "Deploy Final — Commit Dual + Push GitHub + Vercel",
-      "execution_commands": [
-        "git add src/data/magnates_nda_routes.json src/data/b2g/ src/app/sitemap.ts scripts/reports/ scripts/inject_magnates_matrix.ts scripts/b2g_tender_hunter.py",
-        "git commit -m 'feat(seo/b2g): Vertical 10 Magnates NDA 125 rutas + Cazador Institucional PLACE/TED + Doble Impacto Municipal'",
-        "git push origin main",
-        "git push vercel-repo main"
-      ],
-      "acceptance_criteria": [
-        "git log --oneline -1 muestra el nuevo commit",
-        "Vercel deployment -> Ready",
-        "https://productoraear.com/sitemap.xml -> HTTP 200"
-      ],
-      "veto_triggers": [
-        "PROHIBIDO deploy si TAREA_11 tiene Exit Code != 0",
-        "PROHIBIDO hardcoded STRIPE_SECRET_KEY en commit"
-      ],
-      "dependencies": [
-        "TAREA_11_TSC_VALIDATION"
-      ],
-      "command": "git add . && git commit -m \"feat(b2g/seo): consolidar matriz 125 magnates NDA, 9 expedientes b2g cazados y sitemap anti-oom\" --allow-empty && git push origin main && git push vercel-repo main",
-      "execution_command": "git add . && git commit -m \"feat(b2g/seo): consolidar matriz 125 magnates NDA, 9 expedientes b2g cazados y sitemap anti-oom\" --allow-empty && git push origin main && git push vercel-repo main",
-      "error": null
-    }
-  ],
+  "tasks": [],
+  "estado_sistema": "CICLO_COMPLETO_SEALED",
   "global_constraints": {
     "typescript_strict": true,
     "tsc_exit_code_required": 0,
     "no_eval": true,
     "no_hardcoded_secrets": true,
-    "split_soberano": "80/10/10 INMUTABLE (AGENTS.md §2)",
-    "stripe_deposit_eur": 100.0,
+    "split_soberano": "80/10/10 INMUTABLE",
+    "stripe_deposit_eur": 100.00,
     "lcsp_techo_art118_eur": 14999.99,
-    "ajuste_preventivo_eur": 14250.0,
-    "visual_style": "Cinematic Monochrome S-Class"
+    "ajuste_preventivo_eur": 14250.00
   }
 }
