@@ -63344,5 +63344,2642 @@
     "sha256": "f241e8f06a68d3cbd576e8eb36ac6b22273f09cd14082d1294536623b0b6ae02",
     "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MERCADO_Y_SEO_MARIACHIS\\https___www.productoraear.com_-Coverage-2026-09-04.zip",
     "archived_at": "2026-09-04T16:30:00Z"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.antigravity-ide\\extensions\\extensions.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_extensions.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "d71c3317a9cf823b5e2985acc331ae1b87972f73b75e912f46010f677fb90984",
+    "size_bytes": 1389,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:15:47.216025"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.antigravity-ide\\extensions\\ms-vscode.powershell-2025.4.0-universal\\package.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_package.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "5eeadc014a823725c4bf2bba666cecdc22833e1156e894cf3e51dc347c94e45b",
+    "size_bytes": 52905,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:15:47.976369"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.antigravity-ide\\extensions\\tomoki1207.pdf-1.2.2-universal\\CHANGELOG.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_CHANGELOG.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "4255d6b26990641809bd0cf270aab79296b6a886eac043d2780c603db0dbe782",
+    "size_bytes": 3191,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:15:50.262298"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.antigravity-ide\\extensions\\tomoki1207.pdf-1.2.2-universal\\package.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_package_1.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "8fc90ae043b579ce1ee2f92c16933d8ee90d65903fd98838227db5f69f77f3a0",
+    "size_bytes": 3033,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:15:50.277787"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.antigravity-ide\\extensions\\tomoki1207.pdf-1.2.2-universal\\README.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_README.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "768e22e1041336940b4c32ac05101cd1bf93fe62380e1dab8328913810f4c1d8",
+    "size_bytes": 948,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:15:50.286764"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-browser-profile\\ActorSafetyLists\\9.5220.3721\\listdata.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_listdata.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "6ee96ce2e55a80cde09b460049a4eb87f7d1e56510c7bba75b23d0b88c7c69ee",
+    "size_bytes": 2645951,
+    "keywords": [
+      "rider",
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:28.005014"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-browser-profile\\Default\\Extensions\\ghbmnnjooekpmoecnnnilnnbdlolhkhi\\1.109.1_0\\_metadata\\computed_hashes.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_computed_hashes.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "baa6145953fd141fd2d9d9e6a96a064ac0b780478930817624fd49af0dea019d",
+    "size_bytes": 6007,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:29.285842"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-browser-profile\\TrustTokenKeyCommitments\\2026.8.3.1\\keys.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_keys.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "3d6c659801f1686ff3ac64bc3b24b1d0ae76ffdd5f0e9c399ba37d1354a15ab4",
+    "size_bytes": 8756,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:30.360805"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-browser-profile\\ZxcvbnData\\3\\english_wikipedia.txt",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_english_wikipedia.txt",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "b29af10c62218f948eb299e0c68b176ab1c5ecdfe9813bd957bf2c434e90813e",
+    "size_bytes": 277015,
+    "keywords": [
+      "alzheimer"
+    ],
+    "archived_at": "2026-09-04T21:16:30.461075"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-browser-profile\\ZxcvbnData\\3\\passwords.txt",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_passwords.txt",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "f65b16793f0d335c87bf5bb4b19bcfc457462396169080b8c11a7c6f1d8b3731",
+    "size_bytes": 241951,
+    "keywords": [
+      "mariachi",
+      "charro"
+    ],
+    "archived_at": "2026-09-04T21:16:30.530192"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-browser-profile\\ZxcvbnData\\3\\surnames.txt",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_surnames.txt",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "3362648c77af4ee84a6383800fb5a5cb0493703d4bfc1557e05f315fc41b2699",
+    "size_bytes": 76077,
+    "keywords": [
+      "charro"
+    ],
+    "archived_at": "2026-09-04T21:16:30.555653"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-browser-profile\\ZxcvbnData\\3\\us_tv_and_film.txt",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_us_tv_and_film.txt",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "f146e15ecba3f37adcd7aa4fb23797555d1ab55489fbb0b989c60073f638aaa0",
+    "size_bytes": 164290,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:30.616748"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\implementation_plan.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_implementation_plan.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "54261604bd59e25d7f3e5f3154ec84188c6ae6ad7bbc9d388a4f33ae594fcabe",
+    "size_bytes": 3701,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:35.113045"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\walkthrough.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_walkthrough.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "3f7e9930fd645383b1adc816e5c0190d4d8dbcb9e6e49eff59bf717aa455c24a",
+    "size_bytes": 2695,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:35.116545"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\0a5ba866-331a-4375-95ad-9a7e570c1e57.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_0a5ba866-331a-4375-95ad-9a7e570c1e57.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "6d0ce3579845ece6dae53a659b621fb998a83d640d03be57953b3983d6584964",
+    "size_bytes": 10625,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:35.127045"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\0e60364c-af15-410e-bff3-44d366339b0d.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_0e60364c-af15-410e-bff3-44d366339b0d.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "2d3fc2c6487da66aea9b5d7a3e7b52a0ed86a02ff3b7d3b775acd07302fe81ad",
+    "size_bytes": 4074,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:35.156121"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\226a249c-703e-4438-bec5-e4ca8df92571.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_226a249c-703e-4438-bec5-e4ca8df92571.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "4a40dfd97bc06fe9febea65488eae48f63451788afabed764a91b68d960203ad",
+    "size_bytes": 6973,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:35.189642"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\25c58f42-293c-47a4-a6bd-4897633477df.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_25c58f42-293c-47a4-a6bd-4897633477df.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "f5cdfecd20a77b8c70fc7550d2d32573ac9f989265a8e2fc61ff4520a6d436a3",
+    "size_bytes": 478440,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:35.263461"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\3559230a-f966-4162-ba5e-f2772d7f6122.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_3559230a-f966-4162-ba5e-f2772d7f6122.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "5baa9dc714b04a28f96706e5d6565c8426f21bc65f34db245c78ba769e762811",
+    "size_bytes": 439736,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:35.340534"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\39e80c4a-6b1a-4623-b56f-85ce5fdee5a0.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_39e80c4a-6b1a-4623-b56f-85ce5fdee5a0.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "df0b2deeb37456843e72ea304fa521de65924dd88c44b6e489b69a8634b877aa",
+    "size_bytes": 545761,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:35.413160"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\62023572-fdb2-4e96-9876-8afeb58fcb53.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_62023572-fdb2-4e96-9876-8afeb58fcb53.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "9a28d14165380d557fb58df20e792d3f1fbc6eaec8229cb42bcc10f7dc2863a2",
+    "size_bytes": 10477,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:35.421203"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\69680db7-0705-48c2-9016-a7e0ddd74965.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_69680db7-0705-48c2-9016-a7e0ddd74965.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "39c375739fe1883456f7a26bb59701416c9616dccf11ddf8eb6e485fb5101899",
+    "size_bytes": 4273,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:35.424707"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\6a1e1f16-e186-40e9-84f9-feb76a976f12.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_6a1e1f16-e186-40e9-84f9-feb76a976f12.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "a1a8d8581066740dc648e9be840722eac6d0fae08b5996286b9a386676599635",
+    "size_bytes": 544764,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:35.501304"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\79a2b3ab-2709-4f30-a742-b77a957ad2d0.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_79a2b3ab-2709-4f30-a742-b77a957ad2d0.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "9a7271ba4c0b12ffb74fe550515bcf3a087a77bda2358743beeff2535ab92649",
+    "size_bytes": 2950,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:35.504328"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\8920c07f-8fde-4709-8094-9739aa63563b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_8920c07f-8fde-4709-8094-9739aa63563b.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "eb47f997b0b7462c1da0e8807ea3f4ffeb26eb5deb9d21d31b38605d59305d1a",
+    "size_bytes": 4899,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:35.508803"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\b5ac7cd9-e4a2-4c09-9c3d-cfff042dc358.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_b5ac7cd9-e4a2-4c09-9c3d-cfff042dc358.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "18ef8fa338f47232ecbc80a1ae7fe507c2998bd654f8892a510368ecb8dc9380",
+    "size_bytes": 438756,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:35.674365"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\b9ed1d5a-ff43-4d9b-94ad-2f1b551151f2.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_b9ed1d5a-ff43-4d9b-94ad-2f1b551151f2.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "0d5d9ce6fb41e6f00c74458286076a23f1ed3f30326bd51f80a4fdcf71dc8733",
+    "size_bytes": 10686,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:35.708382"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\c3025fdb-2ed1-449b-b957-973ff0b9d445.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_c3025fdb-2ed1-449b-b957-973ff0b9d445.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "60815d53189aa9695b445205bd596df2582a291a9e6d637e61ec38f959549690",
+    "size_bytes": 9514,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:35.714386"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\e72539e2-b510-46d6-b814-346c79ce6f62.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_e72539e2-b510-46d6-b814-346c79ce6f62.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "8a365599dbf2fd3499b1144464d64066d3093943eee691b931111f1fac4bd132",
+    "size_bytes": 515164,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:35.801904"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\.system_generated\\messages\\fe7c0bda-aab7-4764-8390-e2c0f93ee4e2.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_fe7c0bda-aab7-4764-8390-e2c0f93ee4e2.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "bb7995583ec7573240f0b0f021b8f182f0c9810461238029e334ec46f2b2b599",
+    "size_bytes": 498000,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:35.885425"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\browser\\scratchpad_2g3jkdxc.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_scratchpad_2g3jkdxc.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "47eef260f5bda0114b83756e51b296b969d0a594d5ae385afa922529455d46a6",
+    "size_bytes": 1262,
+    "keywords": [
+      "mariachi",
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:35.889928"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\2412456d-5638-4bb1-83f5-a7fbb90b7498\\browser\\scratchpad_vbbrxsfq.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_scratchpad_vbbrxsfq.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "d7d32af34db0222bf4622b33806fd5782254d2fe7c06a81f5272284515fa7756",
+    "size_bytes": 2231,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:35.893939"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\implementation_plan.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_implementation_plan.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "c79019dac1a043bc8d5aff9f49069a61dc7e47275d67245b2362c04ae7657093",
+    "size_bytes": 2986,
+    "keywords": [
+      "vimume",
+      "musicoterapia",
+      "geriatrico"
+    ],
+    "archived_at": "2026-09-04T21:16:37.908028"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\implementation_plan.md.metadata.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_implementation_plan.md.metadata.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "632056afc48fd5416358bb1176260150f32542423d665605abd5f96bcfe38494",
+    "size_bytes": 318,
+    "keywords": [
+      "vimume",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:37.915499"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\mandato_nightcrawler_cline.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_mandato_nightcrawler_cline.md",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "0337626f65aaa81082f0b7e1f42382d5c990cfc681f190e6ec56955071675b13",
+    "size_bytes": 11124,
+    "keywords": [
+      "precio",
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:37.934500"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\mandato_nightcrawler_cline.md.metadata.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_mandato_nightcrawler_cline.md.metadata.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "8f6429f2c2d07cc450bf05a4d59214069b2feb46edd1975c5562b06f0dfb50bc",
+    "size_bytes": 456,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:37.941499"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\mandato_nightcrawler_cline_v2.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_mandato_nightcrawler_cline_v2.md",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "4e0ef60727441e17c5a6e91e0f4eab31eacb5e079ca187fdd09aa8b4bec5c298",
+    "size_bytes": 4862,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:37.953526"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\scraping_strategy.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_scraping_strategy.md",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "ecee9a9e8733d83a87c3eac5871f2c44504357d884b9cfe5884ca8856aa493c1",
+    "size_bytes": 4325,
+    "keywords": [
+      "precio",
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:37.971535"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\scraping_strategy.md.metadata.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_scraping_strategy.md.metadata.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "5477252cf76e700c5230c92e727076d7549d9e713d6cd043aa94ef394aba24a3",
+    "size_bytes": 390,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:37.978499"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\0364bbe7-562d-4966-983f-6b6a6e66a876.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_0364bbe7-562d-4966-983f-6b6a6e66a876.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "d6631fca109c6148474a39ddcf4e339a47d4b2957e3691abd4065c9837dac4d9",
+    "size_bytes": 2011,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:38.055572"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\05e1f2e7-faad-4941-bdd6-523b3ed7b8c3.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_05e1f2e7-faad-4941-bdd6-523b3ed7b8c3.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "7b9cf644af34528b778d63e977cb79da1db12c496971d6252d66c4889ccbd7f9",
+    "size_bytes": 3450,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.074571"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\061e6dc8-7a49-4d4b-ac4a-dcc7654dded1.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_061e6dc8-7a49-4d4b-ac4a-dcc7654dded1.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "567cb5e806dc92d344de774bb71266e40c7ed3ebeb80af512f460fb175f0df60",
+    "size_bytes": 228720,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.139674"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\1336a3b1-4c04-46f5-8248-6913380d11f3.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_1336a3b1-4c04-46f5-8248-6913380d11f3.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "c24bf36dcddc169c7bd211f8bfe5cb91bec8a2decac3d93ed99244f212cc869d",
+    "size_bytes": 259948,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:38.260389"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\154c7636-569e-467d-9ac6-b421cbf15921.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_154c7636-569e-467d-9ac6-b421cbf15921.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "7b8bd100d1fde18275ee680da132c3fae16c7104e0f966a9ab1e63a997f57c8a",
+    "size_bytes": 237444,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.330437"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\17d73ded-51df-4f5d-b369-e67e8d7a467e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_17d73ded-51df-4f5d-b369-e67e8d7a467e.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "82f46bc001fd8d78948a9b4e315348a9f10450f5b4dd6d8a62a7c5281d4a0762",
+    "size_bytes": 239880,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.399951"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\190a464a-0412-488a-95b7-f1ecd8652a41.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_190a464a-0412-488a-95b7-f1ecd8652a41.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "b6cb57ad2f57e96c7b07a8002ab3f8fe7cd0a18fddd70dea3c6e8b99a716fdfe",
+    "size_bytes": 246049,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.465139"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\26eec2b0-605d-47b0-8592-4a597320afca.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_26eec2b0-605d-47b0-8592-4a597320afca.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "8e690b3d473e30706b58e7413f7832c360fe76d6e0edacfc1cf5f13aaeb3b1ef",
+    "size_bytes": 10566,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:38.524224"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\28c61e06-1db5-40d2-9383-0e8b23cc6c0c.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_28c61e06-1db5-40d2-9383-0e8b23cc6c0c.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "c47a8ad004be1f1eaf11aee4fa3f1667f640e779e42152609b3bd17a313f9697",
+    "size_bytes": 11415,
+    "keywords": [
+      "presupuesto",
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:38.565722"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\2f37196f-86b4-46cc-b8b9-cd35caa0ab4e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_2f37196f-86b4-46cc-b8b9-cd35caa0ab4e.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "6bde703134cc701f88a65be28c8282efae4814453649e1e17770df74d7a709d7",
+    "size_bytes": 4218,
+    "keywords": [
+      "rider",
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.624875"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\30404cb7-3f00-4b99-92db-0597d776d572.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_30404cb7-3f00-4b99-92db-0597d776d572.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "d61ee4383a0887913f6351193ed1b3aa09e76a9122ecf75153bc22ffbd6dd4b9",
+    "size_bytes": 3594,
+    "keywords": [
+      "bose f1",
+      "12 w/pax",
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.632876"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\34036e44-a300-4b65-a026-d49ec6600a14.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_34036e44-a300-4b65-a026-d49ec6600a14.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "c5d863a7083ab8ec6e749d6f76e30c073e93ee2fc2e52726a838bd353338f31e",
+    "size_bytes": 9971,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:38.700491"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\3844713b-7cc0-45f4-a6a7-8161b155cc51.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_3844713b-7cc0-45f4-a6a7-8161b155cc51.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "be6ba55b47dcaed5962d7f1e75810dbff033d72ecaf740737a811e57a5a0ff6e",
+    "size_bytes": 224352,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:38.764955"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\3a618712-8cae-40c8-b567-4f7a2818c51e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_3a618712-8cae-40c8-b567-4f7a2818c51e.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "57489ea204807f7530acd98189e38712e00fdb9d1f028962be3208029a029ba2",
+    "size_bytes": 9795,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:38.817959"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\46a946fc-977d-4c51-8293-673b5081e55c.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_46a946fc-977d-4c51-8293-673b5081e55c.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "9f9e6f2e4b4dc82173e7566ac301ee53b42f6ef17628467cc9fd6a29e7b784f2",
+    "size_bytes": 9845,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:38.995978"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\4fc5e279-cace-471b-8f72-3906ca7e2c12.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_4fc5e279-cace-471b-8f72-3906ca7e2c12.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "cb0d6abbd8e327484ae8dabdd0728a856461312b88d723d70233deda919d37a1",
+    "size_bytes": 3664,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:39.079979"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\59d98085-95ce-4155-b557-a168bf1576fa.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_59d98085-95ce-4155-b557-a168bf1576fa.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "d4778569b7a0a6bab6384931c8ee789c2b914c88bff9d229b15e47e1fd2d9090",
+    "size_bytes": 276560,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:39.246009"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\5c95a5f9-5a55-4b33-ad78-f3896dd3e0e3.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_5c95a5f9-5a55-4b33-ad78-f3896dd3e0e3.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "841f5296e74cf26806e96764f8dad45612dbb7a3539e3d28ef4e4f99e7b418ab",
+    "size_bytes": 11156,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:39.316054"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\5e8148db-9ef0-4a74-8183-92f5fc88c1da.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_5e8148db-9ef0-4a74-8183-92f5fc88c1da.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "06bb5cdf6d230fdb21664a9e9fec543c22da6c065ee4c8940641b14081a1ee52",
+    "size_bytes": 6306,
+    "keywords": [
+      "mariachi",
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:39.371053"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\5f46984c-d8d2-427d-ba94-b3467824b610.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_5f46984c-d8d2-427d-ba94-b3467824b610.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "2cd616b4c8977904d75d2bd29c5e08cb2ddb562020f62f47fd4e8e1798370788",
+    "size_bytes": 264789,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:39.447570"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\6dd7544b-aa59-49cc-80d3-fe8a08186439.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_6dd7544b-aa59-49cc-80d3-fe8a08186439.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "efa2adbf136aba291b8988e59ffcf6a22446c6e4ce3e6aeaa7ed1fcc7c9067e4",
+    "size_bytes": 244092,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:39.583577"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\7432d2b9-79ae-4c77-91a0-07ddf553ee9b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_7432d2b9-79ae-4c77-91a0-07ddf553ee9b.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "6d46db146c1fa3eb5b8b3b7cf6b6451300ecaccec80debe1b8ce93f2cb54549d",
+    "size_bytes": 1939,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:39.608112"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\782dbedf-cc06-4971-860a-581eef799674.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_782dbedf-cc06-4971-860a-581eef799674.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "747728ea417ecce03ee6733f57df6fdb84f8e16da9a99b4d9d5a0e8cf17d9be5",
+    "size_bytes": 5801,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:39.631081"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\7ba8f347-6032-4dc7-be38-a70881afb3d4.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_7ba8f347-6032-4dc7-be38-a70881afb3d4.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "46665f7321c90c268a502dd63d0e4055f98c801621406788bf2fd9fdbbb4dd72",
+    "size_bytes": 3288,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:39.639101"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\7e72dc24-e814-4d16-af81-4350cdb3279e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_7e72dc24-e814-4d16-af81-4350cdb3279e.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "0d87661b9dc0219c63d3975cf85c270281841d7844615917162ab3a936d7b84f",
+    "size_bytes": 228800,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:39.731219"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\8281fdde-ab08-427d-af17-63611bf512ec.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_8281fdde-ab08-427d-af17-63611bf512ec.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "5b5066b7937610d7315d47aa38f898df15aa6be0e3ce498b302c0c19e21a7085",
+    "size_bytes": 6479,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:39.771219"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\9e484650-f20c-48c5-b63c-b085fca0afa7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_9e484650-f20c-48c5-b63c-b085fca0afa7.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "a402e35a46666d6505dcc7052baa61f5f922c4bb51fea4839276f6687a883e33",
+    "size_bytes": 6628,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:40.103578"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\9f86f481-e2e6-4f8f-b087-f418c118e379.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_9f86f481-e2e6-4f8f-b087-f418c118e379.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "95ae476f7744e91664f4d718a682340a4254f65d8aaf13338a4617251a7c20b9",
+    "size_bytes": 10198,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:40.119035"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\b2b938b3-0296-45ee-80d0-f72002b38d63.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_b2b938b3-0296-45ee-80d0-f72002b38d63.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "0328f6a6a818d05038bb272d2b4ad5cfe5610e265118711c867383507d651cf7",
+    "size_bytes": 304209,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:40.340317"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\b5a5fb6d-1343-40c8-bc1b-656c44d3b45c.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_b5a5fb6d-1343-40c8-bc1b-656c44d3b45c.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "9ef544b2f4d11916dd52e4650176c9be0fff6945a120ee2d2cf8e889e2ba437e",
+    "size_bytes": 238844,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:40.443459"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\b60d8f78-4707-4a80-95e4-e0b7fcbbae2a.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_b60d8f78-4707-4a80-95e4-e0b7fcbbae2a.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "d6075372c93b2c716723fd49f9d3f0b79d8a765aea0eed7ff74388ed1e80ec5e",
+    "size_bytes": 9797,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:40.447406"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\b9c4ee34-61af-4ad4-a8ab-68478b94a98c.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_b9c4ee34-61af-4ad4-a8ab-68478b94a98c.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "efab26a332786eec627b00b8290ad913864ab9a64bfdcda7cfc61cd9f48558f5",
+    "size_bytes": 348344,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:40.556057"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\bb92074c-17d9-4b14-9433-f47c765dfaf7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_bb92074c-17d9-4b14-9433-f47c765dfaf7.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "d857d623596db1d1e4c48f8cf3b93adb9e15185d9ca00c15f943500181dd7aa2",
+    "size_bytes": 12091,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:40.564051"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\c78bb9a1-210b-4d1d-b991-ccbbb7bcb5d7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_c78bb9a1-210b-4d1d-b991-ccbbb7bcb5d7.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "e47f4dc7a1961bf1cc716a34ba5d6131e68c457bae805e189277964a95a7ecb2",
+    "size_bytes": 11135,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:40.611132"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\ccbb8f8c-4747-4384-86a6-9f7b7aec8fbb.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_ccbb8f8c-4747-4384-86a6-9f7b7aec8fbb.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "4668600ae4c36a1bd285b981809fc4b2c258fbfb7faecae348d11b82f97c677d",
+    "size_bytes": 3847,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:40.639633"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\d86aab2b-f833-49e2-b59f-466f3dc5f245.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_d86aab2b-f833-49e2-b59f-466f3dc5f245.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "324d544eb1c96ef36bd3cbfed93be8451fdae32c574d0ac104a834514ea91e43",
+    "size_bytes": 10814,
+    "keywords": [
+      "mariachi",
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:40.695186"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\d8ad3926-ecc7-4b91-985e-0fb02ba4be95.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_d8ad3926-ecc7-4b91-985e-0fb02ba4be95.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "ff47dc0bd0d8d0832a6873b721be4cdcb2096a0704aca7f080514b0cc4c1cafb",
+    "size_bytes": 61224,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:40.709702"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\d8dc8022-f389-4ceb-97b2-cccff9a13661.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_d8dc8022-f389-4ceb-97b2-cccff9a13661.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "ac9306aa99ffe1b59d5be7e0a1c8ec232c17442d706f77ca9e7167f892082ae9",
+    "size_bytes": 5599,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:40.712695"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\db572648-74a2-4934-a270-67cdba94888f.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_db572648-74a2-4934-a270-67cdba94888f.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "bb08fc6d35223da4d534b900e3942d0300041588e3b9d5517c8816a49ebc1735",
+    "size_bytes": 11114,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:40.717695"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\dec52ca5-c025-4427-8569-d003eb49f913.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_dec52ca5-c025-4427-8569-d003eb49f913.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "10b58e6c3e6b4efc3a6674ea32d741669ba4bdbfc3956ed403d68788e35804dc",
+    "size_bytes": 3539,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:16:40.722200"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\e3ea155b-f418-4726-a80f-722db33fe265.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_e3ea155b-f418-4726-a80f-722db33fe265.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "e9aa4da045e970af45297a1ce6d108874f643c9901cca3d47536456b5bec9d19",
+    "size_bytes": 9616,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:40.728699"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\ed1cf56b-b9ed-439d-99a3-5379e62801eb.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_ed1cf56b-b9ed-439d-99a3-5379e62801eb.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "98bdb247258c1a9a9380655eeb77d8a333ff555bb85ffa7663cb048107aa440e",
+    "size_bytes": 36329,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:40.763244"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\f764299c-6c5a-4320-9cae-ccdcf3fb92da.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_f764299c-6c5a-4320-9cae-ccdcf3fb92da.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "11ba9ba761fe10f8fef649a5f37f5fe0550add237e380109801cd9350e691b63",
+    "size_bytes": 2121,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:40.811876"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\fb2d84a6-7679-4ca6-a208-8f8ab4713257.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_fb2d84a6-7679-4ca6-a208-8f8ab4713257.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "6e347e6e77fc929da0568b19b1c3d3ea9afff8f0da120e9cc35379206adf61a1",
+    "size_bytes": 4490,
+    "keywords": [
+      "bose f1",
+      "12 w/pax",
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:40.834872"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\messages\\fbf1e20b-3874-47a6-a42f-0d48da80473f.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_fbf1e20b-3874-47a6-a42f-0d48da80473f.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "b3eecaecd975987b240e85ecd0008ff363daea0c615ed07a9a69e13c418e97ef",
+    "size_bytes": 225652,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:40.888962"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\steps\\2323\\content.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_content.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "41c796f46d8ac5e37bd014b9e38a253794e2ecd6c26a1986d02cf7c29f0fcf49",
+    "size_bytes": 85126,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:40.938042"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\steps\\2329\\content.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_content_1.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "dbebb58fc86ce4fb72f85b63fde38a4c117d2ee188b8d47ce407e0628c5c0c27",
+    "size_bytes": 222482,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:40.976078"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\steps\\3186\\content.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_content.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "fe19e85f242a295163e729770b99e17fa89bb21c81b50c4cfc78fdacbe125b56",
+    "size_bytes": 73461,
+    "keywords": [
+      "mariachi",
+      "charro",
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:41.049667"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\.system_generated\\steps\\3192\\content.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_content_1.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "067a1d84db8b1b821a8528e0df5e1787105b3174605a0db8008659a2b6436720",
+    "size_bytes": 195710,
+    "keywords": [
+      "mariachi",
+      "charro",
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:41.161873"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\39f09488-62e5-4276-87d0-a8690220e2b7\\browser\\scratchpad_9j2q8psf.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_scratchpad_9j2q8psf.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "b67bd64c2acb410f26d5f84accd25bdd30a4c489243d21e761ffa488b30cb075",
+    "size_bytes": 711,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:41.185917"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\implementation_plan.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_implementation_plan_1.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "041eed1ce6b3ed3acc8a7badf6b88590d0e95c940eb80e144264944e8913a31d",
+    "size_bytes": 3765,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:46.473346"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\task.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_task.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "f7c21359b9f3a43e493794978ed47148a87b5748a8eda309ca6b0e2b240064cc",
+    "size_bytes": 736,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:46.481346"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\walkthrough.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_walkthrough.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "27612d0bfb0f99d3545b2078f51b0855f6620a750cbe67abf8340db605c7e9f3",
+    "size_bytes": 3035,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:46.487847"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\walkthrough.md.metadata.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_walkthrough.md.metadata.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "60135030be7774e1c1aeb03d2e56e6a596d6c707e1a77142fcea49025744973d",
+    "size_bytes": 230,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:46.491352"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\0982e3ec-3ee7-49e8-80b3-2f7522e7e61b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_0982e3ec-3ee7-49e8-80b3-2f7522e7e61b.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "5bc99613156424af3c3e998388512175957996fcf4d5df75a0fdfaa183d3c95b",
+    "size_bytes": 11061,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:46.508851"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\217eaa47-cfe5-47b8-9e11-4c01954556ec.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_217eaa47-cfe5-47b8-9e11-4c01954556ec.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "4ce9a9b689a9f4bff4f23cf6c5816f83842a37be5413cb1d5c84dcde1615e707",
+    "size_bytes": 12422,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:46.538351"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\222f8892-849a-486f-a035-c913cc9e8bb7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_222f8892-849a-486f-a035-c913cc9e8bb7.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "2d9d5079672e9a33415be834ed5b56f8dcd02b684b951b8501cc33b014386022",
+    "size_bytes": 12027,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:46.543856"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\490534a2-ee3b-47f3-938e-f91786c6c7a8.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_490534a2-ee3b-47f3-938e-f91786c6c7a8.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "f1a180bf8042f7825a50f011b7cdcb18ca7f25141f40b4eb0b3256ccfecd548e",
+    "size_bytes": 7648,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:46.599356"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\4a568a27-6e5e-41be-b559-5d1b41b7cb40.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_4a568a27-6e5e-41be-b559-5d1b41b7cb40.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "17aea28d6ea323af57c45f06d38b4affabc2961738172ab0d37f9fa6b19dfcc4",
+    "size_bytes": 9726,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:46.602978"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\4bc1b4ad-b6e8-424b-8251-f23bc5600a2d.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_4bc1b4ad-b6e8-424b-8251-f23bc5600a2d.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "682863259d6dfb202a81311160c774e6d59cb65dcdb94727c71093fbfe8e6363",
+    "size_bytes": 7859,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:46.606992"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\58c4978b-5712-4f32-90f3-b7509f2d05f1.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_58c4978b-5712-4f32-90f3-b7509f2d05f1.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "885a8b2d47aba8d3237d94cb14f11d68caa1b4531bb6d7030fe7c577ba7bf1cc",
+    "size_bytes": 11824,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:46.617444"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\6a70324b-9a36-4a4b-9c49-2ab6ebf2e02e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_6a70324b-9a36-4a4b-9c49-2ab6ebf2e02e.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "3aa57945c37e51cf0f260f96b77b9fe917554664a64e7e38aa495a4221b80c30",
+    "size_bytes": 9514,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:46.639444"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\70d8acaf-a2dc-49ae-86ae-ccfcc2ecd916.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_70d8acaf-a2dc-49ae-86ae-ccfcc2ecd916.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "dacc02f5c85c8178e0c6073236b75daa5c4a37d5a640f09d3442c90e2955357c",
+    "size_bytes": 1497,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:46.678444"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\81e665b7-ff79-4a2e-8dce-3abe48ee841b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_81e665b7-ff79-4a2e-8dce-3abe48ee841b.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "66111109cc7a27d6b9ca3193c0829a2f7ed495b4ddbc2a18cac9b74b50f5a437",
+    "size_bytes": 11125,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:46.702591"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\8b2cf3ac-bbbf-4123-9d88-ff3327cc31fc.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_8b2cf3ac-bbbf-4123-9d88-ff3327cc31fc.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "2d1970fbb6d216d6f0f7b07808d1c57d0a4ae00a7179a14fb26e08d9867e32ff",
+    "size_bytes": 13026,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:46.748060"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\8bd702ea-6672-4c69-96b3-90cb77612d19.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_8bd702ea-6672-4c69-96b3-90cb77612d19.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "bcf7ec33d1ba654b07da69a1001f3e86a48dc2353560dfb2bc9b2aa7b31a27c5",
+    "size_bytes": 10857,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:46.758062"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\bb21b4e7-6df4-46c9-8c58-1336d5d6b82f.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_bb21b4e7-6df4-46c9-8c58-1336d5d6b82f.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "72802625d083f96a27b29f61c6e526b5579843047414208907610f2cd711e570",
+    "size_bytes": 1850,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:46.826217"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\bf668220-8ef5-4789-bc64-d286f7424e51.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_bf668220-8ef5-4789-bc64-d286f7424e51.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "fbd4be15037c5ba025f4af1a871c51d8e64d8ca8ba634dae02d0b422002c3dd4",
+    "size_bytes": 9735,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:46.841177"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\cf379e1e-c107-4de4-847d-31151e830f65.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_cf379e1e-c107-4de4-847d-31151e830f65.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "cc1962805627b1a5f253bf179e205ec4fd9a5efde8bdf2488b5163c0d35610c7",
+    "size_bytes": 12133,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:16:46.858207"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\d12b91ef-047b-4e58-8270-14fe4b11dcae.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_d12b91ef-047b-4e58-8270-14fe4b11dcae.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "f90c5c1130543e7c1073b0b36f86d0a81bb0d3395f43c1f984e457c7da7cc402",
+    "size_bytes": 13356,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:46.867740"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\e9c7f3a7-11d0-43fa-926c-c990a81aa368.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_e9c7f3a7-11d0-43fa-926c-c990a81aa368.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "ff68518c9520d5281dd4459ac0af8ca88fef10e6e8614d5d3242366fa9cbf93f",
+    "size_bytes": 4357,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:46.921910"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\.system_generated\\messages\\f44ad328-5221-4832-b3bf-11cc5751a5b9.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_f44ad328-5221-4832-b3bf-11cc5751a5b9.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "ca7cccc61c89249b9616f5409d096ef10d471adc5721a3e895a2a1d8ddd1e509",
+    "size_bytes": 3465,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:16:46.931439"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\5cbda5d1-980f-484c-85e1-11b568c6f3fa\\browser\\scratchpad_2pzwh1d3.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_scratchpad_2pzwh1d3.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "77a1ae287d0b899e4a1fce57dc5e302afd80f59c86bad61d614e2dca43f1afdd",
+    "size_bytes": 1607,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:46.955909"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\06f1d872-1db2-4f9c-946e-c78006b59f6d.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_06f1d872-1db2-4f9c-946e-c78006b59f6d.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "52d0d6eb530901fb3ca846fcf8620395b91a73fbbe30b1e0a1144610d75d4f01",
+    "size_bytes": 9866,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:57.970661"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\08581c12-1888-4e56-99ae-9b380f156d22.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_08581c12-1888-4e56-99ae-9b380f156d22.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "0a44a568fa00e4a7e12ffb4908c33062e9c1d1fb7bb5ea6e0d5d13ea1ab8319b",
+    "size_bytes": 13451,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:57.988661"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\09e12f7b-5311-4988-bda5-fe0b8c6fafd7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_09e12f7b-5311-4988-bda5-fe0b8c6fafd7.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "ae480018efe229703181193d26e115bd96496f01c9292dafd63e855e02026b44",
+    "size_bytes": 9907,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:58.005161"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\0a02dcc1-875e-4a23-ad12-44eaebbe2302.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_0a02dcc1-875e-4a23-ad12-44eaebbe2302.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "ed23ebe724f4633da59d4942e98a09e13e791cb5630f1365fa848eb94628a93d",
+    "size_bytes": 3416,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:58.016667"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\0fc4cd6f-78c1-4478-88c2-e5ddcb3ce241.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_0fc4cd6f-78c1-4478-88c2-e5ddcb3ce241.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "eab59339a45377e23118e5d34b641a9e14d9cee7fd072cbdbe3850b5d3d00232",
+    "size_bytes": 9928,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:58.045701"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\20a61444-0f44-482a-82a1-cba8cc81d989.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_20a61444-0f44-482a-82a1-cba8cc81d989.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "96068705075e9c5733d77aa90ced1f7de65980a6ffdc331634d697a127ed0f79",
+    "size_bytes": 9599,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.082667"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\24776457-064b-499a-95ce-88f0f4d68082.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_24776457-064b-499a-95ce-88f0f4d68082.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "a7312f9faa6a5a5d4296e8433af4efc49e95f4c0838bc374dd4fd5e42d8d648f",
+    "size_bytes": 1880,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.114262"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\2bbe84b9-f414-488a-b99c-f043bedcbbae.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_2bbe84b9-f414-488a-b99c-f043bedcbbae.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "26da88a78f2008371763e712ccef567bfc0f34b3a7b9c5baaef845c9a340944b",
+    "size_bytes": 1520,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.122258"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\5bd4c489-b82f-4134-a491-688de8d69c9d.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_5bd4c489-b82f-4134-a491-688de8d69c9d.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "d90c094b92847b0c6b1bdb34262a0a46a36385f8d73226e07fc676c32fd23c39",
+    "size_bytes": 3881,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.191301"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\666c3d1c-9bfd-4caa-ae06-9d0a9162fcba.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_666c3d1c-9bfd-4caa-ae06-9d0a9162fcba.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "e9d9fe7fafddc5d14317dc3228c2af0dc84298b5859d8a30363dea031600e229",
+    "size_bytes": 10687,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.211830"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\73c866ea-829d-40a4-ace5-8ba05ef3d7d5.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_73c866ea-829d-40a4-ace5-8ba05ef3d7d5.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "6d1ecac5f3c8143e985ad40b5a14a01cad403fd1436c085a60c2495eedeb59e9",
+    "size_bytes": 9761,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:58.265834"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\7561bd19-469f-4ca7-b9bb-03f30a501276.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_7561bd19-469f-4ca7-b9bb-03f30a501276.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "5dacd19eb343e7bac82927710e0ab2cbf4f9564767338a4dd85e6aec8497cbfc",
+    "size_bytes": 10022,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:58.285476"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\7c4991bd-e365-44d2-be65-2e9f8ebc0930.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_7c4991bd-e365-44d2-be65-2e9f8ebc0930.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "b35ee9a73e7a366faf728977c1b3d4e53c438cae90954809334a1a20af426380",
+    "size_bytes": 4236,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.292933"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\935eb29b-6a49-4ada-b330-25e59a55073b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_935eb29b-6a49-4ada-b330-25e59a55073b.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "1c2ae128350b8286ccf38392342de61c681ab972464d5d14c2336d6e0aa6abc5",
+    "size_bytes": 10196,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:16:58.366077"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\95b5fa40-93f2-4f48-89f7-0c8b34d81602.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_95b5fa40-93f2-4f48-89f7-0c8b34d81602.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "c9adfc77ea2bb437d0f57d448caca0d7d2deb079158860c1d95b231608a54fbb",
+    "size_bytes": 11535,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.384578"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\a22eefaf-f1b8-422e-9254-2b0b0baac58a.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_a22eefaf-f1b8-422e-9254-2b0b0baac58a.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "1a3573a6e09f42f9ae181def0c17103ecb35dfe09449c0a383f400717a55da9b",
+    "size_bytes": 9949,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:58.434585"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\a435d2c9-b617-496d-81da-1d811d9afbc5.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_a435d2c9-b617-496d-81da-1d811d9afbc5.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "3d281df1eacb133a38345c1e15a7a12ae3f8ce6544f9b6d6f8bc719d09656d1f",
+    "size_bytes": 9948,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:58.440086"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\acba60e2-0cd4-449a-8a31-d0f9253c3606.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_acba60e2-0cd4-449a-8a31-d0f9253c3606.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "8d7ade6b7355faf19cdfd8f0601a38694e190bd3dd89177044581acf752fc842",
+    "size_bytes": 2424,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.479127"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\ae51193e-6cb4-4c4b-a8a9-ac846cb495f7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_ae51193e-6cb4-4c4b-a8a9-ac846cb495f7.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "4c45735714f22c00535ecd7493ab4ec23590fbb94ff1fb6e63951a22b2d68d77",
+    "size_bytes": 9865,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:16:58.487127"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\b3f87b77-0b23-4322-8ea0-c56f6c8dd3d8.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_b3f87b77-0b23-4322-8ea0-c56f6c8dd3d8.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "891d8e32ba5d5ec5264ccbb66002bc0c987d00fe5799d4e146f2b734ecf6512f",
+    "size_bytes": 11327,
+    "keywords": [
+      "vimume",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:16:58.514259"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\cd6c047d-08f2-4de3-8d4a-59e297f6f648.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_cd6c047d-08f2-4de3-8d4a-59e297f6f648.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "b1539dfcd36601bb6a73acc4347d24b4c916c67504f8f865d9162b9b394258f6",
+    "size_bytes": 7376,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.562674"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\d07ddd50-0165-4956-b602-e7480553a884.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_d07ddd50-0165-4956-b602-e7480553a884.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "ae204bab451d5162734487c84d1dbbe37254da02d37ed14299b9f2735a2e9b6d",
+    "size_bytes": 10386,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.585924"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\d8c7a61b-1c18-4876-90a6-ad8abeae0d42.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_d8c7a61b-1c18-4876-90a6-ad8abeae0d42.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "04c44fc45dbcaab3a14f15a37ab6698cdd1ab45fab103ccaf7d6f1eeca370aa5",
+    "size_bytes": 10436,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.626985"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\da590f5e-5878-47fd-86d5-d9a566ebad02.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_da590f5e-5878-47fd-86d5-d9a566ebad02.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "30a842f264f6e1b4b82ef3f540c8c019c8e0bfa1df362ade49f62e73866113e1",
+    "size_bytes": 346148,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:16:58.700060"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\messages\\e5675778-987c-49ad-8682-70aee359956e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_e5675778-987c-49ad-8682-70aee359956e.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "17164933ec7e140f193e3369bfe1a6d98e09ced138bdd2a96af45b3c0afdc040",
+    "size_bytes": 2386,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:16:58.705521"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\adcd6f67-c8af-4540-813a-fea54854b319\\.system_generated\\steps\\27\\content.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_content_2.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "837707d56a4583595bb977ad343b403f8c77ed15248bcdf2afcd6af493ceda63",
+    "size_bytes": 2664848,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:02.479665"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\implementation_plan.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_implementation_plan_2.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "69f35a62034982a856e1f1edf234f54860be5e900111a6e1300e0aa823a03c37",
+    "size_bytes": 8279,
+    "keywords": [
+      "mariachi",
+      "serenata",
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:17:13.641358"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\walkthrough.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_walkthrough.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "f2095ec45d4019dcab42dc830389fdc30b2a8ca30f4841cb87b31831d502e612",
+    "size_bytes": 3125,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:13.654357"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\walkthrough.md.metadata.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_walkthrough.md.metadata.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "3523034fa0c2253a5deaa56403d510ad61fe997af259fdb927e8856ecb0b5dbf",
+    "size_bytes": 430,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:13.662397"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\027364a1-5fdb-4007-9029-e29f7e632804.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_027364a1-5fdb-4007-9029-e29f7e632804.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "62402ffb52833cb8f74c661f1047343ca572d1ee1d2445e14aeb3ee5e5247aea",
+    "size_bytes": 2837,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:13.723868"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\03c390cb-484e-4c65-a257-058607cd8842.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_03c390cb-484e-4c65-a257-058607cd8842.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "9acb23acc946e8c5ca06d2740b1c10c29276a87717ccaa102f2e905e443838b8",
+    "size_bytes": 3629,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:13.732869"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\056bf397-9b8b-4eef-a2ce-cd4065f2ea01.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_056bf397-9b8b-4eef-a2ce-cd4065f2ea01.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "0bc8ca26fdce431742dc9194fcc66ccbb183e0518567235d6ca2f3585d1de11b",
+    "size_bytes": 2899,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:13.766368"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\064f5f53-c3c5-4784-b389-1d8554699da6.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_064f5f53-c3c5-4784-b389-1d8554699da6.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "ac671e5b77d908710fbe689a406bdceca842a56512c4ab98c5b470a893ec69dd",
+    "size_bytes": 4131,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:13.784872"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\085895d9-9ffb-4018-9d84-0d31d70641b7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_085895d9-9ffb-4018-9d84-0d31d70641b7.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "653c5cd55ebd4927c317492f8206104c22ceb1930ec4c3d2aae122fe2da7e39b",
+    "size_bytes": 9955,
+    "keywords": [
+      "residencia"
+    ],
+    "archived_at": "2026-09-04T21:17:13.873403"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\0b608fb6-9331-4475-a2ef-82f46e0c7128.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_0b608fb6-9331-4475-a2ef-82f46e0c7128.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "771463d09ce07befea694b9c6cb881a5505e9fd39ab7e395d3e63439dea46674",
+    "size_bytes": 11450,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:13.889907"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\0bec263d-1f04-4c3e-8b42-3428a3d914c7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_0bec263d-1f04-4c3e-8b42-3428a3d914c7.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "358cbc8bd7ee0d11ff51277306165ac93aa838eba2901ad78a6ebece3ba46c23",
+    "size_bytes": 2725,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:13.924912"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\15a7713e-0b00-4ac3-af29-33f5fc74f907.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_15a7713e-0b00-4ac3-af29-33f5fc74f907.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "b1e11f2f891133a23bbe0f5ee2b908e5848223bceb11b056b49f90f892006a36",
+    "size_bytes": 239309,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:14.256980"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\1803cfb9-8750-4f3b-88dc-a2dc10d318bf.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_1803cfb9-8750-4f3b-88dc-a2dc10d318bf.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "e4228344557be11168591a16eac75f3ac6d1f6c1ee99e9d6f3ecf359fb1384a1",
+    "size_bytes": 3064,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:14.308520"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\1c98e50d-ab49-42f0-9d9f-6e8267940de2.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_1c98e50d-ab49-42f0-9d9f-6e8267940de2.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "e71994937a82a8fe349a5aeab7502f7a8b4cc74786a7b8e2118dd8d894daff93",
+    "size_bytes": 11614,
+    "keywords": [
+      "storyselling",
+      "precio"
+    ],
+    "archived_at": "2026-09-04T21:17:14.330531"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\23a66830-71e4-45b6-af4d-250ae8b29291.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_23a66830-71e4-45b6-af4d-250ae8b29291.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "c7f7087be4c18fbdc0711a261f5b8507b829317c84e9c7106c2ec75543d956a8",
+    "size_bytes": 9588,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:14.466050"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\275cb313-a1e3-4245-b359-ec5b07914524.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_275cb313-a1e3-4245-b359-ec5b07914524.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "6b14158e550dd5955b3742ae8d7ec8ff9d2742e22f8de3ebbfe102c488081800",
+    "size_bytes": 309380,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:14.696138"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\28f39504-c2cf-4668-b4b6-bf099b857f50.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_28f39504-c2cf-4668-b4b6-bf099b857f50.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "d2d406d6e578babfa189a6bc630665f8c493f9769cb766723434561a1b06af36",
+    "size_bytes": 10688,
+    "keywords": [
+      "storyselling",
+      "precio"
+    ],
+    "archived_at": "2026-09-04T21:17:14.729649"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\2dbbe384-5595-49a7-a5d5-24f140ce62d2.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_2dbbe384-5595-49a7-a5d5-24f140ce62d2.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "c6593dd0aeaf1bb2077d0a32c5a103ede95f270adde8be8f5822b1eabff3e0c3",
+    "size_bytes": 2075,
+    "keywords": [
+      "pliego"
+    ],
+    "archived_at": "2026-09-04T21:17:14.875182"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\339cc9a1-c85b-408a-b33a-bb1f2acebeb3.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_339cc9a1-c85b-408a-b33a-bb1f2acebeb3.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "4335f18a914fe272470b754724b0329fdad7932f4b637284f0dd2751da21c38a",
+    "size_bytes": 9983,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:14.904218"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\385bad5a-0918-447e-a7af-21a5882107a6.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_385bad5a-0918-447e-a7af-21a5882107a6.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "1c66c698f704fec87c7324dae84193c186287f81ad3c4598b9b6d86f8155ab36",
+    "size_bytes": 4025,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.035742"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\3919e8e5-fa65-464a-9008-a940c5d3a073.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_3919e8e5-fa65-464a-9008-a940c5d3a073.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "74e9bdd87b8d0170882d5ee2bc8025a019a1a7004f37713591bba4be297c4255",
+    "size_bytes": 12963,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.049243"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\3a7d3af8-0af2-4b57-8c9b-b4a27e4015de.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_3a7d3af8-0af2-4b57-8c9b-b4a27e4015de.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "37d31bd974f4ee508b87d9010bff8b97d1cd2388af737a87adf6d71c3b620bf8",
+    "size_bytes": 11349,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.080237"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\3b12b009-a81e-480d-a98c-26fdd447ccef.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_3b12b009-a81e-480d-a98c-26fdd447ccef.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "6a7c149fe3532349c16b46066b61e0e088ec7c21c941184f917ffa6d6dca1625",
+    "size_bytes": 255413,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:15.151756"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\3b25fd5f-d88a-4db8-a25b-b55b07186b00.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_3b25fd5f-d88a-4db8-a25b-b55b07186b00.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "35f1c8c9e3304ca2a71c6a8bbdbe51647f640a2a0abb835d51f4e77e8adbdda5",
+    "size_bytes": 10678,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.156755"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\3b951914-00ca-486d-92a5-30d070b08670.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_3b951914-00ca-486d-92a5-30d070b08670.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "f23340dd55d22ccf742aac4987072cb6fb349e616f2f5c2e01ad48138ce23d9e",
+    "size_bytes": 3959,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:15.160756"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\3fcd74ac-9078-4a2e-90af-409da63fc5f9.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_3fcd74ac-9078-4a2e-90af-409da63fc5f9.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "3338529e953ba1b59726873a4a13e9e109a9ce0c59334a1c51c26add21bf8df6",
+    "size_bytes": 3178,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.218271"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\46480505-a4c9-4b46-9b29-009734a014e5.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_46480505-a4c9-4b46-9b29-009734a014e5.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "66ebeecdfc0818dd69c9c7f932d42f9d1baf0ca5fa6aa9729c14b9d1defc2b4b",
+    "size_bytes": 3895,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:15.277277"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\4a468e69-51a2-4c89-bd8a-cd8a3203ddce.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_4a468e69-51a2-4c89-bd8a-cd8a3203ddce.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "0bf1d71f7804cb3a33c431ce9be8268a7972eddee1cda383fae093ecd1b5cab1",
+    "size_bytes": 2551,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:15.342977"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\4b2be866-8af4-4962-8800-09ed9dd64963.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_4b2be866-8af4-4962-8800-09ed9dd64963.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "2d236a3049aedc0a3fcf700054a5d6daef7c89578b478225306d447d87013857",
+    "size_bytes": 3137,
+    "keywords": [
+      "mariachi",
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:15.346442"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\4c5aa2a9-dede-4592-8a29-0933fdfa8c64.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_4c5aa2a9-dede-4592-8a29-0933fdfa8c64.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "7ddd514926da7bae7491038c9bab6592bd85c11f0d6bc1fb6278fc405b33c9e6",
+    "size_bytes": 3044,
+    "keywords": [
+      "vimume",
+      "residencia"
+    ],
+    "archived_at": "2026-09-04T21:17:15.348936"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\514caaf8-f6fd-4fe9-a4b1-efef884c50cd.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_514caaf8-f6fd-4fe9-a4b1-efef884c50cd.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "ff4468c196368bb100ae43e303ed34af17a40fcacb201e039071be99eec274a2",
+    "size_bytes": 3669,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:15.381942"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\5282a6c2-4e6c-4fbe-b473-0d33de5afbf7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_5282a6c2-4e6c-4fbe-b473-0d33de5afbf7.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "650cd4dc7bfce4695bad6fa61cad40dc218cd38bfeb44d668f876c9df56988f0",
+    "size_bytes": 2506,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:15.383940"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\54fe7af1-8a67-4129-bff9-ae17fb6f8a89.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_54fe7af1-8a67-4129-bff9-ae17fb6f8a89.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "0ed071203fcb9c2597a7aac8814272db33b951eea96163d25c708551df71bec3",
+    "size_bytes": 9658,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.442955"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\552097b4-04c8-4db2-a965-8d69b5886d8d.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_552097b4-04c8-4db2-a965-8d69b5886d8d.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "8cf2a91135f0da5a2ece415d6f72f3336f90986e3251b8664631f54d29d286f7",
+    "size_bytes": 10289,
+    "keywords": [
+      "trayectoria",
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:17:15.454999"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\585f16a5-43ad-4d09-96b5-1b265657da5e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_585f16a5-43ad-4d09-96b5-1b265657da5e.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "741abc5fd67691cc17e85141d8229936cafe5f138d4cd49d1cdad8e2b3786101",
+    "size_bytes": 2732,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:15.516496"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\5a21b8b0-5917-4195-94ef-5ef7563bde3d.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_5a21b8b0-5917-4195-94ef-5ef7563bde3d.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "21f86b4a4c670c7b7accbbc8c2c118f90e26960613ca6c9a48c3ad217e0335c3",
+    "size_bytes": 11821,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.550009"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\5b411ea0-f1ed-498d-95cf-460f8e1065a7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_5b411ea0-f1ed-498d-95cf-460f8e1065a7.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "b197eaf5534d1b7fbfdd5726980e304b243a2d77bef05a4a03e23073d484ba9b",
+    "size_bytes": 4892,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:15.569559"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\5be8c1c0-bc84-4969-acba-dfbd35aea01b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_5be8c1c0-bc84-4969-acba-dfbd35aea01b.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "80f17218acd50d418a382f5eeca700764001dd8880473841fdb43cb40b622662",
+    "size_bytes": 12126,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.600563"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\5f335875-e926-4b06-88ca-9e1f3f69ed8e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_5f335875-e926-4b06-88ca-9e1f3f69ed8e.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "d04b3d2b7bf2388d7b24842515d22eaa9de98c57d56e54a725dcbf857d3d5f0f",
+    "size_bytes": 2322,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:15.690615"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\62817ea7-30dd-4291-8cdb-974ed106eff1.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_62817ea7-30dd-4291-8cdb-974ed106eff1.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "dc26331a67794a168696e83c3ac3761f579ef9f03bb22ca73cd4c93002bb8f57",
+    "size_bytes": 13232,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:15.744688"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\643b9767-5914-4f95-9e07-030febe8ee24.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_643b9767-5914-4f95-9e07-030febe8ee24.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "5edea0cbb23694d32527aa583506ad69f0a6769f7a32d346e00cbc54ed78151f",
+    "size_bytes": 11110,
+    "keywords": [
+      "rider"
+    ],
+    "archived_at": "2026-09-04T21:17:15.791159"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\661ab838-d995-416b-8e0f-71a1c57d3e64.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_661ab838-d995-416b-8e0f-71a1c57d3e64.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "21cfd10ca94f402bfe3e606823586621460789148d2fb4fc1c995eda5ddbc2da",
+    "size_bytes": 5245,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.861813"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\664ec067-af77-48ee-af32-5996c92c0aa7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_664ec067-af77-48ee-af32-5996c92c0aa7.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "f1078a17cb081658f34dacfe223acfb010b93c889e6c86d5b73ffff0128e065e",
+    "size_bytes": 8379,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:15.884890"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\66e853e7-e56f-49a1-9480-c5e1a906ada9.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_66e853e7-e56f-49a1-9480-c5e1a906ada9.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "a7629eb8eb66882edd02adf3f582fc931af318a5dd4833a24c874043d1618bae",
+    "size_bytes": 4056,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:15.895856"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\681b5e12-1ff4-4d7d-b1ee-e0a3063b261a.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_681b5e12-1ff4-4d7d-b1ee-e0a3063b261a.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "b5ff1ccef67a4ff27bce6f28a09262361d585181119bfbde29219e94ee19bc2a",
+    "size_bytes": 11209,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.923421"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\68592bfe-29e2-4b02-b87e-f1b545081ee8.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_68592bfe-29e2-4b02-b87e-f1b545081ee8.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "5ce2098dc02ce731c8ce850aae41736ae3a3b4220481576b6d966de1b40f998f",
+    "size_bytes": 3646,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:15.934950"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\6b0a1416-649c-442e-b57b-6c3fd475430f.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_6b0a1416-649c-442e-b57b-6c3fd475430f.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "328c125307f170d98bd90b40196c6a780437dabc63ab483a30a3ecd6d7401682",
+    "size_bytes": 10732,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:15.956422"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\70eddfd9-a2f8-493e-be5a-5ae4706bb425.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_70eddfd9-a2f8-493e-be5a-5ae4706bb425.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "77f0a1ad6896536e72ba06dcf3701b02369983772e6490691812ac39259b1d2e",
+    "size_bytes": 11793,
+    "keywords": [
+      "residencia"
+    ],
+    "archived_at": "2026-09-04T21:17:16.092588"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\74110e11-cfdd-4ced-b4e0-487f981ccbdd.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\STORYSELLING_Y_PRECIOS\\[2026-09-04]_74110e11-cfdd-4ced-b4e0-487f981ccbdd.json",
+    "category": "STORYSELLING_Y_PRECIOS",
+    "sha256": "87acf96937e23837dc6684e34998f1a0ec7444d068664370564f84e4cfee0616",
+    "size_bytes": 10211,
+    "keywords": [
+      "bodas.net"
+    ],
+    "archived_at": "2026-09-04T21:17:16.151227"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\7c4c535a-c35b-4360-99ea-9f21c5d0f56c.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_7c4c535a-c35b-4360-99ea-9f21c5d0f56c.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "59b670839974bf218ca5fc8bfcc515595e6ff73e7956d9f591aa54befde482de",
+    "size_bytes": 3031,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:16.302939"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\7e694050-370b-4ca2-97ce-be6cc8f52735.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_7e694050-370b-4ca2-97ce-be6cc8f52735.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "76fe1516b1bb740f71fd6171dc0b86a9936f343a0ea7912ccab4670cc7552308",
+    "size_bytes": 9238,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:16.319954"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\7eed4344-2d12-4e7e-9b08-8dc278bdafbc.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_7eed4344-2d12-4e7e-9b08-8dc278bdafbc.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "3245ede8bb6232c539c0b17b6ba6f02a56aab40cc97c57b0a7cef38ac5e58fb3",
+    "size_bytes": 5950,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:16.331958"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\7f3dbc5c-0f00-477a-948a-b1ca8801b0b9.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_7f3dbc5c-0f00-477a-948a-b1ca8801b0b9.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "dba2423127e63f05ab283deae327d4d8a33fc050c7902e2ddf6dd7c8bd3dcddb",
+    "size_bytes": 12330,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:16.354014"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\7f832b96-7305-4329-aba0-37e7ea6b7bbc.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_7f832b96-7305-4329-aba0-37e7ea6b7bbc.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "ef8362aa5abb6fa487d40e9f31fff67019b1c59a8bbbd26e5db1a3c5cb9accd9",
+    "size_bytes": 3333,
+    "keywords": [
+      "mariachi",
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:16.377954"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\816483fc-69b3-4354-86b9-95ffb9bb3c79.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_816483fc-69b3-4354-86b9-95ffb9bb3c79.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "5cdf7b2183982fb2dfb6512b810d75136fb791c5ae863ac044d1786ecdd8fb15",
+    "size_bytes": 3287,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:16.411991"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\81cc31de-8df3-4bbf-b3f2-2cc14c7531ff.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_81cc31de-8df3-4bbf-b3f2-2cc14c7531ff.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "2b640526f4485b415cfe8ed794c76395bbaa737e4c952c59e349cf2345ad6be4",
+    "size_bytes": 2367,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:16.420565"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\8971c572-14cd-4fec-bba7-6c12f6d7532b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_8971c572-14cd-4fec-bba7-6c12f6d7532b.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "4df08e25873376630e9fc377df208ce679b828a065d695a89a932445e9902df2",
+    "size_bytes": 10542,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:16.493073"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\949c7c2c-b84d-4208-a433-d9add7bffc0e.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_949c7c2c-b84d-4208-a433-d9add7bffc0e.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "588676669520c373619a6d87f56720671a5eefe609e6b9d13a2083e13b569d2f",
+    "size_bytes": 10346,
+    "keywords": [
+      "rider"
+    ],
+    "archived_at": "2026-09-04T21:17:16.636307"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\983eb30e-b294-43cf-a0b4-aee6e4f8a6d1.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_983eb30e-b294-43cf-a0b4-aee6e4f8a6d1.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "3fdf0ebe3aa25fde53db9fcab5752913de2a64eb53fd8c820628ba685a3d6027",
+    "size_bytes": 10969,
+    "keywords": [
+      "vimume",
+      "residencia"
+    ],
+    "archived_at": "2026-09-04T21:17:16.650311"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\9d3e4217-eec3-4cf1-b7f3-b4f5835fca48.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_9d3e4217-eec3-4cf1-b7f3-b4f5835fca48.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "0c3b322f6d6e3b44d4868b06cca5fa460e841e3d30ed0b0488e86651045a83d7",
+    "size_bytes": 6721,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:16.685812"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\a0870454-ebc1-455c-8366-41511ab6ffc5.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_a0870454-ebc1-455c-8366-41511ab6ffc5.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "cdff2c5913bdb77d75218e69fa07c2f702720769073dd7d7946ae2ed9605312d",
+    "size_bytes": 2444,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:16.728980"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\a333c8a3-58ea-4e58-886a-6e36cd9b7e6d.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_a333c8a3-58ea-4e58-886a-6e36cd9b7e6d.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "a0737c56bdcec17f277a09aa173cd0e364e89d1a79859b7590a66a0aa2662f5b",
+    "size_bytes": 2931,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:16.747980"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\a50d6f5f-f10c-48bf-8c23-ad7b0ab98868.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_a50d6f5f-f10c-48bf-8c23-ad7b0ab98868.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "6e978bd7be8330be93120f1d4680de62034c37fe9cabeff10354cc91205c50f5",
+    "size_bytes": 305700,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:16.850934"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\adebd791-cee8-4a34-9e9d-36cadd0d7b6c.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_adebd791-cee8-4a34-9e9d-36cadd0d7b6c.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "60894bad2a45a9849b281e2469c767969b75e3f091356c968a7b7dd1fd8e1ed4",
+    "size_bytes": 5170,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:16.859912"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\af5eb795-1400-410a-bfe7-6f76e6c4192a.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_af5eb795-1400-410a-bfe7-6f76e6c4192a.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "ce0461de74b453886bbfe6eaafe9d3c6828a158928b72d5c529d5065b5a6f3ba",
+    "size_bytes": 3584,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:16.865412"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\b1251259-88fa-4520-b726-d692d52c3c61.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_b1251259-88fa-4520-b726-d692d52c3c61.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "a9b82e303b8070ccf63d67ef31716d4f8598b4fa8ea2c9911bac1dd301e6187a",
+    "size_bytes": 3842,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:16.885426"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\be6d2af4-739a-4749-8dab-7cbaa35676e9.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_be6d2af4-739a-4749-8dab-7cbaa35676e9.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "74eeb28e81d7367a98f7efa432bb4161d606fe3210757475e361d8a44a8cec62",
+    "size_bytes": 2320,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:17.009030"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\bfde2d57-fdc1-436b-a6c6-e5707cd0cd81.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_bfde2d57-fdc1-436b-a6c6-e5707cd0cd81.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "b083cfe5d3e6a2f62b5f989c25095429368acb309a1d1efc67cfca262fd950c9",
+    "size_bytes": 2431,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:17.046577"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\c0261c3f-d5de-4195-b0fa-d151bd3923ff.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\LEGAL_Y_CONTRATOS\\[2026-09-04]_c0261c3f-d5de-4195-b0fa-d151bd3923ff.json",
+    "category": "LEGAL_Y_CONTRATOS",
+    "sha256": "4cbd03d7e174abe697c50442316fc2a6cd0b22784106a96f5a39b43cf6f746d1",
+    "size_bytes": 256460,
+    "keywords": [
+      "aie"
+    ],
+    "archived_at": "2026-09-04T21:17:17.149409"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\c45ce0a1-b27f-4a99-bc2c-ad54352d3ce0.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_c45ce0a1-b27f-4a99-bc2c-ad54352d3ce0.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "df7f585bfe3ea16c07acd8ebbeefcc3e8a3ca272673bdf3e9f56c1f9ca240aa5",
+    "size_bytes": 3243,
+    "keywords": [
+      "vimume",
+      "residencia"
+    ],
+    "archived_at": "2026-09-04T21:17:17.190461"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\d0057ec0-96de-4fe2-90ee-e6c1892dfb44.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_d0057ec0-96de-4fe2-90ee-e6c1892dfb44.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "2f7edee2b77dd1bd664af7cd4f22c1c6356e76a330281e21b473ecce8d1486e9",
+    "size_bytes": 3737,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:17.312105"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\d0632878-77d5-45e4-8a9d-7b2ca462fcb4.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_d0632878-77d5-45e4-8a9d-7b2ca462fcb4.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "3506b48f4b0477e51de035bf57b34283039c2875c8d268c57d336c10270dc392",
+    "size_bytes": 2386,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:17.337111"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\d1e682f8-291b-4961-a660-80041fd3d84b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_d1e682f8-291b-4961-a660-80041fd3d84b.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "6a1a47a719ea38290a247363d9bff47706a2b5d0ab95170c4ad38e433c452656",
+    "size_bytes": 4476,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:17.392129"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\d9b88f60-542b-401c-b743-302f7ba83859.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_d9b88f60-542b-401c-b743-302f7ba83859.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "3c994c9e7858c1d760641474dbbc69481a4e55b3aa08f2355cd5fdaee100a19c",
+    "size_bytes": 4052,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:17.605690"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\daa5f384-63d6-40ae-b1fd-513806dd0475.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_daa5f384-63d6-40ae-b1fd-513806dd0475.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "f5f05c504c1177be6f44cc4bd5c3e82a142ff5c88fdb090b0271e537a28c49ff",
+    "size_bytes": 2920,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:17.626702"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\dac8990b-2d3d-4dde-8989-9fd80d1d90cf.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_dac8990b-2d3d-4dde-8989-9fd80d1d90cf.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "6711e04a6a953c8d3855e716c73e3a658203b7106a6485e5ae2a0e343e2dc1c6",
+    "size_bytes": 2936,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:17.649197"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\dc233d40-9552-4907-96ac-ece97447b988.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_dc233d40-9552-4907-96ac-ece97447b988.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "3bc5726ab0fb9482c31e65767b7752e4ee83de93cebc4fdaef07f0d4c5575280",
+    "size_bytes": 4501,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:17.673698"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\e9644be6-3fa3-4386-b1c0-a98c1b93d2cc.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_e9644be6-3fa3-4386-b1c0-a98c1b93d2cc.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "ea9e2e53ccbe314d011dbc3fca6548c687ab9eed7af67a22e4c9fd6ad40f9ae3",
+    "size_bytes": 2898,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:17.827559"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\ea36d8f4-39d1-4b35-a2e3-a8c74aa4a1c5.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_ea36d8f4-39d1-4b35-a2e3-a8c74aa4a1c5.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "500cbbfc39c430b86db3be9f17d292fa19aaa80702139939af237ec24ce0427d",
+    "size_bytes": 3927,
+    "keywords": [
+      "serenata"
+    ],
+    "archived_at": "2026-09-04T21:17:17.837555"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\eb631bbd-3c52-4bc8-a167-babcdeec440b.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_eb631bbd-3c52-4bc8-a167-babcdeec440b.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "f7a16c6c8b62f1af82cacca0b35790c28e1987557fa251f19137081f078d62f9",
+    "size_bytes": 2654,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:17.853555"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\ee318c41-4235-45de-9b5e-cdf4d1c257a7.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_ee318c41-4235-45de-9b5e-cdf4d1c257a7.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "ad0d7312283d7e93157ef25f7d52645082336bf2e3213abdd8f82b137c3d3823",
+    "size_bytes": 2557,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:17.943655"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\efc2cb1b-efa6-41a2-aa48-9b1eff2cd1f0.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_efc2cb1b-efa6-41a2-aa48-9b1eff2cd1f0.json",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "fd85822b2005b20e89cc22beaa591df4e37f1225de5043ee9b9a47916c9653dd",
+    "size_bytes": 8201,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:17:17.977154"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\f2ca330d-99f8-4d77-8ea7-51cbba101e95.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_f2ca330d-99f8-4d77-8ea7-51cbba101e95.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "65eb2aa13a826503c81df7a6bc14b4186630d716db64251a00c4e740577417f6",
+    "size_bytes": 2929,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:18.006157"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\f8953ebb-996e-49f8-bfac-0845b9722ccf.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_f8953ebb-996e-49f8-bfac-0845b9722ccf.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "9ea65b30abae5b191752c7658b2106c4aeba15b4431b377695192dd4e50e1749",
+    "size_bytes": 3893,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:18.059169"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\f93cc83c-cc6e-47e0-96fb-3cade79f2049.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_f93cc83c-cc6e-47e0-96fb-3cade79f2049.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "f6212840c8578d07d6f0af8028b18ee56692711b731c16171a52000cc0cb443c",
+    "size_bytes": 3592,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:18.077669"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\fe8d8a7b-1fe6-457c-b84c-26f699fb86a2.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_fe8d8a7b-1fe6-457c-b84c-26f699fb86a2.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "f11179f5e8e1136c6095521435d8c12e6ab54cc403534ddb493adfbd56aad322",
+    "size_bytes": 2223,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:18.140676"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\.system_generated\\messages\\ffe9e5e6-dd90-4208-9c08-59fe921b9a47.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_ffe9e5e6-dd90-4208-9c08-59fe921b9a47.json",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "03474b8f55b054d5c8628633cab866b34d7b505226fe5c1a73fb1129d85a90fc",
+    "size_bytes": 2471,
+    "keywords": [
+      "vimume",
+      "alzheimer",
+      "musicoterapia"
+    ],
+    "archived_at": "2026-09-04T21:17:18.178677"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\browser\\scratchpad_2sacux2r.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_scratchpad_2sacux2r.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "394d1d71f38d3b7c635cda7c3cfa2198459f13b96e6777822c4d8fcf3f7c0479",
+    "size_bytes": 468,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:18.197676"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\browser\\scratchpad_95ojplfn.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_scratchpad_95ojplfn.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "e38b7c6a8a4b04cf1a11051b684296c50e1ec9c6de0140a42cd6d343318d1988",
+    "size_bytes": 370,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:18.208180"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\browser\\scratchpad_c8ldp5v4.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_scratchpad_c8ldp5v4.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "7e6aa3b6f40917c20d3d92512631825d752f876d6ddd66c269c199bc2242ce2a",
+    "size_bytes": 892,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:18.216180"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\browser\\scratchpad_h7n7vtmg.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_scratchpad_h7n7vtmg.md",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "56dff07b6b776800e7fdfb6c8490970e1418a47f6d0dfb98bab85d43a8565d73",
+    "size_bytes": 464,
+    "keywords": [
+      "spl"
+    ],
+    "archived_at": "2026-09-04T21:17:18.227183"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\browser\\scratchpad_spy5ezz0.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_scratchpad_spy5ezz0.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "7104d4875b8c9438cf0268676054e9a39f83ddd8404081884ed68b36e3899941",
+    "size_bytes": 607,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:17:18.236183"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\browser\\scratchpad_t66m47m2.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\VIMUME_NEUROCIENCIA\\[2026-09-04]_scratchpad_t66m47m2.md",
+    "category": "VIMUME_NEUROCIENCIA",
+    "sha256": "96712020e2b697e6fcac79cb7bb561f75d521f1f78939ce8626ca941e438fb24",
+    "size_bytes": 531,
+    "keywords": [
+      "vimume"
+    ],
+    "archived_at": "2026-09-04T21:17:18.241684"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\edcb27fe-4520-452a-a2b0-2df7c5dcd4e5\\browser\\scratchpad_x3zdjh8d.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_scratchpad_x3zdjh8d.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "a8b643c1fa39098bb7c2e559245edd0b4e4c7555af54ded36866714545514cbc",
+    "size_bytes": 591,
+    "keywords": [
+      "edwin agudelo"
+    ],
+    "archived_at": "2026-09-04T21:17:18.248183"
+  },
+  {
+    "original_path": "C:\\Users\\M2-W10\\Desktop\\Exportacion_Cambios_Hoy.md",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\MARIACHIS_Y_REPERTORIO\\[2026-09-04]_Exportacion_Cambios_Hoy.md",
+    "category": "MARIACHIS_Y_REPERTORIO",
+    "sha256": "20e813fd4335479ad71d64b3eeb1ba9104aee526d357fd3f314aa0db52ae5225",
+    "size_bytes": 3237,
+    "keywords": [
+      "mariachi"
+    ],
+    "archived_at": "2026-09-04T21:18:13.732190"
+  },
+  {
+    "original_path": "C:\\Users\\Public\\Documents\\NI Resources\\dist_database\\waves\\bass rider stereo\\categories.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_categories.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "347824cbafd28148c06fcc570bcb23e0e94097e09af9e1df0aab38e5005fd995",
+    "size_bytes": 129,
+    "keywords": [
+      "rider"
+    ],
+    "archived_at": "2026-09-04T21:18:13.958528"
+  },
+  {
+    "original_path": "C:\\Users\\Public\\Documents\\NI Resources\\dist_database\\waves\\bass rider stereo\\shortname.json",
+    "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\PRODUCCION_Y_RIDERS\\[2026-09-04]_shortname.json",
+    "category": "PRODUCCION_Y_RIDERS",
+    "sha256": "1115f5d3fae0f4ad55bdecaa560fe0dfc7b679f4bdabc3308795a39718f4b22e",
+    "size_bytes": 140,
+    "keywords": [
+      "rider"
+    ],
+    "archived_at": "2026-09-04T21:18:13.961464"
   }
 ]

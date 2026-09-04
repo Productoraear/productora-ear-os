@@ -4,7 +4,7 @@
     "sector": "Alumbrado Navideño y Festivo España (CPV 31522000 / CNAE 2740)",
     "acceso": "CONFIDENCIAL_ADMIN_SOLO (Zero-Public-Leak)",
     "normativa": "Contratos Menores Art. 118 LCSP (<15.000 € / Techo EAR: 14.250 €)",
-    "last_updated": "2026-09-01T07:28:32.339154+00:00"
+    "last_updated": "2026-09-04T19:15:42.419392+00:00"
   },
   "proveedores_iluminacion": [
     {
@@ -32,7 +32,7 @@
       "sede_principal": "Puente Genil (Córdoba)",
       "margen_estimado_subcontratacion": "30% - 45%",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     },
     {
       "id": "B2G-LIGHT-79ad8cb42e0b",
@@ -58,7 +58,7 @@
       "sede_principal": "Toledo (Castilla-La Mancha)",
       "margen_estimado_subcontratacion": "25% - 38%",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     },
     {
       "id": "B2G-LIGHT-caec0a0d4744",
@@ -84,7 +84,7 @@
       "sede_principal": "O Porriño (Pontevedra)",
       "margen_estimado_subcontratacion": "20% - 35%",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     },
     {
       "id": "B2G-LIGHT-4f0936b46610",
@@ -110,7 +110,7 @@
       "sede_principal": "Mataró (Barcelona)",
       "margen_estimado_subcontratacion": "35% - 50%",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     },
     {
       "id": "B2G-LIGHT-629b37a0feb2",
@@ -136,7 +136,7 @@
       "sede_principal": "Sevilla",
       "margen_estimado_subcontratacion": "28% - 40%",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     },
     {
       "id": "B2G-LIGHT-e9858135668a",
@@ -162,7 +162,7 @@
       "sede_principal": "Valencia",
       "margen_estimado_subcontratacion": "30% - 45%",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     },
     {
       "id": "B2G-LIGHT-dfca1f6160e8",
@@ -188,7 +188,7 @@
       "sede_principal": "Madrid",
       "margen_estimado_subcontratacion": "25% - 40%",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     },
     {
       "id": "B2G-LIGHT-cfefad3028cc",
@@ -215,7 +215,7 @@
       "sede_principal": "Madrid (PLACSP / Gobierto)",
       "margen_estimado_subcontratacion": "Arbitraje B2G directo",
       "estado_homologacion": "AUDITADO_EAR_B2G",
-      "fecha_ingesta": "2026-09-01T07:28:32.339154+00:00"
+      "fecha_ingesta": "2026-09-04T19:15:42.419392+00:00"
     }
   ]
 }

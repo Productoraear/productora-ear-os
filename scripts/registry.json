@@ -191,6 +191,15 @@
       "inputs": ["Definición de municipios estratégicos nacionales"],
       "outputs": "src/data/b2g-national/national-municipalities.json",
       "cli": "npx tsx src/scripts/seed-national-b2g.ts"
+    },
+    {
+      "id": "vampire_swarm_orchestrator",
+      "name": "vampire_swarm_orchestrator.py",
+      "path": "scripts/vampire_swarm_orchestrator.py",
+      "purpose": "Orquestador de enjambre vampírico en paralelo: lanza simultáneamente las 7 unidades de recolección masiva (HTMLs, alumbrado B2G, catálogo Demetrio, bio/objeciones, oráculo, licitaciones PLACE/TED y barrido forense ZTM) sin colisiones de E/S.",
+      "inputs": ["Discos H:\\, I:\\, D:\\, catálogos PDF y archivos de proveedores"],
+      "outputs": "scripts/reports/swarm/*.log + scripts/reports/vampire_swarm_master_telemetry.json",
+      "cli": "python scripts/vampire_swarm_orchestrator.py"
     }
   ]
 }

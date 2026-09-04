@@ -1,0 +1,126 @@
+{
+  "timestamp": "2026-09-04T22:09:04.979786",
+  "total_units": 7,
+  "executed_units": 7,
+  "successful_units": 6,
+  "failed_units": 1,
+  "total_elapsed_seconds": 3202.62,
+  "units": [
+    {
+      "id": "UNIT_LIGHTING_B2G",
+      "name": "Ingestor Alumbrado Navideño B2G & CPV 31522000",
+      "script": "vampirize_christmas_lighting_b2g.py",
+      "output_target": "src/data/admin/christmas_lighting_b2g.json",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "elapsed_seconds": 2.04,
+      "log_file": "H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\swarm\\UNIT_LIGHTING_B2G.log",
+      "snippet": [
+        ">> [SUCCESS] Base de datos de Alumbrado Navide�o B2G generada en: H:\\EAR_OS_V2\\EAR_OS_V2\\src\\data\\admin\\christmas_lighting_b2g.json (9.2 KB)",
+        ">> 8 empresas, fabricantes y fuentes de licitaci�n procesadas."
+      ]
+    },
+    {
+      "id": "UNIT_DEMETRIO_CATALOG",
+      "name": "Vampirización Total Catálogo Demetrio Luces 2025/2026",
+      "script": "vampirize_demetrio_full.py",
+      "output_target": "src/data/demetrio_luces_navidad_2025.json",
+      "status": "FAILED",
+      "exit_code": 1,
+      "elapsed_seconds": 2.04,
+      "log_file": "H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\swarm\\UNIT_DEMETRIO_CATALOG.log",
+      "snippet": [
+        "doc = fitz.open(pdf_path)",
+        "^^^^^^^^^^^^^^^^^^^",
+        "File \"C:\\Users\\M2-W10\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\pymupdf\\__init__.py\", line 3001, in __init__",
+        "raise FileNotFoundError(f\"no such file: '{filename}'\")",
+        "pymupdf.FileNotFoundError: no such file: 'H:\\CATALOGO luces de Navidad Demetrio 2025 _compressed.pdf'"
+      ]
+    },
+    {
+      "id": "UNIT_ORACLE_RAG",
+      "name": "Oráculo Estratégico High-Density Distiller",
+      "script": "vampire_oracle_miner.py",
+      "output_target": "src/data/oraculo-rag-ssot.json",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "elapsed_seconds": 2.03,
+      "log_file": "H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\swarm\\UNIT_ORACLE_RAG.log",
+      "snippet": [
+        "VAMPIRE ORACLE MINER: BARRIDO DE ALTA DENSIDAD",
+        "================================================================================",
+        "[OK] Barrido finalizado. 0 activos procesados.",
+        "[OK] Archivo SSOT: H:\\EAR_OS_V2\\EAR_OS_V2\\src\\data\\oraculo-rag-ssot.json",
+        "[OK] Tama�o final: 0.00 MB (L�mite 15 MB)"
+      ]
+    },
+    {
+      "id": "UNIT_B2G_TENDER_HUNTER",
+      "name": "Cazador B2G PLACE/TED Licitaciones Menores Art. 118",
+      "script": "b2g_tender_hunter.py",
+      "output_target": "src/data/b2g/b2g_doble_impacto_municipal.json",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "elapsed_seconds": 2.03,
+      "log_file": "H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\swarm\\UNIT_B2G_TENDER_HUNTER.log",
+      "snippet": [
+        "Doble Impacto Ops:      8",
+        "Split Soberano:         80% / 10% / 10% — INMUTABLE",
+        "Tiempo:                 0.0s",
+        "Output:                 H:\\EAR_OS_V2\\EAR_OS_V2\\src\\data\\b2g\\b2g_active_tenders.json",
+        "======================================================================"
+      ]
+    },
+    {
+      "id": "UNIT_HTML_MASSIVE",
+      "name": "Vampirizador Masivo de HTMLs (Proveedores H: & I:)",
+      "script": "vampirize_massive_html_vaults.py",
+      "output_target": "src/data/bodas-vendors-harvested.json",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "elapsed_seconds": 4.07,
+      "log_file": "H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\swarm\\UNIT_HTML_MASSIVE.log",
+      "snippet": [
+        "Skipped inválidos:   0",
+        "Tiempo total:        2.1s (0.0min)",
+        "Output:              H:\\EAR_OS_V2\\EAR_OS_V2\\src\\data\\bodas-vendors-harvested.json",
+        "Informe:             H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\vampire_massive_report.json",
+        "========================================================================"
+      ]
+    },
+    {
+      "id": "UNIT_FORENSIC_SWEEPER",
+      "name": "Barrido Forense ZTM Omni-Drive & Absorbed Vault",
+      "script": "full_pc_forensic_ear_sweeper.py",
+      "output_target": "src/data/ear-rag-database.json",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "elapsed_seconds": 2416.43,
+      "log_file": "H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\swarm\\UNIT_FORENSIC_SWEEPER.log",
+      "snippet": [
+        "Nodos RAG acumulados (total) : 6008",
+        "Bóveda destino               : H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT",
+        "Tiempo transcurrido          : 2415.9 s",
+        "╚══════════════════════════════════════════════════════════════════════════════╝",
+        "🏁 PROTOCOLO ZTM COMPLETADO — ARCHIVISTA PURISTA EN LÍNEA"
+      ]
+    },
+    {
+      "id": "UNIT_BIO_OBJECTIONS",
+      "name": "Omni-Drive Miner (Biografía Edwin & Objeciones Dani Aragón)",
+      "script": "vampire_bio_and_objections_miner.py",
+      "output_target": "src/data/edwin-true-bio-ssot_draft.json",
+      "status": "COMPLETED",
+      "exit_code": 0,
+      "elapsed_seconds": 3202.59,
+      "log_file": "H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\reports\\swarm\\UNIT_BIO_OBJECTIONS.log",
+      "snippet": [
+        "[OMNI-DRIVE MINER] Escaneo completado en unidad D:\\. Archivos relevantes encontrados: 1017",
+        "[OMNI-DRIVE MINER] Escaneo completado en unidad H:\\. Archivos relevantes encontrados: 16543",
+        "[OMNI-DRIVE MINER] Extracci�n finalizada con Exit Code 0.",
+        "-> H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\..\\src\\data\\edwin-true-bio-ssot_draft.json",
+        "-> H:\\EAR_OS_V2\\EAR_OS_V2\\scripts\\..\\src\\data\\oraculo-300-objeciones-ssot_draft.json"
+      ]
+    }
+  ]
+}

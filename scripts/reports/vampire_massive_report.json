@@ -1,6 +1,6 @@
 {
-  "session_ts": "2026-09-04T19:17:01.085790",
-  "duration_seconds": 6329.35,
+  "session_ts": "2026-09-04T21:15:44.557149",
+  "duration_seconds": 2.13,
   "scan_roots": [
     "H:\\ARCHIVO_FRIO_ESTRUCTURAL",
     "H:\\EAR_OS_V2",
@@ -11,12 +11,12 @@
     "D:\\01_VERTICAL_EVENTOS"
   ],
   "html_discovered": 99564,
-  "html_new": 99564,
-  "vendors_existing": 24869,
-  "vendors_added": 2210,
+  "html_new": 0,
+  "vendors_existing": 27079,
+  "vendors_added": 0,
   "vendors_total": 27079,
-  "skipped_dup": 30072,
-  "skipped_invalid": 67282,
+  "skipped_dup": 0,
+  "skipped_invalid": 0,
   "output": "H:\\EAR_OS_V2\\EAR_OS_V2\\src\\data\\bodas-vendors-harvested.json",
   "protocol": "ANTIGRAVITY ZTM v4.1 — BARE-METAL QWEN WORKER"
 }

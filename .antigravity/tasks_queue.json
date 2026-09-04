@@ -1,34 +1,119 @@
 {
   "_meta": {
-    "version": "5.0.0",
+    "version": "5.1.0",
     "generated_by": "ANTIGRAVITY System Orchestrator — MODO ARQUITECTO PURO v5.0",
-    "generated_at": "2026-09-04T20:28:00+02:00",
-    "protocol": "BARE-METAL QWEN WORKER — ZTM CLOSED CYCLE"
+    "generated_at": "2026-09-04T21:12:00+02:00",
+    "protocol": "BARE-METAL QWEN WORKER — ZTM MULTI-PROCESS SWARM"
   },
   "completed": [
-    { "id": "TAREA_01", "status": "COMPLETED", "summary": "27.079 proveedores ingestados — bodas-vendors-harvested.json" },
-    { "id": "TAREA_02", "status": "COMPLETED", "summary": "Video matching 418 productos — luces_navidad_2026_ear.json" },
-    { "id": "TAREA_03", "status": "COMPLETED", "summary": "npx tsc --noEmit -> Exit Code 0" },
-    { "id": "TAREA_04", "status": "COMPLETED", "summary": "Push dual origin+vercel-repo. Commit 75d9bd0f. 628.182 lineas." },
-    { "id": "TAREA_05_FIX_SUBNODOS_PANEL", "status": "COMPLETED", "summary": "Sub-nodos acordeon expandible + pointer-events fix. Deploy: 6878536" },
-    { "id": "TAREA_06_SITEMAP_INDEX", "status": "COMPLETED", "summary": "Sitemap Index 22k+ rutas + subnodos. Deploy: 8235f1c" },
-    { "id": "TAREA_07_TSC_VALIDATION", "status": "COMPLETED", "summary": "Exit Code 0" },
-    { "id": "TAREA_08_DEPLOY_LIVE", "status": "COMPLETED", "summary": "Deploy Vercel Ready" },
-    { "id": "TAREA_09_MAGNATES_MATRIX", "status": "COMPLETED", "summary": "125 rutas Magnates NDA + sitemap seccion 6. Deploys: d444bdc / 0285374" },
-    { "id": "TAREA_10_B2G_HUNTER", "status": "COMPLETED", "summary": "9 expedientes B2G cazados + Doble Impacto Municipal. Deploy: 32cfbce" },
-    { "id": "TAREA_11_TSC_VALIDATION", "status": "COMPLETED", "summary": "Exit Code 0" },
-    { "id": "TAREA_12_DEPLOY_FINAL", "status": "COMPLETED", "summary": "Deploy Ready. Commit: 32cfbce. Hash: feat(b2g/seo): consolidar matrix 125 magnates NDA" }
+    {
+      "id": "TAREA_01",
+      "status": "COMPLETED",
+      "summary": "27.079 proveedores ingestados — bodas-vendors-harvested.json"
+    },
+    {
+      "id": "TAREA_02",
+      "status": "COMPLETED",
+      "summary": "Video matching 418 productos — luces_navidad_2026_ear.json"
+    },
+    {
+      "id": "TAREA_03",
+      "status": "COMPLETED",
+      "summary": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "TAREA_04",
+      "status": "COMPLETED",
+      "summary": "Push dual origin+vercel-repo. Commit 75d9bd0f. 628.182 lineas."
+    },
+    {
+      "id": "TAREA_05_FIX_SUBNODOS_PANEL",
+      "status": "COMPLETED",
+      "summary": "Sub-nodos acordeon expandible + pointer-events fix. Deploy: 6878536"
+    },
+    {
+      "id": "TAREA_06_SITEMAP_INDEX",
+      "status": "COMPLETED",
+      "summary": "Sitemap Index 22k+ rutas + subnodos. Deploy: 8235f1c"
+    },
+    {
+      "id": "TAREA_07_TSC_VALIDATION",
+      "status": "COMPLETED",
+      "summary": "Exit Code 0"
+    },
+    {
+      "id": "TAREA_08_DEPLOY_LIVE",
+      "status": "COMPLETED",
+      "summary": "Deploy Vercel Ready"
+    },
+    {
+      "id": "TAREA_09_MAGNATES_MATRIX",
+      "status": "COMPLETED",
+      "summary": "125 rutas Magnates NDA + sitemap seccion 6. Deploys: d444bdc / 0285374"
+    },
+    {
+      "id": "TAREA_10_B2G_HUNTER",
+      "status": "COMPLETED",
+      "summary": "9 expedientes B2G cazados + Doble Impacto Municipal. Deploy: 32cfbce"
+    },
+    {
+      "id": "TAREA_11_TSC_VALIDATION",
+      "status": "COMPLETED",
+      "summary": "Exit Code 0"
+    },
+    {
+      "id": "TAREA_12_DEPLOY_FINAL",
+      "status": "COMPLETED",
+      "summary": "Deploy Ready. Commit: 32cfbce. Hash: feat(b2g/seo): consolidar matrix 125 magnates NDA"
+    }
   ],
-  "tasks": [],
-  "estado_sistema": "CICLO_COMPLETO_SEALED",
+  "tasks": [
+    {
+      "id": "TAREA_13_VAMPIRE_SWARM_PARALLEL",
+      "title": "Ignición y Ejecución Simultánea del Enjambre Vampírico Total (7 Unidades Paralelas)",
+      "status": "COMPLETED",
+      "priority": "P0_CRITICAL",
+      "command": "python scripts/vampire_swarm_orchestrator.py",
+      "inputs": [
+        "scripts/vampirize_massive_html_vaults.py",
+        "scripts/vampirize_christmas_lighting_b2g.py",
+        "scripts/vampirize_demetrio_full.py",
+        "scripts/vampire_bio_and_objections_miner.py",
+        "scripts/vampire_oracle_miner.py",
+        "scripts/b2g_tender_hunter.py",
+        "scripts/full_pc_forensic_ear_sweeper.py"
+      ],
+      "outputs": [
+        "scripts/reports/swarm/*.log",
+        "scripts/reports/vampire_swarm_master_telemetry.json",
+        "src/data/bodas-vendors-harvested.json",
+        "src/data/admin/christmas_lighting_b2g.json",
+        "src/data/demetrio_luces_navidad_2025.json",
+        "src/data/edwin-true-bio-ssot_draft.json",
+        "src/data/oraculo-300-objeciones-ssot_draft.json",
+        "src/data/oraculo-rag-ssot.json",
+        "src/data/b2g/b2g_doble_impacto_municipal.json",
+        "src/data/ear-rag-database.json"
+      ],
+      "governance_checks": [
+        "No eval() usage",
+        "No hardcoded secrets",
+        "Strict Split Soberano 80/10/10",
+        "Dedicated I/O logs per process",
+        "TypeScript Strict verification post-run"
+      ],
+      "completed_at": "2026-09-04 22:09:13"
+    }
+  ],
+  "estado_sistema": "TAREA_13_QUEUED_READY_FOR_DISPATCH",
   "global_constraints": {
     "typescript_strict": true,
     "tsc_exit_code_required": 0,
     "no_eval": true,
     "no_hardcoded_secrets": true,
     "split_soberano": "80/10/10 INMUTABLE",
-    "stripe_deposit_eur": 100.00,
+    "stripe_deposit_eur": 100.0,
     "lcsp_techo_art118_eur": 14999.99,
-    "ajuste_preventivo_eur": 14250.00
+    "ajuste_preventivo_eur": 14250.0
   }
 }
