@@ -30,79 +30,12 @@
   ],
   "tasks": [
     {
-      "id": "TAREA_05_FIX_SUBNODOS_PANEL",
-      "priority": 1,
-      "status": "COMPLETED",
-      "title": "Fix UI: Sub-Nodos Vinculados — Acordeón Expandible en NodeInspector",
-      "description": "ARQUITECTO ya aplicó el fix. El obrero debe validar TypeScript y hacer commit. Los cambios eliminan pointer-events-none del wrapper y convierten los sub-nodos en acordeón interactivo con ChevronDown animado y panel de detalle desplegable.",
-      "files_modified": [
-        "src/components/neural/NodeInspector.tsx (acordeón + ChevronDown + expandedSubNodeId state)",
-        "src/app/page.tsx (eliminado pointer-events-none del wrapper del panel)"
-      ],
-      "execution_command": "npx tsc --noEmit && git add src/components/neural/NodeInspector.tsx src/app/page.tsx && git commit -m 'fix(ui): sub-nodos panel acordeón expandible — pointer-events fix + ChevronDown' && git push origin main && git push vercel-repo main",
-      "acceptance_criteria": [
-        "Al pulsar un sub-nodo (Formación, Representación, etc.) se despliega panel con description",
-        "ChevronDown rota 180deg al expandir, vuelve a 0deg al colapsar",
-        "npx tsc --noEmit -> Exit Code 0",
-        "Vercel deployment -> Ready"
-      ],
-      "dependencies": [],
-      "completed_at": "2026-09-04 19:41:52"
-    },
-    {
-      "id": "TAREA_06_SITEMAP_INDEX",
-      "priority": 2,
-      "status": "COMPLETED",
-      "title": "Arquitectura de Sitemap Paginado (22.000+ Rutas Semánticas Sin OOM)",
-      "description": "Implementar Sitemap Index con sub-sitemaps paginados geográficamente. El raíz sitemap.ts delega en /sitemap/municipios/[page]/route.ts con 500 URLs por sub-sitemap. Evitar OOM en Vercel serverless.",
-      "execution_command": "npx tsx scripts/build_semantic_sitemap_index.ts",
-      "architecture": {
-        "root": "src/app/sitemap.ts — Sitemap Index con referencias a sub-sitemaps",
-        "sub_sitemap": "src/app/sitemap/municipios/[page]/route.ts — 500 URLs/página",
-        "total_urls": "~24.393 (8.131 municipios x 3 clústers semánticos: B2G, Vimume, Bodas)",
-        "oom_prevention": "Lazy loading: cada sub-sitemap se genera en su propia función serverless"
-      },
-      "acceptance_criteria": [
-        "GET /sitemap.xml -> HTTP 200 con sitemapindex XML",
-        "GET /sitemap/municipios/1 -> HTTP 200 con urlset XML (500 URLs)",
-        "npx tsc --noEmit -> Exit Code 0"
-      ],
-      "dependencies": [
-        "TAREA_05_FIX_SUBNODOS_PANEL"
-      ],
-      "error": null,
-      "completed_at": "2026-09-04 19:42:35"
-    },
-    {
-      "id": "TAREA_07_TSC_VALIDATION",
-      "priority": 3,
-      "status": "COMPLETED",
-      "title": "Validación TypeScript Estricta — npx tsc --noEmit",
-      "execution_command": "npx tsc --noEmit",
-      "acceptance_criteria": [
-        "Exit Code 0",
-        "Cero errores TS en stderr"
-      ],
-      "on_failure": "VETO_ESTRATEGICO_ACTIVADO — Corregir antes de TAREA_08",
-      "dependencies": [
-        "TAREA_06_SITEMAP_INDEX"
-      ],
-      "completed_at": "2026-09-04 19:42:49"
-    },
-    {
-      "id": "TAREA_08_DEPLOY_LIVE",
-      "priority": 4,
+      "id": "TAREA_09_INTERNATIONAL_500_MATRIX",
+      "title": "Compilación y Despliegue de 500 Rutas Internacionales (Cruceros, Hoteles GL, Festivales)",
+      "command": "npx tsx scripts/inject_international_matrix.ts && npx tsc --noEmit && git add . && git commit -m \"feat(seo): inyectar 500 combinaciones internacionales cruceros, luxury hotels y festivales\" && git push origin main && git push vercel-repo main",
+      "execution_command": "npx tsx scripts/inject_international_matrix.ts && npx tsc --noEmit && git add . && git commit -m \"feat(seo): inyectar 500 combinaciones internacionales cruceros, luxury hotels y festivales\" && git push origin main && git push vercel-repo main",
       "status": "PENDING",
-      "title": "Despliegue a Producción — Commit Dual + Push GitHub + Vercel",
-      "execution_command": "git add . && git commit -m 'feat(core): sitemap index 22k+ rutas + subnodos accordion fix' && git push origin main && git push vercel-repo main",
-      "acceptance_criteria": [
-        "Vercel deployment -> Ready",
-        "https://productoraear.com -> HTTP 200",
-        "https://productoraear.com/sitemap.xml -> HTTP 200 con XML válido"
-      ],
-      "dependencies": [
-        "TAREA_07_TSC_VALIDATION"
-      ]
+      "error": null
     }
   ],
   "global_constraints": {
