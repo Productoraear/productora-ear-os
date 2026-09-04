@@ -226,7 +226,7 @@ export default function Home() {
 
           {/* Panel Lateral / Inspector de Rol al Expandir */}
           {selectedRole && (
-            <div className="absolute top-20 right-4 md:right-8 z-30 pointer-events-none max-w-full">
+            <div className="absolute top-20 right-4 md:right-8 z-30 max-w-full">
               <NodeInspector
                 selectedRole={selectedRole}
                 selectedNode={selectedNode}

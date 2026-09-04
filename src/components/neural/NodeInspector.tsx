@@ -14,6 +14,7 @@ import {
   Sparkles,
   Layers,
   ChevronRight,
+  ChevronDown,
   ShieldCheck,
   Zap,
   Activity,
@@ -40,6 +41,7 @@ export default function NodeInspector({
 
   const [telemetry, setTelemetry] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [expandedSubNodeId, setExpandedSubNodeId] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -250,7 +252,7 @@ export default function NodeInspector({
         </div>
       </div>
 
-      {/* Sub-Nodos Satélites */}
+      {/* Sub-Nodos Satélites — Acordeón Expandible */}
       <div className="flex flex-col gap-2.5">
         <div className="flex items-center justify-between text-[11px] font-mono text-zinc-400">
           <span className="flex items-center gap-1.5">
@@ -262,29 +264,71 @@ export default function NodeInspector({
           </span>
         </div>
 
-        <div className="flex flex-col gap-1.5 max-h-48 overflow-y-auto pr-1">
+        <div className="flex flex-col gap-1.5 max-h-72 overflow-y-auto pr-1 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/10">
           {primaryTaxonomy?.children?.map((subNode) => {
+            const isExpanded = expandedSubNodeId === subNode.id;
             const isSelected = selectedNode?.id === subNode.id;
             return (
-              <button
-                key={subNode.id}
-                type="button"
-                onClick={() => onSelectSubNode(subNode)}
-                className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between border ${
-                  isSelected
-                    ? 'bg-white/10 border-white/30 text-white font-medium shadow-[0_0_15px_rgba(255,255,255,0.05)]'
-                    : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:bg-white/[0.05] hover:text-zinc-200'
-                }`}
-              >
-                <div className="flex items-center gap-2 truncate">
-                  <span
-                    style={{ backgroundColor: subNode.color }}
-                    className="w-1.5 h-1.5 rounded-full shrink-0"
+              <div key={subNode.id} className="flex flex-col">
+                {/* Cabecera del acordeón */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const nextId = isExpanded ? null : subNode.id;
+                    setExpandedSubNodeId(nextId);
+                    onSelectSubNode(subNode);
+                  }}
+                  aria-expanded={isExpanded}
+                  className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between border ${
+                    isExpanded || isSelected
+                      ? 'bg-white/10 border-white/20 text-white font-medium'
+                      : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-2 truncate">
+                    <span
+                      style={{ backgroundColor: subNode.color || roleDef.color }}
+                      className="w-1.5 h-1.5 rounded-full shrink-0 animate-pulse"
+                    />
+                    <span className="truncate font-mono tracking-wide">{subNode.label}</span>
+                  </div>
+                  <ChevronDown
+                    size={14}
+                    className="text-zinc-500 shrink-0 transition-transform duration-200"
+                    style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
                   />
-                  <span className="truncate">{subNode.label}</span>
-                </div>
-                <ChevronRight size={14} className="text-zinc-500 shrink-0" />
-              </button>
+                </button>
+
+                {/* Panel de detalle expandible */}
+                {isExpanded && (
+                  <div className="mx-2 mb-1 mt-0.5 rounded-b-xl border border-t-0 border-white/10 bg-white/[0.03] p-3 flex flex-col gap-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                    {subNode.description && (
+                      <p className="text-[11px] text-zinc-400 leading-relaxed">
+                        {subNode.description}
+                      </p>
+                    )}
+                    {!subNode.description && (
+                      <p className="text-[11px] text-zinc-500 italic">
+                        Módulo estratégico vinculado al eje {roleDef.label}.
+                      </p>
+                    )}
+                    {subNode.route && (
+                      <Link
+                        href={subNode.route}
+                        className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg transition-all hover:scale-[1.02]"
+                        style={{
+                          color: roleDef.color,
+                          backgroundColor: `${roleDef.color}18`,
+                          border: `1px solid ${roleDef.color}40`,
+                        }}
+                      >
+                        <ArrowRight size={11} />
+                        Abrir módulo
+                      </Link>
+                    )}
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>
