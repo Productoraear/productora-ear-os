@@ -16,6 +16,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { verifyGoogleAuthenticator } from '@/lib/totp-engine';
+import CognitiveModules from '@/components/oraculo/CognitiveModules';
 
 export default function OraculoAdminPage() {
   const [totpInput, setTotpInput] = useState('');
@@ -140,6 +141,9 @@ export default function OraculoAdminPage() {
                 <span className="text-[10px] text-purple-300 font-mono">Respuesta instantánea</span>
               </div>
             </div>
+
+            {/* Módulo de Armamento Cognitivo */}
+            <CognitiveModules />
 
             {/* Motores Certificados Protegidos */}
             <div className="p-6 rounded-2xl bg-[#09090d] border border-white/10 space-y-3">

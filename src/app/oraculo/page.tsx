@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import AdminOraculoPage from '@/app/(nexus)/admin/oraculo/page';
+import AdminOraculoPage from '@/app/admin/oraculo/page';
 import { ShieldCheck, Zap } from 'lucide-react';
 
 export const metadata: Metadata = {
