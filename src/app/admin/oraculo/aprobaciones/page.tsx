@@ -1,8 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { SparringContext } from '@/components/neural/SparringProvider';
 
 export default function BandejaCuarentenaSClass() {
-  // Estado simulado para la lógica de bloques individuales
+  const sparring = useContext(SparringContext);
+  
   const [items, setItems] = useState([
     { id: 1, text: 'Edwin Agudelo, Tenor Lírico especialista en Rancheras...', selected: false },
     { id: 2, text: 'Táctica Takeaway: Si el cliente pide descuento, retirar la oferta de 3.800€...', selected: false }
@@ -18,9 +20,18 @@ export default function BandejaCuarentenaSClass() {
 
   return (
     <div className="p-8 bg-neutral-950 min-h-screen text-neutral-200 font-sans">
-      <header className="mb-8 border-b border-amber-500/30 pb-4">
-        <h1 className="text-3xl font-bold text-amber-500">MATRIZ DE APROBACIÓN S-CLASS</h1>
-        <p className="text-sm text-neutral-400">Edición granular, selección por lotes y entrenamiento proactivo.</p>
+      <header className="mb-8 border-b border-amber-500/30 pb-4 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-amber-500">MATRIZ DE APROBACIÓN S-CLASS</h1>
+          <p className="text-sm text-neutral-400">Edición granular, selección por lotes y entrenamiento proactivo.</p>
+        </div>
+        {/* BOTÓN DE EMERGENCIA TÁCTICA PARA DISPARAR EL SPARRING */}
+        <button 
+          onClick={() => sparring?.triggerSparring()}
+          className="bg-red-600 hover:bg-red-500 text-white font-bold px-5 py-3 rounded-xl shadow-[0_0_20px_rgba(239,68,68,0.4)] transition-all animate-pulse flex items-center gap-2 text-sm uppercase tracking-wider"
+        >
+          ⚔️ Activar Sparring de Combate
+        </button>
       </header>
       
       <div className="space-y-4">
@@ -30,7 +41,7 @@ export default function BandejaCuarentenaSClass() {
               type="checkbox" 
               checked={item.selected} 
               onChange={() => toggleSelect(item.id)}
-              className="mt-2 w-5 h-5 accent-amber-500 rounded bg-neutral-800 border-neutral-700"
+              className="mt-2 w-5 h-5 accent-amber-500 rounded bg-neutral-800 border-neutral-700 cursor-pointer"
             />
             <div className="flex-1">
               <textarea 
