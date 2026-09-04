@@ -74,7 +74,7 @@ export default async function ServiciosProvinciaPage({ params }: PageProps) {
         description={`Producción S-Class y contratación directa de ${serviceFormatted} en ${cityName} con infraestructura técnica asegurada.`}
         location={cityName}
         province={cityName}
-        category="Servicios"
+        category={servicio}
         serviceId={servicio}
         isApex={true}
       />

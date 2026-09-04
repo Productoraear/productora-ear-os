@@ -20,77 +20,77 @@ interface Props {
 const CATEGORY_COVERS: Record<string, { page: number; image: string; desc: string }> = {
   "Motivos 3D Gigantes": {
     page: 2,
-    image: "/images/demetrio/page_2.jpg",
+    image: "/images/navidad_2026/page_2.jpg",
     desc: "Carrozas, portales de osos, pingüinos y muñecos de nieve transitables"
   },
   "Conos y Árboles Gigantes 3D": {
     page: 15,
-    image: "/images/demetrio/page_15.jpg",
+    image: "/images/navidad_2026/page_15.jpg",
     desc: "Estructuras cónicas y árboles monumentales para plazas consistoriales"
   },
   "Motivos 2D y Arcos de Calle": {
     page: 35,
-    image: "/images/demetrio/page_35.jpg",
+    image: "/images/navidad_2026/page_35.jpg",
     desc: "Arcos de calle transversales, motivos para báculos de farola y avenidas"
   },
   "Esferas 3D Plegables": {
     page: 20,
-    image: "/images/demetrio/page_20.jpg",
+    image: "/images/navidad_2026/page_20.jpg",
     desc: "Esferas transitables y bolas luminosas 3D de gran volumen"
   },
   "Árboles y Almendros LED": {
     page: 50,
-    image: "/images/demetrio/page_50.jpg",
+    image: "/images/navidad_2026/page_50.jpg",
     desc: "Árboles escultóricos con ramas micro-LED blanco cálido y puro"
   },
   "Twinkly Pro Smart LED": {
     page: 70,
-    image: "/images/demetrio/page_70.jpg",
+    image: "/images/navidad_2026/page_70.jpg",
     desc: "Tecnología mapeable direccionable RGB+AWW con control cloud"
   },
   "Cortinas y Mallas LED": {
     page: 85,
-    image: "/images/demetrio/page_85.jpg",
+    image: "/images/navidad_2026/page_85.jpg",
     desc: "Cascadas de luz y mallas de alta densidad para fachadas y arbolado"
   },
   "Guirnaldas Profesionales": {
     page: 95,
-    image: "/images/demetrio/page_95.jpg",
+    image: "/images/navidad_2026/page_95.jpg",
     desc: "Cordones LED estancos IP67 de alta resistencia mecánica y climática"
   },
   "Elementos Decorativos y Bolas": {
     page: 110,
-    image: "/images/demetrio/page_110.jpg",
+    image: "/images/navidad_2026/page_110.jpg",
     desc: "Motivos decorativos autónomos para suelo y galerías comerciales"
   },
   "Motivos Plásticos / Biodegradables": {
     page: 125,
-    image: "/images/demetrio/page_125.jpg",
+    image: "/images/navidad_2026/page_125.jpg",
     desc: "Diseños sostenibles en biopolímeros reciclables para licitaciones verdes"
   },
   "Accesorios y Montaje": {
     page: 140,
-    image: "/images/demetrio/page_140.jpg",
+    image: "/images/navidad_2026/page_140.jpg",
     desc: "Fuentes de alimentación 24V/230V, conectores estancos y controladores"
   },
   "Iluminación de Farolas y Columnas": {
     page: 25,
-    image: "/images/demetrio/page_35.jpg",
+    image: "/images/navidad_2026/page_35.jpg",
     desc: "Banderolas verticales LED para báculos de farola y avenidas urbanas"
   },
   "Guirnaldas, Cortinas y Cielo LED": {
     page: 85,
-    image: "/images/demetrio/page_85.jpg",
+    image: "/images/navidad_2026/page_85.jpg",
     desc: "Cascadas de luz, mallas de alta densidad y cielos luminosos para plazas"
   },
   "Árboles Gigantes y Estructuras Cónicas": {
     page: 15,
-    image: "/images/demetrio/page_15.jpg",
+    image: "/images/navidad_2026/page_15.jpg",
     desc: "Estructuras cónicas y árboles monumentales transitables"
   },
   "Portales y Esculturas Transitables": {
     page: 4,
-    image: "/images/demetrio/page_4.jpg",
+    image: "/images/navidad_2026/page_4.jpg",
     desc: "Portales de osos, túneles walk-through y carrozas monumentales transitables"
   }
 };
@@ -102,6 +102,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeModalProduct, setActiveModalProduct] = useState<ChristmasLightingProduct | null>(null);
+  const [modalTab, setModalTab] = useState<'product' | 'page'>('product');
   const [pendingSku, setPendingSku] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -318,14 +319,23 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
               >
                 <div 
                   className="cursor-pointer"
-                  onClick={() => setActiveModalProduct(prod)}
+                  onClick={() => {
+                    setModalTab('product');
+                    setActiveModalProduct(prod);
+                  }}
                 >
                   {/* Visual Card con Imagen Real del Catálogo */}
                   <div className="relative h-56 w-full overflow-hidden bg-black flex items-center justify-center">
                     <img 
-                      src={prod.image} 
+                      src={prod.image || prod.pageImage} 
                       alt={prod.name}
                       loading="lazy"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (prod.pageImage && !target.src.includes(prod.pageImage)) {
+                          target.src = prod.pageImage;
+                        }
+                      }}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-80" />
@@ -495,13 +505,40 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
 
             {/* Modal Body */}
             <div className="overflow-y-auto p-6 grid grid-cols-1 md:grid-cols-12 gap-6">
-              {/* Imagen Grande Oficial */}
-              <div className="md:col-span-7 rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[300px]">
-                <img 
-                  src={activeModalProduct.image} 
-                  alt={activeModalProduct.name} 
-                  className="w-full h-full object-contain max-h-[420px] rounded-xl"
-                />
+              {/* Imagen Grande Oficial y Switcher de Lámina */}
+              <div className="md:col-span-7 flex flex-col gap-2">
+                <div className="rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[320px] max-h-[440px] relative">
+                  <img 
+                    src={modalTab === 'product' ? (activeModalProduct.image || activeModalProduct.pageImage) : (activeModalProduct.pageImage || activeModalProduct.image)} 
+                    alt={activeModalProduct.name} 
+                    className="w-full h-full object-contain max-h-[420px] rounded-xl transition-all duration-300"
+                  />
+                  {modalTab === 'page' && (
+                    <div className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#ecb613]/40 text-[10px] font-mono text-[#ecb613]">
+                      Lámina Oficial Catálogo 2026 · Pág. {activeModalProduct.cataloguePage || '1'}
+                    </div>
+                  )}
+                </div>
+
+                {/* Tab Switcher */}
+                {activeModalProduct.pageImage && activeModalProduct.image !== activeModalProduct.pageImage && (
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setModalTab('product')}
+                      className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all ${modalTab === 'product' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'}`}
+                    >
+                      Foto Individual Producto
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setModalTab('page')}
+                      className={`flex-1 py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all ${modalTab === 'page' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'}`}
+                    >
+                      Lámina Completa Catálogo (Pág. {activeModalProduct.cataloguePage || '1'})
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Especificaciones */}

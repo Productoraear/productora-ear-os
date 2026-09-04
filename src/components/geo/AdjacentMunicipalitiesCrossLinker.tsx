@@ -36,7 +36,29 @@ export function AdjacentMunicipalitiesCrossLinker({
     .filter(m => m.slug !== normLocation)
     .slice(0, 8);
 
-  const matchedService = SERVICES_DATABASE.find(s => s.slug === currentServiceSlug) || SERVICES_DATABASE[0];
+  const rawSlug = (currentServiceSlug || '').toLowerCase();
+  let normalizedSlug = rawSlug;
+
+  if (/mariachi/.test(rawSlug)) {
+    normalizedSlug = 'mariachi-gala';
+  } else if (/sonido|audio|iluminacion|luces/.test(rawSlug)) {
+    normalizedSlug = 'sonido-iluminacion';
+  } else if (/pantalla/.test(rawSlug)) {
+    normalizedSlug = 'alquiler-pantallas-led';
+  } else if (/catering|brasa|showcooking/.test(rawSlug)) {
+    normalizedSlug = 'catering-brasas';
+  } else if (/boda|nupcial/.test(rawSlug)) {
+    normalizedSlug = 'bodas-lujo';
+  } else if (/fiesta|patronal|ayuntamiento|b2g/.test(rawSlug)) {
+    normalizedSlug = 'fiestas-patronales-ayuntamientos';
+  } else if (/serenata|aniversario/.test(rawSlug)) {
+    normalizedSlug = 'serenatas-aniversarios';
+  }
+
+  const matchedService = SERVICES_DATABASE.find(s => s.slug === normalizedSlug) || 
+    SERVICES_DATABASE.find(s => s.slug === currentServiceSlug) || 
+    SERVICES_DATABASE.find(s => s.slug === 'mariachi-gala') || 
+    SERVICES_DATABASE[0];
 
   return (
     <section className="mt-16 pt-12 border-t border-white/10 relative overflow-hidden">

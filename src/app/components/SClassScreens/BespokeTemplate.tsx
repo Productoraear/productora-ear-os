@@ -112,26 +112,46 @@ export const BespokeTemplate: React.FC<BespokeTemplateProps> = ({
     ? safeLocation.charAt(0).toUpperCase() + safeLocation.slice(1)
     : 'Madrid';
 
-  const isArsenal = /arsenal|tecnico|hardware|pantalla|sonido|audio|luces|iluminacion/.test(safeCategory.toLowerCase()) || 
-                    /arsenal|tecnico|hardware|pantalla|sonido|audio/.test((serviceId || '').toLowerCase());
-  const isServices = /servicio|artista|solista|dj|musica/.test(safeCategory.toLowerCase()) || 
-                     /servicio|artista|solista|dj|musica/.test((serviceId || '').toLowerCase());
+  const lowerCat = safeCategory.toLowerCase();
+  const lowerServ = (serviceId || '').toLowerCase();
+
+  const isMariachi = /mariachi/.test(lowerCat) || /mariachi/.test(lowerServ);
+  const isArsenal = !isMariachi && (/arsenal|tecnico|hardware|pantalla|sonido|audio|luces|iluminacion/.test(lowerCat) || 
+                    /arsenal|tecnico|hardware|pantalla|sonido|audio|luces|iluminacion/.test(lowerServ));
+  const isDJ = !isMariachi && !isArsenal && (/dj|discoteca/.test(lowerCat) || /dj|discoteca/.test(lowerServ));
+  const isCuerdas = !isMariachi && !isArsenal && (/cuerda|violin|clasic|orquesta|filarmon/.test(lowerCat) || /cuerda|violin|clasic|orquesta|filarmon/.test(lowerServ));
+  const isSolista = !isMariachi && !isArsenal && (/solista|tenor|bolero|edwin/.test(lowerCat) || /solista|tenor|bolero|edwin/.test(lowerServ));
 
   let displayList: any[] = [];
 
-  if (isArsenal) {
-    displayList = ARSENAL_HARDWARE_ITEMS;
-  } else if (isServices && !/mariachi/.test(safeCategory.toLowerCase())) {
-    displayList = SERVICES_SCLASS_ITEMS;
-  } else {
-    const filteredCatalog = catalogData.filter((item) => {
-      const matchesCategory = item.category.toLowerCase() === safeCategory.toLowerCase();
+  if (isMariachi) {
+    const provinceMatches = catalogData.filter((item) => {
+      const isItemMariachi = item.category.toLowerCase() === 'mariachis';
       const matchesProvince = item.provinces.some(
-        (p) => p.toLowerCase() === safeProvince || safeProvince.includes(p.toLowerCase())
+        (p) => p.toLowerCase() === safeProvince || safeProvince.includes(p.toLowerCase()) || p.toLowerCase() === 'todas'
       );
-      return matchesCategory && matchesProvince;
+      return isItemMariachi && matchesProvince;
     });
-    displayList = filteredCatalog.length > 0 ? filteredCatalog : catalogData;
+    displayList = provinceMatches.length > 0 ? provinceMatches : catalogData.filter(i => i.category.toLowerCase() === 'mariachis');
+  } else if (isArsenal) {
+    displayList = ARSENAL_HARDWARE_ITEMS;
+  } else if (isDJ) {
+    displayList = SERVICES_SCLASS_ITEMS.filter(item => item.id.includes('dj'));
+  } else if (isCuerdas) {
+    displayList = SERVICES_SCLASS_ITEMS.filter(item => item.id.includes('cuerdas'));
+  } else if (isSolista) {
+    displayList = SERVICES_SCLASS_ITEMS.filter(item => item.id.includes('edwin'));
+  } else {
+    // Si la categoría coincide exactamente con elementos del catálogo
+    const matchedCategory = catalogData.filter(item => item.category.toLowerCase() === lowerCat);
+    if (matchedCategory.length > 0) {
+      const provFiltered = matchedCategory.filter(item => 
+        item.provinces.some(p => p.toLowerCase() === safeProvince || safeProvince.includes(p.toLowerCase()) || p.toLowerCase() === 'todas')
+      );
+      displayList = provFiltered.length > 0 ? provFiltered : matchedCategory;
+    } else {
+      displayList = SERVICES_SCLASS_ITEMS;
+    }
   }
 
   const handleCotizarExpress = (itemName: string, basePrice: number) => {

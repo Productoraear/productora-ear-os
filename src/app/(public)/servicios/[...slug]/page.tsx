@@ -72,7 +72,7 @@ export default async function ServiciosCatchAllPage({ params }: PageProps) {
         description={`Producción S-Class y contratación directa de ${serviceSlug.replace(/-/g, ' ')} en ${cityName}.`}
         location={cityName}
         province={cityName}
-        category="Servicios"
+        category={serviceSlug}
         serviceId={serviceSlug}
         isApex={true}
       />

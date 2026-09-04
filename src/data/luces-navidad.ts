@@ -23,7 +23,8 @@ export interface ChristmasLightingProduct {
   cataloguePage: number;
   provider: string;
   canonicalUrl: string;
-  image?: string;
+  image: string;
+  pageImage?: string;
 }
 
 /**

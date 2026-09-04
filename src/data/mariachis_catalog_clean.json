@@ -1,5 +1,40 @@
 [
   {
+    "id": "edwin-agudelo-mariachi-solista",
+    "name": "Edwin Agudelo — Tenor & Mariachi Imperial S-Class",
+    "category": "mariachis",
+    "provinces": [
+      "madrid",
+      "toledo",
+      "guadalajara",
+      "segovia",
+      "avila",
+      "cuenca",
+      "ciudad-real",
+      "todas"
+    ],
+    "rating": "5.0",
+    "reviews": 64,
+    "basePrice": 350,
+    "priceTag": "Desde 350 €",
+    "badge": "Artista Soberano",
+    "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800",
+    "features": [
+      "Voz Tenor Lírico & Espectáculo Ranchero Imperial",
+      "Sistema Bose F1 Model 812 + Microfonía Shure Beta 87A",
+      "Traje de Charro de Gala con botonadura de plata y sombrero"
+    ],
+    "tier": "s_class_imperial",
+    "phone": "+34693693048",
+    "pricingModel": "hybrid",
+    "customTariff": {
+      "base60Min": 350,
+      "extraHour": 180,
+      "kmRate": 1.50
+    },
+    "isAvailableForDispatch": true
+  },
+  {
     "id": "mariachi-mexicanto",
     "name": "Mariachi Mexicanto S-Class",
     "category": "mariachis",
@@ -12,7 +47,7 @@
     "rating": "4.9",
     "reviews": 38,
     "basePrice": 290,
-    "priceTag": "Desde 290€",
+    "priceTag": "Desde 290 €",
     "badge": "Verificado EAR",
     "img": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800",
     "features": [
@@ -43,7 +78,7 @@
     "rating": "5.0",
     "reviews": 52,
     "basePrice": 350,
-    "priceTag": "Desde 350€",
+    "priceTag": "Desde 350 €",
     "badge": "S-Class Gold",
     "img": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800",
     "features": [
@@ -73,7 +108,7 @@
     "rating": "4.8",
     "reviews": 24,
     "basePrice": 260,
-    "priceTag": "Desde 260€",
+    "priceTag": "Desde 260 €",
     "badge": "Directo Fincas",
     "img": "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?auto=format&fit=crop&q=80&w=800",
     "features": [
