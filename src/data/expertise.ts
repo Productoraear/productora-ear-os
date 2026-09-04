@@ -1,6 +1,6 @@
 
 import { Video, Film, Users, Box, Crown, Music, Mic2 } from 'lucide-react';
-import { ExpertiseService } from '../types';
+import { ExpertiseService } from '../shared/types';
 
 export const EXPERTISE_SERVICES: ExpertiseService[] = [
   {

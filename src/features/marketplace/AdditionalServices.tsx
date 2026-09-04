@@ -63,7 +63,7 @@ const AdditionalServices: React.FC = () => {
                     </p>
 
                     <div className="grid grid-cols-2 gap-3">
-                      {service.items.map((item, i) => (
+                      {service.items.map((item: string, i: number) => (
                         <div key={i} className="flex items-center gap-2 text-[11px] text-white/40">
                           <span className="w-1 h-1 rounded-full bg-[#ecb613]"></span>
                           {item}

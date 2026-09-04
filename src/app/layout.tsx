@@ -36,6 +36,7 @@ import SovereignFooter from "@/app/components/layout/SovereignFooter";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
 import { AIConciergeDock } from "@/components/chat/AIConciergeDock";
+import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
@@ -92,6 +93,7 @@ export default function RootLayout({
         className={`antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans ${fraunces.variable} ${montserrat.variable}`}
         suppressHydrationWarning
       >
+        <VimumeThemeInjector />
         {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
             {`

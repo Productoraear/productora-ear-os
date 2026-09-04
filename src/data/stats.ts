@@ -1,5 +1,5 @@
 
-import { Stat } from '../types';
+import { Stat } from '../shared/types';
 
 export type DynamicStat = {
   id: string;

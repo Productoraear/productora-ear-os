@@ -114,8 +114,14 @@
 
   /* 🕊️ VIMUME THEME - INHERITS SEMANTIC VARIABLES */
   body.theme-vimume {
-    --background: #fdfcf8;
-    --foreground: #1a1a1a;
+    --background: #050507;
+    --foreground: #f4f4f5;
+    --primary: #8b5cf6; /* Violeta Neón */
+    --primary-light: #a78bfa;
+    --primary-dark: #7c3aed;
+    --primary-aura: rgba(139, 92, 246, 0.25);
+    --border: rgba(139, 92, 246, 0.2);
+    --border-subtle: rgba(139, 92, 246, 0.1);
   }
 }
 

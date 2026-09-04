@@ -1,6 +1,6 @@
 
 import { Target, Terminal, PlayCircle, Zap, Mic2 } from 'lucide-react';
-import { BlogArticle } from '../types';
+import { BlogArticle } from '../shared/types';
 
 export const BLOG_ARTICLES: BlogArticle[] = [
   {

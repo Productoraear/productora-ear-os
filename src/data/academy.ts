@@ -1,5 +1,5 @@
 
-import { AcademyLesson, AcademyTool } from '../types';
+import { AcademyLesson, AcademyTool } from '../shared/types';
 
 export const ACADEMY_LESSONS: AcademyLesson[] = [
   { title: "Mentalidad de CEO Artístico", time: "45 min", status: "Completado", progress: 100 },
