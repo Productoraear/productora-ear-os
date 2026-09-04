@@ -1,0 +1,54 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "generated_by": "ANTIGRAVITY System Orchestrator",
+    "generated_at": "2026-09-04T17:15:00+02:00",
+    "protocol": "BARE-METAL QWEN WORKER QUEUE",
+    "ssot_ref": "EAR_OS_STRATEGIC_ORCHESTRATOR_PLAN.md",
+    "total_retos": 4,
+    "execution_mode": "SEQUENTIAL_STRICT"
+  },
+  "tasks": [
+    {
+      "id": "RETO_01_QR_VAMPIRE",
+      "priority": 1,
+      "status": "COMPLETE",
+      "title": "Extracción Forense de QR Codes del Catálogo PDF de Luces de Navidad",
+      "script": "scripts/extract_pdf_qr_intel.py",
+      "inputs": ["H:\\EAR_OS_V2\\CATALOGO luces de navidad 2026 EAR.pdf"],
+      "outputs": ["src/data/luces_navidad_qr_metadata.json", "src/data/luces_navidad_2026_ear.json"],
+      "progress": "36 QR codes decoded. 234/652 products now have videoUrl. 128 newly enriched.",
+      "acceptance": ["luces_navidad_qr_metadata.json populated", "All hasVideo items have videoUrl"]
+    },
+    {
+      "id": "RETO_02_HTML_PURIFICATION",
+      "priority": 2,
+      "status": "COMPLETE",
+      "title": "Vampirización y Purificación de HTMLs Locales de Proveedores",
+      "script": "scripts/vampirize_all_local_providers.py",
+      "outputs": ["src/data/all_providers_database.json (7516 providers)"]
+    },
+    {
+      "id": "RETO_03_COMPILATION_SITEMAP",
+      "priority": 3,
+      "status": "COMPLETE",
+      "title": "Compilación TypeScript Estricta y Sitemap SEO"
+    },
+    {
+      "id": "RETO_04_DEPLOY_GITHUB_VERCEL",
+      "priority": 4,
+      "status": "COMPLETE",
+      "title": "Despliegue a GitHub + Vercel Production"
+    }
+  ],
+  "global_constraints": {
+    "typescript_strict": true,
+    "tsc_exit_code_required": 0,
+    "no_eval": true,
+    "no_hardcoded_secrets": true,
+    "split_soberano": "80/10/10",
+    "stripe_deposit": 100.00,
+    "visual_style": "Cinematic Monochrome S-Class"
+  }
+}
+

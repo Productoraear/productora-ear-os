@@ -18,7 +18,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 2,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p2",
@@ -28,7 +28,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1gGzXeIOqFNm59BShBGi-mnecvnIKPnDv/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0002",
@@ -49,7 +50,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 3,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p3",
@@ -59,7 +60,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1gGzXeIOqFNm59BShBGi-mnecvnIKPnDv/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0003",
@@ -377,7 +379,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 6,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26003-3d-24v",
@@ -387,7 +389,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/13GvSSiP8lTYoEBCtTdqGel1Q1k53jOIT/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0013",
@@ -408,7 +411,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 6,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26008-3d-24v",
@@ -418,7 +421,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/13GvSSiP8lTYoEBCtTdqGel1Q1k53jOIT/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0014",
@@ -505,7 +509,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 8,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5684-pi-3d-24v",
@@ -515,7 +519,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/13GvSSiP8lTYoEBCtTdqGel1Q1k53jOIT/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0017",
@@ -536,7 +541,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 8,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5685-pi-3d-24v",
@@ -546,7 +551,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/13GvSSiP8lTYoEBCtTdqGel1Q1k53jOIT/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0018",
@@ -567,7 +573,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 9,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5684-w-3d-24v",
@@ -577,7 +583,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0019",
@@ -598,7 +605,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 9,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5684-ww-3d-24v",
@@ -608,7 +615,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0020",
@@ -629,7 +637,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 9,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5685-w-3d-24v",
@@ -639,7 +647,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0021",
@@ -660,7 +669,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 9,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5685-ww-3d-24v",
@@ -670,7 +679,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0022",
@@ -691,7 +701,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 10,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p10",
@@ -701,7 +711,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0023",
@@ -821,7 +832,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 12,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p12",
@@ -831,7 +842,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0027",
@@ -852,7 +864,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 13,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-nacimiento-2d-24v",
@@ -862,7 +874,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0028",
@@ -883,7 +896,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 13,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-angel-2d-24v",
@@ -893,7 +906,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0029",
@@ -914,7 +928,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 14,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-reyes-2d-24v",
@@ -924,7 +938,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/16llbrFuSyC_cwQ2B-HUtc5XVuMhXBoEF/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0030",
@@ -945,7 +960,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 15,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/crcamel1-2d-24v",
@@ -955,7 +970,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/16llbrFuSyC_cwQ2B-HUtc5XVuMhXBoEF/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0031",
@@ -976,7 +992,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 15,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/crcamel2-2d-24v",
@@ -986,7 +1002,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/16llbrFuSyC_cwQ2B-HUtc5XVuMhXBoEF/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0032",
@@ -1106,7 +1123,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 17,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p17",
@@ -1116,7 +1133,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/16llbrFuSyC_cwQ2B-HUtc5XVuMhXBoEF/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0036",
@@ -1137,7 +1155,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 18,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr25012-3d-24v",
@@ -1147,7 +1165,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/16llbrFuSyC_cwQ2B-HUtc5XVuMhXBoEF/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0037",
@@ -1168,7 +1187,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 18,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26081-3d-24v",
@@ -1178,7 +1197,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/16llbrFuSyC_cwQ2B-HUtc5XVuMhXBoEF/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0038",
@@ -1354,7 +1374,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 22,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5537-3d-piruleta",
@@ -1364,7 +1384,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0044",
@@ -1385,7 +1406,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 22,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-magichouse-3d-24v",
@@ -1395,7 +1416,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0045",
@@ -1416,7 +1438,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 22,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5548-3d-bastones",
@@ -1426,7 +1448,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0046",
@@ -1447,7 +1470,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 23,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26043-2d-24v",
@@ -1457,7 +1480,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0047",
@@ -1478,7 +1502,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 23,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26042-2d-24v",
@@ -1488,7 +1512,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0048",
@@ -1608,7 +1633,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 25,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-4870-2d-mother-deer",
@@ -1618,7 +1643,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0052",
@@ -1639,7 +1665,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 25,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-4871-2d-child-deer",
@@ -1649,7 +1675,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0053",
@@ -1670,7 +1697,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 25,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-4872-2d-father-deer",
@@ -1680,7 +1707,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0054",
@@ -1701,7 +1729,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 26,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p26",
@@ -1711,7 +1739,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0055",
@@ -1980,7 +2009,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 32,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p32",
@@ -1990,7 +2019,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1Yr7zOkga3yj2h-RmfP6Q9Wra_LXEyH0o/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0064",
@@ -2011,7 +2041,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 33,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26048-3d-24v",
@@ -2021,7 +2051,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1Yr7zOkga3yj2h-RmfP6Q9Wra_LXEyH0o/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0065",
@@ -2042,7 +2073,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 33,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26049-3d-24v",
@@ -2052,7 +2083,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1Yr7zOkga3yj2h-RmfP6Q9Wra_LXEyH0o/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0066",
@@ -2172,7 +2204,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 35,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p35",
@@ -2182,7 +2214,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1Yr7zOkga3yj2h-RmfP6Q9Wra_LXEyH0o/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0070",
@@ -2203,7 +2236,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 36,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26124-3d-24v",
@@ -2213,7 +2246,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/11ybi7ng22YKB6ePsencJEYyYejaPsB5t/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0071",
@@ -2234,7 +2268,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 36,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26125-3d-24v",
@@ -2244,7 +2278,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/11ybi7ng22YKB6ePsencJEYyYejaPsB5t/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0072",
@@ -2397,7 +2432,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 38,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p38",
@@ -2407,7 +2442,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1x4xyTe4YqO9XiRWfOoHfV2QpTbPSxCIO/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0077",
@@ -2560,7 +2596,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 41,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26329-3d-24v",
@@ -2570,7 +2606,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/17eZIGh_12CgD2aI7AyRWzGbRfC7HX-VB/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0082",
@@ -2591,7 +2628,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 41,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr340-3d-24v",
@@ -2601,7 +2638,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/17eZIGh_12CgD2aI7AyRWzGbRfC7HX-VB/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0083",
@@ -2688,7 +2726,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 43,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p43",
@@ -2698,7 +2736,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/17eZIGh_12CgD2aI7AyRWzGbRfC7HX-VB/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0086",
@@ -2719,7 +2758,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 44,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26110-3d-24v",
@@ -2729,7 +2768,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0087",
@@ -2750,7 +2790,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 44,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26111-3d-24v",
@@ -2760,7 +2800,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0088",
@@ -2781,7 +2822,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 44,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26112-3d-24v",
@@ -2791,7 +2832,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0089",
@@ -2812,7 +2854,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 45,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p45",
@@ -2822,7 +2864,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0090",
@@ -2909,7 +2952,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 47,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26121-2d",
@@ -2919,7 +2962,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0093",
@@ -2940,7 +2984,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 47,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26117-2d",
@@ -2950,7 +2994,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0094",
@@ -2971,7 +3016,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 47,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26116-2d",
@@ -2981,7 +3026,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0095",
@@ -3002,7 +3048,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 47,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26118-2d",
@@ -3012,7 +3058,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0096",
@@ -3033,7 +3080,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 47,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26120-2d",
@@ -3043,7 +3090,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0097",
@@ -3064,7 +3112,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 47,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-26119-2d",
@@ -3074,7 +3122,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0098",
@@ -3095,7 +3144,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 48,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p48",
@@ -3105,7 +3154,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1yTMu3xWelJRXESMeYrlnFYzyrRR5YBR4/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0099",
@@ -3390,7 +3440,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 54,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ring-3d-24v",
@@ -3400,7 +3450,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/10J67NzaS7DtzM-eyyXas3lHjZbPiPVM1/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0108",
@@ -3454,7 +3505,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 56,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p56",
@@ -3464,7 +3515,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1FOkvyi3Q3ScBJ1T5pdoKeHUdbLM0ToKL/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0110",
@@ -3584,7 +3636,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 59,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p59",
@@ -3594,7 +3646,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1afiQ61VGHwKx2kjypI87xzXn_XXKwSgw/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0114",
@@ -3615,7 +3668,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 60,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-van-3d-r-24v",
@@ -3625,7 +3678,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1afiQ61VGHwKx2kjypI87xzXn_XXKwSgw/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0115",
@@ -3646,7 +3700,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 60,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-van-3d-b-24v",
@@ -3656,7 +3710,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1afiQ61VGHwKx2kjypI87xzXn_XXKwSgw/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0116",
@@ -3842,7 +3897,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0122",
@@ -3873,7 +3929,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0123",
@@ -3894,7 +3951,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 66,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-glbeard-2d-1-6",
@@ -3904,7 +3961,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0124",
@@ -3925,7 +3983,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 66,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-glbeard-2d-2-4",
@@ -3935,7 +3993,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0125",
@@ -3956,7 +4015,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 66,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-pcbear-2d-24v",
@@ -3966,7 +4025,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0126",
@@ -4053,7 +4113,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 68,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-4579-3d-24v",
@@ -4063,7 +4123,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0129",
@@ -4117,7 +4178,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 72,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5228-3d-24v",
@@ -4127,7 +4188,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1Sk8bMIzp6_VshikDU7HnNNQhnm56yvdB/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0131",
@@ -4148,7 +4210,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 72,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-puerta-lazo-3d",
@@ -4158,7 +4220,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1Sk8bMIzp6_VshikDU7HnNNQhnm56yvdB/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0132",
@@ -4344,7 +4407,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 75,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p75",
@@ -4354,7 +4417,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1n8dLjEROdO94mr_anPAyT3Kay4_m77Nn/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0138",
@@ -4408,7 +4472,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 77,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p77",
@@ -4418,7 +4482,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1n8dLjEROdO94mr_anPAyT3Kay4_m77Nn/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0140",
@@ -4439,7 +4504,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 78,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p78",
@@ -4449,7 +4514,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0141",
@@ -4470,7 +4536,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 79,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5245-3d-24v",
@@ -4480,7 +4546,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0142",
@@ -4501,7 +4568,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 79,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr26055-3d-24v",
@@ -4511,7 +4578,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0143",
@@ -4532,7 +4600,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 79,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5244-3d-24v",
@@ -4542,7 +4610,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0144",
@@ -4629,7 +4698,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 81,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-3460-3d-24v",
@@ -4639,7 +4708,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0147",
@@ -4660,7 +4730,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 81,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cra-3d-deer",
@@ -4670,7 +4740,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0148",
@@ -4691,7 +4762,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 81,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-3709-3d-24v",
@@ -4701,7 +4772,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0149",
@@ -4722,7 +4794,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 82,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-penfam-3d-24v",
@@ -4732,7 +4804,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/15F-01kY9KjIi0uGdjcXpWCn6c_RVZL1T/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0150",
@@ -4753,7 +4826,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 82,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5142-3d-24v",
@@ -4763,7 +4836,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/15F-01kY9KjIi0uGdjcXpWCn6c_RVZL1T/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0151",
@@ -4784,7 +4858,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 83,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-gltree-2d-24v",
@@ -4794,7 +4868,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/15F-01kY9KjIi0uGdjcXpWCn6c_RVZL1T/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0152",
@@ -4815,7 +4890,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 83,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5142-3d-24v",
@@ -4825,7 +4900,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/15F-01kY9KjIi0uGdjcXpWCn6c_RVZL1T/view?usp=share_link"
   },
   {
     "id": "ear-nav-2026-0153",
@@ -4978,7 +5054,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 86,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p86",
@@ -4988,7 +5064,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1yb20JaOjnVy8fsYrRRoioi7lIIsry3Wt/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0158",
@@ -5141,7 +5218,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 89,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p89",
@@ -5151,7 +5228,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1P2CAf6DHGxQibUMEOT6AGqt95Q3oUcDT/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0163",
@@ -5238,7 +5316,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 91,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-4574-3d-24v",
@@ -5248,7 +5326,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1P2CAf6DHGxQibUMEOT6AGqt95Q3oUcDT/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0166",
@@ -5269,7 +5348,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 91,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-5659-3d-24v",
@@ -5279,7 +5358,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1P2CAf6DHGxQibUMEOT6AGqt95Q3oUcDT/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0167",
@@ -5300,7 +5380,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 92,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p92",
@@ -5310,7 +5390,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1P2CAf6DHGxQibUMEOT6AGqt95Q3oUcDT/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0168",
@@ -5331,7 +5412,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 93,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-buz-n-3d",
@@ -5341,7 +5422,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1KO0IpA3AIXm0H_4LW2aobZm48Wk9IzYG/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0169",
@@ -5362,7 +5444,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 93,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-trono-3d",
@@ -5372,7 +5454,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1KO0IpA3AIXm0H_4LW2aobZm48Wk9IzYG/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0170",
@@ -5393,7 +5476,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": true,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 94,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p94",
@@ -5403,7 +5486,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1KO0IpA3AIXm0H_4LW2aobZm48Wk9IzYG/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0171",
@@ -5490,7 +5574,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 96,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cra-gift-box-stars-24v",
@@ -5500,7 +5584,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1HGMTpJGKcFck-kbIrn8OAcjdv6RD7Ejo/view?usp=drive_link"
   },
   {
     "id": "ear-nav-2026-0174",
@@ -5521,7 +5606,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 96,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cra-gift-box-b-24v",
@@ -5531,7 +5616,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1HGMTpJGKcFck-kbIrn8OAcjdv6RD7Ejo/view?usp=drive_link"
   },
   {
     "id": "ear-nav-2026-0175",
@@ -5816,7 +5902,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 100,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cra-3d-ball-tapiz-r-24v",
@@ -5826,7 +5912,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/12ugcs8I2mdQKRedJl9_DvyMvgNyYgQJ0/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0184",
@@ -5847,7 +5934,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 101,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/cr-ear-2026-p101",
@@ -5857,7 +5944,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/12ugcs8I2mdQKRedJl9_DvyMvgNyYgQJ0/view?usp=sharing"
   },
   {
     "id": "ear-nav-2026-0185",
@@ -16604,7 +16692,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 2,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p2",
@@ -16614,7 +16702,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1gGzXeIOqFNm59BShBGi-mnecvnIKPnDv/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2002",
@@ -16645,7 +16734,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1gGzXeIOqFNm59BShBGi-mnecvnIKPnDv/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2004",
@@ -16742,7 +16832,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2012",
@@ -16773,7 +16864,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2019",
@@ -16804,7 +16896,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2020",
@@ -16835,7 +16928,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2021",
@@ -16866,7 +16960,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1ibeuE-93jr72mY5pt7sTDPezqksZl7Os/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2037",
@@ -16928,7 +17023,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1o92iX83CMsMk3pozdBeBGX12w04sRHZF/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2056",
@@ -17085,7 +17181,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/17eZIGh_12CgD2aI7AyRWzGbRfC7HX-VB/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2080",
@@ -17149,7 +17246,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/17eZIGh_12CgD2aI7AyRWzGbRfC7HX-VB/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2082",
@@ -17180,7 +17278,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2083",
@@ -17211,7 +17310,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2084",
@@ -17265,7 +17365,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 47,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p47",
@@ -17275,7 +17375,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1_ap_7v-00Qld-pb16NGWgN_rACY8yEze/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2086",
@@ -17296,7 +17397,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 48,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p48",
@@ -17306,7 +17407,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1yTMu3xWelJRXESMeYrlnFYzyrRR5YBR4/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2087",
@@ -17393,7 +17495,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 51,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p51",
@@ -17403,7 +17505,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1akdWNVaeKbwOGnSi0Jk0ZKOX7wv5UGk2/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2090",
@@ -17698,7 +17801,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/10J67NzaS7DtzM-eyyXas3lHjZbPiPVM1/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2099",
@@ -17729,7 +17833,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/10J67NzaS7DtzM-eyyXas3lHjZbPiPVM1/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2100",
@@ -17783,7 +17888,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 56,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p56",
@@ -17793,7 +17898,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1FOkvyi3Q3ScBJ1T5pdoKeHUdbLM0ToKL/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2102",
@@ -17880,7 +17986,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 59,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p59",
@@ -17890,7 +17996,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1afiQ61VGHwKx2kjypI87xzXn_XXKwSgw/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2118",
@@ -18014,7 +18121,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2143",
@@ -18045,7 +18153,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2152",
@@ -18076,7 +18185,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1-eCl3gd1lvGdDu9uF6eXA1H8Re-Rl04h/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2153",
@@ -18097,7 +18207,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 69,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p69",
@@ -18107,7 +18217,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1jp1Dm7yeYDMAPDXfyyo2VgoFcnO3we1i/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2155",
@@ -18128,7 +18239,7 @@
     "ipRating": "IP65 / IP44 Plug Estanco",
     "material": "Aluminio Anodizado Reforzado",
     "specialTransport": false,
-    "hasVideo": false,
+    "hasVideo": true,
     "cataloguePage": 71,
     "provider": "División Alumbrado Monumental · Productora EAR S-Class",
     "canonicalUrl": "/arsenal/luces-navidad/dem-p71",
@@ -18138,7 +18249,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1jp1Dm7yeYDMAPDXfyyo2VgoFcnO3we1i/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2156",
@@ -18169,7 +18281,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1Sk8bMIzp6_VshikDU7HnNNQhnm56yvdB/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2168",
@@ -18233,7 +18346,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1n8dLjEROdO94mr_anPAyT3Kay4_m77Nn/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2182",
@@ -18264,7 +18378,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1YGbZQFwtiOdC14SdyFejJ7Ton2tfUePD/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2187",
@@ -18295,7 +18410,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/15F-01kY9KjIi0uGdjcXpWCn6c_RVZL1T/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2190",
@@ -18326,7 +18442,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/15F-01kY9KjIi0uGdjcXpWCn6c_RVZL1T/view?usp=share_link"
   },
   {
     "id": "ear-nav-fused-dem-2192",
@@ -18423,7 +18540,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1yb20JaOjnVy8fsYrRRoioi7lIIsry3Wt/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2200",
@@ -18454,7 +18572,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1yb20JaOjnVy8fsYrRRoioi7lIIsry3Wt/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2201",
@@ -18485,7 +18604,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1yb20JaOjnVy8fsYrRRoioi7lIIsry3Wt/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2202",
@@ -18615,7 +18735,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1P2CAf6DHGxQibUMEOT6AGqt95Q3oUcDT/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2211",
@@ -18646,7 +18767,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1P2CAf6DHGxQibUMEOT6AGqt95Q3oUcDT/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2219",
@@ -18677,7 +18799,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1P2CAf6DHGxQibUMEOT6AGqt95Q3oUcDT/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2225",
@@ -18840,7 +18963,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1HGMTpJGKcFck-kbIrn8OAcjdv6RD7Ejo/view?usp=drive_link"
   },
   {
     "id": "ear-nav-fused-dem-2233",
@@ -18871,7 +18995,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1HGMTpJGKcFck-kbIrn8OAcjdv6RD7Ejo/view?usp=drive_link"
   },
   {
     "id": "ear-nav-fused-dem-2234",
@@ -18902,7 +19027,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1HGMTpJGKcFck-kbIrn8OAcjdv6RD7Ejo/view?usp=drive_link"
   },
   {
     "id": "ear-nav-fused-dem-2235",
@@ -18933,7 +19059,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": true
+    "art_118_lcsp_compliant": true,
+    "videoUrl": "https://drive.google.com/file/d/1HGMTpJGKcFck-kbIrn8OAcjdv6RD7Ejo/view?usp=drive_link"
   },
   {
     "id": "ear-nav-fused-dem-2246",
@@ -18964,7 +19091,8 @@
     "currency": "EUR",
     "price_lock_deposit": 100.0,
     "smart_lock_validity": "72h",
-    "art_118_lcsp_compliant": false
+    "art_118_lcsp_compliant": false,
+    "videoUrl": "https://drive.google.com/file/d/12ugcs8I2mdQKRedJl9_DvyMvgNyYgQJ0/view?usp=sharing"
   },
   {
     "id": "ear-nav-fused-dem-2257",
