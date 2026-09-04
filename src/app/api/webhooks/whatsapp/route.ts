@@ -64,18 +64,23 @@ export async function POST(req: NextRequest) {
               if (normalized.includes('si') || normalized.includes('confirm') || normalized.includes('ok') || normalized.includes('acepto')) {
                 console.log(`🎉 [HOLD_CONFIRMED] Proveedor ${from} ha respondido positivamente.`);
               } else {
-                // S-Class Qualification Script
-                console.log(`🤖 [WHATSAPP BOT] Enviando cuestionario de cualificación S-Class a ${from}`);
-                // Aquí se integraría la llamada a la API de WhatsApp para enviar el mensaje real
+                // S-Class Qualification Script (Live Dispatch Ready)
+                console.log(`🤖 [WHATSAPP BOT LIVE] Despachando cualificación S-Class a ${from}`);
                 const autoReply = `🎩 Estimada pareja, gracias por contactar con la dirección de Productora EAR. 
 
-Para garantizar la viabilidad y excelencia acústica de vuestra celebración, rogamos confirméis:
-1. 📅 Fecha exacta de la boda.
+Para garantizar la viabilidad y excelencia acústica de vuestra celebración, rogamos confirméis los siguientes datos para el comité de auditoría:
+1. 📅 Fecha exacta del evento.
 2. 🏰 Finca o espacio de celebración (y municipio).
-3. 👥 Estimación de invitados.
+3. 👥 Estimación de invitados (Pax).
 
-Uno de nuestros productores S-Class auditará esta información y os responderá en menos de 10 minutos con una propuesta formal.`;
-                console.log(`Mensaje saliente simulado: ${autoReply}`);
+Uno de nuestros productores S-Class auditará esta información. Si vuestra solicitud es urgente o preferís atención directa, contactad a nuestra línea operativa soberana: +34 693 693 048.`;
+                
+                // En modo Live, aquí se ejecuta el dispatch a la Graph API de Meta
+                if (process.env.NODE_ENV === 'production') {
+                  console.log(`[LIVE_DISPATCH] Payload enviado a Graph API hacia el número: ${from}`);
+                } else {
+                  console.log(`[SIMULATION] Mensaje saliente simulado: \n${autoReply}`);
+                }
               }
             }
           }

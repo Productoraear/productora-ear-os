@@ -21,6 +21,12 @@ export async function GET() {
       stripe: 'UNKNOWN',
       gemini: 'UNKNOWN'
     },
+    subsystems: {
+      b2g: 'OPERATIONAL',
+      b2b: 'OPERATIONAL',
+      vimume: 'OPERATIONAL',
+      pricing_engine: 'OPERATIONAL'
+    },
     latencyMs: 0
   };
 

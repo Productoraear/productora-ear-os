@@ -7,7 +7,15 @@ import { stripe } from '@/lib/payments';
  */
 export async function POST(req: Request) {
   try {
-    const { amount, concept, metadata: clientMeta } = await req.json();
+    let { amount, concept, metadata: clientMeta } = await req.json();
+
+    // 🛡️ SECURITY BLINDAJE: Price-Lock inmutable de 100 € en producción
+    if (process.env.NODE_ENV === 'production') {
+      if (Number(amount) !== 100) {
+        console.warn(`[SECURITY] Intento de bypass de Price-Lock detectado. Forzando 100 €. Original: ${amount}`);
+        amount = 100;
+      }
+    }
 
     const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
 
