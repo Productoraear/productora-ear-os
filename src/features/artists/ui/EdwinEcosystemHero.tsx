@@ -528,14 +528,12 @@ export const EdwinEcosystemHero: React.FC = () => {
               Historia de Resiliencia & Conquista
             </span>
             <h3 className="text-3xl font-black uppercase text-white font-syne">
-              De Amagá a la Cumbre de la Producción Escénica
+              La Cátedra del Escenario y el Efecto Fénix
             </h3>
             <div className="space-y-4 text-white/70 text-sm md:text-base leading-relaxed max-w-4xl">
+                Edwin descubrió su vocación por la música tradicional en su juventud, forjando su temple en los escenarios de alto rendimiento antes de establecerse como referente técnico y vocal en Europa.
               <p>
-                Nacido en Amagá, Antioquia (1975), Edwin descubrió su pasión por la música tradicional mexicana en Medellín. A los 16 años ya formaba parte de agrupaciones profesionales como "Tropical Mix". En 1997, decide cruzar el Atlántico y establecerse en España.
-              </p>
-              <p>
-                Tras años de esfuerzo incansable trabajando en aluminio, motos, conduciendo su propio taxi y asumiendo la dirección técnica de grandes salas de eventos, consolidó la coordinación de 37 macroconciertos internacionales (apoyando giras como la de Ana Gabriel en La Cubierta de Leganés y la Plaza de Toros de Valencia).
+                Tras años de esfuerzo incansable asumiendo la dirección técnica de grandes salas de eventos, consolidó la coordinación de 37 macroconciertos internacionales (apoyando giras de artistas de renombre).
               </p>
               <p className="text-white font-bold italic border-l-2 border-[#ecb613] pl-4">
                 Hoy, como fundador de Productora EAR y el movimiento VIMUME, su propósito es empoderar a la nueva generación de artistas para que conviertan su talento en un activo patrimonial indestructible.

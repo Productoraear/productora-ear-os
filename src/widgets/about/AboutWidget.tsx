@@ -20,7 +20,7 @@ const About: React.FC = () => {
             NO ES TÉCNICA.<br/> ES <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] to-[#8a6b0d]">SINCRONICIDAD EMOCIONAL</span>.
           </h1>
           <p className="text-xl text-white/60 font-light leading-relaxed">
-            Nacimos de la resiliencia. Nuestro fundador, Edwin Agudelo, forjó su visión trabajando en aluminio, motos y conduciendo su propio taxi. Esa misma garra es la que inyectamos en cada sistema de impacto que diseñamos.
+            Nacimos de la resiliencia. Nuestro fundador, Edwin Agudelo, forjó su visión en la cátedra del escenario y la dirección técnica. Esa misma garra es la que inyectamos en cada sistema de impacto que diseñamos.
           </p>
         </div>
       </section>

@@ -96,7 +96,7 @@ export const SEED_ARTISTS: ArtistProfileData[] = [
     legalName: "Edwin Agudelo Agudelo",
     role: "PRODUCER",
     bioShort: "CEO de Productora EAR, artista de gala, cantante, compositor y empresario del entretenimiento.",
-    bioLong: "Nacido en Amagá-Antioquia y formado en las exigentes ligas musicales de Medellín, Edwin Agudelo inició su ascenso a los 16 años. Tras emigrar a España, dominó el sector del ocio como director de salas y orquestó 37 grandes conciertos internacionales. Hoy lidera la revolución del Mariachi de gala y el diseño sonoro como CEO de Productora EAR, fusionando la maestría tradicional con las soluciones acústicas avanzadas de VIMUME.",
+    bioLong: "Formado en las exigentes ligas musicales, Edwin Agudelo dominó el sector del ocio como director técnico y orquestó 37 grandes conciertos internacionales. Hoy lidera la revolución del Mariachi de gala y el diseño sonoro como CEO de Productora EAR, fusionando la maestría tradicional con las soluciones acústicas avanzadas de VIMUME.",
     genres: ["Mariachi de Gala", "Balada Sinfónica", "Estimulación Cognitiva"],
     status: "PUBLISHED",
     mediaKitUrl: "https://productoraear.com/assets/media/edwin-agudelo-kit.jpg",

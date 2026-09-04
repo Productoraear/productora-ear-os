@@ -17,7 +17,11 @@ import {
   Volume2, 
   HelpCircle,
   Feather,
-  CheckCircle2
+  CheckCircle2,
+  Speaker,
+  Cpu,
+  Radio,
+  Sliders
 } from 'lucide-react';
 import Link from 'next/link';
 import { CENTRALITA } from '@/lib/phone-constants';
@@ -27,6 +31,7 @@ import { VimumeColibriNarrative } from '@/components/vimume/VimumeColibriNarrati
 import { VimumeRagFaqSection } from '@/components/vimume/VimumeRagFaqSection';
 import { VimumeOntologyExplorer } from '@/features/vimume/ui/VimumeOntologyExplorer';
 import { LiveSonometryGuard } from '@/components/vimume/LiveSonometryGuard';
+import { AIConciergeProactive } from '@/components/neural/AIConciergeProactive';
 
 type VimumeTabId = 'evidencia' | 'mecenazgo' | 'colibri' | 'sonometria' | 'ontologia' | 'b2g_concertacion';
 
@@ -43,7 +48,7 @@ export function VimumeClinicalPortal() {
   const [activeTab, setActiveTab] = useState<VimumeTabId>('evidencia');
 
   return (
-    <div className="w-full space-y-12">
+    <div className="w-full space-y-12 relative">
       
       {/* 🌌 HERO SECTION ARISTOCRÁTICO TRUE BLACK */}
       <section className="relative rounded-[2.5rem] bg-[#050508] border border-white/10 p-6 sm:p-12 overflow-hidden shadow-[0_0_90px_rgba(139,92,246,0.1)]">
@@ -86,12 +91,13 @@ export function VimumeClinicalPortal() {
             </p>
           </div>
 
-          {/* ACCIONES RÁPIDAS S-CLASS */}
+          {/* ACCIONES RÁPIDAS S-CLASS (Con Heurística Proactiva de Cursor) */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
             <button
               type="button"
+              data-proactive-zone="mecenazgo"
               onClick={() => setActiveTab('mecenazgo')}
-              className="p-4 rounded-2xl bg-[#8b5cf6]/10 border border-[#8b5cf6]/30 hover:border-[#8b5cf6] flex items-center justify-between group transition-all text-left"
+              className="p-4 rounded-2xl bg-[#8b5cf6]/10 border border-[#8b5cf6]/30 hover:border-[#8b5cf6] flex items-center justify-between group transition-all text-left cursor-pointer"
             >
               <div>
                 <span className="text-[10px] font-mono text-[#8b5cf6] block uppercase font-bold">Incentivo Fiscal Ley 49/2002</span>
@@ -102,12 +108,13 @@ export function VimumeClinicalPortal() {
 
             <button
               type="button"
+              data-proactive-zone="evidencia"
               onClick={() => setActiveTab('evidencia')}
-              className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#AAD6CD]/40 flex items-center justify-between group transition-all text-left"
+              className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-[#AAD6CD]/40 flex items-center justify-between group transition-all text-left cursor-pointer"
             >
               <div>
-                <span className="text-[10px] font-mono text-[#AAD6CD] block uppercase font-bold">Evidencia Clínica</span>
-                <h4 className="text-sm font-bold text-white">Estudio Piloto N=45 (p &lt; 0.05)</h4>
+                <span className="text-[10px] font-mono text-[#AAD6CD] block uppercase font-bold">Evidencia Clínica & Audio</span>
+                <h4 className="text-sm font-bold text-white">40 Hz DSP & Estudio N=45</h4>
               </div>
               <ArrowRight size={16} className="text-zinc-400 group-hover:text-[#AAD6CD] group-hover:translate-x-1 transition-transform" />
             </button>
@@ -116,7 +123,7 @@ export function VimumeClinicalPortal() {
               href={CENTRALITA.whatsapp}
               target="_blank"
               rel="noreferrer"
-              className="p-4 rounded-2xl bg-[#25D366]/10 border border-[#25D366]/30 hover:border-[#25D366] flex items-center justify-between group transition-all text-left text-[#25D366]"
+              className="p-4 rounded-2xl bg-[#25D366]/10 border border-[#25D366]/30 hover:border-[#25D366] flex items-center justify-between group transition-all text-left text-[#25D366] cursor-pointer"
             >
               <div>
                 <span className="text-[10px] font-mono block uppercase font-bold">Atención Sanitaria</span>
@@ -140,7 +147,7 @@ export function VimumeClinicalPortal() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-xs font-mono font-bold uppercase transition-all shrink-0 ${
+              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-xs font-mono font-bold uppercase transition-all shrink-0 cursor-pointer ${
                 isActive
                   ? 'bg-gradient-to-r from-[#8b5cf6] to-purple-700 text-white shadow-[0_0_25px_rgba(139,92,246,0.4)]'
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
@@ -157,7 +164,7 @@ export function VimumeClinicalPortal() {
       <div className="min-h-[500px]">
         <AnimatePresence mode="wait">
           
-          {/* VISTA 1: BÓVEDA DE EVIDENCIA */}
+          {/* VISTA 1: BÓVEDA DE EVIDENCIA (40Hz & Recharts) */}
           {activeTab === 'evidencia' && (
             <motion.div
               key="evidencia"
@@ -169,7 +176,10 @@ export function VimumeClinicalPortal() {
               <VimumeBovedaEvidencia />
               
               {/* Callout hacia Calculadora */}
-              <div className="p-8 rounded-3xl bg-gradient-to-r from-[#8b5cf6]/10 to-transparent border border-[#8b5cf6]/30 flex flex-col sm:flex-row items-center justify-between gap-6">
+              <div 
+                className="p-8 rounded-3xl bg-gradient-to-r from-[#8b5cf6]/10 to-transparent border border-[#8b5cf6]/30 flex flex-col sm:flex-row items-center justify-between gap-6"
+                data-proactive-zone="mecenazgo"
+              >
                 <div>
                   <h4 className="text-xl font-bold font-syne text-white uppercase">
                     Financia una sesión en una residencia de tu localidad
@@ -181,7 +191,7 @@ export function VimumeClinicalPortal() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('mecenazgo')}
-                  className="px-6 py-3.5 rounded-xl bg-[#8b5cf6] hover:bg-[#7c3aed] text-white text-xs font-mono font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(139,92,246,0.4)] shrink-0 transition-all"
+                  className="px-6 py-3.5 rounded-xl bg-[#8b5cf6] hover:bg-[#7c3aed] text-white text-xs font-mono font-bold uppercase tracking-wider shadow-[0_0_20px_rgba(139,92,246,0.4)] shrink-0 transition-all cursor-pointer"
                 >
                   Abrir Calculadora Fiscal
                 </button>
@@ -197,6 +207,9 @@ export function VimumeClinicalPortal() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               className="space-y-12"
+              data-observe-concierge
+              id="seccion-mecenazgo"
+              data-proactive-zone="mecenazgo"
             >
               <MecenazgoFiscalCalculator />
             </motion.div>
@@ -215,7 +228,7 @@ export function VimumeClinicalPortal() {
             </motion.div>
           )}
 
-          {/* VISTA 4: SONOMETRÍA ACTIVA */}
+          {/* VISTA 4: SONOMETRÍA ACTIVA Y ENTREGA FÍSICA BOSE */}
           {activeTab === 'sonometria' && (
             <motion.div
               key="sonometria"
@@ -223,12 +236,64 @@ export function VimumeClinicalPortal() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               className="space-y-8"
+              data-observe-concierge
+              id="seccion-sonometria"
             >
               <LiveSonometryGuard 
                 initialVenue="Centro Residencial Homologado VIMUME" 
                 maxAllowedDb={75} 
                 isVimumeMode={true} 
               />
+
+              {/* 🏛️ ARQUITECTURA DE ENTREGA FÍSICA BOSE (12 W/PAX) */}
+              <div className="rounded-[2.5rem] bg-gradient-to-b from-[#090910] to-black border border-white/10 p-6 sm:p-10 space-y-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
+                  <div className="space-y-1">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono tracking-widest uppercase font-bold">
+                      <Speaker size={13} />
+                      <span>RIDER ACÚSTICO INSTITUCIONAL // HARDWARE Y CALIBRACIÓN IN SITU</span>
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-black uppercase text-white font-syne">
+                      Entrega Física de la Presión Sonora: <span className="text-[#ecb613]">Sistemas Bose (12 W/pax)</span>
+                    </h3>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
+                    Homogeneidad: ±1.5 dB en Sala
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+                      <Radio size={20} />
+                    </div>
+                    <h4 className="text-sm font-bold text-white font-syne">1. Dispersión Espacial Flexible</h4>
+                    <p className="text-xs text-zinc-300 font-light leading-relaxed">
+                      Uso de columnas <strong>Bose F1 Model 812</strong> en configuración curvilínea ("J-Shape") orientada al plano auditivo sentado de los residentes, complementado por satélites <strong>Bose S1 Pro</strong> a 12 W/pax. Evita el gradiente frontal violento (&gt;80 dB delante y &lt;60 dB detrás).
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#8b5cf6]/10 border border-[#8b5cf6]/30 flex items-center justify-center text-[#8b5cf6]">
+                      <Cpu size={20} />
+                    </div>
+                    <h4 className="text-sm font-bold text-white font-syne">2. DSP Behringer XR18 Clamped</h4>
+                    <p className="text-xs text-zinc-300 font-light leading-relaxed">
+                      El flujo digital viaja desde la consola Behringer XR18 con limitador hardware infranqueable fijado a 74.0 dB SPL slow. Incluye filtro paso-alto en 35 Hz, resonancia calibrada en 40.0 Hz (Q=4.5) y corte suave en agudos (&gt;4.5 kHz) para anular el reclutamiento coclear.
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#AAD6CD]/10 border border-[#AAD6CD]/30 flex items-center justify-center text-[#AAD6CD]">
+                      <ShieldCheck size={20} />
+                    </div>
+                    <h4 className="text-sm font-bold text-white font-syne">3. Calibración Clase 1 & Hash</h4>
+                    <p className="text-xs text-zinc-300 font-light leading-relaxed">
+                      Medición previa con sonómetro homologado IEC 61672-1 Clase 1 en 5 nodos de la sala. Se emite acta criptográfica SHA-256 de conformidad ambiental para la dirección médica del centro antes del inicio de la sesión.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           )}
 
@@ -328,6 +393,9 @@ export function VimumeClinicalPortal() {
 
         </AnimatePresence>
       </div>
+
+      {/* 🔮 ORÁCULO PREDICTIVO CON HEURÍSTICA DE CURSOR */}
+      <AIConciergeProactive onSelectTab={(tabId) => setActiveTab(tabId as VimumeTabId)} />
 
     </div>
   );

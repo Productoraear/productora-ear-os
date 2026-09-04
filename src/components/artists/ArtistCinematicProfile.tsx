@@ -374,34 +374,37 @@ export default function ArtistCinematicProfile({
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
               
               {/* Origen y Forja de Carácter */}
-              <div className="md:col-span-7 rounded-3xl border border-white/10 bg-[#09090d] p-8 space-y-4">
-                <span className="rounded-full bg-white/10 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-[#ecb613]">
-                  1975 — Origen & Temple
-                </span>
-                <h3 className="font-syne text-2xl font-bold uppercase text-white">
-                  Raíces en Amagá y la Cátedra de la Calle
-                </h3>
-                <p className="text-sm text-white/70 leading-relaxed">
-                  Nacido en Amagá, Antioquia (1975), Edwin descubrió a temprana edad la sonoridad y el desgarro de la música tradicional en Medellín. A los 16 años ya lideraba presentaciones en directo con agrupaciones profesionales como <em>Tropical Mix</em>. En 1997 da el salto transoceánico a España, donde compaginó los oficios más duros —desde el corte de aluminio y la mecánica de motocicletas hasta el volante de su propio taxi— con el perfeccionamiento continuo de su emisión lírica.
-                </p>
-                <p className="text-sm text-white/70 leading-relaxed">
-                  Esta experiencia forjó una resiliencia escénica única: comprender que cada minuto frente a un público es un pacto de entrega irrenunciable, sin artificios ni concesiones a la mediocridad.
-                </p>
-              </div>
-
-              {/* Productor en Retaguardia */}
-              <div className="md:col-span-5 rounded-3xl border border-[#ecb613]/30 bg-gradient-to-br from-[#0e0e14] to-[#161622] p-8 space-y-4">
+              {/* Origen y Forja de Carácter (Efecto Fénix & Hitos Innegociables) */}
+              <div className="md:col-span-12 rounded-3xl border border-[#ecb613]/30 bg-gradient-to-br from-[#09090d] to-[#161622] p-8 space-y-6">
                 <span className="rounded-full bg-[#ecb613] px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest text-black">
-                  37 Macroconciertos
+                  Hitos Innegociables S-Class
                 </span>
                 <h3 className="font-syne text-2xl font-bold uppercase text-white">
-                  Dirección Técnica & Gestión de Giras
+                  La Cátedra del Escenario y el Efecto Fénix
                 </h3>
-                <p className="text-sm text-white/80 leading-relaxed">
-                  Más allá del micrófono, Edwin ha ejercido como director y coordinador técnico de 37 grandes producciones internacionales en recintos icónicos de Europa, coordinando fechas históricas como las giras de <strong>Ana Gabriel</strong> en La Cubierta de Leganés y la Plaza de Toros de Valencia.
+                <p className="text-sm text-white/80 leading-relaxed max-w-3xl">
+                  El recorrido de Edwin Agudelo es el testimonio de un dominio absoluto sobre el escenario y la acústica, forjando una resiliencia única donde cada minuto frente al público es un pacto de entrega irrenunciable, sin artificios ni concesiones a la mediocridad.
                 </p>
-                <div className="border-t border-white/10 pt-4 font-mono text-xs text-[#AAD6CD]">
-                  Garantía de rider, distribución de corriente, seguridad perimetral y coordinación de backline de gran escala.
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-white/10">
+                  <div className="space-y-3">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#AAD6CD] font-bold">Hito 1: Identidad Sonora</span>
+                    <p className="text-sm text-white leading-relaxed">
+                      Tenor solista especialista en Rancheras, Boleros y Baladas. Dominio escénico absoluto y máxima potencia vocal sin compresión destructiva.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#ecb613] font-bold">Hito 2: Autoridad Técnica</span>
+                    <p className="text-sm text-white leading-relaxed">
+                      Productor Audiovisual y "Paciente Cero" / Creador del ecosistema EAR OS. Garantiza la sonorización de alta gama con un despliegue acústico estricto de 12 W/pax.
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#258DCD] font-bold">Hito 3: Propósito y Trascendencia</span>
+                    <p className="text-sm text-white leading-relaxed">
+                      Director y arquitecto del Proyecto VIMUME (Intervención Neuroacústica a 40 Hz Gamma). Diseñador de terapias de reminiscencia sonora para el tratamiento cognitivo.
+                    </p>
+                  </div>
                 </div>
               </div>
 

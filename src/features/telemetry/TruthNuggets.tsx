@@ -9,7 +9,7 @@ export const TruthNuggets = () => {
       value: '+20 Años',
       label: 'Trayectoria Élite',
       icon: <History size={16} className="text-[#d4a855]" />,
-      detail: 'Ininterrumpida desde Amagá (1975) hasta el circuito VIP europeo.',
+      detail: 'Trayectoria ininterrumpida hasta el circuito VIP europeo.',
     },
     {
       id: 'paises',

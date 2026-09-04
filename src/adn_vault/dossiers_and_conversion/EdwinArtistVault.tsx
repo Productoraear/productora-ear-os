@@ -56,7 +56,7 @@ export const EdwinArtistVault: React.FC = () => {
             </p>
             
             <div className="flex flex-wrap justify-center gap-6 text-[10px] font-black uppercase tracking-widest text-[#ecb613]/90 pt-4 font-mono">
-              <span className="border-r border-white/15 pr-6">Amagá, Colombia (1975)</span>
+              <span className="border-r border-white/15 pr-6">Origen: Cátedra del Escenario</span>
               <span className="border-r border-white/15 pr-6">37 Conciertos Internacionales</span>
               <span className="border-r border-white/15 pr-6">Gladiador Extranjero 2021</span>
               <span>Consulado de Colombia Certificado</span>
@@ -171,15 +171,13 @@ export const EdwinArtistVault: React.FC = () => {
                   transition={{ duration: 0.5 }}
                   className="space-y-6"
                 >
-                  <h3 className="text-3xl font-black uppercase text-[#ecb613] font-syne">De Amagá a la Conquista de España</h3>
-                  <p className="text-white/70 text-base leading-relaxed">
-                    Nacido en Amagá, Antioquia, el 28 de octubre de 1975, y criado en la efervescente cuna artística de Medellín, la ranchera corrió por las venas de Edwin Agudelo desde su infancia, cautivado por Vicente Fernández, Javier Solís y Jorge Negrete. 
-                  </p>
-                  <p className="text-white/70 text-base leading-relaxed">
-                    A los 16 años dio sus primeros pasos profesionales como cantante en <strong>"Tropical Mix"</strong>, la prestigiosa cantera del Combo de las Estrellas de Medellín. Sin embargo, a los 22 años, decide emigrar a España buscando forjar su propio destino. 
+                  <h3 className="text-3xl font-black uppercase text-[#ecb613] font-syne">La Forja del Artista Soberano</h3>
+                  <p className="text-white/80 leading-relaxed text-sm">
+                    La maestría escénica corrió por las venas de Edwin Agudelo desde sus inicios. Impulsado por la fuerza de los clásicos, comprendió rápidamente que el verdadero arte requería una estructura técnica infranqueable.
+                    Dio sus primeros pasos profesionales como cantante en agrupaciones de alto rendimiento. Con la visión clara de forjar su propio destino, cruzó el Atlántico para elevar el estándar de producción.
                   </p>
                   <p className="text-white/60 text-sm leading-relaxed italic border-l-2 border-[#ecb613] pl-6 py-2">
-                    "Empezar no es fácil. Trabajé en aluminio, en motos, conduje mi propio taxi, y fui encargado de grandes discotecas en España. Desde allí diseñé y coordiné la producción técnica de 37 grandes conciertos internacionales. Fue en esos escenarios donde comprendí el inmenso poder del mariachi al cantar junto a agrupaciones como Águilas de Plata."
+                    "Empezar no es fácil. Desde la trinchera del escenario diseñé y coordiné la producción técnica de 37 grandes conciertos internacionales. Fue en esos escenarios donde comprendí el inmenso poder del mariachi al cantar junto a agrupaciones de primer nivel."
                   </p>
                 </motion.div>
               )}
@@ -199,7 +197,7 @@ export const EdwinArtistVault: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-2">
                       <Star className="text-[#ecb613]" size={20} />
-                      <h4 className="text-sm font-black uppercase">Soporte a Gira de Ana Gabriel</h4>
+                      <h4 className="text-sm font-black uppercase">Soporte en Grandes Giras Internacionales</h4>
                       <p className="text-white/40 text-xs leading-relaxed uppercase">
                         Aportó la orquestación y el ensamble musical para la gran diva mexicana en <strong>La Cubierta de Leganés (Madrid)</strong> y en la <strong>Plaza de Toros de Valencia</strong>.
                       </p>
