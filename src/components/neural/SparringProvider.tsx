@@ -30,7 +30,7 @@ export function SparringProvider({ children }: { children: React.ReactNode }) {
           <div className="bg-neutral-950 border border-red-500/50 p-10 rounded-2xl max-w-2xl w-full relative overflow-hidden shadow-[0_0_50px_rgba(239,68,68,0.2)]">
             <div 
               className="absolute top-0 left-0 h-1 bg-red-500 transition-all duration-1000" 
-              style={{ width: \\%\ }} 
+              style={{ width: `${(timeLeft / 10) * 100}%` }} 
             />
             <h2 className="text-red-500 font-bold tracking-widest uppercase text-sm mb-4 animate-pulse">
               [ ALERTA TÁCTICA: INTERVENCIÓN MUNICIPAL ]
