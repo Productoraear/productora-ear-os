@@ -44,50 +44,57 @@ export const FinancialPanel = () => {
     const [opalMetrics, setOpalMetrics] = useState(OpalEngine.getGlobalHealth());
 
     useEffect(() => {
-        if (!db) return;
+        if (!db || typeof window === 'undefined') return;
 
-        const q = query(
-            collection(db, 'ear_orders'),
-            orderBy('createdAt', 'desc'),
-            limit(15)
-        );
+        let unsubscribe = () => {};
+        try {
+            const q = query(
+                collection(db, 'ear_orders'),
+                orderBy('createdAt', 'desc'),
+                limit(15)
+            );
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const rawData = snapshot.docs.map(doc => {
-                const data = doc.data() as any;
-                const parsed = OrderSchema.safeParse({ id: doc.id, ...data });
-                if (parsed.success) {
-                    return parsed.data;
-                }
-                return {
-                    id: doc.id,
-                    customer: data?.customer || 'Cliente EAR OS',
-                    amount: typeof data?.amount === 'number' ? data.amount : Number(data?.amount || data?.total || 0),
-                    status: data?.status || 'PAID',
-                    concept: data?.concept || 'Reserva S-Class',
-                    paymentMethod: data?.paymentMethod || 'Stripe',
-                    createdAt: data?.createdAt || new Date().toISOString()
-                };
+            unsubscribe = onSnapshot(q, (snapshot) => {
+                const rawData = snapshot.docs.map(doc => {
+                    const data = doc.data() as any;
+                    const parsed = OrderSchema.safeParse({ id: doc.id, ...data });
+                    if (parsed.success) {
+                        return parsed.data;
+                    }
+                    return {
+                        id: doc.id,
+                        customer: data?.customer || 'Cliente EAR OS',
+                        amount: typeof data?.amount === 'number' ? data.amount : Number(data?.amount || data?.total || 0),
+                        status: data?.status || 'PAID',
+                        concept: data?.concept || 'Reserva S-Class',
+                        paymentMethod: data?.paymentMethod || 'Stripe',
+                        createdAt: data?.createdAt || new Date().toISOString()
+                    };
+                });
+
+                setOrders(rawData);
+
+                // Calcular métricas en tiempo real
+                const paid = rawData.filter(o => o.status === 'PAID');
+                const total = paid.reduce((acc, curr) => acc + curr.amount, 0);
+                const pending = rawData.filter(o => o.status === 'INITIATED').length;
+                
+                setStats({
+                    totalRevenue: total,
+                    convRate: Math.round((paid.length / (rawData.length || 1)) * 100),
+                    avgTicket: Math.round(total / (paid.length || 1)),
+                    pendingOrders: pending
+                });
+            }, (error) => {
+                console.warn("⚠️ [FinancialPanel] Firestore fallback activo:", error.message);
             });
+        } catch (err: any) {
+            console.warn("⚠️ [FinancialPanel] Listener safe fallback:", err.message);
+        }
 
-            setOrders(rawData);
-
-            // Calcular métricas en tiempo real
-            const paid = rawData.filter(o => o.status === 'PAID');
-            const total = paid.reduce((acc, curr) => acc + curr.amount, 0);
-            const pending = rawData.filter(o => o.status === 'INITIATED').length;
-            
-            setStats({
-                totalRevenue: total,
-                convRate: Math.round((paid.length / (rawData.length || 1)) * 100),
-                avgTicket: Math.round(total / (paid.length || 1)),
-                pendingOrders: pending
-            });
-        }, (error) => {
-            console.warn("⚠️ [FinancialPanel] Firestore fallback activo:", error.message);
-        });
-
-        return () => unsubscribe();
+        return () => {
+            try { unsubscribe(); } catch (e) {}
+        };
     }, []);
 
     const handleGenerateStripePayment = async () => {
@@ -119,16 +126,16 @@ export const FinancialPanel = () => {
     return (
         <div className="space-y-8 font-montserrat animate-in fade-in slide-in-from-bottom-4 duration-1000">
             {/* Header / Odometer Box */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-white/5 pb-10 gap-6">
-                <div>
-                    <h3 className="text-5xl font-black uppercase italic tracking-tighter text-white leading-none">
+            <div className="flex flex-col xl:flex-row justify-between items-start xl:items-end border-b border-white/5 pb-8 gap-6 w-full min-w-0">
+                <div className="min-w-0">
+                    <h3 className="text-3xl sm:text-5xl font-black uppercase italic tracking-tighter text-white leading-none">
                         INTELIGENCIA <span className="text-[#d4af37]">FINANCIERA</span>
                     </h3>
-                    <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.5em] mt-3 italic">
-                        Flujo de Caja en Tiempo Real & Monitorización S-Class
+                    <p className="text-[10px] text-white/40 font-black uppercase tracking-[0.3em] mt-2 italic">
+                        Flujo de Caja en Tiempo Real · Fase Pre-Lanzamiento (0 Ventas / 0 € Ingresos)
                     </p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap items-center gap-3">
                     <StatBox 
                         label="RECAUDACIÓN TOTAL" 
                         value={`€${stats.totalRevenue.toLocaleString()}`} 
@@ -139,7 +146,7 @@ export const FinancialPanel = () => {
                         whileTap={{ scale: 0.95 }}
                         onClick={handleGenerateStripePayment}
                         disabled={isGenerating}
-                        className="flex items-center gap-3 bg-[#d4af37] text-black px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:shadow-[0_0_40px_rgba(212,175,55,0.5)] transition-all disabled:opacity-50"
+                        className="flex items-center gap-2.5 bg-[#d4af37] text-black px-6 py-3.5 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:shadow-[0_0_40px_rgba(212,175,55,0.5)] transition-all disabled:opacity-50"
                     >
                         {isGenerating ? (
                             <Activity className="w-4 h-4 animate-spin" />
@@ -162,7 +169,7 @@ export const FinancialPanel = () => {
                             const data = await res.json();
                             alert(data.message || data.error);
                         }}
-                        className="flex items-center gap-3 bg-white/5 text-white/40 border border-white/10 px-8 py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-white/10 transition-all"
+                        className="flex items-center gap-2.5 bg-white/5 text-white/40 border border-white/10 px-6 py-3.5 rounded-2xl font-black uppercase text-[10px] tracking-widest hover:bg-white/10 transition-all"
                     >
                         <TrendingUp className="w-4 h-4 text-emerald-500" />
                         LIQUIDAR ARTISTA
@@ -171,10 +178,10 @@ export const FinancialPanel = () => {
             </div>
 
             {/* Core Metrics Bento */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 min-w-0">
                 <BentoCard title="CONVERSIÓN" subtitle="Eficiencia del Checkout">
                     <div className="mt-6 flex items-center justify-between">
-                        <SmallKPI icon={TrendingUp} label="ÉXITO" value={`${stats.convRate}%`} trend="UP" color="text-emerald-500" />
+                        <SmallKPI icon={TrendingUp} label="ÉXITO" value={`${stats.convRate}%`} trend="PRE" color="text-emerald-500" />
                         <TrendingUp className="text-emerald-500/20 w-8 h-8" />
                     </div>
                     <div className="mt-4 h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
@@ -184,19 +191,19 @@ export const FinancialPanel = () => {
 
                 <BentoCard title="TICKET PROMEDIO" subtitle="Vitalidad Económica">
                     <div className="mt-6">
-                        <p className="text-4xl font-black text-white italic tracking-tighter">€{stats.avgTicket}</p>
-                        <p className="text-[9px] text-white/20 uppercase tracking-widest mt-1 italic">Por Transacción Pagada</p>
+                        <p className="text-3xl sm:text-4xl font-black text-white italic tracking-tighter">€{stats.avgTicket}</p>
+                        <p className="text-[9px] text-white/30 uppercase tracking-widest mt-1 italic">0 Ventas Imputadas</p>
                     </div>
                 </BentoCard>
 
                 <BentoCard title="RED OPERATIVA" subtitle="Protocolo de Integridad">
-                    <div className="mt-6 flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
-                            <ShieldCheck className="text-emerald-400 w-6 h-6" />
+                    <div className="mt-6 flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shrink-0">
+                            <ShieldCheck className="text-emerald-400 w-5 h-5" />
                         </div>
-                        <div>
-                            <p className="text-xs font-black text-white uppercase italic">Latencia: 140ms</p>
-                            <p className="text-[9px] text-emerald-400/50 uppercase font-bold">Webhooks: SINCRONIZADOS</p>
+                        <div className="min-w-0">
+                            <p className="text-xs font-black text-white uppercase italic truncate">Latencia: &lt;140ms</p>
+                            <p className="text-[9px] text-emerald-400/60 uppercase font-bold truncate">Webhooks: STANDBY</p>
                         </div>
                     </div>
                 </BentoCard>
@@ -204,22 +211,22 @@ export const FinancialPanel = () => {
                 <BentoCard title="PENDIENTES" subtitle="Sesiones en Abandono">
                     <div className="mt-6">
                         <div className="flex items-end justify-between">
-                            <p className="text-4xl font-black text-amber-500 italic tracking-tighter">{stats.pendingOrders}</p>
+                            <p className="text-3xl sm:text-4xl font-black text-amber-500 italic tracking-tighter">{stats.pendingOrders}</p>
                             <div className="w-8 h-8 bg-amber-500/10 rounded-lg flex items-center justify-center">
                                 <Receipt className="text-amber-500 w-4 h-4" />
                             </div>
                         </div>
-                        <p className="text-[9px] text-white/20 uppercase tracking-widest mt-1">Checkouts Iniciados</p>
+                        <p className="text-[9px] text-white/30 uppercase tracking-widest mt-1">Checkouts Iniciados</p>
                     </div>
                 </BentoCard>
             </div>
 
             {/* Master Record & Extra Intel */}
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                <div className="xl:col-span-2">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 sm:gap-8 min-w-0">
+                <div className="xl:col-span-2 min-w-0">
                     <BentoCard title="REGISTRO MAESTRO DE TRANSACCIONES" subtitle="Validación de Realidad Absoluta">
-                        <div className="mt-8 overflow-x-auto">
-                            <table className="w-full text-left">
+                        <div className="mt-8 overflow-x-auto min-w-0">
+                            <table className="w-full text-left min-w-[500px]">
                                 <thead>
                                     <tr className="border-b border-white/5">
                                         <th className="pb-5 text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">Hash_ID</th>
@@ -252,7 +259,9 @@ export const FinancialPanel = () => {
                                     ))}
                                     {orders.length === 0 && (
                                         <tr>
-                                            <td colSpan={4} className="py-24 text-center text-white/5 italic uppercase font-black tracking-[1em] text-[10px]">Sin datos activos en el Nexo Financiero</td>
+                                            <td colSpan={4} className="py-16 text-center text-white/30 italic uppercase font-mono text-xs">
+                                                0 Ventas Registradas · Ecosistema en Fase Pre-Operativa (0 € Ingresos)
+                                            </td>
                                         </tr>
                                     )}
                                 </tbody>

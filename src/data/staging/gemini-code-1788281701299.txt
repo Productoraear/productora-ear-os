@@ -1,0 +1,21 @@
+H:\EAR_OS_MASTER_2026\productora-ear-app\src\
+│
+├── 🏢 empresa\
+│   ├── resumen-ejecutivo\          # Visión global, capitalistas, modelo S-Class
+│   ├── empresa-core\               # Empleado, oficina, identidad jurídica
+│   ├── mercado-meta\               # Clientes (quién, edades, género, ingresos), competidores, propuesta de valor
+│   ├── estrategia\                 # Logros (cuándo, qué), planes (corto y largo plazo)
+│   ├── financiero\                 # Flujo de efectivo, pérdidas y ganancias, punto de equilibrio, capital
+│   └── producto\                   # Beneficios, guías de uso de servicios (Bodas, Arsenal, VIMUME)
+│
+├── 👤 personal-y-artista\
+│   └── edwin-agudelo\
+│       ├── biografia-y-perfil\     # Historia de éxito, experiencia, habilidades directivas
+│       ├── repertorio-y-ip\        # Tratamiento de cada canción como un Proyecto de IP independiente
+│       ├── derechos-y-sgae\        # Gestión de autoría, AIE, distribución digital
+│       └── habitos-y-directivas\   # Protocolos de liderazgo, madrugar, directivas CEO
+│
+└── ⚙️ core-sistema\
+    ├── seo\                        # Schema.org LocalBusiness, FAQs, metadatos canónicos
+    ├── performance\                # Lazy loading diferido (Stripe, Firebase Auth, ShaderMelody)
+    └── conversion\                 # QualificationForm, WhatsApp UTM tracking

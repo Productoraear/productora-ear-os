@@ -122,13 +122,15 @@ export default function UnifiedAdminCommandCenter() {
               className="space-y-8"
             >
               <NexusRealCockpit />
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div className="lg:col-span-8 space-y-8">
-                  <OmegaCockpitPanel />
-                  <HunterPanel />
-                </div>
-                <div className="lg:col-span-4">
-                  <FinancialPanel />
+              <div className="space-y-8 w-full min-w-0">
+                <OmegaCockpitPanel />
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 w-full min-w-0 items-start">
+                  <div className="min-w-0 w-full bg-zinc-950/40 p-4 sm:p-8 rounded-3xl border border-white/5">
+                    <FinancialPanel />
+                  </div>
+                  <div className="min-w-0 w-full bg-zinc-950/40 p-4 sm:p-8 rounded-3xl border border-white/5">
+                    <HunterPanel />
+                  </div>
                 </div>
               </div>
             </motion.div>

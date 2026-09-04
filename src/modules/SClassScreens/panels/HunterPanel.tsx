@@ -31,25 +31,32 @@ export const HunterPanel = () => {
     const [logs, setLogs] = useState<string[]>([]);
 
     useEffect(() => {
-        if (!db) return;
+        if (!db || typeof window === 'undefined') return;
         
-        const q = query(
-            collection(db, 'ear_leads'),
-            orderBy('detectedAt', 'desc'),
-            limit(20)
-        );
+        let unsubscribe = () => {};
+        try {
+            const q = query(
+                collection(db, 'ear_leads'),
+                orderBy('detectedAt', 'desc'),
+                limit(20)
+            );
 
-        const unsubscribe = onSnapshot(q, (snapshot) => {
-            const data = snapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            })) as Lead[];
-            setLeads(data);
-        }, (err) => {
-            console.warn('⚠️ [HunterPanel] Firestore fallback activo:', err.message);
-        });
+            unsubscribe = onSnapshot(q, (snapshot) => {
+                const data = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                })) as Lead[];
+                setLeads(data);
+            }, (err) => {
+                console.warn('⚠️ [HunterPanel] Firestore fallback activo:', err.message);
+            });
+        } catch (e: any) {
+            console.warn('⚠️ [HunterPanel] Listener safe fallback:', e.message);
+        }
 
-        return () => unsubscribe();
+        return () => {
+            try { unsubscribe(); } catch (e) {}
+        };
     }, []);
 
     const addLog = (msg: string) => {

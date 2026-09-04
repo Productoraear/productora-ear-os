@@ -72,6 +72,26 @@ const CATEGORY_COVERS: Record<string, { page: number; image: string; desc: strin
     page: 140,
     image: "/images/demetrio/page_140.jpg",
     desc: "Fuentes de alimentación 24V/230V, conectores estancos y controladores"
+  },
+  "Iluminación de Farolas y Columnas": {
+    page: 25,
+    image: "/images/demetrio/page_35.jpg",
+    desc: "Banderolas verticales LED para báculos de farola y avenidas urbanas"
+  },
+  "Guirnaldas, Cortinas y Cielo LED": {
+    page: 85,
+    image: "/images/demetrio/page_85.jpg",
+    desc: "Cascadas de luz, mallas de alta densidad y cielos luminosos para plazas"
+  },
+  "Árboles Gigantes y Estructuras Cónicas": {
+    page: 15,
+    image: "/images/demetrio/page_15.jpg",
+    desc: "Estructuras cónicas y árboles monumentales transitables"
+  },
+  "Portales y Esculturas Transitables": {
+    page: 4,
+    image: "/images/demetrio/page_4.jpg",
+    desc: "Portales de osos, túneles walk-through y carrozas monumentales transitables"
   }
 };
 

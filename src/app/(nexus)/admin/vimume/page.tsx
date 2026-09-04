@@ -41,8 +41,8 @@ export default function AdminVimumePage() {
         </div>
 
         <div className="flex items-center gap-2 font-mono text-xs">
-          <span className="px-3 py-1.5 bg-emerald-950/40 border border-emerald-800/40 text-emerald-400 rounded-lg flex items-center gap-1.5">
-            <Activity className="w-3.5 h-3.5" /> ESTADO: OPERATIVO 100%
+          <span className="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-lg flex items-center gap-1.5">
+            <Activity className="w-3.5 h-3.5" /> ESTADO: PRE-LANZAMIENTO · NO DESPLEGADO EN CALLE
           </span>
         </div>
       </header>
@@ -51,26 +51,26 @@ export default function AdminVimumePage() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <div className="p-5 bg-neutral-900/60 border border-neutral-800 rounded-2xl">
           <div className="text-[10px] font-mono text-neutral-500 uppercase mb-1">Sesiones Impartidas</div>
-          <div className="text-2xl font-black text-white">128</div>
-          <div className="text-[10px] text-amber-400 mt-1">Centros de Mayores & Residencias</div>
+          <div className="text-2xl font-black text-white">0</div>
+          <div className="text-[10px] text-amber-400 mt-1">Fase Pre-Operativa / En Homologación</div>
         </div>
 
         <div className="p-5 bg-neutral-900/60 border border-neutral-800 rounded-2xl">
           <div className="text-[10px] font-mono text-neutral-500 uppercase mb-1">Impacto Beneficiarios</div>
-          <div className="text-2xl font-black text-white">+1.840</div>
-          <div className="text-[10px] text-emerald-400 mt-1">Adultos Mayores Estimulados</div>
+          <div className="text-2xl font-black text-white">0</div>
+          <div className="text-[10px] text-neutral-400 mt-1">Pendiente de Despliegue en Calle</div>
         </div>
 
         <div className="p-5 bg-neutral-900/60 border border-neutral-800 rounded-2xl">
           <div className="text-[10px] font-mono text-neutral-500 uppercase mb-1">Fondo VIMUME (10%)</div>
           <div className="text-2xl font-black text-amber-400">0 €</div>
-          <div className="text-[10px] text-neutral-500 mt-1">Retención Activa de Cajas</div>
+          <div className="text-[10px] text-neutral-500 mt-1">Sin Ventas Imputadas Aún</div>
         </div>
 
         <div className="p-5 bg-neutral-900/60 border border-neutral-800 rounded-2xl">
           <div className="text-[10px] font-mono text-neutral-500 uppercase mb-1">Dossiers B2G Adjudicables</div>
           <div className="text-2xl font-black text-white">14</div>
-          <div className="text-[10px] text-emerald-400 mt-1">Cumplimiento Regla del 95% Art. 118</div>
+          <div className="text-[10px] text-emerald-400 mt-1">Catálogo Homologado Art. 118 LCSP</div>
         </div>
       </div>
 

@@ -38,11 +38,8 @@ interface EmpireState {
 }
 
 export const useEmpireStore = create<EmpireState>((set, get) => ({
-  soberanos: [
-    { id: '1', nombre: 'Boda Finca El Regajal', etapa: 'Negociación', valor: 18000, probabilidad: 85 },
-    { id: '2', nombre: 'Evento Corporativo Airbus', etapa: 'Propuesta', valor: 25000, probabilidad: 60 }
-  ],
-  pipeline: 43000,
+  soberanos: [],
+  pipeline: 0,
   flota: [
     { id: 'v1', modelo: 'Mercedes Maybach S680', matricula: 'EAR-001', estado: 'DISPONIBLE', bateria: 92 },
     { id: 'v2', modelo: 'Rolls-Royce Ghost', matricula: 'EAR-002', estado: 'EN_SERVICIO', bateria: 45 }

@@ -1,4 +1,4 @@
-import demetrioData from './demetrio_luces_navidad_2025.json';
+import catalog2026Data from './luces_navidad_2026_ear.json';
 
 export interface ChristmasLightingProduct {
   id: string;
@@ -15,7 +15,9 @@ export interface ChristmasLightingProduct {
   weightKg: string | null;
   voltage: string;
   dimensions: string;
+  ledColor?: string;
   ipRating: string;
+  material?: string;
   specialTransport: boolean;
   hasVideo: boolean;
   cataloguePage: number;
@@ -24,20 +26,18 @@ export interface ChristmasLightingProduct {
   image?: string;
 }
 
-export const CHRISTMAS_LIGHTING_PRODUCTS: ChristmasLightingProduct[] = demetrioData as ChristmasLightingProduct[];
+/**
+ * Catálogo Oficial 2026 EAR OS Vampirizado al 100% (530 Productos, 497 Precios Exactos, 196 Páginas)
+ */
+export const CHRISTMAS_LIGHTING_PRODUCTS: ChristmasLightingProduct[] = catalog2026Data as ChristmasLightingProduct[];
 
 export const CHRISTMAS_LIGHTING_CATEGORIES = [
   "Motivos 3D Gigantes",
-  "Conos y Árboles Gigantes 3D",
-  "Motivos Plásticos / Biodegradables",
-  "Esferas 3D Plegables",
-  "Árboles y Almendros LED",
   "Motivos 2D y Arcos de Calle",
-  "Elementos Decorativos y Bolas",
-  "Twinkly Pro Smart LED",
-  "Guirnaldas Profesionales",
-  "Cortinas y Mallas LED",
-  "Accesorios y Montaje"
+  "Iluminación de Farolas y Columnas",
+  "Guirnaldas, Cortinas y Cielo LED",
+  "Árboles Gigantes y Estructuras Cónicas",
+  "Portales y Esculturas Transitables"
 ] as const;
 
 /**
@@ -50,12 +50,12 @@ export function getChristmasProductsByCategory(category: string): ChristmasLight
 }
 
 /**
- * Obtener productos destacados para Ayuntamientos / B2G (Pliegos LCSP)
+ * Obtener productos destacados para Ayuntamientos / B2G (Pliegos LCSP < 14.250€)
  */
 export function getB2GFeaturedLighting(): ChristmasLightingProduct[] {
   return CHRISTMAS_LIGHTING_PRODUCTS.filter(
-    p => p.priceNumeric !== null && (p.priceNumeric >= 1000 || p.category.includes("3D") || p.category.includes("Arcos"))
-  ).slice(0, 24);
+    p => p.priceNumeric !== null && (p.priceNumeric >= 250 || p.category.includes("3D") || p.category.includes("Arcos"))
+  ).slice(0, 36);
 }
 
 /**

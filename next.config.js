@@ -16,6 +16,12 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // 0. Alias Mobile Studio (guion bajo vs guion medio)
+      {
+        source: '/admin/mobile_studio',
+        destination: '/admin/mobile-studio',
+        permanent: true,
+      },
       // 1. Sanitización de WordPress y Escaneos Obsoletos
       {
         source: '/wp-content/:path*',

@@ -17,10 +17,10 @@ export function ExpansionDashboard() {
           <p className="text-[10px] text-white/40 uppercase tracking-[0.4em] font-bold mt-2">Vertical I: Inteligencia de Mercado</p>
         </div>
         <button 
-          onClick={() => addSoberano({ id: Math.random().toString(), nombre: 'Soberano Capturado', etapa: 'Vampirización', valor: 12000, probabilidad: 100 })}
+          onClick={() => addSoberano({ id: Math.random().toString(), nombre: 'Lead Prospecto Enriquecido', etapa: 'Prospección Activa', valor: 0, probabilidad: 0 })}
           className="bg-[#d4a855] text-black px-8 py-3 rounded-full font-black uppercase text-[10px] hover:scale-105 transition-all shadow-[0_0_20px_rgba(212,168,85,0.3)]"
         >
-          Vampirizar Lead +€12k
+          Capturar Prospecto (+0€)
         </button>
       </div>
 
@@ -30,12 +30,12 @@ export function ExpansionDashboard() {
           <div className="space-y-1">
             <p className="text-[9px] text-white/30 uppercase font-black tracking-widest">Pipeline Total</p>
             <p className="text-4xl font-black text-white">€{soberanos.reduce((acc, s) => acc + s.valor, 0).toLocaleString()}</p>
-            <p className="text-[10px] text-green-400 font-bold flex items-center gap-1"><TrendingUp size={12}/> +12.3% Hoy</p>
+            <p className="text-[10px] text-white/40 font-mono flex items-center gap-1">0.0% · Sin Ventas Aún</p>
           </div>
           <div className="space-y-1">
             <p className="text-[9px] text-white/30 uppercase font-black tracking-widest">Tasa de Cierre</p>
-            <p className="text-4xl font-black text-white">74%</p>
-            <p className="text-[10px] text-[#d4a855] font-bold tracking-widest uppercase">Escudo Activo</p>
+            <p className="text-4xl font-black text-white">0%</p>
+            <p className="text-[10px] text-[#d4a855] font-bold tracking-widest uppercase">Fase Pre-Operativa</p>
           </div>
           <div className="space-y-1 text-right">
             <Zap className="text-[#d4a855] ml-auto mb-2" size={24} />
@@ -54,7 +54,7 @@ export function ExpansionDashboard() {
              </div>
              <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg opacity-50">
                 <span className="text-[10px] text-white/80">Range Rover Lux</span>
-                <span className="text-[9px] bg-amber-500/20 text-amber-400 px-2 rounded">DESPACHADO</span>
+                <span className="text-[9px] bg-amber-500/20 text-amber-400 px-2 rounded">STANDBY</span>
              </div>
           </div>
           <button className="w-full mt-6 py-3 border border-white/20 rounded-xl text-[10px] font-black uppercase hover:bg-white/5 transition-all">Ver Telemetría</button>
@@ -88,6 +88,13 @@ export function ExpansionDashboard() {
                 </td>
               </tr>
             ))}
+            {soberanos.length === 0 && (
+              <tr>
+                <td colSpan={4} className="py-16 text-center text-white/30 italic uppercase font-mono text-xs">
+                  0 Operaciones Cerradas · Ecosistema en Fase Pre-Lanzamiento (0 Ventas / 0 € Ingresos)
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

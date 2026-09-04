@@ -1,0 +1,101 @@
+[
+  {
+    "id": "MUN-001",
+    "name": "Madrid",
+    "province": "Madrid",
+    "autonomousCommunity": "Comunidad de Madrid",
+    "population": 3332880,
+    "tramo": "C",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo C"
+  },
+  {
+    "id": "MUN-002",
+    "name": "Toledo",
+    "province": "Toledo",
+    "autonomousCommunity": "Castilla-La Mancha",
+    "population": 85085,
+    "tramo": "C",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo C"
+  },
+  {
+    "id": "MUN-003",
+    "name": "Sevilla",
+    "province": "Sevilla",
+    "autonomousCommunity": "Andalucía",
+    "population": 684234,
+    "tramo": "C",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo C"
+  },
+  {
+    "id": "MUN-004",
+    "name": "Valencia",
+    "province": "Valencia",
+    "autonomousCommunity": "Comunidad Valenciana",
+    "population": 807693,
+    "tramo": "C",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo C"
+  },
+  {
+    "id": "MUN-005",
+    "name": "Barcelona",
+    "province": "Barcelona",
+    "autonomousCommunity": "Cataluña",
+    "population": 1620343,
+    "tramo": "C",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo C"
+  },
+  {
+    "id": "MUN-006",
+    "name": "Méntrida",
+    "province": "Toledo",
+    "autonomousCommunity": "Castilla-La Mancha",
+    "population": 5493,
+    "tramo": "B",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo B"
+  },
+  {
+    "id": "MUN-007",
+    "name": "Navalcarnero",
+    "province": "Madrid",
+    "autonomousCommunity": "Comunidad de Madrid",
+    "population": 31235,
+    "tramo": "C",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo C"
+  },
+  {
+    "id": "MUN-008",
+    "name": "Talavera de la Reina",
+    "province": "Toledo",
+    "autonomousCommunity": "Castilla-La Mancha",
+    "population": 83296,
+    "tramo": "C",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo C"
+  },
+  {
+    "id": "MUN-009",
+    "name": "El Escorial",
+    "province": "Madrid",
+    "autonomousCommunity": "Comunidad de Madrid",
+    "population": 16599,
+    "tramo": "B",
+    "minorContractLimit": 14999.99,
+    "dualImpactViable": true,
+    "notes": "Nodo estratégico B2G - Tramo B"
+  }
+]

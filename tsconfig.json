@@ -60,6 +60,7 @@
     "scripts",
     "src/adn_vault",
     "src/adn_vault_staging",
+    "src/data/staging",
     "dist",
     "build"
   ]

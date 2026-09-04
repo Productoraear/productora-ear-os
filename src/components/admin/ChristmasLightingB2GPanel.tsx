@@ -72,12 +72,18 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href="/arsenal/luces-navidad"
+            className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs font-mono flex items-center gap-2 border border-white/20 transition-all cursor-pointer"
+          >
+            <Sparkles size={14} className="text-[#ecb613]" /> Catálogo 2026 EAR (530 Refs)
+          </a>
           <a
             href="/dossiers/dossier-embajadores-culturales-fitur-2026.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2.5 rounded-xl bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-bold text-xs font-mono flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20"
+            className="px-4 py-2.5 rounded-xl bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-bold text-xs font-mono flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
           >
             <Download size={14} /> Dossier PDF Oficial
           </a>

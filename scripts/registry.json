@@ -173,6 +173,24 @@
       "inputs": ["H:\\catálogos de empresas de alumbrados navideños en E.md"],
       "outputs": "src/data/admin/christmas_lighting_b2g.json",
       "cli": "python scripts/vampirize_christmas_lighting_b2g.py"
+    },
+    {
+      "id": "vampire_staging_processor",
+      "name": "vampire-staging-processor.ts",
+      "path": "src/scripts/vampire-staging-processor.ts",
+      "purpose": "Procesamiento y vampirización semántica con SHA-256 de documentos Markdown en staging hacia sus respectivos vaults de gobernanza, empresas, artistas e instituciones.",
+      "inputs": ["src/data/staging/*.md"],
+      "outputs": "src/data/governance/strategic_vault/*_vampirized.json",
+      "cli": "npx tsx src/scripts/vampire-staging-processor.ts"
+    },
+    {
+      "id": "seed_national_b2g",
+      "name": "seed-national-b2g.ts",
+      "path": "src/scripts/seed-national-b2g.ts",
+      "purpose": "Generación y actualización del dataset canónico de municipios nacionales B2G con tramos A/B/C y límite LCSP Art. 118.",
+      "inputs": ["Definición de municipios estratégicos nacionales"],
+      "outputs": "src/data/b2g-national/national-municipalities.json",
+      "cli": "npx tsx src/scripts/seed-national-b2g.ts"
     }
   ]
 }

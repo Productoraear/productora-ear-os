@@ -1,0 +1,96 @@
+// prisma/schema.prisma (extensión)
+model Budget {
+  id                String   @id @default(uuid())
+  totalBudget       Float    @default(250000)
+  finalCost         Float    @default(0)
+  paidAmount        Float    @default(0)
+  pendingAmount     Float    @default(0)
+  currency          String   @default("EUR")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  categories        BudgetCategory[]
+  expenses          Expense[]
+  payments          Payment[]
+  
+  @@map("budgets")
+}
+
+model BudgetCategory {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  estimatedCost   Float
+  finalCost       Float    @default(0)
+  paidAmount      Float    @default(0)
+  pendingAmount   Float    @default(0)
+  percentage      Float    @default(0)
+  order           Int
+  icon            String?
+  color           String   @default("#3B82F6")
+  budgetId        String
+  
+  budget          Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  expenses        Expense[]
+  
+  @@index([budgetId])
+  @@map("budget_categories")
+}
+
+model Expense {
+  id              String   @id @default(uuid())
+  description     String
+  amount          Float
+  date            DateTime
+  categoryId      String
+  vendorId        String?
+  notes           String?
+  budgetId        String
+  
+  budget          Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  category        BudgetCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  vendor          Vendor?  @relation(fields: [vendorId], references: [id], onDelete: SetNull)
+  payments        Payment[]
+  
+  @@index([categoryId])
+  @@index([budgetId])
+  @@map("expenses")
+}
+
+model Payment {
+  id              String   @id @default(uuid())
+  amount          Float
+  paymentDate     DateTime
+  expenseId       String?
+  categoryId      String?
+  budgetId        String
+  status          PaymentStatus @default(PENDING)
+  dueDate         DateTime?
+  notes           String?
+  
+  budget          Budget   @relation(fields: [budgetId], references: [id], onDelete: Cascade)
+  expense         Expense? @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  
+  @@index([expenseId])
+  @@index([budgetId])
+  @@map("payments")
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+  CANCELLED
+}
+
+model Vendor {
+  id              String   @id @default(uuid())
+  name            String
+  email           String?
+  phone           String?
+  category        String?
+  notes           String?
+  expenses        Expense[]
+  
+  @@map("vendors")
+}

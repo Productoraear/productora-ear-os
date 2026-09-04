@@ -166,10 +166,20 @@ export interface EditorialHeroConfig {
   ctaAction: 'slide-lock' | 'cotizador' | 'whatsapp';
 }
 
-export default function MobileFusionAdminStudio() {
-  const [activeTab, setActiveTab] = useState<'homepage' | 'editorial-lego' | 'presets' | 'custom' | 'catalog'>('homepage');
+interface MobileFusionAdminStudioProps {
+  initialTab?: 'homepage' | 'editorial-lego' | 'presets' | 'custom' | 'catalog';
+}
+
+export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: MobileFusionAdminStudioProps = {}) {
+  const [activeTab, setActiveTab] = useState<'homepage' | 'editorial-lego' | 'presets' | 'custom' | 'catalog'>(initialTab);
   const [selectedPresetId, setSelectedPresetId] = useState('combo-wedding-vip');
   const [activeHomepageMode, setActiveHomepageMode] = useState<string>('editorial-curated');
+
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
   
   const [customConfig, setCustomConfig] = useState<CustomMixerConfig>({
     header: 'dynamic-island',
