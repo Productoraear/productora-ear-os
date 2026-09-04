@@ -7,7 +7,6 @@ export function SparringProvider({ children }: { children: React.ReactNode }) {
   const [isActive, setIsActive] = useState(false);
   const [timeLeft, setTimeLeft] = useState(10);
   
-  // Intercepción heurística simulada: Disparo aleatorio o invocado por acciones críticas
   const triggerSparring = () => {
     setIsActive(true);
     setTimeLeft(10);
@@ -18,7 +17,6 @@ export function SparringProvider({ children }: { children: React.ReactNode }) {
     if (isActive && timeLeft > 0) {
       timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
     } else if (timeLeft === 0) {
-      // Penalización por inercia: Cierre fallido
       setTimeout(() => setIsActive(false), 2000); 
     }
     return () => clearTimeout(timer);
@@ -30,7 +28,10 @@ export function SparringProvider({ children }: { children: React.ReactNode }) {
       {isActive && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md">
           <div className="bg-neutral-950 border border-red-500/50 p-10 rounded-2xl max-w-2xl w-full relative overflow-hidden shadow-[0_0_50px_rgba(239,68,68,0.2)]">
-            <div className="absolute top-0 left-0 h-1 bg-red-500 transition-all duration-1000" style={{ width: ${(timeLeft/10)*100}% }} />
+            <div 
+              className="absolute top-0 left-0 h-1 bg-red-500 transition-all duration-1000" 
+              style={{ width: \\%\ }} 
+            />
             <h2 className="text-red-500 font-bold tracking-widest uppercase text-sm mb-4 animate-pulse">
               [ ALERTA TÁCTICA: INTERVENCIÓN MUNICIPAL ]
             </h2>
