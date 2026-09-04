@@ -1,1 +1,9 @@
-{"metadata": {"system": "EAR OS Oráculo // ZTM Neural Engine", "compiled_at": "2026-09-04T07:54:04.564153", "total_mined_assets": 0, "latency_target": "< 80ms"}, "neural_chunks": []}
+{
+  "metadata": {
+    "system": "EAR OS Oráculo // ZTM Neural Engine",
+    "compiled_at": "2026-09-04T07:54:04.564153",
+    "total_mined_assets": 0,
+    "latency_target": "< 80ms"
+  },
+  "neural_chunks": []
+}
