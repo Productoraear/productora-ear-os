@@ -191,6 +191,18 @@ function ProveedoresDirectoryContent() {
       : providersData;
 
     return baseList.filter((p: any) => {
+      // Filtrar artículos de blog que se colaron en el scraping
+      const nameLower = (p.name || '').toLowerCase();
+      if (nameLower.includes('la ceremonia de boda') ||
+          nameLower.includes('protocolo para bodas') ||
+          nameLower.includes('protocolo de la boda') ||
+          nameLower.includes('bodas de invierno a un precio increible') ||
+          nameLower.includes('mejores lecturas') ||
+          nameLower.includes('grupo ceremonia nupcial') ||
+          nameLower.includes('prueba de menú gratuita para los novios')) {
+        return false;
+      }
+
       // 1. Filtrado Estricto de Categoría
       const matchCat =
         selectedCategory === 'ALL' ||
@@ -356,7 +368,9 @@ function ProveedoresDirectoryContent() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paginatedProviders.map((item: any) => (
+            {paginatedProviders.map((item: any) => {
+              const coverImg = item.img || (item.gallery && item.gallery[0]);
+              return (
               <article
                 key={item.id}
                 onClick={() => openModal(item)}
@@ -367,15 +381,20 @@ function ProveedoresDirectoryContent() {
                 }`}
               >
                 <div className="relative h-56 w-full overflow-hidden bg-black">
-                  {item.img ? (
+                  {coverImg ? (
                     <img
-                      src={item.img}
+                      src={coverImg}
                       alt={item.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-neutral-900 to-black">
                       <Camera className="w-12 h-12 text-neutral-700" />
+                    </div>
+                  )}
+                  {item.videos && item.videos.length > 0 && (
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/60 rounded-full p-3 backdrop-blur-sm pointer-events-none group-hover:bg-[#ecb613] group-hover:text-black transition-colors">
+                      <Video size={24} className="text-white group-hover:text-black" />
                     </div>
                   )}
                   <div className="absolute top-3 left-3 bg-black/90 backdrop-blur-md px-3 py-1 rounded-xl text-[10px] font-bold text-[#ecb613] uppercase tracking-wider font-mono border border-[#ecb613]/30">
@@ -391,7 +410,7 @@ function ProveedoresDirectoryContent() {
 
                 <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-xl font-extrabold text-white group-hover:text-[#ecb613] transition-colors leading-snug flex items-center gap-2 font-syne">
+                    <h3 className="text-xl font-extrabold text-white group-hover:text-[#ecb613] transition-colors leading-snug flex items-center gap-2 font-syne line-clamp-2">
                       {item.name} {item.isPreferred && <span className="text-[#ecb613]">✦</span>}
                     </h3>
                     <p className="text-neutral-400 text-xs mt-2 line-clamp-2 leading-relaxed font-light">
@@ -420,7 +439,7 @@ function ProveedoresDirectoryContent() {
                         : 'bg-neutral-900 text-white hover:bg-white/10 border border-white/10'
                     }`}
                   >
-                    Ver Ficha
+                    Ver Ficha {item.videos && item.videos.length > 0 && <Video size={14} className="inline ml-1 mb-0.5" />}
                   </button>
 
                   <button
@@ -443,7 +462,8 @@ function ProveedoresDirectoryContent() {
                   </a>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         )}
 

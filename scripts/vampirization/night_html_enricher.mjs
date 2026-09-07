@@ -117,7 +117,7 @@ async function main() {
         const address = $('.storefront__address, .storefront-map__address, .address').text();
         if (address) provider.address = cleanText(address);
         
-        // 7. URLs de imágenes
+        // 7. URLs de imágenes y videos
         const images = new Set(provider.images || []);
         $('img').each((i, el) => {
             const src = $(el).attr('src') || $(el).attr('data-src');
@@ -126,6 +126,17 @@ async function main() {
             }
         });
         provider.images = Array.from(images);
+        
+        const videos = new Set(provider.videos || []);
+        $('iframe, video').each((i, el) => {
+            let src = $(el).attr('src') || $(el).attr('data-src');
+            if (src && (src.includes('youtube.com') || src.includes('vimeo.com') || src.endsWith('.mp4'))) {
+                // Si es un iframe de youtube sin http, añadirlo
+                if (src.startsWith('//')) src = 'https:' + src;
+                videos.add(src);
+            }
+        });
+        if (videos.size > 0) provider.videos = Array.from(videos);
         
         // 8. Enlaces a redes sociales
         const socials = provider.social_links || {};
@@ -137,6 +148,15 @@ async function main() {
             if (href.includes('youtube.com')) socials.youtube = href;
         });
         if (Object.keys(socials).length > 0) provider.social_links = socials;
+
+        // Evitar artículos que no son proveedores (Títulos como 'La ceremonia de boda')
+        if (realName && (realName.toLowerCase().includes('la ceremonia de boda') || 
+                         realName.toLowerCase().includes('protocolo para bodas') ||
+                         realName.toLowerCase().includes('13 mejores lecturas') ||
+                         realName.toLowerCase().includes('bodas de invierno a un precio increible') ||
+                         realName.toLowerCase().includes('grupo ceremonia nupcial'))) {
+            return; // Skip este provider porque es un artículo del blog
+        }
         
         // 9. Reseñas / testimonios
         const reviews = [];

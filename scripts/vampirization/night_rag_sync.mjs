@@ -38,6 +38,7 @@ function main() {
       reviews: prov.metrics?.reviewCount || prov.reviews?.length || 0,
       description: prov.description_full || prov.description,
       gallery: prov.images || (prov.media?.coverImage ? [prov.media.coverImage] : []),
+      videos: prov.videos || [],
       basePrice: (() => {
         const p = prov.pricing?.rentalBasePrice || prov.prices?.[0];
         if (typeof p === 'number') return p;
