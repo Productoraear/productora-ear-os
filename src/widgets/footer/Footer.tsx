@@ -42,12 +42,12 @@ const Footer: React.FC = () => {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-8">
                <img 
-                 src="https://lh3.googleusercontent.com/a/ACg8ocJF7O8ZaJG4WsLPfVaVe5f5Gmu80nOoea2teuOAs-s9sq53uNk=s288-c-no" 
-                 alt="EAR OS Logo" 
-                 className="w-12 h-12 rounded-xl object-cover border border-[#ecb613]/50 shadow-[0_0_20px_rgba(212,168,85,0.3)]"
+                 src="/images/brand/ear_logo_official_diamond.png" 
+                 alt="Productora EAR Logotipo Oficial Diamante" 
+                 className="w-12 h-12 rounded-2xl object-cover border border-[#FF2B44]/70 shadow-[0_0_20px_rgba(255,43,68,0.45)] bg-black"
                />
-               <h2 className="text-3xl font-black uppercase tracking-tighter text-white font-syne">
-                 EAR <span className="text-[#ecb613]">OS V2</span>
+               <h2 className="text-2xl lg:text-3xl font-black uppercase tracking-tight text-white font-syne">
+                 PRODUCTORA <span className="text-[#FF2B44]">EAR</span>
                </h2>
             </div>
             <p className="text-white/40 font-body max-w-sm mb-10 leading-relaxed text-sm">

@@ -88,10 +88,8 @@ export const VIMUME_CLINICAL_SSOT = {
     }
   ] as ClinicalStudyMetric[],
 
-  // 5. El Legado de Sebastián Díaz y el Colibrí
+  // 5. El Legado y Simbología del Colibrí
   LEGACY_COLIBRI: {
-    creator: 'Sebastián Díaz',
-    role: 'Diseñador del Manual de Identidad y Arquitecto Visual de VIMUME',
     symbol: 'El Colibrí Sagrado',
     fable: 'En medio de un gran incendio en la selva, todos los animales huían aterrorizados. Un pequeño colibrí iba y venía al río, recogiendo una sola gota de agua con su pico para soltarla sobre las llamas. El león, incrédulo, le rugió: "¿Crees que vas a apagar el fuego con eso?". El colibrí, sin detener el vuelo, le respondió: "Yo solo hago mi parte".',
     metaphor: 'El colibrí de VIMUME no pretende revertir por sí solo la neurodegeneración del planeta; vierte con precisión milimétrica su gota acústica en cada ser humano, extrayendo el néctar de los recuerdos más profundos cuando todo lo demás parece perdido.',
@@ -130,8 +128,8 @@ export const VIMUME_CLINICAL_SSOT = {
     },
     {
       questionNumber: 128,
-      question: '¿Cuál es el significado del isotipo del colibrí diseñado por Sebastián Díaz?',
-      answer: 'Diseñado en el manual de identidad maestro por Sebastián Díaz, el colibrí representa el "Protocolo Colibrí: Hacemos nuestra parte". Encarna la agilidad, la precisión neuroacústica y la capacidad de extraer recuerdos flor a flor en pacientes que parecían desconectados.',
+      question: '¿Cuál es el significado del isotipo del colibrí de VIMUME?',
+      answer: 'Símbolo fundacional de VIMUME, el colibrí representa el "Protocolo Colibrí: Hacemos nuestra parte". Encarna la agilidad, la precisión neuroacústica y la capacidad de extraer recuerdos flor a flor en pacientes que parecían desconectados.',
       authorityTag: 'IDENTIDAD'
     },
     {

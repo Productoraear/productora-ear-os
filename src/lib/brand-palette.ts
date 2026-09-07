@@ -7,6 +7,7 @@
 
 export const EAR_PALETTE = {
   // 1. Fondos y Superficies de Élite (Deep Space Obsidian)
+  // 1. Fondos y Superficies de Élite (Deep Space Obsidian)
   obsidian: {
     pure: '#000000',
     core: '#030305',
@@ -19,7 +20,33 @@ export const EAR_PALETTE = {
     borderGold: 'rgba(236, 182, 19, 0.28)'
   },
 
-  // 2. Oro & Ámbar S-Class (Espectáculos & Núcleo Productora EAR)
+  // 💎 2. PALETA ROJIZA PRODUCTORA EAR (DIAMANTE ROJO - PASIÓN / FUEGO / NÚCLEO)
+  // Fuente: Cuaderno Manuscrito de Marca & Logotipo Oficial EAR
+  diamondRed: {
+    primary: '#E11D48',
+    action: '#FF2B44',
+    highlight: '#FF6B7D',
+    deep: '#9F1239',
+    light: '#FEE2E2',
+    glow: 'rgba(255, 43, 68, 0.35)',
+    gradient: 'linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%)',
+    borderGlow: '0 0 25px rgba(255, 43, 68, 0.4)'
+  },
+
+  // 💎 3. PALETA AZULADA VIMUME & ESTRUCTURA (DIAMANTE AZUL - NEUROACÚSTICA / CIENCIA)
+  // Fuente: Cuaderno Manuscrito de Marca & Logotipo Oficial EAR
+  diamondBlue: {
+    obsidian: '#030712',
+    technical: '#0284C7',
+    electric: '#258DCD',
+    ice: '#BAE6FD',
+    sky: '#44A3D8',
+    glow: 'rgba(37, 141, 205, 0.35)',
+    gradient: 'linear-gradient(135deg, #BAE6FD 0%, #44A3D8 35%, #258DCD 70%, #0284C7 100%)',
+    borderGlow: '0 0 25px rgba(37, 141, 205, 0.35)'
+  },
+
+  // 4. Oro & Ámbar S-Class (Espectáculos & Núcleo Productora EAR)
   gold: {
     base: '#c3983c',       // Pantone P 15-14 C
     glow: '#ecb613',       // EAR S-Class Highlight
@@ -117,6 +144,7 @@ export const EAR_PALETTE = {
 
   // 6. Activos Oficiales
   assets: {
+    diamondOfficialLogo: '/images/brand/ear_logo_official_diamond.png',
     earGoldIsotipo: '/images/brand/ear_gold_isotipo.png',
     earWhiteIsotipo: '/images/brand/ear_white_isotipo.png',
     colibriIsotipo: '/images/brand/colibri_isotipo.png',

@@ -1,0 +1,2483 @@
+﻿{
+    "scanDate":  "2026-09-07T17:03:37Z",
+    "totalDiscoveredAssets":  306,
+    "sampleAssets":  [
+                         {
+                             "id":  1,
+                             "name":  "colibri-colorido-niebla-volando-oscuridad-al-estilo-paleta-colores-psicodelicos_921860-50454.jpg",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-11-08 17:24:32",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri-colorido-niebla-volando-oscuridad-al-estilo-paleta-colores-psicodelicos_921860-50454.jpg",
+                             "sizeBytes":  203199
+                         },
+                         {
+                             "id":  2,
+                             "name":  "colibri_isotipo.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:35",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_isotipo.png",
+                             "sizeBytes":  25683
+                         },
+                         {
+                             "id":  3,
+                             "name":  "colibri_logo_completo.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_logo_completo.png",
+                             "sizeBytes":  99590
+                         },
+                         {
+                             "id":  4,
+                             "name":  "colibri_logo_white.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:54",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_logo_white.png",
+                             "sizeBytes":  95148
+                         },
+                         {
+                             "id":  5,
+                             "name":  "colibri_p21_0.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_0.png",
+                             "sizeBytes":  5381
+                         },
+                         {
+                             "id":  6,
+                             "name":  "colibri_p21_1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_1.png",
+                             "sizeBytes":  16825
+                         },
+                         {
+                             "id":  7,
+                             "name":  "colibri_p21_2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_2.png",
+                             "sizeBytes":  4792
+                         },
+                         {
+                             "id":  8,
+                             "name":  "colibri_p21_3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_3.png",
+                             "sizeBytes":  16138
+                         },
+                         {
+                             "id":  9,
+                             "name":  "colibri_p21_4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_4.png",
+                             "sizeBytes":  11360
+                         },
+                         {
+                             "id":  10,
+                             "name":  "colibri_p21_5.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_5.png",
+                             "sizeBytes":  9484
+                         },
+                         {
+                             "id":  11,
+                             "name":  "colibri_p21_6.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_6.png",
+                             "sizeBytes":  12240
+                         },
+                         {
+                             "id":  12,
+                             "name":  "colibri_p21_7.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_7.png",
+                             "sizeBytes":  7232
+                         },
+                         {
+                             "id":  13,
+                             "name":  "colibri_p21_8.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_8.png",
+                             "sizeBytes":  32716
+                         },
+                         {
+                             "id":  14,
+                             "name":  "colibri_p21_9.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\colibri_p21_9.png",
+                             "sizeBytes":  104173
+                         },
+                         {
+                             "id":  15,
+                             "name":  "dashboard_vimume_3000_1776976465447.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\dashboard_vimume_3000_1776976465447.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  16,
+                             "name":  "dashboard_vimume_3000_1776976465447_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\dashboard_vimume_3000_1776976465447_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  17,
+                             "name":  "dashboard_vimume_3000_1776976465447_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\dashboard_vimume_3000_1776976465447_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  18,
+                             "name":  "dashboard_vimume_3000_1776976465447_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\dashboard_vimume_3000_1776976465447_dup3.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  19,
+                             "name":  "dashboard_vimume_3000_1776976465447_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\dashboard_vimume_3000_1776976465447_dup4.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  20,
+                             "name":  "full_vimume_page_1774550500856.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:41:40",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\full_vimume_page_1774550500856.png",
+                             "sizeBytes":  130508
+                         },
+                         {
+                             "id":  21,
+                             "name":  "full_vimume_page_1774550500856_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:41:40",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\full_vimume_page_1774550500856_dup1.png",
+                             "sizeBytes":  130508
+                         },
+                         {
+                             "id":  22,
+                             "name":  "full_vimume_page_1774550500856_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:41:40",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\full_vimume_page_1774550500856_dup2.png",
+                             "sizeBytes":  130508
+                         },
+                         {
+                             "id":  23,
+                             "name":  "full_vimume_page_1774550500856_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:41:40",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\full_vimume_page_1774550500856_dup3.png",
+                             "sizeBytes":  130508
+                         },
+                         {
+                             "id":  24,
+                             "name":  "full_vimume_page_1774550500856_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:41:40",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\full_vimume_page_1774550500856_dup4.png",
+                             "sizeBytes":  130508
+                         },
+                         {
+                             "id":  25,
+                             "name":  "home_page_vimume_tab_1778778270843.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:04:30",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\home_page_vimume_tab_1778778270843.png",
+                             "sizeBytes":  119214
+                         },
+                         {
+                             "id":  26,
+                             "name":  "home_page_vimume_tab_1778778270843_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:04:30",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\home_page_vimume_tab_1778778270843_dup1.png",
+                             "sizeBytes":  119214
+                         },
+                         {
+                             "id":  27,
+                             "name":  "home_page_vimume_tab_1778778270843_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:04:30",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\home_page_vimume_tab_1778778270843_dup2.png",
+                             "sizeBytes":  119214
+                         },
+                         {
+                             "id":  28,
+                             "name":  "imagenes-de-colibri.jpg",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-11-08 15:23:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\imagenes-de-colibri.jpg",
+                             "sizeBytes":  46524
+                         },
+                         {
+                             "id":  29,
+                             "name":  "imagenes-de-colibri_idx.jpg",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-11-08 15:23:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\imagenes-de-colibri_idx.jpg",
+                             "sizeBytes":  46524
+                         },
+                         {
+                             "id":  30,
+                             "name":  "Isotipo VIMUME LOGO.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-03-31 14:16:31",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\Isotipo VIMUME LOGO.png",
+                             "sizeBytes":  11858
+                         },
+                         {
+                             "id":  31,
+                             "name":  "mobile_menu_open_vimume_hub_1778758025211.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\mobile_menu_open_vimume_hub_1778758025211.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  32,
+                             "name":  "mobile_menu_open_vimume_hub_1778758025211_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\mobile_menu_open_vimume_hub_1778758025211_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  33,
+                             "name":  "mobile_menu_open_vimume_hub_1778758025211_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\mobile_menu_open_vimume_hub_1778758025211_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  34,
+                             "name":  "mobile_menu_vimume_hub_1778758017203.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\mobile_menu_vimume_hub_1778758017203.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  35,
+                             "name":  "mobile_menu_vimume_hub_1778758017203_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\mobile_menu_vimume_hub_1778758017203_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  36,
+                             "name":  "mobile_menu_vimume_hub_1778758017203_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\mobile_menu_vimume_hub_1778758017203_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  37,
+                             "name":  "rol_pareja_vimume_1774134993146.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-22 00:16:33",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\rol_pareja_vimume_1774134993146.png",
+                             "sizeBytes":  816769
+                         },
+                         {
+                             "id":  38,
+                             "name":  "tocadisco y colibri.jpeg",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-05-25 21:19:40",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\tocadisco y colibri.jpeg",
+                             "sizeBytes":  104345
+                         },
+                         {
+                             "id":  39,
+                             "name":  "tocadisco y colibri_idx.jpeg",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-05-25 21:19:40",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\tocadisco y colibri_idx.jpeg",
+                             "sizeBytes":  104345
+                         },
+                         {
+                             "id":  40,
+                             "name":  "valhalla_dashboard_vimume_1774385263448.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-24 21:47:43",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\valhalla_dashboard_vimume_1774385263448.png",
+                             "sizeBytes":  168818
+                         },
+                         {
+                             "id":  41,
+                             "name":  "vimume_audit_final_1777409325373.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:49:59",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_audit_final_1777409325373.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  42,
+                             "name":  "vimume_audit_final_1777409325373_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:49:59",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_audit_final_1777409325373_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  43,
+                             "name":  "vimume_audit_final_1777409325373_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:49:59",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_audit_final_1777409325373_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  44,
+                             "name":  "vimume_audit_final_1777409325373_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:49:59",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_audit_final_1777409325373_dup3.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  45,
+                             "name":  "vimume_audit_final_1777409325373_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:49:59",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_audit_final_1777409325373_dup4.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  46,
+                             "name":  "vimume_audit_final_1777409325373_dup5.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:49:59",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_audit_final_1777409325373_dup5.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  47,
+                             "name":  "vimume_check_1775756942185.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:49:02",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_check_1775756942185.png",
+                             "sizeBytes":  108179
+                         },
+                         {
+                             "id":  48,
+                             "name":  "vimume_check_1775756942185_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:49:02",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_check_1775756942185_dup1.png",
+                             "sizeBytes":  108179
+                         },
+                         {
+                             "id":  49,
+                             "name":  "vimume_check_1775756942185_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:49:02",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_check_1775756942185_dup2.png",
+                             "sizeBytes":  108179
+                         },
+                         {
+                             "id":  50,
+                             "name":  "vimume_check_1775756942185_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:49:02",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_check_1775756942185_dup3.png",
+                             "sizeBytes":  108179
+                         },
+                         {
+                             "id":  51,
+                             "name":  "vimume_check_1775756942185_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:49:02",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_check_1775756942185_dup4.png",
+                             "sizeBytes":  108179
+                         },
+                         {
+                             "id":  52,
+                             "name":  "vimume_clinical_page_1778668967629.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-13 12:42:47",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_clinical_page_1778668967629.png",
+                             "sizeBytes":  50309
+                         },
+                         {
+                             "id":  53,
+                             "name":  "vimume_clinical_page_1778668967629_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-13 12:42:47",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_clinical_page_1778668967629_dup1.png",
+                             "sizeBytes":  50309
+                         },
+                         {
+                             "id":  54,
+                             "name":  "vimume_clinical_page_1778668967629_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-13 12:42:47",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_clinical_page_1778668967629_dup2.png",
+                             "sizeBytes":  50309
+                         },
+                         {
+                             "id":  55,
+                             "name":  "vimume_contact_page_1774278118681.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-23 16:01:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_contact_page_1774278118681.png",
+                             "sizeBytes":  113316
+                         },
+                         {
+                             "id":  56,
+                             "name":  "vimume_core_panel_initial_1776976775300.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_core_panel_initial_1776976775300.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  57,
+                             "name":  "vimume_core_panel_initial_1776976775300_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_core_panel_initial_1776976775300_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  58,
+                             "name":  "vimume_core_panel_initial_1776976775300_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_core_panel_initial_1776976775300_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  59,
+                             "name":  "vimume_current_state_1777106968070.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-25 10:49:28",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_current_state_1777106968070.png",
+                             "sizeBytes":  111297
+                         },
+                         {
+                             "id":  60,
+                             "name":  "vimume_dashboard_1774551741386.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 20:02:21",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_1774551741386.png",
+                             "sizeBytes":  323294
+                         },
+                         {
+                             "id":  61,
+                             "name":  "vimume_dashboard_1774551741386_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 20:02:21",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_1774551741386_dup1.png",
+                             "sizeBytes":  323294
+                         },
+                         {
+                             "id":  62,
+                             "name":  "vimume_dashboard_1774551741386_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 20:02:21",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_1774551741386_dup2.png",
+                             "sizeBytes":  323294
+                         },
+                         {
+                             "id":  63,
+                             "name":  "vimume_dashboard_1774551741386_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 20:02:21",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_1774551741386_dup3.png",
+                             "sizeBytes":  323294
+                         },
+                         {
+                             "id":  64,
+                             "name":  "vimume_dashboard_1774551741386_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 20:02:21",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_1774551741386_dup4.png",
+                             "sizeBytes":  323294
+                         },
+                         {
+                             "id":  65,
+                             "name":  "vimume_dashboard_loaded_1774550784127.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:46:24",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_loaded_1774550784127.png",
+                             "sizeBytes":  762005
+                         },
+                         {
+                             "id":  66,
+                             "name":  "vimume_dashboard_loaded_1774550784127_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:46:24",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_loaded_1774550784127_dup1.png",
+                             "sizeBytes":  762005
+                         },
+                         {
+                             "id":  67,
+                             "name":  "vimume_dashboard_loaded_1774550784127_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:46:24",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_loaded_1774550784127_dup2.png",
+                             "sizeBytes":  762005
+                         },
+                         {
+                             "id":  68,
+                             "name":  "vimume_dashboard_loaded_1774550784127_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:46:24",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_loaded_1774550784127_dup3.png",
+                             "sizeBytes":  762005
+                         },
+                         {
+                             "id":  69,
+                             "name":  "vimume_dashboard_loaded_1774550784127_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:46:24",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_loaded_1774550784127_dup4.png",
+                             "sizeBytes":  762005
+                         },
+                         {
+                             "id":  70,
+                             "name":  "vimume_dashboard_sclass_1774295491626.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-23 20:51:31",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_dashboard_sclass_1774295491626.png",
+                             "sizeBytes":  76161
+                         },
+                         {
+                             "id":  71,
+                             "name":  "vimume_ear_os_aesthetic_1778863246044.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_ear_os_aesthetic_1778863246044.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  72,
+                             "name":  "vimume_ear_os_aesthetic_1778863246044_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_ear_os_aesthetic_1778863246044_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  73,
+                             "name":  "vimume_ear_os_aesthetic_1778863246044_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_ear_os_aesthetic_1778863246044_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  74,
+                             "name":  "vimume_emotional_connection_1771240397435.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 12:13:17",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_emotional_connection_1771240397435.png",
+                             "sizeBytes":  75348
+                         },
+                         {
+                             "id":  75,
+                             "name":  "vimume_full_page_1777122396552.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:36",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_full_page_1777122396552.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  76,
+                             "name":  "vimume_full_page_1777122396552_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:36",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_full_page_1777122396552_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  77,
+                             "name":  "vimume_full_page_1777122396552_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:36",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_full_page_1777122396552_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  78,
+                             "name":  "vimume_full_page_1777122396552_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:36",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_full_page_1777122396552_dup3.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  79,
+                             "name":  "vimume_full_page_1777122396552_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:36",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_full_page_1777122396552_dup4.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  80,
+                             "name":  "vimume_fundacion_navigation_1778778318236.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:05:18",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_fundacion_navigation_1778778318236.png",
+                             "sizeBytes":  68461
+                         },
+                         {
+                             "id":  81,
+                             "name":  "vimume_fundacion_navigation_1778778318236_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:05:18",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_fundacion_navigation_1778778318236_dup1.png",
+                             "sizeBytes":  68461
+                         },
+                         {
+                             "id":  82,
+                             "name":  "vimume_fundacion_navigation_1778778318236_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:05:18",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_fundacion_navigation_1778778318236_dup2.png",
+                             "sizeBytes":  68461
+                         },
+                         {
+                             "id":  83,
+                             "name":  "vimume_hero_1774098900832.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-21 14:15:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_hero_1774098900832.png",
+                             "sizeBytes":  224398
+                         },
+                         {
+                             "id":  84,
+                             "name":  "vimume_hero_navbar_1778758194338.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_hero_navbar_1778758194338.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  85,
+                             "name":  "vimume_hero_navbar_1778758194338_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_hero_navbar_1778758194338_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  86,
+                             "name":  "vimume_hero_navbar_1778758194338_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:56",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_hero_navbar_1778758194338_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  87,
+                             "name":  "vimume_hub_evidencia_tab_1778778290706.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:04:50",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_hub_evidencia_tab_1778778290706.png",
+                             "sizeBytes":  66374
+                         },
+                         {
+                             "id":  88,
+                             "name":  "vimume_hub_evidencia_tab_1778778290706_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:04:50",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_hub_evidencia_tab_1778778290706_dup1.png",
+                             "sizeBytes":  66374
+                         },
+                         {
+                             "id":  89,
+                             "name":  "vimume_hub_evidencia_tab_1778778290706_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:04:50",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_hub_evidencia_tab_1778778290706_dup2.png",
+                             "sizeBytes":  66374
+                         },
+                         {
+                             "id":  90,
+                             "name":  "vimume_impacto_1773734232766.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-17 08:57:12",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_impacto_1773734232766.png",
+                             "sizeBytes":  401287
+                         },
+                         {
+                             "id":  91,
+                             "name":  "vimume_impacto_full_1773734247697.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-17 08:57:27",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_impacto_full_1773734247697.png",
+                             "sizeBytes":  555881
+                         },
+                         {
+                             "id":  92,
+                             "name":  "vimume_metodologia_1773734224098.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-17 08:57:04",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_metodologia_1773734224098.png",
+                             "sizeBytes":  659703
+                         },
+                         {
+                             "id":  93,
+                             "name":  "vimume_page_1774540140138.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 16:49:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_1774540140138.png",
+                             "sizeBytes":  806981
+                         },
+                         {
+                             "id":  94,
+                             "name":  "vimume_page_1774540140138_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 16:49:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_1774540140138_dup1.png",
+                             "sizeBytes":  806981
+                         },
+                         {
+                             "id":  95,
+                             "name":  "vimume_page_1774540140138_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 16:49:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_1774540140138_dup2.png",
+                             "sizeBytes":  806981
+                         },
+                         {
+                             "id":  96,
+                             "name":  "vimume_page_1774540140138_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 16:49:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_1774540140138_dup3.png",
+                             "sizeBytes":  806981
+                         },
+                         {
+                             "id":  97,
+                             "name":  "vimume_page_1774540140138_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 16:49:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_1774540140138_dup4.png",
+                             "sizeBytes":  806981
+                         },
+                         {
+                             "id":  98,
+                             "name":  "vimume_page_1774540140138_dup5.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 16:49:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_1774540140138_dup5.png",
+                             "sizeBytes":  806981
+                         },
+                         {
+                             "id":  99,
+                             "name":  "vimume_page_ear_os_1775317492956.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-04 17:44:52",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_ear_os_1775317492956.png",
+                             "sizeBytes":  96333
+                         },
+                         {
+                             "id":  100,
+                             "name":  "vimume_page_ear_os_1775317492956_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-04 17:44:52",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_ear_os_1775317492956_dup1.png",
+                             "sizeBytes":  96333
+                         },
+                         {
+                             "id":  101,
+                             "name":  "vimume_page_ear_os_1775317492956_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-04 17:44:52",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_ear_os_1775317492956_dup2.png",
+                             "sizeBytes":  96333
+                         },
+                         {
+                             "id":  102,
+                             "name":  "vimume_page_ear_os_1775317492956_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-04 17:44:52",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_ear_os_1775317492956_dup3.png",
+                             "sizeBytes":  96333
+                         },
+                         {
+                             "id":  103,
+                             "name":  "vimume_page_ear_os_1775317492956_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-04 17:44:52",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_ear_os_1775317492956_dup4.png",
+                             "sizeBytes":  96333
+                         },
+                         {
+                             "id":  104,
+                             "name":  "vimume_page_verification_1774544356024.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 17:59:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_verification_1774544356024.png",
+                             "sizeBytes":  98156
+                         },
+                         {
+                             "id":  105,
+                             "name":  "vimume_page_verification_1774544356024_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 17:59:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_verification_1774544356024_dup1.png",
+                             "sizeBytes":  98156
+                         },
+                         {
+                             "id":  106,
+                             "name":  "vimume_page_verification_1774544356024_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 17:59:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_verification_1774544356024_dup2.png",
+                             "sizeBytes":  98156
+                         },
+                         {
+                             "id":  107,
+                             "name":  "vimume_page_verification_1774544356024_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 17:59:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_verification_1774544356024_dup3.png",
+                             "sizeBytes":  98156
+                         },
+                         {
+                             "id":  108,
+                             "name":  "vimume_page_verification_1774544356024_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 17:59:16",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_page_verification_1774544356024_dup4.png",
+                             "sizeBytes":  98156
+                         },
+                         {
+                             "id":  109,
+                             "name":  "vimume_panel_audit_zeroed_1777117618194.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-25 13:46:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_panel_audit_zeroed_1777117618194.png",
+                             "sizeBytes":  108570
+                         },
+                         {
+                             "id":  110,
+                             "name":  "vimume_protocolo_navigation_1778778345490.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:05:45",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_protocolo_navigation_1778778345490.png",
+                             "sizeBytes":  71338
+                         },
+                         {
+                             "id":  111,
+                             "name":  "vimume_protocolo_navigation_1778778345490_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:05:45",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_protocolo_navigation_1778778345490_dup1.png",
+                             "sizeBytes":  71338
+                         },
+                         {
+                             "id":  112,
+                             "name":  "vimume_protocolo_navigation_1778778345490_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:05:45",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_protocolo_navigation_1778778345490_dup2.png",
+                             "sizeBytes":  71338
+                         },
+                         {
+                             "id":  113,
+                             "name":  "vimume_reminiscence_hands_1778223406767.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-08 08:56:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_reminiscence_hands_1778223406767.png",
+                             "sizeBytes":  716077
+                         },
+                         {
+                             "id":  114,
+                             "name":  "vimume_reminiscence_hands_1778223406767_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-08 08:56:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_reminiscence_hands_1778223406767_dup1.png",
+                             "sizeBytes":  716077
+                         },
+                         {
+                             "id":  115,
+                             "name":  "vimume_reminiscence_hands_1778223406767_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-08 08:56:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_reminiscence_hands_1778223406767_dup2.png",
+                             "sizeBytes":  716077
+                         },
+                         {
+                             "id":  116,
+                             "name":  "vimume_roadmap_check_1778863034543.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_roadmap_check_1778863034543.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  117,
+                             "name":  "vimume_roadmap_check_1778863034543_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_roadmap_check_1778863034543_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  118,
+                             "name":  "vimume_roadmap_check_1778863034543_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_roadmap_check_1778863034543_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  119,
+                             "name":  "vimume_roadmap_navigation_1778778363003.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:06:03",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_roadmap_navigation_1778778363003.png",
+                             "sizeBytes":  71880
+                         },
+                         {
+                             "id":  120,
+                             "name":  "vimume_roadmap_navigation_1778778363003_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:06:03",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_roadmap_navigation_1778778363003_dup1.png",
+                             "sizeBytes":  71880
+                         },
+                         {
+                             "id":  121,
+                             "name":  "vimume_roadmap_navigation_1778778363003_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-14 19:06:03",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_roadmap_navigation_1778778363003_dup2.png",
+                             "sizeBytes":  71880
+                         },
+                         {
+                             "id":  122,
+                             "name":  "vimume_scroll_1_1778862739760.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_1_1778862739760.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  123,
+                             "name":  "vimume_scroll_1_1778862739760_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_1_1778862739760_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  124,
+                             "name":  "vimume_scroll_1_1778862739760_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_1_1778862739760_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  125,
+                             "name":  "vimume_scroll_1_1778863016644.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_1_1778863016644.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  126,
+                             "name":  "vimume_scroll_1_1778863016644_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_1_1778863016644_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  127,
+                             "name":  "vimume_scroll_1_1778863016644_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_1_1778863016644_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  128,
+                             "name":  "vimume_scroll_2_investment_1778863028445.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_2_investment_1778863028445.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  129,
+                             "name":  "vimume_scroll_2_investment_1778863028445_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:52:44",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_scroll_2_investment_1778863028445_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  130,
+                             "name":  "vimume_services_page_1774278078644.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-23 16:01:18",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_services_page_1774278078644.png",
+                             "sizeBytes":  195409
+                         },
+                         {
+                             "id":  131,
+                             "name":  "vimume_tab_formulario_tracker_1774550548524.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:28",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_formulario_tracker_1774550548524.png",
+                             "sizeBytes":  98766
+                         },
+                         {
+                             "id":  132,
+                             "name":  "vimume_tab_formulario_tracker_1774550548524_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:28",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_formulario_tracker_1774550548524_dup1.png",
+                             "sizeBytes":  98766
+                         },
+                         {
+                             "id":  133,
+                             "name":  "vimume_tab_formulario_tracker_1774550548524_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:28",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_formulario_tracker_1774550548524_dup2.png",
+                             "sizeBytes":  98766
+                         },
+                         {
+                             "id":  134,
+                             "name":  "vimume_tab_formulario_tracker_1774550548524_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:28",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_formulario_tracker_1774550548524_dup3.png",
+                             "sizeBytes":  98766
+                         },
+                         {
+                             "id":  135,
+                             "name":  "vimume_tab_formulario_tracker_1774550548524_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:28",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_formulario_tracker_1774550548524_dup4.png",
+                             "sizeBytes":  98766
+                         },
+                         {
+                             "id":  136,
+                             "name":  "vimume_tab_impacto_1774550532715.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:12",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_impacto_1774550532715.png",
+                             "sizeBytes":  745833
+                         },
+                         {
+                             "id":  137,
+                             "name":  "vimume_tab_impacto_1774550532715_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:12",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_impacto_1774550532715_dup1.png",
+                             "sizeBytes":  745833
+                         },
+                         {
+                             "id":  138,
+                             "name":  "vimume_tab_impacto_1774550532715_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:12",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_impacto_1774550532715_dup2.png",
+                             "sizeBytes":  745833
+                         },
+                         {
+                             "id":  139,
+                             "name":  "vimume_tab_impacto_1774550532715_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:12",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_impacto_1774550532715_dup3.png",
+                             "sizeBytes":  745833
+                         },
+                         {
+                             "id":  140,
+                             "name":  "vimume_tab_impacto_1774550532715_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:12",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_impacto_1774550532715_dup4.png",
+                             "sizeBytes":  745833
+                         },
+                         {
+                             "id":  141,
+                             "name":  "vimume_tab_presupuesto_dinamico_4500_1774550578607.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_dinamico_4500_1774550578607.png",
+                             "sizeBytes":  124207
+                         },
+                         {
+                             "id":  142,
+                             "name":  "vimume_tab_presupuesto_dinamico_4500_1774550578607_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_dinamico_4500_1774550578607_dup1.png",
+                             "sizeBytes":  124207
+                         },
+                         {
+                             "id":  143,
+                             "name":  "vimume_tab_presupuesto_dinamico_4500_1774550578607_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_dinamico_4500_1774550578607_dup2.png",
+                             "sizeBytes":  124207
+                         },
+                         {
+                             "id":  144,
+                             "name":  "vimume_tab_presupuesto_dinamico_4500_1774550578607_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_dinamico_4500_1774550578607_dup3.png",
+                             "sizeBytes":  124207
+                         },
+                         {
+                             "id":  145,
+                             "name":  "vimume_tab_presupuesto_dinamico_4500_1774550578607_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_dinamico_4500_1774550578607_dup4.png",
+                             "sizeBytes":  124207
+                         },
+                         {
+                             "id":  146,
+                             "name":  "vimume_tab_presupuesto_dinamico_4500_1774550578607_dup5.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:58",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_dinamico_4500_1774550578607_dup5.png",
+                             "sizeBytes":  124207
+                         },
+                         {
+                             "id":  147,
+                             "name":  "vimume_tab_presupuesto_inicial_1774550568902.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:48",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_inicial_1774550568902.png",
+                             "sizeBytes":  120135
+                         },
+                         {
+                             "id":  148,
+                             "name":  "vimume_tab_presupuesto_inicial_1774550568902_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:48",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_inicial_1774550568902_dup1.png",
+                             "sizeBytes":  120135
+                         },
+                         {
+                             "id":  149,
+                             "name":  "vimume_tab_presupuesto_inicial_1774550568902_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:48",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_inicial_1774550568902_dup2.png",
+                             "sizeBytes":  120135
+                         },
+                         {
+                             "id":  150,
+                             "name":  "vimume_tab_presupuesto_inicial_1774550568902_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:48",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_inicial_1774550568902_dup3.png",
+                             "sizeBytes":  120135
+                         },
+                         {
+                             "id":  151,
+                             "name":  "vimume_tab_presupuesto_inicial_1774550568902_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:48",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_inicial_1774550568902_dup4.png",
+                             "sizeBytes":  120135
+                         },
+                         {
+                             "id":  152,
+                             "name":  "vimume_tab_presupuesto_inicial_1774550568902_dup5.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:42:48",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tab_presupuesto_inicial_1774550568902_dup5.png",
+                             "sizeBytes":  120135
+                         },
+                         {
+                             "id":  153,
+                             "name":  "vimume_tracker_final_check_1776976785107.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tracker_final_check_1776976785107.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  154,
+                             "name":  "vimume_tracker_final_check_1776976785107_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tracker_final_check_1776976785107_dup1.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  155,
+                             "name":  "vimume_tracker_final_check_1776976785107_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:51:00",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tracker_final_check_1776976785107_dup2.png",
+                             "sizeBytes":  0
+                         },
+                         {
+                             "id":  156,
+                             "name":  "vimume_tracker_panel_initial_1776976767294.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-23 22:39:27",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_tracker_panel_initial_1776976767294.png",
+                             "sizeBytes":  242640
+                         },
+                         {
+                             "id":  157,
+                             "name":  "vimume_verification_1775757166199.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:52:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_verification_1775757166199.png",
+                             "sizeBytes":  143104
+                         },
+                         {
+                             "id":  158,
+                             "name":  "vimume_verification_1775757166199_dup1.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:52:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_verification_1775757166199_dup1.png",
+                             "sizeBytes":  143104
+                         },
+                         {
+                             "id":  159,
+                             "name":  "vimume_verification_1775757166199_dup2.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:52:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_verification_1775757166199_dup2.png",
+                             "sizeBytes":  143104
+                         },
+                         {
+                             "id":  160,
+                             "name":  "vimume_verification_1775757166199_dup3.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:52:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_verification_1775757166199_dup3.png",
+                             "sizeBytes":  143104
+                         },
+                         {
+                             "id":  161,
+                             "name":  "vimume_verification_1775757166199_dup4.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-09 19:52:46",
+                             "path":  "D:\\USUARIO_DATOS\\Cuarentena_Residuos_Menores_1MB\\vimume_verification_1775757166199_dup4.png",
+                             "sizeBytes":  143104
+                         },
+                         {
+                             "id":  162,
+                             "name":  "colibri_isotipo.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:35",
+                             "path":  "D:\\USUARIO_DATOS\\Inbox_Personal\\colibri_isotipo.png",
+                             "sizeBytes":  25683
+                         },
+                         {
+                             "id":  163,
+                             "name":  "colibri_logo_completo.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:46",
+                             "path":  "D:\\USUARIO_DATOS\\Inbox_Personal\\colibri_logo_completo.png",
+                             "sizeBytes":  99590
+                         },
+                         {
+                             "id":  164,
+                             "name":  "colibri_logo_white.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:54",
+                             "path":  "D:\\USUARIO_DATOS\\Inbox_Personal\\colibri_logo_white.png",
+                             "sizeBytes":  95148
+                         },
+                         {
+                             "id":  165,
+                             "name":  "dashboard_vimume_3000_1776976465447.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-23 22:34:25",
+                             "path":  "D:\\USUARIO_DATOS\\Inbox_Personal\\dashboard_vimume_3000_1776976465447.png",
+                             "sizeBytes":  33448
+                         },
+                         {
+                             "id":  166,
+                             "name":  "vimume_audit_final_1777409325373.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-28 22:48:45",
+                             "path":  "D:\\USUARIO_DATOS\\Inbox_Personal\\vimume_audit_final_1777409325373.png",
+                             "sizeBytes":  269272
+                         },
+                         {
+                             "id":  167,
+                             "name":  "vimume_panel_audit_zeroed_1777117618194.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-25 13:46:58",
+                             "path":  "D:\\USUARIO_DATOS\\Inbox_Personal\\vimume_panel_audit_zeroed_1777117618194.png",
+                             "sizeBytes":  108570
+                         },
+                         {
+                             "id":  168,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_chat con  antigravity de dias anteriores EAR OS S CLASS FALLIDO.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 19:34:32",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_chat con  antigravity de dias anteriores EAR OS S CLASS FALLIDO.md",
+                             "sizeBytes":  1858763
+                         },
+                         {
+                             "id":  169,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_chat con  antigravity de dias anteriores EAR OS S CLASS FALLIDO_F40C.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 19:34:32",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_chat con  antigravity de dias anteriores EAR OS S CLASS FALLIDO_F40C.md",
+                             "sizeBytes":  1858763
+                         },
+                         {
+                             "id":  170,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-12-03 10:43:58",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal.md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  171,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_1410093913..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-12-03 10:43:58",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_1410093913..md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  172,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_1547261753..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-12-03 10:43:58",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_1547261753..md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  173,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_1773661048..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-12-03 10:43:58",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_1773661048..md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  174,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_580409116..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-12-03 10:43:58",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_580409116..md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  175,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_87175986..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-12-03 10:43:58",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_87175986..md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  176,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_C575.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-12-03 10:43:58",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal_C575.md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  177,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2).md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2).md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  178,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1047209054..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1047209054..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  179,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1075947398..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1075947398..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  180,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1151950846..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1151950846..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  181,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1230701806..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1230701806..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  182,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1341224600..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1341224600..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  183,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1504359072..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_1504359072..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  184,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_228251295..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_228251295..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  185,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_355191093..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_355191093..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  186,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_856300284..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_856300284..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  187,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_88A1.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_88A1.md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  188,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_91102312..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:07:03",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_EDWIN AGUDELO  mapa mental 2 OK GEMINI (2)_91102312..md",
+                             "sizeBytes":  1799
+                         },
+                         {
+                             "id":  189,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2).md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2).md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  190,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1012825769..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1012825769..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  191,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1349429385..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1349429385..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  192,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_14230396..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_14230396..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  193,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1506575946..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1506575946..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  194,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1629831531..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1629831531..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  195,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1782645814..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1782645814..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  196,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1785251234..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1785251234..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  197,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1992989144..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1992989144..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  198,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1D30.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_1D30.md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  199,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_238180051..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_238180051..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  200,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_496917149..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:09:45",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental 1 OK GEMINI (2)_496917149..md",
+                             "sizeBytes":  3460
+                         },
+                         {
+                             "id":  201,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2).md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2).md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  202,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_0DF1.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_0DF1.md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  203,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1145913785..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1145913785..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  204,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1246182498..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1246182498..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  205,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_139487832..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_139487832..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  206,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1396082354..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1396082354..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  207,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1440562739..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1440562739..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  208,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1526197110..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1526197110..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  209,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1651202168..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_1651202168..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  210,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_364765068..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_364765068..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  211,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_394700489..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_394700489..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  212,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_61640956..md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-04 21:11:14",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_Edwin Agudelo mapa mental OK GEMINI (2)_61640956..md",
+                             "sizeBytes":  2802
+                         },
+                         {
+                             "id":  213,
+                             "name":  "VERTICAL_PROYECTOS_VIMUME_GEMINI.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-05-07 11:59:54",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\VERTICAL_PROYECTOS_VIMUME_GEMINI.md",
+                             "sizeBytes":  2618
+                         },
+                         {
+                             "id":  214,
+                             "name":  "vimume-brain_ANTIGRAVITY_CHATS_FORENSIC_SUMMARY.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:31",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_ANTIGRAVITY_CHATS_FORENSIC_SUMMARY.md",
+                             "sizeBytes":  2817
+                         },
+                         {
+                             "id":  215,
+                             "name":  "vimume-brain_D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_GEMINI.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:32",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_GEMINI.md",
+                             "sizeBytes":  6071
+                         },
+                         {
+                             "id":  216,
+                             "name":  "vimume-brain_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:32",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_D_OS AZUL_1_EAR_03_UNIDADES_DE_NEGOCIO_EAR_Artistas_y_Management_01_Edwin_Agudelo_Artista_Datos_Brutos_recomendaciones desde perplexity pro para edwin Agudelo personal.md",
+                             "sizeBytes":  6800
+                         },
+                         {
+                             "id":  217,
+                             "name":  "vimume-brain_Edwin Agudelo mapa mental 1 OK GEMINI (2).md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:34",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_Edwin Agudelo mapa mental 1 OK GEMINI (2).md",
+                             "sizeBytes":  3594
+                         },
+                         {
+                             "id":  218,
+                             "name":  "vimume-brain_Edwin Agudelo mapa mental 4 OK GEMINI (2).md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:34",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_Edwin Agudelo mapa mental 4 OK GEMINI (2).md",
+                             "sizeBytes":  21768
+                         },
+                         {
+                             "id":  219,
+                             "name":  "vimume-brain_Edwin Agudelo mapa mental OK GEMINI (2).md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:34",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_Edwin Agudelo mapa mental OK GEMINI (2).md",
+                             "sizeBytes":  2946
+                         },
+                         {
+                             "id":  220,
+                             "name":  "vimume-brain_no-named-export.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:39",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_no-named-export.md",
+                             "sizeBytes":  1496
+                         },
+                         {
+                             "id":  221,
+                             "name":  "vimume-brain_NODE_chat_VIAJE_MUSICAL_POR_LA_MEMORIA.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:36",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_NODE_chat_VIAJE_MUSICAL_POR_LA_MEMORIA.md",
+                             "sizeBytes":  1304
+                         },
+                         {
+                             "id":  222,
+                             "name":  "vimume-brain_NODE_chat_VIAJE_MUSICAL_POR_LA_MEMORIA_2_.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:36",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_NODE_chat_VIAJE_MUSICAL_POR_LA_MEMORIA_2_.md",
+                             "sizeBytes":  1322
+                         },
+                         {
+                             "id":  223,
+                             "name":  "vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_modelo_plan_de_negocio_PRODUCTORA_EAR_OK_GEMINI.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:35",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_modelo_plan_de_negocio_PRODUCTORA_EAR_OK_GEMINI.md",
+                             "sizeBytes":  1428
+                         },
+                         {
+                             "id":  224,
+                             "name":  "vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Plan_de_Negocio_de_Productora_EAR_INCOMPLETO_DESDE_CHAT_OK_GEMINI.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:35",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Plan_de_Negocio_de_Productora_EAR_INCOMPLETO_DESDE_CHAT_OK_GEMINI.md",
+                             "sizeBytes":  1518
+                         },
+                         {
+                             "id":  225,
+                             "name":  "vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Propuesta_de_Dise_o_de_P_gina_Web_-_Productora_Ear_OK_GEMINI.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:35",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Propuesta_de_Dise_o_de_P_gina_Web_-_Productora_Ear_OK_GEMINI.md",
+                             "sizeBytes":  2341
+                         },
+                         {
+                             "id":  226,
+                             "name":  "vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Web_productora_EAR_para_ARTISTAS_OK_GEMINI.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:35",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Web_productora_EAR_para_ARTISTAS_OK_GEMINI.md",
+                             "sizeBytes":  1403
+                         },
+                         {
+                             "id":  227,
+                             "name":  "vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Web_productora_EAR_para_EVENTOS_OK_GEMINI.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-02 22:47:35",
+                             "path":  "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\HISTORIC_AI_CHATS\\vimume-brain_NODE_D_OS_AZUL_0_INBOX_Documentos_Web_productora_EAR_para_EVENTOS_OK_GEMINI.md",
+                             "sizeBytes":  1398
+                         },
+                         {
+                             "id":  228,
+                             "name":  "vimume-logo-horizontal-light-blue.svg",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-03-31 14:16:31",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand\\vimume-logo-horizontal-light-blue.svg",
+                             "sizeBytes":  6992
+                         },
+                         {
+                             "id":  229,
+                             "name":  "02_VERTICAL_VIMUME.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-25 12:17:25",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\02_VERTICAL_VIMUME.md",
+                             "sizeBytes":  1017
+                         },
+                         {
+                             "id":  230,
+                             "name":  "BACKUP_VIMUME_INVENTORY_V1_20260214_1806_071420_071430.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-14 18:07:53",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\BACKUP_VIMUME_INVENTORY_V1_20260214_1806_071420_071430.md",
+                             "sizeBytes":  4288
+                         },
+                         {
+                             "id":  231,
+                             "name":  "BACKUP_VIMUME_INVENTORY_V1_20260214_1806_071430.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-14 18:07:53",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\BACKUP_VIMUME_INVENTORY_V1_20260214_1806_071430.md",
+                             "sizeBytes":  4288
+                         },
+                         {
+                             "id":  232,
+                             "name":  "BACKUP_VIMUME_INVENTORY_V1_20260214_1806_071430_4BD7.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-14 18:07:53",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\BACKUP_VIMUME_INVENTORY_V1_20260214_1806_071430_4BD7.md",
+                             "sizeBytes":  4288
+                         },
+                         {
+                             "id":  233,
+                             "name":  "be94455af769589870a87545abd0925b_VIMUME_MASTER_DASHBOARD.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-25 11:18:45",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\be94455af769589870a87545abd0925b_VIMUME_MASTER_DASHBOARD.md",
+                             "sizeBytes":  1598
+                         },
+                         {
+                             "id":  234,
+                             "name":  "BORRADOR_ESTATUTOS_VIMUME.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 11:13:24",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\BORRADOR_ESTATUTOS_VIMUME.md",
+                             "sizeBytes":  1885
+                         },
+                         {
+                             "id":  235,
+                             "name":  "BORRADOR_ESTATUTOS_VIMUME_071421.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 11:13:24",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\BORRADOR_ESTATUTOS_VIMUME_071421.md",
+                             "sizeBytes":  1885
+                         },
+                         {
+                             "id":  236,
+                             "name":  "Documentos_preguntas de sebastian web_1.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-02-07 11:58:46",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Documentos_preguntas de sebastian web_1.docx",
+                             "sizeBytes":  21734
+                         },
+                         {
+                             "id":  237,
+                             "name":  "Documentos_preguntas de sebastian web_1.pdf",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-02-07 11:59:41",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Documentos_preguntas de sebastian web_1.pdf",
+                             "sizeBytes":  90739
+                         },
+                         {
+                             "id":  238,
+                             "name":  "D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_preguntas de sebastian web.pdf",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-02-07 11:59:41",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_preguntas de sebastian web.pdf",
+                             "sizeBytes":  90739
+                         },
+                         {
+                             "id":  239,
+                             "name":  "D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_preguntas de sebastian web_1.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-02-07 11:58:46",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_0_INBOX_Documentos_preguntas de sebastian web_1.docx",
+                             "sizeBytes":  21734
+                         },
+                         {
+                             "id":  240,
+                             "name":  "D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_DOCUMENTOS_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071430.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-01-05 16:41:07",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\D_OS AZUL_1_EAR_00_CEREBRO_DIGITAL_10_MI_VOZ_01_CAOS_ORIGINAL_TEXTOS_D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_DOCUMENTOS_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071430.docx",
+                             "sizeBytes":  26037
+                         },
+                         {
+                             "id":  241,
+                             "name":  "D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_DOCUMENTOS_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071456.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-01-05 16:41:07",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_DOCUMENTOS_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071456.docx",
+                             "sizeBytes":  26037
+                         },
+                         {
+                             "id":  242,
+                             "name":  "D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071430_071456.docx.pdf",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-01-05 16:41:07",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071430_071456.docx.pdf",
+                             "sizeBytes":  26037
+                         },
+                         {
+                             "id":  243,
+                             "name":  "D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071653.docx.pdf",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-01-05 16:41:07",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071653.docx.pdf",
+                             "sizeBytes":  26037
+                         },
+                         {
+                             "id":  244,
+                             "name":  "Herramientas de la metodología VIMUME con más técnicas específicas de Terapia Ocupacional.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-04-10 12:14:06",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Herramientas de la metodología VIMUME con más técnicas específicas de Terapia Ocupacional.docx",
+                             "sizeBytes":  18396
+                         },
+                         {
+                             "id":  245,
+                             "name":  "Herramientas de la metodología VIMUME con más técnicas específicas de Terapia Ocupacional_071430.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-04-10 12:14:06",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Herramientas de la metodología VIMUME con más técnicas específicas de Terapia Ocupacional_071430.docx",
+                             "sizeBytes":  18396
+                         },
+                         {
+                             "id":  246,
+                             "name":  "MATRIZ_ESTRATEGICA_VIMUME.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 20:36:51",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\MATRIZ_ESTRATEGICA_VIMUME.md",
+                             "sizeBytes":  2641
+                         },
+                         {
+                             "id":  247,
+                             "name":  "MATRIZ_ESTRATEGICA_VIMUME_071420.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 20:36:51",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\MATRIZ_ESTRATEGICA_VIMUME_071420.md",
+                             "sizeBytes":  2641
+                         },
+                         {
+                             "id":  248,
+                             "name":  "MATRIZ_ESTRATEGICA_VIMUME_071420_071430.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 20:36:51",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\MATRIZ_ESTRATEGICA_VIMUME_071420_071430.md",
+                             "sizeBytes":  2641
+                         },
+                         {
+                             "id":  249,
+                             "name":  "MATRIZ_ESTRATEGICA_VIMUME_071421.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 20:36:51",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\MATRIZ_ESTRATEGICA_VIMUME_071421.md",
+                             "sizeBytes":  2641
+                         },
+                         {
+                             "id":  250,
+                             "name":  "Metodología VIMUME abril 2025_071430.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-04-10 11:46:36",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Metodología VIMUME abril 2025_071430.docx",
+                             "sizeBytes":  25268
+                         },
+                         {
+                             "id":  251,
+                             "name":  "Metodología Vimume_ Innovación Sociocultural y Terapéutica a través de la Musicoterapia Activa y Sensorial.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-01-05 11:22:46",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Metodología Vimume_ Innovación Sociocultural y Terapéutica a través de la Musicoterapia Activa y Sensorial.docx",
+                             "sizeBytes":  361043
+                         },
+                         {
+                             "id":  252,
+                             "name":  "Musicoterapia_ Presentación Proyecto Vimume 09 12 2025 busqueda profunda_071421_071430_071456.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 22:03:44",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Musicoterapia_ Presentación Proyecto Vimume 09 12 2025 busqueda profunda_071421_071430_071456.docx",
+                             "sizeBytes":  6219654
+                         },
+                         {
+                             "id":  253,
+                             "name":  "Musicoterapia_ Presentación Proyecto Vimume 09 12 2025 busqueda profunda_071430_071456.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 22:03:44",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Musicoterapia_ Presentación Proyecto Vimume 09 12 2025 busqueda profunda_071430_071456.docx",
+                             "sizeBytes":  6219654
+                         },
+                         {
+                             "id":  254,
+                             "name":  "Musicoterapia_ Presentación Proyecto Vimume 09 12 2025 busqueda profunda_071456.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 22:03:44",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Musicoterapia_ Presentación Proyecto Vimume 09 12 2025 busqueda profunda_071456.docx",
+                             "sizeBytes":  6219654
+                         },
+                         {
+                             "id":  255,
+                             "name":  "Plan hoja de ruta de productora vimume_071421.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2024-09-09 15:42:50",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Plan hoja de ruta de productora vimume_071421.docx",
+                             "sizeBytes":  5107333
+                         },
+                         {
+                             "id":  256,
+                             "name":  "preguntas de sebastian web.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-02-07 11:58:46",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\preguntas de sebastian web.docx",
+                             "sizeBytes":  21734
+                         },
+                         {
+                             "id":  257,
+                             "name":  "PRO_02_VERTICAL_VIMUME.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-25 12:17:25",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_02_VERTICAL_VIMUME.md",
+                             "sizeBytes":  1017
+                         },
+                         {
+                             "id":  258,
+                             "name":  "PRO_METODOLOGÍA_VIMUME_INNOVACIÓN_SOCIOCULTURAL_Y_TER.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-01-05 11:22:46",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_METODOLOGÍA_VIMUME_INNOVACIÓN_SOCIOCULTURAL_Y_TER.docx",
+                             "sizeBytes":  361043
+                         },
+                         {
+                             "id":  259,
+                             "name":  "PRO_MUSICOTERAPIA_PRESENTACIÓN_PROYECTO_VIMUME_09_12.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 22:03:44",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_MUSICOTERAPIA_PRESENTACIÓN_PROYECTO_VIMUME_09_12.docx",
+                             "sizeBytes":  6219654
+                         },
+                         {
+                             "id":  260,
+                             "name":  "PRO_RADAR_VIMUME.txt",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-23 22:08:45",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_RADAR_VIMUME.txt",
+                             "sizeBytes":  1129
+                         },
+                         {
+                             "id":  261,
+                             "name":  "PRO_VIMUME_FUNDING_STRATEGY.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:37:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_VIMUME_FUNDING_STRATEGY.md",
+                             "sizeBytes":  26565
+                         },
+                         {
+                             "id":  262,
+                             "name":  "PRO_VIMUME_LEGAL_STRATEGY.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:50:24",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_VIMUME_LEGAL_STRATEGY.md",
+                             "sizeBytes":  20394
+                         },
+                         {
+                             "id":  263,
+                             "name":  "PRO_VIMUME_MASTER_INVENTORY.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-14 17:39:15",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_VIMUME_MASTER_INVENTORY.md",
+                             "sizeBytes":  4288
+                         },
+                         {
+                             "id":  264,
+                             "name":  "PRO_VIMUME_ROADMAP_2026.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:09:29",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_VIMUME_ROADMAP_2026.md",
+                             "sizeBytes":  9935
+                         },
+                         {
+                             "id":  265,
+                             "name":  "PRO_VIMUME_SESSION_PROTOCOL_V2.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:08:18",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\PRO_VIMUME_SESSION_PROTOCOL_V2.md",
+                             "sizeBytes":  19584
+                         },
+                         {
+                             "id":  266,
+                             "name":  "STRIPE_SETUP_VIMUME.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-08 22:37:15",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\STRIPE_SETUP_VIMUME.md",
+                             "sizeBytes":  3996
+                         },
+                         {
+                             "id":  267,
+                             "name":  "Síntesis Ejecutiva vimume viaje musical por la memoria_071431.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-11-11 12:58:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Síntesis Ejecutiva vimume viaje musical por la memoria_071431.docx",
+                             "sizeBytes":  18472
+                         },
+                         {
+                             "id":  268,
+                             "name":  "Síntesis Ejecutiva vimume viaje musical por la memoria_071431_071444.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-11-11 12:58:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Síntesis Ejecutiva vimume viaje musical por la memoria_071431_071444.docx",
+                             "sizeBytes":  18472
+                         },
+                         {
+                             "id":  269,
+                             "name":  "Síntesis Ejecutiva vimume viaje musical por la memoria_071431_071512.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-11-11 12:58:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Síntesis Ejecutiva vimume viaje musical por la memoria_071431_071512.docx",
+                             "sizeBytes":  18472
+                         },
+                         {
+                             "id":  270,
+                             "name":  "Síntesis Ejecutiva vimume viaje musical por la memoria_071443_071512.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-11-11 12:58:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Síntesis Ejecutiva vimume viaje musical por la memoria_071443_071512.docx",
+                             "sizeBytes":  18472
+                         },
+                         {
+                             "id":  271,
+                             "name":  "Síntesis Ejecutiva vimume viaje musical por la memoria_071444.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-11-11 12:58:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Síntesis Ejecutiva vimume viaje musical por la memoria_071444.docx",
+                             "sizeBytes":  18472
+                         },
+                         {
+                             "id":  272,
+                             "name":  "Síntesis Ejecutiva vimume viaje musical por la memoria_071512.docx",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2025-11-11 12:58:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\Síntesis Ejecutiva vimume viaje musical por la memoria_071512.docx",
+                             "sizeBytes":  18472
+                         },
+                         {
+                             "id":  273,
+                             "name":  "TEXTO_RESCATADO_D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_DOCUMENTOS_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071430_071456.txt",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-19 21:31:54",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\TEXTO_RESCATADO_D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_DOCUMENTOS_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador_071430_071456.txt",
+                             "sizeBytes":  22839
+                         },
+                         {
+                             "id":  274,
+                             "name":  "TEXTO_RESCATADO_D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador.docx.txt",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-19 21:31:54",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\TEXTO_RESCATADO_D_OS AZUL_1_EAR_02_PROYECTOS_ACTIVOS_4_VIMUME_01_Musicoterapia activa con la figura del mariachi como elemento diferencial y potenciador.docx.txt",
+                             "sizeBytes":  21157
+                         },
+                         {
+                             "id":  275,
+                             "name":  "vimume.pdf",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 17:00:23",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\vimume.pdf",
+                             "sizeBytes":  91528773
+                         },
+                         {
+                             "id":  276,
+                             "name":  "VIMUME_EXTRACTED_KNOWLEDGE.json",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-04-25 14:17:05",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_EXTRACTED_KNOWLEDGE.json",
+                             "sizeBytes":  1640915
+                         },
+                         {
+                             "id":  277,
+                             "name":  "VIMUME_FUNDING_STRATEGY.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:37:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_FUNDING_STRATEGY.md",
+                             "sizeBytes":  26565
+                         },
+                         {
+                             "id":  278,
+                             "name":  "VIMUME_FUNDING_STRATEGY_071420.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:37:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_FUNDING_STRATEGY_071420.md",
+                             "sizeBytes":  26565
+                         },
+                         {
+                             "id":  279,
+                             "name":  "VIMUME_FUNDING_STRATEGY_071420_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:37:57",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_FUNDING_STRATEGY_071420_071431.md",
+                             "sizeBytes":  26565
+                         },
+                         {
+                             "id":  280,
+                             "name":  "vimume_gold_v2_5_architecture_F4F2.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-26 19:46:46",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\vimume_gold_v2_5_architecture_F4F2.md",
+                             "sizeBytes":  2787
+                         },
+                         {
+                             "id":  281,
+                             "name":  "VIMUME_LEGAL_STRATEGY_071430.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:50:24",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_LEGAL_STRATEGY_071430.md",
+                             "sizeBytes":  20394
+                         },
+                         {
+                             "id":  282,
+                             "name":  "VIMUME_LEGAL_STRATEGY_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:50:24",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_LEGAL_STRATEGY_071431.md",
+                             "sizeBytes":  20394
+                         },
+                         {
+                             "id":  283,
+                             "name":  "VIMUME_MARKET_ANALYSIS_ES.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:04:25",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_MARKET_ANALYSIS_ES.md",
+                             "sizeBytes":  13459
+                         },
+                         {
+                             "id":  284,
+                             "name":  "VIMUME_MARKET_ANALYSIS_ES_071430.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:04:25",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_MARKET_ANALYSIS_ES_071430.md",
+                             "sizeBytes":  13459
+                         },
+                         {
+                             "id":  285,
+                             "name":  "VIMUME_MARKET_ANALYSIS_ES_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:04:25",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_MARKET_ANALYSIS_ES_071431.md",
+                             "sizeBytes":  13459
+                         },
+                         {
+                             "id":  286,
+                             "name":  "VIMUME_MASTER_DASHBOARD_071421.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-25 11:18:45",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_MASTER_DASHBOARD_071421.md",
+                             "sizeBytes":  1518
+                         },
+                         {
+                             "id":  287,
+                             "name":  "VIMUME_MASTER_DASHBOARD_071421_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-25 11:18:45",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_MASTER_DASHBOARD_071421_071431.md",
+                             "sizeBytes":  1518
+                         },
+                         {
+                             "id":  288,
+                             "name":  "VIMUME_MASTER_INVENTORY_071421.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-14 17:39:15",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_MASTER_INVENTORY_071421.md",
+                             "sizeBytes":  4288
+                         },
+                         {
+                             "id":  289,
+                             "name":  "VIMUME_MASTER_INVENTORY_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-14 17:39:15",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_MASTER_INVENTORY_071431.md",
+                             "sizeBytes":  4288
+                         },
+                         {
+                             "id":  290,
+                             "name":  "VIMUME_RESIDUAL_IDEAS.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-03-13 07:28:47",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_RESIDUAL_IDEAS.md",
+                             "sizeBytes":  1296
+                         },
+                         {
+                             "id":  291,
+                             "name":  "VIMUME_ROADMAP_2026_071420.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:09:29",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_ROADMAP_2026_071420.md",
+                             "sizeBytes":  9935
+                         },
+                         {
+                             "id":  292,
+                             "name":  "VIMUME_ROADMAP_2026_071421.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:09:29",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_ROADMAP_2026_071421.md",
+                             "sizeBytes":  9935
+                         },
+                         {
+                             "id":  293,
+                             "name":  "VIMUME_ROADMAP_2026_071421_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:09:29",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_ROADMAP_2026_071421_071431.md",
+                             "sizeBytes":  9935
+                         },
+                         {
+                             "id":  294,
+                             "name":  "VIMUME_SCIENTIFIC_FOUNDATION.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:06:10",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SCIENTIFIC_FOUNDATION.md",
+                             "sizeBytes":  16544
+                         },
+                         {
+                             "id":  295,
+                             "name":  "VIMUME_SCIENTIFIC_FOUNDATION_071420.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:06:10",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SCIENTIFIC_FOUNDATION_071420.md",
+                             "sizeBytes":  16544
+                         },
+                         {
+                             "id":  296,
+                             "name":  "VIMUME_SCIENTIFIC_FOUNDATION_071421.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:06:10",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SCIENTIFIC_FOUNDATION_071421.md",
+                             "sizeBytes":  16544
+                         },
+                         {
+                             "id":  297,
+                             "name":  "VIMUME_SCIENTIFIC_FOUNDATION_071430.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:06:10",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SCIENTIFIC_FOUNDATION_071430.md",
+                             "sizeBytes":  16544
+                         },
+                         {
+                             "id":  298,
+                             "name":  "VIMUME_SCIENTIFIC_FOUNDATION_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:06:10",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SCIENTIFIC_FOUNDATION_071431.md",
+                             "sizeBytes":  16544
+                         },
+                         {
+                             "id":  299,
+                             "name":  "VIMUME_SESSION_PROTOCOL_V2.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:08:18",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SESSION_PROTOCOL_V2.md",
+                             "sizeBytes":  19584
+                         },
+                         {
+                             "id":  300,
+                             "name":  "VIMUME_SESSION_PROTOCOL_V2_071421.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:08:18",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SESSION_PROTOCOL_V2_071421.md",
+                             "sizeBytes":  19584
+                         },
+                         {
+                             "id":  301,
+                             "name":  "VIMUME_SESSION_PROTOCOL_V2_071421_071431.md",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-02-16 10:08:18",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\brand_assets_vimume_sebastian_diaz\\VIMUME_SESSION_PROTOCOL_V2_071421_071431.md",
+                             "sizeBytes":  19584
+                         },
+                         {
+                             "id":  302,
+                             "name":  "colibri_isotipo.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:35",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\images\\brand\\colibri_isotipo.png",
+                             "sizeBytes":  25683
+                         },
+                         {
+                             "id":  303,
+                             "name":  "colibri_logo_completo.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:46",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\images\\brand\\colibri_logo_completo.png",
+                             "sizeBytes":  99590
+                         },
+                         {
+                             "id":  304,
+                             "name":  "colibri_logo_white.png",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-09-03 11:50:54",
+                             "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\images\\brand\\colibri_logo_white.png",
+                             "sizeBytes":  95148
+                         },
+                         {
+                             "id":  305,
+                             "name":  "audit_vimume_vault.py",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-21 21:22:27",
+                             "path":  "C:\\Users\\M2-W10\\Desktop\\EAR_OS_V2\\scripts\\audit_vimume_vault.py",
+                             "sizeBytes":  2886
+                         },
+                         {
+                             "id":  306,
+                             "name":  "rescue_vimume_master.py",
+                             "authorFolderMatch":  false,
+                             "lastModified":  "2026-08-20 00:13:08",
+                             "path":  "C:\\Users\\M2-W10\\Desktop\\EAR_OS_V2\\scripts\\rescue_vimume_master.py",
+                             "sizeBytes":  3705
+                         }
+                     ],
+    "targetPngs":  [
+                       {
+                           "extractedMeta":  {
+
+                                             },
+                           "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\images\\brand\\colibri_isotipo.png",
+                           "name":  "colibri_isotipo.png",
+                           "sizeBytes":  25683,
+                           "lastModified":  "2026-09-03 11:50:35"
+                       },
+                       {
+                           "extractedMeta":  {
+
+                                             },
+                           "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\images\\brand\\colibri_logo_completo.png",
+                           "name":  "colibri_logo_completo.png",
+                           "sizeBytes":  99590,
+                           "lastModified":  "2026-09-03 11:50:46"
+                       },
+                       {
+                           "extractedMeta":  {
+
+                                             },
+                           "path":  "H:\\EAR_OS_V2\\EAR_OS_V2\\public\\images\\brand\\colibri_logo_white.png",
+                           "name":  "colibri_logo_white.png",
+                           "sizeBytes":  95148,
+                           "lastModified":  "2026-09-03 11:50:54"
+                       }
+                   ]
+}

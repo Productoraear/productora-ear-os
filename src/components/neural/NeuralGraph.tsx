@@ -136,7 +136,7 @@ export default function NeuralGraph({
 
     // 6. Nodo Root: DIAMANTE SOBERANO CENTRAL DE PRODUCTORA EAR
     const earDiamondImg = new Image();
-    earDiamondImg.src = '/images/brand/ear_diamante_central.png';
+    earDiamondImg.src = '/images/brand/ear_logo_official_diamond.png';
     iconsRef.current.root = earDiamondImg;
   }, []);
 

@@ -134,7 +134,7 @@ const RECOGNITIONS = [
 export default function ArtistCinematicProfile({
   name = 'Edwin Agudelo',
   specialty = 'Voz, Oficio y Escenario',
-  imageUrl = '/images/brand/ear_diamante_central.png',
+  imageUrl = '/images/brand/ear_logo_official_diamond.png',
   videoUrl = ''
 }: ArtistCinematicProfileProps) {
   const [activeTab, setActiveTab] = useState<TabKey>('MANIFIESTO');

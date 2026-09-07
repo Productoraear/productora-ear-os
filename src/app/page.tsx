@@ -136,7 +136,7 @@ export default function Home() {
   };
 
   return (
-    <main className="relative w-screen min-h-screen overflow-x-hidden bg-[#030305] text-white font-sans selection:bg-[#ecb613] selection:text-black">
+    <main className="relative w-full max-w-full min-h-screen overflow-x-hidden bg-[#030305] text-white font-sans selection:bg-[#ecb613] selection:text-black">
       {/* Reconocedor Gestual Móvil (8 segundos continuos para transmutar modo) */}
       <TransmutationGesture
         currentMode={navMode}
@@ -146,12 +146,18 @@ export default function Home() {
       {/* 1. Header Global Vanguardista con Switch de Modo (PC & Mobile) */}
       <header className="fixed top-0 left-0 right-0 z-40 pointer-events-none p-4 md:p-6 flex items-center justify-between">
         {/* Identidad de Marca */}
-        <div className="pointer-events-auto flex items-center gap-3 bg-black/60 backdrop-blur-xl border border-white/10 px-4 py-2 rounded-full shadow-lg">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ecb613] animate-ping" />
+        <div className="pointer-events-auto flex items-center gap-2.5 bg-black/70 backdrop-blur-xl border border-white/10 px-3.5 py-1.5 rounded-full shadow-lg">
+          <div className="relative w-7 h-7 rounded-full overflow-hidden border border-[#FF2B44]/70 shadow-[0_0_12px_rgba(255,43,68,0.5)] shrink-0 bg-black">
+            <img 
+              src="/images/brand/ear_logo_official_diamond.png" 
+              alt="Productora EAR Logotipo Oficial" 
+              className="w-full h-full object-cover" 
+            />
+          </div>
           <div className="flex items-center gap-1.5">
-            <span className="font-bold text-sm tracking-tight text-white font-mono">PRODUCTORA</span>
-            <span className="font-bold text-sm tracking-tight text-[#ecb613] font-mono">EAR</span>
-            <span className="text-[10px] text-zinc-500 font-mono ml-1 hidden sm:inline">OS v2.4</span>
+            <span className="font-bold text-xs tracking-tight text-white font-mono">PRODUCTORA</span>
+            <span className="font-bold text-xs tracking-tight text-[#FF2B44] font-mono">EAR</span>
+            <span className="text-[9px] text-[#00E5FF] font-mono ml-1 hidden sm:inline">OS v2.4</span>
           </div>
         </div>
 
@@ -212,7 +218,7 @@ export default function Home() {
 
       {navMode === 'neural' ? (
         /* MODO 1: RED NEURONAL INTERACTIVA A PANTALLA COMPLETA */
-        <div className="relative w-screen h-screen overflow-hidden">
+        <div className="relative w-full max-w-full h-screen overflow-hidden">
           {/* Canvas 2D + Spring Physics */}
           <div className="absolute inset-0 z-10 w-full h-full">
             <NeuralGraph

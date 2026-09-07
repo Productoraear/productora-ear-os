@@ -1,0 +1,211 @@
+{
+  "_meta": {
+    "version": "2.0.0",
+    "name": "EAR OS Impeccable Design Library & Anti-Slop SSOT",
+    "description": "Biblioteca de diseño prescriptivo, familias estéticas, vocabulario y filtros anti-slop para Qwen, Cline y agentes locales.",
+    "target_engines": ["Qwen 2.5/3.8", "Cline", "Antigravity", "Local LLMs"],
+    "requires_subscription": false
+  },
+  "design_families": [
+    {
+      "id": "cinematic-monochrome",
+      "name": "Cinematic Monocromo S-Class",
+      "tag": "Luxury / Three.js 3D",
+      "accent_color": "#FF2B44",
+      "secondary_color": "#00E5FF",
+      "bg_color": "#030305",
+      "description": "Estética OLED de alto lujo inspirada en instrumentación de alta fidelidad, diamantes facetados con refracción física y telemetría de precisión.",
+      "vocabulary": [
+        "True Black OLED #030305",
+        "Refracción facetada física (IOR 2.417)",
+        "Doble haz Rubí Crimson & Cyan Hielo",
+        "Bordes translúcidos border-white/10",
+        "Tipografía display Syne monumental",
+        "Acento de oro heráldico #ecb613",
+        "Telemetría en JetBrains Mono",
+        "Inercia con física de muelles"
+      ],
+      "keywords": [
+        "monochrome luxury",
+        "refractive diamond 3D",
+        "high contrast dark mode",
+        "cinematic lighting",
+        "subtle glow",
+        "linear interface",
+        "anti-slop"
+      ],
+      "hero_image_prompt": "Cinematic 3D faceted dark diamond rotating in deep space with ruby crimson and icy cyan laser refraction, OLED black background, zero dust, sharp specular highlights, ultra-minimalist, shot on Hasselblad 100MP --ar 16:9 --style raw",
+      "brief": "Landing page de máxima autoridad para productores musicales, artistas de élite y clientes de alto patrimonio. El usuario debe sentir exclusividad instantánea sin elementos genéricos de SaaS."
+    },
+    {
+      "id": "editorial-tecnica",
+      "name": "Impresión Técnica & Textura de Datos",
+      "tag": "Editorial / Arquitectura",
+      "accent_color": "#10B981",
+      "secondary_color": "#94A3B8",
+      "bg_color": "#06080B",
+      "description": "Estética inspirada en manuales de ingeniería aeronáutica, planos de patentes, coordenadas geodésicas y fichas técnicas milimétricas.",
+      "vocabulary": [
+        "Linework topográfico milimétrico",
+        "Marcas de corte y cruces de registro",
+        "Timestamps y hashes SHA-256 visibles",
+        "Malla de puntos y rejillas milimetradas",
+        "Tipografía monoespaciada estructurada",
+        "Grano de papel y dither monocromático",
+        "Contraste nítido sobre pizarra oscura",
+        "Badges de estado estilo instrumentación"
+      ],
+      "keywords": [
+        "technical blueprint",
+        "data density",
+        "monospaced typography",
+        "register marks",
+        "topographic lines",
+        "clean engineering",
+        "ascii precision"
+      ],
+      "hero_image_prompt": "Vector technical architectural schematic of an acoustic wave transducer, isometric projection, fine green phosphor lines on dark slate, topographic contours, precision grid, clean drafting table aesthetics --ar 16:9",
+      "brief": "Plataforma de auditoría, catastro o licitaciones públicas B2G donde la densidad informativa y el rigor técnico generan confianza jurídica inmediata."
+    },
+    {
+      "id": "cyber-acoustic-glass",
+      "name": "Cyber-Acústico Glassmorphism",
+      "tag": "Neuroacústica / 40 Hz",
+      "accent_color": "#8B5CF6",
+      "secondary_color": "#38BDF8",
+      "bg_color": "#070814",
+      "description": "Estética etérea y clínica inspirada en terapias sonoras, partículas de levitación armónica, ondas Gamma a 40 Hz y difuminados de vidrio multicapa.",
+      "vocabulary": [
+        "Backdrop-blur multicapa ultra-difuso",
+        "Enjambre de partículas en levitación armónica",
+        "Resonancia sinusoidal a 40 Hz",
+        "Reflejos iridiscentes violeta y zafiro",
+        "Vidrio ahumado semi-translúcido",
+        "Isotipo orgánico (Colibrí) estilizado",
+        "Gradientes de profundidad suaves sin banding",
+        "Indicadores de frecuencias hertzianas"
+      ],
+      "keywords": [
+        "40Hz Gamma wave",
+        "acoustic resonance",
+        "ethereal particle field",
+        "frosted glass UI",
+        "biophilic soundscape",
+        "harmonic vibration"
+      ],
+      "hero_image_prompt": "A radiant holographic hummingbird floating serenely inside an ethereal 40Hz soundwave resonance chamber, bioluminescent particles, soft purple and deep cyan auroras, volumetric caustics, clean cinematic macro --ar 16:9",
+      "brief": "Interfaz de bienestar, neurociencia acústica y residencias de mayores (Proyecto VIMUME). Transmite serenidad, base científica médica y emoción contenida."
+    },
+    {
+      "id": "dark-neo-brutalist",
+      "name": "Dark Neo-Brutalist",
+      "tag": "Street / Pure Signal",
+      "accent_color": "#F59E0B",
+      "secondary_color": "#FFFFFF",
+      "bg_color": "#0A0A0A",
+      "description": "Diseño contundente, sin adornos superfluos, bordes de 1px afilados, botones gigantes monolíticos y tipografía pesada en mayúsculas.",
+      "vocabulary": [
+        "Bordes definidos con micro-contrastes",
+        "Botones táctiles monolíticos de altura fija",
+        "Tipografía grotesca ultra-negra",
+        "Cero sombras difusas; sombras duras de bloque",
+        "Acentos ámbar señalética de advertencia",
+        "Micro-etiquetas con fondos invertidos",
+        "Estructuras modulares sin curvas innecesarias",
+        "Iconografía lineal estricta de 2px"
+      ],
+      "keywords": [
+        "neo-brutalism",
+        "raw signal",
+        "hard shadows",
+        "tactile buttons",
+        "sharp borders",
+        "amber warning accent",
+        "no-slop"
+      ],
+      "hero_image_prompt": "High contrast brutalist typography installation in a dark concrete brutalist gallery, razor sharp amber neon tube lighting, deep shadows, zero blur, intense graphic clarity --ar 16:9",
+      "brief": "Bolsa de trabajo para artistas, logística de gira e interfaces de control de rider en directo donde la rapidez operativa y la legibilidad extrema priman."
+    },
+    {
+      "id": "minimalist-sanctuary",
+      "name": "Minimalist Spatial Sanctuary",
+      "tag": "Galería / Gran Formato",
+      "accent_color": "#FFFFFF",
+      "secondary_color": "#71717A",
+      "bg_color": "#020203",
+      "description": "Máxima concentración en el contenido. Fondos oscuros casi invisibles, espacios negativos monumentales y tipografía que respira.",
+      "vocabulary": [
+        "Paddings generosos de triple altura",
+        "Titulares en minúsculas poéticas o mayúsculas raras",
+        "Blanco puro sobre carbón absoluto",
+        "Ausencia radical de bordes decorativos",
+        "Micro-navegación minimalista flotante",
+        "Carga visual ultra-ligera (<50 KB bundle)",
+        "Transiciones de opacidad desvanecida limpia",
+        "Imágenes protagonistas a sangre"
+      ],
+      "keywords": [
+        "zen minimalism",
+        "spatial negative space",
+        "editorial magazine",
+        "pure contrast",
+        "subtle typographic hierarchy"
+      ],
+      "hero_image_prompt": "A single white acoustic tuning fork levitating over a pure black water mirror, solitary ripples, razor sharp reflection, museum gallery lighting, pure stillness --ar 16:9",
+      "brief": "Dossiers de bodas de súper lujo, eventos privados de magnates y celebraciones donde la elegancia radica en lo que no se dice."
+    }
+  ],
+  "anti_slop_checklist_7_dimensions": [
+    {
+      "dimension": "Tipografía",
+      "slop_indicator": "Jerarquías planas, fuentes del sistema por defecto, interlineado sofocado.",
+      "impeccable_standard": "Titulares display Syne/Inter de gran escala, JetBrains Mono para datos, leading-relaxed, tracking calibrado."
+    },
+    {
+      "dimension": "Color",
+      "slop_indicator": "Degradados violeta/azul genéricos de IA, grises lavados sin personalidad.",
+      "impeccable_standard": "True Black OLED (#030305), un solo acento electrizante (#FF2B44 / #00E5FF / #ecb613), bordes con opacidad controlada."
+    },
+    {
+      "dimension": "Espacial",
+      "slop_indicator": "Paddings apretados, tarjetas dentro de tarjetas sin jerarquía.",
+      "impeccable_standard": "Espacio negativo generoso (py-16+), alineación rígida de rejilla, agrupaciones semánticas limpias."
+    },
+    {
+      "dimension": "Responsivo",
+      "slop_indicator": "Desbordamiento horizontal con 100vw en Windows, botones deformados en móvil.",
+      "impeccable_standard": "w-full max-w-full overflow-x-hidden estricto, targets táctiles >= 44px, layouts adaptativos sin pérdida."
+    },
+    {
+      "dimension": "Interacción",
+      "slop_indicator": "Botones estáticos sin hover, cursores por defecto, falta de micro-feedback.",
+      "impeccable_standard": "Micro-interacciones activas (scale-95, brillo suave, tooltips precisos), feedback en menos de 100ms."
+    },
+    {
+      "dimension": "Movimiento",
+      "slop_indicator": "Animaciones lentas flotantes mareantes sin propósito físico.",
+      "impeccable_standard": "Física de muelles Three.js reactiva a ratón/touch, render loops optimizados, respeto a prefers-reduced-motion."
+    },
+    {
+      "dimension": "Redacción UX",
+      "slop_indicator": "Copy cliché de IA ('revoluciona tu experiencia', 'solución integral').",
+      "impeccable_standard": "Datos y telemetría exacta (Split 80/10/10, Rider 12 W/pax Bose, Art. 118 LCSP < 15.000 €), CTAs de valor directo."
+    }
+  ],
+  "prompt_4_parts_template": {
+    "structure": [
+      "1. ESTÉTICA: [Familia de diseño elegida de la biblioteca]",
+      "2. REFERENCIA: [Sensación exacta y análogo del mundo real]",
+      "3. INTENCIÓN: [Audiencia, problema a resolver y conversión buscada]",
+      "4. GUÍAS: [Lista SIEMPRE de requisitos y NUNCA de slop prohibido]"
+    ],
+    "example": "ESTÉTICA: Cinematic Monocromo S-Class (True Black #030305, refracción diamante Three.js, acentos Rubí #FF2B44 y Oro #ecb613).\nREFERENCIA: Instrumentación Bang & Olufsen combinada con la fluidez de Linear.\nINTENCIÓN: Para ayuntamientos y particulares que buscan contratación de directos de alta fidelidad con presupuesto cerrado.\nGUÍAS:\n- SIEMPRE: Split 80/10/10, Rider 12 W/pax, Price-Lock SHA-256, 100% responsive sin desbordamiento horizontal.\n- NUNCA: Degradados púrpuras de IA, w-screen, fotos de stock sin procesar, textos genéricos tipo 'revoluciona tu mundo'."
+  },
+  "toolbelt_commands": [
+    { "command": "/bolder", "action": "Aumenta el contraste tipográfico, escala el héroe a 3D/WebGL monumental y elimina ruido secundario." },
+    { "command": "/audit-slop", "action": "Escanea el componente contra las 7 dimensiones y 46 patrones de slop emitiendo informe." },
+    { "command": "/kill-purple", "action": "Elimina cualquier gradiente from-purple-600 to-blue-500 y reemplaza por paleta S-Class OLED." },
+    { "command": "/fix-overflow", "action": "Sustituye w-screen por w-full max-w-full overflow-x-hidden erradicando scroll horizontal en Windows." },
+    { "command": "/monochrome-sclass", "action": "Aplica True Black #030305 con borde border-white/10 y acento unificado." }
+  ]
+}

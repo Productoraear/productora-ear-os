@@ -99,7 +99,7 @@ export function VimumeColibriNarrative() {
               El Isotipo del Colibrí
             </h4>
             <p className="text-xs font-mono text-zinc-400">
-              Manual Maestro concebido por <strong className="text-white">{LEGACY_COLIBRI.creator}</strong>
+              Manual Maestro de Marca
             </p>
           </div>
         </div>

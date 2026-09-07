@@ -67,6 +67,24 @@ module.exports = {
         "ear-sapphire-dark": "#040914",
         "ear-coral": "#FF455B",
 
+        // 💎 PALETA SOBERANA DIAMANTE ROJO & DIAMANTE AZUL (SSOT CUADERNO)
+        "ear-red": {
+          DEFAULT: "#E11D48",
+          primary: "#E11D48",
+          action: "#FF2B44",
+          highlight: "#FF6B7D",
+          deep: "#9F1239",
+          light: "#FEE2E2",
+        },
+        "ear-blue-palette": {
+          DEFAULT: "#258DCD",
+          deep: "#030712",
+          technical: "#0284C7",
+          electric: "#258DCD",
+          ice: "#BAE6FD",
+          sky: "#44A3D8",
+        },
+
         // Stitch Semantic Tokens (Additive)
         "on-surface-variant": "#d0c5af",
         "surface-bright": "#3a3939",
@@ -87,11 +105,14 @@ module.exports = {
         "glow-ear-blue": "0 0 25px rgba(37, 141, 205, 0.35)",
         "glow-ear-cyan": "0 0 20px rgba(170, 214, 205, 0.25)",
         "glow-ear-coral": "0 0 20px rgba(255, 69, 91, 0.35)",
+        "glow-ear-red": "0 0 25px rgba(255, 43, 68, 0.4)",
         "glow-ear-sapphire": "0 10px 40px -10px rgba(8, 18, 38, 0.8)",
       },
       backgroundImage: {
         "grad-ear-sapphire": "linear-gradient(185deg, #081226 0%, #000000 100%)",
         "grad-ear-cyan-blue": "linear-gradient(135deg, #AAD6CD 0%, #258DCD 100%)",
+        "grad-ear-red": "linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%)",
+        "grad-ear-blue": "linear-gradient(135deg, #BAE6FD 0%, #44A3D8 35%, #258DCD 70%, #0284C7 100%)",
       },
       fontFamily: {
         francia: ["var(--font-fraunces)", "Fraunces", "serif"],

@@ -9,7 +9,8 @@ import {
   Building2,
   Landmark,
   RotateCcw,
-  Sparkles
+  Sparkles,
+  Heart
 } from 'lucide-react';
 
 interface RoleHUDProps {
@@ -26,14 +27,13 @@ export default function RoleHUD({
   const roles: Array<{
     key: RoleKey;
     icon?: React.ElementType;
-    isColibri?: boolean;
     badge: string;
   }> = [
     { key: 'artistas', icon: Mic, badge: 'ROSTER' },
     { key: 'eventos', icon: Calendar, badge: 'B2C' },
     { key: 'empresas', icon: Building2, badge: 'B2B' },
     { key: 'instituciones', icon: Landmark, badge: 'B2G' },
-    { key: 'vimume', isColibri: true, badge: '40Hz' },
+    { key: 'vimume', icon: Heart, badge: '40Hz' },
   ];
 
   const handleRoleClick = (key: RoleKey) => {
@@ -84,7 +84,7 @@ export default function RoleHUD({
       <div className="w-[1px] h-5 bg-white/10 mx-0.5" />
 
       {/* Los 5 Ejes de la Taxonomía */}
-      {roles.map(({ key, icon: Icon, isColibri, badge }) => {
+      {roles.map(({ key, icon: Icon, badge }) => {
         const def = ROLE_DEFINITIONS[key];
         const isSelected = selectedRole === key;
 
@@ -114,22 +114,13 @@ export default function RoleHUD({
               }`}
             />
 
-            {isColibri ? (
-              <div className="relative w-4 h-4 shrink-0">
-                <Image
-                  src="/images/brand/colibri_isotipo.png"
-                  alt="Colibrí VIMUME"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            ) : Icon ? (
+            {Icon && (
               <Icon
                 size={14}
                 style={{ color: isSelected ? def.color : undefined }}
                 className="transition-colors duration-200"
               />
-            ) : null}
+            )}
 
             <span
               style={{ color: isSelected ? '#ffffff' : undefined }}

@@ -53,3 +53,21 @@ ROLLBACK:
 ESTADO_BLOQUE:
 SIGUIENTE_PASO_PROPUESTO:
 REQUIERE_APROBACIÓN:
+
+━━ 8. PROTOCOLO IMPECABLE & TASTE ENGINE LOCAL (PARA QWEN 3.8 & CLINE) ━━━━━━━━━━━━━━
+- 46 Patrones de Slop Inmutables: Prohibido degradado violeta/azul de IA (`from-purple-600 to-blue-500`), prohibido `w-screen` (`100vw`) por rotura en Windows, prohibido copy vacío ('revoluciona tu experiencia').
+- 7 Dimensiones de Auditoría de Diseño: Tipografía (Syne + Inter + JetBrains Mono), Color (True Black OLED #030305 + 1 acento único), Espacial (paddings generosos py-16+), Responsivo (w-full max-w-full overflow-x-hidden), Interacción (micro-interacciones activas), Movimiento (física Three.js 3D), Redacción UX (telemetría y datos reales).
+- Framework Prompt 4 Partes: 1. Estética (Familia SSOT), 2. Referencia (Sensación real), 3. Intención (Conversión/Audiencia), 4. Guías (Siempre/Nunca).
+- Nunca en una toma: Proyectar en grande (5 familias estéticas -> 3 variantes -> 1 ganador -> micro-ajustes).
+- Comando /bolder: Alto contraste tipográfico, héroe 3D monumental, cero elementos decorativos superfluos.
+- Independencia Soberana: Capacidades de diseño integradas 100% en local para Qwen y Cline sin dependencias de suscripciones de Claude.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

@@ -7,7 +7,8 @@ import {
   Calendar, 
   Building2, 
   Landmark, 
-  ArrowRight
+  ArrowRight,
+  Heart
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -22,7 +23,6 @@ export interface ProfileJourney {
   ctaText: string;
   href: string;
   icon?: React.ElementType;
-  isColibri?: boolean;
   accentColor: string;
   bgImage: string;
   stats: { label: string; value: string }[];
@@ -101,7 +101,7 @@ const PROFILES: ProfileJourney[] = [
     description: 'Protocolo neuroacústico a 40 Hz Gamma (<75 dB SPL) para residencias de mayores y centros de día. El colibrí que poliniza recuerdos y bienestar emocional.',
     ctaText: 'Desplegar Protocolo VIMUME',
     href: '/vimume',
-    isColibri: true,
+    icon: Heart,
     accentColor: '#8b5cf6',
     bgImage: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop',
     stats: [
@@ -122,27 +122,20 @@ export default function CinematicHeroSClass() {
   return (
     <section className="relative w-full min-h-[85vh] bg-[#030305] text-white flex flex-col justify-between overflow-hidden selection:bg-[#ecb613] selection:text-black pb-12">
       
-      {/* 👑 ENCABEZADO MINIMALISTA CON CENTRO GRAVITACIONAL DIAMANTE */}
-      <div className="pt-24 sm:pt-28 pb-8 px-4 z-20 flex flex-col items-center justify-center text-center">
-        <div className="inline-flex items-center gap-2.5 px-5 py-2 bg-black/70 border border-[#00E5FF]/30 rounded-full backdrop-blur-2xl shadow-[0_0_25px_rgba(0,229,255,0.2)]">
-          <div className="relative w-5 h-5 rounded-full overflow-hidden border border-[#FF1A2A]/60 shadow-[0_0_10px_rgba(255,26,42,0.6)] shrink-0">
-            <Image
-              src="/images/brand/ear_diamante_central.png"
-              alt="Productora EAR Diamante Central"
-              fill
-              className="object-cover"
-            />
-          </div>
-          <span className="text-[10px] font-mono font-bold tracking-[0.25em] uppercase text-white">
-            PRODUCTORA EAR // CENTRO GRAVITACIONAL
+      {/* 👑 DOSSIER PROFUNDO DE LOS 5 EJES SOBERANOS */}
+      <div className="pt-8 sm:pt-12 pb-6 px-4 z-20 flex flex-col items-center justify-center text-center">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-black/70 border border-white/10 rounded-full backdrop-blur-2xl shadow-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
+          <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-zinc-300">
+            DOSSIER SOBERANO // FICHAS TÉCNICAS
           </span>
         </div>
 
-        <h1 className="mt-5 text-2xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white font-syne max-w-4xl leading-[1.15]">
-          CENTRO GRAVITACIONAL // <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF1A2A] via-[#00E5FF] to-white italic">5 EJES SOBERANOS</span>
-        </h1>
-        <p className="text-xs sm:text-sm text-zinc-300 font-light max-w-2xl mt-3 leading-relaxed">
-          Selecciona tu eje operativo para acceder a la infraestructura especializada, tarifas homologadas y gestión soberana.
+        <h2 className="mt-4 text-xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white font-syne max-w-3xl leading-tight">
+          EXPEDIENTES OPERATIVOS // <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2B44] via-[#00E5FF] to-white italic">ESPECIFICACIONES S-CLASS</span>
+        </h2>
+        <p className="text-xs sm:text-sm text-zinc-400 font-mono font-light max-w-xl mt-2 leading-relaxed">
+          Consulta tarifas homologadas, cláusulas de contratación y telemetría acústica de cada perfil.
         </p>
       </div>
 
@@ -189,18 +182,7 @@ export default function CinematicHeroSClass() {
                         color: p.accentColor 
                       }}
                     >
-                      {p.isColibri ? (
-                        <div className="relative w-7 h-7">
-                          <Image
-                            src="/images/brand/colibri_isotipo.png"
-                            alt="Colibrí VIMUME - Sebastián Díaz"
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                      ) : Icon ? (
-                        <Icon size={20} />
-                      ) : null}
+                      {Icon && <Icon size={20} />}
                     </div>
 
                     <span 

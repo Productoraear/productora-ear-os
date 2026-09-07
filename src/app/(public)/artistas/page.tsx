@@ -30,7 +30,7 @@ export const metadata: Metadata = {
       "Voz, Oficio y Escenario. Catálogo íntegro de 14 formatos homologados con tarifas suelo inmutables, acústica Bose a 12 W/pax y cierre transaccional con depósito Stripe de 100 €.",
     images: [
       {
-        url: "https://www.productoraear.com/images/brand/ear_diamante_central.png",
+        url: "https://www.productoraear.com/images/brand/ear_logo_official_diamond.png",
         width: 1200,
         height: 630,
         alt: "Edwin Agudelo & Roster S-Class Productora EAR",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     title: "Edwin Agudelo & Roster S-Class — 14 Formatos Homologados",
     description:
       "14 formatos musicales y técnicos con rider Bose/Shure garantizado a 12 W/pax. Depósito reembolsable de 100 € con Price-Lock SHA-256.",
-    images: ["https://www.productoraear.com/images/brand/ear_diamante_central.png"],
+    images: ["https://www.productoraear.com/images/brand/ear_logo_official_diamond.png"],
   },
 };
 
@@ -59,7 +59,7 @@ const artistSchema = {
       telephone: "+34 693 693 048",
       email: "direccion@productoraear.com",
       url: "https://www.productoraear.com/artistas",
-      image: "https://www.productoraear.com/images/brand/ear_diamante_central.png",
+      image: "https://www.productoraear.com/images/brand/ear_logo_official_diamond.png",
       worksFor: {
         "@type": "Organization",
         name: "Productora EAR",
@@ -117,7 +117,7 @@ export default function ArtistasCinematicPage() {
       <ArtistCinematicProfile
         name="Edwin Agudelo"
         specialty="Voz, Oficio y Escenario · Tenor Lírico & Roster Soberano"
-        imageUrl="/images/brand/ear_diamante_central.png"
+        imageUrl="/images/brand/ear_logo_official_diamond.png"
       />
     </main>
   );

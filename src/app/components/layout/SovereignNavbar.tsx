@@ -63,21 +63,36 @@ const SovereignNavbar = () => {
           roleStyles[role] || roleStyles.ROLE_GUEST
         )}
       >
-        {/* LOGO & BRAND */}
+        {/* LOGO & BRAND (PRODUCTORA EAR DIAMANTE VS VIMUME COLIBRÍ) */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className={cn(
-            "w-10 h-10 rounded-full overflow-hidden border p-0.5 flex items-center justify-center transition-transform group-hover:scale-105",
-            role === 'ROLE_B2G' ? "border-blue-400/60 shadow-[0_0_20px_rgba(59,130,246,0.4)]" : "border-[#ecb613]/60 shadow-[0_0_20px_rgba(236,182,19,0.4)]"
+            "w-10 h-10 rounded-2xl overflow-hidden border p-0.5 flex items-center justify-center transition-all group-hover:scale-105 bg-black",
+            pathname?.startsWith('/vimume')
+              ? "border-[#00E5FF]/60 shadow-[0_0_20px_rgba(0,229,255,0.4)]"
+              : role === 'ROLE_B2G' 
+                ? "border-blue-400/60 shadow-[0_0_20px_rgba(59,130,246,0.4)]" 
+                : "border-[#FF2B44]/70 shadow-[0_0_20px_rgba(255,43,68,0.45)]"
           )}>
             <img 
-              src="https://lh3.googleusercontent.com/a/ACg8ocJF7O8ZaJG4WsLPfVaVe5f5Gmu80nOoea2teuOAs-s9sq53uNk=s288-c-no" 
-              alt="EAR OS Logo" 
-              className="w-full h-full object-cover rounded-full"
+              src={pathname?.startsWith('/vimume') ? "/images/brand/colibri_isotipo.png" : "/images/brand/ear_logo_official_diamond.png"} 
+              alt={pathname?.startsWith('/vimume') ? "VIMUME Logo Colibrí" : "Productora EAR Logotipo Oficial Diamante"} 
+              className="w-full h-full object-cover rounded-xl"
             />
           </div>
-          <span className="text-lg md:text-xl font-bold font-syne tracking-tighter text-white">
-            {role === 'ROLE_B2G' ? "EarOS B2G" : "EarOS"}
-          </span>
+          <div className="flex flex-col">
+            <span className="text-base md:text-lg font-black font-syne tracking-tight text-white leading-none">
+              {pathname?.startsWith('/vimume') ? (
+                <>VIMUME <span className="text-[#00E5FF]">OS</span></>
+              ) : role === 'ROLE_B2G' ? (
+                <>EAR OS <span className="text-blue-400">B2G</span></>
+              ) : (
+                <>PRODUCTORA <span className="text-[#FF2B44]">EAR</span></>
+              )}
+            </span>
+            <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mt-0.5">
+              {pathname?.startsWith('/vimume') ? "Neuroacústica 40Hz" : "Infraestructura S-Class"}
+            </span>
+          </div>
         </Link>
 
         {/* RUTAS S-CLASS & VIMUME */}

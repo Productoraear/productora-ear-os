@@ -33,11 +33,28 @@
     --color-ear-sapphire-dark: #040914;
     --color-ear-coral: #FF455B;
 
+    /* 💎 PALETA SOBERANA DIAMANTE ROJO (PRODUCTORA EAR / FUEGO / PASIÓN) */
+    --color-ear-red-primary: #E11D48;
+    --color-ear-red-action: #FF2B44;
+    --color-ear-red-highlight: #FF6B7D;
+    --color-ear-red-deep: #9F1239;
+    --color-ear-red-light: #FEE2E2;
+
+    /* 💎 PALETA SOBERANA DIAMANTE AZUL (VIMUME / NEUROACÚSTICA / CIENCIA) */
+    --color-ear-blue-deep: #030712;
+    --color-ear-blue-technical: #0284C7;
+    --color-ear-blue-electric: #258DCD;
+    --color-ear-blue-ice: #BAE6FD;
+    --color-ear-blue-sky: #44A3D8;
+
     /* Gradientes & Resplandores Corporativos */
     --grad-ear-sapphire: linear-gradient(185deg, #081226 0%, #000000 100%);
+    --grad-ear-red: linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%);
+    --grad-ear-blue: linear-gradient(135deg, #BAE6FD 0%, #44A3D8 35%, #258DCD 70%, #0284C7 100%);
     --glow-ear-blue: 0 0 25px rgba(37, 141, 205, 0.35);
     --glow-ear-cyan: 0 0 20px rgba(170, 214, 205, 0.25);
     --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
+    --glow-ear-red: 0 0 25px rgba(255, 43, 68, 0.4);
 
     /* 🖋️ TIPOGRAFÍA SOBERANA: FRANCIA (FRAUNCES) + MONTSERRAT */
     --font-francia: var(--font-fraunces), 'Fraunces', Georgia, serif;
