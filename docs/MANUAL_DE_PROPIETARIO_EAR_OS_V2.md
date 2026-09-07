@@ -1,8 +1,8 @@
-# 📖 MANUAL DE PROPIETARIO & OPERACIÓN ATÓMICA · EAR OS V2 GOLD
-**Sistema Operativo Integral para la Industria de la Música, Eventos S-Class, FinTech de Regalías y Archivo Soberano**
-*Versión de Plataforma:* **v4.22 (Release Tag: `v4.21-cuebridge-sclass`)**  
+# 📖 MANUAL DE PROPIETARIO & OPERACIÓN ATÓMICA · EAR OS V5 OMEGA
+**Autonomous Business Operating System (ABOS) & B2B/B2G Matchmaking Engine**
+*Versión de Plataforma:* **v5.0 OMEGA (Release Tag: `v5.0-abos-sclass`)**  
 *Dominio Canónico Soberano:* **https://www.productoraear.com**  
-*Fecha de Compilación:* **2026-08-23 19:40:51 CEST**  
+*Fecha de Compilación:* **2026-09-07 22:00:00 CEST**  
 *Clasificación de Seguridad:* **S-Class Enterprise High-Signal (SSOT / Modo CEO)**
 
 ---
@@ -19,6 +19,7 @@
 8. [CAPÍTULO 8: GUÍAS DE OPERACIÓN PASO A PASO POR ROL](#capítulo-8-guías-de-operación-paso-a-paso-por-rol)
 9. [CAPÍTULO 9: FÓRMULAS ACÚSTICAS, MATEMÁTICAS DE PRICING Y BLINDAJE LEGAL](#capítulo-9-fórmulas-acústicas-matemáticas-de-pricing-y-blindaje-legal)
 10. [CAPÍTULO 10: PROCEDIMIENTOS DE MANTENIMIENTO, ROLLBACK Y HARDWARE OFFLOADING](#capítulo-10-procedimientos-de-mantenimiento-rollback-y-hardware-offloading)
+11. [CAPÍTULO 11: MOTOR VAMPÍRICO DE DATOS RAG Y MONOPOLIO ZTM](#capítulo-11-motor-vampírico-de-datos-rag-y-monopolio-ztm)
 
 ---
 
@@ -263,6 +264,20 @@ Debe devolver **Exit Code 0 (0 errores)**.
 - **Servidor Ollama:** `http://localhost:11434`
 - **Modelos Recomendados:** `qwen2.5-coder:32b` para análisis de código y `llama3.1:latest` para extracción semántica RAG.
 - **Uso:** Todas las tareas de indexación de textos masivos se delegan a la GPU local mediante llamadas HTTP locales sin consumir cuota de tokens en la nube.
+
+---
+
+## CAPÍTULO 11: MOTOR VAMPÍRICO DE DATOS RAG Y MONOPOLIO ZTM
+
+### 11.1 Arquitectura del Data Lake (Vampire Engine)
+EAR OS V5.0 incorpora una constelación de scripts de extracción y enriquecimiento masivo que operan de noche en background (`scripts/vampirization/`).
+- **`night_html_extractor.py`**: Motor de scraping crudo que evade WAFs complejos (ej. Akamai) mediante curl_cffi y peticiones *stateless*, almacenando copias físicas en `EAR_ABSORBED_VAULT/vendors_html/`.
+- **`night_html_enricher.mjs`**: Pipeline sin navegador (Cheerio) que extrae datos limpios (precios, descripciones completas, fotos, iframes de vídeos y redes sociales), ignorando artículos genéricos basura.
+- **`night_image_downloader.mjs`**: Motor de asimilación de assets con sistema de *fallbackUrl* anti-404 para asegurar que el CDN local almacena la calidad S-Class de las imágenes extraídas.
+- **`night_rag_sync.mjs`**: Compilador final que mapea y sincroniza los datos extraídos en `all_providers_database.json` y los tokeniza para el motor de recomendación semántica local (RAG).
+
+### 11.2 Valoración y Capitalización de Datos (The Data Moat)
+La capacidad de EAR OS de ingerir y actualizar más de 19.300 proveedores reales de manera autónoma, estructurarlos y disponibilizarlos localmente sin consumo de tokens de API de terceros, sitúa a la plataforma en una **valoración técnica Seed / Series A S-Class**. Este "foso defensivo" (Data Moat) permite monetizar leads (VIMUME / Producciones B2G / VIP) con coste de adquisición cero, consolidando el dominio del sector.
 
 ---
 *Fin del Manual de Propietario · Productora EAR S.L. · Todos los derechos reservados.*

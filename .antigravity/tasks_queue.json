@@ -212,6 +212,48 @@
       "status": "FROZEN",
       "title": "Extracción de Velocity Media",
       "condition": "Bloqueado hasta alcanzar 2.500,00 € de facturación real o 5 depósitos confirmados en Stripe."
+    },
+    {
+      "id": "TAREA_37_BRAND_IDENTITY_CORE",
+      "priority": "P0_CRITICAL",
+      "status": "PENDING",
+      "auto_advance": true,
+      "title": "Identidad de Marca: Extracción y Consolidación S-Class del Logo EAR",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "description": "Se ha ejecutado search_clean_logos_pc.ps1. Hay 21 candidatos en public/brand_assets_ear/candidates/. Cline debe examinar las imágenes, seleccionar el logotipo definitivo (Diamante EAR Auténtico) para S-Class, optimizarlo y consolidar su uso en toda la plataforma. A continuación, debe refinar y alinear src/lib/brand-palette.ts, tailwind.config.js y globals.css al estándar visual Cinematic Monochrome (True Black, Oro EAR, Cyan Hielo).",
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "Selección de Logotipo",
+          "action": "visual_audit",
+          "instructions": [
+            "Usar modelo de visión local para examinar los 21 candidatos en public/brand_assets_ear/candidates/",
+            "Identificar el logotipo EAR Diamante más nítido y auténtico, preferiblemente con fondo transparente",
+            "Mover el ganador a public/brand_assets_ear/logo_ear_sclass.png"
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Consolidación de Identidad CSS/TS",
+          "action": "code_modification",
+          "instructions": [
+            "Actualizar src/lib/brand-palette.ts para exportar la paleta de colores inmutable (True Black #050505, Paper #FFFFFF, Charcoal #1a1a1a, Azul Eléctrico #258DCD, Oro EAR #ecb613)",
+            "Propagar variables en src/app/globals.css y tailwind.config.js",
+            "Sustituir referencias huérfanas al logo en componentes Header/Footer apuntando al nuevo logo_ear_sclass.png"
+          ]
+        }
+      ],
+      "outputs": [
+        "public/brand_assets_ear/logo_ear_sclass.png",
+        "src/lib/brand-palette.ts",
+        "src/app/globals.css",
+        "tailwind.config.js"
+      ],
+      "governance_checks": [
+        "Exit Code 0 obligatorio en npx tsc",
+        "Cero gradientes slop (prohibido purpurina IA o violetas)",
+        "El logotipo debe mantener su integridad original de Productora EAR"
+      ]
     }
   ],
   "active_sprint": "SPRINT_CASH_2500",

@@ -64,8 +64,6 @@ def main():
     failed = 0
     skipped = 0
     
-    session = requests.Session(impersonate="chrome110", timeout=15)
-    
     for p in providers:
         if count >= 5000:
             break
@@ -85,7 +83,7 @@ def main():
             continue
             
         try:
-            resp = session.get(url)
+            resp = requests.get(url, impersonate="chrome110", timeout=15)
             if resp.status_code == 200:
                 html = resp.text
                 html_path.write_text(html, encoding="utf-8")
