@@ -35,7 +35,7 @@ const ARROCES_CATALOG: ArrozDish[] = [
     badge: 'TOP VENTAS EVENTOS',
     rating: 5.0,
     reviews: 64,
-    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&auto=format&fit=crop&q=80',
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000092-978dd978e1/700/IMG_1919.jpeg?ph=21f8870982',
     description: 'Todo el marisco pelado a mano. Fondo de pescado de roca y cangrejo azul con sofrito lento de ñoras, sepia fresca de lonja y gambón rojo.',
     ingredients: ['Sepia de bahía', 'Gambón pelado', 'Fondo de roca 14h', 'Azafrán en hebra D.O.'],
     socarratLevel: 'Crujiente Caramelizado',
@@ -50,7 +50,7 @@ const ARROCES_CATALOG: ArrozDish[] = [
     badge: 'MÁXIMO LUJO VIP',
     rating: 5.0,
     reviews: 42,
-    image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop&q=80',
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000119-0913009133/700/IMG_1933.jpeg?ph=21f8870982',
     description: 'Carabineros salvajes de gran calibre abiertos en canal sobre el arroz. Coral emulsionado en la salmorreta aportando un sabor marino profundo e inolvidable.',
     ingredients: ['Carabinero salvaje XL', 'Salmorreta alicantina', 'Fondo de galeras y cangrejo', 'Arroz bomba selecto'],
     socarratLevel: 'Crujiente Caramelizado',
@@ -58,61 +58,61 @@ const ARROCES_CATALOG: ArrozDish[] = [
   },
   {
     id: 'gamba-roja-denia',
-    title: 'Arroz de Gamba Roja & Ajetes Tiernos',
+    title: 'Arroz de Gamba Roja & Bogavante',
     subtitle: 'Elegancia mediterránea con reducción de cabezas en vivo',
     pricePerPax: 23.00,
     category: 'MARISCO',
     badge: 'SELECCIÓN GOURMET',
     rating: 4.98,
     reviews: 38,
-    image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=800&auto=format&fit=crop&q=80',
-    description: 'Gamba roja de subasta tratada con precisión milimétrica. Fondo translúcido pero intenso, con el jugo yodado de las cabezas marcando cada grano.',
-    ingredients: ['Gamba roja fresca', 'Ajos tiernos del campo', 'Fumet de pescado blanco', 'Pimentón de la Vera ahumado'],
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000114-e266ee2670/700/D04D45A8-88BF-47FF-B2BD-3B2665899E97.webp?ph=21f8870982',
+    description: 'Gamba roja fresca y bogavante nacional. Fondo translúcido pero intenso, con el jugo yodado de las cabezas marcando cada grano.',
+    ingredients: ['Bogavante troceado', 'Gamba roja fresca', 'Fumet de pescado blanco', 'Pimentón de la Vera ahumado'],
     socarratLevel: 'Punto Óptimo',
     pairing: 'Cava Reserva o Rosado provenzal'
   },
   {
     id: 'rabo-toro-glaseado',
-    title: 'Arroz Meloso de Rabo de Toro & Trufa',
+    title: 'Arroz Meloso de Rabo de Toro & Setas',
     subtitle: 'Potencia cárnica desmigada tras 12h de cocción a fuego lento',
     pricePerPax: 19.50,
     category: 'CARNE',
     badge: 'OTOÑO-INVIERNO SIGNATURE',
     rating: 4.99,
     reviews: 51,
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80',
-    description: 'Rabo de toro estofado al vino tinto de Madrid y desmigado a mano. Caldo denso y gelatinoso que envuelve el arroz en una textura aterciopelada y perfumada de trufa.',
-    ingredients: ['Rabo de toro meloso', 'Vino tinto D.O. Vinos de Madrid', 'Láminas de trufa negra', 'Chalotas caramelizadas'],
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000105-0c49f0c4a2/700/IMG_1927.jpeg?ph=21f8870982',
+    description: 'Rabo de toro estofado al vino tinto y desmigado a mano. Caldo denso y gelatinoso que envuelve el arroz en una textura aterciopelada y perfumada de setas.',
+    ingredients: ['Rabo de toro meloso', 'Vino tinto crianza', 'Boletus y setas de temporada', 'Chalotas caramelizadas'],
     socarratLevel: 'Meloso',
     pairing: 'Ribera del Duero Crianza o Tinto de Toro'
   },
   {
     id: 'secreto-iberico-piquillo',
-    title: 'Arroz de Secreto Ibérico & Pimiento de Cristal',
-    subtitle: 'Equilibrio maestro de grasa noble y dulzor vegetal',
+    title: 'Arroz de Secreto Ibérico & Boletus',
+    subtitle: 'Equilibrio maestro de grasa noble y aroma de dehesa',
     pricePerPax: 18.00,
     category: 'CARNE',
     badge: 'POPULAR EN FINCAS',
     rating: 4.96,
     reviews: 47,
-    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
-    description: 'Secreto ibérico de bellota dorado a fuego vivo para mantener los jugos, acompañado de pimientos de cristal confitados y fondo de jamón curado.',
-    ingredients: ['Secreto ibérico de bellota', 'Pimientos de cristal', 'Fondo de jamón y hueso', 'Romero fresco de monte'],
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000094-1546c1546e/700/IMG_1921.jpeg?ph=21f8870982',
+    description: 'Secreto ibérico de bellota dorado a fuego vivo para mantener los jugos, acompañado de boletus y fondo de jamón curado.',
+    ingredients: ['Secreto ibérico de bellota', 'Boletus silvestres', 'Fondo de jamón y hueso', 'Romero fresco de monte'],
     socarratLevel: 'Crujiente Caramelizado',
     pairing: 'Rioja Reserva o Garnacha de Gredos'
   },
   {
     id: 'costilla-duroc-alcachofa',
-    title: 'Arroz de Costilla Duroc & Alcachofa de Tudela',
-    subtitle: 'La armonía campestre de huerta y carne confitada',
+    title: 'Arroz Campero de Pato & Costilla Duroc',
+    subtitle: 'La armonía campestre de huerta y carnes confitadas',
     pricePerPax: 16.90,
     category: 'CARNE',
-    badge: 'TEMPORADA DE HUERTA',
+    badge: 'SABOR TRADICIONAL',
     rating: 4.95,
     reviews: 33,
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80',
-    description: 'Costilla de cerdo Duroc marinada y glaseada, corazones de alcachofa fritos en el momento y judía bobby plana de proximidad.',
-    ingredients: ['Costilla Duroc deshuesada', 'Alcachofa de Tudela', 'Judía verde bobby', 'Fondo cárnico concentrado'],
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000102-894c3894c5/700/IMG_1925.jpeg?ph=21f8870982',
+    description: 'Magret y confit de pato con costilla de cerdo Duroc marinada y glaseada, judía bobby plana y fondo cárnico de cocción prolongada.',
+    ingredients: ['Confit de pato', 'Costilla Duroc deshuesada', 'Judía verde plana', 'Fondo cárnico concentrado'],
     socarratLevel: 'Crujiente Caramelizado',
     pairing: 'Mencía del Bierzo o Somontano'
   },
@@ -125,7 +125,7 @@ const ARROCES_CATALOG: ArrozDish[] = [
     badge: 'CONTRASTE VISUAL',
     rating: 4.97,
     reviews: 40,
-    image: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=800&auto=format&fit=crop&q=80',
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000093-c5782c5785/700/IMG_1920.jpeg?ph=21f8870982',
     description: 'Tinta natural de calamar fresco, sepionet picado a dados pequeños y all-i-oli suave de mortero preparado en directo durante el showcooking.',
     ingredients: ['Calamar de potera', 'Tinta natural fresca', 'Fondo oscuro de crustáceos', 'All-i-oli de mortero'],
     socarratLevel: 'Crujiente Caramelizado',
@@ -140,7 +140,7 @@ const ARROCES_CATALOG: ArrozDish[] = [
     badge: 'CANON TRADICIONAL',
     rating: 5.0,
     reviews: 58,
-    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&auto=format&fit=crop&q=80',
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000103-bf4a2bf4a5/700/IMG_1926.jpeg?ph=21f8870982',
     description: 'Elaborada según la receta canónica con fuego de sarmiento y leña de naranjo. Pollo campero, conejo de granja, bajoqueta, garrofó valenciano y brizna de romero silvestre.',
     ingredients: ['Pollo campero', 'Conejo de granja', 'Garrofó auténtico', 'Romero silvestre alicantino'],
     socarratLevel: 'Crujiente Caramelizado',
@@ -155,7 +155,7 @@ const ARROCES_CATALOG: ArrozDish[] = [
     badge: '100% PLANT BASED',
     rating: 4.94,
     reviews: 28,
-    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80',
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000091-1398a1398c/700/IMG_1924.jpeg?ph=21f8870982',
     description: 'Corazones de alcachofa, espárragos trigueros, boletus edulis, pimientos asados a la leña y fondo 100% vegetal reducido durante 8 horas.',
     ingredients: ['Espárrago triguero', 'Boletus edulis', 'Alcachofa fresca', 'Fondo vegetal concentrado'],
     socarratLevel: 'Punto Óptimo',
@@ -170,7 +170,7 @@ const ARROCES_CATALOG: ArrozDish[] = [
     badge: 'CRUJIENTE DE HORNO',
     rating: 4.96,
     reviews: 35,
-    image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
+    image: 'https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000118-046a8046ab/700/fideua.png?ph=21f8870982',
     description: 'Fideo cabellín frito previamente para que quede de punta tras el golpe de calor. Sepia melosa, gamba arrocera y fondo marinero con all-i-oli de ajo negro.',
     ingredients: ['Fideo nº 0 cabellín', 'Sepia de lonja', 'Gamba arrocera', 'All-i-oli de ajo negro'],
     socarratLevel: 'Puntas Erguidas Crujientes',
@@ -251,6 +251,24 @@ export default function ArrocesSotaPage() {
           La evolución definitiva del servicio de arroces en Madrid y Zona Centro. Desde showcooking monumental a leña de sarmiento 
           en fincas exclusivas hasta delivery caliente en paellera tradicional con recogida posterior sin fianza.
         </p>
+
+        {/* 📸 HERO PANORAMIC BANNER AUTÉNTICO DE 120GRAMOS */}
+        <div className="relative w-full max-w-5xl mx-auto h-64 sm:h-80 md:h-96 rounded-3xl overflow-hidden mb-10 border border-[#ecb613]/30 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+          <img
+            src="https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000067-d7412d7415/72334_120gramos_Hero%20%281%29.webp?ph=21f8870982"
+            alt="Arroces monumentales y paellas gigantes en directo"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#030305] via-black/20 to-transparent pointer-events-none" />
+          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-[#ecb613]/50 text-[#ecb613] text-xs font-mono font-bold uppercase tracking-wider">
+              SHOWCOOKING MONUMENTAL EN VIVO
+            </span>
+            <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-white/10 text-zinc-300 text-xs font-mono">
+              Arroces & Brasas a Leña
+            </span>
+          </div>
+        </div>
 
         {/* Telemetría y Sellos de Garantía */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-4xl mx-auto mb-10">
@@ -339,6 +357,19 @@ export default function ArrocesSotaPage() {
               </div>
             </div>
 
+            {/* Foto Showcooking Real de 120gramos */}
+            <div className="relative h-48 w-full rounded-2xl overflow-hidden mb-5 border border-white/10">
+              <img
+                src="https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000140-b87c9b87cd/700/DSC06600.jpeg?ph=21f8870982"
+                alt="Showcooking de paellas en vivo con leña"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+              <span className="absolute bottom-2.5 left-3 text-[10px] font-mono text-[#ecb613] bg-black/80 px-2 py-0.5 rounded border border-[#ecb613]/30">
+                PUESTO GASTRONÓMICO DE GALA
+              </span>
+            </div>
+
             <h3 className="text-2xl font-black uppercase font-syne mb-2">
               Showcooking en Vivo a Fuego & Leña
             </h3>
@@ -390,6 +421,19 @@ export default function ArrocesSotaPage() {
               }`}>
                 {mode === 'DELIVERY' && <Check size={14} strokeWidth={3} />}
               </div>
+            </div>
+
+            {/* Foto Delivery Real de 120gramos */}
+            <div className="relative h-48 w-full rounded-2xl overflow-hidden mb-5 border border-white/10">
+              <img
+                src="https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000145-5a1755a177/700/DSC06488%202-0.jpeg?ph=21f8870982"
+                alt="Entrega en paellera caliente tradicional sin fianza"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+              <span className="absolute bottom-2.5 left-3 text-[10px] font-mono text-[#258DCD] bg-black/80 px-2 py-0.5 rounded border border-blue-500/30">
+                PAELLERA CALIENTE SIN FIANZA
+              </span>
             </div>
 
             <h3 className="text-2xl font-black uppercase font-syne mb-2">
@@ -637,6 +681,11 @@ export default function ArrocesSotaPage() {
                     }`}>
                       {addJamon && <Check size={12} strokeWidth={3} />}
                     </div>
+                    <img
+                      src="https://21f8870982.clvaw-cdnwnd.com/7c86c07c489a1fcfbd405fc42f4a985b/200000073-559c2559c5/700/Jamon_Iberico_Pepe-Cro%5B18555%5D.webp?ph=21f8870982"
+                      alt="Cortador Jamón Ibérico"
+                      className="w-12 h-12 rounded-xl object-cover border border-[#ecb613]/30 shrink-0"
+                    />
                     <div>
                       <div className="text-xs font-bold text-white">Cortador Profesional de Jamón Ibérico de Bellota</div>
                       <div className="text-[11px] text-zinc-400">Pieza 100% Bellota D.O. Guijuelo / Jabugo + Maestro Cortador 2h</div>
