@@ -31,7 +31,8 @@
     { "id": "TAREA_24_ONEPAGER_VIMUME_B2B_B2G", "status": "COMPLETED", "summary": "One-pager /vimume/propuesta con techo Art.118 LCSP." },
     { "id": "TAREA_26_SITEMAP_SANITY_AND_ARROCES_SOTA", "status": "COMPLETED", "summary": "Sitemap Index 5 particiones (generateSitemaps) + landing /arroces con imágenes 120gramos auténticas." },
     { "id": "TAREA_27_SITEMAP_INDEX_REFACTOR", "status": "COMPLETED", "summary": "Monolito 22.5k → 5 particiones generateSitemaps SOTA GSC. Commit: c01689aa" },
-    { "id": "TAREA_28_REDIRECT_SCLASS_SLUGS", "status": "COMPLETED", "summary": "Redirect inteligente /proveedores/{arroces,edwin,catering,...} → landing dedicada. Commit: 097ed0e2" }
+    { "id": "TAREA_28_REDIRECT_SCLASS_SLUGS", "status": "COMPLETED", "summary": "Redirect inteligente /proveedores/{arroces,edwin,catering,...} → landing dedicada. Commit: 097ed0e2" },
+    { "id": "TAREA_36_SITEMAP_INDEX_ROOT_FIX", "status": "COMPLETED", "summary": "Fix GSC 404: Endpoint maestro /sitemap-index.xml + rewrite /sitemap.xml + limpieza robots.txt. npx tsc Exit Code 0." }
   ],
   "tasks": [
     {

@@ -85,6 +85,14 @@ const nextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/sitemap-index.xml',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
