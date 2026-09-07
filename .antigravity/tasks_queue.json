@@ -387,6 +387,22 @@
       "status": "FROZEN",
       "title": "Extracción de Velocity Media",
       "condition": "Bloqueado hasta alcanzar 2.500,00 € de facturación real o 5 depósitos confirmados en Stripe."
+    },
+    {
+      "id": "TAREA_26_SITEMAP_SANITY_AND_ARROCES_SOTA",
+      "priority": "P0_CRITICAL",
+      "status": "COMPLETED",
+      "verified_exit_code": 0,
+      "deployed_route": "/arroces",
+      "title": "Saneamiento Forense Sitemap XML (Línea 45400) & Vampirización SOTA 120gramos (/arroces)",
+      "target_files": [
+        "src/app/sitemap.ts",
+        "src/app/(public)/arroces/page.tsx",
+        "src/app/(public)/catering-brasas/page.tsx",
+        "src/app/(public)/proveedores/[slug]/page.tsx"
+      ],
+      "description": "1. Diagnóstico forense de GSC Línea 45400 resuelto: sanitización estricta de slugs RFC 3986 (eliminación de caracteres con espacios, paréntesis y artefactos de scraping en all_providers_database.json). Filtro inmutable en addEntry bloqueando cualquier URL no canónica. 2. Fallback enriquecido en getProviderData para bodas-vendors-harvested.json evitando soft-404s. 3. Creación de /arroces: vampirización y elevación SOTA de 120gramos.com con 10 arroces maestros, dos modalidades operativas (Showcooking leña/gas vs Delivery tradicional sin fianza), cotizador reactivo con logística desde Méntrida, sonido ambiental Bose (<75 dB), depósito 100€ Stripe Price-Lock y enlace de retención a WhatsApp +34 693 693 048.",
+      "completed_at": "2026-09-07T19:25:00.000Z"
     }
   ],
   "active_sprint": "SPRINT_CASH_2500",

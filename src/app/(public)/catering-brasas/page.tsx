@@ -257,20 +257,18 @@ export default function CateringBrasasPage() {
           </div>
 
           <div className="space-y-3.5 pt-2">
-            <div 
-              onClick={() => setLocked(!locked)}
-              className={`w-full py-4.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
-                locked 
-                  ? 'bg-emerald-500 text-black shadow-2xl shadow-emerald-500/30' 
-                  : 'bg-gradient-to-r from-[#ecb613] via-amber-400 to-[#d4a00e] text-black shadow-[0_0_40px_rgba(236,182,19,0.35)] hover:brightness-110 active:scale-98'
-              }`}
+            <a
+              href="https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-4.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-between transition-all bg-gradient-to-r from-[#ecb613] via-amber-400 to-[#d4a00e] text-black shadow-[0_0_40px_rgba(236,182,19,0.35)] hover:brightness-110 active:scale-98"
             >
               <div className="flex items-center gap-2.5">
                 <Lock size={18} />
-                <span>{locked ? '✓ FECHA BLOQUEADA 72H EN STRIPE' : 'DESLIZAR PARA BLOQUEAR FECHA'}</span>
+                <span>BLOQUEAR FECHA 72H CON DEPÓSITO STRIPE</span>
               </div>
               <span className="font-mono text-base font-black">100 €</span>
-            </div>
+            </a>
 
             <a
               href={`https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20quiero%20reservar%20${encodeURIComponent(selectedMenu.title)}%20para%20${pax}%20comensales%20(${totalQuote}%E2%82%AC).`}
@@ -282,6 +280,30 @@ export default function CateringBrasasPage() {
               <span>Despachar Payload Directo a WhatsApp (+34 693 693 048)</span>
             </a>
           </div>
+        </div>
+
+        {/* Cross-Link a Maestros Arroceros S-Class */}
+        <div className="mt-8 p-6 rounded-2xl bg-[#09090e] border border-[#ecb613]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613] shrink-0">
+              <Flame size={24} />
+            </div>
+            <div>
+              <div className="text-sm font-bold text-white uppercase font-syne">
+                ¿Prefieres Showcooking de Arroces & Paellas Gigantes en Vivo?
+              </div>
+              <div className="text-xs text-zinc-400">
+                10 arroces de autor, leña de sarmiento y delivery en paellera caliente directa a tu finca.
+              </div>
+            </div>
+          </div>
+          <Link
+            href="/arroces"
+            className="px-6 py-3 rounded-xl bg-white/10 hover:bg-[#ecb613] hover:text-black font-black text-xs uppercase tracking-wider transition-all shrink-0 flex items-center gap-2"
+          >
+            <span>Ver Carta Arroces SOTA</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </section>
     </main>

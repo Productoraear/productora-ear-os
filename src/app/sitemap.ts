@@ -30,6 +30,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ) => {
     // Normalización canónica estricta para evitar canibalización y doorway penalties
     const cleanUrl = url.trim().replace(/\/+$/, '');
+    
+    // FILTRO INMUTABLE S-CLASS: Bloqueo estricto de cualquier URL con espacios o caracteres no RFC 3986
+    if (/[\s()<>"'{}\\]/.test(cleanUrl)) {
+      return;
+    }
+
     if (!seenUrls.has(cleanUrl)) {
       seenUrls.add(cleanUrl);
       entries.push({
@@ -46,6 +52,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   addEntry(`${BASE_URL}/reservar/solista`, 1.0, 'daily');
   addEntry(`${BASE_URL}/vimume/propuesta`, 0.98, 'daily');
+  addEntry(`${BASE_URL}/arroces`, 0.98, 'daily');
+  addEntry(`${BASE_URL}/catering-brasas`, 0.95, 'weekly');
   addEntry(`${BASE_URL}/artistas/representacion`, 0.95, 'daily');
   addEntry(`${BASE_URL}/eventos/municipales`, 0.95, 'daily');
   addEntry(`${BASE_URL}/instituciones/catalogo-360`, 0.92, 'weekly');
@@ -65,7 +73,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   addEntry(`${BASE_URL}/calculadora`, 0.85, 'weekly');
   addEntry(`${BASE_URL}/alquiler-equipos-sonido-audiovisuales`, 0.90, 'weekly');
   addEntry(`${BASE_URL}/alquiler-pantallas-led-madrid`, 0.85, 'weekly');
-  addEntry(`${BASE_URL}/catering-brasas`, 0.85, 'weekly');
   addEntry(`${BASE_URL}/ocasiones/ayuntamientos`, 0.90, 'weekly');
   addEntry(`${BASE_URL}/b2g`, 0.90, 'weekly');
   addEntry(`${BASE_URL}/arsenal`, 0.85, 'weekly');
@@ -149,8 +156,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
   addEntry(`${BASE_URL}/artistas/edwin-agudelo/ultra-luxury-nda`, 0.75, 'monthly');
 
+  // Función ultra-estricta de sanitización y validación de slugs (RFC 3986 & XML Sitemap SOTA)
+  const sanitizeSlug = (input: any): string | null => {
+    if (!input || typeof input !== 'string') return null;
+    const clean = input
+      .toLowerCase()
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Eliminar acentos diacríticos
+      .replace(/[^a-z0-9\-]/g, '-')    // Reemplazar caracteres no estándar y espacios por guiones
+      .replace(/-+/g, '-')             // Colapsar guiones múltiples
+      .replace(/^-|-$/g, '');          // Recortar guiones iniciales o finales
+
+    // Longitud canónica válida
+    if (clean.length < 3 || clean.length > 70) return null;
+
+    // Filtro anti-basura y anti-scraping artifacts
+    if (
+      clean.includes('base-de-datos') ||
+      clean.includes('bodasnet') ||
+      clean.includes('undefined') ||
+      clean.includes('null') ||
+      clean.includes('test') ||
+      (clean.startsWith('prov-slug-') && clean.length > 45)
+    ) {
+      return null;
+    }
+
+    return clean;
+  };
+
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 6. PROVEEDORES HOMOLOGADOS (ALL_PROVIDERS_DATABASE.JSON - 7.516)
+  // 6. PROVEEDORES HOMOLOGADOS (ALL_PROVIDERS_DATABASE.JSON - Curados)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   try {
     const curatedPath = path.join(process.cwd(), 'src', 'data', 'all_providers_database.json');
@@ -159,9 +196,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const allProviders: any[] = JSON.parse(raw);
       
       allProviders.forEach(provider => {
-        const slug = provider.id || provider.slug;
-        if (slug && typeof slug === 'string' && slug.length > 2) {
-          addEntry(`${BASE_URL}/proveedores/${slug}`, 0.70, 'weekly');
+        // Priorizar el slug semántico limpio sobre ID técnico
+        const rawSlug = provider.slug || provider.atomic_specs?.slug || provider.id;
+        const validSlug = sanitizeSlug(rawSlug);
+        if (validSlug) {
+          addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.70, 'weekly');
         }
       });
     }
@@ -182,19 +221,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       for (const v of harvestedVendors) {
         if (entries.length >= TARGET_TOTAL_URLS) break;
         
-        // Extracción de slug limpio y canónico
-        let slug = v.id || v.slug;
-        if (!slug && v.name && typeof v.name === 'string') {
-          slug = v.name
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, '');
-        }
-
-        if (slug && typeof slug === 'string' && slug.length > 3) {
-          addEntry(`${BASE_URL}/proveedores/${slug}`, 0.65, 'monthly');
+        const rawSlug = v.slug || v.id || v.name;
+        const validSlug = sanitizeSlug(rawSlug);
+        if (validSlug) {
+          addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.65, 'monthly');
         }
       }
     }

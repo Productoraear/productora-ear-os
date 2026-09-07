@@ -20,12 +20,12 @@ interface PageProps {
 
 // 🛡️ LISTA DE RAÍCES ESTÁTICAS DE NIVEL 1 QUE TIENEN RUTA PROPIA EN APP ROUTER
 const EXACT_ROOT_STATIC_ROUTES = new Set([
-  'about', 'academia', 'afiliados', 'artistas', 'artists', 'aviso-legal', 'ayuntamientos',
-  'ayuntamientospremium', 'ayuntamientos-premium', 'blog', 'calculadora',
+  'about', 'academia', 'afiliados', 'arroces', 'artistas', 'artists', 'aviso-legal', 'ayuntamientos',
+  'ayuntamientospremium', 'ayuntamientos-premium', 'blog', 'calculadora', 'catering-brasas',
   'categorias', 'checkout', 'contacto', 'cookies', 'cotizador', 'dossier', 'dossier-seo',
   'empresarios', 'infraestructura', 'journal', 'marketplace',
   'precios', 'presupuesto', 'privacidad', 'proveedores',
-  'proyectos', 'reclamar-perfil', 'soberania-tecnica', 'social',
+  'proyectos', 'reclamar-perfil', 'reservar', 'soberania-tecnica', 'social',
   'the-signal', 'vimume', 'login', 'register', 'admin', 'nexus', 'dashboard',
   'studio', 'api', 'guia-estrategica', 'casos-exito', 'subasta', 'metodologia',
   'prensa', 'terms', 'privacy', 'directorio', 'business', 'comparativas-premium'

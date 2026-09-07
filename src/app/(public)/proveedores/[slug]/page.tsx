@@ -100,6 +100,7 @@ function getProxiedImage(url: string | undefined): string {
 
 let cachedCuratedProviders: any[] | null = null;
 let cachedVampProviders: any[] | null = null;
+let cachedHarvestedVendors: any[] | null = null;
 
 async function getProviderData(slug: string) {
   const slugNorm = slug.toLowerCase().trim();
@@ -176,6 +177,48 @@ async function getProviderData(slug: string) {
     }
   } catch (err) {
     console.warn(`[PROVIDER_SLUG] Error leyendo vampirized_providers:`, err);
+  }
+
+  // 4. Fallback: Dataset Cosechado (Con caché singleton)
+  try {
+    if (!cachedHarvestedVendors) {
+      const harvestedPath = path.join(process.cwd(), 'src', 'data', 'bodas-vendors-harvested.json');
+      if (fs.existsSync(harvestedPath)) {
+        cachedHarvestedVendors = JSON.parse(fs.readFileSync(harvestedPath, 'utf-8'));
+      }
+    }
+    if (cachedHarvestedVendors) {
+      const found = cachedHarvestedVendors.find((v: any) => {
+        if (v.slug?.toLowerCase() === slugNorm) return true;
+        if (v.id?.toLowerCase() === slugNorm) return true;
+        const nameSlug = (v.name || '')
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/(^-|-$)/g, '');
+        return nameSlug === slugNorm;
+      });
+      if (found) {
+        return {
+          id: found.id || slugNorm,
+          name: found.name,
+          category: found.category || 'Servicio para Eventos',
+          province: found.location?.province || 'Madrid',
+          address: `${found.location?.city || 'Madrid'}, ${found.location?.province || 'Madrid'}`,
+          phone: found.phone || CENTRALITA,
+          telephone: found.phone || CENTRALITA,
+          rating: found.metrics?.rating || 4.9,
+          reviews: found.metrics?.reviewCount || 18,
+          description: found.description || `Proveedor profesional homologado para bodas y eventos en ${found.location?.province || 'Madrid'}.`,
+          gallery: found.media?.coverImage ? [found.media.coverImage] : [],
+          img: found.media?.coverImage || null,
+          basePrice: found.pricing?.rentalBasePrice || 650,
+        };
+      }
+    }
+  } catch (err) {
+    console.warn(`[PROVIDER_SLUG] Error leyendo bodas-vendors-harvested:`, err);
   }
 
   return null;
