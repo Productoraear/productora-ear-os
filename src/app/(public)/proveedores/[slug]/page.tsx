@@ -201,6 +201,47 @@ async function getProviderData(slug: string) {
     console.warn(`[PROVIDER_SLUG] Error leyendo vampirized_providers:`, err);
   }
 
+  // 3.5 Fallback: Dataset Enriquecido Nocturno
+  try {
+    const enrichedPath = path.join(process.cwd(), 'src', 'data', 'vendors-enriched-night.json');
+    if (fs.existsSync(enrichedPath)) {
+      const enrichedData = JSON.parse(fs.readFileSync(enrichedPath, 'utf-8'));
+      const found = enrichedData.find((p: any) => {
+        if (p.slug?.toLowerCase() === slugNorm) return true;
+        const nameSlug = (p.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        return nameSlug === slugNorm;
+      });
+      if (found) {
+        return {
+          id: found.id || found.slug || slugNorm,
+          name: found.name,
+          category: found.category || 'Servicio para Eventos',
+          province: found.location?.province || found.provincia || 'Madrid',
+          address: found.address || `${found.location?.city || found.provincia || 'Madrid'}, España`,
+          phone: found.telephone || found.phone || CENTRALITA.tel,
+          telephone: found.telephone || found.phone || CENTRALITA.tel,
+          rating: found.metrics?.rating || found.rating || 5.0,
+          reviews: found.metrics?.reviewCount || found.reviews?.length || 24,
+          description: found.description_full || found.description || `Proveedor profesional homologado para bodas y eventos.`,
+          gallery: found.images && found.images.length > 0 ? found.images : (found.media?.coverImage ? [found.media.coverImage] : []),
+          img: (found.images && found.images[0]) || found.media?.coverImage || null,
+          basePrice: (() => {
+            const priceStr = found.pricing?.rentalBasePrice || found.prices?.[0];
+            if (!priceStr) return 900;
+            if (typeof priceStr === 'number') return priceStr;
+            const match = String(priceStr).match(/\d+/);
+            return match ? parseInt(match[0], 10) : 900;
+          })(),
+          services_list: found.services || [],
+          social_links: found.social_links || {},
+          reviews_list: found.reviews || []
+        };
+      }
+    }
+  } catch (err) {
+    console.warn(`[PROVIDER_SLUG] Error leyendo vendors-enriched-night.json:`, err);
+  }
+
   // 4. Fallback: Dataset Cosechado (Con caché singleton)
   try {
     if (!cachedHarvestedVendors) {

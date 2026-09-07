@@ -72,7 +72,7 @@
     {
       "id": "TAREA_31_NIGHT_VAMPIRE_PROVIDERS_HTML",
       "priority": "P1_HIGH",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "auto_advance": true,
       "next_task_id": "TAREA_32_NIGHT_VAMPIRE_EXTRACT_ENRICHMENT",
       "title": "Vampirización Nocturna: Extracción HTML Masiva de Proveedores Cosechados",
@@ -124,7 +124,7 @@
     {
       "id": "TAREA_32_NIGHT_VAMPIRE_EXTRACT_ENRICHMENT",
       "priority": "P1_HIGH",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "auto_advance": true,
       "next_task_id": "TAREA_33_NIGHT_VAMPIRE_IMAGES_DOWNLOAD",
       "title": "Vampirización Nocturna: Enriquecimiento de Datos desde HTML Descargado",
