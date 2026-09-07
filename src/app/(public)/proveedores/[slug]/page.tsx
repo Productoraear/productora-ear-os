@@ -1,5 +1,5 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { 
   ShieldCheck, 
   Sparkles, 
@@ -104,6 +104,28 @@ let cachedHarvestedVendors: any[] | null = null;
 
 async function getProviderData(slug: string) {
   const slugNorm = slug.toLowerCase().trim();
+
+  // ━━━ REDIRECCIÓN INMEDIATA: Slugs con landing S-Class dedicada ━━━
+  const SCLASS_REDIRECT_MAP: Record<string, string> = {
+    'arroces': '/arroces',
+    'arroz': '/arroces',
+    'paella': '/arroces',
+    'paellas': '/arroces',
+    'paellas-gigantes': '/arroces',
+    'catering-brasas': '/catering-brasas',
+    'catering': '/catering-brasas',
+    'fincas': '/fincas',
+    'edwin-agudelo': '/artistas/edwin-agudelo',
+    'mariachi-mexicanto': '/artistas/mariachi-mexicanto',
+    'vimume': '/vimume',
+    'estudio-diseno': '/estudio-diseno',
+    'luces-navidad': '/arsenal/luces-navidad',
+    'alquiler-pantallas-led': '/alquiler-pantallas-led-madrid',
+    'sonido-iluminacion': '/alquiler-equipos-sonido-audiovisuales',
+  };
+  if (SCLASS_REDIRECT_MAP[slugNorm]) {
+    redirect(SCLASS_REDIRECT_MAP[slugNorm]);
+  }
 
   // 1. Consulta optimizada a PostgreSQL / Prisma
   if (process.env.POSTGRES_PRISMA_URL || process.env.DATABASE_URL) {
