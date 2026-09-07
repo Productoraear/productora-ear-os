@@ -182,18 +182,19 @@ export default function ArrocesSotaPage() {
   const [selectedDish, setSelectedDish] = useState<ArrozDish>(ARROCES_CATALOG[0]);
   const [pax, setPax] = useState<number>(60);
   const [mode, setMode] = useState<'SHOWCOOKING' | 'DELIVERY'>('SHOWCOOKING');
-  const [distanceKm, setDistanceKm] = useState<number>(35);
+  const [distanceKm, setDistanceKm] = useState<number>(20);
   const [addJamon, setAddJamon] = useState<boolean>(false);
   const [addAllioliBar, setAddAllioliBar] = useState<boolean>(true);
   const [addWineBar, setAddWineBar] = useState<boolean>(false);
   const [locked, setLocked] = useState<boolean>(false);
 
-  // Cálculos de presupuesto en tiempo real
+  // Cálculos de presupuesto en tiempo real (Logística desde Cocina Central del Proveedor)
   const baseFoodTotal = selectedDish.pricePerPax * pax;
   const showcookingFee = mode === 'SHOWCOOKING' ? 180 : 0; // Coste de montaje y puesta en escena
-  const logisticsDistance = Math.max(0, distanceKm - 50);
-  const logisticsTotal = logisticsDistance * 1.50; // 1,50 €/km después de 50km
-  const hotelSupplement = (distanceKm > 200) ? 120 : 0;
+  // Radio local gratuito hasta 30 km desde Cocina Central
+  const logisticsDistance = Math.max(0, distanceKm - 30);
+  const logisticsTotal = logisticsDistance * 1.20; // 1,20 €/km más allá del radio base
+  const hotelSupplement = (distanceKm > 180) ? 120 : 0;
   
   const jamonTotal = addJamon ? 350 : 0;
   const allioliTotal = addAllioliBar ? pax * 1.50 : 0;
@@ -217,7 +218,7 @@ export default function ArrocesSotaPage() {
     `🍲 Arroz: ${selectedDish.title}\n` +
     `👥 Comensales: ${pax} pax\n` +
     `🍳 Modalidad: ${mode === 'SHOWCOOKING' ? 'Showcooking en Directo con Leña/Gas' : 'Delivery en Paellera Caliente'}\n` +
-    `📍 Ubicación: Aprox. ${distanceKm} km desde Méntrida\n` +
+    `📍 Ubicación: Aprox. ${distanceKm} km desde Cocina Central (Madrid / Zona Centro)\n` +
     `🧀 Extras: ${[addJamon ? 'Cortador Jamón' : null, addAllioliBar ? 'Barra All-i-Oli' : null, addWineBar ? 'Bodega D.O. Madrid' : null].filter(Boolean).join(', ') || 'Ninguno'}\n` +
     `💰 Presupuesto Estimado: ${grandTotal} € (${estimatedPricePerPax} €/pax)\n` +
     `🔒 Deseo verificar disponibilidad de fecha con depósito de 100€ Price-Lock.`
@@ -452,26 +453,37 @@ export default function ArrocesSotaPage() {
               <div 
                 key={dish.id}
                 onClick={() => setSelectedDish(dish)}
-                className={`cursor-pointer rounded-3xl border transition-all duration-300 flex flex-col justify-between p-6 ${
+                className={`cursor-pointer rounded-3xl border transition-all duration-300 flex flex-col justify-between overflow-hidden group ${
                   isSelected 
                     ? 'bg-[#121008] border-[#ecb613] shadow-[0_0_35px_rgba(236,182,19,0.2)] ring-1 ring-[#ecb613]' 
                     : 'bg-[#09090e] border-white/5 hover:border-white/20'
                 }`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[10px] font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#ecb613]/20 text-[#ecb613] border border-[#ecb613]/30">
+                {/* 📸 FOTO DEL ARROZ */}
+                <div className="relative h-52 w-full overflow-hidden bg-neutral-950">
+                  <img 
+                    src={dish.image} 
+                    alt={dish.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#09090e] via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                    <span className="text-[10px] font-mono font-bold px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md text-[#ecb613] border border-[#ecb613]/40 shadow-lg">
                       {dish.badge}
                     </span>
-                    <div className="flex items-center gap-1 text-[11px] text-zinc-400 font-mono">
-                      <Star size={12} className="text-[#ecb613] fill-[#ecb613]" />
-                      <span>{dish.rating} ({dish.reviews})</span>
-                    </div>
                   </div>
+                  <div className="absolute top-3 right-3 flex items-center gap-1 text-[11px] text-white font-mono px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/10">
+                    <Star size={11} className="text-[#ecb613] fill-[#ecb613]" />
+                    <span>{dish.rating} ({dish.reviews})</span>
+                  </div>
+                </div>
 
-                  <h3 className="text-xl font-bold uppercase font-syne mb-1 text-white">
-                    {dish.title}
-                  </h3>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold uppercase font-syne mb-1 text-white group-hover:text-[#ecb613] transition-colors">
+                      {dish.title}
+                    </h3>
                   <p className="text-xs text-zinc-400 mb-4 line-clamp-2">
                     {dish.description}
                   </p>
@@ -512,8 +524,9 @@ export default function ArrocesSotaPage() {
                   </button>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
         </div>
       </section>
 
@@ -541,12 +554,21 @@ export default function ArrocesSotaPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Controles del Cotizador (7 cols) */}
             <div className="lg:col-span-7 space-y-6">
-              {/* Arroz Seleccionado */}
-              <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
-                <div className="text-xs text-zinc-400 font-mono mb-1">PLATO SELECCIONADO:</div>
-                <div className="flex items-center justify-between">
-                  <div className="text-lg font-bold text-white font-syne">{selectedDish.title}</div>
-                  <div className="text-base font-mono font-black text-[#ecb613]">{selectedDish.pricePerPax.toFixed(2)} €/pax</div>
+              {/* Arroz Seleccionado con Fotografía */}
+              <div className="p-4 rounded-2xl bg-black/40 border border-[#ecb613]/30 flex items-center gap-4">
+                <img 
+                  src={selectedDish.image} 
+                  alt={selectedDish.title} 
+                  className="w-20 h-20 rounded-xl object-cover border border-[#ecb613]/40 shrink-0" 
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="text-[10px] text-[#ecb613] font-mono font-bold uppercase mb-0.5 tracking-wider">PLATO SELECCIONADO:</div>
+                  <div className="text-base sm:text-lg font-bold text-white font-syne truncate">{selectedDish.title}</div>
+                  <div className="text-xs text-zinc-400 truncate">{selectedDish.subtitle}</div>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-[10px] text-zinc-500 font-mono uppercase">RACIÓN BASE</div>
+                  <div className="text-base sm:text-lg font-mono font-black text-[#ecb613]">{selectedDish.pricePerPax.toFixed(2)} €/pax</div>
                 </div>
               </div>
 
@@ -573,26 +595,26 @@ export default function ArrocesSotaPage() {
                 </div>
               </div>
 
-              {/* Selector de Distancia Logística desde Méntrida */}
+              {/* Selector de Distancia Logística desde Cocina Central del Proveedor */}
               <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-zinc-400 font-mono">DISTANCIA DESDE HUB MÉNTRIDA (TOLEDO):</span>
+                  <span className="text-xs text-zinc-400 font-mono">DISTANCIA DESDE COCINA CENTRAL (MADRID / ZONA CENTRO):</span>
                   <span className="text-base font-mono font-bold text-[#AAD6CD]">{distanceKm} km</span>
                 </div>
                 <input 
                   type="range" 
                   min="5" 
-                  max="250" 
+                  max="200" 
                   step="5"
                   value={distanceKm}
                   onChange={(e) => setDistanceKm(parseInt(e.target.value))}
                   className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#AAD6CD]"
                 />
                 <div className="flex justify-between text-[10px] text-zinc-500 font-mono mt-1">
-                  <span>Méntrida / Navalcarnero (0 km)</span>
-                  <span>Madrid Capital (50 km - Incluido)</span>
-                  <span>Toledo / Guadalajara</span>
-                  <span>&gt; 200 km (Hotel)</span>
+                  <span>0 - 30 km (Radio Base Gratuito - 0 €)</span>
+                  <span>50 km (Corona metropolitana)</span>
+                  <span>100 km (Fincas periféricas)</span>
+                  <span>&gt; 180 km (Desplazamiento especial)</span>
                 </div>
               </div>
 
@@ -691,9 +713,9 @@ export default function ArrocesSotaPage() {
                   )}
 
                   <div className="flex justify-between">
-                    <span className="text-zinc-400">Logística ({distanceKm} km desde Méntrida):</span>
+                    <span className="text-zinc-400">Logística ({distanceKm} km desde Cocina Central):</span>
                     <span className="font-mono font-bold text-white">
-                      {logisticsTotal === 0 ? '0,00 € (Primeros 50 km gratis)' : `${logisticsTotal.toFixed(2)} €`}
+                      {logisticsTotal === 0 ? '0,00 € (Radio 30 km incluido)' : `${logisticsTotal.toFixed(2)} €`}
                     </span>
                   </div>
 

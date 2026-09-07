@@ -113,7 +113,35 @@ function ProveedoresDirectoryContent() {
   };
 
   const filteredProviders = useMemo(() => {
-    const sclassBbq = [
+    const sclassSpecialServices = [
+      {
+        id: 'sclass-arroces-showcooking',
+        name: 'Maestros Arroceros S-Class: Showcooking de Paellas Gigantes',
+        category: 'catering',
+        province: 'Madrid',
+        description: 'Puesto gastronómico monumental en directo con leña de sarmiento. 10 recetas maestras: Arroz del Senyoret, Carabinero XL, Gamba Roja, Fideuà Gandiense y Arroz Negro. Desde 30 a 2.000 pax. Incluye sonido Bose S1 Pro de cortesía.',
+        price: '16,50 €/pax',
+        rating: 5.0,
+        reviews: 64,
+        img: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&auto=format&fit=crop&q=80',
+        isPreferred: true,
+        badge: 'SHOWCOOKING S-CLASS',
+        customUrl: '/arroces'
+      },
+      {
+        id: 'sclass-arroces-delivery',
+        name: 'Delivery Caliente de Paellas Tradicionales en Paellera (Sin Fianza)',
+        category: 'catering',
+        province: 'Madrid',
+        description: 'Entrega puntual en paellera tradicional caliente y reposada en su punto exacto. Sin fianzas bancarias ni retenciones. Recogida posterior del recipiente sucia en tu finca o domicilio.',
+        price: '15,00 €/pax',
+        rating: 4.98,
+        reviews: 52,
+        img: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop&q=80',
+        isPreferred: true,
+        badge: 'DELIVERY S-CLASS',
+        customUrl: '/arroces'
+      },
       {
         id: 'sclass-bbq-iberico',
         name: 'Catering de Brasas S-Class: Ritual Ibérico de Gala',
@@ -125,7 +153,8 @@ function ProveedoresDirectoryContent() {
         reviews: 48,
         img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop&q=80',
         isPreferred: true,
-        badge: 'HOMOLOGADO S-CLASS'
+        badge: 'HOMOLOGADO S-CLASS',
+        customUrl: '/catering-brasas'
       },
       {
         id: 'sclass-bbq-argentino',
@@ -138,7 +167,8 @@ function ProveedoresDirectoryContent() {
         reviews: 36,
         img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80',
         isPreferred: true,
-        badge: 'ALTA DISTINCIÓN'
+        badge: 'ALTA DISTINCIÓN',
+        customUrl: '/catering-brasas'
       },
       {
         id: 'sclass-bbq-ancestral',
@@ -151,12 +181,13 @@ function ProveedoresDirectoryContent() {
         reviews: 29,
         img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=800&auto=format&fit=crop&q=80',
         isPreferred: true,
-        badge: 'EXPERIENCIA MONUMENTAL'
+        badge: 'EXPERIENCIA MONUMENTAL',
+        customUrl: '/catering-brasas'
       }
     ];
 
     const baseList = selectedCategory === 'catering' || selectedCategory === 'ALL'
-      ? [...sclassBbq, ...providersData]
+      ? [...sclassSpecialServices, ...providersData]
       : providersData;
 
     return baseList.filter((p: any) => {
@@ -170,11 +201,31 @@ function ProveedoresDirectoryContent() {
         !selectedProvince ||
         (p.province && p.province.toLowerCase().includes(selectedProvince.toLowerCase()));
 
-      // 3. Filtrado de Búsqueda de Texto
-      const matchQuery =
-        !searchQuery ||
-        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (p.description && p.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      // 3. Filtrado de Búsqueda Inteligente con Stemming y Sinónimos
+      let matchQuery = true;
+      if (searchQuery && searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const terms = [q];
+        if (q.includes('arroc') || q.includes('arroz')) {
+          terms.push('arroz', 'arroces', 'paella', 'paellas');
+        } else if (q.includes('paell')) {
+          terms.push('paella', 'paellas', 'arroz', 'arroces');
+        } else if (q.includes('brasa') || q.includes('barbacoa') || q.includes('bbq')) {
+          terms.push('brasa', 'brasas', 'barbacoa', 'asado', 'bbq');
+        }
+
+        const name = (p.name || '').toLowerCase();
+        const desc = (p.description || '').toLowerCase();
+        const fullDesc = (p.description_full || '').toLowerCase();
+        const cat = (p.category || '').toLowerCase();
+
+        matchQuery = terms.some(t => 
+          name.includes(t) || 
+          desc.includes(t) || 
+          fullDesc.includes(t) || 
+          cat.includes(t)
+        );
+      }
 
       return matchCat && matchProv && matchQuery;
     }).sort((a: any, b: any) => {
@@ -498,6 +549,15 @@ function ProveedoresDirectoryContent() {
                     <ShieldCheck size={16} className="text-[#ecb613]" />
                     <span>Reclamar Ficha (2FA)</span>
                   </button>
+                  {activeModalProvider.customUrl && (
+                    <a
+                      href={activeModalProvider.customUrl}
+                      className="w-full sm:w-auto bg-[#ecb613] hover:brightness-110 text-black font-black text-xs px-6 py-3.5 rounded-2xl uppercase transition-all text-center shadow-lg shadow-[#ecb613]/20 font-mono cursor-pointer flex items-center justify-center gap-2"
+                    >
+                      <Sparkles size={16} />
+                      <span>Ver Carta & Cotizador</span>
+                    </a>
+                  )}
                   <a
                     href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero verificar disponibilidad para ${activeModalProvider.name} en ${activeModalProvider.province ? activeModalProvider.province.charAt(0).toUpperCase() + activeModalProvider.province.slice(1).toLowerCase() : 'Madrid'}.`)}`}
                     target="_blank"
