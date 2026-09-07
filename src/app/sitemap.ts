@@ -34,6 +34,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
   };
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 0. CHECKOUT TRANSACCIONAL & CAPTACIÓN INMEDIATA (P0 REVENUE)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  addEntry(`${BASE_URL}/reservar/solista`, 1.0, 'daily');
+  addEntry(`${BASE_URL}/vimume/propuesta`, 0.98, 'daily');
+  addEntry(`${BASE_URL}/artistas/representacion`, 0.92, 'weekly');
+  addEntry(`${BASE_URL}/eventos/municipales`, 0.92, 'weekly');
+  addEntry(`${BASE_URL}/instituciones/catalogo-360`, 0.92, 'weekly');
+  addEntry(`${BASE_URL}/vimume/archivo-clinico`, 0.92, 'weekly');
+  addEntry(`${BASE_URL}/fincas`, 0.90, 'weekly');
+  addEntry(`${BASE_URL}/estudio-diseno`, 0.85, 'weekly');
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 1. PÁGINAS ESTRUCTURALES Y ARQUITECTURA S-CLASS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   addEntry(`${BASE_URL}/`, 1.0, 'daily');
