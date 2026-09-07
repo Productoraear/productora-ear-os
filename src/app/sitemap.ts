@@ -3,8 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { CHRISTMAS_LIGHTING_PRODUCTS } from '@/data/luces-navidad';
+import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
 
 const BASE_URL = 'https://www.productoraear.com';
+const TARGET_TOTAL_URLS = 22500;
 
 // Servicios prioritarios por provincia
 const REGIONAL_SERVICES = [
@@ -21,11 +23,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];
   const seenUrls = new Set<string>();
 
-  const addEntry = (url: string, priority: number, changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' = 'weekly') => {
-    if (!seenUrls.has(url)) {
-      seenUrls.add(url);
+  const addEntry = (
+    url: string, 
+    priority: number, 
+    changeFrequency: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' = 'weekly'
+  ) => {
+    // Normalización canónica estricta para evitar canibalización y doorway penalties
+    const cleanUrl = url.trim().replace(/\/+$/, '');
+    if (!seenUrls.has(cleanUrl)) {
+      seenUrls.add(cleanUrl);
       entries.push({
-        url,
+        url: cleanUrl,
         lastModified: now,
         changeFrequency,
         priority
@@ -38,17 +46,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   addEntry(`${BASE_URL}/reservar/solista`, 1.0, 'daily');
   addEntry(`${BASE_URL}/vimume/propuesta`, 0.98, 'daily');
-  addEntry(`${BASE_URL}/artistas/representacion`, 0.92, 'weekly');
-  addEntry(`${BASE_URL}/eventos/municipales`, 0.92, 'weekly');
+  addEntry(`${BASE_URL}/artistas/representacion`, 0.95, 'daily');
+  addEntry(`${BASE_URL}/eventos/municipales`, 0.95, 'daily');
   addEntry(`${BASE_URL}/instituciones/catalogo-360`, 0.92, 'weekly');
   addEntry(`${BASE_URL}/vimume/archivo-clinico`, 0.92, 'weekly');
-  addEntry(`${BASE_URL}/fincas`, 0.90, 'weekly');
+  addEntry(`${BASE_URL}/fincas`, 0.92, 'weekly');
   addEntry(`${BASE_URL}/estudio-diseno`, 0.85, 'weekly');
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 1. PÁGINAS ESTRUCTURALES Y ARQUITECTURA S-CLASS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  addEntry(`${BASE_URL}/`, 1.0, 'daily');
+  addEntry(`${BASE_URL}`, 1.0, 'daily');
   addEntry(`${BASE_URL}/eventos`, 0.95, 'daily');
   addEntry(`${BASE_URL}/artistas`, 0.95, 'daily');
   addEntry(`${BASE_URL}/bodas`, 0.95, 'daily');
@@ -84,19 +92,36 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const provinceSlugs = Object.keys(PROVINCIAS_52_GRAPH);
   for (const prov of provinceSlugs) {
-    // Hub provincial de bodas y eventos
     addEntry(`${BASE_URL}/bodas/${prov}`, 0.85, 'weekly');
     addEntry(`${BASE_URL}/bodas/${prov}/eventos`, 0.85, 'weekly');
     addEntry(`${BASE_URL}/b2g/${prov}`, 0.85, 'weekly');
 
-    // Servicios verticales por provincia
     for (const serv of REGIONAL_SERVICES) {
       addEntry(`${BASE_URL}/servicios/${serv}/${prov}`, 0.85, 'weekly');
     }
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 3. CATÁLOGO OFICIAL 2026 DE ALUMBRADO MONUMENTAL (530 PRODUCTOS)
+  // 3. INTENCIÓN LOCAL DE ALTA CONVERSIÓN (MUNICIPIOS TOP PSEO)
+  //    Resuelve intención específica: logística exacta + rider acústico
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  const servicePseoList = SERVICES_PSEO_EXPANDED || [];
+  for (const provKey of Object.keys(MUNICIPALITIES_DATASET)) {
+    const towns = MUNICIPALITIES_DATASET[provKey] || [];
+    for (const t of towns) {
+      if (t.slug) {
+        for (const s of servicePseoList) {
+          const sPath = s.path || s.id;
+          if (sPath) {
+            addEntry(`${BASE_URL}/bodas/${provKey}/${sPath}/${t.slug}`, 0.75, 'weekly');
+          }
+        }
+      }
+    }
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 4. CATÁLOGO OFICIAL 2026 DE ALUMBRADO MONUMENTAL (530 PRODUCTOS)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   try {
     for (const prod of CHRISTMAS_LIGHTING_PRODUCTS) {
@@ -109,7 +134,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 4. ARTISTAS ROSTER S-CLASS & TALENTO
+  // 5. ARTISTAS ROSTER S-CLASS & TALENTO
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const rosterArtists = [
     'edwin-agudelo',
@@ -122,9 +147,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const art of rosterArtists) {
     addEntry(`${BASE_URL}/artistas/${art}`, 0.80, 'weekly');
   }
+  addEntry(`${BASE_URL}/artistas/edwin-agudelo/ultra-luxury-nda`, 0.75, 'monthly');
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 5. PROVEEDORES HOMOLOGADOS Y FINCAS VERIFICADAS (ALL PROVIDERS DB)
+  // 6. PROVEEDORES HOMOLOGADOS (ALL_PROVIDERS_DATABASE.JSON - 7.516)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   try {
     const curatedPath = path.join(process.cwd(), 'src', 'data', 'all_providers_database.json');
@@ -132,10 +158,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const raw = fs.readFileSync(curatedPath, 'utf-8');
       const allProviders: any[] = JSON.parse(raw);
       
-      // Indexamos hasta 3.500 proveedores con ficha técnica completa y slug/id único
-      allProviders.slice(0, 3500).forEach(provider => {
+      allProviders.forEach(provider => {
         const slug = provider.id || provider.slug;
-        if (slug) {
+        if (slug && typeof slug === 'string' && slug.length > 2) {
           addEntry(`${BASE_URL}/proveedores/${slug}`, 0.70, 'weekly');
         }
       });
@@ -144,13 +169,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
     console.warn('[SITEMAP] Error leyendo all_providers_database:', err);
   }
 
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // 7. EXPANDIR CON PROVEEDORES COSECHADOS HASTA ALCANZAR 22.500 URLs
+  //    (BODAS-VENDORS-HARVESTED.JSON - Filtrado estricto anti-duplicados)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  try {
+    const harvestedPath = path.join(process.cwd(), 'src', 'data', 'bodas-vendors-harvested.json');
+    if (fs.existsSync(harvestedPath)) {
+      const raw = fs.readFileSync(harvestedPath, 'utf-8');
+      const harvestedVendors: any[] = JSON.parse(raw);
+      
+      for (const v of harvestedVendors) {
+        if (entries.length >= TARGET_TOTAL_URLS) break;
+        
+        // Extracción de slug limpio y canónico
+        let slug = v.id || v.slug;
+        if (!slug && v.name && typeof v.name === 'string') {
+          slug = v.name
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+        }
 
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  // 6. VERTICAL 10: MAGNATES, FINCAS PRIVADAS & YATES (NDA) — 125 Rutas
-  //    Anti-OOM: sub-sitemap en /sitemaps/magnates-nda
-  //    Fuente: src/data/magnates_nda_routes.json
-  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  addEntry(`${BASE_URL}/artistas/edwin-agudelo/ultra-luxury-nda`, 0.75, 'monthly');
+        if (slug && typeof slug === 'string' && slug.length > 3) {
+          addEntry(`${BASE_URL}/proveedores/${slug}`, 0.65, 'monthly');
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[SITEMAP] Error leyendo bodas-vendors-harvested:', err);
+  }
 
   return entries;
 }
