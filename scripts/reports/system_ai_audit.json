@@ -1,0 +1,15 @@
+﻿{
+    "Fecha":  "2026-09-05 10:26:01",
+    "CPU":  "Genuine Intel(R) CPU 0000 @ 2.60GHz",
+    "CoresFisicos":  8,
+    "CoresLogicos":  16,
+    "RAM_Total_GB":  63.84,
+    "RAM_Libre_GB":  51.36,
+    "GPUs":  [
+                 {
+                     "Name":  "AMD Radeon RX 7900 XTX",
+                     "DriverVersion":  "32.0.31041.1004"
+                 }
+             ],
+    "OllamaPresente":  true
+}

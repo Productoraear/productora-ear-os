@@ -1,0 +1,2440 @@
+{
+  "total_files_scanned": 100,
+  "scan_date": "2026-09-07 14:45:32",
+  "categories": {
+    "EMAIL_NOTIF": [
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5899,
+        "content": "{\"ClickType\":\"left\",\"PageID\":\"93962E6B4A55E6970222DFF665890CDF\",\"X\":616,\"Y\":393,\"explanation\":\"Focus on the Email input field.\",\"toolAction\":\"Clicking on element\",\"toolSummary\":\"Web search\"}",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7398,
+        "content": "80:     email: '',",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8616,
+        "content": "42:   email?: string;",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 17673,
+        "content": "16:   email: \"mailto:hola@productoraear.com\",",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 17674,
+        "content": "17:   /** Display email */",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 17675,
+        "content": "18:   emailDisplay: \"hola@productoraear.com\",",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 25910,
+        "content": "58:   const payerEmail = session.customer_details?.email || md.customerEmail || 'anonimo@productoraear.com';",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 25946,
+        "content": "20: - `UserService` sin escalada de privilegios por email.",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 25964,
+        "content": "38: | RBAC | ✅ PASS | Nuevos usuarios → `EXPLORADOR`, sin escalada por email | NO |",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 26032,
+        "content": "12: | `/api/nexus/user/sync` | Privada | Rol, UID, Email | NINGUNA | Backend | `src/app/api/nexus/user/sync/route.ts:6` | P0 (Spoofing UID) | Validar JWT Firebase | CONFIRMADO |",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 27089,
+        "content": "19:       customerEmail = 'anonimo@productoraear.com',",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 27118,
+        "content": "48:           notes: `ExpiresAt: ${expiresAtDate.toISOString()} | Payer: ${customerEmail}`,",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 32969,
+        "content": "80:     email: '',",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 33130,
+        "content": "241:                   <label className=\"text-[9px] font-black uppercase tracking-widest text-zinc-400\">Email de Contacto</label>",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 33135,
+        "content": "246:                       type=\"email\"",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 34362,
+        "content": "83:     email: '',",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 34523,
+        "content": "244:                   <label className=\"text-[9px] font-black uppercase tracking-widest text-zinc-400\">Email de Contacto</label>",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 34528,
+        "content": "249:                       type=\"email\"",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 35804,
+        "content": "FIREBASE_CLIENT_EMAIL              Encrypted           Production, Preview         24m ago",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMAIL_NOTIF",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 40586,
+        "content": "- Contiene todos los correos extraídos, manuscritos de arquitectura de precios, framework 10/80/10 y bases de datos de Amplify.",
+        "pattern": "TODO"
+      }
+    ],
+    "UNCATEGORIZED": [
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 160,
+        "content": "⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 163,
+        "content": "npx @next/codemod@canary middleware-to-proxy .",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 165,
+        "content": "Learn more: https://nextjs.org/docs/messages/middleware-to-proxy",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 194,
+        "content": "⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 197,
+        "content": "npx @next/codemod@canary middleware-to-proxy .",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 199,
+        "content": "Learn more: https://nextjs.org/docs/messages/middleware-to-proxy",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 239,
+        "content": "⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 242,
+        "content": "npx @next/codemod@canary middleware-to-proxy .",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 244,
+        "content": "Learn more: https://nextjs.org/docs/messages/middleware-to-proxy",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 328,
+        "content": "⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 331,
+        "content": "npx @next/codemod@canary middleware-to-proxy .",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 333,
+        "content": "Learn more: https://nextjs.org/docs/messages/middleware-to-proxy",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 365,
+        "content": "2. __Fix Missing Module Error__: The module `@/scripts/vampire_public_catalog_zk.json` cannot be found. We need to verify the existence of this file or replace it with an appropriate one.",
+        "pattern": "FIX"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 396,
+        "content": "⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 399,
+        "content": "npx @next/codemod@canary middleware-to-proxy .",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 401,
+        "content": "Learn more: https://nextjs.org/docs/messages/middleware-to-proxy",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 433,
+        "content": "2. __Fix Missing Module Error__: The module `@/scripts/vampire_public_catalog_zk.json` cannot be found. We need to verify the existence of this file or replace it with an appropriate one.",
+        "pattern": "FIX"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 464,
+        "content": "⚠ The \"middleware\" file convention is deprecated. Please use \"proxy\" instead.",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 467,
+        "content": "npx @next/codemod@canary middleware-to-proxy .",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "UNCATEGORIZED",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 469,
+        "content": "Learn more: https://nextjs.org/docs/messages/middleware-to-proxy",
+        "pattern": "MIDDLEWARE"
+      }
+    ],
+    "B2G_INSTITUCIONAL": [
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2894,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_BROKEN_OR_ORPHAN_SURFACES.md (LANGUAGE_MARKDOWN)",
+        "pattern": "BROKEN"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3428,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_BROKEN_OR_ORPHAN_SURFACES.md (LANGUAGE_MARKDOWN)",
+        "pattern": "BROKEN"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4028,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_BROKEN_OR_ORPHAN_SURFACES.md (LANGUAGE_MARKDOWN)",
+        "pattern": "BROKEN"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4102,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_BROKEN_OR_ORPHAN_SURFACES.md (LANGUAGE_MARKDOWN)",
+        "pattern": "BROKEN"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5365,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_BROKEN_OR_ORPHAN_SURFACES.md (LANGUAGE_MARKDOWN)",
+        "pattern": "BROKEN"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5518,
+        "content": "- Visualización de páginas completada, capturas de pantalla guardadas en el directorio de artefactos (`contacto_success`, `ayuntamientos_page`, `nexus_dashboard`, `admin_vimume_page`, `admin_estado_pa...",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6288,
+        "content": "31:     ROLE_B2G: \"border-blue-500/30 bg-[#0a1128]/70 shadow-[0_0_30px_rgba(59,130,246,0.2)]\",",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6327,
+        "content": "70:             role === 'ROLE_B2G' ? \"bg-gradient-to-br from-blue-400 to-blue-700 shadow-[0_0_20px_rgba(59,130,246,0.4)]\" : \"bg-gradient-to-br from-[#ecb613] to-[#8a6b0d] shadow-[0_0_20px_rgba(236,18...",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7367,
+        "content": "49:     { id: 'b2g-tender', name: 'Pliegos Técnicos & Licitación B2G', price: 950, icon: <FileText size={20} />, desc: 'Documentación homologada para Ayuntamientos y Sector Público.', category: 'LOGIS...",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7539,
+        "content": "72:             {['Elegante / Gala', 'Fiesta Rompedora', 'Institucional / B2G', 'Íntimo / Acústico'].map((atm) => (",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7792,
+        "content": "+    id: 'b2g',",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7793,
+        "content": "+    name: 'Institucional / B2G Soberano',",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7850,
+        "content": "-            {['Elegante / Gala', 'Fiesta Rompedora', 'Institucional / B2G', 'Íntimo / Acústico'].map((atm) => (",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8629,
+        "content": "55: interface ArsenalEnriched {",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8637,
+        "content": "63: interface ArsenalCompleto {",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8679,
+        "content": "21: interface NeuralJourneyApexProps {",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8804,
+        "content": "- **`Institucional / B2G Soberano`** (Government Ready / Blue Glow)",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9091,
+        "content": "- **Curaduría de Atmósferas**: Selector de firmas emocionales (*Gala Imperial*, *Fiesta Rompedora*, *Institucional B2G*, *Íntimo Acústico*).",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9240,
+        "content": "14:     { title: 'Licitaciones B2G', href: '/ocasiones/ayuntamientos', tag: 'SECTOR PÚBLICO' },",
+        "pattern": "B2G"
+      },
+      {
+        "category": "B2G_INSTITUCIONAL",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9519,
+        "content": "75:       'Coordinación directa de protocolo B2G / LCSP'",
+        "pattern": "ROTO"
+      }
+    ],
+    "DASHBOARD_ADMIN": [
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 850,
+        "content": "{\"name\":\"(dashboard)\",\"isDir\":true}",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6088,
+        "content": "{\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"explanation\":\"Get DOM tree for /admin/nexus dashboard page.\",\"toolAction\":\"Getting DOM tree\",\"toolSummary\":\"Directory analysis\"}",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6117,
+        "content": "{\"CaptureBeyondViewport\":false,\"CaptureByElementIndex\":false,\"PageID\":\"93962E6B4A55E6970222DFF665890CDF\",\"SaveScreenshot\":true,\"ScreenshotName\":\"nexus_dashboard\",\"explanation\":\"Captured /admin/nexus d...",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6120,
+        "content": "Saved screenshot to: C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\066359b6-dd26-4c3d-b49b-ca96c39f0c12\\nexus_dashboard_1786825963882.png",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6915,
+        "content": "[main 6c584dae7] fix(ux): resolve React hook order in SovereignNavbar & make FinancialPanel schema resilient",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6963,
+        "content": "- **Mensaje:** `fix(ux): resolve React hook order in SovereignNavbar & make FinancialPanel schema resilient`",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7086,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\Nexus\\LogisticsDashboard.tsx                      10898",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7094,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\ExpansionDashboard.tsx               5409",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7096,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\FenixV2Dashboard.tsx                10592",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8549,
+        "content": "C:\\EAR_OS_V2\\src\\app\\components\\SClass\\CommandCenterDashboard.tsx       20222",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10239,
+        "content": "- c:\\EAR_OS_V2\\EAR_OS_CONTROL\\scripts\\live_status_dashboard_v3.ps1 (LANGUAGE_POWERSHELL)",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12055,
+        "content": "{\"ClickType\":\"left\",\"PageID\":\"93962E6B4A55E6970222DFF665890CDF\",\"X\":980,\"Y\":970,\"explanation\":\"Clicked on NEXUS menu item to check release readiness dashboard.\",\"toolAction\":\"Clicking tab\",\"toolSummar...",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12070,
+        "content": "{\"Dx\":0,\"Dy\":600,\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"X\":567,\"Y\":500,\"explanation\":\"Scroll down the Nexus dashboard to check more operational metrics and audits.\",\"toolAction\":\"Scrolling page\"...",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12155,
+        "content": "{\"ClickType\":\"left\",\"PageID\":\"93962E6B4A55E6970222DFF665890CDF\",\"X\":66,\"Y\":178,\"explanation\":\"Clicked 'CENTRO DE MANDO' to access the command center dashboard.\",\"toolAction\":\"Clicking link\",\"toolSumma...",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12416,
+        "content": "- c:\\EAR_OS_V2\\EAR_OS_CONTROL\\scripts\\live_status_dashboard_v3.ps1 (LANGUAGE_POWERSHELL)",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12447,
+        "content": "C:\\EAR_OS_V2\\src\\app\\(nexus)\\dashboard\\NexusMissionTracker.tsx",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12464,
+        "content": "C:\\EAR_OS_V2\\src\\app\\(nexus)\\(admin)\\analytics\\page.tsx",
+        "pattern": "ANALYTICS"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12468,
+        "content": "C:\\EAR_OS_V2\\src\\app\\(nexus)\\(dashboard)\\layout.tsx",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12469,
+        "content": "C:\\EAR_OS_V2\\src\\app\\(nexus)\\(dashboard)\\giras\\[id]\\page.tsx",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "DASHBOARD_ADMIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12470,
+        "content": "C:\\EAR_OS_V2\\src\\app\\(nexus)\\(dashboard)\\studio\\page.tsx",
+        "pattern": "DASHBOARD"
+      }
+    ],
+    "TESTING": [
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1054,
+        "content": "12: export async function generateStaticParams() {",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1557,
+        "content": "12: export async function generateStaticParams() {",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2496,
+        "content": "El JSON de 7.8MB no puede bundlearse como import estático en Vercel. **Fix**: mover el filtrado del catálogo a `generateStaticParams` usando solo los campos mínimos necesarios, o limitar el import al ...",
+        "pattern": "FIX"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4065,
+        "content": "StatusError[Latest](https://vercel.com/productoraear-gmailcoms-projects/ear-psi/deployments?filterBranch=main)",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4216,
+        "content": "StatusError[Latest](https://vercel.com/productoraear-gmailcoms-projects/ear-psi/deployments?filterBranch=main)",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4373,
+        "content": "29:                 \"extract-zip\": \"latest\",",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4474,
+        "content": "\"test-memory-persistence\": \"ts-node src/test-memory-persistence.ts\",",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4498,
+        "content": "\"extract-zip\": \"latest\",",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4622,
+        "content": "StatusError[Latest](https://vercel.com/productoraear-gmailcoms-projects/ear/deployments?filterBranch=main)",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4720,
+        "content": "- **`ear-psi`**: Es un proyecto duplicado (creado por error o durante alguna prueba anterior). El sufijo `-psi` se lo puso Vercel automáticamente al crear un segundo proyecto con el mismo nombre.",
+        "pattern": "CREAR"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4757,
+        "content": "StatusError[Latest](https://vercel.com/productoraear-gmailcoms-projects/ear/deployments?filterBranch=main)",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4858,
+        "content": "11:         \"test-memory-persistence\": \"ts-node src/test-memory-persistence.ts\",",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5892,
+        "content": "{\"Key\":\"\",\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"Text\":\"Test Org\",\"explanation\":\"Type 'Test Org' in the Name field.\",\"toolAction\":\"Pressing keyboard key\",\"toolSummary\":\"Web search\"}",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5907,
+        "content": "{\"Key\":\"\",\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"Text\":\"test@example.com\",\"explanation\":\"Type email address.\",\"toolAction\":\"Pressing keyboard key\",\"toolSummary\":\"Web search\"}",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5944,
+        "content": "{\"Key\":\"\",\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"Text\":\"Smoke Test\",\"explanation\":\"Type 'Smoke Test' in Subject field.\",\"toolAction\":\"Pressing keyboard key\",\"toolSummary\":\"Web search\"}",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5959,
+        "content": "{\"Key\":\"\",\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"Text\":\"This is a smoke test to check form functionality.\",\"explanation\":\"Type the message body.\",\"toolAction\":\"Pressing keyboard key\",\"toolSummar...",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6505,
+        "content": "77:     const handleGenerateStripePayment = async () => {",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9062,
+        "content": "?  (SSG)      prerendered as static HTML (uses generateStaticParams)",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10253,
+        "content": "Task Description: $patterns = @(\"*Productora Ear*\", \"*CATALOGO DE SERVICIOS*\", \"*Disposici*\", \"*musicos*\", \"*agrupaciones*\", \"*cantantes*\", \"*roadmap*\", \"*crowdfunding*\", \"*subsecciones*\"); foreach ($...",
+        "pattern": "TEST"
+      },
+      {
+        "category": "TESTING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10414,
+        "content": "Task Description: $drives = @(\"H:\\\", \"D:\\\", \"E:\\\", \"C:\\\", \"L:\\\"); foreach ($d in $drives) { if (Test-Path $d) { Get-ChildItem -Path $d -Filter \"*glosario*\" -Recurse -ErrorAction SilentlyContinue | Sel...",
+        "pattern": "TEST"
+      }
+    ],
+    "DEPLOYMENT": [
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10,
+        "content": "2. Radar B2G Multiescala (13.9k€ a 120k€+) con alertas en Telegram y Vercel Cron a las 09:00 CEST.",
+        "pattern": "CRON"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 31,
+        "content": "Abre la terminal y ejecuta npm run build para confirmar que el build pase con Exit Code 0.\"  Deployments",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 32,
+        "content": "[fix(infra): adjust cron schedule to daily for Vercel Hobby plan](https://vercel.com/productoraear-gmailcoms-projects/ear/3nKvxL7b5xk4jeMNdGH6g3UsKR8V)Queued",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 33,
+        "content": "[Production](https://ear-6qtatb9yt-productoraear-gmailcoms-projects.vercel.app/)",
+        "pattern": "VERCEL"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 34,
+        "content": "[Redeploy of HoGJhr6Vw](https://vercel.com/productoraear-gmailcoms-projects/ear/HoGJhr6VwaiP4U5X43ZusATpV7h2)5m ago",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 35,
+        "content": "[fix(infra): adjust cron schedule to daily for Vercel Hobby plan](https://vercel.com/productoraear-gmailcoms-projects/ear/HoGJhr6VwaiP4U5X43ZusATpV7h2)Queued",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 36,
+        "content": "[Production](https://ear-l325o2qor-productoraear-gmailcoms-projects.vercel.app/)",
+        "pattern": "VERCEL"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 37,
+        "content": "[Redeploy of FPiHL9n7x](https://vercel.com/productoraear-gmailcoms-projects/ear/FPiHL9n7xiq9cqUND1d8FJ5D2nMf)5m ago",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 38,
+        "content": "[fix(infra): adjust cron schedule to daily for Vercel Hobby plan](https://vercel.com/productoraear-gmailcoms-projects/ear/2fPDXXcP2mw2ChaWPjJSynAAQy3v)Queued",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 39,
+        "content": "[Production](https://ear-365okuu0m-productoraear-gmailcoms-projects.vercel.app/)",
+        "pattern": "VERCEL"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 40,
+        "content": "[Redeploy of BruLg94qX](https://vercel.com/productoraear-gmailcoms-projects/ear/BruLg94qXkvutnyLcNeN7rPyHnvt)5m ago",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 41,
+        "content": "[fix(infra): adjust cron schedule to daily for Vercel Hobby plan](https://vercel.com/productoraear-gmailcoms-projects/ear/BruLg94qXkvutnyLcNeN7rPyHnvt)Queued",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 42,
+        "content": "[Production](https://ear-aqpoz2cdg-productoraear-gmailcoms-projects.vercel.app/)",
+        "pattern": "VERCEL"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 43,
+        "content": "[Redeploy of 5pq3FCm6W](https://vercel.com/productoraear-gmailcoms-projects/ear/5pq3FCm6WGFzUxzyeMFNGuZJSY34)6m ago",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 44,
+        "content": "[fix(infra): adjust cron schedule to daily for Vercel Hobby plan](https://vercel.com/productoraear-gmailcoms-projects/ear/CedR7CW6Pf5FB3T3PpndbvZGvGR9)Queued",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 45,
+        "content": "[Production](https://ear-3zjc56m8l-productoraear-gmailcoms-projects.vercel.app/)",
+        "pattern": "VERCEL"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 46,
+        "content": "[Redeploy of FPiHL9n7x](https://vercel.com/productoraear-gmailcoms-projects/ear/FPiHL9n7xiq9cqUND1d8FJ5D2nMf)6m ago",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 47,
+        "content": "[fix(infra): adjust cron schedule to daily for Vercel Hobby plan](https://vercel.com/productoraear-gmailcoms-projects/ear/CMXLJDHCEab4tjYje4LYKEeqEH68)Queued",
+        "pattern": "FIX"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 48,
+        "content": "[Production](https://ear-60cys9x91-productoraear-gmailcoms-projects.vercel.app/)",
+        "pattern": "VERCEL"
+      },
+      {
+        "category": "DEPLOYMENT",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 49,
+        "content": "[Redeploy of 5ajkwyRWx](https://vercel.com/productoraear-gmailcoms-projects/ear/5ajkwyRWxUY2LrWN5xJ7VAZkeh9F)6m ago",
+        "pattern": "DEPLOY"
+      }
+    ],
+    "ARSENAL_AUDIO": [
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 942,
+        "content": "{\"name\":\"arsenal\",\"isDir\":true}",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5247,
+        "content": "10: const TIER_ZERO_ARSENAL: CartItem[] = [",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7140,
+        "content": "10: const TIER_ZERO_ARSENAL: CartItem[] = [",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7183,
+        "content": "53:           <p className=\"text-xs text-slate-400\">Diseño de Atmósfera + Inyección Automática de Arsenal Tier 0</p>",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7577,
+        "content": "110:       {/* SECCIÓN 1: INYECTADOR DE ARSENAL PROPIO (TIER 0) */}",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7583,
+        "content": "116:           {TIER_ZERO_ARSENAL.map((item) => {",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7739,
+        "content": "const TIER_ZERO_ARSENAL: CartItem[] = [",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7831,
+        "content": "-          <p className=\"text-xs text-slate-400\">Diseño de Atmósfera + Inyección Automática de Arsenal Tier 0</p>",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7888,
+        "content": "-      {/* SECCIÓN 1: INYECTADOR DE ARSENAL PROPIO (TIER 0) */}",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7894,
+        "content": "-          {TIER_ZERO_ARSENAL.map((item) => {",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8154,
+        "content": "+        {/* TABS DE SELECCIÓN DE REPERTORIO / ARSENAL */}",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8180,
+        "content": "+        {/* SECCIÓN 1: ARSENAL PROPIO TIER 0 */}",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8183,
+        "content": "+            {TIER_ZERO_ARSENAL.map((item) => {",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8545,
+        "content": "C:\\EAR_OS_V2\\src\\app\\components\\SClass\\ArsenalTechnical.tsx             25362",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8570,
+        "content": "File Path: `file:///C:/EAR_OS_V2/src/app/components/SClass/ArsenalTechnical.tsx`",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8596,
+        "content": "22:   fetchArsenalEnrichedAction,",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8597,
+        "content": "23:   fetchArsenalCompletoAction",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8812,
+        "content": "3. **Inyector de Arsenal Propio (Tier 0 — Margen >75%)**:",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8827,
+        "content": "- **`src/app/components/SClass/ArsenalTechnical.tsx`** (Inventario y especificaciones técnicas de alta gama)",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARSENAL_AUDIO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9161,
+        "content": "29:       title: 'Arsenal',",
+        "pattern": "ARSENAL"
+      }
+    ],
+    "VIMUME_NEURO": [
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 976,
+        "content": "{\"name\":\"vimume\",\"isDir\":true}",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6125,
+        "content": "{\"ClickType\":\"left\",\"PageID\":\"93962E6B4A55E6970222DFF665890CDF\",\"X\":66,\"Y\":221,\"explanation\":\"Click on 'REACTOR VIMUME' sub-menu item.\",\"toolAction\":\"Clicking on element\",\"toolSummary\":\"Web search\"}",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6133,
+        "content": "{\"explanation\":\"Wait for REACTOR VIMUME page to load.\",\"toolAction\":\"Waiting\",\"toolSummary\":\"Web search\"}",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6147,
+        "content": "{\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"explanation\":\"Read the content of /admin/vimume.\",\"toolAction\":\"Reading browser page\",\"toolSummary\":\"Directory analysis\"}",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6154,
+        "content": "{\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"explanation\":\"Check console logs on /admin/vimume.\",\"toolAction\":\"Capturing console logs\",\"toolSummary\":\"Command execution\"}",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6161,
+        "content": "{\"CaptureBeyondViewport\":false,\"CaptureByElementIndex\":false,\"PageID\":\"93962E6B4A55E6970222DFF665890CDF\",\"SaveScreenshot\":true,\"ScreenshotName\":\"admin_vimume_page\",\"explanation\":\"Captured /admin/vimum...",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6164,
+        "content": "Saved screenshot to: C:\\Users\\M2-W10\\.gemini\\antigravity-ide\\brain\\066359b6-dd26-4c3d-b49b-ca96c39f0c12\\admin_vimume_page_1786825988413.png",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6511,
+        "content": "83:                 concept: 'Acceso VIMUME OS Premium',",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6513,
+        "content": "85:                     type: 'SUBSCRIPTION_VIMUME',",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6514,
+        "content": "86:                     engine: 'VIMUME_S_CLASS'",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7101,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\VimumeVertical.tsx                   3360",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7109,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\components\\VimumeDashboard.tsx      10554",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7110,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\components\\VimumeNavigator.tsx       5111",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8540,
+        "content": "C:\\EAR_OS_V2\\src\\app\\(public)\\vimume\\hermes\\dashboard\\page.tsx         127339",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8542,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\VimumeTrackerPanel.tsx    29903",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8555,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\VimumeSocial.tsx          17738",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8557,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\panels\\VimumeDashboard.tsx       17262",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9040,
+        "content": "� \t /vimume/consorcios",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9041,
+        "content": "� \t /vimume/contacto",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "VIMUME_NEURO",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9042,
+        "content": "� \t /vimume/eventos",
+        "pattern": "VIMUME"
+      }
+    ],
+    "ASTRA_IA": [
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1533,
+        "content": "La página usa esta función de forma incorrecta — está usando `calculateGeoPricing` como si fuera un geocodificador simple. La solución mínima y segura es **eliminar esa dependencia de la página** y us...",
+        "pattern": "NECESITA"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1772,
+        "content": "`tsconfig.json` incluye `scripts/**/*.ts` — eso arrastra `scripts/batch_google_indexer.ts` al type-check. La corrección: excluir ese directorio del include o instalar `googleapis`. La opción mínima y ...",
+        "pattern": "ASTRA"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2112,
+        "content": "APROBADO. Procede de inmediato con el commit y el push a main para activar el redespliegue automático en Vercel. La resolución de los params asíncronos y la eliminación de la colisión de rutas garanti...",
+        "pattern": "CRON"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2124,
+        "content": "Ejecutar en la consola npx tsx scripts/set_telegram_webhook.ts para reenviar los eventos del bot hacia la URL de producción.",
+        "pattern": "WEBHOOK"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2310,
+        "content": "[feat(academy): mount Talent Campus LMS & Astra Neural Twin in public /academia and admin /admin/academia](https://vercel.com/productoraear-gmailcoms-projects/ear-psi/H6x696EtVprUL8rVtCFxngTwXA2M)Erro...",
+        "pattern": "ASTRA"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2350,
+        "content": "[feat(rag): conexion de OmniSearchModal con el endpoint del Oraculo RAG](https://vercel.com/productoraear-gmailcoms-projects/ear-psi/BVngUZkf738w79c5cCXo3PwbPYdT)Ready",
+        "pattern": "ENDPOINT"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2488,
+        "content": "> En el panel de Vercel → click en el deployment `FeVuqHUR` → tab **\"Build Logs\"** → copia el último bloque de error rojo y pégalo aquí.",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2500,
+        "content": "Con 35 páginas SSG cada una importando 7.8MB, el worker de Vercel puede agotar memoria. **Fix**: lazy-load via `import()` dinámico o `fs.readFile` en runtime.",
+        "pattern": "FIX"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2543,
+        "content": "**4.** Selecciona y copia todo el bloque de error (desde la línea que dice `Error:` o `Build Error` hasta el final) y pégalo aquí.",
+        "pattern": "TODO"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3511,
+        "content": "preview/consolidacion-mvpfix(build): prevent supabase init crash at build time in oracle/infer - Add export const dynamic = 'force-dynamic' to /api/oracle/infer - Move createClient inside handler with...",
+        "pattern": "FIX"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3912,
+        "content": "Haz clic en la pestaña **`Deployment`** (arriba a la izquierda en la primera captura) y copia el texto del error que aparece en la caja de Build Logs, o hazle una captura a esa pantalla. ¡Con eso lo d...",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3955,
+        "content": "[feat(academy): mount Talent Campus LMS & Astra Neural Twin in public /academia and admin /admin/academia](https://vercel.com/productoraear-gmailcoms-projects/ear-psi/H6x696EtVprUL8rVtCFxngTwXA2M)Erro...",
+        "pattern": "ASTRA"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3995,
+        "content": "[feat(rag): conexion de OmniSearchModal con el endpoint del Oraculo RAG](https://vercel.com/productoraear-gmailcoms-projects/ear-psi/BVngUZkf738w79c5cCXo3PwbPYdT)Ready",
+        "pattern": "ENDPOINT"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5398,
+        "content": "18: - **EVIDENCIA:** `src/app/api/nexus/user/sync/route.ts` (58 líneas) valida JWT via `adminAuth.verifyIdToken()`. Devuelve 401 sin token. `UserService.ts` asigna `EXPLORADOR` a nuevos usuarios sin e...",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5414,
+        "content": "34: - **EVIDENCIA:** `src/middleware.ts` (31 líneas) protege `/dashboard`, `/nexus`, `/admin`, `/vault`, `/artist` via cookie `ear_auth_signal`. Redirige a `/login` si ausente.",
+        "pattern": "MIDDLEWARE"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6966,
+        "content": "El sistema se encuentra en coherencia absoluta de navegación y el build de producción está blindado contra colisiones de rutas, discrepancias de `.vercelignore` y rupturas del ciclo de vida de React.",
+        "pattern": "VERCEL"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7052,
+        "content": "Task Description: Get-ChildItem -Path \"H:\\\", \"D:\\\", \"C:\\\" -Directory -Depth 2 -ErrorAction SilentlyContinue | Where-Object { $_.Name -match \"EAR|PRODUCTORA|SCLASS|MCP|DARK|ASTRA|UNIO|VAMPIRE|GOLD|ORAC...",
+        "pattern": "ASTRA"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7088,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\AstraNeuralTwin.tsx                  7159",
+        "pattern": "ASTRA"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7089,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\AstraSingleVoice.tsx                 2584",
+        "pattern": "ASTRA"
+      },
+      {
+        "category": "ASTRA_IA",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 7102,
+        "content": "C:\\EAR_OS_V2\\src\\modules\\SClassScreens\\components\\AstraKPIPanel.tsx         5705",
+        "pattern": "ASTRA"
+      }
+    ],
+    "SEO_BLOG": [
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 939,
+        "content": "{\"name\":\"LandingPage.tsx\",\"sizeBytes\":\"608\"}",
+        "pattern": "LANDING"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 947,
+        "content": "{\"name\":\"blog\",\"isDir\":true}",
+        "pattern": "BLOG"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1067,
+        "content": "25: export default function CategoryProvinceSeoPage({ params }: PageProps) {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1114,
+        "content": "72:           INSPECCIÓN SEO PROGRAMÁTICA // COBERTURA NACIONAL",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1570,
+        "content": "25: export default function CategoryProvinceSeoPage({ params }: PageProps) {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1617,
+        "content": "72:           INSPECCIÓN SEO PROGRAMÁTICA // COBERTURA NACIONAL",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1677,
+        "content": "export default function CategoryProvinceSeoPage({ params }: PageProps) {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1934,
+        "content": "-export default function CategoryProvinceSeoPage({ params }: PageProps) {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1937,
+        "content": "+export default async function CategoryProvinceSeoPage({ params }: PageProps) {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2096,
+        "content": "| 3 | **`calculateGeoPricing` eliminado** | `page.tsx` líneas 5, 27-28 | Función async de pricing usada como normalizador síncrono de strings |",
+        "pattern": "CRON"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8548,
+        "content": "C:\\EAR_OS_V2\\src\\app\\components\\artists\\ArtistSEOSwarm.tsx              20667",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8855,
+        "content": "\"metadata_seo\": {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8869,
+        "content": "\"metadata_seo\": {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8883,
+        "content": "\"metadata_seo\": {",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10195,
+        "content": "Se ha eliminado por completo la geometría abstracta en 3D y se ha diseñado e integrado el **Vuelo del Colibrí Soberano (`HummingbirdFlight.tsx`)**, creando un efecto de acompañamiento narrativo y cine...",
+        "pattern": "TODO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12757,
+        "content": "123:             transition={{ duration: 1.5, ease: 'easeOut' }}",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 14644,
+        "content": "C:\\EAR_OS_V2\\src\\app\\components\\artists\\ArtistSEOSwarm.tsx              20667",
+        "pattern": "SEO"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15569,
+        "content": "27:   blog: \"/blog\",",
+        "pattern": "BLOG"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15570,
+        "content": "28:   blogCasos: \"/blog/casos-clinicos\",",
+        "pattern": "BLOG"
+      },
+      {
+        "category": "SEO_BLOG",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15572,
+        "content": "30:   blogTecnica: \"/blog/tecnica-sonora\",",
+        "pattern": "BLOG"
+      }
+    ],
+    "ONBOARDING": [
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 17,
+        "content": "# 📜 REGISTRO CRONOLÓGICO COMPLETO",
+        "pattern": "CRON"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 866,
+        "content": "{\"name\":\"onboarding\",\"isDir\":true}",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 30376,
+        "content": "{\"name\":\"onboarding\",\"isDir\":true}",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 30402,
+        "content": "2: import RoleSelectionGateway from '@/components/onboarding/RoleSelectionGateway';",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 30430,
+        "content": "File Path: `file:///C:/EAR_OS_V2/src/components/onboarding/RoleSelectionGateway.tsx`",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 38414,
+        "content": "C:\\EAR_OS_V2\\src\\app\\onboarding\\components",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 38415,
+        "content": "C:\\EAR_OS_V2\\src\\app\\onboarding\\select-profile",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 49680,
+        "content": "2. **Sensibilidad a Mayúsculas en Filtros**: El endpoint de búsqueda recibía el valor `ALL` en mayúsculas mientras el filtro evaluaba `all` en minúsculas, descartando temporalmente los registros sin b...",
+        "pattern": "QUEDA POR"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 50412,
+        "content": "components\\OnboardingTour.tsx (9615 bytes)",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 51398,
+        "content": "import { OnboardingTour, TourStep } from './OnboardingTour';",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 52217,
+        "content": "• Cotizador Bespoke      • Onboarding 80/10/10     • E-Manager Suite",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 17,
+        "content": "# 📜 REGISTRO CRONOLÓGICO COMPLETO",
+        "pattern": "CRON"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 866,
+        "content": "{\"name\":\"onboarding\",\"isDir\":true}",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 30376,
+        "content": "{\"name\":\"onboarding\",\"isDir\":true}",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 30402,
+        "content": "2: import RoleSelectionGateway from '@/components/onboarding/RoleSelectionGateway';",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 30430,
+        "content": "File Path: `file:///C:/EAR_OS_V2/src/components/onboarding/RoleSelectionGateway.tsx`",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 38414,
+        "content": "C:\\EAR_OS_V2\\src\\app\\onboarding\\components",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 38415,
+        "content": "C:\\EAR_OS_V2\\src\\app\\onboarding\\select-profile",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 49680,
+        "content": "2. **Sensibilidad a Mayúsculas en Filtros**: El endpoint de búsqueda recibía el valor `ALL` en mayúsculas mientras el filtro evaluaba `all` en minúsculas, descartando temporalmente los registros sin b...",
+        "pattern": "QUEDA POR"
+      },
+      {
+        "category": "ONBOARDING",
+        "file": "EAR_OS_SESSION_EXPORT_2026_08_17.md",
+        "line_num": 50412,
+        "content": "components\\OnboardingTour.tsx (9615 bytes)",
+        "pattern": "ONBOARDING"
+      }
+    ],
+    "STRIPE_PAYMENTS": [
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2262,
+        "content": "**3 — Telegram webhook (requiere tu aprobación explícita antes de ejecutar):**",
+        "pattern": "WEBHOOK"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4320,
+        "content": "16:     \"stripe\": \"^13.5.0\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4363,
+        "content": "19:                 \"@stripe/stripe-js\": \"^9.12.1\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4367,
+        "content": "23:                 \"@types/stripe\": \"^8.0.416\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4407,
+        "content": "48:                 \"stripe\": \"^22.5.0\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4488,
+        "content": "\"@stripe/stripe-js\": \"^9.12.1\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4492,
+        "content": "\"@types/stripe\": \"^8.0.416\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4517,
+        "content": "\"stripe\": \"^22.5.0\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4872,
+        "content": "25:         \"@stripe/stripe-js\": \"^9.12.1\",",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6415,
+        "content": "12: import { parseStripeAmount } from '@/lib/recovered/parseStripeProp';",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6430,
+        "content": "27:     paymentMethod: z.string().optional().default('Stripe'),",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6510,
+        "content": "82:                 amount: parseStripeAmount(1000), // Ejemplo: 1000€",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6524,
+        "content": "96:             console.error(\"Stripe Generation Failed:\", error);",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6525,
+        "content": "97:             alert(\"Falla en el handshake de Stripe. Revisa logs.\");",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6562,
+        "content": "paymentMethod: z.string().optional().default('Stripe'),",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9601,
+        "content": "53:         <link rel=\"preconnect\" href=\"https://js.stripe.com\" />",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9605,
+        "content": "57:           src=\"https://js.stripe.com/v3/\"",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10011,
+        "content": "- Enrutador de Intención    - Inyección Tier 0         - Stripe / Checkout instantáneo",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10105,
+        "content": "53:         <link rel=\"preconnect\" href=\"https://js.stripe.com\" />",
+        "pattern": "STRIPE"
+      },
+      {
+        "category": "STRIPE_PAYMENTS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10109,
+        "content": "57:           src=\"https://js.stripe.com/v3/\"",
+        "pattern": "STRIPE"
+      }
+    ],
+    "EMPRESAS_B2B": [
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 13,
+        "content": "5. Consola Proveedor B2B `/dashboard/proveedor` y Micro-Lote 01 (100 fincas Madrid/Toledo).",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12660,
+        "content": "26:   { nivel: 8, nombre: 'Red de Alianzas', anchor: 'alliance_affiliate_network', estado: 'PENDIENTE', descripcion: 'Red de proveedores y afiliados estratégicos', archivosClave: ['AllianceNetwork.tsx...",
+        "pattern": "PENDIENTE"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 12875,
+        "content": "-  { nivel: 8, nombre: 'Red de Alianzas', anchor: 'alliance_affiliate_network', estado: 'PENDIENTE', descripcion: 'Red de proveedores y afiliados estratégicos', archivosClave: ['AllianceNetwork.tsx'] ...",
+        "pattern": "PENDIENTE"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 16400,
+        "content": "| **`/ocasiones/corporativo`** | **Landing Corporativa B2B** | Convenciones, eventos de marca y galas de empresa. |",
+        "pattern": "LANDING"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 24098,
+        "content": "17. **Seguro RC 1M€:** Obligatorio para finca / Recomendable / Protocolo de cliente.",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 26551,
+        "content": "+| TD-005 | P1 | SEO/Indexación | `src/app/sitemap.ts` & `src/app/robots.ts` | `/afiliados`, `/presupuesto` y catálogo indexados; rutas admin disallow. | ✅ PASS | SEO |",
+        "pattern": "SEO"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 26607,
+        "content": "| **`sitemap.ts`** | Faltaban las URLs públicas estratégicas de **`/afiliados`** y **`/presupuesto`** en el array de `corePages`. | Añadidas con prioridad `0.9` e indexación continua para SEO orgánico...",
+        "pattern": "FALTA"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 44533,
+        "content": "# 🏛️ REPORTE DE EVOLUCIÓN: TÚNEL NEURAL EN 10 PANTALLAS Y MATCHMAKING SUBLIME PARA WEDDING PLANNERS & B2B",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 48641,
+        "content": "TÚNEL NEURAL DE 10 PANTALLAS • WEDDING PLANNERS & B2B",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 48658,
+        "content": "Todos los ServiciosSonido & LucesMúsica & MariachiFincas & RecintosWedding PlannersVídeo 4K & CineCatering & Gastro",
+        "pattern": "TODO"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 49331,
+        "content": "FIXED RESULT: Total: 8352 Count in batch: 6 Sample name: U. Zalacain La Finca Location: Pozuelo De Alarcón Price: 650",
+        "pattern": "FIX"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 53747,
+        "content": "192:               placeholder=\"Buscar por nombre, finca, servicio...\"",
+        "pattern": "PLACEHOLDER"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 58060,
+        "content": "#### 9. Nodo: `NODO_RECLAMACION_FICHA_PROVEEDOR` (Onboarding de Profesionales B2B)",
+        "pattern": "ONBOARDING"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 58442,
+        "content": "21:     \"email_subject\": \"Verificación de Ficha Oficial y Protocolo de Reservas 2026: Finca Las Tenadas Alta Gama\",",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 58465,
+        "content": "44:     \"email_subject\": \"Verificación de Ficha Oficial y Protocolo de Reservas 2026: U. Zalacain La Finca\",",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 58811,
+        "content": "placeholder=\"Nombre de tu Finca, Catering o Servicio...\"",
+        "pattern": "PLACEHOLDER"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 59332,
+        "content": "- Diseña la interfaz `/dashboard/proveedor` donde las fincas o servicios que paguen la suscripción B2B (49 €/mes) puedan ver sus métricas en vivo (impresiones, clics a WhatsApp, reservas congeladas).",
+        "pattern": "DASHBOARD"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 61163,
+        "content": "81: Todo flujo de comisión debe modelarse en datos, no en hojas manuales.",
+        "pattern": "TODO"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 61638,
+        "content": "1. **Ejecución del Lote 01 Real**: Lanzar el despachador de WhatsApp/Email sobre las primeras 25 fincas de Madrid (`python scripts/outbound_dispatcher_queue.py --mode=production`).",
+        "pattern": "EMAIL"
+      },
+      {
+        "category": "EMPRESAS_B2B",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 63129,
+        "content": "48: - **Tipo de Landing:** Hub B2B Corporativo.",
+        "pattern": "LANDING"
+      }
+    ],
+    "AUTH_LOGIN": [
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 938,
+        "content": "{\"name\":\"(auth)\",\"isDir\":true}",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2384,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_AUTH_LOGIN_LOGOUT_GUARDS.md (LANGUAGE_MARKDOWN)",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4358,
+        "content": "14:                 \"@next-auth/prisma-adapter\": \"^1.0.7\",",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4365,
+        "content": "21:                 \"@supabase/auth-helpers-react\": \"^0.15.0\",",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4483,
+        "content": "\"@next-auth/prisma-adapter\": \"^1.0.7\",",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4490,
+        "content": "\"@supabase/auth-helpers-react\": \"^0.15.0\",",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4867,
+        "content": "20:         \"@next-auth/prisma-adapter\": \"^1.0.7\",",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5212,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_AUTH_LOGIN_LOGOUT_GUARDS.md (LANGUAGE_MARKDOWN)",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5406,
+        "content": "26: - **EVIDENCIA:** Cookie `ear_auth_signal` establecida en `AuthContext.tsx` tras login Firebase. Sesión edge-compatible confirmada.",
+        "pattern": "AUTH"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5496,
+        "content": "- Se detectó un error crítico de React Hooks (`Error: Rendered more hooks than during the previous render`) al acceder a `/login?from=...`, originado en el componente `SovereignNavbar` al manejar pará...",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5499,
+        "content": "- La caída de renderizado en `/login` se debe a un retorno temprano condicional en `SovereignNavbar` que altera el orden de ejecución de los React Hooks.",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5511,
+        "content": "- Imposibilidad de autenticación o uso del Gateway de Identidad Soberana para clientes/administradores debido al crash en `/login`.",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5524,
+        "content": "SIGUIENTE_PASO_PROPUESTO: Corregir el bug de orden de Hooks en `SovereignNavbar` en la página de login.",
+        "pattern": "CORREGIR"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6575,
+        "content": "- Acceso y renderizado limpio de `/login` con el flujo de redirección de cliente (`?role=cliente&from=/servicios`).",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6586,
+        "content": "- Declarar el bloque de verificación del login y la redirección de cliente como completado con estado `PASS`.",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6595,
+        "content": "- Carga de `http://localhost:3007/` y redirección a `http://localhost:3007/login?role=cliente&from=/servicios`.",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6596,
+        "content": "- Verificación visual (screenshots guardados: `login_page_load`, `servicios_page_clean`).",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6647,
+        "content": "{\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"explanation\":\"Retrieve DOM tree of the homepage to locate the login link.\",\"toolAction\":\"Getting page DOM\",\"toolSummary\":\"Get page DOM\"}",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6662,
+        "content": "{\"explanation\":\"Check current browser URL after clicking login link.\",\"toolAction\":\"Listing browser pages\",\"toolSummary\":\"List browser pages\"}",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "AUTH_LOGIN",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6669,
+        "content": "{\"PageId\":\"93962E6B4A55E6970222DFF665890CDF\",\"explanation\":\"Retrieve DOM tree of the login page to verify components.\",\"toolAction\":\"Getting page DOM\",\"toolSummary\":\"Get page DOM\"}",
+        "pattern": "LOGIN"
+      }
+    ],
+    "ARTISTAS_ROSTER": [
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1415,
+        "content": "1. **Stale types en `.next/dev/types/`** — referencias a las rutas eliminadas. Fix: limpiar caché.",
+        "pattern": "FIX"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 6776,
+        "content": "{\"ClickType\":\"left\",\"PageID\":\"93962E6B4A55E6970222DFF665890CDF\",\"X\":408,\"Y\":531,\"explanation\":\"Clicked 'ARTISTA' button on the login page to check if it displays credential inputs.\",\"toolAction\":\"Clic...",
+        "pattern": "LOGIN"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8165,
+        "content": "+            INFRAESTRUCTURA TÉCNICA & ARTISTAS S-CLASS ({TIER_ZERO_ARSENAL.length})",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9093,
+        "content": "- **Arsenal Tier 0**: Inyección directa de equipamiento Line Array Bose, microfonía Shure Axient y booking exclusivo de Edwin Agudelo.",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 11295,
+        "content": "-            INFRAESTRUCTURA TÉCNICA & ARTISTAS S-CLASS ({TIER_ZERO_ARSENAL.length})",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 11320,
+        "content": "+              INFRAESTRUCTURA TÉCNICA & ARTISTAS S-CLASS ({TIER_ZERO_ARSENAL.length})",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 14123,
+        "content": "22:     { title: \"Soberanía\", label: \"Manifiesto\", desc: \"El compromiso de Edwin Agudelo: Defender la identidad contra el olvido.\", href: \"/vimume/nosotros\" },",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15145,
+        "content": "[/artistas] SWIPE MATCHER      [/vimume] KIT DE PRENSA        [/servicios] TÚNEL NEURAL",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15252,
+        "content": "Error: error executing cascade step: CORTEX_STEP_TYPE_OPEN_BROWSER_URL: failed to open URL in Antigravity Browser. DO NOT try alternative ways of opening the page. If this tool has failed multiple tim...",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15267,
+        "content": "Error: error executing cascade step: CORTEX_STEP_TYPE_OPEN_BROWSER_URL: failed to open URL in Antigravity Browser. DO NOT try alternative ways of opening the page. If this tool has failed multiple tim...",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15312,
+        "content": "Error: error executing cascade step: CORTEX_STEP_TYPE_OPEN_BROWSER_URL: failed to open URL in Antigravity Browser. DO NOT try alternative ways of opening the page. If this tool has failed multiple tim...",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 15437,
+        "content": "Error: error executing cascade step: CORTEX_STEP_TYPE_OPEN_BROWSER_URL: failed to open URL in Antigravity Browser. DO NOT try alternative ways of opening the page. If this tool has failed multiple tim...",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 16333,
+        "content": "Hazme una simulación como administrador y una elección de lo privado y público Sugieren las que se Públicas como las url De las landing Los selectores de servicios Productos Contrataciones de artistas...",
+        "pattern": "LANDING"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 16786,
+        "content": "- **Superficies Públicas de Captación:** `/`, `/servicios`, `/artistas`, `/artistas/edwin-agudelo`, `/arsenal`, `/cotizador`, `/checkout/presupuesto`, `/contacto`, `/ocasiones/bodas`, `/ocasiones/corp...",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 18468,
+        "content": "22:     { title: \"Soberanía\", label: \"Manifiesto\", desc: \"El compromiso de Edwin Agudelo: Defender la identidad contra el olvido.\", href: \"/vimume/nosotros\" },",
+        "pattern": "VIMUME"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 20635,
+        "content": "Error: error executing cascade step: CORTEX_STEP_TYPE_OPEN_BROWSER_URL: failed to open URL in Antigravity Browser. DO NOT try alternative ways of opening the page. If this tool has failed multiple tim...",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 20672,
+        "content": "Error: error executing cascade step: CORTEX_STEP_TYPE_OPEN_BROWSER_URL: failed to open URL in Antigravity Browser. DO NOT try alternative ways of opening the page. If this tool has failed multiple tim...",
+        "pattern": "ROTO"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 20756,
+        "content": "- **Resultado:** Todos los textos, fichas de artistas (Edwin Agudelo), botones, badges y sliders se ven **perfectamente contrastados, nítidos y legibles en todo momento**, sin necesidad de seleccionar...",
+        "pattern": "TODO"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 21975,
+        "content": "289:               INFRAESTRUCTURA TÉCNICA & ARTISTAS S-CLASS ({TIER_ZERO_ARSENAL.length})",
+        "pattern": "ARSENAL"
+      },
+      {
+        "category": "ARTISTAS_ROSTER",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 23593,
+        "content": "[MATCHMAKER](http://localhost:3007/servicios)[COTIZADOR](http://localhost:3007/cotizador)[ARTISTAS](http://localhost:3007/artistas)[ARSENAL](http://localhost:3007/arsenal)[NEXUS](http://localhost:3007...",
+        "pattern": "ARSENAL"
+      }
+    ],
+    "CRM_LEADS": [
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 204,
+        "content": "1. __Dynamic filesystem access warning__: The `fs.existsSync` call in `GravitationalIngestionEngine.ts` is causing the whole project to be traced and included in the output, which can slow down deploy...",
+        "pattern": "DEPLOY"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 833,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_SIGNAL_FUNNEL_ARCHITECTURE.md (LANGUAGE_MARKDOWN)",
+        "pattern": "FUNNEL"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 897,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1042,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1453,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1545,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1730,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1784,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 1964,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2518,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_SIGNAL_FUNNEL_ARCHITECTURE.md (LANGUAGE_MARKDOWN)",
+        "pattern": "FUNNEL"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3869,
+        "content": "- c:\\EAR_OS_V2\\docs\\audit\\EAR_SIGNAL_FUNNEL_ARCHITECTURE.md (LANGUAGE_MARKDOWN)",
+        "pattern": "FUNNEL"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4117,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4304,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4344,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4398,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4847,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 4945,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5003,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5237,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      },
+      {
+        "category": "CRM_LEADS",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 5380,
+        "content": "The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove t...",
+        "pattern": "LEAD"
+      }
+    ],
+    "NEURAL_GRAPH": [
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2786,
+        "content": "/weddings/fotografos-boda-editorial-rivas-vaciamadrid",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2886,
+        "content": "/weddings/fotografos-boda-editorial-guadalajara",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 2963,
+        "content": "/weddings/fotografos-boda-editorial-rivas-vaciamadrid",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3063,
+        "content": "/weddings/fotografos-boda-editorial-guadalajara",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3140,
+        "content": "/weddings/fotografos-boda-editorial-rivas-vaciamadrid",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3240,
+        "content": "/weddings/fotografos-boda-editorial-guadalajara",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3320,
+        "content": "/weddings/fotografos-boda-editorial-rivas-vaciamadrid",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3420,
+        "content": "/weddings/fotografos-boda-editorial-guadalajara",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 3769,
+        "content": "/weddings/fotografos-boda-editorial-rivas-vaciamadrid",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8547,
+        "content": "C:\\EAR_OS_V2\\src\\app\\components\\SClassScreens\\NeuralJourneyApex.tsx     21040",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8654,
+        "content": "File Path: `file:///C:/EAR_OS_V2/src/app/components/SClassScreens/NeuralJourneyApex.tsx`",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8664,
+        "content": "6:  * Transmutación Aura Onyx del componente NeuralJourneyV2.",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8688,
+        "content": "30:     { id: 'details', label: 'Arquitectura', subtitle: 'Datos técnicos y presupuesto neural' },",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8994,
+        "content": "1. **Grafo de Conocimiento & Documentos Históricos de Formación**:",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 8995,
+        "content": "- Localizados en `H:\\00_PRODUCTORA_EAR\\...` los archivos de grafo de conocimiento (`knowledge_graph.json`) y directivas de diseño de alta gama (`DIVI_MASTER_01_GLASSMORPHISM.md`).",
+        "pattern": "GRAFO"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9725,
+        "content": "83:     <canvas className=\"fixed inset-0 z-0 pointer-events-none\" />",
+        "pattern": "FIX"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 9826,
+        "content": "-    <canvas className=\"fixed inset-0 z-0 pointer-events-none\" />",
+        "pattern": "FIX"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10532,
+        "content": "File Path: `file:///C:/EAR_OS_V2/src/app/components/SClassScreens/NeuralJourneyApex.tsx`",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10542,
+        "content": "6:  * Transmutación Aura Onyx del componente NeuralJourneyV2.",
+        "pattern": "NEURAL"
+      },
+      {
+        "category": "NEURAL_GRAPH",
+        "file": "CONVERSATION_EXPORT_BACKUP.md",
+        "line_num": 10566,
+        "content": "30:     { id: 'details', label: 'Arquitectura', subtitle: 'Datos técnicos y presupuesto neural' },",
+        "pattern": "NEURAL"
+      }
+    ]
+  },
+  "summary": {
+    "DASHBOARD_ADMIN": 2766,
+    "EMAIL_NOTIF": 1159,
+    "B2G_INSTITUCIONAL": 2037,
+    "ASTRA_IA": 7734,
+    "TESTING": 6789,
+    "DEPLOYMENT": 6682,
+    "EMPRESAS_B2B": 1951,
+    "SEO_BLOG": 9866,
+    "ONBOARDING": 236,
+    "STRIPE_PAYMENTS": 3941,
+    "UNCATEGORIZED": 22293,
+    "ARSENAL_AUDIO": 1997,
+    "AUTH_LOGIN": 4864,
+    "ARTISTAS_ROSTER": 1921,
+    "VIMUME_NEURO": 2959,
+    "CRM_LEADS": 17678,
+    "NEURAL_GRAPH": 2551
+  },
+  "total_task_hits": 97424
+}

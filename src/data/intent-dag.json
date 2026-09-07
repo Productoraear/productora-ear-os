@@ -1,0 +1,93 @@
+﻿{
+    "domain":  "https://www.productoraear.com",
+    "matrices":  [
+                     {
+                         "vertical":  "bodas_eventos_gala",
+                         "hub":  "Mentrida (Toledo)",
+                         "lead_artist":  "Edwin Agudelo",
+                         "nodes":  [
+                                       {
+                                           "question":  "¿Cuánto cuesta contratar un mariachi profesional para una boda en Madrid?",
+                                           "answer":  "La tarifa base parte de 350,00 € para actuaciones solistas de gala con amplificación Bose integrada. El Ensamble de Gala Mariachi (6 o más músicos con trajes bordados a mano) se presupuesta desde 2.800,00 €, con kilometraje estandarizado a 1,50 €/km desde Méntrida a partir del km 50.",
+                                           "cta_label":  "Ver Formatos de Gala",
+                                           "level":  0,
+                                           "target_route":  "/artistas/edwin-agudelo",
+                                           "category":  "Precio y Formatos"
+                                       },
+                                       {
+                                           "question":  "¿Por qué se exige un mínimo de 6 integrantes en las actuaciones de gala de Edwin Agudelo?",
+                                           "answer":  "Para preservar la excelencia acústica del mariachi tradicional (guitarrón, vihuela, dos violines y trompeta) junto a la voz tenor de Edwin Agudelo. Formaciones menores comprometen el cuerpo armónico y la presión sonora requerida en fincas y salones.",
+                                           "cta_label":  "Escuchar Muestras S-Class",
+                                           "level":  1,
+                                           "target_route":  "/artistas/edwin-agudelo",
+                                           "category":  "Calidad Sonora"
+                                       },
+                                       {
+                                           "question":  "¿Qué garantía existe de que el grupo no cancelará el día del evento?",
+                                           "answer":  "Toda contratación se formaliza mediante contrato mercantil vinculante con depósito del 30% custodiado por Stripe, asignación geoespacial de ruta vía PostGIS y protocolo de sustitución inmediata en flota.",
+                                           "cta_label":  "Bloquear Fecha Segura",
+                                           "level":  2,
+                                           "target_route":  "/presupuesto",
+                                           "category":  "Garantía Operativa"
+                                       },
+                                       {
+                                           "question":  "¿Cómo se coordina la llegada y el timing de la sorpresa en el banquete?",
+                                           "answer":  "El equipo de operaciones realiza un enlace técnico previo de 15 minutos con el maitre o la wedding planner. La entrada se realiza sin pruebas sonoras audibles para mantener el factor sorpresa.",
+                                           "cta_label":  "Coordinar con Centralita",
+                                           "level":  3,
+                                           "target_route":  "/contacto",
+                                           "category":  "Logística y Horarios"
+                                       },
+                                       {
+                                           "question":  "¿Se puede contratar un mariachi con menos de 48 horas de antelación?",
+                                           "answer":  "Sí, a través de la centralita telefónica oficial (+34 693 693 048). El sistema despacha la unidad móvil disponible más cercana al código postal del evento.",
+                                           "cta_label":  "Llamar a Despacho Central",
+                                           "level":  4,
+                                           "target_route":  "tel:+34693693048",
+                                           "category":  "Cierre Urgente"
+                                       }
+                                   ]
+                     },
+                     {
+                         "vertical":  "vimume_neuroacustica_b2g",
+                         "hub":  "Mentrida (Toledo)",
+                         "lead_artist":  "Metodologia Clinica VIMUME",
+                         "nodes":  [
+                                       {
+                                           "question":  "¿Cómo puede un ayuntamiento o residencia contratar talleres de musicoterapia sin licitación abierta?",
+                                           "answer":  "Mediante contrato menor de servicios amparado en el Art. 118 de la Ley de Contratos del Sector Público (LCSP), acotado estrictamente bajo el límite preventivo de 14.250,00 € (inferior al techo legal de 15.000 €).",
+                                           "cta_label":  "Descargar Memoria B2G",
+                                           "level":  0,
+                                           "target_route":  "/ayuntamientospremium",
+                                           "category":  "Marco Administrativo"
+                                       },
+                                       {
+                                           "question":  "¿Cuál es el impacto de VIMUME en personas mayores con Alzheimer o demencia?",
+                                           "answer":  "Aplica estimulación cognitiva rítmica y neuroacústica a 40 Hz, reactivando la memoria episódica afectiva y reduciendo episodios de agitación psicomotriz con un límite sonoro controlado inferior a 75 dB SPL.",
+                                           "cta_label":  "Ver Protocolo Clínico",
+                                           "level":  1,
+                                           "target_route":  "/dossier",
+                                           "category":  "Evidencia Clínica"
+                                       },
+                                       {
+                                           "question":  "¿Qué requisitos de personal y equipos exige el programa en el centro?",
+                                           "answer":  "Cero sobrecarga para el personal de planta. Productora EAR provee sistemas autónomos Bose S1 Pro a batería, microfonía Shure y técnicos con seguro de Responsabilidad Civil de 1.000.000 € y altas laborales en regla.",
+                                           "cta_label":  "Consultar Disponibilidad",
+                                           "level":  2,
+                                           "target_route":  "/ayuntamientospremium",
+                                           "category":  "Solvencia Técnica"
+                                       },
+                                       {
+                                           "question":  "¿Qué documentación se aporta para la justificación del gasto público?",
+                                           "answer":  "Factura electrónica homologada con desglose de IVA, memoria técnica de ejecución de sesiones, control de asistencia y certificados de estar al corriente con TGSS y Agencia Tributaria.",
+                                           "cta_label":  "Solicitar Certificado",
+                                           "level":  3,
+                                           "target_route":  "/dossier",
+                                           "category":  "Cumplimiento y Auditoría"
+                                       }
+                                   ]
+                     }
+                 ],
+    "version":  "5.0",
+    "centralita":  "+34693693048"
+}

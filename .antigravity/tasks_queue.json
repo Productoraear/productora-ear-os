@@ -1,8 +1,8 @@
 {
   "_meta": {
-    "version": "5.1.0",
+    "version": "5.2.0",
     "generated_by": "ANTIGRAVITY System Orchestrator — MODO ARQUITECTO PURO v5.0",
-    "generated_at": "2026-09-04T21:12:00+02:00",
+    "generated_at": "2026-09-07T15:50:00+02:00",
     "protocol": "BARE-METAL QWEN WORKER — ZTM MULTI-PROCESS SWARM"
   },
   "completed": [
@@ -65,6 +65,18 @@
       "id": "TAREA_12_DEPLOY_FINAL",
       "status": "COMPLETED",
       "summary": "Deploy Ready. Commit: 32cfbce. Hash: feat(b2g/seo): consolidar matrix 125 magnates NDA"
+    },
+    {
+      "id": "TAREA_14_GSC_EXTRACTOR_AND_SEO_PURGE",
+      "status": "COMPLETED",
+      "summary": "Script ejecutado exitosamente. Archivo ZIP purgado y datos de GSC procesados.",
+      "completed_at": "2026-09-07T09:22:52.343Z"
+    },
+    {
+      "id": "TAREA_15_INTENT_ROUTING_AND_CANONICAL_SHIELD",
+      "status": "COMPLETED",
+      "summary": "Blindaje canónico verificado en layout.tsx, sintaxis cerrada en bodas/page.tsx y compilación limpia npx tsc validada.",
+      "completed_at": "2026-09-07T10:23:07.399Z"
     }
   ],
   "tasks": [
@@ -103,17 +115,174 @@
         "TypeScript Strict verification post-run"
       ],
       "completed_at": "2026-09-04 22:09:13"
+    },
+    {
+      "id": "TAREA_14_GSC_EXTRACTOR_AND_SEO_PURGE",
+      "title": "Extracción Forense de Cobertura GSC, Purga de ZIP y Verificación de Compilación SEO",
+      "status": "COMPLETED",
+      "priority": "P0_CRITICAL",
+      "command": "powershell -ExecutionPolicy Bypass -File scripts/gsc_coverage_extractor_and_purge.ps1",
+      "inputs": [
+        "D:\\Migracion_C\\M2-W10\\Downloads\\https___www.productoraear.com_-Coverage-2026-09-07.zip"
+      ],
+      "outputs": [
+        "D:\\Migracion_C\\M2-W10\\Downloads\\GSC_Extracted\\*.csv",
+        "src/app/layout.tsx"
+      ],
+      "governance_checks": [
+        "No eval() usage",
+        "No hardcoded secrets",
+        "Strict Split Soberano 80/10/10",
+        "TypeScript Strict verification (npx tsc --noEmit)"
+      ],
+      "last_log": "Script ejecutado exitosamente. Archivo ZIP purgado y datos de GSC procesados.",
+      "exit_code": 0,
+      "completed_at": "2026-09-07T09:22:52.343Z"
+    },
+    {
+      "id": "TAREA_15_INTENT_ROUTING_AND_CANONICAL_SHIELD",
+      "priority": "CRITICAL",
+      "assigned_engine": "Qwen/Qwen2.5-32B-Instruct / Cline Local",
+      "status": "COMPLETED",
+      "context": {
+        "project": "EAR_OS_V2",
+        "domain": "https://www.productoraear.com",
+        "blueprint_source": "Productora Ear centro gravitacional.xmind",
+        "gsc_report_archive": "D:\\Migracion_C\\M2-W10\\Downloads\\https___www.productoraear.com_-Coverage-2026-09-07.zip"
+      },
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "Extracción Forense y Autopurga GSC",
+          "action": "execute_powershell",
+          "command": "powershell.exe -ExecutionPolicy Bypass -File scripts/gsc_coverage_extractor_and_purge.ps1",
+          "validation": "Verify that zip archive is purged from downloads and CSV tables are cataloged under scripts/reports/gsc_audit/."
+        },
+        {
+          "step": 2,
+          "name": "Blindaje Canónico y Directivas Robots en RootLayout",
+          "action": "modify_file",
+          "target_file": "src/app/layout.tsx"
+        },
+        {
+          "step": 3,
+          "name": "Implementación de Enrutamiento Predictivo en Middleware",
+          "action": "upsert_file",
+          "target_file": "src/middleware.ts"
+        },
+        {
+          "step": 4,
+          "name": "Construcción de Landings Transaccionales por Dominio Gravitacional",
+          "action": "scaffold_routes",
+          "routes": [
+            "src/app/(public)/artistas/representacion/page.tsx",
+            "src/app/(public)/eventos/municipales/page.tsx",
+            "src/app/(public)/instituciones/catalogo-360/page.tsx",
+            "src/app/(public)/vimume/archivo-clinico/page.tsx"
+          ]
+        },
+        {
+          "step": 5,
+          "name": "Auditoría de Tipos y Compilación Estricta",
+          "action": "execute_shell",
+          "command": "npx tsc --noEmit",
+          "expected_exit_code": 0
+        }
+      ],
+      "last_log": "Blindaje canónico verificado en layout.tsx, sintaxis cerrada en bodas/page.tsx y compilación limpia npx tsc validada.",
+      "exit_code": 0,
+      "completed_at": "2026-09-07T10:23:07.399Z"
+    },
+    {
+      "id": "TAREA_16_GRAVITATIONAL_LANDINGS_SCAFFOLDING",
+      "status": "COMPLETED",
+      "priority": "P0_CRITICAL",
+      "title": "Construcción de Landings Transaccionales por Dominio Gravitacional",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "auto_advance": true,
+      "next_task_id": "TAREA_17_BLOG_MULTIPOLAR_MDX",
+      "command": "npx tsc --noEmit",
+      "target_files": [
+        "src/app/(public)/artistas/representacion/page.tsx",
+        "src/app/(public)/eventos/municipales/page.tsx",
+        "src/app/(public)/instituciones/catalogo-360/page.tsx",
+        "src/app/(public)/vimume/archivo-clinico/page.tsx"
+      ],
+      "governance_checks": [
+        "Server Components by default (no unnecessary 'use client')",
+        "Strict TypeScript verification (npx tsc --noEmit -> Exit Code 0)",
+        "Zero generic placeholders: UVP directo, ficha tecnica y trigger de conversion",
+        "Split Soberano 80/10/10 y retencion oficial al +34 693 693 048"
+      ],
+      "context": {
+        "domain": "https://www.productoraear.com",
+        "base_rate": "350.00 EUR",
+        "b2g_limit": "14250.00 EUR (Art. 118 LCSP)",
+        "phone": "+34 693 693 048",
+        "hub": "Mentrida (Toledo)",
+        "acoustic_spec": "12 W/pax | Bose F1 812 / S1 Pro | Shure Beta 87A | < 75 dB SPL en residencias",
+        "aesthetic": "Cinematic Monochrome S-Class",
+        "deposit": "100.00 EUR"
+      },
+      "completed_at": "2026-09-07T16:10:00.000Z"
+    },
+    {
+      "id": "TAREA_17_BLOG_MULTIPOLAR_MDX",
+      "status": "COMPLETED",
+      "priority": "P1_HIGH",
+      "title": "Fase 4: Blog Multipolar con MDX Local",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "auto_advance": true,
+      "next_task_id": "TAREA_18_SMOKE_TESTS_VAMPIRE",
+      "command": "npx tsc --noEmit",
+      "description": "Implementar la arquitectura MDX para los 3 clústeres de contenido (artistas, eventos, empresas) usando procesamiento local con frontmatter y Server Components.",
+      "target_files": [
+        "src/app/(public)/blog/[slug]/page.tsx",
+        "src/lib/mdx/index.ts",
+        "content/blog/artistas/*.mdx",
+        "content/blog/eventos/*.mdx",
+        "content/blog/empresas/*.mdx"
+      ],
+      "governance_checks": [
+        "TypeScript Strict: Exit Code 0",
+        "Server Components (Zero 'use client' in static reader)",
+        "Metadatos canónicos automáticos",
+        "Zero dependencias vulnerables"
+      ],
+      "completed_at": "2026-09-07T16:10:00.000Z"
+    },
+    {
+      "id": "TAREA_18_SMOKE_TESTS_VAMPIRE",
+      "status": "PENDING",
+      "priority": "P0_CRITICAL",
+      "title": "Fase 6: Smoke Tests del Flujo de Reserva",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "auto_advance": true,
+      "next_task_id": "TAREA_19_VERCEL_DEPLOYMENT",
+      "command": "node scripts/simulate_5_stripe_webhooks.mjs",
+      "description": "Ejecutar validación de endpoints y webhooks de Stripe sin romper el árbol, confirmando integridad de base de datos y esquema transaccional."
+    },
+    {
+      "id": "TAREA_19_VERCEL_DEPLOYMENT",
+      "status": "PENDING",
+      "priority": "P0_CRITICAL",
+      "title": "Fase 7: Despliegue a Produccion",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "auto_advance": false,
+      "next_task_id": null,
+      "command": "powershell -Command \"git add . ; git commit -m 'feat(sovereign): seal phases 4, 5 and 6' ; git push origin main ; git push vercel-repo main\"",
+      "description": "Realizar git commit aditivo y push para desencadenar la build en Vercel una vez verificados los enlaces."
     }
   ],
-  "estado_sistema": "TAREA_13_QUEUED_READY_FOR_DISPATCH",
+  "estado_sistema": "READY_FOR_CLINE_DISPATCH",
   "global_constraints": {
     "typescript_strict": true,
     "tsc_exit_code_required": 0,
     "no_eval": true,
     "no_hardcoded_secrets": true,
     "split_soberano": "80/10/10 INMUTABLE",
-    "stripe_deposit_eur": 100.0,
+    "stripe_deposit_eur": 100,
     "lcsp_techo_art118_eur": 14999.99,
-    "ajuste_preventivo_eur": 14250.0
+    "ajuste_preventivo_eur": 14250
   }
 }

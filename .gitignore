@@ -51,3 +51,12 @@ scripts/nightcrawler_results/
 scripts/_*
 scripts/recyclable_assets_found.json
 src/data/*_draft.json
+scripts/reports/auditoria_purista_santuario.json
+scripts/reports/*.json
+!scripts/reports/system_ai_audit.json
+!scripts/reports/ui-audit.json
+!scripts/reports/route-audit.json
+!scripts/reports/miner-audit.json
+!scripts/reports/vampire_massive_report.json
+!scripts/reports/b2g_tender_hunter_report.json
+!scripts/reports/vampire_swarm_master_telemetry.json

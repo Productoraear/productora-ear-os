@@ -1,1 +1,1 @@
-﻿export { default } from '@/widgets/navbar/Navbar';
+export { default } from '@/widgets/navbar/Navbar';

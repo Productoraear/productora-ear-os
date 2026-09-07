@@ -1,1 +1,1 @@
-﻿export { default } from '@/widgets/footer/Footer';
+export { default } from '@/widgets/footer/Footer';

@@ -1,0 +1,264 @@
+﻿{
+    "FechaAuditoria":  "2026-09-05 10:39:26",
+    "DiscosAnalizados":  [
+                             "C:",
+                             "D:",
+                             "E:",
+                             "G:",
+                             "H:",
+                             "L:"
+                         ],
+    "TotalArchivosMapeados":  823784,
+    "PesoTotalGB":  420.50,
+    "DesglosePorDisco":  {
+                             "D:":  {
+                                        "PesoGB":  118.98,
+                                        "Archivos":  466112
+                                    },
+                             "G:":  {
+                                        "PesoGB":  0,
+                                        "Archivos":  19
+                                    },
+                             "E:":  {
+                                        "PesoGB":  2.78,
+                                        "Archivos":  60
+                                    },
+                             "L:":  {
+                                        "PesoGB":  0,
+                                        "Archivos":  0
+                                    },
+                             "H:":  {
+                                        "PesoGB":  297.50,
+                                        "Archivos":  349496
+                                    },
+                             "C:":  {
+                                        "PesoGB":  1.24,
+                                        "Archivos":  8097
+                                    }
+                         },
+    "DistribucionPorCategoria":  {
+                                     "04_HISTORICO_GENERAL":  798224,
+                                     "01_SISTEMA_CORE":  3674,
+                                     "02_MANDO_ESTRATEGICO":  4216,
+                                     "03_OPERACIONES_PRODUCCION":  17654,
+                                     "05_MODELOS_IA":  16
+                                 },
+    "TopExtensiones":  {
+                           ".xmind":  422,
+                           ".ts":  132267,
+                           ".js":  189748,
+                           ".json":  91199,
+                           ".md":  127427,
+                           ".docx":  50262,
+                           ".ps1":  1188,
+                           ".py":  84202,
+                           ".gguf":  16,
+                           ".pdf":  92007,
+                           ".mp3":  6676,
+                           ".xlsx":  731,
+                           ".tsx":  44606,
+                           ".wav":  3033
+                       },
+    "MuestraDesviadosCriticos":  [
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "InstallManifest.json",
+                                         "TamanoMB":  0.56,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\AMD\\AMD-Software-Installer\\Config",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  1.85,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\anthropic.claude-code-2.1.121-win32-x64",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "index.js",
+                                         "TamanoMB":  4.58,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\anthropic.claude-code-2.1.121-win32-x64\\webview",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  3.07,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\devsense.phptools-vscode-1.70.18851-win32-x64\\out\\src",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension-node.js",
+                                         "TamanoMB":  1.29,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\github.vscode-github-actions-0.31.5-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension-web.js",
+                                         "TamanoMB":  1.85,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\github.vscode-github-actions-0.31.5-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "server-node.js",
+                                         "TamanoMB":  3.22,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\github.vscode-github-actions-0.31.5-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "server-web.js",
+                                         "TamanoMB":  3.24,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\github.vscode-github-actions-0.31.5-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.bundle.js",
+                                         "TamanoMB":  4.26,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\ms-azuretools.vscode-containers-2.4.4-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "pydevd_schema.py",
+                                         "TamanoMB":  0.8,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\ms-python.debugpy-2026.6.0-win32-x64\\bundled\\libs\\debugpy\\_vendored\\pydevd\\_pydevd_bundle\\_debug_adapter",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  1.07,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\ms-python.debugpy-2026.6.0-win32-x64\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  1.57,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\redhat.java-1.54.0-win32-x64\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  14.12,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\rooveterinaryinc.roo-cline-3.54.0-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "countTokens.js",
+                                         "TamanoMB":  2.25,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\rooveterinaryinc.roo-cline-3.54.0-universal\\dist\\workers",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "chunk-C9XAeP06.js",
+                                         "TamanoMB":  0.74,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\rooveterinaryinc.roo-cline-3.54.0-universal\\webview-ui\\build\\assets",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "chunk-CG6Dc4jp.js",
+                                         "TamanoMB":  0.59,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\rooveterinaryinc.roo-cline-3.54.0-universal\\webview-ui\\build\\assets",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "chunk-CzjqYRUi.js",
+                                         "TamanoMB":  0.6,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\rooveterinaryinc.roo-cline-3.54.0-universal\\webview-ui\\build\\assets",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "index.js",
+                                         "TamanoMB":  4.38,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\rooveterinaryinc.roo-cline-3.54.0-universal\\webview-ui\\build\\assets",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "mermaid-bundle.js",
+                                         "TamanoMB":  2.46,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\rooveterinaryinc.roo-cline-3.54.0-universal\\webview-ui\\build\\assets",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  20.04,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\saoudrizwan.claude-dev-3.83.0-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "index.js",
+                                         "TamanoMB":  5.98,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\saoudrizwan.claude-dev-3.83.0-universal\\webview-ui\\build\\assets",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  20.05,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\saoudrizwan.claude-dev-3.84.0-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "index.js",
+                                         "TamanoMB":  5.98,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\saoudrizwan.claude-dev-3.84.0-universal\\webview-ui\\build\\assets",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "index.js",
+                                         "TamanoMB":  1.05,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\vscjava.vscode-gradle-3.17.3-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     },
+                                     {
+                                         "Disco":  "C:",
+                                         "Archivo":  "extension.js",
+                                         "TamanoMB":  0.53,
+                                         "Categoria":  "04_HISTORICO_GENERAL",
+                                         "UbicacionActual":  "C:\\Users\\M2-W10\\.antigravity\\extensions\\vscjava.vscode-java-debug-0.59.0-universal\\dist",
+                                         "DestinoSugerido":  "H:\\ARCHIVO_HISTORICO_EAR"
+                                     }
+                                 ]
+}

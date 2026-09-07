@@ -41,7 +41,18 @@ import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
   alternates: {
-    canonical: "/",
+    canonical: "./",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   title: "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G",
   description: "Plataforma de producción técnica, alquiler de audiovisuales, música para bodas y licitaciones públicas de festejos.",

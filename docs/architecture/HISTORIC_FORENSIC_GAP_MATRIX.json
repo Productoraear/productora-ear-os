@@ -1,0 +1,2367 @@
+{
+  "audit_date": "2026-09-07 13:07:18",
+  "total_signatures": 393,
+  "implemented_count": 230,
+  "missing_count": 163,
+  "coverage_ratio": 58.52,
+  "matrix": [
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\middleware.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\nexus\\user\\sync\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\firebaseAdmin.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\prisma.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\webhooks\\stripe\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\rag\\query\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\ear-rag-database.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\globals.css",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\artistas\\edwin-agudelo\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\sitemap.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\artistas\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\presupuesto\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\ayuntamientospremium\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\finance\\ui\\MultiPricer.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\widgets\\BookingCalculator.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\actions\\checkoutActions.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\layout.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\layout.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\public\\ClickToCallBar.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\servicios\\mariachis\\[provincia]\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\public\\TinderMatcherClient.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\OracleMatrix.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\store\\useEarStore.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\Event.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\EventsSection.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\servicios\\mariachis\\[provincia]\\[evento]\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\auth\\AuthGuard.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\events.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\context\\SharedContext.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\events.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\routes.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\ui\\ThemeToggle.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\artistas\\solistas\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\dossier\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\infraestructura\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\vimume\\fundacion\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\vimume\\protocolo\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\intelligence\\EternalMemory.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\services\\rag\\GravitationalIngestionEngine.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\cotizador\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\empresarios\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\public\\PublicNavbar.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\public\\PublicFooter.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\auth\\login.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\auth\\register.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\middleware.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\auth\\login\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\auth\\register\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\artistas\\[slug]\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\actions\\commandCenterActions.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\services\\ProfileService.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\services\\UserService.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\auth\\middleware.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\airlineData.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\utils\\audioSynth.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\ThreeCanvas.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\HeaderNav.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\SideDotNav.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\HeroSection.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\DespegueSection.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\InteriorSection.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\RoutesSection.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\OnboardExperienceSection.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\TelemetrySection.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\BookingModal.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\App.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\FinalReserveSection.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\3d\\AuraMatrixCanvas.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\audio\\auraAudioSynth.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FUNCTION_TARGET",
+      "Signature": "evaluateMvpGate",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Lógica sugerida en chats pero no declarada en src/."
+    },
+    {
+      "Type": "FUNCTION_TARGET",
+      "Signature": "appendContinuityBlock",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Lógica sugerida en chats pero no declarada en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\fleet\\waybills\\[id]\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\FenixV2Dashboard.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\FleetTracker.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\Home.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\NexusDashboardSClass.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\PRO_VIMUMEPAGE.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\Pricing.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\ShieldTracker.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\SocialImpact.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\SovereignLogin.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\SovereignRegister.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\SystemCockpitSClass.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\TheSignal.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\ToolkitHubSClass.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\Vimume.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\VimumeVertical.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\components\\SClassUI.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\AcademyPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\BriefingPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\CRMPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\CROPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\DispatchPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\HunterPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\MarketPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\RoadmapPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\StitchConsole.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\ToolkitPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\UrlIndexPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\VampirePanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\VimumeAtlas.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\VimumeLegacy.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\VimumeSocial.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\VampireEngine\\ProfileClaimer.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\vendor\\actions\\mediaActions.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\scripts\\batch_nexus_link.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\scripts\\e2e_swarm_checkout.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\scripts\\phantomIngestor.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\scripts\\phantomScraper.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\scripts\\vampire-deep-scan.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\services\\EmpireLoop.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\services\\earOpsService.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\services\\telemetry\\SovereignIntentService.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\shared\\assets\\manifest.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\shared\\context\\SovereignContext.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\shared\\context\\sovereignDecisionEngine.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\shared\\context\\types.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\shared\\hooks\\useSovereignRole.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\shared\\utils\\templateEngine.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\shared\\utils\\webhookSender.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\store\\useCalculatorStore.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\store\\useEcosystemFilterStore.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\store\\useEmpireStore.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\store\\useNeuralTunnelStore.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\styles\\globals.css",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\budget.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\css.d.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\database.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\dossier.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\legacy-components.d.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\marketplace.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\paypal.d.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\three-jsx.d.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\types\\vendor.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\widgets\\about\\AboutWidget.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\widgets\\about\\SocialImpactWidget.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\widgets\\footer\\Footer.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\widgets\\navbar\\Navbar.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\widgets\\navigation\\SovereignNav.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\bodas\\[provincia]\\[servicio]\\[municipio]\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ContratarMariachi_c359e33f.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ContratarMariachi_e034cbe8.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\Control.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_1e51ea71.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_27caa898.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_33b5e0da.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_49036a99.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_4ba4b7b5.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_59b8cb4b.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_5bde912b.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_ba25008a.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlCenterDashboard_ebba5b84.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlPanel-1.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlPanel.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ControlPanel_1de0b38a.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\Controller.d_ebce951b.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\Controller.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\Controls_6d417256.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConversationsWidget.d.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConversationsWidget.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvertAnsi.d.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvertAnsi.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvertNode.d.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvertNode.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexGeometry.d.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexGeometry.d_085f9e9b.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexGeometry.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexHull.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexHull_1.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexHull_5d76b3d7.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexObjectBreaker.d.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexObjectBreaker.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexObjectBreaker_45878b8c.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvexObjectBreaker_cab93841.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvocationView.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvolutionMaterial.d.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvolutionShader.d.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\ConvolutionShader.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CookieItemsView.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CookieParser.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CookiesPolicy.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CookiesPolicy_e99c32af.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CookiesTable.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CoordinatesEngine.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\Coptic.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\Coptic_0611ccdd.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_0e7d11a7.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_1.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_10.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_11.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_12.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_13.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_14.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_15.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_16.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_2.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\00_PRODUCTORA_EAR\\BODEGA_CUARENTENA\\RESCATE_FINAL\\PROYECTOS_CODE\\CopyDataProperties_3.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\SClassScreens\\BespokeTemplate.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\templates\\BespokeTemplate.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\artists\\ArtistCinematicProfile.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\contratacion\\ayuntamientos\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\sitemap\\[id]\\route.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\prisma.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\artists\\edwin-agudelo-schema.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\artists\\matrix.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\crawler-output\\nicho-mariachi\\page_1_www_mariachismadrid_es.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\crawler-output\\nicho-mariachi\\page_2_www_mariachisoldeamerica_com.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\crawler-output\\nicho-mariachi\\page_3_www_mariachisentoledo_es.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\crawler-output\\nicho-mariachi\\page_4_www_bodas_net.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\crawler-output\\nicho-mariachi\\page_5_www_zankyou_es.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\crawler-output\\nicho-mariachi\\serp_mariachi_audit.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\paciente-cero-spider.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\vampire-runner.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\vampire-runner.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\[...slug]\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\academy.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\admin\\mobile-studio-config.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\artists.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\artists\\edwin-agudelo.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\blog-content.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\blog.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\catalog\\behavioral_profiling_50q.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\catalog\\muestra_3_nuevos_bodas.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\dani-aragon-tracks.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\demetrio_luces_navidad_2025.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\expertise.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\global-search-index.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\governance\\route_visibility.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\luces-navidad.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\pricing.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\quality-vip-solutions.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\qualityvipsolutions_catalog.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\qualityvipsolutions_raw_crawl.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\rentals.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\security\\security_audit_report.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\services.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\stats.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\telemetry\\clarity-performance-data.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\weddings.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\data\\vampire-service.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\matrix.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\vampire-parser_eff953.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\firebase.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\vimume\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\artistas\\edwin-agudelo\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\artists\\ui\\EdwinEcosystemHero.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\artists\\ui\\EdwinArtistVault.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\artists\\schema.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\chat\\concierge\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\edwin-true-bio-ssot.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\oraculo-300-objeciones-ssot.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\MultiPricer.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\pricing-catalog.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\pricing-engine.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\hungarianAlgorithm.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\filters.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\personal-y-artista\\edwin-agudelo\\repertorio-y-ip\\AirbnbUltraFiltersModal.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\empresa\\productora-ear-core\\PriceLockBadge.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\public\\DiscoverySearch.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\constants\\pricing-catalog.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\pricing-engine.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\matchmaker\\hungarianAlgorithm.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\finance\\types\\filters.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\finance\\ui\\PriceLockBadge.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\finance\\ui\\AirbnbUltraFiltersModal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\pricing\\MultiPricer.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\matcher\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\constants\\seo-data-hydrated.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\constants\\spanish-municipalities.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\layout\\SovereignFooter.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\vampirized_providers.backup.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\catalog\\ADN_EAR_INDEX.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\public\\AtmosphereMatcherClient.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\blog\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\blog\\[slug]\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\oraculo\\CognitiveModules.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\admin\\oraculo\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\sitemap.xml\\route.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\oraculo-rag-ssot.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\extension.ts",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\luces_navidad_qr_metadata.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\catalog_qr_decoded_intel.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\luces_navidad_2026_ear.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\vampirized_providers.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\NUCLEO_DATA\\bodas_full.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\NUCLEO_DATA\\bodas_clean.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\b2g\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\instituciones_vault\\instituciones-knowledge-base.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\instituciones\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\b2g\\facturae\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\b2g\\B2GInstitutionalPortal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\b2g-tender-engine.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\fincas\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\empresas_vault\\empresas-knowledge-base.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\b2b\\autofactura\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\b2b\\homologacion\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\fincas\\FincasB2BPortal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\b2b-billing-engine.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\constants\\fincas-catalog.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\vimume\\tender-compiler\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\centro-mando\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(vendor)\\vendor\\media\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\admin\\crm-vulnerable\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\AstraNeuralTwin.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\ConfiguradorBespoke.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\ExpansionDashboard.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\nexus\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\PRO_VIMUMEDASHBOARD_2.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\services\\scrapers\\cazador_fantasma.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\services\\b2g-hunter.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\tools\\qr-cue-bridge\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\theme\\VimumeThemeInjector.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\public\\BlogClusterPage.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\soberania-tecnica\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\dashboard\\EarCommandCenter.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\layouts\\MainLayout.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\admin\\layout.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\(admin)\\command-center\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\admin\\estado\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(label)\\artists\\dashboard\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\alquiler-equipos-sonido-audiovisuales\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\arsenal\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\admin\\hunter\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\dashboard\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\admin\\flota\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\categorias\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\academia\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\(admin)\\analytics\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\dashboard\\vault\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\admin\\astra\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\dossier\\pdf\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\marketplace\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\ai\\infer\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\admin\\MobileExperienceSelectorOLED.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\modules\\SClassScreens\\panels\\FinancialPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\api\\b2g\\alerts\\route.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\hooks\\useTripwire.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\b2g\\ui\\VimumeB2GCompiler.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\components\\CostCalculator.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\artistas\\dashboard\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\artistas\\reclamar-regalias\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\AIAssistantModal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\AboutModal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\CommandPalette.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\Header.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\HistoryPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\KnowledgeExplorerModal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\ProjectsDashboard.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\RoleSelector.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\SaveSessionModal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\SessionPreviewModal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\SettingsPanel.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\StrategicCommandDashboard.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\StrategicJourney.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\ToolkitHub.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\WisdomVaultModal.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\CampaignSimulatorTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\ContentFactoryTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\ContractAnalyzerTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\CouncilOfMindsTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\IkigaiTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\RiskRadarTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\SWOTTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\components\\tools\\VisionBoardTool.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\utils\\toolRegistry.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\contacto\\[slug]\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\widgets\\navigation\\PredatorNav.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\vimume\\conocimiento\\[nicho]\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(nexus)\\nexus\\[role]\\[id]\\page.tsx",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\bodas\\[provincia]\\[servicio]\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\supabase\\server.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\programmatic\\SemanticBlockRenderer.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\tour-logistics\\ui\\TourCenterAdapter.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\services\\emailService.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\ui\\SupplierBlurLock.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\catalog\\ui\\ChristmasLightingCatalogView.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\catalog\\ui\\LightingDetailActions.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\chauffeur\\ui\\ChauffeurVipView.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\providers\\ClaimProfileTrigger.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\components\\vimume\\VimumeAcousticEngine.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\App.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\astra\\AstraAppRoot.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\constants\\vimume-100-levels.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\data\\vimume-brain\\VIMUME_100_LEVELS_ONTOLOGY.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\data\\vimume-brain\\VIMUME_100_LEVELS_ONTOLOGY.js",
+      "Status": "MISSING_IN_REPO",
+      "Diagnostics": "Diseñado en chats pero no existe físicamente en src/."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\lib\\vimume\\b2g-tender-engine.ts",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\features\\vimume\\ui\\VimumeOntologyExplorer.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    },
+    {
+      "Type": "FILE_TARGET",
+      "Signature": "src\\app\\(public)\\vimume\\b2g\\page.tsx",
+      "Status": "IMPLEMENTED",
+      "Diagnostics": "El archivo existe físicamente en el repositorio."
+    }
+  ]
+}
