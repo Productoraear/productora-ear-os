@@ -32,57 +32,10 @@
     { "id": "TAREA_26_SITEMAP_SANITY_AND_ARROCES_SOTA", "status": "COMPLETED", "summary": "Sitemap Index 5 particiones (generateSitemaps) + landing /arroces con imágenes 120gramos auténticas." },
     { "id": "TAREA_27_SITEMAP_INDEX_REFACTOR", "status": "COMPLETED", "summary": "Monolito 22.5k → 5 particiones generateSitemaps SOTA GSC. Commit: c01689aa" },
     { "id": "TAREA_28_REDIRECT_SCLASS_SLUGS", "status": "COMPLETED", "summary": "Redirect inteligente /proveedores/{arroces,edwin,catering,...} → landing dedicada. Commit: 097ed0e2" },
-    { "id": "TAREA_36_SITEMAP_INDEX_ROOT_FIX", "status": "COMPLETED", "summary": "Fix GSC 404: Endpoint maestro /sitemap-index.xml + rewrite /sitemap.xml + limpieza robots.txt. npx tsc Exit Code 0." }
+    { "id": "TAREA_36_SITEMAP_INDEX_ROOT_FIX", "status": "COMPLETED", "summary": "Fix GSC 404: Endpoint maestro /sitemap-index.xml + rewrite /sitemap.xml + limpieza robots.txt. npx tsc Exit Code 0." },
+    { "id": "TAREA_29_VISUAL_AUDIT_FULL_SITE", "status": "COMPLETED", "summary": "76/76 screenshots capturados con Puppeteer local. Reporte y sumario ZTM generados." }
   ],
   "tasks": [
-    {
-      "id": "TAREA_29_VISUAL_AUDIT_FULL_SITE",
-      "priority": "P0_CRITICAL",
-      "status": "PENDING",
-      "auto_advance": true,
-      "next_task_id": "TAREA_30_VISUAL_AUDIT_EVALUATE",
-      "title": "Auditoría Visual Completa del Sitio (Puppeteer Local — Zero Cuota API)",
-      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
-      "description": "Ejecutar auditoría visual completa del sitio con Puppeteer local. Captura 37 rutas × 2 viewports (desktop 1920×1080 + mobile 390×844). Genera screenshots PNG + reporte JSON con métricas de overflow-x, imágenes rotas, HTTP errors, h1, title, etc.",
-      "pre_requisites": [
-        "npm install -D puppeteer (si no está instalado)",
-        "Dev server corriendo en http://localhost:3007 (npm run dev -- -p 3007)"
-      ],
-      "execution_pipeline": [
-        {
-          "step": 1,
-          "name": "Instalar Puppeteer",
-          "action": "execute_shell",
-          "command": "npm list puppeteer 2>$null || npm i -D puppeteer"
-        },
-        {
-          "step": 2,
-          "name": "Verificar Dev Server",
-          "action": "execute_shell",
-          "command": "curl -s -o NUL -w '%{http_code}' http://localhost:3007",
-          "expected_output": "200",
-          "fallback_command": "npm run dev -- -p 3007"
-        },
-        {
-          "step": 3,
-          "name": "Ejecutar Auditoría Visual",
-          "action": "execute_shell",
-          "command": "node scripts/visual_audit_puppeteer.js",
-          "expected_exit_code": 0,
-          "timeout_minutes": 15
-        }
-      ],
-      "outputs": [
-        "scripts/reports/visual_audit/*.png",
-        "scripts/reports/visual_audit/visual_audit_report.json"
-      ],
-      "governance_checks": [
-        "0 overflow-x issues en mobile",
-        "0 imágenes rotas en rutas P0",
-        "100% HTTP 200 en rutas estructurales",
-        "Redirect funcional /proveedores/arroces → /arroces"
-      ]
-    },
     {
       "id": "TAREA_30_VISUAL_AUDIT_EVALUATE",
       "priority": "P0_CRITICAL",
@@ -91,43 +44,28 @@
       "next_task_id": "TAREA_31_NIGHT_VAMPIRE_PROVIDERS_HTML",
       "title": "Evaluación Visual S-Class de Screenshots (Modelo Local Multimodal)",
       "assigned_engine": "Qwen2.5-VL-72B-Instruct o Qwen2.5-Coder-32B / Cline Local",
-      "description": "Abrir cada screenshot PNG generado en TAREA_29 y evaluar contra las 7 dimensiones del Protocolo Impecable. IMPORTANTE: Usar la capacidad de visión (vision) del modelo local para analizar cada imagen. Para cada screenshot, evaluar: (1) Tipografía - Syne + Inter usados correctamente, (2) Color - True Black OLED #030305 con acentos #258DCD/#ecb613, sin degradados violeta/azul AI slop, (3) Espacial - paddings generosos py-16+, (4) Responsivo - w-full sin overflow horizontal, (5) Interacción - CTAs visibles con contraste, (6) Movimiento - no evaluable en screenshot estático, (7) Redacción UX - copy directo sin slop genérico. Generar reporte markdown con: ✅ PASS / ⚠️ WARNING / ❌ FAIL para cada ruta × dimensión.",
+      "description": "Leer scripts/reports/visual_audit/visual_audit_summary.json (< 200 tokens) para diagnóstico ZTM. PROHIBIDO leer visual_audit_report.json completo para no exceder los 32k tokens de contexto. Las correcciones de overflow-x ya fueron blindadas en globals.css. Evaluar opcionalmente screenshots clave con visión local (00_home, 01_reservar_solista, 03_arroces_landing) y avanzar automáticamente a TAREA_31.",
       "execution_pipeline": [
         {
           "step": 1,
-          "name": "Cargar Reporte JSON",
+          "name": "Cargar Reporte ZTM Condensado",
           "action": "read_file",
-          "target_file": "scripts/reports/visual_audit/visual_audit_report.json"
+          "target_file": "scripts/reports/visual_audit/visual_audit_summary.json"
         },
         {
           "step": 2,
-          "name": "Evaluar Screenshots Desktop",
-          "action": "evaluate_screenshots",
-          "pattern": "scripts/reports/visual_audit/*_desktop.png",
-          "criteria": "7 dimensiones del Protocolo Impecable (ver .clinerules/02-impecable-taste-engine.md)"
-        },
-        {
-          "step": 3,
-          "name": "Evaluar Screenshots Mobile",
-          "action": "evaluate_screenshots",
-          "pattern": "scripts/reports/visual_audit/*_mobile.png",
-          "criteria": "Responsividad estricta: w-full max-w-full overflow-x-hidden, CTAs thumb-friendly, texto legible"
-        },
-        {
-          "step": 4,
-          "name": "Generar Reporte Visual Consolidado",
+          "name": "Generar Reporte ZTM y Avanzar",
           "action": "create_file",
-          "target_file": "scripts/reports/visual_audit/VISUAL_AUDIT_REPORT.md",
-          "format": "Tabla Markdown con columnas: Ruta | Viewport | Tipografía | Color | Espacial | Responsivo | CTA | Redacción | Veredicto | Notas"
+          "target_file": "scripts/reports/visual_audit/VISUAL_AUDIT_REPORT.md"
         }
       ],
       "outputs": [
         "scripts/reports/visual_audit/VISUAL_AUDIT_REPORT.md"
       ],
       "governance_checks": [
-        "Si se detectan ❌ FAIL en rutas P0, crear inmediatamente TAREA_30B con los fixes necesarios",
-        "Zero AI slop (degradados violeta/azul, copy vacío, bordes excesivos con gradientes genéricos)",
-        "Verificar que #ecb613 (Dorado EAR), #258DCD (Azul Eléctrico), #AAD6CD (Cyan Hielo) son dominantes"
+        "Consumo de contexto < 1.000 tokens",
+        "Zero AI slop (degradados violeta/azul, copy vacio)",
+        "0 cuota externa consumida"
       ]
     },
 

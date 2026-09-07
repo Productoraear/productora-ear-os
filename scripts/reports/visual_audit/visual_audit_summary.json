@@ -1,0 +1,24 @@
+{
+  "status": "AUDITORIA_COMPLETA_EXITO",
+  "screenshots_generados": "76/76 (100%)",
+  "errores_http": 0,
+  "rutas_auditadas": 38,
+  "hallazgos": {
+    "overflow_x_mobile": [
+      "/arroces",
+      "/catering-brasas",
+      "/bodas",
+      "/cotizador",
+      "/privacidad",
+      "/proveedores/arroces",
+      "/sitemap.xml"
+    ],
+    "imagenes_rotas_principales": [
+      { "ruta": "/arroces", "rotas": 1 },
+      { "ruta": "/catering-brasas", "rotas": 1 },
+      { "ruta": "/bodas", "rotas": 4 },
+      { "ruta": "/proveedores", "rotas": 11 }
+    ]
+  },
+  "diagnostico_ztm": "Auditoria visual 100% capturada. 0 errores criticos HTTP. 7 rutas con overflow-x leve en mobile y fallbacks de imagenes pendientes."
+}

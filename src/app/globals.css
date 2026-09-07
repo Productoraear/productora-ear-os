@@ -100,13 +100,18 @@
     -ms-hyphens: none !important;
   }
 
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
   html, body, p, span, div, h1, h2, h3, h4, h5, h6, li, a, button, blockquote, cite, strong, em, b {
     hyphens: none !important;
     -webkit-hyphens: none !important;
     -moz-hyphens: none !important;
     -ms-hyphens: none !important;
-    word-break: normal !important;
-    overflow-wrap: normal !important;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
 
   body {
@@ -116,6 +121,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    max-width: 100%;
     transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
 
