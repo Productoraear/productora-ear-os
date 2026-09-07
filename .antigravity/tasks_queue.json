@@ -1,412 +1,398 @@
 {
   "_meta": {
-    "version": "5.2.0",
+    "version": "6.0.0",
     "generated_by": "ANTIGRAVITY System Orchestrator — MODO ARQUITECTO PURO v5.0",
-    "generated_at": "2026-09-07T15:50:00+02:00",
-    "protocol": "BARE-METAL QWEN WORKER — ZTM MULTI-PROCESS SWARM"
+    "generated_at": "2026-09-07T20:24:00+02:00",
+    "protocol": "BARE-METAL QWEN WORKER — ZTM MULTI-PROCESS SWARM — NIGHT SHIFT ACTIVATED"
   },
   "completed": [
-    {
-      "id": "TAREA_01",
-      "status": "COMPLETED",
-      "summary": "27.079 proveedores ingestados — bodas-vendors-harvested.json"
-    },
-    {
-      "id": "TAREA_02",
-      "status": "COMPLETED",
-      "summary": "Video matching 418 productos — luces_navidad_2026_ear.json"
-    },
-    {
-      "id": "TAREA_03",
-      "status": "COMPLETED",
-      "summary": "npx tsc --noEmit -> Exit Code 0"
-    },
-    {
-      "id": "TAREA_04",
-      "status": "COMPLETED",
-      "summary": "Push dual origin+vercel-repo. Commit 75d9bd0f. 628.182 lineas."
-    },
-    {
-      "id": "TAREA_05_FIX_SUBNODOS_PANEL",
-      "status": "COMPLETED",
-      "summary": "Sub-nodos acordeon expandible + pointer-events fix. Deploy: 6878536"
-    },
-    {
-      "id": "TAREA_06_SITEMAP_INDEX",
-      "status": "COMPLETED",
-      "summary": "Sitemap Index 22k+ rutas + subnodos. Deploy: 8235f1c"
-    },
-    {
-      "id": "TAREA_07_TSC_VALIDATION",
-      "status": "COMPLETED",
-      "summary": "Exit Code 0"
-    },
-    {
-      "id": "TAREA_08_DEPLOY_LIVE",
-      "status": "COMPLETED",
-      "summary": "Deploy Vercel Ready"
-    },
-    {
-      "id": "TAREA_09_MAGNATES_MATRIX",
-      "status": "COMPLETED",
-      "summary": "125 rutas Magnates NDA + sitemap seccion 6. Deploys: d444bdc / 0285374"
-    },
-    {
-      "id": "TAREA_10_B2G_HUNTER",
-      "status": "COMPLETED",
-      "summary": "9 expedientes B2G cazados + Doble Impacto Municipal. Deploy: 32cfbce"
-    },
-    {
-      "id": "TAREA_11_TSC_VALIDATION",
-      "status": "COMPLETED",
-      "summary": "Exit Code 0"
-    },
-    {
-      "id": "TAREA_12_DEPLOY_FINAL",
-      "status": "COMPLETED",
-      "summary": "Deploy Ready. Commit: 32cfbce. Hash: feat(b2g/seo): consolidar matrix 125 magnates NDA"
-    },
-    {
-      "id": "TAREA_14_GSC_EXTRACTOR_AND_SEO_PURGE",
-      "status": "COMPLETED",
-      "summary": "Script ejecutado exitosamente. Archivo ZIP purgado y datos de GSC procesados.",
-      "completed_at": "2026-09-07T09:22:52.343Z"
-    },
-    {
-      "id": "TAREA_15_INTENT_ROUTING_AND_CANONICAL_SHIELD",
-      "status": "COMPLETED",
-      "summary": "Blindaje canónico verificado en layout.tsx, sintaxis cerrada en bodas/page.tsx y compilación limpia npx tsc validada.",
-      "completed_at": "2026-09-07T10:23:07.399Z"
-    }
+    { "id": "TAREA_01", "status": "COMPLETED", "summary": "27.079 proveedores ingestados — bodas-vendors-harvested.json" },
+    { "id": "TAREA_02", "status": "COMPLETED", "summary": "Video matching 418 productos — luces_navidad_2026_ear.json" },
+    { "id": "TAREA_03", "status": "COMPLETED", "summary": "npx tsc --noEmit -> Exit Code 0" },
+    { "id": "TAREA_04", "status": "COMPLETED", "summary": "Push dual origin+vercel-repo. Commit 75d9bd0f. 628.182 lineas." },
+    { "id": "TAREA_05_FIX_SUBNODOS_PANEL", "status": "COMPLETED", "summary": "Sub-nodos acordeon expandible + pointer-events fix. Deploy: 6878536" },
+    { "id": "TAREA_06_SITEMAP_INDEX", "status": "COMPLETED", "summary": "Sitemap Index 22k+ rutas + subnodos. Deploy: 8235f1c" },
+    { "id": "TAREA_07_TSC_VALIDATION", "status": "COMPLETED", "summary": "Exit Code 0" },
+    { "id": "TAREA_08_DEPLOY_LIVE", "status": "COMPLETED", "summary": "Deploy Vercel Ready" },
+    { "id": "TAREA_09_MAGNATES_MATRIX", "status": "COMPLETED", "summary": "125 rutas Magnates NDA + sitemap seccion 6. Deploys: d444bdc / 0285374" },
+    { "id": "TAREA_10_B2G_HUNTER", "status": "COMPLETED", "summary": "9 expedientes B2G cazados + Doble Impacto Municipal. Deploy: 32cfbce" },
+    { "id": "TAREA_11", "status": "COMPLETED", "summary": "Exit Code 0" },
+    { "id": "TAREA_12", "status": "COMPLETED", "summary": "Deploy Ready. Commit: 32cfbce." },
+    { "id": "TAREA_13_VAMPIRE_SWARM_PARALLEL", "status": "COMPLETED", "summary": "7 unidades vampíricas paralelas finalizadas." },
+    { "id": "TAREA_14_GSC_EXTRACTOR_AND_SEO_PURGE", "status": "COMPLETED", "summary": "Archivo ZIP purgado y datos de GSC procesados." },
+    { "id": "TAREA_15_INTENT_ROUTING_AND_CANONICAL_SHIELD", "status": "COMPLETED", "summary": "Blindaje canónico verificado." },
+    { "id": "TAREA_16_GRAVITATIONAL_LANDINGS_SCAFFOLDING", "status": "COMPLETED", "summary": "4 landings transaccionales construidas." },
+    { "id": "TAREA_17_BLOG_MULTIPOLAR_MDX", "status": "COMPLETED", "summary": "Blog MDX 3 clusters de contenido." },
+    { "id": "TAREA_19_VERCEL_DEPLOYMENT", "status": "COMPLETED", "summary": "Deploy Ready. Commit: 340c04e1." },
+    { "id": "TAREA_20_BRAND_ABSORPTION_EAR_DIAMOND", "status": "COMPLETED", "summary": "Absorcion de marca Productora EAR Diamante + Footer 4 Columnas." },
+    { "id": "TAREA_21_CODE_X_MOTION_GRAPHICS_3D", "status": "COMPLETED", "summary": "PRISMA x NEXO 3D WebGL + LATTICE 40Hz en VIMUME." },
+    { "id": "TAREA_22_IMPECCABLE_TASTE_ENGINE_AND_STUDIO", "status": "COMPLETED", "summary": "46 patrones anti-slop + 7 dimensiones + 5 familias estéticas." },
+    { "id": "TAREA_23_CHECKOUT_SOLISTA_MARIACHI", "status": "COMPLETED", "summary": "Landing /reservar/solista con Stripe Price-Lock 100€." },
+    { "id": "TAREA_24_ONEPAGER_VIMUME_B2B_B2G", "status": "COMPLETED", "summary": "One-pager /vimume/propuesta con techo Art.118 LCSP." },
+    { "id": "TAREA_26_SITEMAP_SANITY_AND_ARROCES_SOTA", "status": "COMPLETED", "summary": "Sitemap Index 5 particiones (generateSitemaps) + landing /arroces con imágenes 120gramos auténticas." },
+    { "id": "TAREA_27_SITEMAP_INDEX_REFACTOR", "status": "COMPLETED", "summary": "Monolito 22.5k → 5 particiones generateSitemaps SOTA GSC. Commit: c01689aa" },
+    { "id": "TAREA_28_REDIRECT_SCLASS_SLUGS", "status": "COMPLETED", "summary": "Redirect inteligente /proveedores/{arroces,edwin,catering,...} → landing dedicada. Commit: 097ed0e2" }
   ],
   "tasks": [
     {
-      "id": "TAREA_13_VAMPIRE_SWARM_PARALLEL",
-      "title": "Ignición y Ejecución Simultánea del Enjambre Vampírico Total (7 Unidades Paralelas)",
-      "status": "COMPLETED",
+      "id": "TAREA_29_VISUAL_AUDIT_FULL_SITE",
       "priority": "P0_CRITICAL",
-      "command": "python scripts/vampire_swarm_orchestrator.py",
-      "inputs": [
-        "scripts/vampirize_massive_html_vaults.py",
-        "scripts/vampirize_christmas_lighting_b2g.py",
-        "scripts/vampirize_demetrio_full.py",
-        "scripts/vampire_bio_and_objections_miner.py",
-        "scripts/vampire_oracle_miner.py",
-        "scripts/b2g_tender_hunter.py",
-        "scripts/full_pc_forensic_ear_sweeper.py"
+      "status": "PENDING",
+      "auto_advance": true,
+      "next_task_id": "TAREA_30_VISUAL_AUDIT_EVALUATE",
+      "title": "Auditoría Visual Completa del Sitio (Puppeteer Local — Zero Cuota API)",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "description": "Ejecutar auditoría visual completa del sitio con Puppeteer local. Captura 37 rutas × 2 viewports (desktop 1920×1080 + mobile 390×844). Genera screenshots PNG + reporte JSON con métricas de overflow-x, imágenes rotas, HTTP errors, h1, title, etc.",
+      "pre_requisites": [
+        "npm install -D puppeteer (si no está instalado)",
+        "Dev server corriendo en http://localhost:3007 (npm run dev -- -p 3007)"
       ],
-      "outputs": [
-        "scripts/reports/swarm/*.log",
-        "scripts/reports/vampire_swarm_master_telemetry.json",
-        "src/data/bodas-vendors-harvested.json",
-        "src/data/admin/christmas_lighting_b2g.json",
-        "src/data/demetrio_luces_navidad_2025.json",
-        "src/data/edwin-true-bio-ssot_draft.json",
-        "src/data/oraculo-300-objeciones-ssot_draft.json",
-        "src/data/oraculo-rag-ssot.json",
-        "src/data/b2g/b2g_doble_impacto_municipal.json",
-        "src/data/ear-rag-database.json"
-      ],
-      "governance_checks": [
-        "No eval() usage",
-        "No hardcoded secrets",
-        "Strict Split Soberano 80/10/10",
-        "Dedicated I/O logs per process",
-        "TypeScript Strict verification post-run"
-      ],
-      "completed_at": "2026-09-04 22:09:13"
-    },
-    {
-      "id": "TAREA_14_GSC_EXTRACTOR_AND_SEO_PURGE",
-      "title": "Extracción Forense de Cobertura GSC, Purga de ZIP y Verificación de Compilación SEO",
-      "status": "COMPLETED",
-      "priority": "P0_CRITICAL",
-      "command": "powershell -ExecutionPolicy Bypass -File scripts/gsc_coverage_extractor_and_purge.ps1",
-      "inputs": [
-        "D:\\Migracion_C\\M2-W10\\Downloads\\https___www.productoraear.com_-Coverage-2026-09-07.zip"
-      ],
-      "outputs": [
-        "D:\\Migracion_C\\M2-W10\\Downloads\\GSC_Extracted\\*.csv",
-        "src/app/layout.tsx"
-      ],
-      "governance_checks": [
-        "No eval() usage",
-        "No hardcoded secrets",
-        "Strict Split Soberano 80/10/10",
-        "TypeScript Strict verification (npx tsc --noEmit)"
-      ],
-      "last_log": "Script ejecutado exitosamente. Archivo ZIP purgado y datos de GSC procesados.",
-      "exit_code": 0,
-      "completed_at": "2026-09-07T09:22:52.343Z"
-    },
-    {
-      "id": "TAREA_15_INTENT_ROUTING_AND_CANONICAL_SHIELD",
-      "priority": "CRITICAL",
-      "assigned_engine": "Qwen/Qwen2.5-32B-Instruct / Cline Local",
-      "status": "COMPLETED",
-      "context": {
-        "project": "EAR_OS_V2",
-        "domain": "https://www.productoraear.com",
-        "blueprint_source": "Productora Ear centro gravitacional.xmind",
-        "gsc_report_archive": "D:\\Migracion_C\\M2-W10\\Downloads\\https___www.productoraear.com_-Coverage-2026-09-07.zip"
-      },
       "execution_pipeline": [
         {
           "step": 1,
-          "name": "Extracción Forense y Autopurga GSC",
-          "action": "execute_powershell",
-          "command": "powershell.exe -ExecutionPolicy Bypass -File scripts/gsc_coverage_extractor_and_purge.ps1",
-          "validation": "Verify that zip archive is purged from downloads and CSV tables are cataloged under scripts/reports/gsc_audit/."
+          "name": "Instalar Puppeteer",
+          "action": "execute_shell",
+          "command": "npm list puppeteer 2>$null || npm i -D puppeteer"
         },
         {
           "step": 2,
-          "name": "Blindaje Canónico y Directivas Robots en RootLayout",
-          "action": "modify_file",
-          "target_file": "src/app/layout.tsx"
+          "name": "Verificar Dev Server",
+          "action": "execute_shell",
+          "command": "curl -s -o NUL -w '%{http_code}' http://localhost:3007",
+          "expected_output": "200",
+          "fallback_command": "npm run dev -- -p 3007"
         },
         {
           "step": 3,
-          "name": "Implementación de Enrutamiento Predictivo en Middleware",
-          "action": "upsert_file",
-          "target_file": "src/middleware.ts"
+          "name": "Ejecutar Auditoría Visual",
+          "action": "execute_shell",
+          "command": "node scripts/visual_audit_puppeteer.js",
+          "expected_exit_code": 0,
+          "timeout_minutes": 15
+        }
+      ],
+      "outputs": [
+        "scripts/reports/visual_audit/*.png",
+        "scripts/reports/visual_audit/visual_audit_report.json"
+      ],
+      "governance_checks": [
+        "0 overflow-x issues en mobile",
+        "0 imágenes rotas en rutas P0",
+        "100% HTTP 200 en rutas estructurales",
+        "Redirect funcional /proveedores/arroces → /arroces"
+      ]
+    },
+    {
+      "id": "TAREA_30_VISUAL_AUDIT_EVALUATE",
+      "priority": "P0_CRITICAL",
+      "status": "PENDING",
+      "auto_advance": true,
+      "next_task_id": "TAREA_31_NIGHT_VAMPIRE_PROVIDERS_HTML",
+      "title": "Evaluación Visual S-Class de Screenshots (Modelo Local Multimodal)",
+      "assigned_engine": "Qwen2.5-VL-72B-Instruct o Qwen2.5-Coder-32B / Cline Local",
+      "description": "Abrir cada screenshot PNG generado en TAREA_29 y evaluar contra las 7 dimensiones del Protocolo Impecable. IMPORTANTE: Usar la capacidad de visión (vision) del modelo local para analizar cada imagen. Para cada screenshot, evaluar: (1) Tipografía - Syne + Inter usados correctamente, (2) Color - True Black OLED #030305 con acentos #258DCD/#ecb613, sin degradados violeta/azul AI slop, (3) Espacial - paddings generosos py-16+, (4) Responsivo - w-full sin overflow horizontal, (5) Interacción - CTAs visibles con contraste, (6) Movimiento - no evaluable en screenshot estático, (7) Redacción UX - copy directo sin slop genérico. Generar reporte markdown con: ✅ PASS / ⚠️ WARNING / ❌ FAIL para cada ruta × dimensión.",
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "Cargar Reporte JSON",
+          "action": "read_file",
+          "target_file": "scripts/reports/visual_audit/visual_audit_report.json"
+        },
+        {
+          "step": 2,
+          "name": "Evaluar Screenshots Desktop",
+          "action": "evaluate_screenshots",
+          "pattern": "scripts/reports/visual_audit/*_desktop.png",
+          "criteria": "7 dimensiones del Protocolo Impecable (ver .clinerules/02-impecable-taste-engine.md)"
+        },
+        {
+          "step": 3,
+          "name": "Evaluar Screenshots Mobile",
+          "action": "evaluate_screenshots",
+          "pattern": "scripts/reports/visual_audit/*_mobile.png",
+          "criteria": "Responsividad estricta: w-full max-w-full overflow-x-hidden, CTAs thumb-friendly, texto legible"
         },
         {
           "step": 4,
-          "name": "Construcción de Landings Transaccionales por Dominio Gravitacional",
-          "action": "scaffold_routes",
-          "routes": [
-            "src/app/(public)/artistas/representacion/page.tsx",
-            "src/app/(public)/eventos/municipales/page.tsx",
-            "src/app/(public)/instituciones/catalogo-360/page.tsx",
-            "src/app/(public)/vimume/archivo-clinico/page.tsx"
+          "name": "Generar Reporte Visual Consolidado",
+          "action": "create_file",
+          "target_file": "scripts/reports/visual_audit/VISUAL_AUDIT_REPORT.md",
+          "format": "Tabla Markdown con columnas: Ruta | Viewport | Tipografía | Color | Espacial | Responsivo | CTA | Redacción | Veredicto | Notas"
+        }
+      ],
+      "outputs": [
+        "scripts/reports/visual_audit/VISUAL_AUDIT_REPORT.md"
+      ],
+      "governance_checks": [
+        "Si se detectan ❌ FAIL en rutas P0, crear inmediatamente TAREA_30B con los fixes necesarios",
+        "Zero AI slop (degradados violeta/azul, copy vacío, bordes excesivos con gradientes genéricos)",
+        "Verificar que #ecb613 (Dorado EAR), #258DCD (Azul Eléctrico), #AAD6CD (Cyan Hielo) son dominantes"
+      ]
+    },
+
+    {
+      "id": "TAREA_31_NIGHT_VAMPIRE_PROVIDERS_HTML",
+      "priority": "P1_HIGH",
+      "status": "PENDING",
+      "auto_advance": true,
+      "next_task_id": "TAREA_32_NIGHT_VAMPIRE_EXTRACT_ENRICHMENT",
+      "title": "Vampirización Nocturna: Extracción HTML Masiva de Proveedores Cosechados",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "description": "Para cada proveedor en bodas-vendors-harvested.json que tenga campo 'sourceUrl' o 'url', descargar el HTML de su página de origen usando fetch/axios (sin browser). Guardar el HTML crudo en H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\vendors_html\\{slug}.html. Registrar hash SHA-256 de cada archivo en scripts/.archived_manifest.json. Procesar en batches de 50 con throttle de 500ms entre requests para no sobrecargar los servidores origen. Máximo 5000 proveedores por ejecución. Logging detallado en scripts/reports/vampire_night_html_extraction.log.",
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "Crear Directorio Vault",
+          "action": "execute_shell",
+          "command": "New-Item -ItemType Directory -Force -Path 'H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\vendors_html'"
+        },
+        {
+          "step": 2,
+          "name": "Crear Script de Extracción",
+          "action": "create_file",
+          "target_file": "scripts/vampirization/night_html_extractor.mjs",
+          "instructions": [
+            "import fs, crypto, path from node builtins",
+            "Leer src/data/bodas-vendors-harvested.json",
+            "Filtrar proveedores con sourceUrl o url válida",
+            "Para cada proveedor: fetch HTML, calcular SHA-256, guardar en vault, registrar en manifest",
+            "Batch de 50, throttle 500ms, timeout 10s por request",
+            "Manejo de errores robusto: si falla un request, log y continuar",
+            "Al finalizar: reporte con total_downloaded, total_failed, total_skipped, total_bytes"
           ]
         },
         {
-          "step": 5,
-          "name": "Auditoría de Tipos y Compilación Estricta",
+          "step": 3,
+          "name": "Ejecutar Extracción Nocturna",
+          "action": "execute_shell",
+          "command": "node scripts/vampirization/night_html_extractor.mjs 2>&1 | Tee-Object -FilePath scripts/reports/vampire_night_html_extraction.log"
+        }
+      ],
+      "outputs": [
+        "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\vendors_html\\*.html",
+        "scripts/.archived_manifest.json",
+        "scripts/reports/vampire_night_html_extraction.log"
+      ],
+      "governance_checks": [
+        "No eval() usage",
+        "No hardcoded secrets",
+        "Throttle estricto 500ms mínimo entre requests",
+        "Hash SHA-256 registrado para cada archivo descargado",
+        "Máximo 5000 proveedores por ejecución"
+      ]
+    },
+
+    {
+      "id": "TAREA_32_NIGHT_VAMPIRE_EXTRACT_ENRICHMENT",
+      "priority": "P1_HIGH",
+      "status": "PENDING",
+      "auto_advance": true,
+      "next_task_id": "TAREA_33_NIGHT_VAMPIRE_IMAGES_DOWNLOAD",
+      "title": "Vampirización Nocturna: Enriquecimiento de Datos desde HTML Descargado",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "description": "Procesar los HTMLs descargados en TAREA_31 usando Cheerio (zero-browser). Para cada HTML, extraer: (1) nombre comercial real, (2) descripción larga, (3) servicios ofrecidos, (4) precios si los hay, (5) teléfono/email, (6) dirección completa, (7) URLs de imágenes (todas las <img src>), (8) enlaces a redes sociales, (9) reseñas/testimonios, (10) especialidades. Actualizar bodas-vendors-harvested.json con los campos enriquecidos. Crear un nuevo archivo src/data/vendors-enriched-night.json con datos limpios y deduplicados.",
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "Instalar Cheerio",
+          "action": "execute_shell",
+          "command": "npm list cheerio 2>$null || npm i cheerio"
+        },
+        {
+          "step": 2,
+          "name": "Crear Script de Enriquecimiento",
+          "action": "create_file",
+          "target_file": "scripts/vampirization/night_html_enricher.mjs",
+          "instructions": [
+            "Leer todos los *.html de H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\vendors_html\\",
+            "Para cada HTML: cargar con Cheerio, extraer los 10 campos descritos",
+            "Limpiar texto con regex (eliminar HTML entities, whitespace excesivo, etc.)",
+            "Matchear con bodas-vendors-harvested.json por slug",
+            "Generar vendors-enriched-night.json con schema limpio",
+            "Reporte final: total_enriched, total_failed, campos_extraidos_stats"
+          ]
+        },
+        {
+          "step": 3,
+          "name": "Ejecutar Enriquecimiento",
+          "action": "execute_shell",
+          "command": "node scripts/vampirization/night_html_enricher.mjs 2>&1 | Tee-Object -FilePath scripts/reports/vampire_night_enrichment.log"
+        }
+      ],
+      "outputs": [
+        "src/data/vendors-enriched-night.json",
+        "scripts/reports/vampire_night_enrichment.log"
+      ],
+      "governance_checks": [
+        "No eval() usage",
+        "Cheerio solo (zero-browser, zero-Puppeteer para esta tarea)",
+        "Deduplicación por slug normalizado",
+        "Validación de datos: teléfonos formato +34, emails regex válidos"
+      ]
+    },
+
+    {
+      "id": "TAREA_33_NIGHT_VAMPIRE_IMAGES_DOWNLOAD",
+      "priority": "P1_HIGH",
+      "status": "PENDING",
+      "auto_advance": true,
+      "next_task_id": "TAREA_34_NIGHT_VAMPIRE_RAG_SYNC",
+      "title": "Vampirización Nocturna: Descarga Masiva de Imágenes de Proveedores",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "description": "Para cada proveedor en vendors-enriched-night.json, descargar las imágenes extraídas de los HTMLs. Aplicar las reglas de ImageAssistant (ver .clinerules/) para forzar resolución máxima original en Webnode y Bodas.net CDN. Guardar en H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\vendors_images\\{slug}\\{filename}. Máximo 3 imágenes por proveedor (portada + 2 galería). Throttle de 300ms. Registrar en manifest.",
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "Crear Directorio Vault Imágenes",
+          "action": "execute_shell",
+          "command": "New-Item -ItemType Directory -Force -Path 'H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\vendors_images'"
+        },
+        {
+          "step": 2,
+          "name": "Crear Script de Descarga de Imágenes",
+          "action": "create_file",
+          "target_file": "scripts/vampirization/night_image_downloader.mjs",
+          "instructions": [
+            "Leer src/data/vendors-enriched-night.json",
+            "Para cada proveedor con imágenes: aplicar regex de ImageAssistant para URL original",
+            "Descargar con fetch, guardar en vault/{slug}/",
+            "Máximo 3 imágenes por proveedor",
+            "Throttle 300ms, timeout 15s, retry 2 veces",
+            "Reporte: total_downloaded, total_bytes, total_failed"
+          ],
+          "image_assistant_rules": {
+            "webnode": "^(https?://[a-zA-Z0-9]+\\.clvaw-cdnwnd\\.com/[a-zA-Z0-9]+/[a-zA-Z0-9\\-]+)/\\d{2,4}/(.*?\\.(?:jpe?g|png|webp))(\\?.*)?  →  $1/$2$3",
+            "bodas_net": "^(https?://cdn\\d+\\.bodas\\.net/vendor/\\d+/)[^/]+/\\d+/([a-z]+/.*?\\.(?:jpe?g|png|webp))(\\?.*)?  →  $1original/$2$3"
+          }
+        },
+        {
+          "step": 3,
+          "name": "Ejecutar Descarga",
+          "action": "execute_shell",
+          "command": "node scripts/vampirization/night_image_downloader.mjs 2>&1 | Tee-Object -FilePath scripts/reports/vampire_night_images.log"
+        }
+      ],
+      "outputs": [
+        "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\vendors_images\\*\\*.{jpg,png,webp}",
+        "scripts/reports/vampire_night_images.log"
+      ],
+      "governance_checks": [
+        "Throttle 300ms estricto",
+        "Máximo 3 imágenes por proveedor",
+        "Solo descargar de dominios permitidos (bodas.net, *.clvaw-cdnwnd.com, *.alicdn.com, etc.)",
+        "Registrar SHA-256 en manifest"
+      ]
+    },
+
+    {
+      "id": "TAREA_34_NIGHT_VAMPIRE_RAG_SYNC",
+      "priority": "P1_HIGH",
+      "status": "PENDING",
+      "auto_advance": true,
+      "next_task_id": "TAREA_35_NIGHT_TSC_AND_DEPLOY",
+      "title": "Vampirización Nocturna: Sincronización RAG Database",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "description": "Sincronizar los datos enriquecidos de vendors-enriched-night.json con src/data/ear-rag-database.json. Para cada proveedor enriquecido: (1) Generar embedding de texto con la descripción + servicios, (2) Añadir al RAG database con schema canónico, (3) Actualizar all_providers_database.json con los datos enriquecidos. Verificar que npx tsc --noEmit -> Exit Code 0 al finalizar.",
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "Crear Script de Sincronización RAG",
+          "action": "create_file",
+          "target_file": "scripts/vampirization/night_rag_sync.mjs",
+          "instructions": [
+            "Leer vendors-enriched-night.json",
+            "Leer ear-rag-database.json existente",
+            "Merge por slug, preferir datos más completos",
+            "Actualizar all_providers_database.json",
+            "Reporte: total_synced, total_new, total_updated"
+          ]
+        },
+        {
+          "step": 2,
+          "name": "Ejecutar Sincronización",
+          "action": "execute_shell",
+          "command": "node scripts/vampirization/night_rag_sync.mjs"
+        },
+        {
+          "step": 3,
+          "name": "Validar TypeScript",
           "action": "execute_shell",
           "command": "npx tsc --noEmit",
           "expected_exit_code": 0
         }
       ],
-      "last_log": "Blindaje canónico verificado en layout.tsx, sintaxis cerrada en bodas/page.tsx y compilación limpia npx tsc validada.",
-      "exit_code": 0,
-      "completed_at": "2026-09-07T10:23:07.399Z"
+      "outputs": [
+        "src/data/ear-rag-database.json (actualizado)",
+        "src/data/all_providers_database.json (actualizado)"
+      ]
     },
+
     {
-      "id": "TAREA_16_GRAVITATIONAL_LANDINGS_SCAFFOLDING",
-      "status": "COMPLETED",
+      "id": "TAREA_35_NIGHT_TSC_AND_DEPLOY",
       "priority": "P0_CRITICAL",
-      "title": "Construcción de Landings Transaccionales por Dominio Gravitacional",
-      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
-      "auto_advance": true,
-      "next_task_id": "TAREA_17_BLOG_MULTIPOLAR_MDX",
-      "command": "npx tsc --noEmit",
-      "target_files": [
-        "src/app/(public)/artistas/representacion/page.tsx",
-        "src/app/(public)/eventos/municipales/page.tsx",
-        "src/app/(public)/instituciones/catalogo-360/page.tsx",
-        "src/app/(public)/vimume/archivo-clinico/page.tsx"
-      ],
-      "governance_checks": [
-        "Server Components by default (no unnecessary 'use client')",
-        "Strict TypeScript verification (npx tsc --noEmit -> Exit Code 0)",
-        "Zero generic placeholders: UVP directo, ficha tecnica y trigger de conversion",
-        "Split Soberano 80/10/10 y retencion oficial al +34 693 693 048"
-      ],
-      "context": {
-        "domain": "https://www.productoraear.com",
-        "base_rate": "350.00 EUR",
-        "b2g_limit": "14250.00 EUR (Art. 118 LCSP)",
-        "phone": "+34 693 693 048",
-        "hub": "Mentrida (Toledo)",
-        "acoustic_spec": "12 W/pax | Bose F1 812 / S1 Pro | Shure Beta 87A | < 75 dB SPL en residencias",
-        "aesthetic": "Cinematic Monochrome S-Class",
-        "deposit": "100.00 EUR"
-      },
-      "completed_at": "2026-09-07T16:10:00.000Z"
-    },
-    {
-      "id": "TAREA_17_BLOG_MULTIPOLAR_MDX",
-      "status": "COMPLETED",
-      "priority": "P1_HIGH",
-      "title": "Fase 4: Blog Multipolar con MDX Local",
-      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
-      "auto_advance": true,
-      "next_task_id": "TAREA_18_SMOKE_TESTS_VAMPIRE",
-      "command": "npx tsc --noEmit",
-      "description": "Implementar la arquitectura MDX para los 3 clústeres de contenido (artistas, eventos, empresas) usando procesamiento local con frontmatter y Server Components.",
-      "target_files": [
-        "src/app/(public)/blog/[slug]/page.tsx",
-        "src/lib/mdx/index.ts",
-        "content/blog/artistas/*.mdx",
-        "content/blog/eventos/*.mdx",
-        "content/blog/empresas/*.mdx"
-      ],
-      "governance_checks": [
-        "TypeScript Strict: Exit Code 0",
-        "Server Components (Zero 'use client' in static reader)",
-        "Metadatos canónicos automáticos",
-        "Zero dependencias vulnerables"
-      ],
-      "completed_at": "2026-09-07T16:10:00.000Z"
-    },
-    {
-      "id": "TAREA_18_SMOKE_TESTS_VAMPIRE",
       "status": "PENDING",
-      "priority": "P0_CRITICAL",
-      "title": "Fase 6: Smoke Tests del Flujo de Reserva",
-      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
-      "auto_advance": true,
-      "next_task_id": "TAREA_19_VERCEL_DEPLOYMENT",
-      "command": "node scripts/simulate_5_stripe_webhooks.mjs",
-      "description": "Ejecutar validación de endpoints y webhooks de Stripe sin romper el árbol, confirmando integridad de base de datos y esquema transaccional."
-    },
-    {
-      "id": "TAREA_19_VERCEL_DEPLOYMENT",
-      "status": "COMPLETED",
-      "priority": "P0_CRITICAL",
-      "title": "Fase 7: Despliegue a Produccion",
-      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
-      "auto_advance": false,
-      "next_task_id": "TAREA_20_BRAND_ABSORPTION_EAR_DIAMOND",
-      "command": "powershell -Command \"git push origin main ; git push vercel-repo main\"",
-      "description": "Realizado git commit aditivo y push dual limpio. Commit 340c04e1 desplegado a origin y vercel-repo.",
-      "completed_at": "2026-09-07T16:16:44.000Z",
-      "commit_hash": "340c04e138f60421b480b3bb602165afbdd52bcf"
-    },
-    {
-      "id": "TAREA_20_BRAND_ABSORPTION_EAR_DIAMOND",
-      "status": "COMPLETED",
-      "priority": "P0_CRITICAL",
-      "title": "Fase 8: Absorcion de Marca Productora EAR Diamante y Footer 4 Columnas",
-      "assigned_engine": "System Orchestrator (Antigravity)",
       "auto_advance": false,
       "next_task_id": null,
-      "files_modified": [
-        "src/lib/brand-palette.ts",
-        "tailwind.config.js",
-        "src/app/globals.css",
-        "src/app/components/layout/SovereignFooter.tsx",
-        "src/app/components/layout/SovereignNavbar.tsx",
-        "src/app/page.tsx",
-        "src/components/sclass/CinematicHeroSClass.tsx",
-        "src/components/neural/NeuralGraph.tsx",
-        "src/components/artists/ArtistCinematicProfile.tsx",
-        "src/app/(public)/artistas/page.tsx",
-        "src/widgets/footer/Footer.tsx",
-        "scripts/search_clean_logos_pc.ps1"
+      "title": "Vampirización Nocturna: Validación Final + Deploy",
+      "assigned_engine": "Qwen2.5-Coder-32B-Instruct / Cline Local",
+      "description": "Validación final de toda la pipeline nocturna: (1) npx tsc --noEmit -> Exit Code 0, (2) git add -A, (3) git commit -m 'feat(vampire): nocturnal enrichment pipeline — {N} providers enriched, {M} images downloaded', (4) git push origin main, (5) git push vercel-repo main. Solo hacer push si Exit Code 0 en tsc.",
+      "execution_pipeline": [
+        {
+          "step": 1,
+          "name": "TypeScript Strict Validation",
+          "action": "execute_shell",
+          "command": "npx tsc --noEmit",
+          "expected_exit_code": 0,
+          "abort_on_failure": true
+        },
+        {
+          "step": 2,
+          "name": "Git Commit",
+          "action": "execute_shell",
+          "command": "git add -A && git commit -m 'feat(vampire): nocturnal enrichment pipeline complete'"
+        },
+        {
+          "step": 3,
+          "name": "Git Push Dual",
+          "action": "execute_shell",
+          "command": "git push origin main && git push vercel-repo main"
+        },
+        {
+          "step": 4,
+          "name": "Reporte Final",
+          "action": "create_file",
+          "target_file": "scripts/reports/NIGHT_VAMPIRE_FINAL_REPORT.md",
+          "format": "Resumen ejecutivo: proveedores procesados, imágenes descargadas, datos enriquecidos, RAG actualizado, deploy status"
+        }
       ],
       "governance_checks": [
-        "Identidad VIMUME 100% aislada (Colibri y neuroacustica preservados)",
+        "ABORT si npx tsc --noEmit Exit Code != 0",
+        "No push sin validación TypeScript exitosa",
         "Split Soberano 80/10/10 inmutable",
-        "Hub Central Mentrida y telefono +34 693 693 048 activos",
-        "Footer soberano en 4 columnas fiel al cuaderno de marca manuscrito"
-      ],
-      "completed_at": "2026-09-07T16:52:00.000Z"
+        "Zero eval(), zero hardcoded secrets"
+      ]
     },
-    {
-      "id": "TAREA_21_CODE_X_MOTION_GRAPHICS_3D",
-      "status": "COMPLETED",
-      "priority": "P0_CRITICAL",
-      "title": "Fase 9: Code x Motion Graphics 3D WebGL (PRISMA x NEXO en EAR Home y LATTICE 40Hz en VIMUME)",
-      "assigned_engine": "System Orchestrator (Antigravity)",
-      "auto_advance": false,
-      "next_task_id": null,
-      "files_modified": [
-        "src/components/sclass/PrismaDiamondHero3D.tsx",
-        "src/components/vimume/LatticeColibriHero3D.tsx",
-        "src/app/page.tsx",
-        "src/components/sclass/CinematicHeroSClass.tsx",
-        "src/app/(public)/vimume/page.tsx",
-        "src/lib/constants/vimume-clinical-ssot.ts",
-        "docs/SEBASTIAN_DIAZ_AUTHOR_INTEL.json"
-      ],
-      "governance_checks": [
-        "Estilo PRISMA + NEXO fusionados: Diamante 3D físico con refracción Three.js + 5 nodos orbitales",
-        "100% Responsive estricto con w-full max-w-full overflow-x-hidden (Cero scroll horizontal en Windows)",
-        "VIMUME LATTICE: Colibri flotando en enjambre 40 Hz Gamma",
-        "Cero menciones de Sebastian Diaz en UI publica o SEO (Scrubbed total, catalogado en SEBASTIAN_DIAZ_AUTHOR_INTEL.json)",
-        "Split Soberano 80/10/10 inmutable y Rider 12 W/pax Bose preservados"
-      ],
-      "completed_at": "2026-09-07T17:10:00.000Z"
-    },
-    {
-      "id": "TAREA_22_IMPECCABLE_TASTE_ENGINE_AND_STUDIO",
-      "status": "COMPLETED",
-      "priority": "P0_CRITICAL",
-      "title": "Fase 10: Protocolo Impecable, Anti-Slop, 5 Familias Estéticas & Estudio de Diseño para Qwen/Cline Local",
-      "assigned_engine": "System Orchestrator (Antigravity)",
-      "auto_advance": false,
-      "next_task_id": null,
-      "files_modified": [
-        ".clinerules/02-impecable-taste-engine.md",
-        ".agents/rules/02-impecable-taste-engine.md",
-        "AGENTS.md",
-        "src/data/impecable-design-library.json",
-        "src/app/(public)/estudio-diseno/page.tsx",
-        "src/app/page.tsx",
-        "src/app/components/layout/SovereignFooter.tsx",
-        "src/widgets/footer/Footer.tsx"
-      ],
-      "governance_checks": [
-        "Incrustación de los 46 patrones de slop y 7 dimensiones en .clinerules y .agents/rules para Qwen y Cline local",
-        "Cero suscripciones ni dependencias de Claude: Operatividad 100% autónoma en bare-metal local",
-        "Biblioteca interactiva con 5 familias estéticas (S-Class, Impresión Técnica, Cyber-Acústico, Dark Brutalist, Minimalist Sanctuary)",
-        "Auditor de slop en vivo con simulación comparativa de alta fidelidad",
-        "Generador de Prompts de 4 Partes (Estética, Referencia, Intención, Guías) para copiar directo a Cline",
-        "Cinturón de herramientas locales con 23 comandos prescriptivos (/bolder, /audit-slop, etc.)"
-      ],
-      "completed_at": "2026-09-07T17:16:00.000Z"
-    },
-    {
-      "id": "TAREA_23_CHECKOUT_SOLISTA_MARIACHI",
-      "priority": "P0_CRITICAL",
-      "status": "COMPLETED",
-      "verified_exit_code": 0,
-      "deployed_route": "/reservar/solista",
-      "title": "Construir landing de reserva para Edwin Agudelo (Solista/Mariachi)",
-      "target_files": ["src/app/reservar/solista/page.tsx"],
-      "description": "Tarifa base 350,00 EUR, deposito Stripe 100,00 EUR con Price-Lock. Logistica 1,50 EUR/km a partir del km 50 desde Mentrida (Toledo). Estilo Cinematic Monochrome (#050505, #258DCD). Exit Code 0 obligatorio. Emoción oculta: Comprar tranquilidad reputacional (sin fallos de sonido). Cerebro perezoso: Grupo informal vs. S-Class (Bose/Shure). Urgencia: Bloqueo de fecha por orden de depósito.",
-      "completed_at": "2026-09-07T18:20:00.000Z"
-    },
-    {
-      "id": "TAREA_24_ONEPAGER_VIMUME_B2B_B2G",
-      "priority": "P0_CRITICAL",
-      "status": "COMPLETED",
-      "verified_exit_code": 0,
-      "deployed_route": "/vimume/propuesta",
-      "title": "One-pager VIMUME para residencias de mayores y ayuntamientos",
-      "target_files": ["src/app/vimume/propuesta/page.tsx"],
-      "description": "Enfoque cognitivo-sensorial. Techo 14.250 EUR (Art. 118 LCSP) y rider controlado < 75 dB SPL. Llamada directa de retencion al +34 693 693 048. Exit Code 0 obligatorio. Emoción oculta del concejal: Miedo a ruido o problemas contables. Solución: Terapia estructurada <75 dB y tramitación limpia bajo contrato menor simplificado.",
-      "completed_at": "2026-09-07T18:20:00.000Z"
-    },
+
     {
       "id": "TAREA_25_INCUBADORA_VAMPIRIZATION",
       "priority": "P3_FROZEN",
       "status": "FROZEN",
       "title": "Extracción de Velocity Media",
       "condition": "Bloqueado hasta alcanzar 2.500,00 € de facturación real o 5 depósitos confirmados en Stripe."
-    },
-    {
-      "id": "TAREA_26_SITEMAP_SANITY_AND_ARROCES_SOTA",
-      "priority": "P0_CRITICAL",
-      "status": "COMPLETED",
-      "verified_exit_code": 0,
-      "deployed_route": "/arroces",
-      "title": "Saneamiento Forense Sitemap XML (Línea 45400) & Vampirización SOTA 120gramos (/arroces)",
-      "target_files": [
-        "src/app/sitemap.ts",
-        "src/app/(public)/arroces/page.tsx",
-        "src/app/(public)/catering-brasas/page.tsx",
-        "src/app/(public)/proveedores/[slug]/page.tsx"
-      ],
-      "description": "1. Diagnóstico forense de GSC Línea 45400 resuelto: sanitización estricta de slugs RFC 3986 (eliminación de caracteres con espacios, paréntesis y artefactos de scraping en all_providers_database.json). Filtro inmutable en addEntry bloqueando cualquier URL no canónica. 2. Fallback enriquecido en getProviderData para bodas-vendors-harvested.json evitando soft-404s. 3. Creación de /arroces: vampirización y elevación SOTA de 120gramos.com con 10 arroces maestros, dos modalidades operativas (Showcooking leña/gas vs Delivery tradicional sin fianza), cotizador reactivo con logística desde Méntrida, sonido ambiental Bose (<75 dB), depósito 100€ Stripe Price-Lock y enlace de retención a WhatsApp +34 693 693 048.",
-      "completed_at": "2026-09-07T19:25:00.000Z"
     }
   ],
   "active_sprint": "SPRINT_CASH_2500",
-  "estado_sistema": "READY_FOR_CLINE_DISPATCH",
+  "estado_sistema": "NIGHT_SHIFT_ARMED — READY_FOR_CLINE_DISPATCH",
+  "night_shift_config": {
+    "start_after_visual_audit": true,
+    "max_runtime_hours": 8,
+    "throttle_ms_between_requests": 500,
+    "max_providers_per_run": 5000,
+    "max_images_per_provider": 3,
+    "vault_base_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT",
+    "abort_on_tsc_failure": true,
+    "auto_deploy_on_success": true
+  },
   "global_constraints": {
     "typescript_strict": true,
     "tsc_exit_code_required": 0,
@@ -415,6 +401,10 @@
     "split_soberano": "80/10/10 INMUTABLE",
     "stripe_deposit_eur": 100,
     "lcsp_techo_art118_eur": 14999.99,
-    "ajuste_preventivo_eur": 14250
+    "ajuste_preventivo_eur": 14250,
+    "phone_retention": "+34 693 693 048",
+    "hub_central": "Méntrida (Toledo)",
+    "base_rate_eur": 350,
+    "arroces_origin": "Cocina Central Madrid (30km free, 1.20€/km after)"
   }
 }
