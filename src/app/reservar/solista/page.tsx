@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Calculator, 
   MapPin, 
@@ -40,6 +41,10 @@ export default function SolistaReservationPage() {
   const [dayTypeFilter, setDayTypeFilter] = useState<'all' | 'weekends' | 'high_demand'>('all');
   const [formatFilter, setFormatFilter] = useState<'solista' | 'mariachi'>('solista');
   const [blockedAlert, setBlockedAlert] = useState<string | null>(null);
+
+  // Hesitation Engine State
+  const [showHesitationBanner, setShowHesitationBanner] = useState(false);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Base constants
   const BASE_RATE = formatFilter === 'solista' ? 350.00 : 550.00;
@@ -519,13 +524,50 @@ export default function SolistaReservationPage() {
                 </p>
               </div>
 
+              {/* HESITATION ENGINE BANNER */}
+              <AnimatePresence>
+                {showHesitationBanner && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0, y: 10 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -10 }}
+                    transition={{ ease: [0.16, 1, 0.3, 1], duration: 0.5 }}
+                    className="mb-4 overflow-hidden"
+                  >
+                    <div className="bg-[#258DCD]/10 border border-[#258DCD]/30 p-4 rounded-xl">
+                      <div className="flex items-start gap-3">
+                        <ShieldCheck className="text-[#258DCD] shrink-0 mt-0.5" size={18} />
+                        <div className="text-xs">
+                          <strong className="block text-[#258DCD] font-bold mb-0.5 uppercase tracking-widest">Aviso de Auditoría</strong>
+                          <span className="text-zinc-300">El 85% de las fincas en esta zona exigen limitación acústica. Nuestro Rider S-Class garantiza 0 multas.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               {/* STRIPE PAYMENT BUTTON */}
-              <a 
-                href={stripeLink}
-                className="w-full flex items-center justify-center gap-2 bg-[#258DCD] hover:bg-[#1E74A8] text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,141,205,0.3)] mb-4"
+              <div 
+                onMouseEnter={() => {
+                  hoverTimerRef.current = setTimeout(() => {
+                    setShowHesitationBanner(true);
+                  }, 3500);
+                }}
+                onMouseLeave={() => {
+                  if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+                }}
               >
-                PAGAR RESERVA (100 €) <ArrowRight size={18} />
-              </a>
+                <a 
+                  href={stripeLink}
+                  onClick={() => {
+                    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 bg-[#258DCD] hover:bg-[#1E74A8] text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,141,205,0.3)] mb-4"
+                >
+                  PAGAR RESERVA (100 €) <ArrowRight size={18} />
+                </a>
+              </div>
 
               {/* DIRECT CONTACT BUTTONS */}
               <div className="grid grid-cols-2 gap-3">

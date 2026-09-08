@@ -34,9 +34,8 @@ import { BespokePricerModal } from "@/features/finance/ui/BespokePricerModal";
 import { SpatialIntelligence } from "@/app/components/spatial/SpatialIntelligence";
 import SovereignFooter from "@/app/components/layout/SovereignFooter";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
-import { FloatingWhatsAppCta } from "@/components/ui/FloatingWhatsAppCta";
-import { AIConciergeDock } from "@/components/chat/AIConciergeDock";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
+import { EarConcierge } from "@/components/Astra/EarConcierge";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.productoraear.com"),
@@ -136,6 +135,7 @@ export default function RootLayout({
                             <HummingbirdFlight />
                             <BespokePricerModal />
                             <OmniSearchModal />
+                            <EarConcierge />
                             <DynamicMobileExperienceOrchestrator />
                           </div>
                         </SmoothScrollProvider>

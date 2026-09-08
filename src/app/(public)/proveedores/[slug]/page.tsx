@@ -184,7 +184,7 @@ async function getProviderData(slug: string) {
   // 3. Fallback: Dataset Vampirizado (Con caché singleton)
   try {
     if (!cachedVampProviders) {
-      const vampPath = path.join(process.cwd(), 'src', 'data', 'vampirized_providers.json');
+      const vampPath = path.join(process.cwd(), 'src', 'data', 'vendors-enriched-night.json');
       if (fs.existsSync(vampPath)) {
         cachedVampProviders = JSON.parse(fs.readFileSync(vampPath, 'utf-8'));
       }
@@ -369,6 +369,19 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pt-28 pb-36 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
+        
+        {/* BREADCRUMBS S-CLASS */}
+        <nav className="flex items-center gap-2 text-xs font-mono text-neutral-500 uppercase tracking-wider">
+          <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
+          <span>/</span>
+          <Link href="/proveedores" className="hover:text-[#ecb613] transition-colors">Directorio S-Class</Link>
+          <span>/</span>
+          <Link href={`/proveedores?cat=${rawProvider.category || 'todas'}`} className="hover:text-white transition-colors">
+            {category.split(' ')[0]}
+          </Link>
+          <span>/</span>
+          <span className="text-white font-bold truncate max-w-[200px] sm:max-w-xs">{rawProvider.name}</span>
+        </nav>
         
         {/* 🚨 BANNER DE SOCIAL PROOF / URGENCIA NUPCIAL */}
         <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-blue-950/60 via-purple-950/40 to-black border border-blue-500/30 flex items-center justify-between gap-4 text-xs sm:text-sm">

@@ -41,31 +41,13 @@ export function DynamicMobileExperienceOrchestrator() {
 
   return (
     <>
-      {/* 1. MODO SOVEREIGN HUD V5 (ONE-SCREEN EXPERIENCE RECOMENDADA) */}
+      {/* 1. MODO SOVEREIGN HUD V5 (SOLO NAVEGACIÓN MÓVIL REFINADA - CERO CHATBOTS FLOTANTES) */}
       {effectiveMode === 'SOVEREIGN_HUD_V5' && (
-        <>
-          <SovereignMobileHUD />
-          {/* En desktop, mantenemos los asistentes discretos de soporte */}
-          <AIConciergeDock />
-          <FloatingWhatsAppCta />
-        </>
+        <SovereignMobileHUD />
       )}
 
-      {/* 2. MODO AI CONCIERGE DOCK (ASISTENTE CONVERSACIONAL PROTAGONISTA) */}
-      {effectiveMode === 'AI_CONCIERGE_DOCK' && (
-        <>
-          <AIConciergeDock />
-          {features.showDirectWhatsAppButton && <FloatingWhatsAppCta />}
-        </>
-      )}
-
-      {/* 3. MODO CLASSIC WHATSAPP (STEALTH DIRECT RETENTION) */}
-      {effectiveMode === 'CLASSIC_WHATSAPP' && (
-        <FloatingWhatsAppCta />
-      )}
-
-      {/* 4. MODO MINIMAL STEALTH: CERO WIDGETS FLOTANTES, MÁXIMA PUREZA */}
-      {effectiveMode === 'MINIMAL_STEALTH' && null}
+      {/* 2. MODO MINIMAL STEALTH / OMNI-BAR SUPREMACY: CERO WIDGETS FLOTANTES OBSOLETOS */}
+      {effectiveMode !== 'SOVEREIGN_HUD_V5' && null}
     </>
   );
 }

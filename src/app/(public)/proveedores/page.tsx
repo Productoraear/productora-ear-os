@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { 
   Search, 
   MapPin, 
@@ -10,39 +11,75 @@ import {
   Sparkles, 
   PhoneCall, 
   Camera, 
-  SlidersHorizontal,
-  X,
-  Check,
-  Building2,
-  UtensilsCrossed,
-  Flower2,
-  Music2,
-  Volume2,
-  Video,
-  HeartHandshake,
-  Shirt,
-  Car,
-  Layers,
-  Loader2
+  X, 
+  Building2, 
+  UtensilsCrossed, 
+  Flower2, 
+  Music2, 
+  Volume2, 
+  Video, 
+  HeartHandshake, 
+  Shirt, 
+  Car, 
+  Layers, 
+  Loader2,
+  Lock,
+  ArrowRight,
+  ExternalLink
 } from 'lucide-react';
-import providersData from '@/data/all_providers_database.json';
+import rawProvidersData from '@/data/all_providers_database.json';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';
+import { BentoProviderCard, ProviderItem } from '@/components/providers/BentoProviderCard';
+import { BentoFilterBar, CategoryItem } from '@/components/providers/BentoFilterBar';
 
-function normalizeCategory(inputCat: string | null): string {
-  if (!inputCat) return 'ALL';
-  const c = inputCat.toLowerCase().trim();
-  if (['foto', 'fotos', 'fotografo', 'fotografos', 'fotografia', 'video', 'videos', 'video-4k', 'videografo'].includes(c)) return 'foto';
-  if (['finca', 'fincas', 'espacios', 'espacio', 'cortijos', 'haciendas'].includes(c)) return 'finca';
-  if (['catering', 'banquetes', 'gastro', 'restaurantes', 'comida'].includes(c)) return 'catering';
-  if (['decoracion', 'flores', 'floristerias', 'decoracion-flores'].includes(c)) return 'decoracion';
-  if (['musica', 'mariachi', 'mariachis', 'artistas', 'solista', 'bandas', 'orquestas'].includes(c)) return 'musica';
-  if (['sonido', 'luces', 'iluminacion', 'dj', 'arsenal', 'sonido-luces', 'dj-sonido'].includes(c)) return 'sonido';
-  if (['wedding', 'wedding-planner', 'wedding-planners', 'organizacion'].includes(c)) return 'wedding';
-  if (['moda', 'belleza', 'vestidos', 'trajes', 'joyeria', 'maquillaje', 'peluqueria'].includes(c)) return 'moda';
-  if (['transporte', 'coches', 'coches-boda', 'chofer', 'limusinas'].includes(c)) return 'transporte';
-  if (['servicios', 'otros', 'animacion', 'fotomaton'].includes(c)) return 'servicios';
-  return c;
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// NORMALIZADOR SEMÁNTICO S-CLASS: COBERTURA 100% SOBRE 26.763 NODOS
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function normalizeCategory(inputCat: string | null | undefined, description?: string, name?: string): string {
+  const l = (inputCat || '').toLowerCase().trim();
+  const d = (description || '').toLowerCase();
+  const n = (name || '').toLowerCase();
+  const full = `${l} ${d} ${n}`;
+
+  // 1. Fotografía y Vídeo
+  if (full.includes('fotograf') || full.includes('videograf') || full.includes('videomatón') || full.includes('fotomatón') || l.includes('foto') || l.includes('video')) {
+    return 'foto';
+  }
+  // 2. Moda y Belleza
+  if (full.includes('traje') || full.includes('vestid') || full.includes('madrina') || full.includes('joyer') || full.includes('joyas') || full.includes('tocado') || full.includes('atelier') || full.includes('peluquer') || full.includes('maquillaj') || l.includes('moda') || l.includes('belleza')) {
+    return 'moda';
+  }
+  // 3. Transporte y Vehículos
+  if (full.includes('coche') || full.includes('limusina') || full.includes('autobus') || full.includes('autobús') || full.includes('chofer') || l.includes('transporte')) {
+    return 'transporte';
+  }
+  // 4. Música en Vivo (Artistas, Bandas, Mariachis, Solistas)
+  if (full.includes('musica') || full.includes('música') || full.includes('mariachi') || full.includes('banda') || full.includes('orquesta') || full.includes('solista') || full.includes('cantante') || full.includes('violin') || full.includes('gospel') || full.includes('grupo musical')) {
+    return 'musica';
+  }
+  // 5. Audiovisual, Sonido, Luces & DJ
+  if (full.includes('audio') || full.includes('sonido') || full.includes('luces') || full.includes('iluminac') || full.includes('dj') || full.includes('discomovil') || full.includes('discomóvil') || full.includes('arsenal')) {
+    return 'sonido';
+  }
+  // 6. Fincas & Espacios (Cortijos, Haciendas, Masías, Salones, Palacios, Castillos)
+  if (full.includes('finca') || full.includes('cortijo') || full.includes('hacienda') || full.includes('masía') || full.includes('masia') || full.includes('casa rural') || full.includes('salon') || full.includes('salón') || full.includes('palacio') || full.includes('castillo') || l.includes('espacio')) {
+    return 'finca';
+  }
+  // 7. Wedding Planners & Organización
+  if (full.includes('wedding') || full.includes('planner') || full.includes('organizac') || full.includes('coordinac')) {
+    return 'wedding';
+  }
+  // 8. Decoración & Floristería
+  if (full.includes('decor') || full.includes('flor') || full.includes('ambientac')) {
+    return 'decoracion';
+  }
+  // 9. Catering & Gastronomía
+  if (l.includes('cater') || full.includes('banquete') || full.includes('gastro') || full.includes('comida') || full.includes('paella') || full.includes('restaurante')) {
+    return 'catering';
+  }
+
+  return 'servicios';
 }
 
 function ProveedoresDirectoryContent() {
@@ -53,12 +90,12 @@ function ProveedoresDirectoryContent() {
   const urlProv = searchParams.get('provincia') || searchParams.get('prov') || searchParams.get('location') || '';
   const urlQ = searchParams.get('q') || searchParams.get('search') || '';
 
-  const initialCat = normalizeCategory(urlCat);
-  const [selectedCategory, setSelectedCategory] = useState(initialCat);
-  const [selectedProvince, setSelectedProvince] = useState(urlProv);
-  const [searchQuery, setSearchQuery] = useState(urlQ);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [activeModalProvider, setActiveModalProvider] = useState<any>(null);
+  const initialCat = urlCat ? normalizeCategory(urlCat) : 'ALL';
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCat);
+  const [selectedProvince, setSelectedProvince] = useState<string>(urlProv);
+  const [searchQuery, setSearchQuery] = useState<string>(urlQ);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [activeModalProvider, setActiveModalProvider] = useState<ProviderItem | null>(null);
   const [activeGalleryImg, setActiveGalleryImg] = useState<string>('');
   const [claimModalProvider, setClaimModalProvider] = useState<any>(null);
 
@@ -77,26 +114,59 @@ function ProveedoresDirectoryContent() {
   }, [urlProv]);
 
   const pageSize = 24;
+  const providersData = rawProvidersData as unknown as ProviderItem[];
 
-  const getCount = (catKey: string) => {
-    if (catKey === 'ALL') return providersData.length;
-    return providersData.filter((p: any) => 
-      p.category && p.category.toLowerCase() === catKey.toLowerCase()
-    ).length;
-  };
+  // Conteos semánticos precalculados para evitar cualquier '0'
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      ALL: providersData.length,
+      finca: 0,
+      catering: 0,
+      decoracion: 0,
+      musica: 0,
+      sonido: 0,
+      foto: 0,
+      wedding: 0,
+      moda: 0,
+      transporte: 0,
+      servicios: 0,
+    };
 
-  const categories = [
-    { id: 'ALL', label: 'Todos los Servicios', count: getCount('ALL'), icon: Layers },
-    { id: 'finca', label: 'Fincas & Espacios', count: getCount('finca'), icon: Building2 },
-    { id: 'catering', label: 'Catering & Gastro', count: getCount('catering'), icon: UtensilsCrossed },
-    { id: 'decoracion', label: 'Decoración & Flores', count: getCount('decoracion'), icon: Flower2 },
-    { id: 'musica', label: 'Música & Mariachi', count: getCount('musica'), icon: Music2 },
-    { id: 'sonido', label: 'Sonido & Luces', count: getCount('sonido'), icon: Volume2 },
-    { id: 'foto', label: 'Vídeo 4K & Foto', count: getCount('foto'), icon: Video },
-    { id: 'wedding', label: 'Wedding Planners', count: getCount('wedding'), icon: HeartHandshake },
-    { id: 'moda', label: 'Moda & Belleza', count: getCount('moda'), icon: Shirt },
-    { id: 'transporte', label: 'Transporte & Coches', count: getCount('transporte'), icon: Car },
+    for (const p of providersData) {
+      const catKey = normalizeCategory(p.category, p.description, p.name);
+      if (counts[catKey] !== undefined) {
+        counts[catKey]++;
+      } else {
+        counts.servicios++;
+      }
+    }
+    return counts;
+  }, [providersData]);
+
+  const categories: CategoryItem[] = [
+    { id: 'ALL', label: 'Todos los Servicios', count: categoryCounts.ALL, icon: Layers },
+    { id: 'finca', label: 'Fincas & Espacios', count: categoryCounts.finca, icon: Building2 },
+    { id: 'catering', label: 'Catering & Gastro', count: categoryCounts.catering, icon: UtensilsCrossed },
+    { id: 'decoracion', label: 'Decoración & Flores', count: categoryCounts.decoracion, icon: Flower2 },
+    { id: 'musica', label: 'Música & Mariachi', count: categoryCounts.musica, icon: Music2 },
+    { id: 'sonido', label: 'Sonido & Luces', count: categoryCounts.sonido, icon: Volume2 },
+    { id: 'foto', label: 'Vídeo 4K & Foto', count: categoryCounts.foto, icon: Video },
+    { id: 'wedding', label: 'Wedding Planners', count: categoryCounts.wedding, icon: HeartHandshake },
+    { id: 'moda', label: 'Moda & Belleza', count: categoryCounts.moda, icon: Shirt },
+    { id: 'transporte', label: 'Transporte & Coches', count: categoryCounts.transporte, icon: Car },
+    { id: 'servicios', label: 'Servicios Integrales', count: categoryCounts.servicios, icon: Sparkles },
   ];
+
+  // Lista de provincias únicas ordenadas
+  const provincesList = useMemo(() => {
+    const pSet = new Set<string>();
+    for (const p of providersData) {
+      if (p.province && p.province.trim()) {
+        pSet.add(p.province.trim());
+      }
+    }
+    return Array.from(pSet).sort((a, b) => a.localeCompare(b));
+  }, [providersData]);
 
   const handleCategorySelect = (catId: string) => {
     setSelectedCategory(catId);
@@ -113,7 +183,7 @@ function ProveedoresDirectoryContent() {
   };
 
   const filteredProviders = useMemo(() => {
-    const sclassSpecialServices = [
+    const sclassSpecialServices: ProviderItem[] = [
       {
         id: 'sclass-arroces-showcooking',
         name: 'Maestros Arroceros S-Class: Showcooking de Paellas Gigantes',
@@ -129,20 +199,6 @@ function ProveedoresDirectoryContent() {
         customUrl: '/arroces'
       },
       {
-        id: 'sclass-arroces-delivery',
-        name: 'Delivery Caliente de Paellas Tradicionales en Paellera (Sin Fianza)',
-        category: 'catering',
-        province: 'Madrid',
-        description: 'Entrega puntual en paellera tradicional caliente y reposada en su punto exacto. Sin fianzas bancarias ni retenciones. Recogida posterior del recipiente sucia en tu finca o domicilio.',
-        price: '15,00 €/pax',
-        rating: 4.98,
-        reviews: 52,
-        img: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&auto=format&fit=crop&q=80',
-        isPreferred: true,
-        badge: 'DELIVERY S-CLASS',
-        customUrl: '/arroces'
-      },
-      {
         id: 'sclass-bbq-iberico',
         name: 'Catering de Brasas S-Class: Ritual Ibérico de Gala',
         category: 'catering',
@@ -155,34 +211,6 @@ function ProveedoresDirectoryContent() {
         isPreferred: true,
         badge: 'HOMOLOGADO S-CLASS',
         customUrl: '/catering-brasas'
-      },
-      {
-        id: 'sclass-bbq-argentino',
-        name: 'Catering de Brasas: Asado Argentino Tradicional',
-        category: 'catering',
-        province: 'Madrid',
-        description: 'Asado de tira, entraña, vacío, mollejas crocantes y chimichurri macerado 48h. Espadas criollas y asadores de campeonato mundial.',
-        price: '55 €/pax',
-        rating: 4.98,
-        reviews: 36,
-        img: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80',
-        isPreferred: true,
-        badge: 'ALTA DISTINCIÓN',
-        customUrl: '/catering-brasas'
-      },
-      {
-        id: 'sclass-bbq-ancestral',
-        name: 'Catering Ancestral al Fuego & a la Cruz',
-        category: 'catering',
-        province: 'Madrid',
-        description: 'Cordero lechal y costillares enteros en domo de leña viva con cocción lenta de 8 horas. El monumento gastronómico definitivo para bodas y galas.',
-        price: '65 €/pax',
-        rating: 5.0,
-        reviews: 29,
-        img: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?w=800&auto=format&fit=crop&q=80',
-        isPreferred: true,
-        badge: 'EXPERIENCIA MONUMENTAL',
-        customUrl: '/catering-brasas'
       }
     ];
 
@@ -190,328 +218,197 @@ function ProveedoresDirectoryContent() {
       ? [...sclassSpecialServices, ...providersData]
       : providersData;
 
-    return baseList.filter((p: any) => {
-      // Filtrar artículos de blog que se colaron en el scraping
-      const nameLower = (p.name || '').toLowerCase();
-      if (nameLower.includes('la ceremonia de boda') ||
-          nameLower.includes('protocolo para bodas') ||
-          nameLower.includes('protocolo de la boda') ||
-          nameLower.includes('bodas de invierno a un precio increible') ||
-          nameLower.includes('mejores lecturas') ||
-          nameLower.includes('grupo ceremonia nupcial') ||
-          nameLower.includes('prueba de menú gratuita para los novios')) {
-        return false;
+    return baseList.filter((p) => {
+      // 1. Filtrado Semántico de Categoría (Cero resultados perdidos)
+      if (selectedCategory !== 'ALL') {
+        const catNormalized = normalizeCategory(p.category, p.description, p.name);
+        if (catNormalized !== selectedCategory) {
+          return false;
+        }
       }
-
-      // 1. Filtrado Estricto de Categoría
-      const matchCat =
-        selectedCategory === 'ALL' ||
-        (p.category && p.category.toLowerCase() === selectedCategory.toLowerCase());
 
       // 2. Filtrado de Provincia
-      const matchProv =
-        !selectedProvince ||
-        (p.province && p.province.toLowerCase().includes(selectedProvince.toLowerCase()));
-
-      // 3. Filtrado de Búsqueda Inteligente con Stemming y Sinónimos
-      let matchQuery = true;
-      if (searchQuery && searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const terms = [q];
-        if (q.includes('arroc') || q.includes('arroz')) {
-          terms.push('arroz', 'arroces', 'paella', 'paellas');
-        } else if (q.includes('paell')) {
-          terms.push('paella', 'paellas', 'arroz', 'arroces');
-        } else if (q.includes('brasa') || q.includes('barbacoa') || q.includes('bbq')) {
-          terms.push('brasa', 'brasas', 'barbacoa', 'asado', 'bbq');
+      if (selectedProvince) {
+        const prov = (p.province || '').toLowerCase();
+        if (!prov.includes(selectedProvince.toLowerCase())) {
+          return false;
         }
-
-        const name = (p.name || '').toLowerCase();
-        const desc = (p.description || '').toLowerCase();
-        const fullDesc = (p.description_full || '').toLowerCase();
-        const cat = (p.category || '').toLowerCase();
-
-        matchQuery = terms.some(t => 
-          name.includes(t) || 
-          desc.includes(t) || 
-          fullDesc.includes(t) || 
-          cat.includes(t)
-        );
       }
 
-      return matchCat && matchProv && matchQuery;
-    }).sort((a: any, b: any) => {
-      // Proveedores preferidos de esa categoría específica arriba
+      // 3. Filtrado de Búsqueda Inteligente
+      if (searchQuery && searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const name = (p.name || '').toLowerCase();
+        const desc = (p.description || '').toLowerCase();
+        const cat = (p.category || '').toLowerCase();
+        const prov = (p.province || '').toLowerCase();
+
+        if (!name.includes(q) && !desc.includes(q) && !cat.includes(q) && !prov.includes(q)) {
+          return false;
+        }
+      }
+
+      return true;
+    }).sort((a, b) => {
       if (a.isPreferred && !b.isPreferred) return -1;
       if (!a.isPreferred && b.isPreferred) return 1;
       return 0;
     });
-  }, [selectedCategory, selectedProvince, searchQuery]);
+  }, [providersData, selectedCategory, selectedProvince, searchQuery]);
 
-  const totalPages = Math.ceil(filteredProviders.length / pageSize);
+  const totalPages = Math.max(1, Math.ceil(filteredProviders.length / pageSize));
   const paginatedProviders = useMemo(() => {
     const start = (currentPage - 1) * pageSize;
     return filteredProviders.slice(start, start + pageSize);
   }, [filteredProviders, currentPage]);
 
-  const openModal = (provider: any) => {
+  const openModal = (provider: ProviderItem) => {
     setActiveModalProvider(provider);
-    setActiveGalleryImg(provider.img || provider.gallery?.[0]);
+    setActiveGalleryImg(provider.img || provider.gallery?.[0] || '');
   };
 
-  const currentCategoryLabel = categories.find(c => c.id === selectedCategory)?.label || 'Todos los Servicios';
-
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-4 md:p-10 font-sans selection:bg-[#ecb613] selection:text-black">
+    <div className="min-h-screen bg-[#030305] text-white p-4 sm:p-6 lg:p-8 font-sans selection:bg-[#258DCD] selection:text-black w-full overflow-x-hidden">
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          1. HEADER CORPORATIVO S-CLASS
+          1. HEADER S-CLASS MONUMENTAL (ZERO HORIZONTAL OVERFLOW)
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <header className="max-w-7xl mx-auto border-b border-neutral-900 pb-8 mb-8 space-y-4">
-        <div className="bg-neutral-950 border border-[#ecb613]/40 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-b from-[#ecb613]/10 to-transparent blur-3xl pointer-events-none" />
+        <div className="bg-[#08080c] border border-neutral-800 hover:border-[#258DCD]/40 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl transition-colors">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-b from-[#258DCD]/10 to-transparent blur-3xl pointer-events-none" />
           
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/5 text-[#ecb613] text-xs font-mono font-bold uppercase tracking-widest mb-3">
-            <Sparkles size={14} /> Productora EAR • Red de Excelencia Nacional
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#258DCD]/30 bg-[#258DCD]/5 text-[#AAD6CD] text-xs font-mono font-bold uppercase tracking-widest mb-3">
+            <Sparkles size={14} className="text-[#258DCD]" /> Productora EAR • Directorio Homologado S-Class
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-black text-white uppercase tracking-tight font-syne">
-            Proveedores Homologados & Matchmaking
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight font-syne">
+            Directorio Nacional de Proveedores
           </h1>
 
-          <p className="text-neutral-400 text-sm sm:text-base max-w-4xl mt-2 font-light leading-relaxed">
-            El estándar de provisión técnica y artística más estricto de España. Todos los profesionales cuentan con seguro de RC de 1.000.000 €, riders acústicos estandarizados de 12 W/pax y SLA garantizado por contrato.
+          <p className="text-neutral-400 text-xs sm:text-sm lg:text-base max-w-4xl mt-2 font-light leading-relaxed">
+            El estándar más riguroso de provisión técnica, artística y logística de España. Seguro de RC de 1.000.000 €, rider acústico estandarizado (12 W/pax) y cierre de fecha con depósito de 100,00 € bajo firma criptográfica SHA-256.
           </p>
+
+          <div className="flex flex-wrap gap-2 pt-4 font-mono text-[11px] text-neutral-300">
+            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
+              <ShieldCheck size={13} className="text-emerald-400" /> Cobertura RC: 1.000.000 €
+            </span>
+            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
+              <Sparkles size={13} className="text-[#258DCD]" /> Split Soberano: 80% Artista / 10% EAR / 10% VIMUME
+            </span>
+            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
+              <Lock size={13} className="text-[#AAD6CD]" /> Price-Lock: 100,00 € Stripe
+            </span>
+            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
+              <PhoneCall size={13} className="text-amber-400" /> Centralita: {CENTRALITA.display}
+            </span>
+          </div>
         </div>
       </header>
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          2. FILTROS Y SELECTOR DE VERTICALES SANEADO
+          2. FILTROS BENTO Y BARRA DE NAVEGACIÓN COMPACTA
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <main className="max-w-7xl mx-auto space-y-8">
-        <div className="bg-[#0a0a0a] border border-white/10 p-6 rounded-3xl space-y-6 shadow-xl">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-              <span className="text-xs font-mono text-[#ecb613] uppercase tracking-widest block">
-                Filtro Activo: <strong className="text-white">{currentCategoryLabel}</strong>
-              </span>
-              <h2 className="text-xl sm:text-2xl font-black uppercase text-white font-syne mt-0.5">
-                {filteredProviders.length.toLocaleString()} Profesionales Homologados
-              </h2>
-            </div>
-
-            <div className="relative w-full md:w-80">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Buscar por nombre o servicio..."
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
-                className="w-full bg-black border border-white/10 rounded-2xl pl-10 pr-4 py-3 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#ecb613] transition-all font-mono"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-white"
-                >
-                  <X size={14} />
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* CATEGORY TABS */}
-          <div className="flex flex-wrap gap-2 pt-2 border-t border-white/5">
-            {categories.map((cat) => {
-              const Icon = cat.icon;
-              const isSelected = selectedCategory === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => handleCategorySelect(cat.id)}
-                  className={`px-4 py-2.5 rounded-2xl text-xs font-bold uppercase transition-all flex items-center gap-2 cursor-pointer font-mono ${
-                    isSelected
-                      ? 'bg-gradient-to-r from-amber-300 via-[#ecb613] to-amber-500 text-black shadow-lg shadow-[#ecb613]/20 font-black'
-                      : 'bg-black/60 text-neutral-400 hover:text-white border border-white/10 hover:border-[#ecb613]/40'
-                  }`}
-                >
-                  <Icon size={14} className={isSelected ? 'text-black' : 'text-[#ecb613]'} />
-                  <span>{cat.label}</span>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] ${
-                    isSelected ? 'bg-black/20 text-black font-extrabold' : 'bg-white/5 text-neutral-400'
-                  }`}>
-                    {cat.count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+      <main className="max-w-7xl mx-auto space-y-8 overflow-x-hidden">
+        <BentoFilterBar
+          categories={categories}
+          selectedCategory={selectedCategory}
+          onSelectCategory={handleCategorySelect}
+          searchQuery={searchQuery}
+          onSearchChange={(q) => { setSearchQuery(q); setCurrentPage(1); }}
+          selectedProvince={selectedProvince}
+          onProvinceChange={(prov) => { setSelectedProvince(prov); setCurrentPage(1); }}
+          provincesList={provincesList}
+          totalResults={filteredProviders.length}
+        />
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. REJILLA DE PROVEEDORES AISLADA
+            3. ARQUITECTURA BENTO GRID: REJILLA ESTRICTA DE ALTA DENSIDAD
            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         {filteredProviders.length === 0 ? (
-          <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-12 text-center space-y-4">
+          <div className="bg-[#08080c] border border-neutral-800 rounded-2xl p-12 text-center space-y-4 font-mono">
             <Camera className="w-12 h-12 text-neutral-600 mx-auto" />
-            <h3 className="text-xl font-bold uppercase text-white font-syne">
+            <h3 className="text-lg font-bold uppercase text-white font-syne">
               No se encontraron proveedores en esta selección
             </h3>
             <p className="text-neutral-400 text-xs sm:text-sm max-w-md mx-auto">
-              Intenta cambiar los términos de búsqueda o selecciona otra categoría del catálogo homologado.
+              Intenta restablecer la provincia o el término de búsqueda para ver todos los profesionales homologados.
             </p>
             <button
-              onClick={() => { setSelectedCategory('ALL'); setSearchQuery(''); }}
-              className="px-6 py-3 rounded-xl bg-[#ecb613] text-black font-bold text-xs uppercase tracking-wider font-mono"
+              onClick={() => { setSelectedCategory('ALL'); setSelectedProvince(''); setSearchQuery(''); }}
+              className="px-5 py-2.5 rounded-xl bg-[#258DCD] text-black font-bold text-xs uppercase tracking-wider font-mono hover:bg-[#1f74a8] transition-colors cursor-pointer"
             >
-              Ver Todos los Servicios
+              Ver Todos los Servicios ({providersData.length.toLocaleString()})
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {paginatedProviders.map((item: any) => {
-              const coverImg = item.img || (item.gallery && item.gallery[0]);
-              return (
-              <article
-                key={item.id}
-                onClick={() => openModal(item)}
-                className={`bg-[#0a0a0a] border transition-all duration-300 rounded-3xl overflow-hidden flex flex-col justify-between shadow-xl group cursor-pointer hover:scale-[1.015] hover:shadow-2xl ${
-                  item.isPreferred
-                    ? 'border-[#ecb613] shadow-[#ecb613]/10 ring-1 ring-[#ecb613]'
-                    : 'border-white/10 hover:border-[#ecb613]/50'
-                }`}
-              >
-                <div className="relative h-56 w-full overflow-hidden bg-black">
-                  {coverImg ? (
-                    <img
-                      src={coverImg}
-                      alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-neutral-900 to-black">
-                      <Camera className="w-12 h-12 text-neutral-700" />
-                    </div>
-                  )}
-                  {item.videos && item.videos.length > 0 && (
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/60 rounded-full p-3 backdrop-blur-sm pointer-events-none group-hover:bg-[#ecb613] group-hover:text-black transition-colors">
-                      <Video size={24} className="text-white group-hover:text-black" />
-                    </div>
-                  )}
-                  <div className="absolute top-3 left-3 bg-black/90 backdrop-blur-md px-3 py-1 rounded-xl text-[10px] font-bold text-[#ecb613] uppercase tracking-wider font-mono border border-[#ecb613]/30">
-                    {item.badge || (item.category ? item.category.toUpperCase() : 'HOMOLOGADO')}
-                  </div>
-                  <div className="absolute top-3 right-3 bg-emerald-500 text-black px-2.5 py-1 rounded-xl text-[10px] font-black flex items-center gap-1">
-                    ★ {item.rating || '4.9'} <span className="text-black/70 font-bold">({item.reviews || 18})</span>
-                  </div>
-                  <div className="absolute bottom-3 left-3 bg-black/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-mono text-neutral-300 border border-white/10">
-                    📍 {item.province ? item.province.toUpperCase() : 'MADRID'}
-                  </div>
-                </div>
-
-                <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-extrabold text-white group-hover:text-[#ecb613] transition-colors leading-snug flex items-center gap-2 font-syne line-clamp-2">
-                      {item.name} {item.isPreferred && <span className="text-[#ecb613]">✦</span>}
-                    </h3>
-                    <p className="text-neutral-400 text-xs mt-2 line-clamp-2 leading-relaxed font-light">
-                      {item.description || `${item.name} (Servicios profesionales homologados). Contratación directa Productora EAR.`}
-                    </p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 pt-4 border-t border-white/5 text-xs font-mono">
-                    <div>
-                      <span className="text-[10px] text-neutral-500 uppercase block">Tarifa Base</span>
-                      <span className="font-bold text-white">Desde {item.basePrice || 650} €</span>
-                    </div>
-                    <div>
-                      <span className="text-[10px] text-neutral-500 uppercase block">SLA Acústico / Calidad</span>
-                      <span className="font-bold text-emerald-400">{item.sla || 'Garantía Contractual EAR'}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-4 bg-black/60 border-t border-white/5 flex gap-2 items-center">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); openModal(item); }}
-                    className={`flex-1 font-extrabold text-xs py-3 rounded-2xl uppercase transition-all shadow-md cursor-pointer font-mono ${
-                      item.isPreferred
-                        ? 'bg-[#ecb613] text-black hover:bg-amber-400'
-                        : 'bg-neutral-900 text-white hover:bg-white/10 border border-white/10'
-                    }`}
-                  >
-                    Ver Ficha {item.videos && item.videos.length > 0 && <Video size={14} className="inline ml-1 mb-0.5" />}
-                  </button>
-
-                  <button
-                    onClick={(e) => { e.stopPropagation(); setClaimModalProvider(item); }}
-                    className="p-3 rounded-2xl bg-[#ecb613]/10 hover:bg-[#ecb613] text-[#ecb613] hover:text-black border border-[#ecb613]/30 transition-all flex items-center justify-center cursor-pointer"
-                    title="Reclamar Ficha (2FA)"
-                  >
-                    <ShieldCheck size={16} />
-                  </button>
-
-                  <a
-                    href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero verificar disponibilidad para ${item.name} en ${item.province ? item.province.charAt(0).toUpperCase() + item.province.slice(1).toLowerCase() : 'Madrid'}.`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="p-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500 text-emerald-400 hover:text-black border border-emerald-500/30 transition-all flex items-center justify-center cursor-pointer"
-                    title="Consultar por WhatsApp"
-                  >
-                    <PhoneCall size={16} />
-                  </a>
-                </div>
-              </article>
-              );
-            })}
-          </div>
-        )}
-
-        {/* PAGINATION */}
-        {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 pt-12 pb-6">
-            <button
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-              className="px-4 py-2 rounded-xl bg-neutral-900 border border-white/10 text-xs font-mono disabled:opacity-30 disabled:cursor-not-allowed hover:border-[#ecb613]"
-            >
-              Anterior
-            </button>
-            <span className="text-xs font-mono text-neutral-400">
-              Página <strong className="text-white">{currentPage}</strong> de <strong className="text-white">{totalPages}</strong>
-            </span>
-            <button
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 rounded-xl bg-neutral-900 border border-white/10 text-xs font-mono disabled:opacity-30 disabled:cursor-not-allowed hover:border-[#ecb613]"
-            >
-              Siguiente
-            </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+            {paginatedProviders.map((provider) => (
+              <BentoProviderCard
+                key={provider.id}
+                provider={provider}
+                onSelect={openModal}
+                onClaim={(p) => setClaimModalProvider(p)}
+              />
+            ))}
           </div>
         )}
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            4. MODAL S-CLASS DETALLADO
+            4. PAGINACIÓN S-CLASS ULTRA FLUIDA
+           ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        {totalPages > 1 && (
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 pb-12 border-t border-neutral-900 font-mono text-xs">
+            <span className="text-neutral-400">
+              Mostrando <strong className="text-white">{((currentPage - 1) * pageSize) + 1}</strong> - <strong className="text-white">{Math.min(currentPage * pageSize, filteredProviders.length).toLocaleString()}</strong> de <strong className="text-[#258DCD]">{filteredProviders.length.toLocaleString()}</strong>
+            </span>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 rounded-xl bg-[#0a0a0f] border border-neutral-800 text-neutral-300 hover:text-white hover:border-[#258DCD] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                ← Anterior
+              </button>
+              <span className="px-3.5 py-2 rounded-xl bg-[#08080c] border border-[#258DCD]/30 text-white font-bold">
+                Pág. <strong className="text-[#258DCD]">{currentPage}</strong> / {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 rounded-xl bg-[#0a0a0f] border border-neutral-800 text-neutral-300 hover:text-white hover:border-[#258DCD] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              >
+                Siguiente →
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            5. MODAL DE FICHA COMPLETA S-CLASS
            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         {activeModalProvider && (
-          <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex justify-center items-center p-4 md:p-10">
-            <div className="bg-[#0c0c0c] border border-[#ecb613] w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-y-auto p-6 md:p-8 relative space-y-6 shadow-2xl font-sans">
+          <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex justify-center items-center p-3 sm:p-6 overflow-y-auto">
+            <div className="bg-[#08080c] border border-[#258DCD] w-full max-w-4xl max-h-[90vh] rounded-3xl overflow-y-auto p-6 sm:p-8 relative space-y-6 shadow-2xl font-sans">
               <button
                 onClick={() => setActiveModalProvider(null)}
-                className="absolute top-4 right-4 bg-neutral-900 hover:bg-[#ecb613] text-white hover:text-black h-10 w-10 rounded-full font-bold text-lg transition-all flex items-center justify-center cursor-pointer border border-white/10"
+                className="absolute top-4 right-4 bg-neutral-900 hover:bg-[#258DCD] text-white hover:text-black h-9 w-9 rounded-full font-bold transition-all flex items-center justify-center cursor-pointer border border-neutral-700"
               >
                 ✕
               </button>
 
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-[#ecb613] uppercase tracking-widest font-mono block">
-                  {activeModalProvider.badge || 'PROVEEDOR HOMOLOGADO'} • {activeModalProvider.province?.toUpperCase() || 'MADRID'}
+              <div className="space-y-1.5 pr-10">
+                <span className="text-xs font-bold text-[#AAD6CD] uppercase tracking-widest font-mono block">
+                  {activeModalProvider.badge || (activeModalProvider.category ? activeModalProvider.category.toUpperCase() : 'HOMOLOGADO')} • {activeModalProvider.province?.toUpperCase() || 'MADRID'}
                 </span>
-                <h2 className="text-3xl md:text-4xl font-black text-white font-syne">{activeModalProvider.name}</h2>
+                <h2 className="text-2xl sm:text-3xl font-black text-white font-syne leading-tight">
+                  {activeModalProvider.name}
+                </h2>
               </div>
 
+              {/* Imagen y Galería */}
               <div className="space-y-3">
-                <div className="h-80 w-full rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center">
+                <div className="h-72 sm:h-80 w-full rounded-2xl overflow-hidden bg-black border border-neutral-800 flex items-center justify-center">
                   <img
                     src={activeGalleryImg || activeModalProvider.img}
                     alt={activeModalProvider.name}
@@ -519,13 +416,13 @@ function ProveedoresDirectoryContent() {
                   />
                 </div>
                 {activeModalProvider.gallery && activeModalProvider.gallery.length > 1 && (
-                  <div className="grid grid-cols-4 gap-3">
-                    {activeModalProvider.gallery.map((imgUrl: string, idx: number) => (
+                  <div className="grid grid-cols-4 gap-2">
+                    {activeModalProvider.gallery.map((imgUrl, idx) => (
                       <div
                         key={idx}
                         onClick={() => setActiveGalleryImg(imgUrl)}
-                        className={`h-20 rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${
-                          activeGalleryImg === imgUrl ? 'border-[#ecb613] scale-95' : 'border-white/10 opacity-60 hover:opacity-100'
+                        className={`h-16 rounded-xl overflow-hidden border-2 cursor-pointer transition-all ${
+                          activeGalleryImg === imgUrl ? 'border-[#258DCD] scale-95' : 'border-neutral-800 opacity-60 hover:opacity-100'
                         }`}
                       >
                         <img src={imgUrl} alt="Galería" className="w-full h-full object-cover" />
@@ -535,57 +432,62 @@ function ProveedoresDirectoryContent() {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/10">
-                <div className="space-y-3">
-                  <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Descripción del Servicio</h4>
+              {/* Especificaciones */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-neutral-800">
+                <div className="space-y-2">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider font-mono">Descripción del Servicio</h4>
                   <p className="text-xs text-neutral-300 leading-relaxed font-light">
-                    {activeModalProvider.description_full || activeModalProvider.description || `${activeModalProvider.name} es un proveedor verificado por Productora EAR con solvencia técnica acreditada.`}
+                    {activeModalProvider.description_full || activeModalProvider.description || `${activeModalProvider.name} es un proveedor homologado bajo los estándares técnicos y de acústica de Productora EAR.`}
                   </p>
                 </div>
-                <div className="space-y-3">
-                  <h4 className="text-sm font-bold text-white uppercase tracking-wider font-mono">Garantía & Homologación S-Class</h4>
-                  <ul className="space-y-2 text-xs text-neutral-300 font-mono">
-                    <li className="flex items-center gap-2"><span className="text-[#ecb613]">✓</span> Cobertura Póliza RC: 1.000.000 €</li>
-                    <li className="flex items-center gap-2"><span className="text-[#ecb613]">✓</span> Contratación Directa vía EAR Split Soberano</li>
-                    <li className="flex items-center gap-2"><span className="text-[#ecb613]">✓</span> Rider Técnico Homologado (Garantía Cero Fallos)</li>
-                    <li className="flex items-center gap-2"><span className="text-[#ecb613]">✓</span> Despacho Central: {CENTRALITA.display}</li>
+                <div className="space-y-2 font-mono text-xs">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">Garantía & Homologación EAR</h4>
+                  <ul className="space-y-1.5 text-neutral-300">
+                    <li className="flex items-center gap-2"><span className="text-[#258DCD]">✓</span> Seguro de Responsabilidad Civil: 1.000.000 €</li>
+                    <li className="flex items-center gap-2"><span className="text-[#258DCD]">✓</span> Contratación Directa vía EAR Split Soberano (80/10/10)</li>
+                    <li className="flex items-center gap-2"><span className="text-[#258DCD]">✓</span> Presión Acústica S-Class: 12 W/pax</li>
+                    <li className="flex items-center gap-2"><span className="text-[#258DCD]">✓</span> Centralita de Retención: {CENTRALITA.display}</li>
                   </ul>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+              {/* Acciones */}
+              <div className="pt-4 border-t border-neutral-800 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
-                  <span className="text-xs text-neutral-500 uppercase font-mono block">Tarifa Oficial Garantizada</span>
-                  <span className="text-2xl font-black text-[#ecb613] font-mono">Desde {activeModalProvider.basePrice || 650} €</span>
+                  <span className="text-[10px] text-neutral-500 uppercase font-mono block">Tarifa Oficial Garantizada</span>
+                  <span className="text-2xl font-black text-[#258DCD] font-mono">
+                    Desde {activeModalProvider.basePrice || 650} €
+                  </span>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+
+                <div className="flex flex-wrap gap-2 w-full sm:w-auto">
                   <button
                     onClick={() => {
                       setClaimModalProvider(activeModalProvider);
                       setActiveModalProvider(null);
                     }}
-                    className="px-5 py-3.5 rounded-2xl bg-white/5 hover:bg-white/10 text-white border border-white/10 hover:border-[#ecb613]/50 text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
+                    className="flex-1 sm:flex-none px-4 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-neutral-700 hover:border-[#258DCD] text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
-                    <ShieldCheck size={16} className="text-[#ecb613]" />
-                    <span>Reclamar Ficha (2FA)</span>
+                    <ShieldCheck size={15} className="text-[#258DCD]" />
+                    <span>Reclamar (2FA)</span>
                   </button>
-                  {activeModalProvider.customUrl && (
-                    <a
-                      href={activeModalProvider.customUrl}
-                      className="w-full sm:w-auto bg-[#ecb613] hover:brightness-110 text-black font-black text-xs px-6 py-3.5 rounded-2xl uppercase transition-all text-center shadow-lg shadow-[#ecb613]/20 font-mono cursor-pointer flex items-center justify-center gap-2"
-                    >
-                      <Sparkles size={16} />
-                      <span>Ver Carta & Cotizador</span>
-                    </a>
-                  )}
+
+                  <Link
+                    href={activeModalProvider.customUrl || `/checkout/presupuesto?format=Solista&base=350&venue=${encodeURIComponent(activeModalProvider.name)}`}
+                    className="flex-1 sm:flex-none px-5 py-3 rounded-xl bg-[#258DCD] hover:bg-[#1f74a8] text-black font-mono font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-lg shadow-[#258DCD]/20"
+                  >
+                    <Lock size={13} />
+                    <span>Bloquear 100 €</span>
+                  </Link>
+
                   <a
-                    href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero verificar disponibilidad para ${activeModalProvider.name} en ${activeModalProvider.province ? activeModalProvider.province.charAt(0).toUpperCase() + activeModalProvider.province.slice(1).toLowerCase() : 'Madrid'}.`)}`}
+                    href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, solicito verificar disponibilidad para ${activeModalProvider.name} en ${activeModalProvider.province || 'Madrid'}.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto bg-gradient-to-r from-amber-300 via-[#ecb613] to-amber-500 hover:brightness-110 text-black font-black text-xs px-6 py-3.5 rounded-2xl uppercase transition-all text-center shadow-lg shadow-[#ecb613]/20 font-mono cursor-pointer flex items-center justify-center gap-2"
+                    className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-black transition-colors flex items-center justify-center cursor-pointer"
+                    title="Consultar vía WhatsApp"
                   >
                     <PhoneCall size={16} />
-                    <span>Verificar en WhatsApp</span>
                   </a>
                 </div>
               </div>
@@ -593,7 +495,7 @@ function ProveedoresDirectoryContent() {
           </div>
         )}
 
-        {/* 🛡️ MODAL DE RECLAMAR FICHA (VERIFICACIÓN EN 2 PASOS) */}
+        {/* Modal de Reclamar Ficha 2FA */}
         <ClaimProviderModal
           isOpen={!!claimModalProvider}
           provider={claimModalProvider}
@@ -610,10 +512,10 @@ function ProveedoresDirectoryContent() {
 export default function WrappedProveedoresPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#050505] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-[#030305] flex items-center justify-center text-white font-mono text-xs">
         <div className="space-y-3 text-center">
-          <Loader2 className="animate-spin text-[#ecb613] mx-auto" size={32} />
-          <p className="text-xs font-mono text-zinc-400">Cargando Directorio Homologado...</p>
+          <Loader2 className="animate-spin text-[#258DCD] mx-auto" size={32} />
+          <p className="text-neutral-400">Cargando Directorio Homologado S-Class...</p>
         </div>
       </div>
     }>

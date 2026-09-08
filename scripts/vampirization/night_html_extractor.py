@@ -25,15 +25,19 @@ def normalize_slug(url_or_name: str) -> str:
     s = re.sub(r'[^a-zA-Z0-9]+', '-', s.lower()).strip('-')
     return s
 
-def load_manifest() -> dict:
+def load_manifest() -> list:
     if MANIFEST_FILE.exists():
         try:
-            return json.loads(MANIFEST_FILE.read_text(encoding="utf-8"))
+            data = json.loads(MANIFEST_FILE.read_text(encoding="utf-8"))
+            if isinstance(data, list):
+                return data
+            if isinstance(data, dict):
+                return [{"vault_path": k, "sha256": v} for k, v in data.items()]
         except Exception:
             pass
-    return {}
+    return []
 
-def save_manifest(manifest: dict):
+def save_manifest(manifest: list):
     MANIFEST_FILE.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST_FILE.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
 
@@ -55,6 +59,8 @@ def get_providers() -> list[dict]:
 def main():
     VAULT_DIR.mkdir(parents=True, exist_ok=True)
     manifest = load_manifest()
+    existing_paths = {item.get("vault_path") for item in manifest if isinstance(item, dict)}
+    
     providers = get_providers()
     
     print(f"[START] Encontrados {len(providers)} proveedores en total.")
@@ -78,7 +84,7 @@ def main():
             
         html_path = VAULT_DIR / f"{slug}.html"
         
-        if str(html_path) in manifest and html_path.exists():
+        if str(html_path) in existing_paths and html_path.exists():
             skipped += 1
             continue
             
@@ -90,7 +96,13 @@ def main():
                 
                 # SHA-256
                 sha256 = hashlib.sha256(html.encode("utf-8")).hexdigest()
-                manifest[str(html_path)] = sha256
+                manifest.append({
+                    "original_path": url,
+                    "vault_path": str(html_path),
+                    "sha256": sha256,
+                    "archived_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+                })
+                existing_paths.add(str(html_path))
                 
                 success += 1
                 print(f"[OK] {url} -> {slug}.html")
