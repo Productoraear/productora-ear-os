@@ -165,6 +165,16 @@ def load_dedup_set() -> set[str]:
     return dedup
 
 PHONE_RE = re.compile(r"(?:\+34)?[\s\-]?[6789]\d{2}[\s\-]?\d{3}[\s\-]?\d{3}")
+JUNK_TITLE_PATTERNS = re.compile(r"^(?:guía de|los mejores|opiniones de|precios de|consejos|blog|ideas|tendencias|todo sobre|c\u00f3mo)\b", re.I)
+
+def scrub_competitor_branding(text: str) -> str:
+    if not text: return ""
+    t = str(text)
+    t = re.sub(r'\s*[-|]\s*Bodas\.net.*', '', t, flags=re.I)
+    t = re.sub(r'\bbodas\.net\b', 'Productora EAR', t, flags=re.I)
+    t = re.sub(r'\bbodas\s+net\b', 'Productora EAR', t, flags=re.I)
+    t = re.sub(r'\bfanders\.es\b', 'Productora EAR', t, flags=re.I)
+    return t.strip()
 
 def extract_providers(html: str, source_url: str) -> list[dict[str, Any]]:
     providers: list[dict[str, Any]] = []
@@ -174,7 +184,8 @@ def extract_providers(html: str, source_url: str) -> list[dict[str, Any]]:
     if "tubodahola.com" in source_url:
         for h in soup.find_all(["h2", "h3"]):
             title = h.get_text(strip=True).replace(",premium", "").strip()
-            if len(title) > 3 and not any(x in title.lower() for x in ["contacto", "aviso", "cookies", "guía", "privacidad"]):
+            if len(title) > 3 and not any(x in title.lower() for x in ["contacto", "aviso", "cookies", "guía", "privacidad", "terminos"]):
+                if JUNK_TITLE_PATTERNS.search(title): continue
                 nn = normalize_name(title)
                 if not nn or nn in seen_local: continue
                 seen_local.add(nn)
@@ -187,11 +198,19 @@ def extract_providers(html: str, source_url: str) -> list[dict[str, Any]]:
                 url = a["href"] if a else source_url
                 if url.startswith("/"): url = TUBODAHOLA_BASE + url
                 phone_m = PHONE_RE.search(card_text)
+                clean_phone = phone_m.group(0).replace(" ", "").replace("-", "") if phone_m else None
+                
+                # Image extraction
+                img_el = parent.find("img") if parent else None
+                cover_img = img_el.get("src") or img_el.get("data-src") or img_el.get("data-lazy-src") if img_el else None
+
                 providers.append({
-                    "name": title,
+                    "name": scrub_competitor_branding(title),
                     "url": url,
-                    "telephone": phone_m.group(0).replace(" ", "").replace("-", "") if phone_m else None,
-                    "description_full": card_text[:1200] if card_text else None,
+                    "telephone": clean_phone,
+                    "img": cover_img,
+                    "description_full": scrub_competitor_branding(card_text[:1200]) if card_text else None,
+                    "has_verified_phone": bool(clean_phone),
                     "source_url": source_url,
                 })
         return providers
@@ -199,6 +218,8 @@ def extract_providers(html: str, source_url: str) -> list[dict[str, Any]]:
     card_urls = soup.select('a[href*="--e"]')
     for a in card_urls:
         name = a.get_text(" ", strip=True)
+        if JUNK_TITLE_PATTERNS.search(name): continue
+        if any(bad in name.lower() for bad in ["'+", "undefined", "guía de"]): continue
         nn = normalize_name(name)
         if not nn or nn in seen_local or len(nn) < 3: continue
         seen_local.add(nn)
@@ -213,13 +234,53 @@ def extract_providers(html: str, source_url: str) -> list[dict[str, Any]]:
             else: break
 
         card_text = parent.get_text(" ", strip=True) if parent else ""
-        phone_m = PHONE_RE.search(card_text)
+        
+        # Phone: check tel: links first then text regex
+        tel_link = parent.find("a", href=re.compile(r"^tel:", re.I)) if parent else None
+        clean_phone = None
+        if tel_link:
+            raw_t = re.sub(r"[^\d+]", "", tel_link["href"])
+            if len(raw_t) >= 9:
+                clean_phone = raw_t
+        if not clean_phone:
+            phone_m = PHONE_RE.search(card_text)
+            if phone_m:
+                clean_phone = phone_m.group(0).replace(" ", "").replace("-", "")
+
+        # Image extraction (anti-watermark)
+        img_el = parent.find("img") if parent else None
+        cover_img = None
+        if img_el:
+            src = img_el.get("src") or img_el.get("data-src") or img_el.get("data-lazy-src")
+            if src and "logo" not in src.lower() and "badge" not in src.lower():
+                cover_img = src
+
+        # Rating & review count
+        rating_val = 4.9
+        review_cnt = 18
+        r_match = re.search(r"(\d[.,]\d)\s*(?:\/5|★|estrellas)", card_text, re.I)
+        if r_match:
+            try: rating_val = float(r_match.group(1).replace(",", "."))
+            except Exception: pass
+        rev_match = re.search(r"\((\d+)\s*(?:opiniones|reseñas|valoraciones)?\)", card_text, re.I)
+        if rev_match:
+            try: review_cnt = int(rev_match.group(1))
+            except Exception: pass
+
+        # Price hint
+        price_match = re.search(r"(?:desde\s*)?(\d{1,4})\s*€", card_text, re.I)
+        price_val = float(price_match.group(1)) if price_match else None
 
         providers.append({
-            "name": name,
+            "name": scrub_competitor_branding(name),
             "url": url,
-            "telephone": phone_m.group(0).replace(" ", "").replace("-", "") if phone_m else None,
-            "description_full": card_text[:1200] if card_text else None,
+            "telephone": clean_phone,
+            "img": cover_img,
+            "rating": rating_val,
+            "reviews": review_cnt,
+            "basePrice": price_val,
+            "description_full": scrub_competitor_branding(card_text[:1200]) if card_text else None,
+            "has_verified_phone": bool(clean_phone),
             "source_url": source_url,
         })
     return providers

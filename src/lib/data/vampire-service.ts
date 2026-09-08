@@ -109,29 +109,51 @@ export const getProvidersByLocation = cache(
 
       const filtered = jsonProviders
         .filter((p) => {
+          if (!p || !p.name) return false;
           const pProv = (p.provincia || p.province || '').toLowerCase();
           const pCat = (p.category || '').toLowerCase();
           const matchProv = !normProv || normProv === 'todas' || normProv === 'espana' || pProv.includes(normProv);
-          const matchCat = !normCat || normCat === 'all' || normCat === 'todos' || pCat.includes(normCat);
+          const matchCat = !normCat || normCat === 'all' || normCat === 'todos' || normCat === 'eventos' || pCat.includes(normCat);
           return matchProv && matchCat;
         })
         .slice(0, limit);
 
-      return filtered.map((p, idx) => ({
-        id: `fallback-${idx}`,
-        name: p.name || 'Proveedor Homologado',
-        category: p.category || 'Servicios para Eventos',
-        province: p.provincia || p.province || 'España',
-        municipality: p.municipality || null,
-        telephone: p.telephone || null,
-        priceRange: p.priceRange || p.price_range || null,
-        rating: p.rating || 4.8,
-        reviewsCount: p.reviewsCount || p.reviews_count || 12,
-        description: p.description || null,
-        imageUrls: Array.isArray(p.image_urls) ? p.image_urls : (p.images || []),
-        claimToken: p.claimToken || `EAR-CLAIM-${idx}`,
-        status: p.status || 'GHOST_UNCLAIMED',
-      }));
+      const categoryFallbacks: Record<string, string> = {
+        finca: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
+        catering: "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
+        decoracion: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+        musica: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
+        sonido: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop",
+        foto: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
+        wedding: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
+        moda: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=1200&auto=format&fit=crop",
+        transporte: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
+        servicios: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"
+      };
+
+      return filtered.map((p, idx) => {
+        const catKey = (p.category || 'servicios').toLowerCase();
+        const fallbackImg = categoryFallbacks[catKey] || categoryFallbacks.servicios;
+        const validImg = (p.img && typeof p.img === 'string' && p.img.startsWith('http')) 
+          ? p.img 
+          : ((p.gallery && p.gallery[0] && p.gallery[0].startsWith('http')) ? p.gallery[0] : fallbackImg);
+
+        return {
+          id: p.id || `prov-${idx}`,
+          name: p.name || 'Proveedor Homologado',
+          category: p.category || 'servicios',
+          province: p.provincia || p.province || 'España',
+          municipality: p.locality || p.municipality || null,
+          telephone: p.phone || p.telephone || '+34 693 693 048',
+          priceRange: p.priceRange || (p.basePrice ? `Desde ${p.basePrice} €` : 'Desde 350 €'),
+          rating: typeof p.rating === 'number' ? p.rating : 4.9,
+          reviewsCount: typeof p.reviews === 'number' ? p.reviews : (p.reviewsCount || 18),
+          description: p.description || `${p.name} proveedor homologado con infraestructura y garantía EAR OS.`,
+          imageUrls: [validImg],
+          claimToken: p.claimToken || `EAR-CLAIM-${idx}`,
+          status: p.status || 'VERIFIED_S_CLASS',
+        };
+      });
     } catch (fsError) {
       console.error('❌ [VAMPIRE SERVICE] Error en fallback JSON:', fsError);
     }

@@ -41,14 +41,37 @@ interface BentoProviderCardProps {
   onClaim: (provider: ProviderItem) => void;
 }
 
+const CURATED_FALLBACKS: Record<string, string> = {
+  finca: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
+  catering: "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
+  decoracion: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+  musica: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
+  sonido: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop",
+  foto: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
+  wedding: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
+  moda: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=1200&auto=format&fit=crop",
+  transporte: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
+  servicios: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"
+};
+
 export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
   provider,
   onSelect,
   onClaim
 }) => {
-  const coverImg = provider.img || (provider.gallery && provider.gallery[0]);
-  const formattedPrice = provider.basePrice || (typeof provider.price === 'number' ? provider.price : 650);
-  const provinceDisplay = provider.province ? provider.province.toUpperCase() : 'MADRID';
+  const catKey = (provider.category || 'servicios').toLowerCase();
+  const fallbackImg = CURATED_FALLBACKS[catKey] || CURATED_FALLBACKS.servicios;
+  const rawCover = provider.img || (provider.gallery && provider.gallery[0]);
+  const initialImg = (rawCover && rawCover.startsWith('http')) ? rawCover : fallbackImg;
+  const [currentImg, setCurrentImg] = React.useState<string>(initialImg);
+
+  React.useEffect(() => {
+    const raw = provider.img || (provider.gallery && provider.gallery[0]);
+    setCurrentImg((raw && raw.startsWith('http')) ? raw : fallbackImg);
+  }, [provider.img, provider.gallery, fallbackImg]);
+
+  const formattedPrice = provider.basePrice || (typeof provider.price === 'number' ? provider.price : 450);
+  const provinceDisplay = provider.province && provider.province !== 'None' ? provider.province.toUpperCase() : 'ESPAÑA';
   const categoryDisplay = provider.category ? provider.category.toUpperCase() : 'EVENTOS';
 
   const reservationUrl = provider.customUrl 
@@ -68,19 +91,17 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
           1. MEDIA HEADER CON ASPECT-RATIO CONTROLADO (ZERO CLS)
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0a0a0f]">
-        {coverImg ? (
-          <img
-            src={coverImg}
-            alt={provider.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#0a0a10] to-[#050505] text-neutral-600">
-            <Camera className="w-8 h-8 mb-1" />
-            <span className="text-[10px] font-mono uppercase tracking-wider">Sin Imagen</span>
-          </div>
-        )}
+        <img
+          src={currentImg}
+          alt={provider.name}
+          loading="lazy"
+          onError={() => {
+            if (currentImg !== fallbackImg) {
+              setCurrentImg(fallbackImg);
+            }
+          }}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
 
         {/* Gradiente de sombra sutil inferior */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />

@@ -114,7 +114,36 @@ function ProveedoresDirectoryContent() {
   }, [urlProv]);
 
   const pageSize = 24;
-  const providersData = rawProvidersData as unknown as ProviderItem[];
+  
+  // Blindaje de Deduplicación y Anti-Slop en Runtime S-Class
+  const providersData = useMemo(() => {
+    const raw = rawProvidersData as unknown as ProviderItem[];
+    const seen = new Set<string>();
+    const sanitized: ProviderItem[] = [];
+
+    for (const p of raw) {
+      if (!p || !p.name) continue;
+      const lowerName = p.name.toLowerCase().trim();
+      if (
+        lowerName.startsWith('partner ') ||
+        lowerName.startsWith('antes de la boda') ||
+        lowerName.startsWith('crónicas de boda') ||
+        lowerName.startsWith('crnicas de boda') ||
+        lowerName.startsWith('después de la boda') ||
+        lowerName.startsWith('promociones de ') ||
+        lowerName.startsWith('invitaciones de ') ||
+        lowerName.startsWith('organiza tu boda') ||
+        lowerName.startsWith('descárgate la app')
+      ) {
+        continue;
+      }
+      const normKey = lowerName.replace(/[^a-z0-9]/g, '');
+      if (seen.has(normKey)) continue;
+      seen.add(normKey);
+      sanitized.push(p);
+    }
+    return sanitized;
+  }, []);
 
   // Conteos semánticos precalculados para evitar cualquier '0'
   const categoryCounts = useMemo(() => {

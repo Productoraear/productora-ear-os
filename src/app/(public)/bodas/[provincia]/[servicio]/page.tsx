@@ -112,48 +112,78 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
 
           {providers.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {providers.map((p, idx) => (
-                <div
-                  key={idx}
-                  className="p-6 rounded-3xl bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 transition-all space-y-4 flex flex-col justify-between group"
-                >
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="px-2.5 py-0.5 bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] rounded-full text-[10px] font-mono uppercase font-bold">
-                        {p.category}
-                      </span>
-                      <div className="flex items-center gap-1 text-amber-400 text-xs font-mono font-bold">
-                        <Star size={12} fill="currentColor" />
-                        <span>{p.rating?.toFixed(1) || '4.9'}</span>
-                        <span className="text-zinc-500 text-[10px]">({p.reviewsCount || 18})</span>
+              {providers.map((p, idx) => {
+                const coverImg = (p.imageUrls && p.imageUrls[0]) ? p.imageUrls[0] : 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop';
+                const catLabel = (p.category || 'Servicio Homologado').toUpperCase();
+
+                return (
+                  <div
+                    key={idx}
+                    className="rounded-3xl bg-[#09090d] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between group overflow-hidden shadow-lg shadow-black/40 hover:-translate-y-1 duration-300"
+                  >
+                    {/* Media Header con Aspect Ratio Controlado */}
+                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#050505]">
+                      <img
+                        src={coverImg}
+                        alt={p.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#09090d] via-transparent to-black/40 pointer-events-none" />
+
+                      {/* Badge Categoría */}
+                      <div className="absolute top-3 left-3">
+                        <span className="px-2.5 py-1 bg-black/80 backdrop-blur-md border border-[#ecb613]/40 text-[#ecb613] rounded-full text-[10px] font-mono uppercase font-bold tracking-wider">
+                          {catLabel}
+                        </span>
+                      </div>
+
+                      {/* Rating */}
+                      <div className="absolute top-3 right-3 bg-black/80 backdrop-blur-md border border-white/10 text-white px-2.5 py-1 rounded-full text-[10px] font-mono flex items-center gap-1">
+                        <Star size={11} className="fill-amber-400 text-amber-400" />
+                        <span className="font-bold">{p.rating?.toFixed(1) || '4.9'}</span>
+                        <span className="text-zinc-400 text-[9px]">({p.reviewsCount || 18})</span>
+                      </div>
+
+                      {/* Ubicación */}
+                      <div className="absolute bottom-2.5 left-3 flex items-center gap-1 text-[10px] font-mono text-zinc-300 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
+                        <MapPin size={11} className="text-[#ecb613]" />
+                        <span>{p.province.toUpperCase()}</span>
                       </div>
                     </div>
 
-                    <h3 className="text-lg font-bold font-syne text-white group-hover:text-[#ecb613] transition-colors">
-                      {p.name}
-                    </h3>
+                    {/* Card Body */}
+                    <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        <h3 className="text-base sm:text-lg font-bold font-syne text-white group-hover:text-[#ecb613] transition-colors line-clamp-1">
+                          {p.name}
+                        </h3>
 
-                    {p.description && (
-                      <p className="text-xs text-zinc-400 line-clamp-3 leading-relaxed font-light">
-                        {p.description}
-                      </p>
-                    )}
-                  </div>
+                        <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed font-light">
+                          {p.description || `${p.name} proveedor homologado con cobertura técnica y garantía de ejecución EAR OS.`}
+                        </p>
+                      </div>
 
-                  <div className="pt-4 border-t border-white/5 flex items-center justify-between">
-                    <span className="text-xs font-mono text-zinc-400">
-                      {p.priceRange || 'Desde 900 €'}
-                    </span>
-                    <Link
-                      href={`/checkout/presupuesto?proveedor=${encodeURIComponent(p.name)}&provincia=${provKey}`}
-                      className="px-4 py-2 bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-white font-mono text-xs font-bold uppercase rounded-xl transition-all flex items-center gap-1"
-                    >
-                      <span>Reservar</span>
-                      <ArrowRight size={12} />
-                    </Link>
+                      {/* Footer Actions */}
+                      <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+                        <div>
+                          <span className="text-[9px] font-mono text-zinc-500 uppercase block">Tarifa Oficial</span>
+                          <span className="text-xs font-mono font-bold text-amber-300">
+                            {p.priceRange || 'Desde 350 €'}
+                          </span>
+                        </div>
+                        <Link
+                          href={`/checkout/presupuesto?proveedor=${encodeURIComponent(p.name)}&provincia=${provKey}`}
+                          className="px-3.5 py-2 bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-mono text-xs font-black uppercase rounded-xl transition-all flex items-center gap-1 shadow-md shadow-amber-500/20"
+                        >
+                          <span>Reservar</span>
+                          <ArrowRight size={12} />
+                        </Link>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <div className="p-12 text-center rounded-3xl bg-[#09090d] border border-white/10 space-y-4">
