@@ -1,0 +1,17 @@
+{
+  "policy": "DENY_ALL_EXCEPT_WHITELIST",
+  "note": "Directiva S-Class del CEO: Todos los perfiles permanecen en oculto por defecto excepto Edwin Agudelo. Activaciones controladas desde /admin/directorio.",
+  "active_ids": [
+    "prov-ear-sovereign-01",
+    "productora-ear",
+    "edwin-agudelo",
+    "prov-53"
+  ],
+  "active_slugs": [
+    "productora-ear",
+    "edwin-agudelo",
+    "edwin-agudelo-canta-a-novios",
+    "bienvenido-edwin-agudelo-sin-igual"
+  ],
+  "updated_at": "2026-09-08T17:48:00Z"
+}

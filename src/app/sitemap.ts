@@ -4,6 +4,7 @@ import path from 'path';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { CHRISTMAS_LIGHTING_PRODUCTS } from '@/data/luces-navidad';
 import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
+import { isProviderPublic } from '@/lib/providers/visibility';
 
 const BASE_URL = 'https://www.productoraear.com';
 
@@ -225,9 +226,10 @@ export default async function sitemap(props: {
         const curatedPath = path.join(process.cwd(), 'src', 'data', 'all_providers_database.json');
         if (fs.existsSync(curatedPath)) {
           const raw = fs.readFileSync(curatedPath, 'utf-8');
-          const allProviders: Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string }> = JSON.parse(raw);
+          const allProviders: Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }> = JSON.parse(raw);
 
           allProviders.forEach(provider => {
+            if (!isProviderPublic(provider)) return;
             const rawSlug = provider.slug || provider.atomic_specs?.slug || provider.id;
             const validSlug = sanitizeSlug(rawSlug);
             if (validSlug) {
@@ -252,6 +254,7 @@ export default async function sitemap(props: {
           const harvestedVendors: Array<{ slug?: string; id?: string; name?: string }> = JSON.parse(raw);
 
           for (const v of harvestedVendors) {
+            if (!isProviderPublic(v)) continue;
             const rawSlug = v.slug || v.id || v.name;
             const validSlug = sanitizeSlug(rawSlug);
             if (validSlug) {

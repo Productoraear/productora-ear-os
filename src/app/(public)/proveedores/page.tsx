@@ -28,10 +28,30 @@ import {
   ExternalLink
 } from 'lucide-react';
 import rawProvidersData from '@/data/all_providers_database.json';
+import activeWhitelist from '@/data/active_providers_whitelist.json';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';
 import { BentoProviderCard, ProviderItem } from '@/components/providers/BentoProviderCard';
 import { BentoFilterBar, CategoryItem } from '@/components/providers/BentoFilterBar';
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ARTISTA SOBERANO S-CLASS: EDWIN AGUDELO (PRIORIDAD PERMANENTE #1)
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const SOVEREIGN_EDWIN_AGUDELO: ProviderItem = {
+  id: 'prov-ear-sovereign-01',
+  name: 'Productora EAR • Edwin Agudelo',
+  slug: 'edwin-agudelo',
+  category: 'musica',
+  province: 'Madrid',
+  description: 'Show musical en vivo de 1 hora (2 pases de 30 min), sonido profesional Bose F1 812 / S1 Pro, microfonía Shure Beta 87A, ramo de flores en vivo, canción personalizada y sesión de fotos con sombreros temáticos. Artista Solista S-Class.',
+  price: '350,00 €',
+  rating: 5.0,
+  reviews: 128,
+  img: 'https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg',
+  isPreferred: true,
+  badge: 'SOLISTA S-CLASS',
+  customUrl: '/artistas/edwin-agudelo'
+};
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // NORMALIZADOR SEMÁNTICO S-CLASS: COBERTURA 100% SOBRE 26.763 NODOS
@@ -115,16 +135,33 @@ function ProveedoresDirectoryContent() {
 
   const pageSize = 24;
   
-  // Blindaje de Deduplicación y Anti-Slop en Runtime S-Class
+  // Blindaje de Deduplicación, Whitelist CEO y Anti-Slop en Runtime S-Class
   const providersData = useMemo(() => {
+    const activeIds = new Set((activeWhitelist.active_ids || []).map(x => x.toLowerCase().trim()));
+    const activeSlugs = new Set((activeWhitelist.active_slugs || []).map(x => x.toLowerCase().trim()));
+
     const raw = rawProvidersData as unknown as ProviderItem[];
     const seen = new Set<string>();
-    const sanitized: ProviderItem[] = [];
+
+    // Edwin Agudelo encabeza siempre con prioridad soberana #1
+    const sanitized: ProviderItem[] = [SOVEREIGN_EDWIN_AGUDELO];
+    seen.add('prov-ear-sovereign-01');
+    seen.add('edwin-agudelo');
 
     for (const p of raw) {
       if (!p || !p.name) continue;
       const lowerName = p.name.toLowerCase().trim();
+      const pId = String(p.id || '').toLowerCase().trim();
+      const pSlug = String(p.slug || (p as any).atomic_specs?.slug || '').toLowerCase().trim();
+
+      // Veto estricto anti-slop y proveedores corruptos/no deseados
       if (
+        lowerName.includes('peke teso') ||
+        pId.includes('peke-teso') ||
+        pSlug.includes('peke-teso') ||
+        pId === 'prov-6' ||
+        lowerName.includes('100 apodos') ||
+        pSlug.includes('100-apodos') ||
         lowerName.startsWith('partner ') ||
         lowerName.startsWith('antes de la boda') ||
         lowerName.startsWith('crónicas de boda') ||
@@ -137,6 +174,16 @@ function ProveedoresDirectoryContent() {
       ) {
         continue;
       }
+
+      // Mandato CEO S-Class: SOLO mostrar perfiles que estén en la whitelist activa
+      const isEdwin = pId === 'prov-53' || lowerName.includes('edwin agudelo') || lowerName.includes('productora ear');
+      const isWhitelisted = activeIds.has(pId) || (pSlug && activeSlugs.has(pSlug));
+
+      if (!isEdwin && !isWhitelisted) {
+        // PERMANECE OCULTO EN PÚBLICO
+        continue;
+      }
+
       const normKey = lowerName.replace(/[^a-z0-9]/g, '');
       if (seen.has(normKey)) continue;
       seen.add(normKey);
@@ -243,8 +290,13 @@ function ProveedoresDirectoryContent() {
       }
     ];
 
+    const activeSpecial = sclassSpecialServices.filter(s => {
+      const activeIds = new Set((activeWhitelist.active_ids || []).map(x => x.toLowerCase().trim()));
+      return activeIds.has(String(s.id).toLowerCase());
+    });
+
     const baseList = selectedCategory === 'catering' || selectedCategory === 'ALL'
-      ? [...sclassSpecialServices, ...providersData]
+      ? [...activeSpecial, ...providersData]
       : providersData;
 
     return baseList.filter((p) => {
@@ -354,20 +406,36 @@ function ProveedoresDirectoryContent() {
             3. ARQUITECTURA BENTO GRID: REJILLA ESTRICTA DE ALTA DENSIDAD
            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         {filteredProviders.length === 0 ? (
-          <div className="bg-[#08080c] border border-neutral-800 rounded-2xl p-12 text-center space-y-4 font-mono">
-            <Camera className="w-12 h-12 text-neutral-600 mx-auto" />
-            <h3 className="text-lg font-bold uppercase text-white font-syne">
-              No se encontraron proveedores en esta selección
-            </h3>
-            <p className="text-neutral-400 text-xs sm:text-sm max-w-md mx-auto">
-              Intenta restablecer la provincia o el término de búsqueda para ver todos los profesionales homologados.
-            </p>
-            <button
-              onClick={() => { setSelectedCategory('ALL'); setSelectedProvince(''); setSearchQuery(''); }}
-              className="px-5 py-2.5 rounded-xl bg-[#258DCD] text-black font-bold text-xs uppercase tracking-wider font-mono hover:bg-[#1f74a8] transition-colors cursor-pointer"
-            >
-              Ver Todos los Servicios ({providersData.length.toLocaleString()})
-            </button>
+          <div className="bg-[#08080c] border border-neutral-800 rounded-3xl p-8 sm:p-14 text-center max-w-3xl mx-auto my-6 relative overflow-hidden shadow-2xl space-y-6">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-b from-[#258DCD]/10 to-transparent blur-3xl pointer-events-none" />
+            <div className="w-14 h-14 rounded-2xl bg-[#258DCD]/10 border border-[#258DCD]/30 flex items-center justify-center mx-auto text-[#258DCD]">
+              <Lock size={26} />
+            </div>
+            <div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#258DCD]/30 bg-[#258DCD]/5 text-[#AAD6CD] text-xs font-mono font-bold uppercase tracking-wider mb-3">
+                Selección Privada & Homologación S-Class
+              </span>
+              <h3 className="text-xl sm:text-2xl font-bold uppercase text-white font-syne tracking-tight">
+                Espacios & Servicios Disponibles bajo Petición
+              </h3>
+              <p className="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto mt-3 font-light leading-relaxed">
+                Por riguroso protocolo de calidad S-Class, rider acústico garantizado (12 W/pax) y seguro de RC de 1.000.000 €, los proveedores externos permanecen bajo auditoría privada y no se exponen masivamente en abierto. Nuestro equipo de concierge gestiona la auditoría técnica, disponibilidad y reserva con bloqueo de fecha criptográfico SHA-256.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 justify-center pt-2 font-mono">
+              <a
+                href={`tel:${CENTRALITA.display.replace(/\s+/g, '')}`}
+                className="px-6 py-3.5 rounded-xl bg-[#258DCD] hover:bg-[#258DCD]/80 text-black font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-transform hover:scale-[1.02] shadow-lg shadow-[#258DCD]/20"
+              >
+                <PhoneCall size={14} /> Contactar Centralita {CENTRALITA.display}
+              </a>
+              <button
+                onClick={() => { setSelectedCategory('ALL'); setSelectedProvince(''); setSearchQuery(''); }}
+                className="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
+              >
+                Ver Artistas Activos ({providersData.length}) <ArrowRight size={14} />
+              </button>
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full">

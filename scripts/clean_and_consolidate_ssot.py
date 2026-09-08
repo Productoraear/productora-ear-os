@@ -56,8 +56,9 @@ FORBIDDEN_NAME_PATTERNS = [
     r'promoci[oó]n exclusiva',
     r'descuento para',
     r'celebrad la boda',
-    r'de vuestros sue[ñn]os',
-    r'lugares perfectos para celebrar'
+    r'lugares perfectos para celebrar',
+    r'peke\s*teso',
+    r'100\s+apodos'
 ]
 
 def clean_provider_name(name):

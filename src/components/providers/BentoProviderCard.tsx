@@ -17,6 +17,7 @@ import {
 export interface ProviderItem {
   id: string | number;
   name: string;
+  slug?: string;
   category?: string;
   province?: string;
   description?: string;

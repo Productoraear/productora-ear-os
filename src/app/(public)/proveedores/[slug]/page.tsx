@@ -31,6 +31,8 @@ import { CENTRALITA } from '@/lib/phone-constants';
 import { SupplierBlurLock } from '@/components/ui/SupplierBlurLock';
 import { ClaimProfileTrigger } from '@/components/providers/ClaimProfileTrigger';
 
+import { isProviderPublic } from '@/lib/providers/visibility';
+
 export const dynamic = 'force-dynamic';
 
 interface PageProps {
@@ -104,6 +106,22 @@ let cachedHarvestedVendors: any[] | null = null;
 
 async function getProviderData(slug: string) {
   const slugNorm = slug.toLowerCase().trim();
+
+  // ━━━ VETO INMUTABLE S-CLASS: Proveedores no deseados y slop ━━━
+  if (slugNorm.includes('peke-teso') || slugNorm === 'prov-6' || slugNorm.includes('100-apodos')) {
+    return null;
+  }
+
+  // ━━━ MANDATO CEO S-CLASS: PERFILES OCULTOS POR DEFECTO EXCEPTO EDWIN AGUDELO ━━━
+  const isEdwin = slugNorm === 'edwin-agudelo' || 
+                  slugNorm === 'productora-ear' || 
+                  slugNorm === 'prov-ear-sovereign-01' || 
+                  slugNorm === 'prov-53' ||
+                  slugNorm.includes('edwin-agudelo');
+
+  if (!isEdwin && !isProviderPublic({ id: slugNorm, slug: slugNorm, name: slugNorm })) {
+    return null;
+  }
 
   // ━━━ REDIRECCIÓN INMEDIATA: Slugs con landing S-Class dedicada ━━━
   const SCLASS_REDIRECT_MAP: Record<string, string> = {
@@ -313,17 +331,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const rawProvider = await getProviderData(slug);
 
   if (!rawProvider) {
-    return (
-      <main className="min-h-screen bg-[#050505] text-white p-12 flex flex-col items-center justify-center text-center">
-        <h1 className="text-3xl font-black mb-4 uppercase font-syne tracking-tight">Proveedor no indexado</h1>
-        <p className="text-zinc-400 text-sm max-w-md">
-          El identificador <code className="text-[#ecb613]">{slug}</code> no se encuentra en el catálogo homologado actual.
-        </p>
-        <Link href="/servicios" className="mt-6 px-6 py-3 bg-[#ecb613] text-black font-black text-xs uppercase rounded-xl">
-          Explorar Directorio Homologado
-        </Link>
-      </main>
-    );
+    notFound();
   }
 
   const category = cleanText(rawProvider.atomic_specs?.category || rawProvider.category || 'Música & Sonido');

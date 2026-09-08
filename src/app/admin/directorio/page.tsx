@@ -33,9 +33,12 @@ import {
   FileJson,
   ArrowUpDown,
   Eye,
+  EyeOff,
+  Globe,
   Phone
 } from 'lucide-react';
 import rawProvidersData from '@/data/vendors-enriched-night.json';
+import defaultWhitelist from '@/data/active_providers_whitelist.json';
 
 interface VendorItem {
   id: string;
@@ -208,6 +211,89 @@ export default function AdminDirectoryPage() {
   const [copiedJson, setCopiedJson] = useState<boolean>(false);
   const [activeModalVendor, setActiveModalVendor] = useState<VendorItem | null>(null);
 
+  // Whitelist de Visibilidad Pública (Mandato CEO S-Class: Deny-All excepto Edwin Agudelo y Activados)
+  const [activeWhitelistIds, setActiveWhitelistIds] = useState<Set<string>>(() => {
+    return new Set((defaultWhitelist.active_ids || []).map(x => x.toLowerCase().trim()));
+  });
+  const [activeWhitelistSlugs, setActiveWhitelistSlugs] = useState<Set<string>>(() => {
+    return new Set((defaultWhitelist.active_slugs || []).map(x => x.toLowerCase().trim()));
+  });
+  const [visibilityFilter, setVisibilityFilter] = useState<'ALL' | 'ACTIVE_ONLY' | 'HIDDEN_ONLY'>('ALL');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Sincronizar whitelist activa con el servidor
+  useEffect(() => {
+    fetch('/api/admin/providers/toggle-visibility')
+      .then(res => res.json())
+      .then(json => {
+        if (json.success && json.data) {
+          if (json.data.active_ids) {
+            setActiveWhitelistIds(new Set(json.data.active_ids.map((x: string) => x.toLowerCase().trim())));
+          }
+          if (json.data.active_slugs) {
+            setActiveWhitelistSlugs(new Set(json.data.active_slugs.map((x: string) => x.toLowerCase().trim())));
+          }
+        }
+      })
+      .catch(err => console.warn('[ADMIN] Error syncing visibility whitelist:', err));
+  }, []);
+
+  const isVendorPublic = (v: VendorItem) => {
+    const id = (v.id || '').toLowerCase().trim();
+    const slug = (v.slug || '').toLowerCase().trim();
+    const name = (v.name || '').toLowerCase().trim();
+
+    if (
+      id === 'prov-ear-sovereign-01' || 
+      id === 'prov-53' ||
+      slug === 'edwin-agudelo' || 
+      slug === 'productora-ear' || 
+      name.includes('edwin agudelo') || 
+      name.includes('productora ear')
+    ) {
+      return true;
+    }
+    return activeWhitelistIds.has(id) || (slug ? activeWhitelistSlugs.has(slug) : false);
+  };
+
+  const handleToggleVisibility = async (vendor: VendorItem) => {
+    const id = vendor.id?.trim();
+    const slug = vendor.slug?.trim() || '';
+    if (!id && !slug) return;
+
+    const currentlyActive = isVendorPublic(vendor);
+    const newActive = !currentlyActive;
+
+    // Actualización optimista inmediata en UI
+    setActiveWhitelistIds(prev => {
+      const next = new Set(prev);
+      if (newActive && id) next.add(id.toLowerCase());
+      else if (id) next.delete(id.toLowerCase());
+      return next;
+    });
+    if (slug) {
+      setActiveWhitelistSlugs(prev => {
+        const next = new Set(prev);
+        if (newActive) next.add(slug.toLowerCase());
+        else next.delete(slug.toLowerCase());
+        return next;
+      });
+    }
+
+    setToastMessage(`"${vendor.name}" ahora está ${newActive ? 'ACTIVO EN PÚBLICO' : 'OCULTO DEL PÚBLICO'}`);
+    setTimeout(() => setToastMessage(null), 3500);
+
+    try {
+      await fetch('/api/admin/providers/toggle-visibility', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, slug, active: newActive })
+      });
+    } catch (err) {
+      console.error('[ADMIN] Error updating provider visibility:', err);
+    }
+  };
+
   // Lista de provincias únicas disponibles ordenadas
   const provincesList = useMemo(() => {
     const provSet = new Set<string>();
@@ -301,6 +387,11 @@ export default function AdminDirectoryPage() {
         if (!match) return false;
       }
 
+      // 5. Filtro de Visibilidad Pública (Mandato CEO S-Class)
+      const isPublic = isVendorPublic(p);
+      if (visibilityFilter === 'ACTIVE_ONLY' && !isPublic) return false;
+      if (visibilityFilter === 'HIDDEN_ONLY' && isPublic) return false;
+
       return true;
     }).sort((a, b) => {
       // SIEMPRE priorizar registros con teléfono verificado
@@ -333,12 +424,23 @@ export default function AdminDirectoryPage() {
       }
       return 0;
     });
-  }, [providersData, selectedCategory, selectedProvince, phoneFilter, searchQuery, sortMode]);
+  }, [providersData, selectedCategory, selectedProvince, phoneFilter, searchQuery, sortMode, visibilityFilter, activeWhitelistIds, activeWhitelistSlugs]);
+
+  // Conteos de Visibilidad
+  const visibilityCounts = useMemo(() => {
+    let active = 0;
+    let hidden = 0;
+    for (const p of providersData) {
+      if (isVendorPublic(p)) active++;
+      else hidden++;
+    }
+    return { all: providersData.length, active, hidden };
+  }, [providersData, activeWhitelistIds, activeWhitelistSlugs]);
 
   // Reset a página 1 en cambios de filtro
   useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, selectedProvince, phoneFilter, searchQuery, sortMode]);
+  }, [selectedCategory, selectedProvince, phoneFilter, searchQuery, sortMode, visibilityFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filteredProviders.length / PAGE_SIZE));
   const paginatedProviders = useMemo(() => {
@@ -434,6 +536,53 @@ export default function AdminDirectoryPage() {
                 </button>
               );
             })}
+          </div>
+
+          {/* Fila Visibilidad: Mandato CEO S-Class (Deny-All excepto Edwin Agudelo y Activados) */}
+          <div className="flex items-center gap-2 pt-2 border-t border-neutral-900 overflow-x-auto text-xs font-mono">
+            <span className="text-neutral-500 font-bold uppercase text-[10px] tracking-wider shrink-0 flex items-center gap-1">
+              <Globe size={13} className="text-[#258DCD]" /> Catálogo Público:
+            </span>
+            <button
+              onClick={() => setVisibilityFilter('ALL')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
+                visibilityFilter === 'ALL'
+                  ? 'bg-white/10 text-white border-white/30 font-black shadow-sm'
+                  : 'bg-black text-neutral-400 border-neutral-800 hover:text-white'
+              }`}
+            >
+              <span>Todos los Registros</span>
+              <span className="px-1.5 py-0.2 rounded text-[9px] bg-white/5 text-neutral-300">
+                {visibilityCounts.all.toLocaleString()}
+              </span>
+            </button>
+            <button
+              onClick={() => setVisibilityFilter('ACTIVE_ONLY')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
+                visibilityFilter === 'ACTIVE_ONLY'
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 font-black shadow-sm'
+                  : 'bg-black text-neutral-400 border-neutral-800 hover:border-emerald-500/30 hover:text-emerald-400'
+              }`}
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Activos en Público</span>
+              <span className="px-1.5 py-0.2 rounded text-[9px] bg-emerald-500/10 text-emerald-300 font-bold">
+                {visibilityCounts.active.toLocaleString()}
+              </span>
+            </button>
+            <button
+              onClick={() => setVisibilityFilter('HIDDEN_ONLY')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 border cursor-pointer ${
+                visibilityFilter === 'HIDDEN_ONLY'
+                  ? 'bg-neutral-800 text-neutral-200 border-neutral-600 font-black'
+                  : 'bg-black text-neutral-400 border-neutral-800 hover:text-white'
+              }`}
+            >
+              <span>Ocultos (Solo Admin)</span>
+              <span className="px-1.5 py-0.2 rounded text-[9px] bg-white/5 text-neutral-400">
+                {visibilityCounts.hidden.toLocaleString()}
+              </span>
+            </button>
           </div>
 
           {/* Fila 2: Refinamiento de Búsqueda y Ordenación */}
@@ -541,6 +690,7 @@ export default function AdminDirectoryPage() {
               const priceDisplay = item.pricing?.minPricePerPax 
                 ? `${item.pricing.minPricePerPax} €/pax` 
                 : (item.pricing?.rentalBasePrice ? `${item.pricing.rentalBasePrice} €` : 'A consultar');
+              const isPublic = isVendorPublic(item);
 
               return (
                 <div 
@@ -562,10 +712,21 @@ export default function AdminDirectoryPage() {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-xs font-bold text-white truncate font-syne group-hover:text-[#258DCD] transition-colors leading-tight">
-                        {item.name}
-                      </h3>
-                      <div className="text-[10px] text-neutral-400 font-mono uppercase truncate flex items-center gap-1.5 mt-0.5">
+                      <div className="flex items-center justify-between gap-1 mb-0.5">
+                        <h3 className="text-xs font-bold text-white truncate font-syne group-hover:text-[#258DCD] transition-colors leading-tight">
+                          {item.name}
+                        </h3>
+                        {isPublic ? (
+                          <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shrink-0">
+                            ● PÚBLICO
+                          </span>
+                        ) : (
+                          <span className="px-1.5 py-0.5 rounded text-[8px] font-mono font-bold bg-neutral-800 text-neutral-400 border border-neutral-700 shrink-0">
+                            ○ OCULTO
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-[10px] text-neutral-400 font-mono uppercase truncate flex items-center gap-1.5">
                         <span className="text-[#AAD6CD] truncate font-semibold">{categoryDisplay}</span>
                         <span className="text-neutral-600">•</span>
                         <span className="truncate">{provinceName}</span>
@@ -643,6 +804,23 @@ export default function AdminDirectoryPage() {
                         </div>
                       )}
 
+                      {/* Botón Toggle Visibilidad en Público */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleToggleVisibility(item);
+                        }}
+                        className={`p-1.5 rounded-lg border text-[10px] font-mono font-bold transition-colors cursor-pointer shrink-0 flex items-center gap-1 ${
+                          isPublic
+                            ? 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border-amber-500/30'
+                            : 'bg-[#258DCD]/10 hover:bg-[#258DCD]/20 text-[#AAD6CD] border-[#258DCD]/30'
+                        }`}
+                        title={isPublic ? "Ocultar perfil del catálogo público" : "Activar perfil para que sea visible en público"}
+                      >
+                        {isPublic ? <EyeOff size={13} className="text-amber-400" /> : <Eye size={13} className="text-[#258DCD]" />}
+                      </button>
+
                       <button
                         type="button"
                         onClick={(e) => {
@@ -652,7 +830,7 @@ export default function AdminDirectoryPage() {
                         className="p-1.5 bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white rounded-lg border border-white/5 transition-colors shrink-0"
                         title="Ver Ficha Completa"
                       >
-                        <Eye size={14} />
+                        <ArrowRight size={14} />
                       </button>
                     </div>
                   </div>
@@ -789,6 +967,46 @@ export default function AdminDirectoryPage() {
               </div>
             </div>
 
+            {/* Estado de Publicación en Catálogo (Mandato CEO S-Class) */}
+            <div className="bg-[#050508] p-4 rounded-xl border border-neutral-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div>
+                <span className="text-[10px] text-neutral-500 uppercase block font-bold font-mono">Estado en Catálogo Público</span>
+                <div className="flex items-center gap-2 mt-1">
+                  {isVendorPublic(activeModalVendor) ? (
+                    <span className="px-2.5 py-1 rounded text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1.5">
+                      ● ACTIVO EN PÚBLICO
+                    </span>
+                  ) : (
+                    <span className="px-2.5 py-1 rounded text-xs font-mono font-bold bg-neutral-800 text-neutral-400 border border-neutral-700 flex items-center gap-1.5">
+                      ○ OCULTO (SOLO VISIBLE EN PANEL ADMIN)
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handleToggleVisibility(activeModalVendor)}
+                className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors ${
+                  isVendorPublic(activeModalVendor)
+                    ? 'bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40'
+                    : 'bg-[#258DCD] hover:bg-[#258DCD]/80 text-black shadow-lg shadow-[#258DCD]/20 font-black'
+                }`}
+              >
+                {isVendorPublic(activeModalVendor) ? (
+                  <>
+                    <EyeOff size={14} />
+                    <span>Ocultar del Público</span>
+                  </>
+                ) : (
+                  <>
+                    <Eye size={14} />
+                    <span>Activar para el Público</span>
+                  </>
+                )}
+              </button>
+            </div>
+
             {/* Datos Técnicos y Financieros */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
               <div className="bg-[#050508] p-4 rounded-xl border border-neutral-800 space-y-2">
@@ -882,6 +1100,14 @@ export default function AdminDirectoryPage() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Notificación Toast S-Class */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#08080c] border border-[#258DCD] text-white px-5 py-3 rounded-2xl shadow-2xl font-mono text-xs flex items-center gap-2.5">
+          <Sparkles size={16} className="text-[#258DCD]" />
+          <span>{toastMessage}</span>
         </div>
       )}
     </div>
