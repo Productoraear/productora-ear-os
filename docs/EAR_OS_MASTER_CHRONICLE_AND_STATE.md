@@ -25,6 +25,20 @@
    - Cero redirecciones externas, respuesta acústica Web Audio API.
 5. **Desmantelamiento de Chatbots Flotantes Obsoletos:**
    - Retirados los botones flotantes de WhatsApp y AI Concierge en favor del Omni-Bar unificado.
+6. **Purga Total de Slop Sintético & Deduplicación Canónica SSOT (26.394 Proveedores):**
+   - Erradicación del 100% de las fichas sintéticas `"Partner Fincas Eventos [Ciudad]"` con `"Servicio profesional para eventos en None."` y ubicación falsa.
+   - Purgados más de 500 artículos de blog y secciones externas de navegación (*"Antes de la boda"*, *"Crónicas de boda"*, *"6 lugares originales y con encanto..."*, etc.).
+   - Deduplicadas 5.305 repeticiones a 26.394 proveedores canónicos únicos con 0 colisiones en nombres, preservando teléfonos verificados, imágenes en alta resolución y tarifas reales.
+7. **Blindaje Reactivo de Imágenes & Fallback Zero-CLS en Directorio:**
+   - En `BentoProviderCard.tsx`, eliminación de roturas por rutas locales huérfanas (`.jpg` relativas). Manejador activo `onError` con fallback automático a galería curatorial de Unsplash S-Class por categoría.
+8. **Elevación S-Class de Rutas Dinámicas PSEO (`/bodas/[provincia]/[servicio]`):**
+   - Rediseñadas las fichas de proveedores con cabecera visual de aspect-ratio 16/10, tags de categoría normalizados, precio base real y botón directo a reserva.
+   - Conexión de `vampire-service.ts` con el dataset limpio canónico y mapeo íntegro de campos.
+9. **Reactivación del Demonio Vampiro Nocturno (Cosechador Continuo SOTA):**
+   - Demonio extractor `night_vampire_scraper.py` ejecutándose en segundo plano con filtros anti-slop, extracción telefónica `PHONE_RE`, scrubbing de marcas competidoras y deduplicación en tiempo real.
+10. **Despliegue a Producción Vercel & GitHub (Exit Code 0):**
+    - `npx tsc --noEmit` verificado con Exit Code 0.
+    - Sincronizado y desplegado en producción en Vercel (`vercel-repo/main` y `origin/main` en commit `54fbaf61`).
 
 ---
 

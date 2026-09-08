@@ -22,16 +22,19 @@ EAR OS no es una web convencional. Es un **Autonomous Business Operating System 
 ## 4. ESTADO VIGENTE DEL SISTEMA (LIVE EN PORT 3007)
 - **Zero-Trust Middleware:** Ubicado en `src/middleware.ts` con CSP estricto, HSTS y whitelist para `/api/astra/payment-intent`.
 - **EAR Concierge (Cmd+K):** Modal Omni-Bar unificado con Stripe Payment Element embebido condicionalmente sin redirecciones externas.
-- **Directorio B2B & Público:** 
-  - Rutas: `/admin/directorio` y `/proveedores`.
-  - Prioridad absoluta para 15.804 proveedores con teléfono directo verificado.
-  - Purga completa de falsos positivos de Catering y fragmentos de blog `bvh-`.
-  - Clasificador semántico multicriterio en 10 categorías maestras.
+- **Directorio B2B & Público SOTA:** 
+  - Rutas: `/admin/directorio`, `/proveedores` y `/bodas/[provincia]/[servicio]`.
+  - Dataset consolidado y purgado: 26.394 proveedores canónicos únicos (cero colisiones, cero duplicados).
+  - Erradicación del 100% de fichas sintéticas ("Partner ... en None") y artículos de blog ("Antes de la boda", etc.).
+  - Prioridad absoluta para proveedores con teléfono directo verificado.
+  - Blindaje Zero-CLS en `BentoProviderCard.tsx` con recuperación reactiva `onError` a Unsplash S-Class.
   - Productora EAR anclada como nodo soberano #1.
+- **Motor Vampiro Nocturno (Extracción Continua):**
+  - Demonio `night_vampire_scraper.py` activo en background (`task-3598`) con filtros anti-slop, extracción `PHONE_RE` y deduplicación en tiempo real.
 - **Catálogo de Navidad:** `/arsenal/luces-navidad` 100% saneado de enlaces y embeds a Google Drive.
 - **Archivo Histórico de Sesiones (Vault ZTM):**
   - Todas las sesiones exportadas en Markdown a `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\HISTORIC_AI_CHATS\`.
-  - Índice maestro consolidado en `docs/EAR_OS_MASTER_CHRONICLE_AND_STATE.md`.
+  - Índice maestro consolidado en `docs/EAR_OS_MASTER_CHRONICLE_AND_STATE.md` y `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\HISTORIC_AI_CHATS\00_EAR_OS_MASTER_CHRONICLE_AND_STATE.md`.
   - Registro de hashes SHA-256 en `scripts/.archived_manifest.json`.
 
 ## 5. PROTECCIÓN DE MOTORES CERTIFICADOS
