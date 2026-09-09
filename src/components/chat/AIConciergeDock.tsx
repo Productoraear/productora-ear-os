@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -270,7 +270,7 @@ export function AIConciergeDock() {
                             )}
 
                             <Link
-                              href={`/checkout/presupuesto?format=Solista&base=350&venue=${encodeURIComponent(prov.name)}`}
+                              href={`/checkout/presupuesto?proveedor=${encodeURIComponent(prov.name)}&base=${(prov as any).price || 650}`}
                               className="py-1 px-2.5 rounded-md bg-[#ecb613] text-black font-bold uppercase tracking-wider flex items-center gap-1 hover:bg-amber-400 transition-all"
                             >
                               <span>Bloquear 100 €</span>
@@ -375,3 +375,4 @@ export function AIConciergeDock() {
     </>
   );
 }
+

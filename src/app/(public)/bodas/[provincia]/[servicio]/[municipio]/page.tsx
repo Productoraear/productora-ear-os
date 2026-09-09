@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Sparkles, MapPin, ShieldCheck, ArrowRight, Phone, Clock, Award, CheckCircle2, ChevronRight, Star, Building2 } from 'lucide-react';
@@ -197,7 +197,7 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
                       )}
 
                       <Link
-                        href={`/checkout/presupuesto?format=${encodeURIComponent(servTitle)}&base=350&venue=${encodeURIComponent(vendor.name)}`}
+                        href={`/checkout/presupuesto?proveedor=${encodeURIComponent(vendor.name)}&pack=${encodeURIComponent(servTitle)}&base=${(vendor as any).price || 650}`}
                         className="py-1.5 px-3 rounded-lg bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-1 transition-all"
                       >
                         <span>Bloquear</span>
@@ -274,3 +274,4 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
     </MeshGradientBackground>
   );
 }
+

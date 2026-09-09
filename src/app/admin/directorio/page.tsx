@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
@@ -1079,7 +1079,7 @@ export default function AdminDirectoryPage() {
 
               <div className="flex gap-2">
                 <Link
-                  href={`/checkout/presupuesto?format=Solista&base=350&venue=${encodeURIComponent(activeModalVendor.name)}`}
+                  href={`/checkout/presupuesto?proveedor=${encodeURIComponent(activeModalVendor.name)}&base=${(activeModalVendor as any).price || 650}`}
                   className="px-4 py-2.5 rounded-xl bg-[#258DCD] hover:bg-[#1e78ae] text-black font-mono font-black text-xs uppercase flex items-center gap-1.5 transition-colors shadow-lg shadow-[#258DCD]/20"
                 >
                   <span>Bloquear 100 € en Stripe</span>
@@ -1113,3 +1113,4 @@ export default function AdminDirectoryPage() {
     </div>
   );
 }
+
