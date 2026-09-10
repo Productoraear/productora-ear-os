@@ -1,4 +1,4 @@
-﻿{
+{
   "tasks": [
     {
       "id": "vanguard-neural-journey",
@@ -20,7 +20,12 @@
         "status": "INTEGRATED",
         "catalog_path": "src/data/neural-providers.ts",
         "vault_path": "H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\Providers\\vampirized-providers.json",
-        "sources_connected": ["SSOT", "Bodas.net", "Fander", "HOLA_Luxury"],
+        "sources_connected": [
+          "SSOT",
+          "Bodas.net",
+          "Fander",
+          "HOLA_Luxury"
+        ],
         "ui_filter_tabs": true
       }
     },
