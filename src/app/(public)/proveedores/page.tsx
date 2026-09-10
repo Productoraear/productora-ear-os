@@ -234,8 +234,8 @@ function ProveedoresDirectoryContent() {
         reviews: isNaN(rawReviews) || rawReviews === 0 ? undefined : rawReviews,
         ['faqs' as string]: rawFaqs,
         ['services_list' as string]: Array.isArray(rawServices) ? rawServices : [],
-        address: rawAddress,
-        atomic_specs: pSpecs,
+        ['address' as string]: rawAddress,
+        ['atomic_specs' as string]: pSpecs,
         isPreferred: Boolean(isEdwin || isWhitelisted),
         badge: isEdwin 
           ? 'SOLISTA S-CLASS' 
@@ -810,10 +810,4 @@ export default function WrappedProveedoresPage() {
     </Suspense>
   );
 }
-
-
-
-
-
-
 
