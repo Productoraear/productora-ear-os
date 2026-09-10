@@ -1,0 +1,1304 @@
+>
+</li>
+<li class="layoutNavMenu__itemFooter">
+<a class="layoutNavMenu__anchorFooter" rel="nofollow" href="https://wedshootsapp.onelink.me/2833772549?pid=WP-Android-ES&amp;c=WP-ES-MOBILE&amp;af_dp=wedshoots%3A%2F%2F">WedShoots</a>
+</li>
+<li class="layoutNavMenu__itemFooter">
+<a class="layoutNavMenu__anchorFooter" rel="nofollow" href="https://bodasnet.onelink.me/pqTO?pid=WP-Android-ES&amp;c=WP-ES-MOBILE&amp;af_dp=bodasnet%3A%2F%2F">Descárgate la app</a>
+</li>
+<li class="layoutNavMenu__itemFooter layoutNavMenu__itemFooter--bordered">
+<a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/emp-Acceso.php" rel="nofollow">
+Acceso empresas            </a>
+</li>
+</ul>
+</nav>
+<div class="layoutHeader__overlay app-header-menu-toggle app-header-menu-overlay"></div>
+<div class="layoutHeader__authArea app-header-auth-area">
+<a href="https://www.bodas.net/users-login.php" class="layoutHeader__authNoLoggedAreaMobile" title="Acceso usuarios">
+<i class="svgIcon app-svg-async svgIcon__user "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/user.svg" data-svg-lazyload="1"></i>    </a>
+<div class="layoutHeader__authNoLoggedArea app-header-auth-area">
+<a class="layoutHeader__vendorAuth"
+rel="nofollow"
+href="https://www.bodas.net/emp-Acceso.php">
+<i class="svgIcon app-svg-async svgIcon__briefcase layoutHeader__vendorAuthIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/vendors/briefcase.svg" data-svg-lazyload="1"></i>    Área Empresas</a>
+<ul class="layoutNavMenuAuth">
+<li class="layoutNavMenuAuth__item">
+<a href="https://www.bodas.net/users-login.php"
+class="layoutNavMenuAuth__anchor">Accede</a>
+</li>
+<li class="layoutNavMenuAuth__item">
+<a href="https://www.bodas.net/users-signup.php"
+class="layoutNavMenuAuth__anchor">Regístrate</a>
+</li>
+</ul>    </div>
+</div>
+</header>
+<main id="layoutMain" class="layoutMain">
+<section class="preHeading">
+<div class="preHeading__breadcrumb">
+<nav class="breadcrumb app-breadcrumb">
+<ul class="breadcrumb__list">
+<li>
+<a  href="https://www.bodas.net/">
+Bodas                    </a>
+</li>
+<li>
+<a  href="https://www.bodas.net/articulos/equipo-editorial">
+Redacción                    </a>
+</li>
+<li>
+Ana Pilar Padilla                            </li>
+</ul>
+</nav>
+</div>
+<div class="preHeading__autocomplete ">
+<div role="search" class="preHeadingSuggest app-preHeading-suggest app-preHeading-mobile-suggest">
+<form method="get" class="preHeadingSuggest__container app-preHeading-autocomplete-container" action="/article-search">
+<label for="q" class="preHeadingSuggest__text">
+<i class="svgIcon app-svg-async svgIcon__search preHeadingSuggest__textIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/search.svg" data-svg-lazyload="1"></i>            <input
+type="text"
+id="preHeadingSuggestInput"
+name="q"
+aria-label="Buscar"
+aria-placeholder="Buscar"
+aria-autocomplete="list"
+aria-controls="preHeadingSuggestResults"
+aria-haspopup="listbox"
+aria-describedby="preHeadingSuggestInstructions"
+autocomplete="off"
+class="preHeadingSuggest__input app-suggest-input"
+placeholder="Buscar"
+>
+</label>
+<div id="preHeadingSuggestInstructions" style="display: none">Empieza a escribir para realizar la búsqueda o usa las teclas de "cursor arriba y abajo" para navegar.</div>
+<div class="preHeadingSuggest__resultsCount app-preHeading-results-count sr-only" aria-live="assertive"></div>
+<div class="preHeadingSuggest__results app-preHeading-results-container">
+<div class="preHeadingSuggest__resultsWrapper">
+<div class="preHeadingSuggest__resultsContainer app-suggest-results-container">
+<ul
+id="preHeadingSuggestResults"
+class="preHeadingSuggest__list app-suggest-list"
+role="listbox"
+aria-labelledby="label"
+></ul>
+</div>
+</div>
+</div>
+</form>
+</div>    </div>
+</section>
+<div class="articlesAuthor">
+<article class="articlesAuthorArticles">
+<header class="articlesAuthorHeading">
+<picture class="articlesAuthorHeading__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Ana Pilar Padilla"  width="100" height="100"   >
+</picture>
+<div class="articlesAuthorHeading__info">
+<h1 class="articlesAuthorHeading__title">Ana Pilar Padilla</h1>
+<p class="articlesAuthorHeading__jobTitle"></p>
+<ul class="socialLinks__list articlesAuthorHeading__socialLinks">
+</ul>
+</div>
+</header>
+<section class="articlesAuthorDescription">
+Ana Pilar lleva muchos años trabajando en los sectores de moda y comunicación.    <div class="articlesAuthorDescription__longDescription"></div>
+</section>
+<section class="listingArticles">
+<h2 class="listingArticles__title">Artículos publicados por Ana Pilar Padilla</h2>
+<div class="listingArticles__content app-infinite-scroll-content">
+<div class="articleTile app-article-tile " data-position="1">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_pastel-boda-sj72dpi_1_77416_v1.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/article-vendor/77416/3_2/320/jpg/pastel-boda-sj72dpi_1_77416_v1.webp 320w,
+https://cdn0.bodas.net/article-vendor/77416/3_2/640/jpg/pastel-boda-sj72dpi_1_77416_v1.webp 640w,
+https://cdn0.bodas.net/article-vendor/77416/3_2/960/jpg/pastel-boda-sj72dpi_1_77416_v1.webp 960w,
+https://cdn0.bodas.net/article-vendor/77416/3_2/1280/jpg/pastel-boda-sj72dpi_1_77416_v1.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/article-vendor/77416/3_2/320/jpg/pastel-boda-sj72dpi_1_77416_v1.jpeg 320w,
+https://cdn0.bodas.net/article-vendor/77416/3_2/640/jpg/pastel-boda-sj72dpi_1_77416_v1.jpeg 640w,
+https://cdn0.bodas.net/article-vendor/77416/3_2/960/jpg/pastel-boda-sj72dpi_1_77416_v1.jpeg 960w,
+https://cdn0.bodas.net/article-vendor/77416/3_2/1280/jpg/pastel-boda-sj72dpi_1_77416_v1.jpeg 1280w"
+src="https://cdn0.bodas.net/article-vendor/77416/3_2/960/jpg/pastel-boda-sj72dpi_1_77416_v1.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="95 tartas de boda: ¡postres únicos para tu gran día!"
+width="640"        height="427"                >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Todo lo que hay que saber sobre el banquete de boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/tartas-de-boda-tendencias--c7881">
+95 tartas de boda: ¡postres únicos para tu gran día!            </a>
+</div>
+<div class="articleTile__content">
+¿Estáis buscando la tarta de bodas de vuestros sueños y necesitáis ayuda? Descubrid las tendencias que triunfan y los mejores consejos para escoger y acertar            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="2">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_102622-portada.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/article/2262/3_2/320/jpg/102622-portada.webp 320w,
+https://cdn0.bodas.net/article/2262/3_2/640/jpg/102622-portada.webp 640w,
+https://cdn0.bodas.net/article/2262/3_2/960/jpg/102622-portada.webp 960w,
+https://cdn0.bodas.net/article/2262/3_2/1280/jpg/102622-portada.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/article/2262/3_2/320/jpg/102622-portada.jpeg 320w,
+https://cdn0.bodas.net/article/2262/3_2/640/jpg/102622-portada.jpeg 640w,
+https://cdn0.bodas.net/article/2262/3_2/960/jpg/102622-portada.jpeg 960w,
+https://cdn0.bodas.net/article/2262/3_2/1280/jpg/102622-portada.jpeg 1280w"
+src="https://cdn0.bodas.net/article/2262/3_2/960/jpg/102622-portada.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="70 vestidos de madrina de boda: ¡deslumbrarás a todos!"
+width="640"        height="427"                >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Los invitados de la boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/vestidos-para-madrina-deslumbraras-a-todos--c9054">
+70 vestidos de madrina de boda: ¡deslumbrarás a todos!            </a>
+</div>
+<div class="articleTile__content">
+Porque madre no hay más que una y tiene que ser la más elegante el día de tu boda... ¡elige el mejor vestido de madrina que jamás hayas imaginado!             </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="3">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_3083521.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/article-real-wedding/117/3_2/320/jpg/3083521.webp 320w,
+https://cdn0.bodas.net/article-real-wedding/117/3_2/640/jpg/3083521.webp 640w,
+https://cdn0.bodas.net/article-real-wedding/117/3_2/960/jpg/3083521.webp 960w,
+https://cdn0.bodas.net/article-real-wedding/117/3_2/1280/jpg/3083521.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/article-real-wedding/117/3_2/320/jpg/3083521.jpeg 320w,
+https://cdn0.bodas.net/article-real-wedding/117/3_2/640/jpg/3083521.jpeg 640w,
+https://cdn0.bodas.net/article-real-wedding/117/3_2/960/jpg/3083521.jpeg 960w,
+https://cdn0.bodas.net/article-real-wedding/117/3_2/1280/jpg/3083521.jpeg 1280w"
+src="https://cdn0.bodas.net/article-real-wedding/117/3_2/960/jpg/3083521.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="60 peinados con trenzas para novias: ¡la tendencia que siempre triunfa!"
+width="640"        height="427"                >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Belleza para novias            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/peinados-con-trenzas-para-novias--c912">
+60 peinados con trenzas para novias: ¡la tendencia que siempre triunfa!            </a>
+</div>
+<div class="articleTile__content">
+Miles de formas y estilos en los que poder inspirarte para lucir un estilismo perfecto el día de tu boda. Descubre los peinados con trenzas para bodas, ¡la tendencia que siempre triunfa!            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="4">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_104048-portada.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/article/8404/3_2/320/jpg/104048-portada.webp 320w,
+https://cdn0.bodas.net/article/8404/3_2/640/jpg/104048-portada.webp 640w,
+https://cdn0.bodas.net/article/8404/3_2/960/jpg/104048-portada.webp 960w,
+https://cdn0.bodas.net/article/8404/3_2/1280/jpg/104048-portada.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/article/8404/3_2/320/jpg/104048-portada.jpeg 320w,
+https://cdn0.bodas.net/article/8404/3_2/640/jpg/104048-portada.jpeg 640w,
+https://cdn0.bodas.net/article/8404/3_2/960/jpg/104048-portada.jpeg 960w,
+https://cdn0.bodas.net/article/8404/3_2/1280/jpg/104048-portada.jpeg 1280w"
+src="https://cdn0.bodas.net/article/8404/3_2/960/jpg/104048-portada.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="85 vestidos de fiesta largos: invitadas de boda con estilo"
+width="640"        height="427"                >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Los invitados de la boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/70-vestidos-de-fiesta-largos-te-sorprenderan--c4544">
+85 vestidos de fiesta largos: invitadas de boda con estilo            </a>
+</div>
+<div class="articleTile__content">
+Hemos seleccionado los mejores vestidos de fiesta largos de la temporada, ideales para las invitadas de bodas de tarde y noche. Esta galería está llena de vestidos elegantes, sencillos y perfectos. ¡Descubre estos diseños irresistibles!            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="5">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_1750887.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article-real-wedding/709/3_2/320/jpg/1750887.webp 320w,
+https://cdn0.bodas.net/article-real-wedding/709/3_2/640/jpg/1750887.webp 640w,
+https://cdn0.bodas.net/article-real-wedding/709/3_2/960/jpg/1750887.webp 960w,
+https://cdn0.bodas.net/article-real-wedding/709/3_2/1280/jpg/1750887.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article-real-wedding/709/3_2/320/jpg/1750887.jpeg 320w,
+https://cdn0.bodas.net/article-real-wedding/709/3_2/640/jpg/1750887.jpeg 640w,
+https://cdn0.bodas.net/article-real-wedding/709/3_2/960/jpg/1750887.jpeg 960w,
+https://cdn0.bodas.net/article-real-wedding/709/3_2/1280/jpg/1750887.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article-real-wedding/709/3_2/960/jpg/1750887.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="Madrinas de boda: funciones, protocolo y mucho más"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Protocolo de la boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/cuales-son-las-funciones-de-las-madrinas--c2766">
+Madrinas de boda: funciones, protocolo y mucho más            </a>
+</div>
+<div class="articleTile__content">
+¿Eres madrina de boda y no sabes qué ponerte? Descubre las ideas, consejos e inspiración que te damos para que triunfes.             </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="6">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_vestido-limonar-mariquita-trasquila_1_171849-170790394772936.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article-vendor/71849/3_2/320/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.webp 320w,
+https://cdn0.bodas.net/article-vendor/71849/3_2/640/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.webp 640w,
+https://cdn0.bodas.net/article-vendor/71849/3_2/960/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.webp 960w,
+https://cdn0.bodas.net/article-vendor/71849/3_2/1280/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article-vendor/71849/3_2/320/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.jpeg 320w,
+https://cdn0.bodas.net/article-vendor/71849/3_2/640/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.jpeg 640w,
+https://cdn0.bodas.net/article-vendor/71849/3_2/960/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.jpeg 960w,
+https://cdn0.bodas.net/article-vendor/71849/3_2/1280/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article-vendor/71849/3_2/960/jpg/vestido-limonar-mariquita-trasquila_1_171849-170790394772936.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="86 vestidos de fiesta cortos: elige tu traje cóctel favorito"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Los invitados de la boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/vestidos-de-coctel-para-boda-de-dia--c8099">
+86 vestidos de fiesta cortos: elige tu traje cóctel favorito            </a>
+</div>
+<div class="articleTile__content">
+Todas las tendencias de 2024 resumidas en esta galería, en la que puedes ver vestidos de fiesta cortos y trajes tipo cóctel. ¡Serás la invitada ideal en una boda de día!            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="7">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_editorial-en-hort-de-nal-12_1_140205-161876457483393.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article-vendor/40205/3_2/320/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.webp 320w,
+https://cdn0.bodas.net/article-vendor/40205/3_2/640/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.webp 640w,
+https://cdn0.bodas.net/article-vendor/40205/3_2/960/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.webp 960w,
+https://cdn0.bodas.net/article-vendor/40205/3_2/1280/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article-vendor/40205/3_2/320/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.jpeg 320w,
+https://cdn0.bodas.net/article-vendor/40205/3_2/640/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.jpeg 640w,
+https://cdn0.bodas.net/article-vendor/40205/3_2/960/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.jpeg 960w,
+https://cdn0.bodas.net/article-vendor/40205/3_2/1280/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article-vendor/40205/3_2/960/jpg/editorial-en-hort-de-nal-12_1_140205-161876457483393.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="104 zapatos de novia 2024: no los querrás dejar escapar"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+La novia            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/50-zapatos-de-novia-increibles-para-tu-gran-dia--c3702">
+104 zapatos de novia 2024: no los querrás dejar escapar            </a>
+</div>
+<div class="articleTile__content">
+¿Buscas zapatos de novia? Es uno de los accesorios más importantes, así que lo mejor es que busques en esta selección y seguro que encuentras uno que se adapte a tu estilo.             </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="8">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_97934-1.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article/4397/3_2/320/jpg/97934-1.webp 320w,
+https://cdn0.bodas.net/article/4397/3_2/640/jpg/97934-1.webp 640w,
+https://cdn0.bodas.net/article/4397/3_2/960/jpg/97934-1.webp 960w,
+https://cdn0.bodas.net/article/4397/3_2/1280/jpg/97934-1.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article/4397/3_2/320/jpg/97934-1.jpeg 320w,
+https://cdn0.bodas.net/article/4397/3_2/640/jpg/97934-1.jpeg 640w,
+https://cdn0.bodas.net/article/4397/3_2/960/jpg/97934-1.jpeg 960w,
+https://cdn0.bodas.net/article/4397/3_2/1280/jpg/97934-1.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article/4397/3_2/960/jpg/97934-1.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="80 vestidos de novia tallas grandes 2024: consejos y diseños ideales"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+La novia            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/consejos-para-novias-con-curvas--c2641">
+80 vestidos de novia tallas grandes 2024: consejos y diseños ideales            </a>
+</div>
+<div class="articleTile__content">
+Descubre las propuestas de vestidos de novia de tallas grandes más TOP para tu gran día y luce un diseño espectacular en tu boda. No te pierdas esta galería. ¡Hay modelos para todos los gustos!            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="9">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_94148-bloggers-mas-influyentes-mundo.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article/8414/3_2/320/jpg/94148-bloggers-mas-influyentes-mundo.webp 320w,
+https://cdn0.bodas.net/article/8414/3_2/640/jpg/94148-bloggers-mas-influyentes-mundo.webp 640w,
+https://cdn0.bodas.net/article/8414/3_2/960/jpg/94148-bloggers-mas-influyentes-mundo.webp 960w,
+https://cdn0.bodas.net/article/8414/3_2/1280/jpg/94148-bloggers-mas-influyentes-mundo.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article/8414/3_2/320/jpg/94148-bloggers-mas-influyentes-mundo.jpeg 320w,
+https://cdn0.bodas.net/article/8414/3_2/640/jpg/94148-bloggers-mas-influyentes-mundo.jpeg 640w,
+https://cdn0.bodas.net/article/8414/3_2/960/jpg/94148-bloggers-mas-influyentes-mundo.jpeg 960w,
+https://cdn0.bodas.net/article/8414/3_2/1280/jpg/94148-bloggers-mas-influyentes-mundo.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article/8414/3_2/960/jpg/94148-bloggers-mas-influyentes-mundo.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="Las 10 bloggers más influyentes del mundo y que deberías conocer"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Actualidad y ferias de boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/las-10-bloggers-mas-influyentes-del-mundo-descubrelas-y-sigue-sus-cuentas-mas-top--c8800">
+Las 10 bloggers más influyentes del mundo y que deberías conocer            </a>
+</div>
+<div class="articleTile__content">
+Tienen un estilo de vida marcado por las últimas tendencias, los viajes y los eventos más internacionales. ¡No te pierdas las 10 it girls que llevan años triunfando en las redes sociales y siguen siendo un referente!            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="10">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article-vendor/06226/3_2/320/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.webp 320w,
+https://cdn0.bodas.net/article-vendor/06226/3_2/640/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.webp 640w,
+https://cdn0.bodas.net/article-vendor/06226/3_2/960/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.webp 960w,
+https://cdn0.bodas.net/article-vendor/06226/3_2/1280/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article-vendor/06226/3_2/320/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.jpeg 320w,
+https://cdn0.bodas.net/article-vendor/06226/3_2/640/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.jpeg 640w,
+https://cdn0.bodas.net/article-vendor/06226/3_2/960/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.jpeg 960w,
+https://cdn0.bodas.net/article-vendor/06226/3_2/1280/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article-vendor/06226/3_2/960/jpg/zita-limonne-tienda-de-vestidos-de-novia-san-sebastian-bodas-gipuzkoa-1551-2_1_106226-169909793324703.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="137 vestidos de novia para una boda civil para triunfar"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+La novia            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/vestidos-para-bodas-civiles--c619">
+137 vestidos de novia para una boda civil para triunfar            </a>
+</div>
+<div class="articleTile__content">
+¿Te casas por lo civil y no sabes qué look elegir? Descubre las tendencias en vestidos de novia perfectos para lucir en una boda civil y estar radiante.             </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="11">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_4662642.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article-real-wedding/994/3_2/320/jpg/4662642.webp 320w,
+https://cdn0.bodas.net/article-real-wedding/994/3_2/640/jpg/4662642.webp 640w,
+https://cdn0.bodas.net/article-real-wedding/994/3_2/960/jpg/4662642.webp 960w,
+https://cdn0.bodas.net/article-real-wedding/994/3_2/1280/jpg/4662642.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article-real-wedding/994/3_2/320/jpg/4662642.jpeg 320w,
+https://cdn0.bodas.net/article-real-wedding/994/3_2/640/jpg/4662642.jpeg 640w,
+https://cdn0.bodas.net/article-real-wedding/994/3_2/960/jpg/4662642.jpeg 960w,
+https://cdn0.bodas.net/article-real-wedding/994/3_2/1280/jpg/4662642.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article-real-wedding/994/3_2/960/jpg/4662642.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="Ramo de novia con peonías: los más espectaculares para tu boda"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+La novia            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/ramos-de-novia-con-peonias-el-romanticismo-de-una-flor-unica--c3308">
+Ramo de novia con peonías: los más espectaculares para tu boda            </a>
+</div>
+<div class="articleTile__content">
+¿Buscas ideas para tener el mejor bouquet de boda que jamás hayas soñado? Pues no te pierdas los ramos de novia con peonías de esta galería y acertarás seguro            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="12">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_dsc-5623-1_1_107504.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article-vendor/07504/3_2/320/jpg/dsc-5623-1_1_107504.webp 320w,
+https://cdn0.bodas.net/article-vendor/07504/3_2/640/jpg/dsc-5623-1_1_107504.webp 640w,
+https://cdn0.bodas.net/article-vendor/07504/3_2/960/jpg/dsc-5623-1_1_107504.webp 960w,
+https://cdn0.bodas.net/article-vendor/07504/3_2/1280/jpg/dsc-5623-1_1_107504.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article-vendor/07504/3_2/320/jpg/dsc-5623-1_1_107504.jpeg 320w,
+https://cdn0.bodas.net/article-vendor/07504/3_2/640/jpg/dsc-5623-1_1_107504.jpeg 640w,
+https://cdn0.bodas.net/article-vendor/07504/3_2/960/jpg/dsc-5623-1_1_107504.jpeg 960w,
+https://cdn0.bodas.net/article-vendor/07504/3_2/1280/jpg/dsc-5623-1_1_107504.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article-vendor/07504/3_2/960/jpg/dsc-5623-1_1_107504.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="Peinados de novia con coleta: descubre más de 30 tipos diferentes"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Belleza para novias            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/novias-con-coleta--c2337">
+Peinados de novia con coleta: descubre más de 30 tipos diferentes            </a>
+</div>
+<div class="articleTile__content">
+Si el día de tu boda quieres lucir un peinado sencillo y acorde a tu estilo, no te pierdas los peinados de novia con coleta que te mostramos ni los mejores consejos para lucirlos.             </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="13">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_96866-10.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/article/6686/3_2/320/jpg/96866-10.webp 320w,
+https://cdn0.bodas.net/article/6686/3_2/640/jpg/96866-10.webp 640w,
+https://cdn0.bodas.net/article/6686/3_2/960/jpg/96866-10.webp 960w,
+https://cdn0.bodas.net/article/6686/3_2/1280/jpg/96866-10.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/article/6686/3_2/320/jpg/96866-10.jpeg 320w,
+https://cdn0.bodas.net/article/6686/3_2/640/jpg/96866-10.jpeg 640w,
+https://cdn0.bodas.net/article/6686/3_2/960/jpg/96866-10.jpeg 960w,
+https://cdn0.bodas.net/article/6686/3_2/1280/jpg/96866-10.jpeg 1280w"
+data-src="https://cdn0.bodas.net/article/6686/3_2/960/jpg/96866-10.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="60 vestidos de fiesta premamá ideales para invitadas embarazadas"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="articleTile__tag">Fotogalería</div>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Los invitados de la boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/30-vestidos-de-fiesta-premama-para-invitadas-embarazadas--c3373">
+60 vestidos de fiesta premamá ideales para invitadas embarazadas            </a>
+</div>
+<div class="articleTile__content">
+¿Estás embarazada, tienes que asistir a una boda próximamente y no sabes qué ponerte? Aquí vas a encontrar los mejores vestidos de fiesta premamá para lucir esa tripita de la forma más elegante y actual.             </div>
+</div>
+</div>
+</div>
+<span class="app-infinite-scroll-pagination "
+data-end="0"
+data-loading="0"
+data-type=""
+data-tipo=""       data-replace-state=""
+data-dynamic-page=""
+data-limit-page="10"
+data-static-url=""
+data-page-param="frmNPage"
+data-url="https://www.bodas.net/articulos/ana-pilar-padilla/com-AuthorArticlesInfiniteScrollAjax.php"
+data-page="1"
+></span></section>            </article>
+<aside class="authorSidebar">
+<div class="advertising advertising--dfp app-advertising-dfp advertising--sidebar">
+<div id="div-gpt-ad-1334158298810-0" class="dfp-center" style="min-height: 1px;"  ></div>
+<script>
+// Set display timeout to avoid problems when infinite scroll adds new content to DOM
+googletag.cmd.push(function () {
+// Set display timeout to avoid problems when infinite scroll adds new content to DOM. Method refreshAdSlot only exist on lazy load integration
+setTimeout(function () {
+googletag.display('div-gpt-ad-1334158298810-0');
+}, 0);
+});
+</script>
+</div>
+<div class="authorSidebar__authors">
+<div class="articlesOurAuthors">
+<h2 class="articlesOurAuthors__title">Nuestro equipo de redacción</h2>
+<ul class="articlesOurAuthors__list">
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title=" Gema Amil"
+href="https://www.bodas.net/articulos/gema-amil">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_6231501.jpeg?r=89404">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/1051/1_1/80/jpg/gu_6231501.webp?r=89404 80w,
+https://cdn0.bodas.net/user/1051/1_1/160/jpg/gu_6231501.webp?r=89404 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/1051/1_1/80/jpg/gu_6231501.jpeg?r=89404 80w,
+https://cdn0.bodas.net/user/1051/1_1/160/jpg/gu_6231501.jpeg?r=89404 160w"
+src="https://cdn0.bodas.net/user/1051/1_1/160/jpg/gu_6231501.jpeg?r=89404"
+sizes="49px"
+alt=" Gema Amil"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Gema Amil                                </span>
+<p class="articlesOurAuthors__description">12 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Adela Márquez"
+href="https://www.bodas.net/articulos/adela-marquez">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_2017062.jpeg?r=44111">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/2607/1_1/80/jpg/gu_2017062.webp?r=44111 80w,
+https://cdn0.bodas.net/user/2607/1_1/160/jpg/gu_2017062.webp?r=44111 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/2607/1_1/80/jpg/gu_2017062.jpeg?r=44111 80w,
+https://cdn0.bodas.net/user/2607/1_1/160/jpg/gu_2017062.jpeg?r=44111 160w"
+src="https://cdn0.bodas.net/user/2607/1_1/160/jpg/gu_2017062.jpeg?r=44111"
+sizes="49px"
+alt="Adela Márquez"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Adela Márquez                                </span>
+<p class="articlesOurAuthors__description">4 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Adrián Miralvés"
+href="https://www.bodas.net/articulos/adrian-miralves">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_1273218.jpeg?r=81434">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/8123/1_1/80/jpg/gu_1273218.webp?r=81434 80w,
+https://cdn0.bodas.net/user/8123/1_1/160/jpg/gu_1273218.webp?r=81434 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/8123/1_1/80/jpg/gu_1273218.jpeg?r=81434 80w,
+https://cdn0.bodas.net/user/8123/1_1/160/jpg/gu_1273218.jpeg?r=81434 160w"
+src="https://cdn0.bodas.net/user/8123/1_1/160/jpg/gu_1273218.jpeg?r=81434"
+sizes="49px"
+alt="Adrián Miralvés"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Adrián Miralvés                                </span>
+<p class="articlesOurAuthors__description">17 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Alba Moreno"
+href="https://www.bodas.net/articulos/alba-moreno">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_2168644.jpeg?r=41943">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/4468/1_1/80/jpg/gu_2168644.webp?r=41943 80w,
+https://cdn0.bodas.net/user/4468/1_1/160/jpg/gu_2168644.webp?r=41943 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/4468/1_1/80/jpg/gu_2168644.jpeg?r=41943 80w,
+https://cdn0.bodas.net/user/4468/1_1/160/jpg/gu_2168644.jpeg?r=41943 160w"
+src="https://cdn0.bodas.net/user/4468/1_1/160/jpg/gu_2168644.jpeg?r=41943"
+sizes="49px"
+alt="Alba Moreno"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Alba Moreno                                </span>
+<p class="articlesOurAuthors__description">422 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Aldara Arruñada"
+href="https://www.bodas.net/articulos/aldara-arrunada">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Aldara Arruñada"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Aldara Arruñada                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Alexandra Castro Bofill"
+href="https://www.bodas.net/articulos/alexandra-castro-bofill">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_614937.jpeg?r=8882059">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/7394/1_1/80/jpg/gu_614937.webp?r=8882059 80w,
+https://cdn0.bodas.net/user/7394/1_1/160/jpg/gu_614937.webp?r=8882059 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/7394/1_1/80/jpg/gu_614937.jpeg?r=8882059 80w,
+https://cdn0.bodas.net/user/7394/1_1/160/jpg/gu_614937.jpeg?r=8882059 160w"
+src="https://cdn0.bodas.net/user/7394/1_1/160/jpg/gu_614937.jpeg?r=8882059"
+sizes="49px"
+alt="Alexandra Castro Bofill"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Alexandra Castro Bofill                                </span>
+<p class="articlesOurAuthors__description">40 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Amaya"
+href="https://www.bodas.net/articulos/amaya">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Amaya"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Amaya                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Ana Pilar Padilla"
+href="https://www.bodas.net/articulos/ana-pilar-padilla">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Ana Pilar Padilla"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Ana Pilar Padilla                                </span>
+<p class="articlesOurAuthors__description">13 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Ana Riaza"
+href="https://www.bodas.net/articulos/ana-riaza">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Ana Riaza"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Ana Riaza                                </span>
+<p class="articlesOurAuthors__description">2 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Ana Sánchez"
+href="https://www.bodas.net/articulos/ana-sanchez">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Ana Sánchez"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Ana Sánchez                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Anama Rubio"
+href="https://www.bodas.net/articulos/anama-rubio">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Anama Rubio"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Anama Rubio                                </span>
+<p class="articlesOurAuthors__description">2 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Andrea Sicilia"
+href="https://www.bodas.net/articulos/andrea-sicilia">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Andrea Sicilia"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Andrea Sicilia                                </span>
+<p class="articlesOurAuthors__description">5 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Andrea Tovar"
+href="https://www.bodas.net/articulos/andrea-tovar">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_2008988.jpeg?r=42662">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/8898/1_1/80/jpg/gu_2008988.webp?r=42662 80w,
+https://cdn0.bodas.net/user/8898/1_1/160/jpg/gu_2008988.webp?r=42662 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/8898/1_1/80/jpg/gu_2008988.jpeg?r=42662 80w,
+https://cdn0.bodas.net/user/8898/1_1/160/jpg/gu_2008988.jpeg?r=42662 160w"
+src="https://cdn0.bodas.net/user/8898/1_1/160/jpg/gu_2008988.jpeg?r=42662"
+sizes="49px"
+alt="Andrea Tovar"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Andrea Tovar                                </span>
+<p class="articlesOurAuthors__description">284 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Anna Llopis"
+href="https://www.bodas.net/articulos/anna-llopis">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_833859.jpeg?r=99267">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/9583/1_1/80/jpg/gu_833859.webp?r=99267 80w,
+https://cdn0.bodas.net/user/9583/1_1/160/jpg/gu_833859.webp?r=99267 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/9583/1_1/80/jpg/gu_833859.jpeg?r=99267 80w,
+https://cdn0.bodas.net/user/9583/1_1/160/jpg/gu_833859.jpeg?r=99267 160w"
+src="https://cdn0.bodas.net/user/9583/1_1/160/jpg/gu_833859.jpeg?r=99267"
+sizes="49px"
+alt="Anna Llopis"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Anna Llopis                                </span>
+<p class="articlesOurAuthors__description">452 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Anna Maestre"
+href="https://www.bodas.net/articulos/anna-maestre">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_172958.jpeg?r=72747">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/8592/1_1/80/jpg/gu_172958.webp?r=72747 80w,
+https://cdn0.bodas.net/user/8592/1_1/160/jpg/gu_172958.webp?r=72747 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/8592/1_1/80/jpg/gu_172958.jpeg?r=72747 80w,
+https://cdn0.bodas.net/user/8592/1_1/160/jpg/gu_172958.jpeg?r=72747 160w"
+src="https://cdn0.bodas.net/user/8592/1_1/160/jpg/gu_172958.jpeg?r=72747"
+sizes="49px"
+alt="Anna Maestre"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Anna Maestre                                </span>
+<p class="articlesOurAuthors__description">225 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Aurora Espartero"
+href="https://www.bodas.net/articulos/aurora-espartero">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Aurora Espartero"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Aurora Espartero                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Bea Gracia"
+href="https://www.bodas.net/articulos/bea-gracia">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_3253119.jpeg?r=36485">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/9113/1_1/80/jpg/gu_3253119.webp?r=36485 80w,
+https://cdn0.bodas.net/user/9113/1_1/160/jpg/gu_3253119.webp?r=36485 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/9113/1_1/80/jpg/gu_3253119.jpeg?r=36485 80w,
+https://cdn0.bodas.net/user/9113/1_1/160/jpg/gu_3253119.jpeg?r=36485 160w"
+src="https://cdn0.bodas.net/user/9113/1_1/160/jpg/gu_3253119.jpeg?r=36485"
+sizes="49px"
+alt="Bea Gracia"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Bea Gracia                                </span>
+<p class="articlesOurAuthors__description">40 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Borja Santos"
+href="https://www.bodas.net/articulos/borja-santos">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Borja Santos"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Borja Santos                                </span>
+<p class="articlesOurAuthors__description">27 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Brenda Germade"
+href="https://www.bodas.net/articulos/brenda-germade">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Brenda Germade"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Brenda Germade                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Carla Ramírez"
+href="https://www.bodas.net/articulos/carla-ramirez">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_113370.jpeg?r=2651651">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/0733/1_1/80/jpg/gu_113370.webp?r=2651651 80w,
+https://cdn0.bodas.net/user/0733/1_1/160/jpg/gu_113370.webp?r=2651651 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/0733/1_1/80/jpg/gu_113370.jpeg?r=2651651 80w,
+https://cdn0.bodas.net/user/0733/1_1/160/jpg/gu_113370.jpeg?r=2651651 160w"
+src="https://cdn0.bodas.net/user/0733/1_1/160/jpg/gu_113370.jpeg?r=2651651"
+sizes="49px"
+alt="Carla Ramírez"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Carla Ramírez                                </span>
+<p class="articlesOurAuthors__description">49 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Carmen Fernández"
+href="https://www.bodas.net/articulos/carmen-fernandez">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_2188002.jpeg?r=75948">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/2008/1_1/80/jpg/gu_2188002.webp?r=75948 80w,
+https://cdn0.bodas.net/user/2008/1_1/160/jpg/gu_2188002.webp?r=75948 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/2008/1_1/80/jpg/gu_2188002.jpeg?r=75948 80w,
+https://cdn0.bodas.net/user/2008/1_1/160/jpg/gu_2188002.jpeg?r=75948 160w"
+src="https://cdn0.bodas.net/user/2008/1_1/160/jpg/gu_2188002.jpeg?r=75948"
+sizes="49px"
+alt="Carmen Fernández"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Carmen Fernández                                </span>
+<p class="articlesOurAuthors__description">13 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Carmen Fernández"
+href="https://www.bodas.net/articulos/carmen-fernandez">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Carmen Fernández"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Carmen Fernández                                </span>
+<p class="articlesOurAuthors__description">2 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Claudia Martín"
+href="https://www.bodas.net/articulos/claudia-martin">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Claudia Martín"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Claudia Martín                                </span>
+<p class="articlesOurAuthors__description">2 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Cristina Gaitan"
+href="https://www.bodas.net/articulos/cristina-gaitan">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_447058.jpeg?r=892456">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/8507/1_1/80/jpg/gu_447058.webp?r=892456 80w,
+https://cdn0.bodas.net/user/8507/1_1/160/jpg/gu_447058.webp?r=892456 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/8507/1_1/80/jpg/gu_447058.jpeg?r=892456 80w,
+https://cdn0.bodas.net/user/8507/1_1/160/jpg/gu_447058.jpeg?r=892456 160w"
+src="https://cdn0.bodas.net/user/8507/1_1/160/jpg/gu_447058.jpeg?r=892456"
+sizes="49px"
+alt="Cristina Gaitan"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Cristina Gaitan                                </span>
+<p class="articlesOurAuthors__description">34 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Cristina Lobato"
+href="https://www.bodas.net/articulos/cristina-lobato">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Cristina Lobato"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Cristina Lobato                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Cristina Palomares"
+href="https://www.bodas.net/articulos/cristina-palomares">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_668649.jpeg?r=848650">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/9468/1_1/80/jpg/gu_668649.webp?r=848650 80w,
+https://cdn0.bodas.net/user/9468/1_1/160/jpg/gu_668649.webp?r=848650 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/9468/1_1/80/jpg/gu_668649.jpeg?r=848650 80w,
+https://cdn0.bodas.net/user/9468/1_1/160/jpg/gu_668649.jpeg?r=848650 160w"
+src="https://cdn0.bodas.net/user/9468/1_1/160/jpg/gu_668649.jpeg?r=848650"
+sizes="49px"
+alt="Cristina Palomares"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Cristina Palomares                                </span>
+<p class="articlesOurAuthors__description">90 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Esther Álvarez"
+href="https://www.bodas.net/articulos/esther-alvarez">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_132111.jpeg?r=4331626">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/1112/1_1/80/jpg/gu_132111.webp?r=4331626 80w,
+https://cdn0.bodas.net/user/1112/1_1/160/jpg/gu_132111.webp?r=4331626 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/1112/1_1/80/jpg/gu_132111.jpeg?r=4331626 80w,
+https://cdn0.bodas.net/user/1112/1_1/160/jpg/gu_132111.jpeg?r=4331626 160w"
+src="https://cdn0.bodas.net/user/1112/1_1/160/jpg/gu_132111.jpeg?r=4331626"
+sizes="49px"
+alt="Esther Álvarez"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Esther Álvarez                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Eva Almarcha"
+href="https://www.bodas.net/articulos/eva-almarcha">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Eva Almarcha"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Eva Almarcha                                </span>
+<p class="articlesOurAuthors__description">14 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Gloria Prieto"
+href="https://www.bodas.net/articulos/gloria-prieto">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_1340232.jpeg?r=10481">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/2320/1_1/80/jpg/gu_1340232.webp?r=10481 80w,
+https://cdn0.bodas.net/user/2320/1_1/160/jpg/gu_1340232.webp?r=10481 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/2320/1_1/80/jpg/gu_1340232.jpeg?r=10481 80w,
+https://cdn0.bodas.net/user/2320/1_1/160/jpg/gu_1340232.jpeg?r=10481 160w"
+src="https://cdn0.bodas.net/user/2320/1_1/160/jpg/gu_1340232.jpeg?r=10481"
+sizes="49px"
+alt="Gloria Prieto"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Gloria Prieto                                </span>
+<p class="articlesOurAuthors__description">20 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Irene R. Castaño"
+href="https://www.bodas.net/articulos/irene-r-castano">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_617204.jpeg?r=8677009">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/4027/1_1/80/jpg/gu_617204.webp?r=8677009 80w,
+https://cdn0.bodas.net/user/4027/1_1/160/jpg/gu_617204.webp?r=8677009 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/4027/1_1/80/jpg/gu_617204.jpeg?r=8677009 80w,
+https://cdn0.bodas.net/user/4027/1_1/160/jpg/gu_617204.jpeg?r=8677009 160w"
+src="https://cdn0.bodas.net/user/4027/1_1/160/jpg/gu_617204.jpeg?r=8677009"
+sizes="49px"
+alt="Irene R. Castaño"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Irene R. Castaño                                </span>
+<p class="articlesOurAuthors__description">9 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Isabel Nuñez"
+href="https://www.bodas.net/articulos/isabel-nunez">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_5607642.jpeg?r=31152">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/2467/1_1/80/jpg/gu_5607642.webp?r=31152 80w,
+https://cdn0.bodas.net/user/2467/1_1/160/jpg/gu_5607642.webp?r=31152 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/2467/1_1/80/jpg/gu_5607642.jpeg?r=31152 80w,
+https://cdn0.bodas.net/user/2467/1_1/160/jpg/gu_5607642.jpeg?r=31152 160w"
+src="https://cdn0.bodas.net/user/2467/1_1/160/jpg/gu_5607642.jpeg?r=31152"
+sizes="49px"
+alt="Isabel Nuñez"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Isabel Nuñez                                </span>
+<p class="articlesOurAuthors__description">2 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Karen Rodríguez"
+href="https://www.bodas.net/articulos/karen-rodriguez">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_240976.jpeg?r=9699931">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/6790/1_1/80/jpg/gu_240976.webp?r=9699931 80w,
+https://cdn0.bodas.net/user/6790/1_1/160/jpg/gu_240976.webp?r=9699931 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/6790/1_1/80/jpg/gu_240976.jpeg?r=9699931 80w,
+https://cdn0.bodas.net/user/6790/1_1/160/jpg/gu_240976.jpeg?r=9699931 160w"
+src="https://cdn0.bodas.net/user/6790/1_1/160/jpg/gu_240976.jpeg?r=9699931"
+sizes="49px"
+alt="Karen Rodríguez"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Karen Rodríguez                                </span>
+<p class="articlesOurAuthors__description">287 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Kim Iglesias"
+href="https://www.bodas.net/articulos/kim-iglesias">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Kim Iglesias"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Kim Iglesias                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Kris Duque"
+href="https://www.bodas.net/articulos/kris-duque">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Kris Duque"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Kris Duque                                </span>
+<p class="articlesOurAuthors__description">3 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Laia Ylla"
+href="https://www.bodas.net/articulos/laia-ylla">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_99661.jpeg?r=6197923">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/1669/1_1/80/jpg/gu_99661.webp?r=6197923 80w,
+https://cdn0.bodas.net/user/1669/1_1/160/jpg/gu_99661.webp?r=6197923 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/1669/1_1/80/jpg/gu_99661.jpeg?r=6197923 80w,
+https://cdn0.bodas.net/user/1669/1_1/160/jpg/gu_99661.jpeg?r=6197923 160w"
+src="https://cdn0.bodas.net/user/1669/1_1/160/jpg/gu_99661.jpeg?r=6197923"
+sizes="49px"
+alt="Laia Ylla"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Laia Ylla                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Laura Asín"
+href="https://www.bodas.net/articulos/laura-asin">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_741484.jpeg?r=2242544">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/4841/1_1/80/jpg/gu_741484.webp?r=2242544 80w,
+https://cdn0.bodas.net/user/4841/1_1/160/jpg/gu_741484.webp?r=2242544 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/4841/1_1/80/jpg/gu_741484.jpeg?r=2242544 80w,
+https://cdn0.bodas.net/user/4841/1_1/160/jpg/gu_741484.jpeg?r=2242544 160w"
+src="https://cdn0.bodas.net/user/4841/1_1/160/jpg/gu_741484.jpeg?r=2242544"
+sizes="49px"
+alt="Laura Asín"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Laura Asín                                </span>
+<p class="articlesOurAuthors__description">90 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Laura Escribano"
+href="https://www.bodas.net/articulos/laura-escribano">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Laura Escribano"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Laura Escribano                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Laura Fort"
+href="https://www.bodas.net/articulos/laura-fort">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_1977836.jpeg?r=25913">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/6387/1_1/80/jpg/gu_1977836.webp?r=25913 80w,
+https://cdn0.bodas.net/user/6387/1_1/160/jpg/gu_1977836.webp?r=25913 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/6387/1_1/80/jpg/gu_1977836.jpeg?r=25913 80w,
+https://cdn0.bodas.net/user/6387/1_1/160/jpg/gu_1977836.jpeg?r=25913 160w"
+src="https://cdn0.bodas.net/user/6387/1_1/160/jpg/gu_1977836.jpeg?r=25913"
+sizes="49px"
+alt="Laura Fort"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Laura Fort                                </span>
+<p class="articlesOurAuthors__description">66 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Laura Hernandez - Directora Editorial"
+href="https://www.bodas.net/articulos/laura-hernandez-directora-editorial">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_6177777.jpeg?r=26160">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/7777/1_1/80/jpg/gu_6177777.webp?r=26160 80w,
+https://cdn0.bodas.net/user/7777/1_1/160/jpg/gu_6177777.webp?r=26160 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/7777/1_1/80/jpg/gu_6177777.jpeg?r=26160 80w,
+https://cdn0.bodas.net/user/7777/1_1/160/jpg/gu_6177777.jpeg?r=26160 160w"
+src="https://cdn0.bodas.net/user/7777/1_1/160/jpg/gu_6177777.jpeg?r=26160"
+sizes="49px"
+alt="Laura Hernandez - Directora Editorial"
+width="80"        height="80"                >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Laura Hernandez - Directora Editorial                                </span>
+<p class="articlesOurAuthors__description">9 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Laura Llorente"
+href="https://www.bodas.net/articulos/laura-llorente">
+<picture class="articlesOurAuthors__photo">
+<img src="https://cdn1.bodas.net/assets/img/articles/avatar-bodasnet.jpg"   alt="Laura Llorente"  width="100" height="100"   >
+</picture>
+<div class="articlesOurAuthors__body">
+<span class="articlesOurAuthors__name">
+Laura Llorente                                </span>
+<p class="articlesOurAuthors__description">1 artículos</p>
+</div>
+</a>
+</li>
+<li class="articlesOurAuthors__item">
+<a class="articlesOurAuthors__anchor" title="Lauren Izquierdo"
+href="https://www.bodas.net/articulos/lauren-izquierdo">
+<picture class="articlesOurAuthors__photo"     data-image-name="imageFileName_gu_6539465.jpeg?r=45631">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/user/5649/1_1/80/jpg/gu_6539465.webp?r=45631 80w,
+https://cdn0.bodas.net/user/5649/1_1/160/jpg/gu_6539465.webp?r=45631 160w" sizes="49px">
+<img
+srcset="https://cdn0.bodas.net/user/5649/1_1/80/jpg/gu_6539465.jpeg?r=45631 80w,
+https://cdn0.bodas.

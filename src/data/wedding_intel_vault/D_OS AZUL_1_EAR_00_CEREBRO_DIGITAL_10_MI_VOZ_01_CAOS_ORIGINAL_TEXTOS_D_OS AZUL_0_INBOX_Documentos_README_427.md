@@ -1,0 +1,354 @@
+                <a href="https://invitaciones.bodas.net/tarjetas-reparto-mesas" ><span class="links-text">Tarjetas reparto mesas</span></a>
+                  </li>
+                                              <li class="menu-item main-menu-item-21 drop-menu">
+                        <a href="https://invitaciones.bodas.net/seating-plan-para-bodas" ><span class="links-text">Póster del Seating Plan</span></a>
+                  </li>
+                                              <li class="menu-item main-menu-item-22 drop-menu">
+                        <a href="https://invitaciones.bodas.net/senalizacion-y-bienvenida" ><span class="links-text">Señalización y Bienvenida</span></a>
+                  </li>
+                                              <li class="menu-item main-menu-item-23 drop-menu">
+                        <a href="https://invitaciones.bodas.net/libro-de-firmas" ><span class="links-text">Libro de firmas</span></a>
+                  </li>
+                                              <li class="menu-item main-menu-item-24 drop-menu">
+                        <a href="https://invitaciones.bodas.net/etiquetas-para-detalles" ><span class="links-text">Etiquetas para detalles</span></a>
+                  </li>
+                                      </ul>
+              </div>
+                                                      </li>
+                      <li class="menu-item main-menu-item main-menu-item-25 multi-level drop-menu " >
+                                    <a href="https://invitaciones.bodas.net/tarjetas-de-agradecimiento" >
+                <span class="links-text">Tarjetas de agradecimiento</span>                              </a>
+                              </li>
+                      <li class="menu-item main-menu-item main-menu-item-26 multi-level drop-menu " >
+                                    <a href="https://invitaciones.bodas.net/poster-de-fotos" >
+                <span class="links-text">Póster</span>                              </a>
+                              </li>
+                      <li class="menu-item main-menu-item main-menu-item-27 multi-level drop-menu " >
+                                    <a href="https://invitaciones.bodas.net/muestras-gratis" >
+                <span class="links-text">Muestras gratis</span>                              </a>
+                              </li>
+          </ul>
+  </div>
+     				
+          			</div>
+          		</div>
+          	</div>
+          </section>
+        </li>
+        <li class="layoutNavMenu__item app-header-menu-item-openSection ">
+          <a href="https://comunidad.bodas.net/" class="layoutNavMenu__anchor app-header-menu-itemAnchor">
+            Comunidad
+          </a>
+          <i class="svgIcon svgIcon__angleRightBlood layoutNavMenu__anchorArrow">
+            <svg viewBox="0 0 32 32" width="16" height="16">
+              <use xlink:href="#svg-_common-angleRightBlood">
+              </use>
+            </svg>
+          </i>
+        </li>
+        <li class="layoutNavMenu__itemFooter layoutNavMenu__itemFooter--bordered">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/cronicas-boda">
+            Bodas reales
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/luna-de-miel">
+            Destinos luna de miel
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/destination-wedding">
+            Destination Weddings
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/sorteo">
+            <i class="svgIcon svgIcon__celebrate ">
+              <svg viewBox="0 0 18 18">
+                <path d="M10.288 7.712c1.759 1.76 2.559 3.892 1.569 4.882a1.383 1.383 0 01-.358.259l-9.306 4.971a1.49 1.49 0 01-2.017-2.017l4.97-9.306c.067-.131.153-.251.26-.358.99-.99 3.122-.19 4.882 1.57zm-5.07.75l-4.172 7.81a.504.504 0 00.682.683l7.81-4.174c-.832-.318-1.739-.931-2.563-1.756-.825-.825-1.439-1.731-1.756-2.564zm.885-1.621l-.048.057-.004.008-.038.069c-.26.583.357 2.05 1.66 3.353 1.418 1.418 3.032 2.023 3.486 1.569.455-.455-.15-2.069-1.569-3.487C8.172 6.99 6.558 6.386 6.103 6.84zm8.419 2.976c.34 0 .622.25.67.578l.008.1c0 .34-.25.622-.578.67l-.1.008a.678.678 0 01-.67-.578l-.008-.1c0-.374.304-.678.678-.678zm3.333-1.006a.493.493 0 11-.697.698 3.181 3.181 0 00-4.494 0 .493.493 0 01-.696-.698 4.167 4.167 0 015.887 0zm-6.292-3.432c.367 0 .665.29.678.654v.024c0 .34-.25.622-.578.67l-.1.008a.678.678 0 01-.67-.578l-.008-.1c0-.375.304-.678.678-.678zm4.994-.173a.493.493 0 01-.23.588l-.082.035-2.596.864a.493.493 0 01-.393-.9l.082-.036 2.596-.864a.493.493 0 01.623.313zM9.177.144a4.163 4.163 0 010 5.89.493.493 0 01-.697-.698 3.177 3.177 0 000-4.494.493.493 0 11.697-.698zm3.608 1.288c.23.077.365.306.332.537l-.02.087-.866 2.597a.493.493 0 01-.956-.226l.02-.086.866-2.597a.493.493 0 01.624-.312zM6.015 3.16c.34 0 .622.251.67.578l.008.1c0 .34-.25.623-.578.671l-.1.008a.678.678 0 01-.67-.578l-.008-.1c0-.375.304-.679.678-.679zm8.877-.74a.678.678 0 01.092 1.35l-.092.007a.678.678 0 01-.678-.678v-.01c0-.365.303-.668.678-.668z">
+                </path>
+              </svg>
+            </i>
+            Sorteo de 5.000€            
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/website/index.php?actionReferrer=2">
+            Mi web de boda
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/lista-boda">
+            Mi Lista de Boda
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://wedshootsapp.onelink.me/2833772549?pid=WP-iOS-ES&s=es&c=WP-ES-MOBILE&af_dp=wedshoots%3A%2F%2F&durl=wedshoots%3A%2F%2F">
+            WedShoots
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://bodasnet.onelink.me/pqTO?pid=WP-iOS-ES&s=es&c=WP-ES-MOBILE&af_dp=bodasnet%3A%2F%2F">
+            Descargar App
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter layoutNavMenu__itemFooter--bordered">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/emp-AccesoBridge.php">
+            Acceso empresas            
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/condiciones-legales.php">
+            Condiciones legales
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/legal/privacy.php">
+            Política de privacidad            
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/legal/cookies.php">
+            Política de cookies            
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/contactar.php">
+            Contactar            
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/aboutus/aboutus.php">
+            ¿Quiénes somos?            
+          </a>
+        </li>
+        <li class="layoutNavMenu__itemFooter">
+          <a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/ayuda.php">
+            ¿Necesitas Ayuda?            
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="layoutHeader__overlay app-header-menu-toggle app-header-menu-overlay">
+    </div>
+    <div class="layoutHeader__authArea app-header-auth-area">
+      <a href="https://www.bodas.net/users-login.php?r=https%3A%2F%2Finvitaciones.bodas.net" rel="nofollow" class="layoutHeader__authNoLoggedAreaMobile">
+        <i class="svgIcon svgIcon__user ">
+          <svg viewBox="0 0 47 53">
+            <path d="M31.722 29.786C40.49 32.99 46.78 42.236 46.78 51.962v1H.846v-1c0-9.615 6.156-18.77 14.774-22.069-2.971-1.686-5.407-4.324-6.774-7.691-3.236-7.981.75-17.009 8.891-20.172 8.13-3.154 17.343.736 20.575 8.698 2.915 7.181-.03 15.22-6.59 19.058zm-12.16 1.698l-2.469.006c-7.922 2.633-13.8 10.765-14.222 19.472h41.885c-.423-8.744-6.343-16.9-14.309-19.501l-2.786.006a16.09 16.09 0 01-8.099.017zm-1.1-27.59c-7.11 2.762-10.576 10.617-7.763 17.556 2.82 6.944 10.88 10.347 17.998 7.582 7.107-2.761 10.575-10.62 7.762-17.551C33.64 4.537 25.579 1.133 18.46 3.895z" fill-rule="nonzero">
+            </path>
+          </svg>
+        </i>
+      </a>
+      <div class="layoutHeader__authNoLoggedArea app-header-auth-area">
+        <a class="layoutHeader__vendorAuth" rel="nofollow" href="https://www.bodas.net/emp-Acceso.php">
+          <i class="svgIcon svgIcon__briefcase layoutHeader__vendorAuthIcon">
+            <svg viewBox="0 0 48 41">
+              <path d="M44.3 27.917h.933V13.925c0-1.46-1.199-2.86-3.057-3.625H5.825c-1.859.766-3.058 2.164-3.058 3.625v13.992h14.866V24.39a1 1 0 011-1h10.734a1 1 0 011 1v3.527H44.3zm-2.133 2h-11.8v.51a1 1 0 01-1 1H18.633a1 1 0 01-1-1v-.51h-11.8v8.564h36.334v-8.564zM14.567 8.3v-.51c0-3.797 2.855-7.035 6.533-7.035h5.8c3.68 0 6.533 3.236 6.533 7.036V8.3h8.935a1 1 0 01.358.066c2.655 1.02 4.507 3.115 4.507 5.559v14.992a1 1 0 01-1 1h-2.066v9.564a1 1 0 01-1 1H4.833a1 1 0 01-1-1v-9.564H1.767a1 1 0 01-1-1V13.925c0-2.445 1.852-4.54 4.509-5.559a1 1 0 01.358-.066h8.933zm13.8 21.126V25.39h-8.734v4.036h8.734zm3.066-21.635c0-2.747-2.018-5.036-4.533-5.036h-5.8c-2.513 0-4.533 2.29-4.533 5.036V8.3h14.866v-.51z" fill-rule="nonzero">
+              </path>
+            </svg>
+          </i>
+          Área Empresas
+        </a>
+        <ul class="layoutNavMenuAuth">
+          <li class="layoutNavMenuAuth__item">
+            <a href="https://www.bodas.net/users-login.php?r=https%3A%2F%2Finvitaciones.bodas.net" rel="nofollow" class="layoutNavMenuAuth__anchor">
+              Accede
+            </a>
+          </li>
+          <li class="layoutNavMenuAuth__item">
+            <a href="https://www.bodas.net/users-signup.php?r=https%3A%2F%2Finvitaciones.bodas.net" rel="nofollow" class="layoutNavMenuAuth__anchor">
+              Regístrate
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  				<script>
+					var CONSENT_ANALYTICS_GROUP = 'C0002';
+					var CONSENT_PERSONALIZATION_GROUP = 'C0003';
+					var CONSENT_TARGETED_ADVERTISING_GROUP = 'C0004';
+					var CONSENT_SOCIAL_MEDIA_GROUP = 'C0005';
+					var cookieConsentContent = '';
+
+					var OptanonAlertBoxClosed = getCookie('OptanonAlertBoxClosed');
+					if (Boolean(OptanonAlertBoxClosed)) {
+						cookieConsentContent = queryStringToJSON(getCookie('OptanonConsent') || '');
+					}
+
+					function getCookie (name) {var b = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'); return b ? unescape(b.pop()) : null}
+					function queryStringToJSON(queryString) {
+						var pairs = queryString.split('&'); var result = {}; pairs.forEach(function(pair) { pair = pair.split('='); result[pair[0]] = decodeURIComponent(pair[1] || ''); });
+						return JSON.parse(JSON.stringify(result));
+					}
+					
+					function isCookieGroupAllowed(group) {
+						var consentGroups = cookieConsentContent.groups;
+						if (typeof(consentGroups) !== 'string') {
+							return false
+						}
+
+						var consentFields = consentGroups.split(',');
+						for (var x = 0; x < consentFields.length; x++) {
+							if (consentFields[x].indexOf(group, 0) >= 0) {
+								return consentFields[x].split(':')[1] === '1'
+							}
+						}
+						return false
+					}
+
+					function userHasAcceptedTheCookies () {
+						var body = document.getElementsByTagName('body')[0];
+						var event = document.createEvent('HTMLEvents');
+						cookieConsentContent = queryStringToJSON(getCookie('OptanonConsent') || '');
+
+						if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+							event.initEvent('analyticsCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+						if (isCookieGroupAllowed(CONSENT_PERSONALIZATION_GROUP) === true) {
+							event.initEvent('personalizationCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+						if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+							event.initEvent('targetedAdvertisingCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+						if (isCookieGroupAllowed(CONSENT_SOCIAL_MEDIA_GROUP) === true) {
+							event.initEvent('socialMediaAdvertisingCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+					}
+
+					function CMP() {
+						var body = document.getElementsByTagName('body')[0];
+						var event = document.createEvent('HTMLEvents');
+						var callbackIAB = (tcData, success) => {
+							if (success && (tcData.eventStatus === 'tcloaded' || tcData.eventStatus === 'useractioncomplete')) {
+								window.__tcfapi('removeEventListener', 2, () => {
+								}, callbackIAB);
+								userHasAcceptedTheCookies();
+							}
+						}
+						var cnt = 0;
+						var consentSetInterval = setInterval(function () {
+							cnt += 1;
+							if (cnt === 200 ||
+								(typeof window.Optanon !== "undefined" && !window.Optanon.GetDomainData().IsIABEnabled)
+							) {
+								clearInterval(consentSetInterval);
+								userHasAcceptedTheCookies();
+							}
+							if (typeof window.__tcfapi !== "undefined") {
+								clearInterval(consentSetInterval);
+								window.__tcfapi('addEventListener', 2, callbackIAB);
+							} 
+						});
+					}
+					CMP();
+					/*
+					document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+						// Analytics tracking
+						(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+						(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+						m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+						ga('create', 'UA-3715104-1', 'auto');
+						ga('send', 'pageview');
+					});
+					*/
+					
+
+					document.getElementsByTagName('body')[0].addEventListener('personalizationCookiesHasBeenAccepted', function () {
+						// Personalization tracking
+						
+					});
+
+					document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+						// Advertising tracking
+						
+						var newScript = document.createElement("script");
+						newScript.type = "text/javascript";
+						newScript.setAttribute("async", "true");
+						newScript.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=AW-1021727564");
+						document.documentElement.firstChild.appendChild(newScript);
+
+						!function(f,b,e,v,n,t,s)
+						{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+						n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+						if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+						n.queue=[];t=b.createElement(e);t.async=!0;
+						t.src=v;s=b.getElementsByTagName(e)[0];
+						s.parentNode.insertBefore(t,s)}(window, document,'script',
+						'https://connect.facebook.net/en_US/fbevents.js');
+						fbq('init', '1434721056835089');
+						
+					});
+
+					document.getElementsByTagName('body')[0].addEventListener('socialMediaAdvertisingCookiesHasBeenAccepted', function () {
+						// Social media tracking			
+					});
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+
+					gtag('config', 'AW-1021727564');
+				</script>
+
+								<script>			
+				 	window.gtag('event', 'page_view', {
+						'send_to': 'AW-1021727564',
+						'Invitations_Nav': '1'
+					}); 
+					function run_fb() {				
+						if (typeof fbq !== 'undefined') {							
+							fbq('track', 'PageView', {'Invitations_Nav' : '1'});
+							console.log('pageview');		
+						} else {							
+							setTimeout(run_fb,600);
+						}						
+					}				
+					run_fb();				
+				</script>
+				            
+              <div class="header header-compact header-sm">
+  <div class="top-bar navbar-nav">
+    <div class="top-menu top-menu-283">
+  <ul class="j-menu">
+              <li class="menu-item top-menu-item top-menu-item-1 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-2 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-3 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-4 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-5 icon-only">
+                        <a href="#" ><span class="links-text">Google</span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-6 icon-only">
+                        <a href="#" ><span class="links-text">Youtube</span></a>
+                  </li>
+          </ul>
+</div>
+          <div class="language-currency top-menu">
+        <div class="desktop-language-wrapper">
+              <div id="language" class="language">
+    <form action="https://invitaciones.bodas.net/index.php?route=common/language/language" method="post" enctype="multipart/form-data" id="form-language">
+      <div class="dropdown drop-menu">
+        <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+          <span class="language-flag-title">
+            <span class="symbol"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAIAAAD5gJpuAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAFnSURBVHjaYvzPgAD/UNlYEUAAmuTYAAAQhAEYqF/zFbe50RZ1cMmS9TLi0pJLRjZohAMTGFUN9HdnHgEE1sDw//+Tp0ClINW/f0NIKPoFJH/9//ULyGaUlQXaABBALAx/Gf4zAt31F4i+ffj3/cN/XrFfzOx//v///f//LzACM/79ZmD8/e8TA0AAMYHdDVT958vXP38nMDB0s3x94/Tj5y+YahhiAKLfQKUAAcQEdtJfoDHMF2L+vPzDmFXLelf551tGFOOhev4A/QgQQExgHwAd8IdFT/Wz6j+GhlpmXSOW/2z///8Eq/sJ18Dw/zdQA0AAMQExxJjjdy9x2/76EfLz4MXdP/i+wsyGkkA3Aw3984cBIIAYfzIwMKel/bt3jwEaLNAwgZIQxp/fDH/+MqqovL14ESCAWICeZvr9h0FSEhSgwBgAygFDEMT+wwAhgQgc4kAEVAwQQIxfUSMSTxxDAECAAQAJWke8v4u1tAAAAABJRU5ErkJggg==" width="16" height="11" alt="Spanisch" title="Spanisch"/></span>
+            <span class="language-title">Spanisch</span>
+          </span>
+        </button>
+        <div class="dropdown-menu j-dropdown">
+          <ul class="j-menu">
+                          <li>
+                <a class="language-select" data-name="de-DE">
+                  <span class="language-flag"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAIAAAD5gJpuAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAGzSURBVHjaYvTxcWb4+53h3z8GZpZff/79+v3n/7/fDAz/GHAAgABi+f37e3FxOZD1Dwz+/v3z9y+E/AMFv3//+Qumfv9et241QACxMDExAVWfOHkJJAEW/gUEP0EQDn78+AHE/gFOQJUAAcQiy8Ag8O+fLFj1n1+/QDp+/

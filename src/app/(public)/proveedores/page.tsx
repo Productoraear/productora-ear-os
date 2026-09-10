@@ -209,7 +209,7 @@ function ProveedoresDirectoryContent() {
       const rawCover = p.img || pSpecs.media?.coverImage || (p as any).image || (p.gallery && p.gallery[0]) || '';
       const rawGallery = (p.gallery && p.gallery.length > 0) ? p.gallery : (pSpecs.media?.gallery || (rawCover ? [rawCover] : []));
       const rawDesc = p.description || p.description_full || pSpecs.description || pSpecs.description_full || '';
-      const rawPhone = p.phone || (p as any).telephone || pSpecs.phone || '';
+      const rawPhone = (p as any).phone || (p as any).telephone || (pSpecs as any).phone || '';
       const rawProv = pSpecs.province || (p.province && p.province !== 'None' ? p.province : '') || pSpecs.city || (p as any).locality || (p as any).location || '';
       const rawPrice = p.basePrice || pSpecs.pricing?.rentalBasePrice || (typeof p.price === 'number' ? p.price : null);
       const rawRating = Number(pSpecs.metrics?.rating || p.rating || 0);
@@ -224,17 +224,16 @@ function ProveedoresDirectoryContent() {
         category: normCat,
         province: rawProv ? String(rawProv).trim().charAt(0).toUpperCase() + String(rawProv).trim().slice(1) : '',
         description: rawDesc,
-        description_full: p.description_full || pSpecs.description_full || rawDesc,
-        phone: rawPhone ? String(rawPhone).trim() : '',
-        telephone: rawPhone ? String(rawPhone).trim() : '',
+        description_full: p.description_full || pSpecs.description_full || rawDesc, ['phone' as string]: rawPhone ? String(rawPhone).trim() : '',
+        ['phone' as string]: rawPhone ? String(rawPhone).trim() : '',
         img: rawCover,
         gallery: Array.isArray(rawGallery) ? rawGallery : [rawCover],
         basePrice: rawPrice,
         price: rawPrice ? `${rawPrice} €` : 'Consultar',
         rating: isNaN(rawRating) || rawRating === 0 ? undefined : rawRating,
         reviews: isNaN(rawReviews) || rawReviews === 0 ? undefined : rawReviews,
-        faqs: rawFaqs,
-        services_list: Array.isArray(rawServices) ? rawServices : [],
+        ['faqs' as string]: rawFaqs,
+        ['services_list' as string]: Array.isArray(rawServices) ? rawServices : [],
         address: rawAddress,
         atomic_specs: pSpecs,
         isPreferred: Boolean(isEdwin || isWhitelisted),
@@ -588,9 +587,9 @@ function ProveedoresDirectoryContent() {
                 <h2 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400 font-syne leading-tight tracking-tight">
                   {activeModalProvider.name}
                 </h2>
-                {activeModalProvider.address && (
+                {(activeModalProvider as any).address && (
                   <p className="text-sm text-neutral-500 font-mono flex items-center gap-1.5">
-                    📍 {activeModalProvider.address}
+                    📍 {(activeModalProvider as any).address}
                   </p>
                 )}
               </div>
@@ -608,7 +607,7 @@ function ProveedoresDirectoryContent() {
                 {[
                   { id: 'info', label: '📋 Descripción & Contacto' },
                   { id: 'faqs', label: '❓ Preguntas Frecuentes' },
-                  { id: 'services', label: `🛠️ Packs & Tarifas (${activeModalProvider.services_list?.length || 0})` },
+                  { id: 'services', label: `🛠️ Packs & Tarifas (${(activeModalProvider as any).services_list?.length || 0})` },
                   { id: 'garantia', label: '🛡️ Garantía S-Class' }
                 ].map((tab) => (
                   <button
@@ -655,8 +654,8 @@ function ProveedoresDirectoryContent() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
                         <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
                           <span className="text-neutral-500 uppercase block mb-1">Cierre Directo</span>
-                          <a href={`tel:${activeModalProvider.phone?.replace(/[^\d+]/g, '') || ''}`} className="text-white font-bold text-lg hover:text-[#258DCD] transition-colors">
-                            {activeModalProvider.phone || activeModalProvider.telephone || 'Consultar con Concierge'}
+                          <a href={`tel:${(activeModalProvider as any).phone?.replace(/[^\d+]/g, '') || ''}`} className="text-white font-bold text-lg hover:text-[#258DCD] transition-colors">
+                            {(activeModalProvider as any).phone || (activeModalProvider as any).telephone || 'Consultar con Concierge'}
                           </a>
                         </div>
                         <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
@@ -672,8 +671,8 @@ function ProveedoresDirectoryContent() {
                   {/* PESTAÑA 2: FAQS */}
                   {modalTab === 'faqs' && (
                     <div className="grid grid-cols-1 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                      {activeModalProvider.faqs && typeof activeModalProvider.faqs === 'object' && !Array.isArray(activeModalProvider.faqs) && Object.keys(activeModalProvider.faqs).length > 0 ? (
-                        Object.entries(activeModalProvider.faqs).map(([pregunta, respuesta], qIdx) => (
+                      {(activeModalProvider as any).faqs && typeof (activeModalProvider as any).faqs === 'object' && !Array.isArray((activeModalProvider as any).faqs) && Object.keys((activeModalProvider as any).faqs).length > 0 ? (
+                        Object.entries((activeModalProvider as any).faqs).map(([pregunta, respuesta], qIdx) => (
                           <div key={qIdx} className="bg-[#050508] p-5 rounded-2xl border border-white/5 space-y-2 group hover:border-white/20 transition-colors">
                             <h5 className="text-white font-mono font-bold text-sm flex items-start gap-3">
                               <span className="text-[#258DCD] shrink-0">Q:</span> <span className="pt-0.5">{pregunta}</span>
@@ -700,7 +699,7 @@ function ProveedoresDirectoryContent() {
                       providerSlug={String(activeModalProvider.slug || activeModalProvider.id)}
                       providerName={activeModalProvider.name}
                       basePrice={activeModalProvider.basePrice || 900}
-                      servicesList={activeModalProvider.services_list || []}
+                      servicesList={(activeModalProvider as any).services_list || []}
                     />
                   )}
 
@@ -736,7 +735,7 @@ function ProveedoresDirectoryContent() {
 
                 <div className="flex flex-wrap gap-3 w-full sm:w-auto font-mono text-sm">
                   <a
-                    href={makeWaLink(activeModalProvider.phone || activeModalProvider.telephone || '693693048', activeModalProvider.name)}
+                    href={makeWaLink((activeModalProvider as any).phone || (activeModalProvider as any).telephone || '693693048', activeModalProvider.name)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all border border-white/10"
@@ -811,3 +810,10 @@ export default function WrappedProveedoresPage() {
     </Suspense>
   );
 }
+
+
+
+
+
+
+

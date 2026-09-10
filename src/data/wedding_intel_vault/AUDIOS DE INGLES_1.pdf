@@ -1,0 +1,392 @@
+value, value2) { var string = _n(single, plural, value); return _s(string, value2); } </script>
+<script defer src="https://www.bodas.net/builds/desktop/js/symfnw-ES171-1-20241219-010_www_m_/WebBundleResponsiveMarketplaceListing.js"></script>
+<script>
+if (typeof(window.userLayersToShow) === "undefined" || (typeof(window.userLayersToShow) !== "undefined" && typeof(window.userLayersToShow.name) === "undefined")) {
+window.userLayersToShow = {
+name:
+null
+}
+}
+</script>
+<div id="app-chat-container" class="pusher-container pusher-mobile   "></div>
+<script>
+window.pusher = {
+actorJson : '{\u0022id\u0022:null,\u0022name\u0022:\u0022An\\u00f3nimo\u0022,\u0022avatar\u0022:\u0022https:\\/\\/cdn1.bodas.net\\/assets\\/img\\/user\\/150x150\\/user-nodefined-150.jpg\u0022,\u0022avatarSvg\u0022:null,\u0022type\u0022:\u0022anonymous\u0022}',
+customOptions : {
+disableUserVendorNotifications : false,
+disableChat : false,
+isMobile : true,
+isAppAndroid : false,
+isAppNativeApiEnabled : false,
+isAppIos : false,
+isAppBarsEnabled : false,
+isAppReferrerEnabled : false,
+forceMinimizeChat : false,
+chatNeedsSpecialClass : false,
+appShowCloseButton : false,
+fixedBar : false,
+isChatbotEnabled: true,
+openOnLoad: false,
+canInitConversation: true,
+isPersistentStorageEnabled: true,
+disableAppChat: false            }
+};
+</script>
+<script>var analyticsManager = (function() {var _storedAnalyticsEvents = [];function queueEvent(func) {_storedAnalyticsEvents.push(func);}function trackQueuedEvents() {while (_storedAnalyticsEvents.length > 0) {var queuedEvent = _storedAnalyticsEvents.shift();queuedEvent();}}return {queueEvent : queueEvent,trackQueuedEvents : trackQueuedEvents,}})();</script><script class="app-ecommerce-script">parent.ecommerce = {};parent.ecommerce.clickTraces = {"standard":{"211986":{"id":211986,"name":"Joyer\u00eda Spirit","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":230020,"brand":"Featured","position":1},"205470":{"id":205470,"name":"5C Diamonds","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":223090,"brand":"Featured","position":2},"54158":{"id":54158,"name":"Perlas Majorica","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":267894,"brand":"Professional","position":3},"86153":{"id":86153,"name":"Marga Mira","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":90291,"brand":"Professional","position":4},"64683":{"id":64683,"name":"Joyer\u00eda Luis Luna","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":66422,"brand":"Professional","position":5},"96930":{"id":96930,"name":"Joyeria Torres","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":102686,"brand":"Free","position":6},"66200":{"id":66200,"name":"Roselin Joyeros","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":68105,"brand":"Free","position":7},"84455":{"id":84455,"name":"Feli Dav\u00f3","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":88373,"brand":"Free","position":8},"87752":{"id":87752,"name":"Miguel Macia","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":92060,"brand":"Free","position":9},"166475":{"id":166475,"name":"Jolfer Joyeros Benidorm","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":180087,"brand":"Free","position":10},"78485":{"id":78485,"name":"Galerie D'Or","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":81743,"brand":"Free","position":11},"68988":{"id":68988,"name":"Joyer\u00eda Milla","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":71145,"brand":"Free","position":12},"15133":{"id":15133,"name":"Alianzas y Anillos","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":28003,"brand":"Free","position":13},"218240":{"id":218240,"name":"Joyer\u00eda Rodes","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":236486,"brand":"Free","position":14},"80951":{"id":80951,"name":"Joyer\u00eda Olga","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":84439,"brand":"Free","position":15},"73759":{"id":73759,"name":"Ciberwatch","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":76525,"brand":"Free","position":16},"202042":{"id":202042,"name":"Manuel G\u00f3mez","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":219444,"brand":"Free","position":17},"192477":{"id":192477,"name":"Enrique Esteve Relojero","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":209127,"brand":"Free","position":18},"44857":{"id":44857,"name":"Oro Vivo - Alicante","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":45088,"brand":"Free","position":19},"80050":{"id":80050,"name":"Pe\u00f1a Quartz","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":83450,"brand":"Free","position":20},"192323":{"id":192323,"name":"Suarez","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":208969,"brand":"Free","position":21},"154967":{"id":154967,"name":"Stay Strong Jewels","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":167709,"brand":"Free","position":22},"85138":{"id":85138,"name":"Joyer\u00eda M\u00ednguez","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":89151,"brand":"Free","position":23},"76476":{"id":76476,"name":"Elypsi","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}","variant":79533,"brand":"Free","position":24}}};</script><script class="app-ecommerce-script">document.addEventListener('DOMContentLoaded', function () {if (typeof (parent.analytics) !== 'undefined') {parent.analytics.track('Product List Viewed', {event_category: 'Ecommerce',event_action: 'Impressions',nonInteraction: 1,products: [{product_id: '211986',name: "Joyería Spirit",brand: 'Featured',variant: '230020',position: 1,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '205470',name: "5C Diamonds",brand: 'Featured',variant: '223090',position: 2,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '54158',name: "Perlas Majorica",brand: 'Professional',variant: '267894',position: 3,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '86153',name: "Marga Mira",brand: 'Professional',variant: '90291',position: 4,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '64683',name: "Joyería Luis Luna",brand: 'Professional',variant: '66422',position: 5,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '96930',name: "Joyeria Torres",brand: 'Free',variant: '102686',position: 6,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '66200',name: "Roselin Joyeros",brand: 'Free',variant: '68105',position: 7,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '84455',name: "Feli Davó",brand: 'Free',variant: '88373',position: 8,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '87752',name: "Miguel Macia",brand: 'Free',variant: '92060',position: 9,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '166475',name: "Jolfer Joyeros Benidorm",brand: 'Free',variant: '180087',position: 10,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '78485',name: "Galerie D\'Or",brand: 'Free',variant: '81743',position: 11,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '68988',name: "Joyería Milla",brand: 'Free',variant: '71145',position: 12,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '15133',name: "Alianzas y Anillos",brand: 'Free',variant: '28003',position: 13,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '218240',name: "Joyería Rodes",brand: 'Free',variant: '236486',position: 14,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '80951',name: "Joyería Olga",brand: 'Free',variant: '84439',position: 15,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '73759',name: "Ciberwatch",brand: 'Free',variant: '76525',position: 16,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '202042',name: "Manuel Gómez",brand: 'Free',variant: '219444',position: 17,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '192477',name: "Enrique Esteve Relojero",brand: 'Free',variant: '209127',position: 18,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '44857',name: "Oro Vivo - Alicante",brand: 'Free',variant: '45088',position: 19,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '80050',name: "Peña Quartz",brand: 'Free',variant: '83450',position: 20,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},]});}});document.addEventListener('DOMContentLoaded', function () {if (typeof (parent.analytics) !== 'undefined') {parent.analytics.track('Product List Viewed', {event_category: 'Ecommerce',event_action: 'Impressions',nonInteraction: 1,products: [{product_id: '192323',name: "Suarez",brand: 'Free',variant: '208969',position: 21,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '154967',name: "Stay Strong Jewels",brand: 'Free',variant: '167709',position: 22,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '85138',name: "Joyería Mínguez",brand: 'Free',variant: '89151',position: 23,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},{product_id: '76476',name: "Elypsi",brand: 'Free',variant: '79533',position: 24,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":3,\"category_id\":36,\"region_adm1_id\":0,\"region_id\":3004,\"geozone_id\":0,\"city_id\":0,\"page\":1}"'},]});}});</script><script>
+var reduced = '/vendors/list/sector/province';
+</script>
+<script>
+window.reducedUrl = '/vendors/list/sector/province';
+</script>
+<script>
+var _comscore = _comscore || []
+var comscoreScript = function () {
+var s = document.createElement('script'), el = document.getElementsByTagName('script')[0]
+s.defer = true
+s.src = (document.location.protocol == 'https:' ? 'https://sb' : 'http://b') + '.scorecardresearch.com/cs/6156116/beacon.js'
+el.parentNode.insertBefore(s, el)
+}
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+comscoreScript()
+})
+document.getElementsByTagName('body')[0].addEventListener('IABTcDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+document.getElementsByTagName('body')[0].addEventListener('nonIABCountryDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+comscoreScript()
+}
+</script>
+<script>
+window.contextTraits = {};
+</script>
+<script>
+function trackExperimentViewed(experimentId, bucketingId, variantId, eventProperties) {
+window.analytics.track('Experiment Viewed', {
+...eventProperties,
+experimentId,
+bucketingId,
+variantId
+})
+}
+</script>
+<script>
+!function () {
+const ga4ClientIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'client_id', resolve)
+});
+const ga4SessionIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_id', resolve)
+});
+const ga4SessionNumberPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_number', resolve)
+});
+var segmentLoaded = false;
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0";;analytics.SNIPPET_VERSION="4.15.3";
+}}();
+var segmentScript = function () {
+if (segmentLoaded) {
+return;
+}
+if (window.analytics && window.analytics.initialized === true) {
+return;
+}
+segmentLoaded = true;
+(async () => {
+let ga4ClientId, ga4SessionId, ga4SessionNumber = null;
+[ga4ClientId, ga4SessionId, ga4SessionNumber] = await Promise.all([ga4ClientIdPromise, ga4SessionIdPromise, ga4SessionNumberPromise]);
+const pageProperties = {"nItems":30,"categoryId":"group_id:3,sector_id:36,province_id:3004","reduced":"\/vendors\/list\/sector\/province","gpAnonId":"2faa1ae2-b846-4000-82e6-08cd18663f24","vendor_id":null,"category_group_id":3,"category_id":36,"region_adm1_id":null,"city_id":null,"region_id":3004,"product_tier":null,"vendor_visibility_tier":null,"isMasquerading":false,"platform":"desktop web","section":"\/vendors\/list\/sector\/province","build_product":"marketplace"};
+const analyticsGroupOpt = isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true;
+const targetedAdsOpt = isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true;
+const socialMediaOpt = isCookieGroupAllowed(CONSENT_SOCIAL_MEDIA_GROUP) === true;
+const saleOfDataOpt = analyticsGroupOpt && targetedAdsOpt && socialMediaOpt
+// Adding Segment middleware
+analytics.addSourceMiddleware(function (middlewareIntermediate) {
+var payload = middlewareIntermediate.payload,
+next = middlewareIntermediate.next,
+namespace;
+if (payload.obj.type === 'identify') {
+namespace = 'traits'
+} else {
+namespace = 'properties'
+}
+if (!payload.obj[namespace]) {
+console.warn('[ga4 segment patch] Analytics event does not contain namespace property: ' + namespace);
+next(payload);
+return
+}
+payload.obj[namespace].ga_session_id = ga4SessionId;
+payload.obj[namespace].ga_session_number = ga4SessionNumber;
+payload.obj[namespace].ga_client_id = ga4ClientId;
+payload.obj[namespace].ga4_session_id = ga4SessionId;
+payload.obj[namespace].ga4_session_number = ga4SessionNumber;
+payload.obj[namespace].ga4_client_id = ga4ClientId;
+payload.obj.context.data_processing_options = !targetedAdsOpt;
+if (payload.obj.type === 'page') {
+payload.obj[namespace]['event_id'] = 'pageview_' + window.userGlobals.gp_anon_id + '_' + '52cc576e-3abd-4270-9d5c-9a493921024f'
+}
+if (!payload.obj[namespace].loggedUserUUID && window.userGlobals?.user_uuid) {
+payload.obj[namespace].loggedUserUUID = window.userGlobals.user_uuid
+}
+const getCookieIsFunction = typeof getCookie === 'function';
+const tkwwOpCookie = getCookieIsFunction ? getCookie('tkww_op') : null;
+if (!payload.obj.context.tkww_op && tkwwOpCookie) {
+payload.obj.context.tkww_op = tkwwOpCookie;
+}
+const globalExtraPropertiesForSegmentTracking = typeof window.globalExtraPropertiesForSegmentTracking === 'object'
+? window.globalExtraPropertiesForSegmentTracking : {};
+for (const key in globalExtraPropertiesForSegmentTracking) {
+if (globalExtraPropertiesForSegmentTracking.hasOwnProperty(key) && !payload.obj[namespace][key]) {
+payload.obj[namespace][key] = globalExtraPropertiesForSegmentTracking[key];
+}
+}
+let globalPageProperties = [];
+let globalPagePropertiesExcludedEventNames = {};
+try {
+globalPageProperties = JSON.parse('["appVersion","frmInsert","gpAnonId","loggedUserUUID","loggedVendorUUID","platform","reduced","section","build_product","experimentVariants","vendor_id","category_group_id","category_id","region_adm1_id","city_id","region_id","product_tier","vendor_visibility_tier"]');
+globalPagePropertiesExcludedEventNames = JSON.parse('[]');
+} catch(e) {
+console.error(`Segment init error: ${e.message}`);
+}
+for (const key in globalPageProperties) {
+const field = globalPageProperties[key];
+const isExcluded = globalPagePropertiesExcludedEventNames[field]?.includes(payload.obj.event) ?? false;
+if (!payload.obj[namespace][field] && pageProperties[field] && !isExcluded) {
+payload.obj[namespace][field] = pageProperties[field];
+}
+}
+payload.obj['context']['traits'] = payload.obj['context']['traits'] || {};
+for (const [key, value] of Object.entries(window.contextTraits)) {
+payload.obj['context']['traits'][key] = value;
+}
+if (getCookieIsFunction) {
+const cookies = {
+'epik': '_epik',
+'ttclid': 'ttclid',
+'_ttp': '_ttp',
+'gclid': 'gclid',
+};
+for (const [traitKey, cookieName] of Object.entries(cookies)) {
+const value = getCookie(cookieName);
+if (value) {
+payload.obj['context']['traits'][traitKey] = value;
+}
+}
+}
+if (!payload.obj['userId']) {
+payload.obj['userId'] = payload.obj[namespace]['loggedUserUUID']
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace]['non_interaction'] = !!parseInt(payload.obj[namespace]['nonInteraction'])
+}
+// override context variables if exists in window.trackingContext is defined and updated
+if (typeof window.trackingContext === 'object') {
+const overrideObjectProperties = (object, newObjectValues) => {
+for (const [key, value] of Object.entries(newObjectValues)) {
+if (typeof value === 'object' && typeof object[key] === 'object') {
+overrideObjectProperties(object[key], value);
+} else {
+object[key] = value;
+}
+}
+return object;
+};
+payload.obj = overrideObjectProperties(payload.obj, window.trackingContext);
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace] = standardizePropertyNames(payload.obj[namespace])
+}
+next(payload);
+});
+var integrationsConfig = {
+All: analyticsGroupOpt,
+'Segment.io': true,
+'Google Analytics 4': analyticsGroupOpt,
+'Facebook Conversions API (Actions)': targetedAdsOpt
+};
+window.analytics.load("ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0", { integrations: integrationsConfig });
+window.analytics.page(null, pageProperties);
+const experiments = (window.pageGlobals && window.pageGlobals.experiments) ? window.pageGlobals.experiments : {};
+Object.keys(experiments).forEach(exp => {
+trackExperimentViewed(
+experiments[exp].experimentId,
+window.userGlobals ? window.userGlobals[experiments[exp].bucketingType] : null,
+experiments[exp].variantId
+)
+})
+})();
+};
+var standardizePropertyNames = function (properties) {
+let origKey, value
+if (properties instanceof Array) {
+for (origKey in properties) {
+value = properties[origKey]
+if (typeof value === 'object') {
+value = standardizePropertyNames(value)
+}
+properties[origKey] = value
+}
+} else {
+for (origKey in properties) {
+if (properties.hasOwnProperty(origKey)) {
+let snakeCaseKey = origKey
+.trim()
+.replace(/-/g, '_')
+.replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+.replace(/([a-z])([A-Z])/g, '$1_$2')
+.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+.replace(/ /g, '_')
+.toLowerCase()
+.substring(0, 100)
+if (isPropertyNameSnakeCase(origKey) && origKey !== snakeCaseKey) {
+delete properties[origKey]
+}
+properties[snakeCaseKey] = properties[origKey]
+}
+}
+}
+return properties
+};
+var isPropertyNameSnakeCase = function (propertyName) {
+const standardFormatRegex = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+return standardFormatRegex.test(propertyName);
+};
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+segmentScript();
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+segmentScript();
+}
+}();
+</script>
+<div class="dnone">
+<script>
+gtag('event', 'page_view', {"BRIDES_NAV":1,"VENDORS_36_NAV":1,"LOGGED":0,"EMPRESA":0,"EMPRESA_CATEGORY":0,"send_to":"adwords"});
+gtag('event', 'view_search_results', {"send_to":"adwords","listing_id":[211986,205470,54158,86153,64683,96930,66200,84455,87752,166475,78485,68988,15133,218240,80951,73759,202042,192477,44857,80050,192323,154967,85138,76476],"listing_pagetype":"searchresults"});
+</script>              <script>
+var facebookScript = function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.defer=1;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)};
+var toExecuteAfterFbInit = function () {
+var hasGlobals = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.facebook
+var globalFacebook = hasGlobals ? parent.pageGlobals.common.remarketing.facebook : {};
+var isLoaded = globalFacebook.isLoaded === true;
+if (!isLoaded) {
+parent.fbq('init', '1434721056835089', {}, {});
+globalFacebook.isLoaded = true;
+}
+parent.fbq('track', 'PageView', {"BRIDES_NAV":1,"VENDORS_36_NAV":1,"LOGGED":0,"EMPRESA":0,"EMPRESA_CATEGORY":0}, {eventID: 'pageview_' + window.userGlobals.gp_anon_id + '_' + '52cc576e-3abd-4270-9d5c-9a493921024f'}); parent.fbq('dataProcessingOptions', ['LDU'], 0, 0);
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+});
+if (parent.isCookieGroupAllowed(parent.CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+}
+</script>             <script>
+var pinterestScript = function() {
+!function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(
+Array.prototype.slice.call(arguments))};var
+n=window.pintrk;n.queue=[],n.version='3.0';var
+t=document.createElement('script');t.defer=1,t.src=e;var
+r=document.getElementsByTagName('script')[0];r.parentNode.insertBefore(t,r)}}('https://s.pinimg.com/ct/core.js');
+var hasGlobalsPinterest = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.pinterest;
+var globalPinterest = hasGlobalsPinterest ? parent.pageGlobals.common.remarketing.pinterest : {};
+var isLoaded = globalPinterest.isLoaded === true;
+if (!isLoaded) {
+parent.pintrk('load', 2613978159206);
+globalPinterest.isLoaded = true;
+}
+var isTracked = globalPinterest.isTracked === true;
+if (!isTracked) {
+globalPinterest.isTracked = true;
+parent.pintrk('page');
+parent.pintrk('track', 'custom', {"BRIDES_NAV":"1","VENDORS_36_NAV":"1","LOGGED":"0","EMPRESA":"0","EMPRESA_CATEGORY":"0","send_to":"adwords"});
+}
+}
+/* Listener of the OneTrust callback when user accepts the cookies */
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+pinterestScript();
+});
+/* Wrap of the Analytics script that checks the consent of the user and the default country configuration */
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+pinterestScript();
+}
+</script>             <script>
+var executeBingScript = function () {
+return (function(w,d,t,r,u) {
+var f,n,i;
+w[u] = w[u]||[], f = function() {
+var o = {ti: "355036992", enableAutoSpaTracking: true};
+o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad")
+},
+n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function() {
+var s = this.readyState;
+s&&s !== "loaded"&&s !== "complete" || (f(), n.onload = n. onreadystatechange=null)
+},
+i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n,i)
+}) (window, document, "script", "//bat.bing.com/bat.js", "uetq");
+}
+var pushBingScript = function () {
+window.uetq = window.uetq || [];
+window.uetq.push ('event', '', {});
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+executeBingScript();
+pushBingScript();
+});
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+executeBingScript();
+pushBingScript();
+}
+</script>     </div>
+<script type="text/javascript" src="https://cdn1.bodas.net/assets/js/newRelicRum.js?siteVersion=symfnw-ES171-1-20241219-010_www_m_" async></script>
+<script>
+window.addEventListener('newRelicScriptLoaded', function() {
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+newRelicScript("307408989");
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+newRelicScript("307408989");
+}
+});
+</script>
+<script type='text/javascript'>
+(function(w) {
+function setAttributes() {
+w._sva.setVisitorTraits({
+user_id: '',
+employee_id: '',
+vendor_id: '',
+vendor_tier_tk: '0',
+vendor_tier_ww: '0',
+market_code: '',
+category_code_tk: '',
+category_code_ww: '',
+experiments: '3c2f31aa-7488-4711-a760-ae994ef480ca,52ddca90-9455-4def-9e17-439869b65fea,75c49d3a-938b-4896-bc69-e1dd5fe94e19,7b6577de-2b3a-46fc-8f20-162f250b511a,b62017cd-0f98-4a68-8f9c-ff170051df5f,b9fdcb28-2031-4af5-b3c9-1059471d1eb5,ba5ff33f-e398-4543-8b7e-a098a526de3f,bc2c4122-fadd-4762-95f4-ffe8feab787a,bd61024e-a0e4-4d50-86af-f63b0b3beeaf,ca55dd78-2d83-4a5a-8ea9-d01989d1a6c9,d35cf1ff-f04f-4064-b708-8e0fd4052be1,e07523e5-5365-4ff0-b5d7-19e2f6e3115b,edf5cea7-b553-4ce2-b00b-e2329217f66e,f09dbae0-c609-46ac-90e5-838cef0c710d'
+});
+}
+if (w._sva) {
+setAttributes();
+} else {
+w.addEventListener("SurvicateReady", setAttributes);
+}
+var s = document.createElement('script');
+s.src = 'https://survey.survicate.com/workspaces/478cb2dcb7cb43968ed84643ad169c41/web_surveys.js';
+s.defer = true;
+var e = document.getElementsByTagName('script')[0];
+e.parentNode.insertBefore(s, e);
+})(window);
+</script>
+<script type="application/ld+json">
+{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bodas","item":"https:\/\/www.bodas.net\/"},{"@type":"ListItem","position":2,"name":"Joyer\u00eda","item":"https:\/\/www.bodas.net\/bodas\/novias\/joyeria"}]}            </script>
+<script type="application/ld+json">
+[{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/11986\/3_2\/960\/jpg\/alianza9_1_211986-167536029943587.webp","url":"https:\/\/www.bodas.net\/joyeria\/joyeria-spirit--e211986","name":"Joyer\u00eda Spirit","image":"alianza9_1_211986-167536029943587.jpg","address":{"@type":"PostalAddress","streetAddress":"Avenida de Madrid, 14 - Bajo derecha","postalCode":"03330","addressLocality":"Crevillente","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":3,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/05470\/3_2\/960\/jpg\/eheringe-1_1_205470-167446837722249.webp","url":"https:\/\/www.bodas.net\/joyeria\/5c-diamonds--e205470","name":"5C Diamonds","image":"eheringe-1_1_205470-167446837722249.jpg","address":{"@type":"PostalAddress","streetAddress":"Avda de la estaci\u00f3n 5, local 12, Centro comercial Bulevar Plaza","postalCode":"03003","addressLocality":"Alacant\/alicante","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":7,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/54158\/3_2\/960\/png\/banner-bodegon-f13-1080x1080px-22_1_54158-170989339261098.webp","url":"https:\/\/www.bodas.net\/joyeria\/perlas-majorica--e54158","name":"Perlas Majorica","image":"banner-bodegon-f13-1080x1080px-22_1_54158-170989339261098.png","address":{"@type":"PostalAddress","streetAddress":"Catalu\u00f1a, 14","postalCode":"08002","addressLocality":"0","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":7,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/86153\/3_2\/960\/jpg\/joyeria-alicante-joyeria-marga-mira-joyas-para-novias-en-alicante-alianzas-boda-alicante-anillos-compromiso-alicante-best-jewelries-alicante_1_86153.webp","url":"https:\/\/www.bodas.net\/joyeria\/marga-mira--e86153","name":"Marga Mira","image":"joyeria-alicante-joyeria-marga-mira-joyas-para-novias-en-alicante-alianzas-boda-alicante-anillos-compromiso-alicante-best-jewelries-alicante_1_86153.jpg","address":{"@type":"PostalAddress","streetAddress":"General Lacy, 10. esquina Pintor Cabrera","postalCode":"03003","addressLocality":"Alacant\/alicante","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":70,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/64683\/3_2\/960\/jpeg\/2c766cce-a7be-4c54-a502-75e8e863b1ff_1_64683-163308072317894.webp","url":"https:\/\/www.bodas.net\/joyeria\/joyeria-luis-luna--e64683","name":"Joyer\u00eda Luis Luna","image":"2c766cce-a7be-4c54-a502-75e8e863b1ff_1_64683-163308072317894.jpeg","address":{"@type":"PostalAddress","streetAddress":"Serrano, 3","postalCode":"03003","addressLocality":"Alacant\/alicante","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":96,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/96930\/3_2\/960\/jpg\/torres-joiers-online-shop-logo-1550946099_1_96930-157970968985151.webp","url":"https:\/\/www.bodas.net\/joyeria\/joyeria-torres--e96930","name":"Joyeria Torres","image":"img-20191222-wa0015_1_96930-157859584571269.jpg","address":{"@type":"PostalAddress","streetAddress":"Doctor Calatayud, 21","postalCode":"03750","addressLocality":"Pedreguer","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":5,"ratingValue":"4.8","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/66200\/3_2\/960\/png\/img-3950_1_57433-161484712991984.webp","url":"https:\/\/www.bodas.net\/joyeria\/roselin-joyeros--e66200","name":"Roselin Joyeros","image":"img-3950_1_57433-161484712991984.png","address":{"@type":"PostalAddress","streetAddress":"Carretera Crevillente, km 34-400 - Carrefour","postalCode":"03180","addressLocality":"Torrevieja","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":521,"ratingValue":"4.7","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/84455\/3_2\/960\/jpg\/logotipo_1_84455.webp","url":"https:\/\/www.bodas.net\/joyeria\/feli-davo--e84455","name":"Feli Dav\u00f3","image":"img-7600-2_1_84455.jpg","address":{"@type":"PostalAddress","streetAddress":"Avenida de Madrid, 5","postalCode":"03330","addressLocality":"Crevillente","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":9,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/87752\/3_2\/960\/jpeg\/img-2167_1_87752-170724006625942.webp","url":"https:\/\/www.bodas.net\/joyeria\/miguel-macia--e87752","name":"Miguel Macia","image":"img-2167_1_87752-170724006625942.jpeg","address":{"@type":"PostalAddress","streetAddress":"Lepanto, 12","postalCode":"03201","addressLocality":"Elx\/elche","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":2,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/66475\/3_2\/960\/jpg\/32-09459_1_82306-1556890931.webp","url":"https:\/\/www.bodas.net\/joyeria\/jolfer-joyeros-benidorm--e166475","name":"Jolfer Joyeros Benidorm","image":"32-09459_1_82306-1556890931.jpg","address":{"@type":"PostalAddress","streetAddress":"C.C. La Marina. Pa\u00eds Valenci\u00e0, 2 (local 25)","postalCode":"03509","addressLocality":"Finestrat","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":25,"ratingValue":"4.8","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/78485\/3_2\/960\/jpg\/logotipo_1_78485.webp","url":"https:\/\/www.bodas.net\/joyeria\/galerie-dor--e78485","name":"Galerie D'Or","image":"image_1_78485_v3.jpeg","address":{"@type":"PostalAddress","streetAddress":"Delf\u00edn, 4","postalCode":"03710","addressLocality":"Calp\/calpe","addressRegion":"Alicante"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/68988\/3_2\/960\/jpg\/logotipo_1_68988.webp","url":"https:\/\/www.bodas.net\/joyeria\/joyeria-milla--e68988","name":"Joyer\u00eda Milla","image":"0002935-alianza-oro9-bicolor-5-mm_1_68988.jpeg","address":{"@type":"PostalAddress","streetAddress":"San Mateo, 35","postalCode":"03015","addressLocality":"Alacant\/alicante","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":1,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/15133\/3_2\/960\/gif\/logotipo.webp","url":"https:\/\/www.bodas.net\/joyeria\/alianzas-y-anillos--e15133","name":"Alianzas y Anillos","image":"a-07-plata_1_15133.jpg","address":{"@type":"PostalAddress","streetAddress":"Doctor Gadea, 9-B2","postalCode":"03550","addressLocality":"San Juan De Alicante","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":3,"ratingValue":"4.7","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/18240\/3_2\/960\/jpg\/5125553d-5b25553d-5r25553d_1_218240-167726346083681.webp","url":"https:\/\/www.bodas.net\/joyeria\/joyeria-rodes--e218240","name":"Joyer\u00eda Rodes","image":"5125553d-5b25553d-5r25553d_1_218240-167726346083681.jpg","address":{"@type":"PostalAddress","streetAddress":"Santa Isabel, 13","postalCode":"03130","addressLocality":"Santa Pola","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":3,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/80951\/3_2\/960\/jpg\/joyeria-olga-logotipo_1_80951.webp","url":"https:\/\/www.bodas.net\/joyeria\/joyeria-olga--e80951","name":"Joyer\u00eda Olga","image":"img-20161109-wa0018_1_80951_v1.jpg","address":{"@type":"PostalAddress","streetAddress":"Fray Pedro Balaguer, 31 bajo","postalCode":"03202","addressLocality":"Elx\/elche","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":12,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/73759\/3_2\/960\/jpg\/argyor1_1_73759.webp","url":"https:\/\/www.bodas.net\/joyeria\/ciberwatch--e73759","name":"Ciberwatch","image":"argyor1_1_73759.jpg","address":{"@type":"PostalAddress","streetAddress":"Mercado, 4","postalCode":"03501","addressLocality":"Benidorm","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":21,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/02042\/3_2\/960\/jpg\/alianzas-de-oro-amarillo_1_202042-166505110675519.webp","url":"https:\/\/www.bodas.net\/joyeria\/manuel-gomez--e202042","name":"Manuel G\u00f3mez","image":"alianzas-de-oro-amarillo_1_202042-166505110675519.jpg","address":{"@type":"PostalAddress","streetAddress":"Juan de Juanes,12","postalCode":"03009","addressLocality":"Alacant\/alicante","addressRegion":"Alicante"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/92477\/3_2\/960\/jpg\/alianzas_1_192477-165183964259202.webp","url":"https:\/\/www.bodas.net\/joyeria\/enrique-esteve-relojero--e192477","name":"Enrique Esteve Relojero","image":"alianzas_1_192477-165183964259202.jpg","address":{"@type":"PostalAddress","streetAddress":"C\/JUAN CARLOS I N\u00ba 29 03600 elda","postalCode":"03600","addressLocality":"Elda","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":2,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/44857\/3_2\/960\/jpg\/oro-vivo-logotipo.webp","url":"https:\/\/www.bodas.net\/joyeria\/oro-vivo-alicante--e44857","name":"Oro Vivo - Alicante","image":"alianza-25-26.jpg","address":{"@type":"PostalAddress","streetAddress":"Alicante","postalCode":"03001","addressLocality":"Alacant\/alicante","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":3,"ratingValue":"4.3","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/80050\/3_2\/960\/jpg\/logo-de-la-empresa_1_80050.webp","url":"https:\/\/www.bodas.net\/joyeria\/pena-quartz--e80050","name":"Pe\u00f1a Quartz","image":"img-0485_1_80050.jpg","address":{"@type":"PostalAddress","streetAddress":"Jos\u00e9 Garc\u00eda Ferrandez, 18","postalCode":"03205","addressLocality":"Elx\/elche","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":4,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/92323\/3_2\/960\/jpg\/alianzas_1_192323-165709466556836.webp","url":"https:\/\/www.bodas.net\/joyeria\/suarez--e192323","name":"Suarez","image":"alianzas_1_192323-165709466556836.jpg","address":{"@type":"PostalAddress","streetAddress":"Avda. de Federico Soto, 1 - 3","postalCode":"03001","addressLocality":"Alacant\/alicante","addressRegion":"Alicante"},"aggregateRating":{"@type":"AggregateRating","reviewCount":1,"ratingValue":"3.6","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/54967\/3_2\/960\/jpg\/tipos-masiasanantonio-074-color_1_154967-158273626130754.webp","url":"https:\/\/www.bodas.net\/joyeria\/stay-strong-jewels--e154967","name":"Stay Strong Jewels","image":"tipos-masiasanantonio-074-color_1_154967-158273626130754.jpg","address":{"@type":"PostalAddress","streetAddress":"Pintor Aparicio, 28","postalCode":"03003","addressLocality":"Alacant\/alic

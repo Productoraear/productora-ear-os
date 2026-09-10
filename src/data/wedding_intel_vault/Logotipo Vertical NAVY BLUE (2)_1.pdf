@@ -1,0 +1,548 @@
+ss="pagination__page pagination__page--active">
+                        1                    </span>
+                            </li>
+                    <li>
+                                    <span class="pagination__page app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=2">
+                        2                    </span>
+                            </li>
+                    <li>
+                                    <span class="pagination__page app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=3">
+                        3                    </span>
+                            </li>
+                    <li>
+                                    <span class="pagination__page app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=4">
+                        4                    </span>
+                            </li>
+                    <li>
+                                    <span class="pagination__page app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=5">
+                        5                    </span>
+                            </li>
+                    <li>
+                                    <span class="pagination__page app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=6">
+                        6                    </span>
+                            </li>
+                    <li>
+                                    <span class="pagination__page app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=7">
+                        7                    </span>
+                            </li>
+        
+
+                                    <li>
+                    ...                </li>
+            
+                            <li>
+                    <span class="pagination__page app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=385">
+                        385                    </span>
+                </li>
+                    
+                    <li>
+                                    <span class="pagination__page pagination__next app-link"
+                       data-href="https://www.bodas.net/real-Home.php?region=barcelona&amp;NumPage=2">
+                        Siguiente                        <i class="svgIcon app-svg-async svgIcon__angleRight "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleRight.svg" data-svg-lazyload="1"></i>                    </span>
+                            </li>
+            </ul>
+</div>
+                            </div>
+        </div>
+    </div>
+</div>
+<div class="footer-filter border-top">
+    <div class="wrapper">
+                    <p class="th2 mb15">Bodas por provincia</p>
+            <div class="province-filter rw-filter">
+                <ul class="pure-g-r row">
+                                                                                        <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/a-coruna">A Coruña</a>
+                                <span>875</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/albacete">Albacete</a>
+                                <span>443</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/alicante">Alicante</a>
+                                <span>2.020</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/almeria">Almería</a>
+                                <span>460</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/asturias">Asturias</a>
+                                <span>874</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/badajoz">Badajoz</a>
+                                <span>553</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/barcelona">Barcelona</a>
+                                <span>5.767</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/burgos">Burgos</a>
+                                <span>274</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/cantabria">Cantabria</a>
+                                <span>589</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/castellon">Castellón</a>
+                                <span>486</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/ceuta">Ceuta</a>
+                                <span>2</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/ciudad-real">Ciudad Real</a>
+                                <span>844</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/cuenca">Cuenca</a>
+                                <span>287</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/caceres">Cáceres</a>
+                                <span>662</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/cadiz">Cádiz</a>
+                                <span>1.456</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/cordoba">Córdoba</a>
+                                <span>653</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/girona">Girona</a>
+                                <span>1.321</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/granada">Granada</a>
+                                <span>1.204</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/guadalajara">Guadalajara</a>
+                                <span>373</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/guipuzcoa">Guipúzcoa</a>
+                                <span>394</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/huelva">Huelva</a>
+                                <span>362</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/huesca">Huesca</a>
+                                <span>177</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/islas-baleares">Islas Baleares</a>
+                                <span>879</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/jaen">Jaén</a>
+                                <span>538</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/la-rioja">La Rioja</a>
+                                <span>190</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/las-palmas">Las Palmas</a>
+                                <span>688</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/leon">León</a>
+                                <span>326</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/lleida">Lleida</a>
+                                <span>285</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/lugo">Lugo</a>
+                                <span>221</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/madrid">Madrid</a>
+                                <span>6.241</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/melilla">Melilla</a>
+                                <span>6</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/murcia">Murcia</a>
+                                <span>1.279</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/malaga">Málaga</a>
+                                <span>1.956</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/navarra">Navarra</a>
+                                <span>360</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/orense">Orense</a>
+                                <span>232</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/palencia">Palencia</a>
+                                <span>103</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/pontevedra">Pontevedra</a>
+                                <span>927</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/salamanca">Salamanca</a>
+                                <span>402</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/santa-cruz-de-tenerife">Santa Cruz de Tenerife</a>
+                                <span>638</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/segovia">Segovia</a>
+                                <span>412</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/sevilla">Sevilla</a>
+                                <span>2.024</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/soria">Soria</a>
+                                <span>54</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/tarragona">Tarragona</a>
+                                <span>1.031</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/teruel">Teruel</a>
+                                <span>94</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/toledo">Toledo</a>
+                                <span>1.222</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/valencia">Valencia</a>
+                                <span>2.165</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/valladolid">Valladolid</a>
+                                <span>706</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit ">
+                                <a href="https://www.bodas.net/cronicas-boda/vizcaya">Vizcaya</a>
+                                <span>715</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit last">
+                                <a href="https://www.bodas.net/cronicas-boda/zamora">Zamora</a>
+                                <span>170</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit last">
+                                <a href="https://www.bodas.net/cronicas-boda/zaragoza">Zaragoza</a>
+                                <span>758</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit last">
+                                <a href="https://www.bodas.net/cronicas-boda/alava">Álava</a>
+                                <span>249</span>
+                            </div>
+                        </li>
+                                                                    <li class="pure-u-1-4 ">
+                            <div class="rw-filter-item unit last">
+                                <a href="https://www.bodas.net/cronicas-boda/avila">Ávila</a>
+                                <span>296</span>
+                            </div>
+                        </li>
+                                    </ul>
+            </div>
+                                                    <p class="th2 mb15">Bodas por estilo</p>
+            <div class="style-filter rw-filter">
+                <div class="pure-g row">
+                                                                        
+<div class="pure-u-1-5 rw-style-left app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/al-aire-libre--s5">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s5.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s5@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="al aire libre"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">Al aire libre</div>
+                    <span class="small">1.475 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                    
+<div class="pure-u-1-5 rw-style-left app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/rusticas--s19">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s19.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s19@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="rústicas"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">Rústicas</div>
+                    <span class="small">928 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                <div class="pure-u-3-5 rw-style-right">
+                            <div class="unit">
+                                <div class="pure-g row">
+                                                                            
+<div class="pure-u-1-3  app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/elegantes--s204">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s204.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s204@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="elegantes"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">Elegantes</div>
+                    <span class="small">921 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                                            
+<div class="pure-u-1-3  app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/modernas--s107">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s107.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s107@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="modernas"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">Modernas</div>
+                    <span class="small">464 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                                            
+<div class="pure-u-1-3  app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/de-noche--s63">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s63.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s63@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="de noche"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">De noche</div>
+                    <span class="small">445 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                                            
+<div class="pure-u-1-3  app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/en-el-campo--s32">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s32.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s32@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="en el campo"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">En el campo</div>
+                    <span class="small">349 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                                            
+<div class="pure-u-1-3  app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/vintage--s24">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s24.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s24@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="vintage"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">Vintage</div>
+                    <span class="small">299 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                                            
+<div class="pure-u-1-3  app-general-item">
+    <div class="app-link image-box app-article-item" data-href="https://www.bodas.net/cronicas-boda/barcelona/en-la-playa--s77">
+        <div class="unit app-general-item">
+            <figure>
+                    <img data-src="https://cdn1.bodas.net/assets/img/real-weddings/s77.jpg" data-srcset="https://cdn1.bodas.net/assets/img/real-weddings/s77@2x.jpg 2x" class="lazyload link--primary pure-u-1 app-general-item-linked" alt="en la playa"     >
+                <figcaption class="text-center">
+                    <div class="style-box-title">En la playa</div>
+                    <span class="small">230 bodas</span>
+                </figcaption>
+            </figure>
+        </div>
+    </div>
+</div>
+                                                                    </div>
+                            </div>
+                        </div>
+                                    </div>
+            </div>
+                            <p class="th2 mb15">Bodas por temporada</p>
+            <div class="season-filter pure-g-r row rw-filter">
+                                    <div class="pure-u-1-4 app-link seasonFilterItem" data-href="https://www.bodas.net/cronicas-boda/barcelona/invierno--t200">
+                        <div class="seasonFilterItem__boxItem">
+                            <div class="icon-season icon-season-winter"></div>
+                            <span class="seasonFilterItem__titleItem">Invierno</span>
+                            <span class="color-grey">294 bodas</span>
+                        </div>
+                    </div>
+                                    <div class="pure-u-1-4 app-link seasonFilterItem" data-href="https://www.bodas.net/cronicas-boda/barcelona/otono--t199">
+                        <div class="seasonFilterItem__boxItem">
+                            <div class="icon-season icon-season-autumn"></div>
+                            <span class="seasonFilterItem__titleItem">Otoño</span>
+                            <span class="color-grey">1.076 bodas</span>
+                        </div>
+                    </div>
+                                    <div class="pure-u-1-4 app-link seasonFilterItem" data-href="https://www.bodas.net/cronicas-boda/barcelona/primavera--t197">
+                        <div class="seasonFilterItem__boxItem">
+                            <div class="icon-season icon-season-spring"></div>
+                            <span class="seasonFilterItem__titleItem">Primavera</span>
+                            <span class="color-grey">1.224 bodas</span>
+                        </div>
+                    </div>
+                                    <div class="pure-u-1-4 app-link seasonFilterItem" data-href="https://www.bodas.net/cronicas-boda/barcelona/verano--t198">
+                        <div class="seasonFilterItem__boxItem">
+                            <div class="icon-season icon-season-summer"></div>
+                            <span class="seasonFilterItem__titleItem">Verano</span>
+                            <span class="color-grey">2.642 bodas</span>
+                        </div>
+                    </div>
+                            </div>
+                            <p class="th2 mb15">Bodas por color</p>
+            <div class="colors-filter box colorFilterItem rw-filter">
+                <ul class="pure-g-r">
+                                                                <li class="pure-u-1-6 app-link" data-href="https://www.bodas.net/cronicas-boda/barcelona/amarillo--c69">
+                            <div class="colorFilterItem__boxItem">
+                                <span class="icon-wedding-color icon-wedding-color-yellow"></span>
+                                <span class="colorFilterItem__titleItem" data-color="anchor-amarillo">Amarillo</span>
+                                <span class="color-grey">111 bodas</span>
+                            </div>
+                        </li>
+                                            <li class="pure-u-1-6 app-link" data-href="https://www.bodas.net/cronicas-boda/barcelona/azul--c30">
+                            <div class="colorFilterItem__boxItem">
+                                <span class="icon-wedding-color icon-wedding-color-blue"></span>
+                                <span class="colorFilterItem__titleItem" data-color="anchor-azul">Azul</span>
+                                <span class="color-grey">588 bodas</span>
+                            </div>
+                        </li>
+                                            <li class="pure-u-1-6 app-link" data-href="https://www.bodas.net/cronicas-boda/barcelona/beige--c70">
+                            <div class="colorFilterItem__boxItem">
+                                <span class="icon-wedding-colo

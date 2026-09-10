@@ -1,0 +1,92 @@
+[
+    {
+        "name":  "Lidia Pecci Rosendi 12",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2025-12-25",
+        "pax":  null,
+        "snippet":  "El 19/03/2025 a las 20:42 · Atendida\nMuchas gracias\n25 dic\n2025"
+    },
+    {
+        "name":  "Edwin",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2025-03-13",
+        "pax":  null,
+        "snippet":  "Mi nombre es Edwin, David encantado de saludarte"
+    },
+    {
+        "name":  "Noelia Hidalgo Callejón 4",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2025-03-08",
+        "pax":  "70-110",
+        "snippet":  "¿En qué momento os viene mejor hablar? O hacer una videollamada.\n\n28 ago\n2027\n70-110\ncomensales"
+    },
+    {
+        "name":  "Diego Gutiérrez Sagüillo 9",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2025-10-04",
+        "pax":  null,
+        "snippet":  "Genial , donde vives?\n\n4 oct\n2025"
+    },
+    {
+        "name":  "Berta 11",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2025-06-07",
+        "pax":  null,
+        "snippet":  "No tenemos la idea de un concierto heavy, más bien una voz con una..."
+    },
+    {
+        "name":  "Alba 5",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2026-04-18",
+        "pax":  null,
+        "snippet":  "Mi número de teléfono es 693 693 048, disponible 24 horas"
+    },
+    {
+        "name":  "Antonia",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2025-09-09",
+        "pax":  null,
+        "snippet":  "Dime cuál es el horario que mejor os viene y agendamos sin compromiso...."
+    },
+    {
+        "name":  "",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2025-02-24",
+        "pax":  null,
+        "snippet":  "Te envío de antemano, un saludo y ya sabes si necesitas algo cuéntame..."
+    },
+    {
+        "name":  "Felipe Borges",
+        "category":  "Musica / Produccion Integral",
+        "stage":  "identified",
+        "rating":  5,
+        "quoted_price":  0.00,
+        "date_requested":  "2026-04-25",
+        "pax":  70,
+        "snippet":  "No estuvo muy receptivo"
+    }
+]

@@ -1,0 +1,233 @@
+ategory-authed="1"
+>
+<a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/sorteo">
+<i class="svgIcon app-svg-async svgIcon__celebrate "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/celebrate.svg" data-svg-lazyload="1"></i>                    Sorteo de 5.000&euro;                </a>
+</li>
+<li class="layoutNavMenu__itemFooter">
+<a class="layoutNavMenu__anchorFooter" rel="nofollow" href="https://wedshootsapp.onelink.me/2833772549?pid=WP-Android-ES&amp;c=WP-ES-MOBILE&amp;af_dp=wedshoots%3A%2F%2F">WedShoots</a>
+</li>
+<li class="layoutNavMenu__itemFooter">
+<a class="layoutNavMenu__anchorFooter" rel="nofollow" href="https://bodasnet.onelink.me/pqTO?pid=WP-Android-ES&amp;c=WP-ES-MOBILE&amp;af_dp=bodasnet%3A%2F%2F">Descárgate la app</a>
+</li>
+<li class="layoutNavMenu__itemFooter layoutNavMenu__itemFooter--bordered">
+<a class="layoutNavMenu__anchorFooter" href="https://www.bodas.net/emp-Acceso.php" rel="nofollow">
+Acceso empresas            </a>
+</li>
+</ul>
+</nav>
+<div class="layoutHeader__overlay app-header-menu-toggle app-header-menu-overlay"></div>
+<div class="layoutHeader__authArea app-header-auth-area">
+<ul class="layoutNavMenuAuthLogged">
+<li class="layoutNavMenuAuthLogged__item">
+<div class="layoutNavMenuAuthLoggedInbox">
+<a class="layoutNavMenuAuthLogged__itemAnchor"
+href="https://www.bodas.net/emp-AdminSolicitudes.php">
+<i class="svgIcon app-svg-async svgIcon__envelope layoutNavMenuAuthLoggedInbox__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/envelope.svg" data-svg-lazyload="1"></i>                            </a>
+</div>
+</li>
+<li class="layoutNavMenuAuthLogged__avatar app-header-authenticator-toggle">
+<picture class="avatar__img"     data-image-name="imageFileName_edwin-agudelo-canta-a-novios_1_78903_v3.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/vendor/78903/3_2/320/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.webp 320w,
+https://cdn0.bodas.net/vendor/78903/3_2/640/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.webp 640w,
+https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.webp 960w,
+https://cdn0.bodas.net/vendor/78903/3_2/1280/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.webp 1280w,
+https://cdn0.bodas.net/vendor/78903/3_2/1920/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.webp 1920w" sizes="(min-width: 480px) 80px, 56px">
+<img
+data-srcset="https://cdn0.bodas.net/vendor/78903/3_2/320/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg 320w,
+https://cdn0.bodas.net/vendor/78903/3_2/640/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg 640w,
+https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg 960w,
+https://cdn0.bodas.net/vendor/78903/3_2/1280/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg 1280w,
+https://cdn0.bodas.net/vendor/78903/3_2/1920/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg 1920w"
+data-src="https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg"
+sizes="(min-width: 480px) 80px, 56px"
+alt="Productora EAR"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+<div class="layoutNavMenuVendorAuthenticatorDropdown app-header-authenticator-dropdown app-header-authenticator-vendor"></div>
+</li>
+</ul></div>
+</header>
+<main id="layoutMain" class="layoutMain">
+<section class="preHeading">
+<div class="preHeading__breadcrumb">
+<nav class="breadcrumb app-breadcrumb">
+<ul class="breadcrumb__list">
+<li>
+<a  href="https://www.bodas.net/">
+Bodas                    </a>
+</li>
+<li>
+<a  href="https://www.bodas.net/articulos">
+Ideas boda                    </a>
+</li>
+<li>
+Antes de la boda                            </li>
+</ul>
+</nav>
+</div>
+<div class="preHeading__autocomplete ">
+<div role="search" class="preHeadingSuggest app-preHeading-suggest app-preHeading-mobile-suggest">
+<form method="get" class="preHeadingSuggest__container app-preHeading-autocomplete-container" action="/article-search">
+<label for="q" class="preHeadingSuggest__text">
+<i class="svgIcon app-svg-async svgIcon__search preHeadingSuggest__textIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/search.svg" data-svg-lazyload="1"></i>            <input
+type="text"
+id="preHeadingSuggestInput"
+name="q"
+aria-label="Buscar"
+aria-placeholder="Buscar"
+aria-autocomplete="list"
+aria-controls="preHeadingSuggestResults"
+aria-haspopup="listbox"
+aria-describedby="preHeadingSuggestInstructions"
+autocomplete="off"
+class="preHeadingSuggest__input app-suggest-input"
+placeholder="Buscar"
+>
+</label>
+<div id="preHeadingSuggestInstructions" style="display: none">Empieza a escribir para realizar la búsqueda o usa las teclas de "cursor arriba y abajo" para navegar.</div>
+<div class="preHeadingSuggest__resultsCount app-preHeading-results-count sr-only" aria-live="assertive"></div>
+<div class="preHeadingSuggest__results app-preHeading-results-container">
+<div class="preHeadingSuggest__resultsWrapper">
+<div class="preHeadingSuggest__resultsContainer app-suggest-results-container">
+<ul
+id="preHeadingSuggestResults"
+class="preHeadingSuggest__list app-suggest-list"
+role="listbox"
+aria-labelledby="label"
+></ul>
+</div>
+</div>
+</div>
+</form>
+</div>    </div>
+</section>
+<article class="category">
+<header class="categoryHeading">
+<h1 class="categoryHeading__title ">Antes de la boda</h1>
+<p class="categoryHeading__description">Elegir el lugar de la ceremonia y del banquete, escoger el vestido de novia, preparar los papeles necesarios, elaborar la lista de invitados... Todo lo que necesitas saber para organizar tu boda paso a paso, con los mejores consejos para que todo salga como sueñas.
+</p>
+<div class="scrollSnap app-scroll-snap-wrapper articlesSubcategories app-articles-items-slider scrollSnap--fullBleed"
+role="region" aria-label=" Carrusel">
+<button type="button" aria-label="Anterior" class="scrollSnap__arrow scrollSnap__arrow--prev app-scroll-snap-prev hidden disabled"><i class="svgIcon app-svg-async svgIcon__arrowLeftThick "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/arrows/arrowLeftThick.svg" data-svg-lazyload="1"></i></button>
+<div class="scrollSnap__container app-scroll-snap-container articlesSubcategories__container" dir="ltr">
+<div class="scrollSnap__item app-scroll-snap-item articlesSubcategories__item"
+data-id="0"
+data-visualized-slide="false"
+>    <span class="button articlesSubcategories__current">
+Todos                    <span class="articlesSubcategories__counter">989</span>
+</span>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item articlesSubcategories__item"
+data-id="1"
+data-visualized-slide="false"
+>    <a class="button button--tertiary articlesSubcategories__notCurrent"
+href="https://www.bodas.net/articulos/planificacion-de-la-boda--t9" title="Planificación">
+Planificación                    <span class="articlesSubcategories__counter">548</span>
+</a>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item articlesSubcategories__item"
+data-id="2"
+data-visualized-slide="false"
+>    <a class="button button--tertiary articlesSubcategories__notCurrent"
+href="https://www.bodas.net/articulos/actualidad-y-ferias-de-boda--t10" title="Actualidad y ferias">
+Actualidad y ferias                    <span class="articlesSubcategories__counter">300</span>
+</a>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item articlesSubcategories__item"
+data-id="3"
+data-visualized-slide="false"
+>    <a class="button button--tertiary articlesSubcategories__notCurrent"
+href="https://www.bodas.net/articulos/tradiciones-y-supersticiones-de-boda--t11" title="Tradiciones y supersticiones">
+Tradiciones y supersticiones                    <span class="articlesSubcategories__counter">128</span>
+</a>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item articlesSubcategories__item"
+data-id="4"
+data-visualized-slide="false"
+>    <a class="button button--tertiary articlesSubcategories__notCurrent"
+href="https://www.bodas.net/articulos/tramites-matrimonio--t12" title="Trámites matrimonio">
+Trámites matrimonio                    <span class="articlesSubcategories__counter">13</span>
+</a>
+</div>
+</div>
+<button type="button" aria-label="Siguiente" class="scrollSnap__arrow scrollSnap__arrow--next app-scroll-snap-next hidden "><i class="svgIcon app-svg-async svgIcon__arrowRightThick "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/arrows/arrowRightThick.svg" data-svg-lazyload="1"></i></button>
+</div>
+</header>
+<div class="category__articles">
+<section class="listingArticles">
+<h2 class="listingArticles__title">Últimos artículos publicados</h2>
+<div class="listingArticles__content">
+<div class="articleTile app-article-tile " data-position="1">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_109277-131-edicion-sorteo.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/article/7729/3_2/320/png/109277-131-edicion-sorteo.webp 320w,
+https://cdn0.bodas.net/article/7729/3_2/640/png/109277-131-edicion-sorteo.webp 640w,
+https://cdn0.bodas.net/article/7729/3_2/960/png/109277-131-edicion-sorteo.webp 960w,
+https://cdn0.bodas.net/article/7729/3_2/1280/png/109277-131-edicion-sorteo.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/article/7729/3_2/320/png/109277-131-edicion-sorteo.jpeg 320w,
+https://cdn0.bodas.net/article/7729/3_2/640/png/109277-131-edicion-sorteo.jpeg 640w,
+https://cdn0.bodas.net/article/7729/3_2/960/png/109277-131-edicion-sorteo.jpeg 960w,
+https://cdn0.bodas.net/article/7729/3_2/1280/png/109277-131-edicion-sorteo.jpeg 1280w"
+src="https://cdn0.bodas.net/article/7729/3_2/960/png/109277-131-edicion-sorteo.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="Sorteo de Bodas.net: descubrid cómo participar y conoced a los ganadores"
+width="640"        height="427"                >
+</picture>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Actualidad y ferias de boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/estos-son-los-nuevos-ganadores-del-sorteo-mensual-de-5-000-euros-de-bodas-net--c6861">
+Sorteo de Bodas.net: descubrid cómo participar y conoced a los ganadores            </a>
+</div>
+<div class="articleTile__content">
+Participar en el sorteo mensual de 5.000 euros de Bodas.net es muy fácil y el premio… ¡merece la pena! Así que no esperéis más y participad ya. Quizá tengáis la misma suerte que Víctor y Laura en la última edición. ¡Animaos!            </div>
+<div class="articleTile__footer">
+Por Anna Llopis, actualizado el 13/11/2024            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="2">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_9d6a2578_1_201646-166428997267517.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/article-vendor/01646/3_2/320/jpg/9d6a2578_1_201646-166428997267517.webp 320w,
+https://cdn0.bodas.net/article-vendor/01646/3_2/640/jpg/9d6a2578_1_201646-166428997267517.webp 640w,
+https://cdn0.bodas.net/article-vendor/01646/3_2/960/jpg/9d6a2578_1_201646-166428997267517.webp 960w,
+https://cdn0.bodas.net/article-vendor/01646/3_2/1280/jpg/9d6a2578_1_201646-166428997267517.webp 1280w" sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/article-vendor/01646/3_2/320/jpg/9d6a2578_1_201646-166428997267517.jpeg 320w,
+https://cdn0.bodas.net/article-vendor/01646/3_2/640/jpg/9d6a2578_1_201646-166428997267517.jpeg 640w,
+https://cdn0.bodas.net/article-vendor/01646/3_2/960/jpg/9d6a2578_1_201646-166428997267517.jpeg 960w,
+https://cdn0.bodas.net/article-vendor/01646/3_2/1280/jpg/9d6a2578_1_201646-166428997267517.jpeg 1280w"
+src="https://cdn0.bodas.net/article-vendor/01646/3_2/960/jpg/9d6a2578_1_201646-166428997267517.jpeg"
+sizes="(min-width: 1024px) 456px, (min-width: 668px) calc(50vw - 2rem), calc(100vw - 2rem)"
+alt="Frases para el brindis de la boda: 20 ideas para emocionar"
+width="640"        height="427"                >
+</picture>
+</div>
+<div class="articleTile__contentContainer">
+<div class="articleTile__preTitle">
+Planificación de la boda            </div>
+<div class="articleTile__title">
+<a class="articleTile__link app-article-tile-link" href="https://www.bodas.net/articulos/que-decir-y-que-no-si-los-novios-te-piden-dar-un-discurso--c2789">
+Frases para el brindis de la boda: 20 ideas para emocionar            </a>
+</div>
+<div class="articleTile__content">
+El momento del brindis siempre tiene parte de la magia, la tradición y la emoción que se dan en casi todas las bodas. Para ayudaros en vuestros brindis, os dejamos algunas impactantes frases.             </div>
+<div class="articleTile__footer">
+Por Borja Santos, actualizado el 12/11/2024            </div>
+</div>
+</div>
+<div class="articleTile app-article-tile " data-position="3">
+<div class="articleTile__image">
+<picture      data-image-name="imageFileName_5328695.jpeg">
+<source
+type="image/webp"
+s

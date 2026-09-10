@@ -1,0 +1,27 @@
+{
+  "policy": "STRICT_OPTOUT_HONORED",
+  "note": "Lista soberana de exclusión y opt-out en 1 clic de acuerdo al RGPD Art. 17 (Derecho de Supresión) y LSSI Art. 16. Los perfiles aquí listados jamás se muestran públicamente ni se indexan.",
+  "blacklisted_ids": [
+    "prov-6",
+    "peke-teso"
+  ],
+  "blacklisted_slugs": [
+    "prov-6",
+    "peke-teso",
+    "100-apodos",
+    "prov-164"
+  ],
+  "optout_records": [
+    {
+      "slug": "prov-6",
+      "reason": "Solicitud expresa de retirada por titular de nombre artístico",
+      "timestamp": "2026-09-08T18:30:00Z"
+    },
+    {
+      "slug": "prov-164",
+      "reason": "1-Click Opt-Out ejecutado desde enlace ético de notificación",
+      "timestamp": "2026-09-09T08:35:16.421Z"
+    }
+  ],
+  "updated_at": "2026-09-09T06:00:00Z"
+}

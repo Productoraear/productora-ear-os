@@ -1,0 +1,100 @@
+<#
+.SYNOPSIS
+    EAR OS S-CLASS BARE-METAL TERMINAL PROFILE & DIGITAL TELEMETRY HUD
+    Carga por defecto para PowerShell 7 / pwsh. Restaura la barra digital y estados de salida.
+#>
+
+$Global:EAR_OS_LAST_CMD_TIME = Get-Date
+
+# Importar funciones de telemetría si existen
+$telemetryPath = Join-Path $PSScriptRoot "terminal_telemetry.ps1"
+if (Test-Path $telemetryPath) {
+    . $telemetryPath
+}
+
+function Show-SystemBadge {
+    param (
+        [string]$Title = "EAR OS CORE V2",
+        [string]$Subtitle = "MODO CEO ACTIVO"
+    )
+    Write-Host ""
+    Write-Host "  ╔══════════════════════════════════════════════════════════════════════╗" -ForegroundColor Cyan
+    Write-Host "  ║  🔱 $Title - $Subtitle" -ForegroundColor Cyan
+    Write-Host "  ║  TELEMETRÍA DIGITAL S-CLASS EN TIEMPO REAL // BARE-METAL ABOS        ║" -ForegroundColor DarkCyan
+    Write-Host "  ╚══════════════════════════════════════════════════════════════════════╝" -ForegroundColor Cyan
+    Write-Host ""
+}
+
+function Show-DigitalProgress {
+    param (
+        [string]$Activity = "Procesando Tarea",
+        [string]$Status = "Ejecutando",
+        [int]$Current = 0,
+        [int]$Total = 100,
+        [string]$ItemName = ""
+    )
+
+    if ($Total -le 0) { $Total = 1 }
+    $percent = [math]::Min(100, [math]::Max(0, [math]::Round(($Current / $Total) * 100)))
+    
+    $barWidth = 30
+    $filled = [math]::Round(($percent / 100) * $barWidth)
+    $empty = $barWidth - $filled
+    $bar = ("█" * $filled) + ("░" * $empty)
+    
+    $stateTag = if ($percent -eq 100) { "[COMPLETED]" } else { "[ACTIVE]" }
+    
+    $itemTrunc = if ($ItemName.Length -gt 35) { $ItemName.Substring(0, 32) + "..." } else { $ItemName }
+    $line = "`r  [$stateTag] $Activity: [$bar] $percent% ($Current/$Total) | $Status $itemTrunc"
+    
+    Write-Host -NoNewline $line
+    
+    if ($Current -ge $Total) {
+        Write-Host "`n  [EXIT CODE 0] Proceso culminado con éxito." -ForegroundColor Green
+    }
+}
+
+# Wrapper universal para ejecutar scripts con telemetría
+function Invoke-Telemetry {
+    param(
+        [Parameter(Mandatory=$true)]
+        [scriptblock]$ScriptBlock,
+        [string]$Title = "Tarea EAR OS"
+    )
+    
+    Write-Host "  [ACTIVE] Iniciando $Title..." -ForegroundColor Cyan
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    
+    try {
+        & $ScriptBlock
+        $sw.Stop()
+        $seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 2)
+        Write-Host "`n  [EXIT CODE 0] $Title finalizado con éxito en ${seconds}s." -ForegroundColor Green
+    } catch {
+        $sw.Stop()
+        $seconds = [Math]::Round($sw.Elapsed.TotalSeconds, 2)
+        Write-Host "`n  [ERROR 1] Falló $Title tras ${seconds}s: $_" -ForegroundColor Red
+        throw $_
+    }
+}
+
+# Prompt S-Class con Telemetría Digital Integrada
+function prompt {
+    $now = Get-Date
+    $elapsed = ($now - $Global:EAR_OS_LAST_CMD_TIME).TotalSeconds
+    $Global:EAR_OS_LAST_CMD_TIME = $now
+    
+    $lastExit = $LASTEXITCODE
+    $statusBadge = if ($lastExit -eq 0 -or $lastExit -eq $null) {
+        Write-Host "[EXIT CODE 0 | $([Math]::Round($elapsed, 2))s]" -NoNewline -ForegroundColor Green
+    } else {
+        Write-Host "[EXIT CODE $lastExit | $([Math]::Round($elapsed, 2))s]" -NoNewline -ForegroundColor Red
+    }
+
+    Write-Host " [EAR OS OMEGA v5.0]" -NoNewline -ForegroundColor Cyan
+    Write-Host " PS $($executionContext.SessionState.Path.CurrentLocation)> " -NoNewline -ForegroundColor White
+    return " "
+}
+
+# Mostrar badge de ignición
+Show-SystemBadge

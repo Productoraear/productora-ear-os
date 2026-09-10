@@ -31,7 +31,7 @@ import { CENTRALITA } from '@/lib/phone-constants';
 import { SupplierBlurLock } from '@/components/ui/SupplierBlurLock';
 import { ClaimProfileTrigger } from '@/components/providers/ClaimProfileTrigger';
 
-import { isProviderPublic } from '@/lib/providers/visibility';
+import { isProviderPublic, isProviderBlacklisted, getProviderTier } from '@/lib/providers/visibility';
 
 export const dynamic = 'force-dynamic';
 
@@ -107,19 +107,8 @@ let cachedHarvestedVendors: any[] | null = null;
 async function getProviderData(slug: string) {
   const slugNorm = slug.toLowerCase().trim();
 
-  // ━━━ VETO INMUTABLE S-CLASS: Proveedores no deseados y slop ━━━
-  if (slugNorm.includes('peke-teso') || slugNorm === 'prov-6' || slugNorm.includes('100-apodos')) {
-    return null;
-  }
-
-  // ━━━ MANDATO CEO S-CLASS: PERFILES OCULTOS POR DEFECTO EXCEPTO EDWIN AGUDELO ━━━
-  const isEdwin = slugNorm === 'edwin-agudelo' || 
-                  slugNorm === 'productora-ear' || 
-                  slugNorm === 'prov-ear-sovereign-01' || 
-                  slugNorm === 'prov-53' ||
-                  slugNorm.includes('edwin-agudelo');
-
-  if (!isEdwin && !isProviderPublic({ id: slugNorm, slug: slugNorm, name: slugNorm })) {
+  // ━━━ VETO INMUTABLE S-CLASS & LISTA NEGRA DE OPT-OUT (RGPD / LSSI) ━━━
+  if (isProviderBlacklisted({ id: slugNorm, slug: slugNorm, name: slugNorm })) {
     return null;
   }
 
@@ -338,10 +327,16 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const location = cleanText(rawProvider.atomic_specs?.location || rawProvider.address || `${rawProvider.province || 'Madrid'}, España`);
   const providerIdShort = (rawProvider.id || slug).substring(0, 8).toUpperCase();
   
-  // 🏛️ MÁSCARA DE IDENTIDAD S-CLASS (P0 ANTI-FUGA SOVEREIGN SHIELD)
-  const displayName = isUnlocked 
-    ? `División Técnica Homologada #${providerIdShort} · ${category}`
-    : `Proveedor Homologado S-Class #${providerIdShort} — ${category} (${location.split(',')[0]})`;
+  const tier = getProviderTier({ id: rawProvider.id || slug, slug, name: rawProvider.name });
+  const isUnclaimed = tier === 'DIRECTORY_UNCLAIMED';
+  
+  // 🏛️ IDENTIDAD S-CLASS: Mostrar nombre real del profesional/agrupación para directorio legal
+  const cleanName = cleanText(rawProvider.name);
+  const displayName = cleanName && !cleanName.toLowerCase().startsWith('prov-')
+    ? cleanName
+    : isUnlocked 
+      ? `División Técnica Homologada #${providerIdShort} · ${category}`
+      : `Proveedor Homologado S-Class #${providerIdShort} — ${category} (${location.split(',')[0]})`;
 
   const rating = rawProvider.atomic_specs?.metrics?.rating || rawProvider.rating || 5.0;
   const reviewsCount = rawProvider.atomic_specs?.metrics?.reviewCount || rawProvider.reviews || 27;
@@ -391,6 +386,41 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
           <span className="text-white font-bold truncate max-w-[200px] sm:max-w-xs">{rawProvider.name}</span>
         </nav>
         
+        {/* 🛡️ BANNER ÉTICO DE DIRECTORIO PROFESIONAL / DEMANDA EN MANO */}
+        {isUnclaimed && (
+          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/70 via-[#0d0d12] to-black border border-blue-500/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 font-mono text-[10px] uppercase font-bold border border-blue-500/30">
+                  Directorio Profesional // Cuenta No Reclamada
+                </span>
+                <span className="text-[10px] font-mono text-zinc-400">Safe Harbor LSSI Art. 16 · RGPD Art. 6.1.f</span>
+              </div>
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                ¿Eres el titular de <strong className="text-white font-bold">{displayName}</strong>? Reclama tu cuenta oficial <span className="text-[#ecb613] font-bold">100% GRATIS</span> para recibir peticiones directas de novios y empresas en {location.split(',')[0]} sin exclusividad ni cuotas fijas. Solo cobramos comisión si accedes a categorías preferentes o licitaciones B2G.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <ClaimProfileTrigger 
+                provider={{
+                  id: rawProvider.id || slug,
+                  name: displayName,
+                  slug,
+                  category,
+                  province: location.split(',')[0],
+                  phone: rawProvider.phone || ''
+                }}
+              />
+              <a 
+                href={`/api/providers/opt-out?slug=${slug}`}
+                className="px-3.5 py-2.5 bg-red-950/30 hover:bg-red-900/50 border border-red-500/30 text-red-300 font-mono text-xs rounded-xl transition-all"
+              >
+                Retirada en 1-clic
+              </a>
+            </div>
+          </div>
+        )}
+
         {/* 🚨 BANNER DE SOCIAL PROOF / URGENCIA NUPCIAL */}
         <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-blue-950/60 via-purple-950/40 to-black border border-blue-500/30 flex items-center justify-between gap-4 text-xs sm:text-sm">
           <div className="flex items-center gap-3">
@@ -403,7 +433,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             </span>
           </div>
           <Link 
-            href={`/checkout/presupuesto?proveedor=${slug}`} 
+            href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&base=${rawProvider.basePrice || 650}`} 
             className="px-3.5 py-1.5 bg-[#ecb613] text-black font-mono text-xs font-black uppercase rounded-xl hover:scale-105 transition-all shrink-0"
           >
             ¡Pedir Presupuesto!
@@ -625,7 +655,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                           <span className="text-lg font-black text-white font-mono">{item.ear_catalog_price_eur || item.original_price_eur} €</span>
                         </div>
                         <Link
-                          href={`/checkout/presupuesto?proveedor=${slug}&pack=${encodeURIComponent(item.title)}&precio=${item.ear_catalog_price_eur || item.original_price_eur}`}
+                          href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&pack=${encodeURIComponent(item.title)}&precio=${item.ear_catalog_price_eur || item.original_price_eur}`}
                           className="px-4 py-2 bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-mono text-xs font-bold uppercase rounded-xl transition-all"
                         >
                           Reservar
@@ -713,7 +743,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
                 <div className="space-y-3">
                   <Link
-                    href={`/checkout/presupuesto?proveedor=${slug}&precio=${rawProvider.basePrice || 900}`}
+                    href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&precio=${rawProvider.basePrice || 650}`}
                     className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-[#ecb613] text-black font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
                   >
                     <span>Contratar con Split Soberano (80/10/10)</span>
@@ -746,7 +776,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               {/* Botón Principal Solicitar Presupuesto */}
               <div className="space-y-3">
                 <Link
-                  href={`/checkout/presupuesto?proveedor=${slug}&precio=${rawProvider.basePrice || 900}`}
+                  href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&precio=${rawProvider.basePrice || 650}`}
                   className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 hover:from-rose-500 hover:to-[#ecb613] text-white font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-rose-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
                 >
                   <span>Solicitar Presupuesto Oficial</span>

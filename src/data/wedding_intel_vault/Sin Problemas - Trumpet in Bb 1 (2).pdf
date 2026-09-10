@@ -1,0 +1,84 @@
+s.png"},{"SIGLA":":O","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_surprise.png"},{"SIGLA":":@","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_angry.png"},{"SIGLA":"8-)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_sexy.png"},{"SIGLA":":?(","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_cry.png"},{"SIGLA":":(","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_sad.png"},{"SIGLA":"&lt;3","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_heart.png"},{"SIGLA":"(:3)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_catface.png"},{"SIGLA":":&dollar;","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_shame.png"},{"SIGLA":"_love_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_love.png"},{"SIGLA":"-_-?","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_ups.png"},{"SIGLA":"_diam_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_diamond.png"},{"SIGLA":"_cake_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_cake.png"},{"SIGLA":"_ring_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_ring.png"},{"SIGLA":"_flower_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_flower.png"},{"SIGLA":"_gift_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_gift.png"},{"SIGLA":"_star_)","SRC":"https:\/\/cdn1.bodas.net\/img\/smileys\/smiley_star.png"}]; globals.vendors = { haveLogoInGallery: false, }; globals.appleSignIn = { clientId: 'net.bodas.applesignin', returnUrl: 'https://www.bodas.net', }; /** * added for custom dimension support on legacy tracking functions */ globals.UniversalAnalyticsDimensions = {"CUSTOM_DIMENSION_REDUCED":5,"CUSTOM_DIMENSION_UID":6,"CUSTOM_DIMENSION_VENDOR_ID":15,"CUSTOM_DIMENSION_LISTING_ID":16,"CUSTOM_DIMENSION_FRM_INSERT":17,"CUSTOM_DIMENSION_HOTEL_ID":18,"CUSTOM_DIMENSION_LEAD_CATEGORY_ID":20,"CUSTOM_DIMENSION_LEAD_GROUP_ID":21,"CUSTOM_DIMENSION_DIRECTORY_SCORE_ID":24,"CUSTOM_DIMENSION_DIRECTORY_LISTING_DETAIL":26,"CUSTOM_DIMENSION_DIRECTORY_LISTING_ID":27,"CUSTOM_DIMENSION_DIRECTORY_STYLE":31,"CUSTOM_DIMENSION_PLATFORM":28,"CUSTOM_DIMENSION_SECTION":29,"CUSTOM_DIMENSION_FILTERS":30,"CUSTOM_DIMENSION_PARENT_LEAD_ID":32,"CUSTOM_DIMENSION_PARENT_VENDOR_ID":33,"CUSTOM_DIMENSION_SEGMENT_EXTRA_DATA":999}; globals.seo = { allowDeindexedMarketplaceSearchesWithoutGroupId: true, }; </script> <script> String.prototype.sprintf = function() { var args = arguments; var pos = 0; return this.replace(/\%s/g, function(match, number) { pos++; return typeof args[pos-1] != 'undefined' ? args[pos-1] : match ; }); }; function __ (string) { return string } function _s() { var msg = arguments[0]; return String.prototype.sprintf.apply(msg, Array.prototype.slice.call(arguments, 1)); } function _n (single, plural, value) { var string = ''; var value = parseInt(value); if (value === 1) { string = single.replace('%s', value); } else { string = plural.replace('%s', value); } return string; } function _ns (single, plural, value, value2) { var string = _n(single, plural, value); return _s(string, value2); } </script>
+<script defer src="https://www.bodas.net/builds/desktop/js/symfnw-ES171-1-20241219-010_www_m_/WebBundleResponsiveMarketplaceListing.js"></script>
+<script>
+if (typeof(window.userLayersToShow) === "undefined" || (typeof(window.userLayersToShow) !== "undefined" && typeof(window.userLayersToShow.name) === "undefined")) {
+window.userLayersToShow = {
+name:
+null
+}
+}
+</script>
+<div id="app-chat-container" class="pusher-container pusher-mobile   "></div>
+<script>
+window.pusher = {
+actorJson : '{\u0022id\u0022:null,\u0022name\u0022:\u0022An\\u00f3nimo\u0022,\u0022avatar\u0022:\u0022https:\\/\\/cdn1.bodas.net\\/assets\\/img\\/user\\/150x150\\/user-nodefined-150.jpg\u0022,\u0022avatarSvg\u0022:null,\u0022type\u0022:\u0022anonymous\u0022}',
+customOptions : {
+disableUserVendorNotifications : false,
+disableChat : false,
+isMobile : true,
+isAppAndroid : false,
+isAppNativeApiEnabled : false,
+isAppIos : false,
+isAppBarsEnabled : false,
+isAppReferrerEnabled : false,
+forceMinimizeChat : false,
+chatNeedsSpecialClass : false,
+appShowCloseButton : false,
+fixedBar : false,
+isChatbotEnabled: true,
+openOnLoad: false,
+canInitConversation: true,
+isPersistentStorageEnabled: true,
+disableAppChat: false            }
+};
+</script>
+<script>var analyticsManager = (function() {var _storedAnalyticsEvents = [];function queueEvent(func) {_storedAnalyticsEvents.push(func);}function trackQueuedEvents() {while (_storedAnalyticsEvents.length > 0) {var queuedEvent = _storedAnalyticsEvents.shift();queuedEvent();}}return {queueEvent : queueEvent,trackQueuedEvents : trackQueuedEvents,}})();</script><script class="app-ecommerce-script">parent.ecommerce = {};parent.ecommerce.clickTraces = {"standard":{"228720":{"id":228720,"name":"Viajes Makai","list":"{\"listing_type\":\"Desktop Catalog\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":247790,"brand":"Professional","position":1},"182554":{"id":182554,"name":"Halc\u00f3n Viajes Rivas","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":198146,"brand":"Professional","position":1},"25256":{"id":25256,"name":"Excursiones Riviera Maya","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":28495,"brand":"Professional","position":2},"18928":{"id":18928,"name":"Viajes Rangali","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":78642,"brand":"Professional","position":3},"176174":{"id":176174,"name":"Viraya Viajes","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":190874,"brand":"Professional","position":4},"82215":{"id":82215,"name":"Premium Travels","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":85879,"brand":"Professional","position":5},"145085":{"id":145085,"name":"Salacot Viajes","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":156865,"brand":"Professional","position":6},"10389":{"id":10389,"name":"MADOX VIAJES","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":28329,"brand":"Professional","position":7},"262239":{"id":262239,"name":"Sirius Travel","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":286611,"brand":"Professional","position":8},"34043":{"id":34043,"name":"Australia Viajes","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":34004,"brand":"Spotlight","position":9},"238834":{"id":238834,"name":"Somos Mundo","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":259920,"brand":"Spotlight","position":10},"253401":{"id":253401,"name":"Now Travel","list":"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}","variant":276641,"brand":"Spotlight","position":11}}};</script><script class="app-ecommerce-script">document.addEventListener('DOMContentLoaded', function () {if (typeof (parent.analytics) !== 'undefined') {parent.analytics.track('Product List Viewed', {event_category: 'Ecommerce',event_action: 'Impressions',nonInteraction: 1,products: [{product_id: '228720',name: "Viajes Makai",brand: 'Professional',variant: '247790',position: 1,list: '"{\"listing_type\":\"Desktop Catalog\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '182554',name: "Halcón Viajes Rivas",brand: 'Professional',variant: '198146',position: 1,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '25256',name: "Excursiones Riviera Maya",brand: 'Professional',variant: '28495',position: 2,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '18928',name: "Viajes Rangali",brand: 'Professional',variant: '78642',position: 3,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '176174',name: "Viraya Viajes",brand: 'Professional',variant: '190874',position: 4,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '82215',name: "Premium Travels",brand: 'Professional',variant: '85879',position: 5,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '145085',name: "Salacot Viajes",brand: 'Professional',variant: '156865',position: 6,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '10389',name: "MADOX VIAJES",brand: 'Professional',variant: '28329',position: 7,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '262239',name: "Sirius Travel",brand: 'Professional',variant: '286611',position: 8,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '34043',name: "Australia Viajes",brand: 'Spotlight',variant: '34004',position: 9,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '238834',name: "Somos Mundo",brand: 'Spotlight',variant: '259920',position: 10,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},{product_id: '253401',name: "Now Travel",brand: 'Spotlight',variant: '276641',position: 11,list: '"{\"listing_type\":\"Desktop Nearby Vendors\",\"group_id\":2,\"category_id\":40,\"region_adm1_id\":0,\"region_id\":3035,\"geozone_id\":0,\"city_id\":831485,\"page\":1}"'},]});}});</script><script>
+var reduced = '/vendors/list/sector/town';
+</script>
+<script>
+window.reducedUrl = '/vendors/list/sector/town';
+</script>
+<script>
+var _comscore = _comscore || []
+var comscoreScript = function () {
+var s = document.createElement('script'), el = document.getElementsByTagName('script')[0]
+s.defer = true
+s.src = (document.location.protocol == 'https:' ? 'https://sb' : 'http://b') + '.scorecardresearch.com/cs/6156116/beacon.js'
+el.parentNode.insertBefore(s, el)
+}
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+comscoreScript()
+})
+document.getElementsByTagName('body')[0].addEventListener('IABTcDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+document.getElementsByTagName('body')[0].addEventListener('nonIABCountryDataReady', function () {
+_comscore.push({ c1: '2', c2: '6156116' })
+})
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+comscoreScript()
+}
+</script>
+<script>
+window.contextTraits = {};
+</script>
+<script>
+function trackExperimentViewed(experimentId, bucketingId, variantId, eventProperties) {
+window.analytics.track('Experiment Viewed', {
+...eventProperties,
+experimentId,
+bucketingId,
+variantId
+})
+}
+</script>
+<script>
+!function () {
+const ga4ClientIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'client_id', resolve)
+});
+const ga4SessionIdPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_id', resolve)
+});
+const ga4SessionNumberPromise = new Promise(resolve => {
+gtag('get', 'G-QDLJBX8LD9', 'session_

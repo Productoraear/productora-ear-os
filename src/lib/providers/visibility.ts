@@ -10,10 +10,73 @@ export interface WhitelistData {
   updated_at?: string;
 }
 
+export interface BlacklistData {
+  policy: string;
+  blacklisted_ids: string[];
+  blacklisted_slugs: string[];
+  optout_records?: Array<{ slug: string; reason?: string; timestamp: string }>;
+}
+
 const WHITELIST_PATH = path.join(process.cwd(), 'src', 'data', 'active_providers_whitelist.json');
+const BLACKLIST_PATH = path.join(process.cwd(), 'src', 'data', 'blacklisted_providers.json');
 
 /**
- * Obtiene la lista blanca activa de proveedores públicos
+ * Obtiene la lista de exclusión (Blacklist / Opt-out)
+ */
+export function getBlacklist(): BlacklistData {
+  try {
+    if (fs.existsSync(BLACKLIST_PATH)) {
+      const raw = fs.readFileSync(BLACKLIST_PATH, 'utf-8');
+      return JSON.parse(raw);
+    }
+  } catch (err) {
+    console.warn('[VISIBILITY] Error leyendo blacklisted_providers.json:', err);
+  }
+  return {
+    policy: 'STRICT_OPTOUT_HONORED',
+    blacklisted_ids: ['prov-6', 'peke-teso'],
+    blacklisted_slugs: ['prov-6', 'peke-teso', '100-apodos'],
+  };
+}
+
+/**
+ * Verifica si un proveedor ha solicitado opt-out o está vetado de forma inmutable
+ */
+export function isProviderBlacklisted(provider: {
+  id?: string;
+  slug?: string;
+  name?: string;
+  atomic_specs?: { slug?: string };
+}): boolean {
+  if (!provider) return true;
+
+  const name = (provider.name || '').toLowerCase().trim();
+  const id = (provider.id || '').toLowerCase().trim();
+  const slug = (provider.slug || provider.atomic_specs?.slug || '').toLowerCase().trim();
+
+  // Veto inmutable hardcoded
+  if (
+    name.includes('peke teso') ||
+    id.includes('peke-teso') ||
+    slug.includes('peke-teso') ||
+    id === 'prov-6' ||
+    slug === 'prov-6' ||
+    name.includes('100 apodos') ||
+    slug.includes('100-apodos')
+  ) {
+    return true;
+  }
+
+  // Comprobar contra archivo blacklisted_providers.json
+  const bl = getBlacklist();
+  if (id && (bl.blacklisted_ids || []).includes(id)) return true;
+  if (slug && (bl.blacklisted_slugs || []).includes(slug)) return true;
+
+  return false;
+}
+
+/**
+ * Obtiene la lista blanca activa de proveedores verificados
  */
 export function getActiveWhitelist(): WhitelistData {
   try {
@@ -27,35 +90,26 @@ export function getActiveWhitelist(): WhitelistData {
   return defaultWhitelist as WhitelistData;
 }
 
+export type ProviderTier = 'SOVEREIGN' | 'CLAIMED' | 'DIRECTORY_UNCLAIMED' | 'BLACKLISTED';
+
 /**
- * Determina si un proveedor tiene visibilidad pública.
- * Por mandato S-Class del CEO: TODOS LOS PERFILES PERMANECEN EN OCULTO EXCEPTO EDWIN AGUDELO,
- * a menos que hayan sido activados explícitamente desde /admin/directorio.
+ * Determina el estado legal y nivel de membresía de un proveedor
  */
-export function isProviderPublic(
-  provider: {
-    id?: string;
-    slug?: string;
-    name?: string;
-    atomic_specs?: { slug?: string };
-  },
-  whitelist?: WhitelistData
-): boolean {
-  if (!provider) return false;
+export function getProviderTier(provider: {
+  id?: string;
+  slug?: string;
+  name?: string;
+  atomic_specs?: { slug?: string };
+}): ProviderTier {
+  if (isProviderBlacklisted(provider)) {
+    return 'BLACKLISTED';
+  }
 
   const name = (provider.name || '').toLowerCase().trim();
   const id = (provider.id || '').toLowerCase().trim();
   const slug = (provider.slug || provider.atomic_specs?.slug || '').toLowerCase().trim();
 
-  // 1. Veto Inmutable: Proveedores vetados o corruptos (Peke Teso, slop de blogs)
-  if (name.includes('peke teso') || id.includes('peke-teso') || slug.includes('peke-teso') || id === 'prov-6') {
-    return false;
-  }
-  if (name.includes('100 apodos') || slug.includes('100-apodos')) {
-    return false;
-  }
-
-  // 2. Soberano Inmutable: Edwin Agudelo y Productora EAR siempre tienen visibilidad pública garantizada
+  // 1. Soberano Inmutable: Edwin Agudelo y Productora EAR
   if (
     id === 'prov-ear-sovereign-01' ||
     id === 'prov-53' ||
@@ -65,23 +119,42 @@ export function isProviderPublic(
     name.includes('edwin agudelo') ||
     name.includes('productora ear')
   ) {
-    return true;
+    return 'SOVEREIGN';
   }
 
-  // 3. Verificación contra Whitelist Activa (Activados desde /admin/directorio)
-  const currentWhitelist = whitelist || getActiveWhitelist();
+  // 2. Verificación contra Whitelist Activa (Cuentas reclamadas y activadas)
+  const currentWhitelist = getActiveWhitelist();
   const activeIds = (currentWhitelist.active_ids || []).map(x => x.toLowerCase().trim());
   const activeSlugs = (currentWhitelist.active_slugs || []).map(x => x.toLowerCase().trim());
 
-  if (id && activeIds.includes(id)) return true;
-  if (slug && activeSlugs.includes(slug)) return true;
+  if ((id && activeIds.includes(id)) || (slug && activeSlugs.includes(slug))) {
+    return 'CLAIMED';
+  }
 
-  // Por defecto: OCULTO
-  return false;
+  // 3. Directorio Público Profesional no reclamado (Legítimo Safe Harbor LSSI Art. 16)
+  return 'DIRECTORY_UNCLAIMED';
 }
 
 /**
- * Alterna la visibilidad pública de un proveedor (Activar / Ocultar)
+ * Determina si un proveedor es visible públicamente en el directorio.
+ * Directiva S-Class del CEO: NUNCA lanzar 404 para proveedores válidos.
+ * Todos los perfiles son visibles excepto aquellos en la lista de exclusión/opt-out.
+ */
+export function isProviderPublic(
+  provider: {
+    id?: string;
+    slug?: string;
+    name?: string;
+    atomic_specs?: { slug?: string };
+  }
+): boolean {
+  if (!provider) return false;
+  const tier = getProviderTier(provider);
+  return tier !== 'BLACKLISTED';
+}
+
+/**
+ * Alterna la verificación oficial de un proveedor
  */
 export function toggleProviderVisibility(id: string, slug?: string, setActive?: boolean): { success: boolean; active: boolean; active_ids: string[] } {
   try {
@@ -109,8 +182,8 @@ export function toggleProviderVisibility(id: string, slug?: string, setActive?: 
     }
 
     const updatedData: WhitelistData = {
-      policy: 'DENY_ALL_EXCEPT_WHITELIST',
-      note: 'Directiva S-Class del CEO: Todos los perfiles permanecen en oculto por defecto excepto Edwin Agudelo. Activaciones controladas desde /admin/directorio.',
+      policy: 'OPEN_DIRECTORY_WITH_OPTOUT',
+      note: 'Directiva S-Class: Directorio público ético con modelo Safe Harbor LSSI Art. 16 y Opt-out en 1 clic.',
       active_ids: Array.from(activeIds),
       active_slugs: Array.from(activeSlugs),
       updated_at: new Date().toISOString()

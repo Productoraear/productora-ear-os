@@ -1,6 +1,6 @@
 {
-  "policy": "DENY_ALL_EXCEPT_WHITELIST",
-  "note": "Directiva S-Class del CEO: Todos los perfiles permanecen en oculto por defecto excepto Edwin Agudelo. Activaciones controladas desde /admin/directorio.",
+  "policy": "OPEN_DIRECTORY_WITH_OPTOUT",
+  "note": "Directiva S-Class del CEO: Directorio público profesional homologado activo con blindaje RGPD, LSSI-CE Art. 16 Safe Harbor y Opt-out en 1 clic. Edwin Agudelo prioridad soberana #1.",
   "active_ids": [
     "prov-ear-sovereign-01",
     "productora-ear",
@@ -13,5 +13,5 @@
     "edwin-agudelo-canta-a-novios",
     "bienvenido-edwin-agudelo-sin-igual"
   ],
-  "updated_at": "2026-09-08T17:48:00Z"
+  "updated_at": "2026-09-09T09:50:00Z"
 }

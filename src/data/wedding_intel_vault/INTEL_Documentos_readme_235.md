@@ -1,0 +1,44 @@
+a-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDownBlood.svg" data-svg-lazyload="1"></i>    <select name="RolOthers"
+id="main_aside_rolOthers"
+class="formField__input formField__input--select app-lead-form-rol-others"
+>
+<option value="3"
+>
+Familia                </option>
+<option value="4"
+selected                    >
+Invitados                </option>
+<option value="5"
+>
+Proveedores                </option>
+<option value="6"
+>
+Prensa                </option>
+</select>
+<label class="formField__label" for="main_aside_rolOthers">Eres</label>
+</div>
+</div>
+<div class="leadForm__fullwidth customDate app-custom-date " data-custom-date-type="MONTH" data-active-section="custom-date">
+<div class="customDate__header">
+<div class="leadForm__label">Fecha del evento</div>
+</div>
+<div class="customDate__rangeSelect app-custom-date-section" data-custom-type-section="custom-date">
+<div class="app-form-control formControl">
+<div class="customDate__groupColumns app-custom-date-selects app-form-field" aria-labelledby="custom-date">
+<div class="formField app-form-field  formField--outlined" aria-labelledby="main_aside_month">
+<i class="svgIcon app-svg-async svgIcon__angleDownBlood formField__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDownBlood.svg" data-svg-lazyload="1"></i>    <select name="month"
+id="main_aside_month"
+data-test-id=modalLeadFormMonth            class="formField__input formField__input--select app-custom-date-month"
+>
+<option value=""
+hidden>
+</option>
+<option value="1"
+>
+Enero                </option>
+<option value="2"
+>
+Febrero                </option>
+<option value="3"
+>
+Marzo        

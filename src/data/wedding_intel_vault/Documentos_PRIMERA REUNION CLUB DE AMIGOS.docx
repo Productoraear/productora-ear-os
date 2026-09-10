@@ -1,0 +1,249 @@
+  </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                                            
+<div class="header-join">
+    <a class="header-join-link" href="https://www.bodas.net/users-login.php">Accede</a>
+    <a
+        class="header-join-link app-ua-track-event"
+        href="https://www.bodas.net/users-signup.php"
+         data-track-c='SignUpTracking'  data-track-a='a-step1'  data-track-l='d-desktop+s-site_header'  data-track-s=''  data-track-v='0'  data-track-ni='0'     >
+        Regístrate    </a>
+</div>
+                    
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+<div class="breadcrumb-box"><div class="wrapper"><div class="breadcrumb-container"><ul class="breadcrumb"><li><a href="https://www.bodas.net/">Bodas</a></li><li><a href="https://comunidad.bodas.net/">Comunidad</a></li><li><a href="https://comunidad.bodas.net/grupos/grupo-belleza">Grupo Belleza</a></li><li><a rel="nofollow" href="https://comunidad.bodas.net/grupos/grupo-belleza/fotos">Fotos</a></li><li><span>Peinados de novia VIII</span></li></ul>    <div id="search" class="animate-search">
+        <div class="animate-search-container">
+            <div class="animate-search-visible">
+                <i class="svgIcon svgIcon__search mr5">
+                    <svg viewBox="0 0 74 77">
+                        <path d="M49.35 48.835l23.262 23.328a2.316 2.316 0 11-3.28 3.27L45.865 51.901a28.534 28.534 0 01-17.13 5.683C12.867 57.584.014 44.7.014 28.8.014 12.896 12.865.015 28.735.015 44.593.015 57.446 12.9 57.446 28.8a28.728 28.728 0 01-8.097 20.035zM52.813 28.8c0-13.345-10.782-24.153-24.079-24.153-13.31 0-24.089 10.805-24.089 24.153 0 13.344 10.782 24.152 24.09 24.152 13.294 0 24.078-10.811 24.078-24.152z" fill-rule="nonzero"></path>
+                    </svg>
+                </i>
+            </div>
+            <form class="app-animate-search animate-search-form" name="frmSearchCom" method="get" action="https://comunidad.bodas.net/community-discussions-search.php">
+                                <input class="app-animate-search-input search-input animate-search-input"
+                       placeholder="BUSCAR"
+                       data-placeholder-open="¿QUÉ BUSCAS?"
+                       name="txtSearch"
+                       id="txtDebatesSearch"
+                       type="text"
+                       autocomplete="off"
+                       data-suffix="default"
+                       value="" />
+                <div id="StrDebates" class="app-suggest-debates-div-default droplayer droplayer-scroll" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+
+</div></div></div>
+<div class="wrapper">
+    <div class="pure-g">
+        <div class="pure-u-3-4 pr50 pt35">
+            <div class="app-blocked-content text-center border discussion-form pt50 pb50 m15 dnone">
+                <h2>El contenido del post se ha ocultado</h2>
+                <p>Para desbloquear el contenido, <span class="app-community-unblock-content simpleLink" data-item-type="3" data-item-id="137">haz clic aquí</span></p>
+            </div>
+            <div class="app-discussion-item-content ">
+                <div class="inspiration-single-box box-image border-light">
+                    <div class="inspiration-single-box-actions">
+                                                                            <span class="app-community-item-like btn universalFavoriteButton universalFavoriteButton--inModal" data-iditem="137" data-idtipo="1">
+                                <div class="btn-fav app-btn-fav no-animation"></div>
+                            </span>
+                                            </div>
+                    <div class="inspiration-single-frame text-center">
+                                                    <div class="inspiration-single-frame-img "  >
+                                <img alt="Peinados de novia VIII" src="https://cdn0.bodas.net/usuarios/fotos/3/4/8/2/cfb_137.jpg" height="450">
+                            </div>
+                            <div class="inspiration-single-box-report">
+                                <span class="app-community-denunciar-option pointer app-community-report" data-type="3" data-id="137">
+                                    <span class="icon icon-report-grey icon-left color-grey">Denunciar</span>
+                                </span>&nbsp;
+                                <span class="app-community-report-hide-option pointer app-community-report-hide-content" data-item-type="3" data-item-id="137">
+                                    <span class="icon icon-eye-through-grey icon-left color-grey">Ocultar contenido</span>
+                                </span>
+                            </div>
+                                            </div>
+                    <div class="inspiration-single-footer pure-g">
+                        <div class="pure-u-1-2">
+                            <p class="mb0">
+                                                                    Publicado en:
+                                                            </p>
+                                                            <span class="inspiration-single-footer-title">Grupo Belleza</span>
+                                                    </div>
+                        <div class="pure-u-1-2 text-right mt5">
+                                                        <div class="flex-inline va-top">
+                                    <div class="buttons-social ">
+                                            <span data-social="pinterest" class="app-share-social-button app-social-share buttons-social-icon" role="button">
+                    <i class="svgIcon app-svg-async svgIcon__pinterest "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/pinterest.svg" data-svg-lazyload="1"></i>                </span>
+                                                        <span
+                    class="app-share-social-button app-social-share buttons-social-icon"
+                    data-social="facebook"
+                    data-url="https://comunidad.bodas.net/fotos/peinados-de-novia-viii--f137"
+                    data-title="Peinados de novia VIII - Fotos bodas.net"
+                    role="button">
+                        <i class="svgIcon app-svg-async svgIcon__facebook "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/facebook.svg" data-svg-lazyload="1"></i>                </span>
+                                                        <span
+                    class="app-share-social-button app-social-share buttons-social-icon"
+                    data-social="twitter"
+                    data-url="https://comunidad.bodas.net/fotos/peinados-de-novia-viii--f137"
+                    data-title="Peinados de novia VIII - Fotos bodas.net"
+                    data-via="bodasnet"
+                    role="button">
+                    <i class="svgIcon app-svg-async svgIcon__twitter "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/twitter.svg" data-svg-lazyload="1"></i>                </span>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pure-u-1-4 pt35">
+            <div class="inspiration-widget inspiration-widget-debate text-left border-light">
+                <p class="inspiration-single-title">
+                                            Publicado en:
+                                    </p>
+                                    <a class="inspiration-widget-debate-title" href="https://comunidad.bodas.net/grupos/grupo-belleza">Grupo Belleza</a>
+                                <div class="inspiration-widget-debate-header">
+                    <div class="fleft">
+                                                    <span rel="nofollow" class="app-link app-community-profile-layer avatar   user-profile" data-id-user="3482" data-href="https://comunidad.bodas.net/marina--u3482" data-testid="partials-complete-avatar">
+            <figure
+        >
+        <img
+            class="avatar-thumb"
+            src="https://cdn0.bodas.net/usuarios/fotos/3/4/8/2/utpp_3482.jpg?r=6903215"
+            width=""
+            loading="lazy"
+             alt="Marina">
+            </figure>
+    </span>
+                    </div>
+                    <div class="overflow pl10">
+                        <p class="color-grey mb0">Por                                                            <a rel="nofollow" class="color-black" href="https://comunidad.bodas.net/marina--u3482"> Marina</a>
+                            , El 24 de Noviembre de 2008 a las 09:38                        </p>
+                    </div>
+                </div>
+                <hr class="inspiration-single-hack-hr">
+                <p class="mt20"><p>Recogido alto trabajado en mechones que conforman una flor.</p></p>
+                                    <div class="text-center mt20">
+                        <a href="https://comunidad.bodas.net/grupos/grupo-belleza" class="btn-flat red btn-primary">Ir al grupo</a>
+                    </div>
+                            </div>
+            <div class="mt20">
+                                    <div class="pure-u-1 content-banner overflow">
+                                    <div class="app-DFP " style="min-height:190px;"
+             data-idgrupo="8"
+             data-idregion="3035"
+             data-idsubseccion="">
+        </div>
+                        </div>
+                            </div>
+        </div>
+    </div>
+</div>
+<div class="app-layer-track" data-url="https://comunidad.bodas.net/fotos/peinados-de-novia-viii--f137" data-reduced="/groups/photos/item"></div>
+
+<img class="img-trace" src="https://www.bodas.net/traces-CommunityFoto.php?id=137&123506199" alt="">
+</main>
+
+
+<div class="app-footer">
+    <script>
+  if (typeof(window.userLayersToShow) === "undefined" || (typeof(window.userLayersToShow) !== "undefined" && typeof(window.userLayersToShow.name) === "undefined")) {
+      window.userLayersToShow = {
+        name:
+                    null
+              }
+  }
+</script>
+
+    
+    
+
+            <footer class="layoutFooter">
+    <div class="linkingFooter">
+        <section class="corporativeLinks">
+    <div class="linkingFooter__title">Información</div>
+    <ul>
+        <li>
+                    <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es/reporting/">Contactar</span>
+                </li>
+        <li>
+            <a rel="nofollow" href="https://www.bodas.net/condiciones-legales.php">Condiciones legales</a>
+        </li>
+                    <li>
+                <a rel="nofollow" href="https://www.bodas.net/legal/privacy.php">Aviso de privacidad</a>
+            </li>
+                            <li>
+                <a rel="nofollow" href="https://www.bodas.net/legal/cookies.php">Aviso de cookies</a>
+            </li>
+                <li>
+            <a class="ot-sdk-show-settings">Do not sell my personal info</a>
+        </li>
+                    <li>
+                <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es/transparency">Centro de transparencia</span>
+            </li>
+            <li>
+                <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es">Centro legal</span>
+            </li>
+                <li>
+                            <a rel="nofollow" href="https://www.bodas.net/emp-Acceso.php">Alta empresas</a>
+                    </li>
+        <li>
+            <a href="https://www.bodas.net/aboutus/aboutus.php">¿Quiénes somos?</a>
+        </li>
+        <li>
+            <span class="app-link-blank pointer" data-href="https://www.theknotww.com/careers/">Careers</span>
+        </li>
+                        <li>
+            <a href="https://www.bodas.net/web-boda">Web de boda</a>
+        </li>
+    </ul>
+</section>
+        
+    <section class="appsLinks app-footer-download-links">
+        <div class="linkingFooter__title">Descárgate la app</div>
+        <div class="appsLinks__description">
+                <img src="https://cdn1.bodas.net/assets/img/dropdown/app.png" srcset="https://cdn1.bodas.net/assets/img/dropdown/app@2x.png 2x" class="appsLinks__imago" alt="App icon"  width="48" height="48" loading="lazy"  >
+            Organiza tu boda donde y cuando quieras        </div>
+        <ul class="appsLinks__list">
+            <li class="app-store-badge-ios">
+                <a rel="nofollow noopener noreferrer" target="_blank" href="https://app.appsflyer.com/id598636207?pid=WP-iOS-ES&c=WP-ES-LANDINGS&s=es"
+                   title="App Store">
+                        <img src="https://cdn1.bodas.net/assets/img/footer/appstore.png" srcset="https://cdn1.bodas.net/assets/img/footer/appstore@2x.png 2x"  alt="App Store"  width="140" height="42" loading="lazy"  >
+                </a>
+            </li>
+            <li class="app-store-badge-android">
+                <a rel="nofollow noopener noreferrer" target="_blank"
+                   href="https://app.appsflyer.com/net.bodas.launcher?pid=WP-Android-ES&c=WP-ES-LANDINGS" title="Google Play">
+                        <img src="https://cdn1.bodas.net/assets/img/footer/googleplay.png" srcset="https://cdn1.bodas.net/assets/img/footer/googleplay@2x.png 2x"  alt="Google Play"  width="140" height="42" loading="lazy"  >
+                </a>
+            </li>
+        </ul>
+    </section>
+            <section class="socialLinks">
+        <div class="linkingFooter__title">Síguenos en</div>
+        <ul class="socialLinks__list">
+                            <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://www.facebook.com/bodasnet" title="Facebook" target="_blank"><i class="svgIcon app-svg-async svgIcon__facebook "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/facebook.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://twitter.com/bodasnet" title="Twitter" target="_blank"><i class="svgIcon app-svg-async svgIcon__twitter "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/twitter.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://pinterest.com/bodasnet" title="Pinterest" target="_blank"><i class="svgIcon app-svg-async svgIcon__pinterest "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/pinterest.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://instagram.com/bodasnet" title="Instagram" target="_blank"><i class="svgIcon app-svg-async svgIcon__instagram "   data-svg="https://cdn

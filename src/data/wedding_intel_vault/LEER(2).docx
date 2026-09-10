@@ -1,0 +1,942 @@
+'pocketfold kraft'+pocketsize).removeClass('schiefer'+pocketsize+' weiss'+pocketsize+' champagner'+pocketsize+' hortensie'+pocketsize);							
+									break;
+								default:
+							}					
+						});
+					} 
+				}
+			
+	
+				function run_fb() {				
+					if (typeof fbq !== 'undefined') {							
+						let fpprice = $('.product-price').html().replace('€','');
+						fbq('track', 'ViewContent', {value: fpprice, content_ids: ['629'], content_category: "Invitations"});			
+					} else {							
+						setTimeout(run_fb,600);
+					}						
+				}				
+			
+$('select[name=\'recurring_id\'], input[name="quantity"]').change(function(){
+	$.ajax({
+		url: 'index.php?route=product/product/getRecurringDescription',
+		type: 'post',
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'recurring_id\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#recurring-description').html('');
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+
+			if (json['success']) {
+				$('#recurring-description').html(json['success']);
+			}
+		}
+	});
+});
+//--></script>
+<script type="text/javascript"><!--
+
+              $('#designer-order').on('click', function () {
+  var $btn = $(this);
+  $.ajax({
+    url: 'index.php?route=checkout/cart/validate',
+    type: 'post',
+    data: $(
+      '#product .button-group-page input[type=\'text\'], #product .button-group-page input[type=\'hidden\'], #product .button-group-page input[type=\'radio\']:checked, #product .button-group-page input[type=\'checkbox\']:checked, #product .button-group-page select, #product .button-group-page textarea, ' +
+      '#product .product-options input[type=\'text\'], #product .product-options input[type=\'hidden\'], #product .product-options input[type=\'radio\']:checked, #product .product-options input[type=\'checkbox\']:checked, #product .product-options select, #product .product-options textarea, ' +
+      '#product select[name="recurring_id"]'
+    ),
+    dataType: 'json',
+    beforeSend: function () {
+      $('#button-cart').button('loading');
+    },
+    complete: function () {
+      $('#button-cart').button('reset');
+    },
+    success: function (json) {
+      $('.alert-dismissible, .text-danger').remove();
+      $('.form-group').removeClass('has-error');
+
+      if (json['error']) {
+
+        if (json['error']['option']) {
+          for (i in json['error']['option']) {
+            var element = $('#input-option' + i.replace('_', '-'));
+
+            if (element.parent().hasClass('input-group')) {
+              element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+            } else {
+              element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+            }
+          }
+        }
+
+        if (json['error']['recurring']) {
+          $('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+        }
+
+        // Highlight any found errors
+        $('.text-danger').parent().addClass('has-error');
+
+        try {
+          $('html, body').animate({ scrollTop: $('.form-group.has-error').offset().top - 50 }, 'slow');
+        } catch (e) {
+        }
+      }else{
+        console.log('suc');
+        ppclient.fire("bestellen-button-click");
+				$('.product-right').removeClass("designer-open");
+				$('iframe[src="https://herzkarten.io/index.html"]').removeClass("designer-open");
+      }
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      alert(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
+    }
+  });
+});
+            
+$('#button-cart, [data-quick-buy]').on('click', function () {
+
+          var sample = '';
+          if($(this).parents('.sample').length == 1){
+            sample = '&sample=true';
+          }
+          
+  var $btn = $(this);
+  $.ajax({
+    url: 'index.php?route=checkout/cart/add' + sample,
+    type: 'post',
+    data: $(
+      '#product .button-group-page input[type=\'text\'], #product .button-group-page input[type=\'hidden\'], #product .button-group-page input[type=\'radio\']:checked, #product .button-group-page input[type=\'checkbox\']:checked, #product .button-group-page select, #product .button-group-page textarea, ' +
+      '#product .product-options input[type=\'text\'], #product .product-options input[type=\'hidden\'], #product .product-options input[type=\'radio\']:checked, #product .product-options input[type=\'checkbox\']:checked, #product .product-options select, #product .product-options textarea, ' +
+      '#product select[name="recurring_id"]'
+    ),
+    dataType: 'json',
+    beforeSend: function () {
+      $('#button-cart').button('loading');
+    },
+    complete: function () {
+      $('#button-cart').button('reset');
+    },
+    success: function (json) {
+
+				dataLayer.push({ ecommerce: null });  // Clear the previous ecommerce object.
+				dataLayer.push({
+					event: "add_to_cart",
+					ecommerce: json['gdata']
+				});	
+			
+			
+      $('.alert-dismissible, .text-danger').remove();
+      $('.form-group').removeClass('has-error');
+
+      if (json['error']) {
+        if (json['error']['option']) {
+          for (i in json['error']['option']) {
+            var element = $('#input-option' + i.replace('_', '-'));
+
+            if (element.parent().hasClass('input-group')) {
+              element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+            } else {
+              element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+            }
+          }
+        }
+
+        if (json['error']['recurring']) {
+          $('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+        }
+
+        // Highlight any found errors
+        $('.text-danger').parent().addClass('has-error');
+
+        try {
+          $('html, body').animate({ scrollTop: $('.form-group.has-error').offset().top - 50 }, 'slow');
+        } catch (e) {
+        }
+      }
+
+      if (json['success']) {
+        if ($('html').hasClass('popup-options')) {
+          parent.$(".popup-options .popup-close").trigger('click');
+        }
+
+        if (json['notification']) {
+          parent.show_notification(json['notification']);
+        } else {
+          parent.$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+        }
+
+        parent.$('#cart-total').html(json['total']);
+        parent.$('#cart-items,.cart-badge').html(json['items_count']);
+
+        if (json['items_count']) {
+          parent.$('#cart-items,.cart-badge').removeClass('count-zero');
+        } else {
+          parent.$('#cart-items,.cart-badge').addClass('count-zero');
+        }
+
+        if (Journal['scrollToTop']) {
+          parent.$('html, body').animate({ scrollTop: 0 }, 'slow');
+        }
+
+        parent.$('.cart-content ul').load('index.php?route=common/cart/info ul li');
+
+        if (window.location.href.indexOf('quick_buy=true') !== -1) {
+          parent.location.href = Journal['checkoutUrl'];
+        }
+
+        if ($btn.data('quick-buy') !== undefined) {
+          location = Journal['checkoutUrl'];
+        }
+
+        if (parent.window['_QuickCheckout']) {
+          parent.window['_QuickCheckout'].save();
+        }
+
+        if (json['redirect']) {
+          parent.location.href = json['redirect'];
+        }
+	
+				if (typeof fbq !== 'undefined') {
+					let fprice = $('.product-price').html().replace('€','');
+					fbq('track', 'AddToCart', {value: fprice, content_ids: ['629'], content_category: "Invitations"});
+				}
+			
+       parent.location.href = "/cart";
+      }
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      alert(thrownError + '\r\n' + xhr.statusText + '\r\n' + xhr.responseText);
+    }
+  });
+});
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
+});
+
+$('.time').datetimepicker({
+	pickDate: false
+});
+
+$('button[id^=\'button-upload\']').on('click', function() {
+	var node = this;
+
+	$('#form-upload').remove();
+
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	if (typeof timer != 'undefined') {
+    	clearInterval(timer);
+	}
+
+	timer = setInterval(function() {
+		if ($('#form-upload input[name=\'file\']').val() != '') {
+			clearInterval(timer);
+
+			$.ajax({
+				url: 'index.php?route=tool/upload',
+				type: 'post',
+				dataType: 'json',
+				data: new FormData($('#form-upload')[0]),
+				cache: false,
+				contentType: false,
+				processData: false,
+				beforeSend: function() {
+					$(node).button('loading');
+				},
+				complete: function() {
+					$(node).button('reset');
+				},
+				success: function(json) {
+					$('.text-danger').remove();
+
+					if (json['error']) {
+						$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
+					}
+
+					if (json['success']) {
+						alert(json['success']);
+
+						$(node).parent().find('input').val(json['code']);
+					}
+				},
+				error: function(xhr, ajaxOptions, thrownError) {
+					alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+				}
+			});
+		}
+	}, 500);
+});
+//--></script>
+<script type="text/javascript"><!--
+$(function () {
+  $('#review').delegate('.pagination a', 'click', function(e) {
+    e.preventDefault();
+
+    $('#review').fadeOut('slow');
+
+    $('#review').load(this.href);
+
+    $('#review').fadeIn('slow');
+  });
+
+  $('#review').load('index.php?route=product/product/review&product_id=629');
+
+  $('#button-review').on('click', function() {
+    $.ajax({
+      url: 'index.php?route=product/product/write&product_id=629',
+      type: 'post',
+      dataType: 'json',
+      data: $("#form-review").serialize(),
+      beforeSend: function() {
+        $('#button-review').button('loading');
+      },
+      complete: function() {
+        $('#button-review').button('reset');
+      },
+      success: function(json) {
+        $('.alert-success, .alert-danger').remove();
+
+        if (json['error']) {
+          $('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+        }
+
+        if (json['success']) {
+          $('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+
+          $('input[name=\'name\']').val('');
+          $('textarea[name=\'text\']').val('');
+          $('input[name=\'rating\']:checked').prop('checked', false);
+        }
+      }
+    });
+  });
+});
+
+
+                $('.imageselect-select').click(function(){
+                    $('.imageselect-options[data-option="' + $(this).data('option') + '"]').toggle();
+                    $(this).parents('.stepper').toggleClass("active");
+                });
+                $('.imageselect-options > li').click(function(){
+                    let option_id = $(this).parents('.imageselect-options').data('option');
+                    $('#inputoption' + option_id).val($(this).val()).change(); 
+                     
+                    $('.imageselect-select[data-option="' + option_id + '"] > a').html($('#' + $(this).val() + '_text').html().trim());
+                    $('.imageselect-options[data-option="' + $(this).parents('.imageselect-options').data('option') + '"]').hide();
+                     $('.product-option-select .stepper').removeClass("active");
+                });
+                $(document).click(function(event) { 
+                    var $target = $(event.target);
+                    if(!$target.closest('.imageselect-options').length && !$target.closest('.imageselect-select').length && 
+                    $('.imageselect-options').is(":visible")) {
+                        $('.imageselect-options').hide();
+                        $('.product-option-select .stepper').removeClass("active");
+                    }        
+                });
+            
+$(document).ready(function() {
+
+              $('.swatch-color').click(function(){
+                let src = $('.product-info .swiper-slide img:first').attr('src').replace(/_.*-/,'_' + $(this).data('id') + '-');
+                let srcset = $('.product-info .swiper-slide img:first').attr('srcset').replace(/_.*-/,'_' + $(this).data('id') + '-');
+                let datalargeimg = $('.product-info .swiper-slide img:first').attr('data-largeimg').replace(/_.*-/,'_' + $(this).data('id') + '-');
+                $('.product-info .swiper-slide img:first').attr('src',src);
+                $('.product-info .swiper-slide img:first').attr('srcset',srcset);
+                $('.product-info .swiper-slide img:first').attr('data-largeimg', datalargeimg);
+                window.ppclient.fire('swatch-select', $(this).data('id'));
+                $('.swatch-color').removeClass('active');
+                $(this).addClass('active');
+              });
+            
+
+            $( ".product-option-radio input:radio:first" ).click();
+            let searchParams = new URLSearchParams(window.location.search);
+            if(searchParams.has('color')){
+              var swatchid = searchParams.get('color');
+            }
+          
+	$('.thumbnails').magnificPopup({
+		type:'image',
+		delegate: 'a',
+		gallery: {
+			enabled:true
+		}
+	});
+});
+
+$(document).ready(function () {
+  $('.review-links a').on('click', function () {
+    var $review = $('#review');
+    if ($review.length) {
+      $('a[href="#' + $review.closest('.module-item').attr('id') + '"]').trigger('click');
+      $('a[href="#' + $review.closest('.tab-pane').attr('id') + '"]').trigger('click');
+      $('a[href="#' + $review.closest('.panel-collapse').attr('id') + '"]').trigger('click');
+      $review.closest('.expand-block').find('.block-expand.btn').trigger('click');
+
+      $([document.documentElement, document.body]).animate({
+        scrollTop: $review.offset().top - 100
+      }, 200);
+    }
+  });
+});
+//--></script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"WebSite","url":"https:\/\/invitaciones.bodas.net\/","name":"Invitaciones Bodas.net","description":"","potentialAction":{"@type":"SearchAction","target":"https:\/\/invitaciones.bodas.net\/index.php?route=product\/search&amp;search={search}","query-input":"required name=search"}}</script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"Organization","url":"https:\/\/invitaciones.bodas.net\/","logo":"https:\/\/invitaciones.bodas.net\/image\/cache\/placeholder-1000x1000.png"}</script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"\/","name":"Inicio"}},{"@type":"ListItem","position":2,"item":{"@id":"https:\/\/invitaciones.bodas.net\/libro-de-firmas","name":"Libro de firmas"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/invitaciones.bodas.net\/libro-de-firmas\/ancona-libro-de-firmas-629","name":"Ancona - Libro de firmas"}}]}</script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org\/","@type":"Product","name":"Ancona - Libro de firmas","image":"https:\/\/invitaciones.bodas.net\/image\/cache\/catalog\/product\/1324cf2f24c34cae43fbbe1944dd8c7a_0-1800x1440.png","description":"","sku":"","mpn":"","offers":{"@type":"Offer","priceCurrency":"EUR","price":"35.65","itemCondition":"http:\/\/schema.org\/NewCondition","availability":"http:\/\/schema.org\/InStock","seller":{"@type":"Organization","name":"Invitaciones Bodas.net"},"priceValidUntil":"2025-12-23","url":"https:\/\/invitaciones.bodas.net\/libro-de-firmas\/ancona-libro-de-firmas-629"},"brand":{"@type":"brand","name":"Herzkarten"}}</script>
+			<script type="text/javascript"><!--
+				$('div[data-option-id="14"] input').click(function(){
+					$('.option-price-label').html('&nbsp;- ' + $(this).siblings('img').data('original-title'));
+				});
+				$( document ).ready(function() {
+					$('img[data-option-id="65" i]').click(function(){
+						$('.product-left img.folie').removeClass("folie_rose");
+						$('.product-left img.folie').removeClass("folie_silber");
+						$('.product-left img.folie').addClass("folie_gold");
+					});
+					$('img[data-option-id="66" i]').click(function(){
+						$('.product-left img.folie').removeClass("folie_rose");
+						$('.product-left img.folie').addClass("folie_silber");
+						$('.product-left img.folie').removeClass("folie_gold");
+					});
+					$('img[data-option-id="67" i]').click(function(){
+						$('.product-left img.folie').addClass("folie_rose");
+						$('.product-left img.folie').removeClass("folie_silber");
+						$('.product-left img.folie').removeClass("folie_gold");
+					});	
+				});
+					
+			//--></script>
+			
+
+				<script type="text/javascript">	
+					$(document).on("click", "input[src-colorbox]", function() {
+						//for non-select options
+						
+						var newImg = $(this).attr('src');
+						var newImgColorBox = $(this).attr('src-colorbox');
+						
+						if(newImg != 'NA')
+						{
+							//poiChangeImage(newImg, newImgColorBox);
+						}
+					return true;
+					});                                  
+					$(document).ready(function()
+					{
+						$("*[src-colorbox]").each(function(){
+							$this = $(this);
+							
+							$src = $this.attr('src');
+							if($src != 'NA')
+							{
+								$('<img/>')[0].src = $src; //preload image
+							}
+							
+							$srcColorbox = $this.attr('src-colorbox');
+							
+							if($srcColorbox != 'NA')
+							{
+								$('<img/>')[0].src = $srcColorbox; //preload image
+							}
+						});
+					});
+																																				$(document).ready(function(){
+							$('div[rel="19"] select[name="option[2839]"]').change(function() {	
+								//console.log($(this));						
+								poiChangeSelect($(this));
+							});
+						});
+															function poiChangeSelect(selectObj)
+					{
+						$selectedOption = selectObj.find("option:selected");
+						var newImg = $selectedOption.attr('src');
+						var newImgColorBox = $selectedOption.attr('src-colorbox');
+						if(newImg != 'NA')
+						{				
+							poiChangeImage(newImg, newImgColorBox);
+						}
+						return true;
+					}
+					
+					$poiImageToChange = [];
+					function setImageToChange()
+					{
+						$poiImageToChange = $('#image, #zoom1 img, #ma-zoom1 img, #main-image, div.image a.colorbox-product img, div.image #wrap a img, .zoomPad > img, .product-info .image > img, .product-image img, #zoom_01, .thumbnail > img:first, #gallery_zoom');
+					}
+					setImageToChange();
+					
+					function poiChangeImage(newImageSrc, newImageColorBoxSrc)
+					{
+						if(typeof newImageSrc !== "undefined"){
+
+							if($('img[src="' + newImageSrc.replace('860x670w', '120x120w') + '"]').length == 0 && $('img[src="' + newImageSrc.replace('860x670h', '120x120h') + '"]').length == 0){
+								$('.main-image img').attr('srcSet', newImageSrc);
+							}else{
+							
+								if($('.main-image img').attr('srcSet').includes($('.main-image img').attr('src'))) {
+									var tmpimg = newImageSrc.replace('860x670w', '120x120w').replace('860x670h', '120x120w');
+									if($('img[src="' + tmpimg + '"]').length > 0){
+										$('img[src="' + tmpimg + '"]').click();
+									}else{
+										$('img[src="' + tmpimg.replace('120x120w', '120x120h') + '"]').click();
+									}
+								}else{
+									$('.main-image img').attr('srcSet', newImageSrc);
+								}
+								
+							}
+							
+							
+							if(newImageColorBoxSrc != null)
+							{
+								//OC2 ColorBox
+								if($('a.thumbnail:first').length > 0)
+								{
+									$('a.thumbnail:first').attr('href', newImageColorBoxSrc);
+								}
+							
+								//ElevateZoom
+								if($('.zoomWindow').length > 0)
+								{
+									$('.zoomWindow').css('background-image', 'url("' + newImageColorBoxSrc + '")');
+								}
+								
+								//CloudZoom
+								if($('.mousetrap').length > 0)
+								{
+									$('.mousetrap').on('mouseenter', this, function (event) {
+										$('#cloud-zoom-big').css('background-image', 'url("' + newImageColorBoxSrc + '")');
+									});
+								}
+								
+								//ColorBox
+								if($('.image .colorbox').length > 0)
+								{
+									$('.image .colorbox').attr('href', newImageColorBoxSrc);
+								}
+								
+								//jQueryZoom
+								if($('.zoomWrapperImage > img').length > 0)
+								{
+									$('.zoomWrapperImage > img').attr('src', newImageColorBoxSrc);
+								}
+								
+								//Lightbox
+								if($('a[rel="lightbox[thumb]"]').length > 0)
+								{
+									$('a[rel="lightbox[thumb]"]').attr('href', newImageColorBoxSrc);
+								}
+								
+								//MagicZoom
+								if($('.MagicZoomBigImageCont img').length > 0)
+								{
+									$('.MagicToolboxContainer img').attr('src', newImageSrc);
+									$('.MagicZoomBigImageCont img').attr('src', newImageColorBoxSrc);
+								}
+								
+								//zoomLens
+								if($('.zoomLens img').length > 0)
+								{
+									$('.zoomLens > img').attr('src', newImageColorBoxSrc);
+									$('#image').data('elevateZoom').swaptheimage(newImageColorBoxSrc, newImageColorBoxSrc); 
+								}
+								
+								//zm-viewer 
+								if($('.zm-viewer img').length > 1)
+								{
+									$($('.zm-viewer img')).attr('src', newImageColorBoxSrc);
+								}
+							
+								//MagicZoomPlus
+								if($('a.MagicZoomPlus').length > 0)
+								{
+									$('a.MagicZoomPlus').attr('href', newImageColorBoxSrc);
+									$('.MagicThumb-expanded img').attr('src', newImageColorBoxSrc);
+								}
+								
+								
+								if($('.zoomImg').length > 1)
+								{
+									$($('.zoomImg')).attr('src', newImageColorBoxSrc);
+								}
+							}
+						}
+					}
+					
+					$('.option.option-image img').click(function(){
+						setTimeout(function() {
+							$('.option-image .radio input[type="radio"]:checked').trigger('click').trigger('change');
+						}, 500);
+					});
+					
+					$('.option.option-radio span').click(function(){
+						setTimeout(function() {
+							$('.option-radio .radio input[type="radio"]:checked').trigger('click').trigger('change');
+						}, 500);
+					});
+					
+					$('.option.option-select span').click(function(){
+						setTimeout(function() {
+							$('.option-select select').trigger('click').trigger('change');
+						}, 500);
+					});
+				</script> 
+			
+ 
+                <script type="text/javascript"><!--	
+                    function openEditor(sample = "false"){           
+                        $.ajax({
+                            url: 'index.php?route=checkout/cart/validate',
+                            type: 'post',
+                            data: $(
+                            '#product .button-group-page input[type=\'text\'], #product .button-group-page input[type=\'hidden\'], #product .button-group-page input[type=\'radio\']:checked, #product .button-group-page input[type=\'checkbox\']:checked, #product .button-group-page select, #product .button-group-page textarea, ' +
+                            '#product .product-options input[type=\'text\'], #product .product-options input[type=\'hidden\'], #product .product-options input[type=\'radio\']:checked, #product .product-options input[type=\'checkbox\']:checked, #product .product-options select, #product .product-options textarea, ' +
+                            '#product select[name="recurring_id"]'
+                            ),
+                            dataType: 'json',
+                            beforeSend: function () {
+                                $('.editor_button').button('loading');
+                            },
+                            complete: function () {
+                               
+                            },
+                            success: function (json) {
+                                $('.alert-dismissible, .text-danger').remove();
+                                $('.form-group').removeClass('has-error');
+                               
+                                if (json['error']) {
+                                    $('.editor_button').button('reset');
+                                    if (json['error']['option']) {
+                                    for (i in json['error']['option']) {
+                                        var element = $('#input-option' + i.replace('_', '-'));
+            
+                                        if (element.parent().hasClass('input-group')) {
+                                        element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+                                        } else {
+                                        element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+                                        }
+                                    }
+                                    }
+            
+                                    if (json['error']['recurring']) {
+                                    $('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+                                    }
+            
+                                    // Highlight any found errors
+                                    $('.text-danger').parent().addClass('has-error');
+            
+                                    try {
+                                    $('html, body').animate({ scrollTop: $('.form-group.has-error').offset().top - 50 }, 'slow');
+                                    } catch (e) {
+                                    }
+                                }else{
+                                    var swatch = 0;
+                                    if(typeof $('.swatch-color.active').data('id') !== 'undefined'){
+                                        swatch = $('.swatch-color.active').data('id');
+                                    }
+                                    
+                                    $.ajax({
+                                        url: 'index.php?route=tkww/editor/openEditor&swatch=' + swatch + '&sample=' + sample,
+                                        xhrFields: {
+                                            withCredentials: true
+                                        },
+                                        type: 'post',
+                                        data: $(
+                                                '#product .button-group-page input[type=\'text\'], #product .button-group-page input[type=\'hidden\'], #product .button-group-page input[type=\'radio\']:checked, #product .button-group-page input[type=\'checkbox\']:checked, #product .button-group-page select, #product .button-group-page textarea, ' +
+                                                '#product .product-options input[type=\'text\'], #product .product-options input[type=\'hidden\'], #product .product-options input[type=\'radio\']:checked, #product .product-options input[type=\'checkbox\']:checked, #product .product-options select, #product .product-options textarea, ' +
+                                                '#product select[name="recurring_id"]'
+                                            ),
+                                        dataType: 'json',
+                                        async: true,
+                                        beforeSend: function() {		
+                                        },				
+                                        success: function(json) {
+                                            $('.editor_button').button('reset');
+                                            if(typeof json.editor !== "undefined" && json.editor !== "false"){
+                                                window.location.replace(json.editor);
+                                            }else{
+                                            console.log(json);
+                                                $('.designer-resort').append('<div class="alert alert-danger" style="order: 2"> Error #3 </div>');  
+                                            }        
+                                        },
+                                        error: function(err){   
+                                            $('.designer-resort').append('<div class="alert alert-danger" style="order: 2"> Error #2 </div>');    
+                                            console.log('Error : ');
+                                            console.log(err);
+                                        }	
+                                    });	
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                $('.designer-resort').append('<div class="alert alert-danger" style="order: 2"> Error #1 </div>');
+                            }
+                        });
+                    }
+				//--></script> 
+            
+
+			<!--BOF Product Color Option-->
+			<style>
+			.product-color-options span
+			{
+				display:inline-block;
+				width:12px;
+				height:12px;
+				margin-right:0px;
+				border:2px solid #E7E7E7;
+			}
+
+			.image .product-color-options
+			{
+				display: none;
+			}
+			
+			a.color-option {
+				display:inline-block;
+				width:15px;
+				height:15px;
+				margin: 3px;
+				padding: 0;
+				border:2px solid #E7E7E7;
+				vertical-align: middle;
+				cursor: pointer;
+				box-sizing: content-box !important;
+			}
+			
+			a.color-option.color-active, a.color-option:hover {
+				margin: 0;
+				padding: 3px;
+			}
+			
+			.hidden {
+				display: none !important;
+			}
+			
+			/*Oval style*/
+			a.color-option.pco-style-oval,
+			.product-color-options span.pco-style-oval
+			{
+				border-radius: 9999px;
+			}
+
+			/*Double rectangle style*/
+			a.color-option.pco-style-double-rectangle,
+			.product-color-options span.pco-style-double-rectangle
+			{
+				border: 4px double #E7E7E7;
+			}	
+
+			/*Double oval style*/
+			a.color-option.pco-style-double-oval,
+			.product-color-options span.pco-style-double-oval
+			{
+				border-radius: 9999px;
+				border: 4px double #E7E7E7;
+			}		
+			</style>
+			<script type="text/javascript"><!--
+			$("a.color-option").click(function(event)
+			{
+				$this = $(this);
+				
+				// highlight current color box
+				$this.parent().find('a.color-option').removeClass('color-active');
+				$this.addClass('color-active');
+				
+				$('#' + $this.attr('option-text-id')).html($this.attr('title'));
+				
+				// trigger selection event on hidden select
+				$select = $this.parent().find('select');
+				
+				$select.val($this.attr('optval'));
+				$select.trigger('change');
+				
+				//option redux
+				if(typeof updatePx == 'function') {
+					updatePx();
+				}
+				
+				//option boost
+				if(typeof obUpdate == 'function') {
+					obUpdate($($this.parent().find('select option:selected')), useSwatch);
+				}
+				
+				if(typeof myocLivePriceUpdate == 'function') {
+					myocLivePriceUpdate();
+				}
+				
+				event.preventDefault();
+			});
+			
+			$("a.color-option").parent('.option').find('.hidden select').change(function()
+			{
+				$this = $(this);
+				var optionValueId = $this.val();
+				$colorOption = $('a#color-option-' + optionValueId);
+				if(!$colorOption.hasClass('color-active'))
+					$colorOption.trigger('click');
+			});
+			//--></script> 
+
+               
+
+				<script src="https://kundenservice.herzkarten.de/assets/chat/chat.min.js"></script>
+								
+					<script>
+						$(function() {
+							new ZammadChat({
+								background: '#f76c6f',
+								fontSize: '12px',
+								show: false,
+								chatId: 2							});
+						});
+					</script>
+
+								
+            
+			<!--EOF Product Color Option-->  <div id="bottom" class="bottom top-row">
+            <div class="grid-rows">
+          <div class="grid-row grid-row-bottom-1">
+                <div class="grid-cols">
+                      <div class="grid-col grid-col-bottom-1-1">
+              <div class="grid-items">
+                                  <div class="grid-item grid-item-bottom-1-1-1">
+                    <div class="module module-products module-products-310 module-products-grid carousel-mode">
+  <div class="module-body">
+                      <div class="tab-container">
+        <ul class="nav nav-tabs">
+                      <li class="tab-1 active">
+                              <a href="#products-6769200e4032d-tab-1" data-toggle="tab">Más de esta serie</a>
+                          </li>
+                    </ul>
+        <div class="tab-content">
+                                    <div class="module-item module-item-1 tab-pane active" id="products-6769200e4032d-tab-1">
+                      <div class="swiper" data-items-per-row='{"c0":{"0":{"items":4,"spacing":24},"1024":{"items":3,"spacing":10},"760":{"items":1,"spacing":10}},"c1":{"0":{"items":4,"spacing":24},"760":{"items":1,"spacing":10}},"c2":{"0":{"items":1,"spacing":0}},"sc":{"0":{"items":1,"spacing":0}}}' data-options='{"speed":500,"autoplay":false,"pauseOnHover":true,"loop":false}'>
+        <div class="swiper-container" >
+          <div class="swiper-wrapper product-grid">
+            
+    <div class="product-layout swiper-slide has-extra-button">
+    <div class="product-thumb">
+            <div class="image">
+                <a data-c-product_id="637" href="https://invitaciones.bodas.net/numeros-de-mesa/ancona-set-de-meseros-nr.-1-10-637" class="product-img ">
+          <div>
+                          <img src="https://invitaciones.bodas.net/image/cache/catalog/product/4a3a365deb3adf2cd67e46b0443333bf_0-300x240.png" srcset="https://invitaciones.bodas.net/image/cache/catalog/product/4a3a365deb3adf2cd67e46b0443333bf_0-300x240.png 1x, https://invitaciones.bodas.net/image/cache/catalog/product/4a3a365deb3adf2cd67e46b0443333bf_0-600x480.png 2x"  width="300" height="240" alt="Ancona - Set de meseros Nr. 1 - 10" title="Ancona - Set de meseros Nr. 1 - 10" class="img-responsive img-first folie folie_gold"/>
+            
+                      </div>
+        </a>
+
+                  <div class="product-labels">
+                          <span class="product-label product-label-303 product-label-default"><b>Brillo</b></span>
+                      </div>
+        
+              </div>
+
+      <div class="caption">
+        
+                  <div class="name"><a href="https://invitaciones.bodas.net/numeros-de-mesa/ancona-set-de-meseros-nr.-1-10-637">Ancona - Set de meseros Nr. 1 - 10</a></div>   
+                    
+        <div class="description">Set de números de mesa con motivo floral que decora la esquina superior derecha y con diseño de un fino marco dorado a lo largo de toda la tarjeta. El..</div>
+
+                  <div class="price">
+                          <span class="price-normal">1.34€</span>
+                                      <span class="price-tax">incl. IVA , excl. <a class="agree" data-info="8">gastos de envío</a>1.11€</span>
+                      </div>
+                        <div class="pds" style="padding-top: 10px;">
+          <div data-id="0" data-product_id="637" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #ffffff;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="1" data-product_id="637" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background-image: url('/image/kraft2.jpg');border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="2" data-product_id="637" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #f9e3d3;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="3" data-product_id="637" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #bfceb2;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="4" data-product_id="637" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #f2dda9;border: 1px solid #D9D9D9;border-radius: 8px;"></div> 
+          </div>
+                        <div class="rating no-rating rating-hover">
+            <div class="rating-stars">
+                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                          </div>
+          </div>
+        
+                <div class="buttons-wrapper">
+          <div class="button-group">
+                      <button data-product_id="637" class="btn btn-warning btn-block button btn-open-product">Ver detalle</button>
+                           <!--BOF Product Series-->
+			                        <div class="cart-group">
+              <div class="stepper">
+                              <input type="text" name="quantity" value="1" data-minimum="1" class="form-control"/>
+               
+                <input type="hidden" name="product_id" value="637"/>
+                <span>
+                <i class="fa fa-angle-up"></i>
+                <i class="fa fa-angle-down"></i>
+              </span>
+              </div>
+              <a class="btn btn-cart"  onclick="cart.add('637', $(this).closest('.product-thumb').find('.button-group input[name=\'quantity\']').val());" data-loading-text="<span class='btn-text'>&nbsp;&nbsp; Comprar</span>"><span class="btn-text">&nbsp;&nbsp; Comprar</span></a>
+            </div>
+            
+                        <div class="wish-group">
+                            <a class="btn btn-wishlist"  data-toggle="tooltip" data-tooltip-class="module-products-310 module-products-grid wishlist-tooltip" data-placement="top" title="Agregar a la Lista de Deseos"  onclick="wishlist.add('637')"><span class="btn-text">Agregar a la Lista de Deseos</span></a>
+                                          <a class="btn btn-compare"  data-toggle="tooltip" data-tooltip-class="module-products-310 module-products-grid compare-tooltip" data-placement="top" title="Comparar este Producto"  onclick="compare.add('637')"><span class="btn-text">Comparar este Producto</span></a>
+                          </div>
+                      </div>
+        </div>
+        
+                  <div class="extra-group">
+            <div>
+                              <a class="btn btn-extra btn-extra-46"
+                                     onclick="cart.add('637', $(this).closest('.product-thumb').find('.button-group input[name=\'quantity\']').val(), true);"                                      data-loading-text="<span class='btn-text'>Buy Now</span>">
+                  <span class="btn-text">Buy Now</span>
+                </a>
+                              <a class="btn btn-extra btn-extra-93"
+                                                        href="javascript:open_popup(22)"  data-product_id="637" data-product_url="https://invitaciones.bodas.net/numeros-de-mesa/ancona-set-de-meseros-nr.-1-10-637"                   data-loading-text="<span class='btn-text'>Question</span>">
+                  <span class="btn-text">Question</span>
+                </a>
+                          </div>
+          </div>
+              </div>
+    </div>
+  </div>
+    <div class="product-layout swiper-slide has-extra-button">
+    <div class="product-thumb">
+            <div class="image">
+                <a data-c-product_id="633" href="https://invitaciones.bodas.net/marcasitios-de-boda/ancona-marcasitios-633" class="product-img ">
+          <div>
+                          <img src="https://invitaciones.bodas.net/image/cache/catalog/product/2159c44d477f087b2e27615ffd311f86_0-300x240.png" srcset="https://invitaciones.bodas.net/image/cache/catalog/product/2159c44d477f087b2e27615ffd311f86_0-300x240.png 1x, https://invitaciones.bodas.net/image/cache/catalog/product/2159c44d477f087b2e27615ffd311f86_0-600x480.png 2x"  width="300" height="240" alt="Ancona - Marcasitios" title="Ancona - Marcasitios" class="img-responsive img-first folie folie_gold"/>
+            
+                      </div>
+        </a>
+
+                  <div class="product-labels">
+                          <span class="product-label product-label-303 product-label-default"><b>Brillo</b></span>
+                      </div>
+        
+              </div>
+
+      <div class="caption">
+        
+                  <div class="name"><a href="https://invitaciones.bodas.net/marcasitios-de-boda/ancona-marcasitios-633">Ancona - Marcasitios</a></div>   
+                    
+        <div class="description">Si necesitas crear un ambiente único en las mesas del banquete prueba a poner marcasitios personalizados para los invitados. Este diseño de la colecci..</div>
+
+                  <div class="price">
+                          <span class="price-normal">1.34€</span>
+                                      <span class="price-tax">incl. IVA , excl. <a class="agree" data-info="8">gastos de envío</a>1.11€</span>
+                      </div>
+                        <div class="pds" style="padding-top: 10px;">
+          <div data-id="0" data-product_id="633" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #ffffff;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="1" data-product_id="633" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background-image: url('/image/kraft2.jpg');border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="2" data-product_id="633" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #f9e3d3;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="3" data-product_id="633" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #bfceb2;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="4" data-product_id="633" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #f2dda9;border: 1px solid #D9D9D9;border-radius: 8px;"></div> 
+          </div>
+                        <div class="rating no-rating rating-hover">
+            <div class="rating-stars">
+                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                            

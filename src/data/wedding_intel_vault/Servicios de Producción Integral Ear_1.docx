@@ -1,0 +1,268 @@
+</div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/vestidos-fiesta" class="selected ">
+                            Vestidos de Fiesta                        </a>
+                                                        </li>
+                            <li   >
+                                            Vestidos de Fiesta de Antonia Serena                                                        </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper pr0 pb0 pl0">
+    <div class="headings-intro">
+        <h1>Vestidos de Fiesta de Antonia Serena</h1>
+                    <span class="count block mb10 ">
+                9 vestidos            </span>
+            </div>
+    </div>
+
+
+<form class="app-dress-filters-form" action="/cat-DressList.php">
+    <input type="hidden" name="type" autocomplete="off" value="2"/>
+            <input type="hidden" name="collection" autocomplete="off" id="collection" value=""/>
+            <input type="hidden" name="designer" autocomplete="off" id="designer" value="922"/>
+            <input type="hidden" name="silhouette" autocomplete="off" id="silhouette" value=""/>
+            <input type="hidden" name="neckline" autocomplete="off" id="neckline" value=""/>
+            <input type="hidden" name="suitStyle" autocomplete="off" id="suitStyle" value=""/>
+            <input type="hidden" name="length" autocomplete="off" id="length" value=""/>
+            <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value=""/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-fiesta">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Antonia Serena                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344848" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-006--v344848">
+                    <a href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-006--v344848">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/antonia-serena/as-006--mfvr725938.jpg"   alt="AS 006, 922"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Antonia Serena, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-006--v344848"
+                        >
+                            Antonia Serena 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>AS 006</span>
+                    </div>
+                                            <div class="tags-item">
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Gloss</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344842" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-023--v344842">
+                    <a href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-023--v344842">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/antonia-serena/as-023--mfvr725932.jpg"   alt="AS 023, 922"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Antonia Serena, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-023--v344842"
+                        >
+                            Antonia Serena 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>AS 023</span>
+                    </div>
+                                            <div class="tags-item">
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Gloss</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344858" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-011--v344858">
+                    <a href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-011--v344858">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/antonia-serena/as-011--mfvr725952.jpg"   alt="AS 011, 922"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Antonia Serena, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-011--v344858"
+                        >
+                            Antonia Serena 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>AS 011</span>
+                    </div>
+                                            <div class="tags-item">
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Gloss</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344856" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-030--v344856">
+                    <a href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-030--v344856">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/antonia-serena/as-030--mfvr725948.jpg"   alt="AS 030, 922"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Antonia Serena, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-030--v344856"
+                        >
+                            Antonia Serena 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>AS 030</span>
+                    </div>
+                                            <div class="tags-item">
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Gloss</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344854" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-028--v344854">
+                    <a href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-028--v344854">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/antonia-serena/as-028--mfvr725946.jpg"   alt="AS 028, 922"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Antonia Serena, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-028--v344854"
+                        >
+                            Antonia Serena 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>AS 028</span>
+                    </div>
+                                            <div class="tags-item">
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Gloss</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344852" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-009--v344852">
+                    <a href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-009--v344852">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/antonia-serena/as-009--mfvr725944.jpg"   alt="AS 009, 922"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Antonia Serena, 2023"
+                                data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-009--v344852"
+                        >
+                            Antonia Serena 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>AS 009</span>
+                    </div>
+                                            <div class="tags-item">
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Gloss</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344850" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-002--v344850">
+                    <a href="https://www.bodas.net/vestidos-fiesta/antonia-serena/as-002--v344850">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-fiesta/antonia-serena/as-002--mfvr725940.jpg"   alt="AS 002, 922"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center 

@@ -1,0 +1,270 @@
+
+let globalPageProperties = [];
+let globalPagePropertiesExcludedEventNames = {};
+try {
+globalPageProperties = JSON.parse('["appVersion","frmInsert","gpAnonId","loggedUserUUID","loggedVendorUUID","platform","reduced","section","build_product","experimentVariants","vendor_id","category_group_id","category_id","region_adm1_id","city_id","region_id","product_tier","vendor_visibility_tier"]');
+globalPagePropertiesExcludedEventNames = JSON.parse('[]');
+} catch(e) {
+console.error(`Segment init error: ${e.message}`);
+}
+for (const key in globalPageProperties) {
+const field = globalPageProperties[key];
+const isExcluded = globalPagePropertiesExcludedEventNames[field]?.includes(payload.obj.event) ?? false;
+if (!payload.obj[namespace][field] && pageProperties[field] && !isExcluded) {
+payload.obj[namespace][field] = pageProperties[field];
+}
+}
+payload.obj['context']['traits'] = payload.obj['context']['traits'] || {};
+for (const [key, value] of Object.entries(window.contextTraits)) {
+payload.obj['context']['traits'][key] = value;
+}
+if (getCookieIsFunction) {
+const cookies = {
+'epik': '_epik',
+'ttclid': 'ttclid',
+'_ttp': '_ttp',
+'gclid': 'gclid',
+};
+for (const [traitKey, cookieName] of Object.entries(cookies)) {
+const value = getCookie(cookieName);
+if (value) {
+payload.obj['context']['traits'][traitKey] = value;
+}
+}
+}
+if (!payload.obj['userId']) {
+payload.obj['userId'] = payload.obj[namespace]['loggedUserUUID']
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace]['non_interaction'] = !!parseInt(payload.obj[namespace]['nonInteraction'])
+}
+// override context variables if exists in window.trackingContext is defined and updated
+if (typeof window.trackingContext === 'object') {
+const overrideObjectProperties = (object, newObjectValues) => {
+for (const [key, value] of Object.entries(newObjectValues)) {
+if (typeof value === 'object' && typeof object[key] === 'object') {
+overrideObjectProperties(object[key], value);
+} else {
+object[key] = value;
+}
+}
+return object;
+};
+payload.obj = overrideObjectProperties(payload.obj, window.trackingContext);
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace] = standardizePropertyNames(payload.obj[namespace])
+}
+next(payload);
+});
+var integrationsConfig = {
+All: analyticsGroupOpt,
+'Segment.io': true,
+'Google Analytics 4': analyticsGroupOpt,
+'Facebook Conversions API (Actions)': targetedAdsOpt
+};
+window.analytics.load("ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0", { integrations: integrationsConfig });
+window.analytics.page(null, pageProperties);
+const experiments = (window.pageGlobals && window.pageGlobals.experiments) ? window.pageGlobals.experiments : {};
+Object.keys(experiments).forEach(exp => {
+trackExperimentViewed(
+experiments[exp].experimentId,
+window.userGlobals ? window.userGlobals[experiments[exp].bucketingType] : null,
+experiments[exp].variantId
+)
+})
+})();
+};
+var standardizePropertyNames = function (properties) {
+let origKey, value
+if (properties instanceof Array) {
+for (origKey in properties) {
+value = properties[origKey]
+if (typeof value === 'object') {
+value = standardizePropertyNames(value)
+}
+properties[origKey] = value
+}
+} else {
+for (origKey in properties) {
+if (properties.hasOwnProperty(origKey)) {
+let snakeCaseKey = origKey
+.trim()
+.replace(/-/g, '_')
+.replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+.replace(/([a-z])([A-Z])/g, '$1_$2')
+.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+.replace(/ /g, '_')
+.toLowerCase()
+.substring(0, 100)
+if (isPropertyNameSnakeCase(origKey) && origKey !== snakeCaseKey) {
+delete properties[origKey]
+}
+properties[snakeCaseKey] = properties[origKey]
+}
+}
+}
+return properties
+};
+var isPropertyNameSnakeCase = function (propertyName) {
+const standardFormatRegex = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+return standardFormatRegex.test(propertyName);
+};
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+segmentScript();
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+segmentScript();
+}
+}();
+</script>
+<div class="dnone">
+<script>
+gtag('event', 'page_view', {"BRIDES_NAV":1,"VENDORS_59_NAV":1,"LOGGED":0,"EMPRESA":0,"EMPRESA_CATEGORY":0,"send_to":"adwords"});
+gtag('event', 'view_search_results', {"send_to":"adwords","listing_id":[214998,84941],"listing_pagetype":"searchresults"});
+</script>              <script>
+var facebookScript = function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.defer=1;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)};
+var toExecuteAfterFbInit = function () {
+var hasGlobals = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.facebook
+var globalFacebook = hasGlobals ? parent.pageGlobals.common.remarketing.facebook : {};
+var isLoaded = globalFacebook.isLoaded === true;
+if (!isLoaded) {
+parent.fbq('init', '1434721056835089', {}, {});
+globalFacebook.isLoaded = true;
+}
+parent.fbq('track', 'PageView', {"BRIDES_NAV":1,"VENDORS_59_NAV":1,"LOGGED":0,"EMPRESA":0,"EMPRESA_CATEGORY":0}, {eventID: 'pageview_' + window.userGlobals.gp_anon_id + '_' + '76666bde-3848-4774-902e-2ef427bb0342'}); parent.fbq('dataProcessingOptions', ['LDU'], 0, 0);
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+});
+if (parent.isCookieGroupAllowed(parent.CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+}
+</script>             <script>
+var pinterestScript = function() {
+!function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(
+Array.prototype.slice.call(arguments))};var
+n=window.pintrk;n.queue=[],n.version='3.0';var
+t=document.createElement('script');t.defer=1,t.src=e;var
+r=document.getElementsByTagName('script')[0];r.parentNode.insertBefore(t,r)}}('https://s.pinimg.com/ct/core.js');
+var hasGlobalsPinterest = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.pinterest;
+var globalPinterest = hasGlobalsPinterest ? parent.pageGlobals.common.remarketing.pinterest : {};
+var isLoaded = globalPinterest.isLoaded === true;
+if (!isLoaded) {
+parent.pintrk('load', 2613978159206);
+globalPinterest.isLoaded = true;
+}
+var isTracked = globalPinterest.isTracked === true;
+if (!isTracked) {
+globalPinterest.isTracked = true;
+parent.pintrk('page');
+parent.pintrk('track', 'custom', {"BRIDES_NAV":"1","VENDORS_59_NAV":"1","LOGGED":"0","EMPRESA":"0","EMPRESA_CATEGORY":"0","send_to":"adwords"});
+}
+}
+/* Listener of the OneTrust callback when user accepts the cookies */
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+pinterestScript();
+});
+/* Wrap of the Analytics script that checks the consent of the user and the default country configuration */
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+pinterestScript();
+}
+</script>             <script>
+var executeBingScript = function () {
+return (function(w,d,t,r,u) {
+var f,n,i;
+w[u] = w[u]||[], f = function() {
+var o = {ti: "355036992", enableAutoSpaTracking: true};
+o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad")
+},
+n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function() {
+var s = this.readyState;
+s&&s !== "loaded"&&s !== "complete" || (f(), n.onload = n. onreadystatechange=null)
+},
+i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n,i)
+}) (window, document, "script", "//bat.bing.com/bat.js", "uetq");
+}
+var pushBingScript = function () {
+window.uetq = window.uetq || [];
+window.uetq.push ('event', '', {});
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+executeBingScript();
+pushBingScript();
+});
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+executeBingScript();
+pushBingScript();
+}
+</script>     </div>
+<script type="text/javascript" src="https://cdn1.bodas.net/assets/js/newRelicRum.js?siteVersion=symfnw-ES171-1-20241219-010_www_m_" async></script>
+<script>
+window.addEventListener('newRelicScriptLoaded', function() {
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+newRelicScript("307408989");
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+newRelicScript("307408989");
+}
+});
+</script>
+<script type='text/javascript'>
+(function(w) {
+function setAttributes() {
+w._sva.setVisitorTraits({
+user_id: '',
+employee_id: '',
+vendor_id: '',
+vendor_tier_tk: '0',
+vendor_tier_ww: '0',
+market_code: '',
+category_code_tk: '',
+category_code_ww: '',
+experiments: '3c2f31aa-7488-4711-a760-ae994ef480ca,52ddca90-9455-4def-9e17-439869b65fea,75c49d3a-938b-4896-bc69-e1dd5fe94e19,7b6577de-2b3a-46fc-8f20-162f250b511a,b62017cd-0f98-4a68-8f9c-ff170051df5f,b9fdcb28-2031-4af5-b3c9-1059471d1eb5,ba5ff33f-e398-4543-8b7e-a098a526de3f,bc2c4122-fadd-4762-95f4-ffe8feab787a,bd61024e-a0e4-4d50-86af-f63b0b3beeaf,ca55dd78-2d83-4a5a-8ea9-d01989d1a6c9,d35cf1ff-f04f-4064-b708-8e0fd4052be1,e07523e5-5365-4ff0-b5d7-19e2f6e3115b,edf5cea7-b553-4ce2-b00b-e2329217f66e,f09dbae0-c609-46ac-90e5-838cef0c710d'
+});
+}
+if (w._sva) {
+setAttributes();
+} else {
+w.addEventListener("SurvicateReady", setAttributes);
+}
+var s = document.createElement('script');
+s.src = 'https://survey.survicate.com/workspaces/478cb2dcb7cb43968ed84643ad169c41/web_surveys.js';
+s.defer = true;
+var e = document.getElementsByTagName('script')[0];
+e.parentNode.insertBefore(s, e);
+})(window);
+</script>
+<script type="application/ld+json">
+{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bodas","item":"https:\/\/www.bodas.net\/"},{"@type":"ListItem","position":2,"name":"Vestidos de arras","item":"https:\/\/www.bodas.net\/bodas\/novias\/vestidos-de-arras"}]}            </script>
+<script type="application/ld+json">
+[{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/14998\/3_2\/960\/jpg\/121212_1_214998-167506926643222.webp","url":"https:\/\/www.bodas.net\/vestidos-de-arras\/corredera-nuvia-arras--e214998","name":"Corredera N\u00favia - Arras","image":"121212_1_214998-167506926643222.jpg","address":{"@type":"PostalAddress","streetAddress":"Pla\u00e7a Catalunya, 5","postalCode":"17800","addressLocality":"Olot","addressRegion":"Girona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/84941\/3_2\/960\/jpg\/-dsc5295-copia_1_84941-168137756069207.webp","url":"https:\/\/www.bodas.net\/vestidos-de-arras\/llar-del-nado--e84941","name":"Llar del nad\u00f3","image":"-dsc5295-copia_1_84941-168137756069207.jpg","address":{"@type":"PostalAddress","streetAddress":"Nou, 5","postalCode":"17600","addressLocality":"Figueres","addressRegion":"Girona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":1,"ratingValue":"5.0","worstRating":0,"bestRating":5}}]            </script>
+<script type="text/javascript"  src="/c-O80A/xtX/qkH/G2361fZl/EaaOt8fNLDVQictu/Hls2Ag/NEs/-bm0mYXYB"></script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      %PDF-1.4
+%‚„œ”
+2 0 obj
+<</Length1 75812/Filter/FlateDecode/Length 31015>>stream
+xúÏ|á’˙˜9g˙ÃŒŒlﬂÕn∂d≥	∞°%°s…RÈ-$zU™ÿP∞Pàÿ∞\VÏ, †^QQØA±\EîÎET Ÿ˜9gw√rÀÔÛ˛fwfü9sÊú3œyûÔSŒLF©h1‚Px¬Â„fwÈ…ıPÚ<B≈/NX0?¸¬´W!‘jB‚ìgOπºÎìÓ8BÌﬁGHKNôyÕ‰‚`ﬁÑ∫-DhD˜©ì∆M<÷øzB´^Ü6:OÖ{YﬁX8>	«ÖS/üuı‘m@ﬁÓE®ÔËô≥&åŒé@Ëì˘p\w˘∏´g{nS÷#Ïˇ*Ögœù4˚—çGÄc∏ﬁ“ ∏Ã@t‹»1éÄrNEº£/B∏7H®7∫ßHò‘ê∏(7òªä[ƒ’s+πGπ›‹)^ÁÌÖja¨∞L®nﬁ~Nä1%-í‰W‰T˛Ù¸˘o‰øõü
+.
+>¸g» ı	]™	]™]jÌÌÌ˝:j·ÇpQ∏C∏<‹-‹=‹;|Yxv¯ö¢›·W√'"BƒÒD
+"EëvëAëëÀ"∑DÓâ<]@
+ƒ£¿^‡*»+¥.à\T0Æ`RîDÕh$Üb$fâô1gÃƒ
+c%±ÚXelflqÏñÿÚÿ ÿ]±Gcœ«6∆∂«^éÌåΩ€˚<v§®≤(Q‘≥®ÆhB—‰¢E≥JµÛ¨ã¨[∂Ó≈u[◊•ûõÙ/|F<„9”˘LÂôÓgzúÈ}Êµ3©≥Œûl™j˙•ÈdSSs¥y~Û¢Ê≥©≥©ù¥ñ !£…ã\!7Ñªñª∏∏ä{ú€√˝∆[˘!BG°F'‹*‹&‹!ÏNàHJC‰µÚ˘„|\úôø3ø9àÇãÉkÉøÑº°pË¢–ê«Üá∂Ñﬁ
+}˙2ÙKËTÖÌ¿≈6·“pE∏íqqzx>pquxmÜãÓFÜG..Æn·¢∏Ë+f∏XW0ëq1¸?∏8§Öã´ckcœ∂pÒ]‡‚?Äã›Z∏8©h:p±∏ËYW∞n˘∫‰∫ﬂûÎ \DggÚœt.&ŒÙ:”˜Ãﬁ≥óù˝•©íqÒts∏yvÛÇÊ≈îã©o‚ÜÌ#ÑÑø ˆ◊<çÓ˘=@µÂ˚D›´~§~®ÓFËÏû≥Ô°úøü:#Ù3ˇÛ@Ñé-BËøéc∂c∆1˝òÂòvL=¶ìéâ«Ñc‹1r˝@ÁZ¬ˆ∑¿v’è”Ωı«
+Ñ~u®˛–ıú~öC€èÌ˙¶‰–™c˜|˙‡ök<v`Bû¢µzÃ9 :{†√ÅƒÅ≤Ö˚˚ÓÔ≥ør≈˛Œ˚Àˆwÿﬂz¡~ˇ~Á~ºÔß}«ˆ›˜ÌæØÈU˚ﬁ⁄˜ÍæøÌ€
+‘õ˚û‹∑~_ü}=˜ıÿW∏Ø`_d_˝–ﬁKM=ü6sZ€IMÅr e}P˙´ÙÄt˙~Ì7#§ak⁄˛ÉMé!n’o‹‘æx6 Fè	ÄO¬a?†R)lcŒqL6Ÿ˛j9©ŒU˜®øk" ’hZ¶Ug∂;—ˇ˘ßm◊˛˚S£‡iâÖ∑∞V-ÓtÀ†ˇu≠•+›,›2GùˇÔûŒª“öÓÉ—ñˇ1≤”È6-µ‘\	€öñ£˙´!+ß’Àˆyôìz›Çñpó°5ËZäV°Ë!Ùzô®X|3∫ù@ˇD∑°{—rå—~Ù3z=ã˛Ö~A'—c`˛éﬁB/†ÒhZç&¢w—$Ù6z}ÄﬁCÔ£]Ë;4}àv£=ËE4˝ÑÓ@£è–^4}èé°[—t4Õ@ó£ôË
+¥ÕBs–l4ÕCW¢˘h∫
+EW£k—5Ë:t=Zà∂¢G—"tÿ•—ËG¥Ø¡˜bÇ9ÃcùAgÒ}¯~¸ ˛+jBÕXƒñQ
+?à¬„GZ¸(V∞ä5l¡è·«—)Ù~?âü¬Î”¯¸,~?è_¿/‚ı8â7‡çx˙}ÇÎÒ
+‹Ä7„-x+nƒ:∂‚mx;6∞âmÿé°Ø∞;ÒK¯eÏ¬nºøÇˇÜ_≈;k¯uÏ¡^¥%±Á·7NÏ«úèÉ¯M¸˙ùF_£opáq‡∑ÒﬂÒ;¯]¸~Ô¬‡(.ƒ1\Ñw„=¯C¸ﬁã?F€q1nÖ[„6Ë0˙"÷ã+ƒï‚m‚*Òvqµxáxßxóx∑xè∏FºWºO(Ô@Oâ◊äèäèâèãOàOäOâÎ¯È¸ÒiÒÒYÒ9ÒyÒÒEqΩò7à≈Mb?ìø\‹,n∑äç‚6qª¯í¯≤¯ä¯7ÒUqá¯ö¯∫¯Ü∏S|S|K|[¸ª¯é¯Æ¯û¯æ∏K¸@‹-Ó·œÚM|3üêÄ"p/Ç(HÇ,(Ç*h‚á‚G‚^ÒÒSÒ3Ò‚Á‚‚>qø¯•x@<(øøøãﬂäGƒÔƒ£‚˜‚‚1ÒGÒ∏¯˛ÜˇÅ?«_‡}ö]2%õdóíSrIn…#y%ü‰óRæîBRXäHöCsj.Õ–já¥Ø¥Øµo¥√⁄∑⁄Ì;Ì®ÂWÀ)Àoñﬂ-XN[ŒXŒZö,Õñîét¨)*J1©H*ñZI≠•6R\àinÕ#-ñnînínñnëñHK•e“rÈV©^Z!≠înìVI∑K´•;§;•ª§ª•{–ßË†¥˝C∫W∫O∫0ÌØÄmIKèHk•G•«§«•'–ÁË¥@ü°/•'•ß§u“”“3“≥“s“Û““ã“z))mê6Jõ§i≥Ê’|ZûÊ◊Zæ‘BZXãhZT+‘bZëV¨µ‚Ô‰Ôí{Ú◊ Ω‰ﬁrπØ|!?_æHÓ'_,˜ó»ÂAÚ`yà<T&óG»#Âj˘yî\#èñ/ï«»µÚeÚXπéøGk≠µ—‚Zâ÷Vkßµ◊:hﬂk?h«¥µ„ZG≠T+ìoìW…∑À´Â;‰;Âª‰ªÂ{‰5ÚΩÚ}Ú˝ÚÚ_ÂçÑ—√ËiÙíí6z}‰GtNÁuÕÖ¯g|ˇÔ«ø‡·ì¯˛ˇéˇ¿ßqü¡gqn∆%‡≠!Ç	!·â@D"ô(D≈mâF,D'Vbìÿàù8à∑#.‚∆Ìq‚!^‚#yƒO$üIºæï‡±‡é∏îDq)$1RDäI+“ö¥!q£ØVÆu“ˆi˚µ/µü¥üµ⁄?Â∑I	iK⁄ëˆ§ÈHJI)'ùHg“E˛ª¸πñ\GíÎ…dYLn$7ëõ…-dâ¸.YJñ…Ô…ÔÀª‰‰›Ú˘C˘#yØ¸±¸â¸©¸ô¸˘s˘yüº_˛R> î…_…_Àﬂ»áÂoÂ#ÚwÚQ˘˘ò¸£|\˛I˛Y>!ˇS˛EÔ)ˇK>)ˇ*üíìóˇêOìÂ‰V¡lÚ˘¨`rì‹,8ó‡<rJA
+Và‡|
+ßä†àä§»ä¢®ä¶XÑ<¡/Ñ|!(Ñ]±*Üb
+a!"Q≈¶ÿá‚T\ä[Ò(^≈ß‰)~%†‰+A%§ÑïàR†DuQâ)EJ±“Ji≠¥Q‚JâP(ƒî∂J;•Ω“AÈ®î*eJπ“IÈ¨tQ∫*J7°H(V.P*ïø(›ï*%°ÙPz*ΩîﬁJ•Øˆãˆ/ÂBÂ"]“e]—U]”-J?Âb•ø2@®R+Cî° 0e∏2B©T+ó(£t]∑ÍÜn˝ç∆@cê1ÿ¢˜“{Î}Ùæ∆Pcò1‹aå4™çKåQFç1⁄ºﬁº¡\d.6o4o2o6oQjî— • •VπL´‘)„îÒ e¢2Iô¨LQ¶*”¥ì teÜ2Sπ\πBô•ÃVÊ(sïy |ÂJeπç¨"∑ì’‰r'πã‹MÓ!k¥_…Ω‰>r?yÄ¸ï<H"ìGî´¥S⁄o⁄Ô⁄£⁄c⁄„⁄∆EÊdÎ÷ù÷7≠oYﬂ÷˛ ?jOiOjÎ¥ßµg¥gµÁ¥ÁÖ2£¿àÖFÃ("«ÕI⁄iÚìQL~Ên‰nÊñpÀ∏[π€∏€πª∏{∏˚πá ryí{Ü{é{Å[œm‡6s€∏W∏◊∏7πw∏]F‹hoî]å»	ÓCÓÓsÓKÓ+Ó[Ó{Ó8˜3˜OÚOÚ˘9I~%ß»o‰w°´P!t”^–^‘÷kg¥≥Zì÷¨•,»®"ê”‰9KöH3Iqà√·8é7'≠Ñ·°RË.$‡˙ûBo°Øpëp±0H±‘h.$\&å&”Ö+Ñπ¬ÆX∏V∏AX,‹$‹",ñC§µRX%¨ÓÓ÷˜	rq·aa≠Ñ¥ºê¿£€.º$º*º1Ÿ{¬n·CÆ≠∞W¯Lÿ'æ·:
+ﬂ	«ÑüÖ	ø	gÑî»âí®âÜh¢á;&˙ƒ|1$Ü≈àX äEb+±çX"∂;pùƒR±\Ï*vªã	±ßÿõì≈>b_ÒBÒ"±üx±ÿ_ âÉ≈!‚Pqò8\!é´≈KƒQbç8⁄‰≈Kµ⁄¶,8ï”8Kö?‚±Nú(Nßiõ-ƒ"ZT‰Ï∑%œ¥Xä,≠,m,%ññr+-	KoÀEññ!ññQñ1ñ:ÀDÀTÀtÀLÎAÎ7÷Ô¨

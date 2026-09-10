@@ -1,0 +1,517 @@
+          <a href="https://invitaciones.bodas.net/save-the-date" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Save the date"
+                    >
+                        Save the date                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/libro-de-firmas" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Libro de firmas"
+                    >
+                        Libro de firmas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/tarjetas-de-agradecimiento" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Tarjetas de agradecimiento"
+                    >
+                        Tarjetas de agradecimiento                    </a>
+                </li>
+                    </ul>
+            </div>
+    </div>
+    </div>
+</div>
+                </div>
+                    </li>
+            <li class="nav-main-item  nav-tabCommunity">
+                                    <a href="https://comunidad.bodas.net/"
+                class="nav-main-link app-header-tab  app-ua-track-event"
+                 data-track-c='NavigationAuthed' data-track-a='a-click' data-track-l='d-desktop+s-header+o-vendors_promotions_list+dt-community' data-track-v='0' data-track-ni='0'                 data-tab="comunidad"
+            >
+                Comunidad            </a>
+                            <div class="app-tabs-container-comunidad">
+                    
+<div class="layoutNavMenuTab app-header-menu-itemDropdown">
+    <div class="layoutNavMenuTab__layout">
+        
+<div class="layoutNavMenuTab__header">
+    <i class="svgIcon app-svg-async svgIcon__angleLeftBlood layoutNavMenuTab__icon app-header-menu-item-closeSection"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleLeftBlood.svg" data-svg-lazyload="1"></i>    <a class="layoutNavMenuTab__title" href="https://comunidad.bodas.net/">
+        Comunidad    </a>
+    <i class="svgIcon app-svg-async svgIcon__close layoutNavMenuTab__iconClose app-header-menu-toggle"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/close.svg" data-svg-lazyload="1"></i></div>
+<div class="layoutNavMenuTabCommunity">
+    <div class="layoutNavMenuTabCommunityList">
+        <a class="layoutNavMenuTabCommunity__title" href="https://comunidad.bodas.net/">
+            Grupos por temática        </a>
+        <ul class="layoutNavMenuTabCommunityList__content">
+            <li class="layoutNavMenuTabCommunityList__item layoutNavMenuTabCommunityList__item--viewAll">
+                <a href="https://comunidad.bodas.net/">Ver todo</a>
+            </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-organizar-una-boda">
+                        Grupo Organizar una boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-moda-nupcial">
+                        Grupo Moda Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-antes-de-la-boda">
+                        Grupo Antes de la boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-manualidades-para-bodas">
+                        Grupo Manualidades                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-luna-de-miel">
+                        Grupo Luna de miel                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-net">
+                        Grupo Bodas.net                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-belleza">
+                        Grupo Belleza                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-banquetes">
+                        Grupo Banquetes                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-ceremonia-nupcial">
+                        Grupo Ceremonia Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-recien-casados">
+                        Grupo Recién Casad@s                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-futuras-mamas">
+                        Grupo Futuras Mamás                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-famosas">
+                        Grupo Bodas Famosas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-viviendo-juntos">
+                        Grupo Vida en pareja                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-sorteo">
+                        Grupo Sorteo                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                                            
+<div class="header-join">
+    <a class="header-join-link" href="https://www.bodas.net/users-login.php">Accede</a>
+    <a
+        class="header-join-link app-ua-track-event"
+        href="https://www.bodas.net/users-signup.php"
+         data-track-c='SignUpTracking'  data-track-a='a-step1'  data-track-l='d-desktop+s-site_header'  data-track-s=''  data-track-v='0'  data-track-ni='0'     >
+        Regístrate    </a>
+</div>
+                    
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/luna-de-miel" class="selected ">
+                            Luna de miel                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/luna-de-miel/europa" class="selected ">
+                            Europa                        </a>
+                                                        </li>
+                            <li   >
+                                            Grecia                                                        </li>
+                    </ul>
+                </div>
+    </div>
+</div>
+
+
+<div class="wrapper">
+    <div class="honeymoonCountryHeader"
+     style="background: url(https://cdn1.bodas.net/assets/img/honeymoons/venue-region-26.jpg) center center/ cover no-repeat;">
+    <div class="honeymoonCountryHeader__content">
+        <h1 class="honeymoonCountryHeader__title">Luna de miel en Grecia</h1>
+        <p class="honeymoonCountryHeader__description">Grecia es un país de contrastes que ofrece un montón de posibilidades para disfrutar de vuestra luna de miel.</p>
+                    <button class="btnFlat btnFlat--red app-multilead-button-insp"
+                    data-href="https://www.bodas.net/multilead/layer/26/26?cta=1"
+                    data-cta="1"
+                    data-zona-origen="81">
+                Consigue el mejor presupuesto            </button>
+            </div>
+</div>
+    <div class="honeymoonHomeSection">
+    <div class="wrapper">
+        <a rel="nofollow"           href="https://www.bodas.net/luna-de-miel/europa/grecia"
+           class="honeymoonHomeSection__item current">Información</a>
+                    <span class="honeymoonHomeSection__separator">·</span>
+            <a rel="nofollow"                    href="https://www.bodas.net/luna-de-miel/europa/grecia/destinos"
+                    class="honeymoonHomeSection__item ">Destinos</a>
+                            <span class="honeymoonHomeSection__separator">·</span>
+            <a rel="nofollow"
+               href="https://www.bodas.net/luna-de-miel/europa/grecia/debates"
+               class="honeymoonHomeSection__item ">Posts</a>
+                            <span class="honeymoonHomeSection__separator">·</span>
+            <span class="honeymoonHomeSection__item btn-insp app-multilead-button-insp"
+                  data-href="https://www.bodas.net/multilead/layer/26/26"
+                  data-zona-origen="81"
+            >
+                <span>Agencias</span>
+            </span>
+            </div>
+</div>
+
+        <div class="pure-g mt20">
+        <div class="pure-u-3-4">
+            <div class="pure-s">
+                <div class="honeymoonTitleSection">
+                    <p class="honeymoonTitleSection__title">Información sobre Grecia</p>
+                </div>
+                                    
+<div class="honeymoon-image-childs">
+    <div class="pure-g row">
+                    <div class="pure-u-1-4">
+                <a href="https://www.bodas.net/luna-de-miel/europa/islas-griegas"
+                   class="honeymoon-image-childs-item">
+                    <img class="pure-u-1"
+                         src="https://cdn0.bodas.net/honey/gallery/0/5/3/t20_169.jpg"
+                         alt="Islas Griegas">
+                    <div class="honeymoon-image-childs-item-text">
+                        <p>Islas Griegas</p>
+                    </div>
+                </a>
+            </div>
+                    <div class="pure-u-1-4">
+                <a href="https://www.bodas.net/luna-de-miel/europa/creta"
+                   class="honeymoon-image-childs-item">
+                    <img class="pure-u-1"
+                         src="https://cdn0.bodas.net/honey/gallery/0/5/4/t20_89.jpg"
+                         alt="Creta">
+                    <div class="honeymoon-image-childs-item-text">
+                        <p>Creta</p>
+                    </div>
+                </a>
+            </div>
+                    </div>
+</div>
+                                <div class="honeymoonProfileContent app-resize-content app-honeymoon-profile-content">
+                    <p>Situada en el sureste del continente Europeo, y bañada por tres mares, el Mediterráneo, el Egeo y el Jónico, Grecia es un auténtico paraíso para los amantes de la cultura, la historia, el deporte y la playa. Cuna de la democracia, de la filosofía occidental y de los juegos olímpicos, posee un montón de atractivos para convertirse en el destino perfecto para vuestra luna de miel.</p>
+<img src="https://cdn0.bodas.net/img_g/stock/luna-de-miel/tb_lunademiel-grecia1.jpg" width="400"  alt="" />
+<img src="https://cdn0.bodas.net/img_g/stock/luna-de-miel/tb_lunademiel-grecia2.jpg" width="400"  alt="" />
+<img src="https://cdn0.bodas.net/img_g/stock/luna-de-miel/tb_lunademiel-grecia3.jpg" width="400"  alt="" />
+<p>Y es que con un clima y una gastronomía muy parecida a la nuestra, Grecia es sin duda el destino ideal para aquellas parejas que no quieren arriesgar ni recorrer miles de kilómetros para disfrutar de su luna de miel de ensueño. Si vosotros sois una de ellas, tomad nota:</p>
+<p><strong>Atenas</strong> es la capital de Grecia, y es el centro de la vida económica, política y cultural del país. Gracias a sus más de 3.000 años de historia posee una gran riqueza monumental que la convierten en un destino muy atractivo para miles de turistas de todo el mundo. Si os gusta la arqueología y la cultura de la Grecia clásica disfrutaréis visitando el Partenón, la Acrópolis o la Torre de los vientos.</p>
+<p>La isla de Mikonos es el lugar perfecto para descansar y desconectar del ajetreo de la boda. Durante el día podéis relajaros en sus playas o pasear por sus calles empedradas, y después de cenar podréis disfrutar de la intensa vida nocturna de la isla. Y animaros a coger una lancha taxi hacia la isla de Delos y recorrer las ruinas del santuario de Apolo.</p>
+<p>Si queréis hacer un viaje al pasado y sentir que formáis parte del pasado no podéis dejar de visitar la península del Peloponeso, unida al continente gracias al istmo de Corinto. Si os gusta la mitología y la historia clásica disfrutaréis visitando el Templo de Hera, Esparta y Olimpia.</p>
+<p><strong>Rodas</strong> está considerada como la isla del sol, pues según la mitología fue el hogar de Helios, dios del sol, y de la ninfa Rodo, de quien tomó el nombre. Si visitáis su puerto no esperéis ver a su famoso coloso, pues se destruyó a causa de un terremoto en el año 226 a. C. Además de disfrutar de sus playas, no dejéis de visitar su ciudad medieval, considerada por la UNESCO como Patrimonio de la Humanidad.</p>                </div>
+                                <div class="mt15">
+            <div class="widget-container widget-debates">
+            <div class="honeymoonTitleSection pb20">
+                <p class="honeymoonTitleSection__title">En la Comunidad se habla de...</p>
+                
+                                            <a class="honeymoonTitleSection__link"
+                           href="https://www.bodas.net/luna-de-miel/europa/grecia/debates"
+                           rel="nofollow">
+                            Ver todos                            <i class="svgIcon svgIcon__angleRight honeymoonGalleryPhotos__iconLink"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i>                        </a>
+                                                </div>
+                            <div class="discussion-post-item ">
+    <div class="pure-g">
+        <div class="pure-u-1-12">
+                <span rel="nofollow" class="app-link app-community-profile-layer avatar   " data-id-user="245953" data-href="https://comunidad.bodas.net/nati--u245953" data-testid="partials-complete-avatar">
+            <figure
+        
+            class=mt10>
+        <img
+            class="avatar-thumb"
+            src="https://cdn0.bodas.net/usuarios/fotos/5/9/5/3/utbp_245953.jpg?r=9952376"
+            width=""
+            loading="lazy"
+             alt="Nati">
+            </figure>
+    </span>
+        </div>
+
+        <div class="pure-u-11-12 pl20">
+            <div class="pure-g">
+                                    <div class="pure-u-6-8 pr20">
+                                    <a class="discussion-post-item-title" href="https://comunidad.bodas.net/debates/luna-de-miel-grecia-mykonos-y-santorini--t58056">Luna de miel (grecia, mykonos y santorini)</a>
+                    
+                    <div class="discussion-post-item-summary mb5">
+                        <a rel="nofollow" href="https://comunidad.bodas.net/nati--u245953">Nati</a>, El 21 de Marzo de 2013 a las 11:44                    </div>
+
+                    <div class="discussion-post-item-content app-link pointer"  data-href="https://comunidad.bodas.net/debates/luna-de-miel-grecia-mykonos-y-santorini--t58056">
+                                                <p>Buenos dias!! Nos casamos en Mayo de 2014 y nuestra idea es hacer un circuito por Grecia, Mykonos y Santorini. Queremos irnos unos 10 dias, donde nos aconsejais pasar mas tiempo? El problema es que a<span class="app-common-ellipsis">...</span></p>
+                    </div>
+                                        <div class="discussion-post-item-meta">
+                        
+                        <span class="color-grey">
+                                                            Estrella,
+                                                        <span>
+                                martes 14-May-19                            </span>
+                        </span>
+
+                                                
+                                                    <span class="color-grey ml10">
+                                <i class="svgIcon svgIcon__comment svgIcon--medium svgIcon--grey discussion-post-item-icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-comment"></use>
+                    </svg>
+                </i>                                <b>236 </b>
+                            </span>
+                                                                            <span class="color-grey ml10">
+                                <i class="svgIcon svgIcon__eye svgIcon--medium svgIcon--grey discussion-post-item-icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-eye"></use>
+                    </svg>
+                </i>20.494                            </span>
+                                                                    </div>
+                </div>
+                                                            <div class="pure-u-2-8 app-link pointer" data-href="https://comunidad.bodas.net/debates/luna-de-miel-grecia-mykonos-y-santorini--t58056">
+                            <div class="post-attachament-grid">
+                                    <img data-src="https://cdn0.bodas.net/usuarios/fotos/5/9/5/3/cfql_116841.jpg"  class="lazyload " alt=""     >
+                                                            </div>
+                        </div>
+                                                </div>
+        </div>
+    </div>
+    </div>
+                            <div class="discussion-post-item ">
+    <div class="pure-g">
+        <div class="pure-u-1-12">
+                <span rel="nofollow" class="app-link app-community-profile-layer avatar   " data-id-user="5000881" data-href="https://comunidad.bodas.net/raul--u5000881" data-testid="partials-complete-avatar">
+            <figure
+        
+            class=mt10>
+        <img
+            class="avatar-thumb"
+            src="https://cdn0.bodas.net/usuarios/fotos/0/8/8/1/utbp_5000881.jpg?r=15102"
+            width=""
+            loading="lazy"
+             alt="Raul">
+            </figure>
+    </span>
+        </div>
+
+        <div class="pure-u-11-12 pl20">
+            <div class="pure-g">
+                                    <div class="pure-u-1">
+                                    <a class="discussion-post-item-title" href="https://comunidad.bodas.net/debates/mykonos-o-santorini--t740777">¿Mykonos o Santorini?</a>
+                    
+                    <div class="discussion-post-item-summary mb5">
+                        <a rel="nofollow" href="https://comunidad.bodas.net/raul--u5000881">Raul</a>, El 13 de Diciembre de 2020 a las 11:04                    </div>
+
+                    <div class="discussion-post-item-content app-link pointer"  data-href="https://comunidad.bodas.net/debates/mykonos-o-santorini--t740777">
+                                                <p>Hola a tod@s!! ¿Alguien ha visitado Mykonos o Santorini? ¿Cuál recomendáis? </p>
+                    </div>
+                                        <div class="discussion-post-item-meta">
+                        
+                        <span class="color-grey">
+                                                            Raul,
+                                                        <span>
+                                sábado 19-Dic-20                            </span>
+                        </span>
+
+                                                
+                                                    <span class="color-grey ml10">
+                                <i class="svgIcon svgIcon__comment svgIcon--medium svgIcon--grey discussion-post-item-icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-comment"></use>
+                    </svg>
+                </i>                                <b>13 </b>
+                            </span>
+                                                                            <span class="color-grey ml10">
+                                <i class="svgIcon svgIcon__eye svgIcon--medium svgIcon--grey discussion-post-item-icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-eye"></use>
+                    </svg>
+                </i>383                            </span>
+                                                                    </div>
+                </div>
+                            </div>
+        </div>
+    </div>
+    </div>
+                            <div class="discussion-post-item ">
+    <div class="pure-g">
+        <div class="pure-u-1-12">
+                <span rel="nofollow" class="app-link app-community-profile-layer avatar   " data-id-user="3676715" data-href="https://comunidad.bodas.net/ariadna--u3676715" data-testid="partials-complete-avatar">
+            <figure
+        
+            class=mt10>
+        <img
+            class="avatar-thumb"
+            src="https://cdn0.bodas.net/usuarios/fotos/6/7/1/5/utbp_3676715.jpg?r=57242"
+            width=""
+            loading="lazy"
+             alt="Ariadna">
+            </figure>
+    </span>
+        </div>
+
+        <div class="pure-u-11-12 pl20">
+            <div class="pure-g">
+                                    <div class="pure-u-1">
+                                    <a class="discussion-post-item-title" href="https://comunidad.bodas.net/debates/atenas-mykonos-y-santorini--t783144">Atenas Mykonos y Santorini</a>
+                    
+                    <div class="discussion-post-item-summary mb5">
+                        <a rel="nofollow" href="https://comunidad.bodas.net/ariadna--u3676715">Ariadna</a>, El 11 de Septiembre de 2021 a las 10:51                    </div>
+
+                    <div class="discussion-post-item-content app-link pointer"  data-href="https://comunidad.bodas.net/debates/atenas-mykonos-y-santorini--t783144">
+                                                <p>Hola a todos! nos casamos el 9 de octubre de este año y hemos decidido irnos a Grecia, y tengo dudas sobre que hacer en caso de mal tiempo. También me han comentado que en Atenas estemos el menor<span class="app-common-ellipsis">...</span></p>
+                    </div>
+                                        <div class="discussion-post-item-meta">
+                        
+                        <span class="color-grey">
+                                                            Patricia,
+                                                        <span>
+                                lunes 13-Sep-21                            </span>
+                        </span>
+
+                                                
+                                                    <span class="color-grey ml10">
+                                <i class="svgIcon svgIcon__comment svgIcon--medium svgIcon--grey discussion-post-item-icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-comment"></use>
+                    </svg>
+                </i>                                <b>9 </b>
+                            </span>
+                                                                            <span class="color-grey ml10">
+                                <i class="svgIcon svgIcon__eye svgIcon--medium svgIcon--grey discussion-post-item-icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-eye"></use>
+                    </svg>
+                </i>516                            </span>
+                                                                    </div>
+                </div>
+                            </div>
+        </div>
+    </div>
+    </div>
+                    </div>
+    </div>                                                                                </div>
+        </div>
+        <div class="pure-u-1-4">
+                            <div class="app-inspirational-aside-box"
+                     data-href="https://www.bodas.net/multilead/aside-layer/26/26">
+                </div>
+            
+                        <div class="app-DFP widget-container mt15" style="min-height:190px;"
+             data-idgrupo="9"
+             data-idregion="3035"
+             data-idsubseccion="">
+        </div>
+    
+                    </div>
+    </div>
+</div>
+            <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                if (parent.pageGlobals.common.environment.isJsArchitectureEnabled) {
+                    parent.app.tracker.internalTrackerService.trackEventAllByData("<div  data-track-c='LeadTracking' data-track-a='a-show' data-track-l='d-desktop+s-honeymoon_category_11' data-track-v='0' data-track-ni='1'  data-track-cds='' ></div>");
+                } else {
+                    analyticsManager.queueEvent(function() {
+                        ga_trackEventAllByData($("<div  data-track-c='LeadTracking' data-track-a='a-show' data-track-l='d-desktop+s-honeymoon_category_11' data-track-v='0' data-track-ni='1'  data-track-cds='' ></div>"));
+                    });
+                }
+            })
+        </script>
+        </main>
+
+
+<div class="app-footer">
+    <script>
+  if (typeof(window.userLayersToShow) === "undefined" || (typeof(window.userLayersToShow) !== "undefined" && typeof(window.userLayersToShow.name) === "undefined")) {
+      window.userLayersToShow = {
+        name:
+                    null
+              }
+  }
+</script>
+
+    
+    
+
+            <footer class="layoutFooter">
+    <div class="linkingFooter">
+        <section class="corporativeLinks">
+    <div class="linkingFooter__title">Información</div>
+    <ul>
+        <li>
+                    <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es/reporting/">Contactar</span>
+                </li>
+        <li>
+            <a rel="nofollow" href="https://www.bodas.net/condiciones-legales.php">Condiciones legales</a>
+        </li>
+                    <li>
+                <a rel="nofollow" href="https://www.bodas.net/legal/privacy.php">Aviso de privacidad</a>
+            </li>
+                            <li>
+                <a rel="nofollow" href="h

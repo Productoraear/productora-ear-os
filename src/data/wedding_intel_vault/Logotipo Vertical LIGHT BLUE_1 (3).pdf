@@ -1,0 +1,531 @@
+/grupo-bodas-net">
+                        Grupo Bodas.net                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-belleza">
+                        Grupo Belleza                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-banquetes">
+                        Grupo Banquetes                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-ceremonia-nupcial">
+                        Grupo Ceremonia Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-recien-casados">
+                        Grupo Recién Casad@s                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-futuras-mamas">
+                        Grupo Futuras Mamás                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-famosas">
+                        Grupo Bodas Famosas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-viviendo-juntos">
+                        Grupo Vida en pareja                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-sorteo">
+                        Grupo Sorteo                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                    
+                                            
+<div class="empLoggedBox ">
+            <a class="header-joined-inbox" href="https://www.bodas.net/emp-AdminSolicitudes.php">
+            <i class="svgIcon app-svg-async svgIcon__envelope "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/envelope.svg" data-svg-lazyload="1"></i>            <span class=" app-header-inbox-counter"></span>
+        </a>
+        <div class="empLoggedBox__logo app-logged-toggle" style="" data-href="https://www.bodas.net/emp-Menu.php">
+        <img class="app_thumb" src="https://cdn0.bodas.net/emp/fotos/7/8/9/0/3/t10_edwin-agudelo-canta-a-novios_1_78903_v3.jpg">
+    </div>
+            <div class="layoutNavMenuVendorAuthenticatorDropdown" id="app-logged-box" style="display:none;">
+    <div class="layoutNavMenuVendorAuthenticatorDropdown__header">
+                    <a class="layoutNavMenuVendorAuthenticatorDropdown__logout" href="https://www.bodas.net/emp-CloseSession.php">
+                Cerrar sesión            </a>
+                            <a class="layoutNavMenuVendorAuthenticatorDropdown__name" href="https://www.bodas.net/emp-Menu.php">
+                Productora EAR                <span class="layoutNavMenuVendorAuthenticatorDropdown__category" style="display:none;">Música - Madrid</span>
+            </a>
+                            <a class="layoutNavMenuVendorAuthenticatorDropdown__action layoutNavMenuVendorAuthenticatorDropdown__action--inline" href="/emp-AdminNotificaciones.php">
+                Configuración            </a>
+                            <a class="layoutNavMenuVendorAuthenticatorDropdown__action layoutNavMenuVendorAuthenticatorDropdown__action--inline" href="https://www.bodas.net/empresa.php?id_empresa=78903" target="_blank">
+                Ver mi escaparate            </a>
+            </div>
+
+    <div class="layoutNavMenuVendorAuthenticatorDropdown__body">
+        <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-Menu.php">
+            <i class="empLoggedDropdown__icon icon icon-my-business"></i>
+            <a href="https://www.bodas.net/emp-Menu.php">Inicio</a>
+        </div>
+        <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-Modif.php">
+            <i class="empLoggedDropdown__icon icon icon-my-storefront"></i>
+            <a href="https://www.bodas.net/emp-Modif.php">Mi escaparate</a>
+        </div>
+                    <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-AdminSolicitudes.php">
+                <div class="empLoggedDropdown__icon icon icon-my-enquiries">
+                                    </div>
+                <a href="https://www.bodas.net/emp-AdminSolicitudes.php">Mis solicitudes</a>
+            </div>
+                <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-AdminReviews.php">
+            <div class="empLoggedDropdown__icon icon icon-reviews">
+                                    <span class="empLoggedDropdown__counter">4</span>
+                            </div>
+            <a href="https://www.bodas.net/emp-AdminReviews.php">
+                Opiniones            </a>
+        </div>
+    </div>
+            <footer class="layoutNavMenuVendorAuthenticatorDropdown__contact">
+            <i class="icon icon-call-center"></i>
+            <p>
+                ¿Necesitas ayuda para tu empresa?                <strong>93 047 62 16</strong>
+            </p>
+        </footer>
+    </div>
+    </div>
+
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+            <ul class="breadcrumb"><li><a href="https://www.bodas.net/">Bodas</a></li><li><a href="https://www.bodas.net/cronicas-boda">Bodas reales</a></li><li><span>Bodas reales en Barcelona</span></li></ul>        </div>
+    </div>
+</div>
+<div class="wrapper">
+    <div class="headings-intro">
+                    <h1 class="search-title">Bodas reales en Barcelona</h1>
+            <span class="count">5.767 bodas</span>
+            </div>
+        <div class="rwFilterbar flex-va-center border-top pt15 pb15 border-bottom mb20">
+        <div class="rwFilterbar__placeholder app-load-filters"
+             data-color="null"
+             data-season="null"
+             data-style="null"
+             data-owner="null"
+             data-region="{&quot;ID_REGION&quot;:&quot;3009&quot;,&quot;DESC_REGION&quot;:&quot;Barcelona&quot;,&quot;URL&quot;:&quot;barcelona&quot;,&quot;LATITUDE&quot;:&quot;41.3879165649&quot;,&quot;LONGITUDE&quot;:&quot;2.169919014&quot;,&quot;ID_REGION_ADM1&quot;:&quot;134&quot;}"
+             data-relevantes="true"
+        >
+        </div>
+        <div class="rwFiltered__orderBy">
+            <span class="color-grey pr5">Ordenar por:</span>
+                            <span class="color-black strong">Relevancia</span>
+                <span class="color-grey pl5 pr5">|</span>
+                <a rel="nofollow" class="color-black" href="https://www.bodas.net/real-Home.php?region=barcelona&order=0">Fecha Publicación</a>
+                    </div>
+    </div>
+    <div class="pure-g-r mt15">
+        <div class="aside pure-u-1-4">
+            <div class="app-realweddings-search-filters realweddings-search-filters"
+                data-load="https://www.bodas.net/real-weddings-sidebar/barcelona">
+            </div>
+        </div>
+        <div class="pure-u-3-4">
+            <div class="">
+                <div class="pure-g-r row">
+            <div class="pure-u-1-3">
+            
+<div class="box relative app-rw-item" style="cursor: pointer">
+            
+<button class="btn-fav btn-fav--transparent app-toggle-fav universalFavoriteButton     app-save-fav     rw-toggle-fav"
+     data-id="120787"
+     data-fav="0"
+     data-remove="0"
+     data-type="3"
+     data-icon="1"
+     data-number-favorites="0">
+</button>
+                    <div class="app-link" data-href="https://www.bodas.net/cronicas-boda/marc-andrea--rw120787">
+            <figure class="gallery-box-figure">
+                            <span class="ribbon icon icon-ribbon-pic"></span>
+                        <div class="img-zoom">
+                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/7/t10_5594625.jpg" srcset="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/7/t20_5594625.jpg 2x"  alt="La boda de Andrea y Marc"  width="285" height="213"   >
+            </div>
+            <figcaption class="flex">
+                                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/7/t10_5594563.jpg"   alt="La boda de Andrea y Marc 1"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/7/t10_5594565.jpg"   alt="La boda de Andrea y Marc 2"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <span class="gallery-box-item-counter">
+                                66                                <small class="block">fotos</small>
+                            </span>
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/7/t10_5594567.jpg"   alt="La boda de Andrea y Marc 3"  width="94" height="70"   >
+                    </div>
+                            </figcaption>
+        </figure>
+        <div class="gallery-box-description gallery-box-description-large text-center">
+                            <p class="mb0 ellipsis"><a href="https://www.bodas.net/cronicas-boda/marc-andrea--rw120787" class="gallery-box-description-names gallery-box-description-names-mw">Marc &amp; Andrea</a></p>
+                        <p class="upper ellipsis mt5 mb5">
+                L' Ametlla Del Valles, Barcelona
+            </p>
+                            <p class="ellipsis mt5 mb5">El Serrat de l'Ametlla</p>
+                                </div>
+            </div>
+            <div class="gallery-box-footer">
+            <div class="pure-g">
+                <div id="rw-clickable-section-120787" class="pure-u-6-8 app-link gallery-box-owner-name relative ellipsis" data-href="https://www.bodas.net/cronicas-boda/marc-andrea--rw120787">
+                                            <span class="icon icon-photographer-small icon-left"></span>
+                        <span class="">Loov Wedding Films</span>
+                                    </div>
+                <div class="item-favs text-right pure-u-2-8" data-id="120787">
+                                        <span class="universalFavoriteBoxSave universalFavoriteBoxSave--greyHeart dnone">
+                        <i class="svgIcon svgIcon__heart universalFavoriteBoxSave__heartIcon universalFavoriteBoxSave__heartIcon--small svgIcon--align"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-heart"></use>
+                    </svg>
+                </i>                        <span class="app-fav-item-count" data-id="120787">0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+            <div class="pure-u-1-3">
+            
+<div class="box relative app-rw-item" style="cursor: pointer">
+            
+<button class="btn-fav btn-fav--transparent app-toggle-fav universalFavoriteButton     app-save-fav     rw-toggle-fav"
+     data-id="120785"
+     data-fav="0"
+     data-remove="0"
+     data-type="3"
+     data-icon="1"
+     data-number-favorites="0">
+</button>
+                    <div class="app-link" data-href="https://www.bodas.net/cronicas-boda/ivan-patri--rw120785">
+            <figure class="gallery-box-figure">
+                            <span class="ribbon icon icon-ribbon-pic"></span>
+                        <div class="img-zoom">
+                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/5/t10_5594515.jpg" srcset="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/5/t20_5594515.jpg 2x"  alt="La boda de Patri y Ivan"  width="285" height="213"   >
+            </div>
+            <figcaption class="flex">
+                                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/5/t10_5594469.jpg"   alt="La boda de Patri y Ivan 1"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/5/t10_5594471.jpg"   alt="La boda de Patri y Ivan 2"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <span class="gallery-box-item-counter">
+                                47                                <small class="block">fotos</small>
+                            </span>
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/7/8/5/t10_5594473.jpg"   alt="La boda de Patri y Ivan 3"  width="94" height="70"   >
+                    </div>
+                            </figcaption>
+        </figure>
+        <div class="gallery-box-description gallery-box-description-large text-center">
+                            <p class="mb0 ellipsis"><a href="https://www.bodas.net/cronicas-boda/ivan-patri--rw120785" class="gallery-box-description-names gallery-box-description-names-mw">Ivan &amp; Patri</a></p>
+                        <p class="upper ellipsis mt5 mb5">
+                Sant Fost De Campsentelles, Barcelona
+            </p>
+                            <p class="ellipsis mt5 mb5">El Celler de Can Torrens</p>
+                                </div>
+            </div>
+            <div class="gallery-box-footer">
+            <div class="pure-g">
+                <div id="rw-clickable-section-120785" class="pure-u-6-8 app-link gallery-box-owner-name relative ellipsis" data-href="https://www.bodas.net/cronicas-boda/ivan-patri--rw120785">
+                                            <span class="icon icon-photographer-small icon-left"></span>
+                        <span class="">Loov Wedding Films</span>
+                                    </div>
+                <div class="item-favs text-right pure-u-2-8" data-id="120785">
+                                        <span class="universalFavoriteBoxSave universalFavoriteBoxSave--greyHeart dnone">
+                        <i class="svgIcon svgIcon__heart universalFavoriteBoxSave__heartIcon universalFavoriteBoxSave__heartIcon--small svgIcon--align"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-heart"></use>
+                    </svg>
+                </i>                        <span class="app-fav-item-count" data-id="120785">0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+            <div class="pure-u-1-3">
+            
+<div class="box relative app-rw-item" style="cursor: pointer">
+            
+<button class="btn-fav btn-fav--transparent app-toggle-fav universalFavoriteButton     app-save-fav     rw-toggle-fav"
+     data-id="120575"
+     data-fav="0"
+     data-remove="0"
+     data-type="3"
+     data-icon="1"
+     data-number-favorites="0">
+</button>
+                    <div class="app-link" data-href="https://www.bodas.net/cronicas-boda/dovar-cristina--rw120575">
+            <figure class="gallery-box-figure">
+                            <span class="ribbon icon icon-ribbon-pic"></span>
+                        <div class="img-zoom">
+                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/7/5/t10_5585975.jpg" srcset="https://cdn0.bodas.net/cronicas-boda/fotos/5/7/5/t20_5585975.jpg 2x"  alt="La boda de Cristina y Dovar"  width="285" height="213"   >
+            </div>
+            <figcaption class="flex">
+                                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/7/5/t10_5585929.jpg"   alt="La boda de Cristina y Dovar 1"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/7/5/t10_5585931.jpg"   alt="La boda de Cristina y Dovar 2"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <span class="gallery-box-item-counter">
+                                24                                <small class="block">fotos</small>
+                            </span>
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/7/5/t10_5585933.jpg"   alt="La boda de Cristina y Dovar 3"  width="94" height="70"   >
+                    </div>
+                            </figcaption>
+        </figure>
+        <div class="gallery-box-description gallery-box-description-large text-center">
+                            <p class="mb0 ellipsis"><a href="https://www.bodas.net/cronicas-boda/dovar-cristina--rw120575" class="gallery-box-description-names gallery-box-description-names-mw">Dovar &amp; Cristina</a></p>
+                        <p class="upper ellipsis mt5 mb5">
+                Castellnou De Bages, Barcelona
+            </p>
+                            <p class="ellipsis mt5 mb5">Cal Segudet</p>
+                                        <p class="mb0">
+                                            Al aire libre,                                                                 Verano                                                                <span class="bullet-color">
+                            <span class="realWeddingHero__weddingColor green"></span>
+                        </span>
+                                    </p>
+                    </div>
+            </div>
+            <div class="gallery-box-footer">
+            <div class="pure-g">
+                <div id="rw-clickable-section-120575" class="pure-u-6-8 app-link gallery-box-owner-name relative ellipsis" data-href="https://www.bodas.net/cronicas-boda/dovar-cristina--rw120575">
+                                            <span class="icon icon-photographer-small icon-left"></span>
+                        <span class="">Andrea Moreno</span>
+                                    </div>
+                <div class="item-favs text-right pure-u-2-8" data-id="120575">
+                                        <span class="universalFavoriteBoxSave universalFavoriteBoxSave--greyHeart dnone">
+                        <i class="svgIcon svgIcon__heart universalFavoriteBoxSave__heartIcon universalFavoriteBoxSave__heartIcon--small svgIcon--align"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-heart"></use>
+                    </svg>
+                </i>                        <span class="app-fav-item-count" data-id="120575">0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+            <div class="pure-u-1-3">
+            
+<div class="box relative app-rw-item" style="cursor: pointer">
+            
+<button class="btn-fav btn-fav--transparent app-toggle-fav universalFavoriteButton     app-save-fav     rw-toggle-fav"
+     data-id="120555"
+     data-fav="0"
+     data-remove="0"
+     data-type="3"
+     data-icon="1"
+     data-number-favorites="0">
+</button>
+                    <div class="app-link" data-href="https://www.bodas.net/cronicas-boda/david-ornella--rw120555">
+            <figure class="gallery-box-figure">
+                            <span class="ribbon icon icon-ribbon-pic"></span>
+                        <div class="img-zoom">
+                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/5/5/t10_5585009.jpg" srcset="https://cdn0.bodas.net/cronicas-boda/fotos/5/5/5/t20_5585009.jpg 2x"  alt="La boda de Ornella y David"  width="285" height="213"   >
+            </div>
+            <figcaption class="flex">
+                                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/5/5/t10_5584953.jpg"   alt="La boda de Ornella y David 1"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/5/5/t10_5584955.jpg"   alt="La boda de Ornella y David 2"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <span class="gallery-box-item-counter">
+                                56                                <small class="block">fotos</small>
+                            </span>
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/5/5/t10_5584957.jpg"   alt="La boda de Ornella y David 3"  width="94" height="70"   >
+                    </div>
+                            </figcaption>
+        </figure>
+        <div class="gallery-box-description gallery-box-description-large text-center">
+                            <p class="mb0 ellipsis"><a href="https://www.bodas.net/cronicas-boda/david-ornella--rw120555" class="gallery-box-description-names gallery-box-description-names-mw">David &amp; Ornella</a></p>
+                        <p class="upper ellipsis mt5 mb5">
+                Alella, Barcelona
+            </p>
+                            <p class="ellipsis mt5 mb5">Can Cabús</p>
+                                </div>
+            </div>
+            <div class="gallery-box-footer">
+            <div class="pure-g">
+                <div id="rw-clickable-section-120555" class="pure-u-6-8 app-link gallery-box-owner-name relative ellipsis" data-href="https://www.bodas.net/cronicas-boda/david-ornella--rw120555">
+                                            <span class="icon icon-photographer-small icon-left"></span>
+                        <span class="">Coleccionistas de Momentos</span>
+                                    </div>
+                <div class="item-favs text-right pure-u-2-8" data-id="120555">
+                                        <span class="universalFavoriteBoxSave universalFavoriteBoxSave--greyHeart dnone">
+                        <i class="svgIcon svgIcon__heart universalFavoriteBoxSave__heartIcon universalFavoriteBoxSave__heartIcon--small svgIcon--align"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-heart"></use>
+                    </svg>
+                </i>                        <span class="app-fav-item-count" data-id="120555">0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+            <div class="pure-u-1-3">
+            
+<div class="box relative app-rw-item" style="cursor: pointer">
+            
+<button class="btn-fav btn-fav--transparent app-toggle-fav universalFavoriteButton     app-save-fav     rw-toggle-fav"
+     data-id="120519"
+     data-fav="0"
+     data-remove="0"
+     data-type="3"
+     data-icon="1"
+     data-number-favorites="0">
+</button>
+                    <div class="app-link" data-href="https://www.bodas.net/cronicas-boda/humbert-laura--rw120519">
+            <figure class="gallery-box-figure">
+                            <span class="ribbon icon icon-ribbon-pic"></span>
+                        <div class="img-zoom">
+                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/1/9/t10_5581327.jpg" srcset="https://cdn0.bodas.net/cronicas-boda/fotos/5/1/9/t20_5581327.jpg 2x"  alt="La boda de Laura y Humbert"  width="285" height="213"   >
+            </div>
+            <figcaption class="flex">
+                                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/1/9/t10_5581327.jpg"   alt="La boda de Laura y Humbert 1"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/1/9/t10_5581329.jpg"   alt="La boda de Laura y Humbert 2"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <span class="gallery-box-item-counter">
+                                36                                <small class="block">fotos</small>
+                            </span>
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/5/1/9/t10_5581331.jpg"   alt="La boda de Laura y Humbert 3"  width="94" height="70"   >
+                    </div>
+                            </figcaption>
+        </figure>
+        <div class="gallery-box-description gallery-box-description-large text-center">
+                            <p class="mb0 ellipsis"><a href="https://www.bodas.net/cronicas-boda/humbert-laura--rw120519" class="gallery-box-description-names gallery-box-description-names-mw">Humbert &amp; Laura</a></p>
+                        <p class="upper ellipsis mt5 mb5">
+                Sant Cugat Del Valles, Barcelona
+            </p>
+                            <p class="ellipsis mt5 mb5">Can Magí</p>
+                                        <p class="mb0">
+                                                                Primavera                                                        </p>
+                    </div>
+            </div>
+            <div class="gallery-box-footer">
+            <div class="pure-g">
+                <div id="rw-clickable-section-120519" class="pure-u-6-8 app-link gallery-box-owner-name relative ellipsis" data-href="https://www.bodas.net/cronicas-boda/humbert-laura--rw120519">
+                                            <span class="icon icon-photographer-small icon-left"></span>
+                        <span class="">Loov Wedding Films</span>
+                                    </div>
+                <div class="item-favs text-right pure-u-2-8" data-id="120519">
+                                        <span class="universalFavoriteBoxSave universalFavoriteBoxSave--greyHeart dnone">
+                        <i class="svgIcon svgIcon__heart universalFavoriteBoxSave__heartIcon universalFavoriteBoxSave__heartIcon--small svgIcon--align"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-heart"></use>
+                    </svg>
+                </i>                        <span class="app-fav-item-count" data-id="120519">0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+            <div class="pure-u-1-3">
+            
+<div class="box relative app-rw-item" style="cursor: pointer">
+            
+<button class="btn-fav btn-fav--transparent app-toggle-fav universalFavoriteButton     app-save-fav     rw-toggle-fav"
+     data-id="120475"
+     data-fav="0"
+     data-remove="0"
+     data-type="3"
+     data-icon="1"
+     data-number-favorites="0">
+</button>
+                    <div class="app-link" data-href="https://www.bodas.net/cronicas-boda/luis-luna--rw120475">
+            <figure class="gallery-box-figure">
+                            <span class="ribbon icon icon-ribbon-pic"></span>
+                        <div class="img-zoom">
+                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/4/7/5/t10_5573313.jpg" srcset="https://cdn0.bodas.net/cronicas-boda/fotos/4/7/5/t20_5573313.jpg 2x"  alt="La boda de Luna y Luis"  width="285" height="213"   >
+            </div>
+            <figcaption class="flex">
+                                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/4/7/5/t10_5573133.jpg"   alt="La boda de Luna y Luis 1"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/4/7/5/t10_5573135.jpg"   alt="La boda de Luna y Luis 2"  width="94" height="70"   >
+                    </div>
+                                    <div class="gallery-box-thumb pure-u-1-3">
+                                                    <span class="gallery-box-item-counter">
+                                94                                <small class="block">fotos</small>
+                            </span>
+                                                    <img src="https://cdn0.bodas.net/cronicas-boda/fotos/4/7/5/t10_5573137.jpg"   alt="La boda de Luna y Luis 3"  width="94" height="70"   >
+                    </div>
+                            </figcaption>
+        </figure>
+        <div class="gallery-box-description gallery-box-description-large text-center">
+                            <p class="mb0 ellipsis"><a href="https://www.bodas.net/cronicas-boda/luis-luna--rw120475" class="gallery-box-description-names gallery-box-description-names-mw">Luis &amp; Luna</a></p>
+                        <p class="upper ellipsis mt5 mb5">
+                Rubio, Barcelona
+            </p>
+                            <p class="ellipsis mt5 mb5">Somiatruites - Mas de Pedrafita</p>
+                                        <p class="mb0">
+                                            Al aire libre,                                                                 Verano                                                        </p>
+                    </div>
+            </div>
+            <div class="gallery-box-footer">
+            <div class="pure-g">
+                <div id="rw-clickable-section-120475" class="pure-u-6-8 app-link g

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es-ES" prefix="og: http://ogp.me/ns#">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Eventos & Celebraciones Ruiz Hnos - Consulta disponibilidad y precios</title>
+<meta name="description" content="Eventos &amp; Celebraciones Ruiz Hnos (Mobiliario Moron De La Frontera). Eventos &amp; Celebraciones Ruiz Hnos es una empresa dedicada a proveer todo el mobiliario necesario para celebrar un...">
+<meta name="keywords" content="Eventos &amp; Celebraciones Ruiz Hnos, Mobiliario Eventos &amp; Celebraciones Ruiz Hnos, Proveedores Eventos &amp; Celebraciones Ruiz Hnos, Bodas Eventos &amp; Celebraciones Ruiz Hnos, Boda Eventos &amp; Celebraciones Ruiz Hnos, Mobiliario Moron De La Frontera, Mobiliario Sevilla, Bodas Moron De La Frontera, Proveedores Moron De La Frontera, Proveedores Sevilla, Bodas Sevilla">
+<meta name="robots" content="all">
+<meta name="distribution" content="global">
+<meta name="rating" content="general">
+<meta name="pbdate" content="22:10:45 22/12/2024">
+<link rel="canonical" href="https://www.bodas.net/mobiliario/eventos-&-celebraciones-ruiz-hnos--e48323">
+<link rel="alternate" href="android-app://net.bodas.launcher/bodasnet/m.bodas.net/mobiliario/eventos-&-celebraciones-ruiz-hnos--e48323">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-custom-itunes-app" content="app-id=598636207">
+<meta name="apple-itunes-app" content="app-id=598636207, app-argument=https://app.appsflyer.com/id598636207?pid=WP-iOS-ES&c=WP-ES-LANDINGS&s=es">
+<meta name="google-play-app" content="app-id=net.bodas.launcher">
+<link rel="shortcut icon" href="https://www.bodas.net/mobile/assets/img/favicon/favicon.png">
+<meta property="fb:pages" content="60558433839" />
+<meta property="fb:app_id" content="127038310647837" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Eventos &amp; Celebraciones Ruiz Hnos" />
+<meta property="og:description" content="Eventos &amp; Celebraciones Ruiz Hnos es una empresa dedicada a proveer todo el mobiliario necesario para celebrar un banquete nupcial. Actualmente, dispone de un departamento Lovechillout especializado en acondicionamiento de espacios con temática chill" />
+<meta property="og:image" content="https://cdn0.bodas.net/vendor/48323/3_2/1280/jpg/213058512-2964707590518036-7788705163311077658-n_1_48323-163638600475467.jpeg">
+<meta property="og:image:secure_url" content="https://cdn0.bodas.net/vendor/48323/3_2/1280/jpg/213058512-2964707590518036-7788705163311077658-n_1_48323-163638600475467.jpeg">
+<meta property="og:image:alt" content="Eventos &amp; Celebraciones Ruiz Hnos">
+<meta property="og:url" content="https://www.bodas.net/mobiliario/eventos-&amp;-celebraciones-ruiz-hnos--e48323" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="stylesheet" href="https://www.bodas.net/builds/desktop/css/symfnw-ES171-1-20241219-010_www_m_/WebBundleResponsiveMarketplaceStorefrontBodas.css">
+<script>
+var internalTrackingService = internalTrackingService || {
+triggerSubmit : function() {},
+triggerAbandon : function() {},
+loaded : false
+};
+</script>
+<script type="text/javascript">
+function getCookie (name) {var b = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)'); return b ? unescape(b.pop()) : null}
+function overrideOneTrustGeo () {
+const otgeoCookie = getCookie('otgeo') || '';
+const regexp = /^([A-Za-z]+)(?:,([A-Za-z]+))?$/g;
+const matches = [...otgeoCookie.matchAll(regexp)][0];
+if (matches) {
+const countryCode = matches[1];
+const stateCode = matches[2];
+const ge

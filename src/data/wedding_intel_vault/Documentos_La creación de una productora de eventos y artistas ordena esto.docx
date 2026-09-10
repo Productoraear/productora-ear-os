@@ -1,0 +1,331 @@
+oad="1"></i></button>
+<div class="scrollSnap__container app-scroll-snap-container storefrontAwards__slider" dir="ltr">
+<div class="scrollSnap__item app-scroll-snap-item storefrontAwards__slide"
+data-id="0"
+data-visualized-slide="false"
+>
+<div class="storefrontAwards__item">
+<img data-src="https://www.bodas.net/assets/img/badges/rated/badge-rated-50.png"  class="lazyload " alt=""  width="125" height="125"  >
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item storefrontAwards__slide"
+data-id="1"
+data-visualized-slide="false"
+>    <div class="storefrontAwards__item">
+<img data-src="https://cdn1.bodas.net/img/badges/2024/badge-weddingawards_es_ES.jpg"  class="lazyload " alt="Ganador Wedding Awards 2024 Bodas.net"  width="125" height="125"  >
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item storefrontAwards__slide"
+data-id="2"
+data-visualized-slide="false"
+>    <div class="storefrontAwards__item">
+<img data-src="https://cdn1.bodas.net/img/badges/2023/badge-weddingawards_es_ES.jpg"  class="lazyload " alt="Ganador Wedding Awards 2023 Bodas.net"  width="125" height="125"  >
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item storefrontAwards__slide"
+data-id="3"
+data-visualized-slide="false"
+>    <div class="storefrontAwards__item">
+<img data-src="https://cdn1.bodas.net/img/badges/2022/badge-weddingawards_es_ES.jpg"  class="lazyload " alt="Ganador Wedding Awards 2022 Bodas.net"  width="125" height="125"  >
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item storefrontAwards__slide"
+data-id="4"
+data-visualized-slide="false"
+>    <div class="storefrontAwards__item">
+<img data-src="https://cdn1.bodas.net/img/badges/2021/badge-weddingawards_es_ES.jpg"  class="lazyload " alt="Ganador Wedding Awards 2021 Bodas.net"  width="125" height="125"  >
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item storefrontAwards__slide"
+data-id="5"
+data-visualized-slide="false"
+>    <div class="storefrontAwards__item">
+<img data-src="https://cdn1.bodas.net/img/badges/2020/badge-weddingawards_es_ES.jpg"  class="lazyload " alt="Ganador Wedding Awards 2020 Bodas.net"  width="125" height="125"  >
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item storefrontAwards__slide"
+data-id="6"
+data-visualized-slide="false"
+>    <div class="storefrontAwards__item">
+<img data-src="https://cdn1.bodas.net/img/badges/2019/badge-weddingawards_es_ES.jpg"  class="lazyload " alt="Ganador Wedding Awards 2019 Bodas.net"  width="125" height="125"  >
+</div>
+</div>
+</div>
+<button type="button" aria-label="Siguiente" class="scrollSnap__arrow scrollSnap__arrow--next app-scroll-snap-next hidden "><i class="svgIcon app-svg-async svgIcon__arrowRightThick "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/arrows/arrowRightThick.svg" data-svg-lazyload="1"></i></button>
+</div>
+</section>
+</section>
+<section class="realWeddingsCouples app-real-weddings-couples-slider app-section-highlighter-item">
+<h2 id="realWeddingsCouples" class="realWeddingsCouples__title" tabindex="-1">Bodas reales de Estefanía Fernández Estudio Make up</h2>
+<div class="scrollSnap app-scroll-snap-wrapper scrollSnap--fullBleed scrollSnap--floatArrows"
+role="region" aria-label="Bodas reales de Estefanía Fernández Estudio Make up Carrusel">
+<button type="button" aria-label="Anterior" class="scrollSnap__arrow scrollSnap__arrow--prev app-scroll-snap-prev hidden disabled"><i class="svgIcon app-svg-async svgIcon__arrowLeftThick "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/arrows/arrowLeftThick.svg" data-svg-lazyload="1"></i></button>
+<div class="scrollSnap__container app-scroll-snap-container realWeddingsCouples__slider" dir="ltr">
+<div class="scrollSnap__item app-scroll-snap-item realWeddingsCouples__slide"
+data-id="0"
+data-visualized-slide="false"
+role="group"    aria-label="Boda "    >
+<div class="realWeddingsCouplesTile app-rw-couples-tile"
+data-href="https://www.bodas.net/belleza-novias/estefania-fernandez-estudio-make-up--e85283/bodas-reales/117165"
+data-rw-id="117165"
+aria-label="Aroa & Daniel, 9 fotos"
+role="link">
+<figure class="realWeddingsCouplesTile__gallery">
+<div class="realWeddingsCouplesTile__image">
+<picture      data-image-name="imageFileName_5412253.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412253.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412253.webp 640w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/960/jpg/5412253.webp 960w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/1280/jpg/5412253.webp 1280w" sizes="(min-width: 768px) 284px, (min-width: 480px) 350px, calc(100vw - 4rem)">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412253.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412253.jpeg 640w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/960/jpg/5412253.jpeg 960w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/1280/jpg/5412253.jpeg 1280w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/165/3_2/960/jpg/5412253.jpeg"
+sizes="(min-width: 768px) 284px, (min-width: 480px) 350px, calc(100vw - 4rem)"
+alt="La boda de Aroa y Daniel"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<figcaption class="realWeddingsCouplesTile__thumbnails">
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_5412261.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412261.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412261.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412261.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412261.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412261.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Aroa y Daniel 1"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_5412263.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412263.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412263.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412263.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412263.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412263.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Aroa y Daniel 2"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_5412265.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412265.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412265.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/165/3_2/320/jpg/5412265.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412265.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/165/3_2/640/jpg/5412265.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Aroa y Daniel 3"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+</figcaption>
+</figure>
+<div class="realWeddingsCouplesTile__body">
+<span class="realWeddingsCouplesTile__title link">Aroa & Daniel</span>
+<div class="realWeddingsCouplesTile__info">
+9 fotos · 21/09/2024        </div>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item realWeddingsCouples__slide"
+data-id="1"
+data-visualized-slide="false"
+role="group"    aria-label="Boda "    >
+<div class="realWeddingsCouplesTile app-rw-couples-tile"
+data-href="https://www.bodas.net/belleza-novias/estefania-fernandez-estudio-make-up--e85283/bodas-reales/87575"
+data-rw-id="87575"
+aria-label="Ámbar & Fran, 126 fotos"
+role="link">
+<figure class="realWeddingsCouplesTile__gallery">
+<div class="realWeddingsCouplesTile__image">
+<picture      data-image-name="imageFileName_3969405.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969405.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969405.webp 640w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/960/jpg/3969405.webp 960w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/1280/jpg/3969405.webp 1280w" sizes="(min-width: 768px) 284px, (min-width: 480px) 350px, calc(100vw - 4rem)">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969405.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969405.jpeg 640w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/960/jpg/3969405.jpeg 960w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/1280/jpg/3969405.jpeg 1280w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/575/3_2/960/jpg/3969405.jpeg"
+sizes="(min-width: 768px) 284px, (min-width: 480px) 350px, calc(100vw - 4rem)"
+alt="La boda de Ámbar y Fran"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<figcaption class="realWeddingsCouplesTile__thumbnails">
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_3969299.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969299.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969299.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969299.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969299.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969299.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Ámbar y Fran 1"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_3969391.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969391.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969391.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969391.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969391.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969391.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Ámbar y Fran 2"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_3969155.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969155.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969155.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/575/3_2/320/jpg/3969155.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969155.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/575/3_2/640/jpg/3969155.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Ámbar y Fran 3"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+</figcaption>
+</figure>
+<div class="realWeddingsCouplesTile__body">
+<span class="realWeddingsCouplesTile__title link">Ámbar & Fran</span>
+<div class="realWeddingsCouplesTile__info">
+126 fotos · 11/06/2022        </div>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item realWeddingsCouples__slide"
+data-id="2"
+data-visualized-slide="false"
+role="group"    aria-label="Boda "    >
+<div class="realWeddingsCouplesTile app-rw-couples-tile"
+data-href="https://www.bodas.net/belleza-novias/estefania-fernandez-estudio-make-up--e85283/bodas-reales/72957"
+data-rw-id="72957"
+aria-label="Desirée  & Sergio, 37 fotos"
+role="link">
+<figure class="realWeddingsCouplesTile__gallery">
+<div class="realWeddingsCouplesTile__image">
+<picture      data-image-name="imageFileName_3303827.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303827.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303827.webp 640w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/960/jpg/3303827.webp 960w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/1280/jpg/3303827.webp 1280w" sizes="(min-width: 768px) 284px, (min-width: 480px) 350px, calc(100vw - 4rem)">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303827.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303827.jpeg 640w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/960/jpg/3303827.jpeg 960w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/1280/jpg/3303827.jpeg 1280w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/957/3_2/960/jpg/3303827.jpeg"
+sizes="(min-width: 768px) 284px, (min-width: 480px) 350px, calc(100vw - 4rem)"
+alt="La boda de Desirée  y Sergio"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<figcaption class="realWeddingsCouplesTile__thumbnails">
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_3303813.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303813.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303813.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303813.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303813.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303813.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Desirée  y Sergio 1"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_3303815.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303815.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303815.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303815.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303815.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303815.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Desirée  y Sergio 2"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+<div class="realWeddingsCouplesTile__thumbnail">
+<picture      data-image-name="imageFileName_3303817.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303817.webp 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303817.webp 640w" sizes="(min-width: 768px) 93px, 0px">
+<img
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/957/3_2/320/jpg/3303817.jpeg 320w,
+https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303817.jpeg 640w"
+data-src="https://cdn0.bodas.net/real-wedding-photo/957/3_2/640/jpg/3303817.jpeg"
+sizes="(min-width: 768px) 93px, 0px"
+alt="La boda de Desirée  y Sergio 3"
+width="640"        height="427"        class="lazyload"        >
+</picture>
+</div>
+</figcaption>
+</figure>
+<div class="realWeddingsCouplesTile__body">
+<span class="realWeddingsCouplesTile__title link">Desirée  & Sergio</span>
+<div class="realWeddingsCouplesTile__info">
+37 fotos · 04/09/2020        </div>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item realWeddingsCouples__slide"
+data-id="3"
+data-visualized-slide="false"
+role="group"    aria-label="Boda "    >
+<div class="realWeddingsCouplesTile app-rw-couples-tile"
+data-href="https://www.bodas.net/belleza-novias/estefania-fernandez-estudio-make-up--e85283/bodas-reales/72999"
+data-rw-id="72999"
+aria-label="Sergio & Desirée , 8 fotos"
+role="link">
+<figure class="realWeddingsCouplesTile__gallery">
+<div class="realWeddingsCouplesTile__image">
+<picture      data-image-name="imageFileName_3306525.jpeg">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/real-wedding-photo/999/3_2/320/jpg/3306525.webp 320w,
+https://cdn0.bodas.net/real-wedding-phot

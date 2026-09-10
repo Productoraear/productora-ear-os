@@ -1,0 +1,141 @@
+
+							event.initEvent('analyticsCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+						if (isCookieGroupAllowed(CONSENT_PERSONALIZATION_GROUP) === true) {
+							event.initEvent('personalizationCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+						if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+							event.initEvent('targetedAdvertisingCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+						if (isCookieGroupAllowed(CONSENT_SOCIAL_MEDIA_GROUP) === true) {
+							event.initEvent('socialMediaAdvertisingCookiesHasBeenAccepted', true, false);
+							body.dispatchEvent(event);
+						}
+					}
+
+					function CMP() {
+						var body = document.getElementsByTagName('body')[0];
+						var event = document.createEvent('HTMLEvents');
+						var callbackIAB = (tcData, success) => {
+							if (success && (tcData.eventStatus === 'tcloaded' || tcData.eventStatus === 'useractioncomplete')) {
+								window.__tcfapi('removeEventListener', 2, () => {
+								}, callbackIAB);
+								userHasAcceptedTheCookies();
+							}
+						}
+						var cnt = 0;
+						var consentSetInterval = setInterval(function () {
+							cnt += 1;
+							if (cnt === 200 ||
+								(typeof window.Optanon !== "undefined" && !window.Optanon.GetDomainData().IsIABEnabled)
+							) {
+								clearInterval(consentSetInterval);
+								userHasAcceptedTheCookies();
+							}
+							if (typeof window.__tcfapi !== "undefined") {
+								clearInterval(consentSetInterval);
+								window.__tcfapi('addEventListener', 2, callbackIAB);
+							} 
+						});
+					}
+					CMP();
+					/*
+					document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+						// Analytics tracking
+						(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+						(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+						m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+						ga('create', 'UA-3715104-1', 'auto');
+						ga('send', 'pageview');
+					});
+					*/
+					
+
+					document.getElementsByTagName('body')[0].addEventListener('personalizationCookiesHasBeenAccepted', function () {
+						// Personalization tracking
+						
+					});
+
+					document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+						// Advertising tracking
+						
+						var newScript = document.createElement("script");
+						newScript.type = "text/javascript";
+						newScript.setAttribute("async", "true");
+						newScript.setAttribute("src", "https://www.googletagmanager.com/gtag/js?id=AW-1021727564");
+						document.documentElement.firstChild.appendChild(newScript);
+
+						!function(f,b,e,v,n,t,s)
+						{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+						n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+						if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+						n.queue=[];t=b.createElement(e);t.async=!0;
+						t.src=v;s=b.getElementsByTagName(e)[0];
+						s.parentNode.insertBefore(t,s)}(window, document,'script',
+						'https://connect.facebook.net/en_US/fbevents.js');
+						fbq('init', '1434721056835089');
+						
+					});
+
+					document.getElementsByTagName('body')[0].addEventListener('socialMediaAdvertisingCookiesHasBeenAccepted', function () {
+						// Social media tracking			
+					});
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+
+					gtag('config', 'AW-1021727564');
+				</script>
+
+								<script>			
+				 	window.gtag('event', 'page_view', {
+						'send_to': 'AW-1021727564',
+						'Invitations_Nav': '1'
+					}); 
+					function run_fb() {				
+						if (typeof fbq !== 'undefined') {							
+							fbq('track', 'PageView', {'Invitations_Nav' : '1'});
+							console.log('pageview');		
+						} else {							
+							setTimeout(run_fb,600);
+						}						
+					}				
+					run_fb();				
+				</script>
+				            
+              <div class="header header-compact header-sm">
+  <div class="top-bar navbar-nav">
+    <div class="top-menu top-menu-283">
+  <ul class="j-menu">
+              <li class="menu-item top-menu-item top-menu-item-1 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-2 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-3 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-4 icon-only">
+                        <a href="#" ><span class="links-text"></span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-5 icon-only">
+                        <a href="#" ><span class="links-text">Google</span></a>
+                  </li>
+                  <li class="menu-item top-menu-item top-menu-item-6 icon-only">
+                        <a href="#" ><span class="links-text">Youtube</span></a>
+                  </li>
+          </ul>
+</div>
+          <div class="language-currency top-menu">
+        <div class="desktop-language-wrapper">
+              <div id="language" class="language">
+    <form action="https://invitaciones.bodas.net/index.php?route=common/language/language" method="post" enctype="multipart/form-data" id="form-language">
+      <div class="dropdown drop-menu">
+        <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+          <span class="language-flag-title">
+            <span class="symbol"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAIAAAD5gJpuAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAFnSURBVHjaYvzPgAD/UNlYEUAAmuTYAAAQhAEYqF/zFbe50RZ1cMmS9TLi0pJLRjZohAMTGFUN9HdnHgEE1sDw//+Tp0ClINW/f0NIKPoFJH/9//ULyGaUlQXaABBALAx/Gf4zAt31F4i+ffj3/cN/XrFfzOx//v///f//LzACM/79ZmD8/e8TA0AAMYHdDVT958vXP38nMDB0s3x94/Tj5y+YahhiAKLfQKUAAcQEdtJfoDHMF2L+vPzDmFXLelf551tGFOOhev4A/QgQQExgHwAd8IdFT/Wz6j+GhlpmXSOW/2z///8Eq/sJ18Dw/zdQA0AAMQExxJjjdy9x2/76EfLz4MXdP

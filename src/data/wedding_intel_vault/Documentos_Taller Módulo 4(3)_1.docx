@@ -1,0 +1,647 @@
+ id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-novias">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Alicia Rueda Atelier                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344642" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/alice--v344642">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/alice--v344642">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/alice--mfvr725294.jpg"   alt="ALICE  , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/alice--v344642"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ALICE  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344636" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/brianna--v344636">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/brianna--v344636">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/brianna--mfvr725246.jpg"   alt="BRIANNA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/brianna--v344636"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>BRIANNA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344620" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/salome--v344620">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/salome--v344620">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/salome--mfvr725122.jpg"   alt="SALOMÉ , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/salome--v344620"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>SALOMÉ </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344628" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/iloveny--v344628">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/iloveny--v344628">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/iloveny--mfvr725184.jpg"   alt="ILOVENY , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/iloveny--v344628"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ILOVENY </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344624" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/milenna--v344624">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/milenna--v344624">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/milenna--mfvr725152.jpg"   alt="MILENNA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/milenna--v344624"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MILENNA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Barco                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344640" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/anna--v344640">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/anna--v344640">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/anna--mfvr725280.jpg"   alt="ANNA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/anna--v344640"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ANNA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344634" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/emilia--v344634">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/emilia--v344634">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/emilia--mfvr725234.jpg"   alt="EMILIA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/emilia--v344634"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>EMILIA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344632" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/gaia--v344632">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/gaia--v344632">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/gaia--mfvr725216.jpg"   alt="GAIA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/gaia--v344632"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>GAIA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Imperio,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344638" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/aurora--v344638">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/aurora--v344638">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/aurora--mfvr725262.jpg"   alt="AURORA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/aurora--v344638"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>AURORA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344630" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/hade--v344630">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/hade--v344630">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/hade--mfvr725202.jpg"   alt="HADE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/hade--v344630"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>HADE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344626" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/isidora--v344626">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/isidora--v344626">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/isidora--mfvr725170.jpg"   alt="ISIDORA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/isidora--v344626"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ISIDORA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+    <div class="pure-u-1-4">
+            <div id="div-gpt-ad-1334158298810-0" class="dfp-center comment" style="min-height: 1px;"  ></div>
+            <script>
+                    // Set display timeout to avoid problems when infinite scroll adds new content to DOM
+                    googletag.cmd.push(function () {
+                        
+                        // Set display timeout to avoid problems when infinite scroll adds new content to DOM. Method refreshAdSlot only exist on lazy load integration
+                        setTimeout(function () {
+                            googletag.display('div-gpt-ad-1334158298810-0');
+
+                                                    }, 0);
+                    });
+            </script>
+            </div>        <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="344622" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/rita--v344622">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/rita--v344622">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/rita--mfvr725138.jpg"   alt="RITA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/rita--v344622"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>RITA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Barco                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321537" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/adriana--v321537">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/adriana--v321537">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/adriana--mfvr615049.jpg"   alt="ADRIANA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/adriana--v321537"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ADRIANA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Otros                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Colette</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321459" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/tessa--v321459">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/tessa--v321459">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/tessa--mfvr614769.jpg"   alt="TESSA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/tessa--v321459"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>TESSA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Colette</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321509" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/estelle--v321509">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/estelle--v321509">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/estelle--mfvr614961.jpg"   alt="ESTELLE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/estelle--v321509"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ESTELLE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Corazón                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Colette</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321483" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/olga--v321483">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/olga--v321483">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/olga--mfvr614869.jpg"   alt="OLGA , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/olga--v321483"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>OLGA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Ilusión                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Colette</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321507" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/estelle--v321507">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/estelle--v321507">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/estelle--mfvr614953.jpg"   alt="ESTELLE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/estelle--v321507"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ESTELLE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Otros,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Colette</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321493" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/juliette--v321493">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/juliette--v321493">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/juliette--mfvr614901.jpg"   alt="JULIETTE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/juliette--v321493"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>JULIETTE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Colette</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321455" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/violette-y-sandrine--v321455">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/violette-y-sandrine--v321455">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/alicia-rueda-atelier/violette-y-sandrine--mfvr614751.jpg"   alt="VIOLETTE Y SANDRINE , 483"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Alicia Rueda Atelier, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/violette-y-sandrine--v321455"
+                        >
+                            Alicia Rueda Atelier 20...</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>VIOLETTE Y SANDRINE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Colette</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="332698" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/celia-&-daisy--v332698">
+                    <a href="https://www.bodas.net/vestidos-novias/alicia-rueda-atelier/celia-&-daisy--v332698">
+                            <img src="https://cdn0.bodas

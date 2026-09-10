@@ -1,0 +1,238 @@
+       Grupo Sorteo                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                                            
+<div class="header-join">
+    <a class="header-join-link" href="https://www.bodas.net/users-login.php">Accede</a>
+    <a
+        class="header-join-link app-ua-track-event"
+        href="https://www.bodas.net/users-signup.php"
+         data-track-c='SignUpTracking'  data-track-a='a-step1'  data-track-l='d-desktop+s-site_header'  data-track-s=''  data-track-v='0'  data-track-ni='0'     >
+        Regístrate    </a>
+</div>
+                    
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/vestidos-novias" class="selected ">
+                            Vestidos de Novia                        </a>
+                                                        </li>
+                            <li   >
+                                            Vestidos de Novia de Anne Barge                                                        </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper pr0 pb0 pl0">
+    <div class="headings-intro">
+        <h1>Vestidos de Novia de Anne Barge</h1>
+                    <span class="count block mb10 ">
+                54 vestidos            </span>
+            </div>
+            <div class="app-dress-quiz dressQuiz"></div>
+    </div>
+
+
+<form class="app-dress-filters-form" action="/cat-DressList.php">
+    <input type="hidden" name="type" autocomplete="off" value="1"/>
+            <input type="hidden" name="collection" autocomplete="off" id="collection" value=""/>
+            <input type="hidden" name="designer" autocomplete="off" id="designer" value="675"/>
+            <input type="hidden" name="silhouette" autocomplete="off" id="silhouette" value=""/>
+            <input type="hidden" name="neckline" autocomplete="off" id="neckline" value=""/>
+            <input type="hidden" name="suitStyle" autocomplete="off" id="suitStyle" value=""/>
+            <input type="hidden" name="length" autocomplete="off" id="length" value=""/>
+            <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value=""/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-novias">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Anne Barge                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321751" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anne-barge/serena--v321751">
+                    <a href="https://www.bodas.net/vestidos-novias/anne-barge/serena--v321751">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anne-barge/serena--mfvr615845.jpg"   alt=" serena, 675"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anne Barge, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/anne-barge/serena--v321751"
+                        >
+                            Anne Barge 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span> serena</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Palabra de honor                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Anne Barge (S / S)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321733" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anne-barge/valerie-midi--v321733">
+                    <a href="https://www.bodas.net/vestidos-novias/anne-barge/valerie-midi--v321733">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anne-barge/valerie-midi--mfvr615797.jpg"   alt="valerie midi, 675"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anne Barge, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/anne-barge/valerie-midi--v321733"
+                        >
+                            Anne Barge 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>valerie midi</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Anne Barge (S / S)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321773" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anne-barge/brynwood--v321773">
+                    <a href="https://www.bodas.net/vestidos-novias/anne-barge/brynwood--v321773">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anne-barge/brynwood--mfvr615925.jpg"   alt=" brynwood, 675"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anne Barge, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/anne-barge/brynwood--v321773"
+                        >
+                            Anne Barge 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span> brynwood</span>
+                    </div>
+                                            <div class="tags-item">
+              

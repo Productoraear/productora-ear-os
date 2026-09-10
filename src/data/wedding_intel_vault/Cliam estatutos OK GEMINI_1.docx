@@ -1,0 +1,459 @@
+     Luna de miel                    </a>
+                </li>
+                            <li class="layoutNavMenuTabArticlesList__item">
+                    <a href="https://www.bodas.net/articulos/despues-de-la-boda--t8">
+                        Después de la boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabArticlesList__item">
+                    <a href="https://www.bodas.net/articulos/hazlo-tu-mism@--t35">
+                        Hazlo tú mism@                    </a>
+                </li>
+                            <li class="layoutNavMenuTabArticlesList__item">
+                    <a href="https://www.bodas.net/articulos/cronicas-de-boda--t36">
+                        Crónicas de boda                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabArticlesBanners">
+                    
+<div class="layoutNavMenuTabArticlesBannersItem app-header-menu-banner app-link"
+     data-href="https://www.bodas.net/cronicas-boda">
+    <figure class="layoutNavMenuTabArticlesBannersItem__figure">
+            <img data-src="https://www.bodas.net/assets/img/components/header/tabs/realweddings_banner.jpg" data-srcset="https://www.bodas.net/assets/img/components/header/tabs/realweddings_banner@2x.jpg 2x" class="lazyload layoutNavMenuTabArticlesBannersItem__image" alt="Bodas reales"  width="304" height="90"  >
+        <figcaption class="layoutNavMenuTabArticlesBannersItem__content">
+            <a href="https://www.bodas.net/cronicas-boda"
+               title="Bodas reales"
+               class="layoutNavMenuTabArticlesBannersItem__title">Bodas reales</a>
+            <p class="layoutNavMenuTabArticlesBannersItem__description">
+                Cada boda es un mundo y detrás de cada una hay una preciosa historia.            </p>
+        </figcaption>
+    </figure>
+</div>
+                            
+<div class="layoutNavMenuTabArticlesBannersItem app-header-menu-banner app-link"
+     data-href="https://www.bodas.net/luna-de-miel">
+    <figure class="layoutNavMenuTabArticlesBannersItem__figure">
+            <img data-src="https://www.bodas.net/assets/img/components/header/tabs/honeymoons_banner.jpg" data-srcset="https://www.bodas.net/assets/img/components/header/tabs/honeymoons_banner@2x.jpg 2x" class="lazyload layoutNavMenuTabArticlesBannersItem__image" alt="Luna de miel"  width="304" height="90"  >
+        <figcaption class="layoutNavMenuTabArticlesBannersItem__content">
+            <a href="https://www.bodas.net/luna-de-miel"
+               title="Luna de miel"
+               class="layoutNavMenuTabArticlesBannersItem__title">Luna de miel</a>
+            <p class="layoutNavMenuTabArticlesBannersItem__description">
+                Encuentra el destino de ensueño para tu luna de miel.            </p>
+        </figcaption>
+    </figure>
+</div>
+            </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+            <li class="nav-main-item  ">
+                                    <a href="https://invitaciones.bodas.net"
+                class="nav-main-link app-header-tab  app-ua-track-event"
+                 data-track-c='Navigation' data-track-a='a-click' data-track-l='d-desktop+s-header+o-groups_discussion_item+dt-invitations' data-track-v='0' data-track-ni='0'                 data-tab="paper"
+            >
+                Invitaciones            </a>
+                            <div class="app-tabs-container-paper">
+                    
+<div class="layoutNavMenuTab app-header-menu-itemDropdown">
+    <div class="layoutNavMenuTab__layout">
+        <div class="layoutNavMenuTab__header">
+    <i class="svgIcon app-svg-async svgIcon__angleLeftBlood layoutNavMenuTab__icon app-header-menu-item-closeSection"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleLeftBlood.svg" data-svg-lazyload="1"></i>    <a class="layoutNavMenuTab__title" href="https://invitaciones.bodas.net">Invitaciones</a>
+    <i class="svgIcon app-svg-async svgIcon__close layoutNavMenuTab__iconClose app-header-menu-toggle"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/close.svg" data-svg-lazyload="1"></i></div>
+<div class="layoutNavMenuTabInvitation">
+    <div class="layoutNavMenuTabInvitationList">
+        <span class="layoutNavMenuTabInvitation__title">
+            Comprar por categoría        </span>
+        <ul class="layoutNavMenuTabInvitationList__content">
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/invitaciones-de-boda" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Invitaciones de boda"
+                    >
+                        Invitaciones de boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/save-the-date" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Save the date"
+                    >
+                        Save the date                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/libro-de-firmas" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Libro de firmas"
+                    >
+                        Libro de firmas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/tarjetas-de-agradecimiento" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Tarjetas de agradecimiento"
+                    >
+                        Tarjetas de agradecimiento                    </a>
+                </li>
+                    </ul>
+            </div>
+    </div>
+    </div>
+</div>
+                </div>
+                    </li>
+            <li class="nav-main-item  nav-tabCommunity">
+                                    <a href="https://comunidad.bodas.net/"
+                class="nav-main-link app-header-tab  app-ua-track-event"
+                 data-track-c='Navigation' data-track-a='a-click' data-track-l='d-desktop+s-header+o-groups_discussion_item+dt-community' data-track-v='0' data-track-ni='0'                 data-tab="comunidad"
+            >
+                Comunidad            </a>
+                            <div class="app-tabs-container-comunidad">
+                    
+<div class="layoutNavMenuTab app-header-menu-itemDropdown">
+    <div class="layoutNavMenuTab__layout">
+        
+<div class="layoutNavMenuTab__header">
+    <i class="svgIcon app-svg-async svgIcon__angleLeftBlood layoutNavMenuTab__icon app-header-menu-item-closeSection"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleLeftBlood.svg" data-svg-lazyload="1"></i>    <a class="layoutNavMenuTab__title" href="https://comunidad.bodas.net/">
+        Comunidad    </a>
+    <i class="svgIcon app-svg-async svgIcon__close layoutNavMenuTab__iconClose app-header-menu-toggle"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/close.svg" data-svg-lazyload="1"></i></div>
+<div class="layoutNavMenuTabCommunity">
+    <div class="layoutNavMenuTabCommunityList">
+        <a class="layoutNavMenuTabCommunity__title" href="https://comunidad.bodas.net/">
+            Grupos por temática        </a>
+        <ul class="layoutNavMenuTabCommunityList__content">
+            <li class="layoutNavMenuTabCommunityList__item layoutNavMenuTabCommunityList__item--viewAll">
+                <a href="https://comunidad.bodas.net/">Ver todo</a>
+            </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-organizar-una-boda">
+                        Grupo Organizar una boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-moda-nupcial">
+                        Grupo Moda Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-antes-de-la-boda">
+                        Grupo Antes de la boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-manualidades-para-bodas">
+                        Grupo Manualidades                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-luna-de-miel">
+                        Grupo Luna de miel                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-net">
+                        Grupo Bodas.net                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-belleza">
+                        Grupo Belleza                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-banquetes">
+                        Grupo Banquetes                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-ceremonia-nupcial">
+                        Grupo Ceremonia Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-recien-casados">
+                        Grupo Recién Casad@s                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-futuras-mamas">
+                        Grupo Futuras Mamás                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-famosas">
+                        Grupo Bodas Famosas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-viviendo-juntos">
+                        Grupo Vida en pareja                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-sorteo">
+                        Grupo Sorteo                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                                            
+<div class="header-join">
+    <a class="header-join-link" href="https://www.bodas.net/users-login.php">Accede</a>
+    <a
+        class="header-join-link app-ua-track-event"
+        href="https://www.bodas.net/users-signup.php"
+         data-track-c='SignUpTracking'  data-track-a='a-step1'  data-track-l='d-desktop+s-site_header'  data-track-s=''  data-track-v='0'  data-track-ni='0'     >
+        Regístrate    </a>
+</div>
+                    
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/joyeria" class="selected ">
+                            Joyería                        </a>
+                                                        </li>
+                            <li   >
+                                            Anillos de pedida                                                        </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+
+
+<form class="app-dress-filters-form" action="/cat-DressList.php">
+    <input type="hidden" name="type" autocomplete="off" value="7"/>
+            <input type="hidden" name="collection" autocomplete="off" id="collection" value=""/>
+            <input type="hidden" name="designer" autocomplete="off" id="designer" value=""/>
+            <input type="hidden" name="silhouette" autocomplete="off" id="silhouette" value=""/>
+            <input type="hidden" name="neckline" autocomplete="off" id="neckline" value=""/>
+            <input type="hidden" name="suitStyle" autocomplete="off" id="suitStyle" value=""/>
+            <input type="hidden" name="length" autocomplete="off" id="length" value=""/>
+            <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value="1"/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+                        <div class="headings-intro mt10 ">
+                <h1 class="search-title">Anillos de pedida</h1>
+                <span class="count block mb10 ">719 modelos</span>
+                                            </div>
+                                <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/joyeria">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="complementType"
+                    data-value="0">
+                    <span>
+                                                    Tipo Complemento: Anillos de pedida                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="190637" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/joyeria/argyor/74b0013--v190637">
+                    <a href="https://www.bodas.net/joyeria/argyor/74b0013--v190637">
+                            <img src="https://cdn0.bodas.net/cat/joyeria/argyor/74b0013--mfvr296203.jpg"   alt="74B0013, 1097"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Argyor, 2023"
+                                data-href="https://www.bodas.net/joyeria/argyor/74b0013--v190637"
+                        >
+                            Argyor 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>74B0013</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Anillos de pedida                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="174245" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/joyeria/cartier/n4164600--v174245">
+                    <a href="https://www.bodas.net/joyeria/cartier/n4164600--v174245">
+                            <img src="https://cdn0.bodas.net/cat/joyeria/cartier/n4164600--mfvr261119.jpg"   alt="N4164600, 195"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Cartier, 2023"
+                                data-href="https://www.bodas.net/joyeria/cartier/n4164600--v174245"
+                        >
+                            Cartier 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>N4164600</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Anillos de pedida                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Solitaire 1895</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="248641" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/joyeria/aristocrazy/j04067-01-bs--v248641">
+                    <a href="https://www.bodas.net/joyeria/aristocrazy/j04067-01-bs--v248641">
+                            <img src="https://cdn0.bodas.net/cat/joyeria/aristocrazy/j04067-01-bs--mfvr421489.jpg"   alt="J04067-01-BS, 543"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Aristocrazy, 2023"
+                                data-href="https://www.bodas.net/joyeria/aristocrazy/j04067-01-bs--v248641"
+                        >
+                            Aristocrazy 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>J04067-01-BS</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Anillos de pedida                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="174269" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/joyeria/cartier/n4246000--v174269">
+                    <a href="https://www.bodas.net/joyeria/cartier/n4246000--v174269">
+                            <img src="https://cdn0.bodas.net/cat/joyeria/cartier/n4246000--mfvr261143.jpg"   alt="N4246000, 195"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Cartier, 2023"
+                                data-href="https://www.bodas.net/joyeria/cartier/n4246000--v174269"
+                        >
+                            Cartier 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>N4246000</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Anillos de pedida                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Destinée</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="190681" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/joyeria/argyor/74b0154--v190681">
+                    <a href="https://www.bodas.net/joyeria/argyor/74b0154--v190681">
+                            <img src="https://cdn0.bodas.net/cat/joyeria/argyor/74b0154--mfvr296253.jpg"   alt="74B0154, 1097"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Argyor, 2023"
+                                data-href="https://www.bodas.net/joyeria/argyor/74b0154--v190681"
+                    

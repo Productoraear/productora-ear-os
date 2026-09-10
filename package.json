@@ -29,6 +29,7 @@
         "@paypal/checkout-server-sdk": "^1.0.3",
         "@paypal/paypal-server-sdk": "^2.3.0",
         "@prisma/client": "^6.19.3",
+        "@radix-ui/react-slider": "^1.4.7",
         "@react-three/drei": "^9.121.5",
         "@react-three/fiber": "^8.17.10",
         "@stripe/react-stripe-js": "^6.9.0",

@@ -1,0 +1,359 @@
+ps://cdn1.bodas.net/assets/svg/optimized/_common/close.svg" data-svg-lazyload="1"></i></div>
+<div class="layoutNavMenuTabCommunity">
+    <div class="layoutNavMenuTabCommunityList">
+        <a class="layoutNavMenuTabCommunity__title" href="https://comunidad.bodas.net/">
+            Grupos por temática        </a>
+        <ul class="layoutNavMenuTabCommunityList__content">
+            <li class="layoutNavMenuTabCommunityList__item layoutNavMenuTabCommunityList__item--viewAll">
+                <a href="https://comunidad.bodas.net/">Ver todo</a>
+            </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-organizar-una-boda">
+                        Grupo Organizar una boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-moda-nupcial">
+                        Grupo Moda Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-antes-de-la-boda">
+                        Grupo Antes de la boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-manualidades-para-bodas">
+                        Grupo Manualidades                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-luna-de-miel">
+                        Grupo Luna de miel                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-net">
+                        Grupo Bodas.net                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-belleza">
+                        Grupo Belleza                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-banquetes">
+                        Grupo Banquetes                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-ceremonia-nupcial">
+                        Grupo Ceremonia Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-recien-casados">
+                        Grupo Recién Casad@s                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-futuras-mamas">
+                        Grupo Futuras Mamás                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-famosas">
+                        Grupo Bodas Famosas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-viviendo-juntos">
+                        Grupo Vida en pareja                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-sorteo">
+                        Grupo Sorteo                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                    
+                                            
+<div class="empLoggedBox ">
+            <a class="header-joined-inbox" href="https://www.bodas.net/emp-AdminSolicitudes.php">
+            <i class="svgIcon app-svg-async svgIcon__envelope "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/envelope.svg" data-svg-lazyload="1"></i>            <span class=" app-header-inbox-counter"></span>
+        </a>
+        <div class="empLoggedBox__logo app-logged-toggle" style="" data-href="https://www.bodas.net/emp-Menu.php">
+        <img class="app_thumb" src="https://cdn0.bodas.net/emp/fotos/7/8/9/0/3/t10_edwin-agudelo-canta-a-novios_1_78903_v3.jpg">
+    </div>
+            <div class="layoutNavMenuVendorAuthenticatorDropdown" id="app-logged-box" style="display:none;">
+    <div class="layoutNavMenuVendorAuthenticatorDropdown__header">
+                    <a class="layoutNavMenuVendorAuthenticatorDropdown__logout" href="https://www.bodas.net/emp-CloseSession.php">
+                Cerrar sesión            </a>
+                            <a class="layoutNavMenuVendorAuthenticatorDropdown__name" href="https://www.bodas.net/emp-Menu.php">
+                Productora EAR                <span class="layoutNavMenuVendorAuthenticatorDropdown__category" style="display:none;">Música - Madrid</span>
+            </a>
+                            <a class="layoutNavMenuVendorAuthenticatorDropdown__action layoutNavMenuVendorAuthenticatorDropdown__action--inline" href="/emp-AdminNotificaciones.php">
+                Configuración            </a>
+                            <a class="layoutNavMenuVendorAuthenticatorDropdown__action layoutNavMenuVendorAuthenticatorDropdown__action--inline" href="https://www.bodas.net/empresa.php?id_empresa=78903" target="_blank">
+                Ver mi escaparate            </a>
+            </div>
+
+    <div class="layoutNavMenuVendorAuthenticatorDropdown__body">
+        <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-Menu.php">
+            <i class="empLoggedDropdown__icon icon icon-my-business"></i>
+            <a href="https://www.bodas.net/emp-Menu.php">Inicio</a>
+        </div>
+        <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-Modif.php">
+            <i class="empLoggedDropdown__icon icon icon-my-storefront"></i>
+            <a href="https://www.bodas.net/emp-Modif.php">Mi escaparate</a>
+        </div>
+                    <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-AdminSolicitudes.php">
+                <div class="empLoggedDropdown__icon icon icon-my-enquiries">
+                                    </div>
+                <a href="https://www.bodas.net/emp-AdminSolicitudes.php">Mis solicitudes</a>
+            </div>
+                <div class="layoutNavMenuVendorAuthenticatorDropdown__bodyItem app-link" data-href="https://www.bodas.net/emp-AdminReviews.php">
+            <div class="empLoggedDropdown__icon icon icon-reviews">
+                                    <span class="empLoggedDropdown__counter">4</span>
+                            </div>
+            <a href="https://www.bodas.net/emp-AdminReviews.php">
+                Opiniones            </a>
+        </div>
+    </div>
+            <footer class="layoutNavMenuVendorAuthenticatorDropdown__contact">
+            <i class="icon icon-call-center"></i>
+            <p>
+                ¿Necesitas ayuda para tu empresa?                <strong>93 047 62 16</strong>
+            </p>
+        </footer>
+    </div>
+    </div>
+
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/vestidos-novias" class="selected ">
+                            Vestidos de Novia                        </a>
+                                                        </li>
+                            <li   >
+                                            Vestidos de Novia de Amsale                                                        </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper pr0 pb0 pl0">
+    <div class="headings-intro">
+        <h1>Vestidos de Novia de Amsale</h1>
+                    <p>Amsale es una marca neoyorquina que pone al alcance de todas las novias vestidos diseñados con las técnicas de la alta costura, como las mangas de tul y detalles pintados a mano. ¡Y tiene modelos para todos los vestilos! Desde los más clásicos, con faldas en A o cortes sirena, confeccionados en crepe y  tul bordado. Si deseas un vestido delicado y femenino, Amsale te encantará. </p>
+            </div>
+            <div class="app-dress-quiz dressQuiz"></div>
+    </div>
+
+
+<form class="app-dress-filters-form" action="/cat-DressList.php">
+    <input type="hidden" name="type" autocomplete="off" value="1"/>
+            <input type="hidden" name="collection" autocomplete="off" id="collection" value=""/>
+            <input type="hidden" name="designer" autocomplete="off" id="designer" value="1033"/>
+            <input type="hidden" name="silhouette" autocomplete="off" id="silhouette" value=""/>
+            <input type="hidden" name="neckline" autocomplete="off" id="neckline" value=""/>
+            <input type="hidden" name="suitStyle" autocomplete="off" id="suitStyle" value=""/>
+            <input type="hidden" name="length" autocomplete="off" id="length" value=""/>
+            <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value=""/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-novias">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Amsale                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="345240" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/amsale/sedna--v345240">
+                    <a href="https://www.bodas.net/vestidos-novias/amsale/sedna--v345240">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/amsale/sedna--mfvr727092.jpg"   alt="Sedna , 1033"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Amsale, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/amsale/sedna--v345240"
+                        >
+                            Amsale 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Sedna </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Otros,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Amsale</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="345254" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/amsale/meredith--v345254">
+                    <a href="https://www.bodas.net/vestidos-novias/amsale/meredith--v345254">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/amsale/meredith--mfvr727184.jpg"   alt="Meredith , 1033"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Amsale, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/amsale/meredith--v345254"
+                        >
+                            Amsale 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Meredith </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Corazón                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Amsale</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="345272" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/amsale/lw203--v345272">
+                    <a href="https://www.bodas.net/vestidos-novias/amsale/lw203--v345272">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/amsale/lw203--mfvr727294.jpg"   alt="LW203  , 1033"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Amsale, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/amsale/lw203--v345272"
+                        >
+                            Amsale 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>LW203  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Cuadrado                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Little White Dress</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="345260" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/amsale/embry--v345260">
+                    <a href="https://www.bodas.net/vestidos-novias/amsale/embry--v345260">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/amsale/embry--mfvr727222.jpg"   alt="Embry , 1033"  w

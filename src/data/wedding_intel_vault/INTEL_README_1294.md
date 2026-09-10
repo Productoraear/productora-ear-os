@@ -1,0 +1,12 @@
+                   <a href="https://www.bodas.net/bodas/proveedores/musica">
+Música                        </a>
+</li>
+<li class="layoutNavMenuTabVendorsList__item">
+<i class="svgIcon app-svg-async svgIcon__categCatering layoutNavMenuTabVendorsList__itemIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/vendors/categories/categCatering.svg" data-svg-lazyload="1"></i>                        <a href="https://www.bodas.net/bodas/proveedores/catering">
+Catering                        </a>
+</li>
+<li class="layoutNavMenuTabVendorsList__item">
+<i class="svgIcon app-svg-async svgIcon__categRental layoutNavMenuTabVendorsList__itemIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/vendors/categories/categRental.svg" data-svg-lazyload="1"></i>                        <a href="https://www.bodas.net/bodas/proveedores/coches-de-boda">
+Coches de boda                        </a>
+</li>
+<li

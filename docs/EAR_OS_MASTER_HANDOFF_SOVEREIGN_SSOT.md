@@ -31,6 +31,11 @@ EAR OS no es una web convencional. Es un **Autonomous Business Operating System 
   - Productora EAR anclada como nodo soberano #1.
 - **Motor Vampiro Nocturno (Extracción Continua):**
   - Demonio `night_vampire_scraper.py` activo en background (`task-3598`) con filtros anti-slop, extracción `PHONE_RE` y deduplicación en tiempo real.
+- **Omni-Cockpit Modular S-Class:**
+  - Ruta: `/admin/omni-cockpit`.
+  - Reordenamiento interactivo en caliente con `@dnd-kit/sortable` y persistencia sin pérdidas en `localStorage` (`omni_cockpit_order_ssot`).
+  - Serialización pura de IDs de widgets (erradicación de cuelgues por circular JSON de React nodes).
+  - 4 Widgets S-Class integrados: Omni Search & Acciones Rápidas, Vampire Engine Telemetry (17.246 nodos, 15.804 teléfonos), Liquidity & Yield (Stripe 100 €, 350 € Solista, split 80/10/10), y VIMUME B2G (< 75 dB SPL, Art. 118 LCSP 14.250 €).
 - **Catálogo de Navidad:** `/arsenal/luces-navidad` 100% saneado de enlaces y embeds a Google Drive.
 - **Archivo Histórico de Sesiones (Vault ZTM):**
   - Todas las sesiones exportadas en Markdown a `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\HISTORIC_AI_CHATS\`.
@@ -39,3 +44,4 @@ EAR OS no es una web convencional. Es un **Autonomous Business Operating System 
 
 ## 5. PROTECCIÓN DE MOTORES CERTIFICADOS
 - **PROHIBIDO REESCRIBIR:** `src/lib/vimume/b2g-tender-engine.ts`, `src/lib/astra/astra-conversation-engine.ts` y los scripts del Vampire Engine (`scripts/vampirization/*`). Todo nuevo desarrollo debe importar y extender estas utilidades.
+

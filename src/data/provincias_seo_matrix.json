@@ -1,0 +1,563 @@
+﻿[
+    {
+        "province":  "Álava",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Albacete",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Alicante",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Almería",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Asturias",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Ávila",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Badajoz",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Barcelona",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Burgos",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Cáceres",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Cádiz",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Cantabria",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Castellón",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Ciudad Real",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Córdoba",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Cuenca",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Girona",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Granada",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Guadalajara",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Guipúzcoa",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Huelva",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Huesca",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Illes Balears",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Jaén",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "La Rioja",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Las Palmas",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "León",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Lleida",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Lugo",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Madrid",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Málaga",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Murcia",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Navarra",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Ourense",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Palencia",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Pontevedra",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Salamanca",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Santa Cruz de Tenerife",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Segovia",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Sevilla",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Soria",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Tarragona",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Teruel",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Toledo",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Valencia",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Valladolid",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Vizcaya",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Zamora",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Zaragoza",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Ceuta",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    },
+    {
+        "province":  "Melilla",
+        "services":  [
+                         "Música en Directo / Tenor",
+                         "Mariachi Boutique",
+                         "Rider Acústico 12 W/pax",
+                         "Producción Integral"
+                     ],
+        "hub_origin":  "Méntrida (Toledo) - Km 0",
+        "logistics_rule":  "1,50 €/km (\u003e 50 km desde Hub Central)"
+    }
+]

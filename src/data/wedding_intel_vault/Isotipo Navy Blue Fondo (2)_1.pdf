@@ -1,0 +1,450 @@
+"https://www.bodas.net/busc.php?id_grupo=2&amp;id_sector=14&amp;id_provincia=3006&amp;isNearby=0&amp;NumPage=2">
+Siguiente                    <i class="svgIcon app-svg-async svgIcon__arrowShortRight pagination__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/arrowShortRight.svg" data-svg-lazyload="1"></i>                </button>
+</span>
+</nav>
+</div>
+<div class="app-nearby-vendors">
+</div>
+<script>
+window.googleMaps = {
+key : 'AIzaSyAqmsLk3h2-iWR1IcC6k1cP49RdrCnIkxQ',
+mapDebugEnabled: false,
+hasClusters: true,
+version: 'weekly',
+libraries: 'geometry,marker'
+};
+</script>
+</section>
+<div class="app-data-collector-content hidden"></div>
+</article>
+<section class="dealsVendors app-deals-vendors-slider">
+<h3 class="dealsVendors__title">Promociones que te pueden interesar</h3>
+<div class="scrollSnap app-scroll-snap-wrapper scrollSnap--fullBleed scrollSnap--floatArrows"
+role="region" aria-label="Promociones que te pueden interesar Carrusel">
+<button type="button" aria-label="Anterior" class="scrollSnap__arrow scrollSnap__arrow--prev app-scroll-snap-prev hidden disabled"><i class="svgIcon app-svg-async svgIcon__arrowLeftThick "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/arrows/arrowLeftThick.svg" data-svg-lazyload="1"></i></button>
+<div class="scrollSnap__container app-scroll-snap-container dealsVendors__slider" dir="ltr">
+<div class="scrollSnap__item app-scroll-snap-item dealsVendors__slide"
+data-id="0"
+data-visualized-slide="false"
+><div class="dealsVendorsTile app-deals-vendor-tile" data-vendor-id="251973">
+<picture class="dealsVendorsTile__picture"     data-image-name="imageFileName_img-26593996827676_1_251973-171836530250890.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/vendor/51973/3_2/320/jpeg/img-26593996827676_1_251973-171836530250890.webp 320w,
+https://cdn0.bodas.net/vendor/51973/3_2/640/jpeg/img-26593996827676_1_251973-171836530250890.webp 640w,
+https://cdn0.bodas.net/vendor/51973/3_2/960/jpeg/img-26593996827676_1_251973-171836530250890.webp 960w" sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px">
+<img
+srcset="https://cdn0.bodas.net/vendor/51973/3_2/320/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 320w,
+https://cdn0.bodas.net/vendor/51973/3_2/640/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 640w,
+https://cdn0.bodas.net/vendor/51973/3_2/960/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 960w"
+src="https://cdn0.bodas.net/vendor/51973/3_2/640/jpeg/img-26593996827676_1_251973-171836530250890.jpeg"
+sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px"
+alt="Alex caricaturas"
+width="640"        height="427"                loading="lazy">
+</picture>
+<div class="dealsVendorsTile__header">
+<div class="dealsVendorsTile__badge"><i class="svgIcon app-svg-async svgIcon__promo-gift dealsVendorsTile__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/promo-gift.svg" data-svg-lazyload="1"></i></div>
+<div class="dealsVendorsTile__category">Regalo</div>
+<a class="dealsVendorsTile__title app-deals-vendor-tile-link" href="https://www.bodas.net/animacion/alex-caricaturas--e251973#deals">Tiempo extra</a>
+</div>
+<div class="dealsVendorsTile__content">
+<p class="dealsVendorsTile__subtitle">Alex caricaturas</p>
+<div class="srOnly">
+Valoración 5.0 de 5,
+3 opiniones,
+</div>
+<div class="dealsVendorsTile__info" aria-hidden="true">
+<i class="svgIcon app-svg-async svgIcon__star dealsVendorsTile__ratingIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/star.svg" data-svg-lazyload="1"></i>                <span class="dealsVendorsTile__rating">5.0</span> (3)
+<span class="dealsVendorsTile__text">&nbsp;·&nbsp;Animación · Colunga</span>
+</div>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item dealsVendors__slide"
+data-id="1"
+data-visualized-slide="false"
+><div class="dealsVendorsTile app-deals-vendor-tile" data-vendor-id="199089">
+<picture class="dealsVendorsTile__picture"     data-image-name="imageFileName_whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/vendor/99089/3_2/320/jpeg/whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.webp 320w,
+https://cdn0.bodas.net/vendor/99089/3_2/640/jpeg/whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.webp 640w,
+https://cdn0.bodas.net/vendor/99089/3_2/960/jpeg/whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.webp 960w" sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px">
+<img
+srcset="https://cdn0.bodas.net/vendor/99089/3_2/320/jpeg/whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.jpeg 320w,
+https://cdn0.bodas.net/vendor/99089/3_2/640/jpeg/whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.jpeg 640w,
+https://cdn0.bodas.net/vendor/99089/3_2/960/jpeg/whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.jpeg 960w"
+src="https://cdn0.bodas.net/vendor/99089/3_2/640/jpeg/whatsapp-image-2022-08-01-at-7-15-13-pm_1_199089-166793008085158.jpeg"
+sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px"
+alt="Eventos Ascu"
+width="640"        height="427"                loading="lazy">
+</picture>
+<div class="dealsVendorsTile__header">
+<div class="dealsVendorsTile__badge dealsVendorsTile__badge--exclusive">
+<i class="svgIcon app-svg-async svgIcon__promo-dto dealsVendorsTile__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/promo-dto.svg" data-svg-lazyload="1"></i>            </div>
+<div class="dealsVendorsTile__category">Descuento exclusivo</div>
+<a class="dealsVendorsTile__title app-deals-vendor-tile-link" href="https://www.bodas.net/animacion/eventos-ascu--e199089#deals">5% de descuento para novios de Bodas.net</a>
+</div>
+<div class="dealsVendorsTile__content">
+<p class="dealsVendorsTile__subtitle">Eventos Ascu</p>
+<div class="srOnly">
+Valoración 5.0 de 5,
+5 opiniones,
+</div>
+<div class="dealsVendorsTile__info" aria-hidden="true">
+<i class="svgIcon app-svg-async svgIcon__star dealsVendorsTile__ratingIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/star.svg" data-svg-lazyload="1"></i>                <span class="dealsVendorsTile__rating">5.0</span> (5)
+<span class="dealsVendorsTile__text">&nbsp;·&nbsp;Animación · Mieres</span>
+</div>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item dealsVendors__slide"
+data-id="2"
+data-visualized-slide="false"
+><div class="dealsVendorsTile app-deals-vendor-tile" data-vendor-id="63558">
+<picture class="dealsVendorsTile__picture"     data-image-name="imageFileName_img-20160806-181214_1_63558.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/vendor/63558/3_2/320/jpg/img-20160806-181214_1_63558.webp 320w,
+https://cdn0.bodas.net/vendor/63558/3_2/640/jpg/img-20160806-181214_1_63558.webp 640w,
+https://cdn0.bodas.net/vendor/63558/3_2/960/jpg/img-20160806-181214_1_63558.webp 960w" sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px">
+<img
+srcset="https://cdn0.bodas.net/vendor/63558/3_2/320/jpg/img-20160806-181214_1_63558.jpeg 320w,
+https://cdn0.bodas.net/vendor/63558/3_2/640/jpg/img-20160806-181214_1_63558.jpeg 640w,
+https://cdn0.bodas.net/vendor/63558/3_2/960/jpg/img-20160806-181214_1_63558.jpeg 960w"
+src="https://cdn0.bodas.net/vendor/63558/3_2/640/jpg/img-20160806-181214_1_63558.jpeg"
+sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px"
+alt="Sueños de Papel"
+width="640"        height="427"                loading="lazy">
+</picture>
+<div class="dealsVendorsTile__header">
+<div class="dealsVendorsTile__badge dealsVendorsTile__badge--exclusive">
+<i class="svgIcon app-svg-async svgIcon__promo-dto dealsVendorsTile__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/promo-dto.svg" data-svg-lazyload="1"></i>            </div>
+<div class="dealsVendorsTile__category">Descuento exclusivo</div>
+<a class="dealsVendorsTile__title app-deals-vendor-tile-link" href="https://www.bodas.net/animacion/suenos-de-papel--e63558#deals">3% de descuento para novios de Bodas.net</a>
+</div>
+<div class="dealsVendorsTile__content">
+<p class="dealsVendorsTile__subtitle">Sueños de Papel</p>
+<div class="srOnly">
+Valoración 5.0 de 5,
+71 opiniones,
+</div>
+<div class="dealsVendorsTile__info" aria-hidden="true">
+<i class="svgIcon app-svg-async svgIcon__star dealsVendorsTile__ratingIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/star.svg" data-svg-lazyload="1"></i>                <span class="dealsVendorsTile__rating">5.0</span> (71)
+<span class="dealsVendorsTile__text">&nbsp;·&nbsp;Animación · Oviedo</span>
+</div>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item dealsVendors__slide"
+data-id="3"
+data-visualized-slide="false"
+><div class="dealsVendorsTile app-deals-vendor-tile" data-vendor-id="103652">
+<picture class="dealsVendorsTile__picture"     data-image-name="imageFileName_fotomaton-espejo-04_1_103652.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/vendor/03652/3_2/320/jpg/fotomaton-espejo-04_1_103652.webp 320w,
+https://cdn0.bodas.net/vendor/03652/3_2/640/jpg/fotomaton-espejo-04_1_103652.webp 640w,
+https://cdn0.bodas.net/vendor/03652/3_2/960/jpg/fotomaton-espejo-04_1_103652.webp 960w" sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px">
+<img
+srcset="https://cdn0.bodas.net/vendor/03652/3_2/320/jpg/fotomaton-espejo-04_1_103652.jpeg 320w,
+https://cdn0.bodas.net/vendor/03652/3_2/640/jpg/fotomaton-espejo-04_1_103652.jpeg 640w,
+https://cdn0.bodas.net/vendor/03652/3_2/960/jpg/fotomaton-espejo-04_1_103652.jpeg 960w"
+src="https://cdn0.bodas.net/vendor/03652/3_2/640/jpg/fotomaton-espejo-04_1_103652.jpeg"
+sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px"
+alt="Fotomatón Espejo Asturias"
+width="640"        height="427"                loading="lazy">
+</picture>
+<div class="dealsVendorsTile__header">
+<div class="dealsVendorsTile__badge dealsVendorsTile__badge--exclusive">
+<i class="svgIcon app-svg-async svgIcon__promo-dto dealsVendorsTile__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/promo-dto.svg" data-svg-lazyload="1"></i>            </div>
+<div class="dealsVendorsTile__category">Descuento exclusivo</div>
+<a class="dealsVendorsTile__title app-deals-vendor-tile-link" href="https://www.bodas.net/animacion/fotomaton-espejo-asturias--e103652#deals">30% de descuento para novios de Bodas.net</a>
+</div>
+<div class="dealsVendorsTile__content">
+<p class="dealsVendorsTile__subtitle">Fotomatón Espejo Asturias</p>
+<div class="srOnly">
+Valoración 3.3 de 5,
+3 opiniones,
+</div>
+<div class="dealsVendorsTile__info" aria-hidden="true">
+<i class="svgIcon app-svg-async svgIcon__star dealsVendorsTile__ratingIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/star.svg" data-svg-lazyload="1"></i>                <span class="dealsVendorsTile__rating">3.3</span> (3)
+<span class="dealsVendorsTile__text">&nbsp;·&nbsp;Animación · Oviedo</span>
+</div>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item dealsVendors__slide"
+data-id="4"
+data-visualized-slide="false"
+><div class="dealsVendorsTile app-deals-vendor-tile" data-vendor-id="253563">
+<picture class="dealsVendorsTile__picture"     data-image-name="imageFileName_unnamed_1_253563-172181352934052.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/vendor/53563/3_2/320/jpg/unnamed_1_253563-172181352934052.webp 320w,
+https://cdn0.bodas.net/vendor/53563/3_2/640/jpg/unnamed_1_253563-172181352934052.webp 640w,
+https://cdn0.bodas.net/vendor/53563/3_2/960/jpg/unnamed_1_253563-172181352934052.webp 960w" sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px">
+<img
+srcset="https://cdn0.bodas.net/vendor/53563/3_2/320/jpg/unnamed_1_253563-172181352934052.jpeg 320w,
+https://cdn0.bodas.net/vendor/53563/3_2/640/jpg/unnamed_1_253563-172181352934052.jpeg 640w,
+https://cdn0.bodas.net/vendor/53563/3_2/960/jpg/unnamed_1_253563-172181352934052.jpeg 960w"
+src="https://cdn0.bodas.net/vendor/53563/3_2/640/jpg/unnamed_1_253563-172181352934052.jpeg"
+sizes="(min-width:1024px) 284px, (min-width:480px) 350px, 80px"
+alt="Con Luz de Neón Eventos"
+width="640"        height="427"                loading="lazy">
+</picture>
+<div class="dealsVendorsTile__header">
+<div class="dealsVendorsTile__badge"><i class="svgIcon app-svg-async svgIcon__promo-gift dealsVendorsTile__icon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/promo-gift.svg" data-svg-lazyload="1"></i></div>
+<div class="dealsVendorsTile__category">Regalo</div>
+<a class="dealsVendorsTile__title app-deals-vendor-tile-link" href="https://www.bodas.net/animacion/con-luz-de-neon-eventos--e253563#deals">Audio libro</a>
+</div>
+<div class="dealsVendorsTile__content">
+<p class="dealsVendorsTile__subtitle">Con Luz de Neón Eventos</p>
+<div class="srOnly">
+Valoración 5.0 de 5,
+1 opinión,
+</div>
+<div class="dealsVendorsTile__info" aria-hidden="true">
+<i class="svgIcon app-svg-async svgIcon__star dealsVendorsTile__ratingIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/star.svg" data-svg-lazyload="1"></i>                <span class="dealsVendorsTile__rating">5.0</span> (1)
+<span class="dealsVendorsTile__text">&nbsp;·&nbsp;Animación · Avilés</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button type="button" aria-label="Siguiente" class="scrollSnap__arrow scrollSnap__arrow--next app-scroll-snap-next hidden "><i class="svgIcon app-svg-async svgIcon__arrowRightThick "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/arrows/arrowRightThick.svg" data-svg-lazyload="1"></i></button>
+</div>
+<div class="dealsVendors__footer">
+<button type="button"
+class="button button--tertiary app-deals-vendors-all"
+data-href="https://www.bodas.net/promos-busc.php?id_grupo=2&id_sector=14&id_provincia=3006">
+Ver todas las promociones            <i class="svgIcon app-svg-async svgIcon__arrowShortRight dealsVendors__footerIconButton"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/arrowShortRight.svg" data-svg-lazyload="1"></i>        </button>
+</div>
+</section>
+<div class="app-listing-cost-guide-us"></div>
+<section class="listingCostGuide app-listing-cost-guide">
+<h3 class="listingCostGuide__title">¿Cuánto cuesta un servicio de animación de boda en Asturias?</h3>
+<div class="listingCostGuidePrice">
+<ul class="listingCostGuidePrice__list">
+<li class="listingCostGuidePrice__item">
+<i class="svgIcon app-svg-async svgIcon__arrow-thick-outline svgIcon--rotate"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/arrow-thick-outline.svg" data-svg-lazyload="1"></i>                <span> 186 €                </span>
+<span>Precio más bajo</span>
+</li>
+<li class="listingCostGuidePrice__item">
+<i class="svgIcon app-svg-async svgIcon__guests-simple "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/guests-simple.svg" data-svg-lazyload="1"></i>                <span>280 € - 450 €</span>
+<span>El gasto más habitual</span>
+</li>
+<li class="listingCostGuidePrice__item">
+<i class="svgIcon app-svg-async svgIcon__coins "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/coins.svg" data-svg-lazyload="1"></i>                <span>411 €</span>
+<span>Precio medio</span>
+</li>
+<li class="listingCostGuidePrice__item">
+<i class="svgIcon app-svg-async svgIcon__arrow-thick-outline "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/arrow-thick-outline.svg" data-svg-lazyload="1"></i>                <span>738 €</span>
+<span>Precio más alto</span>
+</li>
+</ul>
+<p class="listingCostGuidePrice__text">Datos obtenidos a partir de las opiniones de las parejas de Bodas.net</p>
+</div>
+</section>
+<section class="listingFaqs app-listing-faqs">
+<h3 class="listingFaqs__title">Preguntas frecuentes en Animación en Asturias</h3>
+<div class="listingFaqsAccordion" itemscope="" itemtype="https://schema.org/FAQPage">
+<div itemscope itemprop="mainEntity"
+itemtype="https://schema.org/Question"
+class="listingFaqsAccordion__item app-listing-faqs-list-item">
+<div class="listingFaqsAccordion__itemHeader">
+<p itemprop="name"
+class="listingFaqsAccordion__itemHeaderTitle">¿Qué empresas especializadas en la animación de bodas destacan en Asturias?</p>
+<i class="svgIcon app-svg-async svgIcon__angleDown listingFaqsAccordion__itemHeaderIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>                </div>
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" class="listingFaqsAccordion__itemContentContainer">
+<div itemprop="text"
+class="listingFaqsAccordion__itemContent">
+Las empresas de animación de boda de Asturias con mejores valoraciones por parejas que ya se han casado son: <a target="_blank" title="Mágicos Eventos" href="https://www.bodas.net/animacion/magicos-eventos--e60938">Mágicos Eventos</a> y <a target="_blank" title="Eventos Divertidos" href="https://www.bodas.net/animacion/eventos-divertidos--e205654">Eventos Divertidos</a>.                    </div>
+</div>
+</div>
+<div itemscope itemprop="mainEntity"
+itemtype="https://schema.org/Question"
+class="listingFaqsAccordion__item app-listing-faqs-list-item">
+<div class="listingFaqsAccordion__itemHeader">
+<p itemprop="name"
+class="listingFaqsAccordion__itemHeaderTitle">¿Cuánto cobra una empresa especializada en entretenimiento por animar una boda en Asturias?</p>
+<i class="svgIcon app-svg-async svgIcon__angleDown listingFaqsAccordion__itemHeaderIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>                </div>
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" class="listingFaqsAccordion__itemContentContainer">
+<div itemprop="text"
+class="listingFaqsAccordion__itemContent">
+El precio medio habitual por un servicio de animación de boda en Asturias es de 411€.                    </div>
+</div>
+</div>
+<div itemscope itemprop="mainEntity"
+itemtype="https://schema.org/Question"
+class="listingFaqsAccordion__item app-listing-faqs-list-item">
+<div class="listingFaqsAccordion__itemHeader">
+<p itemprop="name"
+class="listingFaqsAccordion__itemHeaderTitle">¿Qué servicios ofrecen las empresas de animación de bodas en Asturias?</p>
+<i class="svgIcon app-svg-async svgIcon__angleDown listingFaqsAccordion__itemHeaderIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>                </div>
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" class="listingFaqsAccordion__itemContentContainer">
+<div itemprop="text"
+class="listingFaqsAccordion__itemContent">
+Las empresas de animación de bodas en Asturias cuentan con diferentes servicios para ofrecer a las parejas que están organizando su gran día. Aquí puedes ver algunos ejemplos: para adultos, para niños y humor.                    </div>
+</div>
+</div>
+<div itemscope itemprop="mainEntity"
+itemtype="https://schema.org/Question"
+class="listingFaqsAccordion__item app-listing-faqs-list-item">
+<div class="listingFaqsAccordion__itemHeader">
+<p itemprop="name"
+class="listingFaqsAccordion__itemHeaderTitle">¿Dónde puedo contratar un mago para mi boda en Asturias?</p>
+<i class="svgIcon app-svg-async svgIcon__angleDown listingFaqsAccordion__itemHeaderIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>                </div>
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" class="listingFaqsAccordion__itemContentContainer">
+<div itemprop="text"
+class="listingFaqsAccordion__itemContent">
+Si deseas contratar un espectáculo de magia en Asturias, te interesará saber que un 23% de las empresas de animación de bodas de la zona lo ofrecen. Aquí tienes algunos ejemplos: <a target="_blank" title="Smile Photo" href="https://www.bodas.net/animacion/smile-photo--e56167">Smile Photo</a>, <a target="_blank" title="Mago Jon Ander" href="https://www.bodas.net/animacion/mago-jon-ander--e64554">Mago Jon Ander</a>, <a target="_blank" title="Mágicos Eventos" href="https://www.bodas.net/animacion/magicos-eventos--e60938">Mágicos Eventos</a>, <a target="_blank" title="Sueños de Papel" href="https://www.bodas.net/animacion/suenos-de-papel--e63558">Sueños de Papel</a> y <a target="_blank" title="E2 Educación y Eventos" href="https://www.bodas.net/animacion/e2-educacion-y-eventos--e62768">E2 Educación y Eventos</a>.                      </div>
+</div>
+</div>
+<div itemscope itemprop="mainEntity"
+itemtype="https://schema.org/Question"
+class="listingFaqsAccordion__item app-listing-faqs-list-item">
+<div class="listingFaqsAccordion__itemHeader">
+<p itemprop="name"
+class="listingFaqsAccordion__itemHeaderTitle">¿En qué empresas de Asturias puedo contratar el servicio de animación infantil y entretenimiento para niños para mi boda?</p>
+<i class="svgIcon app-svg-async svgIcon__angleDown listingFaqsAccordion__itemHeaderIcon"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>                </div>
+<div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer" class="listingFaqsAccordion__itemContentContainer">
+<div itemprop="text"
+class="listingFaqsAccordion__itemContent">
+La animación infantil es uno de los servicios más demandados por las parejas que celebran su boda en Asturias, por ello al menos un 64% de las empresas de la zona lo ofrecen, algunas de ellas son: <a target="_blank" title="Alex caricaturas" href="https://www.bodas.net/animacion/alex-caricaturas--e251973">Alex caricaturas</a>, <a target="_blank" title="Eventos Divertidos" href="https://www.bodas.net/animacion/eventos-divertidos--e205654">Eventos Divertidos</a>, <a target="_blank" title="Asturmusic - Fotomatón" href="https://www.bodas.net/animacion/asturmusic-fotomaton--e85937">Asturmusic - Fotomatón</a>, <a target="_blank" title="Mago Jon Ander" href="https://www.bodas.net/animacion/mago-jon-ander--e64554">Mago Jon Ander</a> y <a target="_blank" title="Eventos Ascu" href="https://www.bodas.net/animacion/eventos-ascu--e199089">Eventos Ascu</a>.                    </div>
+</div>
+</div>
+</div>
+</section>
+<section class="listingReviews app-reviews-slider">
+<h3 class="listingReviews__title">Mira las opiniones de nuestras parejas sobre Animación en Asturias</h3>
+<div class="scrollSnap app-scroll-snap-wrapper scrollSnap--fullBleed scrollSnap--floatArrows"
+role="region" aria-label=" Carrusel">
+<button type="button" aria-label="Anterior" class="scrollSnap__arrow scrollSnap__arrow--prev app-scroll-snap-prev hidden disabled"><i class="svgIcon app-svg-async svgIcon__arrowLeftThick "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/arrows/arrowLeftThick.svg" data-svg-lazyload="1"></i></button>
+<div class="scrollSnap__container app-scroll-snap-container listingReviews__slider" dir="ltr">
+<div class="scrollSnap__item app-scroll-snap-item listingReviews__slide"
+data-id="0"
+data-visualized-slide="false"
+><div class="reviewsTile app-reviews-carousel-vendors-tile">
+<picture class="reviewsTile__picture"     data-image-name="imageFileName_img-26593996827676_1_251973-171836530250890.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/vendor/51973/3_2/320/jpeg/img-26593996827676_1_251973-171836530250890.webp 320w,
+https://cdn0.bodas.net/vendor/51973/3_2/640/jpeg/img-26593996827676_1_251973-171836530250890.webp 640w,
+https://cdn0.bodas.net/vendor/51973/3_2/960/jpeg/img-26593996827676_1_251973-171836530250890.webp 960w,
+https://cdn0.bodas.net/vendor/51973/3_2/1280/jpeg/img-26593996827676_1_251973-171836530250890.webp 1280w,
+https://cdn0.bodas.net/vendor/51973/3_2/1920/jpeg/img-26593996827676_1_251973-171836530250890.webp 1920w" sizes="(min-width:1024px) 28vw, calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/vendor/51973/3_2/320/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 320w,
+https://cdn0.bodas.net/vendor/51973/3_2/640/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 640w,
+https://cdn0.bodas.net/vendor/51973/3_2/960/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 960w,
+https://cdn0.bodas.net/vendor/51973/3_2/1280/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 1280w,
+https://cdn0.bodas.net/vendor/51973/3_2/1920/jpeg/img-26593996827676_1_251973-171836530250890.jpeg 1920w"
+src="https://cdn0.bodas.net/vendor/51973/3_2/960/jpeg/img-26593996827676_1_251973-171836530250890.jpeg"
+sizes="(min-width:1024px) 28vw, calc(100vw - 2rem)"
+alt=""
+width="640"        height="427"                >
+</picture>
+<div class="reviewsTile__body">
+<div class="reviewsTile__title">
+<a class="app-reviews-carousel-vendors-tile-link" href="https://www.bodas.net/animacion/alex-caricaturas--e251973#reviews">Alex caricaturas</a>
+</div>
+<div class="reviewsTile__info">
+<i class="svgIcon app-svg-async svgIcon__star reviewsTile__rating"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/star.svg" data-svg-lazyload="1"></i>            <span class="reviewsTile__rating">5,0</span> (3)
+· Animación · Asturias        </div>
+</div>
+<div class="reviewsTile__footer">
+<div class="reviewsTile__user">
+<div class="reviewsTile__avatar">
+<div class="avatar">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMin slice">
+<circle fill="#C097A0" cx="100" cy="100" r="100"/>
+<text transform="translate(100,130)" y="0">
+<tspan font-size="90" class="" fill="rgba(255,255,255,1)" text-anchor="middle">A</tspan>
+</text>
+</svg>                </div>
+</div>
+<div>
+<div class="reviewsTile__name">Ana</div>
+<div class="srOnly">
+Valoración 5.0 de 5    </div>
+<div class="rating rating--stars" aria-hidden="true">
+<div class="rating__picture">
+<span class="rating__picture rating__progress" style="width:100"></span>
+</div>
+<span class="rating__count">
+5.0        </span>
+</div>
+</div>
+</div>
+<p class="reviewsTile__description">Llamamos a Alex y su equipo para un evento de empresa, la gente no se lo esperaba y fue un éxito. Se amoldaron a nuestras necesidades, llamando a más compañeros y haciendo un diseño personal, sin duda un recuerdo divertido y único para todos
+De nuevo muchas gracias por todo!</p>
+</div>
+</div>
+</div>
+<div class="scrollSnap__item app-scroll-snap-item listingReviews__slide"
+data-id="1"
+data-visualized-slide="false"
+><div class="reviewsTile app-reviews-carousel-vendors-tile">
+<picture class="reviewsTile__picture"     data-image-name="imageFileName_unnamed_1_253563-172181352934052.jpeg">
+<source
+type="image/webp"
+srcset="https://cdn0.bodas.net/vendor/53563/3_2/320/jpg/unnamed_1_253563-172181352934052.webp 320w,
+https://cdn0.bodas.net/vendor/53563/3_2/640/jpg/unnamed_1_253563-172181352934052.webp 640w,
+https://cdn0.bodas.net/vendor/53563/3_2/960/jpg/unnamed_1_253563-172181352934052.webp 960w,
+https://cdn0.bodas.net/vendor/53563/3_2/1280/jpg/unnamed_1_253563-172181352934052.webp 1280w,
+https://cdn0.bodas.net/vendor/53563/3_2/1920/jpg/unnamed_1_253563-172181352934052.webp 1920w" sizes="(min-width:1024px) 28vw, calc(100vw - 2rem)">
+<img
+srcset="https://cdn0.bodas.net/vendor/53563/3_2/320/jpg/unnamed_1_253563-172181352934052.jpeg 320w,
+https://cdn0.bodas.net/vendor/53563/3_2/640/jpg/unnamed_1_253563-172181352934052.jpeg 640w,
+https://cdn0.bodas.net/vendor/53563/3_2/960/jpg/unnamed_1_253563-172181352934052.jpeg 960w,
+https://cdn0.bodas.net/vendor/53563/3_2/1280/jpg/unnamed_1_253563-172181352934052.jpeg 1280w,
+https://cdn0.bodas.net/vendor/53563/3_2/1920/jpg/unnamed_1_253563-172181352934052.jpeg 1920w"
+src="https://cdn0.bodas.net/vendor/53563/3_2/960/jpg/unnamed_1_253563-172181352934052.jpeg"
+sizes="(min-width:1024px) 28vw, calc(100vw - 2rem)"
+alt=""
+width="640"        height="427"                >
+</picture>
+<div class="reviewsTile__body">
+<div class="reviewsTile__title">
+<a class="app-reviews-carousel-vendors-tile-link" href="https://www.bodas.net/animacion/con-luz-de-neon-eventos--e253563#reviews">Con Luz de Neón Eventos</a>
+</div>
+<div class="reviewsTile__info">
+<i class="svgIcon app-svg-async svgIcon__star reviewsTile__rating"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/star.svg" data-svg-lazyload="1"></i>            <span class="reviewsTile__rating">5,0</span> (1)
+· Animación · Asturias        </div>
+</div>
+<div class="reviewsTile__footer">
+<div class="reviewsTile__user">
+<div class="reviewsTile__avatar">
+<div class="avatar">
+<picture class="avatar__img"     data-image-name="imageFileName_gu_7615542.jpeg?r=42443">
+<source
+type="image/webp"
+data-srcset="https://cdn0.bodas.net/user/2455/1_1/80/jpg/gu_7615542.webp?r=42443 80w,
+https://cdn0.bodas.net/user/2455/1_1/160/jpg/gu_7615542.webp?r=42443 160w,
+https://cdn0.bodas.net/user/2455/1_1/320/jpg/gu_7615542.webp?r=42443 320w" sizes="(min-width: 600px) 640px, calc(100vw - 2rem)">
+<img
+data-srcset="https://cdn0.bodas.net/user/2455/1_1/80/jpg/gu_7615542.jpeg?r=42443 80w,
+https://cdn0.bodas.net/user/2455/1_1/160/jpg/gu_7615542.jpeg?r=42443 160w,
+https://cdn0.bodas.net/user/2455/1_1/320/jpg/gu_7615542.jpeg?r=42443 320w"
+data-src="https://cdn0.bodas.net/user/2455/1_1/160/jpg/gu_7615542.jpeg?r=42443"
+sizes="(min-width: 600px) 640px, calc(100vw - 2rem)"
+alt="Lorena"
+width="80"        height="80"        class="lazyload"        >
+</picture>
+</div>
+</div>
+<div>
+<div class="reviewsTile__name">Lorena</div>
+<div class="srOnly">
+Valoración 5.0 de 5    </div>
+<div class="rating rating--stars" aria-hidden="true">
+<div class="rating__picture">
+<span class="rating__picture rating__progress" style="width:100"></span>
+</div>
+<span class="rating__count">
+5.0        </span>
+</div>
+</div>
+</div>
+<p class="reviewsTile__description">Desde el primer momento nos dieron un trac

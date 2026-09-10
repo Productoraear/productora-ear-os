@@ -1,0 +1,622 @@
+ttps://comunidad.bodas.net/grupos/grupo-recien-casados">
+                        Grupo Recién Casad@s                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-futuras-mamas">
+                        Grupo Futuras Mamás                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-famosas">
+                        Grupo Bodas Famosas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-viviendo-juntos">
+                        Grupo Vida en pareja                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-sorteo">
+                        Grupo Sorteo                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                                            
+<div class="header-join">
+    <a class="header-join-link" href="https://www.bodas.net/users-login.php">Accede</a>
+    <a
+        class="header-join-link app-ua-track-event"
+        href="https://www.bodas.net/users-signup.php"
+         data-track-c='SignUpTracking'  data-track-a='a-step1'  data-track-l='d-desktop+s-site_header'  data-track-s=''  data-track-v='0'  data-track-ni='0'     >
+        Regístrate    </a>
+</div>
+                    
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li   >
+                                            <a href="https://www.bodas.net/vestidos-novias" class="selected ">
+                            Vestidos de Novia                        </a>
+                                                        </li>
+                            <li   >
+                                            Vestidos de Novia de Grace Loves Lace                                                        </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper pr0 pb0 pl0">
+    <div class="headings-intro">
+        <h1>Vestidos de Novia de Grace Loves Lace</h1>
+                    <p>Diseños hechos a mano con un estilo natural y desenfadado, y vanguardistas. Encontrarás escotes deep plunge confeccionados en delicado tul italiano, escotes cuadrados con finos tirantes, mangas abullonadas de tul y mangas largas de encaje con hombros caídos. O sus faldas, desde los sensuales cortes de sirena de crepé elástico que realzan las curvas femeninas hasta sus faldas en A con impecable caída y colas de capilla y catedral. Enamórate de las opciones hippie chic de Grace Loves Lace.</p>
+            </div>
+            <div class="app-dress-quiz dressQuiz"></div>
+    </div>
+
+
+<form class="app-dress-filters-form" action="/cat-DressList.php">
+    <input type="hidden" name="type" autocomplete="off" value="1"/>
+            <input type="hidden" name="collection" autocomplete="off" id="collection" value=""/>
+            <input type="hidden" name="designer" autocomplete="off" id="designer" value="306"/>
+            <input type="hidden" name="silhouette" autocomplete="off" id="silhouette" value=""/>
+            <input type="hidden" name="neckline" autocomplete="off" id="neckline" value=""/>
+            <input type="hidden" name="suitStyle" autocomplete="off" id="suitStyle" value=""/>
+            <input type="hidden" name="length" autocomplete="off" id="length" value=""/>
+            <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value=""/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-novias">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Grace Loves Lace                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="329044" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/goldie--v329044">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/goldie--v329044">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/goldie--mfvr639058.jpg"   alt="Goldie , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/goldie--v329044"
+                        >
+                            Grace Loves Lace 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Goldie </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Halter                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Memoirs of Her</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="329040" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/solstice--v329040">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/solstice--v329040">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/solstice--mfvr638950.jpg"   alt="Solstice, 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/solstice--v329040"
+                        >
+                            Grace Loves Lace 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Solstice</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Memoirs of Her</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="329052" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/anu--v329052">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/anu--v329052">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/anu--mfvr639236.jpg"   alt="Anu , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/anu--v329052"
+                        >
+                            Grace Loves Lace 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Anu </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Otros                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Memoirs of Her</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="329042" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/sienna--v329042">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/sienna--v329042">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/sienna--mfvr639018.jpg"   alt="Sienna , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/sienna--v329042"
+                        >
+                            Grace Loves Lace 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Sienna </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Memoirs of Her</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="329038" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/zsa-zsa--v329038">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/zsa-zsa--v329038">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/zsa-zsa--mfvr638912.jpg"   alt="Zsa Zsa, 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/zsa-zsa--v329038"
+                        >
+                            Grace Loves Lace 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Zsa Zsa</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Memoirs of Her</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="329048" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/pierlot--v329048">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/pierlot--v329048">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/pierlot--mfvr639152.jpg"   alt="Pierlot , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/pierlot--v329048"
+                        >
+                            Grace Loves Lace 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>Pierlot </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Barco                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Memoirs of Her</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="329046" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/la-paz--v329046">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/la-paz--v329046">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/la-paz--mfvr639106.jpg"   alt="La Paz , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/la-paz--v329046"
+                        >
+                            Grace Loves Lace 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>La Paz </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Memoirs of Her</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="311149" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/mila--v311149">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/mila--v311149">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/mila--mfvr580351.jpg"   alt="MILA, 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/mila--v311149"
+                        >
+                            Grace Loves Lace 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MILA</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Coco Loco</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="311147" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/margot--v311147">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/margot--v311147">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/margot--mfvr580321.jpg"   alt="MARGOT  , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/margot--v311147"
+                        >
+                            Grace Loves Lace 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MARGOT  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Barco                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Coco Loco</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="311153" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/chelo--v311153">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/chelo--v311153">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/chelo--mfvr580399.jpg"   alt="CHELO , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/chelo--v311153"
+                        >
+                            Grace Loves Lace 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>CHELO </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Coco Loco</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="311141" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/olive--v311141">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/olive--v311141">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/olive--mfvr580141.jpg"   alt="OLIVE, 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/olive--v311141"
+                        >
+                            Grace Loves Lace 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>OLIVE</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Coco Loco</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+    <div class="pure-u-1-4">
+            <div id="div-gpt-ad-1334158298810-0" class="dfp-center comment" style="min-height: 1px;"  ></div>
+            <script>
+                    // Set display timeout to avoid problems when infinite scroll adds new content to DOM
+                    googletag.cmd.push(function () {
+                        
+                        // Set display timeout to avoid problems when infinite scroll adds new content to DOM. Method refreshAdSlot only exist on lazy load integration
+                        setTimeout(function () {
+                            googletag.display('div-gpt-ad-1334158298810-0');
+
+                                                    }, 0);
+                    });
+            </script>
+            </div>        <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="311143" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/nathalia--v311143">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/nathalia--v311143">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/nathalia--mfvr580195.jpg"   alt="NATHALIA  , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/nathalia--v311143"
+                        >
+                            Grace Loves Lace 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>NATHALIA  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Coco Loco</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="311139" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/sofia--v311139">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/sofia--v311139">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/sofia--mfvr580091.jpg"   alt="SOFIA  , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/sofia--v311139"
+                        >
+                            Grace Loves Lace 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>SOFIA  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Coco Loco</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="311155" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/bella--v311155">
+                    <a href="https://www.bodas.net/vestidos-novias/grace-loves-lace/bella--v311155">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/grace-loves-lace/bella--mfvr580477.jpg"   alt="BELLA  , 306"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Grace Loves Lace, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/grace-loves-lace/bella--v311155"
+                        >
+                            Grace Loves Lace 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>BELLA  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Cuadrado                  

@@ -1,0 +1,1502 @@
+off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-novias">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Anna Kara                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321729" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/ali--v321729">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/ali--v321729">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/ali--mfvr615787.jpg"   alt="ALI , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/ali--v321729"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ALI </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Ilusión                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321699" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/river--v321699">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/river--v321699">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/river--mfvr615681.jpg"   alt="RIVER , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/river--v321699"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>RIVER </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321659" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/trinity--v321659">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/trinity--v321659">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/trinity--mfvr615541.jpg"   alt="TRINITY   , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/trinity--v321659"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>TRINITY   </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Shape of You</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321719" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/juno--v321719">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/juno--v321719">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/juno--mfvr615751.jpg"   alt="JUNO , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/juno--v321719"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>JUNO </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321715" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/maya--v321715">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/maya--v321715">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/maya--mfvr615737.jpg"   alt="MAYA , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/maya--v321715"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MAYA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321709" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/millo--v321709">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/millo--v321709">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/millo--mfvr615717.jpg"   alt="MILLO , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/millo--v321709"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MILLO </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321707" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/miranda--v321707">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/miranda--v321707">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/miranda--mfvr615713.jpg"   alt="MIRANDA , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/miranda--v321707"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MIRANDA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321703" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/noe--v321703">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/noe--v321703">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/noe--mfvr615695.jpg"   alt="NOE , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/noe--v321703"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>NOE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Redondo                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321689" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/venus--v321689">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/venus--v321689">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/venus--mfvr615643.jpg"   alt="VENUS , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/venus--v321689"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>VENUS </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321683" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/alanis--v321683">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/alanis--v321683">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/alanis--mfvr615619.jpg"   alt="ALANIS , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/alanis--v321683"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ALANIS </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Asimétrico                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Shape of You</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321681" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/charlize--v321681">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/charlize--v321681">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/charlize--mfvr615611.jpg"   alt="CHARLIZE   , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/charlize--v321681"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>CHARLIZE   </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Cuadrado                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Shape of You</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+    <div class="pure-u-1-4">
+            <div id="div-gpt-ad-1334158298810-0" class="dfp-center comment" style="min-height: 1px;"  ></div>
+            <script>
+                    // Set display timeout to avoid problems when infinite scroll adds new content to DOM
+                    googletag.cmd.push(function () {
+                        
+                        // Set display timeout to avoid problems when infinite scroll adds new content to DOM. Method refreshAdSlot only exist on lazy load integration
+                        setTimeout(function () {
+                            googletag.display('div-gpt-ad-1334158298810-0');
+
+                                                    }, 0);
+                    });
+            </script>
+            </div>        <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321673" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/elle--v321673">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/elle--v321673">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/elle--mfvr615585.jpg"   alt="ELLE, 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/elle--v321673"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ELLE</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Shape of You</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321721" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/isla--v321721">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/isla--v321721">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/isla--mfvr615757.jpg"   alt="ISLA , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/isla--v321721"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ISLA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321717" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/margaery--v321717">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/margaery--v321717">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/margaery--mfvr615745.jpg"   alt="MARGAERY , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/margaery--v321717"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MARGAERY </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Barco                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321695" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/sansa--v321695">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/sansa--v321695">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/sansa--mfvr615665.jpg"   alt="SANSA , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/sansa--v321695"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>SANSA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321691" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/stephanie--v321691">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/stephanie--v321691">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/stephanie--mfvr615649.jpg"   alt="STEPHANIE , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/stephanie--v321691"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>STEPHANIE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321685" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/wilma--v321685">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/wilma--v321685">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/wilma--mfvr615627.jpg"   alt="WILMA , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/wilma--v321685"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>WILMA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321679" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/coco--v321679">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/coco--v321679">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/coco--mfvr615603.jpg"   alt="COCO , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/coco--v321679"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>COCO </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Shape of You</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321705" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/miriam--v321705">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/miriam--v321705">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/miriam--mfvr615705.jpg"   alt="MIRIAM , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/miriam--v321705"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>MIRIAM </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321697" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/samia--v321697">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/samia--v321697">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/samia--mfvr615673.jpg"   alt="SAMIA , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/samia--v321697"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>SAMIA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Ilusión                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321687" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/virginia--v321687">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/virginia--v321687">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/virginia--mfvr615637.jpg"   alt="VIRGINIA , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/virginia--v321687"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>VIRGINIA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Daydreaming</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="321677" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/anna-kara/courtney--v321677">
+                    <a href="https://www.bodas.net/vestidos-novias/anna-kara/courtney--v321677">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/anna-kara/courtney--mfvr615597.jpg"   alt="COURTNEY , 1057"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Anna Kara, 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/anna-kara/courtney--v321677"
+                        >
+                            Anna Kara 2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>COURTNEY </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Evasé,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Otros                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Shape of You</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+    <div class="pure-u-1-4">
+            <div id="div-gpt-ad-1334158298810-1" class="dfp-center comment" style="min-height: 1px;"  ></div>
+            <script>
+                    // Set display timeout to avoid problems when infinite scroll adds new content to DOM
+                    googletag.cmd.push(function () {
+                        
+                        // Set display timeout to avoid problems when infinite scroll adds new content to DOM. Method refreshAdSlot only exist on lazy load integration
+                        setTimeout(function () {
+                            googletag.display('div-gpt-ad-1334158298810-1');
+
+                                                    }, 0);
+                    });
+            </script>
+            </div></div>
+
+                            <div class="mb10 pagination">
+            <ul>
+            
+            
+                                                <li><span class="pagination__page pagination__next app-link" data-href='https://www.bodas.net/cat-DressList.php?type=1&designer=1057&NumPage=2'>Siguiente<i class="svgIcon app-svg-async svgIcon__angleRight "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleRight.svg" data-svg-lazyload="1"></i></span></li>
+                                    </ul>
+    </div>
+            
+                    </div>
+    </div>
+</div>
+
+
+    
+    <div class="dress-footer-filter bg">
+        <div class="wrapper">
+                    
+                                        <p class="ui-list-title">Vestidos de Novia de Anna Kara por temporada</p>
+                        <div class="box-related-list">
+                <ul class="pure-g-r">
+                                                                                    <li class="pure-u-1-4">
+                            <div>
+                                <a href="https://www.bodas.net/vestidos-novias/anna-kara--d1057/2022--y2022">Vestidos de Novia  de Anna Kara 2022</a>
+                                <span>36</span>
+                            </div>
+                        </li>
+                                    </ul>
+            </div>
+
+        
+                
+                            <p class="ui-list-title">Vestidos de Novia de Anna Kara por colección</p>
+            
+            <div class="box-related-list">
+                <ul class="pure-g-r">
+                                                                                                        <li class="pure-u-1-4">
+                            <div>
+                                <a href="https://www.bodas.net/vestidos-novias/anna-kara--d1057/daydreaming-2022--co5669">Anna Kara Daydreaming 2022</a>
+                                <span>23</span>
+                            </div>
+                        </li>
+                                            <li class="pure-u-1-4">
+                            <div>
+                                <a href="https://www.bodas.net/vestidos-novias/anna-kara--d1057/shape-of-you-2022--co5667">Anna Kara Shape of You 2022</a>
+                                <span>13</span>
+                            </div>
+                        </li>
+                                    </ul>
+            </div>
+                    </div>
+    </div>
+
+
+        <div class="dnone app-dresses-load-no-index-ajax"  data-type='1'  data-designer='1057' ></div>
+
+        <script id="quiz-base-tpl" type="text/html-template">
+            <div class="app-dress-quiz-header dress-quiz-header dressQuizHeader ">
+            <div class="app-dress-quiz-initial">
+                <p class="dressQuizHeader__title app-title">
+                    ¿Aún no tienes tu vestido ideal?                </p>
+                <div class="dressQuizHeader__description app-subtitle">
+                    Dinos cuáles de los siguientes te gustan y te ayudaremos a encontrarlo                </div>
+            </div>
+            <div class="dressQuizHeader__button">
+                <a role="button" class="app-btn-dress-quiz-init btnFlat btnFlat--primary">Encuentra tu vestido</a>
+                <i class="svgIcon app-svg-async svgIcon__angleDown app-btn-dress-quiz-close dressQuizHeader__arrow close dnone"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleDown.svg" data-svg-lazyload="1"></i>            </div>
+        </div>
+        <div class="app-dress-quiz-slide dnone">
+            <div class="app-dress-quiz-content dress-quiz-content dressQuizContent"></div>
+        </div>
+    </script>
+
+
+<script id="quiz-item" type="text/html-template">
+            <div class="dressQuizContent__item">
+            <figure>
+                <img class="dressQuizContent__image app-dress-quiz-content-item-img animated" src="{{src}}" data-index="{{index}}" data-id="{{id}}" data-url="{{url}}">
+                <figcaption class="dressQuizContent__actions">
+                    <i class="svgIcon app-svg-async svgIcon__refresh app-dress-quiz-icon-undo dressQuizContent__action dressQuizContent__action--undo dnone"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/refresh.svg" data-svg-lazyload="1"></i>                    <i class="svgIcon app-svg-async svgIcon__timesCircle app-dress-quiz-icon-dislike dressQuizContent__action dressQuizContent__action--dislike"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/timesCircle.svg" data-svg-lazyload="1"></i>                    <i class="svgIcon app-svg-async svgIcon__checkCircle app-dress-quiz-icon-like dressQuizContent__action dressQuizContent__action--like"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/checkCircle.svg" data-svg-lazyload="1"></i>                </figcaption>
+            </figure>
+        </div>
+    </script>
+
+<script id="quiz-content" type="text/html-template">
+            <div class="dressQuizContent__info">
+            <span class="dressQuizContent__icon  animated">
+                <span class="app-dress-quiz-count-header"></span>
+                                    <i class="svgIcon app-svg-async svgIcon__bride-dress "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/catalog/bride-dress.svg" data-svg-lazyload="1"></i>                            </span>
+            <p class="app-dress-quiz-info"><span class="dressQuizContent__infoText">Elige </span><span class="dressQuizContent__infoText--number"> 5 vestidos </span><span class="dressQuizContent__infoText">  y descubre tu estilo</span></p>
+            <div>
+                <button id="app-quiz-show-result" class="btn-flat small red dnone" rel="nofollow">Descubre tu estilo</button>
+            </div>
+            <div>
+                <a id="app-quiz-restart" class="pointer small regular mt10 block" style="display:none;" rel="nofollow">Volver a empezar</a>
+            </div>
+        </div>
+        <div class="dressQuizContent__items app-dresses-quiz-wrapper"></div>
+        <div class="dressQuizContent__items app-dresses-quiz-result dnone"></div>
+    </script>
+
+<script id="quiz-result-content" type="text/html-template">
+            <p class="dressQuizContent__resultTitle">¡Magia! Parece que el vestido de tus sueños es:</p>
+        <ul class="clearfix mt10 mb20">
+            <li class="app-quiz-dress-tags dressQuizContent__resultTags"></li>
+        </ul>
+        <a class="btn-flat red small app-quiz-apply-filters" rel="nofollow" href="#">Ver mis resultados</a>
+        &nbsp;&nbsp;
+        <a role="button" rel="nofollow" class="app-quiz-startover mr10 startover-btn">Repetir juego</a>
+        <span class="end-separator">|</span>
+        <a role="button" rel="nofollow" id="app-quiz-continue" class="ml10 continue-btn">Seguir afinando</a>
+    </script>
+
+<script id="quiz-dress-tag" type="text/html-template">
+    <span class="app-dress-tags-filter dressQuizContent__resultTag" data-name="{{filterName}}" data-id="{{filterId}}">{{desc}}<i class="icon icon-grey-times-small icon-right"></i></span>
+</script>
+
+<script>
+    window.dressQuizData = {
+        tipo        : '1',
+        idDisenador : null,
+        idColeccion : '',
+        idTemporada : '',
+        idEscote    : '',
+        idCorte     : '',
+        idLargo     : '',
+        idEstilo    : '',
+        idTipoComp  : '',
+        idManga     : '',
+        idCategoria : '',
+        isMobile    : false,
+        translations: {
+            title             : '¿Aún no tienes tu vestido ideal?',
+            titleBeforeEnd    : '¿Todavía buscando el vestido ideal?',
+            titleEnd          : 'Encuentra el vestido de tus sueños',
+            titleNumItems     : '',
+            subTitle          : 'Dinos cuáles de los siguientes te gustan y te ayudaremos a encontrarlo',
+            subTitleBeforeEnd : 'Estás a %1$s %2$s de descubrir tu estilo ideal',
+            subTitleEnd       : 'Descubre la selección que encaja contigo',
+            itemsName         : 'vestidos',
+            itemName          : 'vestido'
+        }
+    };
+</script>
+
+<script>
+    var catalogSectionTraceOn = true;
+    var catalogTracesVars = catalogTracesVars || {};
+
+    catalogTracesVars.section    = '1';
+    catalogTracesVars.idItem     = '0';
+    catalogTracesVars.itemType   = '1';
+    catalogTracesVars.idDesigner = '1057';
+    catalogTracesVars.isMobile = false;
+</script>
+
+<script>
+    var catalogImpressionsAndClicksTraceOn = true;
+    var catalogTracesVars = catalogTracesVars || {};
+
+    catalogTracesVars.itemType = '1';
+</script>
+
+<script>
+    var catalogFiltersTraceOn = true;
+    var catalogTracesVars = catalogTracesVars || {};
+
+    catalogTracesVars.itemType = '1';
+</script>
+
+</main>
+
+
+<div class="app-footer">
+    <script>
+  if (typeof(window.userLayersToShow) === "undefined" || (typeof(window.userLayersToShow) !== "undefined" && typeof(window.userLayersToShow.name) === "undefined")) {
+      window.userLayersToShow = {
+        name:
+                    "contest"
+              }
+  }
+</script>
+
+    
+    
+
+            <footer class="layoutFooter">
+    <div class="linkingFooter">
+        <section class="corporativeLinks">
+    <div class="linkingFooter__title">Información</div>
+    <ul>
+        <li>
+                    <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es/reporting/">Contactar</span>
+                </li>
+        <li>
+            <a rel="nofollow" href="https://www.bodas.net/condiciones-legales.php">Condiciones legales</a>
+        </li>
+                    <li>
+                <a rel="nofollow" href="https://www.bodas.net/legal/privacy.php">Aviso de privacidad</a>
+            </li>
+                            <li>
+                <a rel="nofollow" href="https://www.bodas.net/legal/cookies.php">Aviso de cookies</a>
+            </li>
+                <li>
+            <a class="ot-sdk-show-settings">Do not sell my personal info</a>
+        </li>
+                    <li>
+                <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es/transparency">Centro de transparencia</span>
+            </li>
+            <li>
+                <span class="app-link-blank" data-href="https://www.theknotww.com/legalhub/es">Centro legal</span>
+            </li>
+                <li>
+                            <a rel="nofollow" href="https://www.bodas.net/emp-Menu.php">Acceso empresas</a>
+                    </li>
+        <li>
+            <a href="https://www.bodas.net/aboutus/aboutus.php">¿Quiénes somos?</a>
+        </li>
+        <li>
+            <span class="app-link-blank pointer" data-href="https://www.theknotww.com/careers/">Careers</span>
+        </li>
+                        <li>
+            <a href="https://www.bodas.net/web-boda">Web de boda</a>
+        </li>
+    </ul>
+</section>
+        
+    <section class="appsLinks app-footer-download-links">
+        <div class="linkingFooter__title">Descárgate la app</div>
+        <div class="appsLinks__description">
+                <img src="https://cdn1.bodas.net/assets/img/dropdown/app.png" srcset="https://cdn1.bodas.net/assets/img/dropdown/app@2x.png 2x" class="appsLinks__imago" alt="App icon"  width="48" height="48" loading="lazy"  >
+            Organiza tu boda donde y cuando quieras        </div>
+        <ul class="appsLinks__list">
+            <li class="app-store-badge-ios">
+                <a rel="nofollow noopener noreferrer" target="_blank" href="https://app.appsflyer.com/id598636207?pid=WP-iOS-ES&c=WP-ES-LANDINGS&s=es"
+                   title="App Store">
+                        <img src="https://cdn1.bodas.net/assets/img/footer/appstore.png" srcset="https://cdn1.bodas.net/assets/img/footer/appstore@2x.png 2x"  alt="App Store"  width="140" height="42" loading="lazy"  >
+                </a>
+            </li>
+            <li class="app-store-badge-android">
+                <a rel="nofollow noopener noreferrer" target="_blank"
+                   href="https://app.appsflyer.com/net.bodas.launcher?pid=WP-Android-ES&c=WP-ES-LANDINGS" title="Google Play">
+                        <img src="https://cdn1.bodas.net/assets/img/footer/googleplay.png" srcset="https://cdn1.bodas.net/assets/img/footer/googleplay@2x.png 2x"  alt="Google Play"  width="140" height="42" loading="lazy"  >
+                </a>
+            </li>
+        </ul>
+    </section>
+            <section class="socialLinks">
+        <div class="linkingFooter__title">Síguenos en</div>
+        <ul class="socialLinks__list">
+                            <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://www.facebook.com/bodasnet" title="Facebook" target="_blank"><i class="svgIcon app-svg-async svgIcon__facebook "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/facebook.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://twitter.com/bodasnet" title="Twitter" target="_blank"><i class="svgIcon app-svg-async svgIcon__twitter "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/twitter.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://pinterest.com/bodasnet" title="Pinterest" target="_blank"><i class="svgIcon app-svg-async svgIcon__pinterest "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/pinterest.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://instagram.com/bodasnet" title="Instagram" target="_blank"><i class="svgIcon app-svg-async svgIcon__instagram "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/instagram.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://www.youtube.com/user/bodasnet/featured" title="Youtube" target="_blank"><i class="svgIcon app-svg-async svgIcon__youtube-filled "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/youtube-filled.svg" data-svg-lazyload="1"></i></a></li>
+                                        <li><a class="socialLinks__item" rel="nofollow noopener noreferrer" href="https://www.tiktok.com/@bodas.net" title="TikTok" target="_blank"><i class="svgIcon app-svg-async svgIcon__tiktok-logo "   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/tiktok-logo.svg" data-svg-lazyload="1"></i></a></li>
+                    </ul>
+    </section>
+        <section class="countrySelector">
+    <div class="linkingFooter__title">Selecciona un país</div>
+    <div class="countrySelector__wrapper">
+                <div class="app-footer-country-selector-toggle countrySelector__dropdown">
+            <img src="https://cdn1.bodas.net/assets/img/flags/country-selector/es.png" width="18" height="12" class="countrySelector__flag" alt="España" loading="lazy">
+            España            <i class="svgIcon svgIcon__angleDown countrySelector__icon"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i>        </div>
+    </div>
+</section>
+        
+<section class="copyrightFooter">
+        <img src="https://cdn1.bodas.net/assets/img/footer/tkww_logo_KO.png" srcset="https://cdn1.bodas.net/assets/img/footer/tkww_logo_KO_2x.png 2x"  alt="ww logo"  width="140"  loading="lazy"  >
+    <p>&copy; 2024 Bodas.net</p>
+</section>    </div>
+</footer>    
+            <div id="app-common-layer" class="modal dnone" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    <div id="app-va-modal" class="modal fade dnone" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    
+    <div id="fb-root"></div>
+
+    <script>
+                                </script>
+
+    
+<script>
+    var pageGlobals = {
+                                            reduced: '/catalog/list'            
+                            ,                                                             currentPageData:[]            
+                            ,                                                             loggedUserInfo:{"isLogged":false,"userId":"","isMarried":false}            
+                            ,                                                             common:{"environment":{"countryCode":"ES","isJsArchitectureEnabled":true,"isCookieLessEnabled":false,"isInternationalOnePage":true,"subdomain":"www.bodas.net","subdomainCommunity":"https:\/\/comunidad.bodas.net\/","isCurrentPageInCustomSubdomain":false,"isGoogleIdentityServicesLibraryEnabled":true,"isWebVitalsEnabled":false,"isDebugCoreWebVitalsEnabled":false,"isDevel":false,"showAppPusher":true},"platform":{"reducedPlatform":"","isDesktop":true,"isMobile":false,"isApp":false,"mobilePlatform":"mobile","apps":{"appVersion":null,"usersApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isShowNativeLoginEnabled":false,"areHappyMomentsEnabled":true,"isNativeShareAvailable":false,"isListingCounterFiltersEnabled":false}},"vendorsApp":{"isCurrentPlatform":false,"isAndroid":false,"isIOS":false,"proxy":{"isProxyBarsEnabled":false,"isIOSProxyBarsFullControlEnabled":false}},"isAppUsersNativeSignUpLayerEnabled":false}},"remarketing":{"facebook":{"isPixelEnabled":true,"isEnabled":true,"isLoaded":false,"tracker":"experiment"},"pinterest":{"isEnabled":true,"isLoaded":false}},"analytics":{"isEcommerceEnabled":true}}            
+                            ,                                                             experiments:[]            
+                                    };
+</script>
+
+<script>
+    var userGlobals = {
+                                            gp_anon_id: '2faa1ae2-b846-4000-82e6-08cd18663f24'            
+                            ,                                                             vendor_id_empresa: '78903'            
+                            ,                                                             vendor_uuid: '587e0718-0168-4bc7-9b54-bfbcc0c68a82'            
+                                    };
+</script>
+
+
+<script defer src="https://www.bodas.net/builds/desktop/js/symfnw-ES171-1-20241219-010_www_m_/common.js"></script>
+
+
+<script defer src="https://www.bodas.net/builds/desktop/js/symfnw-ES171-1-20241219-010_www_m_/WebBundleDesktopDresses.js"></script>
+
+<script>
+    (function (w) {
+                w.desktopInMobile = "0";
+    })(window);
+</script>
+
+
+    <div id="app-pusher-vendors-users-notification-alert" class="pusher-notification dnone"></div>
+    <div id="app-chat-container" class="pusher-container"></div>
+    <script>
+                    window.pusher = {
+              actorJson : '{\u0022id\u0022:78903,\u0022name\u0022:\u0022Productora EAR\u0022,\u0022avatar\u0022:\u0022https:\\/\\/cdn0.bodas.net\\/emp\\/fotos\\/7\\/8\\/9\\/0\\/3\\/edwin-agudelo-canta-a-novios_1_78903_v3.jpg\u0022,\u0022avatarSvg\u0022:null,\u0022type\u0022:\u0022vendor\u0022}',
+              customOptions : {
+                disableChat : false,
+                disableUserVendorNotifications : false,
+                isChatbotEnabled: true,
+                openOnLoad: false,
+                canInitConversation: true,
+                isPersistentStorageEnabled: true,
+                disableAppChat: false              }
+            };
+            </script>
+
+
+    
+    <script>var analyticsManager = (function() {var _storedAnalyticsEvents = [];function queueEvent(func) {_storedAnalyticsEvents.push(func);}function trackQueuedEvents() {while (_storedAnalyticsEvents.length > 0) {var queuedEvent = _storedAnalyticsEvents.shift();queuedEvent();}}return {queueEvent : queueEvent,trackQueuedEvents : trackQueuedEvents,}})();</script>
+<script>
+    var reduced = '/catalog/list';
+    </script>
+
+
+<script>
+  var _comscore = _comscore || []
+
+  var comscoreScript = function () {
+    var s = document.createElement('script'), el = document.getElementsByTagName('script')[0]
+    s.defer = true
+    s.src = (document.location.protocol == 'https:' ? 'https://sb' : 'http://b') + '.scorecardresearch.com/cs/6156116/beacon.js'
+    el.parentNode.insertBefore(s, el)
+  }
+
+    document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+    comscoreScript()
+  })
+  document.getElementsByTagName('body')[0].addEventListener('IABTcDataReady', function () {
+    _comscore.push({ c1: '2', c2: '6156116' })
+  })
+  document.getElementsByTagName('body')[0].addEventListener('nonIABCountryDataReady', function () {
+      _comscore.push({ c1: '2', c2: '6156116' })
+  })
+    if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+    comscoreScript()
+  }
+</script>
+
+
+
+
+    <script>
+window.contextTraits = {};
+</script>
+<script>
+    function trackExperimentViewed(experimentId, bucketingId, variantId, eventProperties) {
+        window.analytics.track('Experiment Viewed', {
+            ...eventProperties,
+            experimentId,
+            bucketingId,
+            variantId
+        })
+    }
+</script>
+<script>
+!function () {
+    const ga4ClientIdPromise = new Promise(resolve => {
+        gtag('get', 'G-QDLJBX8LD9', 'client_id', resolve)
+    });
+    const ga4SessionIdPromise = new Promise(resolve => {
+        gtag('get', 'G-QDLJBX8LD9', 'session_id', resolve)
+    });
+    const ga4SessionNumberPromise = new Promise(resolve => {
+        gtag('get', 'G-QDLJBX8LD9', 'session_number', resolve)
+    });
+    var segmentLoaded = false;
+    !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0";;analytics.SNIPPET_VERSION="4.15.3";
+    }}();
+
+        
+    var segmentScript = function () {
+        if (segmentLoaded) {
+            return;
+        }
+        if (window.analytics && window.analytics.initialized === true) {
+            return;
+        }
+
+        segmentLoaded = true;
+        (async () => {
+          let ga4ClientId, ga4SessionId, ga4SessionNumber = null;
+          [ga4ClientId, ga4SessionId, ga4SessionNumber] = await Promise.all([ga4ClientIdPromise, ga4SessionIdPromise, ga4SessionNumberPromise]);
+            const pageProperties = {"nItems":36,"reduced":"\/catalog\/list","gpAnonId":"2faa1ae2-b846-4000-82e6-08cd18663f24","loggedVendorUUID":"587e0718-0168-4bc7-9b54-bfbcc0c68a82","isMasquerading":false,"platform":"desktop web","section":"\/catalog\/list","build_product":"fashion"};
+            const analyticsGroupOpt = isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true;
+            const targetedAdsOpt = isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true;
+            const socialMediaOpt = isCookieGroupAllowed(CONSENT_SOCIAL_MEDIA_GROUP) === true;
+            const saleOfDataOpt = analyticsGroupOpt && targetedAdsOpt && socialMediaOpt
+
+            // Adding Segment middleware
+            analytics.addSourceMiddleware(function (middlewareIntermediate) {
+                var payload = middlewareIntermediate.payload,
+                    next = middlewareIntermediate.next,
+                    namespace;
+                if (payload.obj.type === 'identify') {
+                    namespace = 'traits'
+                } else {
+                    namespace = 'properties'
+                }
+                if (!payload.obj[namespace]) {
+                    console.warn('[ga4 segment patch] Analytics event does not contain namespace property: ' + namespace);
+                    next(payload);
+                    return
+                }
+                payload.obj[namespace].ga_session_id = ga4SessionId;
+                payload.obj[namespace].ga_session_number = ga4SessionNumber;
+                payload.obj[namespace].ga_client_id = ga4ClientId;
+                payload.obj[namespace].ga4_session_id = ga4SessionId;
+                payload.obj[namespace].ga4_session_number = ga4SessionNumber;
+                payload.obj[namespace].ga4_client_id = ga4ClientId;
+
+                                    payload.obj.context.data_processing_options = !targetedAdsOpt;
+                
+                if (payload.obj.type === 'page') {
+                  payload.obj[namespace]['event_id'] = 'pageview_' + window.userGlobals.gp_anon_id + '_' + '4c39aa12-f7b2-4506-bf91-829e5d078157'
+                }
+
+                if (!payload.obj[namespace].loggedUserUUID && window.userGlobals?.user_uuid) {
+                  payload.obj[namespace].loggedUserUUID = window.userGlobals.user_uuid
+                }
+
+                const getCookieIsFunction = typeof getCookie === 'function';
+                const tkwwOpCookie = getCookieIsFunction ? getCookie('tkww_op') : null;
+                if (!payload.obj.context.tkww_op && tkwwOpCookie) {
+                  payload.obj.context.tkww_op = tkwwOpCookie;
+                }
+
+                                const globalExtraPropertiesForSegmentTracking = typeof window.globalExtraPropertiesForSegmentTracking === 'object'
+                ? window.globalExtraPropertiesForSegmentTracking : {};
+                for (const key in globalExtraPropertiesForSegmentTracking) {
+                    if (globalExtraPropertiesForSegmentTracking.hasOwnProperty(key) && !payload.obj[namespace][key]) {
+                      payload.obj[namespace][key] = globalExtraPropertiesForSegmentTracking[key];
+                    }
+                }
+
+                                let globalPageProperties = [];
+                let globalPagePropertiesExcludedEventNames = {};
+                try {
+                  globalPageProperties = JSON.parse('["appVersion","frmInsert","gpAnonId","loggedUserUUID","loggedVendorUUID","platform","reduced","section","build_product","experimentVariants"]');
+                  globalPagePropertiesExcludedEventNames = JSON.parse('[]');
+                } catch(e) {
+                  console.error(`Segment init error: ${e.message}`);
+                }
+
+                for (const key in globalPageProperties) {
+                    const field = globalPageProperties[key];
+                    const isExcluded = globalPagePropertiesExcludedEventNames[field]?.includes(payload.obj.event) ?? false;
+                    if (!payload.obj[namespace][field] && pageProperties[field] && !isExcluded) {
+                      payload.obj[namespace][field] = pageProperties[field];
+                    }
+                }
+
+                payload.obj['context']['traits'] = payload.obj['context']['traits'] || {};
+                for (const [key, value] of Object.entries(window.contextTraits)) {
+                  payload.obj['context']['traits'][key] = value;
+                }
+
+                if (getCookieIsFunction) {
+                    const cookies = {
+                        'epik': '_epik',
+                        'ttclid': 'ttclid',
+                        '_ttp': '_ttp',
+                        'gclid': 'gclid',
+                    };
+
+                    for (const [traitKey, cookieName] of Object.entries(cookies)) {
+                        const value = getCookie(cookieName);
+
+                        if (value) {
+                            payload.obj['context']['traits'][traitKey] = value;
+                        }
+                    }
+                }
+
+
+                if (!payload.obj['userId']) {
+                  payload.obj['userId'] = payload.obj[namespace]['loggedUserUUID']
+                }
+
+                if (payload.obj.type !== 'identify') {
+                  payload.obj[namespace]['non_interaction'] = !!parseInt(payload.obj[namespace]['nonInteraction'])
+                }
+
+                                
+                // override context variables if exists in window.trackingContext is defined and updated
+                if (typeof window.trackingContext === 'object') {
+                    const overrideObjectProperties = (object, newObjectValues) => {
+                      for (const [key, value] of Object.entries(newObjectValues)) {
+                        if (typeof value === 'object' && typeof object[key] === 'object') {
+                          overrideObjectProperties(object[key], value);
+                        } else {
+                          object[key] = value;
+                        }
+                      }
+                      return object;
+                    };
+
+                    payload.obj = overrideObjectProperties(payload.obj, window.trackingContext);
+                }
+
+                if (payload.obj.type !== 'identify') {
+                    payload.obj[namespace] = standardizePropertyNames(payload.obj[namespace])
+                }
+
+                next(payload);
+            });
+
+                                        var integrationsConfig = {
+                    All: analyticsGroupOpt,
+                    'Segment.io': true,
+                    'Google Analytics 4': analyticsGroupOpt,
+                    'Facebook Conversions API (Actions)': targetedAdsOpt
+                };
+                        window.analytics.load("ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0", { integrations: integrationsConfig });
+                        window.analytics.page(null, pageProperties);
+                        const experiments = (window.pageGlobals && window.pageGlobals.experiments) ? window.pageGlobals.experiments : {};
+            Object.keys(experiments).forEach(exp => {
+                trackExperimentViewed(
+                    experiments[exp].experimentId,
+                    window.userGlobals ? window.userGlobals[experiments[exp].bucketingType] : null,
+                    experiments[exp].variantId
+                )
+            })
+        })();
+    };
+    var standardizePropertyNames = function (properties) {
+        let origKey, value
+        if (properties instanceof Array) {
+            for (origKey in properties) {
+                value = properties[origKey]
+                if (typeof value === 'object') {
+                    value = standardizePropertyNames(value)
+                }
+                properties[origKey] = value
+            }
+        } else {
+            for (origKey in properties) {
+                if (properties.hasOwnProperty(origKey)) {
+                    let snakeCaseKey = origKey
+                        .trim()
+                        .replace(/-/g, '_')
+                        .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+                        .replace(/([a-z])([A-Z])/g, '$1_$2')
+                        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+                        .replace(/ /g, '_')
+                        .toLowerCase()
+                        .substring(0, 100)
+
+                    if (isPropertyNameSnakeCase(origKey) && origKey !== snakeCaseKey) {
+                        delete properties[origKey]
+                    }
+
+                    properties[snakeCaseKey] = properties[origKey]
+                }
+            }
+        }
+        return properties
+    };
+    var isPropertyNameSnakeCase = function (propertyName) {
+        const standardFormatRegex = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+        return standardFormatRegex.test(propertyName);
+    };
+        document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+        segmentScript();
+    });
+                if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+            segmentScript();
+        }
+    }();
+</script>
+
+
+<script>
+                window.reducedUrl = '/catalog/list';
+    
+        
+            window.layerRedirect = 'a%3A2%3A%7Bs%3A7%3A%22reduced%22%3Bs%3A13%3A%22%2Fcatalog%2Flist%22%3Bs%3A10%3A%22ID_PROJECT%22%3Bi%3A1%3B%7D'
+    
+    
+    window.isCustomDomainMode = false;
+
+</script>
+
+<div class="dnone">
+                <script>
+                gtag('event', 'page_view', {"CATALOG_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1,"send_to":"adwords","user_id":"e78903"});
+                
+            </script>              <script>
+                  var facebookScript = function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.defer=1;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)};
+                  
+                  var toExecuteAfterFbInit = function () {                  
+                      var hasGlobals = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.facebook
+                      var globalFacebook = hasGlobals ? parent.pageGlobals.common.remarketing.facebook : {};
+                      var isLoaded = globalFacebook.isLoaded === true;
+                      if (!isLoaded) {
+                        parent.fbq('init', '1434721056835089', {}, {}); 
+                        globalFacebook.isLoaded = true;
+                      }
+                      
+                      parent.fbq('track', 'PageView', {"CATALOG_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1}, {eventID: 'pageview_' + window.userGlobals.gp_anon_id + '_' + '4c39aa12-f7b2-4506-bf91-829e5d078157'}); parent.fbq('dataProcessingOptions', ['LDU'], 0, 0); 
+                  }
+                  
+                  document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+                      facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+                      toExecuteAfterFbInit ()
+                  });
+
+                  if (parent.isCookieGroupAllowed(parent.CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+                      facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+                      toExecuteAfterFbInit ()                      
+                  }
+            </script>             <script>
+                var pinterestScript = function() {
+                    !function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(
+                        Array.prototype.slice.call(arguments))};var
+                        n=window.pintrk;n.queue=[],n.version='3.0';var
+                        t=document.createElement('script');t.defer=1,t.src=e;var
+                        r=document.getElementsByTagName('script')[0];r.parentNode.insertBefore(t,r)}}('https://s.pinimg.com/ct/core.js');
+
+                    var hasGlobalsPinterest = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.pinterest;
+                    var globalPinterest = hasGlobalsPinterest ? parent.pageGlobals.common.remarketing.pinterest : {};
+                    var isLoaded = globalPinterest.isLoaded === true;
+                    
+                    if (!isLoaded) {
+                        parent.pintrk('load', 2613978159206);
+                        globalPinterest.isLoaded = true;
+                    }
+                    
+                      var isTracked = globalPinterest.isTracked === true;
+                      if (!isTracked) {
+                        globalPinterest.isTracked = true;
+                        parent.pintrk('page');
+                        parent.pintrk('track', 'custom', {"CATALOG_NAV":"1","LOGGED":"0","EMPRESA":"1","EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":"1","send_to":"adwords"});
+                        
+                      }
+                }
+
+                /* Listener of the OneTrust callback when user accepts the cookies */
+                document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+                    pinterestScript();
+                });
+                /* Wrap of the Analytics script that checks the consent of the user and the default country configuration */
+                if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+                    pinterestScript();
+                }
+            </script>             <script>
+                var executeBingScript = function () {
+                  return (function(w,d,t,r,u) {
+                    var f,n,i;
+                    w[u] = w[u]||[], f = function() {
+                      var o = {ti: "355036992", enableAutoSpaTracking: true};
+                      o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad")
+                    },
+                    n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function() {
+                      var s = this.readyState;
+                      s&&s !== "loaded"&&s !== "complete" || (f(), n.onload = n. onreadystatechange=null)
+                    },
+                    i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n,i)
+                  }) (window, document, "script", "//bat.bing.com/bat.js", "uetq");
+                }
+                
+                var pushBingScript = function () {
+                  window.uetq = window.uetq || [];
+                  window.uetq.push ('event', '', {});
+                }
+
+                document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+                  executeBingScript();
+                  pushBingScript();
+                });
+
+                if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+                  executeBingScript();
+                  pushBingScript();
+                }
+            </script> </div>
+
+
+    
+        <script type="text/javascript" src="https://cdn1.bodas.net/assets/js/newRelicRum.js?siteVersion=symfnw-ES171-1-20241219-010_www_m_" async></script>
+    <script>
+      window.addEventListener('newRelicScriptLoaded', function() {
+                  document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+          newRelicScript("307408989");
+        });
+                  if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+          newRelicScript("307408989");
+        }
+      });
+    </script>
+
+    
+    
+    
+                <script type="application/ld+json">
+              {"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListEleme

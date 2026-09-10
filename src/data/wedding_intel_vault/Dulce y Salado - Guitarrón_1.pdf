@@ -1,0 +1,332 @@
+                       <th className="py-4">Fecha</th>
+                                        <th className="py-4">Código</th>
+                                        <th className="py-4">Venta</th>
+                                        <th className="py-4 text-ear-gold">Comisión</th>
+                                        <th className="py-4 text-right">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-white/5">
+                                    {referrals.map((ref) => (
+                                        <tr key={ref.id} className="hover:bg-white/5 transition-colors group">
+                                            <td className="py-4 text-gray-400">{new Date(ref.createdAt).toLocaleDateString()}</td>
+                                            <td className="py-4 font-black text-white">{ref.code}</td>
+                                            <td className="py-4">€{ref.orderAmount}</td>
+                                            <td className="py-4 text-ear-gold font-black">€{ref.commissionAmount}</td>
+                                            <td className="py-4 text-right">
+                                                <div className="flex justify-end gap-2">
+                                                    <button
+                                                        onClick={() => handleApproveCommission(ref.id)}
+                                                        className="px-3 py-1.5 bg-green-500/20 text-green-500 border border-green-500/30 rounded-lg text-[8px] font-black hover:bg-green-500/30 transition-all font-mono"
+                                                    >
+                                                        APROBAR
+                                                    </button>
+                                                    <button className="p-2 bg-white/5 hover:bg-red-500/20 text-red-500 rounded-lg transition-all opacity-0 group-hover:opacity-100">
+                                                        <X size={12} />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    {referrals.length === 0 && (
+                                        <tr>
+                                            <td colSpan={5} className="py-20 text-center text-gray-600 italic">No hay comisiones pendientes de auditoría.</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </BentoCard>
+
+                    <BentoCard title="Base de Afiliados Activos" subtitle="Planners, Venues & Partners">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                            {affiliates.map(aff => (
+                                <div key={aff.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex justify-between items-center group hover:border-ear-gold/30 transition-all">
+                                    <div>
+                                        <p className="text-[10px] font-black text-white italic">{aff.code}</p>
+                                        <p className="text-[8px] text-gray-500 font-bold uppercase tracking-widest">{aff.role} • {aff.commissionRate}%</p>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-xs font-black text-ear-gold">€{aff.totalEarned.toFixed(2)}</p>
+                                        <p className="text-[7px] text-gray-600 font-black uppercase">Acumulado</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </BentoCard>
+                </div>
+
+                <div className="space-y-8">
+                    <BentoCard title="Estatuto de Afiliación" subtitle="Protocolo de Seguridad">
+                        <div className="space-y-4 py-4">
+                            <AlertBox type="INFO" msg="Los pagos se procesan los días 1 y 15 de cada mes." />
+                            <div className="p-6 bg-white/5 border border-white/10 rounded-[2rem] space-y-4 font-mono">
+                                <div className="flex justify-between text-[10px]">
+                                    <span className="text-gray-500 uppercase">Total x Pagar</span>
+                                    <span className="text-white font-black italic uppercase">€1,450.00</span>
+                                </div>
+                                <div className="flex justify-between text-[10px]">
+                                    <span className="text-gray-500 uppercase">Referrals Hoy</span>
+                                    <span className="text-ear-gold font-black italic uppercase">12</span>
+                                </div>
+                                <div className="h-px bg-white/5 w-full" />
+                                <button className="w-full py-4 bg-white text-black text-[10px] font-black uppercase tracking-widest rounded-2xl hover:bg-ear-gold transition-all">
+                                    Lanzar Payouts Batch
+                                </button>
+                            </div>
+                        </div>
+                    </BentoCard>
+
+                    <BentoCard title="Tracking de Terceros" subtitle="EAR como Afiliado">
+                        <div className="space-y-4 py-4">
+                            <div className="p-4 bg-blue-500/5 border border-blue-500/20 rounded-2xl">
+                                <p className="text-[10px] font-black text-blue-400 uppercase mb-2">Comisiones por Cobrar:</p>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between text-[9px]">
+                                        <span className="text-gray-400">Floristería "El Ramo"</span>
+                                        <span className="text-white">€45.00</span>
+                                    </div>
+                                    <div className="flex justify-between text-[9px]">
+                                        <span className="text-gray-400">DJ Externo (Partner)</span>
+                                        <span className="text-white">€120.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </BentoCard>
+                </div>
+            </div>
+        </div>
+    );
+};
+// --- NEW CRO & GROWTH PANEL ---
+const CROPanel = () => {
+    const [events, setEvents] = useState<any[]>([]);
+    const [feedback, setFeedback] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (!db) return;
+
+        // 1. Snapshot de Eventos Recientes
+        const qEv = query(collection(db, 'user_events'), orderBy('timestamp', 'desc'), limit(50));
+        const unsubscribeEv = onSnapshot(qEv, (snap) => {
+            setEvents(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        });
+
+        // 2. Snapshot de Feedback
+        const qFb = query(collection(db, 'user_feedback'), orderBy('timestamp', 'desc'), limit(10));
+        const unsubscribeFb = onSnapshot(qFb, (snap) => {
+            setFeedback(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        });
+
+        return () => {
+            unsubscribeEv();
+            unsubscribeFb();
+        };
+    }, []);
+
+    // Cálculo simplificado de Funnel VIMUME
+    const vimumeFunnel = {
+        views: events.filter(e => e.path === '/vimume').length || 1,
+        checkout: events.filter(e => e.type === 'checkout_start' && e.metadata?.itemCount > 0).length,
+        paid: events.filter(e => e.type === 'order_complete').length
+    };
+
+    return (
+        <div className="space-y-10">
+            <div className="flex justify-between items-end border-b border-white/5 pb-10">
+                <div>
+                    <h3 className="text-4xl font-display font-black uppercase italic tracking-tighter text-white">
+                        GROWTH <span className="text-ear-gold">& CRO</span>
+                    </h3>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.4em] mt-2">
+                        Optimización de Embudos, A/B Testing & Feedback Neural
+                    </p>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+                <div className="xl:col-span-2 space-y-8">
+                    {/* VISUALIZACIÓN DE EMBUDOS */}
+                    <BentoCard title="Embudo de Conversión Crítico" subtitle="VIMUME Social Impact">
+                        <div className="grid grid-cols-3 gap-4 mt-8 relative">
+                            {[
+                                { label: 'Visitas VIMUME', value: vimumeFunnel.views, color: 'bg-white/10' },
+                                { label: 'Inicia Checkout', value: vimumeFunnel.checkout, color: 'bg-ear-gold/20' },
+                                { label: 'Orden Pagada', value: vimumeFunnel.paid, color: 'bg-green-500/20' }
+                            ].map((step, i) => (
+                                <div key={i} className={`p-6 rounded-3xl ${step.color} border border-white/5 flex flex-col items-center justify-center text-center group`}>
+                                    <p className="text-2xl font-black text-white italic">{step.value}</p>
+                                    <p className="text-[8px] font-black uppercase text-gray-500 tracking-widest mt-2">{step.label}</p>
+                                    {i < 2 && (
+                                        <div className="absolute top-1/2 -right-4 -translate-y-1/2 z-20 hidden md:block">
+                                            <ArrowRight size={16} className="text-gray-700" />
+                                        </div>
+                                    )}
+                                    <div className="mt-4 w-full bg-white/5 h-1 rounded-full overflow-hidden">
+                                        <div className="h-full bg-ear-gold" style={{ width: `${(step.value / vimumeFunnel.views) * 100}%` }} />
+                                    </div>
+                                    <p className="text-[7px] font-bold text-gray-600 mt-2">
+                                        {((step.value / (i === 0 ? step.value : [vimumeFunnel.views, vimumeFunnel.checkout][i - 1])) * 100).toFixed(1)}% Retención
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </BentoCard>
+
+                    {/* A/B TESTS EN CURSO */}
+                    <BentoCard title="Performance A/B Testing" subtitle="Variables Activas en Producción">
+                        <div className="space-y-4 mt-6">
+                            {[
+                                { name: 'Color botón CTA Landing', status: 'LIVE', leader: 'VARIANTE B (+12%)', stats: 'Confidence 94%' },
+                                { name: 'Texto Hero VIMUME', status: 'LIVE', leader: 'VARIANTE A (Empate)', stats: 'Collecting Data...' }
+                            ].map((test, i) => (
+                                <div key={i} className="p-4 bg-white/5 border border-white/10 rounded-2xl flex justify-between items-center group hover:border-ear-gold/30 transition-all">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                        <div>
+                                            <p className="text-[10px] font-black text-white italic">{test.name}</p>
+                                            <p className="text-[8px] text-gray-600 font-bold uppercase">{test.stats}</p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right">
+                                        <p className="text-[10px] font-black text-ear-gold uppercase">{test.leader}</p>
+                                        <p className="text-[7px] text-gray-500 font-black uppercase">Líder Actual</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </BentoCard>
+
+                    {/* EVENTOS EN TIEMPO REAL */}
+                    <BentoCard title="Behavioral Live Feed" subtitle="Sincronía con Usuarios en Vivo">
+                        <div className="space-y-2 mt-4 font-mono">
+                            {events.slice(0, 10).map((ev) => (
+                                <div key={ev.id} className="flex items-center gap-3 text-[9px] py-1 border-b border-white/5 group">
+                                    <span className="text-gray-600">[{new Date(ev.timestamp).toLocaleTimeString()}]</span>
+                                    <span className={`font-black uppercase ${ev.type.includes('click') ? 'text-blue-400' :
+                                        ev.type.includes('order') ? 'text-green-500' : 'text-gray-400'
+                                        }`}>{ev.type}</span>
+                                    <span className="text-gray-500 truncate max-w-[150px]">{ev.path}</span>
+                                    <span className="text-ear-gold ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                                        {ev.userId !== 'guest' ? 'MASTER' : 'GUEST'}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    </BentoCard>
+                </div>
+
+                <div className="space-y-8">
+                    {/* NPS & FEEDBACK */}
+                    <BentoCard title="Voz del Usuario" subtitle="NPS & Feedback Contextual">
+                        <div className="space-y-6 mt-6">
+                            <div className="p-6 bg-gradient-to-br from-ear-gold/20 to-transparent border border-ear-gold/30 rounded-3xl text-center">
+                                <p className="text-4xl font-black text-white italic">8.8</p>
+                                <p className="text-[8px] font-black uppercase text-ear-gold tracking-widest mt-2">Global NPS Score</p>
+                            </div>
+
+                            <div className="space-y-4">
+                                {feedback.map(fb => (
+                                    <div key={fb.id} className="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-2">
+                                        <div className="flex justify-between items-center">
+                                            <div className="flex gap-1">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <div key={i} className={`w-2 h-2 rounded-full ${i < (fb.score / 2) ? 'bg-ear-gold' : 'bg-white/10'}`} />
+                                                ))}
+                                            </div>
+                                            <span className="text-[8px] font-black text-gray-600 uppercase italic">Hace {Math.floor((Date.now() - new Date(fb.timestamp).getTime()) / 60000)}m</span>
+                                        </div>
+                                        <p className="text-[10px] text-gray-300 italic">"{fb.comment || 'Sin comentario.'}"</p>
+                                        <p className="text-[7px] text-gray-600 font-bold uppercase tracking-widest">{fb.context}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </BentoCard>
+
+                    {/* AI RECOMMENDATIONS */}
+                    <BentoCard title="EAR Predictor" subtitle="AI Insights para Optimización">
+                        <div className="space-y-4 mt-6">
+                            <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl border-l-4 border-l-red-500">
+                                <p className="text-[10px] font-black text-red-500 uppercase flex items-center gap-2">
+                                    <AlertCircle size={10} /> Drop-off Crítico
+                                </p>
+                                <p className="text-[11px] text-white font-bold mt-1">El 65% de usuarios abandona en la selección de método de pago Bizum.</p>
+                                <button className="text-[8px] font-black text-red-400 uppercase mt-2 hover:underline">Ver Trazabilidad</button>
+                            </div>
+
+                            <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl border-l-4 border-l-blue-500">
+                                <p className="text-[10px] font-black text-blue-500 uppercase flex items-center gap-2">
+                                    <Zap size={10} /> Oportunidad
+                                </p>
+                                <p className="text-[11px] text-white font-bold mt-1">Los Wedding Planners convierten un 25% mejor si ven el video de Metodología Forense.</p>
+                                <button className="text-[8px] font-black text-blue-400 uppercase mt-2 hover:underline">Personalizar Flujo</button>
+                            </div>
+                        </div>
+                    </BentoCard>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// --- NEW CRM & AUTOMATIONS PANEL ---
+const CRMPanel = () => {
+    const [pendingEmails, setPendingEmails] = useState<any[]>([]);
+    const [abandonedCheckouts, setAbandonedCheckouts] = useState<any[]>([]);
+    const [loyaltyLogs, setLoyaltyLogs] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (!db) return;
+
+        // 1. Snapshot de Cola de Email
+        const qEmails = query(collection(db, 'ear_email_queue'), orderBy('createdAt', 'desc'), limit(10));
+        const unsubscribeEmails = onSnapshot(qEmails, (snap) => {
+            setPendingEmails(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        });
+
+        // 2. Snapshot de Abandonados
+        const qAb = query(collection(db, 'ear_abandoned_checkouts'), where('converted', '==', false), orderBy('createdAt', 'desc'), limit(5));
+        const unsubscribeAb = onSnapshot(qAb, (snap) => {
+            setAbandonedCheckouts(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        });
+
+        // 3. Snapshot de Puntos/Loyalty
+        const qLoyalty = query(collection(db, 'ear_loyalty_logs'), orderBy('timestamp', 'desc'), limit(10));
+        const unsubscribeLoyalty = onSnapshot(qLoyalty, (snap) => {
+            setLoyaltyLogs(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        });
+
+        return () => {
+            unsubscribeEmails();
+            unsubscribeAb();
+            unsubscribeLoyalty();
+        };
+    }, []);
+
+    return (
+        <div className="space-y-10">
+            <div className="flex justify-between items-end border-b border-white/5 pb-10">
+                <div>
+                    <h3 className="text-4xl font-display font-black uppercase italic tracking-tighter text-white">
+                        LIFECYCLE <span className="text-ear-gold">& CRM</span>
+                    </h3>
+                    <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.4em] mt-2">
+                        Automatización de Mensajería, Recuperación & Lealtad
+                    </p>
+                </div>
+                <div className="flex gap-2">
+                    <div className="px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                        <span className="text-[10px] font-black text-green-500 uppercase">Motor Activo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-10">
+                <div className="xl:col-span-2 space-y-8">
+                    {/* EMAIL QUEUE STATUS */}
+                    <BentoCard title="Cola de Email Transaccional" subtitle="Envíos Pendientes y Recientes">
+                        <div className="space-y-4 mt-6">
+                            {pendingEmails.length === 0 ? (
+                                <p className="text-center py-10 text-gray-700

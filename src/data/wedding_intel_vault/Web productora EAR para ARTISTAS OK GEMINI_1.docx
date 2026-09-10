@@ -1,0 +1,279 @@
+              </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper pr0 pb0 pl0">
+    <div class="headings-intro">
+        <h1>Vestidos de Novia de Blumarine </h1>
+                    <p>Blumarine siempre ofrece en sus colecciones nupciales mil opciones sea cual sea tu gusto. Encontrarás faldas que utilizan el microplisado para un look sofisticado con aire vintage, faldas de gasa con una caída natural para novias más informales, volantes fruncidos en escotes para novias románticas... Y si lo que buscar es atreverte con un toque de color, Blumarine es de las firmas que proponen vestidos de novia con pinceladas de color. Encuentra tu estilo y elige tu favorito. ¡No te costará!</p>
+            </div>
+            <div class="app-dress-quiz dressQuiz"></div>
+    </div>
+
+
+<form class="app-dress-filters-form" action="/cat-DressList.php">
+    <input type="hidden" name="type" autocomplete="off" value="1"/>
+            <input type="hidden" name="collection" autocomplete="off" id="collection" value=""/>
+            <input type="hidden" name="designer" autocomplete="off" id="designer" value="269"/>
+            <input type="hidden" name="silhouette" autocomplete="off" id="silhouette" value=""/>
+            <input type="hidden" name="neckline" autocomplete="off" id="neckline" value=""/>
+            <input type="hidden" name="suitStyle" autocomplete="off" id="suitStyle" value=""/>
+            <input type="hidden" name="length" autocomplete="off" id="length" value=""/>
+            <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value=""/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-novias">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Blumarine                                             </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="293552" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-30--v293552">
+                    <a href="https://www.bodas.net/vestidos-novias/blumarine/b&b-30--v293552">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/blumarine/b&b-30--mfvr524834.jpg"   alt="B&amp;B 30, 269"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Blumarine , 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-30--v293552"
+                        >
+                            Blumarine  2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>B&B 30</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Bellantuono and Blumarine (Sìsposa Italia)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="293532" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-42--v293532">
+                    <a href="https://www.bodas.net/vestidos-novias/blumarine/b&b-42--v293532">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/blumarine/b&b-42--mfvr524754.jpg"   alt="B&amp;B 42, 269"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Blumarine , 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-42--v293532"
+                        >
+                            Blumarine  2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>B&B 42</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Otros                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Bellantuono and Blumarine (Sìsposa Italia)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="293530" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-46--v293530">
+                    <a href="https://www.bodas.net/vestidos-novias/blumarine/b&b-46--v293530">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/blumarine/b&b-46--mfvr524748.jpg"   alt="B&amp;B 46, 269"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Blumarine , 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-46--v293530"
+                        >
+                            Blumarine  2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>B&B 46</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Bellantuono and Blumarine (Sìsposa Italia)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="293548" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-05--v293548">
+                    <a href="https://www.bodas.net/vestidos-novias/blumarine/b&b-05--v293548">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/blumarine/b&b-05--mfvr524820.jpg"   alt="B&amp;B 05, 269"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Blumarine , 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-05--v293548"
+                        >
+                            Blumarine  2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>B&B 05</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Bellantuono and Blumarine (Sìsposa Italia)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="293546" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-08--v293546">
+                    <a href="https://www.bodas.net/vestidos-novias/blumarine/b&b-08--v293546">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/blumarine/b&b-08--mfvr524812.jpg"   alt="B&amp;B 08, 269"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Blumarine , 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-08--v293546"
+                        >
+                            Blumarine  2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>B&B 08</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte En A,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Bellantuono and Blumarine (Sìsposa Italia)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="293544" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-12--v293544">
+                    <a href="https://www.bodas.net/vestidos-novias/blumarine/b&b-12--v293544">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/blumarine/b&b-12--mfvr524802.jpg"   alt="B&amp;B 12, 269"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Blumarine , 2022"
+                                data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-12--v293544"
+                        >
+                            Blumarine  2022</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>B&B 12</span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Recto,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                        <br />
+                                <span class="mb0 small color-grey">Colección Bellantuono and Blumarine (Sìsposa Italia)</span>
+                                                    </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="293536" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/blumarine/b&b-35--v293536">
+                    <a href="https://www.bodas.net/vestidos-novias/blumarine/b&b-35--v293536">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/blumarine/b&b-35--mfvr524768.jpg"   alt="B&amp;B 35, 269"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-large-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Blumarine , 2022"
+    

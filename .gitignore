@@ -60,3 +60,4 @@ scripts/reports/*.json
 !scripts/reports/vampire_massive_report.json
 !scripts/reports/b2g_tender_hunter_report.json
 !scripts/reports/vampire_swarm_master_telemetry.json
+.vercel

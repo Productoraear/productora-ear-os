@@ -1,0 +1,218 @@
+          <input type="hidden" name="sleeves" autocomplete="off" id="sleeves" value=""/>
+            <input type="hidden" name="category" autocomplete="off" id="category" value=""/>
+            <input type="hidden" name="year" autocomplete="off" id="year" value=""/>
+            <input type="hidden" name="complementType" autocomplete="off" id="complementType" value=""/>
+            <input type="hidden" name="fabric" autocomplete="off" id="fabric" value=""/>
+            <input type="hidden" name="stone" autocomplete="off" id="stone" value=""/>
+            <input type="hidden" name="stoneShape" autocomplete="off" id="stoneShape" value=""/>
+            <input type="hidden" name="ringStyle" autocomplete="off" id="ringStyle" value=""/>
+            <input type="hidden" name="metal" autocomplete="off" id="metal" value=""/>
+            <input type="hidden" name="color" autocomplete="off" id="color" value=""/>
+            <input type="hidden" name="style" autocomplete="off" id="style" value=""/>
+            <input type="hidden" name="season" autocomplete="off" id="season" value=""/>
+            <input type="hidden" name="price" autocomplete="off" id="price" value=""/>
+            <input type="hidden" name="waist" autocomplete="off" id="waist" value=""/>
+            <input type="hidden" name="accent" autocomplete="off" id="accent" value=""/>
+    </form>
+
+<div class="wrapper">
+        <div class="pure-g">
+        <div class="pure-u-2-8">
+            <div class="pure-s dress-filters">
+            <div class="pure-g border-top pt20">
+            <div class="pure-u-1-2">
+                <p class="dress-filters-search-title mb0">Tu búsqueda</p>
+            </div>
+
+            <div class="pure-u-1-2 text-right">
+                <span class="app-link dress-filters-reset" data-href="https://www.bodas.net/vestidos-novias">Borrar todo</span>
+            </div>
+        </div>
+
+        <ul class="clearfix mt10 pb20 border-bottom">
+                            <li class="app-dress-filters-change dress-tags-filter"
+                    data-field="designer"
+                    data-value="0">
+                    <span>
+                                                    Badgley Mischka                                            </span>
+                </li>
+                    </ul>
+        <div class="app-dresses-load-filters"></div>
+    <i class="svgIcon svgIcon__angleDown dnone"  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleDown"></use>
+                    </svg>
+                </i></div>
+        </div>
+        <div class="pure-u-6-8">
+            <div class="dress-list pure-g-r row mb20">
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="340072" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/aria--v340072">
+                    <a href="https://www.bodas.net/vestidos-novias/badgley-mischka/aria--v340072">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/badgley-mischka/aria--mfvr714100.jpg"   alt="ARIA , 503"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Badgley Mischka, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/aria--v340072"
+                        >
+                            Badgley Mischka 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ARIA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="340068" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/ashlyn--v340068">
+                    <a href="https://www.bodas.net/vestidos-novias/badgley-mischka/ashlyn--v340068">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/badgley-mischka/ashlyn--mfvr714086.jpg"   alt="ASHLYN  , 503"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Badgley Mischka, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/ashlyn--v340068"
+                        >
+                            Badgley Mischka 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ASHLYN  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Corazón                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="340084" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/alejandra--v340084">
+                    <a href="https://www.bodas.net/vestidos-novias/badgley-mischka/alejandra--v340084">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/badgley-mischka/alejandra--mfvr714136.jpg"   alt="ALEJANDRA , 503"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Badgley Mischka, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/alejandra--v340084"
+                        >
+                            Badgley Mischka 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ALEJANDRA </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Princesa,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="340090" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/adalina--v340090">
+                    <a href="https://www.bodas.net/vestidos-novias/badgley-mischka/adalina--v340090">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/badgley-mischka/adalina--mfvr714152.jpg"   alt="ADALINA  , 503"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Badgley Mischka, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/adalina--v340090"
+                        >
+                            Badgley Mischka 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ADALINA  </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote Hombros caídos                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="340088" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/adele--v340088">
+                    <a href="https://www.bodas.net/vestidos-novias/badgley-mischka/adele--v340088">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/badgley-mischka/adele--mfvr714146.jpg"   alt="ADELE , 503"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Badgley Mischka, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/adele--v340088"
+                        >
+                            Badgley Mischka 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                        <span>ADELE </span>
+                    </div>
+                                            <div class="tags-item">
+                                                            <span class="color-grey">
+                                    Corte Sirena,                                </span>
+                                                            <span class="color-grey">
+                                    Escote En V                                </span>
+                                                                                </div>
+                                    </figcaption>
+            </div>
+        </div>
+            <div class="pure-u-1-4">
+            <div class="dress-item animation">
+                
+                                                    <button class="btn-fav btn-fav--transparent app-btn-fav" data-id="340078" data-z="2"></button>
+                                <div class="frame-animation app-link" data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/anakara--v340078">
+                    <a href="https://www.bodas.net/vestidos-novias/badgley-mischka/anakara--v340078">
+                            <img src="https://cdn0.bodas.net/cat/vestidos-novias/badgley-mischka/anakara--mfvr714118.jpg"   alt="ANAKARA , 503"  width="210" height="294"   >
+                    </a>
+                </div>
+                <figcaption class="text-center dress-small-box-effect">
+                    <div class="title-item">
+                                                <p
+                                class="app-link"
+                                title="Badgley Mischka, 2023"
+                                data-href="https://www.bodas.net/vestidos-novias/badgley-mischka/anakara--v340078"
+                        >
+                            Badgley Mischka 2023</p>
+                    </div>
+                    <div class="subtitle-item">
+                    

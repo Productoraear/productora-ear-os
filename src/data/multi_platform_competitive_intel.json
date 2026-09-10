@@ -1,0 +1,232 @@
+{
+  "timestamp": "2026-09-09T19:28:57.076Z",
+  "platforms": {
+    "hola_bodas": {
+      "platform": "Hola Bodas",
+      "url": "https://www.tubodahola.com/",
+      "title": "Guía de Bodas - Tu Boda ¡HOLA!",
+      "menuOrCategories": [
+        {
+          "text": "LOGIN",
+          "href": ""
+        },
+        {
+          "text": "ACCEDE",
+          "href": "https://www.tubodahola.com/#"
+        },
+        {
+          "text": "REGÍSTRATE",
+          "href": "https://www.tubodahola.com/#"
+        },
+        {
+          "text": "BANQUETE",
+          "href": "https://www.tubodahola.com/#"
+        },
+        {
+          "text": "Fincas",
+          "href": "https://www.tubodahola.com/fincas-para-bodas/"
+        },
+        {
+          "text": "Hoteles",
+          "href": "https://www.tubodahola.com/hoteles-bodas/"
+        },
+        {
+          "text": "Cortijos",
+          "href": "https://www.tubodahola.com/cortijos-para-bodas/"
+        },
+        {
+          "text": "Bodegas",
+          "href": "https://www.tubodahola.com/bodegas-para-bodas/"
+        },
+        {
+          "text": "Espacios singulares",
+          "href": "https://www.tubodahola.com/espacios-singulares/"
+        },
+        {
+          "text": "Pazos",
+          "href": "https://www.tubodahola.com/pazos-para-bodas/"
+        },
+        {
+          "text": "Restaurantes",
+          "href": "https://www.tubodahola.com/restaurantes-para-bodas/"
+        },
+        {
+          "text": "Salones",
+          "href": "https://www.tubodahola.com/salones-de-boda/"
+        },
+        {
+          "text": "Haciendas",
+          "href": "https://www.tubodahola.com/haciendas-para-bodas/"
+        },
+        {
+          "text": "Masías",
+          "href": "https://www.tubodahola.com/masias-para-bodas/"
+        },
+        {
+          "text": "Catering",
+          "href": "https://www.tubodahola.com/catering-para-bodas/"
+        },
+        {
+          "text": "NOVIAS",
+          "href": "https://www.tubodahola.com/#"
+        },
+        {
+          "text": "Talleres de novia",
+          "href": "https://www.tubodahola.com/talleres-de-novia/"
+        },
+        {
+          "text": "Vestidos de novia",
+          "href": "https://www.tubodahola.com/vestidos-de-novia/"
+        },
+        {
+          "text": "Vestidos de arras",
+          "href": "https://www.tubodahola.com/vestidos-de-arras/"
+        },
+        {
+          "text": "Belleza novias",
+          "href": "https://www.tubodahola.com/belleza-novias/"
+        },
+        {
+          "text": "Complementos de novias",
+          "href": "https://www.tubodahola.com/complementos-novia/"
+        },
+        {
+          "text": "Joyas para bodas",
+          "href": "https://www.tubodahola.com/joyas-boda/"
+        },
+        {
+          "text": "Vestidos de madrina",
+          "href": "https://www.tubodahola.com/vestidos-de-madrinas/"
+        },
+        {
+          "text": "Vestidos de invitadas",
+          "href": "https://www.tubodahola.com/vestidos-invitadas/"
+        },
+        {
+          "text": "Maquillaje y peluquería",
+          "href": "https://www.tubodahola.com/maquillaje-peluqueria/"
+        },
+        {
+          "text": "Tratamientos de belleza",
+          "href": "https://www.tubodahola.com/tratamientos-belleza/"
+        },
+        {
+          "text": "NOVIOS",
+          "href": "https://www.tubodahola.com/#"
+        },
+        {
+          "text": "Trajes de novio",
+          "href": "https://www.tubodahola.com/trajes-de-novio/"
+        },
+        {
+          "text": "Alquiler de trajes de etiqueta",
+          "href": "https://www.tubodahola.com/alquiler-de-trajes/"
+        },
+        {
+          "text": "PROVEEDORES",
+          "href": "https://www.tubodahola.com/#"
+        },
+        {
+          "text": "Fotógrafos",
+          "href": "https://www.tubodahola.com/fotografos-de-bodas/"
+        },
+        {
+          "text": "Florísterias",
+          "href": "https://www.tubodahola.com/flores-bodas/"
+        },
+        {
+          "text": "Decoración",
+          "href": "https://www.tubodahola.com/decoracion-bodas/"
+        },
+        {
+          "text": "Detalles de boda",
+          "href": "https://www.tubodahola.com/detalles-de-boda/"
+        },
+        {
+          "text": "Carpas para boda",
+          "href": "https://www.tubodahola.com/carpas-para-bodas/"
+        },
+        {
+          "text": "Animación",
+          "href": "https://www.tubodahola.com/animacion-bodas/"
+        },
+        {
+          "text": "Música para bodas",
+          "href": "https://www.tubodahola.com/musica-para-bodas/"
+        },
+        {
+          "text": "Organización de bodas",
+          "href": "https://www.tubodahola.com/organizar-boda/"
+        },
+        {
+          "text": "Invitaciones de boda",
+          "href": "https://www.tubodahola.com/invitaciones-de-boda/"
+        },
+        {
+          "text": "Viajes de novios",
+          "href": "https://www.tubodahola.com/viajes-de-novios/"
+        },
+        {
+          "text": "Coches de Boda",
+          "href": "https://www.tubodahola.com/coches-boda/"
+        },
+        {
+          "text": "VESTIDOS",
+          "href": "https://www.tubodahola.com/vestidos-de-novia/"
+        },
+        {
+          "text": "CONDICIONES LEGALES",
+          "href": "https://www.hola.com/aviso-legal/"
+        },
+        {
+          "text": "POLÍTICA DE PRIVACIDAD",
+          "href": "https://www.hola.com/politica-de-privacidad/"
+        },
+        {
+          "text": "CONTACTAR",
+          "href": "https://www.tubodahola.com/informacion/contacto"
+        },
+        {
+          "text": "POLÍTICA DE COOKIES",
+          "href": "https://www.hola.com/contacto/cookies/"
+        },
+        {
+          "text": "¿NECESITAS AYUDA?",
+          "href": "https://www.tubodahola.com/informacion/preguntas-frecuentes-bodas"
+        },
+        {
+          "text": "¿QUIÉNES SOMOS?",
+          "href": "https://www.tubodahola.com/informacion/servicios-bodas"
+        },
+        {
+          "text": "FINCAS",
+          "href": "https://www.tubodahola.com/fincas-para-bodas/"
+        },
+        {
+          "text": "HOTELES",
+          "href": "https://www.tubodahola.com/hoteles-bodas/"
+        }
+      ],
+      "mainHeadings": [
+        "La mejor selección de profesionales para tu boda",
+        "Nuestros imprescindibles",
+        "Novias Virales",
+        "DESCUBRE POR QUÉ NOS HAN CONQUISTADO",
+        "Vestidos de novia",
+        "Ideas ¡HOLA! Novias",
+        "Organización de Bodas"
+      ],
+      "bodySample": "LOGIN\nACCEDE\no\nREGÍSTRATE\nBANQUETE\nFincas\nHoteles\nCortijos\nBodegas\nEspacios singulares\nPazos\nRestaurantes\nSalones\nHaciendas\nMasías\nCatering\nNOVIAS\nTalleres de novia\nVestidos de novia\nVestidos de arras\nBelleza novias\nComplementos de novias\nJoyas para bodas\nVestidos de madrina\nVestidos de invitadas\nMaquillaje y peluquería\nTratamientos de belleza\nNOVIOS\nTrajes de novio\nAlquiler de trajes de etiqueta\nPROVEEDORES\nFotógrafos\nFlorísterias\nDecoración\nDetalles de boda\nCarpas para boda\nAnimación\nMúsica para bodas\nOrganización de bodas\nInvitaciones de boda\nViajes de novios\nCoches de Boda\nVESTIDOS\nCONDICIONES LEGALES\nPOLÍTICA DE PRIVACIDAD\nCONTACTAR\nPOLÍTICA DE COOKIES\n¿NECESITAS AYUDA?\n¿QUIÉNES SOMOS?\nBANQUETE\n\nBANQUETE\n\nFINCAS\nHOTELES\nCORTIJOS\nBODEGAS\nESPACIOS SINGULARES\nPAZOS\nRESTAURANTES\nSALONES\nHACIENDAS\nMASÍAS\nCATERING\nPROVEEDORES\n\nPROVEEDORES\n\nFOTÓGRAFOS\nFLORÍSTERIAS\nDECORACIÓN\nDETALLES DE BODA\nCARPAS PARA BODA\nANIMACIÓN\nMÚSICA PARA BODAS\nORGANIZACIÓN DE BODAS\nINVITACIONES DE BODA\nVIAJES DE NOVIOS\nCOCHES DE BODA\nNOVIAS\n\nNOVIAS\n\nTALLERES DE NOVIA\nVESTIDOS DE NOVIA\nVESTIDOS DE ARRAS\nBELLEZA NOVIAS\nCOMPLEMENTOS DE NOVIAS\nJOYAS PARA BODAS\nVESTIDOS DE MADRINA\nVESTIDOS DE INVITADAS\nMAQUILLAJE Y PELUQUERÍA\nTRATAMIENTOS DE BELLEZA\nNOVIOS\n\nNOVIOS\n\nTRAJES DE NOVIO\nALQUILER DE TRAJES DE ETIQUETA\nBODAS\nVESTIDOS\nLa mejor selección de profesionales para tu boda\n\n@meriurba por Click10\n\nBanquete\nNovias\nFotógrafos\nLuna de miel\nFlores\nFincas\nCatering\nNuestros imprescindibles\nCERCA DE...\n \nCERCA DE...\nA Coruña\nÁlava\nAlbacete\nAlicante\nAlmeria\nAsturias\nÁvila\nBadajoz\nBarcelona\nBurgos\nCáceres\nCádiz\nCantabria\nCastellón\nCiudad Real\nCórdoba\nCuenca\nGirona\nGranada\nGuadalajara\nGuipúzcoa\nHuelva\nHuesca\nIlles Balears\nJaén\nLa Rioja\nLas Palmas\nLeón\nLleida\nLugo\nMadrid\nMálaga\nMelilla\nMurcia\nNavarra\nOurense\nPalencia\nPontevedra\nS C de Tenerife\nSalamanca\nSegovia\nSevilla\nSoria\nTarragona\nTeruel\nToledo\nValencia\nValladolid\nVizcaya\nZamora\nZaragoza\nMÁS PROVEEDORES\nNovias Virales\nDESCUBRE POR QUÉ NOS HAN CONQUISTADO\n\nCarmen, una novia sin velo que confió a su hermana la decoración de su boda: \"Fue un auténtico lujo contar con su talento y su apoyo incondicional\"\n\nUna colcha antigua comprada en un mercadillo de Londres y una mantilla de su madre: los secretos del vestido de novia de María para su boda en Jávea\n\nHelena, la novia que decoró su boda con un lienzo de casi 4 metros y 140 sobres pintados a mano por su mejor amiga\n\nLaura, la periodista que inspiró su ramo en 'Gossip Girl', diseñó la papelería y se casó en una bodega de La Rioja Alavesa\n\nMÁS BODAS\nVestidos de novia\nCarolina Herrera\n \nDiseñador\nAmelia Casablanca\nAmsale\nBellauntuono\nBerta Bridal\nCarolina Herrera\nDemetrios\nElie Saab\nFlora\nHigar Novias\nHouse Of St.Patrick\nInes Di Santo\nIsabel Sanchis\nIsabel Zarpardiez\nJesús Peiró\nJustin Alexander\nLela Rose\nLorena Panea\nMarchesa\nMonique Lehuiller\nOlga Maciá\nOscar De La Renta\nPronovias\nPronovias Privée Oasis\nPronovias Marchesa\nReem Acra\nRosa Clará\nRosa Clará Soft\nRosa Clará Couture\nSophie Et Voilá\nThe Atelier\nVera Wang\nVestal\nVictor & Rolf\nYolancris\nYumi Katsura\nZuhair Murad\nIdeas ¡HOLA! Novias\n\nLuisa Bergel, Teresa Urquijo y otras novias de la alta sociedad que llevaron al altar la historia de sus familias a través del vestido\n\nIsabel Getty se casa con un vestido de novia corto que nadie esperaba para una heredera multimillonaria\n\nLaura, la periodista que inspiró su ramo en 'Gossip Girl', diseñó la papelería y se casó en una bodega de La Rioja Alavesa\n\nOrganización de Bodas\n\n¿Bodas sin móviles? Los expertos explican por qué cada vez más parejas piden a sus invitados desconectar\n\nLirio del valle, la pequeña flor con significado de buena suerte que eligen las novias de la realeza\n\nAna Lorente, astróloga, sobre las fechas más favorables para casarse: \"Una boda en Luna nueva acompaña la idea de algo que nace y crece\"\n\nAYUDA Y ATENCIÓN AL USUARIO\n\nPregúntanos\nPreguntas frecuentes\nSobre Tu Boda ¡HOLA!\n\nCUIDAMOS TU PRIVACIDAD\n\nAviso Legal\nPolítica de Privacidad\nPolítica de Cookies\n\nPROVEEDORES TU BODA ¡HOLA!\n\nProveedores\nContacto nuevo proveedor\n\nEmpresa Colaboradora Citiservi Europe S.L"
+    },
+    "fander": {
+      "platform": "Fander",
+      "url": "https://fander.es/",
+      "title": "404 Not Found",
+      "menuOrCategories": [],
+      "mainHeadings": [
+        "404 Not Found"
+      ],
+      "bodySample": "404 Not Found"
+    }
+  }
+}

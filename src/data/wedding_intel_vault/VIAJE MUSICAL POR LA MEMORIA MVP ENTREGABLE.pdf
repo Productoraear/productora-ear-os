@@ -1,0 +1,486 @@
+'.module-item').attr('id') + '"]').trigger('click');
+      $('a[href="#' + $review.closest('.tab-pane').attr('id') + '"]').trigger('click');
+      $('a[href="#' + $review.closest('.panel-collapse').attr('id') + '"]').trigger('click');
+      $review.closest('.expand-block').find('.block-expand.btn').trigger('click');
+
+      $([document.documentElement, document.body]).animate({
+        scrollTop: $review.offset().top - 100
+      }, 200);
+    }
+  });
+});
+//--></script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"WebSite","url":"https:\/\/invitaciones.bodas.net\/","name":"Invitaciones Bodas.net","description":"","potentialAction":{"@type":"SearchAction","target":"https:\/\/invitaciones.bodas.net\/index.php?route=product\/search&amp;search={search}","query-input":"required name=search"}}</script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"Organization","url":"https:\/\/invitaciones.bodas.net\/","logo":"https:\/\/invitaciones.bodas.net\/image\/cache\/placeholder-1000x1000.png"}</script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"\/","name":"Inicio"}},{"@type":"ListItem","position":2,"item":{"@id":"https:\/\/invitaciones.bodas.net\/invitaciones-de-boda","name":"Invitaciones de boda"}},{"@type":"ListItem","position":3,"item":{"@id":"https:\/\/invitaciones.bodas.net\/invitaciones-de-boda\/beloved-floral-invitacion-plegable-con-banda-676","name":"Beloved Floral - Invitaci\u00f3n plegable con banda"}}]}</script>
+<script type="application/ld+json">{"@context":"http:\/\/schema.org\/","@type":"Product","name":"Beloved Floral - Invitaci\u00f3n plegable con banda","image":"https:\/\/invitaciones.bodas.net\/image\/cache\/catalog\/product\/34b8481499b2444be70753e4b26f8476_0-1800x1440.png","description":"Elegante invitaci\u00f3n de boda con doble pliegue y banda central, ideal para compartir con los invitados los datos del evento y el cronograma del d\u00eda. Cuenta con grandes peon\u00edas pintadas efecto acuarela en tonos burdeos. El fondo de la invitaci\u00f3n est\u00e1 disponible en blanco y azul navy y se pueden hacar","sku":"","mpn":"","offers":{"@type":"Offer","priceCurrency":"EUR","price":"3.71","itemCondition":"http:\/\/schema.org\/NewCondition","availability":"http:\/\/schema.org\/InStock","seller":{"@type":"Organization","name":"Invitaciones Bodas.net"},"priceValidUntil":"2025-12-23","url":"https:\/\/invitaciones.bodas.net\/invitaciones-de-boda\/beloved-floral-invitacion-plegable-con-banda-676"},"brand":{"@type":"brand","name":"TKWW"}}</script>
+			<script type="text/javascript"><!--
+				$('div[data-option-id="14"] input').click(function(){
+					$('.option-price-label').html('&nbsp;- ' + $(this).siblings('img').data('original-title'));
+				});
+				$( document ).ready(function() {
+					$('img[data-option-id="65" i]').click(function(){
+						$('.product-left img.folie').removeClass("folie_rose");
+						$('.product-left img.folie').removeClass("folie_silber");
+						$('.product-left img.folie').addClass("folie_gold");
+					});
+					$('img[data-option-id="66" i]').click(function(){
+						$('.product-left img.folie').removeClass("folie_rose");
+						$('.product-left img.folie').addClass("folie_silber");
+						$('.product-left img.folie').removeClass("folie_gold");
+					});
+					$('img[data-option-id="67" i]').click(function(){
+						$('.product-left img.folie').addClass("folie_rose");
+						$('.product-left img.folie').removeClass("folie_silber");
+						$('.product-left img.folie').removeClass("folie_gold");
+					});	
+				});
+					
+			//--></script>
+			
+
+				<script type="text/javascript">	
+					$(document).on("click", "input[src-colorbox]", function() {
+						//for non-select options
+						
+						var newImg = $(this).attr('src');
+						var newImgColorBox = $(this).attr('src-colorbox');
+						
+						if(newImg != 'NA')
+						{
+							//poiChangeImage(newImg, newImgColorBox);
+						}
+					return true;
+					});                                  
+					$(document).ready(function()
+					{
+						$("*[src-colorbox]").each(function(){
+							$this = $(this);
+							
+							$src = $this.attr('src');
+							if($src != 'NA')
+							{
+								$('<img/>')[0].src = $src; //preload image
+							}
+							
+							$srcColorbox = $this.attr('src-colorbox');
+							
+							if($srcColorbox != 'NA')
+							{
+								$('<img/>')[0].src = $srcColorbox; //preload image
+							}
+						});
+					});
+																										$(document).ready(function(){
+							$('div[rel="19"] select[name="option[1304]"]').change(function() {	
+								//console.log($(this));						
+								poiChangeSelect($(this));
+							});
+						});
+															function poiChangeSelect(selectObj)
+					{
+						$selectedOption = selectObj.find("option:selected");
+						var newImg = $selectedOption.attr('src');
+						var newImgColorBox = $selectedOption.attr('src-colorbox');
+						if(newImg != 'NA')
+						{				
+							poiChangeImage(newImg, newImgColorBox);
+						}
+						return true;
+					}
+					
+					$poiImageToChange = [];
+					function setImageToChange()
+					{
+						$poiImageToChange = $('#image, #zoom1 img, #ma-zoom1 img, #main-image, div.image a.colorbox-product img, div.image #wrap a img, .zoomPad > img, .product-info .image > img, .product-image img, #zoom_01, .thumbnail > img:first, #gallery_zoom');
+					}
+					setImageToChange();
+					
+					function poiChangeImage(newImageSrc, newImageColorBoxSrc)
+					{
+						if(typeof newImageSrc !== "undefined"){
+
+							if($('img[src="' + newImageSrc.replace('860x670w', '120x120w') + '"]').length == 0 && $('img[src="' + newImageSrc.replace('860x670h', '120x120h') + '"]').length == 0){
+								$('.main-image img').attr('srcSet', newImageSrc);
+							}else{
+							
+								if($('.main-image img').attr('srcSet').includes($('.main-image img').attr('src'))) {
+									var tmpimg = newImageSrc.replace('860x670w', '120x120w').replace('860x670h', '120x120w');
+									if($('img[src="' + tmpimg + '"]').length > 0){
+										$('img[src="' + tmpimg + '"]').click();
+									}else{
+										$('img[src="' + tmpimg.replace('120x120w', '120x120h') + '"]').click();
+									}
+								}else{
+									$('.main-image img').attr('srcSet', newImageSrc);
+								}
+								
+							}
+							
+							
+							if(newImageColorBoxSrc != null)
+							{
+								//OC2 ColorBox
+								if($('a.thumbnail:first').length > 0)
+								{
+									$('a.thumbnail:first').attr('href', newImageColorBoxSrc);
+								}
+							
+								//ElevateZoom
+								if($('.zoomWindow').length > 0)
+								{
+									$('.zoomWindow').css('background-image', 'url("' + newImageColorBoxSrc + '")');
+								}
+								
+								//CloudZoom
+								if($('.mousetrap').length > 0)
+								{
+									$('.mousetrap').on('mouseenter', this, function (event) {
+										$('#cloud-zoom-big').css('background-image', 'url("' + newImageColorBoxSrc + '")');
+									});
+								}
+								
+								//ColorBox
+								if($('.image .colorbox').length > 0)
+								{
+									$('.image .colorbox').attr('href', newImageColorBoxSrc);
+								}
+								
+								//jQueryZoom
+								if($('.zoomWrapperImage > img').length > 0)
+								{
+									$('.zoomWrapperImage > img').attr('src', newImageColorBoxSrc);
+								}
+								
+								//Lightbox
+								if($('a[rel="lightbox[thumb]"]').length > 0)
+								{
+									$('a[rel="lightbox[thumb]"]').attr('href', newImageColorBoxSrc);
+								}
+								
+								//MagicZoom
+								if($('.MagicZoomBigImageCont img').length > 0)
+								{
+									$('.MagicToolboxContainer img').attr('src', newImageSrc);
+									$('.MagicZoomBigImageCont img').attr('src', newImageColorBoxSrc);
+								}
+								
+								//zoomLens
+								if($('.zoomLens img').length > 0)
+								{
+									$('.zoomLens > img').attr('src', newImageColorBoxSrc);
+									$('#image').data('elevateZoom').swaptheimage(newImageColorBoxSrc, newImageColorBoxSrc); 
+								}
+								
+								//zm-viewer 
+								if($('.zm-viewer img').length > 1)
+								{
+									$($('.zm-viewer img')).attr('src', newImageColorBoxSrc);
+								}
+							
+								//MagicZoomPlus
+								if($('a.MagicZoomPlus').length > 0)
+								{
+									$('a.MagicZoomPlus').attr('href', newImageColorBoxSrc);
+									$('.MagicThumb-expanded img').attr('src', newImageColorBoxSrc);
+								}
+								
+								
+								if($('.zoomImg').length > 1)
+								{
+									$($('.zoomImg')).attr('src', newImageColorBoxSrc);
+								}
+							}
+						}
+					}
+					
+					$('.option.option-image img').click(function(){
+						setTimeout(function() {
+							$('.option-image .radio input[type="radio"]:checked').trigger('click').trigger('change');
+						}, 500);
+					});
+					
+					$('.option.option-radio span').click(function(){
+						setTimeout(function() {
+							$('.option-radio .radio input[type="radio"]:checked').trigger('click').trigger('change');
+						}, 500);
+					});
+					
+					$('.option.option-select span').click(function(){
+						setTimeout(function() {
+							$('.option-select select').trigger('click').trigger('change');
+						}, 500);
+					});
+				</script> 
+			
+ 
+                <script type="text/javascript"><!--	
+                    function openEditor(sample = "false"){           
+                        $.ajax({
+                            url: 'index.php?route=checkout/cart/validate',
+                            type: 'post',
+                            data: $(
+                            '#product .button-group-page input[type=\'text\'], #product .button-group-page input[type=\'hidden\'], #product .button-group-page input[type=\'radio\']:checked, #product .button-group-page input[type=\'checkbox\']:checked, #product .button-group-page select, #product .button-group-page textarea, ' +
+                            '#product .product-options input[type=\'text\'], #product .product-options input[type=\'hidden\'], #product .product-options input[type=\'radio\']:checked, #product .product-options input[type=\'checkbox\']:checked, #product .product-options select, #product .product-options textarea, ' +
+                            '#product select[name="recurring_id"]'
+                            ),
+                            dataType: 'json',
+                            beforeSend: function () {
+                                $('.editor_button').button('loading');
+                            },
+                            complete: function () {
+                               
+                            },
+                            success: function (json) {
+                                $('.alert-dismissible, .text-danger').remove();
+                                $('.form-group').removeClass('has-error');
+                               
+                                if (json['error']) {
+                                    $('.editor_button').button('reset');
+                                    if (json['error']['option']) {
+                                    for (i in json['error']['option']) {
+                                        var element = $('#input-option' + i.replace('_', '-'));
+            
+                                        if (element.parent().hasClass('input-group')) {
+                                        element.parent().after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+                                        } else {
+                                        element.after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
+                                        }
+                                    }
+                                    }
+            
+                                    if (json['error']['recurring']) {
+                                    $('select[name=\'recurring_id\']').after('<div class="text-danger">' + json['error']['recurring'] + '</div>');
+                                    }
+            
+                                    // Highlight any found errors
+                                    $('.text-danger').parent().addClass('has-error');
+            
+                                    try {
+                                    $('html, body').animate({ scrollTop: $('.form-group.has-error').offset().top - 50 }, 'slow');
+                                    } catch (e) {
+                                    }
+                                }else{
+                                    var swatch = 0;
+                                    if(typeof $('.swatch-color.active').data('id') !== 'undefined'){
+                                        swatch = $('.swatch-color.active').data('id');
+                                    }
+                                    
+                                    $.ajax({
+                                        url: 'index.php?route=tkww/editor/openEditor&swatch=' + swatch + '&sample=' + sample,
+                                        xhrFields: {
+                                            withCredentials: true
+                                        },
+                                        type: 'post',
+                                        data: $(
+                                                '#product .button-group-page input[type=\'text\'], #product .button-group-page input[type=\'hidden\'], #product .button-group-page input[type=\'radio\']:checked, #product .button-group-page input[type=\'checkbox\']:checked, #product .button-group-page select, #product .button-group-page textarea, ' +
+                                                '#product .product-options input[type=\'text\'], #product .product-options input[type=\'hidden\'], #product .product-options input[type=\'radio\']:checked, #product .product-options input[type=\'checkbox\']:checked, #product .product-options select, #product .product-options textarea, ' +
+                                                '#product select[name="recurring_id"]'
+                                            ),
+                                        dataType: 'json',
+                                        async: true,
+                                        beforeSend: function() {		
+                                        },				
+                                        success: function(json) {
+                                            $('.editor_button').button('reset');
+                                            if(typeof json.editor !== "undefined" && json.editor !== "false"){
+                                                window.location.replace(json.editor);
+                                            }else{
+                                            console.log(json);
+                                                $('.designer-resort').append('<div class="alert alert-danger" style="order: 2"> Error #3 </div>');  
+                                            }        
+                                        },
+                                        error: function(err){   
+                                            $('.designer-resort').append('<div class="alert alert-danger" style="order: 2"> Error #2 </div>');    
+                                            console.log('Error : ');
+                                            console.log(err);
+                                        }	
+                                    });	
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                $('.designer-resort').append('<div class="alert alert-danger" style="order: 2"> Error #1 </div>');
+                            }
+                        });
+                    }
+				//--></script> 
+            
+
+			<!--BOF Product Color Option-->
+			<style>
+			.product-color-options span
+			{
+				display:inline-block;
+				width:12px;
+				height:12px;
+				margin-right:0px;
+				border:2px solid #E7E7E7;
+			}
+
+			.image .product-color-options
+			{
+				display: none;
+			}
+			
+			a.color-option {
+				display:inline-block;
+				width:15px;
+				height:15px;
+				margin: 3px;
+				padding: 0;
+				border:2px solid #E7E7E7;
+				vertical-align: middle;
+				cursor: pointer;
+				box-sizing: content-box !important;
+			}
+			
+			a.color-option.color-active, a.color-option:hover {
+				margin: 0;
+				padding: 3px;
+			}
+			
+			.hidden {
+				display: none !important;
+			}
+			
+			/*Oval style*/
+			a.color-option.pco-style-oval,
+			.product-color-options span.pco-style-oval
+			{
+				border-radius: 9999px;
+			}
+
+			/*Double rectangle style*/
+			a.color-option.pco-style-double-rectangle,
+			.product-color-options span.pco-style-double-rectangle
+			{
+				border: 4px double #E7E7E7;
+			}	
+
+			/*Double oval style*/
+			a.color-option.pco-style-double-oval,
+			.product-color-options span.pco-style-double-oval
+			{
+				border-radius: 9999px;
+				border: 4px double #E7E7E7;
+			}		
+			</style>
+			<script type="text/javascript"><!--
+			$("a.color-option").click(function(event)
+			{
+				$this = $(this);
+				
+				// highlight current color box
+				$this.parent().find('a.color-option').removeClass('color-active');
+				$this.addClass('color-active');
+				
+				$('#' + $this.attr('option-text-id')).html($this.attr('title'));
+				
+				// trigger selection event on hidden select
+				$select = $this.parent().find('select');
+				
+				$select.val($this.attr('optval'));
+				$select.trigger('change');
+				
+				//option redux
+				if(typeof updatePx == 'function') {
+					updatePx();
+				}
+				
+				//option boost
+				if(typeof obUpdate == 'function') {
+					obUpdate($($this.parent().find('select option:selected')), useSwatch);
+				}
+				
+				if(typeof myocLivePriceUpdate == 'function') {
+					myocLivePriceUpdate();
+				}
+				
+				event.preventDefault();
+			});
+			
+			$("a.color-option").parent('.option').find('.hidden select').change(function()
+			{
+				$this = $(this);
+				var optionValueId = $this.val();
+				$colorOption = $('a#color-option-' + optionValueId);
+				if(!$colorOption.hasClass('color-active'))
+					$colorOption.trigger('click');
+			});
+			//--></script> 
+
+               
+
+				<script src="https://kundenservice.herzkarten.de/assets/chat/chat.min.js"></script>
+								
+					<script>
+						$(function() {
+							new ZammadChat({
+								background: '#f76c6f',
+								fontSize: '12px',
+								show: false,
+								chatId: 2							});
+						});
+					</script>
+
+								
+            
+			<!--EOF Product Color Option-->  <div id="bottom" class="bottom top-row">
+            <div class="grid-rows">
+          <div class="grid-row grid-row-bottom-1">
+                <div class="grid-cols">
+                      <div class="grid-col grid-col-bottom-1-1">
+              <div class="grid-items">
+                                  <div class="grid-item grid-item-bottom-1-1-1">
+                    <div class="module module-products module-products-310 module-products-grid carousel-mode">
+  <div class="module-body">
+                      <div class="tab-container">
+        <ul class="nav nav-tabs">
+                      <li class="tab-1 active">
+                              <a href="#products-6769200e4032d-tab-1" data-toggle="tab">Más de esta serie</a>
+                          </li>
+                    </ul>
+        <div class="tab-content">
+                                    <div class="module-item module-item-1 tab-pane active" id="products-6769200e4032d-tab-1">
+                      <div class="swiper" data-items-per-row='{"c0":{"0":{"items":4,"spacing":24},"1024":{"items":3,"spacing":10},"760":{"items":1,"spacing":10}},"c1":{"0":{"items":4,"spacing":24},"760":{"items":1,"spacing":10}},"c2":{"0":{"items":1,"spacing":0}},"sc":{"0":{"items":1,"spacing":0}}}' data-options='{"speed":500,"autoplay":false,"pauseOnHover":true,"loop":false}'>
+        <div class="swiper-container" >
+          <div class="swiper-wrapper product-grid">
+            
+    <div class="product-layout swiper-slide has-extra-button">
+    <div class="product-thumb">
+            <div class="image">
+                <a data-c-product_id="675" href="https://invitaciones.bodas.net/invitaciones-de-boda/beloved-floral-invitacion-de-boda-tarjeta-plegable-vertical-675" class="product-img ">
+          <div>
+                          <img src="https://invitaciones.bodas.net/image/cache/catalog/product/9b2d35be12bbf4fdbea4f926f2653509_0-300x240.png" srcset="https://invitaciones.bodas.net/image/cache/catalog/product/9b2d35be12bbf4fdbea4f926f2653509_0-300x240.png 1x, https://invitaciones.bodas.net/image/cache/catalog/product/9b2d35be12bbf4fdbea4f926f2653509_0-600x480.png 2x"  width="300" height="240" alt="Beloved Floral - Invitación de boda - Tarjeta plegable (vertical)" title="Beloved Floral - Invitación de boda - Tarjeta plegable (vertical)" class="img-responsive img-first "/>
+            
+                      </div>
+        </a>
+
+        
+              </div>
+
+      <div class="caption">
+        
+                  <div class="name"><a href="https://invitaciones.bodas.net/invitaciones-de-boda/beloved-floral-invitacion-de-boda-tarjeta-plegable-vertical-675">Beloved Floral - Invitación de boda - Tarjeta plegable (vertical)</a></div>   
+                    
+        <div class="description">Invitación de boda plegable de inspiración romántica donde resaltan grandes peonías y rosas en tonos vino y rosa empolvado. Disponible en blanco, beig..</div>
+
+                  <div class="price">
+                          <span class="price-normal">1.34€</span>
+                                      <span class="price-tax">incl. IVA , excl. <a class="agree" data-info="8">gastos de envío</a>1.11€</span>
+                      </div>
+                        <div class="pds" style="padding-top: 10px;">
+          <div data-id="0" data-product_id="675" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #892d47;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="1" data-product_id="675" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #966979;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="2" data-product_id="675" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #dfada2;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="3" data-product_id="675" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #efe0d6;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="4" data-product_id="675" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #36546b;border: 1px solid #D9D9D9;border-radius: 8px;"></div><div data-id="5" data-product_id="675" class="swatch-icon" style="margin: 4px;display: inline-block;width: 16px;height: 16px;background: #b5c5a6;border: 1px solid #D9D9D9;border-radius: 8px;"></div> 
+          </div>
+                        <div class="rating no-rating rating-hover">
+            <div class="rating-stars">
+                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                                                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                          </div>
+          </div>
+        
+                <div class="buttons-wrapper">
+          <div class="bu

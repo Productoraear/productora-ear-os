@@ -1,0 +1,476 @@
+components/header/tabs/realweddings_banner@2x.jpg 2x" class="lazyload layoutNavMenuTabArticlesBannersItem__image" alt="Bodas reales"  width="304" height="90"  >
+        <figcaption class="layoutNavMenuTabArticlesBannersItem__content">
+            <a href="https://www.bodas.net/cronicas-boda"
+               title="Bodas reales"
+               class="layoutNavMenuTabArticlesBannersItem__title">Bodas reales</a>
+            <p class="layoutNavMenuTabArticlesBannersItem__description">
+                Cada boda es un mundo y detrás de cada una hay una preciosa historia.            </p>
+        </figcaption>
+    </figure>
+</div>
+                            
+<div class="layoutNavMenuTabArticlesBannersItem app-header-menu-banner app-link"
+     data-href="https://www.bodas.net/luna-de-miel">
+    <figure class="layoutNavMenuTabArticlesBannersItem__figure">
+            <img data-src="https://www.bodas.net/assets/img/components/header/tabs/honeymoons_banner.jpg" data-srcset="https://www.bodas.net/assets/img/components/header/tabs/honeymoons_banner@2x.jpg 2x" class="lazyload layoutNavMenuTabArticlesBannersItem__image" alt="Luna de miel"  width="304" height="90"  >
+        <figcaption class="layoutNavMenuTabArticlesBannersItem__content">
+            <a href="https://www.bodas.net/luna-de-miel"
+               title="Luna de miel"
+               class="layoutNavMenuTabArticlesBannersItem__title">Luna de miel</a>
+            <p class="layoutNavMenuTabArticlesBannersItem__description">
+                Encuentra el destino de ensueño para tu luna de miel.            </p>
+        </figcaption>
+    </figure>
+</div>
+            </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+            <li class="nav-main-item  ">
+                                    <a href="https://invitaciones.bodas.net"
+                class="nav-main-link app-header-tab  app-ua-track-event"
+                 data-track-c='Navigation' data-track-a='a-click' data-track-l='d-desktop+s-header+o-groups_discussion_item+dt-invitations' data-track-v='0' data-track-ni='0'                 data-tab="paper"
+            >
+                Invitaciones            </a>
+                            <div class="app-tabs-container-paper">
+                    
+<div class="layoutNavMenuTab app-header-menu-itemDropdown">
+    <div class="layoutNavMenuTab__layout">
+        <div class="layoutNavMenuTab__header">
+    <i class="svgIcon app-svg-async svgIcon__angleLeftBlood layoutNavMenuTab__icon app-header-menu-item-closeSection"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleLeftBlood.svg" data-svg-lazyload="1"></i>    <a class="layoutNavMenuTab__title" href="https://invitaciones.bodas.net">Invitaciones</a>
+    <i class="svgIcon app-svg-async svgIcon__close layoutNavMenuTab__iconClose app-header-menu-toggle"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/close.svg" data-svg-lazyload="1"></i></div>
+<div class="layoutNavMenuTabInvitation">
+    <div class="layoutNavMenuTabInvitationList">
+        <span class="layoutNavMenuTabInvitation__title">
+            Comprar por categoría        </span>
+        <ul class="layoutNavMenuTabInvitationList__content">
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/invitaciones-de-boda" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Invitaciones de boda"
+                    >
+                        Invitaciones de boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/save-the-date" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Save the date"
+                    >
+                        Save the date                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/libro-de-firmas" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Libro de firmas"
+                    >
+                        Libro de firmas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabInvitationList__item">
+                    <a href="https://invitaciones.bodas.net/tarjetas-de-agradecimiento" class="app-analytics-track-event-click"
+                       data-tracking-section="header_invitations" data-tracking-category="Navigation" data-tracking-category-authed="1"
+                       data-tracking-dt="Tarjetas de agradecimiento"
+                    >
+                        Tarjetas de agradecimiento                    </a>
+                </li>
+                    </ul>
+            </div>
+    </div>
+    </div>
+</div>
+                </div>
+                    </li>
+            <li class="nav-main-item  nav-tabCommunity">
+                                    <a href="https://comunidad.bodas.net/"
+                class="nav-main-link app-header-tab  app-ua-track-event"
+                 data-track-c='Navigation' data-track-a='a-click' data-track-l='d-desktop+s-header+o-groups_discussion_item+dt-community' data-track-v='0' data-track-ni='0'                 data-tab="comunidad"
+            >
+                Comunidad            </a>
+                            <div class="app-tabs-container-comunidad">
+                    
+<div class="layoutNavMenuTab app-header-menu-itemDropdown">
+    <div class="layoutNavMenuTab__layout">
+        
+<div class="layoutNavMenuTab__header">
+    <i class="svgIcon app-svg-async svgIcon__angleLeftBlood layoutNavMenuTab__icon app-header-menu-item-closeSection"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/angleLeftBlood.svg" data-svg-lazyload="1"></i>    <a class="layoutNavMenuTab__title" href="https://comunidad.bodas.net/">
+        Comunidad    </a>
+    <i class="svgIcon app-svg-async svgIcon__close layoutNavMenuTab__iconClose app-header-menu-toggle"   data-svg="https://cdn1.bodas.net/assets/svg/optimized/_common/close.svg" data-svg-lazyload="1"></i></div>
+<div class="layoutNavMenuTabCommunity">
+    <div class="layoutNavMenuTabCommunityList">
+        <a class="layoutNavMenuTabCommunity__title" href="https://comunidad.bodas.net/">
+            Grupos por temática        </a>
+        <ul class="layoutNavMenuTabCommunityList__content">
+            <li class="layoutNavMenuTabCommunityList__item layoutNavMenuTabCommunityList__item--viewAll">
+                <a href="https://comunidad.bodas.net/">Ver todo</a>
+            </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-organizar-una-boda">
+                        Grupo Organizar una boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-moda-nupcial">
+                        Grupo Moda Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-antes-de-la-boda">
+                        Grupo Antes de la boda                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-manualidades-para-bodas">
+                        Grupo Manualidades                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-luna-de-miel">
+                        Grupo Luna de miel                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-net">
+                        Grupo Bodas.net                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-belleza">
+                        Grupo Belleza                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-banquetes">
+                        Grupo Banquetes                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-ceremonia-nupcial">
+                        Grupo Ceremonia Nupcial                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-recien-casados">
+                        Grupo Recién Casad@s                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-futuras-mamas">
+                        Grupo Futuras Mamás                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-bodas-famosas">
+                        Grupo Bodas Famosas                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-viviendo-juntos">
+                        Grupo Vida en pareja                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-sorteo">
+                        Grupo Sorteo                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-soporte">
+                        Grupo Soporte                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos/grupo-juegos-boda">
+                        Grupo Juegos y test                    </a>
+                </li>
+                            <li class="layoutNavMenuTabCommunityList__item">
+                    <a href="https://comunidad.bodas.net/grupos-provincia">
+                        Grupos por Provincia                    </a>
+                </li>
+                    </ul>
+    </div>
+    <div class="layoutNavMenuTabCommunityLast">
+        <p class="layoutNavMenuTabCommunityLast__subtitle app-header-menu-community app-link"
+           role="link"
+           tabindex="0" data-href="https://comunidad.bodas.net/">Entérate de lo último</p>
+        <ul class="layoutNavMenuTabCommunityLast__list">
+                            <li>
+                    <a href="https://comunidad.bodas.net/">
+                        Posts                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/fotos">
+                        Fotos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/videos">
+                        Vídeos                    </a>
+                </li>
+                            <li>
+                    <a href="https://comunidad.bodas.net/miembros">
+                        Usuarios                    </a>
+                </li>
+                                </ul>
+    </div>
+</div>    </div>
+</div>
+                </div>
+                    </li>
+        </ul>
+                        </div>
+                    
+                                            
+<div class="header-join">
+    <a class="header-join-link" href="https://www.bodas.net/users-login.php">Accede</a>
+    <a
+        class="header-join-link app-ua-track-event"
+        href="https://www.bodas.net/users-signup.php"
+         data-track-c='SignUpTracking'  data-track-a='a-step1'  data-track-l='d-desktop+s-site_header'  data-track-s=''  data-track-v='0'  data-track-ni='0'     >
+        Regístrate    </a>
+</div>
+                    
+                                    </div>
+            </div>
+        </div>
+        <div class="tabsHeader app-common-header-dropdown"></div>
+        <div class="tabsHeader__backdrop app-header-backdrop"></div>
+    </div>
+</div>
+<main id="layoutMain">
+
+<div class="white">
+<div class="breadcrumb-box">
+    <div class="wrapper">
+        <div class="breadcrumb-container">
+                    <ul class="breadcrumb">
+                            <li   >
+                                            <a href="https://www.bodas.net/" class="selected ">
+                            Bodas                        </a>
+                                                        </li>
+                            <li id='app-dresses-load-breadcrumb-no-ajax'  >
+                                            <a href="https://www.bodas.net/joyeria" class="selected icon-breadcrumb-arrow">
+                            Joyería                        </a>
+                                                                        <div class="bread-menu" style="display:none"> 
+            <ul>
+                                    <li>
+                                                    <a href="https://www.bodas.net/vestidos-novias">
+                                                Vestidos de Novia                                                    </a>
+                                            </li>
+                                    <li>
+                                                    <a href="https://www.bodas.net/trajes-novio">
+                                                Trajes de Novio                                                    </a>
+                                            </li>
+                                    <li>
+                                                    <a href="https://www.bodas.net/vestidos-madrina">
+                                                Vestidos de Madrina                                                    </a>
+                                            </li>
+                                    <li>
+                                                    <a href="https://www.bodas.net/vestidos-fiesta">
+                                                Vestidos de Fiesta                                                    </a>
+                                            </li>
+                                    <li>
+                                                    <a href="https://www.bodas.net/zapatos">
+                                                Zapatos                                                    </a>
+                                            </li>
+                                    <li>
+                                                    <a href="https://www.bodas.net/lenceria">
+                                                Lencería                                                    </a>
+                                            </li>
+                                    <li>
+                                                    <a href="https://www.bodas.net/complementos">
+                                                Complementos                                                    </a>
+                                            </li>
+                            </ul>
+        </div>
+                                            </li>
+                            <li   >
+                                            Todos los diseñadores                                                        </li>
+                    </ul>
+                    <div class="app-dresses-load-favorites dnone"></div>
+        </div>
+    </div>
+</div>
+
+    <div class="dresses-catalog-nav dress-title">
+        <h1>Diseñadores de Joyería</h1>
+    </div>
+
+    <div class="dresses-featured dresses-featured-section ">
+    <div class="wrapper">
+
+                <div
+            class="app-dress-featured-designers featured-designers pure-g-r"
+            data-k="192532642"
+            data-t="7"
+        >
+                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/majorica--d1504">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Majorica"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/4/0/t20_2x_7_1504.jpg?r=4fd4918c7c6a906c136629a3b3dc12db"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                            <div class="tag-top-dress">TOP</div>
+                                                        <a href="https://www.bodas.net/joyeria/majorica--d1504" >
+                                Majorica                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/staring--d242">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Staring"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/2/4/t20_2x_7_242.jpg?r=47f1c888f19990c0c8abf4ad89f8a025"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/staring--d242" >
+                                Staring                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/edenly--d249">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Edenly"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/9/4/t20_2x_7_249.jpg?r=9edc57ed745a50f2fa48806e07724013"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/edenly--d249" >
+                                Edenly                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/chanel--d496">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Chanel"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/6/9/t20_2x_7_496.jpg?r=80f7be3f74ef36955ad3ec3460c61ae5"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/chanel--d496" >
+                                Chanel                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/carolina-herrera--d173">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Carolina Herrera"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/3/7/t20_2x_7_173.jpg?r=e58da4ed98d5b2b918155caa84bffe5d"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/carolina-herrera--d173" >
+                                Carolina Herrera                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/alighieri--d1342">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Alighieri"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/2/4/t20_2x_7_1342.jpg?r=2b7b9d97843e9a772c5402a4916e3d28"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/alighieri--d1342" >
+                                Alighieri                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/david-locco--d1207">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería David Locco"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/7/0/t20_2x_7_1207.jpg?r=2b07155da1dc458c7d6d4526c154617a"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/david-locco--d1207" >
+                                David Locco                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/swarovski--d279">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Swarovski"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/9/7/t20_2x_7_279.jpg?r=41bab0b92494b3d61321e17973b27eda"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/swarovski--d279" >
+                                Swarovski                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/breuning--d317">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Breuning"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/7/1/t20_2x_7_317.jpg?r=3cf494da0d29bfe799baebf57fb0aa31"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/breuning--d317" >
+                                Breuning                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+                        <use xlink:href="#svg-_common-angleRight"></use>
+                    </svg>
+                </i></span>
+                    </figure>
+                </div>
+                                            <div class="pure-u-1-5 item app-link" data-href="https://www.bodas.net/joyeria/nicole-milano--d319">
+                    <figure class="relative">
+                        <img
+                            alt="Joyería Nicole Milano"
+                                                                                        src="https://cdn1.bodas.net/local/es_ES/catalogo/designers/9/1/t20_2x_7_319.jpg?r=1ee65cfb2bb8187a79b61f7948cce589"
+                                                        width="232"
+                            height="155"
+                        />
+                        <figcaption class="dress-designer-label flex-va-center">
+                                                        <a href="https://www.bodas.net/joyeria/nicole-milano--d319" >
+                                Nicole Milano                            </a>
+                        </figcaption>
+                        <span class="dress-designer-btn">Ver colección<i class="svgIcon svgIcon__angleRight "  >
+                    <svg viewBox="0 0 32 32" width="16" height="16">
+  

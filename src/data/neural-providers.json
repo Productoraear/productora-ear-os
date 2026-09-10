@@ -1,0 +1,18 @@
+[
+  {
+    "hash": "8f4a2b9c",
+    "source": "bodas.net",
+    "target_name": "Finca La Estación (Toledo)",
+    "status": "VAMPIRIZADO",
+    "detected_at": "2026-09-10T16:32:29Z",
+    "phone": "600123456"
+  },
+  {
+    "hash": "3c9d1e8a",
+    "source": "fander.es",
+    "target_name": "Atelier Acústico Madrid",
+    "status": "EN_COLA",
+    "detected_at": "2026-09-10T16:33:10Z",
+    "phone": null
+  }
+]

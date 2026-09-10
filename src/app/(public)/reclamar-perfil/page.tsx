@@ -74,35 +74,31 @@ function ReclamarPerfilContent() {
     }
   };
 
-  const handleStripeActivation = async () => {
+  const [isClaimSuccess, setIsClaimSuccess] = useState(false);
+
+  const handleClaimActivation = async () => {
     if (!vendorData) return;
     setIsCheckoutLoading(true);
 
     try {
-      const res = await fetch('/api/payments/checkout', {
+      const res = await fetch('/api/admin/providers/toggle-visibility', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: 49,
-          concept: `Activación Ficha Destacada S-Class: ${vendorData.name} (49 €/mes)`,
-          metadata: {
-            type: 'VENDOR_SUBSCRIPTION',
-            vendor_id: vendorData.id,
-            vendor_slug: vendorData.slug,
-            vendor_name: vendorData.name,
-            is_b2b_claim: 'true'
-          }
+          id: vendorData.id,
+          slug: vendorData.slug,
+          active: true
         })
       });
 
       const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
+      if (data.success) {
+        setIsClaimSuccess(true);
       } else {
-        alert('No se pudo generar la sesión de pago: ' + (data.error || 'Error desconocido'));
+        alert('No se pudo verificar la ficha: ' + (data.error || 'Error desconocido'));
       }
     } catch (e: any) {
-      alert('Error conectando a Stripe: ' + e.message);
+      alert('Error de conexión con Productora EAR: ' + e.message);
     } finally {
       setIsCheckoutLoading(false);
     }
@@ -164,54 +160,96 @@ function ReclamarPerfilContent() {
               </div>
             </div>
 
-            {/* BENEFICIOS DE ACTIVACIÓN S-CLASS */}
+            {/* BENEFICIOS Y CONDICIONES INMUTABLES S-CLASS */}
             <div className="space-y-4">
               <h3 className="text-xs font-mono font-bold text-[#ecb613] uppercase tracking-widest flex items-center gap-1.5">
-                <Sparkles size={14} /> VENTAJAS AL ACTIVAR LA CONSOLA OFICIAL
+                <Sparkles size={14} /> CONDICIONES SOBERANAS DE HOMOLOGACIÓN S-CLASS
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300">
-                <div className="flex items-center gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
-                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-                  <span>Recepción de Solicitudes Directas (0% Comisión de Intermediación)</span>
+                <div className="flex items-start gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
+                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block font-mono">Split Soberano 80/10/10</strong>
+                    <span className="text-[11px] text-slate-400">80% del caché íntegro para ti. 10% gestión EAR, 10% impacto social VIMUME.</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
-                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-                  <span>Botón de Reserva Directa con Garantía Stripe</span>
+                <div className="flex items-start gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
+                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block font-mono">Depósito 100 € Stripe Price-Lock</strong>
+                    <span className="text-[11px] text-slate-400">Cada fecha queda congelada con señal bancaria inmediata. Cero regateos.</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
-                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-                  <span>Canal Directo a tu WhatsApp Corporativo</span>
+                <div className="flex items-start gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
+                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block font-mono">Rider Acústico S-Class (12 W/pax)</strong>
+                    <span className="text-[11px] text-slate-400">Sistemas Bose F1 812 / S1 Pro y microfonía Shure Beta 87A homologados.</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
-                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-                  <span>Posicionamiento GEO Prioritario en tu Provincia</span>
+                <div className="flex items-start gap-2.5 bg-black/40 p-4 rounded-2xl border border-white/5">
+                  <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-white block font-mono">Cero Cuotas Mensuales (0 € / mes)</strong>
+                    <span className="text-[11px] text-slate-400">Sin suscripciones fijas ni cuotas ocultas como en Bodas.net. Solo cobramos sobre eventos cerrados.</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* BOTÓN DE ACTIVACIÓN CON PASARELA STRIPE */}
-            <div className="pt-4 border-t border-white/10 space-y-4">
-              <button
-                onClick={handleStripeActivation}
-                disabled={isCheckoutLoading}
-                className="w-full py-4 bg-[#ecb613] hover:bg-[#d4a210] text-black font-mono font-black text-xs uppercase tracking-widest rounded-2xl transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/20 cursor-pointer active:scale-[0.99]"
-              >
-                {isCheckoutLoading ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" /> Conectando Pasarela Stripe...
-                  </>
-                ) : (
-                  <>
-                    <Lock size={15} /> Activar Ficha Destacada B2B (49 € / mes)
-                  </>
-                )}
-              </button>
+            {/* CONFIRMACIÓN O BOTÓN DE ACTIVACIÓN */}
+            {isClaimSuccess ? (
+              <div className="p-6 rounded-3xl bg-emerald-950/40 border border-emerald-500/40 text-center space-y-4">
+                <div className="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
+                  <ShieldCheck size={28} />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-lg font-black text-white uppercase font-syne">¡Ficha Verificada con Éxito!</h4>
+                  <p className="text-xs text-emerald-200/80 font-mono">
+                    {vendorData.name} ya cuenta con la insignia VERIFICADO S-CLASS en la Red Oficial de Productora EAR.
+                  </p>
+                </div>
+                <div className="flex flex-wrap justify-center gap-3 pt-2">
+                  <Link
+                    href={`/proveedores?q=${encodeURIComponent(vendorData.name)}`}
+                    className="px-5 py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black font-mono font-bold text-xs uppercase tracking-wider transition-colors"
+                  >
+                    Ver Ficha en Directorio Público →
+                  </Link>
+                  <a
+                    href="https://wa.me/34693693048"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-mono text-xs uppercase tracking-wider transition-colors"
+                  >
+                    Contactar Centralita Técnica
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <div className="pt-4 border-t border-white/10 space-y-4">
+                <button
+                  onClick={handleClaimActivation}
+                  disabled={isCheckoutLoading}
+                  className="w-full py-4 bg-[#ecb613] hover:bg-[#d4a210] text-black font-mono font-black text-xs uppercase tracking-widest rounded-2xl transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/20 cursor-pointer active:scale-[0.99]"
+                >
+                  {isCheckoutLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" /> Verificando Ficha S-Class...
+                    </>
+                  ) : (
+                    <>
+                      <ShieldCheck size={16} /> Aceptar Condiciones S-Class y Activar Ficha Gratis (0 € / mes)
+                    </>
+                  )}
+                </button>
 
-              <p className="text-center text-[10px] font-mono text-slate-400">
-                Cancelación en 1-clic sin permanencia • Soporte técnico directo 24/7 vía Centralita
-              </p>
-            </div>
+                <p className="text-center text-[10px] font-mono text-slate-400">
+                  Activación instantánea sin permanencia • Soporte técnico directo 24/7 vía Centralita (+34 693 693 048)
+                </p>
+              </div>
+            )}
 
           </div>
         ) : (

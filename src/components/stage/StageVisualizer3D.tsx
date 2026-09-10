@@ -12,6 +12,7 @@ interface StageVisualizer3DProps {
   venueType: VenueType;
   pax: number;
   isVimume?: boolean;
+  providerName?: string;
 }
 
 interface MusicianNode {
@@ -65,8 +66,10 @@ export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
   format,
   venueType,
   pax,
-  isVimume = false
+  isVimume = false,
+  providerName
 }) => {
+  const isExternal = Boolean(providerName && !providerName.toLowerCase().includes('edwin') && !providerName.toLowerCase().includes('productora ear'));
   const musicians = MUSICIANS_CONFIG[format] || MUSICIANS_CONFIG.solista;
   const totalWatts = pax * 12;
   const isLargeArray = totalWatts > 600;
@@ -189,7 +192,9 @@ export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
 
             {/* Tooltip / Label */}
             <div className="mt-1.5 px-2 py-0.5 rounded bg-black/90 border border-white/20 text-[9px] font-mono text-white text-center whitespace-nowrap opacity-90 group-hover:opacity-100 transition-opacity">
-              <span className="font-bold text-[#ecb613]">{m.name}</span>
+              <span className="font-bold text-[#ecb613]">
+                {isExternal && m.name.includes('Edwin Agudelo') ? 'Voz Principal' : m.name}
+              </span>
               <span className="text-gray-400 block text-[8px]">{m.role}</span>
             </div>
           </motion.div>

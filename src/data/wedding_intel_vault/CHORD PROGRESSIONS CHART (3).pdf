@@ -1,0 +1,284 @@
+AnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0";;analytics.SNIPPET_VERSION="4.15.3";
+}}();
+var segmentScript = function () {
+if (segmentLoaded) {
+return;
+}
+if (window.analytics && window.analytics.initialized === true) {
+return;
+}
+segmentLoaded = true;
+(async () => {
+let ga4ClientId, ga4SessionId, ga4SessionNumber = null;
+[ga4ClientId, ga4SessionId, ga4SessionNumber] = await Promise.all([ga4ClientIdPromise, ga4SessionIdPromise, ga4SessionNumberPromise]);
+const pageProperties = {"nItems":80,"categoryId":"group_id:3,sector_id:18,province_id:3009","reduced":"\/vendors\/list\/sector\/province","gpAnonId":"2faa1ae2-b846-4000-82e6-08cd18663f24","loggedVendorUUID":"587e0718-0168-4bc7-9b54-bfbcc0c68a82","vendor_id":null,"category_group_id":3,"category_id":18,"region_adm1_id":null,"city_id":null,"region_id":3009,"product_tier":null,"vendor_visibility_tier":null,"isMasquerading":false,"platform":"desktop web","section":"\/vendors\/list\/sector\/province","build_product":"marketplace"};
+const analyticsGroupOpt = isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true;
+const targetedAdsOpt = isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true;
+const socialMediaOpt = isCookieGroupAllowed(CONSENT_SOCIAL_MEDIA_GROUP) === true;
+const saleOfDataOpt = analyticsGroupOpt && targetedAdsOpt && socialMediaOpt
+// Adding Segment middleware
+analytics.addSourceMiddleware(function (middlewareIntermediate) {
+var payload = middlewareIntermediate.payload,
+next = middlewareIntermediate.next,
+namespace;
+if (payload.obj.type === 'identify') {
+namespace = 'traits'
+} else {
+namespace = 'properties'
+}
+if (!payload.obj[namespace]) {
+console.warn('[ga4 segment patch] Analytics event does not contain namespace property: ' + namespace);
+next(payload);
+return
+}
+payload.obj[namespace].ga_session_id = ga4SessionId;
+payload.obj[namespace].ga_session_number = ga4SessionNumber;
+payload.obj[namespace].ga_client_id = ga4ClientId;
+payload.obj[namespace].ga4_session_id = ga4SessionId;
+payload.obj[namespace].ga4_session_number = ga4SessionNumber;
+payload.obj[namespace].ga4_client_id = ga4ClientId;
+payload.obj.context.data_processing_options = !targetedAdsOpt;
+if (payload.obj.type === 'page') {
+payload.obj[namespace]['event_id'] = 'pageview_' + window.userGlobals.gp_anon_id + '_' + 'b685a189-62f1-454b-a902-8bc82dda8bac'
+}
+if (!payload.obj[namespace].loggedUserUUID && window.userGlobals?.user_uuid) {
+payload.obj[namespace].loggedUserUUID = window.userGlobals.user_uuid
+}
+const getCookieIsFunction = typeof getCookie === 'function';
+const tkwwOpCookie = getCookieIsFunction ? getCookie('tkww_op') : null;
+if (!payload.obj.context.tkww_op && tkwwOpCookie) {
+payload.obj.context.tkww_op = tkwwOpCookie;
+}
+const globalExtraPropertiesForSegmentTracking = typeof window.globalExtraPropertiesForSegmentTracking === 'object'
+? window.globalExtraPropertiesForSegmentTracking : {};
+for (const key in globalExtraPropertiesForSegmentTracking) {
+if (globalExtraPropertiesForSegmentTracking.hasOwnProperty(key) && !payload.obj[namespace][key]) {
+payload.obj[namespace][key] = globalExtraPropertiesForSegmentTracking[key];
+}
+}
+let globalPageProperties = [];
+let globalPagePropertiesExcludedEventNames = {};
+try {
+globalPageProperties = JSON.parse('["appVersion","frmInsert","gpAnonId","loggedUserUUID","loggedVendorUUID","platform","reduced","section","build_product","experimentVariants","vendor_id","category_group_id","category_id","region_adm1_id","city_id","region_id","product_tier","vendor_visibility_tier"]');
+globalPagePropertiesExcludedEventNames = JSON.parse('[]');
+} catch(e) {
+console.error(`Segment init error: ${e.message}`);
+}
+for (const key in globalPageProperties) {
+const field = globalPageProperties[key];
+const isExcluded = globalPagePropertiesExcludedEventNames[field]?.includes(payload.obj.event) ?? false;
+if (!payload.obj[namespace][field] && pageProperties[field] && !isExcluded) {
+payload.obj[namespace][field] = pageProperties[field];
+}
+}
+payload.obj['context']['traits'] = payload.obj['context']['traits'] || {};
+for (const [key, value] of Object.entries(window.contextTraits)) {
+payload.obj['context']['traits'][key] = value;
+}
+if (getCookieIsFunction) {
+const cookies = {
+'epik': '_epik',
+'ttclid': 'ttclid',
+'_ttp': '_ttp',
+'gclid': 'gclid',
+};
+for (const [traitKey, cookieName] of Object.entries(cookies)) {
+const value = getCookie(cookieName);
+if (value) {
+payload.obj['context']['traits'][traitKey] = value;
+}
+}
+}
+if (!payload.obj['userId']) {
+payload.obj['userId'] = payload.obj[namespace]['loggedUserUUID']
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace]['non_interaction'] = !!parseInt(payload.obj[namespace]['nonInteraction'])
+}
+// override context variables if exists in window.trackingContext is defined and updated
+if (typeof window.trackingContext === 'object') {
+const overrideObjectProperties = (object, newObjectValues) => {
+for (const [key, value] of Object.entries(newObjectValues)) {
+if (typeof value === 'object' && typeof object[key] === 'object') {
+overrideObjectProperties(object[key], value);
+} else {
+object[key] = value;
+}
+}
+return object;
+};
+payload.obj = overrideObjectProperties(payload.obj, window.trackingContext);
+}
+if (payload.obj.type !== 'identify') {
+payload.obj[namespace] = standardizePropertyNames(payload.obj[namespace])
+}
+next(payload);
+});
+var integrationsConfig = {
+All: analyticsGroupOpt,
+'Segment.io': true,
+'Google Analytics 4': analyticsGroupOpt,
+'Facebook Conversions API (Actions)': targetedAdsOpt
+};
+window.analytics.load("ZG7KvyfJu5fe9wDQrYtqkcYfF1OzVmy0", { integrations: integrationsConfig });
+window.analytics.page(null, pageProperties);
+const experiments = (window.pageGlobals && window.pageGlobals.experiments) ? window.pageGlobals.experiments : {};
+Object.keys(experiments).forEach(exp => {
+trackExperimentViewed(
+experiments[exp].experimentId,
+window.userGlobals ? window.userGlobals[experiments[exp].bucketingType] : null,
+experiments[exp].variantId
+)
+})
+})();
+};
+var standardizePropertyNames = function (properties) {
+let origKey, value
+if (properties instanceof Array) {
+for (origKey in properties) {
+value = properties[origKey]
+if (typeof value === 'object') {
+value = standardizePropertyNames(value)
+}
+properties[origKey] = value
+}
+} else {
+for (origKey in properties) {
+if (properties.hasOwnProperty(origKey)) {
+let snakeCaseKey = origKey
+.trim()
+.replace(/-/g, '_')
+.replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+.replace(/([a-z])([A-Z])/g, '$1_$2')
+.replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+.replace(/ /g, '_')
+.toLowerCase()
+.substring(0, 100)
+if (isPropertyNameSnakeCase(origKey) && origKey !== snakeCaseKey) {
+delete properties[origKey]
+}
+properties[snakeCaseKey] = properties[origKey]
+}
+}
+}
+return properties
+};
+var isPropertyNameSnakeCase = function (propertyName) {
+const standardFormatRegex = /^[a-z0-9]+(_[a-z0-9]+)*$/;
+return standardFormatRegex.test(propertyName);
+};
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+segmentScript();
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+segmentScript();
+}
+}();
+</script>
+<div class="dnone">
+<script>
+gtag('event', 'page_view', {"BRIDES_NAV":1,"VENDORS_18_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1,"send_to":"adwords","user_id":"e78903"});
+gtag('event', 'view_search_results', {"send_to":"adwords","listing_id":[6598,49548,58684,66899,87660,170315,244848,231004,56864,58331,45813,34106,40780,42152,107588,58763,44350,37060,56291,14585,124225,139297,43624,207930],"listing_pagetype":"searchresults","user_id":"e78903"});
+</script>              <script>
+var facebookScript = function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.defer=1;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)};
+var toExecuteAfterFbInit = function () {
+var hasGlobals = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.facebook
+var globalFacebook = hasGlobals ? parent.pageGlobals.common.remarketing.facebook : {};
+var isLoaded = globalFacebook.isLoaded === true;
+if (!isLoaded) {
+parent.fbq('init', '1434721056835089', {}, {});
+globalFacebook.isLoaded = true;
+}
+parent.fbq('track', 'PageView', {"BRIDES_NAV":1,"VENDORS_18_NAV":1,"LOGGED":0,"EMPRESA":1,"EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":1}, {eventID: 'pageview_' + window.userGlobals.gp_anon_id + '_' + 'b685a189-62f1-454b-a902-8bc82dda8bac'}); parent.fbq('dataProcessingOptions', ['LDU'], 0, 0);
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+});
+if (parent.isCookieGroupAllowed(parent.CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+facebookScript(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+toExecuteAfterFbInit ()
+}
+</script>             <script>
+var pinterestScript = function() {
+!function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(
+Array.prototype.slice.call(arguments))};var
+n=window.pintrk;n.queue=[],n.version='3.0';var
+t=document.createElement('script');t.defer=1,t.src=e;var
+r=document.getElementsByTagName('script')[0];r.parentNode.insertBefore(t,r)}}('https://s.pinimg.com/ct/core.js');
+var hasGlobalsPinterest = parent.pageGlobals && parent.pageGlobals.common && parent.pageGlobals.common.remarketing && parent.pageGlobals.common.remarketing.pinterest;
+var globalPinterest = hasGlobalsPinterest ? parent.pageGlobals.common.remarketing.pinterest : {};
+var isLoaded = globalPinterest.isLoaded === true;
+if (!isLoaded) {
+parent.pintrk('load', 2613978159206);
+globalPinterest.isLoaded = true;
+}
+var isTracked = globalPinterest.isTracked === true;
+if (!isTracked) {
+globalPinterest.isTracked = true;
+parent.pintrk('page');
+parent.pintrk('track', 'custom', {"BRIDES_NAV":"1","VENDORS_18_NAV":"1","LOGGED":"0","EMPRESA":"1","EMPRESA_CATEGORY":"9","EMPRESA_CLIENT":"1","send_to":"adwords"});
+}
+}
+/* Listener of the OneTrust callback when user accepts the cookies */
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+pinterestScript();
+});
+/* Wrap of the Analytics script that checks the consent of the user and the default country configuration */
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+pinterestScript();
+}
+</script>             <script>
+var executeBingScript = function () {
+return (function(w,d,t,r,u) {
+var f,n,i;
+w[u] = w[u]||[], f = function() {
+var o = {ti: "355036992", enableAutoSpaTracking: true};
+o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad")
+},
+n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function() {
+var s = this.readyState;
+s&&s !== "loaded"&&s !== "complete" || (f(), n.onload = n. onreadystatechange=null)
+},
+i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n,i)
+}) (window, document, "script", "//bat.bing.com/bat.js", "uetq");
+}
+var pushBingScript = function () {
+window.uetq = window.uetq || [];
+window.uetq.push ('event', '', {});
+}
+document.getElementsByTagName('body')[0].addEventListener('targetedAdvertisingCookiesHasBeenAccepted', function () {
+executeBingScript();
+pushBingScript();
+});
+if (isCookieGroupAllowed(CONSENT_TARGETED_ADVERTISING_GROUP) === true) {
+executeBingScript();
+pushBingScript();
+}
+</script>     </div>
+<script type="text/javascript" src="https://cdn1.bodas.net/assets/js/newRelicRum.js?siteVersion=symfnw-ES171-1-20241219-010_www_m_" async></script>
+<script>
+window.addEventListener('newRelicScriptLoaded', function() {
+document.getElementsByTagName('body')[0].addEventListener('analyticsCookiesHasBeenAccepted', function () {
+newRelicScript("307408989");
+});
+if (isCookieGroupAllowed(CONSENT_ANALYTICS_GROUP) === true) {
+newRelicScript("307408989");
+}
+});
+</script>
+<script type="application/ld+json">
+{"@context":"http:\/\/schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Bodas","item":"https:\/\/www.bodas.net\/"},{"@type":"ListItem","position":2,"name":"Complementos novia","item":"https:\/\/www.bodas.net\/bodas\/novias\/complementos-novia"}]}            </script>
+<script type="application/ld+json">
+[{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/6598\/3_2\/960\/jpg\/jordi-anguera-botiga-252_1_6598-167483693849978.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/el-tocador-de-la-novia--e6598","name":"El Tocador de la Novia","image":"jordi-anguera-botiga-252_1_6598-167483693849978.jpg","address":{"@type":"PostalAddress","streetAddress":"Muntaner, 269","postalCode":"08037","addressLocality":"Barcelona","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":351,"ratingValue":"4.6","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/49548\/3_2\/960\/jpg\/sam-0063_1_49548.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/ramos-joya-cristina-piabell--e49548","name":"Ramos Joya Cristina Piabell","image":"sam-0063_1_49548.jpg","address":{"@type":"PostalAddress","streetAddress":"Barcelona","postalCode":"08001","addressLocality":"Barcelona","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":3,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/58684\/3_2\/960\/jpg\/img-20161022-132027_1_58684.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/dancart--e58684","name":"Dan\u00e7art","image":"img-20161022-132027_1_58684.jpg","address":{"@type":"PostalAddress","streetAddress":"Joan Ram\u00f3n Benapres, 24","postalCode":"08870","addressLocality":"Sitges","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":5,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/66899\/3_2\/960\/jpg\/img-9795_1_66899.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/lesprit-des-fleurs--e66899","name":"L'Esprit des Fleurs","image":"img-9795_1_66899.jpg","address":{"@type":"PostalAddress","streetAddress":"hospitalet","postalCode":"08901","addressLocality":"Barcelona","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":7,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/87660\/3_2\/960\/jpg\/logotipo_1_87660.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/ces--e87660","name":"Ces","image":"images-3_1_87660.jpg","address":{"@type":"PostalAddress","streetAddress":"Llobateras, 55","postalCode":"08191","addressLocality":"Rubi","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":3,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/70315\/3_2\/960\/jpg\/file-1664387636484_1_170315-166438763832217.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/brave-brides--e170315","name":"Brave Brides","image":"file-1664387636484_1_170315-166438763832217.jpg","address":{"@type":"PostalAddress","streetAddress":"Ernest Lluch, 15","postalCode":"08940","addressLocality":"Cornella De Llobregat","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":6,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/44848\/3_2\/960\/jpg\/dscf5082_1_244848-170818127738790.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/ella-flower-boutique--e244848","name":"Ella Flower Boutique","image":"dscf5082_1_244848-170818127738790.jpg","address":{"@type":"PostalAddress","streetAddress":"Mallorca, 586","postalCode":"08026","addressLocality":"Barcelona","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/31004\/3_2\/960\/jpg\/3_1_231004-169495774417214.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/eternal--e231004","name":"Eternal","image":"3_1_231004-169495774417214.jpg","address":{"@type":"PostalAddress","streetAddress":"Miquel Biada","postalCode":"08302","addressLocality":"Matar\u00f3","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/56864\/3_2\/960\/jpg\/shootingweddingloveingreen430_1_56864.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/dime-ke-si--e56864","name":"Dime Ke S\u00ed","image":"shootingweddingloveingreen430_1_56864.jpg","address":{"@type":"PostalAddress","streetAddress":"Sant Cugat, 5","postalCode":"08191","addressLocality":"Rubi","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":2,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/58331\/3_2\/960\/jpg\/logotipo_1_58331.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/el-secret-deva--e58331","name":"El Secret d'Eva","image":"giselanovia_1_58331.jpg","address":{"@type":"PostalAddress","streetAddress":"carrer dels ferrers 44","postalCode":"08720","addressLocality":"Vilafranca Del Penedes","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/45813\/3_2\/960\/jpg\/logobelfantasy.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/bel-fantasy--e45813","name":"Bel Fantasy","image":"rosas-transparentes.jpg","address":{"@type":"PostalAddress","streetAddress":"Pallars","postalCode":"08800","addressLocality":"Vilanova I La Geltru","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/34106\/3_2\/960\/jpg\/1469990-10201213442354925-1125250259-n_1_34106.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/hand-made-tocados--e34106","name":"Hand-Made Tocados","image":"1469990-10201213442354925-1125250259-n_1_34106.jpg","address":{"@type":"PostalAddress","streetAddress":"Avenida Europa n2","postalCode":"08290","addressLocality":"Cerdanyola Del Valles","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":11,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/40780\/3_2\/960\/jpg\/logo-estiliza.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/estiliza-fajas-moldeadoras--e40780","name":"Estiliza - Fajas moldeadoras","image":"13001_1_40780.jpg","address":{"@type":"PostalAddress","streetAddress":"Prudenci Comellas, 9-11","postalCode":"08240","addressLocality":"Manresa","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/42152\/3_2\/960\/jpg\/logo-coto.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/coto--e42152","name":"Cot\u00f3","image":"conjunto-antigel.jpg","address":{"@type":"PostalAddress","streetAddress":"Arquebisbe Alemany, 2","postalCode":"08500","addressLocality":"Vic","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":1,"ratingValue":"4.6","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/07588\/3_2\/960\/jpg\/069a736b-dac4-4194-ad07-c1a7ddf21e48_1_107588-1557594039.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/labambolina--e107588","name":"LaBambolina","image":"img-2134_1_107588.jpg","address":{"@type":"PostalAddress","streetAddress":"Francisco de Vitoria, 21","postalCode":"08225","addressLocality":"Terrassa","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":2,"ratingValue":"4.9","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/58763\/3_2\/960\/jpg\/01202m_1_58763.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/papelon--e58763","name":"Papel\u00f3n","image":"01202m_1_58763.jpg","address":{"@type":"PostalAddress","streetAddress":"Torrent de les flors, 99","postalCode":"08024","addressLocality":"Barcelona","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":28,"ratingValue":"4.8","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/44350\/3_2\/960\/jpg\/logononaly.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/no-na-ly--e44350","name":"No Na Ly","image":"esmeralda.jpg","address":{"@type":"PostalAddress","streetAddress":"Muntaner, 272","postalCode":"08006","addressLocality":"Barcelona","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/37060\/3_2\/960\/jpg\/img-20160929-wa0072_1_37060.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/rius-de-forns--e37060","name":"Rius de Forns","image":"img-20160929-wa0072_1_37060.jpg","address":{"@type":"PostalAddress","streetAddress":"Carrer Abat Samso  con tradici\u00f3","postalCode":"08017","addressLocality":"Barcelona","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":5,"ratingValue":"5.0","worstRating":0,"bestRating":5}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/56291\/3_2\/960\/png\/logo_1_56291.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/wedding-arts-barcelona--e56291","name":"Wedding Arts Barcelona","image":"-dsc3862_1_56291.jpg","address":{"@type":"PostalAddress","streetAddress":"C\/ Carmen, 94","postalCode":"08302","addressLocality":"Matar\u00f3","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/14585\/3_2\/960\/gif\/Logotipo.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/daniela-monticone--e14585","name":"Daniela Monticone","image":"Capa_princ_comp.jpg","address":{"@type":"PostalAddress","streetAddress":"C\/ Dami\u00e1 Campeny, 5","postalCode":"08392","addressLocality":"Matar\u00f3","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/24225\/3_2\/960\/jpg\/4karas.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/4karas--e124225","name":"4Karas","image":"img-0583.jpg","address":{"@type":"PostalAddress","streetAddress":"Roger de Ll\u00faria, 29 4-1","postalCode":"08009","addressLocality":"Barcelona","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/39297\/3_2\/960\/png\/captura-de-pantalla-2019-11-03-a-las-18-06-06_1_139297-157280083329415.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/coco-lulu--e139297","name":"Coco Lul\u00fa","image":"captura-de-pantalla-2019-11-03-a-las-18-06-06_1_139297-157280083329415.png","address":{"@type":"PostalAddress","streetAddress":"Llan\u00e7a, 29","postalCode":"08015","addressLocality":"Barcelona","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/43624\/3_2\/960\/jpg\/logo-de-la-empresa_1_43624.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/mireia-pages--e43624","name":"Mireia Pag\u00e8s","image":"hat2toe-shop-organca_1_43624.jpg","address":{"@type":"PostalAddress","streetAddress":"Enric Morera, 44","postalCode":"08902","addressLocality":"L' Hospitalet De Llobregat","addressRegion":"Barcelona"}},{"@context":"http:\/\/schema.org","@type":"LocalBusiness","logo":"https:\/\/cdn0.bodas.net\/vendor\/07930\/3_2\/960\/jpg\/tocadossuit-17_1_207930-167083798856644.webp","url":"https:\/\/www.bodas.net\/complementos-novia\/tocados-suit--e207930","name":"Tocados Suit","image":"tocadossuit-2_1_207930-167083794856263.jpg","address":{"@type":"PostalAddress","streetAddress":"Gran Via de les Cortes Catalanes","postalCode":"08013","addressLocality":"Barcelona","addressRegion":"Barcelona"},"aggregateRating":{"@type":"AggregateRating","reviewCount":2,"ratingValue":"5.0","worstRating":0,"bestRating":5}}]            </script>
+<script type="text/javascript"  src="/c-O80A/xtX/qkH/G2361fZl/EaaOt8fNLDVQictu/Hls2Ag/NEs/-bm0mYXYB"></script></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  import type { ContextOptions, DateArg } from "./types.js";
+/**
+ * The {@link endOfYear} function options.
+ */
+export interface EndOfYearOptions<Date
