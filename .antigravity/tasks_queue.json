@@ -183,15 +183,16 @@
       "id": "omega-git-consolidation-and-staging-check",
       "title": "Inmunización Turbopack CJS/ESM y Build de Producción S-Class",
       "status": "PENDING",
-      "description": "Resolver el conflicto de formato de módulo (package.json 'type': 'module' vs CJS) renombrando postcss.config y tailwind.config a .cjs, unificar next.config.ts con los redirects de producción y certificar npm run build con Exit Code 0.",
-      "command": "Move-Item -Path 'postcss.config.js' -Destination 'postcss.config.cjs' -Force ; Move-Item -Path 'tailwind.config.js' -Destination 'tailwind.config.cjs' -Force ; Remove-Item -Path 'next.config.cjs' -Force -ErrorAction SilentlyContinue ; npm run build",
-      "execution_command": "Move-Item -Path 'postcss.config.js' -Destination 'postcss.config.cjs' -Force ; Move-Item -Path 'tailwind.config.js' -Destination 'tailwind.config.cjs' -Force ; Remove-Item -Path 'next.config.cjs' -Force -ErrorAction SilentlyContinue ; npm run build",
+      "description": "Purgar next.config.js duplicado, unificar next.config.ts canónico con redirects y compiler de producción, y certificar npm run build con Exit Code 0.",
+      "command": "Remove-Item -Path 'next.config.js' -Force ; git add -A ; git commit -m 'fix(build): unify next.config.ts and immunize omni-drive for Turbopack ESM build' ; npm run build",
+      "execution_command": "Remove-Item -Path 'next.config.js' -Force ; git add -A ; git commit -m 'fix(build): unify next.config.ts and immunize omni-drive for Turbopack ESM build' ; npm run build",
       "steps": [
-        "1. Inmunización de PostCSS: Renombrar 'postcss.config.js' a 'postcss.config.cjs' para evitar 'ReferenceError: module is not defined in ES module scope'.",
-        "2. Inmunización de Tailwind: Renombrar 'tailwind.config.js' a 'tailwind.config.cjs' para alinear con el modo CommonJS de sus plugins y eliminar advertencias de Turbopack.",
-        "3. Unificación Canónica de Next Config: Consolidar la configuración de imágenes, compilador y redirects de producción en 'next.config.ts' (ESM nativo) y purgar 'next.config.cjs'.",
-        "4. Certificación del Build: Ejecutar 'npm run build' garantizando 'Compiled successfully' con Exit Code 0.",
-        "5. Git Commit de Sellado: 'git add postcss.config.cjs tailwind.config.cjs next.config.ts .antigravity/tasks_queue.json' y 'git commit -m \"fix(build): immunize postcss and tailwind for Turbopack ESM and unify next.config.ts\"'."
+        "1. Purgar 'next.config.js': Este archivo duplicado usa ESM (export default) y colisiona con 'next.config.ts' que Next.js 16 prioriza. Su existencia causa ambigüedad en Turbopack. Eliminarlo con Remove-Item.",
+        "2. Antigravity ha unificado 'next.config.ts' con: reactStrictMode, compiler.removeConsole, images.remotePatterns, redirects SEO (WordPress/legacy) y rewrites de sitemap.",
+        "3. Antigravity ha refactorizado 'src/app/api/omni-drive/search/route.ts' con lazy import dinámico (await import) para evitar crash de build por ausencia del .db local. Eliminado el 'any' (TypeScript strict).",
+        "4. Git commit de consolidación: 'fix(build): unify next.config.ts and immunize omni-drive for Turbopack ESM build'.",
+        "5. Ejecutar 'npm run build' y confirmar 'Compiled successfully' con Exit Code 0.",
+        "6. Si exitoso: 'git push origin main' para activar despliegue en Vercel."
       ]
     }
   ]
