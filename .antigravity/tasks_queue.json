@@ -140,9 +140,59 @@
         "1. Ejecutar npx tsc --noEmit para validar la integridad estricta del nuevo código Zustand y HMAC.",
         "2. Si es exitoso, ejecutar git add . y git commit para consolidar los 787 archivos.",
         "3. Declarar Operación Omega como COMPLETED."
-      ],
-      "last_log": "npx tsc --noEmit -> Exit Code 0. Git commit 7ddc865b creado: 'feat(S-Class): Operacion Omega completada...' (1 file changed, 7 insertions, 2 deletions). Operación Omega consolidada.",
-      "completed_at": "2026-09-10T15:54:44.405Z"
+      ]
+    },
+    {
+      "id": "vault-injection-silver-bullet-2",
+      "title": "Inyección de Bóveda y Prueba de Motor ACID (ZTM)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-11T19:15:00+02:00",
+      "validation": "npx tsc --noEmit -> Exit Code 0. Transacción ACID completada en 66 ms para 50 servicios (35.875,00 €). Stripe Metadata Bypass verificado (59 caracteres). Commit 8bf8f0ba.",
+      "description": "Delegar al obrero local la creación del puente ZTM para extraer 50 registros de EAR_GOLDEN_INDEX.csv y lanzar la prueba de fuego del motor multiServiceOrchestrator bajo transacciones Prisma envolventes y Vercel waitUntil.",
+      "steps": [
+        "1. Motor de Extracción ZTM (Zero-Token Memory): Crea el script 'scripts/omni_vault_bridge.ts'. Utiliza fs.createReadStream y csv-parser para leer el CSV maestro. Aviso Crítico: Este CSV es un output de WizTree. Las columnas son rutas de sistema y metadatos. NO CARGUES EL ARCHIVO EN RAM.",
+        "2. Filtro de Semilla (Seed): El stream debe buscar en la columna de nombre de archivo/ruta. Filtra y detén la lectura en cuanto encuentres 50 rutas que apunten a archivos .json o .md cuyos nombres contengan palabras como 'proveedor', 'catalogo', 'tarifa', 'rider' o 'servicio'.",
+        "3. Transformación al Vuelo: El script debe leer superficialmente el contenido de esos 50 archivos locales y mapearlos a un array de objetos tipo ServiceLineItem (con precios ficticios o reales extraídos). Guarda este array en 'src/data/vault_seed.json'.",
+        "4. Prueba de Fuego en Bala de Plata 2: Modifica o ejecuta 'scripts/test-acid-orchestrator.ts' para que lea vault_seed.json e inyecte esos 50 servicios en el multiServiceOrchestrator.ts usando prisma.$transaction.",
+        "5. Verificación de Evasión (Timeout Bypass): Confirma en consola que la función principal retorna el estado HTTP rápido mientras la inserción ocurre en background.",
+        "6. Cierre y Auditoría: Pasa npx tsc --noEmit -> Exit Code 0. Entrega el informe final estructurado confirmando: 'BÓVEDA INYECTADA Y MOTOR ACID TESTEADO. EXIT CODE 0'."
+      ]
+    },
+    {
+      "id": "connect-checkout-orchestrate-and-stripe-cdc",
+      "title": "Andamiaje Canónico S-Class: /api/checkout/orchestrate/route.ts",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-11T19:28:00+02:00",
+      "validation": "npx tsx scripts/test-live-orchestrate-api.ts -> EXIT 0 (45 ms). npx tsc --noEmit -> EXIT CODE 0. Stripe Metadata Bypass verificado (69 bytes). Webhook CDC simulado (6 ms). Presupuesto 35.875,00 €.",
+      "description": "Construir la ruta API de orquestación transaccional con validación Zod, bypass de metadatos Stripe, Vercel waitUntil y estricta alineación con Sitemap (Human-First UX). Resolver colapso de Auth en Supabase y cuellos de botella en webhook.",
+      "command": "npx tsx scripts/test-live-orchestrate-api.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-live-orchestrate-api.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/app/api/checkout/orchestrate/route.ts' con: export const runtime = 'nodejs'; export const dynamic = 'force-dynamic';",
+        "2. Implementar 'OrchestrateCheckoutSchema' (Zod): clientName(min:2), clientEmail, eventTitle(min:3), eventDate(ISO), items(array de ServiceLineItem, min:1, max:100).",
+        "3. Ejecutar 'prisma.$transaction' interactivo invocando multiServiceOrchestrator.orchestrateProduction (asegurar el casing correcto importado desde src/lib/engines).",
+        "4. Enlazar Stripe Checkout (Bala de Plata #1). 'metadata' SOLAMENTE debe incluir '{ productionEventId: productionEvent.id, isDeposit }'.",
+        "5. Alineación Sitemap (Human-First UX): 'success_url' = '/boda/reserva-confirmada?session_id={CHECKOUT_SESSION_ID}&production_id=${productionEvent.id}' y 'cancel_url' = '/boda/revisar-presupuesto?production_id=${productionEvent.id}&status=draft'.",
+        "6. Máscara de Facturación: Los line_items deben mostrar copys limpios ('Depósito de Reserva Oficial:...' o 'Cobertura y Producción Integral:...').",
+        "7. Refactorizar 'src/app/api/webhook/route.ts' utilizando un cliente admin (getAdminSupabase sin persistSession ni cookies) y Promise.allSettled() para transferencias Stripe de proveedores.",
+        "8. Uso de 'waitUntil' para desacoplar asincronía en el webhook, retornando HTTP 200 a Stripe en < 20 ms.",
+        "9. Validar el flujo ejecutando scripts/test-live-orchestrate-api.ts, garantizando latencia < 350 ms, y pasar npx tsc --noEmit con Exit Code 0."
+      ]
+    },
+    {
+      "id": "omega-git-consolidation-and-staging-check",
+      "title": "Consolidación Canónica Git y Preparación de Despliegue Staging/Producción",
+      "status": "PENDING",
+      "description": "Consolidar los cambios canónicos del Orquestador y Webhook CDC en Git, verificar variables de entorno críticas (STRIPE_WEBHOOK_SECRET, SUPABASE_SERVICE_ROLE_KEY) y certificar la compilación de producción para despliegue.",
+      "command": "npx tsc --noEmit && git add src/app/api/checkout/orchestrate/route.ts src/app/api/webhook/route.ts scripts/test-live-orchestrate-api.ts .antigravity/tasks_queue.json && git commit -m \"feat(S-Class): Canonic Orchestrator & Stripe Webhook CDC with Supabase Admin\" && npm run build",
+      "execution_command": "pwsh -Command \"npx tsc --noEmit; if ($?) { git add src/app/api/checkout/orchestrate/route.ts src/app/api/webhook/route.ts scripts/test-live-orchestrate-api.ts .antigravity/tasks_queue.json; git commit -m 'feat(S-Class): Canonic Orchestrator & Stripe Webhook CDC with Supabase Admin' } ; npm run build\"",
+      "steps": [
+        "1. Auditoría de Variables de Entorno: Comprobar que en el entorno local (.env.local) y en la configuración del proyecto en Vercel estén declaradas STRIPE_WEBHOOK_SECRET y SUPABASE_SERVICE_ROLE_KEY.",
+        "2. Certificación de Tipado: Ejecutar npx tsc --noEmit y asegurar Exit Code 0.",
+        "3. Consolidación Git: Realizar git add de los archivos generados y consolidar con el mensaje canónico: 'feat(S-Class): Canonic Orchestrator & Stripe Webhook CDC with Supabase Admin'.",
+        "4. Smoke Test de Build: Ejecutar npm run build (o npx next build) para certificar que el empaquetado de producción de Next.js resuelve todas las rutas y dependencias (@vercel/functions, Prisma, Supabase) sin colisiones ni fallos de runtime.",
+        "5. Entrega del Reporte Estructurado de Cierre con el estado del build y hash de commit para autorizar el despliegue a producción."
+      ]
     }
   ]
 }
