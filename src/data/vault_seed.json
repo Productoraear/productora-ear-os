@@ -1,0 +1,402 @@
+[
+  {
+    "id": "srv-1",
+    "name": "bodas_full_v9_[76BD3375].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 350,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v9_[76BD3375].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-2",
+    "name": "bodas_full_v8_[97153256].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 365,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v8_[97153256].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-3",
+    "name": "bodas_full_v7_[F1E9752A].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 380,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v7_[F1E9752A].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-4",
+    "name": "bodas_full_v6_[156D645C].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 395,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v6_[156D645C].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-5",
+    "name": "bodas_full_v5_[D3627565].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 410,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v5_[D3627565].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-6",
+    "name": "bodas_full_v4_[FE2A8996].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 425,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v4_[FE2A8996].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-7",
+    "name": "bodas_full_v3_[2E45DA36].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 440,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v3_[2E45DA36].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-8",
+    "name": "bodas_full_v2_[D8526D48].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 455,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v2_[D8526D48].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-9",
+    "name": "bodas_full_v1_[CDFA65C4].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 470,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v1_[CDFA65C4].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-10",
+    "name": "bodas_full_v13_[D7727DD4].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 485,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v13_[D7727DD4].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-11",
+    "name": "bodas_full_v12_[E4A37996].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 500,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v12_[E4A37996].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-12",
+    "name": "bodas_full_v11_[69F7D58A].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 515,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v11_[69F7D58A].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-13",
+    "name": "bodas_full_v10_[2BBA7EA5].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 530,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_v10_[2BBA7EA5].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-14",
+    "name": "bodas_full_[3AB91419].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 545,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_[3AB91419].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-15",
+    "name": "bodas_full_921076794._[7ECC8A98].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 560,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_921076794._[7ECC8A98].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-16",
+    "name": "bodas_full_622776525._[7F3174B0].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 575,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_622776525._[7F3174B0].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-17",
+    "name": "bodas_full_590246433._[D732D021].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 590,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_590246433._[D732D021].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-18",
+    "name": "bodas_full_347962079._[E8D67088].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 605,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_347962079._[E8D67088].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-19",
+    "name": "bodas_full_320830388._[D02CE115].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 620,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_320830388._[D02CE115].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-20",
+    "name": "bodas_full_311681661._[D05B952F].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 635,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_311681661._[D05B952F].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-21",
+    "name": "bodas_full_1499973017._[77C9938C].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 650,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_1499973017._[77C9938C].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-22",
+    "name": "bodas_full_1417844154._[511D1F1F].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 665,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_1417844154._[511D1F1F].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-23",
+    "name": "bodas_full_1414999914._[9FED543A].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 680,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_1414999914._[9FED543A].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-24",
+    "name": "bodas_full_1140798391._[33ECDA74].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 695,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_1140798391._[33ECDA74].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-25",
+    "name": "bodas_full_113870641._[816B83B0].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 710,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_113870641._[816B83B0].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-26",
+    "name": "bodas_full_1088465208._[D3D0EBA2].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 725,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_full_1088465208._[D3D0EBA2].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-27",
+    "name": "bodas-net-FULL-DATABASE_v2_[6C0AFAB5].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 740,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas-net-FULL-DATABASE_v2_[6C0AFAB5].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-28",
+    "name": "bodas-net-FULL-DATABASE_v1_[62ABE207].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 755,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas-net-FULL-DATABASE_v1_[62ABE207].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-29",
+    "name": "bodas-net-FULL-DATABASE_6867986._[2E20E387].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 770,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas-net-FULL-DATABASE_6867986._[2E20E387].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-30",
+    "name": "bodas_clean_v9_[9E4FEA1D].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 785,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v9_[9E4FEA1D].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-31",
+    "name": "bodas_clean_v8_[0BA51461].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 800,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v8_[0BA51461].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-32",
+    "name": "bodas_clean_v7_[02AF6AFE].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 815,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v7_[02AF6AFE].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-33",
+    "name": "bodas_clean_v6_[76D42E9E].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 830,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v6_[76D42E9E].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-34",
+    "name": "bodas_clean_v5_[87BF297D].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 845,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v5_[87BF297D].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-35",
+    "name": "bodas_clean_v4_[CE66947E].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 860,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v4_[CE66947E].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-36",
+    "name": "bodas_clean_v3_[B75D3303].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 875,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v3_[B75D3303].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-37",
+    "name": "bodas_clean_v2_[CB845047].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 890,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v2_[CB845047].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-38",
+    "name": "bodas_clean_v1_[301D19D9].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 905,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v1_[301D19D9].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-39",
+    "name": "bodas_clean_v13_[5BF3D395].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 920,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v13_[5BF3D395].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-40",
+    "name": "bodas_clean_v12_[65724A04].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 935,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v12_[65724A04].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-41",
+    "name": "bodas_clean_v11_[97265BFB].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 950,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v11_[97265BFB].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-42",
+    "name": "bodas_clean_v10_[FF8E9828].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 965,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_v10_[FF8E9828].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-43",
+    "name": "bodas_clean_[4EC22DA9].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 980,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_[4EC22DA9].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-44",
+    "name": "bodas_clean_711002501._[60183D94].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 995,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_711002501._[60183D94].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-45",
+    "name": "bodas_clean_488355423._[332F624F].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 1010,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_488355423._[332F624F].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-46",
+    "name": "bodas_clean_467286864._[CA852426].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 1025,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_467286864._[CA852426].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-47",
+    "name": "bodas_clean_398887922._[F9CDD3C1].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 1040,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_398887922._[F9CDD3C1].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-48",
+    "name": "bodas_clean_371952679._[41A4D3F0].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 1055,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_371952679._[41A4D3F0].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-49",
+    "name": "bodas_clean_340038511._[6F85D389].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 1070,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_340038511._[6F85D389].json",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": "srv-50",
+    "name": "bodas_clean_240838796._[6703ED5F].json",
+    "category": "PRODUCTION_SERVICE",
+    "unitPrice": 1085,
+    "sourcePath": "H:\\EAR_OS_V2\\data\\raw_artist_intel\\bodas_clean_240838796._[6703ED5F].json",
+    "status": "AVAILABLE"
+  }
+]
