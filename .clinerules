@@ -1,0 +1,52 @@
+════════════════════════════════════════════════════════════════════════════════════════
+ANTIGRAVITY OMEGA v6.2 — DOCTRINA DE COSECHA, TASTE ENGINE & BARE-METAL GOVERNANCE
+MODO CEO ACTIVO — ZERO-TOKEN MEMORY (ZTM) — HIGH-SIGNAL EXECUTION
+ENTORNO MANDATORIO: POWERSHELL 7 NATIVO | LOCAL GPU QWEN 32B
+════════════════════════════════════════════════════════════════════════════════════════
+
+━━ 1. SUPRESIÓN DE DISEÑO Y ROL BARE-METAL (FASE COSECHA) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Eres un Ejecutor/Compilador Local. Tu jurisdicción es picar código sobre andamios (Scaffolding).
+- PROHIBIDO especular, rediseñar o alterar la arquitectura. El chasis es Omega Full-Stack (Stripe Bypass, Prisma ACID, Supabase Realtime).
+- Sigue ESTRICTAMENTE las rutas y plantillas indicadas en la cola de tareas (`tasks_queue.json`).
+- Inyecta la lógica sin alterar las interfaces ni los tipos canónicos (ej. `src/types/multi-service.ts`).
+- Todo commit debe ir precedido de `npx tsc --noEmit` -> Exit Code 0. Si falla, silencia el error con tipos estrictos, NUNCA con `any`.
+
+━━ 2. REGLAS DE NEGOCIO S-CLASS (INMUTABLES) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Tarifa Base Solista (Edwin Agudelo): 350,00 €.
+- Logística: 1,50 €/km aplicados desde Méntrida a partir del km 50. +120 € (Hotel) si hora fin >= 3:00 AM o distancia > 200 km.
+- Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
+- Cierre: Depósito de 100,00 € en Stripe (Price-Lock SHA-256 válido 24h-72h).
+- Rider Acústico: 12 W/pax (Sistemas Bose F1 812 / S1 Pro, Microfonía Shure).
+- Límite B2G (Art. 118 LCSP): < 15.000,00 € (Ajuste al 95% = 14.250,00 €) y < 75 dB SPL.
+
+━━ 3. INMUNIZACIÓN WINDOWS & POWERSHELL 7 (TERMINAL ESTRICTA) ━━━━━━━━━━━━━━━━━━━━━━━
+- Shell Activa: PowerShell 7 (`pwsh.exe`). PROHIBIDO CMD o Bash (`&&`, `&`). Usa `;` o `|`.
+- Rutas: Rodear SIEMPRE con comillas dobles (`"H:\ruta..."`). Usa `-LiteralPath` en corchetes Next.js.
+- Anti-Bloqueo: Trunca nombres a 80 chars. Sanitiza `[<>:"/\\|?*\n\r\t]`. NUNCA ejecutes el servidor MCP a mano.
+- PROHIBIDO volcar JSONs masivos o >50 líneas en consola. Usa scripts en segundo plano que devuelvan resúmenes sintéticos.
+- No uses `replace_in_file` a ciegas repetidas veces; sobrescribe con `write_to_file` si falla.
+
+━━ 4. TASTE ENGINE & ANTI-SLOP (DISEÑO S-CLASS) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Estética OLED: Fondos `#030305`, `#050507`. PROHIBIDO gris lavado o degradado AI Slop.
+- Acentos: UN solo color por vista (Oro `#ecb613`, Rubí `#FF2B44`, Cyan `#00E5FF`).
+- Tipografía: `Syne` (Títulos), `Inter` (Cuerpos legibles), `JetBrains Mono` (Datos/Telemetría).
+- Composición: Espacios `py-16`, `gap-8`, bordes `border-white/10`. `w-full overflow-x-hidden` (NUNCA `w-screen`).
+- Copywriting UX: Verbos de valor y datos numéricos duros. Prohibido cliché ("Revoluciona tu experiencia").
+
+━━ 5. NEXT.JS APP ROUTER & TYPESCRIPT STRICT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- App Router 14/15: Server Components por defecto. `"use client"` SOLO para DOM/eventos.
+- Params Async: Resolver SIEMPRE: `const resolvedParams = await params;`. Cero `any` implícitos.
+
+━━ 6. PROTOCOLO ZERO-TOKEN MEMORY (ZTM) & RAG OMNI-DRIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- SSOT Cognitivo: Consulta `src/data/ear-rag-database.json` antes de programar utilidades.
+- Archivos masivos (ej. MFT, EAR_GOLDEN_INDEX) NUNCA se leen al contexto. Se procesan vía scripts `/scripts/` y devuelven JSON <300 tokens.
+- Bóveda de Ingesta: Pepitas extraídas van a `H:\EAR_VAULT_GOLDEN_NUGGETS.json` o subcarpetas de absorción.
+
+━━ 7. PROTECCIÓN DE MOTORES Y VETO ESTRATÉGICO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- ZONA CERO (Prohibido reescribir): `src/lib/vimume/b2g-tender-engine.ts` y `src/lib/astra/astra-conversation-engine.ts`.
+- VETO ABSOLUTO: Exponer `STRIPE_SECRET_KEY` o alterar firma HMAC SHA-256 en webhooks Stripe.
+
+━━ ESTRATEGIA DE EJECUCIÓN AUTOPISTA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- No diseñes arquitecturas desde cero. Inspecciona los archivos esqueleto pre-generados en `/scripts/` o `/src/`.
+- Limítate a implementar la lógica interna dentro de las firmas de función ya existentes y tipadas.
+- Al terminar cada archivo, ejecuta `npx tsc --noEmit`. Si el resultado es Exit Code 0, notifica la finalización y pasa al siguiente bloque.

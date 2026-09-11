@@ -356,6 +356,7 @@ model fleetUnit {
   workspaceId     String?
   workspace       workspace? @relation(fields: [workspaceId], references: [id])
   waybills        waybill[]
+  positions       FleetPosition[]
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
 }
@@ -365,6 +366,37 @@ model fleetTelemetryEvent {
   unitId    String?
   eventData String?
   createdAt DateTime @default(now())
+}
+
+model FleetPosition {
+  id        String    @id @default(cuid())
+  unitId    String
+  unit      fleetUnit @relation(fields: [unitId], references: [id])
+  latitude  Float
+  longitude Float
+  speed     Float?
+  heading   Float?
+  timestamp DateTime  @default(now())
+  @@index([unitId, timestamp(sort: Desc)])
+}
+
+model ProductionEvent {
+  id            String   @id @default(cuid())
+  title         String
+  eventDate     DateTime
+  eventType     String   @default("WEDDING")
+  status        String   @default("DRAFT")
+  totalBudget   Float    @default(0)
+  clientEmail   String?
+  clientName    String?
+  clientPhone   String?
+  location      String?
+  guestCount    Int      @default(100)
+  serviceLines  Json     @default("[]")
+  stakeholders  Json     @default("[]")
+  metadata      Json?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model calendarBlock {
@@ -389,6 +421,7 @@ model VendorShadowProfile {
   imageUrls    String[]
   claimToken   String   @unique
   status       String   @default("GHOST_UNCLAIMED") // GHOST_UNCLAIMED | VERIFIED_ACTIVE
+  claimedById  String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
