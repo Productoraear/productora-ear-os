@@ -4,7 +4,7 @@ import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import { calculateSovereignSplit } from '@/lib/atmosphere-matcher';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummyBuildBypass', {
   apiVersion: '2025-02-24' as Stripe.LatestApiVersion,
 });
 
@@ -56,3 +56,4 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ received: true });
 }
+
