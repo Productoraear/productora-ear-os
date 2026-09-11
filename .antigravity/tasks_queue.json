@@ -181,17 +181,17 @@
     },
     {
       "id": "omega-git-consolidation-and-staging-check",
-      "title": "Consolidación Canónica Git y Preparación de Despliegue Staging/Producción",
+      "title": "Inmunización Turbopack CJS/ESM y Build de Producción S-Class",
       "status": "PENDING",
-      "description": "Consolidar los cambios canónicos del Orquestador y Webhook CDC en Git, verificar variables de entorno críticas (STRIPE_WEBHOOK_SECRET, SUPABASE_SERVICE_ROLE_KEY) y certificar la compilación de producción para despliegue.",
-      "command": "npx tsc --noEmit && git add src/app/api/checkout/orchestrate/route.ts src/app/api/webhook/route.ts scripts/test-live-orchestrate-api.ts .antigravity/tasks_queue.json && git commit -m \"feat(S-Class): Canonic Orchestrator & Stripe Webhook CDC with Supabase Admin\" && npm run build",
-      "execution_command": "pwsh -Command \"npx tsc --noEmit; if ($?) { git add src/app/api/checkout/orchestrate/route.ts src/app/api/webhook/route.ts scripts/test-live-orchestrate-api.ts .antigravity/tasks_queue.json; git commit -m 'feat(S-Class): Canonic Orchestrator & Stripe Webhook CDC with Supabase Admin' } ; npm run build\"",
+      "description": "Resolver el conflicto de formato de módulo (package.json 'type': 'module' vs CJS) renombrando postcss.config y tailwind.config a .cjs, unificar next.config.ts con los redirects de producción y certificar npm run build con Exit Code 0.",
+      "command": "Move-Item -Path 'postcss.config.js' -Destination 'postcss.config.cjs' -Force ; Move-Item -Path 'tailwind.config.js' -Destination 'tailwind.config.cjs' -Force ; Remove-Item -Path 'next.config.cjs' -Force -ErrorAction SilentlyContinue ; npm run build",
+      "execution_command": "Move-Item -Path 'postcss.config.js' -Destination 'postcss.config.cjs' -Force ; Move-Item -Path 'tailwind.config.js' -Destination 'tailwind.config.cjs' -Force ; Remove-Item -Path 'next.config.cjs' -Force -ErrorAction SilentlyContinue ; npm run build",
       "steps": [
-        "1. Auditoría de Variables de Entorno: Comprobar que en el entorno local (.env.local) y en la configuración del proyecto en Vercel estén declaradas STRIPE_WEBHOOK_SECRET y SUPABASE_SERVICE_ROLE_KEY.",
-        "2. Certificación de Tipado: Ejecutar npx tsc --noEmit y asegurar Exit Code 0.",
-        "3. Consolidación Git: Realizar git add de los archivos generados y consolidar con el mensaje canónico: 'feat(S-Class): Canonic Orchestrator & Stripe Webhook CDC with Supabase Admin'.",
-        "4. Smoke Test de Build: Ejecutar npm run build (o npx next build) para certificar que el empaquetado de producción de Next.js resuelve todas las rutas y dependencias (@vercel/functions, Prisma, Supabase) sin colisiones ni fallos de runtime.",
-        "5. Entrega del Reporte Estructurado de Cierre con el estado del build y hash de commit para autorizar el despliegue a producción."
+        "1. Inmunización de PostCSS: Renombrar 'postcss.config.js' a 'postcss.config.cjs' para evitar 'ReferenceError: module is not defined in ES module scope'.",
+        "2. Inmunización de Tailwind: Renombrar 'tailwind.config.js' a 'tailwind.config.cjs' para alinear con el modo CommonJS de sus plugins y eliminar advertencias de Turbopack.",
+        "3. Unificación Canónica de Next Config: Consolidar la configuración de imágenes, compilador y redirects de producción en 'next.config.ts' (ESM nativo) y purgar 'next.config.cjs'.",
+        "4. Certificación del Build: Ejecutar 'npm run build' garantizando 'Compiled successfully' con Exit Code 0.",
+        "5. Git Commit de Sellado: 'git add postcss.config.cjs tailwind.config.cjs next.config.ts .antigravity/tasks_queue.json' y 'git commit -m \"fix(build): immunize postcss and tailwind for Turbopack ESM and unify next.config.ts\"'."
       ]
     }
   ]
