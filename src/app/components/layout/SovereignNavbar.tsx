@@ -97,15 +97,15 @@ const SovereignNavbar = () => {
 
         {/* RUTAS S-CLASS & VIMUME */}
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/eventos" className="text-sm font-medium text-white/80 hover:text-[#ecb613] transition-colors uppercase tracking-widest">Producción</Link>
-          <Link href="/artistas" className="text-sm font-medium text-white/80 hover:text-[#ecb613] transition-colors uppercase tracking-widest">Artistas</Link>
+          <Link href="/eventos" className="text-sm font-medium text-white/80 hover:text-[#FF2B44] transition-colors uppercase tracking-widest">Producción</Link>
+          <Link href="/artistas" className="text-sm font-medium text-white/80 hover:text-[#FF2B44] transition-colors uppercase tracking-widest">Artistas</Link>
           
           {/* VIMUME HIGHLIGHT (Adapta color según rol) */}
           <Link href="/vimume" className={cn(
             "flex items-center gap-2 text-sm font-bold text-white bg-white/5 px-4 py-1.5 rounded-full border transition-all uppercase tracking-widest",
-            role === 'ROLE_B2G' ? "border-blue-400/50 bg-blue-500/10 hover:bg-blue-500/20" : "border-white/10 hover:border-[#ecb613]/50 hover:bg-[#ecb613]/10"
+            role === 'ROLE_B2G' ? "border-blue-400/50 bg-blue-500/10 hover:bg-blue-500/20" : "border-[#00E5FF]/30 hover:border-[#00E5FF] hover:bg-[#00E5FF]/10 text-[#00E5FF]"
           )}>
-            <Activity size={14} className={role === 'ROLE_B2G' ? "text-blue-400" : "text-[#ecb613]"} />
+            <Activity size={14} className={role === 'ROLE_B2G' ? "text-blue-400" : "text-[#00E5FF]"} />
             <span>VIMUME</span>
           </Link>
         </div>
@@ -113,10 +113,10 @@ const SovereignNavbar = () => {
         {/* OMNI-SEARCH & WALLET */}
         <div className="hidden md:flex items-center gap-4">
           <button 
-            className="flex items-center gap-2 bg-black/50 border border-white/10 hover:border-[#ecb613]/50 px-4 py-2 rounded-full text-white/50 text-sm transition-all group"
+            className="flex items-center gap-2 bg-black/50 border border-white/10 hover:border-[#FF2B44]/50 px-4 py-2 rounded-full text-white/50 text-sm transition-all group"
             onClick={() => setIsSearchOpen(true)}
           >
-            <Search size={14} className="group-hover:text-[#ecb613] transition-colors" />
+            <Search size={14} className="group-hover:text-[#FF2B44] transition-colors" />
             <span>Buscar servicio...</span>
             <kbd className="ml-2 bg-white/10 px-1.5 py-0.5 rounded text-[10px] font-mono text-white/70">⌘K</kbd>
           </button>

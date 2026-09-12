@@ -156,14 +156,14 @@ export default function ArtistCinematicProfile({
   };
 
   return (
-    <div className="relative min-h-screen bg-[#050507] text-white selection:bg-[#ecb613] selection:text-black font-sans">
+    <div className="relative min-h-screen bg-[#050507] text-white selection:bg-[#FF2B44] selection:text-white font-sans pt-24 md:pt-28">
       
       {/* ── BARRA SUPERIOR DE AUTORIDAD ── */}
       <aside aria-label="Gobernanza y Sello" className="border-b border-white/10 bg-[#09090d]/80 backdrop-blur-md px-6 py-2.5 text-xs text-white/60">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="inline-block h-2 w-2 rounded-full bg-[#ecb613] animate-pulse" />
-            <span className="font-mono uppercase tracking-widest text-[#ecb613] font-bold text-[11px]">
+            <span className="inline-block h-2 w-2 rounded-full bg-[#FF2B44] animate-pulse" />
+            <span className="font-mono uppercase tracking-widest text-[#FF2B44] font-bold text-[11px]">
               S-Class Sovereign Artist Dossier
             </span>
             <span className="text-white/30">•</span>
@@ -450,7 +450,7 @@ export default function ArtistCinematicProfile({
             className="space-y-12"
           >
             <div className="max-w-3xl space-y-3">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
+              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#FF2B44] font-bold">
                 A. Identidad & Misión Vital
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
@@ -466,8 +466,8 @@ export default function ArtistCinematicProfile({
               
               {/* Origen y Forja de Carácter */}
               {/* Origen y Forja de Carácter (Efecto Fénix & Hitos Innegociables) */}
-              <div className="md:col-span-12 rounded-3xl border border-[#ecb613]/30 bg-gradient-to-br from-[#09090d] to-[#161622] p-8 space-y-6">
-                <span className="rounded-full bg-[#ecb613] px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest text-black">
+              <div className="md:col-span-12 rounded-3xl border border-[#FF2B44]/30 bg-gradient-to-br from-[#09090d] via-[#12080c] to-[#09090d] p-8 space-y-6 shadow-[0_0_40px_rgba(255,43,68,0.1)]">
+                <span className="rounded-full bg-[#FF2B44] px-3.5 py-1 font-mono text-[10px] font-black uppercase tracking-widest text-white shadow-sm">
                   Hitos Innegociables S-Class
                 </span>
                 <h3 className="font-syne text-2xl font-bold uppercase text-white">
@@ -485,13 +485,13 @@ export default function ArtistCinematicProfile({
                     </p>
                   </div>
                   <div className="space-y-3">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#ecb613] font-bold">Hito 2: Autoridad Técnica</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF2B44] font-bold">Hito 2: Autoridad Técnica</span>
                     <p className="text-sm text-white leading-relaxed">
                       Productor Audiovisual y "Paciente Cero" / Creador del ecosistema EAR OS. Garantiza la sonorización de alta gama con un despliegue acústico estricto de 12 W/pax.
                     </p>
                   </div>
                   <div className="space-y-3">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#258DCD] font-bold">Hito 3: Propósito y Trascendencia</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#00E5FF] font-bold">Hito 3: Propósito y Trascendencia</span>
                     <p className="text-sm text-white leading-relaxed">
                       Director y arquitecto del Proyecto VIMUME (Intervención Neuroacústica a 40 Hz Gamma). Diseñador de terapias de reminiscencia sonora para el tratamiento cognitivo.
                     </p>
@@ -500,10 +500,10 @@ export default function ArtistCinematicProfile({
               </div>
 
               {/* El Manifiesto del Activo Patrimonial */}
-              <div className="md:col-span-12 rounded-3xl border border-white/10 bg-[#09090d] p-8 md:p-12">
+              <div className="md:col-span-12 rounded-3xl border border-white/10 bg-[#09090d] p-8 md:p-12 hover:border-[#FF2B44]/30 transition-colors">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
                   <div className="lg:col-span-2 space-y-3">
-                    <span className="font-mono text-xs uppercase tracking-widest text-[#ecb613]">
+                    <span className="font-mono text-xs uppercase tracking-widest text-[#FF2B44] font-bold">
                       Declaración Fundamental EAR OS
                     </span>
                     <h3 className="font-syne text-3xl font-black uppercase text-white">
@@ -514,7 +514,7 @@ export default function ArtistCinematicProfile({
                     </p>
                   </div>
                   <div className="flex flex-col items-center justify-center border-l-0 lg:border-l border-white/10 lg:pl-8 space-y-2 text-center">
-                    <ShieldCheck size={44} className="text-[#ecb613]" />
+                    <ShieldCheck size={44} className="text-[#FF2B44]" />
                     <span className="font-syne text-lg font-bold text-white uppercase">Cero Subcontratas</span>
                     <p className="font-mono text-xs text-white/50">Trato directo con la dirección de Productora EAR y el artista principal.</p>
                   </div>

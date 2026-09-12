@@ -1,18 +1,19 @@
 import { SovereignMobileHUD } from '@/components/sclass/SovereignMobileHUD';
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Fraunces, Montserrat } from "next/font/google";
+import { Syne, Inter } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const syne = Syne({
   subsets: ["latin"],
-  variable: "--font-fraunces",
+  variable: "--font-syne",
   display: "swap",
+  weight: ["400", "600", "700", "800"],
 });
 
-const montserrat = Montserrat({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -96,11 +97,11 @@ export default function RootLayout({
     <html 
       lang="es" 
       suppressHydrationWarning 
-      className={`dark scroll-smooth ${fraunces.variable} ${montserrat.variable}`}
+      className={`dark scroll-smooth ${syne.variable} ${inter.variable}`}
     >
       <head />
       <body 
-        className={`antialiased bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans ${fraunces.variable} ${montserrat.variable}`}
+        className={`antialiased bg-[#050505] text-white selection:bg-[#FF2B44] selection:text-white font-sans ${syne.variable} ${inter.variable}`}
         suppressHydrationWarning
       >
         <VimumeThemeInjector />

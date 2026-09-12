@@ -56,11 +56,10 @@
     --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
     --glow-ear-red: 0 0 25px rgba(255, 43, 68, 0.4);
 
-    /* 🖋️ TIPOGRAFÍA SOBERANA: FRANCIA (FRAUNCES) + MONTSERRAT */
-    --font-francia: var(--font-fraunces), 'Fraunces', Georgia, serif;
-    --font-fraunces: var(--font-fraunces), 'Fraunces', Georgia, serif;
-    --font-montserrat: var(--font-montserrat), 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-syne: var(--font-fraunces), 'Syne', sans-serif;
+    /* 🖋️ TIPOGRAFÍA SOBERANA S-CLASS: SYNE (DISPLAY) + INTER (BODY) */
+    --font-syne: var(--font-syne), 'Syne', sans-serif;
+    --font-inter: var(--font-inter), 'Inter', sans-serif;
+    --font-sans: var(--font-inter), 'Inter', sans-serif;
   }
 
   .dark {
@@ -117,7 +116,7 @@
   body {
     background-color: var(--background) !important;
     color: var(--foreground) !important;
-    font-family: var(--font-montserrat);
+    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -126,8 +125,8 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-fraunces);
-    letter-spacing: -0.02em;
+    font-family: var(--font-syne), sans-serif;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
