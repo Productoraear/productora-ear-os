@@ -354,7 +354,9 @@
     {
       "id": "airbnb-style-neural-booking-bar-and-filters",
       "title": "Barra de Búsqueda y Reserva Estilo Airbnb S-Class (Calendario, GPS Méntrida, Pax 12W y Filtros Inteligentes)",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T13:05:00Z",
+      "validation": "npx tsx scripts/test-airbnb-booking-filters.ts -> Exit Code 0. Distancia Haversine Méntrida, tarifa logística 1,50 €/km, cálculo 12W/pax y componentes probados. Commit y push completados.",
       "description": "Integración completa de la barra de búsqueda y reserva estilo Airbnb en EAR OS V2. Incluye Calendario de Exclusividad, Ubicación con Coordenadas GPS y cálculo de distancia km desde Méntrida (1,50 €/km >50km + 120€ hotel), Invitados Pax (12 W/pax acústico) y Drawer de Filtros Inteligentes Avanzados (Multi-gremio, B2G LCSP, SPL, Certificación S-Class).",
       "command": "npx tsx scripts/test-airbnb-booking-filters.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-airbnb-booking-filters.ts; npx tsc --noEmit\"",
@@ -365,6 +367,21 @@
         "4. Actualizar 'src/app/(public)/proveedores/page.tsx': Sustituir el filtro antiguo por AirbnbNeuralBookingBar conectándolo a la API de búsqueda Prisma /api/profiles/search.",
         "5. Crear script de validación 'scripts/test-airbnb-booking-filters.ts': Probar cálculo de distancia Méntrida, cálculo 12 W/pax, persistencia de filtros y compilación limpia.",
         "6. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "tinder-neural-matcher-and-uber-dispatch-cascade",
+      "title": "Tinder Neural Matcher & Motor de Despacho Uber con Buffer de Tránsito y Cascada de Relevo",
+      "status": "PENDING",
+      "description": "Desplegar el sistema de matching perfecto estilo Tinder para EAR OS V2 con desglose presupuestario transparente con IVA (21%), validación de franjas horarias con buffer mínimo de 60 minutos de trayecto/desmontaje, y cascada de relevo automático tipo Uber en caso de prolongación de horas extra.",
+      "command": "npx tsx scripts/test-uber-dispatch-matcher.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-uber-dispatch-matcher.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/matchmaker/uberDispatchScheduleEngine.ts': Motor de cálculo de desglose con IVA 21%, logística Méntrida, verificación de franjas horarias con buffer mínimo de 60 minutos y algoritmo de cascada de relevo tipo Uber ante horas extra.",
+        "2. Crear 'src/features/matchmaker/ui/TinderNeuralMatcher.tsx': Interfaz deslizable estilo Tinder con tarjetas de artistas, especificación acústica 12W/pax, desglose con IVA y simulador interactivo de franjas horarias (Alcorcón 09:00 ➔ Algete 16:30 + test de horas extra).",
+        "3. Crear 'src/app/(public)/matcher/page.tsx': Ruta pública /matcher para la experiencia Tinder Neural Matcher.",
+        "4. Crear script de validación 'scripts/test-uber-dispatch-matcher.ts': Probar cálculo de IVA 21%, viabilidad de franjas horarias con buffer de 60 min y disparo de cascada de relevo Uber ante exceso de horas extra.",
+        "5. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
       ]
     }
   ]
