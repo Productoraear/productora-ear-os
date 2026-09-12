@@ -389,7 +389,9 @@
     {
       "id": "mariachi-high-traffic-uber-simulation",
       "title": "Simulación de Alto Tráfico Uber de Mariachis (32 Actuaciones Simultáneas Sábado)",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T13:17:00Z",
+      "validation": "npx tsx scripts/test-mariachi-high-traffic-simulation.ts -> Exit Code 0. Salida Mariachis Plaza Elíptica, Méntrida Edwin Agudelo, 32 actuaciones (18.615,40 €), 0% cancelaciones y relevos Uber probados. Commit y push completados.",
       "description": "Simulación masiva de 32 contrataciones de Mariachis el próximo sábado en 15+ municipios de Madrid y Castilla-La Mancha. Evaluación en vivo de franjas horarias, buffer de 60 min, desglose IVA 21%, logística Méntrida e inyección de horas extra con cascada de relevo tipo Uber.",
       "command": "npx tsx scripts/test-mariachi-high-traffic-simulation.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-mariachi-high-traffic-simulation.ts; npx tsc --noEmit\"",

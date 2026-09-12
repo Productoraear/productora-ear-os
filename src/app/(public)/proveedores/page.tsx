@@ -29,8 +29,6 @@ import {
   ArrowRight,
   ExternalLink
 } from 'lucide-react';
-import rawProvidersData from '@/data/curated_providers.json';
-import activeWhitelist from '@/data/active_providers_whitelist.json';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';
 import { BentoProviderCard, ProviderItem } from '@/components/providers/BentoProviderCard';
@@ -148,107 +146,58 @@ function ProveedoresDirectoryContent() {
 
   const pageSize = 24;
   
-  // Blindaje de Deduplicación, Whitelist CEO y Anti-Slop en Runtime S-Class
+  const [apiProviders, setApiProviders] = useState<ProviderItem[]>([]);
+  const [totalApiProviders, setTotalApiProviders] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    let isCancelled = false;
+    setIsLoading(true);
+
+    const params = new URLSearchParams();
+    if (selectedCategory && selectedCategory !== 'ALL') params.set('category', selectedCategory);
+    if (selectedProvince && selectedProvince !== 'ALL') params.set('province', selectedProvince);
+    if (searchQuery) params.set('q', searchQuery);
+    params.set('page', currentPage.toString());
+    params.set('limit', pageSize.toString());
+
+    fetch(`/api/profiles/search?${params.toString()}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!isCancelled && data.success) {
+          const mapped: ProviderItem[] = (data.providers || []).map((p: any) => ({
+            id: p.id || p.shaHash,
+            name: p.name,
+            slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
+            category: normalizeCategory(p.category, p.description, p.name),
+            province: p.province || 'Madrid',
+            description: p.description || '',
+            price: p.basePrice ? `${p.basePrice} €` : 'Consultar',
+            rating: p.rating || 5.0,
+            reviews: p.reviewsCount || 0,
+            img: p.imageUrl || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80',
+            gallery: p.imageUrl ? [p.imageUrl] : [],
+            isPreferred: p.status === 'VERIFIED_ACTIVE',
+            badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
+          }));
+
+          setApiProviders(mapped);
+          setTotalApiProviders(data.total || mapped.length);
+        }
+      })
+      .catch((err) => {
+        console.error('Prisma search API fallback:', err);
+      })
+      .finally(() => {
+        if (!isCancelled) setIsLoading(false);
+      });
+
+    return () => { isCancelled = true; };
+  }, [selectedCategory, selectedProvince, searchQuery, currentPage]);
+
   const providersData = useMemo(() => {
-    const activeIds = new Set((activeWhitelist.active_ids || []).map(x => x.toLowerCase().trim()));
-    const activeSlugs = new Set((activeWhitelist.active_slugs || []).map(x => x.toLowerCase().trim()));
-
-    const raw = rawProvidersData as unknown as ProviderItem[];
-    const seen = new Set<string>();
-
-    // Edwin Agudelo encabeza siempre con prioridad soberana #1
-    const sanitized: ProviderItem[] = [SOVEREIGN_EDWIN_AGUDELO];
-    seen.add('prov-ear-sovereign-01');
-    seen.add('edwin-agudelo');
-    seen.add('productoraearedwinagudelo');
-
-    for (const p of raw) {
-      if (!p || !p.name) continue;
-      const lowerName = p.name.toLowerCase().trim();
-      const pId = String(p.id || '').toLowerCase().trim();
-      const pSlug = String(p.slug || (p as any).atomic_specs?.slug || '').toLowerCase().trim();
-
-      // Veto estricto anti-slop y proveedores corruptos/no deseados
-      if (
-        lowerName.includes('peke teso') ||
-        pId.includes('peke-teso') ||
-        pSlug.includes('peke-teso') ||
-        pId === 'prov-6' ||
-        lowerName.includes('100 apodos') ||
-        pSlug.includes('100-apodos') ||
-        lowerName.startsWith('partner ') ||
-        lowerName.startsWith('antes de la boda') ||
-        lowerName.startsWith('crónicas de boda') ||
-        lowerName.startsWith('crnicas de boda') ||
-        lowerName.startsWith('después de la boda') ||
-        lowerName.startsWith('promociones de ') ||
-        lowerName.startsWith('invitaciones de ') ||
-        lowerName.startsWith('organiza tu boda') ||
-        lowerName.startsWith('descárgate la app')
-      ) {
-        continue;
-      }
-
-      // Mandato CEO S-Class: Política de Visibilidad Ética y Blindada
-      const isOpenDirectory = (activeWhitelist as any).policy === 'OPEN_DIRECTORY_WITH_OPTOUT';
-      const isEdwin = pId === 'prov-53' || lowerName.includes('edwin agudelo') || lowerName.includes('productora ear');
-      const isWhitelisted = activeIds.has(pId) || Boolean(pSlug && activeSlugs.has(pSlug));
-
-      if (!isOpenDirectory && !isEdwin && !isWhitelisted) {
-        // PERMANECE OCULTO SOLO SI LA POLÍTICA ES DENY_ALL_EXCEPT_WHITELIST
-        continue;
-      }
-
-      const normKey = lowerName.replace(/[^a-z0-9]/g, '');
-      if (seen.has(normKey) || seen.has(pId) || (pSlug && seen.has(pSlug))) continue;
-      seen.add(normKey);
-      if (pId) seen.add(pId);
-      if (pSlug) seen.add(pSlug);
-
-      // Rescate y normalización profunda de campos (SOTA Omega)
-      const pSpecs = (p as any).atomic_specs || {};
-      const rawCover = p.img || pSpecs.media?.coverImage || (p as any).image || (p.gallery && p.gallery[0]) || '';
-      const rawGallery = (p.gallery && p.gallery.length > 0) ? p.gallery : (pSpecs.media?.gallery || (rawCover ? [rawCover] : []));
-      const rawDesc = p.description || p.description_full || pSpecs.description || pSpecs.description_full || '';
-      const rawPhone = (p as any).phone || (p as any).telephone || (pSpecs as any).phone || '';
-      const rawProv = pSpecs.province || (p.province && p.province !== 'None' ? p.province : '') || pSpecs.city || (p as any).locality || (p as any).location || '';
-      const rawPrice = p.basePrice || pSpecs.pricing?.rentalBasePrice || (typeof p.price === 'number' ? p.price : null);
-      const rawRating = Number(pSpecs.metrics?.rating || p.rating || 0);
-      const rawReviews = Number(pSpecs.metrics?.reviewCount || p.reviews || 0);
-      const normCat = normalizeCategory(p.category || pSpecs.category, rawDesc, p.name);
-      const rawFaqs = (p as any).faqs || pSpecs.faqs || {};
-      const rawServices = (p as any).services_list || pSpecs.services_list || pSpecs.services || [];
-      const rawAddress = (p as any).address || pSpecs.address || '';
-
-      const enhancedProvider: ProviderItem = {
-        ...p,
-        category: normCat,
-        province: rawProv ? String(rawProv).trim().charAt(0).toUpperCase() + String(rawProv).trim().slice(1) : '',
-        description: rawDesc,
-        description_full: p.description_full || pSpecs.description_full || rawDesc, ['phone' as string]: rawPhone ? String(rawPhone).trim() : '',
-        ['phone' as string]: rawPhone ? String(rawPhone).trim() : '',
-        img: rawCover,
-        gallery: Array.isArray(rawGallery) ? rawGallery : [rawCover],
-        basePrice: rawPrice,
-        price: rawPrice ? `${rawPrice} €` : 'Consultar',
-        rating: isNaN(rawRating) || rawRating === 0 ? undefined : rawRating,
-        reviews: isNaN(rawReviews) || rawReviews === 0 ? undefined : rawReviews,
-        ['faqs' as string]: rawFaqs,
-        ['services_list' as string]: Array.isArray(rawServices) ? rawServices : [],
-        ['address' as string]: rawAddress,
-        ['atomic_specs' as string]: pSpecs,
-        isPreferred: Boolean(isEdwin || isWhitelisted),
-        badge: isEdwin 
-          ? 'SOLISTA S-CLASS' 
-          : isWhitelisted 
-            ? 'VERIFICADO S-CLASS' 
-            : 'DIRECTORIO HOMOLOGADO'
-      };
-
-      sanitized.push(enhancedProvider);
-    }
-    return sanitized;
-  }, []);
+    return [SOVEREIGN_EDWIN_AGUDELO, ...apiProviders];
+  }, [apiProviders]);
 
   // Conteos semánticos precalculados para evitar cualquier '0'
   const categoryCounts = useMemo(() => {
