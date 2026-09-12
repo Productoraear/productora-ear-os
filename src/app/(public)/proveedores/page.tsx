@@ -29,7 +29,7 @@ import {
   ArrowRight,
   ExternalLink
 } from 'lucide-react';
-import rawProvidersData from '@/data/all_providers_database.json';
+import rawProvidersData from '@/data/curated_providers.json';
 import activeWhitelist from '@/data/active_providers_whitelist.json';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';

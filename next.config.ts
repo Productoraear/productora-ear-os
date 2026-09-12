@@ -13,6 +13,15 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
+  outputFileTracingExcludes: {
+    '*': [
+      './src/data/staging/**',
+      './src/data/wedding_intel_vault/**',
+      './src/data/catalog/ADN_EAR_INDEX.json',
+      './src/data/vampirized-providers-deep-sclass.json',
+      './src/data/vampirized_providers.backup.json',
+    ],
+  },
   experimental: {
     optimizePackageImports: [
       "lucide-react",
