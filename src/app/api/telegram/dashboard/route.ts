@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 <i>EAR OS GOLD · Neural Strategic Engine v5.2</i>
 `.trim();
     } else {
-      const dossierLink = `https://www.productoraear.com/blog/b2g?municipio=${encodeURIComponent(municipio)}&presupuesto=${presupuestoMax}&cpv=${encodeURIComponent(cpv)}&objeto=${encodeURIComponent(objeto)}`;
+      const dossierLink = `https://www.productoraear.com/ayuntamientos?municipio=${encodeURIComponent(municipio)}&presupuesto=${presupuestoMax}&cpv=${encodeURIComponent(cpv)}&objeto=${encodeURIComponent(objeto)}`;
 
       textMessage = `
 🏛️ <b>NUEVA OPORTUNIDAD B2G DETECTADA (HUNTER AGENT)</b>
@@ -59,8 +59,8 @@ export async function POST(req: Request) {
 🏷️ <b>CPV:</b> ${cpv}
 🛰️ <b>Fuente:</b> ${fuente}
 
-📋 <b>Dossier Autogenerado ODS 2030:</b>
-<a href="${dossierLink}">📄 Ver Expediente LCSP y Generar PDF</a>
+⚡ <b>ACCESO EN 1-CLIC (Nave Nodriza EAR OS):</b>
+<a href="${dossierLink}">📄 Abrir Expediente LCSP y Generar PDF en 1-Clic</a>
 ───────────
 <i>EAR OS V2 :: Soberanía Comercial & Plenos Municipales</i>
 `.trim();

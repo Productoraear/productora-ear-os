@@ -50,7 +50,7 @@ const SOVEREIGN_EDWIN_AGUDELO: ProviderItem = {
   price: '350,00 €',
   rating: 5.0,
   reviews: 128,
-  img: 'https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg',
+  img: '/assets/shadow_vendors/c6831218af2e78b8.jpg',
   isPreferred: true,
   badge: 'SOLISTA S-CLASS',
   customUrl: '/artistas/edwin-agudelo'
@@ -165,21 +165,30 @@ function ProveedoresDirectoryContent() {
       .then(res => res.json())
       .then(data => {
         if (!isCancelled && data.success) {
-          const mapped: ProviderItem[] = (data.providers || []).map((p: any) => ({
-            id: p.id || p.shaHash,
-            name: p.name,
-            slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
-            category: normalizeCategory(p.category, p.description, p.name),
-            province: p.province || 'Madrid',
-            description: p.description || '',
-            price: p.basePrice ? `${p.basePrice} €` : 'Consultar',
-            rating: p.rating || 5.0,
-            reviews: p.reviewsCount || 0,
-            img: p.imageUrl || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80',
-            gallery: p.imageUrl ? [p.imageUrl] : [],
-            isPreferred: p.status === 'VERIFIED_ACTIVE',
-            badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
-          }));
+          const mapped: ProviderItem[] = (data.providers || []).map((p: any) => {
+            // La API devuelve el array 'imageUrls' (rutas locales soberanas).
+            // El fallback usa el placeholder neutro estático.
+            const imageUrls: string[] = Array.isArray(p.imageUrls)
+              ? p.imageUrls.filter((u: any) => typeof u === 'string' && u.length > 0)
+              : [];
+            const featured = imageUrls[0] || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80';
+
+            return {
+              id: p.id || p.shaHash,
+              name: p.name,
+              slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
+              category: normalizeCategory(p.category, p.description, p.name),
+              province: p.province || 'Madrid',
+              description: p.description || '',
+              price: p.basePrice ? `${p.basePrice} €` : 'Consultar',
+              rating: p.rating || 5.0,
+              reviews: p.reviewsCount || 0,
+              img: featured,
+              gallery: imageUrls.length > 0 ? imageUrls : [featured],
+              isPreferred: p.status === 'VERIFIED_ACTIVE',
+              badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
+            };
+          });
 
           setApiProviders(mapped);
           setTotalApiProviders(data.total || mapped.length);

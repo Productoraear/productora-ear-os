@@ -666,7 +666,19 @@
     {
       "id": "hormozi-pseo-high-retention-landings",
       "title": "Motor pSEO de Landings de Alta Retención & Intención de Búsqueda Hormozi ($100M Grand Slam Offer)",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T19:53:00+02:00",
+      "validation": "npx tsx scripts/test-hormozi-pseo-sitemap.ts -> Exit Code 0 (7/7 checks, 520 landings, 0 URLs rotas). npx tsc --noEmit -> Exit Code 0.",
+      "report": {
+        "HECHO_VERIFICADO": "searchIntentEngine.ts (10 gremios × 52 provincias, 12W/pax, 1,50€/km Méntrida >50km, hotel +120€, split y Price-Lock), 6 componentes WOW (AcousticSpatialSim, MentridaFleetTracker, LocalProofGallery, HormoziOfferStack, SchemaOrgMarkup + integrador HormoziGrandSlamLanding), schemaOrgGenerator.ts (Service/FAQPage/AggregateRating), página dinámica /servicios/[servicio]/[provincia] conectada y sitemap partición 1 actualizado a 10 gremios.",
+        "HIPÓTESIS": "Las landings de alta retención con Information Gain (simulador acústico, telemetría Méntrida, gallery local y value stack Hormozi) maximizan permanencia y CTR frente a plantillas genéricas.",
+        "DECISIÓN": "Preservar la rama transporte-vip (ChauffeurVipView) y delegar el resto de gremios canónicos a HormoziGrandSlamLanding.",
+        "RIESGOS": "Bajo. Los proofPhotos usan rutas locales deterministas /assets/shadow_vendors/ con fallback de dossier si la galería aún no está sincronizada.",
+        "CAMBIOS": "src/lib/seo/searchIntentEngine.ts, src/lib/seo/schemaOrgGenerator.ts, src/features/landing/HormoziGrandSlamLanding.tsx, src/features/landing/components/{AcousticSpatialSim,MentridaFleetTracker,LocalProofGallery,HormoziOfferStack,SchemaOrgMarkup}.tsx, src/app/(public)/servicios/[servicio]/[provincia]/page.tsx, src/app/sitemap.ts, scripts/test-hormozi-pseo-sitemap.ts.",
+        "VALIDACIONES": "npx tsx scripts/test-hormozi-pseo-sitemap.ts -> Exit Code 0. npx tsc --noEmit -> Exit Code 0.",
+        "ESTADO_BLOQUE": "COMPLETED",
+        "SIGUIENTE_PASO": "Git commit y push doble remoto (origin + vercel-repo) para activar el despliegue."
+      },
       "description": "Construir e integrar el motor de landings de ultra-alta conversión y retención inmediata (<500ms) para los 10 gremios x 52 provincias. Cada landing ataca con precisión milimétrica la intención de búsqueda real del lead (Audio, Presupuesto con IVA 21%, Disponibilidad atómica, Repertorio y Relevo Uber 0% cancelaciones), con el Value Stack de Alex Hormozi ($100M Offers), 5 componentes modulares WOW, estética OLED cinematográfica y sitemap pSEO masivo.",
       "command": "npx tsx scripts/test-hormozi-pseo-sitemap.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-hormozi-pseo-sitemap.ts; npx tsc --noEmit\"",

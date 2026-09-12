@@ -5,6 +5,7 @@ import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { CHRISTMAS_LIGHTING_PRODUCTS } from '@/data/luces-navidad';
 import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
 import { isProviderPublic } from '@/lib/providers/visibility';
+import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
 
 const BASE_URL = 'https://www.productoraear.com';
 
@@ -190,8 +191,8 @@ export default async function sitemap(props: {
         addEntry(`${BASE_URL}/bodas/${prov}/eventos`, 0.85, 'weekly');
         addEntry(`${BASE_URL}/b2g/${prov}`, 0.85, 'weekly');
 
-        for (const serv of REGIONAL_SERVICES) {
-          addEntry(`${BASE_URL}/servicios/${serv}/${prov}`, 0.85, 'weekly');
+        for (const serv of CANONICAL_GREMIO_SLUGS) {
+          addEntry(`${BASE_URL}/servicios/${serv}/${prov}`, 0.90, 'weekly');
         }
       }
       break;

@@ -11,7 +11,16 @@ import crypto from 'crypto';
  */
 
 const BATCH_SIZE = 500;
-const JSON_FILE_PATH = path.join(process.cwd(), 'src', 'data', 'vampirized_providers.json');
+// Prioridad: dataset sincronizado con imágenes soberanas (sin hotlinks).
+// Fallback: dataset consolidado original.
+const JSON_FILE_PATH = path.join(
+  process.cwd(),
+  'src',
+  'data',
+  fs.existsSync(path.join(process.cwd(), 'src', 'data', 'vampirized-providers-synchronized.json'))
+    ? 'vampirized-providers-synchronized.json'
+    : 'vampirized_providers.json'
+);
 
 function cleanString(str: any): string {
   if (typeof str !== 'string') return '';
@@ -66,9 +75,13 @@ async function main() {
       const shaHash = p.shaHash ? cleanString(p.shaHash) : computeSha256(`${name}|${province}|${category}`);
       const claimToken = p.claimToken ? cleanString(p.claimToken) : generateClaimToken(name, province);
 
-      const imageUrls: string[] = Array.isArray(p.image_urls)
-        ? p.image_urls.map((img: any) => cleanString(typeof img === 'string' ? img : img.url)).filter(Boolean)
-        : (Array.isArray(p.images) ? p.images.map((img: any) => cleanString(img)).filter(Boolean) : []);
+      // El dataset sincronizado usa 'imageUrls' (array directo de rutas locales).
+      // El dataset consolidado original usa 'image_urls' (array de strings o {url}).
+      const imageUrls: string[] = Array.isArray(p.imageUrls)
+        ? p.imageUrls.map((img: any) => cleanString(typeof img === 'string' ? img : img.url)).filter(Boolean)
+        : Array.isArray(p.image_urls)
+          ? p.image_urls.map((img: any) => cleanString(typeof img === 'string' ? img : img.url)).filter(Boolean)
+          : (Array.isArray(p.images) ? p.images.map((img: any) => cleanString(img)).filter(Boolean) : []);
 
       return {
         shaHash,

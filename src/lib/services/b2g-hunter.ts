@@ -69,9 +69,11 @@ function formatAlertMessageHtml(item: Licitacion): string {
     ? (item.presupuestoMaximo * 0.95).toFixed(2)
     : (item.presupuestoMaximo * 0.92).toFixed(2);
 
-  const dossierUrl = `https://www.productoraear.com/blog/b2g?municipio=${encodeURIComponent(
+  const earCommandUrl = `https://www.productoraear.com/ayuntamientos?municipio=${encodeURIComponent(
     item.ayuntamiento
-  )}&presupuesto=${ofertaSugerida}&cpv=${item.cpv}`;
+  )}&objeto=${encodeURIComponent(item.objeto)}&presupuesto=${item.presupuestoMaximo}&cpv=${encodeURIComponent(
+    item.cpv
+  )}`;
 
   return `🏛️ <b>NUEVA OPORTUNIDAD B2G DETECTADA (HUNTER AGENT)</b>
 --------------------------------------------------
@@ -82,10 +84,10 @@ function formatAlertMessageHtml(item: Licitacion): string {
 🏷️ <b>Modalidad:</b> ${item.tipoContrato} (CPV: ${item.cpv})
 🛰️ <b>Fuente Verificable:</b> ${item.fuente || 'PLACSP'}
 
-📋 <b>Dossier & Memoria Técnica ODS 2030:</b>
-<a href="${dossierUrl}">Generar Memoria Técnica y PDF</a>
+⚡ <b>ACCESO EN 1-CLIC (Nave Nodriza EAR OS):</b>
+<a href="${earCommandUrl}">📄 Generar Memoria Técnica LCSP y Expediente en 1-Clic</a>
 
-🔗 <a href="${item.linkPliego}">Auditar en Plataforma de Contratación (PLACSP)</a>
+🔗 <a href="${item.linkPliego}">Auditar Perfil de Contratante en PLACSP</a>
 --------------------------------------------------
 <i>EAR OS V2 :: Soberanía Comercial y Radar de Contratación Pública</i>`;
 }

@@ -1,22 +1,41 @@
-"use client";
-
-import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Building2, FileText, Download, Copy, Check, Sparkles, 
-  ShieldCheck, ArrowRight, DollarSign, Calendar, MapPin, Award, Layers
+  ShieldCheck, ArrowRight, DollarSign, Calendar, MapPin, Award, Layers, ExternalLink
 } from 'lucide-react';
 
-export const B2GMemoryGenerator: React.FC = () => {
+function B2GMemoryGeneratorContent() {
+  const searchParams = useSearchParams();
+
   const [municipio, setMunicipio] = useState('Ayuntamiento de Toledo');
   const [objetoContrato, setObjetoContrato] = useState('Circuito Municipal de Conciertos de Gala y Tradición Musical');
   const [presupuestoMax, setPresupuestoMax] = useState(14950);
   const [fechaEvento, setFechaEvento] = useState('Septiembre 2026');
   const [codigoDIR3, setCodigoDIR3] = useState('L01451688');
   const [cpv, setCpv] = useState('92300000-4 (Servicios de Espectáculos)');
+  const [idBp, setIdBp] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedDossier, setGeneratedDossier] = useState<string | null>(null);
   const [hasCopied, setHasCopied] = useState(false);
+  const [hasCopiedId, setHasCopiedId] = useState(false);
+
+  useEffect(() => {
+    const qMunicipio = searchParams.get('municipio') || searchParams.get('entidad');
+    const qObjeto = searchParams.get('objeto') || searchParams.get('title');
+    const qPresupuesto = searchParams.get('presupuesto') || searchParams.get('presupuestoMax');
+    const qCpv = searchParams.get('cpv');
+    const qDir3 = searchParams.get('dir3') || searchParams.get('codigoDIR3');
+    const qIdBp = searchParams.get('idBp') || searchParams.get('expediente');
+
+    if (qMunicipio) setMunicipio(qMunicipio);
+    if (qObjeto) setObjetoContrato(qObjeto);
+    if (qPresupuesto && !isNaN(Number(qPresupuesto))) setPresupuestoMax(Number(qPresupuesto));
+    if (qCpv) setCpv(qCpv);
+    if (qDir3) setCodigoDIR3(qDir3);
+    if (qIdBp) setIdBp(qIdBp);
+  }, [searchParams]);
 
   const ofertaSugerida = Math.round(presupuestoMax * 0.95 * 100) / 100;
   const ivaCalculado = Math.round(ofertaSugerida * 0.21 * 100) / 100;
@@ -237,5 +256,13 @@ Sede: Calle Tórtola 5, Encinasola (Toledo) • Cobertura Nacional
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+export const B2GMemoryGenerator: React.FC = () => {
+  return (
+    <Suspense fallback={<div className="p-8 text-center font-mono text-xs text-white/50">Cargando Generador B2G...</div>}>
+      <B2GMemoryGeneratorContent />
+    </Suspense>
   );
 };

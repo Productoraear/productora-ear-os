@@ -66,10 +66,10 @@ async function runDiagnostic() {
 🏷️ <b>Modalidad:</b> Menor (Art. 118 LCSP) (CPV: 92300000-4)
 🛰️ <b>Fuente Verificable:</b> BOP_TOLEDO / PLACSP
 
-📋 <b>Dossier & Memoria Técnica Autogenerada ODS 2030:</b>
-<a href="https://www.productoraear.com/ayuntamientos">Generar Memoria Técnica en 1-Clic</a>
+⚡ <b>ACCESO EN 1-CLIC (Nave Nodriza EAR OS):</b>
+<a href="https://www.productoraear.com/ayuntamientos?municipio=Ayuntamiento%20de%20Illescas%20(Toledo)&objeto=Sonorizaci%C3%B3n%20L-Acoustics%2FBose%20F1%20y%20Concierto%20L%C3%ADrico%20de%20Mariachi...&presupuesto=14950&cpv=92300000-4&idBp=Illescas">📄 Abrir Expediente LCSP y Generar PDF en 1-Clic</a>
 
-🔗 <a href="https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=Illescas">Auditar en Plataforma de Contratación (PLACSP)</a>
+🔗 <a href="https://contrataciondelestado.es/wps/poc?uri=deeplink:perfilContratante&idBp=Illescas">Auditar Perfil de Contratante en PLACSP</a>
 --------------------------------------------------
 <i>EAR OS V2 :: Soberanía Comercial y Radar de Contratación Pública</i>`;
 

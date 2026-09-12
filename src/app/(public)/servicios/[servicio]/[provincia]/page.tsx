@@ -1,9 +1,10 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
 import ChauffeurVipView from '@/features/chauffeur/ui/ChauffeurVipView';
 import { resolveGeoLocation } from '@/lib/seo/semantic-engine';
+import { resolveSearchIntent } from '@/lib/seo/searchIntentEngine';
+import HormoziGrandSlamLanding from '@/features/landing/HormoziGrandSlamLanding';
 
 interface PageProps {
   params: Promise<{
@@ -33,7 +34,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const fullPath = `${servicio}-${provincia}`.toLowerCase();
   const geo = resolveGeoLocation(provincia);
   const cityName = geo?.cityName || geo?.name || formatProvincia(provincia);
-  const serviceFormatted = formatText(servicio);
 
   if (/chofer|conductor|transfer|coche|transporte-vip/.test(fullPath)) {
     return {
@@ -45,11 +45,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const profile = resolveSearchIntent(servicio, provincia);
   return {
-    title: `${serviceFormatted} en ${cityName} | Productora EAR`,
-    description: `Servicios profesionales de ${serviceFormatted} en ${cityName} con infraestructura técnica directa, sonido calibrado y garantía S-Class.`,
+    title: `${profile.gremioLabel} en ${profile.provinciaName} | Productora EAR`,
+    description: `${profile.dreamOutcome} Presupuesto cerrado desde ${profile.basePrice} € con fianza de ${profile.deposit} € (Price-Lock SHA-256). Logística Méntrida 1,50 €/km y Garantía de Relevo Uber 0% cancelaciones.`,
     alternates: {
       canonical: `https://www.productoraear.com/servicios/${servicio}/${provincia}`,
+    },
+    openGraph: {
+      title: `${profile.gremioLabel} en ${profile.provinciaName} | Productora EAR`,
+      description: profile.dreamOutcome,
+      type: 'website',
+      url: `https://www.productoraear.com/servicios/${servicio}/${provincia}`,
+      locale: 'es_ES'
     }
   };
 }
@@ -61,23 +69,12 @@ export default async function ServiciosProvinciaPage({ params }: PageProps) {
   const fullPath = `${servicio}-${provincia}`.toLowerCase();
   const geo = resolveGeoLocation(provincia);
   const cityName = geo?.cityName || geo?.name || formatProvincia(provincia);
-  const serviceFormatted = formatText(servicio);
 
   if (/chofer|conductor|transfer|coche|transporte-vip/.test(fullPath)) {
     return <ChauffeurVipView location={cityName} />;
   }
 
-  return (
-    <main className="min-h-screen bg-black text-white">
-      <BespokeTemplate
-        title={`${serviceFormatted} en ${cityName}`}
-        description={`Producción S-Class y contratación directa de ${serviceFormatted} en ${cityName} con infraestructura técnica asegurada.`}
-        location={cityName}
-        province={cityName}
-        category={servicio}
-        serviceId={servicio}
-        isApex={true}
-      />
-    </main>
-  );
+  const profile = resolveSearchIntent(servicio, provincia);
+
+  return <HormoziGrandSlamLanding profile={profile} />;
 }
