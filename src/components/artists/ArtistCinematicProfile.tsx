@@ -148,7 +148,7 @@ export default function ArtistCinematicProfile({
 
   const handleSelectFormatAndQuote = (formatId: string) => {
     setSelectedFormatId(formatId);
-    setActiveTab('BOOKING');
+    setActiveTab('ROSTER_14');
     setTimeout(() => {
       const el = document.getElementById('cotizador-cierre');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -158,20 +158,20 @@ export default function ArtistCinematicProfile({
   return (
     <div className="relative min-h-screen bg-[#030305] text-white selection:bg-[#FF2B44] selection:text-white font-sans pt-28 md:pt-32">
       
-      {/* ── BARRA SUPERIOR DE AUTORIDAD Y CONTACTO DIRECTO ── */}
-      <aside aria-label="Gobernanza y Sello" className="border-b border-white/10 bg-[#07070b]/90 backdrop-blur-xl px-6 py-2 text-xs text-white/70">
+      {/* ── BARRA SUPERIOR DE DISPONIBILIDAD Y TRATO DIRECTO ── */}
+      <aside aria-label="Contacto Directo" className="border-b border-white/10 bg-[#07070b]/90 backdrop-blur-xl px-6 py-2.5 text-xs text-white/70">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <span className="inline-block h-2 w-2 rounded-full bg-[#FF2B44] animate-pulse" />
-            <span className="font-mono uppercase tracking-[0.2em] text-[#FF2B44] font-bold text-[11px]">
-              Dossier Oficial de Artista Homologado
+            <span className="font-mono uppercase tracking-[0.15em] text-[#FF2B44] font-bold text-[11px]">
+              Contratación Directa sin Intermediarios
             </span>
             <span className="text-white/20">•</span>
-            <span className="hidden sm:inline font-mono text-[11px] text-[#AAD6CD]">Protocolo Acústico Certificado 12 W/pax</span>
+            <span className="hidden sm:inline font-mono text-[11px] text-[#AAD6CD]">Solo 1 actuación por fecha para máxima entrega</span>
           </div>
           <div className="flex items-center gap-6 font-mono text-[11px]">
-            <span>Base Logística: <strong className="text-white">Méntrida (Toledo)</strong></span>
-            <span>Atención Directa: <a href="tel:+34693693048" className="text-[#FF2B44] hover:underline font-bold">+34 693 693 048</a></span>
+            <span>Base: <strong className="text-white">Méntrida (Toledo)</strong></span>
+            <span>WhatsApp Directo: <a href="tel:+34693693048" className="text-[#FF2B44] hover:underline font-bold">+34 693 693 048</a></span>
           </div>
         </div>
       </aside>
@@ -193,40 +193,40 @@ export default function ArtistCinematicProfile({
                 <div className="relative w-full aspect-video bg-black overflow-hidden">
                   <iframe
                     src="https://www.youtube-nocookie.com/embed/fLT4-kqfdI4?rel=0&modestbranding=1&controls=1&showinfo=0&iv_load_policy=3&fs=1&disablekb=0"
-                    title="Edwin Agudelo - Master Showcase en Directo"
+                    title="Edwin Agudelo en Vivo"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className="absolute inset-0 w-full h-full border-0"
                   />
                 </div>
                 
-                {/* Barra de Telemetría Inferior High-End */}
+                {/* Barra de Telemetría Inferior */}
                 <div className="px-5 py-3.5 bg-[#08080c] border-t border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <span className="h-2 w-2 rounded-full bg-[#FF2B44] animate-ping" />
                     <span className="font-mono text-[11px] uppercase tracking-widest text-[#FF2B44] font-bold">
-                      Directo de Gala · Máxima Calidad
+                      Directo de Gala · Voz & Corazón
                     </span>
                   </div>
                   <div className="flex items-center gap-3 font-mono text-[11px] text-white/60">
-                    <span className="text-[#AAD6CD]">Bose F1 (12 W/pax)</span>
+                    <span className="text-[#AAD6CD]">Sonido Bose 2.000W</span>
                     <span className="text-white/20">•</span>
-                    <span className="text-white/80">Shure Beta 87A</span>
+                    <span className="text-white/80">Pistas Master de Alta Fidelidad</span>
                   </div>
                 </div>
 
               </div>
             </div>
 
-            {/* PROPUESTA DE VALOR DE IMPACTO INMEDIATO */}
+            {/* PROPUESTA DE VALOR DE IMPACTO INMEDIATO (VOZ REAL DE EDWIN) */}
             <div className="lg:col-span-5 space-y-6">
               
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-[#FF2B44] px-3.5 py-1 text-[10px] font-mono font-black uppercase tracking-widest text-white shadow-[0_0_15px_rgba(255,43,68,0.4)]">
-                  Tenor Lírico Solista
+                  Cantante & Compositor
                 </span>
                 <span className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-white/80">
-                  Productora EAR
+                  Música de Gala
                 </span>
                 <span className="rounded-full border border-[#AAD6CD]/30 bg-[#AAD6CD]/10 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-[#AAD6CD]">
                   Proyecto VIMUME
@@ -238,38 +238,38 @@ export default function ArtistCinematicProfile({
                   {name}
                 </h1>
                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#AAD6CD] font-bold">
-                  {specialty}
+                  Voz Lírica, Tradición y Conexión con tu Gente
                 </p>
               </div>
 
-              {/* PROPUESTA DE VALOR DIRECTA: CONVIERTE TU EVENTO EN UNA OVACIÓN HISTÓRICA */}
-              <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/[0.04] to-transparent p-5 space-y-2 relative overflow-hidden">
+              {/* PROPUESTA CERCANA Y EMPÁTICA */}
+              <div className="rounded-2xl border border-white/15 bg-gradient-to-br from-white/[0.04] to-transparent p-5 space-y-2.5 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-1 h-full bg-[#FF2B44]" />
-                <h2 className="font-syne text-xl sm:text-2xl font-black uppercase text-white tracking-wide">
-                  Convierte tu evento en una ovación que tus invitados recordarán durante décadas
+                <h2 className="font-syne text-lg sm:text-xl font-bold text-white tracking-wide leading-snug">
+                  Hacer de vuestro día especial algo verdaderamente memorable
                 </h2>
-                <p className="font-sans text-xs sm:text-sm text-white/75 font-light leading-relaxed">
-                  No vendemos minutos de música de fondo; aseguramos una presencia escénica visceral con tesitura de tenor lírico y la sonorización de alta fidelidad más limpia de Madrid y Toledo.
+                <p className="font-sans text-xs sm:text-sm text-white/75 font-normal leading-relaxed">
+                  Me ocupo de conocer vuestra historia para elegir juntos las canciones que llegan a la fibra. Desde el homenaje más emotivo a vuestros seres queridos hasta la fiesta donde todos cantan y sonríen.
                 </p>
               </div>
 
-              {/* DATOS DE AUTORIDAD COMPACTOS */}
+              {/* DATOS DE CONFIANZA */}
               <div className="grid grid-cols-4 gap-2 pt-1">
                 <div className="rounded-xl border border-white/10 bg-[#09090e] p-2.5 text-center">
-                  <span className="block font-syne text-lg sm:text-xl font-black text-[#FF2B44]">160k+</span>
-                  <span className="font-mono text-[8px] uppercase tracking-wider text-white/50">KM Escenario</span>
+                  <span className="block font-syne text-lg sm:text-xl font-black text-[#FF2B44]">25+</span>
+                  <span className="font-mono text-[8px] uppercase tracking-wider text-white/50">Años Oficio</span>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-[#09090e] p-2.5 text-center">
-                  <span className="block font-syne text-lg sm:text-xl font-black text-white">37</span>
-                  <span className="font-mono text-[8px] uppercase tracking-wider text-white/50">Giras Int.</span>
+                  <span className="block font-syne text-lg sm:text-xl font-black text-white">100%</span>
+                  <span className="font-mono text-[8px] uppercase tracking-wider text-white/50">En Vivo</span>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-[#09090e] p-2.5 text-center">
-                  <span className="block font-syne text-lg sm:text-xl font-black text-[#AAD6CD]">14</span>
+                  <span className="block font-syne text-lg sm:text-xl font-black text-[#AAD6CD]">4</span>
                   <span className="font-mono text-[8px] uppercase tracking-wider text-white/50">Formatos</span>
                 </div>
                 <div className="rounded-xl border border-white/10 bg-[#09090e] p-2.5 text-center">
-                  <span className="block font-syne text-lg sm:text-xl font-black text-white">80/10/10</span>
-                  <span className="font-mono text-[8px] uppercase tracking-wider text-white/50">Soberano</span>
+                  <span className="block font-syne text-lg sm:text-xl font-black text-white">Bose</span>
+                  <span className="font-mono text-[8px] uppercase tracking-wider text-white/50">Sonido 2.000W</span>
                 </div>
               </div>
 
@@ -280,25 +280,25 @@ export default function ArtistCinematicProfile({
                   className="rounded-xl bg-[#FF2B44] px-6 py-3.5 font-mono text-xs font-black uppercase tracking-[0.15em] text-white shadow-[0_0_25px_rgba(255,43,68,0.4)] transition-all hover:scale-105 hover:bg-white hover:text-black flex items-center gap-2.5 cursor-pointer"
                 >
                   <Lock size={14} />
-                  <span>Bloquear Fecha (100 €)</span>
+                  <span>Reservar Fecha (100 €)</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('ROSTER_14')}
                   className="rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10 flex items-center gap-2 cursor-pointer"
                 >
                   <Layers size={14} className="text-[#AAD6CD]" />
-                  <span>Ver los 14 Formatos</span>
+                  <span>Ver Opciones y Tarifas</span>
                 </button>
                 <a
                   href={`https://wa.me/34693693048?text=${encodeURIComponent(
-                    'Hola Edwin, deseo consultar disponibilidad para tu actuación de Tenor Solista Mariachi 350€.'
+                    'Hola Edwin, deseo consultar disponibilidad para tu actuación.'
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="rounded-xl border border-[#AAD6CD]/40 bg-[#AAD6CD]/10 px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-[#AAD6CD] transition-colors hover:bg-[#AAD6CD]/20 flex items-center gap-2"
                 >
                   <Phone size={13} />
-                  <span>WhatsApp</span>
+                  <span>Hablar con Edwin</span>
                 </a>
               </div>
 
@@ -311,87 +311,95 @@ export default function ArtistCinematicProfile({
 
       {/* ── LA OFERTA IRRESISTIBLE S-CLASS (SECUENCIA DE 8 PASOS DE VALOR) ── */}
       <SClassIrresistibleOffer
-        promiseBadge="CONTRATACIÓN DIRECTA S-CLASS // EDWIN AGUDELO"
+        promiseBadge="CONTRATACIÓN DIRECTA // PACK SOLISTA PREMIUM"
         headlinePromise="Convierte tu evento en una ovación histórica que tus invitados recordarán durante décadas"
-        subPromise="No contratas minutos de música de fondo; aseguras una presencia escénica arrolladora con tesitura de tenor lírico y la sonorización de alta fidelidad más nítida de Madrid y Toledo."
+        subPromise="No contratas minutos de música de fondo; aseguras una presencia escénica visceral con tesitura de tenor lírico y la sonorización de alta fidelidad más nítida de Madrid y Toledo."
         benefits={[
           {
-            title: "Catarsis Emocional Garantizada",
-            desc: "Dominio absoluto del clímax festivo y ceremonial. Repertorio de mariachi, rancheras de gala y boleros que erizan la piel y levantan a todos los invitados."
+            title: "Emoción y Respeto a tu Historia",
+            desc: "Primero conocemos vuestra historia y elegimos juntos las canciones para llegar hasta la fibra, creando un repertorio a medida."
           },
           {
-            title: "Cero Distorsión y Cero Acoples",
-            desc: "Ingeniería de sonido militarizada: micrófonos Shure Axient Beta 87A y columnas Bose F1 con presión homogénea de 12 W/pax sin fatiga auditiva."
+            title: "Sonido Bose 2.000W Impecable",
+            desc: "Claridad cristalina sin fatiga auditiva. Microfonía profesional Shure Beta 87A para que cada estrofa e instrumento se escuche perfecto."
           },
           {
-            title: "Trato Directo sin Intermediarios",
-            desc: "Hablas directamente con el artista principal y la dirección técnica de Productora EAR. 100% de compromiso, puntualidad británica y traje charro impecable."
+            title: "Trato Directo y Cercano con Edwin",
+            desc: "Hablas directamente con el artista. Puntualidad impecable, traje de gala charro artesanal y compromiso total con tu celebración."
           }
         ]}
-        deliverablesBadge="ENTREGABLES TANGIBLES Y COMPROMISOS EXACTOS"
-        deliverablesTitle="Lo que recibes en tu celebración sin sorpresas ni letra pequeña"
+        deliverablesBadge="ENTREGABLES DEL SHOW SOLISTA PREMIUM"
+        deliverablesTitle="Todo lo que incluye el Show Solista Premium (350 €) para tu gran día"
         deliverables={[
           {
-            spec: "1x Tenor Solista en Vivo (Edwin Agudelo)",
-            detail: "Actuación estelar de 60 minutos ininterrumpidos con traje de gala charro artesanal y botonaduras de plata."
+            spec: "Actuación en Directo (Edwin Agudelo)",
+            detail: "Show de 60 minutos con máxima flexibilidad (2 salidas de 30 minutos: la primera dedicada a homenajeados y la segunda para complacer peticiones)."
           },
           {
-            spec: "Sistema de PA Bose F1 Model 812",
-            detail: "Despliegue acústico con dispersión vertical flexible homologado a 12 W por invitado hasta 300 personas."
+            spec: "Equipo Profesional Bose 2.000W",
+            detail: "Sonorización de alta gama con cobertura hasta 300 personas en interiores y exteriores con microfonía Shure Beta 87A."
           },
           {
-            spec: "Microfonía Inalámbrica Shure Beta 87A",
-            detail: "Cápsula de condensador súpercardioide para una inteligibilidad de la voz cristalina en interiores y exteriores."
+            spec: "Photocall Temático con Sombreros Charros",
+            detail: "Llevamos sombreros artesanales para que todos tus invitados participen y se lleven un recuerdo visual inolvidable."
           },
           {
-            spec: "Transporte y Montaje Técnico Incluido",
-            detail: "Llegada con 60 minutos de antelación para prueba de sonido sin interferir con la recepción de invitados."
+            spec: "Sesión de Fotos en las Mesas con el Artista",
+            detail: "Edwin se acerca mesa por mesa para compartir con los invitados y tomar fotos de recuerdo en alta resolución sin molestias."
+          },
+          {
+            spec: "Ramo de Flores de Cortesía",
+            detail: "Entregado en mano durante el tema de apertura para que se lo ofrezcas a tu pareja, madre o persona homenajeada."
+          },
+          {
+            spec: "Exclusividad Absoluta de Fecha",
+            detail: "Solo trabajo con vosotras esa fecha. Máxima frescura vocal y dedicación al 100% a vuestro evento."
           }
         ]}
         priceAnchor={{
           totalValueEstimate: "750,00 €",
           finalPrice: "350,00 €",
           depositAmount: "100,00 €",
-          periodOrFormat: "Tarifa Suelo Oficial Solista (1 hora)",
-          legalNote: "Tarifa base para eventos en radio de 50 km desde Hub Méntrida. Kilometraje adicional: 1,50 €/km."
+          periodOrFormat: "Show Solista Premium Completo",
+          legalNote: "Tarifa para eventos en radio de 50 km desde Méntrida. Kilometraje adicional: 1,50 €/km."
         }}
         guarantee={{
-          badgeText: "GARANTÍA SOBERANA RIESGO CERO",
-          title: "Garantía de Satisfacción Total y Acústica Homologada",
-          description: "Si el despliegue técnico o la calidad vocal no cumple con los estándares certificados de Productora EAR OS, tienes respaldo directo de la dirección. Tu reserva de 100 € queda protegida con firma criptográfica SHA-256 válida durante 72 horas."
+          badgeText: "GARANTÍA Y COMPROMISO DIRECTO",
+          title: "Garantía de Satisfacción por Escrito",
+          description: "Nos aseguramos de cuidar cada detalle y filtrar cualquier contenido inadecuado para que toda la familia y amigos disfruten plenamente. Tu reserva de 100 € queda bloqueada con firma Price-Lock válida 72 horas."
         }}
         bonuses={[
           {
-            title: "Dedicatoria y Canción Personalizada de Entrada",
+            title: "Canción Personalizada y Dedicatoria de Entrada",
             realValue: "120,00 €",
-            description: "Adaptamos la primera canción con dedicatoria expresa a los novios, homenajeados o directivos de la empresa para arrancar con impacto emocional máximo."
+            description: "Adaptamos la primera canción con dedicatoria expresa a los homenajeados para arrancar con el máximo impacto emocional."
           },
           {
-            title: "Micrófono Inalámbrico Extra para Discursos",
+            title: "Micrófono Inalámbrico Extra para Brindis",
             realValue: "80,00 €",
-            description: "Dejamos a disposición de la familia o anfitriones un micrófono Shure profesional conectado al sistema Bose para brindis y discursos sin coste."
+            description: "Dejamos a disposición de la familia o anfitriones un micrófono Shure profesional conectado al sistema Bose para discursos."
           }
         ]}
         objections={[
           {
             question: "¿Qué ocurre si la ceremonia o la cena se retrasa?",
-            answer: "No te preocupes. Como profesionales con más de 25 años de oficio, llegamos con antelación y nuestro equipo se coordina con el maître o wedding planner para ajustar el inicio al instante perfecto."
+            answer: "No te preocupes. Como profesionales con más de 25 años de oficio, llegamos con antelación y nos coordinamos con el maître o wedding planner para ajustar el inicio al instante perfecto."
           },
           {
             question: "¿Y si el espacio de la finca o salón es reducido?",
-            answer: "El sistema Bose F1 está diseñado específicamente para ocupar menos de 1 metro cuadrado en el escenario ofreciendo una cobertura de 100 grados sin tapar la vista de los comensales."
+            answer: "El sistema Bose F1 / S1 Pro ocupa un espacio mínimo en el suelo ofreciendo una cobertura de 100 grados sin tapar la vista de los comensales."
           },
           {
-            question: "¿Se puede ampliar a Dúo, Trío o Mariachi completo si decidimos crecer?",
-            answer: "Absolutamente. Tu depósito de 100 € bloquea la fecha de Edwin Agudelo y se descuenta íntegramente si decides escalar a cualquiera de los 14 Formatos Homologados (hasta 12 músicos)."
+            question: "¿Se puede ampliar a Grupo o Mariachi completo si decidimos crecer?",
+            answer: "Totalmente. Si deseas dar el salto a Mariachi de 6 músicos (600 €), 9 músicos (900 €) o Gran Ensamble de 13 músicos (1.300 €), tu depósito se descuenta íntegramente."
           }
         ]}
         scarcity={{
-          urgencyBadge: "CUPO ESTRICTO: MÁXIMO 1 ACTUACIÓN POR FECHA",
-          limitText: "Para garantizar la máxima frescura vocal y el estándar acústico de gala, Edwin Agudelo solo atiende una contratación por jornada. Las fechas de fin de semana se reservan habitualmente con meses de antelación.",
-          ctaPrimaryText: "Bloquear Fecha Ahora (100 €)",
+          urgencyBadge: "CUPO ESTRICTO: SOLO 1 ACTUACIÓN POR FECHA",
+          limitText: "Para garantizar la máxima entrega y frescura vocal, solo atiendo una contratación por jornada. Las fechas de fin de semana se reservan con meses de antelación.",
+          ctaPrimaryText: "Reservar Fecha Ahora (100 €)",
           checkoutUrl: "/checkout/presupuesto?format=solista-edwin-agudelo&base=350",
-          whatsappText: "Hola Edwin, deseo verificar si tienes disponible mi fecha para la actuación de Solista Mariachi 350€."
+          whatsappText: "Hola Edwin, deseo verificar si tienes disponible mi fecha para la actuación de Solista Premium 350€."
         }}
       />
 
@@ -400,13 +408,13 @@ export default function ArtistCinematicProfile({
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 overflow-x-auto no-scrollbar">
           {(
             [
-              { key: 'MANIFIESTO', label: 'Manifiesto & Biografía', icon: FileText },
-              { key: 'ROSTER_14', label: 'Roster Homologado (14 Formatos)', icon: Layers },
-              { key: 'REPERTORIO', label: 'Repertorio & Catarsis', icon: Music },
-              { key: 'RIDER', label: 'Rider Técnico S-Class', icon: Radio },
+              { key: 'MANIFIESTO', label: 'Biografía & Oficio', icon: FileText },
+              { key: 'ROSTER_14', label: 'Formatos & Tarifas (4 Opciones)', icon: Layers },
+              { key: 'REPERTORIO', label: 'Repertorio & Emoción', icon: Music },
+              { key: 'RIDER', label: 'Sonido Bose 2.000W', icon: Radio },
               { key: 'VIMUME', label: 'Proyecto VIMUME', icon: Activity },
-              { key: 'TRAYECTORIA', label: 'Reconocimientos & Hitos', icon: Trophy },
-              { key: 'BOOKING', label: 'Cotizador & Contratación', icon: Calendar }
+              { key: 'TRAYECTORIA', label: 'Reconocimientos', icon: Trophy },
+              { key: 'BOOKING', label: 'Cotizador & Fecha', icon: Calendar }
             ] as const
           ).map((tab) => {
             const Icon = tab.icon;
@@ -516,7 +524,7 @@ export default function ArtistCinematicProfile({
           </motion.div>
         )}
 
-        {/* TAB 2: ROSTER HOMOLOGADO (14 FORMATOS) */}
+        {/* TAB 2: CATÁLOGO OFICIAL DE FORMATOS (4 OPCIONES) */}
         {activeTab === 'ROSTER_14' && (
           <motion.div 
             initial={{ opacity: 0, y: 15 }} 
@@ -526,130 +534,162 @@ export default function ArtistCinematicProfile({
           >
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
               <div className="max-w-3xl space-y-3">
-                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-                  B. Catálogo Oficial Homologado
+                <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#FF2B44] font-bold">
+                  B. Formatos y Tarifas Oficiales
                 </span>
                 <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
-                  Roster Soberano de 14 Formatos
+                  Las 4 Fórmulas de Actuación
                 </h2>
-                <p className="text-white/60 text-base leading-relaxed">
-                  Tarifas suelo inmutables blindadas por contrato, presión acústica calculada a 12 W/pax, split soberano 80/10/10 y reserva instantánea con 100 € de depósito en Stripe con firma SHA-256.
+                <p className="text-white/70 text-base leading-relaxed">
+                  Desde el show individual con experiencia interactiva completa hasta la imponencia acústica de la gran agrupación en directo. Elige la fórmula que mejor se adapte a tu celebración.
                 </p>
               </div>
 
-              {/* Filtros de Categoría */}
-              <div className="flex flex-wrap gap-2">
-                {(['TODOS', 'SOLISTA', 'CAMARA', 'ENSAMBLE', 'ESPECIALIDAD', 'TECNICA', 'B2G'] as const).map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setRosterFilter(cat)}
-                    className={`rounded-lg px-3 py-1.5 font-mono text-[11px] font-bold uppercase transition-all cursor-pointer ${
-                      rosterFilter === cat
-                        ? 'bg-[#ecb613] text-black shadow-md'
-                        : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
+              <div className="rounded-2xl border border-white/10 bg-[#09090e] p-4 text-xs font-mono text-white/70 space-y-1">
+                <div className="flex items-center gap-2 text-[#AAD6CD]">
+                  <CheckCircle2 size={14} />
+                  <span>Reserva con solo 100 €</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/60">
+                  <CheckCircle2 size={14} className="text-[#FF2B44]" />
+                  <span>Solo 1 evento por día</span>
+                </div>
+              </div>
+            </div>
+
+            {/* COMPARADOR VISUAL INTERACTIVO S-CLASS */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {SCLASS_ROSTER_14_FORMATS.map((format, index) => {
+                const isSolista = format.id === 'solista-edwin-agudelo';
+                const isSelected = selectedFormatId === format.id;
+
+                return (
+                  <div
+                    key={format.id}
+                    onClick={() => setSelectedFormatId(format.id)}
+                    className={`rounded-3xl border p-6 flex flex-col justify-between space-y-6 transition-all cursor-pointer relative overflow-hidden group ${
+                      isSelected 
+                        ? 'border-[#FF2B44] bg-[#0c090e] shadow-[0_0_35px_rgba(255,43,68,0.2)]' 
+                        : 'border-white/10 bg-[#09090d] hover:border-white/25'
                     }`}
                   >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* BENTO GRID DE LOS 14 FORMATOS */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredRoster.map((format, index) => (
-                <div
-                  key={format.id}
-                  className="rounded-3xl border border-white/10 bg-[#09090d] p-7 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/50 transition-all group"
-                >
-                  <div className="space-y-4">
-                    {/* Header Card */}
-                    <div className="flex items-center justify-between">
-                      <span className="rounded-full bg-white/5 border border-white/10 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-[#ecb613]">
-                        #{index + 1} · {format.category}
-                      </span>
-                      <span className="font-mono text-2xl font-black text-[#ecb613]">
-                        {format.basePrice} €
-                      </span>
-                    </div>
-
-                    <div>
-                      <h3 className="font-syne text-xl font-bold uppercase text-white group-hover:text-[#ecb613] transition-colors">
-                        {format.name}
-                      </h3>
-                      <div className="mt-2 flex flex-wrap items-center gap-3 font-mono text-[11px] text-white/50">
-                        <span className="flex items-center gap-1">
-                          <Users size={12} className="text-[#AAD6CD]" />
-                          {format.members} {format.members === 1 ? 'músico' : 'músicos'}
+                    {/* Badge de Distinción de Estrategia */}
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${
+                          isSolista 
+                            ? 'bg-[#FF2B44]/20 text-[#FF2B44] border border-[#FF2B44]/30' 
+                            : 'bg-[#AAD6CD]/10 text-[#AAD6CD] border border-[#AAD6CD]/25'
+                        }`}>
+                          {isSolista ? 'Show + Complementos' : `${format.members} Músicos en Vivo`}
                         </span>
-                        <span>•</span>
-                        <span className="flex items-center gap-1">
-                          <Clock size={12} className="text-[#AAD6CD]" />
+                        <span className="font-mono text-2xl font-black text-white group-hover:text-[#FF2B44] transition-colors">
+                          {format.basePrice} €
+                        </span>
+                      </div>
+
+                      <div>
+                        <h3 className="font-syne text-xl font-bold uppercase text-white leading-tight">
+                          {format.name}
+                        </h3>
+                        <p className="mt-1 font-mono text-[11px] text-[#AAD6CD]">
                           {format.duration}
+                        </p>
+                      </div>
+
+                      <p className="text-xs text-white/70 leading-relaxed min-h-[50px]">
+                        {format.description}
+                      </p>
+
+                      {/* Diferenciador Visual: ¿Lleva complementos o es fuerza escénica pura? */}
+                      <div className="rounded-2xl border border-white/5 bg-black/40 p-3.5 space-y-2.5 font-mono text-[11px]">
+                        <span className="text-[10px] uppercase tracking-wider text-white/50 block font-bold">
+                          {isSolista ? 'Atrezzo y Extras Incluidos:' : 'Presencia Escénica:'}
                         </span>
+
+                        {isSolista ? (
+                          <ul className="space-y-1.5 text-xs text-white/80">
+                            <li className="flex items-center gap-1.5 text-emerald-400">
+                              <Check size={12} /> Photocall con sombreros
+                            </li>
+                            <li className="flex items-center gap-1.5 text-emerald-400">
+                              <Check size={12} /> Fotos directas en las mesas
+                            </li>
+                            <li className="flex items-center gap-1.5 text-emerald-400">
+                              <Check size={12} /> Ramo de flores sorpresa
+                            </li>
+                            <li className="flex items-center gap-1.5 text-emerald-400">
+                              <Check size={12} /> Dedicatoria personalizada
+                            </li>
+                          </ul>
+                        ) : (
+                          <ul className="space-y-1.5 text-xs text-white/80">
+                            <li className="flex items-center gap-1.5 text-[#AAD6CD]">
+                              <Users size={12} /> Edwin + {format.members - 1} músicos acompañantes
+                            </li>
+                            <li className="flex items-center gap-1.5 text-[#AAD6CD]">
+                              <Check size={12} /> Trompetas, vihuela y guitarrón
+                            </li>
+                            <li className="flex items-center gap-1.5 text-[#AAD6CD]">
+                              <Check size={12} /> Fuerza y acústica viva en directo
+                            </li>
+                            <li className="flex items-center gap-1.5 text-white/50 text-[10px]">
+                              (No requiere atrezzo; la música es el espectáculo)
+                            </li>
+                          </ul>
+                        )}
+
+                        <div className="border-t border-white/5 pt-2 text-[10px] text-white/50 truncate">
+                          Rider: {format.rider}
+                        </div>
                       </div>
                     </div>
 
-                    <p className="text-xs text-white/65 leading-relaxed">
-                      {format.description}
-                    </p>
-
-                    {/* Especificaciones Técnicas y Acústicas */}
-                    <div className="rounded-2xl border border-white/5 bg-black/40 p-3.5 space-y-2 font-mono text-[11px]">
-                      <div className="flex items-center justify-between text-[#AAD6CD]">
-                        <span>Rider Acústico:</span>
-                        <strong>{format.wattsPerPax > 0 ? `${format.wattsPerPax} W/pax` : 'Visual 4K'}</strong>
-                      </div>
-                      <div className="flex items-center justify-between text-white/60">
-                        <span>Margen Operativo:</span>
-                        <span className="text-emerald-400 font-bold">&ge; {Math.round(format.minGrossMargin * 100)}%</span>
-                      </div>
-                      <div className="truncate text-white/40 text-[10px] border-t border-white/5 pt-1.5">
-                        {format.rider}
-                      </div>
+                    {/* Botón de Selección / Cotización */}
+                    <div className="space-y-2 border-t border-white/10 pt-4">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSelectFormatAndQuote(format.id);
+                        }}
+                        className={`w-full rounded-xl py-3 text-center font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                          isSelected
+                            ? 'bg-[#FF2B44] text-white shadow-lg shadow-[#FF2B44]/25'
+                            : 'bg-white/10 text-white hover:bg-white/20'
+                        }`}
+                      >
+                        <Lock size={13} />
+                        <span>Elegir y Cotizar</span>
+                      </button>
                     </div>
                   </div>
+                );
+              })}
+            </div>
 
-                  {/* CTA de la Card */}
-                  <div className="space-y-2 border-t border-white/10 pt-4">
-                    <button
-                      onClick={() => handleSelectFormatAndQuote(format.id)}
-                      className="w-full rounded-xl bg-white/10 py-3 text-center font-mono text-xs font-black uppercase tracking-wider text-white hover:bg-[#ecb613] hover:text-black transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-                    >
-                      <Lock size={13} />
-                      <span>Cotizar & Bloquear (100 €)</span>
-                    </button>
-                    <div className="flex items-center justify-between text-[10px] font-mono text-white/40 px-1">
-                      <span>Split: 80/10/10</span>
-                      <span>Price-Lock SHA-256</span>
-                    </div>
-                  </div>
+            {/* SECCIÓN DEL COTIZADOR INTEGRADO CON EL FORMATO SELECCIONADO */}
+            <div id="cotizador-cierre" className="rounded-3xl border border-white/10 bg-[#09090d] p-6 md:p-10 space-y-6 shadow-2xl">
+              <div className="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                  <span className="font-mono text-xs uppercase tracking-widest text-[#FF2B44] font-bold">
+                    Cotización Rápida y Transparente
+                  </span>
+                  <h3 className="font-syne text-2xl font-black uppercase text-white mt-1">
+                    Calcular Presupuesto con Kilometraje Exacto
+                  </h3>
+                  <p className="text-xs text-white/60 mt-1">
+                    Tarifa del formato elegido desde Méntrida (Toledo). 50 km incluidos; 1,50 €/km adicional.
+                  </p>
                 </div>
-              ))}
+                <div className="rounded-2xl border border-[#AAD6CD]/30 bg-[#AAD6CD]/10 px-4 py-2 text-right">
+                  <span className="font-mono text-[10px] uppercase text-[#AAD6CD] block">Reserva Protegida</span>
+                  <strong className="font-mono text-xs text-white">100 € Depósito en Stripe</strong>
+                </div>
+              </div>
+
+              <BookingCalculator initialFormatId={selectedFormatId} />
             </div>
 
-            {/* BANNER DE RETENCIÓN DE ROSTER */}
-            <div className="rounded-3xl border border-[#ecb613]/30 bg-gradient-to-r from-[#0c0c12] via-[#12121c] to-[#0c0c12] p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="space-y-2">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#ecb613] font-bold">
-                  Soberanía de Contratación Centralizada
-                </span>
-                <h3 className="font-syne text-2xl font-black uppercase text-white">
-                  ¿Desea combinar múltiples formatos para su evento?
-                </h3>
-                <p className="text-xs text-white/60 max-w-2xl leading-relaxed">
-                  Podemos paquetizar Dúo de Ceremonia + Saxo Lounge para Cóctel + Boda Diamond 360 o Discomóvil Bose con tarifa combinada optimizada y gestión logística unificada desde Méntrida.
-                </p>
-              </div>
-              <a
-                href={`https://wa.me/34693693048?text=${encodeURIComponent('Hola Productora EAR, deseo cotizar un paquete con varios formatos del Roster.')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="shrink-0 rounded-xl bg-[#ecb613] px-7 py-4 font-mono text-xs font-black uppercase tracking-widest text-black hover:bg-white transition-all shadow-lg shadow-[#ecb613]/20"
-              >
-                Paquete Multi-Formato Personalizado
-              </a>
-            </div>
           </motion.div>
         )}
 
@@ -975,34 +1015,34 @@ export default function ArtistCinematicProfile({
             className="space-y-12"
           >
             <div className="max-w-3xl space-y-3">
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
-                G. Cierre Transaccional Inmediato
+              <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#FF2B44] font-bold">
+                G. Reserva y Presupuesto
               </span>
               <h2 className="font-syne text-3xl sm:text-5xl font-black uppercase text-white tracking-tight">
-                Cotización Dinámica de los 14 Formatos
+                Cotización de Actuación
               </h2>
-              <p className="text-white/60 text-base leading-relaxed">
-                Seleccione el formato oficial deseado, calcule el desplazamiento exacto desde el Hub Central en Méntrida (Toledo) y bloquee su fecha con firma criptográfica SHA-256 en Stripe mediante el depósito reembolsable de 100 €.
+              <p className="text-white/70 text-base leading-relaxed">
+                Elige tu formato (Solista Premium o Agrupación), calcula la distancia desde Méntrida (Toledo) y asegura tu fecha con el depósito de 100 €.
               </p>
             </div>
 
-            {/* COTIZADOR EMBEBIDO CON PRECARGA DE FORMATO */}
-            <div id="cotizador-cierre" className="rounded-3xl border border-white/10 bg-[#09090d] p-6 md:p-10 space-y-6 shadow-2xl">
+            {/* COTIZADOR EMBEBIDO */}
+            <div className="rounded-3xl border border-white/10 bg-[#09090d] p-6 md:p-10 space-y-6 shadow-2xl">
               <div className="border-b border-white/10 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-widest text-[#ecb613] font-bold">
-                    Motor de Cotización Transaccional EAR OS v2
+                  <span className="font-mono text-xs uppercase tracking-widest text-[#FF2B44] font-bold">
+                    Tarifa Oficial Directa
                   </span>
                   <h3 className="font-syne text-2xl font-black uppercase text-white mt-1">
-                    Calcular y Bloquear Fecha en 1-Clic
+                    Calcular y Reservar Fecha
                   </h3>
                   <p className="text-xs text-white/50 mt-1">
-                    Tarifa suelo protegida, kilometraje forense (1,50 €/km &gt; 50 km) y suplemento de hotel (+120 €).
+                    Sin intermediarios. Kilometraje: 1,50 €/km después de los primeros 50 km.
                   </p>
                 </div>
-                <div className="rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/10 px-4 py-2 text-right">
-                  <span className="font-mono text-[10px] uppercase text-[#ecb613] block">Garantía S-Class</span>
-                  <strong className="font-mono text-xs text-white">Margen Operativo &ge; 58%</strong>
+                <div className="rounded-2xl border border-[#AAD6CD]/30 bg-[#AAD6CD]/10 px-4 py-2 text-right">
+                  <span className="font-mono text-[10px] uppercase text-[#AAD6CD] block">Depósito Inicial</span>
+                  <strong className="font-mono text-xs text-white">100,00 € en Stripe</strong>
                 </div>
               </div>
 
@@ -1013,29 +1053,6 @@ export default function ArtistCinematicProfile({
         )}
 
       </div>
-
-      {/* ── FOOTER DE AUTORIDAD Y CONTACTO ── */}
-      <footer className="border-t border-white/10 bg-[#070709] px-6 py-12 text-center sm:text-left text-xs text-white/50">
-        <div className="mx-auto flex max-w-7xl flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="space-y-1">
-            <p className="font-syne font-bold text-white text-sm uppercase">Productora EAR & Roster Soberano S-Class</p>
-            <p>Hub Central: Méntrida (Toledo) • 14 Formatos Homologados • Split Inmutable 80/10/10.</p>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-6 font-mono text-[11px]">
-            <a href={`tel:${CENTRALITA.display}`} className="text-white hover:text-[#ecb613]">
-              {CENTRALITA.display}
-            </a>
-            <span className="text-white/20">•</span>
-            <a href="mailto:direccion@productoraear.com" className="text-white hover:text-[#ecb613]">
-              direccion@productoraear.com
-            </a>
-            <span className="text-white/20">•</span>
-            <Link href="/vimume" className="text-[#AAD6CD] hover:underline">
-              Proyecto VIMUME
-            </Link>
-          </div>
-        </div>
-      </footer>
 
     </div>
   );

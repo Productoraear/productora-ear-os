@@ -131,12 +131,12 @@ export function calculateMariachiRate(params: BookingParams): RateDetails & { ac
   let acousticPower = 0;
   let isBodaSClass = false;
   
-  if (params.evento === 'Boda' || params.formatoId === 'boda-diamond') {
+  if (params.formatoId === 'boda-diamond') {
     isBodaSClass = true;
     const wPax = params.tipoEspacio === 'Exterior' ? 18 : 12;
     acousticPower = (params.pax || 100) * wPax;
     
-    // Ticket suelo inmutable de 3800€ para Bodas S-Class
+    // Ticket suelo inmutable de 3800€ para Producción Integral Boda Diamond 360
     if (subtotal < 3800) {
       tarifaBase = 3800 - kmExtra - hotel;
       subtotal = 3800;

@@ -75,16 +75,16 @@ export default function BookingCalculator({ initialFormatId = 'solista-edwin-agu
   return (
     <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md shadow-2xl max-w-lg mx-auto text-white font-sans">
       <h3 className="text-2xl font-bold mb-4 flex items-center gap-2 font-syne">
-        <ShieldCheck className="text-[#ecb613]" /> Calculador S-Class
+        <ShieldCheck className="text-[#FF2B44]" /> Calculador de Presupuesto
       </h3>
       
       <div className="space-y-4 mb-6">
         <div>
-          <label className="block text-sm font-medium mb-1 text-gray-300 font-mono text-xs uppercase">Formato Homologado (14 Opciones)</label>
+          <label className="block text-sm font-medium mb-1 text-gray-300 font-mono text-xs uppercase">Formato Oficial (4 Opciones)</label>
           <select 
             value={formatoId}
             onChange={(e) => setFormatoId(e.target.value)}
-            className="w-full bg-black/60 border border-[#ecb613]/40 rounded-lg py-2.5 px-3 text-white focus:ring-2 focus:ring-[#ecb613] outline-none font-mono text-xs"
+            className="w-full bg-black/60 border border-[#FF2B44]/40 rounded-lg py-2.5 px-3 text-white focus:ring-2 focus:ring-[#FF2B44] outline-none font-mono text-xs"
           >
             {SCLASS_ROSTER_14_FORMATS.map((f) => (
               <option key={f.id} value={f.id}>

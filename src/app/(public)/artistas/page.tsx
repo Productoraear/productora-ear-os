@@ -3,20 +3,19 @@ import ArtistCinematicProfile from "@/components/artists/ArtistCinematicProfile"
 import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
 
 export const metadata: Metadata = {
-  title: "Edwin Agudelo & Roster S-Class de 14 Formatos | Productora EAR",
+  title: "Edwin Agudelo · Cantante y Compositor · Tarifas y Formatos Oficiales",
   description:
-    "Catálogo oficial de Productora EAR: Edwin Agudelo y los 14 Formatos Homologados (Solista 350€, Dúo 480€, Trío 600€, Cuarteto 750€, Quinteto 900€, Gran Ensamble 1.400€, VIMUME B2G, Discomóvil Bose F1). Presión acústica garantizada a 12 W/pax, Split 80/10/10 y reserva directa con depósito Stripe de 100 €.",
+    "Contratación directa de Edwin Agudelo: Show Solista Premium (350€ con sonido Bose 2.000W, sombreros, fotos y ramo) y Agrupaciones en vivo de 6, 9 y 13 músicos (desde 600€). Trato directo desde Méntrida (Toledo). Reserva de fecha con depósito de 100 €.",
   keywords: [
     "Edwin Agudelo",
-    "Roster Productora EAR",
-    "14 formatos homologados",
-    "contratar mariachi Madrid Toledo",
-    "solista de gala 350",
-    "quinteto mariachi 900",
-    "boda s-class diamond 3800",
-    "rider acustico Bose F1",
-    "Shure Beta 87A",
-    "Proyecto VIMUME",
+    "contratar mariachi Madrid",
+    "contratar mariachi Toledo",
+    "solista rancheras Madrid",
+    "solista premium 350",
+    "mariachi 6 musicos",
+    "mariachi bodas Madrid",
+    "musica mexicana en vivo",
+    "Productora EAR",
     "Méntrida Toledo",
   ],
   alternates: { canonical: "https://www.productoraear.com/artistas" },
@@ -24,24 +23,24 @@ export const metadata: Metadata = {
     type: "profile",
     locale: "es_ES",
     url: "https://www.productoraear.com/artistas",
-    siteName: "Productora EAR — EAR OS",
-    title: "Edwin Agudelo & Roster S-Class de 14 Formatos Homologados",
+    siteName: "Productora EAR",
+    title: "Edwin Agudelo · Música en Directo para Bodas y Celebraciones",
     description:
-      "Voz, Oficio y Escenario. Catálogo íntegro de 14 formatos homologados con tarifas suelo inmutables, acústica Bose a 12 W/pax y cierre transaccional con depósito Stripe de 100 €.",
+      "Cantante y compositor. Show Solista Premium 350€ y Agrupaciones Mariachi en vivo (6, 9 y 13 integrantes). Sonido profesional Bose y reserva directa de fecha.",
     images: [
       {
         url: "https://www.productoraear.com/images/brand/ear_logo_official_diamond.png",
         width: 1200,
         height: 630,
-        alt: "Edwin Agudelo & Roster S-Class Productora EAR",
+        alt: "Edwin Agudelo Productora EAR",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Edwin Agudelo & Roster S-Class — 14 Formatos Homologados",
+    title: "Edwin Agudelo · Cantante y Compositor · Tarifas Oficiales",
     description:
-      "14 formatos musicales y técnicos con rider Bose/Shure garantizado a 12 W/pax. Depósito reembolsable de 100 € con Price-Lock SHA-256.",
+      "Show Solista Premium (350€) y Mariachi en vivo de 6, 9 y 13 músicos. Reserva directa con 100 € de depósito.",
     images: ["https://www.productoraear.com/images/brand/ear_logo_official_diamond.png"],
   },
 };
@@ -88,13 +87,13 @@ const artistSchema = {
       ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Roster Soberano de 14 Formatos Homologados",
+        name: "Formatos y Tarifas Oficiales Homologadas",
         itemListElement: SCLASS_ROSTER_14_FORMATS.map((format) => ({
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
             name: format.name,
-            description: `${format.description} Rider: ${format.rider}. Integrantes: ${format.members}. Presión: ${format.wattsPerPax} W/pax.`,
+            description: `${format.description} Integrantes: ${format.members}.`,
           },
           price: `${format.basePrice}.00`,
           priceCurrency: "EUR",
@@ -109,14 +108,14 @@ const artistSchema = {
 export default function ArtistasCinematicPage() {
   return (
     <main>
-      {/* Schema.org estructurado JSON-LD con los 14 formatos */}
+      {/* Schema.org estructurado JSON-LD con los formatos oficiales */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(artistSchema) }}
       />
       <ArtistCinematicProfile
         name="Edwin Agudelo"
-        specialty="Voz, Oficio y Escenario · Tenor Lírico & Roster Soberano"
+        specialty="Cantante y Compositor · Rancheras, Boleros y Música de Gala"
         imageUrl="/images/brand/ear_logo_official_diamond.png"
       />
     </main>
