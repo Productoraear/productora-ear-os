@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
       './src/data/catalog/ADN_EAR_INDEX.json',
       './src/data/vampirized-providers-deep-sclass.json',
       './src/data/vampirized_providers.backup.json',
+      'node_modules/puppeteer/**',
+      'node_modules/playwright/**',
+      'node_modules/@sparticuz/**',
+      'node_modules/pdfjs-dist/**',
     ],
   },
   experimental: {
