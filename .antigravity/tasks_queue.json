@@ -401,6 +401,49 @@
         "3. Crear script de validación 'scripts/test-mariachi-high-traffic-simulation.ts': Probar simulación estocástica de 32 bolos, 0% cancelaciones, facturación bruta acumulada y disparo de cascada de relevo Uber.",
         "4. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
       ]
+    },
+    {
+      "id": "squad-consensus-meeting-point-voting-engine",
+      "title": "Motor de Votación y Consenso del Punto de Partida para Cuadrillas y Mariachis",
+      "status": "PENDING",
+      "description": "Implementar el motor de acuerdo democrático de punto de partida para mariachis y cuadrillas. El responsable propone ubicaciones (ej. Plaza Elíptica, Atocha, Moncloa o domicilio de ensayo), los integrantes votan en tiempo real y el punto ganador se convierte en el GPS Origin para el cálculo de ruta, km logísticos y telemetría.",
+      "command": "npx tsx scripts/test-squad-meeting-point-consensus.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-squad-meeting-point-consensus.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/matchmaker/squadMeetingPointConsensusEngine.ts': Definir tipos 'MeetingPointProposal', 'SquadVote' y lógica de ponderación por consenso/mayoría.",
+        "2. Integrar catálogo de puntos sugeridos por provincia (Madrid: Plaza Elíptica, Atocha, Chamartín; Valencia: Plaza del Ayuntamiento, Puerto; etc.) y permitir geolocalización personalizada.",
+        "3. Crear hook/función de resolución que actualice la base de salida del convoy dinámicamente sustituyendo el valor fijo por el punto consensuado.",
+        "4. Crear script de prueba 'scripts/test-squad-meeting-point-consensus.ts' que simule la propuesta de 3 puntos, la votación de 6 músicos y la resolución del GPS ganador en <20ms.",
+        "5. Validar compilación con 'npx tsc --noEmit' asegurando Exit Code 0."
+      ]
+    },
+    {
+      "id": "arsenal-provider-multi-point-gps-tracker",
+      "title": "Motor de Despacho y Tracking GPS Multiorigen del Arsenal y Proveedores",
+      "status": "PENDING",
+      "description": "Generalizar el visualizador táctico para que cualquier proveedor o equipo del Arsenal (ej. empresa de sonido/luces en Valencia, floristería en Sevilla o catering en Toledo) sea trackeado desde sus coordenadas reales nativas hasta el evento del cliente.",
+      "command": "npx tsx scripts/test-arsenal-multiorigin-gps.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-arsenal-multiorigin-gps.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/engines/arsenalGpsRoutingEngine.ts': Extender getVendorBaseOrigin para calcular rutas punto a punto desde las coordenadas del almacén/nave del proveedor hasta la finca del cliente.",
+        "2. Soporte para convoyes combinados: Artista (origen A) + Alquiler de Sonido/Pantallas (origen B) convergiendo en la misma finca con ETAs sincronizados.",
+        "3. Crear script 'scripts/test-arsenal-multiorigin-gps.ts' simulando 3 convoyes cruzados (Valencia -> Finca, Toledo -> Finca, Madrid -> Finca) con cálculo de km, tarifas y tiempos de llegada.",
+        "4. Validar compilación con 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "dual-view-telemetry-client-and-admin-bridge",
+      "title": "Puente de Telemetría Dual (Vista Cliente / Vista NASA Admin)",
+      "status": "PENDING",
+      "description": "Conectar el tracking geográfico a dos experiencias visuales sincronizadas: (1) Vista Cliente post-reserva (seguimiento de su mariachi/equipo con mapa Google Maps, ETA y contacto directo) y (2) Pantalla NASA Admin en /admin/fleet-live donde la central de Productora EAR supervisa simultáneamente todos los convoyes de España.",
+      "command": "npx tsx scripts/test-dual-view-telemetry.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-dual-view-telemetry.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/features/fleet/ui/ClientLiveTrackingDrawer.tsx': Componente para que el cliente siga la furgoneta asignada en tiempo real tras pagar la fianza de 100€.",
+        "2. Enlazar 'src/app/(nexus)/admin/fleet-live/page.tsx' con 'UberFleetVisualizer' en modo global multi-proveedor, permitiendo ver todos los convoyes activos del territorio nacional.",
+        "3. Crear script 'scripts/test-dual-view-telemetry.ts' que verifique la serialización de eventos de posición para ambas vistas.",
+        "4. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
+      ]
     }
   ]
 }
