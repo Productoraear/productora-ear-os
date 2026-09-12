@@ -36,6 +36,7 @@ import {
   Check
 } from 'lucide-react';
 import BookingCalculator from '@/components/widgets/BookingCalculator';
+import SClassIrresistibleOffer from '@/components/sclass/SClassIrresistibleOffer';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { SCLASS_ROSTER_14_FORMATS, FormatPricing } from '@/lib/constants/pricing-catalog';
 
@@ -312,6 +313,92 @@ export default function ArtistCinematicProfile({
 
         </div>
       </section>
+
+      {/* ── LA OFERTA IRRESISTIBLE S-CLASS (SECUENCIA DE 8 PASOS DE VALOR) ── */}
+      <SClassIrresistibleOffer
+        promiseBadge="CONTRATACIÓN DIRECTA S-CLASS // EDWIN AGUDELO"
+        headlinePromise="Convierte tu evento en una ovación histórica que tus invitados recordarán durante décadas"
+        subPromise="No contratas minutos de música de fondo; aseguras una presencia escénica arrolladora con tesitura de tenor lírico y la sonorización de alta fidelidad más nítida de Madrid y Toledo."
+        benefits={[
+          {
+            title: "Catarsis Emocional Garantizada",
+            desc: "Dominio absoluto del clímax festivo y ceremonial. Repertorio de mariachi, rancheras de gala y boleros que erizan la piel y levantan a todos los invitados."
+          },
+          {
+            title: "Cero Distorsión y Cero Acoples",
+            desc: "Ingeniería de sonido militarizada: micrófonos Shure Axient Beta 87A y columnas Bose F1 con presión homogénea de 12 W/pax sin fatiga auditiva."
+          },
+          {
+            title: "Trato Directo sin Intermediarios",
+            desc: "Hablas directamente con el artista principal y la dirección técnica de Productora EAR. 100% de compromiso, puntualidad británica y traje charro impecable."
+          }
+        ]}
+        deliverablesBadge="ENTREGABLES TANGIBLES Y COMPROMISOS EXACTOS"
+        deliverablesTitle="Lo que recibes en tu celebración sin sorpresas ni letra pequeña"
+        deliverables={[
+          {
+            spec: "1x Tenor Solista en Vivo (Edwin Agudelo)",
+            detail: "Actuación estelar de 60 minutos ininterrumpidos con traje de gala charro artesanal y botonaduras de plata."
+          },
+          {
+            spec: "Sistema de PA Bose F1 Model 812",
+            detail: "Despliegue acústico con dispersión vertical flexible homologado a 12 W por invitado hasta 300 personas."
+          },
+          {
+            spec: "Microfonía Inalámbrica Shure Beta 87A",
+            detail: "Cápsula de condensador súpercardioide para una inteligibilidad de la voz cristalina en interiores y exteriores."
+          },
+          {
+            spec: "Transporte y Montaje Técnico Incluido",
+            detail: "Llegada con 60 minutos de antelación para prueba de sonido sin interferir con la recepción de invitados."
+          }
+        ]}
+        priceAnchor={{
+          totalValueEstimate: "750,00 €",
+          finalPrice: "350,00 €",
+          depositAmount: "100,00 €",
+          periodOrFormat: "Tarifa Suelo Oficial Solista (1 hora)",
+          legalNote: "Tarifa base para eventos en radio de 50 km desde Hub Méntrida. Kilometraje adicional: 1,50 €/km."
+        }}
+        guarantee={{
+          badgeText: "GARANTÍA SOBERANA RIESGO CERO",
+          title: "Garantía de Satisfacción Total y Acústica Homologada",
+          description: "Si el despliegue técnico o la calidad vocal no cumple con los estándares certificados de Productora EAR OS, tienes respaldo directo de la dirección. Tu reserva de 100 € queda protegida con firma criptográfica SHA-256 válida durante 72 horas."
+        }}
+        bonuses={[
+          {
+            title: "Dedicatoria y Canción Personalizada de Entrada",
+            realValue: "120,00 €",
+            description: "Adaptamos la primera canción con dedicatoria expresa a los novios, homenajeados o directivos de la empresa para arrancar con impacto emocional máximo."
+          },
+          {
+            title: "Micrófono Inalámbrico Extra para Discursos",
+            realValue: "80,00 €",
+            description: "Dejamos a disposición de la familia o anfitriones un micrófono Shure profesional conectado al sistema Bose para brindis y discursos sin coste."
+          }
+        ]}
+        objections={[
+          {
+            question: "¿Qué ocurre si la ceremonia o la cena se retrasa?",
+            answer: "No te preocupes. Como profesionales con más de 25 años de oficio, llegamos con antelación y nuestro equipo se coordina con el maître o wedding planner para ajustar el inicio al instante perfecto."
+          },
+          {
+            question: "¿Y si el espacio de la finca o salón es reducido?",
+            answer: "El sistema Bose F1 está diseñado específicamente para ocupar menos de 1 metro cuadrado en el escenario ofreciendo una cobertura de 100 grados sin tapar la vista de los comensales."
+          },
+          {
+            question: "¿Se puede ampliar a Dúo, Trío o Mariachi completo si decidimos crecer?",
+            answer: "Absolutamente. Tu depósito de 100 € bloquea la fecha de Edwin Agudelo y se descuenta íntegramente si decides escalar a cualquiera de los 14 Formatos Homologados (hasta 12 músicos)."
+          }
+        ]}
+        scarcity={{
+          urgencyBadge: "CUPO ESTRICTO: MÁXIMO 1 ACTUACIÓN POR FECHA",
+          limitText: "Para garantizar la máxima frescura vocal y el estándar acústico de gala, Edwin Agudelo solo atiende una contratación por jornada. Las fechas de fin de semana se reservan habitualmente con meses de antelación.",
+          ctaPrimaryText: "Bloquear Fecha Ahora (100 €)",
+          checkoutUrl: "/checkout/presupuesto?format=solista-edwin-agudelo&base=350",
+          whatsappText: "Hola Edwin, deseo verificar si tienes disponible mi fecha para la actuación de Solista Mariachi 350€."
+        }}
+      />
 
       {/* ── NAVEGACIÓN INMERSIVA POR TABS ── */}
       <nav aria-label="Navegación de secciones del perfil" className="sticky top-0 z-40 border-b border-white/10 bg-[#050507]/90 backdrop-blur-xl px-6 py-3">
