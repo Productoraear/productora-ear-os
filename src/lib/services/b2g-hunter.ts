@@ -69,7 +69,7 @@ function formatAlertMessageHtml(item: Licitacion): string {
     ? (item.presupuestoMaximo * 0.95).toFixed(2)
     : (item.presupuestoMaximo * 0.92).toFixed(2);
 
-  const earCommandUrl = `https://www.productoraear.com/ayuntamientos?municipio=${encodeURIComponent(
+  const earCommandUrl = `https://productora-ear-os.netlify.app/ayuntamientos?municipio=${encodeURIComponent(
     item.ayuntamiento
   )}&objeto=${encodeURIComponent(item.objeto)}&presupuesto=${item.presupuestoMaximo}&cpv=${encodeURIComponent(
     item.cpv

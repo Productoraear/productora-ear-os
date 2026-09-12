@@ -44,7 +44,7 @@ export async function POST(req: Request) {
 <i>EAR OS GOLD · Neural Strategic Engine v5.2</i>
 `.trim();
     } else {
-      const dossierLink = `https://www.productoraear.com/ayuntamientos?municipio=${encodeURIComponent(municipio)}&presupuesto=${presupuestoMax}&cpv=${encodeURIComponent(cpv)}&objeto=${encodeURIComponent(objeto)}`;
+      const dossierLink = `https://productora-ear-os.netlify.app/ayuntamientos?municipio=${encodeURIComponent(municipio)}&presupuesto=${presupuestoMax}&cpv=${encodeURIComponent(cpv)}&objeto=${encodeURIComponent(objeto)}`;
 
       textMessage = `
 🏛️ <b>NUEVA OPORTUNIDAD B2G DETECTADA (HUNTER AGENT)</b>
