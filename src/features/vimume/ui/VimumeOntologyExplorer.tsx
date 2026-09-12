@@ -25,7 +25,7 @@ import {
 } from 'lucide-react';
 import { VIMUME_BLOCKS, VimumeOntologyBlock, VimumeLevelItem } from '@/lib/constants/vimume-100-levels';
 
-const BLOCK_ICONS: Record<string, React.ElementType> = {
+const BLOCK_ICONS: Record<string, any> = {
   A: Brain,
   B: Activity,
   C: Heart,

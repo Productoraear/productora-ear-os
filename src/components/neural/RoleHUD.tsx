@@ -26,7 +26,7 @@ export default function RoleHUD({
 }: RoleHUDProps) {
   const roles: Array<{
     key: RoleKey;
-    icon?: React.ElementType;
+    icon?: any;
     badge: string;
   }> = [
     { key: 'artistas', icon: Mic, badge: 'ROSTER' },

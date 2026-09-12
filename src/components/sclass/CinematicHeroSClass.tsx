@@ -22,7 +22,7 @@ export interface ProfileJourney {
   description: string;
   ctaText: string;
   href: string;
-  icon?: React.ElementType;
+  icon?: any;
   accentColor: string;
   bgImage: string;
   stats: { label: string; value: string }[];

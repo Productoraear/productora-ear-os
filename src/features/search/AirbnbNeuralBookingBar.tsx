@@ -242,7 +242,7 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
                 <strong className="text-[#00E5FF]">{distanceKm} km</strong>
               </div>
               <div className="flex justify-between text-zinc-300">
-                <span>Tarifa de Transporte (1,50 €/km >50km):</span>
+                <span>Tarifa de Transporte (1,50 €/km &gt;50km):</span>
                 <strong>{logistics.kmCost} €</strong>
               </div>
               {logistics.requiresLodging && (

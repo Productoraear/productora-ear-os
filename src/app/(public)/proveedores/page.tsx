@@ -297,10 +297,7 @@ function ProveedoresDirectoryContent() {
       }
     ];
 
-    const activeSpecial = sclassSpecialServices.filter(s => {
-      const activeIds = new Set((activeWhitelist.active_ids || []).map(x => x.toLowerCase().trim()));
-      return activeIds.has(String(s.id).toLowerCase());
-    });
+    const activeSpecial = sclassSpecialServices;
 
     const baseList = selectedCategory === 'catering' || selectedCategory === 'ALL'
       ? [...activeSpecial, ...providersData]

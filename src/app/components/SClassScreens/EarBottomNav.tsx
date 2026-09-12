@@ -2,7 +2,7 @@ import React from 'react';
 import { Home, Search, Layout, User, Settings } from 'lucide-react';
 
 interface NavItemProps {
-  icon: React.ElementType;
+  icon: any;
   label: string;
   isActive?: boolean;
   onClick?: () => void;

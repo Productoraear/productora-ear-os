@@ -10,7 +10,7 @@ interface PathNode {
   title: string;
   description: string;
   href: string;
-  icon?: React.ElementType;
+  icon?: any;
   category?: string;
 }
 

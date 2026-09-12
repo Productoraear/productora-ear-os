@@ -35,7 +35,7 @@ import { AIConciergeProactive } from '@/components/neural/AIConciergeProactive';
 
 type VimumeTabId = 'evidencia' | 'mecenazgo' | 'colibri' | 'sonometria' | 'ontologia' | 'b2g_concertacion';
 
-const TABS: { id: VimumeTabId; label: string; icon: React.ElementType }[] = [
+const TABS: { id: VimumeTabId; label: string; icon: any }[] = [
   { id: 'evidencia', label: 'Bóveda de Evidencia (40Hz)', icon: Brain },
   { id: 'mecenazgo', label: 'Calculadora Fiscal (80%)', icon: Calculator },
   { id: 'colibri', label: 'El Legado del Colibrí', icon: Feather },

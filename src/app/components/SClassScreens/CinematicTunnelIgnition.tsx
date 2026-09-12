@@ -37,7 +37,7 @@ const PROFILE_CONFIG: Record<ProfileContext, {
   glowTo: string;
   accentColor: string;
   borderColor: string;
-  icon: React.ElementType;
+  icon: any;
   phases: { id: string; label: string; desc: string }[];
   optionA: { label: string; desc: string; href: string };
   optionB: { label: string; desc: string; href: string };
@@ -135,7 +135,7 @@ export const CinematicTunnelIgnition: React.FC<CinematicTunnelIgnitionProps> = (
     containerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, [profileContext]);
 
-  const IconComponent = config.icon;
+  const IconComponent = config.icon as any;
 
   return (
     <motion.div
