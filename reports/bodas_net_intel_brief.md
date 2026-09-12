@@ -2,7 +2,7 @@
 
 - Documentos extraídos: 26
 - PDFs escaneados (requieren OCR): 0
-- Generado: 2026-09-12T15:22:50.936816+00:00
+- Generado: 2026-09-12T20:56:34.178239+00:00
 
 ## Patrones de conversión
 - El Funnel y sus fases Un funnel o embudo de ventas es un concepto que se utiliza para representar las fases o etapas que recorre un usuario, desde que tiene una necesidad hasta que adquiere un producto o servicio.

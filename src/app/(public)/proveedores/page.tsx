@@ -255,25 +255,100 @@ function ProveedoresDirectoryContent() {
           }
 
           const total = filtered.length;
+          const PROV_FALLBACK_POOLS: Record<string, string[]> = {
+            finca: [
+              "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"
+            ],
+            catering: [
+              "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop"
+            ],
+            decoracion: [
+              "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1200&auto=format&fit=crop"
+            ],
+            musica: [
+              "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop"
+            ],
+            sonido: [
+              "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop"
+            ],
+            foto: [
+              "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop"
+            ],
+            wedding: [
+              "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop"
+            ],
+            moda: [
+              "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1200&auto=format&fit=crop"
+            ],
+            transporte: [
+              "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop"
+            ],
+            servicios: [
+              "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop"
+            ]
+          };
+
+          const getFallback = (catKey: string, seed?: string) => {
+            const pool = PROV_FALLBACK_POOLS[catKey] || PROV_FALLBACK_POOLS.servicios;
+            if (!seed) return pool[0];
+            const hash = seed.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+            return pool[hash % pool.length];
+          };
+
+          const isDirty = (u: any) =>
+            !u ||
+            typeof u !== 'string' ||
+            u.includes('.svg') ||
+            u.includes('gen_logoHeader') ||
+            u.includes('default_avatar') ||
+            u.includes('741e9617168a2484.jpg');
+
           const paged = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
           const mapped: ProviderItem[] = paged.map((p: any) => {
-            const imageUrls: string[] = Array.isArray(p.imageUrls)
-              ? p.imageUrls.filter((u: any) => typeof u === 'string' && u.length > 0)
-              : [];
-            const featured = imageUrls[0] || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80';
+            const rawCat = (selectedCategory && selectedCategory !== 'ALL') ? selectedCategory : normalizeCategory(p.category, p.description, p.name);
+            const rawImages = Array.isArray(p.imageUrls) && p.imageUrls.length > 0
+              ? p.imageUrls
+              : (Array.isArray(p.sourceImageUrls) && p.sourceImageUrls.length > 0
+                ? p.sourceImageUrls
+                : (Array.isArray(p.images) && p.images.length > 0 ? p.images.map((im: any) => typeof im === 'string' ? im : im.url) : (p.img ? [p.img] : [])));
+            const validImages: string[] = rawImages.filter((u: any) => typeof u === 'string' && u.length > 0 && !isDirty(u));
+            const defaultFallback = getFallback(rawCat, p.id || p.shaHash || p.name);
+            const featured = validImages[0] || defaultFallback;
 
             return {
               id: p.id || p.shaHash,
-              name: p.name,
+              name: (p.name || '').replace(/\s*-\s*Consulta disponibilidad y precios.*/i, '').trim(),
               slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
-              category: (selectedCategory && selectedCategory !== 'ALL') ? selectedCategory : normalizeCategory(p.category, p.description, p.name),
+              category: rawCat,
               province: p.province || 'Madrid',
               description: p.description || '',
               price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
               rating: p.rating || 5.0,
               reviews: p.reviewsCount || 12,
               img: featured,
-              gallery: imageUrls.length > 0 ? imageUrls : [featured],
+              gallery: validImages.length > 0 ? validImages : [featured],
               isPreferred: p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS',
               badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
             };
@@ -294,24 +369,98 @@ function ProveedoresDirectoryContent() {
       .then(res => res.json())
       .then(data => {
         if (!isCancelled && data.success && Array.isArray(data.providers) && data.providers.length > 0) {
+          const PROV_FALLBACK_POOLS: Record<string, string[]> = {
+            finca: [
+              "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"
+            ],
+            catering: [
+              "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop"
+            ],
+            decoracion: [
+              "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1200&auto=format&fit=crop"
+            ],
+            musica: [
+              "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop"
+            ],
+            sonido: [
+              "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop"
+            ],
+            foto: [
+              "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop"
+            ],
+            wedding: [
+              "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop"
+            ],
+            moda: [
+              "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1200&auto=format&fit=crop"
+            ],
+            transporte: [
+              "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop"
+            ],
+            servicios: [
+              "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop"
+            ]
+          };
+
+          const getFallback = (catKey: string, seed?: string) => {
+            const pool = PROV_FALLBACK_POOLS[catKey] || PROV_FALLBACK_POOLS.servicios;
+            if (!seed) return pool[0];
+            const hash = seed.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+            return pool[hash % pool.length];
+          };
+
+          const isDirty = (u: any) =>
+            !u ||
+            typeof u !== 'string' ||
+            u.includes('.svg') ||
+            u.includes('gen_logoHeader') ||
+            u.includes('default_avatar') ||
+            u.includes('741e9617168a2484.jpg');
+
           const mapped: ProviderItem[] = data.providers.map((p: any) => {
-            const imageUrls: string[] = Array.isArray(p.imageUrls)
-              ? p.imageUrls.filter((u: any) => typeof u === 'string' && u.length > 0)
-              : [];
-            const featured = imageUrls[0] || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80';
+            const rawCat = (selectedCategory && selectedCategory !== 'ALL') ? selectedCategory : normalizeCategory(p.category, p.description, p.name);
+            const rawImages = Array.isArray(p.imageUrls) && p.imageUrls.length > 0
+              ? p.imageUrls
+              : (Array.isArray(p.sourceImageUrls) && p.sourceImageUrls.length > 0
+                ? p.sourceImageUrls
+                : (Array.isArray(p.images) && p.images.length > 0 ? p.images.map((im: any) => typeof im === 'string' ? im : im.url) : (p.img ? [p.img] : [])));
+            const validImages: string[] = rawImages.filter((u: any) => typeof u === 'string' && u.length > 0 && !isDirty(u));
+            const defaultFallback = getFallback(rawCat, p.id || p.shaHash || p.name);
+            const featured = validImages[0] || defaultFallback;
 
             return {
               id: p.id || p.shaHash,
-              name: p.name,
+              name: (p.name || '').replace(/\s*-\s*Consulta disponibilidad y precios.*/i, '').trim(),
               slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
-              category: (selectedCategory && selectedCategory !== 'ALL') ? selectedCategory : normalizeCategory(p.category, p.description, p.name),
+              category: rawCat,
               province: p.province || 'Madrid',
               description: p.description || '',
               price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
               rating: p.rating || 5.0,
               reviews: p.reviewsCount || 12,
               img: featured,
-              gallery: imageUrls.length > 0 ? imageUrls : [featured],
+              gallery: validImages.length > 0 ? validImages : [featured],
               isPreferred: p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS',
               badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
             };

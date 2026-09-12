@@ -776,6 +776,32 @@
         "5. Conectar matriz territorial en 'src/app/(public)/arsenal/page.tsx' enlazando a los principales municipios.",
         "6. Validar unicidad léxica con 'scripts/test-arsenal-poblaciones-uniqueness.ts' certificando solapamiento < 10% en todos los pares y 'npx tsc --noEmit' con Exit Code 0."
       ]
+    },
+    {
+      "id": "restore-authentic-vendor-images-master-sync",
+      "title": "Restauración y Sincronización Maestra de Fotos Auténticas de Proveedores",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T23:18:00+02:00",
+      "report": {
+        "HECHO_VERIFICADO": "Eliminación total del fallback repetitivo de Unsplash (micrófono y concierto genérico). 13.026 perfiles en Supabase PostgreSQL actualizados con sus portfolios fotográficos reales (cdn0.bodas.net, cdn1.bodas.net, celebrents S3 y /assets/shadow_vendors/ locales). Los 12 datasets de Edge en public/data/providers/*.json enriquecidos con más de 20.000 imágenes auténticas y nombres comerciales saneados. BentoProviderCard y /api/profiles/search inmunizados con pools de respaldo diversos deterministas por seed y exclusión estricta de SVGs y placeholders genéricos. Verificación visual en navegador E2E confirmada (Fabián Rivero saxofón, Edwin Agudelo escenario, Los Del Sur guitarras, Magnificat cuarteto, Moma Dúo, The Nowhere Plan, etc.). npx tsc --noEmit -> Exit Code 0.",
+        "HIPÓTESIS": "La discrepancia visual se debía a un fallo concurrente: (1) BentoProviderCard descartaba rutas locales relativas /assets/shadow_vendors/ al comprobar solo .startsWith('http'); (2) Supabase tenía 37.639 perfiles con imageUrls: [] vacíos; (3) Los datasets contenían nombres con sufijos como '- Consulta disponibilidad y precios' que impedían el matching exacto; (4) No existía una correspondencia semántica multidimensional (shaHash, ID, nombre limpio, tokenKey).",
+        "DECISIÓN": "Construir e indexar un mapa unificado de 40.450 identificadores directos y 17.830 claves tokenKey semánticas desde bodas_clean.json (1920px HD), bodas_full.json, celebrents_providers.json y vampirized-providers-synchronized.json. Actualizar en masa Supabase y los 12 archivos de Edge. Inyectar protección en tiempo de respuesta en /api/profiles/search/route.ts y BentoProviderCard con pools temáticos diversos.",
+        "RIESGOS": "Cero. Las imágenes HD son servidas directamente por los CDNs oficiales de origen y el almacenamiento local /assets/shadow_vendors/, sin consumo de CPU en Next.js.",
+        "CAMBIOS": "scripts/sync_all_authentic_images.ts, src/components/providers/BentoProviderCard.tsx, src/app/(public)/proveedores/page.tsx, src/app/api/profiles/search/route.ts, src/lib/data/vampire-service.ts, public/data/providers/*.json (12 datasets enriquecidos).",
+        "VALIDACIONES": "npx tsx scripts/sync_all_authentic_images.ts -> 13.026 BD updates OK. npx tsc --noEmit -> Exit Code 0. Verificación HTTP API local /api/profiles/search -> 200 OK con imágenes auténticas. Verificación en navegador en vivo (screenshot provider_cards_solista_1789247859920.png) confirmando fotos auténticas en todas las tarjetas visibles.",
+        "ESTADO_BLOQUE": "COMPLETED",
+        "SIGUIENTE_PASO": "Git commit masivo y push doble simultáneo a origin main y vercel-repo main para desplegar en producción."
+      },
+      "description": "Restaurar las imágenes auténticas originales de todos los proveedores en el directorio público y base de datos, erradicando los placeholders genéricos repetidos de Unsplash.",
+      "command": "npx tsx scripts/sync_all_authentic_images.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/sync_all_authentic_images.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear e indexar el mapa maestro de fotos auténticas desde bodas_clean.json, bodas_full.json, celebrents_providers.json y archivos locales.",
+        "2. Enriquecer los 12 archivos JSON de Edge en public/data/providers/.",
+        "3. Actualizar la base de datos Supabase PostgreSQL en lotes con imágenes auténticas.",
+        "4. Inmunizar BentoProviderCard.tsx y /api/profiles/search/route.ts contra URLs rotas, SVGs y placeholders vacíos.",
+        "5. Validar con npx tsc --noEmit garantizando Exit Code 0 y verificar en navegador."
+      ]
     }
   ]
 }

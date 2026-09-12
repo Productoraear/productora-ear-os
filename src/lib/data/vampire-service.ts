@@ -134,9 +134,10 @@ export const getProvidersByLocation = cache(
       return filtered.map((p, idx) => {
         const catKey = (p.category || 'servicios').toLowerCase();
         const fallbackImg = categoryFallbacks[catKey] || categoryFallbacks.servicios;
-        const validImg = (p.img && typeof p.img === 'string' && p.img.startsWith('http')) 
+        const isGoodImg = (u?: string) => typeof u === 'string' && (u.startsWith('http') || u.startsWith('/'));
+        const validImg = (p.img && isGoodImg(p.img)) 
           ? p.img 
-          : ((p.gallery && p.gallery[0] && p.gallery[0].startsWith('http')) ? p.gallery[0] : fallbackImg);
+          : ((p.gallery && p.gallery[0] && isGoodImg(p.gallery[0])) ? p.gallery[0] : fallbackImg);
 
         return {
           id: p.id || `prov-${idx}`,

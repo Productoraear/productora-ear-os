@@ -42,33 +42,102 @@ interface BentoProviderCardProps {
   onClaim: (provider: ProviderItem) => void;
 }
 
-const CURATED_FALLBACKS: Record<string, string> = {
-  finca: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
-  catering: "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
-  decoracion: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
-  musica: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
-  sonido: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop",
-  foto: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
-  wedding: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
-  moda: "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=1200&auto=format&fit=crop",
-  transporte: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
-  servicios: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"
+const CURATED_FALLBACK_POOLS: Record<string, string[]> = {
+  finca: [
+    "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop"
+  ],
+  catering: [
+    "https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1200&auto=format&fit=crop"
+  ],
+  decoracion: [
+    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1478146896981-b80fe463b330?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?q=80&w=1200&auto=format&fit=crop"
+  ],
+  musica: [
+    "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop"
+  ],
+  sonido: [
+    "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop"
+  ],
+  foto: [
+    "https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200&auto=format&fit=crop"
+  ],
+  wedding: [
+    "https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200&auto=format&fit=crop"
+  ],
+  moda: [
+    "https://images.unsplash.com/photo-1594552072238-b8a33785b261?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1200&auto=format&fit=crop"
+  ],
+  transporte: [
+    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1200&auto=format&fit=crop"
+  ],
+  servicios: [
+    "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop"
+  ]
 };
+
+function getDiverseFallback(category?: string, seed?: string | number): string {
+  const cat = (category || 'servicios').toLowerCase();
+  const pool = CURATED_FALLBACK_POOLS[cat] || CURATED_FALLBACK_POOLS.servicios;
+  if (!seed) return pool[0];
+  const str = String(seed);
+  const hash = str.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return pool[hash % pool.length];
+}
+
+function isValidImage(url?: string): boolean {
+  if (!url || typeof url !== 'string') return false;
+  const trimmed = url.trim();
+  const lower = trimmed.toLowerCase();
+  if (
+    lower.includes('.svg') ||
+    lower.includes('gen_logoheader') ||
+    lower.includes('default_avatar') ||
+    lower.includes('741e9617168a2484.jpg')
+  ) {
+    return false;
+  }
+  return (
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://') ||
+    trimmed.startsWith('/') ||
+    trimmed.startsWith('data:image/')
+  );
+}
 
 export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
   provider,
   onSelect,
   onClaim
 }) => {
-  const catKey = (provider.category || 'servicios').toLowerCase();
-  const fallbackImg = CURATED_FALLBACKS[catKey] || CURATED_FALLBACKS.servicios;
+  const fallbackImg = getDiverseFallback(provider.category, provider.id || provider.name);
   const rawCover = provider.img || (provider.gallery && provider.gallery[0]);
-  const initialImg = (rawCover && rawCover.startsWith('http')) ? rawCover : fallbackImg;
+  const initialImg = isValidImage(rawCover) ? rawCover!.trim() : fallbackImg;
   const [currentImg, setCurrentImg] = React.useState<string>(initialImg);
 
   React.useEffect(() => {
     const raw = provider.img || (provider.gallery && provider.gallery[0]);
-    setCurrentImg((raw && raw.startsWith('http')) ? raw : fallbackImg);
+    setCurrentImg(isValidImage(raw) ? raw!.trim() : fallbackImg);
   }, [provider.img, provider.gallery, fallbackImg]);
 
   const formattedPrice = provider.basePrice || (typeof provider.price === 'number' ? provider.price : 450);
@@ -97,6 +166,14 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
           alt={provider.name}
           loading="lazy"
           onError={() => {
+            if (provider.gallery && provider.gallery.length > 1) {
+              const currentIdx = provider.gallery.findIndex(g => g === currentImg);
+              const nextImg = provider.gallery.find((g, i) => i > currentIdx && isValidImage(g) && g !== currentImg);
+              if (nextImg) {
+                setCurrentImg(nextImg);
+                return;
+              }
+            }
             if (currentImg !== fallbackImg) {
               setCurrentImg(fallbackImg);
             }
