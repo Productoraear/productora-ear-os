@@ -18,15 +18,13 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
   outputFileTracingExcludes: {
     '*': [
-      './src/data/staging/**',
-      './src/data/wedding_intel_vault/**',
-      './src/data/catalog/ADN_EAR_INDEX.json',
-      './src/data/vampirized-providers-deep-sclass.json',
-      './src/data/vampirized_providers.backup.json',
+      './src/data/**',
+      './scripts/**',
       'node_modules/puppeteer/**',
       'node_modules/playwright/**',
       'node_modules/@sparticuz/**',
       'node_modules/pdfjs-dist/**',
+      'node_modules/better-sqlite3/**',
     ],
   },
   experimental: {
