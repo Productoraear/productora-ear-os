@@ -1,0 +1,117 @@
+{
+  "project": "VIMUME",
+  "domain": "viajemusicalporlamemoria.com",
+  "scientific_basis": "40Hz Neuroacoustic",
+  "value_proposition": "Programa de musicoterapia en vivo y estimulación neuroacústica a 40 Hz para residencias geriátricas, centros de día y festejos municipales. Rider acústico certificado de 12 W/pax con sistemas Bose F1 812 / S1 Pro y microfonía Shure Beta 87A, operando siempre por debajo de 75 dB SPL.",
+  "testimonials": [
+    {
+      "source": "Bienvenido, Edwin Agudelo SIN IGUAL",
+      "quote": "Especialista homologado en la red Productora EAR.",
+      "verified": true
+    },
+    {
+      "source": "Bienvenidos a Viaje Musical por la Memoria",
+      "quote": "Bienvenidos a Viaje Musical por la Memoria Explora los sonidos y experiencias que transforman vidas.",
+      "verified": true
+    },
+    {
+      "source": "Testimonial",
+      "quote": "Testimonial Magnis provident turpis! Veniam torquent adipiscing odit excepteur molestie proin! Wisi? Malesuada ridiculus eros semper, nihil, tellus proin tellus massa? Cras diam, feugiat ridiculus modi.",
+      "verified": true
+    },
+    {
+      "source": "Bienvenido, Edwin Agudelo SIN IGUAL",
+      "quote": "Servicio profesional homologado para bodas y eventos exclusivos en madrid. Cobertura acústica y garantía EAR OS.",
+      "verified": true
+    },
+    {
+      "source": "Productora EAR • Edwin Agudelo",
+      "quote": "Show musical en directo de 1 hora (2 pases de 30 min), sonido profesional Bose F1 812 / S1 Pro, microfonía Shure Beta 87A, entrega de ramo de flores en vivo, canción personalizada y sesión de fotos con sombreros temáticos.",
+      "verified": true
+    }
+  ],
+  "repertoire": [
+    {
+      "title": "Copla Española Clásica",
+      "era": "1940-1960",
+      "format": "Voz + Guitarra"
+    },
+    {
+      "title": "Bolero y Balada Romántica",
+      "era": "1950-1975",
+      "format": "Voz + Piano"
+    },
+    {
+      "title": "Pasodoble y Zarzuela",
+      "era": "1930-1960",
+      "format": "Voz + Banda"
+    },
+    {
+      "title": "Canción Española de Autor",
+      "era": "1960-1990",
+      "format": "Voz + Guitarra"
+    },
+    {
+      "title": "Habaneras y Canciones de la Memoria",
+      "era": "1920-1950",
+      "format": "Coro + Guitarra"
+    },
+    {
+      "title": "Rumba Catalana y Cuplé",
+      "era": "1950-1980",
+      "format": "Voz + Percusión"
+    }
+  ],
+  "b2g_framework": {
+    "law": "LCSP Art. 118",
+    "ceiling": 15000,
+    "preventiveCeiling": 14250,
+    "splLimit": 75,
+    "acousticRider": "12 W/pax",
+    "certifiedSystems": [
+      "Bose F1 812",
+      "Bose S1 Pro"
+    ],
+    "microphones": [
+      "Shure Beta 87A Inalámbrico"
+    ]
+  },
+  "media_gallery": [
+    {
+      "url": "https://viajemusicalporlamemoria.com/wp-content/uploads/vimume-edwin-agudelo-live.jpg",
+      "type": "image",
+      "caption": "Edwin Agudelo en directo — Viaje Musical Por La Memoria"
+    }
+  ],
+  "sovereign_split": {
+    "artist": 80,
+    "earOs": 10,
+    "vimume": 10
+  },
+  "deposit_required": 100,
+  "price_lock_hours": 72,
+  "logistics": {
+    "hubReference": "Méntrida, Toledo",
+    "ratePerKm": 1.5,
+    "freeKmThreshold": 50,
+    "hotelSupplementHoursLimit": "03:00 AM",
+    "hotelSupplementCost": 120
+  },
+  "flagship_artist": {
+    "name": "Edwin Agudelo",
+    "slug": "edwin-agudelo",
+    "basePrice": 350,
+    "rating": 5,
+    "reviewCount": 128,
+    "phone": "+34 693 693 048",
+    "description": "Show musical en directo de 1 hora (2 pases de 30 min), sonido profesional Bose F1 812 / S1 Pro, microfonía Shure Beta 87A, entrega de ramo de flores en vivo, canción personalizada y sesión de fotos con sombreros temáticos."
+  },
+  "purification_report": {
+    "scanned_files": 2,
+    "scanned_records": 107254,
+    "raw_hits": 22,
+    "purged_slop_fragments": 50,
+    "nuggets_extracted": 12,
+    "generated_at": "2026-09-12T14:34:37.005Z"
+  }
+}

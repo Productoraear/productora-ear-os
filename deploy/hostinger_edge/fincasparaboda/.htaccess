@@ -1,0 +1,57 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# fincasparaboda.com — LiteSpeed S-Class Edge Config
+# Compresión Brotli/Gzip · HSTS · Redirección forzada HTTPS · Cache inmutable
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ── Redirección forzada HTTPS ──────────────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# ── Compresión Brotli (LiteSpeed nativo) ───────────────────────────────────────
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css
+    AddOutputFilterByType BROTLI_COMPRESS text/javascript application/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/json application/xml
+    AddOutputFilterByType BROTLI_COMPRESS image/svg+xml application/rss+xml
+</IfModule>
+
+# ── Compresión Gzip (fallback) ─────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE text/javascript application/javascript
+    AddOutputFilterByType DEFLATE application/json application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml application/rss+xml
+</IfModule>
+
+# ── Headers de seguridad S-Class ───────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header unset X-Powered-By
+</IfModule>
+
+# ── Cache inmutable de assets estáticos ────────────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# ── Índice por defecto ─────────────────────────────────────────────────────────
+DirectoryIndex index.php index.html
+
+# ── Bloqueo de archivos sensibles ──────────────────────────────────────────────
+<FilesMatch "\.(env|json|md|log|sql|bak)$">
+    Require all denied
+</FilesMatch>
