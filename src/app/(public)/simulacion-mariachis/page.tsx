@@ -21,7 +21,7 @@ export default function SimulacionMariachisPage() {
 
   const handleStartSimulation = () => {
     setIsRunning(true);
-    setTimeout(() => setIsRunning(false), 1200);
+    setTimeout(() => setIsRunning(false), 60000);
   };
 
   return (
