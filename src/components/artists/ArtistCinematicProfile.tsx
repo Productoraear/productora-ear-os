@@ -194,105 +194,109 @@ export default function ArtistCinematicProfile({
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
-            {/* RETRATO CINEMATOGRÁFICO DE AUTORIDAD */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="relative w-full max-w-[420px] aspect-[4/5] rounded-3xl overflow-hidden border border-[#ecb613]/30 bg-[#09090d] shadow-[0_25px_60px_rgba(0,0,0,0.9)] group">
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-black/40 z-10" />
-                <img 
-                  src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1000&auto=format&fit=crop" 
-                  alt={`${name} - Tenor & Master Artist`}
-                  className="h-full w-full object-cover filter grayscale contrast-125 group-hover:scale-105 transition-transform duration-700"
-                />
+            {/* VÍDEO CINEMATOGRÁFICO DE AUTORIDAD S-CLASS (FIGMA PRO HIGH-END FRAME) */}
+            <div className="lg:col-span-6 flex flex-col items-center">
+              <div className="relative w-full rounded-3xl overflow-hidden border border-[#ecb613]/30 bg-[#09090d] shadow-[0_20px_60px_rgba(0,0,0,0.85)] group">
                 
-                {/* Sello de Autenticidad */}
-                <div className="absolute top-4 right-4 z-20 rounded-full border border-white/20 bg-black/60 backdrop-blur-md px-3.5 py-1 text-[10px] font-mono uppercase tracking-widest text-[#AAD6CD]">
-                  Paciente Cero EAR OS
+                {/* Marco de Reproductor High-End 16:9 */}
+                <div className="relative w-full aspect-video bg-black overflow-hidden">
+                  <iframe
+                    src="https://www.youtube-nocookie.com/embed/fLT4-kqfdI4?rel=0&modestbranding=1&controls=1&showinfo=0"
+                    title="Edwin Agudelo - En Directo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full border-0"
+                  />
                 </div>
-
-                {/* Badge Inferior */}
-                <div className="absolute bottom-0 inset-x-0 z-20 p-5 bg-gradient-to-t from-black via-black/90 to-transparent">
-                  <div className="flex items-center justify-between border-t border-white/10 pt-3">
-                    <div>
-                      <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">Tesitura Principal</p>
-                      <p className="font-syne text-sm font-bold text-[#ecb613]">Tenor Lírico / Escénico</p>
+                
+                {/* Barra de Telemetría Inferior del Frame */}
+                <div className="p-4 bg-gradient-to-t from-black via-[#09090d] to-[#09090d]/80 border-t border-white/10">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
+                      <span className="font-mono text-[11px] uppercase tracking-widest text-[#ecb613] font-bold">
+                        En Directo · Gala S-Class
+                      </span>
                     </div>
-                    <div className="text-right">
-                      <p className="font-mono text-[10px] uppercase tracking-widest text-white/50">Cierre Criptográfico</p>
-                      <p className="font-mono text-xs font-bold text-white">SHA-256 Price-Lock</p>
+                    <div className="flex items-center gap-3 font-mono text-[10px] text-white/50">
+                      <span>Bose F1 12 W/pax</span>
+                      <span>•</span>
+                      <span className="text-[#AAD6CD]">Shure Beta 87A</span>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
 
-            {/* MANIFIESTO HEADLINE & CTA DE CIERRE */}
-            <div className="lg:col-span-7 space-y-6">
+            {/* MANIFIESTO HEADLINE & CTA DE CIERRE (ESPACIO OPTIMIZADO FIGMA PRO) */}
+            <div className="lg:col-span-6 space-y-5">
               
-              <div className="flex flex-wrap items-center gap-3">
-                <span className="rounded-full bg-[#ecb613] px-3.5 py-1 text-[10px] font-mono font-black uppercase tracking-widest text-black">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span className="rounded-full bg-[#ecb613] px-3 py-0.5 text-[10px] font-mono font-black uppercase tracking-widest text-black shadow-sm">
                   Artista Insignia
                 </span>
-                <span className="rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-[10px] font-mono uppercase tracking-widest text-white/80">
+                <span className="rounded-full border border-white/15 bg-white/5 px-3 py-0.5 text-[10px] font-mono uppercase tracking-widest text-white/80">
                   Fundador Productora EAR
                 </span>
-                <span className="rounded-full border border-[#AAD6CD]/30 bg-[#AAD6CD]/10 px-3.5 py-1 text-[10px] font-mono uppercase tracking-widest text-[#AAD6CD]">
-                  Director Proyecto VIMUME
+                <span className="rounded-full border border-[#AAD6CD]/30 bg-[#AAD6CD]/10 px-3 py-0.5 text-[10px] font-mono uppercase tracking-widest text-[#AAD6CD]">
+                  Director VIMUME
                 </span>
               </div>
 
               <div>
-                <h1 className="font-syne text-5xl sm:text-7xl font-black uppercase tracking-tight text-white leading-none">
+                <h1 className="font-syne text-4xl sm:text-6xl font-black uppercase tracking-tight text-white leading-none">
                   {name}
                 </h1>
-                <p className="mt-3 font-syne text-xl sm:text-2xl font-light tracking-wide text-[#ecb613]">
+                <p className="mt-2 font-syne text-lg sm:text-xl font-light tracking-wide text-[#ecb613]">
                   {specialty}
                 </p>
               </div>
 
               {/* Declaración Inmutable de Oficio */}
-              <div className="border-l-2 border-[#ecb613] pl-6 py-2 bg-white/[0.02] rounded-r-2xl">
-                <p className="text-base sm:text-lg text-white/85 font-light leading-relaxed italic">
-                  &ldquo;Artista, cantante y compositor de amplia trayectoria y oficio real sobre el escenario. No vendemos números; diseñamos una arquitectura acústica y emocional indestructible que transforma un evento en un recuerdo de por vida.&rdquo;
+              <div className="border-l-2 border-[#ecb613] pl-4 py-1.5 bg-white/[0.02] rounded-r-xl">
+                <p className="text-sm sm:text-base text-white/85 font-light leading-relaxed italic">
+                  &ldquo;No vendemos números; diseñamos una arquitectura acústica y emocional indestructible que transforma tu evento en un recuerdo de por vida.&rdquo;
                 </p>
               </div>
 
-              {/* STAT GRID S-CLASS */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                <div className="rounded-2xl border border-white/10 bg-[#0a0a0f] p-4 text-center">
-                  <span className="block font-syne text-2xl sm:text-3xl font-black text-[#ecb613]">160k+</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">KM de Giras</span>
+              {/* STAT GRID S-CLASS COMPACTO FIGMA HIGH-END */}
+              <div className="grid grid-cols-4 gap-2.5 pt-1">
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
+                  <span className="block font-syne text-xl sm:text-2xl font-black text-[#ecb613]">160k+</span>
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">KM Giras</span>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-[#0a0a0f] p-4 text-center">
-                  <span className="block font-syne text-2xl sm:text-3xl font-black text-white">37</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">Conciertos Int.</span>
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
+                  <span className="block font-syne text-xl sm:text-2xl font-black text-white">37</span>
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">Giras Int.</span>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-[#0a0a0f] p-4 text-center">
-                  <span className="block font-syne text-2xl sm:text-3xl font-black text-[#AAD6CD]">14</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">Formatos S-Class</span>
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
+                  <span className="block font-syne text-xl sm:text-2xl font-black text-[#AAD6CD]">14</span>
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">Formatos</span>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-[#0a0a0f] p-4 text-center">
-                  <span className="block font-syne text-2xl sm:text-3xl font-black text-white">80/10/10</span>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/50">Split Soberano</span>
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
+                  <span className="block font-syne text-xl sm:text-2xl font-black text-white">80/10/10</span>
+                  <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">Soberano</span>
                 </div>
               </div>
 
-              {/* CTAS DE ALTO VALOR */}
-              <div className="flex flex-wrap items-center gap-4 pt-4">
+              {/* CTAS DE ALTO IMPACTO (OPTIMIZADOS) */}
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={() => handleSelectFormatAndQuote('solista-edwin-agudelo')}
-                  className="rounded-xl bg-[#ecb613] px-8 py-4 font-mono text-xs font-black uppercase tracking-[0.2em] text-black shadow-[0_0_30px_rgba(236,182,19,0.3)] transition-all hover:scale-105 hover:bg-white flex items-center gap-3 cursor-pointer"
+                  className="rounded-xl bg-[#ecb613] px-6 py-3.5 font-mono text-xs font-black uppercase tracking-[0.15em] text-black shadow-[0_0_25px_rgba(236,182,19,0.35)] transition-all hover:scale-105 hover:bg-white flex items-center gap-2.5 cursor-pointer"
                 >
-                  <Lock size={15} />
-                  <span>Bloquear Fecha — Depósito 100 €</span>
+                  <Lock size={14} />
+                  <span>Bloquear Fecha (100 €)</span>
                 </button>
                 <button
                   onClick={() => setActiveTab('ROSTER_14')}
-                  className="rounded-xl border border-white/20 bg-white/5 px-6 py-4 font-mono text-xs font-semibold uppercase tracking-widest text-white transition-colors hover:bg-white/10 flex items-center gap-2 cursor-pointer"
+                  className="rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10 flex items-center gap-2 cursor-pointer"
                 >
                   <Layers size={14} className="text-[#ecb613]" />
-                  <span>Explorar los 14 Formatos</span>
+                  <span>Ver 14 Formatos</span>
                 </button>
                 <a
                   href={`https://wa.me/34693693048?text=${encodeURIComponent(
@@ -300,10 +304,10 @@ export default function ArtistCinematicProfile({
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-xl border border-[#AAD6CD]/40 bg-[#AAD6CD]/10 px-5 py-4 font-mono text-xs font-semibold uppercase tracking-widest text-[#AAD6CD] transition-colors hover:bg-[#AAD6CD]/20 flex items-center gap-2"
+                  className="rounded-xl border border-[#AAD6CD]/40 bg-[#AAD6CD]/10 px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-[#AAD6CD] transition-colors hover:bg-[#AAD6CD]/20 flex items-center gap-2"
                 >
-                  <Phone size={14} />
-                  <span>WhatsApp (+34 693 693 048)</span>
+                  <Phone size={13} />
+                  <span>WhatsApp</span>
                 </a>
               </div>
 
