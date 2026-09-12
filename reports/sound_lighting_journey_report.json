@@ -1,0 +1,110 @@
+{
+  "engine": "CLIENT_AUDIO_LIGHTING_CONVERSION_JOURNEY",
+  "version": "1.0.0",
+  "timestamp": "2026-09-12T14:13:24.436Z",
+  "baseUrl": "http://localhost:3007",
+  "serverReachable": true,
+  "milestones": [
+    {
+      "id": 1,
+      "stage": "COLD",
+      "name": "Landing /alquiler (AcousticSpatialMatcher 12 W/pax)",
+      "url": "http://localhost:3007/alquiler",
+      "method": "GET",
+      "status": 200,
+      "latencyMs": 79,
+      "ok": true,
+      "withinBudget": true,
+      "details": {
+        "wattsPerPax": 12,
+        "totalWatts": 1800,
+        "recommendedSystem": "Bose F1 Model 812 + Subwoofer Array",
+        "microphones": "Shure Beta 87A / Axient RF / GLXD4",
+        "sha256": "513057b36eecc794...",
+        "httpOk": true,
+        "hasMatcher": true
+      }
+    },
+    {
+      "id": 2,
+      "stage": "WARM",
+      "name": "Selección pack 150 pax (Bose F1 812 + LED) → WARM",
+      "url": "http://localhost:3007/alquiler",
+      "method": "GET",
+      "status": 200,
+      "latencyMs": 0,
+      "ok": true,
+      "withinBudget": true,
+      "details": {
+        "temperature": "WARM",
+        "score": 25,
+        "visitedPages": [
+          "/",
+          "/alquiler",
+          "/alquiler?pack=bose-f1-812-led-150pax"
+        ],
+        "pack": "Bose F1 Model 812 + Subwoofer Array + Pack Iluminación LED",
+        "totalWatts": 1800,
+        "wattsPerPax": 12
+      }
+    },
+    {
+      "id": 3,
+      "stage": "HOT",
+      "name": "Matriz /comparar (sin rebote a home, precios transparentes)",
+      "url": "http://localhost:3007/comparar",
+      "method": "GET",
+      "status": 200,
+      "latencyMs": 93,
+      "ok": true,
+      "withinBudget": true,
+      "details": {
+        "httpStatus": 200,
+        "isRedirectToHome": false,
+        "hasTransparency": true,
+        "antiHomeRedirect": true
+      }
+    },
+    {
+      "id": 4,
+      "stage": "FIRE",
+      "name": "Orquestación transaccional (fianza 100 € Stripe + Price-Lock)",
+      "url": "http://localhost:3007/api/checkout/orchestrate",
+      "method": "POST",
+      "status": 201,
+      "latencyMs": 328,
+      "ok": true,
+      "withinBudget": false,
+      "details": {
+        "httpStatus": 201,
+        "success": true,
+        "productionId": "cmtygtmmu0001at0kwcdfiudj",
+        "checkoutUrl": "https://checkout.stripe.com/c/pay/cs_test_a1eruh3XSaKK7A5brWjAyFWs1olOynoMlX1VQ4WDNq87INnODIPpDxp3tT#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdicGRmZGhqaWBTZHdsZGtxJz8nZmprcXdqaScpJ2R1bE5gfCc%2FJ3VuWnFgdnFaMDRWfW1dMFd3Sj1idmFjc3VxdGloaGg3SXdWVzZIbHZnfUZTbjxxR3M9aVRBQ0E0ZlFAa3YwSFRtQmx9RGs9d2RLTlB9PWNVUXNiYUpmVWp0d2BWfFE3PH01NTNdc0dNNjFKJyknY3dqaFZgd3Ngdyc%2FcXdwYCknZ2RmbmJ3anBrYUZqaWp3Jz8nJmNjY2NjYycpJ2lkfGpwcVF8dWAnPyd2bGtiaWBabHFgaCcpJ2BrZGdpYFVpZGZgbWppYWB3dic%2FcXdwYHgl",
+        "totalBudget": 726,
+        "depositOnly": true
+      }
+    },
+    {
+      "id": 5,
+      "stage": "FIRE",
+      "name": "Cierre /boda/reserva-confirmada (Leaflet HD + ClientLiveTrackingDrawer)",
+      "url": "http://localhost:3007/boda/reserva-confirmada?production_id=cmtygtmmu0001at0kwcdfiudj",
+      "method": "GET",
+      "status": 200,
+      "latencyMs": 78,
+      "ok": true,
+      "withinBudget": true,
+      "details": {
+        "httpStatus": 200,
+        "no404": true,
+        "hasTracking": true,
+        "productionId": "cmtygtmmu0001at0kwcdfiudj"
+      }
+    }
+  ],
+  "finalTemperature": "FIRE",
+  "productionId": "cmtygtmmu0001at0kwcdfiudj",
+  "totalLatencyMs": 578,
+  "allPass": true,
+  "summary": "VIAJE COMPLETO COLD ➔ FIRE: cliente capturado, calentado, comparado y cerrado con fianza 100 €."
+}

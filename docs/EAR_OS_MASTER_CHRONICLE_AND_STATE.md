@@ -274,6 +274,16 @@ Acción |
 
 ---
 
+## 🚀 HITOS DE CONVERGENCIA OMEGA (SEPTIEMBRE 2026)
+
+- **Hito 22 // Portal de Reserva Confirmada S-Class (`/boda/reserva-confirmada`):** Cierre del embudo post-Stripe con `ClientLiveTrackingDrawer` flotante sobre Leaflet HD, lectura de `ProductionEvent` en Supabase, fianza de 100 € verificada (Price-Lock SHA-256) y botones de llamada/WhatsApp directo con el jefe de cuadrilla.
+- **Hito 23 // Pantalla NASA Admin (`/admin/fleet-live`):** Reemplazo del mock estático de CSS por la integración táctica Leaflet HD en vivo, monitoreando la convergencia de 4 convoyes nacionales (Valencia 338 km, Toledo 40 km, Madrid 39 km, Sevilla 530 km) con telemetría de velocidad, ETAs y fases.
+- **Hito 24 // Motor Atómico de Bloqueo de Fechas (`atomicDateLockEngine.ts` & `/api/availability/check`):** Verificación y bloqueo atómico con aislamiento ACID sobre `calendarBlock` y `ProductionEvent` en Prisma, impidiendo colisiones y doble reserva en el calendario estilo Airbnb.
+- **Hito 25 // Radar B2G Festejos Municipales (`b2gArsenalTenderRadar.ts`):** Generador de ofertas técnicas y riders acústicos blindados en 1 clic (< 14.250 € preventivo Art. 118 LCSP, < 75 dB SPL, Split 80/10/10, logística Méntrida 1,50 €/km).
+- **Hito 26 // Malla Enciclopédica Wikipedia ZTM (`omniGoldWikipediaMeshEngine.ts`):** Minería por streaming sobre los 362.498 Activos de Oro de `H:\EAR_GOLDEN_INDEX.csv` generando grafos relacionales y enlaces bidireccionales ([[Wikilinks]]) para Blog, Proyectos y Dossiers sin consumo excesivo de RAM.
+
+---
+
 ## 🛡️ PROTOCOLOS Y REGLAS DE NEGOCIO INMUTABLES (SSOT)
 - **Tarifa Solista:** 350,00 € (Edwin Agudelo).
 - **Logística:** 1,50 €/km desde Méntrida a partir del km 50. Suplemento hotel (+120 €) si hora fin >= 3:00 AM.

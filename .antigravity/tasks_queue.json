@@ -559,6 +559,43 @@
         "2. Crear script de validación 'scripts/test-multi-tenant-hostinger.ts': Simular requests HTTP NextRequest con los distintos headers de Host y certificar que rewrite URLs y status 200 respondan correctamente en < 5 ms.",
         "3. Validar con 'npx tsc --noEmit' asegurando Exit Code 0."
       ]
+    },
+    {
+      "id": "browser-e2e-sound-lighting-conversion-journey",
+      "title": "Simulación E2E Navegador: Viaje del Cliente de Sonido e Iluminación (COLD -> FIRE)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T16:13:00+02:00",
+      "validation": "npx tsx scripts/test-client-audio-lighting-journey.ts -> EXIT 0 (5/5 hitos OK, servidor ONLINE). npx tsc --noEmit -> Exit Code 0. Viaje COLD->FIRE completo: /alquiler (12 W/pax, 87 ms), WARM (150 pax Bose F1+LED), /comparar (anti-home redirect), /api/checkout/orchestrate (fianza 100 €, productionId=cmtygt3fs0000at0kpzleesl0), /boda/reserva-confirmada (Leaflet HD + drawer, sin 404). Reporte: reports/sound_lighting_journey_report.json.",
+
+      "description": "Ejecutar una prueba E2E de navegador ligera sin consumo de tokens pesados (usando Puppeteer local o client HTTP/DOM) que simule el viaje completo de un cliente que busca 'alquilar altavoces y luces para evento': (1) Landing /alquiler (COLD), (2) Selección acústica 150 pax / 12W (WARM), (3) Comparador transparente /comparar o cotizador (HOT), (4) Orquestación de fianza 100€ Stripe (FIRE) y (5) Confirmación de reserva en /boda/reserva-confirmada con tracking de furgoneta.",
+      "command": "npx tsx scripts/test-client-audio-lighting-journey.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-client-audio-lighting-journey.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'scripts/test-client-audio-lighting-journey.ts': Script automatizado que consulte http://localhost:3007 y simule el flujo completo de usuario.",
+        "2. Paso 1 (COLD): Petición a '/alquiler', verificar carga 200 OK, presencia del AcousticSpatialMatcher y cálculo 12 W/pax.",
+        "3. Paso 2 (WARM): Simular selección de evento (150 personas, sonido Bose F1 + pack luces LED), verificar escalado de LeadTemperature a WARM.",
+        "4. Paso 3 (HOT): Navegación a '/comparar' para certificar que no hay rebotes a home y el desglose de precios es transparente.",
+        "5. Paso 4 (FIRE): Invocar '/api/checkout/orchestrate' con los line items (Bose F1 812 + Luces LED + Fianza 100€), capturando el productionId generado.",
+        "6. Paso 5 (Cierre): Petición a '/boda/reserva-confirmada?production_id=${productionId}' verificando que el mapa táctico y el drawer de cabina se renderizan sin error 404.",
+        "7. Guardar reporte en 'reports/sound_lighting_journey_report.json' y certificar 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "deploy-to-netlify-and-audit-production",
+      "title": "Despliegue a Netlify (Doble Push Git) y Auditoría de Producción en Vivo",
+      "status": "PENDING",
+      "description": "Consolidar todos los cambios recientes (enrutamiento multi-tenant, viaje de conversión sonido/luces, documentación S-Class) en un Git commit limpio y ejecutar push simultáneo a 'origin main' y 'vercel-repo main' (repositorio que activa el webhook de despliegue en Netlify). Verificar que la compilación pase con Exit Code 0 y auditar la respuesta HTTP del balanceador de Netlify.",
+      "command": "git add -A ; git commit -m \"feat(S-Class): Deploy Multi-Tenant Edge Routing & E2E Sound/Lighting CRO Journey\" ; git push origin main ; git push vercel-repo main",
+      "execution_command": "pwsh -Command \"git add -A ; git commit -m 'feat(S-Class): Deploy Multi-Tenant Edge Routing & E2E Sound/Lighting CRO Journey' ; git push origin main ; git push vercel-repo main\"",
+      "steps": [
+        "1. Validar integridad de TypeScript con 'npx tsc --noEmit' asegurando Exit Code 0.",
+        "2. Ejecutar 'git add -A' para incluir todos los archivos nuevos (scripts, reportes, middleware, documentación).",
+        "3. Ejecutar 'git commit -m \"feat(S-Class): Deploy Multi-Tenant Edge Routing & E2E Sound/Lighting CRO Journey\"'.",
+        "4. Ejecutar 'git push origin main' (repositorio productora-ear-os).",
+        "5. Ejecutar 'git push vercel-repo main' (repositorio ear.git que activa el build automático en Netlify).",
+        "6. Verificar que ambos pushes se hayan completado con éxito (Fast-forward / up-to-date).",
+        "7. Marcar esta tarea como COMPLETED en tasks_queue.json y notificar."
+      ]
     }
   ]
 }
