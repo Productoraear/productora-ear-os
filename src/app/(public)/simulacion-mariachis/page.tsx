@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
 import { runHighTrafficMariachiSimulation, MariachiSimulationReport } from '@/lib/matchmaker/mariachiHighTrafficSimulator';
-import { LiveCommandCenter } from '@/features/tour-logistics/ui/LiveCommandCenter';
+import { UberFleetVisualizer } from '@/components/neural/UberFleetVisualizer';
 
 export default function SimulacionMariachisPage() {
   const [injectOvertime, setInjectOvertime] = useState(false);
@@ -168,9 +168,9 @@ export default function SimulacionMariachisPage() {
 
           </div>
 
-          {/* TELEMETRÍA EN VIVO (MAPA REAL) */}
+          {/* TELEMETRÍA EN VIVO (MAPA UBER) */}
           <div className="pt-8">
-            <LiveCommandCenter tourId="GLOBAL_MARIACHI_FLEET" />
+            <UberFleetVisualizer report={simulation} isRunning={isRunning} />
           </div>
 
         </div>
