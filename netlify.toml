@@ -5,3 +5,9 @@
 [build]
   command = "npm run build"
   publish = ".next"
+
+# Runtime oficial de Next.js para Netlify (v5).
+# IMPRESCINDIBLE para SSR, Middleware (multi-tenant edge routing) y App Router.
+# Sin este plugin, Netlify intenta un build estático genérico y falla con Exit Code 2.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

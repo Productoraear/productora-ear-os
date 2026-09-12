@@ -8,7 +8,10 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 
-export const DEDUCCION_FISCAL_RATE = 0.35; // 35% de deducción en Impuesto de Sociedades (Ley 49/2002)
+// 35% de deducción en Impuesto de Sociedades (Ley 49/2002).
+// NOTA: No puede exportarse desde un page.tsx (Next.js solo permite exports
+// canónicos: default, metadata, generateMetadata, etc.). Se mantiene local.
+const DEDUCCION_FISCAL_RATE = 0.35;
 
 export default function VimumeProveedoresSeniorPage() {
   // Estado para Calculador de Co-Branding & Patrocinio

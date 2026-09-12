@@ -14,11 +14,7 @@ interface PageProps {
     provincia: string;
     servicio: string;
     municipio: string;
-  }> | {
-    provincia: string;
-    servicio: string;
-    municipio: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
