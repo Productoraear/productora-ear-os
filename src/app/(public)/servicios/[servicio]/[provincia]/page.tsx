@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import ChauffeurVipView from '@/features/chauffeur/ui/ChauffeurVipView';
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `Alquiler de Vehículos de Lujo con Conductor & Chófer VIP en ${cityName} | Productora EAR`,
       description: `Flota oficial Mercedes-Benz Clase S, Clase V y Maybach en ${cityName}. Servicios de representación, transfers aeropuerto Barajas FBO, bodas y eventos VIP.`,
       alternates: {
-        canonical: `https://www.productoraear.com/servicios/${servicio}/${provincia}`,
+        canonical: `https://productoraear.com/servicios/${servicio}/${provincia}`,
       }
     };
   }
@@ -50,13 +50,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${profile.gremioLabel} en ${profile.provinciaName} | Productora EAR`,
     description: `${profile.dreamOutcome} Presupuesto cerrado desde ${profile.basePrice} € con fianza de ${profile.deposit} € (Price-Lock SHA-256). Logística Méntrida 1,50 €/km y Garantía de Relevo Uber 0% cancelaciones.`,
     alternates: {
-      canonical: `https://www.productoraear.com/servicios/${servicio}/${provincia}`,
+      canonical: `https://productoraear.com/servicios/${servicio}/${provincia}`,
     },
     openGraph: {
       title: `${profile.gremioLabel} en ${profile.provinciaName} | Productora EAR`,
       description: profile.dreamOutcome,
       type: 'website',
-      url: `https://www.productoraear.com/servicios/${servicio}/${provincia}`,
+      url: `https://productoraear.com/servicios/${servicio}/${provincia}`,
       locale: 'es_ES'
     }
   };

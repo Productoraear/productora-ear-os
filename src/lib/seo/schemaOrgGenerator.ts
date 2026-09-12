@@ -11,7 +11,7 @@ export interface SchemaOrgGraph {
   '@graph': Array<Record<string, unknown>>;
 }
 
-const BASE_URL = 'https://www.productoraear.com';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 const PHONE = '+34693693048';
 
 export function buildServiceSchema(profile: SearchIntentProfile): Record<string, unknown> {

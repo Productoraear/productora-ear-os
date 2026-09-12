@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 🏛️ OCCASION HUB - S-CLASS INTENT NODE
  * Purpose: Aggregated destination for high-intent occasion searches.
  */
@@ -29,7 +29,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     title: occasion.seoTitle,
     description: occasion.seoDescription,
     alternates: {
-      canonical: `https://www.productoraear.com${occasion.canonicalPath}`,
+      canonical: `https://productoraear.com${occasion.canonicalPath}`,
     },
     openGraph: {
       title: occasion.seoTitle,

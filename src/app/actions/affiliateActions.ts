@@ -98,7 +98,7 @@ export async function getAffiliateDashboardData(email: string): Promise<Affiliat
     .reduce((acc, l) => acc + l.amount, 0);
 
   const referralCode = user.id.replace(/^usr-/, '').toUpperCase();
-  const referralLink = `https://www.productoraear.com/?ref=${encodeURIComponent(referralCode)}`;
+  const referralLink = `https://productoraear.com/?ref=${encodeURIComponent(referralCode)}`;
 
   return {
     user: {

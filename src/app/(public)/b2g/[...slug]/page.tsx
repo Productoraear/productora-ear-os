@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `Licitaciones B2G y Producción Institucional en ${cityName} | Productora EAR`,
     description: `Servicios de ${eventSlug.replace(/-/g, ' ')} para Ayuntamientos e Instituciones Públicas en ${cityName}. Cumplimiento estricto LCSP, seguro RC 600.000€ y memorias técnicas.`,
     alternates: {
-      canonical: `https://www.productoraear.com/b2g/${slug.join('/')}`,
+      canonical: `https://productoraear.com/b2g/${slug.join('/')}`,
     }
   };
 }

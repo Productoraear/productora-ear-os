@@ -16,12 +16,12 @@ export const metadata: Metadata = {
     'licitacion menor cultura festejos'
   ],
   alternates: {
-    canonical: 'https://www.productoraear.com/b2g',
+    canonical: 'https://productoraear.com/b2g',
   },
   openGraph: {
     title: 'Portal B2G & Contratación Menor Art. 118 LCSP | Productora EAR',
     description: 'Bypass administrativo para administraciones locales. Licitaciones menores blindadas en 14.250€ y facturación directa en FACe.',
-    url: 'https://www.productoraear.com/b2g',
+    url: 'https://productoraear.com/b2g',
     siteName: 'Productora EAR — EAR OS',
     locale: 'es_ES',
     type: 'website',

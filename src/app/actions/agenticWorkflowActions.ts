@@ -136,7 +136,7 @@ async function validateDeepLink(url: string): Promise<{ status: number; alive: b
       method: 'HEAD',
       signal: controller.signal,
       headers: {
-        'User-Agent': 'EAR-OS-OpportunityValidator/1.0 (+https://www.productoraear.com)',
+        'User-Agent': 'EAR-OS-OpportunityValidator/1.0 (+https://productoraear.com)',
       },
       redirect: 'follow',
     });

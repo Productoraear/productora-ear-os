@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import SemanticBlockRenderer from '@/components/programmatic/SemanticBlockRenderer';
@@ -80,7 +80,7 @@ export async function generateMetadata({
       title: node.title,
       description: node.description,
       type: 'website',
-      url: `https://www.productoraear.com/${node.vertical}/${node.intent}`,
+      url: `https://productoraear.com/${node.vertical}/${node.intent}`,
     },
   };
 }

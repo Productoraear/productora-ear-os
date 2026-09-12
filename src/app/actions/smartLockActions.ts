@@ -119,7 +119,7 @@ export async function createSmartLockCheckoutAction(input: {
 
     // ── STANDARD FLOW: Create Stripe Checkout Session ──
     const stripeApiKey = process.env.STRIPE_SECRET_KEY;
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
     if (stripeApiKey && !stripeApiKey.includes('dummy')) {
       const stripe = (await import('stripe')).default;

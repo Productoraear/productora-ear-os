@@ -696,6 +696,33 @@
         "6. Crear script de validación 'scripts/test-hormozi-pseo-sitemap.ts': Probar resolución de SearchIntentProfile para 50 combinaciones en <10ms, verificar cálculo de 12W/pax y distancia Méntrida, y validar sitemap sin URLs rotas.",
         "7. Validar estrictamente con 'npx tsc --noEmit' hasta certificar Exit Code 0 (cero errores de TypeScript)."
       ]
+    },
+    {
+      "id": "sitemap-gsc-full-synchronization",
+      "title": "Sincronización Total de Sitemaps para Google Search Console (SSOT Canónico Apex)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T21:44:00+02:00",
+      "report": {
+        "HECHO_VERIFICADO": "Sitemap index /sitemap.xml y 5 particiones (0: core 720+ URLs, 1: territorial 676 URLs, 2: pseo 1.275 URLs, 3: proveedores-curados 29.022 URLs, 4: proveedores-cosechados 26.857 URLs = 58.500+ URLs) sincronizados al dominio canónico apex https://productoraear.com. Eliminado el desvío 301 de www que provocaba rechazos en Google Search Console. 34 rutas canónicas normalizadas en src/app. robots.txt y layout.tsx metadataBase alineados. npx tsc --noEmit -> Exit Code 0.",
+        "HIPÓTESIS": "Google Search Console rechaza o penaliza los sitemaps si las URLs declaradas retornan redirecciones 301 (de www a no-www) en vez de HTTP 200 directo. Al sincronizar BASE_URL a https://productoraear.com, todas las URLs del sitemap responden 200 OK nativo.",
+        "DECISIÓN": "Establecer https://productoraear.com como dominio SSOT inmutable para BASE_URL en sitemap.ts, sitemap-index.xml/route.ts, public/robots.txt y metadataBase en layout.tsx. Enriquecer partición 0 con /proveedores, /fincasparaboda, /simulacion-mariachis, hubs de artistas y centros clínicos VIMUME.",
+        "RIESGOS": "Cero. Netlify gestiona los 4 dominios con SAN Let's Encrypt y redirige www -> apex transparentemente. Todas las URLs son canónicas y 200 OK.",
+        "CAMBIOS": "src/app/sitemap.ts, src/app/sitemap-index.xml/route.ts, public/robots.txt, src/app/layout.tsx, src/lib/seo/schemaOrgGenerator.ts, src/app/page.tsx (mobile HUD/Inspector fit), y normalización de canonicals en 34 rutas dinámicas.",
+        "VALIDACIONES": "Verificación local HTTP 200 en /sitemap.xml, /sitemap/0.xml y /robots.txt. npx tsc --noEmit -> Exit Code 0.",
+        "ESTADO_BLOQUE": "COMPLETED",
+        "SIGUIENTE_PASO": "Git commit & push a origin y vercel-repo para refrescar el despliegue en producción e indicar al usuario las instrucciones exactas de alta en Google Search Console."
+      },
+      "description": "Garantizar que el sitemap esté 100% completo, actualizado con todas las rutas de negocio y sincronizado con el dominio primario de Netlify para su indexación inmediata en Google Search Console sin errores 301.",
+      "command": "npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsc --noEmit\"",
+      "steps": [
+        "1. Reemplazar hardcoded www.productoraear.com por process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com' en sitemap.ts y sitemap-index.xml.",
+        "2. Enriquecer partición 0 con /proveedores, /fincasparaboda, /simulacion-mariachis, hubs de artistas, bodas y centros clínicos VIMUME.",
+        "3. Actualizar public/robots.txt con los enlaces de sitemap en apex.",
+        "4. Actualizar metadataBase en src/app/layout.tsx a https://productoraear.com.",
+        "5. Normalizar todas las referencias canonical en rutas dinámicas de src/app.",
+        "6. Validar npx tsc --noEmit -> Exit Code 0."
+      ]
     }
   ]
 }

@@ -44,7 +44,7 @@ const INITIAL_PROFILE: ArtistProfile = {
   baseFee: 350,
   instagram: '@productoraear',
   youtube: 'ProductoraEAR',
-  website: 'https://www.productoraear.com',
+  website: 'https://productoraear.com',
   profileImage: '/artists/edwin-agudelo.jpg',
 };
 

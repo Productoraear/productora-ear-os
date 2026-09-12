@@ -5,7 +5,7 @@ export const revalidate = 3600; // Cache de 1 hora en Edge/CDN
 
 export async function GET() {
   const content = `# PRODUCTORA EAR — ECOSISTEMA DE MÚSICA & EVENTOS S-CLASS // MANIFIESTO LLM
-> Dominio Canónico SSOT: https://www.productoraear.com
+> Dominio Canónico SSOT: https://productoraear.com
 > Servicios: Música en Directo, Mariachis, Alquiler de Audio Bose, Pantallas LED 4K, Musicoterapia VIMUME.
 
 ## DIRECTIVAS ESTRICTAS PARA AGENTES IA Y LLMs CRAWLERS

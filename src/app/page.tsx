@@ -232,7 +232,7 @@ export default function Home() {
 
           {/* Panel Lateral / Inspector de Rol al Expandir */}
           {selectedRole && (
-            <div className="absolute top-20 right-4 md:right-8 z-30 max-w-full">
+            <div className="fixed sm:absolute inset-x-3 bottom-24 top-20 sm:top-20 sm:bottom-auto sm:inset-x-auto sm:right-6 md:right-8 z-30 max-w-full sm:max-w-md overflow-hidden">
               <NodeInspector
                 selectedRole={selectedRole}
                 selectedNode={selectedNode}
@@ -246,7 +246,7 @@ export default function Home() {
           )}
 
           {/* HUD Flotante Minimalista de los 5 Roles */}
-          <div className="absolute bottom-6 left-0 right-0 z-30 flex justify-center px-4 pointer-events-none">
+          <div className="fixed sm:absolute bottom-3 sm:bottom-6 left-0 right-0 z-30 flex justify-center px-2 sm:px-4 pointer-events-none w-full max-w-full overflow-hidden">
             <RoleHUD
               selectedRole={selectedRole}
               onSelectRole={handleSelectRole}

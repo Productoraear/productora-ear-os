@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: 'Acompañamiento Estratégico & Canal Empresarios | Productora EAR',
   description: 'Acompañamiento estratégico y táctico para empresarios y marcas de alto valor. Planes desde 1000€/mes con garantía de ROI por escrito.',
   alternates: {
-    canonical: 'https://www.productoraear.com/empresarios',
+    canonical: 'https://productoraear.com/empresarios',
   }
 };
 

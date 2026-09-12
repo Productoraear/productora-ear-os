@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Catálogo Oficial Alumbrado Monumental & Luces de Navidad 2026 EAR | Productora EAR',
   description: 'Catálogo técnico oficial de 530 referencias en 6 categorías monumentales (196 páginas). Iluminación homologada para Ayuntamientos (LCSP < 14.250 €) y centros comerciales.',
   alternates: {
-    canonical: 'https://www.productoraear.com/arsenal/luces-navidad',
+    canonical: 'https://productoraear.com/arsenal/luces-navidad',
   },
   openGraph: {
     title: 'Catálogo Oficial Alumbrado Monumental & Luces de Navidad 2026 EAR | Productora EAR',

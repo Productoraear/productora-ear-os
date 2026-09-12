@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { 
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `Alquiler de ${equipoFormatted} en ${provinciaFormatted} | El Arsenal Técnico EAR`,
     description: `Alquiler profesional de ${equipoFormatted} en ${provinciaFormatted}. Infraestructura técnica audiovisual S-Class, transporte homologado, montaje y técnico in-situ con garantía 0 Fallos.`,
     alternates: {
-      canonical: `https://www.productoraear.com/arsenal/${equipo}/${provincia}`,
+      canonical: `https://productoraear.com/arsenal/${equipo}/${provincia}`,
     },
     openGraph: {
       title: `Alquiler de ${equipoFormatted} en ${provinciaFormatted} - Productora EAR`,

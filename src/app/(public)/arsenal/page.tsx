@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'El Arsenal Técnico | Infraestructura y Equipos Audiovisuales S-Class',
   description: 'Alquiler de Pantallas LED P2.9 Novastar, Monitores 4K, Sonido Line Array VTX A8, Iluminación y Escenarios en Madrid y toda España bajo el dominio productoraear.com.',
   alternates: {
-    canonical: 'https://www.productoraear.com/arsenal',
+    canonical: 'https://productoraear.com/arsenal',
   }
 };
 

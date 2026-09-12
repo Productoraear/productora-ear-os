@@ -38,10 +38,10 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-Sitemap: https://www.productoraear.com/sitemap.xml
-Sitemap: https://www.productoraear.com/sitemap-index.xml
-Sitemap: https://www.productoraear.com/sitemap/0.xml
-Sitemap: https://www.productoraear.com/sitemap/1.xml
-Sitemap: https://www.productoraear.com/sitemap/2.xml
-Sitemap: https://www.productoraear.com/sitemap/3.xml
-Sitemap: https://www.productoraear.com/sitemap/4.xml
+Sitemap: https://productoraear.com/sitemap.xml
+Sitemap: https://productoraear.com/sitemap-index.xml
+Sitemap: https://productoraear.com/sitemap/0.xml
+Sitemap: https://productoraear.com/sitemap/1.xml
+Sitemap: https://productoraear.com/sitemap/2.xml
+Sitemap: https://productoraear.com/sitemap/3.xml
+Sitemap: https://productoraear.com/sitemap/4.xml

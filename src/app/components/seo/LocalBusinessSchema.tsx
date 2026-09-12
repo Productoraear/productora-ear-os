@@ -25,19 +25,19 @@ export const LocalBusinessSchema: React.FC<SchemaProps> = ({
   faqs = []
 }) => {
   const currentCity = city || "Madrid";
-  const canonicalUrl = `https://www.productoraear.com/${canonicalPath.replace(/^\//, '')}`;
+  const canonicalUrl = `https://productoraear.com/${canonicalPath.replace(/^\//, '')}`;
 
   const graph: any[] = [
     // 1. ENTIDAD DE NEGOCIO LOCAL & SERVICIO PROFESIONAL
     {
       "@type": ["LocalBusiness", "ProfessionalService"],
-      "@id": `https://www.productoraear.com/#organization`,
+      "@id": `https://productoraear.com/#organization`,
       "name": "Productora EAR",
       "alternateName": ["EAR OS", "Productora EAR S-Class", "VIMUME OS", "Edwin Agudelo Producciones"],
       "description": serviceDesc,
-      "url": "https://www.productoraear.com",
-      "logo": "https://www.productoraear.com/favicon.svg",
-      "image": "https://www.productoraear.com/og-image-vimume.jpg",
+      "url": "https://productoraear.com",
+      "logo": "https://productoraear.com/favicon.svg",
+      "image": "https://productoraear.com/og-image-vimume.jpg",
       "telephone": "+34 693 693 048",
       "email": "hola@productoraear.com",
       "priceRange": priceRange,
@@ -76,7 +76,7 @@ export const LocalBusinessSchema: React.FC<SchemaProps> = ({
     // 2. ENTIDAD ARTÍSTICA / AGRUPACIÓN MUSICAL DE EDWIN AGUDELO
     {
       "@type": ["MusicGroup", "PerformingGroup"],
-      "@id": `https://www.productoraear.com/artistas/edwin-agudelo#musicgroup`,
+      "@id": `https://productoraear.com/artistas/edwin-agudelo#musicgroup`,
       "name": "Edwin Agudelo & Mariachi Imperial de Gala",
       "alternateName": ["Mariachi Edwin Agudelo", "Tenor Edwin Agudelo"],
       "description": "Gladiador en el Extranjero 2021. Formación de gala de 6 a 12 músicos para bodas y grandes eventos en toda España.",
@@ -100,7 +100,7 @@ export const LocalBusinessSchema: React.FC<SchemaProps> = ({
       "@id": `${canonicalUrl}#product`,
       "name": `${serviceName} en ${currentCity}`,
       "description": serviceDesc,
-      "image": "https://www.productoraear.com/og-image-vimume.jpg",
+      "image": "https://productoraear.com/og-image-vimume.jpg",
       "brand": {
         "@type": "Brand",
         "name": "Productora EAR"

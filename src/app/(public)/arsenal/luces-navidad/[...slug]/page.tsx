@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${matchedCategory} | Catálogo Alumbrado Navideño Productora EAR`,
       description: `Línea oficial de ${matchedCategory} para alumbrado público y grandes eventos. Cumplimiento normativo LCSP e instalación homologada.`,
       alternates: {
-        canonical: `https://www.productoraear.com/arsenal/luces-navidad/categoria/${catSlug}`,
+        canonical: `https://productoraear.com/arsenal/luces-navidad/categoria/${catSlug}`,
       }
     };
   }
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${product.name} (Ref: ${product.sku}) | Productora EAR Alumbrado Monumental`,
       description: `${product.description} Medidas: ${product.dimensions}. IP: ${product.ipRating}. Voltaje: ${product.voltage}. Suministro e instalación Productora EAR.`,
       alternates: {
-        canonical: `https://www.productoraear.com${product.canonicalUrl}`,
+        canonical: `https://productoraear.com${product.canonicalUrl}`,
       },
       openGraph: {
         title: `${product.name} | Productora EAR S-Class`,

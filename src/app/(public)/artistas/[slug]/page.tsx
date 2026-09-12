@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
@@ -35,12 +35,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: variant.title,
       description: variant.metaDescription,
       alternates: {
-        canonical: `https://www.productoraear.com/artistas/${slug}`,
+        canonical: `https://productoraear.com/artistas/${slug}`,
       },
       openGraph: {
         title: variant.title,
         description: variant.metaDescription,
-        url: `https://www.productoraear.com/artistas/${slug}`,
+        url: `https://productoraear.com/artistas/${slug}`,
         siteName: 'Productora EAR',
         locale: 'es_ES',
         type: 'profile'
@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `Artista ${slug} | Productora EAR`,
     description: 'Perfil y rider técnico oficial en Productora EAR',
     alternates: {
-      canonical: `https://www.productoraear.com/artistas/${slug}`,
+      canonical: `https://productoraear.com/artistas/${slug}`,
     },
   };
 }

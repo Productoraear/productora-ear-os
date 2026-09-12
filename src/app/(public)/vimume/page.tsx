@@ -33,9 +33,9 @@ export default function VimumePage() {
     '@graph': [
       {
         '@type': 'MedicalOrganization',
-        '@id': 'https://www.productoraear.com/vimume#organization',
+        '@id': 'https://productoraear.com/vimume#organization',
         name: 'Proyecto VIMUME (Viaje Musical por la Memoria) - Productora EAR',
-        url: 'https://www.productoraear.com/vimume',
+        url: 'https://productoraear.com/vimume',
         description: 'Intervención neuroacústica de precisión a 40 Hz Gamma para personas mayores con deterioro cognitivo y demencia.',
         medicalSpecialty: 'Neurology',
         telephone: '+34693693048',

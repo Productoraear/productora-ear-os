@@ -4,7 +4,7 @@ import QRCode from "qrcode";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const targetUrl = searchParams.get("url") || "https://www.productoraear.com/api/tools/download-cue-bridge";
+    const targetUrl = searchParams.get("url") || "https://productoraear.com/api/tools/download-cue-bridge";
     const format = searchParams.get("format") || "svg";
 
     if (format === "png") {

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Canal Instituciones & Administraciones Públicas (Art. 118 LCSP) | Productora EAR',
   description: 'Gabinete técnico para Administraciones Locales, Ayuntamientos y Diputaciones. Contratación menor simplificada, facturación FACe y programas ODS 2030.',
   alternates: {
-    canonical: 'https://www.productoraear.com/instituciones',
+    canonical: 'https://productoraear.com/instituciones',
   },
 };
 

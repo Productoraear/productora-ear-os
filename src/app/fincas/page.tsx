@@ -16,12 +16,12 @@ export const metadata: Metadata = {
     'Méntrida Hub Logístico'
   ],
   alternates: {
-    canonical: 'https://www.productoraear.com/fincas',
+    canonical: 'https://productoraear.com/fincas',
   },
   openGraph: {
     title: 'Red de 12 Fincas Homologadas S-Class & Portal de Afiliación B2B',
     description: 'Espacios certificados con auditoría de potencia y límites acústicos. Liquidación de comisiones garantizada en 7 días hábiles.',
-    url: 'https://www.productoraear.com/fincas',
+    url: 'https://productoraear.com/fincas',
     siteName: 'Productora EAR — EAR OS',
     locale: 'es_ES',
     type: 'website',

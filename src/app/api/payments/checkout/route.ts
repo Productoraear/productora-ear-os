@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       }
     }
 
-    const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
+    const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
     // Cálculo del Split 80/10/10
     const totalCents = Math.round(Number(amount) * 100);

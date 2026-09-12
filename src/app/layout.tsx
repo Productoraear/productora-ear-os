@@ -39,7 +39,7 @@ import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 import { EarConcierge } from "@/components/Astra/EarConcierge";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.productoraear.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"),
   alternates: {
     canonical: "./",
   },
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G",
     description: "Plataforma de producción técnica, alquiler de audiovisuales, música para bodas y licitaciones públicas de festejos.",
-    url: "https://www.productoraear.com",
+    url: "https://productoraear.com",
     siteName: "Productora EAR // EAR OS",
     images: [
       {

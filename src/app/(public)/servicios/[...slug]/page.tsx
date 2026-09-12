@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `Alquiler de Vehículos de Lujo con Conductor & Chófer VIP en ${cityName} | Productora EAR`,
       description: `Flota oficial Mercedes-Benz Clase S, Clase V y Maybach en ${cityName}. Servicios de representación, transfers aeropuerto Barajas FBO, bodas y eventos VIP.`,
       alternates: {
-        canonical: `https://www.productoraear.com/servicios/${slug.join('/')}`,
+        canonical: `https://productoraear.com/servicios/${slug.join('/')}`,
       }
     };
   }
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${serviceSlug.replace(/-/g, ' ').toUpperCase()} en ${cityName} | Productora EAR`,
     description: `Servicios profesionales de ${serviceSlug.replace(/-/g, ' ')} en ${cityName} con infraestructura técnica directa.`,
     alternates: {
-      canonical: `https://www.productoraear.com/servicios/${slug.join('/')}`,
+      canonical: `https://productoraear.com/servicios/${slug.join('/')}`,
     }
   };
 }

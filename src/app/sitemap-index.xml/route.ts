@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const BASE_URL = 'https://www.productoraear.com';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 const PARTITIONS = ['0', '1', '2', '3', '4'];
 
 export const dynamic = 'force-dynamic';

@@ -7,7 +7,7 @@ import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/
 import { isProviderPublic } from '@/lib/providers/visibility';
 import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
 
-const BASE_URL = 'https://www.productoraear.com';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SITEMAP INDEX STRATEGY (SOTA GSC)
@@ -121,14 +121,41 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/instituciones/catalogo-360`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/vimume/archivo-clinico`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/fincas`, 0.92, 'weekly');
+      addEntry(`${BASE_URL}/fincasparaboda`, 0.92, 'weekly');
+      addEntry(`${BASE_URL}/fincas-landing`, 0.88, 'weekly');
+      addEntry(`${BASE_URL}/proveedores`, 0.96, 'daily');
+      addEntry(`${BASE_URL}/simulacion-mariachis`, 0.90, 'weekly');
       addEntry(`${BASE_URL}/estudio-diseno`, 0.85, 'weekly');
 
-      // Páginas estructurales
+      // Páginas estructurales y Hubs canónicos
       addEntry(`${BASE_URL}`, 1.0, 'daily');
       addEntry(`${BASE_URL}/eventos`, 0.95, 'daily');
       addEntry(`${BASE_URL}/artistas`, 0.95, 'daily');
+      addEntry(`${BASE_URL}/artistas/solistas`, 0.92, 'weekly');
+      addEntry(`${BASE_URL}/artistas/djs`, 0.90, 'weekly');
+      addEntry(`${BASE_URL}/artistas/orquestas`, 0.90, 'weekly');
+      addEntry(`${BASE_URL}/artistas/shows`, 0.88, 'weekly');
+      addEntry(`${BASE_URL}/artistas/bodas`, 0.90, 'weekly');
+      addEntry(`${BASE_URL}/artistas/ciudades`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/artistas/municipios`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/artistas/provincias`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/artistas/reclamar-regalias`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/servicios`, 0.92, 'weekly');
+      addEntry(`${BASE_URL}/categorias`, 0.88, 'weekly');
       addEntry(`${BASE_URL}/bodas`, 0.95, 'daily');
+      addEntry(`${BASE_URL}/bodas/guias`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/vimume`, 0.90, 'daily');
+      addEntry(`${BASE_URL}/vimume/clinica`, 0.90, 'weekly');
+      addEntry(`${BASE_URL}/vimume/centros`, 0.90, 'weekly');
+      addEntry(`${BASE_URL}/vimume/familia`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/vimume/asociaciones`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/vimume/investigacion`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/vimume/terapia-ocupacional`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/vimume/piloto-5-centros`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/vimume/fondos-europeos`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/proyectos/vimume/alzheimer`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/proyectos/vimume/ods-2030`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/proyectos/vimume/silver-economy`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/academia`, 0.90, 'weekly');
       addEntry(`${BASE_URL}/calculadora`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/alquiler-equipos-sonido-audiovisuales`, 0.90, 'weekly');
@@ -137,8 +164,12 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/b2g`, 0.90, 'weekly');
       addEntry(`${BASE_URL}/arsenal`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/arsenal/luces-navidad`, 0.95, 'daily');
+      addEntry(`${BASE_URL}/infraestructura/mundial-2026`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/contacto`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/cotizador`, 0.80, 'weekly');
+      addEntry(`${BASE_URL}/neural-journey`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/oraculo`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/afiliados`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/precios`, 0.80, 'weekly');
       addEntry(`${BASE_URL}/presupuesto`, 0.80, 'weekly');
       addEntry(`${BASE_URL}/soberania-tecnica`, 0.80, 'monthly');
@@ -150,6 +181,11 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/blog/auditoria-fincas-b2b`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/blog/lcsp-ayuntamientos-118`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/blog/vimume-evidencia-clinica`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/blog/b2g`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/blog/casos-clinicos`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/blog/impacto-social`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/blog/investigacion`, 0.80, 'monthly');
+      addEntry(`${BASE_URL}/blog/tecnica-sonora`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/aviso-legal`, 0.30, 'yearly');
       addEntry(`${BASE_URL}/privacidad`, 0.30, 'yearly');
       addEntry(`${BASE_URL}/cookies`, 0.30, 'yearly');

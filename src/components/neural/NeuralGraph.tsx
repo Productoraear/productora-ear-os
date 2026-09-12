@@ -34,13 +34,14 @@ export default function NeuralGraph({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // Camera state
+  const isMobileInitial = typeof window !== 'undefined' && window.innerWidth < 640;
   const cameraRef = useRef<CameraState>({
     x: 0,
     y: 0,
-    zoom: 0.85,
+    zoom: isMobileInitial ? 0.52 : 0.85,
     targetX: 0,
     targetY: 0,
-    targetZoom: 0.85
+    targetZoom: isMobileInitial ? 0.52 : 0.85
   });
 
   // Pointer state
@@ -354,18 +355,19 @@ export default function NeuralGraph({
 
   // Set camera target based on selected role
   useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
     if (!selectedRole) {
       cameraRef.current.targetX = 0;
       cameraRef.current.targetY = 0;
-      cameraRef.current.targetZoom = 0.85;
+      cameraRef.current.targetZoom = isMobile ? 0.52 : 0.85;
       return;
     }
 
     const primaryNode = nodesMapRef.current.get(selectedRole);
     if (primaryNode) {
-      cameraRef.current.targetX = -primaryNode.x * 1.35;
-      cameraRef.current.targetY = -primaryNode.y * 1.35;
-      cameraRef.current.targetZoom = 1.25;
+      cameraRef.current.targetX = -primaryNode.x * (isMobile ? 0.85 : 1.35);
+      cameraRef.current.targetY = -primaryNode.y * (isMobile ? 0.85 : 1.35);
+      cameraRef.current.targetZoom = isMobile ? 0.82 : 1.25;
     }
   }, [selectedRole]);
 

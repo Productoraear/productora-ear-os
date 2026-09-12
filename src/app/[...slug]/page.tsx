@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
@@ -66,12 +66,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${catalogItem.name} | Productora EAR`,
       description: catalogItem.description,
       alternates: {
-        canonical: `https://www.productoraear.com${catalogItem.canonicalUrl}`,
+        canonical: `https://productoraear.com${catalogItem.canonicalUrl}`,
       },
       openGraph: {
         title: `${catalogItem.name} | Productora EAR`,
         description: catalogItem.description,
-        url: `https://www.productoraear.com${catalogItem.canonicalUrl}`,
+        url: `https://productoraear.com${catalogItem.canonicalUrl}`,
         images: [catalogItem.image || '/og-image-vimume.jpg'],
         siteName: 'Productora EAR',
         locale: 'es_ES',
@@ -89,12 +89,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${vipItem.name} | Quality VIP Solutions · Productora EAR`,
       description: vipItem.description,
       alternates: {
-        canonical: `https://www.productoraear.com${vipItem.canonicalUrl}`,
+        canonical: `https://productoraear.com${vipItem.canonicalUrl}`,
       },
       openGraph: {
         title: `${vipItem.name} | Quality VIP Solutions`,
         description: vipItem.description,
-        url: `https://www.productoraear.com${vipItem.canonicalUrl}`,
+        url: `https://productoraear.com${vipItem.canonicalUrl}`,
         images: [vipItem.image || '/og-image-vimume.jpg'],
         siteName: 'Productora EAR',
         locale: 'es_ES',
@@ -111,7 +111,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: `${guide.nombre} | Productora EAR`,
         description: guide.descripcion,
         alternates: {
-          canonical: `https://www.productoraear.com/guias/${guide.slug}`,
+          canonical: `https://productoraear.com/guias/${guide.slug}`,
         }
       };
     }
@@ -127,7 +127,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const semantic = generateSemanticPageData(slug, locationCandidate);
-  const canonicalUrl = `https://www.productoraear.com/${(semantic?.canonicalPath || "").replace(/^\//, '')}`;
+  const canonicalUrl = `https://productoraear.com/${(semantic?.canonicalPath || "").replace(/^\//, '')}`;
 
   return {
     title: semantic.title,

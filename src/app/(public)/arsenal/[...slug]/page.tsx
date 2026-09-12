@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: 'Catálogo Oficial Alumbrado Monumental & Luces de Navidad 2025 | Productora EAR',
         description: 'Catálogo técnico oficial de 358 referencias en 11 categorías. Iluminación monumental para Ayuntamientos (LCSP), centros comerciales y fincas.',
         alternates: {
-          canonical: 'https://www.productoraear.com/arsenal/luces-navidad',
+          canonical: 'https://productoraear.com/arsenal/luces-navidad',
         },
         openGraph: {
           title: 'Catálogo Oficial Alumbrado Monumental & Luces de Navidad 2025 | Productora EAR',
@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: `${matchedCategory} | Catálogo Alumbrado Navideño Productora EAR`,
         description: `Línea oficial de ${matchedCategory} para alumbrado público y grandes eventos. Cumplimiento normativo LCSP e instalación homologada.`,
         alternates: {
-          canonical: `https://www.productoraear.com/arsenal/luces-navidad/categoria/${catSlug}`,
+          canonical: `https://productoraear.com/arsenal/luces-navidad/categoria/${catSlug}`,
         }
       };
     }
@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         title: `${product.name} (Ref: ${product.sku}) | Productora EAR Alumbrado Monumental`,
         description: `${product.description} Medidas: ${product.dimensions}. IP: ${product.ipRating}. Voltaje: ${product.voltage}. Suministro e instalación Productora EAR.`,
         alternates: {
-          canonical: `https://www.productoraear.com${product.canonicalUrl}`,
+          canonical: `https://productoraear.com${product.canonicalUrl}`,
         },
         openGraph: {
           title: `${product.name} | Productora EAR S-Class`,
@@ -98,7 +98,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `Alquiler de ${slug.join(' ')} en ${location} | El Arsenal Técnico EAR`,
     description: `Equipamiento audiovisual profesional, pantallas LED, sonido Line Array y estructuras en ${location}. Garantía S-Class de cero fallos.`,
     alternates: {
-      canonical: `https://www.productoraear.com/arsenal/${slug.join('/')}`,
+      canonical: `https://productoraear.com/arsenal/${slug.join('/')}`,
     }
   };
 }

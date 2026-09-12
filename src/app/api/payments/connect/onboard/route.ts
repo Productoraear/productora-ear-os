@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 3. Generar Account Link para onboarding KYC
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
     const accountLink = await stripe.accountLinks.create({
       account: stripeAccountId,

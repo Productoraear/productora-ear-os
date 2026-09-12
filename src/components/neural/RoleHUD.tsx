@@ -57,14 +57,14 @@ export default function RoleHUD({
   return (
     <nav
       aria-label="Selector de Taxonomía Neuronal"
-      className={`pointer-events-auto flex items-center gap-1.5 p-1.5 rounded-full backdrop-blur-xl bg-black/60 border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] max-w-full overflow-x-auto no-scrollbar transition-all duration-300 ${className}`}
+      className={`pointer-events-auto flex items-center gap-1 sm:gap-1.5 p-1 sm:p-1.5 rounded-full backdrop-blur-xl bg-black/80 border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.85)] max-w-[calc(100vw-1rem)] overflow-x-auto scrollbar-none touch-pan-x transition-all duration-300 ${className}`}
     >
       {/* Botón Core / Reset Vista Global */}
       <button
         type="button"
         onClick={() => onSelectRole(null)}
         title="Restaurar Visión Global"
-        className={`flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-mono transition-all duration-200 group ${
+        className={`flex items-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-mono transition-all duration-200 group shrink-0 ${
           !selectedRole
             ? 'bg-white/10 text-white shadow-sm border border-white/15'
             : 'text-zinc-400 hover:text-white hover:bg-white/5'
@@ -76,12 +76,12 @@ export default function RoleHUD({
             !selectedRole ? 'text-[#ecb613]' : 'text-zinc-500'
           }`}
         />
-        <span className="font-semibold tracking-wider text-[11px] uppercase hidden sm:inline">
+        <span className="font-semibold tracking-wider text-[10px] sm:text-[11px] uppercase hidden xs:inline sm:inline">
           GLOBAL
         </span>
       </button>
 
-      <div className="w-[1px] h-5 bg-white/10 mx-0.5" />
+      <div className="w-[1px] h-4 sm:h-5 bg-white/10 mx-0.5 shrink-0" />
 
       {/* Los 5 Ejes de la Taxonomía */}
       {roles.map(({ key, icon: Icon, badge }) => {
@@ -97,7 +97,7 @@ export default function RoleHUD({
               borderColor: isSelected ? def.color : 'transparent',
               backgroundColor: isSelected ? def.accentBg : undefined
             }}
-            className={`relative flex items-center gap-2 px-3.5 py-2 rounded-full text-xs transition-all duration-200 border group whitespace-nowrap ${
+            className={`relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs transition-all duration-200 border group whitespace-nowrap shrink-0 cursor-pointer ${
               isSelected
                 ? 'shadow-[0_0_20px_rgba(0,0,0,0.5)] scale-[1.02]'
                 : 'border-transparent text-zinc-400 hover:text-zinc-100 hover:bg-white/5'
@@ -109,14 +109,14 @@ export default function RoleHUD({
                 backgroundColor: def.color,
                 boxShadow: isSelected ? `0 0 10px ${def.color}` : 'none'
               }}
-              className={`w-2 h-2 rounded-full transition-transform duration-200 ${
+              className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full transition-transform duration-200 ${
                 isSelected ? 'scale-125 animate-pulse' : 'opacity-70 group-hover:opacity-100'
               }`}
             />
 
             {Icon && (
               <Icon
-                size={14}
+                size={13}
                 style={{ color: isSelected ? def.color : undefined }}
                 className="transition-colors duration-200"
               />
@@ -124,7 +124,7 @@ export default function RoleHUD({
 
             <span
               style={{ color: isSelected ? '#ffffff' : undefined }}
-              className="font-medium tracking-wide text-[12px]"
+              className="font-medium tracking-wide text-[11px] sm:text-[12px]"
             >
               {def.label}
             </span>
@@ -144,7 +144,7 @@ export default function RoleHUD({
         );
       })}
 
-      <div className="w-[1px] h-5 bg-white/10 mx-0.5 hidden sm:block" />
+      <div className="w-[1px] h-4 sm:h-5 bg-white/10 mx-0.5 shrink-0 hidden sm:block" />
 
       {/* Asistente Neural Trigger */}
       <button
@@ -155,10 +155,10 @@ export default function RoleHUD({
           }
         }}
         title="Invocar Asistente Local Neural"
-        className="flex items-center gap-1.5 px-3 py-2 rounded-full text-zinc-400 hover:text-[#ecb613] hover:bg-[#ecb613]/10 border border-transparent hover:border-[#ecb613]/30 transition-all text-xs font-mono group"
+        className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-zinc-400 hover:text-[#ecb613] hover:bg-[#ecb613]/10 border border-transparent hover:border-[#ecb613]/30 transition-all text-[11px] sm:text-xs font-mono group shrink-0 cursor-pointer"
       >
         <Sparkles size={13} className="text-[#ecb613] animate-pulse" />
-        <span className="text-[11px] tracking-wider hidden lg:inline">ASISTENTE</span>
+        <span className="text-[10px] sm:text-[11px] tracking-wider hidden lg:inline">ASISTENTE</span>
       </button>
     </nav>
   );
