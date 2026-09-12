@@ -5,6 +5,18 @@
 
 ---
 
+## 🚀 CONSOLAS ACTIVAS EN VIVO (LOCAL & PRODUCCIÓN)
+
+| Módulo S-Class | URL Local | Descripción Operativa | Estado |
+| :--- | :--- | :--- | :---: |
+| 🏎️ **Consola Táctica GPS // Uber Mariachis** | [`/simulacion-mariachis`](http://localhost:3007/simulacion-mariachis) | **Google Maps HD interactivo**: Satélite HD, micro-señas de acceso de clientes en fincas, rutas GPS en vivo, cascada de relevos <50ms y contacto directo telefónico/WhatsApp con la cuadrilla tras fianza Stripe 100€. | 🟢 **ACTIVO** |
+| 💍 **Buscador & Reserva Estilo Airbnb** | [`/proveedores`](http://localhost:3007/proveedores) | Barra de búsqueda inteligente, cálculo de km desde Méntrida, diagnóstico 12 W/pax acústico y catálogo Supabase desacoplado. | 🟢 **ACTIVO** |
+| 🔥 **Tinder Neural Matcher** | [`/matcher`](http://localhost:3007/matcher) | Matching perfecto de artistas con desglose de IVA 21%, buffer de tránsito de 60 min y cascada de horas extra. | 🟢 **ACTIVO** |
+| 📊 **Matriz Comparativa Transparente** | [`/comparar`](http://localhost:3007/comparar) | Comparador sin redirección a home: Portales tradicionales vs Modelo Soberano EAR OS (Split 80/10/10, Fianza 100€). | 🟢 **ACTIVO** |
+| 🛡️ **Ficha del Artista // Edwin Agudelo** | [`/artistas/edwin-agudelo`](http://localhost:3007/artistas/edwin-agudelo) | Doble narrativa: Cantante y compositor de bodas de élite arropado por el mariachi + Productor y CEO 24/7 con exclusividad de fecha. | 🟢 **ACTIVO** |
+
+---
+
 ## 🛠️ ARSENAL DE MACRO-SCRIPTS SOBERANOS (EJECUTABLES EN 1 CLIC)
 > *Haz doble clic en cualquiera de ellos en tu Escritorio o en `H:\EAR_OS_V2\`.*
 
@@ -37,3 +49,4 @@
 - **Split Soberano Inmutable:** `80% Artista / 10% EAR OS / 10% VIMUME`.
 - **Cierre Transaccional:** Depósito de `100,00 €` en Stripe con Price-Lock (24h a 72h).
 - **Teléfono Oficial de Retención:** `+34 693 693 048`.
+- **Base Central Mariachis:** Plaza Elíptica, Madrid (`40.3847, -3.7183`).

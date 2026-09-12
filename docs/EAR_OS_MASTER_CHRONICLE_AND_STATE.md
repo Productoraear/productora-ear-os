@@ -60,6 +60,20 @@
     - Actualizado `master_purist_archivist.py` con purificación quirúrgica de la raíz de `EAR_OS_V2` hacia el Vault.
 16. **Pipeline de Destilación Cognitiva de Chats para NotebookLM:**
     - Creado `scripts/unified/historic_chat_distiller.py`: filtra el 90% de ruido y desvía bloques masivos de código a bóveda, preservando el 100% de la visión de Edwin y las soluciones de las IA.
+17. **Buscador & Reserva Estilo Airbnb S-Class (`/proveedores`):**
+    - Barra flotante interactiva: Calendario de exclusividad de fecha, cálculo Haversine de distancia km desde Méntrida (1,50 €/km a partir del km 50 + 120 € hotel si fin >= 3:00 AM o > 200 km), diagnóstico acústico automático (12 W/pax) y Drawer Modal de filtros avanzados S-Class.
+    - Catálogo desacoplado del bundle de Next.js hacia PostgreSQL/Prisma, resolviendo el límite serverless de 250 MB en Netlify.
+18. **Tinder Neural Matcher (`/matcher`):**
+    - Tarjetas interactivas deslizables con especificación acústica 12 W/pax, desglose con IVA 21%, verificación de buffer de tránsito mínimo de 60 min entre bolos y cascada de relevo automático ante horas extra inesperadas.
+19. **Simulador de Alto Tráfico Uber de Mariachis (`/simulacion-mariachis`):**
+    - 32 contrataciones simultáneas en 16 municipios de Madrid, Toledo y Guadalajara con salida desde Plaza Elíptica (Madrid: 40.3847, -3.7183). Facturación bruta calculada, 0% cancelaciones y 100% SLA garantizado.
+20. **Consola Táctica GPS // Google Maps HD de Mariachis con Micro-Señas y Contacto Directo:**
+    - Cartografía interactiva multicapa con Leaflet Engine: Dark OLED (CartoDB Dark Matter), Satélite HD (Esri World Imagery) y Callejero con zoom de precisión hasta nivel 20.
+    - Micro-señas de acceso minuciosas del cliente en cada finca (cancela de servicio, muelle de descarga, aparcamiento para furgoneta y contacto en finca).
+    - Canal de contacto telefónico 1-clic (`tel:`) y WhatsApp E2E directo con el Maestro de la Cuadrilla tras confirmación de fianza de 100,00 € en Stripe (Price-Lock SHA-256).
+21. **Inmunización Netlify Next.js Runtime v5 & Build Limpio (Exit Code 0):**
+    - Saneado `netlify.toml` para utilizar el runtime nativo v5 sin versiones obsoletas de `@netlify/plugin-nextjs` (resolviendo el Exit Code 2).
+    - Verificación `npm run build`: 270 rutas estáticas y dinámicas compiladas en verde con Exit Code 0. Sincronización a ambos remotos git (`origin` y `vercel-repo`).
 
 ---
 
