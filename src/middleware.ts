@@ -6,7 +6,8 @@ const PUBLIC_API_WHITELIST = [
   '/api/astra/payment-intent',
   '/api/stripe/webhook',
   '/api/quote',
-  '/api/chat/concierge'
+  '/api/chat/concierge',
+  '/api/profiles'
 ];
 
 // ── ENRUTAMIENTO MULTI-TENANT EDGE (Portafolio Hostinger) ──────────────────────
