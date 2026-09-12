@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: "https://www.productoraear.com/artistas",
     siteName: "Productora EAR — EAR OS",
-    title: "Edwin Agudelo & Roster S-Class de 14 Formatos (Major Label Standard)",
+    title: "Edwin Agudelo & Roster S-Class de 14 Formatos Homologados",
     description:
       "Voz, Oficio y Escenario. Catálogo íntegro de 14 formatos homologados con tarifas suelo inmutables, acústica Bose a 12 W/pax y cierre transaccional con depósito Stripe de 100 €.",
     images: [
