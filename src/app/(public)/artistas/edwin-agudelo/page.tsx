@@ -6,8 +6,8 @@ import { Mic2, Star, ShieldCheck, Award, Sparkles, Music, CheckCircle2 } from 'l
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Edwin Agudelo | Tenor Lírico, Mariachi de Gala & Paciente Cero S-Class',
-  description: 'Contratación oficial de Edwin Agudelo para bodas, serenatas de gala y eventos institucionales. Sonorización Bose F1 12 W/pax, Price-Lock SHA-256 y split soberano 80/10/10.',
+  title: 'Edwin Agudelo | Cantante, Compositor y Mariachi | Disponibilidad Mundial 24/7',
+  description: 'Cantante y compositor arropado por la figura del mariachi. Disponibilidad mundial 24/7 con exclusividad absoluta en la fecha. Sonorización Bose F1 12 W/pax, Price-Lock SHA-256.',
 };
 
 export default function EdwinAgudeloPage() {
@@ -21,13 +21,13 @@ export default function EdwinAgudeloPage() {
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-widest uppercase mb-4">
                 <Sparkles size={14} />
-                <span>PACIENTE CERO S-CLASS // TENOR LÍRICO DE GALA</span>
+                <span>CANTANTE Y COMPOSITOR // EXCLUSIVIDAD 24/7 MUNDIAL</span>
               </div>
               <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tight text-white font-syne leading-[1.05]">
                 Edwin <span className="text-[#ecb613] italic">Agudelo</span>
               </h1>
               <p className="text-zinc-300 text-base md:text-lg leading-relaxed max-w-xl font-light mt-4">
-                Tenor lírico, cantante y compositor con más de 25 años de trayectoria y oficio real sobre los escenarios. Traje de gala con botonadura de plata y producción técnica de alta fidelidad. Garantía de cero fallos acústicos para bodas, serenatas exclusivas y recepciones de Estado.
+                Cantante y compositor arropado por la majestuosa figura del mariachi. Con más de 25 años de trayectoria y oficio real sobre los escenarios, ofrece disponibilidad para viajar a cualquier lugar del mundo (24/7) garantizando exclusividad absoluta en tu fecha.
               </p>
             </div>
 

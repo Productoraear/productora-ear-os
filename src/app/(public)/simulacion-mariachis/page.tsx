@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
 import { runHighTrafficMariachiSimulation, MariachiSimulationReport } from '@/lib/matchmaker/mariachiHighTrafficSimulator';
+import { LiveCommandCenter } from '@/features/tour-logistics/ui/LiveCommandCenter';
 
 export default function SimulacionMariachisPage() {
   const [injectOvertime, setInjectOvertime] = useState(false);
@@ -36,11 +37,11 @@ export default function SimulacionMariachisPage() {
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight font-syne leading-[0.95]">
-              SIMULACIÓN SÁBADO <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white italic">32 MARIACHIS</span>
+              TELEMETRÍA GLOBAL <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white italic">UBER MARIACHIS</span>
             </h1>
 
             <p className="text-sm sm:text-base text-zinc-400 font-light max-w-2xl mx-auto leading-relaxed">
-              Salida oficial calculada desde <strong className="text-white">Plaza Elíptica, Madrid</strong>. Verificación en tiempo real de franjas horarias, buffer de 60 min, impuestos (IVA 21%) y cascada de relevo Uber.
+              Métricas y posicionamiento GPS real en directo. Salida oficial desde <strong className="text-white">Plaza Elíptica, Madrid</strong>. Verificación en tiempo real de franjas horarias y cascada de relevo.
             </p>
 
             {/* Simulation Control Buttons Bar */}
@@ -165,6 +166,11 @@ export default function SimulacionMariachisPage() {
               ))}
             </div>
 
+          </div>
+
+          {/* TELEMETRÍA EN VIVO (MAPA REAL) */}
+          <div className="pt-8">
+            <LiveCommandCenter tourId="GLOBAL_MARIACHI_FLEET" />
           </div>
 
         </div>
