@@ -171,15 +171,15 @@ export default function ArtistCinematicProfile({
           </div>
           <div className="flex items-center gap-6 font-mono text-[11px]">
             <span>Hub Central: <strong>Méntrida (Toledo)</strong></span>
-            <span>Teléfono Oficial: <a href="tel:+34693693048" className="text-[#ecb613] hover:underline font-bold">+34 693 693 048</a></span>
+            <span>Teléfono Oficial: <a href="tel:+34693693048" className="text-[#FF2B44] hover:underline font-bold">+34 693 693 048</a></span>
           </div>
         </div>
       </aside>
 
       {/* ── HERO CINEMATOGRÁFICO MONOCROMO S-CLASS ── */}
       <section className="relative overflow-hidden pt-12 pb-20 px-6 sm:px-10 lg:px-12 border-b border-white/10">
-        {/* Iluminación de fondo radial sutil */}
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[600px] w-[1100px] bg-gradient-radial from-[#ecb613]/10 via-[#258DCD]/5 to-transparent blur-[160px]" />
+        {/* Iluminación de fondo radial sutil con halo Rubí y Cyan */}
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[600px] w-[1100px] bg-gradient-radial from-[#FF2B44]/15 via-[#258DCD]/10 to-transparent blur-[160px]" />
 
         <div className="relative mx-auto max-w-7xl">
           
@@ -187,7 +187,7 @@ export default function ArtistCinematicProfile({
           <div className="mb-8">
             <Link 
               href="/" 
-              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-white/50 hover:text-[#ecb613] transition-colors"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-white/50 hover:text-[#FF2B44] transition-colors"
             >
               <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" />
               <span>Centro Gravitacional EAR OS</span>
@@ -198,7 +198,7 @@ export default function ArtistCinematicProfile({
             
             {/* VÍDEO CINEMATOGRÁFICO DE AUTORIDAD S-CLASS (FIGMA PRO HIGH-END FRAME) */}
             <div className="lg:col-span-6 flex flex-col items-center">
-              <div className="relative w-full rounded-3xl overflow-hidden border border-[#ecb613]/30 bg-[#09090d] shadow-[0_20px_60px_rgba(0,0,0,0.85)] group">
+              <div className="relative w-full rounded-3xl overflow-hidden border border-[#FF2B44]/40 bg-[#09090d] shadow-[0_20px_60px_rgba(255,43,68,0.2)] group">
                 
                 {/* Marco de Reproductor High-End 16:9 */}
                 <div className="relative w-full aspect-video bg-black overflow-hidden">
@@ -215,15 +215,15 @@ export default function ArtistCinematicProfile({
                 <div className="p-4 bg-gradient-to-t from-black via-[#09090d] to-[#09090d]/80 border-t border-white/10">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
-                      <span className="font-mono text-[11px] uppercase tracking-widest text-[#ecb613] font-bold">
+                      <span className="h-2 w-2 rounded-full bg-[#FF2B44] animate-ping" />
+                      <span className="font-mono text-[11px] uppercase tracking-widest text-[#FF2B44] font-bold">
                         En Directo · Gala S-Class
                       </span>
                     </div>
                     <div className="flex items-center gap-3 font-mono text-[10px] text-white/50">
-                      <span>Bose F1 12 W/pax</span>
+                      <span className="text-[#AAD6CD]">Bose F1 12 W/pax</span>
                       <span>•</span>
-                      <span className="text-[#AAD6CD]">Shure Beta 87A</span>
+                      <span className="text-white/80">Shure Beta 87A</span>
                     </div>
                   </div>
                 </div>
@@ -235,7 +235,7 @@ export default function ArtistCinematicProfile({
             <div className="lg:col-span-6 space-y-5">
               
               <div className="flex flex-wrap items-center gap-2.5">
-                <span className="rounded-full bg-[#ecb613] px-3 py-0.5 text-[10px] font-mono font-black uppercase tracking-widest text-black shadow-sm">
+                <span className="rounded-full bg-[#FF2B44] px-3 py-0.5 text-[10px] font-mono font-black uppercase tracking-widest text-white shadow-[0_0_15px_rgba(255,43,68,0.5)]">
                   Artista Insignia
                 </span>
                 <span className="rounded-full border border-white/15 bg-white/5 px-3 py-0.5 text-[10px] font-mono uppercase tracking-widest text-white/80">
@@ -250,13 +250,13 @@ export default function ArtistCinematicProfile({
                 <h1 className="font-syne text-4xl sm:text-6xl font-black uppercase tracking-tight text-white leading-none">
                   {name}
                 </h1>
-                <p className="mt-2 font-syne text-lg sm:text-xl font-light tracking-wide text-[#ecb613]">
+                <p className="mt-2 font-syne text-lg sm:text-xl font-light tracking-wide text-[#AAD6CD]">
                   {specialty}
                 </p>
               </div>
 
               {/* Declaración Inmutable de Oficio */}
-              <div className="border-l-2 border-[#ecb613] pl-4 py-1.5 bg-white/[0.02] rounded-r-xl">
+              <div className="border-l-2 border-[#FF2B44] pl-4 py-1.5 bg-white/[0.02] rounded-r-xl">
                 <p className="text-sm sm:text-base text-white/85 font-light leading-relaxed italic">
                   &ldquo;No vendemos números; diseñamos una arquitectura acústica y emocional indestructible que transforma tu evento en un recuerdo de por vida.&rdquo;
                 </p>
@@ -264,19 +264,19 @@ export default function ArtistCinematicProfile({
 
               {/* STAT GRID S-CLASS COMPACTO FIGMA HIGH-END */}
               <div className="grid grid-cols-4 gap-2.5 pt-1">
-                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
-                  <span className="block font-syne text-xl sm:text-2xl font-black text-[#ecb613]">160k+</span>
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center hover:border-[#FF2B44]/40 transition-colors">
+                  <span className="block font-syne text-xl sm:text-2xl font-black text-[#FF2B44]">160k+</span>
                   <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">KM Giras</span>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center hover:border-[#AAD6CD]/40 transition-colors">
                   <span className="block font-syne text-xl sm:text-2xl font-black text-white">37</span>
                   <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">Giras Int.</span>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center hover:border-[#AAD6CD]/40 transition-colors">
                   <span className="block font-syne text-xl sm:text-2xl font-black text-[#AAD6CD]">14</span>
                   <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">Formatos</span>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center">
+                <div className="rounded-xl border border-white/10 bg-[#0a0a0f] p-3 text-center hover:border-[#FF2B44]/40 transition-colors">
                   <span className="block font-syne text-xl sm:text-2xl font-black text-white">80/10/10</span>
                   <span className="font-mono text-[9px] uppercase tracking-wider text-white/50">Soberano</span>
                 </div>
@@ -286,7 +286,7 @@ export default function ArtistCinematicProfile({
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={() => handleSelectFormatAndQuote('solista-edwin-agudelo')}
-                  className="rounded-xl bg-[#ecb613] px-6 py-3.5 font-mono text-xs font-black uppercase tracking-[0.15em] text-black shadow-[0_0_25px_rgba(236,182,19,0.35)] transition-all hover:scale-105 hover:bg-white flex items-center gap-2.5 cursor-pointer"
+                  className="rounded-xl bg-[#FF2B44] px-6 py-3.5 font-mono text-xs font-black uppercase tracking-[0.15em] text-white shadow-[0_0_25px_rgba(255,43,68,0.4)] transition-all hover:scale-105 hover:bg-white hover:text-black flex items-center gap-2.5 cursor-pointer"
                 >
                   <Lock size={14} />
                   <span>Bloquear Fecha (100 €)</span>
@@ -295,7 +295,7 @@ export default function ArtistCinematicProfile({
                   onClick={() => setActiveTab('ROSTER_14')}
                   className="rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10 flex items-center gap-2 cursor-pointer"
                 >
-                  <Layers size={14} className="text-[#ecb613]" />
+                  <Layers size={14} className="text-[#AAD6CD]" />
                   <span>Ver 14 Formatos</span>
                 </button>
                 <a
@@ -426,7 +426,7 @@ export default function ArtistCinematicProfile({
                 onClick={() => setActiveTab(tab.key)}
                 className={`flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                    ? 'bg-[#FF2B44] text-white shadow-lg shadow-[#FF2B44]/25'
                     : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
               >

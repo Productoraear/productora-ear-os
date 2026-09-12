@@ -106,14 +106,14 @@ export default function SClassIrresistibleOffer({
 
   return (
     <section className="relative overflow-hidden py-20 px-4 sm:px-6 lg:px-8 bg-[#030305] text-white border-t border-b border-white/10">
-      {/* Luz ambiental sutil */}
-      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-radial from-[#ecb613]/10 via-transparent to-transparent blur-[140px]" />
+      {/* Luz ambiental sutil Diamante Rojo y Cyan */}
+      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-radial from-[#FF2B44]/15 via-[#258DCD]/10 to-transparent blur-[140px]" />
 
       <div className="relative mx-auto max-w-5xl space-y-16">
         
         {/* ── PASO 1: LA PROMESA TRANSFORMACIONAL (Lo que compran, no el producto) ── */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#ecb613]/40 bg-[#ecb613]/10 px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-[#ecb613]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#FF2B44]/50 bg-[#FF2B44]/10 px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-[#FF2B44]">
             <Sparkles size={13} />
             <span>{promiseBadge}</span>
           </div>
@@ -130,10 +130,10 @@ export default function SClassIrresistibleOffer({
           {benefits.map((b, i) => (
             <div 
               key={i} 
-              className="rounded-2xl border border-white/10 bg-[#09090e] p-6 space-y-3 hover:border-[#ecb613]/40 transition-colors"
+              className="rounded-2xl border border-white/10 bg-[#09090e] p-6 space-y-3 hover:border-[#FF2B44]/40 transition-colors"
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#ecb613]/10 font-mono text-xs font-bold text-[#ecb613]">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FF2B44]/15 font-mono text-xs font-bold text-[#FF2B44]">
                   0{i + 1}
                 </span>
                 <h3 className="font-syne text-base font-bold uppercase text-white tracking-wide">
@@ -162,9 +162,9 @@ export default function SClassIrresistibleOffer({
             {deliverables.map((d, i) => (
               <div 
                 key={i} 
-                className="flex items-start gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4"
+                className="flex items-start gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 hover:border-[#AAD6CD]/30 transition-colors"
               >
-                <CheckCircle2 size={20} className="text-[#ecb613] shrink-0 mt-0.5" />
+                <CheckCircle2 size={20} className="text-[#FF2B44] shrink-0 mt-0.5" />
                 <div>
                   <p className="font-mono text-xs font-bold uppercase text-white tracking-wide">{d.spec}</p>
                   <p className="text-xs text-white/60 font-sans mt-0.5 leading-relaxed">{d.detail}</p>
@@ -175,10 +175,10 @@ export default function SClassIrresistibleOffer({
         </div>
 
         {/* ── PASO 4: EL PRECIO ANCLADO (Solo aquí, después de entender el valor) ── */}
-        <div className="relative rounded-3xl border-2 border-[#ecb613] bg-[#09090d] p-8 sm:p-12 shadow-[0_0_60px_rgba(236,182,19,0.12)]">
+        <div className="relative rounded-3xl border-2 border-[#FF2B44] bg-[#09090d] p-8 sm:p-12 shadow-[0_0_60px_rgba(255,43,68,0.2)]">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="space-y-3 text-center md:text-left">
-              <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#ecb613] font-bold">
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#FF2B44] font-bold">
                 Inversión Total Garantizada
               </span>
               {priceAnchor.totalValueEstimate && (
@@ -202,7 +202,7 @@ export default function SClassIrresistibleOffer({
             <div className="flex flex-col items-center md:items-end gap-3 shrink-0">
               <a
                 href={scarcity.checkoutUrl}
-                className="rounded-xl bg-[#ecb613] px-8 py-4 font-mono text-xs font-black uppercase tracking-[0.2em] text-black shadow-[0_0_30px_rgba(236,182,19,0.35)] transition-all hover:scale-105 hover:bg-white flex items-center gap-3 cursor-pointer"
+                className="rounded-xl bg-[#FF2B44] px-8 py-4 font-mono text-xs font-black uppercase tracking-[0.2em] text-white shadow-[0_0_30px_rgba(255,43,68,0.4)] transition-all hover:scale-105 hover:bg-white hover:text-black flex items-center gap-3 cursor-pointer"
               >
                 <Lock size={15} />
                 <span>{scarcity.ctaPrimaryText}</span>
@@ -237,7 +237,7 @@ export default function SClassIrresistibleOffer({
         {/* ── PASO 6: LOS BONOS (Regalos reales que suman valor sin inflar el precio) ── */}
         <div className="space-y-6">
           <div className="text-center space-y-2">
-            <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.25em] text-[#ecb613] font-bold">
+            <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.25em] text-[#FF2B44] font-bold">
               <Gift size={14} />
               <span>Bonos de Alto Impacto Incluidos de Forma Gratuita</span>
             </span>
@@ -253,10 +253,10 @@ export default function SClassIrresistibleOffer({
             {bonuses.map((bonus, i) => (
               <div 
                 key={i} 
-                className="rounded-2xl border border-white/10 bg-[#07070b] p-6 space-y-3 relative overflow-hidden"
+                className="rounded-2xl border border-white/10 bg-[#07070b] p-6 space-y-3 relative overflow-hidden hover:border-[#AAD6CD]/30 transition-colors"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] uppercase font-bold text-[#ecb613] bg-[#ecb613]/10 px-2.5 py-1 rounded-md">
+                  <span className="font-mono text-[10px] uppercase font-bold text-[#FF2B44] bg-[#FF2B44]/10 px-2.5 py-1 rounded-md">
                     Bono Gratuito 0{i + 1}
                   </span>
                   <span className="font-mono text-xs text-white/40 line-through">
@@ -277,7 +277,7 @@ export default function SClassIrresistibleOffer({
         {/* ── PASO 7: DERRIBO PREVENTIVO DE OBJECIONES (FAQ de Conversión) ── */}
         <div className="space-y-6 max-w-3xl mx-auto">
           <div className="text-center space-y-2">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/50 font-bold">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#AAD6CD] font-bold">
               Claridad Absoluta
             </span>
             <h3 className="font-syne text-2xl sm:text-3xl font-black uppercase text-white">
@@ -291,19 +291,19 @@ export default function SClassIrresistibleOffer({
               return (
                 <div 
                   key={i} 
-                  className="rounded-xl border border-white/10 bg-[#07070b] overflow-hidden"
+                  className="rounded-xl border border-white/10 bg-[#07070b] overflow-hidden hover:border-white/20 transition-colors"
                 >
                   <button
                     onClick={() => toggleObjection(i)}
-                    className="w-full p-4 text-left flex items-center justify-between gap-4 font-syne text-sm font-bold uppercase text-white hover:text-[#ecb613] transition-colors cursor-pointer"
+                    className="w-full p-4 text-left flex items-center justify-between gap-4 font-syne text-sm font-bold uppercase text-white hover:text-[#FF2B44] transition-colors cursor-pointer"
                   >
                     <span className="flex items-center gap-3">
-                      <HelpCircle size={16} className="text-[#ecb613] shrink-0" />
+                      <HelpCircle size={16} className="text-[#FF2B44] shrink-0" />
                       <span>{obj.question}</span>
                     </span>
                     <ChevronDown 
                       size={16} 
-                      className={`text-white/50 transition-transform ${isOpen ? 'rotate-180 text-[#ecb613]' : ''}`} 
+                      className={`text-white/50 transition-transform ${isOpen ? 'rotate-180 text-[#FF2B44]' : ''}`} 
                     />
                   </button>
                   {isOpen && (
@@ -318,9 +318,9 @@ export default function SClassIrresistibleOffer({
         </div>
 
         {/* ── PASO 8: ESCASEZ REAL Y CIERRE FINAL (Límite genuino) ── */}
-        <div className="rounded-3xl border border-[#ecb613]/50 bg-gradient-to-r from-[#0d0d14] via-[#12121c] to-[#0d0d14] p-8 sm:p-12 text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full bg-red-500/10 border border-red-500/30 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-red-400">
-            <Flame size={14} className="animate-pulse" />
+        <div className="rounded-3xl border border-[#FF2B44]/50 bg-gradient-to-r from-[#0d0d14] via-[#1a0f14] to-[#0d0d14] p-8 sm:p-12 text-center space-y-6 shadow-[0_0_50px_rgba(255,43,68,0.2)]">
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#FF2B44]/10 border border-[#FF2B44]/40 px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-[#FF6B7D]">
+            <Flame size={14} className="animate-pulse text-[#FF2B44]" />
             <span>{scarcity.urgencyBadge}</span>
           </div>
 
@@ -336,7 +336,7 @@ export default function SClassIrresistibleOffer({
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
             <a
               href={scarcity.checkoutUrl}
-              className="rounded-xl bg-[#ecb613] px-10 py-5 font-mono text-xs font-black uppercase tracking-[0.2em] text-black shadow-[0_0_40px_rgba(236,182,19,0.4)] transition-all hover:scale-105 hover:bg-white flex items-center gap-3 cursor-pointer"
+              className="rounded-xl bg-[#FF2B44] px-10 py-5 font-mono text-xs font-black uppercase tracking-[0.2em] text-white shadow-[0_0_40px_rgba(255,43,68,0.5)] transition-all hover:scale-105 hover:bg-white hover:text-black flex items-center gap-3 cursor-pointer"
             >
               <Lock size={16} />
               <span>{scarcity.ctaPrimaryText}</span>
@@ -346,7 +346,7 @@ export default function SClassIrresistibleOffer({
                 href={`https://wa.me/34693693048?text=${encodeURIComponent(scarcity.whatsappText)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl border border-white/20 bg-white/5 px-8 py-5 font-mono text-xs font-bold uppercase tracking-widest text-white hover:bg-white/10 transition-colors flex items-center gap-2"
+                className="rounded-xl border border-[#AAD6CD]/30 bg-[#AAD6CD]/10 px-8 py-5 font-mono text-xs font-bold uppercase tracking-widest text-[#AAD6CD] hover:bg-[#AAD6CD]/20 transition-colors flex items-center gap-2"
               >
                 <span>Consultar Disponibilidad por WhatsApp</span>
                 <ArrowRight size={14} />

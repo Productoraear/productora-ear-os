@@ -19,12 +19,12 @@
     --muted: #16161c;
     --muted-foreground: #9ca3af;
     
-    /* 10% Accent (S-Class Imperial Gold) */
-    --primary: #ecb613;
-    --primary-foreground: #050505;
-    --primary-light: #f5c538;
-    --primary-dark: #b38805;
-    --primary-aura: rgba(236, 182, 19, 0.25);
+    /* 10% Accent (S-Class Sovereign Diamond Ruby Red #FF2B44) */
+    --primary: #FF2B44;
+    --primary-foreground: #ffffff;
+    --primary-light: #FF6B7D;
+    --primary-dark: #E11D48;
+    --primary-aura: rgba(255, 43, 68, 0.28);
 
     /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
     --color-ear-cyan: #AAD6CD;
@@ -74,11 +74,11 @@
     --border-glass: rgba(255, 255, 255, 0.14);
     --muted: #16161c;
     --muted-foreground: #9ca3af;
-    --primary: #ecb613;
-    --primary-foreground: #050505;
-    --primary-light: #f5c538;
-    --primary-dark: #b38805;
-    --primary-aura: rgba(236, 182, 19, 0.25);
+    --primary: #FF2B44;
+    --primary-foreground: #ffffff;
+    --primary-light: #FF6B7D;
+    --primary-dark: #E11D48;
+    --primary-aura: rgba(255, 43, 68, 0.28);
     
     /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
     --color-ear-cyan: #AAD6CD;

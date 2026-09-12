@@ -45,12 +45,12 @@ module.exports = {
         "border-glass": "rgba(255, 255, 255, 0.14)",
         "text-secondary": "#9ca3af",
 
-        // 10% Accent (Imperial Gold Focal Points & Conversion CTAs)
-        gold: "#ecb613",
-        "gold-imperial": "#ecb613",
-        "gold-light": "#f5c538",
-        "gold-dark": "#b38805",
-        "gold-glow": "rgba(236, 182, 19, 0.25)",
+        // 10% Accent (S-Class Sovereign Ruby Red & Diamond Cyan)
+        gold: "#FF2B44",
+        "gold-imperial": "#FF2B44",
+        "gold-light": "#FF6B7D",
+        "gold-dark": "#E11D48",
+        "gold-glow": "rgba(255, 43, 68, 0.35)",
 
         // 🎬 CINEMATIC MONOCHROME SYSTEM (SQUARESPACE ULTRA-LUXURY SPEC)
         obsidian: "#000000",
