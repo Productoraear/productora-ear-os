@@ -80,6 +80,8 @@ export const PRICING_CATALOG: Record<string, FormatPricing> = {
   'clasico-esencial': SCLASS_ROSTER_14_FORMATS[0],
   'grupo-6': SCLASS_ROSTER_14_FORMATS[1],
   'quinteto-gala-mariachi': SCLASS_ROSTER_14_FORMATS[1],
+  'cuarteto-imperial': SCLASS_ROSTER_14_FORMATS[1],
+  'quinteto-honor': SCLASS_ROSTER_14_FORMATS[1],
   'grupo-9': SCLASS_ROSTER_14_FORMATS[2],
   'grupo-13': SCLASS_ROSTER_14_FORMATS[3],
   'gran-ensamble': SCLASS_ROSTER_14_FORMATS[3],
