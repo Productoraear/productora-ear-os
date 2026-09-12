@@ -37,6 +37,7 @@ import { BentoProviderCard, ProviderItem } from '@/components/providers/BentoPro
 import { BentoFilterBar, CategoryItem } from '@/components/providers/BentoFilterBar';
 import { PremiumMediaCarousel } from '@/components/providers/PremiumMediaCarousel';
 import { PremiumPacksCarousel } from '@/components/providers/PremiumPacksCarousel';
+import { AirbnbNeuralBookingBar } from '@/features/search/AirbnbNeuralBookingBar';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ARTISTA SOBERANO S-CLASS: EDWIN AGUDELO (PRIORIDAD PERMANENTE #1)
@@ -466,6 +467,9 @@ function ProveedoresDirectoryContent() {
           2. FILTROS BENTO Y BARRA DE NAVEGACIÓN COMPACTA
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <main className="max-w-7xl mx-auto px-4 space-y-8 overflow-x-hidden">
+        {/* 🌟 AIRBNB NEURAL BOOKING BAR */}
+        <AirbnbNeuralBookingBar />
+
         <BentoFilterBar
           categories={categories}
           selectedCategory={selectedCategory}

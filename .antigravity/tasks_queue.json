@@ -336,7 +336,9 @@
     {
       "id": "neural-experience-customer-journey-and-lead-temperature",
       "title": "Acompañamiento Integral del Viaje de Cliente & Matriz Comparativa (Anti-Home Redirect)",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T12:59:00Z",
+      "validation": "npx tsx scripts/test-lead-journey-routes.ts -> Exit Code 0. Rutas /comparar y /cotizador?mode=comparison implementadas sin redirecciones a home. Git commit y push a main completados.",
       "description": "Desplegar el sistema de acompañamiento continuo EAR OS Neural Experience con termómetro de leads dinámico (COLD / WARM / HOT / FIRE) y matriz comparativa transparente S-Class sin derivar tráfico a home.",
       "command": "npx tsx scripts/test-lead-journey-routes.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-lead-journey-routes.ts; npx tsc --noEmit\"",
@@ -346,6 +348,22 @@
         "3. Crear 'src/app/(public)/comparar/page.tsx': Ruta pública de la Matriz Comparativa Transparente S-Class (Portales Tradicionales vs EAR OS S-Class: Split 80/10/10, 12 W/pax acústica, 1.50 €/km Méntrida, 100€ Stripe lock). Garantizar que la intención de comparación NUNCA redirija al cliente a home (/).",
         "4. Modificar 'src/app/(public)/cotizador/page.tsx': Dar soporte al parámetro searchParams.mode === 'comparison' para desplegar directamente la pestaña comparativa VIMUME en el MultiPricer.",
         "5. Crear script de validación 'scripts/test-lead-journey-routes.ts': Verificar instanciación del store, renderizado de /comparar y ausencia de redirección a home para rutas comparativas.",
+        "6. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "airbnb-style-neural-booking-bar-and-filters",
+      "title": "Barra de Búsqueda y Reserva Estilo Airbnb S-Class (Calendario, GPS Méntrida, Pax 12W y Filtros Inteligentes)",
+      "status": "PENDING",
+      "description": "Integración completa de la barra de búsqueda y reserva estilo Airbnb en EAR OS V2. Incluye Calendario de Exclusividad, Ubicación con Coordenadas GPS y cálculo de distancia km desde Méntrida (1,50 €/km >50km + 120€ hotel), Invitados Pax (12 W/pax acústico) y Drawer de Filtros Inteligentes Avanzados (Multi-gremio, B2G LCSP, SPL, Certificación S-Class).",
+      "command": "npx tsx scripts/test-airbnb-booking-filters.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-airbnb-booking-filters.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/features/search/utils/mentridaDistanceEngine.ts': Motor Haversine y catálogo provincial de distancia exacta desde Méntrida (Toledo: 40.2383, -4.1956) con cálculo automático de 1.50 €/km (>50km) + 120€ hotel si fin >= 3:00 AM o distancia > 200 km.",
+        "2. Crear 'src/features/search/stores/useAirbnbBookingFiltersStore.ts': Store Zustand para mantener estado de fecha del evento, provincia, municipio, GPS, invitados (pax), potencia acústica (pax * 12W), gremios, rango de precio, B2G LCSP y estado S-Class.",
+        "3. Crear 'src/features/search/AirbnbNeuralBookingBar.tsx': Barra de búsqueda flotante sticky estilo Airbnb con 4 módulos (Calendario, Ubicación & GPS Méntrida, Invitados 12W/pax y Drawer Modal de Filtros Avanizados S-Class).",
+        "4. Actualizar 'src/app/(public)/proveedores/page.tsx': Sustituir el filtro antiguo por AirbnbNeuralBookingBar conectándolo a la API de búsqueda Prisma /api/profiles/search.",
+        "5. Crear script de validación 'scripts/test-airbnb-booking-filters.ts': Probar cálculo de distancia Méntrida, cálculo 12 W/pax, persistencia de filtros y compilación limpia.",
         "6. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
       ]
     }
