@@ -4,6 +4,7 @@ import path from 'path';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { CHRISTMAS_LIGHTING_PRODUCTS } from '@/data/luces-navidad';
 import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
+import { MUNICIPALITIES_DATABASE } from '@/lib/geo/spanish-municipalities';
 import { isProviderPublic } from '@/lib/providers/visibility';
 import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
 
@@ -158,6 +159,7 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/proyectos/vimume/silver-economy`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/academia`, 0.90, 'weekly');
       addEntry(`${BASE_URL}/calculadora`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/alquiler`, 0.92, 'daily');
       addEntry(`${BASE_URL}/alquiler-equipos-sonido-audiovisuales`, 0.90, 'weekly');
       addEntry(`${BASE_URL}/alquiler-pantallas-led-madrid`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/ocasiones/ayuntamientos`, 0.90, 'weekly');
@@ -229,6 +231,13 @@ export default async function sitemap(props: {
 
         for (const serv of CANONICAL_GREMIO_SLUGS) {
           addEntry(`${BASE_URL}/servicios/${serv}/${prov}`, 0.90, 'weekly');
+        }
+      }
+
+      // Alquiler de Arsenal Audiovisual por poblaciones (S-Class pSEO >90% único)
+      for (const muni of MUNICIPALITIES_DATABASE) {
+        if (muni.slug) {
+          addEntry(`${BASE_URL}/alquiler/${muni.slug}`, 0.88, 'weekly');
         }
       }
       break;
