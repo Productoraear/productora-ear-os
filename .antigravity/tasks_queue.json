@@ -538,6 +538,27 @@
         "4. Validar compilación 'npx tsc --noEmit' -> Exit Code 0.",
         "5. Ejecutar consolidación Git: 'git add -A ; git commit -m \"feat(S-Class): Triologia de Convergencia Omega completada. Reserva Confirmada Live Tracking, Radar NASA HD y Bloqueo Atomico de Fechas\" ; git push origin main ; git push vercel-repo main'."
       ]
+    },
+    {
+      "id": "hostinger-triad-multi-tenant-routing",
+      "title": "Enrutamiento Multi-Tenant Edge para el Portafolio de Dominios Hostinger",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T16:08:00+02:00",
+      "validation": "npx tsx scripts/test-multi-tenant-hostinger.ts -> Exit Code 0 (9/9 tests OK, latencia máxima 0.73 ms < 5 ms). npx tsc --noEmit -> Exit Code 0. Rewrites transparentes verificados: fincasparaboda.com->/fincas, viajemusicalporlamemoria.com->/vimume, artistaseuropa.com->/artistas, mariachis.*->/simulacion-mariachis. /api/*, _next/* y guards /admin/* preservados.",
+
+      "description": "Configurar en src/middleware.ts el enrutamiento transparente multi-dominio para los 4 dominios de Hostinger: (1) fincasparaboda.com -> /fincas o /proveedores, (2) viajemusicalporlamemoria.com -> /vimume o /b2g, (3) artistaseuropa.com -> /artistas o /matcher, (4) productoraear.com -> Nave Nodriza / (y subdominios opcionales mariachis.productoraear.com -> /simulacion-mariachis), preservando la barra de direcciones del navegador y el aislamiento de sesiones/Stripe.",
+      "command": "npx tsx scripts/test-multi-tenant-hostinger.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-multi-tenant-hostinger.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Modificar 'src/middleware.ts': Extraer 'host' de request.headers. Si no es ruta interna (/api, _next, favicon), aplicar reglas de NextResponse.rewrite() según el dominio entrante:",
+        "   - Host contiene 'fincasparaboda.com' y pathname === '/' -> rewrite a '/fincas' (o '/proveedores?categoria=fincas').",
+        "   - Host contiene 'viajemusicalporlamemoria.com' y pathname === '/' -> rewrite a '/vimume' (o '/b2g').",
+        "   - Host contiene 'artistaseuropa.com' y pathname === '/' -> rewrite a '/artistas' (o '/matcher').",
+        "   - Host inicia con 'mariachis.' o contiene 'mariachis' y pathname === '/' -> rewrite a '/simulacion-mariachis'.",
+        "   - Mantener intactas las cabeceras de seguridad S-Class, la protección anti-scraping y los guards de /admin.",
+        "2. Crear script de validación 'scripts/test-multi-tenant-hostinger.ts': Simular requests HTTP NextRequest con los distintos headers de Host y certificar que rewrite URLs y status 200 respondan correctamente en < 5 ms.",
+        "3. Validar con 'npx tsc --noEmit' asegurando Exit Code 0."
+      ]
     }
   ]
 }

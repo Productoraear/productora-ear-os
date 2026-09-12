@@ -9,8 +9,31 @@ const PUBLIC_API_WHITELIST = [
   '/api/chat/concierge'
 ];
 
+// ── ENRUTAMIENTO MULTI-TENANT EDGE (Portafolio Hostinger) ──────────────────────
+// Rewrite transparente: preserva la barra de direcciones del navegador y el
+// aislamiento de sesiones/Stripe. Solo actúa sobre la raíz '/' de cada dominio.
+interface TenantRoute {
+  match: (host: string) => boolean;
+  target: string;
+}
+
+const TENANT_ROUTES: TenantRoute[] = [
+  { match: (host) => host.includes('fincasparaboda.com'), target: '/fincas' },
+  { match: (host) => host.includes('viajemusicalporlamemoria.com'), target: '/vimume' },
+  { match: (host) => host.includes('artistaseuropa.com'), target: '/artistas' },
+  { match: (host) => host.includes('mariachis'), target: '/simulacion-mariachis' }
+];
+
+function resolveTenantRewrite(host: string, pathname: string): string | null {
+  if (pathname !== '/') return null;
+  const route = TENANT_ROUTES.find((r) => r.match(host));
+  return route ? route.target : null;
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const host = request.headers.get('host') ?? request.nextUrl.hostname;
+
 
   const hasSession = request.cookies.get('ear_session')?.value;
   const hasToken = request.cookies.get('ear_admin_token')?.value;
@@ -52,8 +75,14 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  // 3. INYECCIÓN DE CABECERAS DE SEGURIDAD S-CLASS (Zero-Trust)
-  const response = NextResponse.next();
+  // 3. ENRUTAMIENTO MULTI-TENANT EDGE (Portafolio Hostinger)
+  // Rewrite transparente de la raíz '/' según el dominio entrante.
+  // Preserva /api/*, _next/*, favicon y los guards de /admin/* (ya resueltos arriba).
+  const tenantTarget = resolveTenantRewrite(host, pathname);
+  const response = tenantTarget
+    ? NextResponse.rewrite(new URL(tenantTarget, request.url))
+    : NextResponse.next();
+
 
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
@@ -72,9 +101,11 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
+    '/',
     '/admin/:path*',
     '/api/:path*',
     '/reservar/:path*',
     '/vimume/:path*'
   ],
 };
+
