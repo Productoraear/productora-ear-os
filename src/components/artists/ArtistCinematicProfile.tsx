@@ -496,7 +496,7 @@ export default function ArtistCinematicProfile({
               </div>
 
               {/* OFERTA IRRESISTIBLE DETALLADA DEL SHOW SOLISTA */}
-              <div className="pt-4">
+              <div className="md:col-span-12 pt-4">
                 <SClassIrresistibleOffer
                   promiseBadge="CONTRATACIÓN DIRECTA // PACK SOLISTA PREMIUM"
                   headlinePromise="Convierte tu evento en una ovación histórica que tus invitados recordarán durante décadas"

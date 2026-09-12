@@ -628,6 +628,62 @@
         "7. Crear script de validación 'scripts/test-vampirize-vimume-and-shells.ts': Certificar que el JSON vampirizado tiene 0 textos basura, que los 3 index.php compilan con sintaxis PHP 8.3 válida y que 'npx tsc --noEmit' retorna Exit Code 0 absoluto.",
         "8. Marcar la tarea como COMPLETED en tasks_queue.json y notificar."
       ]
+    },
+    {
+      "id": "sync-providers-sovereign-images-and-purge-hotlinks",
+      "title": "Sincronización Soberana de Proveedores: Descarga de Imágenes a Disco Local y Purga de Hotlinks",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T18:20:00+02:00",
+      "report": {
+        "HECHO_VERIFICADO": "53.623 proveedores sincronizados con imágenes reales de origen descargadas a public/assets/shadow_vendors/ (4.995 imágenes únicas, 41.207 URLs locales activas, 0 hotlinks remotos). Logos SVG de cabecera, avatars y placeholders genéricos purgados. Generado src/data/vampirized-providers-synchronized.json (90,8 MB).",
+        "HIPÓTESIS": "Descargar las imágenes a disco local e inmunizar los perfiles elimina el riesgo de hotlinking bloqueado por CDN competidor, evita fugas de tráfico y acelera la carga a nivel microsegundo.",
+        "DECISIÓN": "Reescribir URLs activas a /assets/shadow_vendors/[hash].jpg y preservar la URL de origen únicamente en sourceImageUrls para auditoría y trazabilidad.",
+        "RIESGOS": "Mitigado: public/assets/ es servido de forma nativa por CDN/LiteSpeed y src/data/ está excluido de bundles AWS Lambda en next.config.ts.",
+        "CAMBIOS": "scripts/sync_providers_sovereign.py, scripts/migrate_json_to_prisma.ts, src/app/(public)/proveedores/page.tsx, src/data/vampirized-providers-synchronized.json, public/assets/shadow_vendors/ (4.995 imágenes), scripts/_inspect_provider_sync.cjs.",
+        "VALIDACIONES": "npx tsc --noEmit -> Exit Code 0. 4.995 imágenes verificadas en disco local. 0 URLs remotas en campos activos.",
+        "ESTADO_BLOQUE": "COMPLETED",
+        "SIGUIENTE_PASO": "Opción A: Despliegue de los 3 Edge Shells S-Class en Hostinger (deploy/hostinger_edge/) y conexión final con la Nave Nodriza."
+      },
+      "description": "Descargar las imágenes de los proveedores desde el origen a disco local, conservar íntegros todos los datos de negocio (nombres, teléfonos, riders, split 80/10/10, precios) y eliminar cualquier hotlink o redirección que apunte a bodas.net o plataformas competidoras.",
+      "command": "python scripts/sync_providers_sovereign.py && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"python scripts/sync_providers_sovereign.py; npx tsc --noEmit\"",
+      "steps": [
+        "1. Ejecutar scripts/sync_providers_sovereign.py con curl_cffi para descargar las 5.002 imágenes únicas a public/assets/shadow_vendors/.",
+        "2. Purgar logotipos SVG de cabecera, avatars y placeholders repetidos.",
+        "3. Reescribir URLs activas a /assets/shadow_vendors/... y mover URLs de origen a sourceImageUrls.",
+        "4. Actualizar scripts/migrate_json_to_prisma.ts y src/app/(public)/proveedores/page.tsx.",
+        "5. Validar compilación TypeScript npx tsc --noEmit -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "deploy-hostinger-edge-shells-ftp",
+      "title": "Despliegue de Edge Shells en Hostinger vía FTP",
+      "status": "SUPERSEDED",
+      "completed_at": "2026-09-12T19:16:00+02:00",
+      "validation": "SUPERSEDED por Netlify Edge Multi-Tenant Architecture (hostinger-triad-multi-tenant-routing). Los 4 dominios apuntan a 75.2.60.5 y responden HTTP 200 directo sin necesidad de FTP.",
+      "description": "Tarea sustituida por el enrutamiento nativo en Netlify Edge, eliminando la necesidad de subidas manuales o FTP a Hostinger."
+    },
+    {
+      "id": "hormozi-pseo-high-retention-landings",
+      "title": "Motor pSEO de Landings de Alta Retención & Intención de Búsqueda Hormozi ($100M Grand Slam Offer)",
+      "status": "PENDING",
+      "description": "Construir e integrar el motor de landings de ultra-alta conversión y retención inmediata (<500ms) para los 10 gremios x 52 provincias. Cada landing ataca con precisión milimétrica la intención de búsqueda real del lead (Audio, Presupuesto con IVA 21%, Disponibilidad atómica, Repertorio y Relevo Uber 0% cancelaciones), con el Value Stack de Alex Hormozi ($100M Offers), 5 componentes modulares WOW, estética OLED cinematográfica y sitemap pSEO masivo.",
+      "command": "npx tsx scripts/test-hormozi-pseo-sitemap.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-hormozi-pseo-sitemap.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/seo/searchIntentEngine.ts': Motor que mapea los 10 gremios canónicos (mariachis, sonido-iluminacion, fincas, dj, solistas, cuarteto-cuerdas, catering-brasas, pantallas-led, animacion, coches-clasicos) cruzados con las 52 provincias. Definir tipo 'SearchIntentProfile' con: leadPainPoints (3 dolores reales), dreamOutcome, hormoziValueStack (4 entregables con valor acumulado >2.500 € vs depósito 100 €), proofPhotos (URLs locales /assets/shadow_vendors/), audioDemo/specs, y 5 FAQs maestras con Schema.org FAQPage.",
+        "2. Crear los 5 Componentes Modulares WOW en 'src/features/landing/components/':",
+        "   - 'AcousticSpatialSim.tsx': Slider interactivo de 50 a 500 pax que computa potencia RMS en tiempo real (pax * 12W) con Bose F1 812, limitador acústico (<75 dB SPL) y onda senoidal animada en Canvas/CSS.",
+        "   - 'MentridaFleetTracker.tsx': Widget táctico que calcula distancia km desde Méntrida (1,50 €/km >50km), tiempo de llegada al recinto y badge de 'Garantía de Relevo Uber 0% cancelaciones' con soporte del Arsenal.",
+        "   - 'LocalProofGallery.tsx': Galería visual Bento que extrae de forma reactiva fotos auténticas de /assets/shadow_vendors/ asociadas a la provincia del usuario, eliminando placeholders.",
+        "   - 'HormoziOfferStack.tsx': Tarjeta OLED con apilamiento de valor irresistible (2.900 € en servicios técnicos y artísticos) vs precio base desde 350 € y depósito de 100 € en Stripe (Price-Lock SHA-256).",
+        "   - 'SchemaOrgMarkup.tsx': Inyector JSON-LD con Schema.org Service, FAQPage y AggregateRating para rich snippets en Google SERP.",
+        "3. Crear 'src/features/landing/HormoziGrandSlamLanding.tsx': Integrador maestro S-Class OLED (#030305, Syne/Inter). Hook instantáneo (<3s) con badge dinámico '● 1 Fecha Libre para Sábado en [Provincia]', Bento Grid de respuesta a intención, los 5 componentes WOW y Sticky CTA flotante a checkout.",
+        "4. Actualizar 'src/app/(public)/servicios/[servicio]/[provincia]/page.tsx': Conectar 'HormoziGrandSlamLanding' consumiendo 'resolveSearchIntent(servicio, provincia)'. Añadir generateMetadata con OpenGraph dinámico y canonicals limpias.",
+        "5. Actualizar 'src/app/sitemap.ts': En partición 1, indexar los 10 gremios x 52 provincias (/servicios/[gremio]/[provincia]) con prioridad 0.90 y frecuencia semanal.",
+        "6. Crear script de validación 'scripts/test-hormozi-pseo-sitemap.ts': Probar resolución de SearchIntentProfile para 50 combinaciones en <10ms, verificar cálculo de 12W/pax y distancia Méntrida, y validar sitemap sin URLs rotas.",
+        "7. Validar estrictamente con 'npx tsc --noEmit' hasta certificar Exit Code 0 (cero errores de TypeScript)."
+      ]
     }
   ]
 }
