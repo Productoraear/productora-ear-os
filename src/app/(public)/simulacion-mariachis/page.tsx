@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   Music, MapPin, Clock, ShieldCheck, Zap, 
   Play, RefreshCw, AlertTriangle, CheckCircle2, 
-  Users, DollarSign, Compass, ArrowRight
+  Users, DollarSign, Compass, ArrowRight, Phone, MessageSquare, Key, Building
 } from 'lucide-react';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
 import { runHighTrafficMariachiSimulation, MariachiSimulationReport } from '@/lib/matchmaker/mariachiHighTrafficSimulator';
@@ -41,7 +41,7 @@ export default function SimulacionMariachisPage() {
             </h1>
 
             <p className="text-sm sm:text-base text-zinc-400 font-light max-w-2xl mx-auto leading-relaxed">
-              Métricas y posicionamiento GPS real en directo. Salida oficial desde <strong className="text-white">Plaza Elíptica, Madrid</strong>. Verificación en tiempo real de franjas horarias y cascada de relevo.
+              Métricas reales y cartografía satélite de alta definición. Salida oficial desde <strong className="text-white">Plaza Elíptica, Madrid</strong>. Señas de acceso minuciosas y contacto telefónico directo con el mariachi tras el pago de fianza.
             </p>
 
             {/* Simulation Control Buttons Bar */}
@@ -52,7 +52,7 @@ export default function SimulacionMariachisPage() {
                 className="px-6 py-3.5 rounded-2xl bg-[#ecb613] text-black font-black uppercase tracking-wider hover:bg-amber-300 transition-all flex items-center gap-2 shadow-xl shadow-[#ecb613]/20 disabled:opacity-50 cursor-pointer"
               >
                 {isRunning ? <RefreshCw size={16} className="animate-spin" /> : <Play size={16} />}
-                <span>{isRunning ? 'Ejecutando Simulación...' : '▶ Iniciar Simulación 32 Bolos'}</span>
+                <span>{isRunning ? 'Flota en Tránsito...' : '▶ Desplegar Flota 32 Bolos'}</span>
               </button>
 
               <button
@@ -96,17 +96,28 @@ export default function SimulacionMariachisPage() {
             </div>
           </div>
 
+          {/* 🗺️ MAPA TÁCTICO GOOGLE MAPS HD // CENTRO DE MANDO EN VIVO */}
+          <div className="pt-2">
+            <UberFleetVisualizer 
+              report={simulation} 
+              isRunning={isRunning}
+              onTogglePlay={handleStartSimulation}
+              onToggleOvertime={() => setInjectOvertime(!injectOvertime)}
+              injectOvertime={injectOvertime}
+            />
+          </div>
+
           {/* 📋 32 MARIACHI SQUAD SCHEDULE DISPATCH GRID */}
           <div className="bg-[#030305]/90 border border-white/10 rounded-3xl p-6 backdrop-blur-2xl space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-white/10">
               <div className="flex items-center gap-2">
                 <Music size={20} className="text-[#ecb613]" />
                 <h2 className="text-lg font-bold font-syne uppercase text-white">
-                  Rejilla de Despacho de 32 Actuaciones (Sábado)
+                  Rejilla de Despacho de 32 Actuaciones con Señas y Contacto Directo
                 </h2>
               </div>
               <span className="text-xs font-mono text-zinc-400">
-                Potencia Acústica Total Cumplida: <strong className="text-amber-400">{simulation.totalAcousticWatts.toLocaleString('es-ES')} W RMS</strong>
+                Potencia Acústica Total: <strong className="text-amber-400">{simulation.totalAcousticWatts.toLocaleString('es-ES')} W RMS</strong>
               </span>
             </div>
 
@@ -118,7 +129,7 @@ export default function SimulacionMariachisPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.02 }}
-                  className={`p-4 rounded-2xl border space-y-3 relative overflow-hidden ${
+                  className={`p-5 rounded-2xl border space-y-3 relative overflow-hidden ${
                     b.status === 'UBER_REASSIGNED'
                       ? 'bg-rose-500/10 border-rose-500/40 shadow-lg shadow-rose-500/10'
                       : 'bg-white/[0.02] border-white/10 hover:border-white/20'
@@ -128,49 +139,71 @@ export default function SimulacionMariachisPage() {
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-zinc-300">
                       #{idx + 1} • {b.timeSlot}
                     </span>
-                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#00E5FF]/10 text-[#00E5FF] border border-[#00E5FF]/20">
-                      {b.distanceFromPlazaElipticaKm} km desde Plaza Elíptica
+                    <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                      FIANZA STRIPE OK
                     </span>
                   </div>
 
                   <div className="space-y-1">
-                    <h3 className="font-bold text-white font-syne text-sm">{b.municipality}</h3>
+                    <h3 className="font-bold text-white font-syne text-sm leading-tight flex items-center gap-1.5">
+                      <Building size={14} className="text-[#ecb613] shrink-0" />
+                      <span>{b.venueName}</span>
+                    </h3>
                     <p className="text-[11px] text-zinc-400 truncate">
-                      {b.status === 'UBER_REASSIGNED' ? (
-                        <span className="text-rose-300 font-bold">⚡ {b.reassignedToName}</span>
-                      ) : (
-                        <span>{b.squadName}</span>
-                      )}
+                      {b.municipality} • {b.distanceFromPlazaElipticaKm} km desde Base
                     </p>
                   </div>
 
-                  <div className="p-2.5 rounded-xl bg-black/50 border border-white/5 space-y-1 text-[10px] text-zinc-400">
-                    <div className="flex justify-between">
-                      <span>Base + IVA 21%:</span>
-                      <span className="text-zinc-200">{b.basePrice} € + {b.vatAmount} €</span>
+                  {/* Contacto Directo con el Mariachi */}
+                  <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30 space-y-2 text-[10px]">
+                    <div className="flex items-center justify-between text-emerald-400 font-bold uppercase tracking-wider text-[9px]">
+                      <span>Mariachi Asignado:</span>
+                      <span>Canal Directo</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Logística:</span>
-                      <span className="text-zinc-200">+{b.logisticsFee} €</span>
-                    </div>
-                    <div className="flex justify-between pt-1 border-t border-white/10 text-white font-bold font-syne text-xs">
-                      <span>TOTAL BRUTO:</span>
-                      <span className="text-[#ecb613]">{b.totalGrossPrice} €</span>
+                    <p className="text-white font-bold">{b.mariachiLeadName}</p>
+                    <p className="text-zinc-400 text-[9px]">Furgoneta: {b.mariachiVehiclePlate}</p>
+                    
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <a
+                        href={`tel:${b.mariachiPhone}`}
+                        className="py-1.5 px-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-syne font-bold text-[10px] flex items-center justify-center gap-1 transition-all"
+                      >
+                        <Phone size={12} />
+                        <span>Llamar</span>
+                      </a>
+                      <a
+                        href={`https://wa.me/${b.mariachiPhone.replace(/\D/g, '')}?text=Hola%20${encodeURIComponent(b.mariachiLeadName)}%2C%20contacto%20desde%20EAR%20OS`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="py-1.5 px-2 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-black font-syne font-bold text-[10px] flex items-center justify-center gap-1 transition-all"
+                      >
+                        <MessageSquare size={12} />
+                        <span>WhatsApp</span>
+                      </a>
                     </div>
                   </div>
 
-                  <p className="text-[9px] text-zinc-400 italic leading-tight pt-1">
-                    {b.logNotes}
-                  </p>
+                  {/* Señas de acceso */}
+                  <div className="p-2.5 rounded-xl bg-black/60 border border-white/5 space-y-1 text-[10px] text-zinc-400">
+                    <span className="text-[#00E5FF] font-bold text-[9px] flex items-center gap-1">
+                      <Key size={11} /> Señas de Acceso del Cliente:
+                    </span>
+                    <p className="text-zinc-300 italic text-[9.5px] leading-snug">
+                      &ldquo;{b.clientAccessNotes}&rdquo;
+                    </p>
+                    <p className="text-[9px] text-zinc-400 pt-1">
+                      Aparcamiento: {b.parkingInstructions}
+                    </p>
+                  </div>
+
+                  <div className="flex justify-between items-center pt-1 border-t border-white/10 text-[10px]">
+                    <span className="text-zinc-400">TOTAL BRUTO:</span>
+                    <span className="text-[#ecb613] font-bold font-syne text-xs">{b.totalGrossPrice} €</span>
+                  </div>
                 </motion.div>
               ))}
             </div>
 
-          </div>
-
-          {/* TELEMETRÍA EN VIVO (MAPA UBER) */}
-          <div className="pt-8">
-            <UberFleetVisualizer report={simulation} isRunning={isRunning} />
           </div>
 
         </div>
