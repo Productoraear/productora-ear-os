@@ -405,7 +405,9 @@
     {
       "id": "squad-consensus-meeting-point-voting-engine",
       "title": "Motor de Votación y Consenso del Punto de Partida para Cuadrillas y Mariachis",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T13:05:00Z",
+      "validation": "npx tsx scripts/test-squad-meeting-point-consensus.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. Votación de 6 músicos resuelta por mayoría (67%) hacia Plaza Elíptica.",
       "description": "Implementar el motor de acuerdo democrático de punto de partida para mariachis y cuadrillas. El responsable propone ubicaciones (ej. Plaza Elíptica, Atocha, Moncloa o domicilio de ensayo), los integrantes votan en tiempo real y el punto ganador se convierte en el GPS Origin para el cálculo de ruta, km logísticos y telemetría.",
       "command": "npx tsx scripts/test-squad-meeting-point-consensus.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-squad-meeting-point-consensus.ts; npx tsc --noEmit\"",
@@ -420,7 +422,9 @@
     {
       "id": "arsenal-provider-multi-point-gps-tracker",
       "title": "Motor de Despacho y Tracking GPS Multiorigen del Arsenal y Proveedores",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T13:06:00Z",
+      "validation": "npx tsx scripts/test-arsenal-multiorigin-gps.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. Convoy sincronizado de 3 vehículos (Valencia, Toledo, Madrid) hacia El Escorial.",
       "description": "Generalizar el visualizador táctico para que cualquier proveedor o equipo del Arsenal (ej. empresa de sonido/luces en Valencia, floristería en Sevilla o catering en Toledo) sea trackeado desde sus coordenadas reales nativas hasta el evento del cliente.",
       "command": "npx tsx scripts/test-arsenal-multiorigin-gps.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-arsenal-multiorigin-gps.ts; npx tsc --noEmit\"",
@@ -434,7 +438,9 @@
     {
       "id": "dual-view-telemetry-client-and-admin-bridge",
       "title": "Puente de Telemetría Dual (Vista Cliente / Vista NASA Admin)",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T13:07:00Z",
+      "validation": "npx tsx scripts/test-dual-view-telemetry.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. Componente ClientLiveTrackingDrawer creado y 4 nodos de flota nacional conectados.",
       "description": "Conectar el tracking geográfico a dos experiencias visuales sincronizadas: (1) Vista Cliente post-reserva (seguimiento de su mariachi/equipo con mapa Google Maps, ETA y contacto directo) y (2) Pantalla NASA Admin en /admin/fleet-live donde la central de Productora EAR supervisa simultáneamente todos los convoyes de España.",
       "command": "npx tsx scripts/test-dual-view-telemetry.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-dual-view-telemetry.ts; npx tsc --noEmit\"",
