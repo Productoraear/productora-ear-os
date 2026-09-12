@@ -138,7 +138,7 @@ export default function ArtistCinematicProfile({
   imageUrl = '/images/brand/ear_logo_official_diamond.png',
   videoUrl = ''
 }: ArtistCinematicProfileProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>('MANIFIESTO');
+  const [activeTab, setActiveTab] = useState<TabKey>('ROSTER_14');
   const [rosterFilter, setRosterFilter] = useState<RosterCategoryFilter>('TODOS');
   const [selectedFormatId, setSelectedFormatId] = useState<string>('solista-edwin-agudelo');
 
@@ -283,11 +283,15 @@ export default function ArtistCinematicProfile({
                   <span>Reservar Fecha (100 €)</span>
                 </button>
                 <button
-                  onClick={() => setActiveTab('ROSTER_14')}
+                  onClick={() => {
+                    setActiveTab('ROSTER_14');
+                    const el = document.getElementById('formatos-oficiales');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className="rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10 flex items-center gap-2 cursor-pointer"
                 >
                   <Layers size={14} className="text-[#AAD6CD]" />
-                  <span>Ver Opciones y Tarifas</span>
+                  <span>Ver las 4 Tarifas</span>
                 </button>
                 <a
                   href={`https://wa.me/34693693048?text=${encodeURIComponent(
@@ -306,115 +310,86 @@ export default function ArtistCinematicProfile({
 
           </div>
 
+          {/* ── CUADRO MAESTRO "DE UN VISTAZO": LAS 4 OPCIONES EN CABECERA ── */}
+          <div id="formatos-oficiales" className="rounded-3xl border border-white/15 bg-gradient-to-b from-[#0a0a0f] to-[#040407] p-5 sm:p-7 shadow-2xl space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3.5">
+              <div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-[#FF2B44] font-black block">
+                  De un vistazo · Tarifas Oficiales Homologadas
+                </span>
+                <h3 className="font-syne text-xl sm:text-2xl font-bold uppercase text-white mt-0.5">
+                  Selecciona tu Formato y Consulta Presupuesto
+                </h3>
+              </div>
+              <div className="flex items-center gap-2 font-mono text-xs text-[#AAD6CD] bg-[#AAD6CD]/10 border border-[#AAD6CD]/20 px-3 py-1.5 rounded-xl self-start sm:self-auto">
+                <ShieldCheck size={14} />
+                <span>Bloqueo de Fecha: 100 € en Stripe</span>
+              </div>
+            </div>
+
+            {/* REJILLA DE 4 FORMATOS DE ALTO IMPACTO DIRECTO */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {SCLASS_ROSTER_14_FORMATS.map((format) => {
+                const isSolista = format.id === 'solista-edwin-agudelo';
+                const isSelected = selectedFormatId === format.id;
+
+                return (
+                  <div
+                    key={format.id}
+                    onClick={() => handleSelectFormatAndQuote(format.id)}
+                    className={`rounded-2xl border p-4 flex flex-col justify-between space-y-3 transition-all cursor-pointer group ${
+                      isSelected
+                        ? 'border-[#FF2B44] bg-[#12080c] shadow-[0_0_30px_rgba(255,43,68,0.25)] ring-1 ring-[#FF2B44]'
+                        : 'border-white/10 bg-black/40 hover:border-white/30 hover:bg-black/70'
+                    }`}
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className={`px-2 py-0.5 rounded-md font-mono text-[9px] font-bold uppercase ${
+                          isSolista ? 'bg-[#FF2B44]/20 text-[#FF2B44]' : 'bg-[#AAD6CD]/20 text-[#AAD6CD]'
+                        }`}>
+                          {isSolista ? 'Show + Atrezzo' : `${format.members} Músicos`}
+                        </span>
+                        <span className="font-mono text-xl font-black text-white group-hover:text-[#FF2B44] transition-colors">
+                          {format.basePrice} €
+                        </span>
+                      </div>
+
+                      <h4 className="font-syne text-sm font-bold uppercase text-white leading-tight">
+                        {format.name}
+                      </h4>
+
+                      <p className="font-sans text-[11px] text-white/70 line-clamp-2 leading-relaxed">
+                        {format.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-white/10 flex items-center justify-between font-mono text-[10px]">
+                      <span className="text-[#AAD6CD]">{format.duration}</span>
+                      <span className="text-white group-hover:underline flex items-center gap-1 font-bold">
+                        Cotizar <ArrowRight size={11} />
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* ── LA OFERTA IRRESISTIBLE S-CLASS (SECUENCIA DE 8 PASOS DE VALOR) ── */}
-      <SClassIrresistibleOffer
-        promiseBadge="CONTRATACIÓN DIRECTA // PACK SOLISTA PREMIUM"
-        headlinePromise="Convierte tu evento en una ovación histórica que tus invitados recordarán durante décadas"
-        subPromise="No contratas minutos de música de fondo; aseguras una presencia escénica visceral con tesitura de tenor lírico y la sonorización de alta fidelidad más nítida de Madrid y Toledo."
-        benefits={[
-          {
-            title: "Emoción y Respeto a tu Historia",
-            desc: "Primero conocemos vuestra historia y elegimos juntos las canciones para llegar hasta la fibra, creando un repertorio a medida."
-          },
-          {
-            title: "Sonido Bose 2.000W Impecable",
-            desc: "Claridad cristalina sin fatiga auditiva. Microfonía profesional Shure Beta 87A para que cada estrofa e instrumento se escuche perfecto."
-          },
-          {
-            title: "Trato Directo y Cercano con Edwin",
-            desc: "Hablas directamente con el artista. Puntualidad impecable, traje de gala charro artesanal y compromiso total con tu celebración."
-          }
-        ]}
-        deliverablesBadge="ENTREGABLES DEL SHOW SOLISTA PREMIUM"
-        deliverablesTitle="Todo lo que incluye el Show Solista Premium (350 €) para tu gran día"
-        deliverables={[
-          {
-            spec: "Actuación en Directo (Edwin Agudelo)",
-            detail: "Show de 60 minutos con máxima flexibilidad (2 salidas de 30 minutos: la primera dedicada a homenajeados y la segunda para complacer peticiones)."
-          },
-          {
-            spec: "Equipo Profesional Bose 2.000W",
-            detail: "Sonorización de alta gama con cobertura hasta 300 personas en interiores y exteriores con microfonía Shure Beta 87A."
-          },
-          {
-            spec: "Photocall Temático con Sombreros Charros",
-            detail: "Llevamos sombreros artesanales para que todos tus invitados participen y se lleven un recuerdo visual inolvidable."
-          },
-          {
-            spec: "Sesión de Fotos en las Mesas con el Artista",
-            detail: "Edwin se acerca mesa por mesa para compartir con los invitados y tomar fotos de recuerdo en alta resolución sin molestias."
-          },
-          {
-            spec: "Ramo de Flores de Cortesía",
-            detail: "Entregado en mano durante el tema de apertura para que se lo ofrezcas a tu pareja, madre o persona homenajeada."
-          },
-          {
-            spec: "Exclusividad Absoluta de Fecha",
-            detail: "Solo trabajo con vosotras esa fecha. Máxima frescura vocal y dedicación al 100% a vuestro evento."
-          }
-        ]}
-        priceAnchor={{
-          totalValueEstimate: "750,00 €",
-          finalPrice: "350,00 €",
-          depositAmount: "100,00 €",
-          periodOrFormat: "Show Solista Premium Completo",
-          legalNote: "Tarifa para eventos en radio de 50 km desde Méntrida. Kilometraje adicional: 1,50 €/km."
-        }}
-        guarantee={{
-          badgeText: "GARANTÍA Y COMPROMISO DIRECTO",
-          title: "Garantía de Satisfacción por Escrito",
-          description: "Nos aseguramos de cuidar cada detalle y filtrar cualquier contenido inadecuado para que toda la familia y amigos disfruten plenamente. Tu reserva de 100 € queda bloqueada con firma Price-Lock válida 72 horas."
-        }}
-        bonuses={[
-          {
-            title: "Canción Personalizada y Dedicatoria de Entrada",
-            realValue: "120,00 €",
-            description: "Adaptamos la primera canción con dedicatoria expresa a los homenajeados para arrancar con el máximo impacto emocional."
-          },
-          {
-            title: "Micrófono Inalámbrico Extra para Brindis",
-            realValue: "80,00 €",
-            description: "Dejamos a disposición de la familia o anfitriones un micrófono Shure profesional conectado al sistema Bose para discursos."
-          }
-        ]}
-        objections={[
-          {
-            question: "¿Qué ocurre si la ceremonia o la cena se retrasa?",
-            answer: "No te preocupes. Como profesionales con más de 25 años de oficio, llegamos con antelación y nos coordinamos con el maître o wedding planner para ajustar el inicio al instante perfecto."
-          },
-          {
-            question: "¿Y si el espacio de la finca o salón es reducido?",
-            answer: "El sistema Bose F1 / S1 Pro ocupa un espacio mínimo en el suelo ofreciendo una cobertura de 100 grados sin tapar la vista de los comensales."
-          },
-          {
-            question: "¿Se puede ampliar a Grupo o Mariachi completo si decidimos crecer?",
-            answer: "Totalmente. Si deseas dar el salto a Mariachi de 6 músicos (600 €), 9 músicos (900 €) o Gran Ensamble de 13 músicos (1.300 €), tu depósito se descuenta íntegramente."
-          }
-        ]}
-        scarcity={{
-          urgencyBadge: "CUPO ESTRICTO: SOLO 1 ACTUACIÓN POR FECHA",
-          limitText: "Para garantizar la máxima entrega y frescura vocal, solo atiendo una contratación por jornada. Las fechas de fin de semana se reservan con meses de antelación.",
-          ctaPrimaryText: "Reservar Fecha Ahora (100 €)",
-          checkoutUrl: "/checkout/presupuesto?format=solista-edwin-agudelo&base=350",
-          whatsappText: "Hola Edwin, deseo verificar si tienes disponible mi fecha para la actuación de Solista Premium 350€."
-        }}
-      />
-
-      {/* ── NAVEGACIÓN INMERSIVA POR TABS ── */}
-      <nav aria-label="Navegación de secciones del perfil" className="sticky top-0 z-40 border-b border-white/10 bg-[#050507]/90 backdrop-blur-xl px-6 py-3">
+      {/* ── BARRA DE SALTO RÁPIDO Y NAVEGACIÓN POR TABS ── */}
+      <nav aria-label="Navegación de secciones del perfil" className="sticky top-16 md:top-20 z-40 border-b border-white/10 bg-[#050507]/95 backdrop-blur-xl px-4 sm:px-8 py-2.5">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 overflow-x-auto no-scrollbar">
           {(
             [
-              { key: 'MANIFIESTO', label: 'Biografía & Oficio', icon: FileText },
-              { key: 'ROSTER_14', label: 'Formatos & Tarifas (4 Opciones)', icon: Layers },
-              { key: 'REPERTORIO', label: 'Repertorio & Emoción', icon: Music },
-              { key: 'RIDER', label: 'Sonido Bose 2.000W', icon: Radio },
-              { key: 'VIMUME', label: 'Proyecto VIMUME', icon: Activity },
+              { key: 'ROSTER_14', label: 'Tarifas & Cotizador', icon: Layers },
+              { key: 'MANIFIESTO', label: 'Qué Incluye el Show', icon: Sparkles },
+              { key: 'REPERTORIO', label: 'Repertorio', icon: Music },
+              { key: 'RIDER', label: 'Sonido Bose', icon: Radio },
               { key: 'TRAYECTORIA', label: 'Reconocimientos', icon: Trophy },
-              { key: 'BOOKING', label: 'Cotizador & Fecha', icon: Calendar }
+              { key: 'VIMUME', label: 'VIMUME', icon: Activity }
             ] as const
           ).map((tab) => {
             const Icon = tab.icon;
@@ -423,13 +398,13 @@ export default function ArtistCinematicProfile({
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                className={`flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                   isSelected
-                    ? 'bg-[#FF2B44] text-white shadow-lg shadow-[#FF2B44]/25'
+                    ? 'bg-[#FF2B44] text-white shadow-md shadow-[#FF2B44]/25'
                     : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
               >
-                <Icon size={14} />
+                <Icon size={13} />
                 <span>{tab.label}</span>
               </button>
             );
@@ -518,6 +493,102 @@ export default function ArtistCinematicProfile({
                     <p className="font-mono text-xs text-white/50">Trato directo con la dirección de Productora EAR y el artista principal.</p>
                   </div>
                 </div>
+              </div>
+
+              {/* OFERTA IRRESISTIBLE DETALLADA DEL SHOW SOLISTA */}
+              <div className="pt-4">
+                <SClassIrresistibleOffer
+                  promiseBadge="CONTRATACIÓN DIRECTA // PACK SOLISTA PREMIUM"
+                  headlinePromise="Convierte tu evento en una ovación histórica que tus invitados recordarán durante décadas"
+                  subPromise="No contratas minutos de música de fondo; aseguras una presencia escénica visceral con tesitura de tenor lírico y la sonorización de alta fidelidad más nítida de Madrid y Toledo."
+                  benefits={[
+                    {
+                      title: "Emoción y Respeto a tu Historia",
+                      desc: "Primero conocemos vuestra historia y elegimos juntos las canciones para llegar hasta la fibra, creando un repertorio a medida."
+                    },
+                    {
+                      title: "Sonido Bose 2.000W Impecable",
+                      desc: "Claridad cristalina sin fatiga auditiva. Microfonía profesional Shure Beta 87A para que cada estrofa e instrumento se escuche perfecto."
+                    },
+                    {
+                      title: "Trato Directo y Cercano con Edwin",
+                      desc: "Hablas directamente con el artista. Puntualidad impecable, traje de gala charro artesanal y compromiso total con tu celebración."
+                    }
+                  ]}
+                  deliverablesBadge="ENTREGABLES DEL SHOW SOLISTA PREMIUM"
+                  deliverablesTitle="Todo lo que incluye el Show Solista Premium (350 €) para tu gran día"
+                  deliverables={[
+                    {
+                      spec: "Actuación en Directo (Edwin Agudelo)",
+                      detail: "Show de 60 minutos con máxima flexibilidad (2 salidas de 30 minutos: la primera dedicada a homenajeados y la segunda para complacer peticiones)."
+                    },
+                    {
+                      spec: "Equipo Profesional Bose 2.000W",
+                      detail: "Sonorización de alta gama con cobertura hasta 300 personas en interiores y exteriores con microfonía Shure Beta 87A."
+                    },
+                    {
+                      spec: "Photocall Temático con Sombreros Charros",
+                      detail: "Llevamos sombreros artesanales para que todos tus invitados participen y se lleven un recuerdo visual inolvidable."
+                    },
+                    {
+                      spec: "Sesión de Fotos en las Mesas con el Artista",
+                      detail: "Edwin se acerca mesa por mesa para compartir con los invitados y tomar fotos de recuerdo en alta resolución sin molestias."
+                    },
+                    {
+                      spec: "Ramo de Flores de Cortesía",
+                      detail: "Entregado en mano durante el tema de apertura para que se lo ofrezcas a tu pareja, madre o persona homenajeada."
+                    },
+                    {
+                      spec: "Exclusividad Absoluta de Fecha",
+                      detail: "Solo trabajo con vosotras esa fecha. Máxima frescura vocal y dedicación al 100% a vuestro evento."
+                    }
+                  ]}
+                  priceAnchor={{
+                    totalValueEstimate: "750,00 €",
+                    finalPrice: "350,00 €",
+                    depositAmount: "100,00 €",
+                    periodOrFormat: "Show Solista Premium Completo",
+                    legalNote: "Tarifa para eventos en radio de 50 km desde Méntrida. Kilometraje adicional: 1,50 €/km."
+                  }}
+                  guarantee={{
+                    badgeText: "GARANTÍA Y COMPROMISO DIRECTO",
+                    title: "Garantía de Satisfacción por Escrito",
+                    description: "Nos aseguramos de cuidar cada detalle y filtrar cualquier contenido inadecuado para que toda la familia y amigos disfruten plenamente. Tu reserva de 100 € queda bloqueada con firma Price-Lock válida 72 horas."
+                  }}
+                  bonuses={[
+                    {
+                      title: "Canción Personalizada y Dedicatoria de Entrada",
+                      realValue: "120,00 €",
+                      description: "Adaptamos la primera canción con dedicatoria expresa a los homenajeados para arrancar con el máximo impacto emocional."
+                    },
+                    {
+                      title: "Micrófono Inalámbrico Extra para Brindis",
+                      realValue: "80,00 €",
+                      description: "Dejamos a disposición de la familia o anfitriones un micrófono Shure profesional conectado al sistema Bose para discursos."
+                    }
+                  ]}
+                  objections={[
+                    {
+                      question: "¿Qué ocurre si la ceremonia o la cena se retrasa?",
+                      answer: "No te preocupes. Como profesionales con más de 25 años de oficio, llegamos con antelación y nos coordinamos con el maître o wedding planner para ajustar el inicio al instante perfecto."
+                    },
+                    {
+                      question: "¿Y si el espacio de la finca o salón es reducido?",
+                      answer: "El sistema Bose F1 / S1 Pro ocupa un espacio mínimo en el suelo ofreciendo una cobertura de 100 grados sin tapar la vista de los comensales."
+                    },
+                    {
+                      question: "¿Se puede ampliar a Grupo o Mariachi completo si decidimos crecer?",
+                      answer: "Totalmente. Si deseas dar el salto a Mariachi de 6 músicos (600 €), 9 músicos (900 €) o Gran Ensamble de 13 músicos (1.300 €), tu depósito se descuenta íntegramente."
+                    }
+                  ]}
+                  scarcity={{
+                    urgencyBadge: "CUPO ESTRICTO: SOLO 1 ACTUACIÓN POR FECHA",
+                    limitText: "Para garantizar la máxima entrega y frescura vocal, solo atiendo una contratación por jornada. Las fechas de fin de semana se reservan con meses de antelación.",
+                    ctaPrimaryText: "Reservar Fecha Ahora (100 €)",
+                    checkoutUrl: "/checkout/presupuesto?format=solista-edwin-agudelo&base=350",
+                    whatsappText: "Hola Edwin, deseo verificar si tienes disponible mi fecha para la actuación de Solista Premium 350€."
+                  }}
+                />
               </div>
 
             </div>

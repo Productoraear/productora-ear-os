@@ -409,37 +409,55 @@ function ProveedoresDirectoryContent() {
   return (
     <div className="min-h-screen bg-[#030305] text-white font-sans selection:bg-[#258DCD] selection:text-black w-full overflow-x-hidden">
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-          1. HEADER S-CLASS MONUMENTAL (ZERO HORIZONTAL OVERFLOW)
+          1. HEADER S-CLASS COMPACTO CON MIGAS DE PAN (DE UN VISTAZO)
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-      <header className="max-w-7xl mx-auto px-4 border-b border-neutral-900 pb-8 mb-8 space-y-4">
-        <div className="bg-[#08080c] border border-neutral-800 hover:border-[#258DCD]/40 rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl transition-colors">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-b from-[#258DCD]/10 to-transparent blur-3xl pointer-events-none" />
+      <header className="max-w-7xl mx-auto px-4 pt-24 md:pt-28 pb-4 mb-4 space-y-3">
+        {/* Breadcrumb de navegación */}
+        <nav aria-label="Migas de pan" className="flex items-center gap-2 font-mono text-[11px] text-white/50">
+          <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
+          <span>/</span>
+          <Link href="/proveedores" className="text-white hover:underline font-bold">Proveedores</Link>
+          {selectedCategory !== 'ALL' && (
+            <>
+              <span>/</span>
+              <span className="text-[#AAD6CD] uppercase font-bold">{selectedCategory}</span>
+            </>
+          )}
+          {selectedProvince && (
+            <>
+              <span>/</span>
+              <span className="text-[#FF2B44] uppercase font-bold">{selectedProvince}</span>
+            </>
+          )}
+        </nav>
+
+        <div className="bg-[#08080c] border border-neutral-800 hover:border-[#258DCD]/40 rounded-2xl p-5 sm:p-6 relative overflow-hidden shadow-xl transition-colors">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-b from-[#258DCD]/10 to-transparent blur-3xl pointer-events-none" />
           
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-[#258DCD]/30 bg-[#258DCD]/5 text-[#AAD6CD] text-xs font-mono font-bold uppercase tracking-widest mb-3">
-            <Sparkles size={14} className="text-[#258DCD]" /> Productora EAR • Directorio Homologado S-Class
-          </div>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full border border-[#258DCD]/30 bg-[#258DCD]/5 text-[#AAD6CD] text-[10px] font-mono font-bold uppercase tracking-widest">
+                <Sparkles size={12} className="text-[#258DCD]" /> Productora EAR · Directorio Nacional
+              </div>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white uppercase tracking-tight font-syne">
+                Directorio Homologado de Proveedores
+              </h1>
+              <p className="text-neutral-400 text-xs sm:text-sm max-w-3xl font-light leading-relaxed">
+                Selección de profesionales de España con seguro de RC de 1.000.000 €, rider acústico estandarizado y reserva protegida de 100,00 €.
+              </p>
+            </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight font-syne">
-            Directorio Nacional de Proveedores
-          </h1>
-
-          <p className="text-neutral-400 text-xs sm:text-sm lg:text-base max-w-4xl mt-2 font-light leading-relaxed">
-            El estándar más riguroso de provisión técnica, artística y logística de España. Seguro de RC de 1.000.000 €, rider acústico estandarizado (12 W/pax) y cierre de fecha con depósito de 100,00 € bajo firma criptográfica SHA-256.
-          </p>
-
-          <div className="flex flex-wrap gap-2 pt-4 font-mono text-[11px] text-neutral-300">
-            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
-              <ShieldCheck size={13} className="text-emerald-400" /> Cobertura RC: 1.000.000 €
-            </span>
-            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
-              <Sparkles size={13} className="text-[#258DCD]" /> Split Soberano: 80% Artista / 10% EAR / 10% VIMUME
-            </span>
-            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
-              <Lock size={13} className="text-[#AAD6CD]" /> Price-Lock: 100,00 € Stripe
-            </span>
-            <span className="px-3 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
-              <PhoneCall size={13} className="text-amber-400" /> Centralita: {CENTRALITA.display}
-            </span>
+            <div className="flex flex-wrap md:flex-col items-start md:items-end gap-2 font-mono text-[10px] text-neutral-300 shrink-0">
+              <span className="px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
+                <ShieldCheck size={12} className="text-emerald-400" /> Cobertura RC: 1.000.000 €
+              </span>
+              <span className="px-2.5 py-1 rounded-lg bg-black/60 border border-white/10 flex items-center gap-1.5">
+                <Lock size={12} className="text-[#AAD6CD]" /> Reserva: 100 € Stripe
+              </span>
+              <a href="tel:+34693693048" className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 hover:border-[#FF2B44] text-[#FF2B44] flex items-center gap-1.5 transition-colors">
+                <PhoneCall size={12} /> {CENTRALITA.display}
+              </a>
+            </div>
           </div>
         </div>
       </header>
