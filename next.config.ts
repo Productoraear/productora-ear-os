@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  productionBrowserSourceMaps: false,
   compiler: {
     removeConsole:
       process.env.NODE_ENV === "production"
@@ -11,8 +12,21 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion", "date-fns"],
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "date-fns",
+      "@heroicons/react",
+      "lodash",
+      "@supabase/supabase-js",
+      "firebase",
+      "firebase/app",
+      "firebase/auth",
+      "firebase/firestore",
+      "firebase/storage",
+    ],
   },
   images: {
     remotePatterns: [
@@ -86,3 +100,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
