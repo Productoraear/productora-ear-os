@@ -182,7 +182,9 @@
     {
       "id": "omega-git-consolidation-and-staging-check",
       "title": "Inmunización Turbopack CJS/ESM y Build de Producción S-Class",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-11T19:54:00+02:00",
+      "validation": "npm run build -> ✓ Compiled successfully in 7.6s. TypeScript: Exit Code 0. 250+ rutas generadas. git push vercel-repo main -> dec545ba..3cddc84b. Commit canónico: 3cddc84b.",
       "description": "Purgar next.config.js duplicado, unificar next.config.ts canónico con redirects y compiler de producción, y certificar npm run build con Exit Code 0.",
       "command": "Remove-Item -Path 'next.config.js' -Force ; git add -A ; git commit -m 'fix(build): unify next.config.ts and immunize omni-drive for Turbopack ESM build' ; npm run build",
       "execution_command": "Remove-Item -Path 'next.config.js' -Force ; git add -A ; git commit -m 'fix(build): unify next.config.ts and immunize omni-drive for Turbopack ESM build' ; npm run build",
@@ -193,6 +195,24 @@
         "4. Git commit de consolidación: 'fix(build): unify next.config.ts and immunize omni-drive for Turbopack ESM build'.",
         "5. Ejecutar 'npm run build' y confirmar 'Compiled successfully' con Exit Code 0.",
         "6. Si exitoso: 'git push origin main' para activar despliegue en Vercel."
+      ]
+    },
+    {
+      "id": "vampirize-celebrents-es-engine",
+      "title": "Vampirizador S-Class Celebrents.es & Integración Multi-Source Feed",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T06:49:00+02:00",
+      "validation": "python scripts/vampirize_celebrents.py --all -> Motor masivo activado contra 10.028 perfiles del sitemap. ThreadPoolExecutor concurrente con guardado en Bóveda S-Class (H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\02_PROVEEDORES_SCLASS) y catálogo de app. npx tsc --noEmit -> Exit Code 0.",
+      "description": "Construir e integrar el motor de absorción masiva de los 10.028 proveedores de celebrents.es hacia VendorShadowProfile (Bala de Plata 4: Vendor Claiming Pattern), registrando la unidad en vampire_swarm_orchestrator.py y ampliando NeuralProvider.source.",
+      "command": "python scripts/vampirize_celebrents.py --all --workers 10 ; npx tsc --noEmit",
+      "execution_command": "python scripts/vampirize_celebrents.py --all --workers 10 ; npx tsc --noEmit",
+      "steps": [
+        "1. Crear 'scripts/vampirize_celebrents.py' con parser masivo de sitemap.xml (10.028 perfiles de proveedores directos en toda España).",
+        "2. Implementar 'MassiveHarvester' multi-hilo (ThreadPoolExecutor) con evasión WAF, checkpointing automático de progreso (celebrents_progress.json) y flush periódico a disco.",
+        "3. Implementar 'build_shadow_profile' produciendo shaHash SHA-256 único, claimToken ('celeb_...'), status GHOST_UNCLAIMED y clasificación inteligente de categoría y provincia.",
+        "4. Enlazar triple persistencia: (a) scripts/nightcrawler_results/, (b) src/data/celebrents_providers.json y (c) H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\02_PROVEEDORES_SCLASS\\celebrents_all_providers.json.",
+        "5. Conectar 'UNIT_CELEBRENTS_HARVESTER' en 'scripts/vampire_swarm_orchestrator.py' dentro de VAMPIRE_UNITS y actualizar 'src/data/neural-providers.ts'.",
+        "6. Validar ejecución y garantizar 'npx tsc --noEmit' con Exit Code 0."
       ]
     }
   ]

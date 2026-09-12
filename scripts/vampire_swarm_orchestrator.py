@@ -109,6 +109,14 @@ VAMPIRE_UNITS = [
         "args": [],
         "output_target": "src/data/ear-rag-database.json",
         "priority": 7
+    },
+    {
+        "id": "UNIT_CELEBRENTS_HARVESTER",
+        "name": "Vampirizador de Proveedores y Perfiles Sombra Celebrents.es",
+        "script": "vampirize_celebrents.py",
+        "args": ["--mock"],
+        "output_target": "src/data/celebrents_providers.json",
+        "priority": 8
     }
 ]
 
