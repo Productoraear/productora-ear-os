@@ -441,3 +441,26 @@ html {
 .light .text-white\/20 {
   opacity: 0.6;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   BLINDAJE Y OCULTAMIENTO ANTI-NETLIFY BADGE / DRAWER (Zero Floating Overlay)
+   ───────────────────────────────────────────────────────────────────────────── */
+netlify-drawer,
+[data-netlify-badge],
+#netlify-badge,
+iframe[src*="netlify"],
+div[class*="netlify-identity"],
+.netlify-badge-container,
+[class*="netlify-badge"],
+[id*="netlify-drawer"] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  z-index: -9999 !important;
+}
