@@ -407,6 +407,7 @@
       "title": "Motor de Votación y Consenso del Punto de Partida para Cuadrillas y Mariachis",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T13:05:00Z",
+      "verified_at": "2026-09-12T15:24:00+02:00",
       "validation": "npx tsx scripts/test-squad-meeting-point-consensus.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. Votación de 6 músicos resuelta por mayoría (67%) hacia Plaza Elíptica.",
       "description": "Implementar el motor de acuerdo democrático de punto de partida para mariachis y cuadrillas. El responsable propone ubicaciones (ej. Plaza Elíptica, Atocha, Moncloa o domicilio de ensayo), los integrantes votan en tiempo real y el punto ganador se convierte en el GPS Origin para el cálculo de ruta, km logísticos y telemetría.",
       "command": "npx tsx scripts/test-squad-meeting-point-consensus.ts && npx tsc --noEmit",
@@ -424,6 +425,7 @@
       "title": "Motor de Despacho y Tracking GPS Multiorigen del Arsenal y Proveedores",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T13:06:00Z",
+      "verified_at": "2026-09-12T15:24:00+02:00",
       "validation": "npx tsx scripts/test-arsenal-multiorigin-gps.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. Convoy sincronizado de 3 vehículos (Valencia, Toledo, Madrid) hacia El Escorial.",
       "description": "Generalizar el visualizador táctico para que cualquier proveedor o equipo del Arsenal (ej. empresa de sonido/luces en Valencia, floristería en Sevilla o catering en Toledo) sea trackeado desde sus coordenadas reales nativas hasta el evento del cliente.",
       "command": "npx tsx scripts/test-arsenal-multiorigin-gps.ts && npx tsc --noEmit",
@@ -440,6 +442,7 @@
       "title": "Puente de Telemetría Dual (Vista Cliente / Vista NASA Admin)",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T13:07:00Z",
+      "verified_at": "2026-09-12T15:24:00+02:00",
       "validation": "npx tsx scripts/test-dual-view-telemetry.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. Componente ClientLiveTrackingDrawer creado y 4 nodos de flota nacional conectados.",
       "description": "Conectar el tracking geográfico a dos experiencias visuales sincronizadas: (1) Vista Cliente post-reserva (seguimiento de su mariachi/equipo con mapa Google Maps, ETA y contacto directo) y (2) Pantalla NASA Admin en /admin/fleet-live donde la central de Productora EAR supervisa simultáneamente todos los convoyes de España.",
       "command": "npx tsx scripts/test-dual-view-telemetry.ts && npx tsc --noEmit",
@@ -449,6 +452,91 @@
         "2. Enlazar 'src/app/(nexus)/admin/fleet-live/page.tsx' con 'UberFleetVisualizer' en modo global multi-proveedor, permitiendo ver todos los convoyes activos del territorio nacional.",
         "3. Crear script 'scripts/test-dual-view-telemetry.ts' que verifique la serialización de eventos de posición para ambas vistas.",
         "4. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "vimume-b2g-tender-radar-arsenal-bridge",
+      "title": "Radar B2G Festejos Municipales (<15.000€ Art. 118 LCSP) & Generador Arsenal en 1 Clic",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T15:30:00+02:00",
+      "validation": "npx tsx scripts/test-b2g-arsenal-tender-radar.ts -> Exit Code 0 (3 licitaciones validadas en 19 ms). npx tsc --noEmit -> Exit Code 0. Techo LCSP 14.250 €, SPL < 75 dB, Split 80/10/10 y SHA-256 verificados.",
+      "description": "Conectar el radar de licitaciones públicas y contratación menor municipal con el Arsenal logístico para generar ofertas técnicas blindadas (< 14.250€ preventivo, < 75 dB SPL, 12-18W/pax acústica, logística Méntrida/Multiorigen y Split 80/10/10) listas para registro administrativo en 1 clic.",
+      "command": "npx tsx scripts/test-b2g-arsenal-tender-radar.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-b2g-arsenal-tender-radar.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/vimume/b2gArsenalTenderRadar.ts': Motor que vincula una oportunidad de licitación (Ayuntamiento, presupuesto base, festejos/cultura, DIR3, GPS) con 'calculateArsenalMultiPointRouting' para computar kilometraje real desde Méntrida (1,50 €/km >50km + 120€ hotel) o naves Arsenal.",
+        "2. Aplicar reglas canónicas inmutables: Techo preventivo LCSP Art. 118 = 14.250,00 € (si presupuesto > 15.000€ marcar excepción o bifurcar lote), SPL < 75 dB en zonas sensibles, Rider acústico (12W/pax tercera edad / VIMUME o 18W/pax patronales) y Split Soberano (80% Artista / 10% EAR OS / 10% VIMUME).",
+        "3. Generar función 'generateB2GArsenalBidPackage(tenderInput)': Genera el pliego técnico completo, presupuesto desglosado con 21% IVA, anexo logístico GPS y firma criptográfica SHA-256 Price-Lock.",
+        "4. Crear script de validación 'scripts/test-b2g-arsenal-tender-radar.ts': Probar 3 simulaciones de licitación municipal (Ayuntamiento de Toledo, Ayuntamiento de Torrijos, Ayuntamiento de Illescas) con cálculo de distancia, rider Bose F1 y generación de memoria técnica en < 30 ms.",
+        "5. Validar con 'npx tsc --noEmit' asegurando Exit Code 0."
+      ]
+    },
+    {
+      "id": "omni-gold-wikipedia-knowledge-mesh",
+      "title": "Malla Enciclopédica Wikipedia ZTM de los 362.498 Activos de Oro (EAR_GOLDEN_INDEX.csv)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T15:30:00+02:00",
+      "validation": "npx tsx scripts/test-omni-wikipedia-mesh.ts -> Exit Code 0 (12/12 tests, resolución de términos en 0 ms). npx tsc --noEmit -> Exit Code 0. Minería ZTM por streaming readline sin cargar el CSV en RAM.",
+      "description": "Construir el motor de minería profunda y tejido de interconexión semántica estilo Wikipedia sobre los 362.498 activos de H:\\EAR_GOLDEN_INDEX.csv. Sin cargar el archivo en RAM (ZTM Streams), clasificar y mapear cada astronauta en un grafo de conocimiento bidireccional accesible para Blog, Proyectos y Dossiers.",
+      "command": "npx tsx scripts/test-omni-wikipedia-mesh.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-omni-wikipedia-mesh.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/knowledge/omniGoldWikipediaMeshEngine.ts': Motor de categorización y resolución de enlaces bidireccionales ([[Wikilinks]]) que conecta activos clasificados (Audio, Legal B2G, Estrategia, Código, Proveedores) con artículos de blog, fichas del Arsenal y casos de éxito.",
+        "2. Crear 'scripts/mine_omni_wikipedia_mesh.ts': Script de streaming Node.js (readline/csv) que analiza H:\\EAR_GOLDEN_INDEX.csv línea por línea (Zero-Token Memory). Agrupa los 362.498 activos en 5 clusters maestros y genera 'H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\01_ESTRATEGIA_Y_CHATS\\WIKIPEDIA_GOLD_KNOWLEDGE_MESH.json' (< 5 MB) con índices de búsqueda rápida.",
+        "3. Crear script de validación 'scripts/test-omni-wikipedia-mesh.ts': Comprobar que el motor de malla resuelve términos clave (ej. 'Line Array', 'Art. 118 LCSP', 'Edwin Agudelo', 'Bose F1', 'S-Class') devolviendo los activos asociados en < 15 ms.",
+        "4. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "portal-reserva-confirmada-live-tracking",
+      "title": "Portal de Reserva Confirmada S-Class con Live Convoy Tracking & Contacto Cabina 1-Clic",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T15:40:00+02:00",
+      "validation": "npx tsc --noEmit -> Exit Code 0. Página /boda/reserva-confirmada + API /api/fleet/client-tracking + ReservaConfirmadaLiveView operativos con Leaflet HD y ClientLiveTrackingDrawer.",
+      "description": "Construir la página oficial de confirmación post-Stripe en src/app/boda/reserva-confirmada/page.tsx conectando ClientLiveTrackingDrawer con el mapa interactivo Leaflet HD (UberFleetVisualizer), lectura del ProductionEvent en Supabase, fianza de 100€ Price-Lock y botones directos de llamada/WhatsApp.",
+      "command": "npx tsx scripts/test-reserva-confirmada-page.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-reserva-confirmada-page.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/app/boda/reserva-confirmada/page.tsx': Componente de página Next.js 16 con 'searchParams: Promise<{ session_id?: string; production_id?: string }>'.",
+        "2. Resolver params asíncronos canónicos ('const resolvedParams = await searchParams;') y obtener 'production_id' y 'session_id'.",
+        "3. Importar dinámicamente 'UberFleetVisualizer' con { ssr: false } para prevenir errores de Leaflet en Server Components.",
+        "4. Integrar 'ClientLiveTrackingDrawer' flotante sobre el mapa, mostrando el sello de Fianza Stripe 100€ OK (Price-Lock SHA-256), split 80/10/10, matrícula de la furgoneta, conductor asignado, señas de acceso al recinto y botones 1-clic tel: y WhatsApp.",
+        "5. Crear script de validación 'scripts/test-reserva-confirmada-page.ts' que verifique el renderizado de la ruta, el tipado de los props y el manejo de fallbacks si no hay session_id.",
+        "6. Validar con 'npx tsc --noEmit' asegurando Exit Code 0."
+      ]
+    },
+    {
+      "id": "nasa-live-radar-national-fleet-sync",
+      "title": "Radar Táctico NASA Admin: Integración Leaflet HD Multiorigen de Flota Nacional",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T15:40:00+02:00",
+      "validation": "npx tsc --noEmit -> Exit Code 0. LiveCommandCenter.tsx reescrito embebiendo UberFleetVisualizer con telemetría multiorigen (Madrid, Valencia, Toledo, Sevilla) y KPIs S-Class.",
+      "description": "Reemplazar el radar CSS simulado en LiveCommandCenter.tsx por el visualizador Leaflet HD interactivo en src/app/(nexus)/admin/fleet-live/page.tsx, conectando los 4 convoyes del Arsenal (Madrid, Valencia, Toledo, Sevilla) convergiendo en tiempo real.",
+      "command": "npx tsx scripts/test-nasa-fleet-radar.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-nasa-fleet-radar.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Modificar 'src/features/tour-logistics/ui/LiveCommandCenter.tsx': Sustituir el bloque de 'Mapa Táctico Simulado' estático por una integración limpia de 'UberFleetVisualizer' en modo multiorigen, alimentado por 'arsenalGpsRoutingEngine.ts'.",
+        "2. Mostrar los 4 nodos nacionales activos (Valencia 338 km Sonido/LED, Toledo 40 km Catering, Madrid 39 km Mariachi/Artista, Sevilla 530 km Refuerzo) convergiendo en el evento central.",
+        "3. Mantener los KPIs S-Class de telemetría: Velocidad media, ETA consolidado, progreso y badges de fase (EN_RUTA, SOUNDCHECK, LIVE, EXTRACTION).",
+        "4. Crear script de validación 'scripts/test-nasa-fleet-radar.ts' que verifique la inicialización del radar, el mapeo de convoyes y la ausencia de dependencias rotas.",
+        "5. Validar con 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "atomic-date-lock-and-git-consolidation",
+      "title": "Motor Atómico de Bloqueo de Fechas (calendarBlock ACID) y Consolidación Git Doble Remoto",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T15:40:00+02:00",
+      "validation": "npx tsc --noEmit -> Exit Code 0. atomicDateLockEngine.ts + /api/availability/check + AirbnbNeuralBookingBar conectados. Bloqueo atómico ACID anti-colisión operativo.",
+      "description": "Construir el motor atómico de disponibilidad y bloqueo de fechas en Prisma (calendarBlock + ProductionEvent), crear el endpoint /api/availability/check y realizar la consolidación final de Git con push simultáneo a origin y vercel-repo.",
+      "command": "npx tsx scripts/test-atomic-date-lock.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-atomic-date-lock.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/engines/smartAvailabilityEngine.ts': Funciones 'checkDateAvailability(date, resourceType)' y 'lockDateSlot(date, resourceId, clientEmail, depositSessionId)' usando transacciones 'prisma.$transaction' para evitar race conditions.",
+        "2. Crear 'src/app/api/availability/check/route.ts': Endpoint HTTP con validación Zod que retorna estado de bloqueo y viabilidad horaria (buffer de 60 min).",
+        "3. Crear script de prueba 'scripts/test-atomic-date-lock.ts' que simule la comprobación de fecha, el bloqueo atómico y el rechazo de doble reserva en < 25 ms.",
+        "4. Validar compilación 'npx tsc --noEmit' -> Exit Code 0.",
+        "5. Ejecutar consolidación Git: 'git add -A ; git commit -m \"feat(S-Class): Triologia de Convergencia Omega completada. Reserva Confirmada Live Tracking, Radar NASA HD y Bloqueo Atomico de Fechas\" ; git push origin main ; git push vercel-repo main'."
       ]
     }
   ]

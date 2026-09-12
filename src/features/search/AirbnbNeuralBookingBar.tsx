@@ -23,6 +23,8 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   const [activeSegment, setActiveSegment] = useState<'date' | 'location' | 'pax' | null>(null);
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
+  const [availabilityConflict, setAvailabilityConflict] = useState<string | null>(null);
 
   const {
     eventDate,
@@ -60,8 +62,37 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
   const logistics = getLogisticsBreakdown();
   const acoustic = getAcousticDiagnostic();
 
-  const handleSearchTrigger = () => {
+  const handleSearchTrigger = async () => {
     setActiveSegment(null);
+    setAvailabilityConflict(null);
+
+    // 🔒 Bloqueo Atómico Anti-Colisión: verifica calendarBlock + ProductionEvent
+    // antes de permitir la búsqueda, evitando colisiones teóricas de fecha.
+    if (eventDate) {
+      setIsCheckingAvailability(true);
+      try {
+        const res = await fetch(
+          `/api/availability/check?date=${encodeURIComponent(eventDate)}`,
+          { cache: 'no-store' }
+        );
+        const json = (await res.json()) as {
+          available?: boolean;
+          reason?: string;
+        };
+        if (res.ok && json.available === false) {
+          setAvailabilityConflict(
+            json.reason ||
+              'Esa fecha ya está bloqueada por otra producción confirmada. Elige otra fecha.'
+          );
+          setIsCheckingAvailability(false);
+          return;
+        }
+      } catch {
+        // Si el endpoint falla, no bloqueamos la navegación (fail-open controlado).
+      }
+      setIsCheckingAvailability(false);
+    }
+
     const params = new URLSearchParams(searchParams.toString());
     if (eventDate) params.set('date', eventDate);
     if (province) params.set('province', province);
@@ -184,6 +215,34 @@ export const AirbnbNeuralBookingBar: React.FC = () => {
 
         </div>
       </div>
+
+      {/* 🔒 ALERTA DE COLISIÓN DE FECHA (BLOQUEO ATÓMICO) */}
+      <AnimatePresence>
+        {availabilityConflict && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="mt-3 p-4 rounded-2xl bg-[#FF2B44]/10 border border-[#FF2B44]/40 flex items-start gap-3"
+          >
+            <AlertCircle size={18} className="text-[#FF2B44] shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <span className="text-xs font-bold font-syne text-[#FF2B44] block">
+                Fecha No Disponible
+              </span>
+              <p className="text-[11px] font-mono text-zinc-300 leading-snug">
+                {availabilityConflict}
+              </p>
+            </div>
+            <button
+              onClick={() => setAvailabilityConflict(null)}
+              className="text-zinc-400 hover:text-white"
+            >
+              <X size={14} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* 🧭 EXPANDED POPUP SEGMENT DRAWERS */}
       <AnimatePresence>
