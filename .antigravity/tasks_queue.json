@@ -372,7 +372,9 @@
     {
       "id": "tinder-neural-matcher-and-uber-dispatch-cascade",
       "title": "Tinder Neural Matcher & Motor de Despacho Uber con Buffer de Tránsito y Cascada de Relevo",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T13:11:00Z",
+      "validation": "npx tsx scripts/test-uber-dispatch-matcher.ts -> Exit Code 0. Desglose IVA 21%, Haversine tiempo trayecto, buffer 60 min y cascada de relevo tipo Uber probados. Commit y push completados.",
       "description": "Desplegar el sistema de matching perfecto estilo Tinder para EAR OS V2 con desglose presupuestario transparente con IVA (21%), validación de franjas horarias con buffer mínimo de 60 minutos de trayecto/desmontaje, y cascada de relevo automático tipo Uber en caso de prolongación de horas extra.",
       "command": "npx tsx scripts/test-uber-dispatch-matcher.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-uber-dispatch-matcher.ts; npx tsc --noEmit\"",
@@ -382,6 +384,20 @@
         "3. Crear 'src/app/(public)/matcher/page.tsx': Ruta pública /matcher para la experiencia Tinder Neural Matcher.",
         "4. Crear script de validación 'scripts/test-uber-dispatch-matcher.ts': Probar cálculo de IVA 21%, viabilidad de franjas horarias con buffer de 60 min y disparo de cascada de relevo Uber ante exceso de horas extra.",
         "5. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
+      ]
+    },
+    {
+      "id": "mariachi-high-traffic-uber-simulation",
+      "title": "Simulación de Alto Tráfico Uber de Mariachis (32 Actuaciones Simultáneas Sábado)",
+      "status": "PENDING",
+      "description": "Simulación masiva de 32 contrataciones de Mariachis el próximo sábado en 15+ municipios de Madrid y Castilla-La Mancha. Evaluación en vivo de franjas horarias, buffer de 60 min, desglose IVA 21%, logística Méntrida e inyección de horas extra con cascada de relevo tipo Uber.",
+      "command": "npx tsx scripts/test-mariachi-high-traffic-simulation.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-mariachi-high-traffic-simulation.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/lib/matchmaker/mariachiHighTrafficSimulator.ts': Generador estocástico y motor de simulación de 32 actuaciones de mariachis con inyección de horas extra y cascadas de relevo.",
+        "2. Crear 'src/app/(public)/simulacion-mariachis/page.tsx': Dashboard visual de comando en tiempo real con estética OLED, rejilla de 32 actuaciones y botón de disparo de horas extra.",
+        "3. Crear script de validación 'scripts/test-mariachi-high-traffic-simulation.ts': Probar simulación estocástica de 32 bolos, 0% cancelaciones, facturación bruta acumulada y disparo de cascada de relevo Uber.",
+        "4. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
       ]
     }
   ]

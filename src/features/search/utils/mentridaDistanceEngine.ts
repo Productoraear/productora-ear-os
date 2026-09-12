@@ -1,12 +1,19 @@
 /**
- * Motor de Cálculo Logístico y Distancias S-Class desde Méntrida (Toledo)
- * Coordenadas Zona Cero: 40.2383, -4.1956
+ * Motor de Cálculo Logístico y Distancias S-Class
+ * - Edwin Agudelo ➔ Méntrida, Toledo (40.2383, -4.1956)
+ * - Mariachis ➔ Plaza Elíptica, Madrid (40.3847, -3.7183)
+ * - Resto de Proveedores ➔ Coordenadas GPS de la App / Ciudad de Residencia
  */
 
-export const MENTRIDA_COORDINATES = {
-  lat: 40.2383,
-  lng: -4.1956,
-  name: 'Méntrida, Toledo'
+export interface BaseOriginConfig {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
+export const BASE_HUBS = {
+  EDWIN_AGUDELO: { name: 'Méntrida, Toledo (Zona Cero Edwin)', lat: 40.2383, lng: -4.1956 },
+  MARIACHIS: { name: 'Plaza Elíptica, Madrid (Base Mariachis)', lat: 40.3847, lng: -3.7183 }
 };
 
 // Coordenadas aproximadas de referencia para las 52 Provincias de España
@@ -64,13 +71,54 @@ export const PROVINCE_COORDINATES: Record<string, { lat: number; lng: number; de
 };
 
 /**
+ * Determina la base oficial de salida de un proveedor (SSOT):
+ * - Edwin Agudelo ➔ Méntrida, Toledo
+ * - Mariachis ➔ Plaza Elíptica, Madrid
+ * - Resto de Proveedores ➔ Sus coordenadas GPS / Ciudad de la App
+ */
+export function getVendorBaseOrigin(provider?: { id?: string; name?: string; category?: string; baseCoords?: { lat: number; lng: number }; province?: string; municipality?: string }): BaseOriginConfig {
+  if (!provider) return BASE_HUBS.EDWIN_AGUDELO;
+  
+  const name = (provider.name || '').toLowerCase();
+  const cat = (provider.category || '').toLowerCase();
+  const id = (provider.id || '').toLowerCase();
+
+  // 1. Edwin Agudelo ➔ Méntrida (Toledo)
+  if (id.includes('edwin') || name.includes('edwin agudelo') || name.includes('productora ear')) {
+    return BASE_HUBS.EDWIN_AGUDELO;
+  }
+
+  // 2. Mariachis ➔ Plaza Elíptica (Madrid)
+  if (cat.includes('mariachi') || name.includes('mariachi')) {
+    return BASE_HUBS.MARIACHIS;
+  }
+
+  // 3. Proveedor General ➔ Coordenadas GPS propias / Ciudad
+  if (provider.baseCoords && provider.baseCoords.lat && provider.baseCoords.lng) {
+    return {
+      name: provider.municipality || provider.province || 'Base Proveedor App',
+      lat: provider.baseCoords.lat,
+      lng: provider.baseCoords.lng
+    };
+  }
+
+  const provKey = provider.province || 'Madrid';
+  const provCoords = PROVINCE_COORDINATES[provKey] || PROVINCE_COORDINATES['Madrid'];
+  return {
+    name: `${provKey} (Base Local)`,
+    lat: provCoords.lat,
+    lng: provCoords.lng
+  };
+}
+
+/**
  * Fórmula de Haversine para calcular distancia en km entre dos puntos GPS
  */
 export function calculateHaversineDistance(
   lat1: number,
   lon1: number,
-  lat2: number = MENTRIDA_COORDINATES.lat,
-  lon2: number = MENTRIDA_COORDINATES.lng
+  lat2: number = BASE_HUBS.EDWIN_AGUDELO.lat,
+  lon2: number = BASE_HUBS.EDWIN_AGUDELO.lng
 ): number {
   const R = 6371; // Radio de la Tierra en km
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -86,16 +134,25 @@ export function calculateHaversineDistance(
 }
 
 /**
- * Retorna la distancia en km desde Méntrida para una provincia o coordenadas dadas
+ * Retorna la distancia en km considerando la base origen adecuada del proveedor
  */
-export function getDistanceKmFromMentrida(province?: string, gpsCoords?: { lat: number; lng: number } | null): number {
+export function getDistanceKmFromMentrida(
+  province?: string, 
+  gpsCoords?: { lat: number; lng: number } | null,
+  provider?: { id?: string; name?: string; category?: string }
+): number {
+  const origin = getVendorBaseOrigin(provider);
+
   if (gpsCoords && gpsCoords.lat && gpsCoords.lng) {
-    return calculateHaversineDistance(gpsCoords.lat, gpsCoords.lng);
+    return calculateHaversineDistance(gpsCoords.lat, gpsCoords.lng, origin.lat, origin.lng);
   }
+  
   if (province && PROVINCE_COORDINATES[province]) {
-    return PROVINCE_COORDINATES[province].defaultKmFromMentrida;
+    const pCoords = PROVINCE_COORDINATES[province];
+    return calculateHaversineDistance(pCoords.lat, pCoords.lng, origin.lat, origin.lng);
   }
-  return 54; // Default Madrid / Toledo cercano
+
+  return 54; // Default
 }
 
 export interface LogisticsCostBreakdown {
@@ -108,7 +165,7 @@ export interface LogisticsCostBreakdown {
 
 /**
  * Calcula la tarifa oficial de logística S-Class:
- * - 1,50 €/km a partir del km 50 desde Méntrida
+ * - 1,50 €/km a partir del km 50 desde la base oficial del proveedor
  * - +120,00 € hotel si fin >= 3:00 AM o km > 200
  */
 export function calculateLogisticsFee(distanceKm: number, endHour: number = 2): LogisticsCostBreakdown {
