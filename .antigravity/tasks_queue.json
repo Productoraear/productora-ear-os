@@ -229,6 +229,107 @@
         "2. netlify.toml inyectado con 4096 MB de RAM para Node.js.",
         "3. Git add, commit y push a ambos remotos."
       ]
+    },
+    {
+      "id": "migrate-providers-db-netlify-fix",
+      "title": "Migración Definitiva 100% Proveedores a Prisma (Fix Netlify 250MB Limit)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T12:43:00Z",
+      "validation": "npx tsx scripts/migrate_json_to_prisma.ts -> Exit Code 0. Refactorización de /api/profiles/search/route.ts con Prisma completada. TypeScript validado con éxito.",
+      "description": "Desacoplar los archivos JSON pesados del build de Next.js. Ejecutar migrate_json_to_prisma.ts para inyectar los proveedores 'vampiros' a PostgreSQL. Refactorizar /api/profiles/search/route.ts para usar Prisma (VendorShadowProfile). Refactorizar src/app/(public)/proveedores/page.tsx para consumir la API en lugar del import JSON estático, resolviendo el límite Serverless de Netlify.",
+      "steps": [
+        "1. Ejecutar 'npx tsx scripts/migrate_json_to_prisma.ts' para inyectar todo el volumen JSON a VendorShadowProfile (Supabase).",
+        "2. Refactorizar 'src/app/api/profiles/search/route.ts' usando 'const prisma = new PrismaClient()' y 'prisma.vendorShadowProfile.findMany()'. Debe procesar filtros (category, province, q), limit y page (paginación real en base de datos), eliminando 'fs.readFileSync'.",
+        "3. Refactorizar 'src/app/(public)/proveedores/page.tsx' eliminando el 'import rawProvidersData from @/data/...'. Implementar carga de datos asíncrona llamando a '/api/profiles/search' con los filtros de la URL (useEffect/fetch).",
+        "4. Ajustar el BentoFilterBar y la lógica de paginación para usar la paginación del lado del servidor devuelta por la API (data.total, data.totalPages).",
+        "5. Validar con 'npx tsc --noEmit' -> Exit Code 0. Testear en localhost que el directorio de proveedores carga dinámicamente desde Supabase.",
+        "6. Actualizar el estado de esta macro-tarea a COMPLETED y notificar."
+      ],
+      "validation": "npx tsc --noEmit -> Exit Code 0. El frontend consume la API Prisma. Límite Netlify solventado."
+    },
+    {
+      "id": "autonomous-e2e-smoke-and-build-audit",
+      "title": "Smoke Test Autónomo E2E y Verificación de Despliegue Netlify",
+      "status": "PENDING",
+      "description": "Prueba de fuego autónoma encadenada. Validar la respuesta de la API con base de datos real, la integridad del VendorClaimingEngine, la ausencia de bundles pesados en el build de Next.js y la sincronización con Git/Netlify sin intervención humana.",
+      "command": "npx tsx scripts/test-autonomous-pipeline.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-autonomous-pipeline.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'scripts/test-autonomous-pipeline.ts' implementando: (a) Consulta Prisma directa a VendorShadowProfile verificando registros y latencia < 150ms. (b) Test de endpoint /api/profiles/search con paginación server-side. (c) Verificación criptográfica de claimToken en vendorClaimingEngine.ts.",
+        "2. Ejecutar 'npx tsx scripts/test-autonomous-pipeline.ts' y asegurar que todos los checks pasen en verde.",
+        "3. Ejecutar 'npx tsc --noEmit' y certificar Exit Code 0 absoluto (cero errores).",
+        "4. Ejecutar git add, commit y push a 'origin main' y 'vercel-repo main' para activar el despliegue automático limpio en Netlify.",
+        "5. Marcar esta tarea como COMPLETED y registrar métricas en 'reports/autonomous_pipeline_report.json'."
+      ],
+      "validation": "npx tsx scripts/test-autonomous-pipeline.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0."
+    },
+    {
+      "id": "rescue-and-integrate-astronauts-squadron-1",
+      "title": "Operación Rescate 908 Astronautas (Escuadrón 1: Flota VIP, NASA Telemetry y 33 Marketing Skills)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T12:41:00Z",
+      "validation": "npx tsx scripts/rescue_astronauts_squadron_1.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. 33 Skills activos y 2 nuevas rutas S-Class operativas.",
+      "description": "Reintegrar quirúrgicamente al chasis de EAR OS V2 la primera oleada de activos de élite recuperados de la catástrofe: conectar Chauffeur VIP (/servicios/transporte-vip), Pantalla NASA (/admin/fleet-live), inyectar los 33 Marketing Skills en .agents/skills y compilar los motores de servicios de élite (EarAiTwin, Predator, Sentinel) con Exit Code 0.",
+      "command": "npx tsx scripts/rescue_astronauts_squadron_1.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/rescue_astronauts_squadron_1.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/app/(public)/servicios/transporte-vip/page.tsx': Importar y renderizar 'ChauffeurVipView' desde '@/features/chauffeur/ui/ChauffeurVipView' con metadatos SEO S-Class ('Flota VIP & Chauffeur S-Class | Productora EAR').",
+        "2. Crear 'src/app/(nexus)/admin/fleet-live/page.tsx': Importar y renderizar 'LiveCommandCenter' desde '@/features/tour-logistics/ui/LiveCommandCenter' parametrizando tourId dinámico y subscripción a FleetPosition.",
+        "3. Ingesta de 33 Marketing Skills: Copiar el árbol completo de skills desde 'H:\\ARCHIVO_HISTORICO_EAR\\RESCATES_Y_SANTUARIOS\\EAR_OS_QUARANTINE_HISTORICO\\00 EAR_OS_LEGACY_STAGING\\EAR_OS_GOLD\\NUCLEO\\.agents\\skills' a '.agents/skills/'.",
+        "4. Actualizar 'src/lib/skillsRegistry.ts': Expandir el array 'MARKETING_SKILLS' para registrar los 33 skills completos con sus metadatos y categorías (CRO, SEO, Strategy, Content, Legal, Financial).",
+        "5. Ingesta de Motores Enterprise en 'src/lib/services/': Migrar y tipar de forma estricta 'earAiTwinService.ts', 'PredatorService.ts', 'SentinelSimulationService.ts' y 'VimumeHunter.ts' asegurando cero dependencias rotas.",
+        "6. Crear script de validación 'scripts/rescue_astronauts_squadron_1.ts' que verifique la existencia de los 33 skills, la carga de las nuevas páginas y la instanciación de los servicios sin fugas de memoria.",
+        "7. Validar con 'npx tsc --noEmit' garantizando Exit Code 0 absoluto.",
+        "8. Marcar esta tarea como COMPLETED en tasks_queue.json."
+      ],
+      "validation": "npx tsx scripts/rescue_astronauts_squadron_1.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. 33 Skills activos y 2 nuevas rutas S-Class operativas."
+    },
+    {
+      "id": "massive-md-export-strategy-vault",
+      "title": "Exportación Masiva a .MD (Estrategia y Chats) sin Saturación de Contexto (ZTM)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T12:21:00Z",
+      "validation": "scripts/export_mega_md.cjs -> Exit Code 0. MEGA_EXPORT_ESTRATEGIA.md generado (319.39 MB).",
+      "description": "El obrero local falla por límite de contexto. Solución ZTM: Crear y ejecutar un script Node.js basado en streams que lea todos los archivos de H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\01_ESTRATEGIA_Y_CHATS y los concatene en un único MEGA_EXPORT_ESTRATEGIA.md.",
+      "steps": [
+        "1. Motor de Consolidación (Node.js Streams): Crea 'scripts/export_mega_md.js'. Usa 'fs.readdirSync' y 'fs.createReadStream' para canalizar el contenido hacia 'fs.createWriteStream(\"H:\\\\00_PRODUCTORA_EAR\\\\EAR_ABSORBED_VAULT\\\\MEGA_EXPORT_ESTRATEGIA.md\")'.",
+        "2. Intercala un separador claro '\\n\\n========================================\\n[ARCHIVO: nombre_del_archivo]\\n========================================\\n\\n' entre cada archivo.",
+        "3. Ejecuta 'node scripts/export_mega_md.js'. NO INTENTES LEER EL ARCHIVO RESULTANTE, puede pesar más de 1 GB. El obrero solo debe reportar el peso final del archivo generado usando 'fs.statSync'.",
+        "4. Devuelve el Exit Code 0 y marca la tarea como COMPLETED."
+      ],
+      "validation": "node scripts/export_mega_md.js -> Exit Code 0. Archivo MEGA_EXPORT generado exitosamente."
+    },
+    {
+      "id": "deep-omni-background-crawler-phase2",
+      "title": "Rastreador Profundo en Background (Búsqueda del 60% de Infraestructura Restante)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T12:22:00Z",
+      "validation": "scripts/deep_omni_background_crawler_phase2.cjs -> Exit Code 0. 13,670 activos de infraestructura localizados.",
+      "description": "Desplegar un script de búsqueda avanzada (Regex/Heurística) sobre H:\\EAR_GOLDEN_INDEX.csv por streaming para rescatar los 908 astronautas restantes (Hooks, Zustand Stores, Contexts, UI S-Class, Configs) sin saturar al obrero.",
+      "steps": [
+        "1. Crear 'scripts/deep_omni_background_crawler_phase2.js'. Importar 'readline' y 'fs' para leer 'H:\\\\EAR_GOLDEN_INDEX.csv' línea por línea (Zero-Token Memory).",
+        "2. Implementar motor de heurística buscando rutas que contengan: '\\\\hooks\\\\', '\\\\store\\\\', '\\\\context\\\\', '\\\\ui\\\\', '\\\\components\\\\', '\\\\lib\\\\', 'tailwind.config', 'prisma', '.tsx', ignorando 'node_modules' y 'dist'.",
+        "3. Filtrar específicamente los archivos que residen en 'H:\\\\ARCHIVO_HISTORICO_EAR\\\\RESCATES_Y_SANTUARIOS'.",
+        "4. Guardar los resultados ordenados en 'H:\\\\00_PRODUCTORA_EAR\\\\EAR_ABSORBED_VAULT\\\\01_ESTRATEGIA_Y_CHATS\\\\REMAINING_60_PERCENT_INFRASTRUCTURE.json'.",
+        "5. Ejecutar 'node scripts/deep_omni_background_crawler_phase2.js' y reportar únicamente la CANTIDAD de archivos encontrados y el Exit Code 0."
+      ],
+      "validation": "node scripts/deep_omni_background_crawler_phase2.js -> Exit Code 0. JSON generado con la lista de activos restantes."
+    },
+    {
+      "id": "build-sclass-html-navigator",
+      "title": "Forja del Visor HTML S-Class (Catálogo Maestro 100% Astronautas)",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T12:23:00Z",
+      "validation": "scripts/build_sclass_html_navigator.cjs -> Exit Code 0. VISOR_ASTRONAUTAS_SCLASS.html generado con éxito.",
+      "description": "El CEO ha solicitado una visualización navegable y puramente S-Class del catálogo maestro de 35.160 activos (Astronautas) rescatados. Se construirá un archivo HTML standalone (Zero-Server) con buscador ultrarrápido y estética OLED.",
+      "steps": [
+        "1. Crear 'scripts/build_sclass_html_navigator.js'.",
+        "2. El script debe leer 'H:\\\\00_PRODUCTORA_EAR\\\\EAR_ABSORBED_VAULT\\\\00_CATALOGO_MAESTRO_100_PORCIENTO_ASTRONAUTAS.json' usando fs.readFileSync (o streams) e incrustar los datos en una variable global 'const vaultData = [...]' dentro del HTML generado.",
+        "3. El HTML resultante ('H:\\\\00_PRODUCTORA_EAR\\\\EAR_ABSORBED_VAULT\\\\VISOR_ASTRONAUTAS_SCLASS.html') debe tener Estética OLED (Fondo #030305), tipografías Syne e Inter (Google Fonts), y Acentos Oro (#ecb613) / Cyan (#00E5FF).",
+        "4. Inyectar Vanilla JS puro para renderizar la lista y permitir un filtrado en tiempo real (debounce 300ms) por las 6 categorías maestras (Planos Mentales, Spiders, Enterprise, Marketing, Algorítmicos, UI).",
+        "5. Ejecutar 'node scripts/build_sclass_html_navigator.js' y asegurar Exit Code 0. El resultado será un Dashboard de Comando táctico, offline y letal."
+      ],
+      "validation": "node scripts/build_sclass_html_navigator.js -> Exit Code 0. Visor HTML S-Class generado exitosamente."
     }
   ]
 }
