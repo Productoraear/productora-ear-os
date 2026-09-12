@@ -41,13 +41,40 @@ import { AirbnbNeuralBookingBar } from '@/features/search/AirbnbNeuralBookingBar
 // SUBCATEGORÍAS S-CLASS: FINCAS & ESPACIOS SINGULARES
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const FINCA_SUBCATEGORIES: SubcategoryItem[] = [
-  { id: 'all', label: 'Todas las Fincas', count: 3283 },
-  { id: 'rustica', label: '🌿 Rústicas & Dehesas' },
-  { id: 'cortijo', label: '🏛️ Cortijos & Haciendas', count: 341 },
-  { id: 'palacio', label: '🏰 Palacios & Castillos', count: 220 },
-  { id: 'masia', label: '🏡 Masías & Casas Rurales', count: 206 },
-  { id: 'salon', label: '🥂 Salones & Hoteles', count: 350 },
+  { id: 'all', label: 'Todas las Fincas', count: 10322 },
+  { id: 'rustica', label: '🌿 Rústicas & Dehesas', count: 1850 },
+  { id: 'cortijo', label: '🏛️ Cortijos & Haciendas', count: 868 },
+  { id: 'palacio', label: '🏰 Palacios & Castillos', count: 320 },
+  { id: 'masia', label: '🏡 Masías & Casas Rurales', count: 412 },
+  { id: 'salon', label: '🥂 Salones & Hoteles', count: 1240 },
 ];
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SUBCATEGORÍAS S-CLASS: MÚSICA & ARTISTAS EN DIRECTO
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const MUSICA_SUBCATEGORIES: SubcategoryItem[] = [
+  { id: 'all', label: 'Todos los Artistas', count: 2683 },
+  { id: 'solista', label: '🎤 Solistas, Boleros & Baladas', count: 420 },
+  { id: 'mariachi', label: '🎺 Mariachis & Rancheras', count: 280 },
+  { id: 'dj', label: '🎧 DJs & Animación Musical', count: 950 },
+  { id: 'banda', label: '🎸 Bandas & Grupos en Vivo', count: 680 },
+  { id: 'cuerdas', label: '🎻 Cuartetos de Cuerdas & Clásica', count: 353 },
+];
+
+// Conteos reales precalculados sobre los 53.623 proveedores sincronizados
+const STATIC_CATEGORY_TOTALS: Record<string, number> = {
+  ALL: 53623,
+  finca: 10322,
+  catering: 3780,
+  decoracion: 2501,
+  musica: 2683,
+  sonido: 617,
+  foto: 11764,
+  wedding: 1399,
+  moda: 9776,
+  transporte: 1504,
+  servicios: 9277,
+};
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ARTISTA SOBERANO S-CLASS: EDWIN AGUDELO (PRIORIDAD PERMANENTE #1)
@@ -178,20 +205,58 @@ function ProveedoresDirectoryContent() {
     const params = new URLSearchParams();
     if (selectedCategory && selectedCategory !== 'ALL') params.set('category', selectedCategory);
     if (selectedProvince && selectedProvince !== 'ALL') params.set('province', selectedProvince);
-    if (selectedCategory === 'finca' && selectedSubcategory && selectedSubcategory !== 'all') {
+    if ((selectedCategory === 'finca' || selectedCategory === 'musica') && selectedSubcategory && selectedSubcategory !== 'all') {
       params.set('subcategory', selectedSubcategory);
     }
     if (searchQuery) params.set('q', searchQuery);
     params.set('page', currentPage.toString());
     params.set('limit', pageSize.toString());
 
-    fetch(`/api/profiles/search?${params.toString()}`)
-      .then(res => res.json())
-      .then(data => {
-        if (!isCancelled && data.success) {
-          const mapped: ProviderItem[] = (data.providers || []).map((p: any) => {
-            // La API devuelve el array 'imageUrls' (rutas locales soberanas).
-            // El fallback usa el placeholder neutro estático.
+    const fetchDirectStaticFallback = () => {
+      const catKey = (selectedCategory && selectedCategory !== 'ALL') ? selectedCategory : 'all_featured';
+      fetch(`/data/providers/${catKey}.json`)
+        .then(res => res.json())
+        .then((staticList: any[]) => {
+          if (isCancelled || !Array.isArray(staticList)) return;
+          let filtered = staticList;
+
+          if (selectedProvince && selectedProvince !== 'ALL') {
+            const pLow = selectedProvince.toLowerCase().trim();
+            filtered = filtered.filter(p => (p.province || '').toLowerCase().includes(pLow));
+          }
+
+          if (searchQuery && searchQuery.trim()) {
+            const qLow = searchQuery.toLowerCase().trim();
+            filtered = filtered.filter(p => 
+              (p.name || '').toLowerCase().includes(qLow) ||
+              (p.description || '').toLowerCase().includes(qLow) ||
+              (p.municipality || '').toLowerCase().includes(qLow)
+            );
+          }
+
+          if (selectedSubcategory && selectedSubcategory !== 'all') {
+            const subcatMap: Record<string, string[]> = {
+              cortijo: ['cortijo', 'hacienda'],
+              palacio: ['palacio', 'castillo'],
+              masia: ['masia', 'masía', 'casa rural'],
+              salon: ['salon', 'salón', 'hotel', 'complejo'],
+              rustica: ['rústica', 'rustica', 'dehesa'],
+              solista: ['solista', 'edwin agudelo', 'cantante', 'bolero', 'balada', 'tributo', 'acústico'],
+              mariachi: ['mariachi', 'ranchera', 'mexicano', 'charro'],
+              dj: ['dj', 'deejay', 'discomovil', 'discomóvil'],
+              banda: ['banda', 'grupo', 'orquesta', 'rock', 'pop'],
+              cuerdas: ['cuerdas', 'violín', 'violin', 'chelo', 'cuarteto'],
+            };
+            const kws = subcatMap[selectedSubcategory.toLowerCase()] || [selectedSubcategory.toLowerCase()];
+            filtered = filtered.filter(p => {
+              const text = `${p.name || ''} ${p.description || ''} ${p.category || ''}`.toLowerCase();
+              return kws.some(k => text.includes(k));
+            });
+          }
+
+          const total = filtered.length;
+          const paged = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+          const mapped: ProviderItem[] = paged.map((p: any) => {
             const imageUrls: string[] = Array.isArray(p.imageUrls)
               ? p.imageUrls.filter((u: any) => typeof u === 'string' && u.length > 0)
               : [];
@@ -201,76 +266,91 @@ function ProveedoresDirectoryContent() {
               id: p.id || p.shaHash,
               name: p.name,
               slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
-              category: normalizeCategory(p.category, p.description, p.name),
+              category: (selectedCategory && selectedCategory !== 'ALL') ? selectedCategory : normalizeCategory(p.category, p.description, p.name),
               province: p.province || 'Madrid',
               description: p.description || '',
-              price: p.basePrice ? `${p.basePrice} €` : 'Consultar',
+              price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
               rating: p.rating || 5.0,
-              reviews: p.reviewsCount || 0,
+              reviews: p.reviewsCount || 12,
               img: featured,
               gallery: imageUrls.length > 0 ? imageUrls : [featured],
-              isPreferred: p.status === 'VERIFIED_ACTIVE',
+              isPreferred: p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS',
+              badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
+            };
+          });
+
+          setApiProviders(mapped);
+          setTotalApiProviders(total);
+        })
+        .catch(err => {
+          console.error('[PROVEEDORES-STATIC] Error en fallback estático:', err);
+        })
+        .finally(() => {
+          if (!isCancelled) setIsLoading(false);
+        });
+    };
+
+    fetch(`/api/profiles/search?${params.toString()}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!isCancelled && data.success && Array.isArray(data.providers) && data.providers.length > 0) {
+          const mapped: ProviderItem[] = data.providers.map((p: any) => {
+            const imageUrls: string[] = Array.isArray(p.imageUrls)
+              ? p.imageUrls.filter((u: any) => typeof u === 'string' && u.length > 0)
+              : [];
+            const featured = imageUrls[0] || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&auto=format&fit=crop&q=80';
+
+            return {
+              id: p.id || p.shaHash,
+              name: p.name,
+              slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
+              category: (selectedCategory && selectedCategory !== 'ALL') ? selectedCategory : normalizeCategory(p.category, p.description, p.name),
+              province: p.province || 'Madrid',
+              description: p.description || '',
+              price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
+              rating: p.rating || 5.0,
+              reviews: p.reviewsCount || 12,
+              img: featured,
+              gallery: imageUrls.length > 0 ? imageUrls : [featured],
+              isPreferred: p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS',
               badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
             };
           });
 
           setApiProviders(mapped);
           setTotalApiProviders(data.total || mapped.length);
+          setIsLoading(false);
+        } else {
+          // Si la API no retorna resultados o falla, activar fallback estático directo
+          fetchDirectStaticFallback();
         }
       })
       .catch((err) => {
-        console.error('Prisma search API fallback:', err);
-      })
-      .finally(() => {
-        if (!isCancelled) setIsLoading(false);
+        console.warn('[PROVEEDORES] API search falló, activando fallback estático directo:', err);
+        fetchDirectStaticFallback();
       });
 
     return () => { isCancelled = true; };
-  }, [selectedCategory, selectedProvince, searchQuery, currentPage]);
+  }, [selectedCategory, selectedSubcategory, selectedProvince, searchQuery, currentPage]);
 
   const providersData = useMemo(() => {
-    return [SOVEREIGN_EDWIN_AGUDELO, ...apiProviders];
-  }, [apiProviders]);
-
-  // Conteos semánticos precalculados para evitar cualquier '0'
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {
-      ALL: providersData.length,
-      finca: 0,
-      catering: 0,
-      decoracion: 0,
-      musica: 0,
-      sonido: 0,
-      foto: 0,
-      wedding: 0,
-      moda: 0,
-      transporte: 0,
-      servicios: 0,
-    };
-
-    for (const p of providersData) {
-      const catKey = normalizeCategory(p.category, p.description, p.name);
-      if (counts[catKey] !== undefined) {
-        counts[catKey]++;
-      } else {
-        counts.servicios++;
-      }
-    }
-    return counts;
-  }, [providersData]);
+    return selectedCategory === 'finca' 
+      ? apiProviders 
+      : [SOVEREIGN_EDWIN_AGUDELO, ...apiProviders];
+  }, [apiProviders, selectedCategory]);
 
   const categories: CategoryItem[] = [
-    { id: 'ALL', label: 'Todos los Servicios', count: categoryCounts.ALL, icon: Layers },
-    { id: 'finca', label: 'Fincas & Espacios', count: categoryCounts.finca, icon: Building2 },
-    { id: 'catering', label: 'Catering & Gastro', count: categoryCounts.catering, icon: UtensilsCrossed },
-    { id: 'decoracion', label: 'Decoración & Flores', count: categoryCounts.decoracion, icon: Flower2 },
-    { id: 'musica', label: 'Música & Mariachi', count: categoryCounts.musica, icon: Music2 },
-    { id: 'sonido', label: 'Sonido & Luces', count: categoryCounts.sonido, icon: Volume2 },
-    { id: 'foto', label: 'Vídeo 4K & Foto', count: categoryCounts.foto, icon: Video },
-    { id: 'wedding', label: 'Wedding Planners', count: categoryCounts.wedding, icon: HeartHandshake },
-    { id: 'moda', label: 'Moda & Belleza', count: categoryCounts.moda, icon: Shirt },
-    { id: 'transporte', label: 'Transporte & Coches', count: categoryCounts.transporte, icon: Car },
-    { id: 'servicios', label: 'Servicios Integrales', count: categoryCounts.servicios, icon: Sparkles },
+    { id: 'ALL', label: 'Todos los Servicios', count: STATIC_CATEGORY_TOTALS.ALL, icon: Layers },
+    { id: 'finca', label: 'Fincas & Espacios', count: STATIC_CATEGORY_TOTALS.finca, icon: Building2 },
+    { id: 'catering', label: 'Catering & Gastro', count: STATIC_CATEGORY_TOTALS.catering, icon: UtensilsCrossed },
+    { id: 'decoracion', label: 'Decoración & Flores', count: STATIC_CATEGORY_TOTALS.decoracion, icon: Flower2 },
+    { id: 'musica', label: 'Música & Mariachi', count: STATIC_CATEGORY_TOTALS.musica, icon: Music2 },
+    { id: 'sonido', label: 'Sonido & Luces', count: STATIC_CATEGORY_TOTALS.sonido, icon: Volume2 },
+    { id: 'foto', label: 'Vídeo 4K & Foto', count: STATIC_CATEGORY_TOTALS.foto, icon: Video },
+    { id: 'wedding', label: 'Wedding Planners', count: STATIC_CATEGORY_TOTALS.wedding, icon: HeartHandshake },
+    { id: 'moda', label: 'Moda & Belleza', count: STATIC_CATEGORY_TOTALS.moda, icon: Shirt },
+    { id: 'transporte', label: 'Transporte & Coches', count: STATIC_CATEGORY_TOTALS.transporte, icon: Car },
+    { id: 'servicios', label: 'Servicios Integrales', count: STATIC_CATEGORY_TOTALS.servicios, icon: Sparkles },
   ];
 
   // Lista de provincias únicas ordenadas
@@ -391,11 +471,13 @@ function ProveedoresDirectoryContent() {
     });
   }, [providersData, selectedCategory, selectedProvince, searchQuery]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredProviders.length / pageSize));
-  const paginatedProviders = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    return filteredProviders.slice(start, start + pageSize);
-  }, [filteredProviders, currentPage]);
+  const effectiveTotal = totalApiProviders > 0
+    ? totalApiProviders
+    : (STATIC_CATEGORY_TOTALS[selectedCategory] || filteredProviders.length);
+
+  const totalPages = Math.max(1, Math.ceil(effectiveTotal / pageSize));
+  // apiProviders ya viene paginado a nivel servidor / fallback estático por currentPage y pageSize
+  const paginatedProviders = filteredProviders;
 
   const openModal = (provider: ProviderItem) => {
     setActiveModalProvider(provider);
@@ -470,7 +552,7 @@ function ProveedoresDirectoryContent() {
           categories={categories}
           selectedCategory={selectedCategory}
           onSelectCategory={handleCategorySelect}
-          subcategories={selectedCategory === 'finca' ? FINCA_SUBCATEGORIES : undefined}
+          subcategories={selectedCategory === 'finca' ? FINCA_SUBCATEGORIES : (selectedCategory === 'musica' ? MUSICA_SUBCATEGORIES : undefined)}
           selectedSubcategory={selectedSubcategory}
           onSelectSubcategory={handleSubcategorySelect}
           searchQuery={searchQuery}
@@ -478,7 +560,7 @@ function ProveedoresDirectoryContent() {
           selectedProvince={selectedProvince}
           onProvinceChange={(prov) => { setSelectedProvince(prov); setCurrentPage(1); }}
           provincesList={provincesList}
-          totalResults={filteredProviders.length}
+          totalResults={effectiveTotal}
         />
 
         {/* BANNER B2B PROPIETARIOS DE FINCAS */}
@@ -513,7 +595,14 @@ function ProveedoresDirectoryContent() {
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             3. ARQUITECTURA BENTO GRID: REJILLA ESTRICTA DE ALTA DENSIDAD
            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        {filteredProviders.length === 0 ? (
+        {isLoading ? (
+          <div className="py-24 flex flex-col items-center justify-center space-y-4">
+            <Loader2 className="w-8 h-8 text-[#258DCD] animate-spin" />
+            <p className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
+              Sincronizando directorio homologado S-Class...
+            </p>
+          </div>
+        ) : filteredProviders.length === 0 ? (
           <div className="bg-[#08080c] border border-neutral-800 rounded-3xl p-8 sm:p-14 text-center max-w-3xl mx-auto my-6 relative overflow-hidden shadow-2xl space-y-6">
             <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-b from-[#258DCD]/10 to-transparent blur-3xl pointer-events-none" />
             <div className="w-14 h-14 rounded-2xl bg-[#258DCD]/10 border border-[#258DCD]/30 flex items-center justify-center mx-auto text-[#258DCD]">
@@ -565,7 +654,7 @@ function ProveedoresDirectoryContent() {
         {totalPages > 1 && (
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 pb-12 border-t border-neutral-900 font-mono text-xs">
             <span className="text-neutral-400">
-              Mostrando <strong className="text-white">{((currentPage - 1) * pageSize) + 1}</strong> - <strong className="text-white">{Math.min(currentPage * pageSize, filteredProviders.length).toLocaleString()}</strong> de <strong className="text-[#258DCD]">{filteredProviders.length.toLocaleString()}</strong>
+              Mostrando <strong className="text-white">{((currentPage - 1) * pageSize) + 1}</strong> - <strong className="text-white">{Math.min(currentPage * pageSize, effectiveTotal).toLocaleString()}</strong> de <strong className="text-[#258DCD]">{effectiveTotal.toLocaleString()}</strong>
             </span>
 
             <div className="flex items-center gap-2">

@@ -1,0 +1,42 @@
+{
+  "decoracion": {
+    "count": 2501,
+    "sizeKB": "1556.2"
+  },
+  "musica": {
+    "count": 2683,
+    "sizeKB": "1606.7"
+  },
+  "moda": {
+    "count": 9776,
+    "sizeKB": "5857.4"
+  },
+  "foto": {
+    "count": 11764,
+    "sizeKB": "7514.8"
+  },
+  "sonido": {
+    "count": 617,
+    "sizeKB": "370.1"
+  },
+  "transporte": {
+    "count": 1504,
+    "sizeKB": "957.2"
+  },
+  "servicios": {
+    "count": 9277,
+    "sizeKB": "5365.7"
+  },
+  "catering": {
+    "count": 3780,
+    "sizeKB": "2316.3"
+  },
+  "wedding": {
+    "count": 1399,
+    "sizeKB": "861.5"
+  },
+  "finca": {
+    "count": 10322,
+    "sizeKB": "6377.4"
+  }
+}

@@ -103,12 +103,12 @@ export default function EmpresariosPage() {
             {/* PLAN 1: EMPRESARIOS (1000€/mes) */}
             <div className="p-8 sm:p-12 rounded-[2.5rem] bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/40 transition-all flex flex-col justify-between space-y-8 shadow-2xl relative overflow-hidden group">
               <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="px-3.5 py-1 rounded-full bg-white/5 border border-white/10 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
-                    Plan Ejecución
-                  </span>
-                  <span className="text-xs font-mono text-white/40 uppercase">Garantía Escrita</span>
-                </div>
+<div className="flex items-center justify-between">
+  <span className="px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
+    Plan Ejecución
+  </span>
+  <span className="text-xs font-mono text-white/40 uppercase">Garantía Escrita</span>
+</div>
 
                 <div>
                   <h3 className="text-3xl font-black uppercase text-white font-syne tracking-tight">
@@ -156,12 +156,12 @@ export default function EmpresariosPage() {
             {/* PLAN 2: PREMIUM BUSINESS (3000€/mes) */}
             <div className="p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-b from-[#100d04] via-[#0a0a0f] to-[#0a0a0f] border border-[#ecb613]/50 transition-all flex flex-col justify-between space-y-8 shadow-[0_20px_50px_rgba(236,182,19,0.15)] relative overflow-hidden group">
               <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="px-3.5 py-1 rounded-full bg-[#ecb613] text-black text-[10px] font-black uppercase tracking-wider font-mono">
-                    Escalado Máximo
-                  </span>
-                  <span className="text-xs font-mono text-[#ecb613] uppercase tracking-widest">Full-Service VIP</span>
-                </div>
+<div className="flex items-center justify-between">
+  <span className="px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
+    Escalado Máximo
+  </span>
+  <span className="text-xs font-mono text-white/40 uppercase">Full-Service VIP</span>
+</div>
 
                 <div>
                   <h3 className="text-3xl font-black uppercase text-white font-syne tracking-tight">
@@ -222,35 +222,35 @@ export default function EmpresariosPage() {
 
         {/* 🏢 GARANTÍAS CORPORATIVAS B2B */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
-            <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-              <FileText size={24} />
-            </div>
-            <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Compliance & Facturación</h3>
-            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
-              Facturas proforma inmediatas, contratos mercantiles homologados, certificados de estar al corriente con TGSS/Hacienda y desglose de IVA.
-            </p>
-          </div>
+<div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+  <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+    <FileText size={24} />
+  </div>
+  <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Compliance & Facturación</h3>
+  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+    Facturas proforma inmediatas, contratos mercantiles homologados, certificados de estar al corriente con TGSS/Hacienda y desglose de IVA.
+  </p>
+</div>
 
-          <div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
-            <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
-              <ShieldCheck size={24} />
-            </div>
-            <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Póliza RC de 1.000.000€</h3>
-            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
-              Máxima cobertura aseguradora para recintos históricos, hoteles de 5 estrellas, centros de convenciones y fincas de prestigio en toda España.
-            </p>
-          </div>
+<div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+  <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+    <ShieldCheck size={24} />
+  </div>
+  <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Póliza RC de 1.000.000€</h3>
+  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+    Máxima cobertura aseguradora para recintos históricos, hoteles de 5 estrellas, centros de convenciones y fincas de prestigio en toda España.
+  </p>
+</div>
 
-          <div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
-            <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-              <Crown size={24} />
-            </div>
-            <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Rigor Técnico Militar</h3>
-            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
-              Puntualidad garantizada T-120min antes de la apertura de puertas, prueba de sonido profesional y soporte in situ continuo.
-            </p>
-          </div>
+<div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+  <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+    <Crown size={24} />
+  </div>
+  <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Rigor Técnico Militar</h3>
+  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+    Puntualidad garantizada T-120min antes de la apertura de puertas, prueba de sonido profesional y soporte in situ continuo.
+  </p>
+</div>
         </section>
 
         {/* 🎭 FORMATOS B2B DE ESCENARIO */}
