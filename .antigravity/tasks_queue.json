@@ -250,7 +250,9 @@
     {
       "id": "autonomous-e2e-smoke-and-build-audit",
       "title": "Smoke Test Autónomo E2E y Verificación de Despliegue Netlify",
-      "status": "PENDING",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-12T12:55:00Z",
+      "validation": "npx tsx scripts/test-autonomous-pipeline.ts -> Exit Code 0 (69ms DB Supabase latency, 38.069 VendorShadowProfiles). Git commit and push completed.",
       "description": "Prueba de fuego autónoma encadenada. Validar la respuesta de la API con base de datos real, la integridad del VendorClaimingEngine, la ausencia de bundles pesados en el build de Next.js y la sincronización con Git/Netlify sin intervención humana.",
       "command": "npx tsx scripts/test-autonomous-pipeline.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-autonomous-pipeline.ts; npx tsc --noEmit\"",
@@ -330,6 +332,22 @@
         "5. Ejecutar 'node scripts/build_sclass_html_navigator.js' y asegurar Exit Code 0. El resultado será un Dashboard de Comando táctico, offline y letal."
       ],
       "validation": "node scripts/build_sclass_html_navigator.js -> Exit Code 0. Visor HTML S-Class generado exitosamente."
+    },
+    {
+      "id": "neural-experience-customer-journey-and-lead-temperature",
+      "title": "Acompañamiento Integral del Viaje de Cliente & Matriz Comparativa (Anti-Home Redirect)",
+      "status": "PENDING",
+      "description": "Desplegar el sistema de acompañamiento continuo EAR OS Neural Experience con termómetro de leads dinámico (COLD / WARM / HOT / FIRE) y matriz comparativa transparente S-Class sin derivar tráfico a home.",
+      "command": "npx tsx scripts/test-lead-journey-routes.ts && npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsx scripts/test-lead-journey-routes.ts; npx tsc --noEmit\"",
+      "steps": [
+        "1. Crear 'src/features/neural-companion/stores/useLeadTemperatureStore.ts': Store Zustand con persistencia en localStorage para gestionar temperatura ('COLD'|'WARM'|'HOT'|'FIRE'), score del lead y eventos de interacción.",
+        "2. Crear 'src/features/neural-companion/ui/NeuralClientCompanion.tsx': Componente de superposición OLED (#030305) flotante que muestra termómetro interactivo y recomendaciones contextuales según la etapa del cliente.",
+        "3. Crear 'src/app/(public)/comparar/page.tsx': Ruta pública de la Matriz Comparativa Transparente S-Class (Portales Tradicionales vs EAR OS S-Class: Split 80/10/10, 12 W/pax acústica, 1.50 €/km Méntrida, 100€ Stripe lock). Garantizar que la intención de comparación NUNCA redirija al cliente a home (/).",
+        "4. Modificar 'src/app/(public)/cotizador/page.tsx': Dar soporte al parámetro searchParams.mode === 'comparison' para desplegar directamente la pestaña comparativa VIMUME en el MultiPricer.",
+        "5. Crear script de validación 'scripts/test-lead-journey-routes.ts': Verificar instanciación del store, renderizado de /comparar y ausencia de redirección a home para rutas comparativas.",
+        "6. Validar compilación 'npx tsc --noEmit' -> Exit Code 0."
+      ]
     }
   ]
 }
