@@ -32,10 +32,22 @@ import {
 import { CENTRALITA } from '@/lib/phone-constants';
 import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';
 import { BentoProviderCard, ProviderItem } from '@/components/providers/BentoProviderCard';
-import { BentoFilterBar, CategoryItem } from '@/components/providers/BentoFilterBar';
+import { BentoFilterBar, CategoryItem, SubcategoryItem } from '@/components/providers/BentoFilterBar';
 import { PremiumMediaCarousel } from '@/components/providers/PremiumMediaCarousel';
 import { PremiumPacksCarousel } from '@/components/providers/PremiumPacksCarousel';
 import { AirbnbNeuralBookingBar } from '@/features/search/AirbnbNeuralBookingBar';
+
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SUBCATEGORÍAS S-CLASS: FINCAS & ESPACIOS SINGULARES
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const FINCA_SUBCATEGORIES: SubcategoryItem[] = [
+  { id: 'all', label: 'Todas las Fincas', count: 3283 },
+  { id: 'rustica', label: '🌿 Rústicas & Dehesas' },
+  { id: 'cortijo', label: '🏛️ Cortijos & Haciendas', count: 341 },
+  { id: 'palacio', label: '🏰 Palacios & Castillos', count: 220 },
+  { id: 'masia', label: '🏡 Masías & Casas Rurales', count: 206 },
+  { id: 'salon', label: '🥂 Salones & Hoteles', count: 350 },
+];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // ARTISTA SOBERANO S-CLASS: EDWIN AGUDELO (PRIORIDAD PERMANENTE #1)
@@ -117,11 +129,13 @@ function ProveedoresDirectoryContent() {
   const router = useRouter();
 
   const urlCat = searchParams.get('cat') || searchParams.get('categoria') || searchParams.get('category');
+  const urlSubcat = searchParams.get('subcat') || searchParams.get('subcategory') || 'all';
   const urlProv = searchParams.get('provincia') || searchParams.get('prov') || searchParams.get('location') || '';
   const urlQ = searchParams.get('q') || searchParams.get('search') || '';
 
   const initialCat = urlCat ? normalizeCategory(urlCat) : 'ALL';
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCat);
+  const [selectedSubcategory, setSelectedSubcategory] = useState<string>(urlSubcat);
   const [selectedProvince, setSelectedProvince] = useState<string>(urlProv);
   const [searchQuery, setSearchQuery] = useState<string>(urlQ);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -136,6 +150,13 @@ function ProveedoresDirectoryContent() {
       setCurrentPage(1);
     }
   }, [urlCat]);
+
+  useEffect(() => {
+    if (urlSubcat) {
+      setSelectedSubcategory(urlSubcat);
+      setCurrentPage(1);
+    }
+  }, [urlSubcat]);
 
   useEffect(() => {
     if (urlProv) {
@@ -157,6 +178,9 @@ function ProveedoresDirectoryContent() {
     const params = new URLSearchParams();
     if (selectedCategory && selectedCategory !== 'ALL') params.set('category', selectedCategory);
     if (selectedProvince && selectedProvince !== 'ALL') params.set('province', selectedProvince);
+    if (selectedCategory === 'finca' && selectedSubcategory && selectedSubcategory !== 'all') {
+      params.set('subcategory', selectedSubcategory);
+    }
     if (searchQuery) params.set('q', searchQuery);
     params.set('page', currentPage.toString());
     params.set('limit', pageSize.toString());
@@ -262,13 +286,30 @@ function ProveedoresDirectoryContent() {
 
   const handleCategorySelect = (catId: string) => {
     setSelectedCategory(catId);
+    setSelectedSubcategory('all');
     setCurrentPage(1);
     const params = new URLSearchParams(window.location.search);
+    params.delete('subcat');
+    params.delete('subcategory');
     if (catId === 'ALL') {
       params.delete('cat');
       params.delete('categoria');
     } else {
       params.set('cat', catId);
+    }
+    const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+    router.replace(newUrl, { scroll: false });
+  };
+
+  const handleSubcategorySelect = (subId: string) => {
+    setSelectedSubcategory(subId);
+    setCurrentPage(1);
+    const params = new URLSearchParams(window.location.search);
+    if (subId === 'all') {
+      params.delete('subcat');
+      params.delete('subcategory');
+    } else {
+      params.set('subcat', subId);
     }
     const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
     router.replace(newUrl, { scroll: false });
@@ -429,6 +470,9 @@ function ProveedoresDirectoryContent() {
           categories={categories}
           selectedCategory={selectedCategory}
           onSelectCategory={handleCategorySelect}
+          subcategories={selectedCategory === 'finca' ? FINCA_SUBCATEGORIES : undefined}
+          selectedSubcategory={selectedSubcategory}
+          onSelectSubcategory={handleSubcategorySelect}
           searchQuery={searchQuery}
           onSearchChange={(q) => { setSearchQuery(q); setCurrentPage(1); }}
           selectedProvince={selectedProvince}
@@ -436,6 +480,35 @@ function ProveedoresDirectoryContent() {
           provincesList={provincesList}
           totalResults={filteredProviders.length}
         />
+
+        {/* BANNER B2B PROPIETARIOS DE FINCAS */}
+        {selectedCategory === 'finca' && (
+          <div className="bg-gradient-to-r from-[#08080c] via-[#0c1017] to-[#08080c] border border-[#258DCD]/30 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+            <div className="flex items-center gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-[#258DCD]/10 border border-[#258DCD]/30 flex items-center justify-center text-[#258DCD] shrink-0">
+                <Building2 size={20} />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono text-[#258DCD] uppercase tracking-wider font-semibold block">
+                  Acceso Exclusivo B2B · Propietarios & Wedding Planners
+                </span>
+                <p className="text-sm font-bold text-white font-syne">
+                  ¿Gestiona una finca, cortijo o recinto para bodas?
+                </p>
+                <p className="text-xs text-neutral-400 font-light mt-0.5">
+                  Homologación técnica S-Class, auditoría acústica 12 W/pax y liquidación garantizada de comisiones (380 € - 570 €) en 7 días hábiles.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/fincas"
+              className="px-4 py-2.5 rounded-xl bg-[#258DCD] text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#258DCD]/90 transition-all shrink-0 flex items-center gap-2 shadow-md shadow-[#258DCD]/20 cursor-pointer"
+            >
+              <span>Homologar mi Espacio</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
+        )}
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             3. ARQUITECTURA BENTO GRID: REJILLA ESTRICTA DE ALTA DENSIDAD

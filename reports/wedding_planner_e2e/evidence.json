@@ -1,0 +1,126 @@
+{
+  "engine": "WEDDING_PLANNER_BROWSER_E2E",
+  "timestamp": "2026-09-12T18:09:56.229Z",
+  "baseUrl": "http://localhost:3007",
+  "totalSteps": 13,
+  "passed": 13,
+  "evidence": [
+    {
+      "step": 0,
+      "name": "Home",
+      "url": "http://localhost:3007/",
+      "status": 200,
+      "title": "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\00-home.png"
+    },
+    {
+      "step": 1,
+      "name": "Adhesión Afiliada",
+      "url": "http://localhost:3007/afiliados",
+      "status": 200,
+      "title": "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\01-afiliados.png"
+    },
+    {
+      "step": 2,
+      "name": "mariachis",
+      "url": "http://localhost:3007/servicios/mariachis/toledo",
+      "status": 200,
+      "title": "Mariachis en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\02-mariachis.png"
+    },
+    {
+      "step": 3,
+      "name": "solistas",
+      "url": "http://localhost:3007/servicios/solistas/toledo",
+      "status": 200,
+      "title": "Solistas en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\03-solistas.png"
+    },
+    {
+      "step": 4,
+      "name": "cuarteto-cuerdas",
+      "url": "http://localhost:3007/servicios/cuarteto-cuerdas/toledo",
+      "status": 200,
+      "title": "Cuarteto de Cuerdas en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\04-cuarteto-cuerdas.png"
+    },
+    {
+      "step": 5,
+      "name": "sonido-iluminacion",
+      "url": "http://localhost:3007/servicios/sonido-iluminacion/toledo",
+      "status": 200,
+      "title": "Sonido e Iluminación en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\05-sonido-iluminacion.png"
+    },
+    {
+      "step": 6,
+      "name": "dj",
+      "url": "http://localhost:3007/servicios/dj/toledo",
+      "status": 200,
+      "title": "DJ Profesional en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\06-dj.png"
+    },
+    {
+      "step": 7,
+      "name": "fincas",
+      "url": "http://localhost:3007/servicios/fincas/toledo",
+      "status": 200,
+      "title": "Fincas para Bodas en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\07-fincas.png"
+    },
+    {
+      "step": 8,
+      "name": "catering-brasas",
+      "url": "http://localhost:3007/servicios/catering-brasas/toledo",
+      "status": 200,
+      "title": "Catering de Brasas en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\08-catering-brasas.png"
+    },
+    {
+      "step": 9,
+      "name": "pantallas-led",
+      "url": "http://localhost:3007/servicios/pantallas-led/toledo",
+      "status": 200,
+      "title": "Pantallas LED en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\09-pantallas-led.png"
+    },
+    {
+      "step": 10,
+      "name": "animacion",
+      "url": "http://localhost:3007/servicios/animacion/toledo",
+      "status": 200,
+      "title": "Animación en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\10-animacion.png"
+    },
+    {
+      "step": 11,
+      "name": "coches-clasicos",
+      "url": "http://localhost:3007/servicios/coches-clasicos/toledo",
+      "status": 200,
+      "title": "Alquiler de Vehículos de Lujo con Conductor & Chófer VIP en Toledo | Productora EAR",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\11-coches-clasicos.png"
+    },
+    {
+      "step": 99,
+      "name": "Checkout",
+      "url": "http://localhost:3007/checkout/presupuesto?servicio=solistas&provincia=toledo",
+      "status": 200,
+      "title": "Productora EAR :: Alquiler de Equipos de Sonido, Bodas & Eventos B2G",
+      "matchedIntent": true,
+      "screenshot": "H:\\EAR_OS_V2\\EAR_OS_V2\\reports\\wedding_planner_e2e\\99-checkout.png"
+    }
+  ]
+}

@@ -25,10 +25,19 @@ export interface CategoryItem {
   icon: any;
 }
 
+export interface SubcategoryItem {
+  id: string;
+  label: string;
+  count?: number;
+}
+
 interface BentoFilterBarProps {
   categories: CategoryItem[];
   selectedCategory: string;
   onSelectCategory: (id: string) => void;
+  subcategories?: SubcategoryItem[];
+  selectedSubcategory?: string;
+  onSelectSubcategory?: (id: string) => void;
   searchQuery: string;
   onSearchChange: (q: string) => void;
   selectedProvince: string;
@@ -41,6 +50,9 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = ({
   categories,
   selectedCategory,
   onSelectCategory,
+  subcategories,
+  selectedSubcategory,
+  onSelectSubcategory,
   searchQuery,
   onSearchChange,
   selectedProvince,
@@ -140,6 +152,41 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = ({
           })}
         </div>
       </div>
+
+      {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+          3. SUBCATEGORÍAS DINÁMICAS (ESPACIOS & FINCAS)
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+      {subcategories && subcategories.length > 0 && onSelectSubcategory && (
+        <div className="pt-3 border-t border-[#1a1a1a] flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none max-w-full">
+          <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest shrink-0 mr-1 flex items-center gap-1 font-semibold">
+            <Filter size={11} className="text-[#258DCD]" /> Tipología:
+          </span>
+          {subcategories.map((sub) => {
+            const isSelected = (selectedSubcategory || 'all') === sub.id;
+            return (
+              <button
+                key={sub.id}
+                type="button"
+                onClick={() => onSelectSubcategory(sub.id)}
+                className={`px-3 py-1.5 rounded-xl text-[11px] font-mono tracking-wide flex items-center gap-1.5 shrink-0 transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#258DCD]/20 text-[#258DCD] border border-[#258DCD] font-bold shadow-md shadow-[#258DCD]/10'
+                    : 'bg-[#0a0a0f] text-neutral-400 hover:text-white border border-[#1a1a1a] hover:border-neutral-700'
+                }`}
+              >
+                <span>{sub.label}</span>
+                {typeof sub.count === 'number' && (
+                  <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${
+                    isSelected ? 'bg-[#258DCD]/30 text-[#258DCD]' : 'bg-white/5 text-neutral-500'
+                  }`}>
+                    {sub.count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };

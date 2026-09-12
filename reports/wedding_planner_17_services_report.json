@@ -1,0 +1,131 @@
+{
+  "engine": "WEDDING_PLANNER_17_SERVICES_PRUEBA_DE_FUEGO",
+  "version": "1.0.0",
+  "timestamp": "2026-09-12T18:05:46.534Z",
+  "provincia": "toledo",
+  "pax": 150,
+  "wattsRms": 1800,
+  "services": [
+    {
+      "name": "Edwin Agudelo Solista",
+      "category": "ARTISTA",
+      "priceEur": 350,
+      "intent": "Solista de conservatorio (Edwin Agudelo, 350€) con microfonía Shure y precio congelado por Price-Lock SHA-256."
+    },
+    {
+      "name": "Dúo Armónico",
+      "category": "ARTISTA",
+      "priceEur": 480,
+      "intent": "Solista de conservatorio (Edwin Agudelo, 350€) con microfonía Shure y precio congelado por Price-Lock SHA-256."
+    },
+    {
+      "name": "Trío Tradicional",
+      "category": "ARTISTA",
+      "priceEur": 600,
+      "intent": "Mariachi de gala con repertorio a medida, sonido calibrado y hora de llegada blindada con telemetría GPS."
+    },
+    {
+      "name": "Cuarteto de Gala",
+      "category": "ARTISTA",
+      "priceEur": 750,
+      "intent": "Cuarteto de cuerdas con repertorio de conservatorio y sonorización de exteriores calibrada."
+    },
+    {
+      "name": "Quinteto Imperial",
+      "category": "ARTISTA",
+      "priceEur": 900,
+      "intent": "Mariachi de gala con repertorio a medida, sonido calibrado y hora de llegada blindada con telemetría GPS."
+    },
+    {
+      "name": "Gran Ensamble Imperial",
+      "category": "ARTISTA",
+      "priceEur": 1400,
+      "intent": "Mariachi de gala con repertorio a medida, sonido calibrado y hora de llegada blindada con telemetría GPS."
+    },
+    {
+      "name": "Pack Sonido 1 (2x 300W)",
+      "category": "SONIDO",
+      "priceEur": 84,
+      "intent": "Sonorización Bose F1 812 calibrada a 12 W/pax y luces LED sincronizadas, dentro del límite municipal de 75 dB."
+    },
+    {
+      "name": "Pack Sonido 4 (2x 1000W)",
+      "category": "SONIDO",
+      "priceEur": 168,
+      "intent": "Sonorización Bose F1 812 calibrada a 12 W/pax y luces LED sincronizadas, dentro del límite municipal de 75 dB."
+    },
+    {
+      "name": "Pack Discomóvil 1 (DJ + LED)",
+      "category": "SONIDO",
+      "priceEur": 432,
+      "intent": "DJ homologado con setlist personalizado y relevo Uber garantizado para 0% cancelaciones."
+    },
+    {
+      "name": "Pack Discomóvil 2 Premium",
+      "category": "SONIDO",
+      "priceEur": 1008,
+      "intent": "DJ homologado con setlist personalizado y relevo Uber garantizado para 0% cancelaciones."
+    },
+    {
+      "name": "Pack Concierto 3 (Escenario)",
+      "category": "SONIDO",
+      "priceEur": 1680,
+      "intent": "Sonorización Bose F1 812 calibrada a 12 W/pax y luces LED sincronizadas, dentro del límite municipal de 75 dB."
+    },
+    {
+      "name": "Transfer VIP Mercedes",
+      "category": "LOGISTICA",
+      "priceEur": 120,
+      "intent": "Flota de coches clásicos verificados con conductor y relevo Uber garantizado en menos de 45 minutos."
+    },
+    {
+      "name": "Finca para Boda",
+      "category": "ESPACIO",
+      "priceEur": 1200,
+      "intent": "Finca real verificada con acceso logístico coordinado y arsenal de proveedores integrados en un solo contrato."
+    },
+    {
+      "name": "Catering de Brasas",
+      "category": "CATERING",
+      "priceEur": 900,
+      "intent": "Catering de brasas con showcooking en vivo, logística de frío y menús personalizables."
+    },
+    {
+      "name": "Pantallas LED HD",
+      "category": "AUDIOVISUAL",
+      "priceEur": 700,
+      "intent": "Pantallas LED HD con técnico dedicado y montaje coordinado con telemetría en directo."
+    },
+    {
+      "name": "Animación Profesional",
+      "category": "ENTRETENIMIENTO",
+      "priceEur": 400,
+      "intent": "Animación profesional sincronizada con el guion del evento y cobertura de contingencia."
+    },
+    {
+      "name": "DJ Profesional",
+      "category": "SONIDO",
+      "priceEur": 550,
+      "intent": "DJ homologado con setlist personalizado y relevo Uber garantizado para 0% cancelaciones."
+    }
+  ],
+  "totalBase": 11722,
+  "totalWithVat": 14183.62,
+  "logisticsFee": 0,
+  "professionalDiscount": {
+    "rate": 0.05,
+    "amount": 709.18,
+    "finalTotal": 13474.44,
+    "requiresProof": true
+  },
+  "split": {
+    "provider80": 9377.6,
+    "earOs10": 1172.2,
+    "vimume10": 1172.2
+  },
+  "timeSavedMinutes": 247,
+  "checksPassed": 6,
+  "totalChecks": 6,
+  "allPass": true,
+  "elapsedMs": 15
+}

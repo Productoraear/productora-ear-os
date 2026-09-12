@@ -25,14 +25,14 @@ const CASES: TenantCase[] = [
   {
     host: 'fincasparaboda.com',
     pathname: '/',
-    expectedRewrite: '/fincas',
-    label: 'Fincas Para Boda -> /fincas',
+    expectedRewrite: '/proveedores?cat=finca',
+    label: 'Fincas Para Boda -> /proveedores?cat=finca',
   },
   {
     host: 'www.fincasparaboda.com',
     pathname: '/',
-    expectedRewrite: '/fincas',
-    label: 'www.fincasparaboda.com -> /fincas',
+    expectedRewrite: '/proveedores?cat=finca',
+    label: 'www.fincasparaboda.com -> /proveedores?cat=finca',
   },
   {
     host: 'viajemusicalporlamemoria.com',
@@ -90,7 +90,8 @@ function extractRewriteTarget(response: Response): string | null {
   const rewriteHeader = response.headers.get('x-middleware-rewrite');
   if (!rewriteHeader) return null;
   try {
-    return new URL(rewriteHeader).pathname;
+    const u = new URL(rewriteHeader);
+    return u.pathname + u.search;
   } catch {
     return rewriteHeader;
   }
