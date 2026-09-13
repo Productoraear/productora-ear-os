@@ -8,7 +8,7 @@ export interface NeuralProvider {
   badge: string;
   tags: string[];
   image: string;
-  source: 'SSOT' | 'Bodas.net' | 'Fander' | 'HOLA_Luxury' | 'Celebrents';
+  source: 'SSOT' | 'Bodas.net' | 'Fander' | 'HOLA_Luxury';
   location: string;
 }
 
