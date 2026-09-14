@@ -1,0 +1,878 @@
+{
+  "timestamp": "2026-09-14T12:03:20.717Z",
+  "totalSimulated": 58,
+  "averageEfficiencyScore": 100,
+  "goldenPathPassRate": 100,
+  "results": [
+    {
+      "journeyId": "sim-1-mariachi-edwin-agudelo-directo",
+      "query": "edwin agudelo madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-2-mariachi-urgente-hoy",
+      "query": "mariachi urgente madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-3-mariachi-madrid-precio",
+      "query": "precio mariachi madrid madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-4-mariachi-bodas-madrid-toledo",
+      "query": "mariachi para boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-5-mariachi-serenata-cumpleanos",
+      "query": "serenata mariachi madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-6-mariachi-repertorio-canciones",
+      "query": "canciones mariachi madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-7-mariachi-comparativa-precios",
+      "query": "comparar mariachis madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-8-mariachi-historia-origen",
+      "query": "origen mariachi madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-9-musica-en-directo-boda-precio",
+      "query": "musica en directo para boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-10-musica-en-vivo-boda-precio",
+      "query": "musica en vivo para boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-11-grupo-musica-en-directo",
+      "query": "grupo de musica en directo madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-12-grupo-musica-en-vivo",
+      "query": "grupo de musica en vivo madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-13-solista-acustico-directo",
+      "query": "solista en directo madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-14-solista-acustico-vivo",
+      "query": "solista en vivo madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-15-grupo-versiones-pop-rock-directo",
+      "query": "banda versiones directo madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-16-cuarteto-cuerda-ceremonia-directo",
+      "query": "cuarteto cuerda directo madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-17-musica-directo-urgente-reemplazo",
+      "query": "musicos directo urgentes madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-18-musica-directo-madrid",
+      "query": "musica en directo madrid madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-19-musica-directo-opiniones",
+      "query": "opiniones musica directo madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-20-musica-directo-ideas-playlist",
+      "query": "ideas musica en directo madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-21-dj-boda-reserva-inmediata",
+      "query": "contratar dj boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-22-dj-discomovil-urgente-48h",
+      "query": "dj urgente madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-23-dj-animador-hora-loca",
+      "query": "dj hora loca madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-24-dj-equipo-sonido-alquiler",
+      "query": "dj equipo bose madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-25-dj-comparar-tarifas",
+      "query": "cuanto cobra un dj de boda madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-26-dj-mejores-canciones",
+      "query": "canciones fiesta dj madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-27-alquiler-sonido-bose-f1",
+      "query": "alquiler bose f1 madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-28-iluminacion-arquitectonica-boda",
+      "query": "iluminacion arquitectonica boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-29-sonido-urgente-mentrida-madrid",
+      "query": "sonido urgente madrid madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-30-microfonia-shure-inalambrica",
+      "query": "shure beta 87a alquiler madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-31-normativa-db-spl-sonido",
+      "query": "normativa ruido bodas madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-32-fotografo-boda-disponibilidad",
+      "query": "fotografo boda precio madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-33-fotografo-boda-urgente",
+      "query": "fotografo urgente boda madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-34-video-cinematografico-dron",
+      "query": "video boda dron madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-35-fotografia-estilos-album",
+      "query": "fotografia documental boda madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-36-fotografia-consejos-posar",
+      "query": "como posar en fotos de boda madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-37-catering-boda-precio-menu",
+      "query": "precio menu catering boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-38-catering-barra-libre-premium",
+      "query": "barra libre premium boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-39-catering-degustacion-menu",
+      "query": "prueba menu boda madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-40-catering-alergias-opciones",
+      "query": "menu vegano boda madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-41-finca-bodas-toledo-madrid",
+      "query": "finca bodas madrid madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-42-finca-boda-con-alojamiento",
+      "query": "finca con habitaciones boda madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-43-finca-disponibilidad-sabados",
+      "query": "fechas libres fincas bodas madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-44-fincas-guia-visitas",
+      "query": "preguntas para visitar finca boda madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-45-coordinacion-dia-boda",
+      "query": "coordinacion dia b madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-46-wedding-planner-integral",
+      "query": "wedding planner madrid madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-47-wedding-planner-urgente",
+      "query": "wedding planner rescate madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-48-cronograma-dia-boda-plantilla",
+      "query": "cronograma boda madrid",
+      "temperature": "COLD",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-49-autobuses-invitados-boda",
+      "query": "autobuses boda precio madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-50-coche-clasico-novios",
+      "query": "coche clasico novios madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-51-logistica-mentrida-km-suplemento",
+      "query": "kilometraje desde mentrida madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-52-licitacion-fiestas-patronales-sonido",
+      "query": "licitacion sonido fiestas patronales madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-53-contrato-menor-118-lcsp-sonido",
+      "query": "contrato menor cultura 15000 madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-54-espectaculo-musical-ayuntamiento",
+      "query": "actuacion musical ayuntamiento madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-55-pliegos-placsp-telecomunicaciones",
+      "query": "pliegos tecnicos placsp madrid",
+      "temperature": "WARM",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 5,
+        "timeMs": 87000,
+        "hasNeuralJourney": true,
+        "depositLocked": false
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-56-reserva-directa-deposito-100",
+      "query": "pagar fianza 100 madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-57-pago-seguro-price-lock",
+      "query": "price lock garantia madrid",
+      "temperature": "HOT",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    },
+    {
+      "journeyId": "sim-58-atencion-cliente-humano-urgente",
+      "query": "telefono productora ear madrid",
+      "temperature": "FIRE",
+      "efficiencyScore": 100,
+      "passedGoldenPath": true,
+      "violations": [],
+      "metrics": {
+        "clicks": 3,
+        "timeMs": 33000,
+        "hasNeuralJourney": true,
+        "depositLocked": true
+      },
+      "recommendations": []
+    }
+  ]
+}

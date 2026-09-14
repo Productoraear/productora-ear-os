@@ -39,7 +39,9 @@ ENTORNO MANDATORIO: POWERSHELL 7 NATIVO | LOCAL GPU QWEN 32B
 
 ━━ 6. PROTOCOLO ZERO-TOKEN MEMORY (ZTM) & RAG OMNI-DRIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - SSOT Cognitivo: Consulta `src/data/ear-rag-database.json` antes de programar utilidades.
-- Archivos masivos (ej. MFT, EAR_GOLDEN_INDEX) NUNCA se leen al contexto. Se procesan vía scripts `/scripts/` y devuelven JSON <300 tokens.
+- Archivos masivos NUNCA se leen enteros al contexto. Si excede 500 líneas, usa scripts para procesar o usa 'Start New Task' en Cline para limpiar el historial (evitando el `UND_ERR_HEADERS_TIMEOUT`).
+- Memoria de Ollama (Model Context Window): Configura `32768` en Cline para equilibrio óptimo de Qwen 27B/32B.
+- Precarga de modelos pesados: Ejecuta `ollama run <model>` en PowerShell antes de que Cline inicie tarea, evitando timeouts por I/O del disco.
 - Bóveda de Ingesta: Pepitas extraídas van a `H:\EAR_VAULT_GOLDEN_NUGGETS.json` o subcarpetas de absorción.
 
 ━━ 7. PROTECCIÓN DE MOTORES Y VETO ESTRATÉGICO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

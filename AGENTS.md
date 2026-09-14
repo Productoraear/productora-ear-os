@@ -39,7 +39,10 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
 - Redacción UX: Verbos de valor, datos reales. Prohibido copy vacío ("revoluciona tu experiencia").
 
 ━━ 6. PROTOCOLO ZERO-TOKEN MEMORY (ZTM) PARA ARCHIVOS MASIVOS ━━━━━━━━━━━━━━━━━━━━━━
-- NUNCA leas archivos pesados (MFT, EAR_GOLDEN_INDEX, CSVs masivos) en tu contexto de chat.
+- NUNCA leas archivos pesados (MFT, EAR_GOLDEN_INDEX, CSVs masivos, o un historial de chat largo) en tu contexto.
+- SATURACIÓN DE TOKENS (Error UND_ERR_HEADERS_TIMEOUT): Si el prompt acumula > 30.000 tokens en Cline, el agente colapsará el LLM local. Solución: Clic en 'Start New Task' y arrancar desde cero leyendo los objetivos en `tasks_queue.json`.
+- GESTIÓN DE VENTANA (Ollama): Fija el 'Model Context Window' en `32768` (Sweet Spot). Solo usar `131072` si es estrictamente necesario y asumiendo pérdida drástica de velocidad t/s por offload a RAM.
+- PRECARGA OLLAMA: Para evitar Timeouts al cargar modelos pesados (27B/32B), ejecuta `ollama run qwen-sclass ""` en PowerShell antes de pedirle a Cline que actúe.
 - DELEGA: Escribe una tarea para que Cline ejecute scripts en PowerShell 7/Node.js por streaming y te devuelva únicamente un resumen estadístico JSON (< 300 tokens).
 - Bóveda de Ingesta: Todo archivo purificado debe ir a `H:\EAR_VAULT_GOLDEN_NUGGETS.json` o subcarpetas de absorción.
 

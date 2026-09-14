@@ -1,0 +1,486 @@
+{
+  "summary": {
+    "total_catalog_programs": 38,
+    "programs_with_local_files": 11,
+    "programs_missing": 27,
+    "coverage_rate_percent": 28.9,
+    "total_matched_videos": 81,
+    "total_local_size_gb": 6.02
+  },
+  "covered": [
+    {
+      "title": "La Máquina de las Ideas",
+      "category": "series",
+      "expected_classes": "4 Clases",
+      "duration": "1h 14m",
+      "url": "https://space.velocitymedia.info/course/80/series",
+      "found_files_count": 2,
+      "total_size_mb": 324.9,
+      "files": [
+        "Clase 2 Las ideas en tu planificación_REPARADO.mp4",
+        "Clase 5 Generación de grandes ideas_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "La venta elegante",
+      "category": "cursos",
+      "expected_classes": "10 Clases",
+      "duration": "1h 12m",
+      "url": "https://space.velocitymedia.info/course/71/cursos",
+      "found_files_count": 1,
+      "total_size_mb": 51.6,
+      "files": [
+        "Clase 5 La propuesta_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "Copywriting",
+      "category": "cursos",
+      "expected_classes": "10 Clases",
+      "duration": "1h 2m",
+      "url": "https://space.velocitymedia.info/course/72/cursos",
+      "found_files_count": 29,
+      "total_size_mb": 1650.8,
+      "files": [
+        "1.3 La fórmula de 4 pasos para que un anuncio funcione y sea convincente_REPARADO.mp4",
+        "1.4 Cuál es la frase a retener de este curso si quieres PERSUADIR con tus anuncios_REPARADO.mp4",
+        "10.1 Cuál es la estructura de un anuncio y a qué debes darle prioridad si quieres ser relevante_REPARADO.mp4",
+        "2.3 El secreto para tener siempre la conversación adecuada con el cliente en cada anuncio_REPARADO.mp4",
+        "3.1.3 Cómo analizar otros anuncios – incluidos los de tu competencia El espionaje_REPARADO.mp4",
+        "3.2 Determina el GANCHO para crear el copy que tu OFERTA necesita_REPARADO.mp4",
+        "3.3 25 trucos psicológicos para explotar al máximo tus anuncios_REPARADO.mp4",
+        "3.4 Cuáles son las palabras más importantes y que más llaman la atención en un anuncio_REPARADO.mp4",
+        "3.5 Cuál es el canal en el que puedes realizar tus anuncios_REPARADO.mp4",
+        "4.1 10 consejos vitales para revisar tus anuncios antes de lanzarlos_REPARADO.mp4",
+        "4.2 Principios de persuasión para crear anuncios más impactantes_REPARADO.mp4",
+        "4.3.3 ¿Qué texto funciona mejor dentro de la imagen de un anuncio_REPARADO.mp4",
+        "5.1 Cómo crear un anuncio en YouTube que tu cliente quiera ver hasta el final_REPARADO.mp4",
+        "6.1 La estructura de un anuncio y los elementos prioritarios_REPARADO.mp4",
+        "6.2 Mi SISTEMA para escribir rápido anuncios en Facebook_REPARADO.mp4",
+        "6.5 Qué hacer para que tus anuncios pasen el filtro de política de Facebook_REPARADO.mp4",
+        "7.1 Copy que genera conversión en los anuncios de Instagram_REPARADO.mp4",
+        "8.1 Consejos para escribir rápido un anuncio efectivo en LinkedIn_REPARADO.mp4",
+        "9.1 Consejos para escribir rápido un anuncio efectivo en Twitter_REPARADO.mp4",
+        "Clase 1 Creación de anuncios_REPARADO.mp4",
+        "Clase 1 Introducción al CopyBranding_REPARADO.mp4",
+        "Clase 10 Activos de marca para CopyBranding_REPARADO.mp4",
+        "Clase 3 Creación y optimización de copy_REPARADO.mp4",
+        "Clase 4 La ciencia de la persuasión_REPARADO.mp4",
+        "Clase 8 Persuasión Avanzada Y Comunicación De Impacto (2)_REPARADO.mp4",
+        "Clase 8 Persuasión avanzada y comunicación de impacto_REPARADO.mp4",
+        "3.2 Determina el GANCHO para crear el copy que tu OFERTA necesita_REPARADO.mp4",
+        "4.2 Principios de persuasión para crear anuncios más impactantes_REPARADO.mp4",
+        "5.1 Cómo crear un anuncio en YouTube que tu cliente quiera ver hasta el final_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "Oportunidades Rápidas",
+      "category": "cursos",
+      "expected_classes": "5 Clases",
+      "duration": "40m",
+      "url": "https://space.velocitymedia.info/course/73/cursos",
+      "found_files_count": 4,
+      "total_size_mb": 207.1,
+      "files": [
+        "Clase 2 Oportunidades Internas_REPARADO.mp4",
+        "Clase 2 Tu mejor Oportunidad_REPARADO.mp4",
+        "Clase 3 ICE SCORE y Análisis de Diana_REPARADO.mp4",
+        "Clase 3 Oportunidades externas_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "Metodología de Atención",
+      "category": "workshops",
+      "expected_classes": "2 Clases",
+      "duration": "1h 4m",
+      "url": "https://space.velocitymedia.info/course/88/workshops",
+      "found_files_count": 14,
+      "total_size_mb": 1195.6,
+      "files": [
+        "Clase 1 La economía de atención_REPARADO.mp4",
+        "Clase 1 Visión estratégica en Hook Marketing_REPARADO.mp4",
+        "Clase 1 Vídeos de Atención Cortos_REPARADO.mp4",
+        "Clase 2 Disparadores que capturan la atención 1ª Parte_REPARADO.mp4",
+        "Clase 2 Tipos de atención_REPARADO.mp4",
+        "Clase 2 Vídeos de Atención Largos_REPARADO.mp4",
+        "Clase 3 Disparadores que capturan la atención 2ª Parte_REPARADO.mp4",
+        "Clase 3 La atención y el cerebro_REPARADO.mp4",
+        "Clase 3 Vídeos de Descubrimiento_REPARADO.mp4",
+        "Clase 4 Estrategias para crear campañas de Marketing de Atención_REPARADO.mp4",
+        "Clase 4 Vídeos de Cultivación_REPARADO.mp4",
+        "Clase 5 Ejemplos prácticos de Hook Marketing_REPARADO.mp4",
+        "Clase 5 Fases de atención_REPARADO.mp4",
+        "Introducción a Hook Marketing_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "El Mentalista",
+      "category": "Unknown",
+      "expected_classes": "8 Clases",
+      "duration": "2h 6m",
+      "url": "N/A",
+      "found_files_count": 5,
+      "total_size_mb": 735.6,
+      "files": [
+        "Clase 2 Psicología del consumidor_REPARADO.mp4",
+        "Clase 6 La psicología del consumidor_REPARADO.mp4",
+        "Clase 6 Narrativa De Marca (2)_REPARADO.mp4",
+        "Clase 6 Narrativa de marca_REPARADO.mp4",
+        "Clase 7 Arquetipos de marca_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "El Estratega",
+      "category": "Unknown",
+      "expected_classes": "4 Clases",
+      "duration": "1h 19m",
+      "url": "N/A",
+      "found_files_count": 9,
+      "total_size_mb": 842.6,
+      "files": [
+        "Clase 1 Planificación de tu estrategia_REPARADO.mp4",
+        "Clase 1 Vídeo Marketing estratégico_REPARADO.mp4",
+        "Clase 2 Las fases de una estrategia de Vídeo Marketing_REPARADO.mp4",
+        "Clase 3 La distribución en Vídeo Marketing_REPARADO.mp4",
+        "Clase 3 Los objetivos del Vídeo Marketing_REPARADO.mp4",
+        "Clase 3 Tu Posicionamiento en el mercado_REPARADO.mp4",
+        "Clase 5 Estrategias en contenido SEO_REPARADO.mp4",
+        "Clase 5 Las rutas de venta en vídeo marketing_REPARADO.mp4",
+        "Clase 6 Las rutas de venta en vídeo marketing_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "De la A a la Z para crear tu negocio de info producto",
+      "category": "Unknown",
+      "expected_classes": "6 Clases",
+      "duration": "1h 22m",
+      "url": "N/A",
+      "found_files_count": 2,
+      "total_size_mb": 86.9,
+      "files": [
+        "Clase 2 La hipótesis de producto validado_REPARADO.mp4",
+        "Clase 3 La ruta de producto_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "Estrategias en Facebook Ads",
+      "category": "Unknown",
+      "expected_classes": "6 Clases",
+      "duration": "45m",
+      "url": "N/A",
+      "found_files_count": 5,
+      "total_size_mb": 336.7,
+      "files": [
+        "Clase 4 El paso a paso para crear un modelo económico para campañas rentables_REPARADO.mp4",
+        "Como_Vender_Canciones_Por_Facebook__Mandamiento_1(youtube.com)_REPARADO.mp4",
+        "Curso_Facebook_Para_Los_Artistas_2_Vdeo(youtube.com)_REPARADO.mp4",
+        "Curso_Facebook_Para_Los_Artistas_3er_Vdeo(youtube.com)_REPARADO.mp4",
+        "Curso_Facebook_Para_Los_Artistas_Vdeo_1(youtube.com)_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "Funnels",
+      "category": "Unknown",
+      "expected_classes": "16 Clases",
+      "duration": "4h 40m",
+      "url": "N/A",
+      "found_files_count": 8,
+      "total_size_mb": 485.4,
+      "files": [
+        "Clase 1 Visión estratégica de los funnels_REPARADO.mp4",
+        "Clase 3 Creando el modelo económico de tu funnel de venta_REPARADO.mp4",
+        "Clase 3 El valor económico de un funnel_REPARADO.mp4",
+        "Clase 4 Elige tu funnel_REPARADO.mp4",
+        "Clase 4 Mentalidad de funnel_REPARADO.mp4",
+        "Clase 5 Los 4 pilares de un funnel_REPARADO.mp4",
+        "Introducción al 1º módulo del Curso de Funnels_REPARADO.mp4",
+        "Introducción al 2º módulo del Curso de Funnels_REPARADO.mp4"
+      ]
+    },
+    {
+      "title": "Sprint IA para emprendedores",
+      "category": "Unknown",
+      "expected_classes": "6 Clases",
+      "duration": "1h 57m",
+      "url": "N/A",
+      "found_files_count": 2,
+      "total_size_mb": 244.8,
+      "files": [
+        "Clase 8 SEO e Inteligencia Artificial_REPARADO.mp4",
+        "Taller de inteligencia artificial_REPARADO.mp4"
+      ]
+    }
+  ],
+  "missing": [
+    {
+      "title": "Los Ganadores",
+      "category": "series",
+      "expected_classes": "4 Clases",
+      "duration": "1h 9m",
+      "url": "https://space.velocitymedia.info/course/62/series",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Pensar dos veces",
+      "category": "series",
+      "expected_classes": "3 Clases",
+      "duration": "48m",
+      "url": "https://space.velocitymedia.info/course/76/series",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Ideas Transformadoras",
+      "category": "series",
+      "expected_classes": "4 Clases",
+      "duration": "43m",
+      "url": "https://space.velocitymedia.info/course/77/series",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "El Club 10X",
+      "category": "series",
+      "expected_classes": "3 Clases",
+      "duration": "1h 9m",
+      "url": "https://space.velocitymedia.info/course/78/series",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "La Nueva Productividad",
+      "category": "series",
+      "expected_classes": "3 Clases",
+      "duration": "49m",
+      "url": "https://space.velocitymedia.info/course/79/series",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Accelerate",
+      "category": "podcasts",
+      "expected_classes": "12 Clases",
+      "duration": "2h 51m",
+      "url": "https://space.velocitymedia.info/course/91/podcasts",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Sobredemanda",
+      "category": "podcasts",
+      "expected_classes": "9 Clases",
+      "duration": "2h 2m",
+      "url": "https://space.velocitymedia.info/course/95/podcasts",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Lo Táctico",
+      "category": "podcasts",
+      "expected_classes": "29 Clases",
+      "duration": "3h 2m",
+      "url": "https://space.velocitymedia.info/course/96/podcasts",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Secretos del Mentalista",
+      "category": "podcasts",
+      "expected_classes": "21 Clases",
+      "duration": "1h 51m",
+      "url": "https://space.velocitymedia.info/course/98/podcasts",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Disparos",
+      "category": "podcasts",
+      "expected_classes": "34 Clases",
+      "duration": "9h 29m",
+      "url": "https://space.velocitymedia.info/course/99/podcasts",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Midas",
+      "category": "cursos",
+      "expected_classes": "17 Clases",
+      "duration": "1h 32m",
+      "url": "https://space.velocitymedia.info/course/70/cursos",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "De la A a la Z para crear",
+      "category": "cursos",
+      "expected_classes": "?",
+      "duration": "?",
+      "url": "https://space.velocitymedia.info/course/74/cursos",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Estrategias en Facebook A",
+      "category": "cursos",
+      "expected_classes": "?",
+      "duration": "?",
+      "url": "https://space.velocitymedia.info/course/75/cursos",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "La Jugada",
+      "category": "cortos",
+      "expected_classes": "6 Clases",
+      "duration": "30m",
+      "url": "https://space.velocitymedia.info/course/116/cortos",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "El ABC para lanzar tu pro",
+      "category": "workshops",
+      "expected_classes": "?",
+      "duration": "?",
+      "url": "https://space.velocitymedia.info/course/89/workshops",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Comunicación Disruptiva",
+      "category": "workshops",
+      "expected_classes": "2 Clases",
+      "duration": "3h 33m",
+      "url": "https://space.velocitymedia.info/course/90/workshops",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "AI Copywriting aplicado a",
+      "category": "workshops",
+      "expected_classes": "?",
+      "duration": "?",
+      "url": "https://space.velocitymedia.info/course/102/workshops",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Lo que está funcionando e",
+      "category": "workshops",
+      "expected_classes": "?",
+      "duration": "?",
+      "url": "https://space.velocitymedia.info/course/108/workshops",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Inteligencia Artificial",
+      "category": "workshops",
+      "expected_classes": "1 Clase",
+      "duration": "28m",
+      "url": "https://space.velocitymedia.info/course/109/workshops",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Clases de Crecimiento con Alexandra",
+      "category": "Unknown",
+      "expected_classes": "8 Clases",
+      "duration": "1h 34m",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Los Sabios",
+      "category": "Unknown",
+      "expected_classes": "11 Clases",
+      "duration": "2h 47m",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "El Libro Negro",
+      "category": "Unknown",
+      "expected_classes": "12 Clases",
+      "duration": "2h 46m",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Bestseller",
+      "category": "Unknown",
+      "expected_classes": "16 Clases",
+      "duration": "5h 32m",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "El ABC para lanzar tu propio infoproducto",
+      "category": "Unknown",
+      "expected_classes": "2 Clases",
+      "duration": "3h 26m",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "AI Copywriting aplicado a tu negocio",
+      "category": "Unknown",
+      "expected_classes": "1 Clase",
+      "duration": "24m",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Lo que está funcionando en Marketing",
+      "category": "Unknown",
+      "expected_classes": "3 Clases",
+      "duration": "0 seg",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    },
+    {
+      "title": "Diseño de Propuesta Irresistible",
+      "category": "Unknown",
+      "expected_classes": "1 Clase",
+      "duration": "26m",
+      "url": "N/A",
+      "found_files_count": 0,
+      "total_size_mb": 0,
+      "files": []
+    }
+  ]
+}

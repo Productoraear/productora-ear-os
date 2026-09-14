@@ -11,9 +11,10 @@ import { SCLASS_ROSTER_14_FORMATS } from '@/lib/constants/pricing-catalog';
 
 interface BookingCalculatorProps {
   initialFormatId?: string;
+  providerInfo?: any; // Add provider info prop
 }
 
-export default function BookingCalculator({ initialFormatId = 'solista-edwin-agudelo' }: BookingCalculatorProps) {
+export default function BookingCalculator({ initialFormatId = 'solista-edwin-agudelo', providerInfo }: BookingCalculatorProps) {
   const [formatoId, setFormatoId] = useState<string>(initialFormatId);
   const [distanciaKm, setDistanciaKm] = useState<number>(0);
   const [horaFin, setHoraFin] = useState<number>(20);
@@ -26,7 +27,7 @@ export default function BookingCalculator({ initialFormatId = 'solista-edwin-agu
   const priceDetails = calculateMariachiRate({
     distanciaKm: Number(distanciaKm),
     horaFin: Number(horaFin),
-    esPremium: true,
+    esPremium: providerInfo?.isPremium || true,
     evento,
     pax,
     tipoEspacio,
@@ -86,7 +87,11 @@ export default function BookingCalculator({ initialFormatId = 'solista-edwin-agu
             onChange={(e) => setFormatoId(e.target.value)}
             className="w-full bg-black/60 border border-[#FF2B44]/40 rounded-lg py-2.5 px-3 text-white focus:ring-2 focus:ring-[#FF2B44] outline-none font-mono text-xs"
           >
-            {SCLASS_ROSTER_14_FORMATS.map((f) => (
+            {providerInfo?.formats?.map((f: any) => ( // Explicitly type 'f' as 'any'
+              <option key={f.id} value={f.id}>
+                {f.name} — {f.basePrice} € ({f.members} {f.members === 1 ? 'músico' : 'músicos'})
+              </option>
+            )) || SCLASS_ROSTER_14_FORMATS.map((f: any) => ( // Explicitly type 'f' as 'any'
               <option key={f.id} value={f.id}>
                 {f.name} — {f.basePrice} € ({f.members} {f.members === 1 ? 'músico' : 'músicos'})
               </option>
@@ -120,7 +125,6 @@ export default function BookingCalculator({ initialFormatId = 'solista-edwin-agu
             <option value="Fiestas">Fiestas Patronales / Festival Público</option>
           </select>
         </div>
-
 
         {evento === 'Boda' && (
           <div className="grid grid-cols-2 gap-4">

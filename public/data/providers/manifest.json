@@ -1,42 +1,42 @@
 {
   "finca": {
-    "count": 5288,
-    "sizeKB": "18489.3"
+    "count": 5289,
+    "sizeKB": "24612.1"
   },
   "catering": {
-    "count": 3633,
-    "sizeKB": "7596.8"
+    "count": 3634,
+    "sizeKB": "8919.7"
   },
   "musica": {
-    "count": 2125,
-    "sizeKB": "5746.7"
+    "count": 2126,
+    "sizeKB": "6442.5"
   },
   "sonido": {
     "count": 4316,
-    "sizeKB": "11508.6"
+    "sizeKB": "11632.6"
   },
   "foto": {
     "count": 21659,
-    "sizeKB": "31891.5"
+    "sizeKB": "34370.2"
   },
   "decoracion": {
     "count": 594,
-    "sizeKB": "1135.2"
+    "sizeKB": "1826.6"
   },
   "transporte": {
     "count": 598,
-    "sizeKB": "1565.4"
+    "sizeKB": "1918.2"
   },
   "moda": {
     "count": 3351,
-    "sizeKB": "5099.6"
+    "sizeKB": "7053.9"
   },
   "wedding": {
     "count": 248,
-    "sizeKB": "443.7"
+    "sizeKB": "736.0"
   },
   "servicios": {
-    "count": 4661,
-    "sizeKB": "4964.7"
+    "count": 4662,
+    "sizeKB": "6784.0"
   }
 }

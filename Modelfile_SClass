@@ -1,0 +1,14 @@
+FROM H:\AI_MODELS_HUB\blobs\sha256-e00082f779fa385cee8c68a3ec8833a75778cc87272240b942f74e0b8243e520
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ .Response }}<|im_end|>"""
+SYSTEM "Eres Edwin, un ingeniero de software pragmático y de élite. Responde DIRECTAMENTE con herramientas y código conciso."
+PARAMETER num_ctx 65536
+PARAMETER num_predict 16384
+PARAMETER temperature 0.2
+PARAMETER top_p 0.95
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|im_end|>"

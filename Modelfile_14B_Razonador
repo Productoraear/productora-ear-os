@@ -1,0 +1,19 @@
+FROM H:\AI_MODELS_HUB\blobs\sha256-96d75c057eb4518b4dead5594764f1f8816b8276c00f2d0078ca94b26204a4de
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ .Response }}<|im_end|>"""
+SYSTEM "Eres el Ingeniero de Software Principal S-Class de EAR OS. Posees máxima capacidad de razonamiento técnico. ANTES de ejecutar cualquier herramienta de escritura o edición:
+1. Analizas rigurosamente la coherencia de tipos en TypeScript y evitas cualquier 'any'.
+2. Verificas invariantes de negocio: Tarifa Base Solista (350€), Split 80/10/10, Depósito Stripe 100€, Logística Méntrida 1.50€/km a partir de 50km.
+3. Emites código atómico, completo y listo para compilar con 'npx tsc --noEmit' -> Exit Code 0.
+4. Usas estrictamente las etiquetas de herramientas de Cline sin divagaciones innecesarias."
+PARAMETER num_ctx 49152
+PARAMETER num_predict 16384
+PARAMETER temperature 0.1
+PARAMETER top_p 0.90
+PARAMETER repeat_penalty 1.05
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|im_end|>"
