@@ -29,6 +29,7 @@ scripts/vampire_mass_extracted.json
 docs/release/COMPREHENSIVE_FORENSIC_INVENTORY.json
 src/data/catalog/ADN_EAR_INDEX.json
 
+vault/
 vault_secrets_backup/
 scratch/
 EAR_OS_CONTROL/
