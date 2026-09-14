@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import {
   Sparkles,
@@ -351,6 +352,110 @@ const ProviderCard: React.FC<SwipeCardProps> = ({ provider, onSwipe, onContactWh
   );
 };
 
+export interface NeuralIntentResult {
+  category: 'SOUND_HARDWARE' | 'B2G_INSTITUTIONAL' | 'MARIACHI_ARTIST' | 'VENUE_FINCA' | 'WEDDING_GENERAL';
+  badge: string;
+  headline: string;
+  responseHtml: string;
+  primaryActionLabel: string;
+  primaryActionUrl: string;
+  secondaryActionLabel?: string;
+  secondaryActionUrl?: string;
+  isCustomRedirect: boolean;
+}
+
+export function analyzeNeuralIntent(rawQuery: string): NeuralIntentResult {
+  const q = rawQuery.toLowerCase();
+
+  // Location extraction
+  let loc = 'Madrid';
+  const towns = ['móstoles', 'mostoles', 'alcorcón', 'alcorcon', 'getafe', 'leganés', 'leganes', 'fuenlabrada', 'madrid', 'toledo', 'méntrida', 'mentrida', 'talavera', 'alcalá', 'aranjuez', 'pozuelo', 'majadahonda', 'las rozas', 'valdemoro', 'pinto', 'parla', 'las ventas', 'chinchón'];
+  for (const t of towns) {
+    if (q.includes(t)) {
+      loc = t.charAt(0).toUpperCase() + t.slice(1);
+      break;
+    }
+  }
+
+  // Detect units
+  let countUnits = '2';
+  const unitMatch = q.match(/(\d+)\s*(altavoz|altavoces|bafle|bafles|cajas|parlante|parlantes|equipos)/);
+  if (unitMatch) {
+    countUnits = unitMatch[1];
+  }
+
+  // 1. HARDWARE / ALTAVOCES / SONORIZACION
+  if (
+    q.includes('altavoz') || q.includes('altavoces') || q.includes('sonido') ||
+    q.includes('bafle') || q.includes('bafles') || q.includes('parlante') ||
+    q.includes('parlantes') || q.includes('line array') || q.includes('bose') ||
+    q.includes('microfono') || q.includes('microfonía') || q.includes('luces') ||
+    q.includes('iluminacion') || q.includes('pantalla') || q.includes('sonorizacion') ||
+    q.includes('sonorización') || q.includes('alquiler') || q.includes('pack')
+  ) {
+    return {
+      category: 'SOUND_HARDWARE',
+      badge: 'DISPONIBILIDAD INMEDIATA CONFIRMADA · ALQUILER DE SONIDO',
+      headline: `DISPONIBILIDAD CONFIRMADA PARA ${countUnits} ALTAVOCES EN ${loc.toUpperCase()}`,
+      responseHtml: `Tenemos disponibilidad para entrega y montaje inmediato en **${loc}**. Disponemos de **Packs de Altavoces Profesionales (Bose F1 Model 812 / Mackie Thump 1300W)**. **¿Qué incluye el pack?** Trípodes telescópicos reforzados, cableado XLR blindado, mesa de sonido con conexión Bluetooth para reproducir desde cualquier móvil y micrófono inalámbrico Shure. Tarifa desde 180 € con montaje y soporte técnico in situ.`,
+      primaryActionLabel: 'VER PACKS DE ALTAVOCES Y MARCAS →',
+      primaryActionUrl: `/proveedores?cat=sonido&provincia=${loc}`,
+      secondaryActionLabel: 'COTIZAR EN DIRECTO CON PRECIO CERRADO',
+      secondaryActionUrl: `/calculadora?cat=sonido&provincia=${loc}`,
+      isCustomRedirect: true
+    };
+  }
+
+  // 2. B2G / INSTITUCIONES / AYUNTAMIENTOS / DIPLOMÁTICOS
+  if (
+    q.includes('ayuntamiento') || q.includes('alcaldia') || q.includes('alcaldía') ||
+    q.includes('festejos') || q.includes('licitacion') || q.includes('licitación') ||
+    q.includes('diplomatico') || q.includes('diplomático') || q.includes('institucion') ||
+    q.includes('institución') || q.includes('concejalia') || q.includes('concejalía') ||
+    q.includes('contrato menor')
+  ) {
+    return {
+      category: 'B2G_INSTITUTIONAL',
+      badge: 'CANAL INSTITUCIONAL B2G HOMOLOGADO (ART. 118 LCSP)',
+      headline: `EXPEDIENTE TÉCNICO B2G PARA ADMINISTRACIONES PÚBLICAS`,
+      responseHtml: `Protocolo oficial activo para instituciones públicas y eventos de protocolo en **${loc}**. Cumplimiento riguroso de la normativa acústica (< 75 dB SPL), suministro con ficha técnica visada, seguro de responsabilidad civil y facturación electrónica vía FACe bajo contrato menor (< 14.250 €).`,
+      primaryActionLabel: 'ACCEDER AL CATÁLOGO INSTITUCIONAL B2G →',
+      primaryActionUrl: '/instituciones/catalogo-360',
+      secondaryActionLabel: 'DESCARGAR DOSSIER TÉCNICO',
+      secondaryActionUrl: '/ayuntamientos',
+      isCustomRedirect: true
+    };
+  }
+
+  // 3. MARIACHI / ARTISTAS / SHOW DE AUTOR
+  if (
+    q.includes('mariachi') || q.includes('edwin agudelo') || q.includes('tenor') ||
+    q.includes('serenata') || q.includes('solista') || q.includes('cantante') ||
+    q.includes('musica en vivo') || q.includes('música en directo')
+  ) {
+    return {
+      category: 'MARIACHI_ARTIST',
+      badge: 'CONTRATACIÓN DIRECTA S-CLASS · ARTISTA EXCLUSIVO',
+      headline: `SHOW DE AUTOR EDWIN AGUDELO & MARIACHI DE GALA`,
+      responseHtml: `Disponibilidad para actuación en **${loc}**. Formato Solista desde 350 € o Quinteto Imperial desde 750 € con equipo de sonido Bose incluido. Split soberano 80/10/10 y reserva con Price-Lock en Stripe.`,
+      primaryActionLabel: 'RESERVAR SHOW CON PRICE-LOCK →',
+      primaryActionUrl: `/calculadora?formato=solista-edwin-agudelo&provincia=${loc}`,
+      isCustomRedirect: true
+    };
+  }
+
+  // 4. WEDDING GENERAL
+  return {
+    category: 'WEDDING_GENERAL',
+    badge: 'PROPUESTA TÉCNICA VIABLE DETECTADA',
+    headline: 'PROPUESTA PERSONALIZADA PARA VUESTRA CELEBRACIÓN',
+    responseHtml: 'Hemos analizado vuestra petición. Para este tipo de celebración recomendamos una combinación de **Música en Vivo de Gala** en momentos cumbre, sonorización nítida y un equipo que garantice el protocolo sin sobrecostes.',
+    primaryActionLabel: 'CONTINUAR A ELEGIR ATMÓSFERA',
+    primaryActionUrl: '',
+    isCustomRedirect: false
+  };
+}
+
 // ==========================================
 // 🚀 ASISTENTE DE EXPERIENCIA NUPCIAL
 // ==========================================
@@ -363,6 +468,8 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
   initialProvince = 'Madrid',
   initialService = 'Servicio Integral'
 }) => {
+  const router = useRouter();
+
   // Current Step in the Couple's Journey: 1, 2, 3, 4
   const [currentStep, setCurrentStep] = useState<number>(1);
 
@@ -376,10 +483,11 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
   const [totalBudget, setTotalBudget] = useState<number>(8000);
   const [guestCount, setGuestCount] = useState<number>(120);
 
-  // Natural Language Input
+  // Natural Language Input & Neural Intent
   const [userInput, setUserInput] = useState('');
   const [analyzing, setAnalyzing] = useState(false);
   const [adviceGenerated, setAdviceGenerated] = useState(false);
+  const [currentIntent, setCurrentIntent] = useState<NeuralIntentResult>(() => analyzeNeuralIntent(''));
 
   // Providers & Selection
   const [availableProviders, setAvailableProviders] = useState<MatchmakerProvider[]>(SEED_PROVIDERS);
@@ -415,14 +523,24 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
     );
   };
 
+  useEffect(() => {
+    if (userInput.trim().length > 6) {
+      const res = analyzeNeuralIntent(userInput);
+      setCurrentIntent(res);
+      setAdviceGenerated(true);
+    }
+  }, [userInput]);
+
   const handleAnalyzeInput = () => {
     if (!userInput.trim()) return;
     setAnalyzing(true);
 
     setTimeout(() => {
       setAnalyzing(false);
+      const res = analyzeNeuralIntent(userInput);
+      setCurrentIntent(res);
       setAdviceGenerated(true);
-    }, 700);
+    }, 300);
   };
 
   const handleSwipe = (direction: 'left' | 'right') => {
@@ -592,14 +710,31 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  className="p-5 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-2 text-xs text-white/80 leading-relaxed font-light"
+                  className={`p-5 rounded-2xl border space-y-3 text-xs leading-relaxed font-light ${
+                    currentIntent.category === 'SOUND_HARDWARE'
+                      ? 'bg-blue-950/30 border-blue-500/40 text-blue-100'
+                      : currentIntent.category === 'B2G_INSTITUTIONAL'
+                      ? 'bg-amber-950/30 border-amber-500/40 text-amber-100'
+                      : 'bg-emerald-950/20 border-emerald-500/30 text-white/80'
+                  }`}
                 >
-                  <div className="flex items-center gap-2 text-emerald-400 font-bold font-mono uppercase">
-                    <CheckCircle2 size={15} />
-                    <span>Propuesta Técnica Viable Detectada</span>
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 font-bold font-mono uppercase text-xs tracking-wider">
+                      <CheckCircle2 size={16} className={currentIntent.category === 'SOUND_HARDWARE' ? 'text-blue-400' : 'text-emerald-400'} />
+                      <span className={currentIntent.category === 'SOUND_HARDWARE' ? 'text-blue-400' : 'text-emerald-400'}>
+                        {currentIntent.badge}
+                      </span>
+                    </div>
                   </div>
-                  <p>
-                    Hemos analizado vuestra petición. Para este tipo de celebración recomendamos una combinación de <strong>Música en Vivo de Gala</strong> en momentos cumbre, sonorización nítida y un equipo que garantice el protocolo sin sobrecostes.
+
+                  <h4 className="text-sm font-bold font-syne uppercase text-white tracking-wide">
+                    {currentIntent.headline}
+                  </h4>
+
+                  <p className="whitespace-pre-line text-xs leading-relaxed">
+                    {currentIntent.responseHtml.split('**').map((chunk, idx) => 
+                      idx % 2 === 1 ? <strong key={idx} className="font-bold text-white">{chunk}</strong> : chunk
+                    )}
                   </p>
                 </motion.div>
               )}
@@ -607,25 +742,30 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-white/5">
                 <div className="flex items-center gap-2 text-[11px] font-mono text-white/40">
                   <ShieldCheck size={14} className="text-[#ecb613]" />
-                  <span>Sin compromiso · Atención directa de profesionales</span>
+                  <span>Sin compromiso · Atención directa de profesionales homologados</span>
                 </div>
 
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  {!adviceGenerated && userInput.trim() && (
+                <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
+                  {currentIntent.secondaryActionUrl && adviceGenerated && (
                     <button
-                      onClick={handleAnalyzeInput}
-                      disabled={analyzing}
-                      className="px-6 py-4 bg-white/10 hover:bg-white/15 text-white font-bold text-xs uppercase tracking-wider rounded-2xl transition-all cursor-pointer"
+                      onClick={() => router.push(currentIntent.secondaryActionUrl!)}
+                      className="px-5 py-3.5 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all cursor-pointer border border-white/15"
                     >
-                      {analyzing ? 'Analizando...' : 'Comprobar Opciones'}
+                      {currentIntent.secondaryActionLabel}
                     </button>
                   )}
 
                   <button
-                    onClick={() => setCurrentStep(2)}
+                    onClick={() => {
+                      if (currentIntent.isCustomRedirect && currentIntent.primaryActionUrl) {
+                        router.push(currentIntent.primaryActionUrl);
+                      } else {
+                        setCurrentStep(2);
+                      }
+                    }}
                     className="w-full sm:w-auto px-8 py-4 bg-[#ecb613] hover:bg-white text-black font-black text-xs uppercase tracking-widest rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 transition-all cursor-pointer hover:scale-105"
                   >
-                    <span>Continuar a Elegir Atmósfera</span>
+                    <span>{currentIntent.primaryActionLabel}</span>
                     <ArrowRight size={16} />
                   </button>
                 </div>
