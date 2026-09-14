@@ -18,13 +18,26 @@ import {
   Maximize2,
   Users
 } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { InventoryEngine, InventoryItem } from '@/lib/constants/inventory-catalog';
 
 export const AcousticSpatialMatcher: React.FC = () => {
-  const [m2, setM2] = useState<number>(20);
-  const [pax, setPax] = useState<number>(25);
-  const [selectedBrand, setSelectedBrand] = useState<string>('All');
+  const searchParams = useSearchParams();
+  const paramPax = searchParams ? Number(searchParams.get('pax')) : 0;
+  const paramM2 = searchParams ? Number(searchParams.get('m2')) : 0;
+  const paramBrand = searchParams ? searchParams.get('brand') : null;
+  const paramCat = searchParams ? searchParams.get('cat') : null;
+
+  const initialPax = paramPax > 0 ? paramPax : 50;
+  const initialM2 = paramM2 > 0 ? paramM2 : Math.max(Math.round(initialPax * 1.5), 35);
+  const initialBrand = paramBrand || 'All';
+  const initialCat = (paramCat === 'altavoces' || paramCat === 'sonido') ? 'ALTAVOCES' : 'All';
+
+  const [m2, setM2] = useState<number>(initialM2);
+  const [pax, setPax] = useState<number>(initialPax);
+  const [selectedBrand, setSelectedBrand] = useState<string>(initialBrand);
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCat);
   const [eventDate, setEventDate] = useState<string>(
     new Date(Date.now() + 86400000 * 7).toISOString().split('T')[0]
   );
@@ -38,10 +51,16 @@ export const AcousticSpatialMatcher: React.FC = () => {
 
   const recommendation = InventoryEngine.recommendGearForSpace(m2, pax);
 
-  // Filter items by brand if selected
-  const availableItems = catalog.filter(item => 
-    selectedBrand === 'All' ? true : item.brand === selectedBrand
-  );
+  // Filter items by brand and category
+  const availableItems = catalog.filter(item => {
+    const matchBrand = selectedBrand === 'All' ? true : item.brand === selectedBrand;
+    const matchCategory = selectedCategory === 'All' ? true : (
+      selectedCategory === 'ALTAVOCES' 
+        ? (item.category === 'ALTAVOCES' || item.category === 'PACKS_SONIDO')
+        : item.category === selectedCategory
+    );
+    return matchBrand && matchCategory;
+  });
 
   const handleReserve = async (item: InventoryItem) => {
     setIsReserving(true);
@@ -63,19 +82,19 @@ export const AcousticSpatialMatcher: React.FC = () => {
         // Refresh catalog state
         setCatalog([...InventoryEngine.getCatalog()]);
 
-        // Proceed to Stripe checkout for the 0.50€ deposit
+        // Proceed to Stripe checkout for the 100€ deposit (S-Class SSOT)
         const payRes = await fetch('/api/payments/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            amount: 0.50,
-            concept: `Reserva Inventario: ${item.name} (${eventDate})`,
+            amount: 100.00,
+            concept: `Reserva Inventario S-Class: ${item.name} (${eventDate})`,
             metadata: {
               itemId: item.id,
               m2,
               pax,
               eventDate,
-              deposit: 0.50
+              deposit: 100.00
             }
           })
         });
@@ -176,22 +195,50 @@ export const AcousticSpatialMatcher: React.FC = () => {
         </div>
       </div>
 
-      {/* SELECTOR DE MARCAS */}
-      <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
-        <span className="text-[10px] font-mono uppercase text-slate-400 font-bold shrink-0">Filtrar por Marca:</span>
-        {['All', 'Bose', 'L-Acoustics', 'JBL', 'Electro-Voice', 'Shure', 'Behringer', 'Chauvet', 'Cameo'].map((brand) => (
-          <button
-            key={brand}
-            onClick={() => setSelectedBrand(brand)}
-            className={`px-4 py-1.5 rounded-full text-xs font-mono font-bold uppercase transition-all shrink-0 cursor-pointer ${
-              selectedBrand === brand 
-                ? 'bg-[#ecb613] text-black shadow-md' 
-                : 'bg-white/5 text-slate-400 hover:text-white border border-white/5'
-            }`}
-          >
-            {brand}
-          </button>
-        ))}
+      {/* SELECTORES DE CATEGORÍA Y MARCA */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          <span className="text-[10px] font-mono uppercase text-slate-400 font-bold shrink-0">Categoría:</span>
+          {[
+            { id: 'All', label: 'Todos los Equipos' },
+            { id: 'ALTAVOCES', label: '🔊 Altavoces & P.A.' },
+            { id: 'PACKS_SONIDO', label: '📦 Packs de Sonido' },
+            { id: 'MICROFONIA', label: '🎙️ Microfonía Shure' },
+            { id: 'MESAS', label: '🎛️ Mesas Digitales' },
+            { id: 'ILUMINACION_DJ', label: '💡 Iluminación DJ' },
+            { id: 'ILUMINACION_EVENTOS', label: '✨ Guirnaldas & Decoración' }
+          ].map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold uppercase transition-all shrink-0 cursor-pointer ${
+                selectedCategory === cat.id 
+                  ? 'bg-white text-black font-black shadow-md' 
+                  : 'bg-white/5 text-slate-400 hover:text-white border border-white/5'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* SELECTOR DE MARCAS */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          <span className="text-[10px] font-mono uppercase text-slate-400 font-bold shrink-0">Marca:</span>
+          {['All', 'Bose', 'L-Acoustics', 'JBL', 'Electro-Voice', 'Shure', 'Behringer', 'Chauvet', 'Cameo'].map((brand) => (
+            <button
+              key={brand}
+              onClick={() => setSelectedBrand(brand)}
+              className={`px-3 py-1 rounded-lg text-[11px] font-mono font-bold uppercase transition-all shrink-0 cursor-pointer ${
+                selectedBrand === brand 
+                  ? 'bg-[#ecb613] text-black shadow-sm font-black' 
+                  : 'bg-white/5 text-slate-400 hover:text-white border border-white/5'
+              }`}
+            >
+              {brand}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* RESULTADO DEL CÁLCULO & RECOMENDACIÓN MATCH */}
@@ -211,7 +258,7 @@ export const AcousticSpatialMatcher: React.FC = () => {
           <div className="text-left lg:text-right bg-black/50 p-4 rounded-2xl border border-white/5">
             <span className="text-[10px] text-slate-500 font-mono uppercase block">Presupuesto Sugerido Pack</span>
             <span className="text-3xl font-display font-black text-[#ecb613]">{recommendation.estimatedBasePrice} €</span>
-            <span className="text-[9px] text-slate-400 block font-mono">Garantía Reserva: 0.50 €</span>
+            <span className="text-[9px] text-emerald-400 block font-mono font-bold">Depósito Price-Lock: 100,00 € (SHA-256)</span>
           </div>
         </div>
 
@@ -309,7 +356,7 @@ export const AcousticSpatialMatcher: React.FC = () => {
           >
             <Lock size={16} /> 
             {InventoryEngine.getAvailableStock(recommendation.recommendedSoundPack.id) > 0
-              ? `Bloquear Fecha y Reservar Pack (0.50 € Garantía)`
+              ? `Bloquear Fecha y Reservar Pack (100,00 € Depósito)`
               : 'Sin Stock para Esta Fecha'}
           </button>
         </div>
@@ -371,7 +418,7 @@ export const AcousticSpatialMatcher: React.FC = () => {
                         : 'bg-zinc-900 text-zinc-600 cursor-not-allowed'
                     }`}
                   >
-                    {available > 0 ? 'Reservar Unidad (0.50 €)' : 'Agotado'}
+                    {available > 0 ? 'Reservar Unidad (100,00 € Depósito)' : 'Agotado'}
                   </button>
                 </div>
               </div>

@@ -54,7 +54,7 @@ export default function AlquilerSonidoIluminacionPage() {
             <Clock className="w-8 h-8 text-[#ecb613]" />
             <h4 className="font-bold text-lg text-white">Price-Lock 72h con Criptofirma</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Al abonar tu garantía de reserva (0.50 €), el precio y las unidades de inventario quedan selladas matemáticamente mediante SHA-256.
+              Al abonar tu garantía de reserva (100,00 €), el precio y las unidades de inventario quedan selladas matemáticamente mediante SHA-256.
             </p>
           </div>
 
