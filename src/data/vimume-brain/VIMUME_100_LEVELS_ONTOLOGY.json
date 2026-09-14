@@ -1,0 +1,178 @@
+{
+  "project": "VIMUME (Viaje Musical por la Memoria)",
+  "version": "S-CLASS 2026 // 100-LEVEL MASTER ONTOLOGY",
+  "framework": "OMS Envejecimiento Saludable 2021-2030 // Art. 118 LCSP",
+  "totalLevels": 100,
+  "blocks": [
+    {
+      "blockId": "A",
+      "name": "Fundamentos Neuroclínicos y Marco OMS",
+      "range": "L1-L10",
+      "levels": [
+        { "level": 1, "title": "Neurociencia Afectiva y Córtex Auditivo", "scope": "Procesamiento límbico y retención de memoria emocional" },
+        { "level": 2, "title": "Arrastre Entrópico de Ondas Cerebrales (Brainwave Entrainment)", "scope": "Sincronización oscilatoria y coherencia interhemisférica" },
+        { "level": 3, "title": "Oscilación Frecuencial Gamma 40 Hz", "scope": "Sincronización interneuronal y activación microglial" },
+        { "level": 4, "title": "Síntesis Binaural Nativa y Pulso Isocrónico", "scope": "Web Audio API con portadoras de 220Hz/260Hz" },
+        { "level": 5, "title": "Modulación de la Respuesta Neuroinflamatoria (Microglía)", "scope": "Reducción de placas beta-amiloide y citoquinas inflamatorias" },
+        { "level": 6, "title": "Preservación de la Memoria Procedimental e Implícita", "scope": "Recuperación de letras, ritmos y asociaciones motoras primarias" },
+        { "level": 7, "title": "Reducción de Agitación Nocturna y Delirium (Escala NPI-NH)", "scope": "Disminución de sintomatología conductual y psicológica" },
+        { "level": 8, "title": "Marco OMS para el Envejecimiento Saludable (2021-2030)", "scope": "Alineamiento con directivas internacionales de salud geriátrica" },
+        { "level": 9, "title": "Terapias No Farmacológicas Homologadas (TNF)", "scope": "Sustitución progresiva de antipsicóticos y benzodiacepinas" },
+        { "level": 10, "title": "Límite de Presión Acústica de Seguridad (<75 dB SPL)", "scope": "Calibración estricta para evitar sobreestimulación o fatiga auditiva" }
+      ]
+    },
+    {
+      "blockId": "B",
+      "name": "Metodología y Herramientas VIMUME",
+      "range": "L11-L20",
+      "levels": [
+        { "level": 11, "title": "Mapeo de la Banda Sonora Vital™", "scope": "Ventana biográfica 15-25 años" },
+        { "level": 12, "title": "Pasaporte Neuroacústico Digital QR/NFC", "scope": "Identificación de canciones ancla y telemetría" },
+        { "level": 13, "title": "Consola Neuroacústica Gamma 40Hz", "scope": "Reproducción binaural nativa sin latencia" },
+        { "level": 14, "title": "Estímulos Sonoros de Reminiscencia", "scope": "Copla, bolero, pasodoble y grabaciones de época" },
+        { "level": 15, "title": "Sesiones Individuales con Auriculares Abiertos / Cerrados HD", "scope": "Inmersión acústica personalizada" },
+        { "level": 16, "title": "Intervenciones Grupales en Centros de Día y Residencias", "scope": "Dinamización comunitaria y empatía reactiva" },
+        { "level": 17, "title": "Registro Biográfico Emocional Intergeneracional", "scope": "Historias de vida compartidas con familiares" },
+        { "level": 18, "title": "Calibración Sonocinesiológica", "scope": "Movimiento adaptado, coordinación y psicomotricidad" },
+        { "level": 19, "title": "Diario de Evolución Conductual para Cuidadores", "scope": "Monitoreo cuantitativo del estado de ánimo" },
+        { "level": 20, "title": "Bóveda de Contenidos Históricos y Lírica Tradicional", "scope": "Archivo restaurado de patrimonio musical hispano" }
+      ]
+    },
+    {
+      "blockId": "C",
+      "name": "Filosofía Simbólica y Movimiento Social",
+      "range": "L21-L30",
+      "levels": [
+        { "level": 21, "title": "Parábola del Colibrí: Haciendo Nuestra Parte", "scope": "Compromiso ético individual frente a retos colectivos" },
+        { "level": 22, "title": "Dignificación de los Abuelos y Abuelas", "scope": "Reconocimiento como guardianes de la sabiduría" },
+        { "level": 23, "title": "Mitigación de la Soledad No Deseada en la Tercera Edad", "scope": "Revitalización de la conexión social" },
+        { "level": 24, "title": "Reconexión Familiar y Reconciliación Intergeneracional", "scope": "Puente afectivo entre nietos, hijos y abuelos" },
+        { "level": 25, "title": "Humanización de los Entornos Sociosanitarios", "scope": "Espacios cálidos, musicales y respetuosos" },
+        { "level": 26, "title": "Rescate del Patrimonio Oral y Musical Inmaterial", "scope": "Preservación de canciones y memorias populares" },
+        { "level": 27, "title": "Ética del Cuidado y Cero Contención Mecánica/Química", "scope": "Respeto a la autonomía y confort del residente" },
+        { "level": 28, "title": "Gratitud Activa como Motor de Transformación Social", "scope": "Cultura del agradecimiento a nuestros mayores" },
+        { "level": 29, "title": "El Arte y la Música como Derecho Fundamental en la Vejez", "scope": "Acceso universal a la cultura viva" },
+        { "level": 30, "title": "Arquitectura del Legado Emocional Inmutable", "scope": "Trascendencia afectiva que perdura en las familias" }
+      ]
+    },
+    {
+      "blockId": "D",
+      "name": "Arquetipos de Stakeholders y Red Humana",
+      "range": "L31-L40",
+      "levels": [
+        { "level": 31, "title": "Senior / Residentes con Deterioro Cognitivo u Alzheimer", "scope": "Beneficiarios directos del protocolo" },
+        { "level": 32, "title": "Familias y Cuidadores Principales", "scope": "Acompañamiento y alivio emocional" },
+        { "level": 33, "title": "Terapeutas Ocupacionales, Psicogeriatras y Neurólogos", "scope": "Prescriptores clínicos y evaluadores" },
+        { "level": 34, "title": "Directores de Residencias y Centros de Día", "scope": "Implementadores institucionales" },
+        { "level": 35, "title": "Concejales de Bienestar Social, Mayores y Festejos", "scope": "Responsables de políticas públicas municipales" },
+        { "level": 36, "title": "Secretarios e Interventores Municipales", "scope": "Fiscalización de contratos menores Art. 118 LCSP" },
+        { "level": 37, "title": "Directores de RSC y Fundaciones Bancarias", "scope": "Patrocinio e inversión de impacto" },
+        { "level": 38, "title": "Medios de Comunicación, Prensa y Divulgadores Científicos", "scope": "Visibilidad y sensibilización pública" },
+        { "level": 39, "title": "Asociaciones de Familiares de Enfermos de Alzheimer (AFAs)", "scope": "Alianzas comunitarias y derivación" },
+        { "level": 40, "title": "Voluntariado y Embajadores Territoriales", "scope": "Extensión comunitaria en pueblos y barrios" }
+      ]
+    },
+    {
+      "blockId": "E",
+      "name": "Silver Economy y Empresarios de Productos/Servicios",
+      "range": "L41-L50",
+      "levels": [
+        { "level": 41, "title": "Mercado de la Silver Economy", "scope": "Banca, seguros y telecomunicaciones para mayores" },
+        { "level": 42, "title": "Fabricantes de Audioprótesis y Soluciones Auditivas", "scope": "Sinergias con fonoaudiología y audiología" },
+        { "level": 43, "title": "Empresas de Domótica, Teleasistencia y Sensorización Senior", "scope": "Hogares inteligentes adaptados" },
+        { "level": 44, "title": "Mobiliario Adaptado y Ergonomía Geriátrica", "scope": "Confort físico en centros y domicilios" },
+        { "level": 45, "title": "Nutrición Adaptada y Suplementación Neurocognitiva", "scope": "Salud integral del cerebro senior" },
+        { "level": 46, "title": "Ortopedia Avanzada y Movilidad Reducida", "scope": "Facilitación del movimiento al compás de la música" },
+        { "level": 47, "title": "Operadores de Residencias Privadas y Redes de Cuidados", "scope": "Diferenciación de marca asistencial S-Class" },
+        { "level": 48, "title": "Soluciones de Software de Gestión Residencial", "scope": "Integración del Pasaporte VIMUME en historiales" },
+        { "level": 49, "title": "Patrocinadores de Kits Neuroacústicos VIMUME", "scope": "Financiación de equipamiento para centros vulnerables" },
+        { "level": 50, "title": "Sello de Calidad y Homologación Ética Silver Economy", "scope": "Acreditación de impacto real auditado" }
+      ]
+    },
+    {
+      "blockId": "F",
+      "name": "Contratación Pública, IMSERSO y B2G",
+      "range": "L51-L60",
+      "levels": [
+        { "level": 51, "title": "Contrato Menor del Sector Público", "scope": "Art. 118.1 LCSP con límite <15.000 € + IVA" },
+        { "level": 52, "title": "Justificación de Exclusividad y Singularidad Artística", "scope": "Art. 168 LCSP con Edwin Agudelo como tenor titular" },
+        { "level": 53, "title": "Códigos CPV Oficiales", "scope": "85320000-8 (Servicios Sociales) y 92300000-4 (Servicios de Entretenimiento)" },
+        { "level": 54, "title": "Tramitación con Código DIR3 para Facturación Electrónica", "scope": "Emisión directa en plataforma FACe / FacturaE" },
+        { "level": 55, "title": "Pliegos Técnicos para Programas Municipales", "scope": "Envejecimiento activo y prevención de dependencia" },
+        { "level": 56, "title": "Subvenciones IMSERSO y Ocio Saludable", "scope": "Canalización de programas de bienestar" },
+        { "level": 57, "title": "Fondos de Financiación del 0,7% IRPF para Fines Sociales", "scope": "Convocatorias autonómicas y estatales" },
+        { "level": 58, "title": "Fondos Europeos NextGenerationEU", "scope": "Modernización del modelo de cuidados" },
+        { "level": 59, "title": "Convenios Marco Interinstitucionales", "scope": "Acuerdos con Ayuntamientos y Diputaciones" },
+        { "level": 60, "title": "Certificados de Solvencia Técnica, AEAT, TGSS y ROLECE", "scope": "Cumplimiento legal inmutable para licitar" }
+      ]
+    },
+    {
+      "blockId": "G",
+      "name": "Modelo Financiero, Impacto SROI y Split Soberano",
+      "range": "L61-L70",
+      "levels": [
+        { "level": 61, "title": "Split Soberano Inmutable 80/10/10", "scope": "80% Artista / 10% EAR OS / 10% VIMUME" },
+        { "level": 62, "title": "Subsidio Cruzado desde Eventos Comerciales B2C", "scope": "Cada boda financia sesiones terapéuticas" },
+        { "level": 63, "title": "Retorno Social de la Inversión (SROI)", "scope": "Ratio auditado de 1,00 € invertido = 4,85 € de impacto social" },
+        { "level": 64, "title": "Deducciones Fiscales por Mecenazgo", "scope": "35% de desgravación bajo Ley 49/2002" },
+        { "level": 65, "title": "Paquetes de Apadrinamiento Corporativo ESG", "scope": "Tiers Oro (3.000€) y Platino (5.000€) para empresas" },
+        { "level": 66, "title": "Tarifas Homologadas por Sesión y Proyecto", "scope": "Transparencia tarifaria sin sobrecostes" },
+        { "level": 67, "title": "Ahorro en Presupuesto Sanitario", "scope": "Reducción de caídas, visitas a urgencias y psicofármacos" },
+        { "level": 68, "title": "Reducción de Tasa de Burnout en Personal Cuidador", "scope": "Mejora del clima laboral en residencias" },
+        { "level": 69, "title": "Transparencia Financiera Auditada", "scope": "Trazabilidad con hashes SHA-256" },
+        { "level": 70, "title": "Modelo de Sostenibilidad Autónoma", "scope": "Autosuficiencia financiera sin depender de subsidios" }
+      ]
+    },
+    {
+      "blockId": "H",
+      "name": "Infraestructura Digital y pSEO Territorial",
+      "range": "L71-L80",
+      "levels": [
+        { "level": 71, "title": "Cobertura pSEO Hiperlocal para 8.131 Municipios", "scope": "Captura orgánica de demanda en Google y Perplexity" },
+        { "level": 72, "title": "Landings Dedicadas B2G", "scope": "/vimume/b2g y /ocasiones/ayuntamientos" },
+        { "level": 73, "title": "Portales de Conversión Específicos", "scope": "/vimume/asociaciones y /vimume/proveedores-senior" },
+        { "level": 74, "title": "Portal Familiar Interactivo", "scope": "/vimume/familia para el registro de la Banda Sonora Vital" },
+        { "level": 75, "title": "Sala de Prensa y Trazabilidad SROI", "scope": "/vimume/prensa para periodistas y concejales" },
+        { "level": 76, "title": "Marcado de Datos Estructurados Schema.org", "scope": "MedicalTherapy, GovernmentService y Organization" },
+        { "level": 77, "title": "Optimización para Motores Generativos (GEO)", "scope": "Reconocimiento en ChatGPT, SearchGPT y Claude" },
+        { "level": 78, "title": "Enrutamiento pSEO por Provincias y Comarcas", "scope": "Indexación por nodos territoriales" },
+        { "level": 79, "title": "Trazabilidad de Leads y Telemetría", "scope": "Panel de control en /admin/nexus" },
+        { "level": 80, "title": "Integración con Centralita WhatsApp B2G", "scope": "Atención institucional inmediata (+34 693 693 048)" }
+      ]
+    },
+    {
+      "blockId": "I",
+      "name": "Rigor Técnico, Acústica y Producción",
+      "range": "L81-L90",
+      "levels": [
+        { "level": 81, "title": "Equipos de Sonido Bose F1 Model 812 + S1 Pro", "scope": "Dispersión vertical controlada y sonido cristalino" },
+        { "level": 82, "title": "Microfonía Inalámbrica Shure Beta 87A / GLXD4", "scope": "Respuesta en frecuencia óptima y rechazo al acople" },
+        { "level": 83, "title": "Consola de Mezcla Behringer XR18", "scope": "Procesamiento dinámico y presets por estancia" },
+        { "level": 84, "title": "Calibración Sonocinesiológica a 12 W/pax", "scope": "Presión acústica homogénea sin zonas sordas" },
+        { "level": 85, "title": "Control de Reflexiones y Trampas de Graves", "scope": "Acondicionamiento para residencias con reverberación" },
+        { "level": 86, "title": "Póliza de Responsabilidad Civil de 1.000.000 €", "scope": "Blindaje legal para auditorios y centros públicos" },
+        { "level": 87, "title": "Protocolos de Seguridad y Evacuación", "scope": "Cableado de seguridad oculto y vías libres" },
+        { "level": 88, "title": "Iluminación Escénica Lógica", "scope": "Cero parpadeo estroboscópico, apto para epilepsia fotosensible" },
+        { "level": 89, "title": "Grabación Multitrack 4K HDR", "scope": "Archivo de recuerdo y evidencia terapéutica" },
+        { "level": 90, "title": "Mantenimiento Preventivo de Hardware Audiovisual", "scope": "Inspección periódica de componentes" }
+      ]
+    },
+    {
+      "blockId": "J",
+      "name": "Legado, AIE/SGAE y Futuro Transcendente",
+      "range": "L91-L100",
+      "levels": [
+        { "level": 91, "title": "Voz Principal de Tenor Lírico de Conservatorio", "scope": "Edwin Agudelo como vehículo vocal de alta resonancia" },
+        { "level": 92, "title": "Registro de Obras Originales en SGAE y AIE", "scope": "Monetización y protección de propiedad intelectual" },
+        { "level": 93, "title": "Bóveda Histórica de 8 Servicios de Autor", "scope": "Catálogo inmutable de producciones y canciones" },
+        { "level": 94, "title": "Red de Embajadores Territoriales", "scope": "Atribución con tokens claim_{slug}_10x" },
+        { "level": 95, "title": "Archivo Documental de Historias de Vida", "scope": "Bancos de memoria oral para municipios" },
+        { "level": 96, "title": "Cátedra Abierta de Neuroacústica Aplicada", "scope": "Formación para terapeutas y músicos" },
+        { "level": 97, "title": "Transferencia del Protocolo VIMUME a Escala Nacional", "scope": "Expansión a las 17 Comunidades Autónomas" },
+        { "level": 98, "title": "Publicaciones Científicas y Alianzas Universitarias", "scope": "Validación en comités de bioética y revistas indexadas" },
+        { "level": 99, "title": "Transformación del Modelo de Cuidado en España", "scope": "Transición de la sedación a la estimulación neuroemocional" },
+        { "level": 100, "title": "Arquitectura Soberana de Legado Eterno", "scope": "Impacto intergeneracional que trasciende en el tiempo" }
+      ]
+    }
+  ]
+}

@@ -93,6 +93,7 @@ public/assets/shadow_vendors/
 .firebase/
 public/images/navidad_2026/
 src/data/vimume-brain/
+!src/data/vimume-brain/VIMUME_100_LEVELS_ONTOLOGY.json
 docs/
 scripts/reports/visual_audit/
 scripts/nightcrawler_results/

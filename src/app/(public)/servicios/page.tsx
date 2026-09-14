@@ -10,7 +10,6 @@ import {
   Cpu, Music, Flame, GlassWater, Crown, Disc, Utensils, 
   Headphones, Camera, Video, Lightbulb, ClipboardList, ChevronRight
 } from 'lucide-react';
-import publicCatalog from '@/data/catalog/vampire_public_catalog_zk.json';
 import { useEventCart, CartItem } from '@/context/EventCartContext';
 import { NeuralJourneyApex } from '@/app/components/SClassScreens/NeuralJourneyApex';
 import { AcousticSpatialMatcher } from '@/app/components/SClassScreens/AcousticSpatialMatcher';
