@@ -35,7 +35,10 @@ git commit -m "feat(omega): VoiceStudio AI integration, Addy Osmani Agent Skills
 
 echo.
 echo [5/5] Desplegando a GitHub y activando webhook de Netlify Edge...
+echo Pushing a origin (productora-ear-os)...
 git push origin main
+echo Pushing a vercel-repo (Productoraear/ear - Vinculado a Netlify)...
+git push vercel-repo main
 
 if %errorlevel% equ 0 (
     echo.
