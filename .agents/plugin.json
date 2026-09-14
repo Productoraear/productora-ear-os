@@ -1,0 +1,16 @@
+{
+  "name": "agent-skills",
+  "version": "1.0.0",
+  "description": "Production-grade engineering skills for AI coding agents (Spec -> Plan -> Build -> Test -> Review -> Simplify -> Ship) by Addy Osmani (Google Chrome)",
+  "author": "Addy Osmani",
+  "homepage": "https://github.com/addyosmani/agent-skills",
+  "skills": "./skills",
+  "agents": "./agents",
+  "references": "./references",
+  "hooks": "./hooks",
+  "commands": "./commands",
+  "governance": {
+    "framework": "ANTIGRAVITY OMEGA v7.0 (S-CLASS)",
+    "doctrine": "Spec before code -> Small atomic tasks -> Incremental build -> Tests are proof -> Adversarial review -> Simplify -> Ship"
+  }
+}

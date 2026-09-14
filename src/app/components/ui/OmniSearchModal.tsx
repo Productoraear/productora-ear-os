@@ -62,14 +62,9 @@ export default function OmniSearchModal() {
     return GLOBAL_SEARCH_INDEX.filter((item) => {
       const matchCat = selectedCategory === 'all' || item.category === selectedCategory;
       if (!matchCat) return false;
-      if (!q) return true;
-
-      const titleMatch = item.title.toLowerCase().includes(q);
-      const subMatch = item.subtitle.toLowerCase().includes(q);
-      const catMatch = item.categoryLabel.toLowerCase().includes(q);
-      const keywordMatch = item.keywords.some((k) => k.toLowerCase().includes(q));
-
-      return titleMatch || subMatch || catMatch || keywordMatch;
+      const tokens = q.split(/\s+/).filter(Boolean);
+      const combinedText = `${item.title} ${item.subtitle} ${item.categoryLabel} ${item.keywords.join(' ')}`.toLowerCase();
+      return tokens.every(token => combinedText.includes(token));
     });
   }, [query, selectedCategory]);
 

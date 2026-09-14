@@ -47,7 +47,7 @@ export const GLOBAL_SEARCH_INDEX: SearchIndexItem[] = [
     category: 'servicios',
     categoryLabel: 'Cotizador',
     url: '/calculadora',
-    price: 'Depósito 10 €',
+    price: 'Depósito 100 € (Price-Lock)',
     badge: 'Stripe Seal',
     keywords: ['calculadora', 'cotizador', 'presupuesto', 'precio', 'tarifa', 'bloquear', 'reserva', 'cuanto cuesta', 'estimacion'],
     image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=400&auto=format&fit=crop'
@@ -335,6 +335,39 @@ export const GLOBAL_SEARCH_INDEX: SearchIndexItem[] = [
     badge: 'Convenios',
     keywords: ['centros', 'residencias de ancianos', 'clinicas', 'estimulacion auditiva', 'salud cerebral'],
     image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=400&auto=format&fit=crop'
+  },
+  {
+    id: 'tool-voice-studio',
+    title: 'Voice Studio AI · Clonación Vocal & Doblaje en 646 Idiomas',
+    subtitle: 'Personalización de canciones con voz de Edwin Agudelo y doblaje de vídeos Higgsfield.',
+    category: 'servicios',
+    categoryLabel: 'IA & Audio S-Class',
+    url: '/voice-studio',
+    price: '0 € Cloud (Bare-Metal)',
+    badge: 'Zero-Shot',
+    keywords: ['voice studio', 'clonacion', 'voz', 'ia', 'edwin agudelo', 'canciones', 'doblaje', 'higgsfield', 'audio']
+  },
+  {
+    id: 'tool-agent-skills',
+    title: 'Agent Skills · Ciclo de Vida de Ingeniería Senior (Addy Osmani)',
+    subtitle: 'Consola interactiva de las 7 compuertas: Spec -> Plan -> Build -> Test -> Review -> Simplify -> Ship.',
+    category: 'servicios',
+    categoryLabel: 'Ingeniería AI',
+    url: '/agent-skills',
+    price: 'Doctrina S-Class',
+    badge: 'SDLC',
+    keywords: ['agent skills', 'addy osmani', 'spec', 'plan', 'build', 'test', 'review', 'simplify', 'ship']
+  },
+  {
+    id: 'srv-alianzas',
+    title: 'Red Soberana de Alianzas & Fincas Homologadas',
+    subtitle: 'Directorio B2B de fincas monumentales, wedding planners y empresas de catering con Split 80/10/10.',
+    category: 'servicios',
+    categoryLabel: 'Alianzas B2B',
+    url: '/alianzas',
+    price: 'Split 80/10/10',
+    badge: 'Partners',
+    keywords: ['alianzas', 'fincas', 'planners', 'catering', 'partners', 'b2b', 'colaboradores']
   }
 ];
 

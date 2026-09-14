@@ -52,6 +52,32 @@ def generate_full_deck():
     providers.append(edwin)
     seen.add('edwin-agudelo')
 
+    # Pre-calcular frecuencia de teléfonos para purgar números dummies/repetidos
+    from collections import Counter
+    phone_counts = Counter()
+    for p in master:
+        raw_ph = (p.get('phone') or p.get('telephone') or '').strip()
+        if raw_ph:
+            clean_digits = re.sub(r'[\s\-\.\(\)]', '', raw_ph)
+            phone_counts[clean_digits] += 1
+
+    # Lista negra de números ficticios / dummies de scraping / fallbacks conocidos
+    BLACKLIST_PHONES = {
+        '34703831064', '+34703831064', '703831064',
+        '34721056835', '+34721056835', '721056835',
+        '34999999999', '999999999',
+        '34727272727', '727272727',
+        '34693693048', '+34693693048', '693693048', # Edwin SSOT único
+        '34605584338', '605584338',
+        '703287473', '34703287473',
+        '34780850659', '780850659',
+        '000000000', '123456789'
+    }
+    # Todo número repetido más de 2 veces en empresas distintas NO es una línea directa verificable
+    for ph_str, count in phone_counts.items():
+        if count > 2:
+            BLACKLIST_PHONES.add(ph_str)
+
     for p in master:
         slug = (p.get('slug') or p.get('id') or '').strip().lower()
         if not slug or slug in seen:
@@ -65,8 +91,18 @@ def generate_full_deck():
         city = p.get('municipality') or prov or 'Madrid'
 
         phone = (p.get('phone') or p.get('telephone') or '').strip()
-        # Never fake Edwin's phone on other vendors
-        has_real_phone = bool(phone and phone != '+34 693 693 048' and 'Edwin' not in name)
+        clean_digits = re.sub(r'[\s\-\.\(\)]', '', phone)
+        
+        # Validación rigurosa de número auténtico y verificable
+        is_valid_format = False
+        if clean_digits:
+            num9 = clean_digits[-9:]
+            if len(num9) == 9 and num9[0] in '6789':
+                is_valid_format = True
+
+        is_known_fake = any(fake in clean_digits for fake in ['703831064', '721056835', '999999999', '727272727', '693693048', '605584338', '703287473', '780850659', '123456789', '000000000'])
+        is_blacklisted = is_known_fake or clean_digits in BLACKLIST_PHONES or ('+34' + clean_digits) in BLACKLIST_PHONES or ('34' + clean_digits) in BLACKLIST_PHONES
+        has_real_phone = bool(phone and is_valid_format and not is_blacklisted and 'Edwin' not in name)
         clean_phone = phone if has_real_phone else ''
 
         price = str(p.get('price') or p.get('basePrice') or 'Consultar')
@@ -74,7 +110,7 @@ def generate_full_deck():
         reviews = int(p.get('reviews', 0) or 0)
 
         profile_url = f"https://www.bodas.net/empresa/{slug}"
-        google_search_url = f"https://www.google.com/search?q={name.replace(' ', '+')}+{city.replace(' ', '+')}+{prov.replace(' ', '+')}"
+        google_search_url = f"https://www.google.com/search?q={name.replace(' ', '+')}+{city.replace(' ', '+')}+{prov.replace(' ', '+')}+telefono"
 
         audit = [
             "Dependencia arriesgada de cuotas fijas en portales externos (150€ - 300€/mes sin garantía de conversión).",

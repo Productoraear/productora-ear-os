@@ -353,7 +353,7 @@ const ProviderCard: React.FC<SwipeCardProps> = ({ provider, onSwipe, onContactWh
 };
 
 export interface NeuralIntentResult {
-  category: 'SOUND_HARDWARE' | 'B2G_INSTITUTIONAL' | 'MARIACHI_ARTIST' | 'VENUE_FINCA' | 'WEDDING_GENERAL';
+  category: 'SOUND_HARDWARE' | 'LED_SCREENS' | 'B2G_INSTITUTIONAL' | 'MARIACHI_ARTIST' | 'DJ_MUSIC' | 'VENUE_FINCA' | 'CATERING' | 'FOTOGRAFIA_VIDEO' | 'CUARTETO_CUERDAS' | 'WEDDING_GENERAL';
   badge: string;
   headline: string;
   responseHtml: string;
@@ -367,46 +367,101 @@ export interface NeuralIntentResult {
 export function analyzeNeuralIntent(rawQuery: string): NeuralIntentResult {
   const q = rawQuery.toLowerCase();
 
-  // Location extraction
+  // 1. Detección Inteligente de Municipio / Provincia (52 Provincias + Principales Ciudades)
   let loc = 'Madrid';
-  const towns = ['móstoles', 'mostoles', 'alcorcón', 'alcorcon', 'getafe', 'leganés', 'leganes', 'fuenlabrada', 'madrid', 'toledo', 'méntrida', 'mentrida', 'talavera', 'alcalá', 'aranjuez', 'pozuelo', 'majadahonda', 'las rozas', 'valdemoro', 'pinto', 'parla', 'las ventas', 'chinchón'];
-  for (const t of towns) {
-    if (q.includes(t)) {
-      loc = t.charAt(0).toUpperCase() + t.slice(1);
+  let locSlug = 'madrid';
+  const locationMap: Record<string, { name: string; slug: string; distMentrida: number }> = {
+    'móstoles': { name: 'Móstoles', slug: 'mostoles', distMentrida: 38 },
+    'mostoles': { name: 'Móstoles', slug: 'mostoles', distMentrida: 38 },
+    'alcorcón': { name: 'Alcorcón', slug: 'alcorcon', distMentrida: 41 },
+    'alcorcon': { name: 'Alcorcón', slug: 'alcorcon', distMentrida: 41 },
+    'getafe': { name: 'Getafe', slug: 'getafe', distMentrida: 46 },
+    'leganés': { name: 'Leganés', slug: 'leganes', distMentrida: 44 },
+    'leganes': { name: 'Leganés', slug: 'leganes', distMentrida: 44 },
+    'fuenlabrada': { name: 'Fuenlabrada', slug: 'fuenlabrada', distMentrida: 40 },
+    'parla': { name: 'Parla', slug: 'parla', distMentrida: 42 },
+    'pinto': { name: 'Pinto', slug: 'pinto', distMentrida: 48 },
+    'valdemoro': { name: 'Valdemoro', slug: 'valdemoro', distMentrida: 52 },
+    'madrid': { name: 'Madrid Capital', slug: 'madrid', distMentrida: 54 },
+    'toledo': { name: 'Toledo', slug: 'toledo', distMentrida: 48 },
+    'méntrida': { name: 'Méntrida (Base Central)', slug: 'mentrida', distMentrida: 0 },
+    'mentrida': { name: 'Méntrida (Base Central)', slug: 'mentrida', distMentrida: 0 },
+    'talavera': { name: 'Talavera de la Reina', slug: 'talavera', distMentrida: 68 },
+    'illescas': { name: 'Illescas', slug: 'illescas', distMentrida: 32 },
+    'torrijos': { name: 'Torrijos', slug: 'torrijos', distMentrida: 29 },
+    'alcalá': { name: 'Alcalá de Henares', slug: 'alcala-de-henares', distMentrida: 78 },
+    'alcala': { name: 'Alcalá de Henares', slug: 'alcala-de-henares', distMentrida: 78 },
+    'aranjuez': { name: 'Aranjuez', slug: 'aranjuez', distMentrida: 62 },
+    'pozuelo': { name: 'Pozuelo de Alarcón', slug: 'pozuelo', distMentrida: 45 },
+    'majadahonda': { name: 'Majadahonda', slug: 'majadahonda', distMentrida: 47 },
+    'las rozas': { name: 'Las Rozas', slug: 'las-rozas', distMentrida: 49 },
+    'barcelona': { name: 'Barcelona', slug: 'barcelona', distMentrida: 640 },
+    'valencia': { name: 'Valencia', slug: 'valencia', distMentrida: 390 },
+    'sevilla': { name: 'Sevilla', slug: 'sevilla', distMentrida: 490 }
+  };
+
+  for (const [key, data] of Object.entries(locationMap)) {
+    if (q.includes(key)) {
+      loc = data.name;
+      locSlug = data.slug;
       break;
     }
   }
 
-  // Detect units
-  let countUnits = '2';
+  // 2. Detección de Aforo / Unidades
+  let detectedUnits = '2';
   const unitMatch = q.match(/(\d+)\s*(altavoz|altavoces|bafle|bafles|cajas|parlante|parlantes|equipos)/);
-  if (unitMatch) {
-    countUnits = unitMatch[1];
-  }
+  if (unitMatch) detectedUnits = unitMatch[1];
 
-  // 1. HARDWARE / ALTAVOCES / SONORIZACION
+  let detectedPax = 50;
+  const paxMatch = q.match(/(\d+)\s*(p|pax|personas|invitados|asistentes)/);
+  if (paxMatch) detectedPax = parseInt(paxMatch[1], 10);
+
+  const calculatedWatts = Math.max(detectedPax * 12, 600);
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 1: SONIDO & ALTAVOCES (Sitemap: /arsenal & /alquiler)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   if (
     q.includes('altavoz') || q.includes('altavoces') || q.includes('sonido') ||
     q.includes('bafle') || q.includes('bafles') || q.includes('parlante') ||
     q.includes('parlantes') || q.includes('line array') || q.includes('bose') ||
-    q.includes('microfono') || q.includes('microfonía') || q.includes('luces') ||
-    q.includes('iluminacion') || q.includes('pantalla') || q.includes('sonorizacion') ||
-    q.includes('sonorización') || q.includes('alquiler') || q.includes('pack')
+    q.includes('microfono') || q.includes('microfonía') || q.includes('sonorizacion') ||
+    q.includes('sonorización') || q.includes('alquiler de equipo')
   ) {
     return {
       category: 'SOUND_HARDWARE',
-      badge: 'DISPONIBILIDAD INMEDIATA CONFIRMADA · ALQUILER DE SONIDO',
-      headline: `DISPONIBILIDAD CONFIRMADA PARA ${countUnits} ALTAVOCES EN ${loc.toUpperCase()}`,
-      responseHtml: `Tenemos disponibilidad para entrega y montaje inmediato en **${loc}**. Disponemos de **Packs de Altavoces Profesionales (Bose F1 Model 812 / Mackie Thump 1300W)**. **¿Qué incluye el pack?** Trípodes telescópicos reforzados, cableado XLR blindado, mesa de sonido con conexión Bluetooth para reproducir desde cualquier móvil y micrófono inalámbrico Shure. Tarifa desde 180 € con montaje y soporte técnico in situ.`,
+      badge: 'STOCK EN TIEMPO REAL · INFRAESTRUCTURA S-CLASS',
+      headline: `DISPONIBILIDAD CONFIRMADA: ${detectedUnits} ALTAVOCES EN ${loc.toUpperCase()}`,
+      responseHtml: `Stock verificado para despliegue en **${loc}**. Para un aforo previsto de **${detectedPax} personas**, la norma técnica requiere **${calculatedWatts} W RMS** (12 W/pax). **Sistemas en inventario:** Bose F1 Model 812, Bose S1 Pro y columnas JBL PRX ONE. **Incluye:** Soportes telescópicos reforzados, cableado balanceado XLR de 10m, mesa de sonido con receptor Bluetooth para reproducir desde móvil y micrófono inalámbrico Shure. Tarifa oficial desde 180 € con montaje y soporte técnico in situ.`,
       primaryActionLabel: 'VER ARSENAL TÉCNICO & DISPONIBILIDAD IN SITU →',
-      primaryActionUrl: `/arsenal?cat=sonido&q=altavoces&provincia=${loc}`,
-      secondaryActionLabel: 'CONFIGURAR EN COTIZADOR DIRECTO',
-      secondaryActionUrl: `/calculadora?cat=sonido&provincia=${loc}`,
+      primaryActionUrl: `/arsenal?cat=sonido&q=altavoces&provincia=${locSlug}`,
+      secondaryActionLabel: 'RESERVAR CON PRICE-LOCK 100 €',
+      secondaryActionUrl: `/alquiler?cat=altavoces&provincia=${locSlug}&pax=${detectedPax}&m2=${Math.max(Math.round(detectedPax * 1.5), 40)}`,
       isCustomRedirect: true
     };
   }
 
-  // 2. B2G / INSTITUCIONES / AYUNTAMIENTOS / DIPLOMÁTICOS
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 2: PANTALLAS LED & VÍDEO (Sitemap: /arsenal?cat=led)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (q.includes('pantalla') || q.includes('led') || q.includes('proyector') || q.includes('novastar') || q.includes('monitor')) {
+    return {
+      category: 'LED_SCREENS',
+      badge: 'HARDWARE LED P2.9 NOVASTAR · ALTO BRILLO',
+      headline: `PANTALLAS LED MODULARES PARA EVENTOS EN ${loc.toUpperCase()}`,
+      responseHtml: `Disponibilidad de módulos LED P2.9 Novastar HDR para interior y exterior en **${loc}**. Configuración a medida desde 2x1.5m hasta 6x3m con procesadores 4K Novastar, escalador de señal y técnico operador de vídeo durante el evento.`,
+      primaryActionLabel: 'VER CATÁLOGO DE PANTALLAS LED EN EL ARSENAL →',
+      primaryActionUrl: `/arsenal?cat=led&provincia=${locSlug}`,
+      secondaryActionLabel: 'SOLICITAR PLANO TÉCNICO',
+      secondaryActionUrl: `/arsenal`,
+      isCustomRedirect: true
+    };
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 3: AYUNTAMIENTOS & DIPLOMÁTICOS (Sitemap: /instituciones/catalogo-360)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   if (
     q.includes('ayuntamiento') || q.includes('alcaldia') || q.includes('alcaldía') ||
     q.includes('festejos') || q.includes('licitacion') || q.includes('licitación') ||
@@ -418,40 +473,131 @@ export function analyzeNeuralIntent(rawQuery: string): NeuralIntentResult {
       category: 'B2G_INSTITUTIONAL',
       badge: 'CANAL INSTITUCIONAL B2G HOMOLOGADO (ART. 118 LCSP)',
       headline: `EXPEDIENTE TÉCNICO B2G PARA ADMINISTRACIONES PÚBLICAS`,
-      responseHtml: `Protocolo oficial activo para instituciones públicas y eventos de protocolo en **${loc}**. Cumplimiento riguroso de la normativa acústica (< 75 dB SPL), suministro con ficha técnica visada, seguro de responsabilidad civil y facturación electrónica vía FACe bajo contrato menor (< 14.250 €).`,
+      responseHtml: `Protocolo oficial activo para instituciones públicas y actos institucionales en **${loc}**. Presupuesto preventivo bajo contrato menor (< 14.250 €), cumplimiento riguroso de emisión sonora (< 75 dB SPL), ficha técnica visada, seguro de responsabilidad civil de 1.000.000 € y facturación electrónica oficial vía FACe.`,
       primaryActionLabel: 'ACCEDER AL CATÁLOGO INSTITUCIONAL B2G →',
       primaryActionUrl: '/instituciones/catalogo-360',
-      secondaryActionLabel: 'DESCARGAR DOSSIER TÉCNICO',
+      secondaryActionLabel: 'PORTAL DE LICITACIONES',
       secondaryActionUrl: '/ayuntamientos',
       isCustomRedirect: true
     };
   }
 
-  // 3. MARIACHI / ARTISTAS / SHOW DE AUTOR
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 4: MARIACHIS & ARTISTAS (Sitemap: /artistas/edwin-agudelo)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   if (
     q.includes('mariachi') || q.includes('edwin agudelo') || q.includes('tenor') ||
-    q.includes('serenata') || q.includes('solista') || q.includes('cantante') ||
-    q.includes('musica en vivo') || q.includes('música en directo')
+    q.includes('serenata') || q.includes('solista') || q.includes('ranchera') ||
+    q.includes('cantante') || q.includes('musica en vivo') || q.includes('música en directo')
   ) {
     return {
       category: 'MARIACHI_ARTIST',
-      badge: 'CONTRATACIÓN DIRECTA S-CLASS · ARTISTA EXCLUSIVO',
-      headline: `SHOW DE AUTOR EDWIN AGUDELO & MARIACHI DE GALA`,
-      responseHtml: `Disponibilidad para actuación en **${loc}**. Formato Solista desde 350 € o Quinteto Imperial desde 750 € con equipo de sonido Bose incluido. Split soberano 80/10/10 y reserva con Price-Lock en Stripe.`,
-      primaryActionLabel: 'RESERVAR SHOW CON PRICE-LOCK →',
-      primaryActionUrl: `/calculadora?formato=solista-edwin-agudelo&provincia=${loc}`,
+      badge: 'CONTRATACIÓN DIRECTA S-CLASS · REPERTORIO DE AUTOR',
+      headline: `EDWIN AGUDELO & SHOW DE MARIACHI DE GALA EN ${loc.toUpperCase()}`,
+      responseHtml: `Disponibilidad confirmada para actuación estelar en **${loc}**. Tarifa Base Solista oficial: **350 €**; formato Quinteto Imperial de Gala desde **750 €**. Incluye sonorización profesional Bose F1, microfonía Shure Axient, repertorio adaptado y cierre seguro con Price-Lock de 100 € en Stripe bajo Split Soberano 80/10/10.`,
+      primaryActionLabel: 'RESERVAR ARTISTA CON PRICE-LOCK →',
+      primaryActionUrl: `/artistas/edwin-agudelo`,
+      secondaryActionLabel: 'COTIZADOR CON LOGÍSTICA',
+      secondaryActionUrl: `/calculadora?formato=solista-edwin-agudelo&provincia=${locSlug}`,
       isCustomRedirect: true
     };
   }
 
-  // 4. WEDDING GENERAL
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 5: DJ & FIESTA (Sitemap: /bodas/[prov]/dj)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (q.includes('dj') || q.includes('discoteca') || q.includes('discomovil') || q.includes('pinchar') || q.includes('baile')) {
+    return {
+      category: 'DJ_MUSIC',
+      badge: 'CABINA DJ PROFESIONAL · RIDER 12 W/PAX HOMOLOGADO',
+      headline: `DJ PROFESIONAL & SONORIZACIÓN DE FIESTA EN ${loc.toUpperCase()}`,
+      responseHtml: `Servicio de DJ con cabina Pioneer DDJ/XDJ, iluminación robótica DMX, efectos de humo y sonido calibrado de alta definición para **${loc}**. Cobertura sin límite de estilos y cumplimiento de limitación acústica.`,
+      primaryActionLabel: `VER DJS DISPONIBLES EN ${loc.toUpperCase()} →`,
+      primaryActionUrl: `/bodas/${locSlug}/dj`,
+      secondaryActionLabel: 'COTIZAR PACK DJ',
+      secondaryActionUrl: `/calculadora?cat=musica&provincia=${locSlug}`,
+      isCustomRedirect: true
+    };
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 6: FINCAS & ESPACIOS (Sitemap: /bodas/[prov]/fincas)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (q.includes('finca') || q.includes('espacio') || q.includes('salon') || q.includes('salón') || q.includes('hacienda') || q.includes('cigarral')) {
+    return {
+      category: 'VENUE_FINCA',
+      badge: 'FINCAS HOMOLOGADAS S-CLASS · SIN INTERMEDIARIOS',
+      headline: `FINCAS Y ESPACIOS SELECCIONADOS EN ${loc.toUpperCase()}`,
+      responseHtml: `Catálogo de fincas verificadas con certificación acústica de 12 W/pax, licencias municipales al día y sin carrusel de competidores ni sobrecostes ocultos en **${loc}**.`,
+      primaryActionLabel: `EXPLORAR FINCAS EN ${loc.toUpperCase()} →`,
+      primaryActionUrl: `/bodas/${locSlug}/fincas`,
+      secondaryActionLabel: 'VER DIRECTORIO COMPLETO',
+      secondaryActionUrl: `/proveedores?cat=finca&provincia=${locSlug}`,
+      isCustomRedirect: true
+    };
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 7: CATERING & GASTRONOMÍA (Sitemap: /bodas/[prov]/catering-brasas)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (q.includes('catering') || q.includes('comida') || q.includes('jamon') || q.includes('jamón') || q.includes('brasas') || q.includes('banquete')) {
+    return {
+      category: 'CATERING',
+      badge: 'ALTA GASTRONOMÍA & BRASAS HOMOLOGADAS',
+      headline: `CATERING EXCLUSIVO & SHOWCOOKING EN ${loc.toUpperCase()}`,
+      responseHtml: `Propuestas gastronómicas de alta gama para **${loc}**: showcooking de brasas en directo, cortadores de jamón ibérico certificados y estaciones de cóctel de autor con servicio integral de camareros.`,
+      primaryActionLabel: `VER OPCIONES DE CATERING EN ${loc.toUpperCase()} →`,
+      primaryActionUrl: `/bodas/${locSlug}/catering-brasas`,
+      secondaryActionLabel: 'PROVEEDORES DE CATERING',
+      secondaryActionUrl: `/proveedores?cat=catering&provincia=${locSlug}`,
+      isCustomRedirect: true
+    };
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 8: FOTOGRAFÍA & VÍDEO (Sitemap: /bodas/[prov]/fotografos)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (q.includes('foto') || q.includes('fotografo') || q.includes('fotógrafo') || q.includes('video') || q.includes('vídeo') || q.includes('drone')) {
+    return {
+      category: 'FOTOGRAFIA_VIDEO',
+      badge: 'PRODUCCIÓN AUDIOVISUAL & CINEMATOGRAFÍA',
+      headline: `FOTÓGRAFOS Y VIDEÓGRAFOS PROFESIONALES EN ${loc.toUpperCase()}`,
+      responseHtml: `Reportaje documental cinematográfico sin posados forzados para **${loc}**. Entrega en alta resolución, galería online privada protegida y opción de drone 4K homologado por AESA.`,
+      primaryActionLabel: `VER FOTÓGRAFOS EN ${loc.toUpperCase()} →`,
+      primaryActionUrl: `/bodas/${locSlug}/fotografos`,
+      secondaryActionLabel: 'DIRECTORIO AUDIOVISUAL',
+      secondaryActionUrl: `/proveedores?cat=foto&provincia=${locSlug}`,
+      isCustomRedirect: true
+    };
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 9: CUARTETO DE CUERDAS & CLÁSICA (Sitemap: /bodas/[prov]/cuarteto-cuerdas)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  if (q.includes('cuerda') || q.includes('cuerdas') || q.includes('violin') || q.includes('violín') || q.includes('cuarteto') || q.includes('clasica') || q.includes('clásica')) {
+    return {
+      category: 'CUARTETO_CUERDAS',
+      badge: 'MÚSICA CLÁSICA & CUARTETO DE CUERDAS S-CLASS',
+      headline: `CUARTETO DE CUERDAS PARA CEREMONIAS EN ${loc.toUpperCase()}`,
+      responseHtml: `Músicos profesionales de conservatorio para ceremonia civil o religiosa y cóctel en **${loc}**. Repertorio que combina obras clásicas con adaptaciones de bandas sonoras y pop moderno.`,
+      primaryActionLabel: `VER CUARTETOS EN ${loc.toUpperCase()} →`,
+      primaryActionUrl: `/bodas/${locSlug}/cuarteto-cuerdas`,
+      secondaryActionLabel: 'RESERVAR CON PRICE-LOCK',
+      secondaryActionUrl: `/calculadora?formato=cuarteto-cuerdas&provincia=${locSlug}`,
+      isCustomRedirect: true
+    };
+  }
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // CRUCE SITEMAP 10: WEDDING GENERAL (Sitemap: /bodas/[prov]/eventos)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   return {
     category: 'WEDDING_GENERAL',
-    badge: 'PROPUESTA TÉCNICA VIABLE DETECTADA',
-    headline: 'PROPUESTA PERSONALIZADA PARA VUESTRA CELEBRACIÓN',
-    responseHtml: 'Hemos analizado vuestra petición. Para este tipo de celebración recomendamos una combinación de **Música en Vivo de Gala** en momentos cumbre, sonorización nítida y un equipo que garantice el protocolo sin sobrecostes.',
+    badge: 'DISEÑO DE CELEBRACIÓN S-CLASS · COBERTURA INTEGRAL',
+    headline: `PRODUCCIÓN INTEGRAL DE CELEBRACIONES EN ${loc.toUpperCase()}`,
+    responseHtml: `Propuesta integral para vuestro evento en **${loc}** con rider acústico calibrado a 12 W/pax, coordinación in situ, protocolo de contingencia N+1 y reserva con depósito blindado de 100 € en Stripe.`,
     primaryActionLabel: 'CONTINUAR A ELEGIR ATMÓSFERA',
-    primaryActionUrl: '',
+    primaryActionUrl: `/bodas/${locSlug}/eventos`,
     isCustomRedirect: false
   };
 }

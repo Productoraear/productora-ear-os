@@ -1,0 +1,39 @@
+{
+  "title": "Fórmulas Cinemáticas de Video Higgsfield S-Class para EAR OS",
+  "description": "Comandos de generación de video publicitario e hiper-realista adaptados a los activos de Productora EAR (Bose, Shure, Fincas y Gala Edwin Agudelo).",
+  "version": "1.0",
+  "formulas": [
+    {
+      "command": "/productexplosion",
+      "name": "Exploded-View Cinemático de Hardware S-Class",
+      "model": "Seedance 2.5",
+      "aspect_ratio": "9:16",
+      "duration": "8s",
+      "use_case": "Publicidad de Arsenal de Sonido e Iluminación (Bose F1, Shure Beta 87A, Pantallas LED P2.9)",
+      "prompt_bose_f1": "Create a premium cinematic product-explosion animation from the supplied Bose F1 Model 812 speaker reference. Start from the pristine assembled black acoustic tower, smoothly explode into high-precision technical components (articulated 8-driver array, 1000W Class-D amplifier module, voice coils, internal passive crossover, anti-resonance chassis) floating weightlessly in mid-air with soft golden rim lighting (#ecb613) and subtle volumetric smoke against a pure OLED black (#030305) backdrop. Elegant metallic reflections, smooth rotation, then seamlessly reassemble into the hero speaker. Photorealistic 4K, 9:16 vertical, 8s, 60fps.",
+      "prompt_shure_beta87a": "Create a premium cinematic product-explosion animation of a Shure Beta 87A vocal condenser microphone. The microphone gracefully floats against a deep dark background, exploding into its precision parts: supercardioid condenser cartridge, triple-stage pop filter, polished satin chrome handle, gold-plated XLR connectors, and internal shock-mount system. Slow-motion suspended in air with luxury specular highlights, gentle orbit camera movement, then snapping back into one monolithic microphone. 9:16 vertical, 8s, ultra-photorealism.",
+      "prompt_pantalla_led": "Create a premium cinematic product-explosion animation of a Novastar P2.9 outdoor LED screen cabinet. The 500x500mm die-cast aluminum frame separates into its 4 magnetic LED modules, Novastar A5s Plus receiving card, power supply box, and fast-lock rigging pins. Golden ambient glow, dark minimal studio, floating in technical space, smooth reassembly into a glowing 4K screen. 9:16, 8s."
+    },
+    {
+      "command": "/FPVDRONE",
+      "name": "Vuelo Rasante FPV Cinemático de Fincas y Escenarios",
+      "model": "Seedance 2.5",
+      "aspect_ratio": "9:16",
+      "duration": "5s - 8s",
+      "use_case": "Promoción de Fincas de Boda Exclusivas y Montajes de Directo de Productora EAR (Madrid / Toledo)",
+      "prompt_finca_boda": "Cinematic high-speed FPV drone flight through an exclusive Spanish wedding estate (Finca) in Toledo at golden hour dusk. The drone enters fast under a wrought-iron entrance arch, skims inches above an illuminated reflecting pool, sweeps tightly between ancient olive trees decorated with warm fairy micro-lights, banks sharply through a candlelit imperial banquet aisle, and accelerates directly toward the live concert stage of Productora EAR where warm amber beams cut through light haze. Ultra-smooth acrobatic trajectory, dynamic motion blur, photorealistic cinematic lighting, 9:16 vertical, 60fps.",
+      "prompt_montaje_directo": "Cinematic dynamic FPV drone dive starting from high above an illuminated festival open-air estate, diving down past giant LED screens and vertical truss towers, banking low over the sound console (Bose F1 audio system), and rising smoothly behind the singer on stage overlooking a sea of applauding guests. Atmospheric stage haze, laser beams, warm gold and cyan backlighting. 9:16, 6s."
+    },
+    {
+      "command": "/macroreveal",
+      "name": "Macro Reveal de Gala & Hiper-Detalle S-Class",
+      "model": "Seedance 2.5",
+      "aspect_ratio": "9:16",
+      "duration": "5s",
+      "use_case": "Branding de Lujo, Show de Gala Edwin Agudelo y Alta Fidelidad Acústica",
+      "prompt_micro_gala": "Cinematic macro reveal shot. The camera begins in extreme macro close-up on the intricate mesh pattern and condensation gleam of a Shure Beta 87A microphone grill, with razor-thin depth of field. Soft golden light catches the silver edges. The camera smoothly pulls back with creamy rack focus, revealing the silhouette of a charismatic male gala vocalist in an impeccable black tailored tuxedo holding the mic on a dark, moody stage with glowing bokeh spheres in warm amber (#ecb613) and deep violet. High-end luxury commercial look, 9:16 vertical, 5s.",
+      "prompt_traje_gala": "Cinematic extreme macro reveal shot. Starts focused on the handcrafted gold thread embroidery and solid silver gala botonería of an authentic bespoke gala mariachi jacket. The camera slowly glides and racks focus backward to reveal the full tailored jacket and the warm ambience of an exclusive private gala dinner. Elegant lighting, dark OLED background, 9:16 vertical, 5s.",
+      "prompt_consola_sonido": "Cinematic macro reveal of motorized faders on a digital sound mixing desk. Camera tracks along the illuminated fader tracks as they move smoothly to a beat, with glowing LED VU meters bouncing in emerald and gold. Focus pulls back to reveal the sleek audio engineer station at a Productora EAR production. 9:16 vertical, 5s."
+    }
+  ]
+}

@@ -107,27 +107,115 @@
         ],
         "macro_script": "Implementar verificación de tokens TOTP de 6 dígitos sin librerías externas pesadas (usando Web Crypto API nativo SHA-1). Endpoint de validación que expide cookie temporal ear_2fa_verified."
       },
+      "validation": "npx tsc --noEmit -> Exit Code 0",
+      "report": {
+        "HECHO_VERIFICADO": "Middleware updated with applySecurityHeaders function and applied to all NextResponse objects.",
+        "HIPÓTESIS": "No further changes are needed.",
+        "DECISIÓN": "Mark task as COMPLETED.",
+        "RIESGOS": "None identified.",
+        "CAMBIOS": "Added applySecurityHeaders function and modified middleware to use it.",
+        "VALIDACIONES": "npx tsc --noEmit -> Exit Code 0",
+        "ESTADO_BLOQUE": "COMPLETED",
+        "SIGUIENTE_PASO": "None."
+      }
+    },
+    {
+      "id": "omega-fullstack-architecture",
+      "title": "Arquitectura Omega Full-Stack: Cruce Maestro de Intenciones con el Sitemap",
+      "status": "PENDING",
+      "description": "Implementar sitemapIntentCrossEngine.ts, actualizar OmniSearchModal.tsx con Live Intent Banner S-Class, arreglar rutas /alianzas y /bodas/:prov/eventos, y proteger el cotizador BookingCalculator con Price-Lock (100 €).",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/seo/sitemapIntentCrossEngine.ts",
+          "src/app/components/ui/OmniSearchModal.tsx",
+          "src/app/(public)/alianzas/page.tsx",
+          "src/lib/constants/spanish-municipalities.ts",
+          "src/components/artists/ArtistCinematicProfile.tsx",
+          "src/components/widgets/BookingCalculator.tsx"
+        ],
+        "macro_script": "1. Crear sitemapIntentCrossEngine.ts con las 10 particiones y cruce geográfico.\\n2. Modificar OmniSearchModal.tsx para buscar usando tokenización (split por espacios, .every(includes)) e inyectar el Intent Banner en posición 0 si hay match de intención técnica.\\n3. Crear page.tsx en /alianzas montando AllianceNetwork.\\n4. Añadir 'eventos' a SERVICES_PSEO_EXPANDED en spanish-municipalities.ts.\\n5. Arreglar scroll en ArtistCinematicProfile.tsx.\\n6. Forzar envío de 100€ a Stripe en BookingCalculator.tsx."
+      },
       "validation": "npx tsc --noEmit -> Exit Code 0"
-"report": {
-  "HECHO_VERIFICADO": "Middleware updated with applySecurityHeaders function and applied to all NextResponse objects.",
-  "HIPÓTESIS": "No further changes are needed.",
-  "DECISIÓN": "Mark task as COMPLETED.",
-  "RIESGOS": "None identified.",
-  "CAMBIOS": "Added applySecurityHeaders function and modified middleware to use it.",
-  "VALIDACIONES": "npx tsc --noEmit -> Exit Code 0",
-  "ESTADO_BLOQUE": "COMPLETED",
-  "SIGUIENTE_PASO": "None."
-},
-  "report": {
-    "HECHO_VERIFICADO": "Middleware updated with applySecurityHeaders function and applied to all NextResponse objects.",
-    "HIPÓTESIS": "No further changes are needed.",
-    "DECISIÓN": "Mark task as COMPLETED.",
-    "RIESGOS": "None identified.",
-    "CAMBIOS": "Added applySecurityHeaders function and modified middleware to use it.",
-    "VALIDACIONES": "npx tsc --noEmit -> Exit Code 0",
-    "ESTADO_BLOQUE": "COMPLETED",
-    "SIGUIENTE_PASO": "None."
-  }
-}
+    },
+    {
+      "id": "scala-leads-sourcing-vampirization",
+      "title": "Vampirización Total de Scala Leads e Integración en EAR OS Admin Sourcing Hub",
+      "status": "PENDING",
+      "description": "Vampirizar la funcionalidad de Scala Leads (scraping Google Maps, CRM de Leads, Inteligencia de llamadas con transcripción y gestión de zonas) e integrarlo en el panel de administración bajo la ruta /admin/sourcing usando la estética OLED S-Class, sin romper los módulos existentes.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/sourcing/scala-leads-client.ts",
+          "src/app/api/admin/sourcing/scala/[...path]/route.ts",
+          "src/app/(admin)/sourcing/page.tsx",
+          "src/app/(admin)/sourcing/components/ScrapingTerminal.tsx",
+          "src/app/(admin)/sourcing/components/LeadCRMTable.tsx",
+          "src/app/(admin)/sourcing/components/CallIntelligencePanel.tsx",
+          "src/app/(admin)/layout.tsx"
+        ],
+        "macro_script": "1. Crear src/lib/sourcing/scala-leads-client.ts como cliente API tipado (TypeScript) consumiendo https://scala-leads-backend-production.up.railway.app con funciones: searchPlaces, streamSearch, getLeads, updateLeadStatus, registerCall, uploadCallAudio, getAdminStats.\\n2. Crear src/app/api/admin/sourcing/scala/[...path]/route.ts como Next.js API Proxy seguro inyectando tokens de autorización.\\n3. Construir la interfaz de usuario en src/app/(admin)/sourcing/page.tsx con soporte de KPIs en tiempo real.\\n4. Crear los componentes ScrapingTerminal (con SSE stream), LeadCRMTable (gestión de status y exportación) y CallIntelligencePanel (grabación, logs y transcripciones).\\n5. Actualizar src/app/(admin)/layout.tsx para añadir el enlace al 'Sourcing Hub' en la barra lateral sin alterar los componentes existentes."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "memanto-agentic-memory-integration",
+      "title": "Instalación e Integración de Memanto (ZTM Fleet Memory Bridge)",
+      "status": "PENDING",
+      "description": "Instalar memanto localmente (pip install memanto), inicializar el agente de memoria con las reglas SSOT inmutables de AGENTS.md, generar el script lanzador INICIAR_MEMANTO_UI.bat y añadir la tarjeta de control en el Centro de Mando /admin/command-center.",
+      "scaffold": {
+        "files_to_touch": [
+          "scripts/unified/bootstrap_memanto_ear_os.py",
+          "INICIAR_MEMANTO_UI.bat",
+          "src/app/(admin)/command-center/page.tsx"
+        ],
+        "macro_script": "1. Crear scripts/unified/bootstrap_memanto_ear_os.py para instalar o verificar memanto, conectar con Cline, e inyectar las reglas SSOT (Tarifa Edwin Agudelo 350€, Split 80/10/10, Logística 1.50€/km >50km, Contrato Menor <14.250€).\\n2. Crear INICIAR_MEMANTO_UI.bat para arrancar el servidor y abrir el dashboard en navegador.\\n3. Añadir la tarjeta en TOOLS de src/app/(admin)/command-center/page.tsx con actionType 'TRIGGER' apuntando a INICIAR_MEMANTO_UI.bat."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "voicestudio-ai-cloning-integration",
+      "title": "Instalación e Integración de VoiceStudio AI (Clonación de Voz, Canciones & Doblaje de Vídeos)",
+      "status": "PENDING",
+      "description": "Integrar VoiceStudio (voicestudio.sh) como motor local on-premise (0€ cloud) para personalización de canciones con voz de Edwin Agudelo y doblaje multilingüe de vídeos cinematográficos de Higgsfield.",
+      "scaffold": {
+        "files_to_touch": [
+          "INICIAR_VOICE_STUDIO.bat",
+          "src/lib/audio/voiceStudioEngine.ts",
+          "src/app/(admin)/voice-studio/page.tsx",
+          "src/app/(admin)/command-center/page.tsx"
+        ],
+        "macro_script": "1. Crear INICIAR_VOICE_STUDIO.bat con autoinstalación oficial de voicestudio.sh y arranque de daemon en puerto 8080.\\n2. Crear src/lib/audio/voiceStudioEngine.ts con perfiles vocales S-Class y endpoints de canciones y doblaje.\\n3. Diseñar src/app/(admin)/voice-studio/page.tsx con diseño OLED S-Class (#030305) y 3 pestañas interactivas.\\n4. Añadir herramienta en TOOLS de src/app/(admin)/command-center/page.tsx."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "agent-skills-lifecycle-integration",
+      "title": "Integración y Activación del Framework Agent Skills (Addy Osmani SDLC)",
+      "status": "PENDING",
+      "description": "Instalar y activar el framework Agent Skills de Addy Osmani (Google Chrome) en EAR OS con las 7 compuertas de calidad: Spec (/spec) -> Plan (/plan) -> Build (/build) -> Test (/test) -> Review (/review) -> Simplify (/code-simplify) -> Ship (/ship).",
+      "scaffold": {
+        "files_to_touch": [
+          "scripts/unified/bootstrap_agent_skills.py",
+          "INSTALAR_AGENT_SKILLS.bat",
+          ".agents/rules/04-agent-skills-lifecycle.md",
+          "src/app/(admin)/agent-skills/page.tsx",
+          "src/app/(admin)/command-center/page.tsx"
+        ],
+        "macro_script": "1. Ejecutar scripts/unified/bootstrap_agent_skills.py para generar las 8 skills troncales con anti-rationalization tables en .agents/skills/ y sincronizar con addyosmani/agent-skills.\\n2. Crear INSTALAR_AGENT_SKILLS.bat para sincronización y validación automática.\\n3. Diseñar consola visual en src/app/(admin)/agent-skills/page.tsx reflejando el diagrama canónico de ingeniería.\\n4. Enlazar la herramienta en Centro de Mando /admin/command-center."
+      },
+      "validation": "python scripts/unified/bootstrap_agent_skills.py && npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "deploy-github-and-netlify",
+      "title": "Despliegue Soberano a GitHub y Netlify Edge (S-Class Commit & Push)",
+      "status": "PENDING",
+      "description": "Auditoría Git anti-bloat (< 50 MB), staging de archivos de código fuente, validación npx tsc --noEmit, commit descriptivo y push a origin main para activación de Netlify Edge CI/CD.",
+      "scaffold": {
+        "files_to_touch": [
+          "DESPLEGAR_A_GITHUB_Y_NETLIFY.bat"
+        ],
+        "macro_script": "git status -> git add src/ .agents/ scripts/ *.bat .antigravity/ -> git commit -m 'feat(omega): VoiceStudio AI, Agent Skills lifecycle, and S-Class navigation integrity' -> git push origin main"
+      },
+      "validation": "git status && git push origin main -> Exit Code 0"
+    }
   ]
 }

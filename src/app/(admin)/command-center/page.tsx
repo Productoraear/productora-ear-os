@@ -17,7 +17,9 @@ import {
   RefreshCw,
   Sparkles,
   Layers,
-  Activity
+  Activity,
+  Mic2,
+  Music
 } from 'lucide-react';
 
 interface ToolCard {
@@ -35,6 +37,45 @@ interface ToolCard {
 }
 
 const TOOLS: ToolCard[] = [
+  {
+    id: 'agent-skills-lifecycle',
+    title: 'Agent Skills // Ciclo de Vida Senior',
+    category: 'INTELLIGENCE',
+    icon: Layers,
+    tag: 'ADDY OSMANI LIFECYCLE',
+    description: 'Framework de ingeniería senior: Spec -> Plan -> Build -> Test -> Review -> Simplify -> Ship.',
+    actionType: 'LINK',
+    targetUrl: '/agent-skills',
+    localPath: 'INSTALAR_AGENT_SKILLS.bat',
+    status: 'ACTIVE',
+    telemetry: '7 Quality Gates Activas'
+  },
+  {
+    id: 'voice-studio-ai',
+    title: 'Voice Studio AI // Canciones & Doblaje',
+    category: 'INTELLIGENCE',
+    icon: Mic2,
+    tag: 'VOICE CLONING S-CLASS',
+    description: 'Personalización de canciones con voz clonada de Edwin Agudelo (Bodas y VIMUME) y doblaje multilingüe para vídeos de Higgsfield.',
+    actionType: 'LINK',
+    targetUrl: '/voice-studio',
+    localPath: 'INICIAR_VOICE_STUDIO.bat',
+    status: 'ONLINE',
+    telemetry: '646 Idiomas // Zero-Shot Clone'
+  },
+  {
+    id: 'sourcing-hub',
+    title: 'Sourcing Hub // VIMUME B2G',
+    category: 'TELEMARKETING',
+    icon: PhoneCall,
+    tag: 'SENIOR CARE CRM',
+    description: 'Consola de prospección activa y telemarketing para Residencias de Mayores, Centros de Día y Hogares del Jubilado.',
+    actionType: 'LINK',
+    targetUrl: '/sourcing',
+    localPath: 'src/app/(admin)/sourcing/page.tsx',
+    status: 'ONLINE',
+    telemetry: '63 Centros en Radio Méntrida'
+  },
   {
     id: 'call-center',
     title: 'Call Center de Proveedores',
@@ -109,6 +150,18 @@ const TOOLS: ToolCard[] = [
     localPath: 'BUSCADOR_OBSIDIAN.bat',
     status: 'STANDBY',
     telemetry: 'Búsqueda en <0.2s'
+  },
+  {
+    id: 'memanto-memory-bridge',
+    title: 'Memanto Agentic Memory (ZTM)',
+    category: 'INTELLIGENCE',
+    icon: BrainCircuit,
+    tag: 'FLEET MEMORY',
+    description: 'Control de memoria persistente, resolución de conflictos y reconciliación de doctrina para la flota de agentes.',
+    actionType: 'TRIGGER',
+    localPath: 'INICIAR_MEMANTO_UI.bat',
+    status: 'ACTIVE',
+    telemetry: 'Zero-Token Memory Hub'
   },
   {
     id: 'ollama-tuner',

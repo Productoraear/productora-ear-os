@@ -151,6 +151,13 @@ const MENU_FOLDERS: MenuFolder[] = [
         icon: Camera
       },
       {
+        title: 'Red de Alianzas & Partners',
+        desc: 'Fincas, planners y caterings homologados',
+        href: '/alianzas',
+        badge: 'S-Class',
+        icon: Users
+      },
+      {
         title: 'Ver Todo el Directorio Nacional',
         desc: 'Catálogo de profesionales homologados en España',
         href: '/proveedores',

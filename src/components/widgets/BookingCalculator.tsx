@@ -40,12 +40,14 @@ export default function BookingCalculator({ initialFormatId = 'solista-edwin-agu
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: priceDetails.total,
-          concept: `${priceDetails.formatName || 'Formato S-Class'} - ${evento}`,
+          amount: 100.00,
+          concept: `Depósito de Reserva (100 €) // Price-Lock 72h: ${priceDetails.formatName || 'Formato S-Class'} - ${evento}`,
           provincia: provincia,
           evento: evento,
           artistId: 'edwin-agudelo',
           metadata: {
+            deposito_reserva_eur: '100.00',
+            presupuesto_total_estimado: String(priceDetails.total),
             formato_id: formatoId,
             format_name: priceDetails.formatName,
             km_recorridos: String(distanciaKm),
@@ -217,7 +219,7 @@ export default function BookingCalculator({ initialFormatId = 'solista-edwin-agu
         className="w-full py-4 bg-green-500 hover:bg-green-400 text-black font-bold rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
       >
         <CreditCard className="w-6 h-6" />
-        {loading ? 'Procesando S-Class...' : 'Reservar con Klarna / Tarjeta'}
+        {loading ? 'Bloqueando Fecha...' : 'Bloquear Fecha con Depósito (100 €)'}
       </motion.button>
 
       <div className="mt-4 grid grid-cols-2 gap-3">
