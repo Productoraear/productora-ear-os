@@ -51,6 +51,18 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
 - Exige al obrero local reportes con esta estructura para cierres de hitos:
   HECHO_VERIFICADO: | HIPÓTESIS: | DECISIÓN: | RIESGOS: | CAMBIOS: | VALIDACIONES: | ESTADO_BLOQUE: | SIGUIENTE_PASO:
 
+━━ 8. REGLA INMUTABLE ANTI-BLOAT Y GOBERNANZA GIT / CI-CD (DOCTRINA PURISTA) ━━━━━━━━━
+- REPO ULTRA-LIGERO (< 50 MB): El árbol de Git debe permanecer siempre en < 50 MB. Actualmente fijado en ~36 MB.
+- PROHIBICIÓN ABSOLUTA DE ARCHIVOS PESADOS EN GIT: Queda estrictamente prohibido commitear o rastrear:
+  1. Archivos > 1 MB (PDFs, ZIPs, CSVs masivos, ejecutables, dumps de scraping, videos).
+  2. Bases de datos monolíticas en crudo (`all_providers_database.json`, staging, MFTs).
+  3. Bóvedas de inteligencia (`wedding_intel_vault`, `EAR_ABSORBED_VAULT`).
+- UBICACIÓN MANDATORIA DE DATOS PESADOS: Todo activo pesado de prospección o scraping debe residir exclusivamente en `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\` o en rutas locales aisladas bajo `.gitignore`.
+- PARTICIONES EDGE CDN: Los datos públicos para el frontend (`public/data/providers/`) deben ser particiones sintéticas optimizadas (máximo 500-1.000 registros curados por gremio, < 1 MB por archivo).
+- AUDITORÍA PRE-COMMIT: Todo agente (Antigravity, Cline, VS Code) debe verificar `git status` y el tamaño de los cambios antes de commitear. Jamás usar `git add -A` a ciegas sin validar que no se arrastren binarios o volcados.
+- PREVENCIÓN DE BLOQUEO CI/CD: Un repositorio pesado agota los 300 minutos de Netlify y satura los límites Fair-Use de Vercel. Mantener el build local en < 60 segundos y el árbol de Git purificado.
+
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

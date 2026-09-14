@@ -46,6 +46,13 @@ ENTORNO MANDATORIO: POWERSHELL 7 NATIVO | LOCAL GPU QWEN 32B
 - ZONA CERO (Prohibido reescribir): `src/lib/vimume/b2g-tender-engine.ts` y `src/lib/astra/astra-conversation-engine.ts`.
 - VETO ABSOLUTO: Exponer `STRIPE_SECRET_KEY` o alterar firma HMAC SHA-256 en webhooks Stripe.
 
+━━ 8. GOBERNANZA GIT PURISTA & ZERO-BLOAT (PROHIBICIÓN ARCHIVOS PESADOS) ━━━━━━━━━━━
+- REPO ULTRA-LIGERO (< 50 MB): El repositorio Git debe mantenerse siempre en < 50 MB (actualmente ~36 MB).
+- PROHIBICIÓN ESTRICTA: JAMÁS commitear archivos > 1 MB (PDFs, ZIPs, CSVs gigantes, ejecutables o dumps de scraping).
+- DATOS PESADOS FUERA DE GIT: Bases de datos monolíticas (`all_providers_database.json`) y bóvedas (`wedding_intel_vault`, staging) van a `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\` o rutas en `.gitignore`.
+- PARTICIONES EDGE CDN: `public/data/providers/` debe contener solo particiones sintéticas compactas (< 1 MB por gremio).
+- AUDITORÍA ANTES DE COMMIT: Comprobar `git status` y peso antes de commitear. Un commit pesado colapsa los minutos de Netlify y Vercel.
+
 ━━ ESTRATEGIA DE EJECUCIÓN AUTOPISTA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - No diseñes arquitecturas desde cero. Inspecciona los archivos esqueleto pre-generados en `/scripts/` o `/src/`.
 - Limítate a implementar la lógica interna dentro de las firmas de función ya existentes y tipadas.
