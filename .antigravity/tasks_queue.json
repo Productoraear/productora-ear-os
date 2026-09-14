@@ -235,7 +235,7 @@
       "title": "Migración Definitiva 100% Proveedores a Prisma (Fix Netlify 250MB Limit)",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T12:43:00Z",
-      "validation": "npx tsx scripts/migrate_json_to_prisma.ts -> Exit Code 0. Refactorización de /api/profiles/search/route.ts con Prisma completada. TypeScript validado con éxito.",
+      "validation": "npx tsc --noEmit -> Exit Code 0. El frontend consume la API Prisma. Límite Netlify solventado.",
       "description": "Desacoplar los archivos JSON pesados del build de Next.js. Ejecutar migrate_json_to_prisma.ts para inyectar los proveedores 'vampiros' a PostgreSQL. Refactorizar /api/profiles/search/route.ts para usar Prisma (VendorShadowProfile). Refactorizar src/app/(public)/proveedores/page.tsx para consumir la API en lugar del import JSON estático, resolviendo el límite Serverless de Netlify.",
       "steps": [
         "1. Ejecutar 'npx tsx scripts/migrate_json_to_prisma.ts' para inyectar todo el volumen JSON a VendorShadowProfile (Supabase).",
@@ -244,15 +244,14 @@
         "4. Ajustar el BentoFilterBar y la lógica de paginación para usar la paginación del lado del servidor devuelta por la API (data.total, data.totalPages).",
         "5. Validar con 'npx tsc --noEmit' -> Exit Code 0. Testear en localhost que el directorio de proveedores carga dinámicamente desde Supabase.",
         "6. Actualizar el estado de esta macro-tarea a COMPLETED y notificar."
-      ],
-      "validation": "npx tsc --noEmit -> Exit Code 0. El frontend consume la API Prisma. Límite Netlify solventado."
+      ]
     },
     {
       "id": "autonomous-e2e-smoke-and-build-audit",
       "title": "Smoke Test Autónomo E2E y Verificación de Despliegue Netlify",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T12:55:00Z",
-      "validation": "npx tsx scripts/test-autonomous-pipeline.ts -> Exit Code 0 (69ms DB Supabase latency, 38.069 VendorShadowProfiles). Git commit and push completed.",
+      "validation": "npx tsx scripts/test-autonomous-pipeline.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0.",
       "description": "Prueba de fuego autónoma encadenada. Validar la respuesta de la API con base de datos real, la integridad del VendorClaimingEngine, la ausencia de bundles pesados en el build de Next.js y la sincronización con Git/Netlify sin intervención humana.",
       "command": "npx tsx scripts/test-autonomous-pipeline.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-autonomous-pipeline.ts; npx tsc --noEmit\"",
@@ -262,8 +261,7 @@
         "3. Ejecutar 'npx tsc --noEmit' y certificar Exit Code 0 absoluto (cero errores).",
         "4. Ejecutar git add, commit y push a 'origin main' y 'vercel-repo main' para activar el despliegue automático limpio en Netlify.",
         "5. Marcar esta tarea como COMPLETED y registrar métricas en 'reports/autonomous_pipeline_report.json'."
-      ],
-      "validation": "npx tsx scripts/test-autonomous-pipeline.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0."
+      ]
     },
     {
       "id": "rescue-and-integrate-astronauts-squadron-1",
@@ -283,30 +281,28 @@
         "6. Crear script de validación 'scripts/rescue_astronauts_squadron_1.ts' que verifique la existencia de los 33 skills, la carga de las nuevas páginas y la instanciación de los servicios sin fugas de memoria.",
         "7. Validar con 'npx tsc --noEmit' garantizando Exit Code 0 absoluto.",
         "8. Marcar esta tarea como COMPLETED en tasks_queue.json."
-      ],
-      "validation": "npx tsx scripts/rescue_astronauts_squadron_1.ts -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0. 33 Skills activos y 2 nuevas rutas S-Class operativas."
+      ]
     },
     {
       "id": "massive-md-export-strategy-vault",
       "title": "Exportación Masiva a .MD (Estrategia y Chats) sin Saturación de Contexto (ZTM)",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T12:21:00Z",
-      "validation": "scripts/export_mega_md.cjs -> Exit Code 0. MEGA_EXPORT_ESTRATEGIA.md generado (319.39 MB).",
+      "validation": "node scripts/export_mega_md.js -> Exit Code 0. Archivo MEGA_EXPORT generado exitosamente.",
       "description": "El obrero local falla por límite de contexto. Solución ZTM: Crear y ejecutar un script Node.js basado en streams que lea todos los archivos de H:\\00_PRODUCTORA_EAR\\EAR_ABSORBED_VAULT\\01_ESTRATEGIA_Y_CHATS y los concatene en un único MEGA_EXPORT_ESTRATEGIA.md.",
       "steps": [
         "1. Motor de Consolidación (Node.js Streams): Crea 'scripts/export_mega_md.js'. Usa 'fs.readdirSync' y 'fs.createReadStream' para canalizar el contenido hacia 'fs.createWriteStream(\"H:\\\\00_PRODUCTORA_EAR\\\\EAR_ABSORBED_VAULT\\\\MEGA_EXPORT_ESTRATEGIA.md\")'.",
         "2. Intercala un separador claro '\\n\\n========================================\\n[ARCHIVO: nombre_del_archivo]\\n========================================\\n\\n' entre cada archivo.",
         "3. Ejecuta 'node scripts/export_mega_md.js'. NO INTENTES LEER EL ARCHIVO RESULTANTE, puede pesar más de 1 GB. El obrero solo debe reportar el peso final del archivo generado usando 'fs.statSync'.",
         "4. Devuelve el Exit Code 0 y marca la tarea como COMPLETED."
-      ],
-      "validation": "node scripts/export_mega_md.js -> Exit Code 0. Archivo MEGA_EXPORT generado exitosamente."
+      ]
     },
     {
       "id": "deep-omni-background-crawler-phase2",
       "title": "Rastreador Profundo en Background (Búsqueda del 60% de Infraestructura Restante)",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T12:22:00Z",
-      "validation": "scripts/deep_omni_background_crawler_phase2.cjs -> Exit Code 0. 13,670 activos de infraestructura localizados.",
+      "validation": "node scripts/deep_omni_background_crawler_phase2.js -> Exit Code 0. JSON generado con la lista de activos restantes.",
       "description": "Desplegar un script de búsqueda avanzada (Regex/Heurística) sobre H:\\EAR_GOLDEN_INDEX.csv por streaming para rescatar los 908 astronautas restantes (Hooks, Zustand Stores, Contexts, UI S-Class, Configs) sin saturar al obrero.",
       "steps": [
         "1. Crear 'scripts/deep_omni_background_crawler_phase2.js'. Importar 'readline' y 'fs' para leer 'H:\\\\EAR_GOLDEN_INDEX.csv' línea por línea (Zero-Token Memory).",
@@ -314,15 +310,14 @@
         "3. Filtrar específicamente los archivos que residen en 'H:\\\\ARCHIVO_HISTORICO_EAR\\\\RESCATES_Y_SANTUARIOS'.",
         "4. Guardar los resultados ordenados en 'H:\\\\00_PRODUCTORA_EAR\\\\EAR_ABSORBED_VAULT\\\\01_ESTRATEGIA_Y_CHATS\\\\REMAINING_60_PERCENT_INFRASTRUCTURE.json'.",
         "5. Ejecutar 'node scripts/deep_omni_background_crawler_phase2.js' y reportar únicamente la CANTIDAD de archivos encontrados y el Exit Code 0."
-      ],
-      "validation": "node scripts/deep_omni_background_crawler_phase2.js -> Exit Code 0. JSON generado con la lista de activos restantes."
+      ]
     },
     {
       "id": "build-sclass-html-navigator",
       "title": "Forja del Visor HTML S-Class (Catálogo Maestro 100% Astronautas)",
       "status": "COMPLETED",
       "completed_at": "2026-09-12T12:23:00Z",
-      "validation": "scripts/build_sclass_html_navigator.cjs -> Exit Code 0. VISOR_ASTRONAUTAS_SCLASS.html generado con éxito.",
+      "validation": "node scripts/build_sclass_html_navigator.js -> Exit Code 0. Visor HTML S-Class generado exitosamente.",
       "description": "El CEO ha solicitado una visualización navegable y puramente S-Class del catálogo maestro de 35.160 activos (Astronautas) rescatados. Se construirá un archivo HTML standalone (Zero-Server) con buscador ultrarrápido y estética OLED.",
       "steps": [
         "1. Crear 'scripts/build_sclass_html_navigator.js'.",
@@ -330,8 +325,7 @@
         "3. El HTML resultante ('H:\\\\00_PRODUCTORA_EAR\\\\EAR_ABSORBED_VAULT\\\\VISOR_ASTRONAUTAS_SCLASS.html') debe tener Estética OLED (Fondo #030305), tipografías Syne e Inter (Google Fonts), y Acentos Oro (#ecb613) / Cyan (#00E5FF).",
         "4. Inyectar Vanilla JS puro para renderizar la lista y permitir un filtrado en tiempo real (debounce 300ms) por las 6 categorías maestras (Planos Mentales, Spiders, Enterprise, Marketing, Algorítmicos, UI).",
         "5. Ejecutar 'node scripts/build_sclass_html_navigator.js' y asegurar Exit Code 0. El resultado será un Dashboard de Comando táctico, offline y letal."
-      ],
-      "validation": "node scripts/build_sclass_html_navigator.js -> Exit Code 0. Visor HTML S-Class generado exitosamente."
+      ]
     },
     {
       "id": "neural-experience-customer-journey-and-lead-temperature",
@@ -545,7 +539,6 @@
       "status": "COMPLETED",
       "completed_at": "2026-09-12T16:08:00+02:00",
       "validation": "npx tsx scripts/test-multi-tenant-hostinger.ts -> Exit Code 0 (9/9 tests OK, latencia máxima 0.73 ms < 5 ms). npx tsc --noEmit -> Exit Code 0. Rewrites transparentes verificados: fincasparaboda.com->/fincas, viajemusicalporlamemoria.com->/vimume, artistaseuropa.com->/artistas, mariachis.*->/simulacion-mariachis. /api/*, _next/* y guards /admin/* preservados.",
-
       "description": "Configurar en src/middleware.ts el enrutamiento transparente multi-dominio para los 4 dominios de Hostinger: (1) fincasparaboda.com -> /fincas o /proveedores, (2) viajemusicalporlamemoria.com -> /vimume o /b2g, (3) artistaseuropa.com -> /artistas o /matcher, (4) productoraear.com -> Nave Nodriza / (y subdominios opcionales mariachis.productoraear.com -> /simulacion-mariachis), preservando la barra de direcciones del navegador y el aislamiento de sesiones/Stripe.",
       "command": "npx tsx scripts/test-multi-tenant-hostinger.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-multi-tenant-hostinger.ts; npx tsc --noEmit\"",
@@ -566,7 +559,6 @@
       "status": "COMPLETED",
       "completed_at": "2026-09-12T16:13:00+02:00",
       "validation": "npx tsx scripts/test-client-audio-lighting-journey.ts -> EXIT 0 (5/5 hitos OK, servidor ONLINE). npx tsc --noEmit -> Exit Code 0. Viaje COLD->FIRE completo: /alquiler (12 W/pax, 87 ms), WARM (150 pax Bose F1+LED), /comparar (anti-home redirect), /api/checkout/orchestrate (fianza 100 €, productionId=cmtygt3fs0000at0kpzleesl0), /boda/reserva-confirmada (Leaflet HD + drawer, sin 404). Reporte: reports/sound_lighting_journey_report.json.",
-
       "description": "Ejecutar una prueba E2E de navegador ligera sin consumo de tokens pesados (usando Puppeteer local o client HTTP/DOM) que simule el viaje completo de un cliente que busca 'alquilar altavoces y luces para evento': (1) Landing /alquiler (COLD), (2) Selección acústica 150 pax / 12W (WARM), (3) Comparador transparente /comparar o cotizador (HOT), (4) Orquestación de fianza 100€ Stripe (FIRE) y (5) Confirmación de reserva en /boda/reserva-confirmada con tracking de furgoneta.",
       "command": "npx tsx scripts/test-client-audio-lighting-journey.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-client-audio-lighting-journey.ts; npx tsc --noEmit\"",
@@ -614,7 +606,6 @@
         "ESTADO_BLOQUE": "COMPLETED",
         "SIGUIENTE_PASO": "Deploy de los 3 paquetes a Hostinger (FTP/SSH) y verificación de headers HSTS/Brotli en producción."
       },
-
       "description": "Extraer y purificar todos los contenidos reales de 'Viaje Musical Por La Memoria' alojados en Hostinger (uploads, testimonios, memorias de residencias y ayuntamientos, descartando 'Lorem Ipsum' de Elementor) mediante un extractor forense Node.js/TypeScript. Depositar los nuggets de oro en 'src/data/vimume_vampirized_hostinger.json'. Con estos datos reales, forjar los Edge Shells S-Class en 'deploy/hostinger_edge/': (1) viajemusicalporlamemoria/index.php (VIMUME Institucional B2G Art. 118 LCSP < 14.250€, SROI 4.85x, testimonios y fotos reales), (2) fincasparaboda/index.php (Catálogo fincas, 12 W/pax, fotos HD, WhatsApp), (3) artistaseuropa/index.php (Roster de artistas con Edwin Agudelo 350€). Incluir .htaccess LiteSpeed Brotli/HSTS en cada paquete.",
       "command": "npx tsx scripts/test-vampirize-vimume-and-shells.ts && npx tsc --noEmit",
       "execution_command": "pwsh -Command \"npx tsx scripts/test-vampirize-vimume-and-shells.ts; npx tsc --noEmit\"",
@@ -848,6 +839,40 @@
         "5. Actualizar esta tarea a 'COMPLETED' registrando el hash del commit generado."
       ],
       "validation": "npx tsc --noEmit -> Exit Code 0 && git push origin main -> Exit Code 0"
+    },
+    {
+      "id": "global-60-30-10-color-rule",
+      "title": "Aplicar Regla 60-30-10 (Azul, Rojo, Blanco) Globalmente",
+      "status": "PENDING",
+      "description": "Auditar y modificar la configuración global de colores para aplicar la regla 60-30-10 del logotipo de Productora EAR: 60% Azul, 30% Rojo, 10% Blanco. EXCLUIR ESTRICTAMENTE el proyecto viajemusicalporlamemoria.",
+      "command": "npx tsc --noEmit",
+      "execution_command": "pwsh -Command \"npx tsc --noEmit\"",
+      "steps": [
+        "1. Auditar tailwind.config.ts, globals.css y cualquier sistema de diseño.",
+        "2. Redefinir la paleta global: 60% Azul (Fondos, layout dominante), 30% Rojo (Acentos, botones, destacados), 10% Blanco (Texto legible, iconos, bordes finos).",
+        "3. Aplicar en todos los layouts, páginas y componentes globales (manteniendo la directiva OLED profunda adaptada a un azul muy oscuro si es fondo).",
+        "4. REGLA INQUEBRANTABLE: Excluir estrictamente cualquier archivo, ruta o componente del proyecto 'viajemusicalporlamemoria'. Este proyecto debe mantener su paleta original.",
+        "5. Validar la compilación de TypeScript con 'npx tsc --noEmit' garantizando Exit Code 0."
+      ],
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "master-vampire-overnight-swarm",
+      "title": "Enjambre Vampiro Nocturno Total: >65.000 Bodas.net + Celebrents.es (99% HTML Data & Sync)",
+      "status": "PENDING",
+      "created_at": "2026-09-13T22:28:00+02:00",
+      "description": "Activación integral del enjambre vampiro para absorber los más de 65.000 proveedores de Bodas.net (28.810 HTMLs en búnker SCRAPING_INTELLIGENCE + 14.041 registros en BD VIMUME) y los 10.028 de Celebrents.es, extrayendo el 99% de la información HTML (fotos HD, teléfonos directos, coordenadas GPS, ratings, reseñas, FAQs y descripciones íntegras), sincronizándolos en Edge CDN (12 particiones), Cotizador Neural y PostgreSQL.",
+      "command": "pwsh -File scripts/ignite_master_vampire_overnight.ps1",
+      "execution_command": "pwsh -File scripts/ignite_master_vampire_overnight.ps1",
+      "steps": [
+        "1. Ejecutar scripts/unified/master_bodas_total_harvester.py para absorber y fusionar las fuentes masivas de Bodas.net (28.810 HTMLs + bases VIMUME y NUCLEO_DATA).",
+        "2. Ejecutar scripts/unified/master_overnight_vampire_daemon.py con 10 workers para minar el 99% de información HTML de Celebrents.es y sitemaps en vivo.",
+        "3. Sincronizar catálogo maestro en src/data/all_providers_database.json y particiones Edge en public/data/providers/*.json.",
+        "4. Sincronizar el cotizador interactivo en src/data/neural-providers.ts y generar los 10 sub-catálogos en la Bóveda Obsidian.",
+        "5. Sincronizar portfolios e imágenes auténticas en la base de datos PostgreSQL local (usuario postgres, puerto 5432) mediante scripts/sync_all_authentic_images.ts.",
+        "6. Validar compilación estricta con npx tsc --noEmit garantizando Exit Code 0 y registrar informe estructurado."
+      ],
+      "validation": "pwsh -File scripts/ignite_master_vampire_overnight.ps1 && npx tsc --noEmit -> Exit Code 0"
     }
   ]
 }

@@ -7,6 +7,19 @@ Barra digital animada, telemetría de rendimiento y estados S-Class.
 import sys
 import time
 
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
+def safe_write(text: str):
+    try:
+        sys.stdout.write(text)
+    except UnicodeEncodeError:
+        ascii_text = text.encode("ascii", errors="replace").decode("ascii")
+        sys.stdout.write(ascii_text)
+
 class DigitalHUD:
     def __init__(self, title="PROCESO EAR OS", total=100, bar_width=30):
         self.title = title
@@ -17,11 +30,12 @@ class DigitalHUD:
         self._render_header()
 
     def _render_header(self):
-        sys.stdout.write(f"\n  \033[96m╔══════════════════════════════════════════════════════════════════════╗\033[0m\n")
-        sys.stdout.write(f"  \033[96m║  🔱 {self.title:<60}║\033[0m\n")
-        sys.stdout.write(f"  \033[90m║  TELEMETRÍA DIGITAL S-CLASS // MONITOREO ACTIVO                     ║\033[0m\n")
-        sys.stdout.write(f"  \033[96m╚══════════════════════════════════════════════════════════════════════╝\033[0m\n\n")
-        sys.stdout.flush()
+        safe_write(f"\n  \033[96m╔══════════════════════════════════════════════════════════════════════╗\033[0m\n")
+        safe_write(f"  \033[96m║  🔱 {self.title:<60}║\033[0m\n")
+        safe_write(f"  \033[90m║  TELEMETRÍA DIGITAL S-CLASS // MONITOREO ACTIVO                     ║\033[0m\n")
+        safe_write(f"  \033[96m╚══════════════════════════════════════════════════════════════════════╝\033[0m\n\n")
+        try: sys.stdout.flush()
+        except: pass
 
     def update(self, current, status="Procesando", item_info=""):
         self.current = current
@@ -37,13 +51,15 @@ class DigitalHUD:
         
         tag = "\033[92m[DONE]\033[0m" if self.current >= self.total else "\033[93m[BUSY]\033[0m"
         line = f"\r  {tag} \033[1m[{bar}]\033[0m \033[96m{percent:5.1f}%\033[0m ({self.current}/{self.total}) | \033[90m{status}\033[0m: \033[97m{info_cut:<38}\033[0m"
-        sys.stdout.write(line)
-        sys.stdout.flush()
+        safe_write(line)
+        try: sys.stdout.flush()
+        except: pass
 
     def finish(self, message="Tarea finalizada con éxito"):
         self.update(self.total, status="Completado", item_info=message)
-        sys.stdout.write(f"\n\n  \033[92m[EXIT CODE 0] {message} // Tiempo total: {time.time() - self.start_time:.2f}s\033[0m\n\n")
-        sys.stdout.flush()
+        safe_write(f"\n\n  \033[92m[EXIT CODE 0] {message} // Tiempo total: {time.time() - self.start_time:.2f}s\033[0m\n\n")
+        try: sys.stdout.flush()
+        except: pass
 
 if __name__ == "__main__":
     # Test de demostración

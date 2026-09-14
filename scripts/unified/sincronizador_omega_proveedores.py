@@ -31,6 +31,12 @@ import time
 import urllib.parse
 from pathlib import Path
 
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 # Telemetría Digital S-Class
 try:
     from terminal_telemetry import DigitalHUD
@@ -126,11 +132,17 @@ def sync_omega_providers():
     print("  Absorbiendo el 100% de fotos HD, teléfonos, GPS y split 80/10/10")
     print("="*75 + "\n")
 
-    # 1. Cargar todas las fuentes disponibles
+    # 1. Cargar todas las fuentes disponibles (Bodas.net + Celebrents + VIMUME + Scraped)
     hud.update(10, "Cargando Fuentes", "Leyendo bases de datos y volcados enriquecidos")
     raw_candidates = [
         APP_DATA_DIR / "vampirized-providers-deep-sclass.json",
+        APP_DATA_DIR / "celebrents_providers.json",
+        WORKSPACE_DIR / "scripts" / "nightcrawler_results" / "celebrents_live_harvested.json",
+        WORKSPACE_DIR / "scripts" / "nightcrawler_results" / "bodas_live_harvested.json",
+        Path(r"H:\EAR_INGESTION_HUB\05_PROYECTO_VIMUME\05_PILOTOS_Y_CASOS_USO\bodas-net-FULL-DATABASE.json"),
+        Path(r"H:\EAR_INGESTION_HUB\05_PROYECTO_VIMUME\05_PILOTOS_Y_CASOS_USO\bodas-net-CLEAN-DATABASE.json"),
         WORKSPACE_DIR / "src" / "lib" / "NUCLEO_DATA" / "bodas_clean.json",
+        WORKSPACE_DIR / "src" / "lib" / "NUCLEO_DATA" / "bodas_full.json",
         APP_DATA_DIR / "bodas-vendors-harvested.json",
         APP_DATA_DIR / "vendors-enriched-night.json",
         APP_DATA_DIR / "all_providers_database.json",
@@ -176,7 +188,8 @@ def sync_omega_providers():
                         continue
 
                     slug_key = str(item.get("slug") or item.get("Slug") or item.get("id") or item.get("Id") or lower_name).lower().strip()
-                    norm_key = re.sub(r'[^a-z0-9]', '', lower_name)
+                    prov_hint = (item.get("province") or item.get("Province") or "") if str(item.get("province", "")).lower() not in ["none", ""] else ""
+                    norm_key = f"{re.sub(r'[^a-z0-9]', '', lower_name)[:25]}_{re.sub(r'[^a-z0-9]', '', str(prov_hint).lower())[:10]}"
 
                     # Si ya existe, enriquecerlo con los datos adicionales
                     existing = master_pool.get(norm_key, {})
@@ -345,6 +358,19 @@ def sync_omega_providers():
     # 3. Guardar en src/data/all_providers_database.json
     with open(APP_DATA_DIR / "all_providers_database.json", "w", encoding="utf-8") as f:
         json.dump(all_providers_list, f, ensure_ascii=False, indent=2)
+
+    # 3.1 Particionar y guardar en los 10 archivos Edge CDN en public/data/providers/
+    PUBLIC_PROVIDERS_DIR = WORKSPACE_DIR / "public" / "data" / "providers"
+    PUBLIC_PROVIDERS_DIR.mkdir(parents=True, exist_ok=True)
+    from collections import defaultdict
+    edge_partitions = defaultdict(list)
+    for prov_item in all_providers_list:
+        c_name = prov_item.get("category", "servicios")
+        edge_partitions[c_name].append(prov_item)
+
+    for cat_name, items_list in edge_partitions.items():
+        with open(PUBLIC_PROVIDERS_DIR / f"{cat_name}.json", "w", encoding="utf-8") as pf:
+            json.dump(items_list, pf, ensure_ascii=False, indent=2)
 
     # 4. Actualizar src/data/neural-providers.ts (Catálogo para el Cotizador)
     hud.update(55, "Generando TypeScript", "Actualizando neural-providers.ts para el cotizador")

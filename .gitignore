@@ -61,3 +61,52 @@ scripts/reports/*.json
 !scripts/reports/b2g_tender_hunter_report.json
 !scripts/reports/vampire_swarm_master_telemetry.json
 .vercel
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# 🏛️ REGLAS INMUTABLES PURISTAS — PROTECCIÓN CONTRA ARCHIVOS PESADOS (ZTM SOVEREIGN)
+# ═══════════════════════════════════════════════════════════════════════════════
+*.pdf
+*.zip
+*.csv
+*.docx
+*.mp4
+*.mkv
+*.wav
+*.mp3
+
+# Bases de datos pesadas de scraping y volcados masivos (> 1MB)
+src/data/all_providers_database.json
+src/data/vampirized-providers-*.json
+src/data/bodas-vendors-harvested.json
+src/data/vendors-enriched-night.json
+src/data/celebrents_providers.json
+src/data/vampirized_providers.json
+src/data/ear-rag-database.json
+src/data/wedding_intel_vault/
+src/data/staging/
+src/lib/NUCLEO_DATA/*.json
+src/infrastructure/docs/archive/
+
+# Bóvedas locales, cachés de imágenes y auditorías
+public/assets/shadow_vendors/
+.firebase/
+public/images/navidad_2026/
+src/data/vimume-brain/
+docs/
+scripts/reports/visual_audit/
+scripts/nightcrawler_results/
+scripts/vampire_public_catalog_zk.json
+scripts/vault_manifest.json
+scripts/.*manifest*.json
+scripts/.processed_hashes.json
+benchmark_localizados.csv
+public/media/edwin/*.m4a
+scripts/vampire_cohort_p1_silver.json
+src/data/catalog/*.json
+src/data/providers_search_index.json
+src/data/vimume-rag-ssot.json
+src/data/vampirized-providers*.json
+desktop.ini
+*.ini
+
+
