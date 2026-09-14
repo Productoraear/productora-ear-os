@@ -398,9 +398,9 @@ export function analyzeNeuralIntent(rawQuery: string): NeuralIntentResult {
       badge: 'DISPONIBILIDAD INMEDIATA CONFIRMADA · ALQUILER DE SONIDO',
       headline: `DISPONIBILIDAD CONFIRMADA PARA ${countUnits} ALTAVOCES EN ${loc.toUpperCase()}`,
       responseHtml: `Tenemos disponibilidad para entrega y montaje inmediato en **${loc}**. Disponemos de **Packs de Altavoces Profesionales (Bose F1 Model 812 / Mackie Thump 1300W)**. **¿Qué incluye el pack?** Trípodes telescópicos reforzados, cableado XLR blindado, mesa de sonido con conexión Bluetooth para reproducir desde cualquier móvil y micrófono inalámbrico Shure. Tarifa desde 180 € con montaje y soporte técnico in situ.`,
-      primaryActionLabel: 'VER PACKS DE ALTAVOCES Y MARCAS →',
-      primaryActionUrl: `/alquiler?cat=altavoces&provincia=${loc}&pax=50&m2=60`,
-      secondaryActionLabel: 'COTIZAR EN DIRECTO CON PRECIO CERRADO',
+      primaryActionLabel: 'VER ARSENAL TÉCNICO & DISPONIBILIDAD IN SITU →',
+      primaryActionUrl: `/arsenal?cat=sonido&q=altavoces&provincia=${loc}`,
+      secondaryActionLabel: 'CONFIGURAR EN COTIZADOR DIRECTO',
       secondaryActionUrl: `/calculadora?cat=sonido&provincia=${loc}`,
       isCustomRedirect: true
     };

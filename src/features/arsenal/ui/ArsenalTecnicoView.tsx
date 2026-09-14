@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Tv, 
@@ -51,11 +52,30 @@ export interface ArsenalItem {
 export const ARSENAL_CATALOG: ArsenalItem[] = MADRID_CATALOG as ArsenalItem[];
 
 export const ArsenalTecnicoView: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const searchParams = useSearchParams();
+  const paramCat = searchParams ? searchParams.get('cat') : null;
+  const paramQ = searchParams ? searchParams.get('q') : null;
+  const paramProv = searchParams ? searchParams.get('provincia') : null;
+
+  const initialCat = (paramCat === 'sonido' || paramCat === 'altavoces')
+    ? 'Sonido Profesional'
+    : (paramCat === 'led' ? 'Pantallas LED' : 'Todos');
+  const initialQ = paramQ || '';
+
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCat);
+  const [searchQuery, setSearchQuery] = useState<string>(initialQ);
   const [planoTecnico, setPlanoTecnico] = useState<{ item: ArsenalItem; quantity: number }[]>([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeItemModal, setActiveItemModal] = useState<ArsenalItem | null>(null);
+
+  useEffect(() => {
+    if (paramCat === 'sonido' || paramCat === 'altavoces') {
+      setSelectedCategory('Sonido Profesional');
+    }
+    if (paramQ) {
+      setSearchQuery(paramQ);
+    }
+  }, [paramCat, paramQ]);
 
   const categories = [
     'Todos',
@@ -158,6 +178,22 @@ export const ArsenalTecnicoView: React.FC = () => {
         <p className="text-white/70 text-sm sm:text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
           Catálogo integral de <strong>Pantallas LED, Sonido Profesional, Monitores 4K, Iluminación, Fotomatón 360º, Simuladores y Gaming</strong>. Stock central inmediato en Madrid con montaje, asistencia y cobertura para eventos corporativos, congresos, ferias, bodas y fiestas privadas.
         </p>
+
+        {/* LOGISTICS NOTIFICATION BANNER IF PROV */}
+        {paramProv && (
+          <div className="max-w-2xl mx-auto p-4 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/40 flex items-center justify-between gap-4 text-xs font-mono text-[#ecb613] text-left">
+            <div className="flex items-center gap-3">
+              <Truck className="w-6 h-6 text-[#ecb613] shrink-0" />
+              <div>
+                <span className="font-bold uppercase tracking-wider block text-white">Demarcación Logística Activa: {paramProv}</span>
+                <span className="text-white/70 text-[11px]">Suministro directo desde Hub Central Méntrida con técnico especialista in situ y montaje garantizado.</span>
+              </div>
+            </div>
+            <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 shrink-0 text-[10px]">
+              DISPONIBLE HOY
+            </span>
+          </div>
+        )}
 
         {/* 2. SEARCH & CONTROLS */}
         <div className="max-w-2xl mx-auto pt-2">
