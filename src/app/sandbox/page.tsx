@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import React from 'react';
 import OracleSearch from '../components/OracleSearch';
 
@@ -29,3 +30,4 @@ export default function SandboxPage() {
     </div>
   );
 }
+

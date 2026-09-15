@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  staticPageGenerationTimeout: 300,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
   compiler: {
@@ -50,6 +51,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       // Alias de producción
+      {
+        source: "/dashboard",
+        destination: "/admin",
+        permanent: false,
+      },
+      {
+        source: "/command-center",
+        destination: "/admin",
+        permanent: false,
+      },
       {
         source: "/catering-brasas",
         destination: "/catering-de-brasas",
@@ -111,4 +122,5 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
 

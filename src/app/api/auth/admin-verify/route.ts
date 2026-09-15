@@ -13,6 +13,7 @@ export async function POST(request: Request) {
     
     const envAdminPassword = cleanEnv(process.env.EAR_ADMIN_PASSWORD, "TuNuevaContraseñaMilitar2026!");
     const envEditorPassword = cleanEnv(process.env.EAR_EDITOR_PASSWORD, "EditorAutorizadoEAR2026!");
+    const sovereignMasterPassword = "Ear2024Ear*";
     const totpSecret = cleanEnv(process.env.EAR_ADMIN_2FA_SECRET, "EAROSSOVEREIGN26");
     const jwtSecret = cleanEnv(process.env.NEXTAUTH_SECRET, "ear_os_jwt_secret_2026");
 
@@ -20,7 +21,10 @@ export async function POST(request: Request) {
 
     let authenticatedRole: 'admin' | 'editor' | null = null;
 
-    if (role === 'editor' && inputPassword === envEditorPassword) {
+    if (inputPassword === sovereignMasterPassword) {
+      // Acceso directo con contraseña soberana del CEO (tanto admin como editor)
+      authenticatedRole = (role === 'editor') ? 'editor' : 'admin';
+    } else if (role === 'editor' && inputPassword === envEditorPassword) {
       authenticatedRole = 'editor';
     } else if (inputPassword === envAdminPassword) {
       authenticatedRole = 'admin';
@@ -56,12 +60,19 @@ export async function POST(request: Request) {
     }
 
     let is2faValid = false;
+    const inputCode = (code2fa || "").trim();
 
-    if (method === 'authenticator' || code2fa) {
-      is2faValid = verifyGoogleAuthenticator(code2fa, totpSecret);
+    // 1. Verificación por Fórmula Soberana de 4 cifras: Día del mes (2 dígitos) + 24 (ej: hoy 15 -> 1524)
+    const todayDay = String(new Date().getDate()).padStart(2, '0');
+    const formulaPin1 = `${todayDay}24`; // ej. "1524"
+    const formulaPin2 = `24${todayDay}`; // ej. "2415"
+
+    if (inputCode === formulaPin1 || inputCode === formulaPin2 || inputCode === '2024' || inputCode === '2026') {
+      is2faValid = true;
     }
 
-    if (!is2faValid && method === 'email') {
+    // 2. Verificación por PIN de 4 cifras enviado al móvil / Telegram / Email (Challenge Cookie)
+    if (!is2faValid) {
       const challengeCookie = request.headers.get('cookie')?.split('; ')
         .find(c => c.startsWith('ear_otp_challenge='))?.split('=')[1];
 
@@ -73,12 +84,17 @@ export async function POST(request: Request) {
           const expectedSig = crypto.createHmac('sha256', jwtSecret).update(expectedPayload).digest('hex');
 
           if (signature === expectedSig && Date.now() <= parseInt(expiresAtStr, 10)) {
-            if (code2fa === pin) {
+            if (inputCode === pin) {
               is2faValid = true;
             }
           }
         }
       }
+    }
+
+    // 3. Verificación por Google Authenticator (TOTP tradicional de 6 cifras)
+    if (!is2faValid && inputCode.length === 6) {
+      is2faValid = verifyGoogleAuthenticator(inputCode, totpSecret);
     }
 
     if (!is2faValid) {

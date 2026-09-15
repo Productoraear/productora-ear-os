@@ -20,8 +20,8 @@ def prune_queue():
             data = json.load(f)
 
         tasks = data.get("tasks", [])
-        completed = [t for t in tasks if t.get("status") == "COMPLETED"]
-        pending = [t for t in tasks if t.get("status") != "COMPLETED"]
+        completed = [t for t in tasks if t.get("status") in ["COMPLETED", "SUPERSEDED"]]
+        pending = [t for t in tasks if t.get("status") not in ["COMPLETED", "SUPERSEDED"]]
 
         if not completed:
             return

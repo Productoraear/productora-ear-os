@@ -1,170 +1,186 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { 
-  Activity, ArrowLeft, Cpu, HardDrive, ShieldCheck, Zap, 
-  Server, RefreshCw, Radio, Terminal, AlertCircle, Database
-} from 'lucide-react';
+import { useCallback, useEffect, useState } from "react";
 
-export default function TelemetriaGlobalPage() {
-  const [timestamp, setTimestamp] = useState<string>('');
-  const [latency, setLatency] = useState<number>(18);
-  const [gpuLoad, setGpuLoad] = useState<number>(14);
+type Telemetry = {
+  timestamp: string;
+  host: { platform: string; arch: string; hostname: string; node: string; uptimeSec: number };
+  cpu: { model: string; cores: number; loadAvg: number[] };
+  memory: { totalMB: number; usedMB: number; freeMB: number; usedPct: number };
+  vram: { totalMB: number; usedMB: number } | null;
+  network: { activeIps: string[] };
+  ollama: { online: boolean; models: string[]; latencyMs: number };
+  payments: { stripeConfigured: boolean; webhookConfigured: boolean };
+  responseMs: number;
+};
 
-  useEffect(() => {
-    setTimestamp(new Date().toLocaleTimeString('es-ES'));
-    const interval = setInterval(() => {
-      setTimestamp(new Date().toLocaleTimeString('es-ES'));
-      setLatency(Math.floor(16 + Math.random() * 6));
-      setGpuLoad(Math.floor(12 + Math.random() * 8));
-    }, 2000);
-    return () => clearInterval(interval);
+const CYAN = "#00E5FF";
+
+function fmtMB(mb: number): string {
+  if (mb >= 1024) return `${(mb / 1024).toFixed(1)} GB`;
+  return `${mb} MB`;
+}
+
+function StatusDot({ ok, label }: { ok: boolean; label: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <span
+        className="h-2.5 w-2.5 rounded-full"
+        style={{ backgroundColor: ok ? CYAN : "#FF2B44", boxShadow: `0 0 8px ${ok ? CYAN : "#FF2B44"}` }}
+      />
+      <span className="font-mono text-xs text-white/70">{label}</span>
+    </div>
+  );
+}
+
+function MetricCard({
+  title,
+  value,
+  sub,
+  pct,
+}: {
+  title: string;
+  value: string;
+  sub?: string;
+  pct?: number;
+}) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-[#050507] p-5">
+      <p className="font-mono text-[11px] uppercase tracking-widest text-white/40">{title}</p>
+      <p className="mt-2 font-mono text-2xl font-semibold text-white">{value}</p>
+      {sub && <p className="mt-1 font-mono text-xs text-white/50">{sub}</p>}
+      {typeof pct === "number" && (
+        <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+          <div
+            className="h-full rounded-full transition-all"
+            style={{ width: `${Math.min(100, Math.max(0, pct))}%`, backgroundColor: CYAN }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function TelemetriaPage() {
+  const [data, setData] = useState<Telemetry | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/telemetry", { cache: "no-store" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = (await res.json()) as Telemetry;
+      setData(json);
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error de telemetría");
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return (
-    <div className="min-h-screen bg-[#030303] text-[#fcfbf9] p-6 md:p-10 font-sans selection:bg-[#d4ac0d] selection:text-black">
-      <div className="max-w-7xl mx-auto space-y-8">
-        
-        {/* Cabecera de Navegación */}
-        <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#1f1f1f] pb-6">
-          <div className="flex items-center gap-4">
-            <Link 
-              href="/admin" 
-              className="inline-flex items-center gap-2 text-xs uppercase tracking-wider text-gray-400 hover:text-[#d4ac0d] transition-colors bg-[#0d0d0d] px-3 py-2 rounded-lg border border-[#222]"
-            >
-              <ArrowLeft className="w-4 h-4" /> Centro de Mando
-            </Link>
-            <div>
-              <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
-                Telemetría Bare-Metal <span className="text-[#d4ac0d] text-xs font-mono px-2 py-0.5 rounded bg-[#d4ac0d]/10 border border-[#d4ac0d]/30">REAL-TIME</span>
-              </h1>
-              <p className="text-xs text-gray-400 font-mono">Hub Operativo Méntrida (Toledo) // Nodo Km 0</p>
-            </div>
-          </div>
+  useEffect(() => {
+    load();
+    const id = setInterval(load, 10000);
+    return () => clearInterval(id);
+  }, [load]);
 
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 bg-[#0a1a0f] border border-[#27ae60]/40 px-3 py-1.5 rounded-lg text-xs font-mono text-[#27ae60]">
-              <span className="w-2 h-2 rounded-full bg-[#27ae60] animate-ping" />
-              SISTEMAS NOMINALES
-            </div>
-            <div className="bg-[#111] border border-[#222] px-3 py-1.5 rounded-lg text-xs font-mono text-gray-300">
-              {timestamp || "00:00:00"}
-            </div>
-          </div>
+  return (
+    <div className="w-full overflow-x-hidden px-6 py-16">
+      <div className="mx-auto max-w-6xl">
+        <header className="mb-10">
+          <p className="font-mono text-xs uppercase tracking-[0.3em]" style={{ color: CYAN }}>
+            B5.44 · Telemetría Bare-Metal
+          </p>
+          <h1 className="mt-3 font-sans text-4xl font-bold text-white">Panel de Telemetría Global</h1>
+          <p className="mt-2 max-w-2xl text-sm text-white/50">
+            Métricas en vivo del host: CPU, RAM, VRAM, motor Ollama (GPU local) y pasarela de pagos.
+            Refresco automático cada 10 s.
+          </p>
         </header>
 
-        {/* Matriz de Hardware y Subestaciones */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-[#080808] border border-[#1f1f1f] p-5 rounded-2xl space-y-3">
-            <div className="flex justify-between items-center text-xs text-gray-400 font-mono">
-              <span>IA ACCELERATOR</span>
-              <Cpu className="w-4 h-4 text-[#d4ac0d]" />
-            </div>
-            <div className="text-2xl font-black text-white font-mono">RX 7900 XTX</div>
-            <div className="space-y-1">
-              <div className="flex justify-between text-[11px] text-gray-400 font-mono">
-                <span>VRAM Asignada: 24 GB</span>
-                <span>{gpuLoad}% Carga</span>
-              </div>
-              <div className="w-full bg-[#1c1c1c] h-1.5 rounded-full overflow-hidden">
-                <div className="bg-[#d4ac0d] h-full transition-all duration-500" style={{ width: `${gpuLoad}%` }} />
-              </div>
-            </div>
-            <p className="text-[10px] text-gray-500 font-mono">Worker Local: 2.55s latencia media</p>
+        {loading && (
+          <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-[#050507] p-6">
+            <span className="h-3 w-3 animate-pulse rounded-full" style={{ backgroundColor: CYAN }} />
+            <span className="font-mono text-sm text-white/60">Conectando al host…</span>
           </div>
+        )}
 
-          <div className="bg-[#080808] border border-[#1f1f1f] p-5 rounded-2xl space-y-3">
-            <div className="flex justify-between items-center text-xs text-gray-400 font-mono">
-              <span>BASE DE DATOS</span>
-              <Database className="w-4 h-4 text-[#27ae60]" />
-            </div>
-            <div className="text-2xl font-black text-white font-mono">Supabase S-Class</div>
-            <div className="text-xs text-emerald-400 font-mono flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" /> Pool Conectado ({latency} ms)
-            </div>
-            <p className="text-[10px] text-gray-500 font-mono">Replicación local + RLS Activo</p>
+        {error && !loading && (
+          <div className="rounded-2xl border border-[#FF2B44]/40 bg-[#FF2B44]/5 p-6">
+            <p className="font-mono text-sm text-[#FF2B44]">Sin señal de telemetría: {error}</p>
           </div>
+        )}
 
-          <div className="bg-[#080808] border border-[#1f1f1f] p-5 rounded-2xl space-y-3">
-            <div className="flex justify-between items-center text-xs text-gray-400 font-mono">
-              <span>ACÚSTICA & DSP</span>
-              <Radio className="w-4 h-4 text-[#3498db]" />
+        {data && !loading && (
+          <>
+            <div className="mb-8 flex flex-wrap items-center gap-6 rounded-2xl border border-white/10 bg-[#050507] p-5">
+              <StatusDot ok={data.ollama.online} label={`OLLAMA ${data.ollama.online ? "ONLINE" : "OFFLINE"}`} />
+              <StatusDot ok={data.payments.stripeConfigured} label="STRIPE" />
+              <StatusDot ok={data.payments.webhookConfigured} label="WEBHOOK" />
+              <span className="ml-auto font-mono text-xs text-white/40">
+                {data.host.hostname} · {data.host.platform}/{data.host.arch} · Node {data.host.node}
+              </span>
             </div>
-            <div className="text-2xl font-black text-white font-mono">12 W / pax</div>
-            <div className="text-xs text-gray-300 font-mono">Bose F1 + Shure Beta 87A</div>
-            <p className="text-[10px] text-gray-500 font-mono">Buffer: 48 kHz / 24-bit nominal</p>
-          </div>
 
-          <div className="bg-[#080808] border border-[#1f1f1f] p-5 rounded-2xl space-y-3">
-            <div className="flex justify-between items-center text-xs text-gray-400 font-mono">
-              <span>GOBIERNO DE RED</span>
-              <HardDrive className="w-4 h-4 text-[#e67e22]" />
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <MetricCard
+                title="CPU"
+                value={`${data.cpu.cores} núcleos`}
+                sub={data.cpu.model}
+              />
+              <MetricCard
+                title="Carga media (1/5/15 min)"
+                value={data.cpu.loadAvg.join(" · ")}
+                sub="loadavg"
+              />
+              <MetricCard
+                title="RAM"
+                value={`${fmtMB(data.memory.usedMB)} / ${fmtMB(data.memory.totalMB)}`}
+                sub={`${data.memory.usedPct}% en uso`}
+                pct={data.memory.usedPct}
+              />
+              <MetricCard
+                title="VRAM (GPU)"
+                value={data.vram ? fmtMB(data.vram.totalMB) : "N/D"}
+                sub={data.vram ? "AMD RX 7900 XTX" : "sin lectura"}
+              />
+              <MetricCard
+                title="Ollama · modelos"
+                value={String(data.ollama.models.length)}
+                sub={data.ollama.online ? `${data.ollama.latencyMs} ms` : "offline"}
+              />
+              <MetricCard
+                title="Uptime host"
+                value={`${Math.floor(data.host.uptimeSec / 3600)} h ${Math.floor((data.host.uptimeSec % 3600) / 60)} min`}
+                sub={`respuesta ${data.responseMs} ms`}
+              />
             </div>
-            <div className="text-2xl font-black text-white font-mono">26.420 Nodos</div>
-            <div className="text-xs text-amber-400 font-mono">Proveedores en Memoria</div>
-            <p className="text-[10px] text-gray-500 font-mono">Protocolo Vampiro en Espera</p>
-          </div>
-        </div>
 
-        {/* Consola de Procesos Activos y Trazabilidad */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
-          {/* Registro de Subestaciones */}
-          <div className="lg:col-span-2 bg-[#080808] border border-[#1f1f1f] rounded-2xl p-6 space-y-4">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-gray-400 font-mono flex items-center gap-2">
-              <Server className="w-4 h-4 text-[#d4ac0d]" /> Estado de Subsistemas EAR OS
-            </h2>
-
-            <div className="space-y-3">
-              {[
-                { name: "Motor de Adquisición (fincasparaboda.com)", status: "Producción Activa", ping: "22 ms", ok: true },
-                { name: "Módulo B2G Art. 118 LCSP (Pliegos Oficiales)", status: "Homologado", ping: "14 ms", ok: true },
-                { name: "Fusion Mixer de 10 Arquetipos (Mobile Studio)", status: "En Memoria", ping: "0 ms", ok: true },
-                { name: "Tripwires Anti-Inyección & TOTP 2FA (Oráculo)", status: "Armado", ping: "5 ms", ok: true },
-                { name: "Pipeline Lavado Semántico (Vampiro)", status: "Modo Soberano", ping: "Localhost", ok: true },
-              ].map((sub, idx) => (
-                <div key={idx} className="flex items-center justify-between p-3.5 bg-[#0e0e0e] border border-[#1a1a1a] rounded-xl text-xs font-mono">
-                  <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#27ae60]" />
-                    <span className="text-gray-200">{sub.name}</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-gray-500">{sub.ping}</span>
-                    <span className="text-[#d4ac0d] font-semibold">{sub.status}</span>
-                  </div>
+            <div className="mt-6 rounded-2xl border border-white/10 bg-[#050507] p-5">
+              <p className="font-mono text-[11px] uppercase tracking-widest text-white/40">Modelos Ollama cargados</p>
+              {data.ollama.models.length === 0 ? (
+                <p className="mt-2 font-mono text-sm text-white/40">Sin modelos detectados en 127.0.0.1:11434</p>
+              ) : (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {data.ollama.models.map((m) => (
+                    <span
+                      key={m}
+                      className="rounded-full border border-white/10 px-3 py-1 font-mono text-xs text-white/70"
+                    >
+                      {m}
+                    </span>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Terminal de Eventos en Tiempo Real */}
-          <div className="bg-[#080808] border border-[#1f1f1f] rounded-2xl p-6 space-y-4 flex flex-col justify-between">
-            <div className="space-y-3">
-              <h2 className="text-sm font-bold uppercase tracking-wider text-gray-400 font-mono flex items-center gap-2">
-                <Terminal className="w-4 h-4 text-[#d4ac0d]" /> Bitácora de Arranque
-              </h2>
-              <div className="bg-black border border-[#1a1a1a] p-3.5 rounded-xl font-mono text-[11px] space-y-2 text-gray-400 max-h-64 overflow-y-auto">
-                <p className="text-emerald-400">[INIT] Kernel EAR OS v2.4 cargado.</p>
-                <p className="text-gray-400">[CORE] Montaje de rutas (nexus)/admin completado.</p>
-                <p className="text-gray-400">[AUDIO] Calibración 12 W/pax para 15 plazas fijada.</p>
-                <p className="text-[#d4ac0d]">[VAMPIRO] 26.420 entidades desindexadas de terceros.</p>
-                <p className="text-emerald-400">[OK] Dashboard y Telemetría enlazados sin errores.</p>
-              </div>
+              )}
             </div>
 
-            <div className="pt-4 border-t border-[#1a1a1a]">
-              <Link 
-                href="/admin/omni-cockpit" 
-                className="w-full inline-flex items-center justify-center gap-2 bg-[#121212] hover:bg-[#1a1a1a] border border-[#333] hover:border-[#d4ac0d] text-white text-xs font-bold py-3 rounded-xl transition-all font-mono"
-              >
-                Abrir Omni-Cockpit Studio
-              </Link>
-            </div>
-          </div>
-
-        </div>
-
+            <p className="mt-8 text-right font-mono text-[11px] text-white/30">
+              Última lectura: {new Date(data.timestamp).toLocaleTimeString("es-ES")}
+            </p>
+          </>
+        )}
       </div>
     </div>
   );

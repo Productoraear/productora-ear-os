@@ -120,6 +120,30 @@ export default function SourcingHubPage() {
     setTimeout(() => setCopiedPhone(null), 2000);
   };
 
+  // B5.46 — Export CSV de la matriz de leads (respetando filtros activos)
+  const handleExportCSV = () => {
+    const esc = (v: string | number) => {
+      const s = String(v ?? '');
+      return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const header = ['id', 'nombre', 'tipo', 'municipio', 'direccion', 'telefono', 'distancia_km', 'estado', 'pitch_recomendado', 'condiciones', 'web'];
+    const rows = filteredLeads.map((l) =>
+      [l.id, l.nombre, l.tipo, l.municipio, l.direccion, l.telefono, l.distancia_km, l.estado, l.pitch_recomendado, l.condiciones, l.web || '']
+        .map(esc)
+        .join(';')
+    );
+    const csv = [header.join(';'), ...rows].join('\r\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ear_sourcing_leads_${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="min-h-screen bg-[#030305] text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
       {/* Header S-Class */}
@@ -159,6 +183,14 @@ export default function SourcingHubPage() {
             <div className="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs font-mono text-cyan-400">
               {stats.interesados} Interesados
             </div>
+            <button
+              onClick={handleExportCSV}
+              className="px-3 py-1.5 rounded-xl bg-[#ecb613] hover:bg-[#f5c518] text-black text-xs font-mono font-bold flex items-center gap-1.5 shadow-[0_0_15px_rgba(236,182,19,0.3)] transition"
+              title="Exportar matriz de leads a CSV (respetando filtros activos)"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Export CSV ({filteredLeads.length})</span>
+            </button>
           </div>
         </div>
       </header>

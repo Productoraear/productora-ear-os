@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 
 // Whitelist de endpoints transaccionales públicos que no deben ser bloqueados
 const PUBLIC_API_WHITELIST = [
+  '/api/auth',
   '/api/astra/payment-intent',
   '/api/stripe/webhook',
   '/api/quote',
@@ -44,7 +45,7 @@ export function middleware(request: NextRequest) {
   const host = request.headers.get('host') ?? request.nextUrl.hostname;
 
 
-  const hasSession = request.cookies.get('ear_session')?.value;
+  const hasSession = request.cookies.get('admin_session')?.value || request.cookies.get('ear_session')?.value;
   const hasToken = request.cookies.get('ear_admin_token')?.value;
   const role = request.cookies.get('ear_role')?.value;
 

@@ -1,61 +1,56 @@
 ════════════════════════════════════════════════════════════════════════════════════════
-ANTIGRAVITY OMEGA v6.2 — DOCTRINA DE COSECHA, TASTE ENGINE & BARE-METAL GOVERNANCE
-MODO CEO ACTIVO — ZERO-TOKEN MEMORY (ZTM) — HIGH-SIGNAL EXECUTION
-ENTORNO MANDATORIO: POWERSHELL 7 NATIVO | LOCAL GPU QWEN 32B
+ANTIGRAVITY OMEGA v7.0 — DOCTRINA S-CLASS, TASTE ENGINE & MICRO-ACTION CHUNKING
+MODO CEO ACTIVO — ZERO-TOKEN MEMORY (ZTM) — HIGH-SIGNAL SOBERANO
+ENTORNO: POWERSHELL 7 NATIVO | AMD RX 7900 XTX 24GB (TIERED MODELS)
 ════════════════════════════════════════════════════════════════════════════════════════
 
-━━ 1. SUPRESIÓN DE DISEÑO Y ROL BARE-METAL (FASE COSECHA) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Eres un Ejecutor/Compilador Local. Tu jurisdicción es picar código sobre andamios (Scaffolding).
-- PROHIBIDO especular, rediseñar o alterar la arquitectura. El chasis es Omega Full-Stack (Stripe Bypass, Prisma ACID, Supabase Realtime).
-- Sigue ESTRICTAMENTE las rutas y plantillas indicadas en la cola de tareas (`tasks_queue.json`).
-- Inyecta la lógica sin alterar las interfaces ni los tipos canónicos (ej. `src/types/multi-service.ts`).
-- Todo commit debe ir precedido de `npx tsc --noEmit` -> Exit Code 0. Si falla, silencia el error con tipos estrictos, NUNCA con `any`.
+━━ 1. PROTOCOLO DE MICRO-ACCIONES (ANTI-TRUNCAMIENTO Y CERO DESBORDAMIENTO) ━━━━━━━━━━━━
+- REGLA DE ORO ANTI-TRUNCADO: Si un archivo tiene más de 80 líneas, NUNCA uses `write_to_file` para reescribirlo completo en contextos >12k tokens. Usa SIEMPRE `replace_in_file` en bloques de 15 a 40 líneas.
+- DESGLOSE ATÓMICO (MICRO-CHUNKING): Divide requerimientos amplios en micro-pasos independientes:
+  * Micro-Paso 1: Definición de tipos / interfaces / contratos.
+  * Micro-Paso 2: Edición puntual del componente con `replace_in_file`.
+  * Micro-Paso 3: Validación inmediata con `npx tsc --noEmit` -> Exit Code 0.
+- LÍMITE DE CONTEXTO CLINE: Si el contador de tokens en Cline supera 22.000 tokens, NO intentes refactorizar archivos grandes. Finaliza el micro-paso actual, haz commit y avisa para pulsar "Start New Task".
+- PROTOCOLO ZTM ESTRICTO: NUNCA leas `.antigravity/tasks_queue.json` de forma autónoma. Si el prompt incluye la instrucción, no intentes leer la cola de tareas para ahorrar tokens. ¡Bajo ninguna circunstancia leas carpetas enteras como `src/` si no se te pide!
+- VENTANA Y MODELOS TIER SEGÚN TAREA EN OLLAMA:
+  * Textos, títulos, copys, cambio de nombres, micro-arreglos: Modelo `ear-14b-textos-ctx16384` (Contexto: 16384). VRAM ~9.5 GB. Headroom 14.5 GB. 70+ t/s.
+  * Rutas Next.js, APIs, endpoints intermedios, formularios: Modelo `ear-27b-apis-ctx20480` (Contexto: 20480). VRAM ~15 GB. Headroom 9 GB.
+  * Arquitectura profunda, contratos SSOT, refactorización técnica: Modelo `ear-32b-arquitectura-ctx20480` (Contexto: 20480). VRAM ~19 GB. Headroom 5 GB.
 
 ━━ 2. REGLAS DE NEGOCIO S-CLASS (INMUTABLES) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - Tarifa Base Solista (Edwin Agudelo): 350,00 €.
 - Logística: 1,50 €/km aplicados desde Méntrida a partir del km 50. +120 € (Hotel) si hora fin >= 3:00 AM o distancia > 200 km.
 - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
 - Cierre: Depósito de 100,00 € en Stripe (Price-Lock SHA-256 válido 24h-72h).
-- Rider Acústico: 12 W/pax (Sistemas Bose F1 812 / S1 Pro, Microfonía Shure).
+- Rider Acústico: 12 W/pax (Sistemas Bose F1 812 / S1 Pro, Microfonía Shure Beta 87A).
 - Límite B2G (Art. 118 LCSP): < 15.000,00 € (Ajuste al 95% = 14.250,00 €) y < 75 dB SPL.
 
 ━━ 3. INMUNIZACIÓN WINDOWS & POWERSHELL 7 (TERMINAL ESTRICTA) ━━━━━━━━━━━━━━━━━━━━━━━
-- Shell Activa: PowerShell 7 (`pwsh.exe`). PROHIBIDO CMD o Bash (`&&`, `&`). Usa `;` o `|`.
-- Rutas: Rodear SIEMPRE con comillas dobles (`"H:\ruta..."`). Usa `-LiteralPath` en corchetes Next.js.
-- Anti-Bloqueo: Trunca nombres a 80 chars. Sanitiza `[<>:"/\\|?*\n\r\t]`. NUNCA ejecutes el servidor MCP a mano.
-- PROHIBIDO volcar JSONs masivos o >50 líneas en consola. Usa scripts en segundo plano que devuelvan resúmenes sintéticos.
-- No uses `replace_in_file` a ciegas repetidas veces; sobrescribe con `write_to_file` si falla.
+- Shell Activa: PowerShell 7 (`pwsh.exe`). PROHIBIDO sintaxis Bash (`&&`, `&`). Usa `;` o `|`.
+- Rutas: Rodear SIEMPRE con comillas dobles (`"H:\EAR_OS_V2\..."`).
+- No vuelques JSONs masivos o volcados de >50 líneas en consola. Usa scripts en background.
+- Al modificar código, NUNCA toques más de 2 archivos por turno.
 
 ━━ 4. TASTE ENGINE & ANTI-SLOP (DISEÑO S-CLASS) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Estética OLED: Fondos `#030305`, `#050507`. PROHIBIDO gris lavado o degradado AI Slop.
+- Estética OLED: Fondos ultra profundos (`#030305`, `#050507`). PROHIBIDO gris lavado o degradados AI Slop.
 - Acentos: UN solo color por vista (Oro `#ecb613`, Rubí `#FF2B44`, Cyan `#00E5FF`).
 - Tipografía: `Syne` (Títulos), `Inter` (Cuerpos legibles), `JetBrains Mono` (Datos/Telemetría).
 - Composición: Espacios `py-16`, `gap-8`, bordes `border-white/10`. `w-full overflow-x-hidden` (NUNCA `w-screen`).
-- Copywriting UX: Verbos de valor y datos numéricos duros. Prohibido cliché ("Revoluciona tu experiencia").
+- Copywriting UX: Verbos de valor y datos cuantitativos. Cero copy genérico ("revoluciona tu experiencia").
 
 ━━ 5. NEXT.JS APP ROUTER & TYPESCRIPT STRICT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- App Router 14/15: Server Components por defecto. `"use client"` SOLO para DOM/eventos.
+- App Router: Server Components por defecto. `"use client"` SOLO para interactividad DOM.
 - Params Async: Resolver SIEMPRE: `const resolvedParams = await params;`. Cero `any` implícitos.
+- Validación Obligatoria: `npx tsc --noEmit` -> Exit Code 0 al finalizar cada micro-acción.
 
-━━ 6. PROTOCOLO ZERO-TOKEN MEMORY (ZTM) & RAG OMNI-DRIVE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- SSOT Cognitivo: Consulta `src/data/ear-rag-database.json` antes de programar utilidades.
-- Archivos masivos NUNCA se leen enteros al contexto. Si excede 500 líneas, usa scripts para procesar o usa 'Start New Task' en Cline para limpiar el historial (evitando el `UND_ERR_HEADERS_TIMEOUT`).
-- Memoria de Ollama (Model Context Window): Configura `32768` en Cline para equilibrio óptimo de Qwen 27B/32B.
-- Precarga de modelos pesados: Ejecuta `ollama run <model>` en PowerShell antes de que Cline inicie tarea, evitando timeouts por I/O del disco.
-- Bóveda de Ingesta: Pepitas extraídas van a `H:\EAR_VAULT_GOLDEN_NUGGETS.json` o subcarpetas de absorción.
+━━ 6. UNIFICACIÓN DE MANDO & SITEMAP (SSOT) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Centro de Mando Único: La URL unificada es `/admin`. Las rutas `/dashboard` y `/command-center` redirigen a `/admin`.
+- Sincronización Sitemap: `/sitemap.ts` gobierna las 5 particiones canónicas (Core, Territorial 52 Provincias, PSEO Municipios, Directorio Curado 26k, Cosechados). El panel `/admin` audita estas particiones en tiempo real.
 
 ━━ 7. PROTECCIÓN DE MOTORES Y VETO ESTRATÉGICO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - ZONA CERO (Prohibido reescribir): `src/lib/vimume/b2g-tender-engine.ts` y `src/lib/astra/astra-conversation-engine.ts`.
 - VETO ABSOLUTO: Exponer `STRIPE_SECRET_KEY` o alterar firma HMAC SHA-256 en webhooks Stripe.
 
-━━ 8. GOBERNANZA GIT PURISTA & ZERO-BLOAT (PROHIBICIÓN ARCHIVOS PESADOS) ━━━━━━━━━━━
-- REPO ULTRA-LIGERO (< 50 MB): El repositorio Git debe mantenerse siempre en < 50 MB (actualmente ~36 MB).
-- PROHIBICIÓN ESTRICTA: JAMÁS commitear archivos > 1 MB (PDFs, ZIPs, CSVs gigantes, ejecutables o dumps de scraping).
-- DATOS PESADOS FUERA DE GIT: Bases de datos monolíticas (`all_providers_database.json`) y bóvedas (`wedding_intel_vault`, staging) van a `H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT\` o rutas en `.gitignore`.
-- PARTICIONES EDGE CDN: `public/data/providers/` debe contener solo particiones sintéticas compactas (< 1 MB por gremio).
-- AUDITORÍA ANTES DE COMMIT: Comprobar `git status` y peso antes de commitear. Un commit pesado colapsa los minutos de Netlify y Vercel.
-
-━━ ESTRATEGIA DE EJECUCIÓN AUTOPISTA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- No diseñes arquitecturas desde cero. Inspecciona los archivos esqueleto pre-generados en `/scripts/` o `/src/`.
-- Limítate a implementar la lógica interna dentro de las firmas de función ya existentes y tipadas.
-- Al terminar cada archivo, ejecuta `npx tsc --noEmit`. Si el resultado es Exit Code 0, notifica la finalización y pasa al siguiente bloque.
+━━ 8. GOBERNANZA GIT PURISTA & ZERO-BLOAT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- REPO ULTRA-LIGERO (< 50 MB): El repositorio Git debe mantenerse siempre en < 50 MB (~36 MB actual).
+- Prohibido commitear archivos > 1 MB o carpetas de scraping (`wedding_intel_vault`, etc.).

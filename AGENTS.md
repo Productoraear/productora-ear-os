@@ -65,6 +65,19 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
 - AUDITORÍA PRE-COMMIT: Todo agente (Antigravity, Cline, VS Code) debe verificar `git status` y el tamaño de los cambios antes de commitear. Jamás usar `git add -A` a ciegas sin validar que no se arrastren binarios o volcados.
 - PREVENCIÓN DE BLOQUEO CI/CD: Un repositorio pesado agota los 300 minutos de Netlify y satura los límites Fair-Use de Vercel. Mantener el build local en < 60 segundos y el árbol de Git purificado.
 
+━━ 9. EL MANDATO SUPREMO: FOCO EN VENTAS Y TOLERANCIA CERO A LAS FACHADAS VACÍAS ━━━━━━━━━
+- PROHIBICIÓN ABSOLUTA DE "FACHADAS BONITAS CON MOTORES VACÍOS":
+  Jamás se dará por completada una vista, componente o módulo si solo contiene arrays hardcodeados, datos simulados o botones sin backend real. Todo botón debe guardar, todo cálculo debe basarse en la lógica SSOT y toda IA debe estar conectada a la GPU local (Ollama 11434).
+- EL CEO NO ES PROGRAMADOR (DOCTRINA DE LA ANTICIPACIÓN ACTIVA):
+  El CEO (Edwin Agudelo) es el artista y la visión comercial de Productora EAR. Antigravity tiene el deber ineludible de anticiparse, auditar y blindar el sistema sin que el CEO tenga que detectar fallos arquitectónicos ni empujar al equipo. Si Antigravity detecta dispersión, tareas incompletas o riesgos de seguridad, INTERVENDRÁ DE INMEDIATO para re-enfocar al CEO y al obrero local en la prioridad nº 1.
+- PRIORIDAD INMUTABLE Nº 1: EAR OS GENERANDO VENTAS Y NEGOCIO HOY:
+  Cualquier tarea, debate o desarrollo que no contribuya directamente a:
+    1) Captar y cerrar reservas con depósito inmutable de 100 € (Stripe Price-Lock).
+    2) Despachar llamadas y WhatsApps a proveedores y centros senior desde el Call Center.
+    3) Adjudicar licitaciones menores B2G (< 14.250 € Art. 118 LCSP).
+    4) Liquidar comisiones y alianzas con fincas (Split 80/10/10).
+  será considerado DISTRACCIÓN y vetado hasta que los motores comerciales estén facturando.
+
 
 <!-- BEGIN:nextjs-agent-rules -->
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Lock, KeyRound, ArrowRight, AlertCircle, Mail, Smartphone, ShieldCheck, Edit3, UserCheck } from 'lucide-react';
+import { Lock, KeyRound, ArrowRight, AlertCircle, Mail, Smartphone, ShieldCheck, Edit3, UserCheck, Eye, EyeOff } from 'lucide-react';
 import { SignIn2 } from '@/components/ui/clean-minimal-sign-in';
 
 function OmniAuthLoginForm() {
@@ -14,6 +14,7 @@ function OmniAuthLoginForm() {
   const [authRole, setAuthRole] = useState<'admin' | 'editor' | 'partner'>('admin');
   const [step, setStep] = useState<1 | 2>(1);
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [code2fa, setCode2fa] = useState('');
   const [verifyMethod, setVerifyMethod] = useState<'authenticator' | 'email'>('authenticator');
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +48,8 @@ function OmniAuthLoginForm() {
           // Editores acceden en 1 solo paso con su clave autorizada
           handleEditorLogin();
         } else {
-          setInfoMsg('Introduce el código de tu app Google Authenticator o solicita PIN por Email.');
+          // ADMIN: Exige segundo factor (Móvil +34693693048, Telegram o Fórmula Soberana)
+          setInfoMsg(data.message || 'Introduce el PIN de 4 cifras enviado a tu móvil (+34693693048) o tu Fórmula Soberana (Día + 24).');
           setStep(2);
         }
       } else {
@@ -71,6 +73,7 @@ function OmniAuthLoginForm() {
       const data = await res.json();
       if (res.ok && data.success) {
         router.push(fromPath || '/admin');
+        router.refresh();
       } else {
         setError(data.message || 'Acceso de editor denegado.');
       }
@@ -191,14 +194,24 @@ function OmniAuthLoginForm() {
               <label className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block mb-1.5">
                 {authRole === 'admin' ? 'Contraseña Master (.env.local)' : 'Contraseña de Editor Autorizado'}
               </label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••••••••••"
-                className="w-full px-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 transition"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••••••••••"
+                  className="w-full pl-4 pr-11 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 transition"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-neutral-400 hover:text-amber-400 transition"
+                  title={showPassword ? 'Ocultar contraseña' : 'Ver contraseña'}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             {error && (
@@ -223,34 +236,22 @@ function OmniAuthLoginForm() {
         {/* PASO 2: VERIFICACIÓN 2FA PARA ADMIN */}
         {step === 2 && authRole === 'admin' && (
           <form onSubmit={handleStep2} className="space-y-4">
-            {/* OPCIONES DE MÉTODO 2FA */}
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => setVerifyMethod('authenticator')}
-                className={`p-2.5 rounded-xl border text-xs font-mono flex items-center justify-center gap-1.5 transition ${
-                  verifyMethod === 'authenticator' ? 'bg-amber-500/20 border-amber-500 text-amber-400' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
-                }`}
-              >
-                <Smartphone className="w-3.5 h-3.5" />
-                <span>Authenticator</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setVerifyMethod('email')}
-                className={`p-2.5 rounded-xl border text-xs font-mono flex items-center justify-center gap-1.5 transition ${
-                  verifyMethod === 'email' ? 'bg-amber-500/20 border-amber-500 text-amber-400' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
-                }`}
-              >
-                <Mail className="w-3.5 h-3.5" />
-                <span>Email OTP</span>
-              </button>
-            </div>
+            {infoMsg && (
+              <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-amber-300 text-xs flex flex-col gap-1">
+                <span className="font-bold flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                  Doble Verificación Requerida:
+                </span>
+                <span className="text-neutral-300">{infoMsg}</span>
+                <div className="mt-1 pt-1 border-t border-amber-500/20 text-[10px] text-amber-400 font-mono">
+                  💡 Fórmula Soberana de hoy: <strong>{String(new Date().getDate()).padStart(2, '0')}24</strong> (Día + 24)
+                </div>
+              </div>
+            )}
 
             <div>
               <label className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider block mb-1.5">
-                {verifyMethod === 'authenticator' ? 'Código de Google Authenticator (6 dígitos)' : 'Código PIN enviado por Email'}
+                PIN de 4 Cifras (Móvil +34693693048 o Fórmula) / Código TOTP
               </label>
               <input
                 type="text"
@@ -258,7 +259,7 @@ function OmniAuthLoginForm() {
                 required
                 value={code2fa}
                 onChange={(e) => setCode2fa(e.target.value)}
-                placeholder="000000"
+                placeholder="ej. 1524"
                 className="w-full px-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-lg font-mono tracking-widest text-center text-amber-400 focus:outline-none focus:border-amber-500 transition"
               />
             </div>
@@ -277,6 +278,14 @@ function OmniAuthLoginForm() {
             >
               <KeyRound className="w-4 h-4" />
               <span>{loading ? 'Validando 2FA...' : 'DESBLOQUEAR PANELES SOBERANOS'}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => { setStep(1); setError(null); }}
+              className="w-full text-center text-xs text-neutral-500 hover:text-amber-400 transition py-1 block cursor-pointer"
+            >
+              ← Volver a introducir contraseña
             </button>
           </form>
         )}
