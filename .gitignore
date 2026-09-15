@@ -112,3 +112,8 @@ desktop.ini
 *.ini
 
 
+
+# Bloqueo estricto Anti-Bloat (JSONs masivos > 1MB)
+public/data/providers/*.json
+public/data/providers/**/*.json
+reports/*.json
