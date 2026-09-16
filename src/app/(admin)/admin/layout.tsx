@@ -18,7 +18,8 @@ import {
   Compass,
   GraduationCap,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Zap
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 
@@ -31,6 +32,7 @@ const NAVIGATION_MODULES = [
   { id: 'fleet', name: 'Flota & Logística en Vivo', href: '/admin/flota', icon: Truck, badge: 'KM 0' },
   { id: 'affiliates', name: 'Red de Afiliados', href: '/admin/afiliados', icon: Share2, badge: 'SPLIT' },
   { id: 'treasury', name: 'Tesorería & Stripe', href: '/admin/tesoreria', icon: CreditCard, badge: '100€' },
+  { id: 'compiler', name: '⚡ Meta-Compiler (Vibe Coding)', href: '/admin/compiler', icon: Zap, badge: 'DAG' },
   { id: 'voice', name: 'Voice Studio IA', href: '/admin/voice-studio', icon: Mic, badge: 'GPU' },
   { id: 'journey', name: 'Journey Heatmap UX', href: '/admin/journey-heatmap', icon: Compass, badge: 'HEATMAP' },
   { id: 'training', name: 'Omni Training Center', href: '/admin/training', icon: GraduationCap, badge: 'SALES' },

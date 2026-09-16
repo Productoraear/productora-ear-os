@@ -1,11 +1,16 @@
 [build]
-excluded_files = ["EAR_CALL_CENTER_PROVEEDORES.html", "benchmark_localizados.csv"]
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  NODE_VERSION = "20"
+  NODE_OPTIONS = "--max-old-space-size=4096"
+  NEXT_TELEMETRY_DISABLED = "1"
+  NEXT_PRIVATE_SKIP_SIZE_CHECK = "true"
+
 [functions]
-  included_files = ["!public/**", "!public/data/**", "!reports/**", "!node_modules/@playwright/**", "!node_modules/playwright/**"]
-  external_node_modules = ["playwright", "playwright-core"]
+  included_files = ["!public/**", "!reports/**", "!scripts/**", "!node_modules/@playwright/**", "!node_modules/playwright/**", "!node_modules/puppeteer/**"]
+  external_node_modules = ["sharp", "bcryptjs"]
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
