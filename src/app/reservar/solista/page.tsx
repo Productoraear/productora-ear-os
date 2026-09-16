@@ -47,6 +47,10 @@ export default function SolistaReservationPage() {
   const [showHesitationBanner, setShowHesitationBanner] = useState(false);
   const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Deposit checkout state (depósito real Stripe 100 €)
+  const [depositLoading, setDepositLoading] = useState(false);
+  const [depositError, setDepositError] = useState<string | null>(null);
+
   // Base constants
   const BASE_RATE = formatFilter === 'solista' ? 350.00 : 550.00;
   const DEPOSIT = 100.00;
@@ -71,7 +75,6 @@ export default function SolistaReservationPage() {
   const hotelCost = requiresHotel ? HOTEL_FEE : 0;
   const totalCost = BASE_RATE + logisticsCost + hotelCost;
 
-  const stripeLink = process.env.NEXT_PUBLIC_STRIPE_SOLISTA_LINK || "https://buy.stripe.com/5kQ5kF2Ryh03fCT3Et4Vy0f";
   const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "34693693048";
 
   // Formatted date string in Spanish
@@ -163,6 +166,33 @@ export default function SolistaReservationPage() {
   }, [formattedSelectedDate, formatFilter, distance, endTime, totalCost]);
 
   const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
+
+  // Crea el depósito vinculante real de 100 € vía Stripe Checkout (server-side).
+  const handleDepositCheckout = async () => {
+    setDepositError(null);
+    setDepositLoading(true);
+    try {
+      const res = await fetch('/api/reservar/solista/deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fecha: selectedDate,
+          formato: formatFilter,
+          distanciaKm: distance,
+          horaFin: endTime,
+          totalEstimado: Number(totalCost.toFixed(2)),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || 'No se pudo iniciar el depósito seguro.');
+      }
+      window.location.href = data.url;
+    } catch (err) {
+      setDepositError(err instanceof Error ? err.message : 'Error inesperado');
+      setDepositLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#FFFFFF] font-sans selection:bg-[#258DCD] selection:text-white pb-24">
@@ -559,16 +589,19 @@ export default function SolistaReservationPage() {
                   if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
                 }}
               >
-                <a 
-                  href={stripeLink}
-                  onClick={() => {
-                    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 bg-[#258DCD] hover:bg-[#1E74A8] text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,141,205,0.3)] mb-4"
+                <button
+                  type="button"
+                  onClick={handleDepositCheckout}
+                  disabled={depositLoading}
+                  className="w-full flex items-center justify-center gap-2 bg-[#258DCD] hover:bg-[#1E74A8] text-white font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(37,141,205,0.3)] mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  PAGAR RESERVA (100 €) <ArrowRight size={18} />
-                </a>
+                  {depositLoading ? 'Creando depósito seguro…' : 'PAGAR RESERVA (100 €)'} <ArrowRight size={18} />
+                </button>
               </div>
+
+              {depositError && (
+                <p className="mb-4 text-xs text-[#FF455B] font-mono">{depositError}</p>
+              )}
 
               {/* DIRECT CONTACT BUTTONS */}
               <div className="grid grid-cols-2 gap-3">
@@ -596,5 +629,4 @@ export default function SolistaReservationPage() {
     </div>
   );
 }
-
 
