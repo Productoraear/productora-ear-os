@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["sharp", "@prisma/client", "bcryptjs"],
   outputFileTracingExcludes: {
     '*': [
+      "EAR_CALL_CENTER_PROVEEDORES.html",
+      "benchmark_localizados.csv",
       './src/data/**',
       './scripts/**',
       'node_modules/puppeteer/**',
@@ -122,5 +124,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-

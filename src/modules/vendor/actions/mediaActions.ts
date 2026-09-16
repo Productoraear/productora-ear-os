@@ -194,7 +194,7 @@ export async function deleteProviderMediaAction(
     const fullDiskPath = path.join(process.cwd(), 'public', relativePath);
     
     try {
-      await fs.unlink(fullDiskPath);
+      await fs.unlink(/*turbopackIgnore: true*/ fullDiskPath);
     } catch (e) {
       console.warn(`[MEDIA_DELETE] Archivo no encontrado en disco: ${fullDiskPath}`);
     }
@@ -253,3 +253,4 @@ export async function getProviderMediaAction(providerId: string): Promise<MediaA
     return { success: false, error: error.message || 'INTERNAL_SERVER_ERROR', code: 500 };
   }
 }
+

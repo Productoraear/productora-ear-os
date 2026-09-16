@@ -1,9 +1,11 @@
 [build]
+excluded_files = ["EAR_CALL_CENTER_PROVEEDORES.html", "benchmark_localizados.csv"]
   command = "npm run build"
   publish = ".next"
 
 [functions]
-  included_files = ["!public/**", "!public/data/**", "!reports/**", "!scripts/**", "!.antigravity/**"]
+  included_files = ["!public/**", "!public/data/**", "!reports/**", "!node_modules/@playwright/**", "!node_modules/playwright/**"]
+  external_node_modules = ["playwright", "playwright-core"]
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

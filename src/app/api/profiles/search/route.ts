@@ -124,11 +124,11 @@ function queryStaticProviders(options: {
 
   const filePath = candidatePaths.find((p) => fs.existsSync(p)) || candidatePaths[0];
 
-  if (!fs.existsSync(filePath)) {
+  if (!fs.existsSync(/*turbopackIgnore: true*/ filePath)) {
     return { total: 0, providers: [] };
   }
 
-  const raw = fs.readFileSync(filePath, 'utf-8');
+  const raw = fs.readFileSync(/*turbopackIgnore: true*/ filePath, 'utf-8');
   let list: any[] = JSON.parse(raw);
 
   // 1. Filtro por provincia
@@ -319,3 +319,4 @@ export async function GET(request: Request) {
     );
   }
 }
+

@@ -111,9 +111,11 @@ src/data/vampirized-providers*.json
 desktop.ini
 *.ini
 
-
-
 # Bloqueo estricto Anti-Bloat (JSONs masivos > 1MB)
 public/data/providers/*.json
 public/data/providers/**/*.json
 reports/*.json
+
+# Exclude specific files from Git
+EAR_CALL_CENTER_PROVEEDORES.html
+benchmark_localizados.csv
