@@ -114,6 +114,7 @@ desktop.ini
 # Bloqueo estricto Anti-Bloat (JSONs masivos > 1MB)
 public/data/providers/*.json
 public/data/providers/**/*.json
+!public/data/providers/manifest.json
 reports/*.json
 
 # Exclude specific files from Git

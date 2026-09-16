@@ -1,6 +1,25 @@
 {
   "tasks": [
     {
+      "id": "omega-god-tier-production-audit-e2e",
+      "title": "B0.99: MANDATO SUPREMO OMEGA DIOS: Verificación Atómica E2E y Sellado de Producción Real",
+      "block": 0,
+      "status": "PENDING",
+      "description": "ORDEN EXPRESA INMUTABLE: Certificar la activación real en producción (Frontend + Backend + DBs) para Proveedores (65k), Artistas (Edwin Agudelo), Fincas B2B, VIMUME B2G Senior y Cockpit Admin. Cero datos simulados o botones huérfanos. Todo flujo debe cerrar depósitos de 100€ en Stripe, registrar telemetría SHA-256 y despachar WhatsApp al +34 693 693 048.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/reservar/solista/page.tsx",
+          "src/app/(public)/simulacion-mariachis/page.tsx",
+          "src/app/(admin)/admin/sourcing/components/BudgetMatrix.tsx",
+          "src/app/(admin)/admin/whatsapp/page.tsx",
+          "src/app/(admin)/admin/compiler/page.tsx",
+          "src/app/api/stripe/webhook/route.ts"
+        ],
+        "macro_script": "AUDITORÍA ATÓMICA BIT-A-BIT: 1) Verificar que el cotizador de Solista y Mariachi calcule Méntrida km 0 (1.50€/km >50km) y derive a Stripe Checkout con Price-Lock SHA-256 de 100€. 2) Validar que los 65.000 proveedores en las particiones públicas carguen instantáneamente desde CDN. 3) Asegurar que el despacho de WhatsApp enlace con +34 693 693 048. 4) Ejecutar build local y certificar npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0 && npm run build -> Exit Code 0"
+    },
+    {
       "id": "admin-backend-01-oracle-ollama-live",
       "title": "B0.01: Motor del Oráculo S-Class Conectado a Ollama Local (GPU Bare-Metal)",
       "block": 0,
@@ -971,6 +990,188 @@
         "macro_script": "Tabla de conciliación de pagos y generación de PDF de Contratos Menores."
       },
       "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-engine-01-budget-predictor-matrix",
+      "title": "B0.06: Matriz Predictiva de Presupuestos de Gran Escala (BudgetPredictor / BudgetMatrix)",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Rescatar y fusionar BudgetPredictor.tsx y BudgetMatrix.tsx en src/app/(admin)/admin/sourcing/components/BudgetMatrix.tsx. Integrar rangos porcentuales por partida crítica (Espacio 18-25%, Catering 22-30%, Producción 10-16%, Contingencia 15-22%) adaptados a eventos de hasta 265.000€ y conectar a /admin/sourcing con exportación a CSV.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/(admin)/admin/sourcing/components/BudgetMatrix.tsx",
+          "src/app/(admin)/admin/sourcing/page.tsx"
+        ],
+        "macro_script": "Crear BudgetMatrix.tsx con cálculo dinámico por partidas y visualización de barras porcentuales OLED. Añadir selector por pestañas en /admin/sourcing para alternar entre leads y matriz de presupuesto."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-engine-02-whatsapp-central-dispatch",
+      "title": "B0.07: Consola Central de Despacho WhatsApp S-Class (+34 693 693 048)",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Integrar el algoritmo oficial rescatado de whatsapp.js en src/lib/whatsapp/whatsapp-dispatch.ts y crear la vista de operador en src/app/(admin)/admin/whatsapp/page.tsx con disparadores directos para Solista (350€), Pack Mariachi (450€) y Piloto VIMUME 14 días.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/whatsapp/whatsapp-dispatch.ts",
+          "src/app/(admin)/admin/whatsapp/page.tsx"
+        ],
+        "macro_script": "Implementar generateWhatsAppLink con normalización de artista y servicios. Crear página /admin/whatsapp con buscador de teléfonos y 3 botones pre-formateados con enlace wa.me directo."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-engine-03-lead-score-institutional-b2g",
+      "title": "B0.08: Clasificador Algorítmico de Leads B2G e Institucionales (LeadScoreCalculator)",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Integrar leadScoreCalculator.js en src/lib/scoring/leadScoreEngine.ts para detectar automáticamente dominios de ayuntamientos (.gob.es, .es, diputaciones) y priorizar leads con etiqueta CRITICAL/VIP y alerta prioritaria.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/scoring/leadScoreEngine.ts",
+          "src/app/api/leads/institutional/route.ts"
+        ],
+        "macro_script": "Crear función calculateLeadScore con reglas de dominios gubernamentales y ponderación de score. Conectar al endpoint institucional de leads."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-engine-04-security-roleguard-dopamine",
+      "title": "B0.09: Blindaje de Roles y Notificaciones Hápticas (RoleGuard & DopamineToast)",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Implementar RoleGuard.tsx para blindar rutas admin con la contraseña soberana Ear2024Ear* y DopamineToast.tsx en src/components/ui/ para feedback sonoro/visual en cierres de reserva de 100€.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/components/auth/RoleGuard.tsx",
+          "src/components/ui/DopamineToast.tsx"
+        ],
+        "macro_script": "RoleGuard validando roles (Admin/Editor/Sovereign). DopamineToast con animación framer-motion para cierres transaccionales de alto valor."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "admin-omega-intent-compiler",
+      "title": "B0.10: Meta-Compilador de Intenciones Vibe Coding S-Class (/admin/compiler)",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Construir la consola vanguardista /admin/compiler que traduce lenguaje natural o voz humana en especificaciones DAG deterministas Omega para IAs en < 200 ms. Interfaz híbrida (Cloud Edge / Ollama GPU Local), estética OLED S-Class (#030305, oro #ecb613), visor de código con resaltado, estimador de tokens, selector de rigor, inyector atómico a tasks_queue.json y botón de copia para Cline/Cursor.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/compiler/omega-intent-compiler.ts",
+          "src/app/api/admin/compile-intent/route.ts",
+          "src/app/api/admin/tasks/inject/route.ts",
+          "src/app/(admin)/admin/compiler/page.tsx"
+        ],
+        "macro_script": "En omega-intent-compiler.ts: función pura compileIntentToDAG(input, mode) que inyecta el grafo SSOT (Méntrida, 350€, Split 80/10/10, B2G <14.250€, Netlify <80MB) y estructura el YAML/JSON canónico. En /api/admin/compile-intent: endpoint híbrido con fallback. En /api/admin/tasks/inject: endpoint POST que agrega tareas a tasks_queue.json de forma segura. En /admin/compiler/page.tsx: panel OLED de doble columna (Voz/Texto a la izquierda, DAG enriquecido y botones de acción a la derecha)."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-thomann-scraper-and-cache-sync",
+      "title": "B0.11: Scraper Headless de Thomann Pro Audio & Bodas.net (Pipeline Bare-Metal)",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Desarrollar un worker crawler en Node.js/Cheerio bajo scripts/workers/thomann_audio_scraper.mjs para extraer precios, referencias y fichas de audio de Thomann (Categorías: consolas digitales, microfonía inalámbrica, IEMs) y actualizar public/data/audio_gear_catalog.json sin comprometer el tamaño del repositorio (<50MB). Consolidar adicionalmente los 26.418 proveedores ya existentes en H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/02_PROVEEDORES_SCLASS/celebrents_all_providers.json.",
+      "scaffold": {
+        "files_to_touch": [
+          "scripts/workers/thomann_audio_scraper.mjs",
+          "public/data/audio_gear_catalog.json",
+          "src/lib/audio/symphonicRiderEngine.ts"
+        ],
+        "macro_script": "Crear script ejecutable con fallback estático. Mapear: marca, modelo, precio, canales, protocolo, latencia y cápsula. El obrero ejecutará: node scripts/workers/thomann_audio_scraper.mjs --dry-run y verificará la persistencia en JSON curado (<500 KB)."
+      },
+      "validation": "node scripts/workers/thomann_audio_scraper.mjs --test -> Exit Code 0 && npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-bodas-forensic-taxonomy-mirror",
+      "title": "B0.12: Extracción Forense Indetectable de Taxonomía y Mega-Navegación Espejo Bodas.net",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Auditar con CDP port 9222 la navegación de Bodas.net (Banquetes, Proveedores, Novias/Novios, Ideas, Comunidad y Tools: Presupuestador, Invitados, Mesas, Escaparate B2B). Generar src/config/weddingTaxonomy.ts e integrarlo en EAR OS mediante un Mega-Menú OLED sin colisionar ni alterar las rutas troncales soberanas (/artistas, /eventos, /vimume, /licitaciones, /calculadora).",
+      "scaffold": {
+        "files_to_touch": [
+          "scripts/workers/bodas_forensic_taxonomy_sweep.js",
+          "src/config/weddingTaxonomy.ts",
+          "src/widgets/navbar/Navbar.tsx",
+          "src/components/navigation/SClassOmniNavigator.tsx"
+        ],
+        "macro_script": "1) Crear scripts/workers/bodas_forensic_taxonomy_sweep.js usando puppeteer-core sobre http://127.0.0.1:9222 para extraer el árbol completo de enlaces y categorías de bodas.net de forma indetectable. 2) Crear src/config/weddingTaxonomy.ts con tipado estricto TS (Category, SubCategory, ToolItem, B2BTool). 3) Construir SClassOmniNavigator.tsx como megamenú OLED (#030305, oro #ecb613) que enruta a las particiones locales de proveedores o herramientas sin romper la barra de navegación actual. 4) Validar con npx tsc --noEmit."
+      },
+      "validation": "node scripts/workers/bodas_forensic_taxonomy_sweep.js --dry-run && npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-finca-executive-cockpit-bodasnet-killer",
+      "title": "B0.13: Portal Ejecutivo para Dueños de Fincas (Familiar Bodas.net + Métricas S-Class)",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Desplegar en src/app/(public)/fincas/portal-demostrativo/page.tsx una interfaz de alto impacto para empresarios de 50-65 años dueños de fincas. Estructura familiar inspirada en emp-Menu.php de Bodas.net (Escaparate, Solicitudes, Calendario), pero superada con el motor S-Class: 1) Comparador ROI Bodas.net vs EAR OS, 2) Certificado Acústico Anti-Multas (<75 dB SPL, 12 W/pax), 3) Cierres reales con depósito Stripe de 100€ y despacho directo a WhatsApp (+34 693 693 048), 4) Simulador de facturación anual de la finca.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/(public)/fincas/portal-demostrativo/page.tsx",
+          "src/components/fincas/BodasNetVsEarOsComparator.tsx",
+          "src/components/fincas/FincaAcousticShieldCard.tsx",
+          "src/lib/fincas/fincaMetricsEngine.ts"
+        ],
+        "macro_script": "1) Crear fincaMetricsEngine.ts con cálculos de conversión de leads, ahorro de canon publicitario y split 80/10/10. 2) Crear BodasNetVsEarOsComparator.tsx con métricas visuales legibles y directas. 3) FincaAcousticShieldCard.tsx con el sello de blindaje acústico ante ayuntamientos. 4) Construir portal-demostrativo/page.tsx con estética ejecutiva OLED de alto contraste y tipografía clara. Validar con npx tsc --noEmit."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-git-anti-bloat-purification",
+      "title": "B0.14: Saneamiento Anti-Bloat Git y Blindaje de Manifest (Doctrina Purista <50MB)",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Desindexar del tracking de Git las particiones masivas de public/data/providers/*.json (339 MB) mediante 'git rm --cached' sin borrarlas de disco, manteniendo rastreado únicamente public/data/providers/manifest.json (<1 KB). Añadir la excepción '!public/data/providers/manifest.json' a .gitignore para blindar el repositorio bajo la Doctrina Purista (<50 MB) y evitar el estrangulamiento de CI/CD.",
+      "scaffold": {
+        "files_to_touch": [
+          ".gitignore",
+          "public/data/providers/manifest.json"
+        ],
+        "macro_script": "1) Añadir '!public/data/providers/manifest.json' en .gitignore justo después de 'public/data/providers/**/*.json'. 2) Ejecutar: git rm --cached public/data/providers/*.json. 3) Forzar re-tracking del manifiesto ligero: git add public/data/providers/manifest.json .gitignore src/app/api/profiles/search/route.ts scripts/sync_providers_manifest.ps1. 4) Validar con git status que los 339 MB de JSONs pasen a estado 'deleted' en el índice (untracked en disco) y que manifest.json quede staged. 5) Verificar que los archivos físicos siguen existiendo en disco (finca.json, foto.json, senior_care.json)."
+      },
+      "validation": "git status --porcelain | Select-String 'public/data/providers/' && npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-autonomous-commerce-grid",
+      "title": "B0.15: Autonomous Commerce Grid (ACG) — La Cinta de Decisión Soberana (Uber + Tinder + Airbnb + Bodas.net)",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Construir e integrar la Cinta de Decisión ACG en src/app/(public)/acg/page.tsx: motor SSOT acgDecisionEngine.ts con logística 1,50 €/km Méntrida, acústica 12 W/pax, Split 80/10/10 y Price-Lock 100 €; grafo tridimensional acgSemanticGraph.ts con Schema.org; componentes OLED DecisionBelt, UberRouteRadar, TinderEventMatcher con audio real, AirbnbPriceLockEscrow con firma SHA-256 y BodasPlanPlanner con simulación isofónica de dB. Enlazado en Navbar y SClassOmniNavigator.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/acg/acgDecisionEngine.ts",
+          "src/lib/acg/acgSemanticGraph.ts",
+          "src/components/acg/DecisionBelt.tsx",
+          "src/components/acg/layers/UberRouteRadar.tsx",
+          "src/components/acg/layers/TinderEventMatcher.tsx",
+          "src/components/acg/layers/AirbnbPriceLockEscrow.tsx",
+          "src/components/acg/layers/BodasPlanPlanner.tsx",
+          "src/app/(public)/acg/page.tsx",
+          "src/widgets/navbar/Navbar.tsx",
+          "src/widgets/navbar/SClassOmniNavigator.tsx"
+        ],
+        "macro_script": "Implementar el motor y los componentes bajo estética OLED (#030305, oro #ecb613, rubí #FF2B44, cyan #00E5FF, esmeralda #10B981). Validar con tsc --noEmit y build de Next.js."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0 && npm run build:next -> Exit Code 0"
+    },
+    {
+      "id": "sclass-preflight-audit-and-deploy-github-netlify",
+      "title": "B0.16: Auditoría Pre-Flight Anti-Bloat y Despliegue a GitHub & Netlify",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Ejecutar la auditoría estricta pre-commit (Doctrina Purista <50 MB), asegurar que los 339 MB de JSONs de public/data/providers/ queden desindexados de Git con manifest.json preservado, validar tsc --noEmit (Exit 0) y despachar el push hacia GitHub (origin main) para disparar el build CI/CD en Netlify.",
+      "scaffold": {
+        "files_to_touch": [
+          ".gitignore",
+          "public/data/providers/manifest.json",
+          "src/",
+          "scripts/"
+        ],
+        "macro_script": "1) Asegurar desindexado anti-bloat: git rm --cached public/data/providers/*.json 2>$null; git add public/data/providers/manifest.json .gitignore. 2) Añadir cambios limpios: git add src/ scripts/sync_providers_manifest.ps1 scripts/audit_providers_sync.ps1 scripts/audit_srcdata_providers.ps1 .antigravity/tasks_queue.json. 3) Auditar pre-commit: git status --short && git diff --cached --stat (verificar que no haya binarios ni volcados >1 MB). 4) Commit atómico: git commit -m 'feat(acg): deploy autonomous commerce grid, bodas taxonomy mirror and git anti-bloat purge'. 5) Push a GitHub: git push origin main (y opcional: git push vercel-repo main)."
+      },
+      "validation": "git status --porcelain | Select-String 'public/data/providers/' | Measure-Object -Line && node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }
   ]
 }

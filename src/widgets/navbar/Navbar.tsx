@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Radio, Shield } from 'lucide-react';
+import { Menu, X, Radio, Shield, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SClassOmniNavigator from '@/widgets/navbar/SClassOmniNavigator';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -54,7 +55,13 @@ const Navbar: React.FC = () => {
               </Link>
             ))}
             
-            <Link href="/the-signal" className="ml-6 px-6 py-2.5 bg-[#ecb613] text-black hover:shadow-[0_0_25px_rgba(236,182,19,0.4)] transition-all duration-500 font-black flex items-center gap-2 rounded-xl text-[9px]">
+            <SClassOmniNavigator />
+
+            <Link href="/acg" className="ml-2 px-5 py-2.5 bg-white/5 border border-[#FF2B44]/40 text-[#FF2B44] hover:bg-[#FF2B44]/10 transition-all duration-500 font-black flex items-center gap-2 rounded-xl text-[9px] uppercase tracking-wider">
+              <Zap size={14} /> ACG Reserva
+            </Link>
+
+            <Link href="/the-signal" className="ml-2 px-6 py-2.5 bg-[#ecb613] text-black hover:shadow-[0_0_25px_rgba(236,182,19,0.4)] transition-all duration-500 font-black flex items-center gap-2 rounded-xl text-[9px]">
               <Radio size={14} className="animate-pulse"/> THE SIGNAL
             </Link>
           </div>
@@ -92,10 +99,19 @@ const Navbar: React.FC = () => {
             ))}
             
             <Link 
+              href="/acg" 
+              onClick={closeMenus} 
+              aria-label="Acceder al Autonomous Commerce Grid"
+              className="w-full py-5 bg-[#FF2B44]/10 border border-[#FF2B44]/40 text-[#FF2B44] font-black uppercase tracking-widest mt-8 flex items-center justify-center gap-3 rounded-2xl text-sm"
+            >
+               <Zap size={20} /> MODO ACG · Reserva Directa
+            </Link>
+
+            <Link 
               href="/the-signal" 
               onClick={closeMenus} 
               aria-label="Acceder a The Signal"
-              className="w-full py-5 bg-[#ecb613] text-black font-black uppercase tracking-widest mt-12 flex items-center justify-center gap-3 rounded-2xl shadow-[0_0_30px_rgba(236,182,19,0.3)] text-sm"
+              className="w-full py-5 bg-[#ecb613] text-black font-black uppercase tracking-widest mt-4 flex items-center justify-center gap-3 rounded-2xl shadow-[0_0_30px_rgba(236,182,19,0.3)] text-sm"
             >
                <Radio size={20} className="animate-pulse" /> THE SIGNAL
             </Link>

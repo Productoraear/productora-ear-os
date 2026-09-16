@@ -141,7 +141,8 @@ async function queryStaticProviders(options: {
   const normCat = (category || '').toLowerCase().trim();
   const validCats = [
     'finca', 'musica', 'sonido', 'catering', 'foto',
-    'decoracion', 'wedding', 'moda', 'transporte', 'servicios'
+    'decoracion', 'wedding', 'moda', 'transporte', 'servicios',
+    'senior_care'
   ];
 
   let targetFile = 'all_featured.json';
