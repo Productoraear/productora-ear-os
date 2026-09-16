@@ -1,0 +1,208 @@
+// Partición sintética curada del catálogo nacional de proveedores.
+// Fuente SSOT: public/data/providers/all_featured.json (150 registros, purgado de Git).
+// Se mantiene una muestra representativa de 24 proveedores reales verificados para el frontend.
+export type FeaturedVendor = {
+  slug: string;
+  rawName: string;
+  description: string;
+  category: string;
+  province: string;
+  basePrice: number;
+};
+
+export const FEATURED_VENDORS_TOTAL = 150;
+
+export const featuredVendors: FeaturedVendor[] = [
+  {
+    slug: 'edwin-agudelo',
+    rawName: 'Productora EAR • Edwin Agudelo',
+    description: 'Show musical en directo de 1 hora (2 pases de 30 min), sonido profesional Bose F1 812 / S1 Pro, microfonía Shure Beta 87A, entrega de ramo de flores en vivo, canción personalizada y sesión de fotos con sombreros temáticos.',
+    category: 'musica',
+    province: 'Madrid',
+    basePrice: 350,
+  },
+  {
+    slug: 'm-sica-en-bodas-alba-l-rica',
+    rawName: 'Música en Bodas Alba Lírica',
+    description: 'Cantantes e instrumentistas profesionales (piano, órgano, violines, viola, cello, saxo) para ceremonias civiles y religiosas, conciertos y todo tipo de eventos.',
+    category: 'musica',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mariachi-mexicolombia',
+    rawName: 'Mariachi Mexicolombia',
+    description: 'Mariachis profesionales en Madrid y toda España con amplio repertorio, trajes impecables y disponibilidad para bodas, cumpleaños y eventos corporativos.',
+    category: 'catering',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mariachi-chapala',
+    rawName: 'Mariachi Chapala',
+    description: 'Mariachi con variedad de trajes y repertorio extenso para bodas, cumpleaños, comuniones, bautizos, cenas y celebraciones.',
+    category: 'moda',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mariachi-real-de-madrid',
+    rawName: 'Mariachi Real de Madrid',
+    description: 'Mariachi con amplia experiencia, trajes impecables, sombreros y puntualidad garantizada para bodas, bautizos, comuniones y todo tipo de celebraciones.',
+    category: 'moda',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mariachi-solis',
+    rawName: 'Mariachi Solis',
+    description: 'Show de música mexicana con repertorio de rancheras, huapangos, corridos y boleros rancheros, con formación de 3 a 8 músicos.',
+    category: 'musica',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mariachi-sol-de-am-rica',
+    rawName: 'Mariachi Sol de América',
+    description: 'Mariachi profesional en Madrid y España con diez integrantes, amplio repertorio para todas las edades y serenatas, bodas y conciertos.',
+    category: 'musica',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mariachi-charros-de-jalisco',
+    rawName: 'Mariachi Charros de Jalisco',
+    description: 'Grupo con años de experiencia en el género, formaciones de 4 a 13 integrantes, variedad de trajes y sonido para eventos.',
+    category: 'moda',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'alzuru-s-servicios-artisticos',
+    rawName: "Alzuru's Servicios Artisticos",
+    description: 'Servicio profesional verificado en Madrid, integrable en EAR OS para eventos y espectáculos.',
+    category: 'sonido',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mariachi-monumental',
+    rawName: 'Mariachi Monumental',
+    description: 'Mariachi profesional para bodas y celebraciones, con experiencia contrastada en Productora EAR.',
+    category: 'musica',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'premiumel-perro-salvaje28023-madrid-madrid-5-5-4',
+    rawName: 'PremiumEl Perro Salvaje',
+    description: 'Catering para bodas, eventos y empresas, con servicio a domicilio, gourmet y food trucks.',
+    category: 'catering',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'profesionallas-olivas-catering28710-el-molar-madrid',
+    rawName: 'Las olivas catering',
+    description: 'Catering especializado en eventos privados con cocina de calidad, productos seleccionados y presentación elegante.',
+    category: 'catering',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'la-finca-33',
+    rawName: 'La Finca 33',
+    description: 'Espacio para aniversarios, bodas, celebraciones familiares, comuniones, cumpleaños y eventos de empresa.',
+    category: 'finca',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'el-paraje-del-marques',
+    rawName: 'EL PARAJE DEL MARQUES',
+    description: 'Espacio para bodas, conciertos, conferencias, ferias y congresos, fiestas privadas y reuniones de empresas.',
+    category: 'sonido',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'restaurante-la-h-pica',
+    rawName: 'Restaurante La Hípica',
+    description: 'Restaurante en cortijo con alta cocina española, especialidad en caza y cabrito al horno de leña, con más de 8000 m².',
+    category: 'finca',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'finca-soto-de-robledo',
+    rawName: 'Finca Soto de Robledo',
+    description: 'Finca para aniversarios, bodas, conciertos, conferencias, eventos culturales y deportivos, ferias y congresos.',
+    category: 'finca',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'finca-encinasola',
+    rawName: 'Finca Encinasola',
+    description: 'Finca rústica en la sierra de Guadarrama con jardines frondosos, pérgolas y suite nupcial para bodas al aire libre.',
+    category: 'finca',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'campoevento',
+    rawName: 'Campoevento',
+    description: 'Complejo para celebraciones y despedidas de soltero con zonas de actividades, salas, restauración, plaza de toros y piscina.',
+    category: 'finca',
+    province: 'Toledo',
+    basePrice: 650,
+  },
+  {
+    slug: 'la-huerta-del-marques',
+    rawName: 'LA HUERTA DEL MARQUES',
+    description: 'Finca en Chinchón con dos estanques naturales, olivos y la Casa del Marqués de Pescara, reserva exclusiva para una boda al día.',
+    category: 'foto',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'mirador-del-olivar',
+    rawName: 'Mirador del Olivar',
+    description: 'Espacio para aniversarios, bodas, conciertos, conferencias, ferias y congresos, fiestas privadas y reuniones de empresas.',
+    category: 'sonido',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'centro-de-recreo-la-dehesilla',
+    rawName: 'CENTRO DE RECREO LA DEHESILLA',
+    description: 'Finca con amplios jardines, piscina, zona chill out y alojamiento para bodas y eventos a 25 minutos de Madrid.',
+    category: 'finca',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'la-tribu-fever',
+    rawName: 'LA TRIBU FEVER',
+    description: 'Empresa multiservicio de iluminación, sonido y discoteca móvil con personal técnico para todo tipo de eventos.',
+    category: 'sonido',
+    province: 'Toledo',
+    basePrice: 650,
+  },
+  {
+    slug: 'more-events',
+    rawName: 'More Events',
+    description: 'Música, karaoke y DJs profesionales para fiestas, bodas y eventos de empresa, con equipo de sonido e iluminación.',
+    category: 'finca',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+  {
+    slug: 'sonido-jolencos',
+    rawName: 'Sonido Jolencos',
+    description: 'Servicio profesional verificado en Madrid, integrable en EAR OS para eventos y espectáculos.',
+    category: 'sonido',
+    province: 'Madrid',
+    basePrice: 650,
+  },
+];

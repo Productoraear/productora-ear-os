@@ -10,7 +10,7 @@ import {
   Cpu, Music, Flame, GlassWater, Crown, Disc, Utensils, 
   Headphones, Camera, Video, Lightbulb, ClipboardList, ChevronRight
 } from 'lucide-react';
-import publicCatalog from '../../../../public/data/providers/all_featured.json';
+import { featuredVendors, FEATURED_VENDORS_TOTAL } from '@/data/featured-vendors';
 import { useEventCart, CartItem } from '@/context/EventCartContext';
 import { NeuralJourneyApex } from '@/app/components/SClassScreens/NeuralJourneyApex';
 import { AcousticSpatialMatcher } from '@/app/components/SClassScreens/AcousticSpatialMatcher';
@@ -328,7 +328,7 @@ function UnifiedMatchmakerContent() {
               }`}
             >
               <Users size={15} />
-              CATÁLOGO NACIONAL ZK ({(publicCatalog as any[]).length})
+              CATÁLOGO NACIONAL ZK ({FEATURED_VENDORS_TOTAL})
             </button>
           </div>
 
@@ -431,7 +431,7 @@ function UnifiedMatchmakerContent() {
         {/* SECCIÓN 2: CATÁLOGO DE PROVEEDORES INDEXADOS */}
         {activeTab === 'catalog' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 animate-in fade-in duration-500">
-            {(publicCatalog as any[]).slice(0, 24).map((vendor: any) => {
+            {featuredVendors.map((vendor) => {
               const isInCart = cart.some((i) => i.slug === vendor.slug);
               return (
                 <div
