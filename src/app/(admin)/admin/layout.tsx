@@ -19,13 +19,15 @@ import {
   GraduationCap,
   ChevronLeft,
   ChevronRight,
-  Zap
+  Zap,
+  MessageCircle
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 
 const NAVIGATION_MODULES = [
   { id: 'cockpit', name: 'Omni-Cockpit Central', href: '/admin', icon: LayoutDashboard, badge: 'CORE' },
   { id: 'call-center', name: 'Call Center Outbound', href: '/admin/call-center', icon: PhoneCall, badge: '45.6K' },
+  { id: 'whatsapp', name: 'Centralita WhatsApp', href: '/admin/whatsapp', icon: MessageCircle, badge: '693 048' },
   { id: 'sourcing', name: 'Scala Leads & Sourcing', href: '/admin/sourcing', icon: Flame, badge: 'LEADS' },
   { id: 'providers', name: 'Proveedores (Edge CDN)', href: '/admin/proveedores', icon: Users, badge: '2.3K CDN' },
   { id: 'b2g', name: 'B2G & Licitaciones <14.250€', href: '/admin/licitaciones', icon: Landmark, badge: 'LEGAL' },
