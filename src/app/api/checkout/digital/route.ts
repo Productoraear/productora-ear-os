@@ -6,9 +6,12 @@ import { OccasionCategory, MusicalGenre, EmotionalTone } from '@/lib/types/digit
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-01-27.acacia' as any,
-});
+const stripe = new Stripe(
+  process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build',
+  {
+    apiVersion: '2025-01-27.acacia' as any,
+  }
+);
 
 const OCCASION_NAMES: Record<OccasionCategory, string> = {
   cumpleanos: 'Cumpleaños Especial',
