@@ -95,15 +95,49 @@ function getApiFallbackImage(category?: string | null, seed?: string | null): st
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MOTOR ESTÁTICO DE ALTA VELOCIDAD (NETLIFY EDGE / ZERO-COLD-START)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-function queryStaticProviders(options: {
+async function loadStaticDataset(targetFile: string, requestUrl: string): Promise<string | null> {
+  // 1. Intento en disco (dev / standalone / self-hosted).
+  const candidatePaths = [
+    path.join(process.cwd(), 'public', 'data', 'providers', targetFile),
+    path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', targetFile),
+    path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'providers', targetFile),
+  ];
+  for (const p of candidatePaths) {
+    try {
+      if (fs.existsSync(/*turbopackIgnore: true*/ p)) {
+        return fs.readFileSync(/*turbopackIgnore: true*/ p, 'utf-8');
+      }
+    } catch {
+      /* continuar */
+    }
+  }
+
+  // 2. Fallback CDN: en serverless (Netlify Functions) `public/` se sirve como
+  //    activo estático, NO se empaqueta en la funcion. Se descarga por URL.
+  //    Esto mantiene el bundle serverless < 250 MB sin perder el dataset.
+  try {
+    const origin = new URL(requestUrl).origin;
+    const res = await fetch(`${origin}/data/providers/${targetFile}`, {
+      cache: 'no-store',
+    });
+    if (res.ok) return await res.text();
+  } catch {
+    /* sin conexion */
+  }
+
+  return null;
+}
+
+async function queryStaticProviders(options: {
   category?: string | null;
   province?: string | null;
   q?: string | null;
   subcategory?: string | null;
   page: number;
   limit: number;
+  requestUrl: string;
 }) {
-  const { category, province, q, subcategory, page, limit } = options;
+  const { category, province, q, subcategory, page, limit, requestUrl } = options;
   const normCat = (category || '').toLowerCase().trim();
   const validCats = [
     'finca', 'musica', 'sonido', 'catering', 'foto',
@@ -115,20 +149,11 @@ function queryStaticProviders(options: {
     targetFile = `${normCat}.json`;
   }
 
-  // Candidatos de ruta según entorno de ejecución (Netlify Lambda / standalone / dev)
-  const candidatePaths = [
-    path.join(process.cwd(), 'public', 'data', 'providers', targetFile),
-    path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', targetFile),
-    path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'providers', targetFile),
-  ];
-
-  const filePath = candidatePaths.find((p) => fs.existsSync(p)) || candidatePaths[0];
-
-  if (!fs.existsSync(/*turbopackIgnore: true*/ filePath)) {
+  const raw = await loadStaticDataset(targetFile, requestUrl);
+  if (!raw) {
     return { total: 0, providers: [] };
   }
 
-  const raw = fs.readFileSync(/*turbopackIgnore: true*/ filePath, 'utf-8');
   let list: any[] = JSON.parse(raw);
 
   // 1. Filtro por provincia
@@ -293,13 +318,14 @@ export async function GET(request: Request) {
   // 2. FALLBACK SOBERANO S-CLASS (Netlify Edge & Serverless Autónomo)
   // Lee instantáneamente desde los datasets categorizados sincronizados en public/data/providers/
   try {
-    const { total, providers } = queryStaticProviders({
+    const { total, providers } = await queryStaticProviders({
       category,
       province,
       q,
       subcategory,
       page,
       limit,
+      requestUrl: request.url,
     });
 
     return NextResponse.json({

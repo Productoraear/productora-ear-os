@@ -25,6 +25,20 @@ const nextConfig: NextConfig = {
       'node_modules/@sparticuz/**',
       'node_modules/pdfjs-dist/**',
       'node_modules/better-sqlite3/**',
+      // Anti-bloat: los activos de `public/` se sirven por CDN, NUNCA deben
+      // empaquetarse en la función serverless (causa raíz del limite de 250 MB).
+      'public/**',
+      'reports/**',
+      'scripts/**',
+      // Motores/CLI de Prisma no necesarios en runtime serverless.
+      'node_modules/@prisma/engines/**',
+      'node_modules/prisma/**',
+      'node_modules/typescript/**',
+      'node_modules/@types/**',
+      // Motores temporales/duplicados y wasm multi-plataforma de Prisma.
+      'node_modules/.prisma/**/*.tmp*',
+      'node_modules/@prisma/client/runtime/*wasm*',
+      'node_modules/@prisma/client/runtime/*.d.ts',
     ],
   },
   experimental: {
