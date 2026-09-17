@@ -27,6 +27,7 @@ import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 
 const NAVIGATION_MODULES = [
   { id: 'cockpit', name: 'Omni-Cockpit Central', href: '/admin', icon: LayoutDashboard, badge: 'CORE' },
+  { id: 'simulador', name: '🗺️ Mapa & Simulador EAR OS', href: '/admin/simulador', icon: Compass, badge: '21ST.DEV' },
   { id: 'call-center', name: 'Call Center Outbound', href: '/admin/call-center', icon: PhoneCall, badge: '45.6K' },
   { id: 'whatsapp', name: 'Centralita WhatsApp', href: '/admin/whatsapp', icon: MessageCircle, badge: '693 048' },
   { id: 'sourcing', name: 'Scala Leads & Sourcing', href: '/admin/sourcing', icon: Flame, badge: 'LEADS' },

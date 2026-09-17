@@ -1,57 +1,72 @@
-import React from "react";
-import Link from "next/link";
-import { ArrowLeft, Building2, Users, Activity, ShieldCheck } from "lucide-react";
+import React from 'react';
+import { Metadata } from 'next';
+import Link from 'next/link';
+import { Brain, Stethoscope, Activity, ShieldCheck, ArrowRight, Phone } from 'lucide-react';
 
-interface PageProps {
+interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export default async function CentroDetailPage({ params }: PageProps) {
-  const resolvedParams = await params;
-  const slug = resolvedParams.slug;
-  const centroNombre = slug.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolved = await params;
+  const name = resolved.slug.replace(/-/g, ' ').toUpperCase();
+  return {
+    title: `Programa Clínico VIMUME // Centro ${name}`,
+    description: `Protocolo de estimulación acústica 40 Hz Gamma para residentes y centros de día en ${name}. Retorno social y reducción del 38.2% en agitación.`,
+  };
+}
+
+export default async function CentroSlugPage({ params }: Props) {
+  const resolved = await params;
+  const centerName = resolved.slug.replace(/-/g, ' ').toUpperCase();
 
   return (
-    <main className="min-h-screen bg-[#030305] text-white pt-32 pb-24 px-6">
-      <div className="max-w-6xl mx-auto space-y-12">
-        <Link 
-          href="/vimume/centros" 
-          className="inline-flex items-center gap-2 text-xs font-mono text-[#00E5FF] hover:underline"
-        >
-          <ArrowLeft size={14} /> VOLVER A CENTROS HOMOLOGADOS
-        </Link>
+    <div className="min-h-screen bg-[#050505] text-white pt-28 pb-32 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-5xl mx-auto space-y-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+          <Brain size={14} />
+          <span>VIMUME // CENTRO HOMOLOGADO SENIOR</span>
+        </div>
 
-        <header className="space-y-4 border-b border-white/10 pb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00E5FF]/10 text-[#00E5FF] text-[10px] font-mono uppercase tracking-widest border border-[#00E5FF]/20">
-            <Building2 size={12} /> CONSOLA CLÍNICA DE CENTRO
-          </div>
-          <h1 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase">
-            {centroNombre}
-          </h1>
-          <p className="text-gray-400 text-sm max-w-2xl leading-relaxed">
-            Monitorización y seguimiento de intervenciones neuroacústicas 40 Hz Gamma, mapeo de la Banda Sonora Vital™ y control de escala CMAI para residentes senior (edad &ge; 50 años).
-          </p>
-        </header>
+        <h1 className="text-3xl sm:text-5xl font-black font-syne uppercase text-white">
+          Programa Clínico en {centerName}
+        </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-1">Residentes Activos</p>
-            <p className="text-2xl font-black text-[#ecb613]">18</p>
+        <p className="text-zinc-300 text-base max-w-2xl font-light">
+          Protocolo de neuro-musicoterapia para mayores con deterioro cognitivo. Financiación directa vía mecenazgo Ley 49/2002 con deducción de hasta el 80% en IRPF.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span className="text-cyan-400 block text-lg font-bold">40 Hz Gamma</span>
+            <span className="text-zinc-400">Estimulación síncrona</span>
           </div>
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-1">Reducción CMAI</p>
-            <p className="text-2xl font-black text-[#10b981]">-38.2%</p>
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span className="text-emerald-400 block text-lg font-bold">-38.2%</span>
+            <span className="text-zinc-400">Desescalada agitación</span>
           </div>
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-1">Estimulación 40 Hz</p>
-            <p className="text-2xl font-black text-[#00E5FF]">&lt; 75 dB</p>
-          </div>
-          <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
-            <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-1">Retorno SROI</p>
-            <p className="text-2xl font-black text-white">4.85x</p>
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/10">
+            <span className="text-[#ecb613] block text-lg font-bold">SROI 4.85x</span>
+            <span className="text-zinc-400">Retorno social auditado</span>
           </div>
         </div>
+
+        <div className="pt-4 flex gap-4">
+          <a
+            href="tel:+34693693048"
+            className="px-6 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-bold font-mono text-xs uppercase flex items-center gap-2"
+          >
+            <Phone size={14} />
+            <span>Consultar con Dirección Médica</span>
+          </a>
+          <Link
+            href="/vimume"
+            className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold font-mono text-xs uppercase"
+          >
+            Ver Portal VIMUME
+          </Link>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

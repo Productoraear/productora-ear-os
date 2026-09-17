@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EAR OS // Simulador de Operaciones & Mapa de Dominancia S-Class (21st.dev Edition)</title>
+  
+  <!-- Tipografías Vanguardistas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            inter: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            oled: '#030305',
+            surface: '#08080d',
+            surfaceBorder: '#161622',
+            gold: '#ecb613',
+            emeraldGlow: '#10b981',
+            cyanGlow: '#00E5FF',
+            rubyGlow: '#FF2B44',
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'glow-spin': 'spin 12s linear infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Estética 21st.dev Vanguardista: Glassmorphism, Bordes de Gradiente & Resplandor */
+    body {
+      background-color: #030305;
+      color: #f4f4f5;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .bento-card {
+      background: linear-gradient(135deg, rgba(14, 14, 22, 0.85) 0%, rgba(8, 8, 13, 0.95) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bento-card:hover {
+      border-color: rgba(236, 182, 19, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.8), 0 0 25px rgba(236, 182, 19, 0.1);
+    }
+    .glow-gold {
+      box-shadow: 0 0 30px rgba(236, 182, 19, 0.2);
+    }
+    .glow-cyan {
+      box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.2);
+    }
+    .gradient-text-gold {
+      background: linear-gradient(135deg, #FFF 0%, #ecb613 60%, #d4a855 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gradient-text-cyan {
+      background: linear-gradient(135deg, #FFF 0%, #00E5FF 70%, #0088cc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    /* Grid Mesh de fondo inspirado en 21st.dev */
+    .bg-grid-pattern {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    /* Estilo del slider moderno */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      height: 6px;
+      border-radius: 9999px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #ecb613;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ecb613;
+      border: 2px solid #fff;
+    }
+  </style>
+</head>
+<body class="bg-oled min-h-screen bg-grid-pattern selection:bg-gold selection:text-black">
+
+  <!-- Glow orbs decorativos de fondo -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-gold/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+  <div class="fixed bottom-10 right-1/4 w-96 h-96 bg-cyanGlow/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+
+  <!-- NAVBAR VANGUARDISTA TIPO 21ST.DEV -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl border-b border-white/5 bg-oled/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-3 h-3 rounded-full bg-gold animate-pulse shadow-[0_0_12px_#ecb613]"></div>
+        <div class="font-syne font-black text-lg tracking-wider text-white">
+          EAR OS <span class="text-gold">SIMULADOR</span>
+        </div>
+        <span class="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-white/5 border border-white/10 text-zinc-400">
+          VANGUARDIA // 21ST.DEV EDITION
+        </span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="hidden md:flex items-center gap-2 px-3 py-1 rounded-xl bg-surface border border-surfaceBorder text-xs font-mono text-zinc-400">
+          <i data-lucide="cpu" class="w-3.5 h-3.5 text-gold"></i>
+          <span>GPU: <strong>AMD RX 7900 XTX</strong> (24GB)</span>
+        </div>
+        <a href="/admin" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-mono font-bold text-white transition-all flex items-center gap-1.5">
+          <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+          <span>Volver al Cockpit</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-12">
+
+    <!-- HERO TITULAR & CONTEXTO OPERATIVO -->
+    <div class="text-center space-y-4 max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 border border-gold/30 text-gold text-xs font-mono uppercase tracking-widest">
+        <i data-lucide="compass" class="w-4 h-4"></i>
+        <span>ACADEMIA DE MANDO S-CLASS // MODO CEO ACTIVO</span>
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-black font-syne uppercase tracking-tight text-white leading-none">
+        MAPA TOTAL Y <span class="gradient-text-gold">SIMULADOR OPERATIVO</span>
+      </h1>
+      <p class="text-zinc-400 text-sm sm:text-base font-light max-w-2xl mx-auto leading-relaxed">
+        Domina todos los motores de Productora EAR: cotizaciones con Méntrida Km 0, el Split Soberano 80/10/10, licitaciones B2G (&lt;14.250 €) y el impacto social VIMUME. Aprende a operar con un clic.
+      </p>
+    </div>
+
+    <!-- 🗺️ SECCIÓN 1: EL MAPA DE LOS 5 DOMINIOS SOBERANOS (BENTO GRID 21ST.DEV) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <div class="space-y-0.5">
+          <span class="text-[10px] font-mono text-gold uppercase tracking-widest font-bold">Arquitectura Multi-Tenant</span>
+          <h2 class="text-2xl font-bold font-syne text-white uppercase">Los 5 Dominios Soberanos de EAR OS</h2>
+        </div>
+        <span class="text-xs font-mono text-zinc-400">Totalmente Interconectados</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Dominio 1: Productora EAR Core -->
+        <div class="bento-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-start justify-between">
+            <span class="p-3 rounded-2xl bg-gold/10 border border-gold/30 text-gold">
+              <i data-lucide="layers" class="w-6 h-6"></i>
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono font-bold">
+              DOMINIO NÚCLEO
+            </span>
+          </div>
+          <div>
+            <span class="text-[10px] font-mono text-zinc-400">HUB DE INGENIERÍA & SONORIZACIÓN</span>
+            <h3 class="text-xl font-bold font-syne text-white">productoraear.com</h3>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Catálogo del Arsenal técnico, Line Arrays Bose F1 (12 W/pax), pantallas LED y centralita telefónica oficial (+34 693 693 048).
+          </p>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+            <span class="text-zinc-500">Conversión:</span>
+            <span class="text-gold font-bold">Teléfono + WhatsApp Express</span>
+          </div>
+        </div>
+
+        <!-- Dominio 2: Artistas Europa -->
+        <div class="bento-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-start justify-between">
+            <span class="p-3 rounded-2xl bg-rubyGlow/10 border border-rubyGlow/30 text-rubyGlow">
+              <i data-lucide="music" class="w-6 h-6"></i>
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-white/5 text-zinc-300 border border-white/10 text-[10px] font-mono font-bold">
+              PORTAL ARTÍSTICO
+            </span>
+          </div>
+          <div>
+            <span class="text-[10px] font-mono text-zinc-400">ROSTER S-CLASS DE MÚSICA EN VIVO</span>
+            <h3 class="text-xl font-bold font-syne text-white">artistaseuropa.com</h3>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Edwin Agudelo (Tenor Insignia 350 €), Mariachis, Cuartetos de Cuerda y DJs. Calendario sincronizado y bloqueo con Price-Lock 100 €.
+          </p>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+            <span class="text-zinc-500">Split Soberano:</span>
+            <span class="text-rubyGlow font-bold">80% Neto al Artista</span>
+          </div>
+        </div>
+
+        <!-- Dominio 3: Fincas Para Boda -->
+        <div class="bento-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-start justify-between">
+            <span class="p-3 rounded-2xl bg-emeraldGlow/10 border border-emeraldGlow/30 text-emeraldGlow">
+              <i data-lucide="building-2" class="w-6 h-6"></i>
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-white/5 text-zinc-300 border border-white/10 text-[10px] font-mono font-bold">
+              PORTAL B2B
+            </span>
+          </div>
+          <div>
+            <span class="text-[10px] font-mono text-zinc-400">RED DE ALIANZAS CON ESPACIOS NUPCIALES</span>
+            <h3 class="text-xl font-bold font-syne text-white">fincasparaboda.com</h3>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Portal demostrativo para fincas, salones y cáterings. Cuota 0 € fija, auditoría técnica previa y retención del 10% de comisión garantizada.
+          </p>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+            <span class="text-zinc-500">Modelo:</span>
+            <span class="text-emeraldGlow font-bold">0 € Fijo / Éxito Puro</span>
+          </div>
+        </div>
+
+        <!-- Dominio 4: VIMUME -->
+        <div class="bento-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-start justify-between">
+            <span class="p-3 rounded-2xl bg-cyanGlow/10 border border-cyanGlow/30 text-cyanGlow">
+              <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-cyanGlow/10 text-cyanGlow border border-cyanGlow/30 text-[10px] font-mono font-bold">
+              IMPACTO SOCIAL & ESG
+            </span>
+          </div>
+          <div>
+            <span class="text-[10px] font-mono text-zinc-400">NEURO-MUSICOTERAPIA MAYORES</span>
+            <h3 class="text-xl font-bold font-syne text-white">viajemusicalporlamemoria.com</h3>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Talleres con estimulación acústica 40 Hz Gamma para Alzheimer y residencias. Financiado con el 10% de cada evento con hasta 80% de deducción IRPF.
+          </p>
+          <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+            <span class="text-zinc-500">Retorno Social:</span>
+            <span class="text-cyanGlow font-bold">SROI 4.85x Demostrado</span>
+          </div>
+        </div>
+
+        <!-- Dominio 5: Ayuntamientos B2G -->
+        <div class="bento-card p-6 rounded-3xl space-y-4 md:col-span-2 lg:col-span-2">
+          <div class="flex items-start justify-between">
+            <span class="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-blue-400">
+              <i data-lucide="landmark" class="w-6 h-6"></i>
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] font-mono font-bold">
+              CONTRATACIÓN PÚBLICA B2G
+            </span>
+          </div>
+          <div>
+            <span class="text-[10px] font-mono text-zinc-400">SECTOR PÚBLICO & FIESTAS PATRONALES</span>
+            <h3 class="text-xl font-bold font-syne text-white">productoraear.com/ayuntamientos</h3>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Pliegos técnicos listos para Contratos Menores (Art. 118 LCSP). Presupuesto preventivo al 95% (14.250 € para blindar de impugnaciones), limitación acústica homologada &lt; 75 dB SPL y facturación electrónica FacturaE (código DIR3).
+          </p>
+          <div class="pt-3 border-t border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            <span class="text-zinc-500">Límite Art. 118 LCSP:</span>
+            <span class="text-blue-400 font-bold">&lt; 15.000 € (Ajuste EAR = 14.250 €)</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ⚡ SECCIÓN 2: SIMULADOR INTERACTIVO DE VENTAS EN VIVO (EL CORAZÓN DEL DINERO) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <div class="space-y-0.5">
+          <span class="text-[10px] font-mono text-gold uppercase tracking-widest font-bold">Calculadora Paramétrica S-Class</span>
+          <h2 class="text-2xl font-bold font-syne text-white uppercase">Simulador de Venta de Evento en Vivo</h2>
+        </div>
+        <span class="text-xs font-mono text-emerald-400">Tiempo Real</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controles Interactivos (Span 7) -->
+        <div class="lg:col-span-7 bento-card p-6 sm:p-8 rounded-3xl space-y-6">
+          
+          <!-- Selector de Formación -->
+          <div class="space-y-2">
+            <label class="text-xs font-mono text-zinc-300 uppercase tracking-wider block">
+              1. Selecciona Formación o Artista:
+            </label>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <button onclick="setPack('solista', 350, 'Edwin Agudelo (Tenor Insignia)')" id="btn-solista" class="pack-btn p-3 rounded-2xl bg-gold text-black font-bold text-xs font-mono text-left transition-all border border-gold">
+                Edwin Agudelo<br><span class="text-[10px] opacity-80">350 € Base</span>
+              </button>
+              <button onclick="setPack('trio', 550, 'Mariachi Trío Tradición')" id="btn-trio" class="pack-btn p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs font-mono text-left transition-all border border-white/10">
+                Mariachi Trío<br><span class="text-[10px] text-zinc-400">550 € Base</span>
+              </button>
+              <button onclick="setPack('imperial', 850, 'Mariachi Imperial (6 músicos)')" id="btn-imperial" class="pack-btn p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs font-mono text-left transition-all border border-white/10">
+                Mariachi Imperial<br><span class="text-[10px] text-zinc-400">850 € Base</span>
+              </button>
+              <button onclick="setPack('cuarteto', 650, 'Cuarteto Clásico')" id="btn-cuarteto" class="pack-btn p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs font-mono text-left transition-all border border-white/10">
+                Cuarteto Cuerda<br><span class="text-[10px] text-zinc-400">650 € Base</span>
+              </button>
+              <button onclick="setPack('djsax', 750, 'DJ Profesional + Saxo')" id="btn-djsax" class="pack-btn p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs font-mono text-left transition-all border border-white/10">
+                DJ + Saxo Directo<br><span class="text-[10px] text-zinc-400">750 € Base</span>
+              </button>
+              <button onclick="setPack('pantallas', 1200, 'Pack Pantallas LED + Sonido 12W/pax')" id="btn-pantallas" class="pack-btn p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs font-mono text-left transition-all border border-white/10">
+                Pantalla LED 4x2m<br><span class="text-[10px] text-zinc-400">1.200 € Base</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Slider Distancia Méntrida Km 0 -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-zinc-300 uppercase tracking-wider">2. Distancia desde Méntrida Km 0:</span>
+              <span class="text-gold font-bold text-base" id="dist-label">35 km (Madrid Centro)</span>
+            </div>
+            <input type="range" id="dist-slider" min="0" max="450" value="35" step="5" class="w-full" oninput="updateCalculation()">
+            <div class="flex justify-between text-[10px] font-mono text-zinc-500">
+              <span>0 km (Méntrida)</span>
+              <span>50 km (Zona Gratis)</span>
+              <span>200 km (+120€ Hotel)</span>
+              <span>450 km</span>
+            </div>
+          </div>
+
+          <!-- Hora de Finalización (Regla de Hotel) -->
+          <div class="space-y-2">
+            <label class="text-xs font-mono text-zinc-300 uppercase tracking-wider block">
+              3. Hora Estimada de Fin del Show:
+            </label>
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick="setLateNight(false)" id="btn-night-no" class="p-3 rounded-2xl bg-gold text-black font-bold text-xs font-mono transition-all border border-gold flex items-center justify-center gap-2">
+                <i data-lucide="sun" class="w-4 h-4"></i>
+                <span>Antes de las 3:00 AM (Sin Hotel)</span>
+              </button>
+              <button onclick="setLateNight(true)" id="btn-night-yes" class="p-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs font-mono transition-all border border-white/10 flex items-center justify-center gap-2">
+                <i data-lucide="moon" class="w-4 h-4"></i>
+                <span>Madrugada &gt;= 3:00 AM (+120 €)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Switch Donación VIMUME Adicional (Ley 49/2002) -->
+          <div class="p-4 rounded-2xl bg-cyanGlow/5 border border-cyanGlow/20 flex items-center justify-between gap-4">
+            <div class="space-y-0.5">
+              <span class="text-xs font-bold text-white flex items-center gap-1.5 font-mono">
+                <i data-lucide="heart" class="w-4 h-4 text-cyanGlow"></i>
+                Añadir Sesión VIMUME Mayor (+150 €)
+              </span>
+              <p class="text-[11px] text-zinc-400">
+                100% deducible hasta el 80% en el IRPF del cliente vía Ley 49/2002.
+              </p>
+            </div>
+            <input type="checkbox" id="vimume-check" onchange="updateCalculation()" class="w-5 h-5 accent-cyan-400 rounded cursor-pointer">
+          </div>
+
+        </div>
+
+        <!-- Telemetría & Desglose en Vivo (Span 5) -->
+        <div class="lg:col-span-5 bento-card p-6 sm:p-8 rounded-3xl space-y-6 border-gold/30">
+          
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div>
+              <span class="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">PRESUPUESTO FINAL RECOMENDADO</span>
+              <div class="text-4xl sm:text-5xl font-black font-syne text-white" id="total-price">
+                350,00 €
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono font-bold block">
+                PRICE-LOCK 72H
+              </span>
+              <span class="text-[10px] font-mono text-zinc-400 mt-1 block">Depósito: 100,00 €</span>
+            </div>
+          </div>
+
+          <!-- Desglose del Split Soberano 80/10/10 -->
+          <div class="space-y-3 font-mono text-xs">
+            <span class="text-[10px] text-gold uppercase tracking-widest font-bold block">
+              DESGLOSE REGLA INMUTABLE 80/10/10:
+            </span>
+
+            <div class="flex justify-between items-center p-2.5 rounded-xl bg-black/40 border border-white/5">
+              <span class="text-zinc-300">👤 80% Artista Ejecutor:</span>
+              <span class="text-white font-bold" id="split-artist">280,00 €</span>
+            </div>
+
+            <div class="flex justify-between items-center p-2.5 rounded-xl bg-black/40 border border-white/5">
+              <span class="text-zinc-300">⚙️ 10% Infraestructura EAR OS:</span>
+              <span class="text-white font-bold" id="split-infra">35,00 €</span>
+            </div>
+
+            <div class="flex justify-between items-center p-2.5 rounded-xl bg-black/40 border border-white/5">
+              <span class="text-zinc-300">❤️ 10% VIMUME Impacto Social:</span>
+              <span class="text-cyanGlow font-bold" id="split-vimume">35,00 €</span>
+            </div>
+
+            <div class="flex justify-between items-center p-2.5 rounded-xl bg-black/40 border border-white/5" id="hotel-row" style="display: none;">
+              <span class="text-amber-400">🏨 Suplemento Hotel (&gt;200km o &gt;3am):</span>
+              <span class="text-amber-400 font-bold">+120,00 €</span>
+            </div>
+
+            <div class="flex justify-between items-center p-2.5 rounded-xl bg-black/40 border border-white/5" id="km-row" style="display: none;">
+              <span class="text-zinc-300">🚗 Kilometraje (&gt;50km @ 1.50€/km):</span>
+              <span class="text-white font-bold" id="km-price">+0,00 €</span>
+            </div>
+          </div>
+
+          <!-- CTAs de Acción Inmediata para el CEO -->
+          <div class="space-y-2 pt-2">
+            <a id="btn-whatsapp-quote" href="https://wa.me/34693693048" target="_blank" class="w-full py-3.5 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all">
+              <i data-lucide="message-circle" class="w-4 h-4"></i>
+              <span>Enviar Presupuesto por WhatsApp</span>
+            </a>
+
+            <a href="https://productoraear.com/reservar/solista" target="_blank" class="w-full py-3.5 px-4 rounded-2xl bg-gold hover:bg-amber-400 text-black font-mono font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-gold/20 transition-all">
+              <i data-lucide="credit-card" class="w-4 h-4"></i>
+              <span>Abrir Checkout Stripe (100 € Depósito)</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 🎓 SECCIÓN 3: SIMULADOR DE ESCENARIOS OPERATIVOS (CÓMO RESOLVER CASOS REALES) -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <div class="space-y-0.5">
+          <span class="text-[10px] font-mono text-gold uppercase tracking-widest font-bold">Protocolos Prácticos</span>
+          <h2 class="text-2xl font-bold font-syne text-white uppercase">Simula y Aprende a Resolver los 3 Casos Típicos</h2>
+        </div>
+        <span class="text-xs font-mono text-zinc-400">Guía Táctica de Conversión</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Caso 1: Una novia llama por teléfono -->
+        <div class="bento-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-2 text-gold text-xs font-mono font-bold uppercase">
+            <i data-lucide="phone-incoming" class="w-4 h-4"></i>
+            <span>CASO 1: Novia Llama al 693 693 048</span>
+          </div>
+          <h4 class="text-base font-bold font-syne text-white">"¿Tenéis fecha para mariachis en Talavera de la Reina?"</h4>
+          <ol class="space-y-2 text-xs text-zinc-400 list-decimal list-inside font-light">
+            <li>Abres <strong class="text-white">/reservar/solista</strong> y miras el calendario del mes.</li>
+            <li>Calculas Talavera (65 km desde Méntrida = 15 km facturables @ 1.50€ = 22.50€).</li>
+            <li>Le das tarifa total: <strong>572,50 €</strong>.</li>
+            <li>Le mandas el link de Stripe por WhatsApp para bloquear con <strong>100 €</strong>.</li>
+          </ol>
+          <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono">
+            ✓ Cliente cerrado en &lt; 5 minutos.
+          </div>
+        </div>
+
+        <!-- Caso 2: Un Ayuntamiento pide presupuesto -->
+        <div class="bento-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-2 text-blue-400 text-xs font-mono font-bold uppercase">
+            <i data-lucide="landmark" class="w-4 h-4"></i>
+            <span>CASO 2: Concejalía de Festejos</span>
+          </div>
+          <h4 class="text-base font-bold font-syne text-white">"Necesitamos sonido e iluminación para las fiestas"</h4>
+          <ol class="space-y-2 text-xs text-zinc-400 list-decimal list-inside font-light">
+            <li>Entras a <strong class="text-white">/admin/licitaciones</strong>.</li>
+            <li>Fijas el contrato menor por debajo de <strong>14.250 €</strong> (Art. 118 LCSP).</li>
+            <li>Generas el Dossier Técnico con certificado de <strong>&lt; 75 dB SPL</strong>.</li>
+            <li>Envías la factura electrónica proforma con código DIR3 del Ayuntamiento.</li>
+          </ol>
+          <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono">
+            ✓ Adjudicación directa sin concurso público.
+          </div>
+        </div>
+
+        <!-- Caso 3: Una Finca quiere comisiones -->
+        <div class="bento-card p-6 rounded-3xl space-y-4">
+          <div class="flex items-center gap-2 text-emeraldGlow text-xs font-mono font-bold uppercase">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+            <span>CASO 3: Finca Exclusiva de Bodas</span>
+          </div>
+          <h4 class="text-base font-bold font-syne text-white">"¿Qué gano yo si os recomiendo a mis parejas?"</h4>
+          <ol class="space-y-2 text-xs text-zinc-400 list-decimal list-inside font-light">
+            <li>Le explicas el <strong class="text-white">Split 80/10/10</strong> con transparencia total.</li>
+            <li>Le creas su enlace de partner en <strong class="text-white">/admin/afiliados</strong>.</li>
+            <li>La finca gana el <strong>10% neto</strong> de cada contratación (sin hacer nada).</li>
+            <li>Certificado de 0 cuotas fijas y seguro de RC de 1.000.000 €.</li>
+          </ol>
+          <div class="p-3 rounded-xl bg-emeraldGlow/10 border border-emeraldGlow/20 text-emeraldGlow text-xs font-mono">
+            ✓ Alianza sellada de por vida.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER MÍNIMO DE CONTROL -->
+  <footer class="border-t border-white/5 py-8 text-center text-xs font-mono text-zinc-500">
+    Productora EAR // EAR OS v7.0 Omega Bare-Metal · Méntrida (Toledo) · Centralita: +34 693 693 048
+  </footer>
+
+  <!-- LÓGICA INTERACTIVA JAVASCRIPT DEL SIMULADOR -->
+  <script>
+    // Inicializar iconos Lucide
+    lucide.createIcons();
+
+    // Estado del simulador
+    let currentPack = {
+      id: 'solista',
+      base: 350,
+      name: 'Edwin Agudelo (Tenor Insignia)'
+    };
+    let isLateNight = false;
+
+    function setPack(id, base, name) {
+      currentPack = { id, base, name };
+      
+      // Actualizar estilos botones
+      document.querySelectorAll('.pack-btn').forEach(btn => {
+        btn.classList.remove('bg-gold', 'text-black', 'border-gold');
+        btn.classList.add('bg-white/5', 'text-white', 'border-white/10');
+      });
+      const activeBtn = document.getElementById('btn-' + id);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white/5', 'text-white', 'border-white/10');
+        activeBtn.classList.add('bg-gold', 'text-black', 'border-gold');
+      }
+
+      updateCalculation();
+    }
+
+    function setLateNight(val) {
+      isLateNight = val;
+      const noBtn = document.getElementById('btn-night-no');
+      const yesBtn = document.getElementById('btn-night-yes');
+
+      if (val) {
+        yesBtn.classList.add('bg-gold', 'text-black', 'border-gold');
+        yesBtn.classList.remove('bg-white/5', 'text-white', 'border-white/10');
+        noBtn.classList.remove('bg-gold', 'text-black', 'border-gold');
+        noBtn.classList.add('bg-white/5', 'text-white', 'border-white/10');
+      } else {
+        noBtn.classList.add('bg-gold', 'text-black', 'border-gold');
+        noBtn.classList.remove('bg-white/5', 'text-white', 'border-white/10');
+        yesBtn.classList.remove('bg-gold', 'text-black', 'border-gold');
+        yesBtn.classList.add('bg-white/5', 'text-white', 'border-white/10');
+      }
+
+      updateCalculation();
+    }
+
+    function updateCalculation() {
+      const slider = document.getElementById('dist-slider');
+      const dist = parseInt(slider.value, 10);
+      const distLabel = document.getElementById('dist-label');
+      
+      // Etiqueta de distancia
+      let locationHint = '(Toledo / Madrid Sur)';
+      if (dist === 0) locationHint = '(Sede Méntrida Km 0)';
+      else if (dist <= 50) locationHint = '(Zona Gratuita <50km)';
+      else if (dist <= 120) locationHint = '(Madrid / Guadalajara / Toledo)';
+      else if (dist <= 200) locationHint = '(Castilla-La Mancha / Ávila / Segovia)';
+      else locationHint = '(Península / Requiere Hotel)';
+
+      distLabel.innerText = `${dist} km ${locationHint}`;
+
+      // Kilometraje: 1.50€/km a partir del km 50
+      let kmCost = 0;
+      if (dist > 50) {
+        kmCost = (dist - 50) * 1.50;
+      }
+
+      // Hotel: 120€ si dist > 200km o si hora >= 3:00 AM
+      const needsHotel = dist > 200 || isLateNight;
+      const hotelCost = needsHotel ? 120 : 0;
+
+      // Donación VIMUME
+      const vimumeCheck = document.getElementById('vimume-check');
+      const extraVimume = vimumeCheck.checked ? 150 : 0;
+
+      const totalBase = currentPack.base + kmCost + hotelCost + extraVimume;
+
+      // Split 80/10/10 sobre la base del artista
+      const artistFee = (currentPack.base * 0.80);
+      const infraFee = (currentPack.base * 0.10);
+      const vimumeFee = (currentPack.base * 0.10) + extraVimume;
+
+      // Renderizar números
+      document.getElementById('total-price').innerText = totalBase.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+      document.getElementById('split-artist').innerText = artistFee.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' €';
+      document.getElementById('split-infra').innerText = infraFee.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' €';
+      document.getElementById('split-vimume').innerText = vimumeFee.toLocaleString('es-ES', { minimumFractionDigits: 2 }) + ' €';
+
+      // Mostrar u ocultar filas de hotel y km
+      const hotelRow = document.getElementById('hotel-row');
+      const kmRow = document.getElementById('km-row');
+      
+      if (hotelCost > 0) {
+        hotelRow.style.display = 'flex';
+      } else {
+        hotelRow.style.display = 'none';
+      }
+
+      if (kmCost > 0) {
+        kmRow.style.display = 'flex';
+        document.getElementById('km-price').innerText = `+${kmCost.toFixed(2)} €`;
+      } else {
+        kmRow.style.display = 'none';
+      }
+
+      // Actualizar enlace de WhatsApp pre-rellenado
+      const msg = encodeURIComponent(
+        `¡Hola Productora EAR! Solicito presupuesto oficial para ${currentPack.name} a ${dist} km de Méntrida. Total estimado: ${totalBase.toFixed(2)} € (incluye depósito de 100 € y Split 80/10/10).`
+      );
+      document.getElementById('btn-whatsapp-quote').href = `https://wa.me/34693693048?text=${msg}`;
+    }
+
+    // Ejecución inicial
+    updateCalculation();
+  </script>
+
+</body>
+</html>
