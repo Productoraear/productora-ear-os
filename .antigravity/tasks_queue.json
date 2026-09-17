@@ -1290,6 +1290,97 @@
         "macro_script": "Sincronizar las constantes globales con el conteo de manifest.json (85.946). Construir la vista interactiva del manual en /admin/manual-operaciones con módulos de inducción de agentes, scripts de venta telefónica y simulador de objeciones con estética militar OLED (#030305, oro #ecb613)."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b499-suno-killer-daw-and-omnichannel-aggregator",
+      "title": "B4.99: VoiceStudio Suno-Killer DAW, Agregadora Soberana DDEX & Radar Omnicanal de Métricas",
+      "block": 4,
+      "status": "COMPLETED",
+      "description": "Desplegar la suite de producción musical soberana y distribución global: 1) Suno-Killer DAW Engine (sunoKillerEngine.ts) con formateo cuántico de prompts acústicos, modelado de 4 stems (Lead Vocal, Percusión, Bajo, Armonía) y masterización AES TD1004 a -14 LUFS. 2) Motor de Agregadora Soberana (aggregatorEngine.ts) para Spotify/Apple Music con generación algorítmica de códigos ISRC oficiales (ES-EAR-26-XXXXX), códigos UPC-A con dígito de control Módulo 10, validación DSP y exportador de manifiesto DDEX XML/JSON con Split Soberano 80/10/10. 3) Radar Omnicanal de Redes & Streaming (socialRadarEngine.ts + DistributionRadar.tsx) para tracking en tiempo real de streams en Spotify, YouTube Music y virales en TikTok/Instagram Reels sin herramientas de pago externas. 4) Mesa de trabajo OLED DawWorkspace.tsx con faders deslizantes de volumen, mute/solo reactivo y exportador WAV 24-bit. 5) Vista completa en /voicestudio/studio-pro.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/audio/sunoKillerEngine.ts",
+          "src/lib/distribution/aggregatorEngine.ts",
+          "src/lib/social/socialRadarEngine.ts",
+          "src/components/voicestudio/DawWorkspace.tsx",
+          "src/components/voicestudio/DistributionRadar.tsx",
+          "src/app/voicestudio/studio-pro/page.tsx"
+        ],
+        "macro_script": "1) Implementar sunoKillerEngine.ts con interfaces SunoTrackConfig, StemTrack, renderizado de prompts estructurados y masterización simulada AES TD1004 (-14 LUFS). 2) Implementar aggregatorEngine.ts con generateSovereignISRC, generateSovereignUPC (checksum módulo 10), validateAudioForDSP y exportDDEXManifest. 3) Implementar socialRadarEngine.ts con interfaces SocialMetricProfile, UnifiedSocialOverview y getUnifiedRadarMetrics. 4) Construir DawWorkspace.tsx ('use client') con selector de BPM/género, faders deslizantes para 4 pistas con estados Solo/Mute y exportador WAV 24-bit. 5) Construir DistributionRadar.tsx ('use client') con pestañas 'Agregadora Soberana' y 'Radar de Métricas' en JetBrains Mono y fondo OLED (#030305). 6) Montar la página /voicestudio/studio-pro/page.tsx orquestando la suite completa. 7) Validar con npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b4100-multi-artist-portal-and-wav-ingestion",
+      "title": "B4.100: Portal Multi-Artista, Ingesta Drag & Drop de Audio WAV/FLAC y Persistencia de Catálogo Soberano",
+      "block": 4,
+      "status": "COMPLETED",
+      "description": "Construir la infraestructura multi-artista para que Edwin Agudelo y cualquier artista de la red EAR puedan gestionar su catálogo soberano: 1) Expansión de mediaActions con audioMediaActions.ts para soportar audio WAV/FLAC/MP3 con análisis acústico (BPM, duración, sample rate, canales) y almacenamiento local en public/uploads/artists/. 2) Base de datos o persistencia de catálogo (src/data/artists/artists_ledger.json y lib/artists/artistCatalogEngine.ts) con soporte para perfiles vocales personalizados, enlaces a perfiles de Spotify/TikTok y asignación automática de ISRC. 3) Interfaz Drag & Drop de Stems y Master en src/components/voicestudio/AudioDragAndDrop.tsx con previsualización de onda. 4) Portal del Artista en src/app/artistas/estudio/page.tsx conectando el DAW B4.99 con la gestión de catálogo y perfiles vocales.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/artists/artistCatalogEngine.ts",
+          "src/data/artists/artists_ledger.json",
+          "src/modules/audio/actions/audioMediaActions.ts",
+          "src/components/voicestudio/AudioDragAndDrop.tsx",
+          "src/app/artistas/estudio/page.tsx"
+        ],
+        "macro_script": "1) Crear src/data/artists/artists_ledger.json con el perfil SSOT de Edwin Agudelo y esquema para artistas federados. 2) Crear src/lib/artists/artistCatalogEngine.ts con CRUD de artistas, timbres de voz y catálogo de releases. 3) Crear src/modules/audio/actions/audioMediaActions.ts con server actions para subir audio WAV/FLAC/MP3 a public/uploads/artists/ con validación de cuota y cabecera de audio. 4) Crear AudioDragAndDrop.tsx ('use client') con visualización interactiva de drag & drop para stems y masters. 5) Montar src/app/artistas/estudio/page.tsx uniendo el DAW con la selección de perfil de artista. 6) Validar npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b090-brand-shield-and-split-justification",
+      "title": "B0.90: Blindaje Jurídico Europeo, Purga de Marcas de Terceros y Justificador S-Class del Split 80/10/10",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Blindaje jurídico total contra reclamaciones y elevación de la soberanía de marca: 1) Purgar de código, rutas y componentes cualquier mención a marcas registradas o nombres de terceros (Dani Aragón -> 'Bóveda de Crecimiento Musical / GrowthMasteryVault', Velocity -> 'Quantum Growth Funnel / Embudo de Retención LTV'). 2) Crear el Justificador Interactivo del Split Soberano 80/10/10 (src/components/governance/SplitJustificationModal.tsx y src/lib/governance/splitJustificationEngine.ts) con desglose por actor (Artista 80%, EAR OS 10%, VIMUME 10%), calculadora de retorno fiscal Ley 49/2002 (hasta 80% en IRPF / 40-50% en Sociedades) y métricas de impacto clínico (SROI 4.85x, desescalada 74% psicofármacos) para que todo cliente, artista y finca entienda que el 10% social es una inversión deducible y de prestigio, no un canon parasitario.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/governance/splitJustificationEngine.ts",
+          "src/components/governance/SplitJustificationModal.tsx",
+          "src/components/governance/SplitSovereignCard.tsx",
+          "src/features/academy/ui/DaniAragonVault.tsx",
+          "src/lib/academia/oraculoEngine.ts",
+          "src/lib/audio/voiceStudioEngine.ts"
+        ],
+        "macro_script": "1) Implementar splitJustificationEngine.ts con argumentos jurídicos, deducciones fiscales Ley 49/2002 y retorno social SROI 4.85x contrastado con el 20-50% parasitario de mánagers tradicionales. 2) Crear SplitJustificationModal.tsx ('use client') accesible desde cotizadores, contratos y footer con estética OLED (#030305, oro #ecb613 y cyan #00E5FF). 3) Despersonalizar DaniAragonVault.tsx a GrowthMasteryVault y limpiar rutas /media/dani-aragon-vault/... en voiceStudioEngine.ts. 4) Sustituir 'Velocity' por 'Quantum Growth Funnel' en oraculoEngine.ts. 5) Validar con npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b599-global-omnirole-supersecurity-and-sitemap-seal",
+      "title": "B5.99: Globalización Dinámica Multi-Rol, Blindaje de Superseguridad (Headers & Rate-Limit) y Sellado de Sitemap RFC 3986",
+      "block": 5,
+      "status": "PENDING",
+      "description": "Cierre y blindaje definitivo para producción: 1) Globalización de herramientas por roles (src/lib/auth/roleContextEngine.ts): Contexto dinámico para ADMIN, ARTIST, VENDOR, CLIENT e INSTITUTION, adaptando vistas, split porcentual, permisos y telemetría según el actor. 2) Superseguridad Militar: Inyectar en next.config.ts cabeceras estrictas HTTP (HSTS, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff, Referrer-Policy, Permissions-Policy) y middleware/utility de Rate Limiting anti-DDoS (src/lib/security/rateLimitGuard.ts) para endpoints de IA y pagos. 3) Actualización Canónica del Sitemap (src/app/sitemap.ts): Inyectar en la partición 0 todas las rutas de alto impacto (/acg, /mariachis, /mariachis/unirse, /alianzas, /fincas/portal-demostrativo, /vimume/inversion, /academia/oraculo, /voicestudio/studio-pro, /artistas/estudio) bajo estricto estándar RFC 3986 sin caracteres espurios.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/auth/roleContextEngine.ts",
+          "src/lib/security/rateLimitGuard.ts",
+          "next.config.ts",
+          "src/app/sitemap.ts",
+          "src/widgets/navbar/Navbar.tsx"
+        ],
+        "macro_script": "1) Implementar roleContextEngine.ts con tipos EarRole ('ADMIN' | 'ARTIST' | 'VENDOR' | 'CLIENT' | 'INSTITUTION') y funciones de resolución de permisos y splits. 2) Crear rateLimitGuard.ts para limitar peticiones excesivas en endpoints de API. 3) En next.config.ts: añadir bloque headers() con HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy y Permissions-Policy. 4) En src/app/sitemap.ts: incorporar todas las nuevas URLs a la Partición 0 respetando sanitización RFC 3986. 5) Validar con npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b095-sos-equipment-rescue-fleet",
+      "title": "B0.95: EAR SOS RESCUE — Centralita Soberana de Rescate Técnico y Despacho Flash de Equipamiento en Caliente",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Módulo de asistencia técnica urgente para eventos (sin marcas de terceros): 1) Motor logístico de proximidad y cubicaje (src/lib/logistics/rescueFleetEngine.ts) que categoriza emergencias por volumen de transporte: Tier Micro/Moto (<5 kg: portátiles, cables, tarjetas de audio, micrófonos), Tier Medio/Turismo (<30 kg: proyectores, pantallas, monitores de escenario), Tier Pesado/Furgón (>30 kg: PA completa, truss, iluminación). 2) Localizador de inventario en tiempo real entre el arsenal propio y los proveedores homologados en un radio de 30 km. 3) Interfaz de emergencia OLED (src/components/logistics/SosEquipmentRescueModal.tsx) con botón de pánico 'SOS RESCATE TÉCNICO', cálculo de tiempo de entrega en vivo (<45 min), fianza instantánea y enlace de tracking GPS del repartidor/chofer. 4) Endpoint de despacho rápido /api/logistics/sos-dispatch.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/logistics/rescueFleetEngine.ts",
+          "src/components/logistics/SosEquipmentRescueModal.tsx",
+          "src/app/api/logistics/sos-dispatch/route.ts",
+          "src/app/(public)/sos-rescate/page.tsx"
+        ],
+        "macro_script": "1) Implementar rescueFleetEngine.ts con interfaces RescueTier, EmergencyEquipmentItem, cálculo haversine de proveedor más cercano, validación de cubicaje de vehículo y tarificación flash (tarifa alquiler + tasa de urgencia + porte km). 2) Crear SosEquipmentRescueModal.tsx ('use client') con estética OLED (#030305, rubí neón #FF2B44 para alerta y cyan #00E5FF para telemetría de tracking), selector de material crítico averiado y pasarela de pago flash. 3) Crear /api/logistics/sos-dispatch/route.ts gestionando la orden urgente y devolviendo URL de seguimiento GPS. 4) Montar la landing de rescate rápido en /sos-rescate. 5) Validar con npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }
   ]
 }

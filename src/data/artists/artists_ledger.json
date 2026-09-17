@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-09-17T11:00:00+02:00",
+  "splitSovereign": {
+    "artista": 80,
+    "earOs": 10,
+    "vimume": 10
+  },
+  "artists": [
+    {
+      "id": "edwin-agudelo",
+      "slug": "edwin-agudelo",
+      "displayName": "Edwin Agudelo",
+      "role": "CEO / Artista Solista",
+      "legalName": "Edwin Agudelo",
+      "bio": "CEO de Productora EAR y Orquestador de EAR OS. Compositor de la igualdad que transforma la tradición en un mensaje de soberanía internacional.",
+      "genres": ["EAR 360", "Mariachi XXI", "Bolero Gala", "Balada Romántica"],
+      "homeBase": "Madrid Sede Global",
+      "latitude": 40.4168,
+      "longitude": -3.7038,
+      "isMasterProfile": true,
+      "isrcRegistrant": "ES-EAR",
+      "socialProfiles": {
+        "spotify": "https://open.spotify.com/artist/edwin-agudelo",
+        "tiktok": "https://www.tiktok.com/@edwinagudelo",
+        "instagram": "https://www.instagram.com/edwinagudelo"
+      },
+      "voiceProfiles": [
+        {
+          "id": "edwin_agudelo_gala",
+          "label": "Directo de Gala",
+          "tone": "Tenor Lírico Emotivo & Tradición",
+          "language": "es-ES",
+          "gender": "male"
+        },
+        {
+          "id": "edwin_agudelo_vimume",
+          "label": "Terapia VIMUME Neuroacústica",
+          "tone": "Cálido, Terapéutico, Cercano (<75 dB SPL)",
+          "language": "es-ES",
+          "gender": "male"
+        }
+      ],
+      "catalog": [
+        {
+          "id": "ear-release-001",
+          "title": "Canción Soberana EAR OS",
+          "album": "Bóveda de Crecimiento Musical",
+          "genre": "Bolero Gala",
+          "durationSeconds": 225,
+          "isrc": "ES-EAR-26-00001",
+          "upc": "840000000011",
+          "releaseDate": "2026-09-17",
+          "status": "draft"
+        }
+      ]
+    },
+    {
+      "id": "artist-federated-template",
+      "slug": "artista-federado",
+      "displayName": "Artista Federado EAR",
+      "role": "Artista Federado",
+      "legalName": "",
+      "bio": "Perfil plantilla para cualquier artista de la red EAR que gestione su catálogo soberano.",
+      "genres": ["Pop Acústico"],
+      "homeBase": "España",
+      "latitude": 40.0,
+      "longitude": -3.0,
+      "isMasterProfile": false,
+      "isrcRegistrant": "ES-EAR",
+      "socialProfiles": {
+        "spotify": "",
+        "tiktok": "",
+        "instagram": ""
+      },
+      "voiceProfiles": [],
+      "catalog": []
+    }
+  ]
+}
