@@ -1351,7 +1351,7 @@
       "id": "sclass-b099-home-commercial-purification",
       "title": "B0.99-HOME: [PRIORIDAD MÁXIMA ANTES DE LAS 12:00] Purga Radical del Ruido en Home & Despliegue Inmediato a Producción",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Limpieza comercial urgente para dejar la web vendiendo antes de las 12:00: 1) En src/components/sclass/CinematicHeroSClass.tsx: cambiar 'Paciente Cero' por 'Artista Insignia // Tenor Lírico (Edwin Agudelo)'. 2) En src/app/page.tsx: erradicar los botones 'MODO NEURAL', 'SWITCH', 'TÚNEL S-CLASS' y 'NODO CORE' del header y renderizar CinematicHeroSClass como vista principal limpia, con header sobrio, logo oficial, teléfono (+34 693 693 048) y botón dorado 'Cotizar en 1 Clic'. 3) Validar npx tsc --noEmit (Exit 0), commit y PUSH INMEDIATO A AMBOS REMOTOS (git push origin main && git push vercel-repo main).",
       "scaffold": {
         "files_to_touch": [

@@ -42,7 +42,7 @@ const PROFILES: ProfileJourney[] = [
     bgImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
     stats: [
       { label: 'Split Artista', value: '80% Neto' },
-      { label: 'Paciente Cero', value: 'Edwin Agudelo' }
+      { label: 'Artista Insignia', value: 'Edwin Agudelo (Tenor Lírico)' }
     ]
   },
   {
