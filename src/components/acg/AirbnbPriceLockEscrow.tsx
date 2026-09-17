@@ -52,16 +52,29 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
       const payload = buildPriceLockPayload(quote, eventDate, selectedFinca?.name ?? 'ACG_OMNI');
       dispatch({ type: 'SET_SPACE', payload: { priceLockPayload: payload } });
 
+      // 1. Firma canónica delegada en el servidor. Sin hash real NO se avanza.
       const lockRes = await fetch('/api/quote/generate-lock', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ formatId: 'solista', distanceKm: state.finca.distanceKm, eventDate }),
+        body: JSON.stringify({
+          formatId: selectedArtist.id,
+          distanceKm: state.finca.distanceKm,
+          endHour: state.space.endHour,
+          eventDate,
+        }),
       });
-      const lockData = await lockRes.json();
+      const lockData = await lockRes.json().catch(() => ({}));
       const priceLockHash = (lockData?.priceLockHash as string) ?? null;
 
-      dispatch({ type: 'SET_PRICE_LOCK', payload: { priceLockPayload: payload, priceLockHash: priceLockHash ?? 'SHA256-Ω-OFFLINE-MODE' } });
+      if (!lockRes.ok || !priceLockHash) {
+        const reason = lockData?.error ?? 'SIGNING_KEY_MISSING';
+        setLockError(`No se emitió firma Price-Lock (${reason}). Abortando reserva.`);
+        return;
+      }
 
+      dispatch({ type: 'SET_PRICE_LOCK', payload: { priceLockPayload: payload, priceLockHash } });
+
+      // 2. Solo con firma real se abre la sesión Stripe.
       const payRes = await fetch('/api/payments/create-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -81,11 +94,11 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
           },
         }),
       });
-      const payData = await payRes.json();
+      const payData = await payRes.json().catch(() => ({}));
       if (payData?.url) {
         window.location.href = payData.url;
       } else {
-        setLockError('Stripe no devolvió URL. Verifica la conexión y reintenta.');
+        setLockError('Stripe no devolvió URL de pago. Verifica la conexión y reintenta.');
       }
     } catch {
       setLockError('No se pudo conectar con el backend de firma o pago.');

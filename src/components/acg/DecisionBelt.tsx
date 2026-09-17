@@ -1,24 +1,68 @@
 "use client";
 
-import React, { useReducer, useEffect, useCallback } from 'react';
+import React, { useReducer, useEffect, useCallback, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Radio } from 'lucide-react';
 import {
   ACG_INITIAL_STATE,
   acgReducer,
   DECISION_STEPS,
+  ACG_ARTIST_OFFERS,
+  type DecisionStepId,
 } from '@/lib/acg/acgDecisionEngine';
+import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
 import UberRouteRadar from './UberRouteRadar';
 import TinderEventMatcher from './TinderEventMatcher';
 import AirbnbPriceLockEscrow from './AirbnbPriceLockEscrow';
 import BodasPlanPlanner from './BodasPlanPlanner';
 
+const STEP_IDS: readonly DecisionStepId[] = ['ruta', 'match', 'espacio', 'plan'];
+
 export default function DecisionBelt() {
+  const searchParams = useSearchParams();
+  const hydratedRef = useRef(false);
   const [state, dispatch] = useReducer(acgReducer, ACG_INITIAL_STATE);
   const activeStep = DECISION_STEPS[state.currentStepIndex];
 
   const goNext = useCallback(() => dispatch({ type: 'GO_NEXT' }), []);
   const goBack = useCallback(() => dispatch({ type: 'GO_BACK' }), []);
   const goToStep = useCallback((index: number) => dispatch({ type: 'GO_TO_STEP', payload: index }), []);
+
+  // Hidratación funcional de deep-links del grafo semántico:
+  //   /acg?finca=<id>&step=ruta|match|espacio|plan&artist=<id>
+  useEffect(() => {
+    if (hydratedRef.current) return;
+    hydratedRef.current = true;
+
+    const fincaId = searchParams.get('finca');
+    const stepParam = searchParams.get('step') as DecisionStepId | null;
+    const artistId = searchParams.get('artist');
+
+    if (fincaId) {
+      const finca = SCLASS_12_FINCAS_HOMOLOGADAS.find(
+        (f) => f.id === fincaId || f.slug === fincaId,
+      );
+      if (finca) {
+        dispatch({
+          type: 'SELECT_FINCA',
+          payload: {
+            fincaId: finca.id,
+            province: finca.provincia,
+            distanceKm: finca.distanciaHubMentridaKm,
+          },
+        });
+      }
+    }
+
+    if (artistId && ACG_ARTIST_OFFERS.some((a) => a.id === artistId)) {
+      dispatch({ type: 'SELECT_ARTIST', payload: artistId });
+    }
+
+    if (stepParam && STEP_IDS.includes(stepParam)) {
+      const stepIndex = STEP_IDS.indexOf(stepParam);
+      dispatch({ type: 'GO_TO_STEP', payload: stepIndex });
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

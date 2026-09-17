@@ -135,7 +135,7 @@ export function buildTerritorialInterlinks(activeProvince: string): Interlink[] 
       anchor: 'provincia',
     },
     {
-      href: `/artistas/provincias/${provSlug}`,
+      href: `/artistas/provincias?provincia=${provSlug}`,
       label: `Artistas en ${activeProvince}`,
       relation: 'GeographyGremio',
       anchor: 'artistas-provincia',

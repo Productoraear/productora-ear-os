@@ -7,6 +7,8 @@ import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/
 import { MUNICIPALITIES_DATABASE } from '@/lib/geo/spanish-municipalities';
 import { isProviderPublic } from '@/lib/providers/visibility';
 import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
+import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
+import { normalizeForUrl } from '@/lib/acg/acgSemanticGraph';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
@@ -122,6 +124,12 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/instituciones/catalogo-360`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/vimume/archivo-clinico`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/fincas`, 0.92, 'weekly');
+      const fincaProvinces = new Set(
+        SCLASS_12_FINCAS_HOMOLOGADAS.map((f) => normalizeForUrl(f.provincia)),
+      );
+      for (const prov of fincaProvinces) {
+        addEntry(`${BASE_URL}/fincas/${prov}`, 0.80, 'weekly');
+      }
       addEntry(`${BASE_URL}/fincasparaboda`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/fincas-landing`, 0.88, 'weekly');
       addEntry(`${BASE_URL}/proveedores`, 0.96, 'daily');
