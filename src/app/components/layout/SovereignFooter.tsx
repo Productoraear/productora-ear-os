@@ -30,10 +30,33 @@ type RegionTab = 'TODAS' | 'CENTRO' | 'SUR' | 'ESTE' | 'NORTE' | 'INSULAR';
 export default function SovereignFooter() {
   const pathname = usePathname();
   const isHomePage = pathname === '/' || pathname === '' || pathname === '/home';
+  const isCleanFunnel = isHomePage || 
+    pathname?.startsWith('/admin') || 
+    pathname?.startsWith('/reservar') || 
+    pathname?.startsWith('/calculadora') ||
+    pathname?.startsWith('/ayuntamientos') ||
+    pathname?.startsWith('/fincas');
 
-  // En la Home (/) no aparece ruido alguno: solo los accesos comerciales de gala
-  if (isHomePage || pathname?.startsWith('/admin')) {
-    return null;
+  // En la Home y páginas comerciales/institucionales no pintamos el bloque territorial masivo
+  if (isCleanFunnel) {
+    if (isHomePage) return null;
+    return (
+      <footer className="bg-[#030305] border-t border-white/5 py-8 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-sans">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#ecb613]" />
+            <span>© {new Date().getFullYear()} Productora EAR. Música en directo & Producción técnica S-Class.</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-6 font-mono text-[11px]">
+            <Link href="/aviso-legal" className="hover:text-white transition-colors">Aviso Legal</Link>
+            <Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link>
+            <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
+            <Link href="/calculadora" className="text-[#ecb613] hover:underline font-bold">Cotizador</Link>
+            <a href="tel:+34693693048" className="text-zinc-400 hover:text-white">+34 693 693 048</a>
+          </div>
+        </div>
+      </footer>
+    );
   }
 
   return <SovereignFooterContent />;

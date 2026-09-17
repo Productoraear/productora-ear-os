@@ -16,12 +16,144 @@ import {
   Calendar as CalendarIcon, 
   Lock, 
   CheckCircle2, 
-  AlertCircle, 
-  Filter, 
-  Sparkles,
-  ChevronLeft,
-  ChevronRight
+  AlertCircle,
+  Star,
+  Search,
+  Check,
+  UserCheck,
+  Filter,
+  Sparkles
 } from 'lucide-react';
+
+export interface SClassArtistFormat {
+  id: string;
+  name: string;
+  role: string;
+  category: 'solista' | 'mariachi' | 'cuerdas' | 'fiesta';
+  baseRate: number;
+  rating: number;
+  reviews: number;
+  badge: string;
+  img: string;
+  description: string;
+  repertoire: string[];
+  rider: string;
+}
+
+export const ARTIST_FORMATS: SClassArtistFormat[] = [
+  {
+    id: 'edwin-solista',
+    name: 'Edwin Agudelo (Tenor Lírico)',
+    role: 'Solista Insignia S-Class',
+    category: 'solista',
+    baseRate: 350.00,
+    rating: 5.0,
+    reviews: 48,
+    badge: 'Artista Insignia',
+    img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=600&auto=format&fit=crop',
+    description: 'Voz lírica de alta tesitura para ceremonias nupciales, boleros de gala y grandes celebraciones. Microfonía Shure Axient de estudio.',
+    repertoire: ['Ave María (Schubert)', 'O Sole Mio', 'Nessun Dorma', 'Bésame Mucho', 'Por Ti Volaré'],
+    rider: 'Bose S1 Pro / F1 + Shure Beta 87A'
+  },
+  {
+    id: 'mariachi-gala-oro',
+    name: "Mariachi 'Gala de Oro' (Trío Clásico)",
+    role: 'Trío Charro Tradicional',
+    category: 'mariachi',
+    baseRate: 550.00,
+    rating: 4.9,
+    reviews: 34,
+    badge: 'Favorito Bodas',
+    img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=600&auto=format&fit=crop',
+    description: 'Voz principal, guitarra y trompeta con auténtico traje charro de gala. Serenatas, cócteles de bienvenida y sorpresas nupciales.',
+    repertoire: ['El Rey', 'Si Nos Dejan', 'Volver Volver', 'Cielito Lindo', 'La Bikina'],
+    rider: 'Rider acústico puro + refuerzo Bose'
+  },
+  {
+    id: 'mariachi-imperial',
+    name: "Mariachi 'Imperial S-Class' (Quinteto)",
+    role: 'Edwin Agudelo + 4 Maestros',
+    category: 'mariachi',
+    baseRate: 850.00,
+    rating: 5.0,
+    reviews: 29,
+    badge: 'Top Selección',
+    img: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=600&auto=format&fit=crop',
+    description: 'Quinteto estelar: tenor lírico, guitarrón mexicano, vihuela, violín y trompeta solista. Sonoridad y presencia inigualables.',
+    repertoire: ['Serenata Huasteca', 'Amor Eterno', 'Échame a Mí la Culpa', 'Sombras'],
+    rider: 'Bose F1 Model 812 (12 W/pax) + Microfonía inalámbrica'
+  },
+  {
+    id: 'mariachi-gran-ensamble',
+    name: 'Gran Ensamble Mariachi (9 Músicos)',
+    role: 'Orquesta Completa de Gala',
+    category: 'mariachi',
+    baseRate: 1300.00,
+    rating: 4.9,
+    reviews: 18,
+    badge: 'Gran Apoteosis',
+    img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=600&auto=format&fit=crop',
+    description: 'Sonoridad completa de gala mexicana: 2 trompetas, 3 violines, vihuela, guitarrón y 2 voces. Para recintos mayores y fincas.',
+    repertoire: ['El Son de la Negra', 'Huapango de Moncayo', 'Guadalajara', 'El Cascabel'],
+    rider: 'Sistema Bose F1 dual + subs 1.000W + mesa digital Midas'
+  },
+  {
+    id: 'cuarteto-cuerdas',
+    name: "Cuarteto de Cuerdas 'Sinfonía Nupcial'",
+    role: '2 Violines, Viola & Violonchelo',
+    category: 'cuerdas',
+    baseRate: 650.00,
+    rating: 4.9,
+    reviews: 41,
+    badge: 'Ceremonias de Gala',
+    img: 'https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=600&auto=format&fit=crop',
+    description: 'Elegancia clásica para ceremonias religiosas y civiles. Piezas sacras, bandas sonoras de cine y adaptaciones pop elegantes.',
+    repertoire: ['Canon de Pachelbel', 'Viva la Vida', 'Cello Suite Bach', 'Cinema Paradiso'],
+    rider: 'Microfonía DPA 4099 para cuerdas'
+  },
+  {
+    id: 'duo-lirico-piano',
+    name: 'Dúo Lírico Clásico (Tenor + Piano Nord)',
+    role: 'Edwin Agudelo & Pianista',
+    category: 'solista',
+    baseRate: 480.00,
+    rating: 5.0,
+    reviews: 26,
+    badge: 'Alta Costura',
+    img: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=600&auto=format&fit=crop',
+    description: 'Voz lírica acompañada de piano de escenario Nord Stage 3. Atmósfera íntima y refinada para firmas de acta y cócteles.',
+    repertoire: ['Hasta Mi Final', 'Hallelujah (Cohen)', 'Intermezzo Cavalleria Rusticana'],
+    rider: 'Piano Nord Stage 3 + Bose S1 Pro'
+  },
+  {
+    id: 'dj-saxo-performance',
+    name: 'DJ & Live Saxo Performance (Pack Fiesta)',
+    role: 'DJ Productor + Saxofonista Live',
+    category: 'fiesta',
+    baseRate: 750.00,
+    rating: 4.8,
+    reviews: 37,
+    badge: 'Barra Libre',
+    img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=600&auto=format&fit=crop',
+    description: 'Sonorización completa de fiesta y barra libre. Saxofón inalámbrico en pista de baile, puente de luces DMX y sonido Bose F1 < 75 dB.',
+    repertoire: ['Deep House', 'Pop Español 80/90', 'Top 50 Hits', 'Ibiza Classics'],
+    rider: 'Cabina Pioneer DJ + 2x Bose F1 + Iluminación DMX'
+  },
+  {
+    id: 'guitarra-violin-duo',
+    name: 'Dúo Guitarra Española & Violín Eléctrico',
+    role: 'Fusión Flamenco-Chillout',
+    category: 'cuerdas',
+    baseRate: 520.00,
+    rating: 4.9,
+    reviews: 22,
+    badge: 'Cóctel Chillout',
+    img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=600&auto=format&fit=crop',
+    description: 'Melodías de guitarra española virtuosa combinadas con la calidez del violín eléctrico para cócteles al atardecer en jardines y fincas.',
+    repertoire: ['Entre Dos Aguas', 'Asturias (Albéniz)', 'Shape of You (Fusión)'],
+    rider: '2x Columnas Bose S1 Pro compactas a batería'
+  }
+];
 
 interface CalendarDay {
   day: number;
@@ -40,8 +172,27 @@ export default function SolistaReservationPage() {
   const [selectedMonth, setSelectedMonth] = useState<number>(9); // 9 = Septiembre 2026
   const [selectedDate, setSelectedDate] = useState<string>('2026-09-27');
   const [dayTypeFilter, setDayTypeFilter] = useState<'all' | 'weekends' | 'high_demand'>('all');
-  const [formatFilter, setFormatFilter] = useState<'solista' | 'mariachi'>('solista');
+  
+  // S-Class Multi-Artist Selection State
+  const [selectedArtistId, setSelectedArtistId] = useState<string>('edwin-solista');
+  const [artistCategoryFilter, setArtistCategoryFilter] = useState<'all' | 'mariachi' | 'solista' | 'cuerdas' | 'fiesta'>('all');
+  const [artistSearch, setArtistSearch] = useState<string>('');
   const [blockedAlert, setBlockedAlert] = useState<string | null>(null);
+
+  const selectedArtist = useMemo(() => {
+    return ARTIST_FORMATS.find(a => a.id === selectedArtistId) || ARTIST_FORMATS[0];
+  }, [selectedArtistId]);
+
+  const filteredArtists = useMemo(() => {
+    return ARTIST_FORMATS.filter(a => {
+      const matchCat = artistCategoryFilter === 'all' || a.category === artistCategoryFilter;
+      const matchSearch = artistSearch.trim() === '' || 
+        a.name.toLowerCase().includes(artistSearch.toLowerCase()) ||
+        a.role.toLowerCase().includes(artistSearch.toLowerCase()) ||
+        a.repertoire.some(r => r.toLowerCase().includes(artistSearch.toLowerCase()));
+      return matchCat && matchSearch;
+    });
+  }, [artistCategoryFilter, artistSearch]);
 
   // Hesitation Engine State
   const [showHesitationBanner, setShowHesitationBanner] = useState(false);
@@ -51,8 +202,8 @@ export default function SolistaReservationPage() {
   const [depositLoading, setDepositLoading] = useState(false);
   const [depositError, setDepositError] = useState<string | null>(null);
 
-  // Base constants
-  const BASE_RATE = formatFilter === 'solista' ? 350.00 : 550.00;
+  // Base constants sincronizados con el artista seleccionado
+  const BASE_RATE = selectedArtist.baseRate;
   const DEPOSIT = 100.00;
   const KM_RATE = 1.50;
   const FREE_KM = 50;
@@ -161,9 +312,9 @@ export default function SolistaReservationPage() {
   const whatsappMessage = useMemo(() => {
     const locText = distance > 0 ? `${distance} km de Méntrida` : 'zona centro';
     return encodeURIComponent(
-      `Hola Edwin, he seleccionado la fecha del ${formattedSelectedDate} (${formatFilter === 'solista' ? 'Solista' : 'Mariachi de Gala'}) para un evento a ${locText} (finalización estimada ~${endTime}, presupuesto est. ${totalCost.toFixed(2)}€). Quiero verificar disponibilidad final y proceder al bloqueo con el depósito de 100€.`
+      `Hola Edwin, he seleccionado a *${selectedArtist.name}* (${selectedArtist.role}) para la fecha del ${formattedSelectedDate} a ${locText} (finalización estimada ~${endTime}, presupuesto est. ${totalCost.toFixed(2)}€). Quiero verificar disponibilidad final y proceder al bloqueo con el depósito de 100€.`
     );
-  }, [formattedSelectedDate, formatFilter, distance, endTime, totalCost]);
+  }, [formattedSelectedDate, selectedArtist, distance, endTime, totalCost]);
 
   const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${whatsappMessage}`;
 
@@ -177,7 +328,7 @@ export default function SolistaReservationPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           fecha: selectedDate,
-          formato: formatFilter,
+          formato: selectedArtist.name,
           distanciaKm: distance,
           horaFin: endTime,
           totalEstimado: Number(totalCost.toFixed(2)),
@@ -413,28 +564,131 @@ export default function SolistaReservationPage() {
               </div>
             </div>
 
-            {/* FORMAT FILTER TOGGLE */}
-            <div className="bg-[#0A0A0C] border border-white/10 rounded-2xl p-6 sm:p-8">
-              <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-4 flex items-center gap-2">
-                <Music size={16} className="text-[#258DCD]" /> Selección de Formato Escénico
-              </h3>
-              <div className="grid grid-cols-2 gap-4">
-                <button 
-                  onClick={() => setFormatFilter('solista')}
-                  className={`p-4 rounded-xl border text-left transition-all ${formatFilter === 'solista' ? 'bg-[#258DCD]/10 border-[#258DCD] text-white shadow-md' : 'bg-[#050505] border-white/10 text-zinc-400 hover:border-white/20'}`}
-                >
-                  <strong className="block text-sm text-white mb-1">Solista Acústico S-Class</strong>
-                  <span className="text-xs text-zinc-400 block mb-2">Voz + Microfonía Shure + Sonido Bose</span>
-                  <span className="text-xs font-mono font-bold text-[#AAD6CD]">Desde 350,00 €</span>
-                </button>
-                <button 
-                  onClick={() => setFormatFilter('mariachi')}
-                  className={`p-4 rounded-xl border text-left transition-all ${formatFilter === 'mariachi' ? 'bg-[#258DCD]/10 border-[#258DCD] text-white shadow-md' : 'bg-[#050505] border-white/10 text-zinc-400 hover:border-white/20'}`}
-                >
-                  <strong className="block text-sm text-white mb-1">Mariachi de Gala Completo</strong>
-                  <span className="text-xs text-zinc-400 block mb-2">Traje de gala, trompetas, vihuela y guitarrón</span>
-                  <span className="text-xs font-mono font-bold text-[#AAD6CD]">Desde 550,00 €</span>
-                </button>
+            {/* S-CLASS VALIDATED MULTI-ARTIST DIRECTORY */}
+            <div className="bg-[#0A0A0C] border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+                <div>
+                  <h3 className="text-base font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                    <Music size={18} className="text-[#258DCD]" /> Catálogo de Artistas & Formatos Homologados
+                  </h3>
+                  <p className="text-xs text-zinc-400 font-sans mt-0.5">
+                    Selecciona tu formato escénico. Precios oficiales con rider técnico Bose/Shure incluido.
+                  </p>
+                </div>
+                {/* Search input */}
+                <div className="relative min-w-[220px]">
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+                  <input
+                    type="text"
+                    value={artistSearch}
+                    onChange={(e) => setArtistSearch(e.target.value)}
+                    placeholder="Buscar artista, repertorio..."
+                    className="w-full pl-9 pr-3 py-1.5 rounded-lg bg-black/60 border border-white/10 text-xs text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#258DCD]"
+                  />
+                </div>
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { id: 'all', label: `Todos (${ARTIST_FORMATS.length})` },
+                  { id: 'mariachi', label: 'Mariachis de Gala' },
+                  { id: 'solista', label: 'Solistas & Piano' },
+                  { id: 'cuerdas', label: 'Cuerdas & Clásica' },
+                  { id: 'fiesta', label: 'Fiesta & DJs' }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setArtistCategoryFilter(tab.id as any)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+                      artistCategoryFilter === tab.id
+                        ? 'bg-[#258DCD] text-white font-bold shadow-[0_0_15px_rgba(37,141,205,0.4)]'
+                        : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Artist Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {filteredArtists.map((artist) => {
+                  const isSelected = selectedArtistId === artist.id;
+                  return (
+                    <div
+                      key={artist.id}
+                      onClick={() => setSelectedArtistId(artist.id)}
+                      className={`relative rounded-xl border p-4 transition-all cursor-pointer flex flex-col justify-between group ${
+                        isSelected
+                          ? 'bg-[#258DCD]/15 border-[#258DCD] shadow-[0_0_25px_rgba(37,141,205,0.3)] ring-1 ring-[#258DCD]'
+                          : 'bg-[#050505] border-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      <div className="flex gap-3 items-start">
+                        <img
+                          src={artist.img}
+                          alt={artist.name}
+                          className="w-16 h-16 rounded-xl object-cover border border-white/10 shrink-0"
+                        />
+                        <div className="flex-1 min-w-0 space-y-1">
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-[#AAD6CD] uppercase">
+                              {artist.badge}
+                            </span>
+                            <div className="flex items-center gap-1 text-[11px] text-amber-400 font-mono">
+                              <Star size={11} fill="currentColor" />
+                              <span>{artist.rating} ({artist.reviews})</span>
+                            </div>
+                          </div>
+                          <h4 className="font-bold text-sm text-white truncate group-hover:text-[#AAD6CD] transition-colors">
+                            {artist.name}
+                          </h4>
+                          <p className="text-[10px] text-zinc-400 font-mono truncate">
+                            {artist.role}
+                          </p>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-zinc-300 mt-3 line-clamp-2 font-light">
+                        {artist.description}
+                      </p>
+
+                      {/* Repertoire tags */}
+                      <div className="flex flex-wrap gap-1 mt-2.5">
+                        {artist.repertoire.slice(0, 3).map((rep, idx) => (
+                          <span key={idx} className="text-[9px] font-mono bg-black/60 px-1.5 py-0.5 rounded text-zinc-400 border border-white/5">
+                            {rep}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/5">
+                        <div>
+                          <span className="text-[10px] font-mono text-zinc-500 uppercase block">Tarifa Oficial</span>
+                          <span className="text-sm font-bold font-mono text-[#AAD6CD]">Desde {artist.baseRate.toFixed(2)} €</span>
+                        </div>
+                        <button
+                          type="button"
+                          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
+                            isSelected
+                              ? 'bg-[#258DCD] text-white shadow'
+                              : 'bg-white/5 text-zinc-300 group-hover:bg-white/10'
+                          }`}
+                        >
+                          {isSelected ? (
+                            <>
+                              <Check size={13} />
+                              <span>Seleccionado</span>
+                            </>
+                          ) : (
+                            <span>Elegir</span>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -506,6 +760,26 @@ export default function SolistaReservationPage() {
           <div className="lg:col-span-5">
             <div className="bg-[#0A0A0C] border border-[#258DCD]/30 rounded-2xl p-6 sm:p-8 sticky top-24 shadow-[0_0_50px_rgba(37,141,205,0.05)]">
               
+              {/* SELECTED ARTIST PREVIEW CARD */}
+              <div className="bg-[#111] border border-[#258DCD]/30 rounded-xl p-4 mb-4 flex items-center gap-3">
+                <img
+                  src={selectedArtist.img}
+                  alt={selectedArtist.name}
+                  className="w-12 h-12 rounded-lg object-cover border border-[#258DCD]/40 shrink-0"
+                />
+                <div className="min-w-0 flex-1">
+                  <span className="text-[9px] font-mono text-[#AAD6CD] uppercase block">
+                    {selectedArtist.badge}
+                  </span>
+                  <strong className="text-sm text-white truncate block">
+                    {selectedArtist.name}
+                  </strong>
+                  <span className="text-[10px] font-mono text-zinc-400 block">
+                    {selectedArtist.role} · Base {selectedArtist.baseRate.toFixed(2)} €
+                  </span>
+                </div>
+              </div>
+
               {/* SELECTED DATE CARD */}
               <div className="bg-[#111] border border-white/10 rounded-xl p-4 mb-6">
                 <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">
@@ -520,7 +794,7 @@ export default function SolistaReservationPage() {
               {/* BUDGET BREAKDOWN */}
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-zinc-400">Tarifa Base ({formatFilter === 'solista' ? 'Solista' : 'Mariachi'})</span>
+                  <span className="text-zinc-400">Tarifa Base ({selectedArtist.name})</span>
                   <span className="font-mono text-white">{BASE_RATE.toFixed(2)} €</span>
                 </div>
                 

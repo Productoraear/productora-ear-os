@@ -45,20 +45,29 @@ export default function AyuntamientosB2GPage() {
           </p>
 
           <div className="flex flex-wrap justify-center gap-3 pt-2">
-            <button
-              onClick={() => openTunnel()}
+            <a
+              href="#compilador"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#06b6d4] to-[#0891b2] text-black font-bold text-xs font-mono uppercase tracking-wider shadow-[0_0_30px_rgba(6,182,212,0.35)] hover:scale-105 transition-all cursor-pointer"
             >
-              <Sliders size={15} />
-              <span>Configurar en Túnel Neural B2G</span>
-            </button>
+              <FileText size={15} />
+              <span>Generar Memoria Art. 118 LCSP</span>
+            </a>
             <a
-              href="tel:+34693693048"
+              href="https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20solicito%20pliego%20t%C3%A9cnico%20y%20presupuesto%20menor%20para%20fiestas%20patronales%20%2F%20acto%20institucional."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-mono uppercase tracking-wider hover:bg-emerald-500/25 transition-all"
+            >
+              <PhoneCall size={14} />
+              <span>Gabinete Técnico B2G: +34 693 693 048</span>
+            </a>
+            <Link
+              href="/proveedores?cat=musica"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/10 text-xs font-mono uppercase tracking-wider transition-all"
             >
-              <PhoneCall size={14} className="text-[#06b6d4]" />
-              <span>Gabinete Técnico: +34 693 693 048</span>
-            </a>
+              <Users2 size={14} className="text-[#06b6d4]" />
+              <span>Alta Proveedor Homologado</span>
+            </Link>
           </div>
         </div>
 

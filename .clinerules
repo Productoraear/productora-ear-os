@@ -54,3 +54,29 @@ ENTORNO: POWERSHELL 7 NATIVO | AMD RX 7900 XTX 24GB (TIERED MODELS)
 ━━ 8. GOBERNANZA GIT PURISTA & ZERO-BLOAT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - REPO ULTRA-LIGERO (< 50 MB): El repositorio Git debe mantenerse siempre en < 50 MB (~36 MB actual).
 - Prohibido commitear archivos > 1 MB o carpetas de scraping (`wedding_intel_vault`, etc.).
+
+━━ 9. OMNI ROUTE (GOBERNANZA DE DOMINIOS SOBERANOS & INTERCONEXIÓN TOTAL) ━━━━━━━━━━━━━━
+- MATRIZ DE DOMINIOS CANÓNICOS:
+  1. `productoraear.com`: Hub Central, Cotizador S-Class (`/calculadora`) y Licitaciones Menores B2G (`/ayuntamientos`).
+  2. `artistaseuropa.com`: Plataforma y Booking de Artistas Homologados (`/reservar/solista`, `/artistas`).
+  3. `fincasparaboda.com`: Vertical Exclusiva de Fincas B2B y Blindaje Acústico (`/fincas/portal-demostrativo`, `/fincasparaboda`).
+  4. `viajemusicalporlamemoria.com`: Plataforma Clínica de Neuroacústica 40 Hz y Mecenazgo Ley 49/2002 (`/vimume`).
+- REGLA DE INTERCONEXIÓN: Ninguna landing o tarjeta debe ser un callejón sin salida. Todo acceso debe llevar el badge del dominio soberano correspondiente y permitir saltar entre verticales sin perder el contexto ni el carrito de reserva.
+- CERO 404s EN REDIRECCIONES: Toda ruta legada o alternativa debe redirigir con código 301/308 a su equivalente canónico.
+
+━━ 10. CLAUDE MEM (ZERO-LOSS WORKING MEMORY & CHECKPOINTING DETERMINISTA) ━━━━━━━━━━━━━
+- CERO POLUCIÓN DE CONTEXTO: Nunca vuelques código masivo en el chat de trabajo. Mantén el estado operativo en archivos ligeros (`.antigravity/memory/` o resúmenes JSON).
+- CHECKPOINTING DETERMINISTA: Cada hito completado debe registrarse con el formato canónico:
+  HECHO_VERIFICADO | HIPÓTESIS | DECISIÓN | RIESGOS | CAMBIOS | VALIDACIONES | ESTADO_BLOQUE | SIGUIENTE_PASO
+- RESÚMENES ALTO-SEÑAL: Respuestas al CEO con un máximo de 300 tokens de resumen ejecutivo, priorizando enlaces a archivos y estado de producción.
+
+━━ 11. HEADROOM DOCTRINE (BLINDAJE DE VRAM, CONTEXTO Y TIEMPO DE RESPUESTA) ━━━━━━━━━
+- VRAM HEADROOM (AMD RX 7900 XTX 24 GB): Nunca superar el 80% de VRAM asignada a modelos en Ollama. Mantener un margen mínimo (Headroom) de 4 a 5 GB libres para evitar OOM del sistema operativo y latencias erráticas.
+- CONTEXT HEADROOM: Trabajar siempre en el 70-75% de la ventana de contexto (ej. 22.000 tokens en ventana de 32k). Al superar el umbral, forzar commit, reporte y "Start New Task".
+- EDGE LATENCY HEADROOM: El Heartbeat de producción (`/api/omega/heartbeat`) debe responder siempre en < 50 ms (observado actual: ~20 ms). Si un motor degrada la latencia, debe aislarse en computación en diferido o caché en memoria.
+
+━━ 12. CLAUDE CODE SPEC (EJECUCIÓN ATÓMICA, CERO AMBIGÜEDAD Y CIERRE IDEMPOTENTE) ━━━━━
+- SCAFFOLDING FIRST: Antes de escribir una sola línea de código, definir rutas exactas de archivos, interfaces de datos, firmas de funciones y comandos de validación.
+- MODIFICACIONES MÍNIMAS & QUIRÚRGICAS: Modificar únicamente los bloques de código afectados. Prohibido reescribir componentes enteros sin justificación.
+- SALVAVIDAS OBLIGATORIO: Todo cambio debe pasar `npx tsc --noEmit` -> Exit Code 0 antes de commitear. Si el exit code es != 0, queda terminantemente prohibido hacer push.
+- DOBLE PUSH A PRODUCCIÓN: Sincronizar siempre `git push origin main` y `git push vercel-repo main` para que Netlify y GitHub permanezcan idénticos.

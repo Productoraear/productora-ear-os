@@ -37,40 +37,57 @@ export default function FincaExecutiveCockpitPage() {
 
   return (
     <main className="w-full overflow-x-hidden min-h-screen bg-[#030305] text-white pt-16">
-      {/* ── HERO EJECUTIVO ── */}
+      {/* ── HERO EJECUTIVO CONECTADO CON FINCASPARABODA.COM ── */}
       <section className="relative border-b border-white/10 py-16 px-4 sm:px-6 md:px-8">
         <div className="max-w-7xl mx-auto space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[11px] font-mono uppercase tracking-[0.3em]">
-            <Gauge size={14} />
-            Cockpit Ejecutivo · Fincas & Espacios
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[11px] font-mono uppercase tracking-[0.3em]">
+              <Gauge size={14} />
+              FINCASPARABODA.COM · S-CLASS VERTICAL
+            </div>
+            <a 
+              href="https://fincasparaboda.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-zinc-300 text-[11px] font-mono transition-colors"
+            >
+              <span>fincasparaboda.com</span>
+              <ArrowRight size={11} className="text-[#ecb613]" />
+            </a>
           </div>
 
           <div className="max-w-4xl space-y-6">
             <h1 className="font-syne text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-[0.95]">
-              Su finca factura <span className="text-[#ecb613]">más</span> sin
-              depender de un directorio
+              FincasParaBoda.com // Su finca factura <span className="text-[#ecb613]">más</span> sin intermediarios
             </h1>
             <p className="font-body text-lg sm:text-xl text-white/60 leading-relaxed max-w-3xl">
-              Portal demostrativo para empresarios de fincas: métricas reales de
-              rentabilidad, blindaje acústico inferior a{' '}
-              <strong className="text-white">75 dB SPL</strong> y cierres con
-              depósito inmutable de{' '}
-              <strong className="text-[#ecb613]">100 €</strong> en Stripe.
+              Ecosistema B2B conectado directamente con <strong className="text-[#ecb613]">fincasparaboda.com</strong> y Productora EAR: métricas reales de
+              rentabilidad, 0 € en cuotas publicitarias, blindaje acústico inferior a{' '}
+              <strong className="text-white">75 dB SPL</strong> y cierres inmediatos con
+              depósito de <strong className="text-[#ecb613]">100 €</strong> en Stripe.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
-                href="/fincas"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#ecb613] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:shadow-[0_0_30px_rgba(236,182,19,0.4)] transition-all"
+                href="/fincasparaboda"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-[#ecb613] text-black font-black uppercase tracking-widest text-sm rounded-xl hover:shadow-[0_0_30px_rgba(236,182,19,0.4)] transition-all font-mono"
               >
-                Solicitar auditoría gratuita
+                Ver FincasParaBoda.com
                 <ArrowRight size={18} />
               </Link>
               <Link
-                href="/contacto"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white/[0.04] border border-white/10 text-white font-black uppercase tracking-widest text-sm rounded-xl hover:bg-white/[0.08] transition-all"
+                href="/proveedores?cat=finca"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white/[0.04] border border-white/10 text-white font-black uppercase tracking-widest text-sm rounded-xl hover:bg-white/[0.08] transition-all font-mono"
               >
-                Hablar con un estratega
+                Directorio de Fincas Homologadas
               </Link>
+              <a
+                href="https://wa.me/34693693048?text=Hola%20Edwin%2C%20quiero%20homologar%20mi%20finca%20en%20fincasparaboda.com%20con%20blindaje%20ac%C3%BAstico%20y%200%E2%82%AC%20de%20cuota."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-4 bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-emerald-500/25 transition-all font-mono"
+              >
+                Homologar Mi Espacio (0 €)
+              </a>
             </div>
           </div>
         </div>

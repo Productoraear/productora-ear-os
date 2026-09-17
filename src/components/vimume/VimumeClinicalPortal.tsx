@@ -58,12 +58,18 @@ export function VimumeClinicalPortal() {
 
         <div className="relative z-10 space-y-8">
           
-          {/* BADGES METADATA */}
+          {/* BADGES METADATA CONECTADO CON VIAJEMUSICALPORLAMEMORIA.COM */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#8b5cf6]/15 border border-[#8b5cf6]/40 text-[#8b5cf6] text-[10px] font-mono tracking-widest uppercase font-bold">
+            <a 
+              href="https://viajemusicalporlamemoria.com" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#8b5cf6]/20 hover:bg-[#8b5cf6]/30 border border-[#8b5cf6]/50 text-[#8b5cf6] text-[10px] font-mono tracking-widest uppercase font-bold transition-all shadow-[0_0_15px_rgba(139,92,246,0.3)]"
+            >
               <Brain size={13} />
-              <span>NODO 5 SSOT // PROYECTO VIMUME</span>
-            </div>
+              <span>VIAJEMUSICALPORLAMEMORIA.COM · DOMINIO OFICIAL</span>
+              <ArrowRight size={11} className="text-white" />
+            </a>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono tracking-widest uppercase font-bold">
               <Activity size={12} />
               <span>40 HZ GAMMA • N=45 (p &lt; 0.05)</span>
