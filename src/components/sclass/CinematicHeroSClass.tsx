@@ -31,82 +31,82 @@ export interface ProfileJourney {
 const PROFILES: ProfileJourney[] = [
   {
     id: 'artistas',
-    name: 'ARTISTAS',
-    badge: 'ROSTER S-CLASS // THE SIGNAL',
-    subtitle: 'REPRESENTACIÓN & BOLSA DE EMPLEO',
-    description: 'Accede a producciones de primer nivel sin intermediarios abusivos. Retén el 80% de tus honorarios bajo contrato soberano homologado y auditoría acústica continua.',
-    ctaText: 'Acceder a Roster Artistas',
-    href: '/artistas',
+    name: 'MARIACHIS & SOLISTA',
+    badge: 'MÚSICA EN DIRECTO DE GALA',
+    subtitle: 'REPERTORIO DE ÉLITE // CONTRATACIÓN DIRECTA',
+    description: 'Voz lírica y mariachis de primer nivel para bodas, aniversarios y grandes recepciones con Edwin Agudelo (Tenor). Máxima emoción sin intermediarios.',
+    ctaText: 'Ver Repertorio & Contratar',
+    href: '/reservar/solista',
     icon: Mic,
-    accentColor: '#f43f5e',
+    accentColor: '#ecb613',
     bgImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
     stats: [
-      { label: 'Split Artista', value: '80% Neto' },
-      { label: 'Artista Insignia', value: 'Edwin Agudelo (Tenor Lírico)' }
+      { label: 'Artista Insignia', value: 'Edwin Agudelo (Tenor)' },
+      { label: 'Garantía Acústica', value: '12 W/pax Bose' }
     ]
   },
   {
     id: 'eventos',
-    name: 'EVENTOS',
-    badge: 'B2C ÉLITE // UNIO',
-    subtitle: 'BODAS & GRANDES CELEBRACIONES',
-    description: 'Músicos profesionales y sonido de alta fidelidad para ceremonias, aniversarios y veladas memorables. Presupuesto cerrado al instante con Price-Lock de 72h garantizado.',
-    ctaText: 'Ver Ocasiones & Celebraciones',
-    href: '/eventos',
+    name: 'BODAS & EVENTOS',
+    badge: 'CELEBRACIONES EXCLUSIVAS',
+    subtitle: 'SONORIZACIÓN & ILUMINACIÓN INTEGRAL',
+    description: 'Ceremonia, cóctel y fiesta de barra libre con sonido de alta fidelidad sin acoples. Presupuesto cerrado al instante con reserva protegida.',
+    ctaText: 'Cotizar Evento al Instante',
+    href: '/calculadora',
     icon: Calendar,
     accentColor: '#f59e0b',
     bgImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
     stats: [
-      { label: 'Garantía Acústica', value: '12 W/pax' },
-      { label: 'Price-Lock', value: '72h SHA-256' }
+      { label: 'Fianza Protegida', value: '100 € Stripe' },
+      { label: 'Despacho Rápido', value: 'Confirmación 24h' }
     ]
   },
   {
     id: 'empresas',
-    name: 'EMPRESAS',
-    badge: 'B2B PARTNERS // PLANNERS',
-    subtitle: 'RED DE FINCAS & PROVEEDORES',
-    description: 'Eleva el estándar sonoro recomendando producción técnica de máxima solvencia. Directorio homologado y gestión de perfil verificado en 2 pasos.',
-    ctaText: 'Directorio B2B Homologado',
-    href: '/proveedores',
+    name: 'FINCAS & EMPRESAS',
+    badge: 'PARTNERS & ESPACIOS B2B',
+    subtitle: 'PROTECCIÓN ACÚSTICA <75 dB SPL',
+    description: 'Directorio homologado de fincas y proveedores. Garantía técnica contra sanciones vecinales y comisiones del 10% para el espacio colaborador.',
+    ctaText: 'Portal de Fincas & Alianzas',
+    href: '/fincas/portal-demostrativo',
     icon: Building2,
     accentColor: '#10b981',
     bgImage: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop',
     stats: [
       { label: 'Comisión Partner', value: '10% Directo' },
-      { label: 'Verificación', value: '2FA Activo' }
+      { label: 'Certificado Acústico', value: '< 75 dB SPL' }
     ]
   },
   {
     id: 'instituciones',
-    name: 'INSTITUCIONES',
-    badge: 'B2G // GOBIERNOS & MUNICIPIOS',
-    subtitle: 'LICITACIONES & CATÁLOGO 360',
-    description: 'Servicios municipales, fiestas patronales y recepciones de estado. Tramitación directa por contrato menor conforme al Art. 118 LCSP sin fricción.',
+    name: 'AYUNTAMIENTOS',
+    badge: 'FIESTAS & EVENTOS PÚBLICOS',
+    subtitle: 'CONTRATACIÓN MENOR ART. 118 LCSP',
+    description: 'Espectáculos para fiestas patronales y recepciones de estado. Tramitación administrativa directa ajustada a pliego técnico menor sin fricción.',
     ctaText: 'Catálogo Institucional B2G',
     href: '/ayuntamientos',
     icon: Landmark,
-    accentColor: '#06b6d4',
+    accentColor: '#00E5FF',
     bgImage: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?q=80&w=1200&auto=format&fit=crop',
     stats: [
-      { label: 'Tramitación LCSP', value: 'Art. 118 LCSP' },
-      { label: 'Presupuesto Máx', value: '< 15.000 €' }
+      { label: 'Régimen Jurídico', value: 'Art. 118 LCSP' },
+      { label: 'Presupuesto Máx', value: '< 14.250 €' }
     ]
   },
   {
     id: 'vimume',
-    name: 'PROYECTO VIMUME',
-    badge: 'NEUROACÚSTICA // 40 HZ',
-    subtitle: 'VIAJE MUSICAL POR LA MEMORIA',
-    description: 'Protocolo neuroacústico a 40 Hz Gamma (<75 dB SPL) para residencias de mayores y centros de día. El colibrí que poliniza recuerdos y bienestar emocional.',
-    ctaText: 'Desplegar Protocolo VIMUME',
+    name: 'IMPACTO SOCIAL VIMUME',
+    badge: 'NEURO-MUSICOTERAPIA CLÍNICA',
+    subtitle: 'MAYORES, SALUD & MECENAZGO',
+    description: 'Protocolo neuroacústico a 40 Hz Gamma para centros de mayores. Deducción fiscal de hasta el 80% en IRPF o Sociedades (Ley 49/2002) y SROI 4.85x.',
+    ctaText: 'Conocer Proyecto VIMUME',
     href: '/vimume',
     icon: Heart,
     accentColor: '#8b5cf6',
     bgImage: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop',
     stats: [
-      { label: 'Frecuencia Gamma', value: '40 Hz Sonora' },
-      { label: 'Límite Acústico', value: '< 75 dB SPL' }
+      { label: 'Deducción Fiscal', value: 'Hasta 80% Ley 49' },
+      { label: 'Retorno Social', value: 'SROI 4.85x' }
     ]
   }
 ];
@@ -122,20 +122,20 @@ export default function CinematicHeroSClass() {
   return (
     <section className="relative w-full min-h-[85vh] bg-[#030305] text-white flex flex-col justify-between overflow-hidden selection:bg-[#ecb613] selection:text-black pb-12">
       
-      {/* 👑 DOSSIER PROFUNDO DE LOS 5 EJES SOBERANOS */}
+      {/* 👑 HERO COMERCIAL DE ALTA GAMA PRODUCTORA EAR */}
       <div className="pt-8 sm:pt-12 pb-6 px-4 z-20 flex flex-col items-center justify-center text-center">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-black/70 border border-white/10 rounded-full backdrop-blur-2xl shadow-lg">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00E5FF] animate-pulse" />
-          <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-zinc-300">
-            DOSSIER SOBERANO // FICHAS TÉCNICAS
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-black/70 border border-[#ecb613]/30 rounded-full backdrop-blur-2xl shadow-lg">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#ecb613] animate-pulse" />
+          <span className="text-[10px] font-mono font-bold tracking-[0.2em] uppercase text-[#ecb613]">
+            PRODUCCIÓN MUSICAL & ESPECTÁCULOS EN DIRECTO
           </span>
         </div>
 
-        <h2 className="mt-4 text-xl sm:text-3xl lg:text-4xl font-black uppercase tracking-tight text-white font-syne max-w-3xl leading-tight">
-          EXPEDIENTES OPERATIVOS // <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF2B44] via-[#00E5FF] to-white italic">ESPECIFICACIONES S-CLASS</span>
-        </h2>
-        <p className="text-xs sm:text-sm text-zinc-400 font-mono font-light max-w-xl mt-2 leading-relaxed">
-          Consulta tarifas homologadas, cláusulas de contratación y telemetría acústica de cada perfil.
+        <h1 className="mt-4 text-2xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white font-syne max-w-4xl leading-tight">
+          MÚSICA EN DIRECTO DE ALTA GALA // <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-[#00E5FF] to-white italic">EVENTOS INOLVIDABLES</span>
+        </h1>
+        <p className="text-xs sm:text-base text-zinc-300 font-sans font-normal max-w-2xl mt-3 leading-relaxed">
+          Mariachis de gala, solistas líricos y producción técnica de alta fidelidad para bodas, celebraciones exclusivas y recepciones oficiales. Presupuesto garantizado con reserva inmediata.
         </p>
       </div>
 
