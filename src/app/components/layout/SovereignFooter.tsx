@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { 
   MapPin, 
   Search, 
@@ -27,6 +28,18 @@ import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 type RegionTab = 'TODAS' | 'CENTRO' | 'SUR' | 'ESTE' | 'NORTE' | 'INSULAR';
 
 export default function SovereignFooter() {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/' || pathname === '' || pathname === '/home';
+
+  // En la Home (/) no aparece ruido alguno: solo los accesos comerciales de gala
+  if (isHomePage || pathname?.startsWith('/admin')) {
+    return null;
+  }
+
+  return <SovereignFooterContent />;
+}
+
+function SovereignFooterContent() {
   const [activeRegion, setActiveRegion] = useState<RegionTab>('TODAS');
   const [searchQuery, setSearchQuery] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
