@@ -4,7 +4,7 @@
  * Cerebro consultivo para artistas validados. Absorbe:
  *  - Clusters de crecimiento musical y señales de algoritmo de descubrimiento.
  *  - Cronograma dinámico interactivo de 61 y 99 Días Haciendo Clic.
- *  - Funnels Velocity (Oyente -> Fan -> Comprador LTV).
+ *  - Quantum Growth Funnel (Oyente -> Fan -> Comprador LTV).
  *  - Calculadora de Salud Algorítmica y 30 Casos Críticos de la Industria.
  *
  * Tono: "Baño de Realidad con Pasos Accionables S-Class". Sin menciones
@@ -39,7 +39,7 @@ export interface ChronogramPhase {
   kpi: string;
 }
 
-export interface VelocityStage {
+export interface QuantumFunnelStage {
   id: 'oyente' | 'fan' | 'comprador';
   label: string;
   conversionRate: number;
@@ -219,10 +219,10 @@ export function getChronogram61(): ChronogramPhase[] {
 }
 
 /* ------------------------------------------------------------------ */
-/* Funnel Velocity: Oyente -> Fan -> Comprador                        */
+/* Quantum Growth Funnel: Oyente -> Fan -> Comprador LTV              */
 /* ------------------------------------------------------------------ */
 
-export const VELOCITY_FUNNEL: VelocityStage[] = [
+export const QUANTUM_GROWTH_FUNNEL: QuantumFunnelStage[] = [
   {
     id: 'oyente',
     label: 'Oyente',
@@ -246,7 +246,7 @@ export const VELOCITY_FUNNEL: VelocityStage[] = [
   },
 ];
 
-export interface VelocityProjection {
+export interface QuantumFunnelProjection {
   oyentes: number;
   fans: number;
   compradores: number;
@@ -254,15 +254,15 @@ export interface VelocityProjection {
   ingresosProyectados: number;
 }
 
-export function projectVelocityFunnel(monthlyListeners: number): VelocityProjection {
+export function projectQuantumGrowthFunnel(monthlyListeners: number): QuantumFunnelProjection {
   const oyentes = Math.max(0, Math.round(monthlyListeners));
-  const fanRate = VELOCITY_FUNNEL[1].conversionRate / 100;
-  const compradorRate = VELOCITY_FUNNEL[2].conversionRate / 100;
+  const fanRate = QUANTUM_GROWTH_FUNNEL[1].conversionRate / 100;
+  const compradorRate = QUANTUM_GROWTH_FUNNEL[2].conversionRate / 100;
 
   const fans = Math.round(oyentes * fanRate);
   const compradores = Math.round(oyentes * compradorRate);
-  const ingresosFans = fans * VELOCITY_FUNNEL[1].avgValueEur;
-  const ingresosCompradores = compradores * VELOCITY_FUNNEL[2].avgValueEur;
+  const ingresosFans = fans * QUANTUM_GROWTH_FUNNEL[1].avgValueEur;
+  const ingresosCompradores = compradores * QUANTUM_GROWTH_FUNNEL[2].avgValueEur;
   const ingresosProyectados = Math.round(ingresosFans + ingresosCompradores);
   const ltvPorOyente =
     oyentes > 0 ? Math.round((ingresosProyectados / oyentes) * 100) / 100 : 0;
@@ -452,7 +452,7 @@ export interface AuditReportPayload {
   emitidoEn: string;
   selloCertificacion: string;
   saludAlgoritmica: AlgorithmHealthResult;
-  proyeccionVelocity: VelocityProjection;
+  proyeccionQuantum: QuantumFunnelProjection;
   casosPrioritarios: CriticalCase[];
   firmaInterna: string;
 }
@@ -462,7 +462,7 @@ export function buildAuditReport(
   artistName: string,
 ): AuditReportPayload {
   const salud = calculateAlgorithmHealth(input);
-  const proyeccion = projectVelocityFunnel(input.monthlyListeners);
+  const proyeccion = projectQuantumGrowthFunnel(input.monthlyListeners);
   const casosPrioritarios = CRITICAL_CASES.slice(0, 5);
   const emitidoEn = new Date().toISOString();
 
@@ -479,7 +479,7 @@ export function buildAuditReport(
     emitidoEn,
     selloCertificacion: 'Certificado por EAR OS · Motor Oráculo Diamante Rojo',
     saludAlgoritmica: salud,
-    proyeccionVelocity: proyeccion,
+    proyeccionQuantum: proyeccion,
     casosPrioritarios,
     firmaInterna,
   };

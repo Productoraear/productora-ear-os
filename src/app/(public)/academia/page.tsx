@@ -32,7 +32,7 @@ const AstraNeuralTwinPanel = dynamic(
   }
 );
 
-import { DaniAragonVault } from '@/features/academy/ui/DaniAragonVault';
+import { GrowthMasteryVault } from '@/features/academy/ui/GrowthMasteryVault';
 
 export default function PublicAcademyPage() {
   const tools = [
@@ -85,8 +85,8 @@ export default function PublicAcademyPage() {
       {/* LMS INTERFACE CONTAINER */}
       <main id="campus-lms" className="max-w-7xl mx-auto px-4 md:px-12 py-16 space-y-16">
         
-        {/* BÓVEDA FORMATIVA DANI ARAGÓN (56 AUDIOS NATIVOS) */}
-        <DaniAragonVault />
+        {/* BÓVEDA DE CRECIMIENTO MUSICAL (56 AUDIOS NATIVOS) */}
+        <GrowthMasteryVault />
 
         {/* LMS Module */}
         <div className="space-y-6">

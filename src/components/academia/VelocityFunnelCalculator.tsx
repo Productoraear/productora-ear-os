@@ -1,15 +1,15 @@
 "use client";
 
 /**
- * ⚡ VELOCITY FUNNEL CALCULATOR — OYENTE -> FAN -> COMPRADOR (LTV)
- * Simulador de conversión y proyección de ingresos por etapas del funnel.
+ * ⚡ QUANTUM GROWTH FUNNEL — OYENTE -> FAN -> COMPRADOR (LTV)
+ * Simulador de conversión y proyección de ingresos por etapas del funnel soberano.
  */
 
 import React, { useMemo, useState } from 'react';
 import { ArrowDown, TrendingUp, Users } from 'lucide-react';
 import {
-  projectVelocityFunnel,
-  VELOCITY_FUNNEL,
+  projectQuantumGrowthFunnel,
+  QUANTUM_GROWTH_FUNNEL,
 } from '@/lib/academia/oraculoEngine';
 
 const eur = (n: number): string =>
@@ -23,7 +23,7 @@ export default function VelocityFunnelCalculator() {
   const [monthlyListeners, setMonthlyListeners] = useState<number>(25000);
 
   const projection = useMemo(
-    () => projectVelocityFunnel(monthlyListeners),
+    () => projectQuantumGrowthFunnel(monthlyListeners),
     [monthlyListeners],
   );
 
@@ -37,7 +37,7 @@ export default function VelocityFunnelCalculator() {
         </div>
         <div>
           <h3 className="font-mono text-sm font-bold uppercase tracking-widest text-white">
-            Funnel Velocity — Proyección LTV
+            Quantum Growth Funnel — Proyección LTV Soberano
           </h3>
           <p className="text-[11px] text-white/40">
             De oyente a fan y de fan a comprador. Cada etapa, un activo.
@@ -63,7 +63,7 @@ export default function VelocityFunnelCalculator() {
       </label>
 
       <div className="space-y-3">
-        {VELOCITY_FUNNEL.map((stage, idx) => (
+        {QUANTUM_GROWTH_FUNNEL.map((stage, idx) => (
           <React.Fragment key={stage.id}>
             <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
@@ -84,7 +84,7 @@ export default function VelocityFunnelCalculator() {
                 </p>
               </div>
             </div>
-            {idx < VELOCITY_FUNNEL.length - 1 && (
+            {idx < QUANTUM_GROWTH_FUNNEL.length - 1 && (
               <div className="flex justify-center text-[#FF2B44]/50">
                 <ArrowDown size={16} />
               </div>

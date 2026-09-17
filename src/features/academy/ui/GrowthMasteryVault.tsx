@@ -20,7 +20,7 @@ interface MasterclassTrack {
   description: string;
 }
 
-export const DaniAragonVault: React.FC = () => {
+export const GrowthMasteryVault: React.FC = () => {
   const [tracks] = useState<MasterclassTrack[]>(TRACKS_DATA);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -165,7 +165,7 @@ export const DaniAragonVault: React.FC = () => {
               </span>
             </div>
             <h3 className="text-xl md:text-2xl font-black uppercase tracking-tight text-white font-syne">
-              Dani Aragón • A&R & Management Mastery
+              Growth Mastery Vault · A&R & Management Mastery
             </h3>
           </div>
         </div>

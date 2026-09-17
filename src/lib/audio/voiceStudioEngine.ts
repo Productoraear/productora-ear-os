@@ -98,7 +98,7 @@ export const EAR_VOICE_PROFILES: VoiceProfile[] = [
     gender: 'male',
     tone: 'Tenor Lírico Emotivo & Tradición',
     tags: ['Directo de Gala', 'Bodas de Lujo', 'Bose 2000W', 'Voz Master'],
-    sampleAudio: '/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_1.ogg',
+    sampleAudio: '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_1.ogg',
     description: 'Timbre soberano de Edwin Agudelo optimizado para canciones personalizadas, baladas, boleros y dedicatorias de boda.',
     isMasterProfile: true
   },
@@ -110,7 +110,7 @@ export const EAR_VOICE_PROFILES: VoiceProfile[] = [
     gender: 'male',
     tone: 'Cálido, Terapéutico, Cercano (<75 dB SPL)',
     tags: ['VIMUME', 'Residencias Mayores', 'Estimulación Cognitiva', 'Evocación'],
-    sampleAudio: '/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_2.ogg',
+    sampleAudio: '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_2.ogg',
     description: 'Calibración vocal suave y resonante para conectar con mayores en centros residenciales y hogares de jubilados.',
     isMasterProfile: true
   },
@@ -268,8 +268,8 @@ export async function personalizeSongWithVoice(
     title: `${songBase.title} // Para ${req.honorees}`,
     honorees: req.honorees,
     audioUrl: songBase.genre === 'bolero_gala' 
-      ? '/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_1.ogg'
-      : '/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_2.ogg',
+      ? '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_1.ogg'
+      : '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_2.ogg',
     durationSeconds: 225,
     waveform: randomWaveform,
     lyrics: `[INTRO INSTRUMENTAL BOSE S1 PRO]\n(Voz Lírica Edwin Agudelo):\n"${processedVerse}"\n\n[ESTRIBILLO DE GALA PERSONALIZADO]\n"Porque el amor verdadero no se apaga,\nbrillará para ${req.honorees} en esta noche sagrada..."`,
@@ -326,7 +326,7 @@ export async function dubVideoWithVoice(
     targetLanguage: req.targetLanguage,
     dubbedVideoUrl: req.videoUrl || '/simulations/higgsfield_cinematic_sample.mp4',
     subtitlesVttUrl: `/simulations/subtitles_${req.targetLanguage}.vtt`,
-    audioVoiceoverUrl: '/media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_3.ogg',
+    audioVoiceoverUrl: '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_3.ogg',
     processingTimeMs: Date.now() - startTime + 850,
     status: 'completed',
     timestamp: new Date().toISOString()
