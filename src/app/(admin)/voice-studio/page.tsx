@@ -57,6 +57,7 @@ export default function VoiceStudioAdminPage() {
     'Dedicado con todo el amor de vuestros hijos a Carmen y Manuel, celebrando 25 años de entrega y complicidad.'
   );
   const [isGeneratingSong, setIsGeneratingSong] = useState(false);
+  const [isSuggestingLyrics, setIsSuggestingLyrics] = useState(false);
   const [generatedSong, setGeneratedSong] = useState<PersonalizedSongResult | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
@@ -88,6 +89,39 @@ export default function VoiceStudioAdminPage() {
       setServerStatus(prev => ({ ...prev, connected: false }));
     } finally {
       setIsCheckingServer(false);
+    }
+  };
+
+  const handleSuggestLyrics = async () => {
+    setIsSuggestingLyrics(true);
+    try {
+      const songBase = EAR_BASE_SONG_CATALOG.find(s => s.id === selectedSongId) || EAR_BASE_SONG_CATALOG[0];
+      const res = await fetch('/api/voice/lyrics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          honorees,
+          occasion,
+          songTitle: songBase.title,
+          voiceProfileId: voiceId
+        })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.lyrics) {
+          setCustomVerse(data.lyrics);
+          return;
+        }
+      }
+      setCustomVerse(
+        `Dedicado con todo el amor a ${honorees}. Que la música acompañe cada latido de vuestra historia, sellada en esta noche de gala con la voz de Edwin Agudelo.`
+      );
+    } catch {
+      setCustomVerse(
+        `Para ${honorees}, que con su ternura han tejido el camino de todos los que les amamos. Hoy cantamos por vuestra vida.`
+      );
+    } finally {
+      setIsSuggestingLyrics(false);
     }
   };
 
@@ -139,10 +173,30 @@ export default function VoiceStudioAdminPage() {
     if (!audioRef.current) return;
     if (isPlayingAudio) {
       audioRef.current.pause();
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
       setIsPlayingAudio(false);
     } else {
       audioRef.current.play().catch(() => {});
       setIsPlayingAudio(true);
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window && generatedSong) {
+        window.speechSynthesis.cancel();
+        const textToSpeak = `Homenaje lírico con la voz de Edwin Agudelo para ${generatedSong.honorees}. ${customVerse.slice(0, 160)}`;
+        const utter = new SpeechSynthesisUtterance(textToSpeak);
+        utter.lang = 'es-ES';
+        utter.rate = 0.92;
+        utter.pitch = 0.95;
+        utter.onend = () => {};
+        window.speechSynthesis.speak(utter);
+      }
+    }
+  };
+
+  const handleAudioEnded = () => {
+    setIsPlayingAudio(false);
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
     }
   };
 
@@ -364,15 +418,12 @@ export default function VoiceStudioAdminPage() {
                     </label>
                     <button
                       type="button"
-                      onClick={() =>
-                        setCustomVerse(
-                          `Para ${honorees}, que con su ternura han tejido el camino de todos los que les amamos. Hoy cantamos por vuestra vida.`
-                        )
-                      }
-                      className="text-[11px] text-[#ecb613] hover:underline flex items-center gap-1"
+                      onClick={handleSuggestLyrics}
+                      disabled={isSuggestingLyrics}
+                      className="text-[11px] text-[#ecb613] hover:underline flex items-center gap-1 disabled:opacity-50"
                     >
-                      <Sparkles className="w-3 h-3" />
-                      Sugerir Letra Emocional
+                      <Sparkles className={`w-3 h-3 ${isSuggestingLyrics ? 'animate-spin' : ''}`} />
+                      {isSuggestingLyrics ? 'Componiendo Letra S-Class...' : 'Sugerir Letra Emocional'}
                     </button>
                   </div>
                   <textarea
@@ -464,11 +515,13 @@ export default function VoiceStudioAdminPage() {
                         </a>
                       </div>
 
-                      {/* Hidden Audio Player */}
+                      {/* Audio Player */}
                       <audio
                         ref={audioRef}
                         src={generatedSong.audioUrl}
-                        onEnded={() => setIsPlayingAudio(false)}
+                        controls
+                        className="w-full mt-3 h-8 accent-[#ecb613] opacity-80 hover:opacity-100 transition-opacity"
+                        onEnded={handleAudioEnded}
                       />
                     </div>
 
@@ -503,14 +556,23 @@ export default function VoiceStudioAdminPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="py-16 text-center space-y-3">
+                  <div className="py-16 text-center space-y-4">
                     <div className="w-12 h-12 rounded-full bg-[#12121A] border border-[#222230] mx-auto flex items-center justify-center text-zinc-500">
                       <FileAudio className="w-6 h-6" />
                     </div>
-                    <p className="text-sm text-zinc-400 font-medium">Ninguna canción generada aún</p>
+                    <p className="text-sm text-zinc-300 font-medium">Ninguna canción generada aún</p>
                     <p className="text-xs text-zinc-500 max-w-xs mx-auto">
-                      Configura el homenaje a la izquierda y pulsa el botón para generar la pista con la voz clonada de Edwin Agudelo.
+                      Configura el homenaje a la izquierda o pulsa abajo para generar y escuchar una pista demo inmediata con la voz clonada de Edwin Agudelo.
                     </p>
+                    <button
+                      type="button"
+                      onClick={handleGenerateSong}
+                      disabled={isGeneratingSong}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#ecb613]/15 hover:bg-[#ecb613]/25 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-md hover:scale-[1.02] cursor-pointer"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      {isGeneratingSong ? 'Generando Master...' : 'Generar Pista Demo Ahora'}
+                    </button>
                   </div>
                 )}
               </div>

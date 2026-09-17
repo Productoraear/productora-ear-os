@@ -1396,6 +1396,21 @@
         "macro_script": "1) Implementar rescueFleetEngine.ts con interfaces RescueTier, EmergencyEquipmentItem, cálculo haversine de proveedor más cercano, validación de cubicaje de vehículo y tarificación flash (tarifa alquiler + tasa de urgencia + porte km). 2) Crear SosEquipmentRescueModal.tsx ('use client') con estética OLED (#030305, rubí neón #FF2B44 para alerta y cyan #00E5FF para telemetría de tracking), selector de material crítico averiado y pasarela de pago flash. 3) Crear /api/logistics/sos-dispatch/route.ts gestionando la orden urgente y devolviendo URL de seguimiento GPS. 4) Montar la landing de rescate rápido en /sos-rescate. 5) Validar con npx tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "omega-voice-studio-ai-646-idiomas-bare-4077",
+      "title": "B0.Omega: VOICE STUDIO AI // 646 IDIOMAS\nBARE-METAL 0€ CLOUD\nPers...",
+      "block": 0,
+      "status": "PENDING",
+      "description": "VOICE STUDIO AI // 646 IDIOMAS\nBARE-METAL 0€ CLOUD\nPersonalización de Canciones & Doblaje de Vídeos\nLOCAL STANDBY\n|\nPuerto 8080\n\nAbrir VoiceStudio Web\nCanciones Personalizadas (Voz Edwin Agudelo)\nDoblaje de Vídeos IA (Higgsfield)\nVoice Gallery & Daemon Local (RX 7900 XTX)\nConfiguración del Homenaje Vocal\nBose 2000W Calibrated\n1. Pista Master & Repertorio Base\n\nBésame Mucho (Gala Acústica)\n03:45\nbolero gala\n\n\nSi Tú Eres Mi Hombre (Balada S-Class)\n04:10\nbalada romantica\n\n\nCantares de la Memoria (VIMUME Homenaje)\n03:20\npasodoble recuerdo\n\n\nEl Rey (Edición Homenaje Vivo)\n03:15\nranchera lirica\n\n2. Nombres de Homenajeados\nCarmen y Manuel (25 Aniversario)\n3. Tipo de Evento / Homenaje\n\nBodas de Plata / Oro (Aniversario)\n4. Perfil Vocal Clonado (Zero-Shot)\n\nEdwin Agudelo (Directo de Gala)\nTenor Lírico Emotivo & Tradición\n\nDirecto de Gala\nBodas de Lujo\n\nEdwin Agudelo (Terapia VIMUME Neuroacústica)\nCálido, Terapéutico, Cercano (<75 dB SPL)\n\nVIMUME\nResidencias Mayores\n5. Verso o Dedicatoria Cantada / Narrada\nSugerir Letra Emocional\nDedicado con todo el amor de vuestros hijos a Carmen y Manuel, celebrando 25 años de entrega y complicidad.\nGenerar Canción Personalizada con Voz de Edwin Agudelo (IA)\nMaster de Gala Acústico\nFLAC 24-bit / 48kHz\nNinguna canción generada aún\n\nConfigura el homenaje a la izquierda y pulsa el botón para generar la pista con la voz clonada de Edwin Agudelo. NO FUNCIONA SOLO ES FACHADA NO HAY BACKEND CONECTADO O NO SE QUE OCURRE",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/reservar/solista/page.tsx",
+          "src/app/(public)/vimume/page.tsx"
+        ],
+        "macro_script": "Construir flujo Full-Stack en src/app/reservar/solista/page.tsx, src/app/(public)/vimume/page.tsx. Integrar con arquitectura S-Class OLED (#030305, oro #ecb613). Asegurar params async en Next.js App Router y cero errores de TypeScript."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
     }
   ]
 }

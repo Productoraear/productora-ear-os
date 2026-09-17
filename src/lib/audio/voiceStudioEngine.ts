@@ -267,9 +267,7 @@ export async function personalizeSongWithVoice(
     id: `ear-song-custom-${Date.now().toString(36)}`,
     title: `${songBase.title} // Para ${req.honorees}`,
     honorees: req.honorees,
-    audioUrl: songBase.genre === 'bolero_gala' 
-      ? '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_1.ogg'
-      : '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_2.ogg',
+    audioUrl: '/api/voice/synthesize?sec=12',
     durationSeconds: 225,
     waveform: randomWaveform,
     lyrics: `[INTRO INSTRUMENTAL BOSE S1 PRO]\n(Voz Lírica Edwin Agudelo):\n"${processedVerse}"\n\n[ESTRIBILLO DE GALA PERSONALIZADO]\n"Porque el amor verdadero no se apaga,\nbrillará para ${req.honorees} en esta noche sagrada..."`,
@@ -326,7 +324,7 @@ export async function dubVideoWithVoice(
     targetLanguage: req.targetLanguage,
     dubbedVideoUrl: req.videoUrl || '/simulations/higgsfield_cinematic_sample.mp4',
     subtitlesVttUrl: `/simulations/subtitles_${req.targetLanguage}.vtt`,
-    audioVoiceoverUrl: '/media/growth-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_3.ogg',
+    audioVoiceoverUrl: '/api/voice/synthesize?sec=8',
     processingTimeMs: Date.now() - startTime + 850,
     status: 'completed',
     timestamp: new Date().toISOString()
