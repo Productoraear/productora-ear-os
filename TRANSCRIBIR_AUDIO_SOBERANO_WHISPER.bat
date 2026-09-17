@@ -1,9 +1,9 @@
 @echo off
 chcp 65001 > nul
-title 🦇 EAR OS — VELOCITY VAMPIRE TRANSCRIBER S-CLASS
+title 🦇 EAR OS — TRANSCRIPTOR DE AUDIO SOBERANO S-CLASS
 
 echo ==============================================================================
-echo 🦇 ANTIGRAVITY OMEGA v7.0 — VAMPIRO TRANSCRIPTOR DE VELOCITY MEDIA
+echo 🦇 ANTIGRAVITY OMEGA v7.0 — TRANSCRIPTOR DE AUDIO SOBERANO (WHISPER)
 echo Absorbiendo y transcribiendo palabra por palabra con Whisper
 echo Bóveda Media:     D:\00_VELOCITY_MEDIA_VAULT
 echo Bóveda Obsidian:  H:\EAR_VAULT_VELOCITY_KNOWLEDGE

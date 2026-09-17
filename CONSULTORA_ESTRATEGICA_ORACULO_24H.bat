@@ -2,10 +2,10 @@
 chcp 65001 > nul
 setlocal enabledelayedexpansion
 
-title 🧠 VELOCITY ORACLE 24H - CONSULTORA ESTRATÉGICA S-CLASS
+title 🧠 ORÁCULO ESTRATÉGICO EAR OS 24H - CONSULTORA ESTRATÉGICA S-CLASS
 
 echo ==============================================================================
-echo 🏛️ ANTIGRAVITY OMEGA v7.0 — VELOCITY ORACLE 24H (CONSULTORA ESTRATÉGICA)
+echo 🏛️ ANTIGRAVITY OMEGA v7.0 — ORÁCULO ESTRATÉGICO EAR OS 24H (CONSULTORA ESTRATÉGICA)
 echo Bóveda de Conocimiento: H:\EAR_VAULT_VELOCITY_KNOWLEDGE
 echo Bóveda Multimedia:     D:\00_VELOCITY_MEDIA_VAULT
 echo ==============================================================================
