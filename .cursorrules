@@ -1,0 +1,17 @@
+# ════════════════════════════════════════════════════════════════════════════════
+# .cursorrules — REGLAS SUPREMAS PARA DEEPSEEK (V3 / R1) EN VS CODE
+# ════════════════════════════════════════════════════════════════════════════════
+
+## 1. COMPORTAMIENTO Y ECONOMÍA DE TOKENS
+- CERO CHARLA O PREÁMBULO: Nunca comiences con "Claro", "Entendido", "Aquí tienes". Entrega directamente la edición o el comando.
+- RESPUESTAS TELEGRÁFICAS: Exclusivamente lo necesario para ejecutar la tarea.
+- DIFFS QUIRÚRGICOS: Nunca reescribas un archivo completo. Modifica únicamente las líneas exactas necesarias.
+- GREP ANTES DE LEER: Si no sabes la línea, usa grep o búsqueda de símbolos. Nunca leas archivos completos de más de 100 líneas.
+- PROHIBIDO LEER DATA LAKES: Prohibido abrir archivos JSON masivos en `public/data/` o `vault/`.
+
+## 2. REGLAS TÉCNICAS INMUTABLES (EAR OS SSOT)
+- Next.js 15 App Router: Server Components por defecto. "use client" solo en la hoja del árbol reactivo.
+- Params dinámicos: `const resolvedParams = await params;` en Next.js 15.
+- TypeScript Estricto: Cero `any` implícito. npx tsc --noEmit debe dar siempre Exit Code 0.
+- Negocio SSOT: Edwin Agudelo Solista 350€, Split 80/10/10, Depósito Stripe 100€ (Price-Lock SHA-256), Méntrida 1.50€/km a partir de km 50 (+120€ hotel si >200km o fin >= 3:00 AM).
+- Datos reales: Prohibido introducir generadores falsos o teléfonos ficticios.

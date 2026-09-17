@@ -21,6 +21,9 @@ import {
   Mic2,
   Music
 } from 'lucide-react';
+import { PROVIDERS_GRAND_TOTAL, formatProviderCount } from '@/lib/constants/providers-manifest';
+
+const GRAND_TOTAL_FORMATTED = formatProviderCount(PROVIDERS_GRAND_TOTAL);
 
 interface ToolCard {
   id: string;
@@ -82,12 +85,12 @@ const TOOLS: ToolCard[] = [
     category: 'TELEMARKETING',
     icon: PhoneCall,
     tag: 'OUTBOUND B2B',
-    description: 'Consola táctica de telemarketing con 39.500 fichas, guiones de objeciones y registro de leads en tiempo real.',
+    description: `Consola táctica de telemarketing con ${GRAND_TOTAL_FORMATTED} fichas, guiones de objeciones y registro de leads en tiempo real.`,
     actionType: 'LINK',
     targetUrl: '/proveedores?cat=musica&subcat=solista',
     localPath: 'EAR_CALL_CENTER_PROVEEDORES.html',
     status: 'ONLINE',
-    telemetry: '74.824 Proveedores en Bóveda'
+    telemetry: `${GRAND_TOTAL_FORMATTED} Proveedores en Bóveda`
   },
   {
     id: 'journey-heatmap',
@@ -244,7 +247,7 @@ export default function AdminCommandCenterPage() {
               <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
               <span>GPU: 7900 XTX 24GB</span>
               <span className="text-white/20">|</span>
-              <span className="text-zinc-400">74.8k Provs</span>
+              <span className="text-zinc-400">{GRAND_TOTAL_FORMATTED} Provs</span>
             </div>
             <Link
               href="/"
@@ -306,7 +309,7 @@ export default function AdminCommandCenterPage() {
                   filter === cat ? 'bg-[#ecb613] text-black font-bold shadow-sm' : 'text-zinc-400 hover:text-white hover:bg-white/5'
                 }`}
               >
-                {cat === 'ALL' ? 'Todas (8)' : cat}
+                {cat === 'ALL' ? `Todas (${TOOLS.length})` : cat}
               </button>
             ))}
           </div>

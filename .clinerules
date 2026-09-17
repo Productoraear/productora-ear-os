@@ -1,82 +1,53 @@
-════════════════════════════════════════════════════════════════════════════════════════
-ANTIGRAVITY OMEGA v7.0 — DOCTRINA S-CLASS, TASTE ENGINE & MICRO-ACTION CHUNKING
-MODO CEO ACTIVO — ZERO-TOKEN MEMORY (ZTM) — HIGH-SIGNAL SOBERANO
-ENTORNO: POWERSHELL 7 NATIVO | AMD RX 7900 XTX 24GB (TIERED MODELS)
-════════════════════════════════════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════════════════════════════
+# .clinerules — PROTOCOLO SUPREMO DE EFICIENCIA QUIRÚRGICA PARA DEEPSEEK (V3 / R1)
+# ════════════════════════════════════════════════════════════════════════════════
 
-━━ 1. PROTOCOLO DE MICRO-ACCIONES (ANTI-TRUNCAMIENTO Y CERO DESBORDAMIENTO) ━━━━━━━━━━━━
-- REGLA DE ORO ANTI-TRUNCADO: Si un archivo tiene más de 80 líneas, NUNCA uses `write_to_file` para reescribirlo completo en contextos >12k tokens. Usa SIEMPRE `replace_in_file` en bloques de 15 a 40 líneas.
-- DESGLOSE ATÓMICO (MICRO-CHUNKING): Divide requerimientos amplios en micro-pasos independientes:
-  * Micro-Paso 1: Definición de tipos / interfaces / contratos.
-  * Micro-Paso 2: Edición puntual del componente con `replace_in_file`.
-  * Micro-Paso 3: Validación inmediata con `npx tsc --noEmit` -> Exit Code 0.
-- LÍMITE DE CONTEXTO CLINE: Si el contador de tokens en Cline supera 22.000 tokens, NO intentes refactorizar archivos grandes. Finaliza el micro-paso actual, haz commit y avisa para pulsar "Start New Task".
-- PROTOCOLO ZTM ESTRICTO: NUNCA leas `.antigravity/tasks_queue.json` de forma autónoma. Si el prompt incluye la instrucción, no intentes leer la cola de tareas para ahorrar tokens. ¡Bajo ninguna circunstancia leas carpetas enteras como `src/` si no se te pide!
-- VENTANA Y MODELOS TIER SEGÚN TAREA EN OLLAMA:
-  * Textos, títulos, copys, cambio de nombres, micro-arreglos: Modelo `ear-14b-textos-ctx16384` (Contexto: 16384). VRAM ~9.5 GB. Headroom 14.5 GB. 70+ t/s.
-  * Rutas Next.js, APIs, endpoints intermedios, formularios: Modelo `ear-27b-apis-ctx20480` (Contexto: 20480). VRAM ~15 GB. Headroom 9 GB.
-  * Arquitectura profunda, contratos SSOT, refactorización técnica: Modelo `ear-32b-arquitectura-ctx20480` (Contexto: 20480). VRAM ~19 GB. Headroom 5 GB.
+## 1. MANDATO ZERO-TOKEN & PROTECCIÓN FINANCIERA (STOP TOKEN BURN)
+- **ZERO PREAMBLE (CERO CHARLA)**: Prohibido saludar, dar introducciones ("¡Por supuesto! Voy a revisar...", "Entendido, aquí tienes...") o hacer resúmenes conversacionales redundantes. Ve DIRECTO a la llamada de herramienta o al código. Cada palabra superflua cuesta dinero.
+- **LÍMITE DE CONTEXTO ESTRICTO (MÁXIMO 35.000 TOKENS)**: Si el contador de la ventana de contexto de Cline supera los **35.000 tokens** (o más de 8 turnos continuos de herramientas), finaliza tu acción actual, escribe un resumen telegráfico y ordena al usuario:
+  `🚨 CONTEXTO EN ZONA ROJA: Pulsa '+' (New Task) para resetear el historial a 0€ sin perder código`.
+  Nunca permitas que la conversación alcance 50k o 200k tokens.
+- **PROHIBIDO 'write_to_file' EN ARCHIVOS EXISTENTES**:
+  - `write_to_file` solo está permitido para crear archivos NUEVOS que no existían.
+  - Para cualquier archivo existente, es OBLIGATORIO usar `replace_in_file` con fragmentos mínimos y precisos (máximo 15-30 líneas de contexto). Reescribir un archivo entero de 500 líneas quema 2.500 tokens de output inútilmente.
+- **PROHIBIDA LA LECTURA COMPLETA DE ARCHIVOS > 150 LÍNEAS**:
+  - NUNCA leas un archivo grande de principio a fin.
+  - Usa siempre `grep` / `search_files` para localizar la función o componente exacto.
+  - Usa `read_file` especificando `offset` y `limit` de líneas para leer únicamente el bloque relevante.
+- **VETO TOTAL A LECTURA DE DATOS MASIVOS**:
+  - Jamás leas `.json`, `.csv`, `.sql` o `.html` en `public/data/`, `src/data/` o `vault/`.
+  - Si requieres inspeccionar estructura de datos, ejecuta un micro-comando de node/python de 1 línea que imprima únicamente `Object.keys()` o `slice(0, 2)`.
 
-━━ 2. REGLAS DE NEGOCIO S-CLASS (INMUTABLES) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Tarifa Base Solista (Edwin Agudelo): 350,00 €.
-- Logística: 1,50 €/km aplicados desde Méntrida a partir del km 50. +120 € (Hotel) si hora fin >= 3:00 AM o distancia > 200 km.
-- Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
-- Cierre: Depósito de 100,00 € en Stripe (Price-Lock SHA-256 válido 24h-72h).
-- Rider Acústico: 12 W/pax (Sistemas Bose F1 812 / S1 Pro, Microfonía Shure Beta 87A).
-- Límite B2G (Art. 118 LCSP): < 15.000,00 € (Ajuste al 95% = 14.250,00 €) y < 75 dB SPL.
+## 2. REGLAS DE ORO DEL MOTOR DEEPSEEK EN CLINE
+- **MODEL SELECTION DISCIPLINA**:
+  - Para PICAR CÓDIGO, depurar, refactorizar o ejecutar herramientas: El modelo DEBE ser `deepseek-chat` (DeepSeek-V3). Tiene soporte nativo de function calling, velocidad ultra-rápida y cero coste de razonamiento oculto.
+  - Reserva `deepseek-reasoner` (R1) EXCLUSIVAMENTE para planificar algoritmos matemáticos complejos en 1 solo turno de prompt. Jamás lo uses en un bucle autónomo de herramientas de 10 pasos.
+- **SINGLE-SHOT TOOL CALLING**:
+  - No encadenes búsquedas especulativas a ciegas. Si buscas un archivo, usa `find_by_name` o una ruta exacta.
+  - No ejecutes `list_directory` en la raíz del proyecto. Asume la arquitectura estándar Next.js App Router (`src/app/`, `src/components/`, `src/lib/`).
 
-━━ 3. INMUNIZACIÓN WINDOWS & POWERSHELL 7 (TERMINAL ESTRICTA) ━━━━━━━━━━━━━━━━━━━━━━━
-- Shell Activa: PowerShell 7 (`pwsh.exe`). PROHIBIDO sintaxis Bash (`&&`, `&`). Usa `;` o `|`.
-- Rutas: Rodear SIEMPRE con comillas dobles (`"H:\EAR_OS_V2\..."`).
-- No vuelques JSONs masivos o volcados de >50 líneas en consola. Usa scripts en background.
-- Al modificar código, NUNCA toques más de 2 archivos por turno.
+## 3. REGLAS DE ARQUITECTURA & NEGOCIO EAR OS (INMUTABLES)
+- **COMPILACIÓN LIMPIA MANDATORIA**: Cada vez que toques código TypeScript, debes verificar mentalmente los tipos o solicitar validación con `npx tsc --noEmit` -> Exit Code 0. Cero `any` implícitos.
+- **DATOS REALES & ZERO FAKES**:
+  - Prohibido reintroducir generadores ficticios (`fincas-generator.ts`, números inventados, mocks aleatorios).
+  - La centralita de la empresa (`+34 693 693 048`) es SOLO para contacto directo del CEO Edwin Agudelo. Para leads de terceros (fincas, fotógrafos, mariachis), si no hay teléfono verificado, se utiliza enlace a búsqueda de Google y ficha de origen.
+- **SSOT S-CLASS BUSINESS RULES**:
+  - Tarifa Base Solista: 350,00 €.
+  - Logística Méntrida: 1,50 €/km a partir del km 50. +120 € hotel si fin >= 3:00 AM o distancia > 200 km.
+  - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
+  - Depósito Stripe: 100,00 € inmutable (Price-Lock SHA-256).
+  - Licitaciones B2G (Art. 118 LCSP): < 14.250,00 € preventivo.
+  - Acústica: 12 W/pax, límite estricto < 75 dB SPL.
 
-━━ 4. TASTE ENGINE & ANTI-SLOP (DISEÑO S-CLASS) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Estética OLED: Fondos ultra profundos (`#030305`, `#050507`). PROHIBIDO gris lavado o degradados AI Slop.
-- Acentos: UN solo color por vista (Oro `#ecb613`, Rubí `#FF2B44`, Cyan `#00E5FF`).
-- Tipografía: `Syne` (Títulos), `Inter` (Cuerpos legibles), `JetBrains Mono` (Datos/Telemetría).
-- Composición: Espacios `py-16`, `gap-8`, bordes `border-white/10`. `w-full overflow-x-hidden` (NUNCA `w-screen`).
-- Copywriting UX: Verbos de valor y datos cuantitativos. Cero copy genérico ("revoluciona tu experiencia").
+## 4. FORMATO DE RESPUESTA TELEGRÁFICO
+Tus respuestas al usuario deben ser hiper-densas, sin adornos:
+```markdown
+### ⚡ ACCIÓN EJECUTADA
+- [Archivo modificado con línea exacta]
 
-━━ 5. NEXT.JS APP ROUTER & TYPESCRIPT STRICT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- App Router: Server Components por defecto. `"use client"` SOLO para interactividad DOM.
-- Params Async: Resolver SIEMPRE: `const resolvedParams = await params;`. Cero `any` implícitos.
-- Validación Obligatoria: `npx tsc --noEmit` -> Exit Code 0 al finalizar cada micro-acción.
+### 🎯 RESULTADO
+- [Qué se resolvió en 1 línea]
 
-━━ 6. UNIFICACIÓN DE MANDO & SITEMAP (SSOT) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- Centro de Mando Único: La URL unificada es `/admin`. Las rutas `/dashboard` y `/command-center` redirigen a `/admin`.
-- Sincronización Sitemap: `/sitemap.ts` gobierna las 5 particiones canónicas (Core, Territorial 52 Provincias, PSEO Municipios, Directorio Curado 26k, Cosechados). El panel `/admin` audita estas particiones en tiempo real.
-
-━━ 7. PROTECCIÓN DE MOTORES Y VETO ESTRATÉGICO ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- ZONA CERO (Prohibido reescribir): `src/lib/vimume/b2g-tender-engine.ts` y `src/lib/astra/astra-conversation-engine.ts`.
-- VETO ABSOLUTO: Exponer `STRIPE_SECRET_KEY` o alterar firma HMAC SHA-256 en webhooks Stripe.
-
-━━ 8. GOBERNANZA GIT PURISTA & ZERO-BLOAT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-- REPO ULTRA-LIGERO (< 50 MB): El repositorio Git debe mantenerse siempre en < 50 MB (~36 MB actual).
-- Prohibido commitear archivos > 1 MB o carpetas de scraping (`wedding_intel_vault`, etc.).
-
-━━ 9. OMNI ROUTE (GOBERNANZA DE DOMINIOS SOBERANOS & INTERCONEXIÓN TOTAL) ━━━━━━━━━━━━━━
-- MATRIZ DE DOMINIOS CANÓNICOS:
-  1. `productoraear.com`: Hub Central, Cotizador S-Class (`/calculadora`) y Licitaciones Menores B2G (`/ayuntamientos`).
-  2. `artistaseuropa.com`: Plataforma y Booking de Artistas Homologados (`/reservar/solista`, `/artistas`).
-  3. `fincasparaboda.com`: Vertical Exclusiva de Fincas B2B y Blindaje Acústico (`/fincas/portal-demostrativo`, `/fincasparaboda`).
-  4. `viajemusicalporlamemoria.com`: Plataforma Clínica de Neuroacústica 40 Hz y Mecenazgo Ley 49/2002 (`/vimume`).
-- REGLA DE INTERCONEXIÓN: Ninguna landing o tarjeta debe ser un callejón sin salida. Todo acceso debe llevar el badge del dominio soberano correspondiente y permitir saltar entre verticales sin perder el contexto ni el carrito de reserva.
-- CERO 404s EN REDIRECCIONES: Toda ruta legada o alternativa debe redirigir con código 301/308 a su equivalente canónico.
-
-━━ 10. CLAUDE MEM (ZERO-LOSS WORKING MEMORY & CHECKPOINTING DETERMINISTA) ━━━━━━━━━━━━━
-- CERO POLUCIÓN DE CONTEXTO: Nunca vuelques código masivo en el chat de trabajo. Mantén el estado operativo en archivos ligeros (`.antigravity/memory/` o resúmenes JSON).
-- CHECKPOINTING DETERMINISTA: Cada hito completado debe registrarse con el formato canónico:
-  HECHO_VERIFICADO | HIPÓTESIS | DECISIÓN | RIESGOS | CAMBIOS | VALIDACIONES | ESTADO_BLOQUE | SIGUIENTE_PASO
-- RESÚMENES ALTO-SEÑAL: Respuestas al CEO con un máximo de 300 tokens de resumen ejecutivo, priorizando enlaces a archivos y estado de producción.
-
-━━ 11. HEADROOM DOCTRINE (BLINDAJE DE VRAM, CONTEXTO Y TIEMPO DE RESPUESTA) ━━━━━━━━━
-- VRAM HEADROOM (AMD RX 7900 XTX 24 GB): Nunca superar el 80% de VRAM asignada a modelos en Ollama. Mantener un margen mínimo (Headroom) de 4 a 5 GB libres para evitar OOM del sistema operativo y latencias erráticas.
-- CONTEXT HEADROOM: Trabajar siempre en el 70-75% de la ventana de contexto (ej. 22.000 tokens en ventana de 32k). Al superar el umbral, forzar commit, reporte y "Start New Task".
-- EDGE LATENCY HEADROOM: El Heartbeat de producción (`/api/omega/heartbeat`) debe responder siempre en < 50 ms (observado actual: ~20 ms). Si un motor degrada la latencia, debe aislarse en computación en diferido o caché en memoria.
-
-━━ 12. CLAUDE CODE SPEC (EJECUCIÓN ATÓMICA, CERO AMBIGÜEDAD Y CIERRE IDEMPOTENTE) ━━━━━
-- SCAFFOLDING FIRST: Antes de escribir una sola línea de código, definir rutas exactas de archivos, interfaces de datos, firmas de funciones y comandos de validación.
-- MODIFICACIONES MÍNIMAS & QUIRÚRGICAS: Modificar únicamente los bloques de código afectados. Prohibido reescribir componentes enteros sin justificación.
-- SALVAVIDAS OBLIGATORIO: Todo cambio debe pasar `npx tsc --noEmit` -> Exit Code 0 antes de commitear. Si el exit code es != 0, queda terminantemente prohibido hacer push.
-- DOBLE PUSH A PRODUCCIÓN: Sincronizar siempre `git push origin main` y `git push vercel-repo main` para que Netlify y GitHub permanezcan idénticos.
+### 🛡️ VERIFICACIÓN
+- npx tsc --noEmit: Exit Code 0
+```

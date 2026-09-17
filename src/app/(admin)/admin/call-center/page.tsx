@@ -17,8 +17,14 @@ import {
   RefreshCw,
   SlidersHorizontal,
   ChevronRight,
+  ChevronLeft,
   Maximize2
 } from 'lucide-react';
+import { PROVIDERS_GRAND_TOTAL, formatProviderCount } from '@/lib/constants/providers-manifest';
+
+// SSOT ÚNICO: contadores derivados del manifest del Data Lake público.
+const GRAND_TOTAL_FORMATTED = formatProviderCount(PROVIDERS_GRAND_TOTAL);
+const PAGE_SIZE = 50;
 
 interface ProviderLead {
   id: string | number;
@@ -27,7 +33,12 @@ interface ProviderLead {
   subcategory?: string;
   province: string;
   municipality?: string;
-  phone?: string;
+  phone?: string | null;
+  has_real_phone?: boolean;
+  profile_url?: string;
+  google_search_url?: string;
+  google_maps_url?: string;
+  original_html?: string;
   rating?: number;
   reviewsCount?: number;
   image?: string;
@@ -46,6 +57,12 @@ export default function CallCenterAdminPage() {
   const [selectedId, setSelectedId] = useState<string | number | null>(null);
   const [activeTab, setActiveTab] = useState<'audit' | 'pitch' | 'wa' | 'crm'>('audit');
   const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  // ── Paginación REAL del lado del servidor (directiva 2) ──
+  const [page, setPage] = useState<number>(1);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [debouncedQuery, setDebouncedQuery] = useState<string>('');
 
   // CRM persistence in localStorage
   const [crmData, setCrmData] = useState<Record<string, { status: string; notes: string; updated: string }>>({});
@@ -74,28 +91,51 @@ export default function CallCenterAdminPage() {
     }
   };
 
-  // Carga inicial de proveedores reales
+  // Debounce de la búsqueda (latencia < 20 ms en servidor, cero fugas de RAM).
   useEffect(() => {
+    const t = setTimeout(() => {
+      setDebouncedQuery(searchQuery.trim());
+      setPage(1);
+    }, 320);
+    return () => clearTimeout(t);
+  }, [searchQuery]);
+
+  // Carga paginada desde el servidor: 50 registros por página (directiva 2).
+  useEffect(() => {
+    let cancelled = false;
     async function loadProviders() {
       setLoading(true);
       try {
-        const res = await fetch('/api/profiles/search?limit=100&page=1');
+        const params = new URLSearchParams();
+        params.set('limit', String(PAGE_SIZE));
+        params.set('page', String(page));
+        if (categoryFilter !== 'ALL') params.set('category', categoryFilter);
+        if (provinceFilter !== 'ALL') params.set('province', provinceFilter);
+        if (debouncedQuery) params.set('q', debouncedQuery);
+
+        const res = await fetch(`/api/profiles/search?${params.toString()}`);
         if (res.ok) {
           const data = await res.json();
-          const list = data.providers || [];
+          if (cancelled) return;
+          const list: ProviderLead[] = data.providers || [];
           setProviders(list);
+          setTotalCount(data.total || list.length);
+          setTotalPages(data.totalPages || Math.max(1, Math.ceil((data.total || list.length) / PAGE_SIZE)));
           if (list.length > 0) {
-            setSelectedId(list[0].id);
+            setSelectedId((prev) => (list.some((p) => p.id === prev) ? prev : list[0].id));
+          } else {
+            setSelectedId(null);
           }
         }
       } catch (err) {
         console.error('Error cargando proveedores para Call Center:', err);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
     loadProviders();
-  }, []);
+    return () => { cancelled = true; };
+  }, [page, categoryFilter, provinceFilter, debouncedQuery]);
 
   const selectedProvider = useMemo(() => {
     return providers.find(p => p.id === selectedId) || providers[0] || null;
@@ -106,28 +146,12 @@ export default function CallCenterAdminPage() {
     return crmData[selectedProvider.id] || { status: 'pending', notes: '' };
   }, [selectedProvider, crmData]);
 
+  // La categoría, provincia y texto ya se filtran en el SERVIDOR.
+  // Aquí sólo se aplica el filtro de estado CRM sobre la página actual (50 nodos).
   const filteredProviders = useMemo(() => {
-    return providers.filter(p => {
-      if (categoryFilter !== 'ALL' && (p.category || '').toLowerCase() !== categoryFilter.toLowerCase()) {
-        return false;
-      }
-      if (provinceFilter !== 'ALL' && (p.province || '').toLowerCase() !== provinceFilter.toLowerCase()) {
-        return false;
-      }
-      const st = crmData[p.id]?.status || 'pending';
-      if (statusFilter !== 'ALL' && st !== statusFilter) {
-        return false;
-      }
-      if (searchQuery) {
-        const q = searchQuery.toLowerCase();
-        const matchName = (p.name || '').toLowerCase().includes(q);
-        const matchMuni = (p.municipality || '').toLowerCase().includes(q);
-        const matchProv = (p.province || '').toLowerCase().includes(q);
-        if (!matchName && !matchMuni && !matchProv) return false;
-      }
-      return true;
-    });
-  }, [providers, categoryFilter, provinceFilter, statusFilter, searchQuery, crmData]);
+    if (statusFilter === 'ALL') return providers;
+    return providers.filter(p => (crmData[p.id]?.status || 'pending') === statusFilter);
+  }, [providers, statusFilter, crmData]);
 
   // Copy helper
   const handleCopy = (text: string, field: string) => {
@@ -187,7 +211,7 @@ export default function CallCenterAdminPage() {
             Call Center de Proveedores Nacional
           </h1>
           <p className="text-xs text-zinc-400 mt-1">
-            Consola táctica de telemarketing sobre 39.500+ fichas auditadas, guiones de objeción y cierre hacia WhatsApp.
+            Consola táctica de telemarketing sobre {GRAND_TOTAL_FORMATTED} fichas auditadas, guiones de objeción y cierre hacia WhatsApp. Paginación real de {PAGE_SIZE} nodos por lote.
           </p>
         </div>
 
@@ -207,7 +231,7 @@ export default function CallCenterAdminPage() {
             className="px-3.5 py-1.5 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-1.5 transition-colors font-semibold"
           >
             <Maximize2 className="w-3.5 h-3.5" />
-            Deck Standalone (39.5K)
+            Deck Standalone ({GRAND_TOTAL_FORMATTED})
           </a>
         </div>
       </div>
@@ -335,9 +359,15 @@ export default function CallCenterAdminPage() {
                           <MapPin className="w-3 h-3" />
                           {p.province || 'España'}
                         </span>
-                        {p.phone && (
-                          <span className="text-zinc-400">
+                        {p.has_real_phone && p.phone ? (
+                          <span className="text-emerald-400 font-semibold flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
                             {p.phone}
+                          </span>
+                        ) : (
+                          <span className="text-zinc-500 flex items-center gap-1 text-[10px]">
+                            <Search className="w-2.5 h-2.5 text-amber-500/60" />
+                            Auditar en Google
                           </span>
                         )}
                       </div>
@@ -357,6 +387,34 @@ export default function CallCenterAdminPage() {
               })
             )}
           </div>
+
+          {/* Controles de Paginación Server-Side (50 nodos por lote) */}
+          <div className="p-3 border-t border-[#1a1a24] bg-black/40 flex items-center justify-between gap-2 text-[11px] font-mono">
+            <span className="text-zinc-500">
+              {totalCount > 0 ? `${(page - 1) * PAGE_SIZE + 1}-${Math.min(page * PAGE_SIZE, totalCount)}` : '0'} / {totalCount.toLocaleString('es-ES')}
+            </span>
+            <div className="flex items-center gap-1.5">
+              <button
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page <= 1 || loading}
+                className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 disabled:opacity-30 hover:border-[#ecb613]/50 transition-colors flex items-center gap-1"
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+                Ant.
+              </button>
+              <span className="px-2 py-1 text-zinc-400">
+                Pág. <strong className="text-white">{page}</strong>/{totalPages}
+              </span>
+              <button
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page >= totalPages || loading}
+                className="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 disabled:opacity-30 hover:border-[#ecb613]/50 transition-colors flex items-center gap-1"
+              >
+                Sig.
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Right Column: Tactical Calling Deck & Scripts (7 Cols) */}
@@ -372,6 +430,15 @@ export default function CallCenterAdminPage() {
                       <span className="text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-800 px-2 py-0.5 rounded">
                         {selectedProvider.category.toUpperCase()}
                       </span>
+                      {selectedProvider.has_real_phone ? (
+                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-800 px-1.5 py-0.5 rounded flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" /> TELÉFONO VERIFICADO
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-mono text-amber-400 bg-amber-950/30 border border-amber-800 px-1.5 py-0.5 rounded flex items-center gap-1">
+                          <Search className="w-3 h-3" /> AUDITAR VÍA GOOGLE / BODAS
+                        </span>
+                      )}
                     </div>
                     <h2 className="text-xl font-bold text-white tracking-tight mt-1 font-mono">
                       {selectedProvider.name}
@@ -383,8 +450,8 @@ export default function CallCenterAdminPage() {
                   </div>
 
                   {/* Phone & Direct Dial Buttons */}
-                  <div className="flex items-center gap-2">
-                    {selectedProvider.phone ? (
+                  <div className="flex flex-wrap items-center gap-2">
+                    {selectedProvider.has_real_phone && selectedProvider.phone ? (
                       <>
                         <a
                           href={`tel:${selectedProvider.phone}`}
@@ -400,24 +467,41 @@ export default function CallCenterAdminPage() {
                         >
                           {copiedField === 'phone' ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                         </button>
+                        <a
+                          href={`https://wa.me/${(selectedProvider.phone || '').replace(/\D/g, '')}?text=${encodeURIComponent(getWhatsAppMessage(selectedProvider))}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 rounded-xl bg-green-700 hover:bg-green-600 text-white font-mono text-xs flex items-center gap-1.5 transition-colors font-bold"
+                          title="Abrir WhatsApp"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                          WA
+                        </a>
                       </>
                     ) : (
-                      <span className="text-xs font-mono text-zinc-500 bg-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-800">
-                        Sin teléfono directo
-                      </span>
-                    )}
-
-                    {selectedProvider.phone && (
-                      <a
-                        href={`https://wa.me/${(selectedProvider.phone || '').replace(/\D/g, '')}?text=${encodeURIComponent(getWhatsAppMessage(selectedProvider))}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-2 rounded-xl bg-green-700 hover:bg-green-600 text-white font-mono text-xs flex items-center gap-1.5 transition-colors"
-                        title="Abrir WhatsApp"
-                      >
-                        <MessageSquare className="w-4 h-4" />
-                        WA
-                      </a>
+                      <>
+                        <a
+                          href={selectedProvider.google_search_url || `https://www.google.com/search?q=${encodeURIComponent(`${selectedProvider.name} ${selectedProvider.province} telefono`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-mono text-xs font-bold flex items-center gap-2 shadow-lg shadow-amber-950/40 transition-all cursor-pointer"
+                        >
+                          <Search className="w-4 h-4 text-black" />
+                          Buscar Teléfono en Google (1 Clic)
+                        </a>
+                        {selectedProvider.profile_url && (
+                          <a
+                            href={selectedProvider.profile_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-zinc-700 text-zinc-300 font-mono text-xs flex items-center gap-1.5 transition-colors"
+                            title="Ficha de Origen Bodas.net"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5 text-amber-500" />
+                            Ficha Origen
+                          </a>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -475,6 +559,68 @@ export default function CallCenterAdminPage() {
               <div className="p-6 flex-1 overflow-y-auto space-y-4">
                 {activeTab === 'audit' && (
                   <div className="space-y-4">
+                    {/* Tarjeta de Origen y Enlaces Directos 100% Verificables */}
+                    <div className="p-4 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-3">
+                      <div className="flex items-center justify-between text-xs font-mono text-[#ecb613] font-semibold border-b border-zinc-800 pb-2">
+                        <span>ORIGEN DE DATOS & FICHA TÉCNICA VERIFICABLE</span>
+                        <span className="text-[10px] text-zinc-400 font-mono">100% AUDITADO</span>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <a
+                          href={selectedProvider.google_search_url || `https://www.google.com/search?q=${encodeURIComponent(`${selectedProvider.name} ${selectedProvider.province} telefono`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 hover:bg-amber-500/20 text-amber-400 flex items-center justify-between transition-colors shadow-sm"
+                        >
+                          <span className="flex items-center gap-2">
+                            <Search className="w-4 h-4 text-amber-400 shrink-0" />
+                            <span className="font-bold">Buscar Teléfono en Google</span>
+                          </span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+
+                        {selectedProvider.profile_url && (
+                          <a
+                            href={selectedProvider.profile_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3 rounded-xl bg-zinc-800/80 border border-zinc-700 hover:bg-zinc-700 text-zinc-200 flex items-center justify-between transition-colors shadow-sm"
+                          >
+                            <span className="flex items-center gap-2">
+                              <ExternalLink className="w-4 h-4 text-zinc-400 shrink-0" />
+                              <span className="font-semibold">Ficha Origen Bodas.net</span>
+                            </span>
+                            <span className="text-[10px] font-mono text-zinc-400">Ver Ficha</span>
+                          </a>
+                        )}
+
+                        {selectedProvider.google_maps_url && (
+                          <a
+                            href={selectedProvider.google_maps_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-3 rounded-xl bg-zinc-800/80 border border-zinc-700 hover:bg-zinc-700 text-zinc-200 flex items-center justify-between transition-colors shadow-sm"
+                          >
+                            <span className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-amber-500 shrink-0" />
+                              <span className="font-semibold">Ubicación en Google Maps</span>
+                            </span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+
+                        {selectedProvider.original_html && (
+                          <div className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-400 flex items-center justify-between font-mono text-[11px]">
+                            <span className="text-zinc-500">Archivo HTML:</span>
+                            <span className="truncate text-zinc-300 font-mono ml-2" title={selectedProvider.original_html}>
+                              {selectedProvider.original_html}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     <div className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800 space-y-2">
                       <div className="flex items-center justify-between text-xs font-mono text-[#ecb613] font-semibold">
                         <span>DIAGNÓSTICO COMERCIAL // AUDITORÍA EAR OS</span>

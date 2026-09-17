@@ -24,14 +24,18 @@ import {
   Satellite
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
+import { PROVIDERS_GRAND_TOTAL, formatProviderBadge } from '@/lib/constants/providers-manifest';
+
+// SSOT ÚNICO: los badges derivan del manifest, nunca se hardcodean cifras.
+const PROVIDERS_BADGE = formatProviderBadge(PROVIDERS_GRAND_TOTAL);
 
 const NAVIGATION_MODULES = [
   { id: 'cockpit', name: 'Omni-Cockpit Central', href: '/admin', icon: LayoutDashboard, badge: 'CORE' },
   { id: 'simulador', name: '🗺️ Mapa & Simulador EAR OS', href: '/admin/simulador', icon: Compass, badge: '21ST.DEV' },
-  { id: 'call-center', name: 'Call Center Outbound', href: '/admin/call-center', icon: PhoneCall, badge: '45.6K' },
+  { id: 'call-center', name: 'Call Center Outbound', href: '/admin/call-center', icon: PhoneCall, badge: PROVIDERS_BADGE },
   { id: 'whatsapp', name: 'Centralita WhatsApp', href: '/admin/whatsapp', icon: MessageCircle, badge: '693 048' },
   { id: 'sourcing', name: 'Scala Leads & Sourcing', href: '/admin/sourcing', icon: Flame, badge: 'LEADS' },
-  { id: 'providers', name: 'Proveedores (Edge CDN)', href: '/admin/proveedores', icon: Users, badge: '2.3K CDN' },
+  { id: 'providers', name: 'Proveedores (Edge CDN)', href: '/admin/proveedores', icon: Users, badge: `${PROVIDERS_BADGE} CDN` },
   { id: 'b2g', name: 'B2G & Licitaciones <14.250€', href: '/admin/licitaciones', icon: Landmark, badge: 'LEGAL' },
   { id: 'fleet', name: 'Flota & Logística en Vivo', href: '/admin/flota', icon: Truck, badge: 'KM 0' },
   { id: 'affiliates', name: 'Red de Afiliados', href: '/admin/afiliados', icon: Share2, badge: 'SPLIT' },
@@ -116,6 +120,15 @@ export default function AdminMasterLayout({ children }: { children: React.ReactN
 
         {/* Footer Soberano */}
         <div className="p-3 border-t border-[#1a1a24] bg-[#030305]">
+          <Link
+            href="/"
+            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono transition mb-3 group"
+            title="Ver Sitio Web Público"
+          >
+            <Compass className="w-4 h-4 text-cyan-400 group-hover:rotate-45 transition-transform" />
+            {!collapsed && <span>Ver Web Pública</span>}
+          </Link>
+
           {!collapsed ? (
             <div className="text-[10px] font-mono text-zinc-500 flex flex-col gap-1">
               <div className="flex justify-between">

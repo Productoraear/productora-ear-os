@@ -21,6 +21,13 @@ import {
   Image as ImageIcon,
   Sparkles
 } from 'lucide-react';
+import {
+  PROVIDERS_MANIFEST_TOTALS,
+  PROVIDERS_GRAND_TOTAL,
+  formatProviderCount,
+} from '@/lib/constants/providers-manifest';
+
+const GRAND_TOTAL_FORMATTED = formatProviderCount(PROVIDERS_GRAND_TOTAL);
 
 interface ProviderItem {
   id?: string;
@@ -37,20 +44,21 @@ interface ProviderItem {
   verified?: boolean;
 }
 
+// Contadores SSOT: derivados del manifest, nunca hardcodeados.
 const CATEGORY_TABS = [
-  { id: 'ALL', label: 'Todos (26K+)' },
-  { id: 'finca', label: 'Fincas & Espacios' },
-  { id: 'musica', label: 'Música & Solistas' },
-  { id: 'sonido', label: 'Sonido & Iluminación' },
-  { id: 'catering', label: 'Catering' },
-  { id: 'foto', label: 'Fotografía' },
-  { id: 'senior_care', label: 'Centros Senior (VIMUME)' },
-  { id: 'wedding', label: 'Wedding Planners' }
+  { id: 'ALL', label: `Todos (${formatProviderCount(PROVIDERS_GRAND_TOTAL)})` },
+  { id: 'finca', label: `Fincas & Espacios (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.finca)})` },
+  { id: 'musica', label: `Música & Solistas (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.musica)})` },
+  { id: 'sonido', label: `Sonido & Iluminación (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.sonido)})` },
+  { id: 'catering', label: `Catering (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.catering)})` },
+  { id: 'foto', label: `Fotografía (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.foto)})` },
+  { id: 'senior_care', label: `Centros Senior VIMUME (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.senior_care)})` },
+  { id: 'wedding', label: `Wedding Planners (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.wedding)})` }
 ];
 
 export default function ProveedoresSyncPage() {
   const [providers, setProviders] = useState<ProviderItem[]>([]);
-  const [totalCount, setTotalCount] = useState<number>(26418);
+  const [totalCount, setTotalCount] = useState<number>(PROVIDERS_GRAND_TOTAL);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
   const [selectedCat, setSelectedCat] = useState<string>('ALL');
@@ -78,8 +86,8 @@ export default function ProveedoresSyncPage() {
 
       if (data.success && Array.isArray(data.providers)) {
         setProviders(data.providers);
-        setTotalCount(data.total || 26418);
-        setTotalPages(data.totalPages || Math.ceil((data.total || 26418) / 24));
+        setTotalCount(data.total || PROVIDERS_GRAND_TOTAL);
+        setTotalPages(data.totalPages || Math.ceil((data.total || PROVIDERS_GRAND_TOTAL) / 24));
       }
     } catch (err) {
       console.error('[PROVEEDORES-SYNC] Error cargando proveedores:', err);
@@ -108,10 +116,10 @@ export default function ProveedoresSyncPage() {
             Directorio S-Class // Sincronizado al 100%
           </div>
           <h1 className="text-3xl font-bold text-white tracking-tight mt-1 font-mono">
-            Proveedores ({totalCount > 0 ? totalCount.toLocaleString() : '2.300'} Nodos CDN)
+            Proveedores ({totalCount > 0 ? totalCount.toLocaleString('es-ES') : GRAND_TOTAL_FORMATTED} Nodos CDN)
           </h1>
           <p className="text-xs text-zinc-400 mt-1 font-sans">
-            Partición pública ultra-ligera en Edge CDN (2.300 nodos) sincronizada con el Call Center local (45.666 fichas) y Bóveda Maestra (74.845 registros).
+            Partición pública en Edge CDN sincronizada con el Call Center local y la Bóveda Maestra SSOT ({GRAND_TOTAL_FORMATTED} registros verificados).
           </p>
         </div>
 
@@ -120,7 +128,7 @@ export default function ProveedoresSyncPage() {
             href="/admin/call-center"
             className="px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ecb613]/50 flex items-center gap-1.5 transition-colors"
           >
-            Abrir Call Center (45.6K)
+            Abrir Call Center ({GRAND_TOTAL_FORMATTED})
           </Link>
           <button
             onClick={() => fetchProviders()}

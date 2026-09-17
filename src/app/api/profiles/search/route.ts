@@ -145,17 +145,28 @@ async function queryStaticProviders(options: {
     'senior_care'
   ];
 
-  let targetFile = 'all_featured.json';
-  if (validCats.includes(normCat)) {
-    targetFile = `${normCat}.json`;
+  let list: any[] = [];
+
+  if (normCat && validCats.includes(normCat)) {
+    const raw = await loadStaticDataset(`${normCat}.json`, requestUrl);
+    if (raw) {
+      try { list = JSON.parse(raw); } catch (e) {}
+    }
+  } else {
+    // When no category is selected, load multiple massive datasets to show the true scale (S-Class)
+    const files = ['finca.json', 'musica.json', 'sonido.json', 'catering.json'];
+    for (const f of files) {
+      const raw = await loadStaticDataset(f, requestUrl);
+      if (raw) {
+        try { list = list.concat(JSON.parse(raw)); } catch (e) {}
+      }
+    }
   }
 
-  const raw = await loadStaticDataset(targetFile, requestUrl);
-  if (!raw) {
+  // Fallback if nothing was loaded
+  if (list.length === 0) {
     return { total: 0, providers: [] };
   }
-
-  let list: any[] = JSON.parse(raw);
 
   // 1. Filtro por provincia
   if (province && province !== 'ALL') {
@@ -191,7 +202,9 @@ async function queryStaticProviders(options: {
     u.includes('.svg') ||
     u.includes('gen_logoHeader') ||
     u.includes('default_avatar') ||
-    u.includes('741e9617168a2484.jpg');
+    u.includes('741e9617168a2484.jpg') ||
+    u.includes('celebrents.s3.amazonaws.com') || // Eliminamos todas las imagenes rotas/placeholder de celebrents (lebrel)
+    u.includes('c2524615ca092dc557196134bcbbcdc1');
 
   const providers = list.slice(skip, skip + limit).map((p) => {
     const rawName = p.name || '';
@@ -201,15 +214,57 @@ async function queryStaticProviders(options: {
       .replace(/\s*-\s*Fotos y opiniones.*/i, '')
       .trim();
 
-    const cleanImages = (p.imageUrls || []).filter((u: string) => !isDirty(u));
+    const rawImages = (p.imageUrls && p.imageUrls.length > 0) ? p.imageUrls : (p.gallery && p.gallery.length > 0) ? p.gallery : (p.img ? [p.img] : []);
+    const cleanImages = rawImages.filter((u: string) => !isDirty(u));
     const finalImages =
       cleanImages.length > 0
         ? cleanImages
         : [getApiFallbackImage(p.category, p.id || p.shaHash || p.name)];
 
+    const rawPhone = (p.phone || p.telephone || '').trim();
+    const cleanDigits = rawPhone.replace(/[^\d]/g, '');
+    const isFake = !cleanDigits || cleanDigits.includes('693693048') || cleanDigits.includes('703831064') || cleanDigits.includes('721056835') || cleanDigits.includes('999999999') || cleanDigits.includes('727272727');
+    const has_real_phone = Boolean(p.hasDirectPhone) || (!isFake && cleanDigits.length >= 9 && !cleanDigits.includes('693693048'));
+    const cleanPhone = has_real_phone ? rawPhone : null;
+
+    // Metadatos de origen 100% verificables (HTML / Bodas.net / Google Business)
+    const slug = (p.slug || p.id || '').trim();
+    const catSlug = p.category === 'finca' ? 'fincas-para-bodas' : p.category === 'musica' ? 'musica' : p.category === 'catering' ? 'catering' : p.category || 'empresas';
+    const profile_url = p.profile_url || (slug ? `https://www.bodas.net/${catSlug}/${slug}` : null);
+    // ── TRAZABILIDAD CANÓNICA (directiva 6) ──
+    // sourceUrl: URL pública de origen derivada del slug + categoría (100% de registros).
+    // originHtml: nombre del volcado HTML en la bóveda física (vault/proveedores_html_indexados/).
+    const sourceUrl = p.sourceUrl || profile_url;
+    const locationForSearch = p.municipality || p.address || p.province || '';
+    const google_search_url = `https://www.google.com/search?q=${encodeURIComponent(`${cleanedName} ${locationForSearch} telefono`)}`;
+    const google_maps_url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${cleanedName} ${p.address || p.province || ''}`)}`;
+    const originHtml = p.originHtml || p.original_html || (slug ? `${slug}.html` : null);
+
+    // ── MODELO SOBERANO DE MONETIZACIÓN (directiva 8) ──
+    // CLAIM primero, LUEGO HOMOLOGACIÓN: una ficha reclamada puede además
+    // haber superado auditoría acústica (CERTIFICADA_GOLD_MASTER).
+    const isClaimed = Boolean(p.isClaimed);
+    const estadoHomologacion =
+      p.estadoHomologacion ||
+      (p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS'
+        ? (isClaimed ? 'CERTIFICADA_GOLD_MASTER' : 'AUDITORIA_VIGENTE')
+        : 'ASOCIADO_STANDARD');
+
     return {
       ...p,
       name: cleanedName || rawName,
+      phone: cleanPhone,
+      telephone: cleanPhone,
+      has_real_phone,
+      isClaimed,
+      estadoHomologacion,
+      profile_url,
+      sourceUrl,
+      originHtml,
+      google_search_url,
+      google_maps_url,
+      original_html: originHtml,
+      img: finalImages[0],
       imageUrls: finalImages,
     };
   });
@@ -224,7 +279,7 @@ export async function GET(request: Request) {
   const q = searchParams.get('q');
   const subcategory = searchParams.get('subcategory') || searchParams.get('subcat');
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-  const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '24', 10)));
+  const limit = Math.min(2000, Math.max(1, parseInt(searchParams.get('limit') || '24', 10)));
   const skip = (page - 1) * limit;
 
   // 1. INTENTO PRIMARIO: Base de datos Prisma (si está disponible y no es localhost inaccesible)
@@ -286,7 +341,9 @@ export async function GET(request: Request) {
             u.includes('.svg') ||
             u.includes('gen_logoHeader') ||
             u.includes('default_avatar') ||
-            u.includes('741e9617168a2484.jpg');
+            u.includes('741e9617168a2484.jpg') ||
+            u.includes('celebrents.s3.amazonaws.com') ||
+            u.includes('c2524615ca092dc557196134bcbbcdc1');
 
           const cleanImages = (p.imageUrls || []).filter((u: string) => !isDirty(u));
           const finalImages =

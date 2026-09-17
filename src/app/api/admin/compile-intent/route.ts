@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     };
 
     const startedAt = performance.now();
-    const compiled = compileIntentToDAG(intent, options);
+    const compiled = await compileIntentToDAG(intent, options);
     const latencyMs = Math.round((performance.now() - startedAt) * 100) / 100;
 
     return NextResponse.json({

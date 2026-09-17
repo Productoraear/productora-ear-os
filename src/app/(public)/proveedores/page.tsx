@@ -36,44 +36,39 @@ import { BentoFilterBar, CategoryItem, SubcategoryItem } from '@/components/prov
 import { PremiumMediaCarousel } from '@/components/providers/PremiumMediaCarousel';
 import { PremiumPacksCarousel } from '@/components/providers/PremiumPacksCarousel';
 import { AirbnbNeuralBookingBar } from '@/features/search/AirbnbNeuralBookingBar';
+import { PROVIDERS_MANIFEST_TOTALS, PROVIDERS_B2C_TOTAL, B2C_DIRECTORY_GREMIO_TOTALS } from '@/lib/constants/providers-manifest';
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SUBCATEGORÍAS S-CLASS: FINCAS & ESPACIOS SINGULARES
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Contadores por tipología sin SSOT oficial: se omiten deliberadamente para no
+// exponer cifras inventadas. Solo el total de gremio (manifest) es trazable.
 const FINCA_SUBCATEGORIES: SubcategoryItem[] = [
-  { id: 'all', label: 'Todas las Fincas', count: 10322 },
-  { id: 'rustica', label: '🌿 Rústicas & Dehesas', count: 1850 },
-  { id: 'cortijo', label: '🏛️ Cortijos & Haciendas', count: 868 },
-  { id: 'palacio', label: '🏰 Palacios & Castillos', count: 320 },
-  { id: 'masia', label: '🏡 Masías & Casas Rurales', count: 412 },
-  { id: 'salon', label: '🥂 Salones & Hoteles', count: 1240 },
+  { id: 'all', label: 'Todas las Fincas', count: PROVIDERS_MANIFEST_TOTALS.finca },
+  { id: 'rustica', label: '🌿 Rústicas & Dehesas' },
+  { id: 'cortijo', label: '🏛️ Cortijos & Haciendas' },
+  { id: 'palacio', label: '🏰 Palacios & Castillos' },
+  { id: 'masia', label: '🏡 Masías & Casas Rurales' },
+  { id: 'salon', label: '🥂 Salones & Hoteles' },
 ];
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // SUBCATEGORÍAS S-CLASS: MÚSICA & ARTISTAS EN DIRECTO
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const MUSICA_SUBCATEGORIES: SubcategoryItem[] = [
-  { id: 'all', label: 'Todos los Artistas', count: 2683 },
-  { id: 'solista', label: '🎤 Solistas, Boleros & Baladas', count: 420 },
-  { id: 'mariachi', label: '🎺 Mariachis & Rancheras', count: 280 },
-  { id: 'dj', label: '🎧 DJs & Animación Musical', count: 950 },
-  { id: 'banda', label: '🎸 Bandas & Grupos en Vivo', count: 680 },
-  { id: 'cuerdas', label: '🎻 Cuartetos de Cuerdas & Clásica', count: 353 },
+  { id: 'all', label: 'Todos los Artistas', count: PROVIDERS_MANIFEST_TOTALS.musica },
+  { id: 'solista', label: '🎤 Solistas, Boleros & Baladas' },
+  { id: 'mariachi', label: '🎺 Mariachis & Rancheras' },
+  { id: 'dj', label: '🎧 DJs & Animación Musical' },
+  { id: 'banda', label: '🎸 Bandas & Grupos en Vivo' },
+  { id: 'cuerdas', label: '🎻 Cuartetos de Cuerdas & Clásica' },
 ];
 
-// Conteos reales precalculados sobre los 53.623 proveedores sincronizados
+// Contadores derivados del manifest público del Data Lake (SSOT real).
+// Nada de cifras hardcodeadas: cualquier cambio se refleja editando el manifest.
 const STATIC_CATEGORY_TOTALS: Record<string, number> = {
-  ALL: 53623,
-  finca: 10322,
-  catering: 3780,
-  decoracion: 2501,
-  musica: 2683,
-  sonido: 617,
-  foto: 11764,
-  wedding: 1399,
-  moda: 9776,
-  transporte: 1504,
-  servicios: 9277,
+  ALL: PROVIDERS_B2C_TOTAL,
+  ...B2C_DIRECTORY_GREMIO_TOTALS,
 };
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -343,6 +338,7 @@ function ProveedoresDirectoryContent() {
               slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
               category: rawCat,
               province: p.province || 'Madrid',
+              municipality: p.municipality || '',
               description: p.description || '',
               price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
               rating: p.rating || 5.0,
@@ -350,7 +346,18 @@ function ProveedoresDirectoryContent() {
               img: featured,
               gallery: validImages.length > 0 ? validImages : [featured],
               isPreferred: p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS',
-              badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
+              badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO',
+              // Trazabilidad y monetización canónicas (directivas 5, 6, 7, 8):
+              phone: p.phone || p.telephone || null,
+              telephone: p.telephone || p.phone || undefined,
+              has_real_phone: p.has_real_phone !== false,
+              profile_url: p.profile_url || null,
+              sourceUrl: p.sourceUrl || p.profile_url || null,
+              originHtml: p.originHtml || p.original_html || null,
+              google_search_url: p.google_search_url,
+              google_maps_url: p.google_maps_url,
+              isClaimed: Boolean(p.isClaimed),
+              estadoHomologacion: p.estadoHomologacion
             };
           });
 
@@ -455,6 +462,7 @@ function ProveedoresDirectoryContent() {
               slug: p.shaHash ? p.shaHash.substring(0, 8) : p.id,
               category: rawCat,
               province: p.province || 'Madrid',
+              municipality: p.municipality || '',
               description: p.description || '',
               price: p.basePrice ? `${p.basePrice} €` : (p.priceRange || 'Consultar'),
               rating: p.rating || 5.0,
@@ -462,7 +470,18 @@ function ProveedoresDirectoryContent() {
               img: featured,
               gallery: validImages.length > 0 ? validImages : [featured],
               isPreferred: p.status === 'VERIFIED_ACTIVE' || p.status === 'APPROVED_SCLASS',
-              badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO'
+              badge: p.status === 'VERIFIED_ACTIVE' ? 'VERIFICADO S-CLASS' : 'DIRECTORIO HOMOLOGADO',
+              // Trazabilidad y monetización canónicas (directivas 5, 6, 7, 8):
+              phone: p.phone || p.telephone || null,
+              telephone: p.telephone || p.phone || undefined,
+              has_real_phone: p.has_real_phone !== false,
+              profile_url: p.profile_url || null,
+              sourceUrl: p.sourceUrl || p.profile_url || null,
+              originHtml: p.originHtml || p.original_html || null,
+              google_search_url: p.google_search_url,
+              google_maps_url: p.google_maps_url,
+              isClaimed: Boolean(p.isClaimed),
+              estadoHomologacion: p.estadoHomologacion
             };
           });
 
@@ -941,10 +960,21 @@ function ProveedoresDirectoryContent() {
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
                         <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
-                          <span className="text-neutral-500 uppercase block mb-1">Cierre Directo</span>
-                          <a href={`tel:${(activeModalProvider as any).phone?.replace(/[^\d+]/g, '') || ''}`} className="text-white font-bold text-lg hover:text-[#258DCD] transition-colors">
-                            {(activeModalProvider as any).phone || (activeModalProvider as any).telephone || 'Consultar con Concierge'}
-                          </a>
+                          <span className="text-neutral-500 uppercase block mb-1">Contacto Directo</span>
+                          {((activeModalProvider as any).phone || (activeModalProvider as any).telephone) && (activeModalProvider as any).has_real_phone !== false ? (
+                            <a href={`tel:${String((activeModalProvider as any).phone || (activeModalProvider as any).telephone).replace(/[^\d+]/g, '')}`} className="text-emerald-400 font-bold text-lg hover:text-emerald-300 transition-colors">
+                              {String((activeModalProvider as any).phone || (activeModalProvider as any).telephone)}
+                            </a>
+                          ) : (
+                            <a
+                              href={(activeModalProvider as any).google_search_url || `https://www.google.com/search?q=${encodeURIComponent(`${activeModalProvider.name} ${activeModalProvider.province || ''} telefono`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-amber-400 font-bold text-sm hover:text-amber-300 transition-colors inline-flex items-center gap-1.5"
+                            >
+                              🔍 Buscar Teléfono en Google (1 Clic)
+                            </a>
+                          )}
                         </div>
                         <div className="bg-white/[0.02] hover:bg-white/[0.04] transition-colors p-5 rounded-2xl border border-white/5">
                           <span className="text-neutral-500 uppercase block mb-1">Desplazamiento</span>
@@ -1022,14 +1052,45 @@ function ProveedoresDirectoryContent() {
                 </div>
 
                 <div className="flex flex-wrap gap-3 w-full sm:w-auto font-mono text-sm">
-                  <a
-                    href={makeWaLink((activeModalProvider as any).phone || (activeModalProvider as any).telephone || '693693048', activeModalProvider.name)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all border border-white/10"
-                  >
-                    <span>Consultar</span>
-                  </a>
+                  {(() => {
+                    const directPhone = (activeModalProvider as any).phone || (activeModalProvider as any).telephone;
+                    const hasDirect = directPhone && (activeModalProvider as any).has_real_phone !== false;
+                    const originUrl = (activeModalProvider as any).profile_url || (activeModalProvider as any).sourceUrl;
+                    // POLÍTICA ESTRICTA (directiva 7): jamás exponer la centralita de EAR.
+                    // Con teléfono verificado -> WhatsApp directo. Sin él -> Google + Reclamar Perfil.
+                    if (hasDirect) {
+                      return (
+                        <a
+                          href={makeWaLink(String(directPhone), activeModalProvider.name)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-6 py-4 rounded-2xl bg-green-700/80 hover:bg-green-600 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all border border-green-500/40"
+                        >
+                          <span>WhatsApp Directo</span>
+                        </a>
+                      );
+                    }
+                    return (
+                      <>
+                        <a
+                          href={(activeModalProvider as any).google_search_url || `https://www.google.com/search?q=${encodeURIComponent(`${activeModalProvider.name} ${activeModalProvider.province || ''} telefono`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-6 py-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all border border-amber-400/50"
+                        >
+                          <span>🔍 Buscar Teléfono en Google</span>
+                        </a>
+                        <a
+                          href={originUrl || `/reclamar-perfil?name=${encodeURIComponent(activeModalProvider.name)}`}
+                          target={originUrl ? '_blank' : undefined}
+                          rel={originUrl ? 'noopener noreferrer' : undefined}
+                          className="px-6 py-4 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all border border-white/10"
+                        >
+                          <span>🌐 Ficha Origen</span>
+                        </a>
+                      </>
+                    );
+                  })()}
 
                   <Link
                     href={activeModalProvider.customUrl || `/checkout/presupuesto?proveedor=${encodeURIComponent(activeModalProvider.name)}&base=${activeModalProvider.basePrice || 650}`}

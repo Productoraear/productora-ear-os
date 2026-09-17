@@ -34,6 +34,16 @@ export interface ProviderItem {
   sla?: string;
   customUrl?: string;
   telephone?: string;
+  // ── TRAZABILIDAD CANÓNICA (directivas 5, 6, 7, 8) ──
+  phone?: string | null;
+  has_real_phone?: boolean;
+  profile_url?: string | null;
+  sourceUrl?: string | null;
+  originHtml?: string | null;
+  google_search_url?: string;
+  google_maps_url?: string;
+  isClaimed?: boolean;
+  estadoHomologacion?: 'CERTIFICADA_GOLD_MASTER' | 'AUDITORIA_VIGENTE' | 'ASOCIADO_STANDARD';
 }
 
 interface BentoProviderCardProps {

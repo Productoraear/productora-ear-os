@@ -18,12 +18,17 @@ import {
   ExternalLink,
   Globe
 } from 'lucide-react';
+import { PROVIDERS_GRAND_TOTAL, formatProviderCount, formatProviderBadge } from '@/lib/constants/providers-manifest';
+
+// SSOT ÚNICO: contadores derivados del manifest, jamás hardcodeados.
+const GRAND_TOTAL_FORMATTED = formatProviderCount(PROVIDERS_GRAND_TOTAL);
+const GRAND_TOTAL_BADGE = formatProviderBadge(PROVIDERS_GRAND_TOTAL);
 
 const KPI_CARDS = [
   {
     title: "Catálogo de Proveedores",
-    value: "85.946",
-    detail: "85.946 en Bóveda SSOT / 150 Featured CDN",
+    value: GRAND_TOTAL_FORMATTED,
+    detail: `${GRAND_TOTAL_FORMATTED} en Bóveda SSOT / 150 Featured CDN`,
     badge: "100% Auditado",
     icon: Users,
     href: "/admin/call-center"
@@ -62,10 +67,10 @@ const ALL_ADMIN_DIRECT_URLS = [
   { category: "Núcleo & Simulación", name: "Manual de Operaciones 360", url: "/admin/manual-operaciones", badge: "DOCTRINA", desc: "Protocolos canónicos para ventas, call center, grabación y contingencias." },
 
   // VENTAS, LEADS & CONVERSIÓN
-  { category: "Ventas & Conversión", name: "Call Center Outbound", url: "/admin/call-center", badge: "45.6K", desc: "Despacho telefónico de novios y base de datos auditada." },
+  { category: "Ventas & Conversión", name: "Call Center Outbound", url: "/admin/call-center", badge: GRAND_TOTAL_BADGE, desc: "Despacho telefónico de novios y base de datos auditada." },
   { category: "Ventas & Conversión", name: "Centralita WhatsApp", url: "/admin/whatsapp", badge: "693 048", desc: "Monitor de mensajes directos y cierre de depósitos vía WhatsApp." },
   { category: "Ventas & Conversión", name: "Scala Leads & Sourcing", url: "/admin/sourcing", badge: "LEADS", desc: "Prospección automática y absorción de centros senior y fincas." },
-  { category: "Ventas & Conversión", name: "Directorio Proveedores CDN", url: "/admin/proveedores", badge: "2.3K CDN", desc: "Fichas públicas de proveedores y homologación técnica." },
+  { category: "Ventas & Conversión", name: "Directorio Proveedores CDN", url: "/admin/proveedores", badge: `${GRAND_TOTAL_BADGE} CDN`, desc: "Fichas públicas de proveedores y homologación técnica." },
   { category: "Ventas & Conversión", name: "Omni Training Center", url: "/admin/training", badge: "SALES", desc: "Academia de ventas, scripts comerciales y manejo de objeciones." },
 
   // FINANZAS, LEGAL & INSTITUCIONAL

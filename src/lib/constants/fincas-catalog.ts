@@ -14,7 +14,7 @@ export interface FincaHomologada {
   name: string;
   slug: string;
   location: string;
-  provincia: 'Madrid' | 'Toledo' | 'Guadalajara';
+  provincia: string;
   distanciaHubMentridaKm: number;
   capacidadMaxPax: number;
   potenciaKw: number;
@@ -42,7 +42,7 @@ export interface FincaHomologada {
     telefono: string;
     email: string;
   };
-  estadoHomologacion: 'CERTIFICADA_GOLD_MASTER' | 'AUDITORIA_VIGENTE';
+  estadoHomologacion: 'CERTIFICADA_GOLD_MASTER' | 'AUDITORIA_VIGENTE' | 'ASOCIADO_STANDARD';
   description: string;
 }
 

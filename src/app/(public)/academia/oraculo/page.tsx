@@ -212,18 +212,16 @@ export default function OraculoDiamanteRojoPage() {
                 trazable y listo para tu equipo.
               </p>
             </div>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
+            <button
+              onClick={() => {
                 document
                   .querySelector('input[aria-label="Nombre del artista"]')
                   ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }}
-              className="inline-flex items-center gap-2 rounded-full bg-[#FF2B44] px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-[#ff5063]"
+              className="inline-flex items-center gap-2 rounded-full bg-[#FF2B44] px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-[#ff5063] cursor-pointer"
             >
               <Search size={14} /> Ir al Exportador
-            </a>
+            </button>
           </div>
         </section>
       </div>

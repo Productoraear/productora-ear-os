@@ -274,6 +274,12 @@ export default async function ProvinciaFincasPage({ params }: ProvinciaFincasPro
           >
             <CheckCircle2 size={16} /> Planificar ruta desde Méntrida
           </Link>
+          <Link
+            href="/fincasparaboda"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 border border-[#ecb613]/40 text-[#ecb613] font-mono text-xs uppercase tracking-widest rounded-xl hover:bg-[#ecb613]/10 transition-all"
+          >
+            <Building2 size={16} /> Ver Red fincasparaboda.com
+          </Link>
           <a
             href={`https://wa.me/34693693048?text=${encodeURIComponent(
               `Hola Productora EAR, quiero consultar disponibilidad para una finca homologada en ${resolved.display}.`,

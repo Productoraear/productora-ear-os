@@ -31,11 +31,12 @@ import {
 import { SCLASS_12_FINCAS_HOMOLOGADAS, FincaHomologada } from '@/lib/constants/fincas-catalog';
 import { calculateB2BCommission, simulateAnnualAffiliateIncome, calculateSevenBusinessDaysDueDate } from '@/lib/b2b-billing-engine';
 import { CENTRALITA } from '@/lib/phone-constants';
+import FincasNationalCatalogClient from '@/app/fincas/FincasNationalCatalogClient';
 
-type PortalView = 'CATALOGO_12_FINCAS' | 'SIMULADOR_AFILIACION' | 'ONBOARDING_EXPRESS_15MIN';
+type PortalView = 'DIRECTORIO_NACIONAL_COMPLETO' | 'CATALOGO_12_FINCAS' | 'SIMULADOR_AFILIACION' | 'ONBOARDING_EXPRESS_15MIN';
 
 export default function FincasB2BPortal() {
-  const [activeView, setActiveView] = useState<PortalView>('CATALOGO_12_FINCAS');
+  const [activeView, setActiveView] = useState<PortalView>('DIRECTORIO_NACIONAL_COMPLETO');
   
   // Filtros de Catálogo
   const [provinciaFilter, setProvinciaFilter] = useState<string>('Todas');

@@ -88,35 +88,22 @@ const MENU_FOLDERS: MenuFolder[] = [
       {
         title: 'Edwin Agudelo · Solista Premium',
         desc: 'Show 1h (2 pases), Bose 2.000W, sombreros charros, flores y fotos',
-        href: '/artistas',
+        href: '/reservar/solista',
         badge: '350 €',
         icon: Music
       },
       {
-        title: 'Mariachi 6 Músicos de Gala',
-        desc: 'Edwin + 5 acompañantes (trompeta, vihuela, guitarrón, violín)',
-        href: '/artistas#formatos-oficiales',
-        badge: '600 €',
-        icon: Users
-      },
-      {
-        title: 'Mariachi 9 Músicos Pro',
-        desc: 'Edwin + 8 acompañantes con sección armónica completa',
-        href: '/artistas#formatos-oficiales',
-        badge: '900 €',
-        icon: Users
-      },
-      {
-        title: 'Gran Ensamble 13 Músicos',
-        desc: 'Edwin + 12 maestros para recintos mayores y apoteosis',
-        href: '/artistas#formatos-oficiales',
-        badge: '1.300 €',
+        title: 'Mariachis & Cuartetos de Gala',
+        desc: 'Trío (450€), Quinteto Imperial (750€) o Monumental (1.300€)',
+        href: '/simulacion-mariachis',
+        badge: 'Packs',
         icon: Users
       },
       {
         title: 'Cotizador Rápido con Kilometraje',
         desc: 'Cálculo transparente desde Méntrida con reserva de 100 €',
-        href: '/artistas#cotizador-cierre',
+        href: '/reservar/solista',
+        badge: 'Price-Lock',
         icon: Lock
       }
     ]
@@ -128,9 +115,17 @@ const MENU_FOLDERS: MenuFolder[] = [
     subitems: [
       {
         title: 'Fincas & Espacios Monumentales',
-        desc: 'Cortijos, haciendas y salones auditados',
-        href: '/proveedores?cat=finca',
+        desc: 'Catálogo de 9.559 fincas y salones con auditoría acústica',
+        href: '/fincas',
+        badge: 'Catálogo',
         icon: Building2
+      },
+      {
+        title: 'VIMUME Senior Care (B2G)',
+        desc: 'Protocolo clínico 40 Hz y licitaciones menores < 14.250 €',
+        href: '/vimume',
+        badge: 'Art. 118',
+        icon: Sparkles
       },
       {
         title: 'Música en Vivo & Mariachis',

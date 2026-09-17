@@ -1,6 +1,66 @@
-src/data/*.json
-src/data/vimume-brain/
-public/images/
+# ════════════════════════════════════════════════════════════════════════════════
+# .clineignore — ESCUDO TOTAL ZERO-TOKEN PARA DEEPSEEK (V3 / R1)
+# ════════════════════════════════════════════════════════════════════════════════
+
+# 1. Data Lakes, Bóvedas y Datasets Masivos (ZTM Protocol)
+public/data/**
+src/data/**
+vault/**
+data/**
+scripts/nightcrawler_results/**
+*.json.gz
+*.csv
+*.tsv
+*.xlsx
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+
+# 2. Builds, Artefactos, Logs y Cachés de Compilador
 node_modules/
 .next/
+.turbo/
+.vercel/
+.firebase/
+out/
+dist/
+build/
+coverage/
 *.log
+*.tsbuildinfo
+tsc_audit.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# 3. Binarios Multimedia y Recursos Pesados (Cero Lectura AI)
+public/images/**
+public/audio/**
+public/videos/**
+public/data/providers/**
+vault/proveedores_html_indexados/**
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.svg
+*.ico
+*.mp3
+*.wav
+*.mp4
+*.webm
+*.pdf
+*.zip
+*.tar
+*.gz
+*.7z
+
+# 4. Mapas de Código y Archivos de Control Git
+*.map
+.git/**
+.github/**
+
+

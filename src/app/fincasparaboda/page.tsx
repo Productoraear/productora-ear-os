@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import { SCLASS_12_FINCAS_HOMOLOGADAS, FincaHomologada } from '@/lib/constants/fincas-catalog';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { PROVIDERS_MANIFEST_TOTALS } from '@/lib/constants/providers-manifest';
 
 export default function FincasSClassPage() {
   const [formData, setFormData] = useState({
@@ -102,7 +103,7 @@ export default function FincasSClassPage() {
               href="/proveedores?cat=finca" 
               className="inline-flex items-center justify-center gap-2 bg-[#0D0D15] hover:bg-[#141420] text-zinc-200 border border-[#262638] font-semibold px-8 py-4 rounded-xl transition-all font-mono text-sm"
             >
-              <Layers className="w-4 h-4 text-[#ecb613]" /> Directorio de Proveedores (10.322 Fincas)
+              <Layers className="w-4 h-4 text-[#ecb613]" /> Directorio de Proveedores ({PROVIDERS_MANIFEST_TOTALS.finca.toLocaleString('es-ES')} Fincas)
             </Link>
           </div>
 
@@ -312,7 +313,7 @@ export default function FincasSClassPage() {
                   Directorio Soberano de Fincas
                 </h3>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  Accede a las 10.322 fincas y espacios singulares indexados en España con filtros por dehesa, cortijo, castillo, masía y salones.
+                  Accede a las {PROVIDERS_MANIFEST_TOTALS.finca.toLocaleString('es-ES')} fincas y espacios singulares indexados en España con filtros por dehesa, cortijo, castillo, masía y salones.
                 </p>
               </div>
               <div className="flex items-center gap-1 text-xs font-mono text-[#ecb613] font-bold">
