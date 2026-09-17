@@ -169,6 +169,18 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/infraestructura/mundial-2026`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/contacto`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/cotizador`, 0.80, 'weekly');
+
+      // Hubs canónicos S-Class (marcas soberanas & flasheo EAR SOS)
+      addEntry(`${BASE_URL}/acg`, 0.92, 'weekly');
+      addEntry(`${BASE_URL}/mariachis`, 0.92, 'weekly');
+      addEntry(`${BASE_URL}/mariachis/unirse`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/alianzas`, 0.88, 'weekly');
+      addEntry(`${BASE_URL}/fincas/portal-demostrativo`, 0.85, 'weekly');
+      addEntry(`${BASE_URL}/vimume/inversion`, 0.88, 'weekly');
+      addEntry(`${BASE_URL}/academia/oraculo`, 0.88, 'weekly');
+      addEntry(`${BASE_URL}/voicestudio/studio-pro`, 0.88, 'weekly');
+      addEntry(`${BASE_URL}/artistas/estudio`, 0.88, 'weekly');
+      addEntry(`${BASE_URL}/sos-rescate`, 0.90, 'daily');
       addEntry(`${BASE_URL}/neural-journey`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/oraculo`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/afiliados`, 0.80, 'monthly');

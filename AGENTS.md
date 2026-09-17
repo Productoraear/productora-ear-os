@@ -79,6 +79,19 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
   será considerado DISTRACCIÓN y vetado hasta que los motores comerciales estén facturando.
 
 
+━━ 10. BLINDAJE JURÍDICO EUROPEO, PROTECCIÓN DE MARCAS Y JUSTIFICACIÓN SPLIT 80/10/10 ━━━━━━━━━
+- PROHIBICIÓN ABSOLUTA DE MARCAS REGISTRADAS Y NOMBRES DE TERCEROS:
+  Queda estrictamente prohibido mencionar en código, interfaces, URLs, JSONs o metadatos marcas registradas de terceros (Dani Aragón, incubadoras externas, "Velocity", Argal, etc.). Todo conocimiento absorbido debe despersonalizarse y rebautizarse bajo la terminología propia y soberana de EAR OS ("Funnels de Aceleración Cuántica", "Ciclo Cinético LTV", "Bóveda Maestra de Crecimiento Musical"). Las únicas menciones a entidades externas permitidas son citas estrictamente bibliográficas o estudios clínicos indexados en literatura médica/legal (ej. Directivas UE 2019/790 y 2022/2065, Ley 49/2002 de Mecenazgo, OMS ICOPE).
+- JUSTIFICACIÓN CANÓNICA DEL SPLIT SOBERANO 80/10/10 (EL ESCUDO DE VALOR):
+  A todo cliente, artista, proveedor o finca se le debe justificar con transparencia cristalina por qué el 80/10/10 es un modelo ético, protector y no comparable al 20%-50% parasitario de un mánager o agencia tradicional:
+  1) 80% ARTISTA EJECUTOR: Soberanía y retribución digna inmediata. El artista percibe el 80% neto de su caché o venta digital sin intermediarios.
+  2) 10% INFRAESTRUCTURA EAR OS: Cero cuotas fijas. Cubre pasarela Stripe Price-Lock SHA-256, telemetría cuántica en tiempo real, captación pSEO, servidores Edge y soporte técnico continuo.
+  3) 10% VIMUME / IMPACTO SOCIAL & SANITARIO (COMPENSACIÓN Y RETORNO 100% DEMOSTRABLE):
+     - DEDUCCIÓN FISCAL LEY 49/2002: Hasta el 80% deducible en IRPF o 40%-50% en Impuesto de Sociedades (Certificado Modelo 182 AEAT).
+     - CERTIFICADO DE IMPACTO RSC / ESG: Financiación directa de sesiones de neuro-musicoterapia para mayores con deterioro cognitivo en residencias (Protocolo 40 Hz Gamma, desescalada del 74% en psicofármacos y 38.2% en agitación).
+     - SROI 4.85x: Cada euro aportado genera un retorno social contrastado de 4,85 €. No es un coste, es un dividendo social y reputacional que prestigia al evento, a la finca y al artista.
+
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know

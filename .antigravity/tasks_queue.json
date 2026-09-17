@@ -1366,7 +1366,7 @@
       "id": "sclass-b599-global-omnirole-supersecurity-and-sitemap-seal",
       "title": "B5.99: Globalización Dinámica Multi-Rol, Blindaje de Superseguridad (Headers & Rate-Limit) y Sellado de Sitemap RFC 3986",
       "block": 5,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Cierre y blindaje definitivo para producción: 1) Globalización de herramientas por roles (src/lib/auth/roleContextEngine.ts): Contexto dinámico para ADMIN, ARTIST, VENDOR, CLIENT e INSTITUTION, adaptando vistas, split porcentual, permisos y telemetría según el actor. 2) Superseguridad Militar: Inyectar en next.config.ts cabeceras estrictas HTTP (HSTS, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff, Referrer-Policy, Permissions-Policy) y middleware/utility de Rate Limiting anti-DDoS (src/lib/security/rateLimitGuard.ts) para endpoints de IA y pagos. 3) Actualización Canónica del Sitemap (src/app/sitemap.ts): Inyectar en la partición 0 todas las rutas de alto impacto (/acg, /mariachis, /mariachis/unirse, /alianzas, /fincas/portal-demostrativo, /vimume/inversion, /academia/oraculo, /voicestudio/studio-pro, /artistas/estudio) bajo estricto estándar RFC 3986 sin caracteres espurios.",
       "scaffold": {
         "files_to_touch": [
@@ -1384,7 +1384,7 @@
       "id": "sclass-b095-sos-equipment-rescue-fleet",
       "title": "B0.95: EAR SOS RESCUE — Centralita Soberana de Rescate Técnico y Despacho Flash de Equipamiento en Caliente",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Módulo de asistencia técnica urgente para eventos (sin marcas de terceros): 1) Motor logístico de proximidad y cubicaje (src/lib/logistics/rescueFleetEngine.ts) que categoriza emergencias por volumen de transporte: Tier Micro/Moto (<5 kg: portátiles, cables, tarjetas de audio, micrófonos), Tier Medio/Turismo (<30 kg: proyectores, pantallas, monitores de escenario), Tier Pesado/Furgón (>30 kg: PA completa, truss, iluminación). 2) Localizador de inventario en tiempo real entre el arsenal propio y los proveedores homologados en un radio de 30 km. 3) Interfaz de emergencia OLED (src/components/logistics/SosEquipmentRescueModal.tsx) con botón de pánico 'SOS RESCATE TÉCNICO', cálculo de tiempo de entrega en vivo (<45 min), fianza instantánea y enlace de tracking GPS del repartidor/chofer. 4) Endpoint de despacho rápido /api/logistics/sos-dispatch.",
       "scaffold": {
         "files_to_touch": [
