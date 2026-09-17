@@ -20,7 +20,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Zap,
-  MessageCircle
+  MessageCircle,
+  Satellite
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 
@@ -39,6 +40,7 @@ const NAVIGATION_MODULES = [
   { id: 'journey', name: 'Journey Heatmap UX', href: '/admin/journey-heatmap', icon: Compass, badge: 'HEATMAP' },
   { id: 'training', name: 'Omni Training Center', href: '/admin/training', icon: GraduationCap, badge: 'SALES' },
   { id: 'telemetry', name: 'Telemetría Bare-Metal', href: '/admin/telemetria', icon: Activity, badge: 'OLLAMA' },
+  { id: 'sentinel', name: 'Consola Sentinel', href: '/admin/sentinel', icon: Satellite, badge: 'ZERO-TKN' },
   { id: 'command', name: 'Centro de Mando & Skills', href: '/admin/command-center', icon: Shield, badge: 'ROOT' }
 ];
 

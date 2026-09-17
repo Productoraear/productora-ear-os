@@ -1160,8 +1160,8 @@
       "id": "sclass-preflight-audit-and-deploy-github-netlify",
       "title": "B0.16: Auditoría Pre-Flight Anti-Bloat y Despliegue a GitHub & Netlify",
       "block": 0,
-      "status": "PENDING",
-      "description": "Ejecutar la auditoría estricta pre-commit (Doctrina Purista <50 MB), asegurar que los 339 MB de JSONs de public/data/providers/ queden desindexados de Git con manifest.json preservado, validar tsc --noEmit (Exit 0) y despachar el push hacia GitHub (origin main) para disparar el build CI/CD en Netlify.",
+      "status": "COMPLETED",
+      "description": "Ejecutar la auditoría estricta pre-commit (Doctrina Purista <50 MB), asegurar que los 339 MB de JSONs de public/data/providers/ queden desindexados de Git con manifest.json preservado, validar tsc --noEmit (Exit 0) y despachar el push hacia GitHub (origin main) para disparar el build CI/CD en Netlify. Resuelta la dependencia de importación remota en servicios/page.tsx mediante la partición tipada src/data/featured-vendors.ts.",
       "scaffold": {
         "files_to_touch": [
           ".gitignore",
@@ -1172,6 +1172,86 @@
         "macro_script": "1) Asegurar desindexado anti-bloat: git rm --cached public/data/providers/*.json 2>$null; git add public/data/providers/manifest.json .gitignore. 2) Añadir cambios limpios: git add src/ scripts/sync_providers_manifest.ps1 scripts/audit_providers_sync.ps1 scripts/audit_srcdata_providers.ps1 .antigravity/tasks_queue.json. 3) Auditar pre-commit: git status --short && git diff --cached --stat (verificar que no haya binarios ni volcados >1 MB). 4) Commit atómico: git commit -m 'feat(acg): deploy autonomous commerce grid, bodas taxonomy mirror and git anti-bloat purge'. 5) Push a GitHub: git push origin main (y opcional: git push vercel-repo main)."
       },
       "validation": "git status --porcelain | Select-String 'public/data/providers/' | Measure-Object -Line && node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-vimume-patient-clinical-engine",
+      "title": "B0.17: Motor Clínico VIMUME, SSOT Senior (Edad >= 50), Barómetro 2024, OMS ICOPE y Banda Sonora Vital™",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Construir el motor clínico tipado src/lib/vimume/vimumePatientEngine.ts con modelos inmutables y regla estricta: todo paciente debe tener edad >= 50 años (Senior SSOT). Integrar métricas del Barómetro Sociosanitario del Mayor en España 2024 (68.4% soledad no deseada, reducción 38.2% CMAI, desescalada del 74% en psicofármacos) y directivas OMS Envejecimiento Saludable 2021-2030 (ICOPE y Terapias No Farmacológicas). Incluye registro de hitos mayores (SPEECH_RECOVERY - habla recuperada), Banda Sonora Vital™ de 10 temas biográficos (15-25 años) y persistencia reactiva en localStorage/Cloud.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/vimume/vimumePatientEngine.ts"
+        ],
+        "macro_script": "Exportar interfaces tipadas (VimumePatientRecord con edad >= 50, ClinicalMilestone, CMAIRecord, VitalSoundtrackTrack, SeniorBarometerStats), catálogo maestro semilla de residentes mayores en centros de día y residencias homologadas, y funciones analíticas de desescalada de agitación y retorno sociosanitario SROI (4.85x)."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-vimume-therapist-console-and-patient-dossier",
+      "title": "B0.18: Consola Clínica del Terapeuta (/vimume/centros/[slug]), Ficha Multimedia WebRTC y Modelo 182 AEAT",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Desarrollar la suite clínica completa: 1) Osciloscopio visualizador de 40 Hz Gamma en Web Audio con limitador acústico a <75 dB SPL. 2) Grabador multimedia WebRTC (VimumeMediaRecorder) directo desde cámara/micrófono para registrar en tiempo real la reacción o la recuperación del habla de un residente. 3) Ficha individual interactiva del paciente (VimumePatientDossier) con dashboard de progreso temporal, timeline de hitos y reproductor de la Banda Sonora Vital™. 4) Modal interactivo con generador de certificados oficiales de deducción fiscal del 80% (Ley 49/2002 / Modelo 182 AEAT) consumiendo vimume-mecenazgo-engine.ts. 5) Rutas dinámicas /vimume/centros/[slug] y /vimume/pacientes/[id].",
+      "scaffold": {
+        "files_to_touch": [
+          "src/components/vimume/VimumeOscilloscope40Hz.tsx",
+          "src/components/vimume/VimumeMediaRecorder.tsx",
+          "src/components/vimume/VimumePatientDossier.tsx",
+          "src/components/vimume/VimumeFiscalCertificateModal.tsx",
+          "src/app/(public)/vimume/centros/[slug]/page.tsx",
+          "src/app/(public)/vimume/pacientes/[id]/page.tsx"
+        ],
+        "macro_script": "Implementar Server Components y Client Components con estética OLED True Black (#030305), acentos violeta neón (#8b5cf6), cyan hielo (#00E5FF) y oro noble (#ecb613). Conectar con el motor de pacientes y el motor de mecenazgo sin dependencias ausentes."
+      },
+    },
+    {
+      "id": "sclass-vimume-corporate-rsc-sponsorship",
+      "title": "B0.19: Suite de Apadrinamiento Corporativo RSC (/vimume/inversion) & Absorción Barómetro Senior 2024 (100%)",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Desplegar el módulo de Apadrinamiento Corporativo RSC en src/app/(public)/vimume/inversion/page.tsx: paquetes para empresas (Tier 3.000 € / 5.000 € / 10.000 €) con deducción del 40%-50% en Impuesto de Sociedades (Ley 49/2002 Art. 20), calculadora de retorno SROI (4.85x), métricas de impacto ESG y entregables de vídeo-documental con branding del sponsor. Una vez validado, mover los archivos del Barómetro Senior 2024 y Guion Sponsor a H:\\ARCHIVO_HISTORICO_EAR\\ABSORBIDOS_COMPLETOS\\ sellados al 100%.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/(public)/vimume/inversion/page.tsx",
+          "src/components/vimume/VimumeCorporateSponsorship.tsx"
+        ],
+        "macro_script": "Crear el componente interactivo VimumeCorporateSponsorship.tsx consumiendo calculateMecenazgo de vimume-mecenazgo-engine.ts, integrarlo en inversion/page.tsx bajo estética de alto nivel B2B ESG y registrar el sellado del activo documental en H:\\ARCHIVO_HISTORICO_EAR\\ABSORBIDOS_COMPLETOS\\."
+      },
+    },
+    {
+      "id": "sclass-sentinel-cockpit-and-local-cli",
+      "title": "B0.20: Consola Visual Sentinel (/admin/sentinel) & Script de Ingesta Local Bare-Metal (Zero-Token)",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Desplegar el sistema de monitorización autónoma en segundo plano para trabajar con Cline / Ollama local en VS Code sin gastar tokens de API: 1) Vista interactiva en src/app/(admin)/admin/sentinel/page.tsx con radar de archivos pendientes en H:\\, porcentaje de absorción en vivo (0-100%), sugerencias de negocio interactivas (A/B/C) y botón 'Absorber & Mover a H:\\ARCHIVO_HISTORICO_EAR\\ABSORBIDOS_COMPLETOS\\'. 2) Script CLI local 'scripts/sentinel_absorber.ps1' que corre en streaming sobre Node.js/Ollama local (qwen-sclass) en el puerto 11434, devolviendo solo resúmenes JSON (<250 tokens) a Cline para evitar colapso de contexto.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/(admin)/admin/sentinel/page.tsx",
+          "src/components/admin/SentinelAbsorptionRadar.tsx",
+          "scripts/sentinel_absorber.ps1"
+        ],
+        "macro_script": "Construir la vista OLED en /admin/sentinel con acceso directo desde el Omnicockpit (/admin), listando los documentos escaneados, el porcentaje vampirizado y los botones de decisión interactiva. Programar el script PowerShell que Cline ejecuta en terminal local para rastrear sin gastar tokens."
+      },
+    },
+    {
+      "id": "sclass-oraculo-diamante-rojo-consulting-engine",
+      "title": "B0.21: Oráculo Diamante Rojo (/academia/oraculo) — Motor Consultivo Algorítmico & Funnels Velocity",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Construir la suite consultiva 'Oráculo Diamante Rojo' en src/app/(public)/academia/oraculo/page.tsx (y espejo en /oraculo): 1) Motor de Inteligencia y Respuestas src/lib/academia/oraculoEngine.ts absorbiendo los clusters de crecimiento musical, algoritmos de Spotify (save rate, discovery), cronograma dinámico interactivo de 61 y 99 Días Haciendo Clic, y funnels Velocity (Oyente -> Fan -> Comprador LTV) sin menciones a terceros. 2) Tono 'Baño de Realidad con Pasos Accionables S-Class' para artistas validados. 3) Calculadora de Salud Algorítmica de Spotify y simulador de inversión. 4) Biblioteca interactiva de 30 Casos Críticos de la Industria para consulta en 1 clic. 5) Exportador de Auditoría en PDF Criptográfico con sello de certificación EAR OS.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/academia/oraculoEngine.ts",
+          "src/components/academia/OraculoSearchConsole.tsx",
+          "src/components/academia/GanttChronogram6199.tsx",
+          "src/components/academia/SpotifyAlgorithmAuditor.tsx",
+          "src/components/academia/VelocityFunnelCalculator.tsx",
+          "src/app/(public)/academia/oraculo/page.tsx"
+        ],
+        "macro_script": "Implementar el motor tipado de consultas y auditorías consumiendo artistas-knowledge-base.json. Crear la interfaz inmersiva estilo Bloomberg/Perplexity musical con estética OLED (#030305 y rubí #FF2B44) con biblioteca de 30 casos pre-cargados, diagrama de Gantt interactivo y exportación de informe."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }
   ]
 }
