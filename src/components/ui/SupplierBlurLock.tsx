@@ -101,26 +101,47 @@ export const SupplierBlurLock: React.FC<SupplierBlurLockProps> = ({
         </div>
 
         <h3 className="text-xl sm:text-2xl font-extrabold text-white font-syne max-w-xl leading-snug">
-          Desbloquea el Contacto Directo & <span className="text-[#ecb613]">Disponibilidad en Tiempo Real</span>
+          Verificación Oficial & <span className="text-[#ecb613]">Disponibilidad en Tiempo Real</span>
         </h3>
 
         <p className="text-xs sm:text-sm text-zinc-400 mt-2 max-w-lg leading-relaxed">
-          Acceso instantáneo al canal directo con <strong className="text-zinc-200">{supplierName}</strong> ({category} en {city}). Incluye auditoría técnica previa y <span className="text-emerald-400 font-semibold">Garantía de 0 Fallos</span> (Smart-Lock 72h).
+          Consulta fechas, caché oficial y disponibilidad de <strong className="text-zinc-200">{supplierName}</strong> ({category} en {city}) a través de la centralita técnica de Productora EAR.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 my-5 w-full max-w-md text-left text-xs font-mono text-zinc-300">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 my-4 w-full max-w-md text-left text-xs font-mono text-zinc-300">
           <div className="flex items-center gap-1.5 bg-black/60 p-2.5 rounded-xl border border-white/5">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>Teléfono Auditado</span>
+            <span>Proveedor Auditado</span>
           </div>
           <div className="flex items-center gap-1.5 bg-black/60 p-2.5 rounded-xl border border-white/5">
             <Clock className="w-4 h-4 text-[#ecb613] shrink-0" />
-            <span>Reserva 72 Horas</span>
+            <span>Respuesta &lt; 15 min</span>
           </div>
           <div className="flex items-center gap-1.5 bg-black/60 p-2.5 rounded-xl border border-white/5">
             <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
             <span>Garantía 0 Fallos</span>
           </div>
+        </div>
+
+        {/* CANALES DE CONTACTO DIRECTO INMEDIATO (CONVERSIÓN 0€) */}
+        <div className="w-full max-w-md space-y-2.5 my-2">
+          <a
+            href="tel:+34693693048"
+            className="w-full py-3.5 px-5 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm rounded-2xl shadow-xl shadow-emerald-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-mono uppercase tracking-wider"
+          >
+            <Phone className="w-4 h-4 fill-current" />
+            <span>Llamar a Centralita: 693 693 048</span>
+          </a>
+
+          <a
+            href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero consultar disponibilidad y presupuesto para ${supplierName} (${category} en ${city}).`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-3.5 px-5 bg-[#25D366]/20 hover:bg-[#25D366]/30 border border-[#25D366]/40 text-[#25D366] hover:text-white font-bold text-xs rounded-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-mono uppercase tracking-wider"
+          >
+            <Mail className="w-4 h-4" />
+            <span>Consultar por WhatsApp Express</span>
+          </a>
         </div>
 
         {error && (
@@ -130,28 +151,26 @@ export const SupplierBlurLock: React.FC<SupplierBlurLockProps> = ({
           </div>
         )}
 
-        <button
-          onClick={handleUnlock}
-          disabled={loading}
-          className="w-full max-w-md py-4 px-6 bg-gradient-to-r from-[#ecb613] via-[#d4a855] to-[#ecb613] text-black font-extrabold text-sm sm:text-base rounded-2xl shadow-xl shadow-[#ecb613]/20 hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50 font-mono"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Conectando con Stripe Checkout...</span>
-            </>
-          ) : (
-            <>
-              <Sparkles className="w-5 h-5" />
-              <span>Desbloquear Datos de Contacto (10 €)</span>
-              <ArrowRight className="w-4 h-4" />
-            </>
-          )}
-        </button>
-
-        <span className="text-[10px] text-zinc-500 font-mono mt-3">
-          * Pago único de 10 € compensable al 100% en la contratación final del evento.
-        </span>
+        {/* PASARELA ALTERNATIVA VIP UNLOCK (OPCIONAL) */}
+        <div className="pt-2 border-t border-white/10 w-full max-w-md">
+          <button
+            onClick={handleUnlock}
+            disabled={loading}
+            className="w-full py-2.5 px-4 bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 font-mono"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Conectando con Stripe...</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
+                <span>Desbloqueo VIP Autónomo Directo (10 €)</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );

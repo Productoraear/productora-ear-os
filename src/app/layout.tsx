@@ -39,6 +39,7 @@ import SovereignFooter from "@/app/components/layout/SovereignFooter";
 import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 import { EarConcierge } from "@/components/Astra/EarConcierge";
+import { SovereignFloatingCallBar } from "@/components/layout/SovereignFloatingCallBar";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"),
@@ -140,6 +141,7 @@ export default function RootLayout({
                             <OmniSearchModal />
                             <EarConcierge />
                             <DynamicMobileExperienceOrchestrator />
+                            <SovereignFloatingCallBar />
                           </div>
                         </SmoothScrollProvider>
                       </EventCartProvider>
