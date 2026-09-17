@@ -422,3 +422,71 @@ export function getPatientsByCenter(
 export function getCenterBySlug(slug: string): SeniorCatalogEntry | undefined {
   return SENIOR_CARE_CENTER_CATALOG.find((c) => c.centerSlug === slug);
 }
+
+/**
+ * Muestra representativa de pacientes senior (edad >= 50 obligatoria)
+ * para hidratar las rutas /vimume/pacientes/[id] en Server Components.
+ */
+export const VIMUME_SAMPLE_PATIENTS: VimumePatientRecord[] = [
+  {
+    id: 'PAT-8823',
+    centerSlug: 'residencia-las-villas-toledo',
+    centerName: 'Residencia Las Villas de Toledo',
+    patientAlias: 'MGA-1944',
+    age: 82,
+    gender: 'F',
+    diagnosis: 'Alzheimer Fase Moderada (GDS 4)',
+    stage: 'ACTIVE_INTERVENTION',
+    cmaiHistory: [
+      { id: 'cmai-1', recordedAt: '2026-08-01T10:00:00Z', score: 68, subscale: 'agitacion_verbal' },
+      { id: 'cmai-2', recordedAt: '2026-08-15T10:00:00Z', score: 52, subscale: 'agitacion_verbal' },
+      { id: 'cmai-3', recordedAt: '2026-09-01T10:00:00Z', score: 42, subscale: 'agitacion_verbal' }
+    ],
+    milestones: [
+      {
+        id: 'mil-1',
+        type: 'SPEECH_RECOVERY',
+        title: 'Recuperación de Habla Espontánea',
+        description: 'La paciente cantó la estrofa completa de Bésame Mucho y mantuvo conversación de 4 minutos con el terapeuta tras 6 meses en mutismo.',
+        achievedAt: '2026-09-05T11:30:00Z',
+        clinicianNotes: 'Activación inmediata tras estimulación 40 Hz Gamma.'
+      }
+    ],
+    vitalSoundtrack: [
+      { id: 'vst-1', position: 1, title: 'Bésame Mucho', artist: 'Consuelo Velázquez', genre: 'Bolero', decade: '1959-1969', bpm: 78, frequencyHz: 40, durationSec: 240, emotionalTag: 'Amor / Reminiscencia' },
+      { id: 'vst-2', position: 2, title: 'Quién será', artist: 'Pedro Infante', genre: 'Bolero', decade: '1959-1969', bpm: 82, frequencyHz: 40, durationSec: 210, emotionalTag: 'Juventud' },
+      { id: 'vst-3', position: 3, title: 'Cielito Lindo', artist: 'Tradicional', genre: 'Ranchera', decade: '1959-1969', bpm: 92, frequencyHz: 41, durationSec: 200, emotionalTag: 'Identidad' }
+    ],
+    createdAt: '2026-08-01T09:00:00Z',
+    updatedAt: '2026-09-17T08:00:00Z',
+    notes: 'Responde extraordinariamente a boleros de su juventud.'
+  },
+  {
+    id: 'PAT-8824',
+    centerSlug: 'centro-de-dia-santa-maria-madrid',
+    centerName: 'Centro de Día Santa María de Madrid',
+    patientAlias: 'ARR-1948',
+    age: 78,
+    gender: 'M',
+    diagnosis: 'Deterioro Cognitivo Leve',
+    stage: 'ACTIVE_INTERVENTION',
+    cmaiHistory: [
+      { id: 'cmai-4', recordedAt: '2026-08-10T11:00:00Z', score: 55, subscale: 'agitacion_fisica' },
+      { id: 'cmai-5', recordedAt: '2026-09-05T11:00:00Z', score: 36, subscale: 'agitacion_fisica' }
+    ],
+    milestones: [
+      {
+        id: 'mil-2',
+        type: 'PSYCHOTROPIC_DESCALATION',
+        title: 'Retirada de Neuroléptico Nocturno',
+        description: 'Desescalada médica completa de medicación de rescate tras 8 semanas de sesiones VIMUME.',
+        achievedAt: '2026-09-10T16:00:00Z'
+      }
+    ],
+    vitalSoundtrack: [
+      { id: 'vst-4', position: 1, title: 'El Reloj', artist: 'Lucho Gatica', genre: 'Bolero', decade: '1963-1973', bpm: 76, frequencyHz: 40, durationSec: 220, emotionalTag: 'Paz' }
+    ],
+    createdAt: '2026-08-10T09:00:00Z',
+    updatedAt: '2026-09-17T08:00:00Z'
+  }
+];

@@ -13,11 +13,21 @@ if (-not (Test-Path $destRoot)) {
     New-Item -ItemType Directory -Path $destRoot -Force | Out-Null
 }
 
-# El radar apunta exclusivamente a la boveda de ingesta soberana.
+# El radar apunta prioritariamente a H:\ (bovedas maestras) y progresivamente a unidades detectadas (C:\, D:\, E:\)
 # Nunca escaneamos el repo (src/, scripts/, prisma/) para no desplazar codigo fuente.
-$rootScan = @(
-    "H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT"
-) | Where-Object { Test-Path $_ }
+$candidateRoots = @(
+    "H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT",
+    "H:\ARCHIVO_HISTORICO_EAR",
+    "H:\ARCHIVO_FRIO_ESTRUCTURAL",
+    "C:\Users\M2-W10\Documents",
+    "D:\EAR_ARCHIVES",
+    "D:\SANTUARIO"
+)
+$rootScan = $candidateRoots | Where-Object { Test-Path $_ }
+if ($rootScan.Count -eq 0) {
+    # Fallback seguro
+    $rootScan = @("H:\00_PRODUCTORA_EAR") | Where-Object { Test-Path $_ }
+}
 
 # Solo absorbemos documentos ligeros (<1MB) para mantener el repo ultra-ligero
 $pendingExtensions = @('.md', '.txt', '.json', '.csv', '.pdf', '.py', '.ps1', '.ts', '.tsx', '.js', '.html')
