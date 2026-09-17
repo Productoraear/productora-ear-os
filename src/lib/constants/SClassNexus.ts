@@ -124,3 +124,62 @@ export const MASTER_SERVICES = [
     slug: 'servicios-audiovisuales/evento-corporativo'
   }
 ];
+
+/**
+ * � SSOT CANÓNICO DE PROVEEDORES (Reconciliación Militar B0.23)
+ * ------------------------------------------------------------------
+ * Cifra auditorada y sellada contra `public/data/providers/manifest.json`.
+ * Prohibido el "baile de cifras": esta es la única fuente de verdad.
+ */
+export const PROVIDERS_CANONICAL = {
+  total: 85946,
+  breakdown: {
+    foto: 35153,
+    fincas: 9559,
+    sonido: 8963,
+    moda: 8777,
+    servicios: 8617,
+    musica: 5359,
+    catering: 4096,
+    transporte: 1961,
+    deco: 1650,
+    wedding: 1011,
+    senior: 800,
+  },
+  lastAudit: '2026-09-17',
+  manifestPath: 'public/data/providers/manifest.json',
+} as const;
+
+/** Suma de control: debe igualar `total`. */
+export const PROVIDERS_BREAKDOWN_SUM = Object.values(
+  PROVIDERS_CANONICAL.breakdown,
+).reduce((acc, n) => acc + n, 0);
+
+/**
+ * �🏛️ SSOT CANÓNICA MILITAR — CONTEO EXACTO DE PROVEEDORES
+ * --------------------------------------------------------
+ * Cifra auditada en public/data/providers/manifest.json:
+ * TOTAL EN BÓVEDA PARTICIONADA: 85.946 proveedores indexados.
+ * Prohibido cualquier baile de cifras (45.666, 74.845, 81.000).
+ */
+export const SSOT_PROVIDER_METRICS = {
+  TOTAL_PROVIDERS_VAULT: 85946,
+  TOTAL_PROVIDERS_FORMATTED: '85.946',
+  CATEGORIES_COUNT: 11,
+  MANIFEST_PARTITIONS: {
+    foto: 35153,
+    finca: 9559,
+    sonido: 8963,
+    moda: 8777,
+    servicios: 8617,
+    musica: 5359,
+    catering: 4096,
+    transporte: 1961,
+    decoracion: 1650,
+    wedding: 1011,
+    senior_care: 800
+  },
+  CALL_CENTER_VERIFIED_COUNT: 85946,
+  FEATURED_EDGE_CDN_COUNT: 150
+};
+

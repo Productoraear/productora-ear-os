@@ -550,7 +550,7 @@
       "id": "mvp-31-story-extraction-form",
       "title": "B4.31: Cuestionario Emocional de 5 Preguntas en /voice-studio",
       "block": 4,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Formulario que extrae los datos clave para componer la canción: nombres de los protagonistas, lugar donde se conocieron, anécdota divertida y frase especial.",
       "scaffold": {
         "files_to_touch": [
@@ -565,7 +565,7 @@
       "id": "mvp-32-musical-genre-selector",
       "title": "B4.32: Selector de Géneros Musicales Populares (Balada, Mariachi, Pop)",
       "block": 4,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Selector de estilo con tarjetas sonoras interactivas que previsualizan la base instrumental antes de personalizar la letra.",
       "scaffold": {
         "files_to_touch": [
@@ -579,7 +579,7 @@
       "id": "mvp-33-voice-cloning-preview",
       "title": "B4.33: Selector de Timbre Vocal S-Class (Edwin Agudelo & Voces Gala)",
       "block": 4,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Permitir al usuario escuchar cómo sonará la voz principal con muestras grabadas en estudio profesional.",
       "scaffold": {
         "files_to_touch": [
@@ -593,7 +593,7 @@
       "id": "mvp-34-digital-product-checkout",
       "title": "B4.34: Checkout para Producto Digital Fijo (49 € / 99 €)",
       "block": 4,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Integrar botón de compra directa con Apple Pay, Google Pay y tarjeta para pedidos de canciones personalizadas de entrega en 24h.",
       "scaffold": {
         "files_to_touch": [
@@ -608,7 +608,7 @@
       "id": "mvp-35-ai-lyrics-generator",
       "title": "B4.35: Generador de Letras Métricas Profesionales con IA",
       "block": 4,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Prompt estructurado que convierte las respuestas del cliente en estrofas de 8 sílabas y estribillo memorable listo para grabación.",
       "scaffold": {
         "files_to_touch": [
@@ -1209,7 +1209,7 @@
       "id": "sclass-vimume-corporate-rsc-sponsorship",
       "title": "B0.19: Suite de Apadrinamiento Corporativo RSC (/vimume/inversion) & Absorción Barómetro Senior 2024 (100%)",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Desplegar el módulo de Apadrinamiento Corporativo RSC en src/app/(public)/vimume/inversion/page.tsx: paquetes para empresas (Tier 3.000 € / 5.000 € / 10.000 €) con deducción del 40%-50% en Impuesto de Sociedades (Ley 49/2002 Art. 20), calculadora de retorno SROI (4.85x), métricas de impacto ESG y entregables de vídeo-documental con branding del sponsor. Una vez validado, mover los archivos del Barómetro Senior 2024 y Guion Sponsor a H:\\ARCHIVO_HISTORICO_EAR\\ABSORBIDOS_COMPLETOS\\ sellados al 100%.",
       "scaffold": {
         "files_to_touch": [
@@ -1218,6 +1218,7 @@
         ],
         "macro_script": "Crear el componente interactivo VimumeCorporateSponsorship.tsx consumiendo calculateMecenazgo de vimume-mecenazgo-engine.ts, integrarlo en inversion/page.tsx bajo estética de alto nivel B2B ESG y registrar el sellado del activo documental en H:\\ARCHIVO_HISTORICO_EAR\\ABSORBIDOS_COMPLETOS\\."
       },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     },
     {
       "id": "sclass-sentinel-cockpit-and-local-cli",
@@ -1233,12 +1234,13 @@
         ],
         "macro_script": "Construir la vista OLED en /admin/sentinel con acceso directo desde el Omnicockpit (/admin), listando los documentos escaneados, el porcentaje vampirizado y los botones de decisión interactiva. Programar el script PowerShell que Cline ejecuta en terminal local para rastrear sin gastar tokens."
       },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     },
     {
       "id": "sclass-oraculo-diamante-rojo-consulting-engine",
       "title": "B0.21: Oráculo Diamante Rojo (/academia/oraculo) — Motor Consultivo Algorítmico & Funnels Velocity",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Construir la suite consultiva 'Oráculo Diamante Rojo' en src/app/(public)/academia/oraculo/page.tsx (y espejo en /oraculo): 1) Motor de Inteligencia y Respuestas src/lib/academia/oraculoEngine.ts absorbiendo los clusters de crecimiento musical, algoritmos de Spotify (save rate, discovery), cronograma dinámico interactivo de 61 y 99 Días Haciendo Clic, y funnels Velocity (Oyente -> Fan -> Comprador LTV) sin menciones a terceros. 2) Tono 'Baño de Realidad con Pasos Accionables S-Class' para artistas validados. 3) Calculadora de Salud Algorítmica de Spotify y simulador de inversión. 4) Biblioteca interactiva de 30 Casos Críticos de la Industria para consulta en 1 clic. 5) Exportador de Auditoría en PDF Criptográfico con sello de certificación EAR OS.",
       "scaffold": {
         "files_to_touch": [
@@ -1250,6 +1252,42 @@
           "src/app/(public)/academia/oraculo/page.tsx"
         ],
         "macro_script": "Implementar el motor tipado de consultas y auditorías consumiendo artistas-knowledge-base.json. Crear la interfaz inmersiva estilo Bloomberg/Perplexity musical con estética OLED (#030305 y rubí #FF2B44) con biblioteca de 30 casos pre-cargados, diagrama de Gantt interactivo y exportación de informe."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-mariachi-centralita-despacho-uber",
+      "title": "B0.22: Red Global de Mariachis (/mariachis) — Centralita Uber Multisede & Portal de Afiliación de Agrupaciones",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Elevar la suite de mariachis a escala mundial: 1) Centralita transaccional en src/app/(public)/mariachis/page.tsx: selector de formato (Trío 450 €, Cuarteto 600 €, Gala 900 €, Monumental 1.300 €), fianza Price-Lock de 100 € en Stripe y repertorio interactivo con audio preview. 2) Motor logístico multisede global (arsenalGpsRoutingEngine.ts): Plaza Elíptica/Méntrida opera como Hub Central para Madrid/Toledo, pero para el resto de España, Europa y Latinoamérica el cálculo se realiza desde la sede fiscal o GPS de cada mariachi federado. 3) Landing de Captación y Registro de Agrupaciones en src/app/(public)/mariachis/unirse/page.tsx ('El Uber de los Mariachis: Cero comisiones fijas, Split 80% neto directo a tu cuenta y bolos garantizados en tu zona').",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/(public)/mariachis/page.tsx",
+          "src/app/(public)/mariachis/unirse/page.tsx",
+          "src/components/mariachi/MariachiDispatchConsole.tsx",
+          "src/components/mariachi/MariachiRepertoireSelector.tsx",
+          "src/components/mariachi/MariachiJoinNetwork.tsx",
+          "src/lib/constants/mariachi-seo.ts"
+        ],
+        "macro_script": "Construir la centralita transaccional con despacho geodésico multiorigen y la landing de afiliación para captar mariachis de todo el mundo bajo estética OLED True Black (#030305, oro #ecb613)."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-military-data-reconciliation-and-ops-manual",
+      "title": "B0.23: Manual Interactivo de Operaciones EAR OS 2030-2050 (Call Center, Marketing & Contenidos)",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "Erradicar el baile de cifras y blindar la formación de todos los equipos del ecosistema en src/app/(admin)/admin/manual-operaciones/page.tsx: 1) Cifra canónica SSOT de 85.946 proveedores en Bóveda sincronizada en Omnicockpit y Call Center. 2) Manual de Operaciones 360 dividido en 4 consolas interactivas: a) AGENTES CENTRALITA (Guion de llamada de 3 min, cierre de fianza 100 € Stripe, simulador de objeciones frente a Bodas.net). b) EQUIPO MARKETING & GROWTH (Estrategia pSEO provincial, campañas Meta Ads / TikTok hacia embudos de WhatsApp, tracking de afiliados 10-15%). c) PRODUCCIÓN & GRABACIÓN DE CONTENIDOS (Protocolo de rodaje 4K en eventos y residencias VIMUME, microfonía Shure/Bose, checklist de entrega de vídeo en 48h para sponsors ESG). d) ADMINISTRADOR & CEO (Gobernanza de Split 80/10/10, auditoría de logs y radar Sentinel).",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/constants/SClassNexus.ts",
+          "src/app/(admin)/admin/page.tsx",
+          "src/app/(admin)/admin/manual-operaciones/page.tsx",
+          "src/components/admin/OperationalTrainingManual.tsx"
+        ],
+        "macro_script": "Sincronizar las constantes globales con el conteo de manifest.json (85.946). Construir la vista interactiva del manual en /admin/manual-operaciones con módulos de inducción de agentes, scripts de venta telefónica y simulador de objeciones con estética militar OLED (#030305, oro #ecb613)."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }

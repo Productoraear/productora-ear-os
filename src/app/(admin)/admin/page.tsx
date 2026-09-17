@@ -18,9 +18,9 @@ import {
 const KPI_CARDS = [
   {
     title: "Catálogo de Proveedores",
-    value: "45.666",
-    detail: "45.666 en Call Center / 2.300 Edge CDN",
-    badge: "74.845 en Bóveda",
+    value: "85.946",
+    detail: "85.946 en Bóveda SSOT / 150 Featured CDN",
+    badge: "100% Auditado",
     icon: Users,
     href: "/admin/call-center"
   },
@@ -151,8 +151,23 @@ export default function OmniCockpitPage() {
               Monitorización de modelos tiered (14B/27B/32B) y consumo de VRAM en tiempo real.
             </p>
           </Link>
+
+          <Link
+            href="/admin/manual-operaciones"
+            className="p-5 rounded-2xl bg-[#050508] border border-[#ecb613]/30 hover:border-[#ecb613] transition-all"
+          >
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs font-mono text-[#ecb613] font-semibold">DOCTRINA 2030-2050</span>
+              <ArrowUpRight className="w-4 h-4 text-[#ecb613]" />
+            </div>
+            <h3 className="text-base font-bold text-white mb-1">Manual de Operaciones 360</h3>
+            <p className="text-xs text-zinc-400">
+              Protocolos militares para Call Center, Marketing & Growth, Grabación 4K y CEO.
+            </p>
+          </Link>
         </div>
       </div>
     </div>
   );
 }
+

@@ -15,6 +15,7 @@ import {
   Fingerprint
 } from 'lucide-react';
 import Link from 'next/link';
+import VimumeCorporateSponsorship from '@/components/vimume/VimumeCorporateSponsorship';
 
 const fadeIn = {
   initial: { opacity: 0, y: 30 },
@@ -131,6 +132,9 @@ export default function InversionVimumePage() {
           </div>
         </div>
       </section>
+
+      {/* 🏛️ SUITE DE APADRINAMIENTO CORPORATIVO RSC (B0.19) */}
+      <VimumeCorporateSponsorship donorType="persona_juridica" />
 
       {/* 🏺 FOSO MORAL & SEGURIDAD */}
       <section className="px-6 py-40 max-w-7xl mx-auto grid lg:grid-cols-3 gap-16">
