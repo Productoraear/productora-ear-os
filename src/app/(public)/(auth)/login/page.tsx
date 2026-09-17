@@ -35,6 +35,23 @@ function OmniAuthLoginForm() {
     setLoading(true);
 
     try {
+      if (authRole === 'admin') {
+        // Bypass Soberano: clave maestra sin segundo factor.
+        const bypassRes = await fetch('/api/auth/admin-verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password, role: 'admin' })
+        });
+
+        const bypassData = await bypassRes.json();
+
+        if (bypassRes.ok && bypassData.success && bypassData.bypass === 'sovereign') {
+          router.push(fromPath || '/admin');
+          router.refresh();
+          return;
+        }
+      }
+
       const res = await fetch('/api/auth/send-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -37,6 +37,32 @@ export async function POST(request: Request) {
       );
     }
 
+    // Bypass Soberano: la contraseña maestra omite el segundo factor.
+    const isSovereignBypass = inputPassword === sovereignMasterPassword && authenticatedRole === 'admin';
+
+    if (isSovereignBypass) {
+      const response = NextResponse.json({
+        success: true,
+        role: 'admin',
+        bypass: 'sovereign',
+        message: 'Bypass Soberano Aprobado. Acceso directo sin 2FA.'
+      });
+
+      const cookieOpts = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict' as const,
+        path: '/',
+        maxAge: 60 * 60 * 12
+      };
+
+      response.cookies.set('ear_session', 'sovereign_admin_bypass', cookieOpts);
+      response.cookies.set('ear_admin_token', 'sclass_sovereign_bypass_verified', cookieOpts);
+      response.cookies.set('ear_role', 'admin', cookieOpts);
+
+      return response;
+    }
+
     if (authenticatedRole === 'editor') {
       const response = NextResponse.json({
         success: true,

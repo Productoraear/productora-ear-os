@@ -8,6 +8,7 @@ const syne = Syne({
   subsets: ["latin"],
   variable: "--font-syne",
   display: "swap",
+  preload: true,
   weight: ["400", "600", "700", "800"],
 });
 
@@ -15,6 +16,7 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+  preload: true,
 });
 
 import { SharedProvider } from "@/app/context/SharedContext";

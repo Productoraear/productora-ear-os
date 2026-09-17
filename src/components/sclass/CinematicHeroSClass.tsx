@@ -142,7 +142,7 @@ export default function CinematicHeroSClass() {
       {/* 🎴 LOS 5 EJES PRINCIPALES SOBERANOS */}
       <div className="w-full flex-1 px-4 lg:px-6 pb-4 z-20 max-w-[1500px] mx-auto flex flex-col justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5 h-full min-h-[490px]">
-          {PROFILES.map((p) => {
+          {PROFILES.map((p, index) => {
             const Icon = p.icon;
             const isHovered = hoveredId === p.id;
 
@@ -165,9 +165,14 @@ export default function CinematicHeroSClass() {
                 }}
               >
                 {/* Fondo sutil con viñeta oscura */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center opacity-15 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none mix-blend-luminosity"
-                  style={{ backgroundImage: `url(${p.bgImage})` }}
+                <img
+                  src={p.bgImage}
+                  alt=""
+                  aria-hidden="true"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  className="absolute inset-0 h-full w-full object-cover opacity-15 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none mix-blend-luminosity"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/80 to-transparent pointer-events-none" />
 

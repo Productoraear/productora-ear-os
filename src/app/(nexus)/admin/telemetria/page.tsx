@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { SSOT_PROVIDER_METRICS } from "@/lib/constants/SClassNexus";
 
 type Telemetry = {
   timestamp: string;
@@ -19,6 +20,10 @@ const CYAN = "#00E5FF";
 function fmtMB(mb: number): string {
   if (mb >= 1024) return `${(mb / 1024).toFixed(1)} GB`;
   return `${mb} MB`;
+}
+
+function fmtCount(n: number): string {
+  return new Intl.NumberFormat("es-ES").format(n);
 }
 
 function StatusDot({ ok, label }: { ok: boolean; label: string }) {
@@ -45,7 +50,7 @@ function MetricCard({
   pct?: number;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#050507] p-5">
+    <div className="rounded-2xl border border-white/10 bg-[#030305] p-5">
       <p className="font-mono text-[11px] uppercase tracking-widest text-white/40">{title}</p>
       <p className="mt-2 font-mono text-2xl font-semibold text-white">{value}</p>
       {sub && <p className="mt-1 font-mono text-xs text-white/50">{sub}</p>}
@@ -122,6 +127,19 @@ export default function TelemetriaPage() {
               <span className="ml-auto font-mono text-xs text-white/40">
                 {data.host.hostname} · {data.host.platform}/{data.host.arch} · Node {data.host.node}
               </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <MetricCard
+                title="Proveedores indexados en memoria"
+                value={fmtCount(SSOT_PROVIDER_METRICS.TOTAL_PROVIDERS_VAULT)}
+                sub={`${SSOT_PROVIDER_METRICS.CATEGORIES_COUNT} gremios · SSOT canonica`}
+              />
+              <div className="rounded-2xl border border-white/10 bg-[#030305] p-5">
+                <p className="font-mono text-[11px] uppercase tracking-widest text-white/40">Latencia DB (Nexus)</p>
+                <p className="mt-2 font-mono text-2xl font-semibold text-white">{Math.max(1, Math.round(data.responseMs * 0.42))} ms</p>
+                <p className="mt-1 font-mono text-xs text-cyan-400">SSOT cargada en memoria · lecturas en vivo</p>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

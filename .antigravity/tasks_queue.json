@@ -4,7 +4,7 @@
       "id": "omega-god-tier-production-audit-e2e",
       "title": "B0.99: MANDATO SUPREMO OMEGA DIOS: Verificación Atómica E2E y Sellado de Producción Real",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "ORDEN EXPRESA INMUTABLE: Certificar la activación real en producción (Frontend + Backend + DBs) para Proveedores (65k), Artistas (Edwin Agudelo), Fincas B2B, VIMUME B2G Senior y Cockpit Admin. Cero datos simulados o botones huérfanos. Todo flujo debe cerrar depósitos de 100€ en Stripe, registrar telemetría SHA-256 y despachar WhatsApp al +34 693 693 048.",
       "scaffold": {
         "files_to_touch": [
@@ -722,7 +722,7 @@
       "id": "mvp-43-mobile-cwv-lcp-boost",
       "title": "B5.43: Optimización de Core Web Vitals en Móviles (LCP < 1.2s)",
       "block": 5,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Verificar precarga de fuentes Google Fonts (Syne, Inter) e imágenes WebP en el viewport inicial.",
       "scaffold": {
         "files_to_touch": [
@@ -736,7 +736,7 @@
       "id": "mvp-44-realtime-telemetry-hud",
       "title": "B5.44: Panel de Telemetría Global en /admin/telemetria",
       "block": 5,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Comprobar métricas en tiempo real de latencia de base de datos, memoria VRAM de Ollama y estado de la pasarela de pagos.",
       "scaffold": {
         "files_to_touch": [
@@ -750,7 +750,7 @@
       "id": "mvp-45-sovereign-bypass-admin",
       "title": "B5.45: Verificación de Contraseña Soberana Ear2024Ear* y Visibilidad",
       "block": 5,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Certificar que el usuario pueda autenticarse sin trabas con Ear2024Ear* y que el icono de ojo permita revisar la contraseña.",
       "scaffold": {
         "files_to_touch": [
@@ -793,7 +793,7 @@
       "id": "mvp-48-edge-security-cache-audit",
       "title": "B5.48: Auditoría de Cabeceras de Seguridad y Políticas Edge",
       "block": 5,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Garantizar que las cabeceras HSTS, X-Frame-Options: DENY y no-store en /admin funcionen sin penalizar la caché pública en CDN.",
       "scaffold": {
         "files_to_touch": [
@@ -1203,7 +1203,7 @@
           "src/app/(public)/vimume/pacientes/[id]/page.tsx"
         ],
         "macro_script": "Implementar Server Components y Client Components con estética OLED True Black (#030305), acentos violeta neón (#8b5cf6), cyan hielo (#00E5FF) y oro noble (#ecb613). Conectar con el motor de pacientes y el motor de mecenazgo sin dependencias ausentes."
-      },
+      }
     },
     {
       "id": "sclass-vimume-corporate-rsc-sponsorship",

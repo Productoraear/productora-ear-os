@@ -125,6 +125,8 @@ module.exports = {
         sans: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
         label: ["Space Grotesk", "sans-serif"],
         syne: ["var(--font-fraunces)", "Syne", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        jm: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       borderRadius: {
         "DEFAULT": "0px", 
