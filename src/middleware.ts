@@ -28,7 +28,7 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
 }
 
 const TENANT_ROUTES: TenantRoute[] = [
-  { match: (host) => host.includes('fincasparaboda.com'), target: '/proveedores?cat=finca' },
+  { match: (host) => host.includes('fincasparaboda.com'), target: '/fincasparaboda' },
   { match: (host) => host.includes('viajemusicalporlamemoria.com'), target: '/vimume' },
   { match: (host) => host.includes('artistaseuropa.com'), target: '/artistas' },
   { match: (host) => host.includes('mariachis'), target: '/simulacion-mariachis' }
