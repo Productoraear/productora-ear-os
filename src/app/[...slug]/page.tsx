@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
@@ -127,7 +127,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const semantic = generateSemanticPageData(slug, locationCandidate);
-  const canonicalUrl = `https://productoraear.com/${(semantic?.canonicalPath || "").replace(/^\//, '')}`;
+  const canonicalPath = '/' + slug.join('/').toLowerCase().trim();
+  const canonicalUrl = `https://productoraear.com${canonicalPath}`;
 
   return {
     title: semantic.title,

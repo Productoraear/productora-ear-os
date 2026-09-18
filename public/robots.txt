@@ -14,6 +14,9 @@ Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /nexus/
 Disallow: /portal/
+Disallow: /login
+Disallow: /*?*provider=
+Disallow: /*?from=
 
 # Directivas de Motores de Búsqueda e Inteligencia Artificial
 User-agent: Googlebot

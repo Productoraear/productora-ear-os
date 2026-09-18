@@ -8,6 +8,9 @@ import { MultiPricer } from '@/features/finance/ui/MultiPricer';
 export const metadata: Metadata = {
   title: 'Cotizador Inteligente S-Class & Price-Lock 72h | Productora EAR',
   description: 'Calculadora paramétrica de alta fidelidad, diagnóstico acústico 12 W/pax, equipamiento audiovisual y Price-Lock 72h con tarifas reales verificadas.',
+  alternates: {
+    canonical: 'https://productoraear.com/cotizador',
+  },
 };
 
 interface CotizadorPageProps {
