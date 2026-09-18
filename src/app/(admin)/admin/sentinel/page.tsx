@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Satellite } from 'lucide-react';
 import SentinelAbsorptionRadar from '@/components/admin/SentinelAbsorptionRadar';
 
@@ -10,31 +11,31 @@ export const metadata: Metadata = {
 
 export default function SentinelPage() {
   return (
-    <div className="space-y-8 max-w-7xl mx-auto">
+    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+        <span>/</span>
+        <span>IA &amp; GPU</span>
+        <span>/</span>
+        <span className="text-[#ecb613]">Consola Sentinel ZTM</span>
+      </div>
+
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a24] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#00E5FF] uppercase tracking-widest">
-            <Satellite className="w-4 h-4 text-[#00E5FF]" />
-            B0.20 — Víscera Forense Local
-          </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight mt-1 font-mono">
-            Consola Sentinel
+          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+            CONSOLA SENTINEL // ZERO-TOKEN ABSORBER
           </h1>
-          <p className="text-xs text-zinc-400 mt-2 font-sans max-w-2xl">
-            Motor de ingesta bare-metal ejecutado sobre{' '}
-            <span className="text-[#00E5FF] font-mono">scripts/sentinel_absorber.ps1</span>.
-            Rastrea la bóveda{' '}
-            <span className="text-[#00E5FF] font-mono">H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT</span>,
-            devuelve resúmenes JSON compactos y desplaza documentos ligeros al Archivo
-            Histórico sin gastar tokens de API.
+          <p className="text-xs font-mono text-zinc-400 mt-1">
+            Motor de ingesta bare-metal • Ingesta de bóveda a Archivo Histórico • <span className="text-[#ecb613]">0 Tokens API consumidos</span>
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#00E5FF] shadow-[0_0_8px_#00E5FF] animate-pulse" />
-            ZERO-TOKEN
+          <div className="px-3.5 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-xs font-mono text-cyan-400 font-bold flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#00E5FF] animate-pulse" />
+            ZERO-TOKEN MEMORY
           </div>
         </div>
       </div>

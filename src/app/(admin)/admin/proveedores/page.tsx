@@ -108,38 +108,107 @@ export default function ProveedoresSyncPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+        <span>/</span>
+        <span>Ventas</span>
+        <span>/</span>
+        <span className="text-[#ecb613]">Proveedores Edge CDN</span>
+      </div>
+
       {/* Header Soberano */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a24] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            <Users className="w-4 h-4 text-[#ecb613]" />
-            Directorio S-Class // Sincronizado al 100%
-          </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight mt-1 font-mono">
-            Proveedores ({totalCount > 0 ? totalCount.toLocaleString('es-ES') : GRAND_TOTAL_FORMATTED} Nodos CDN)
+          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+            DIRECTORIO &amp; PROVEEDORES EDGE CDN
           </h1>
-          <p className="text-xs text-zinc-400 mt-1 font-sans">
-            Partición pública en Edge CDN sincronizada con el Call Center local y la Bóveda Maestra SSOT ({GRAND_TOTAL_FORMATTED} registros verificados).
+          <p className="text-xs font-mono text-zinc-400 mt-1">
+            Partición pública optimizada sobre <span className="text-[#ecb613]">{totalCount > 0 ? totalCount.toLocaleString('es-ES') : GRAND_TOTAL_FORMATTED} nodos</span> curados • Latencia ultra-baja y sincronización en tiempo real
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <Link
             href="/admin/call-center"
-            className="px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ecb613]/50 flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ecb613]/50 flex items-center gap-2 transition-colors"
           >
+            <Phone className="w-3.5 h-3.5 text-[#ecb613]" />
             Abrir Call Center ({GRAND_TOTAL_FORMATTED})
           </Link>
           <button
             onClick={() => fetchProviders()}
-            className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-[#ecb613]/50 transition-colors"
+            className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-[#ecb613]/50 transition-colors"
             title="Refrescar datos"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-[#ecb613]' : ''}`} />
           </button>
-          <div className="px-3.5 py-1.5 rounded-xl bg-emerald-950/40 border border-emerald-800 text-xs font-mono text-emerald-400 font-semibold flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4" />
+          <div className="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 font-bold flex items-center gap-2">
+            <CheckCircle2 className="w-3.5 h-3.5" />
             100% SINCRONIZADO
+          </div>
+        </div>
+      </div>
+
+      {/* KPI Cards CATMÍN S-Class */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Nodos en Edge CDN</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+              <Users className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+            {totalCount > 0 ? totalCount.toLocaleString('es-ES') : GRAND_TOTAL_FORMATTED}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-blue-400">Públicos</span> &lt;1 MB / partición
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Fincas &amp; Espacios</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
+              <MapPin className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
+            {formatProviderCount(PROVIDERS_MANIFEST_TOTALS.finca)}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-[#ecb613]">Comisiones</span> Split 80/10/10
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Música &amp; Solistas</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+              <Star className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
+            {formatProviderCount(PROVIDERS_MANIFEST_TOTALS.musica)}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-emerald-400">Edwin Agudelo</span> 350 € Base
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Senior VIMUME</span>
+            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
+            {formatProviderCount(PROVIDERS_MANIFEST_TOTALS.senior_care)}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-purple-400">B2G Menor</span> &lt; 14.250 €
           </div>
         </div>
       </div>

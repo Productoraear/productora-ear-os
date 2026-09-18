@@ -1411,6 +1411,57 @@
         "macro_script": "Construir flujo Full-Stack en src/app/reservar/solista/page.tsx, src/app/(public)/vimume/page.tsx. Integrar con arquitectura S-Class OLED (#030305, oro #ecb613). Asegurar params async en Next.js App Router y cero errores de TypeScript."
       },
       "validation": "npx tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b097-sovereign-vault-mirror-and-highclass-carousel",
+      "title": "B0.97: Espejo Sanitizador Zero-Leak de HTML, Ingestor de Absorción 100% y Carrusel S-Class High-Class",
+      "block": 0,
+      "status": "COMPLETED",
+      "description": "DOBLE MOTOR DE ABSORCIÓN Y VIZ SOBERANA: 1) Endpoint Espejo Zero-Leak (/api/vault/mirror/[category]/[slug]): Sirve los 2.150 archivos HTML de vault/proveedores_html_indexados/ como clones visuales puros. Extirpa todo script externo (OneTrust, Google Analytics, Criteo, Facebook Pixel) y neutraliza backlinks/canonicals a Bodas.net. Secuestra el dataLayer para telemetría soberana interna (EAR OS Event Logger). Inyecta un 'SovereignConciergeDock' discreto e inapreciable (sin distraer con banners molestos), con WhatsApp directo (+34 693 693 048) y checkout Stripe Price-Lock 100€. 2) Script de Absorción Masiva (scripts/absorb_html_vault.cjs): Parsea por streaming los 2.150 HTMLs, extrayendo JSON-LD (teléfono real, dirección, GPS, rating, reviews), galería de imágenes HD (960p/1080p), pax min/max, precio de menús y FAQs reales. Sincroniza al 100% enriqueciendo las particiones públicas en public/data/providers/ (finca.json, musica.json, catering.json, etc.). 3) Carrusel S-Class High-Class (src/components/sclass/SovereignCarouselSClass.tsx): Componente premium OLED (#030305, detalles oro #ecb613) para renderizar galerías de fotos HD con transiciones suaves, barras de progreso elegantes, contador sutil, soporte táctil/swipe y modal lightbox a pantalla completa. 4) Conexión en el Call Center (/admin/call-center): Añadir botón '👁️ Ver Clon Sanitizado' en el drawer de cada proveedor para auditar su web espejo en caliente.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/api/vault/mirror/[category]/[slug]/route.ts",
+          "scripts/absorb_html_vault.cjs",
+          "src/components/sclass/SovereignCarouselSClass.tsx",
+          "src/components/sclass/SovereignConciergeDock.tsx",
+          "src/app/(admin)/admin/call-center/page.tsx",
+          "public/EAR_CALL_CENTER_PROVEEDORES.html"
+        ],
+        "macro_script": "1) En src/app/api/vault/mirror/[category]/[slug]/route.ts: Crear GET handler que resuelva params async ({ category, slug } = await params). Buscar el archivo HTML en vault/proveedores_html_indexados/[category]/ (soportando las 11 subcarpetas: Fincas_Espacios, Catering_Banquetes, Musica, Fotografia_Video, Wedding_Planners, Decoracion_Flores, Animacion_Espectaculos, Transporte_Coches, Infraestructura_Sonido, Moda_Belleza, Servicios_Regalos). Si existe, sanitizar: a) Eliminar scripts externos de analítica (cookielaw, googletagmanager, criteo, facebook, scorecardresearch). b) Reemplazar enlaces <a href='https://www.bodas.net/...'> por '#'. c) Reemplazar canonical por https://productoraear.com. d) Inyectar script soberano que intercepte window.dataLayer.push y clicks de contacto para enviarlos a /api/telemetry/lead-intent. e) Inyectar SovereignConciergeDock con 'Garantía EAR OS · Contacto Directo WhatsApp +34 693 693 048 · Bloqueo 100€ Stripe'. f) Devolver response con status 200 y Content-Type text/html; charset=utf-8. 2) En scripts/absorb_html_vault.cjs: Script Node.js que itera las 11 subcarpetas de vault/proveedores_html_indexados/. Extrae schema.org JSON-LD (<script type='application/ld+json'>), arrays de imágenes en data-src, bloques de comensales y FAQs. Actualiza y enriquece los archivos JSON en public/data/providers/ (finca.json, musica.json, catering.json, etc.). 3) En src/components/sclass/SovereignCarouselSClass.tsx: Componente React 'use client' con fotos HD, transition fade/slide, miniatura en tira horizontal, botón de fullscreen/lightbox, controles anterior/siguiente y teclado. Estética OLED (#030305, border white/10, acento oro #ecb613). 4) En src/app/(admin)/admin/call-center/page.tsx: Dentro del panel/drawer de detalle del proveedor, añadir botón 'Ver Clon Sanitizado' que abra /api/vault/mirror/[category]/[slug] en una nueva pestaña (target='_blank'). 5) En public/EAR_CALL_CENTER_PROVEEDORES.html: Añadir en la tarjeta de cada proveedor el botón '👁️ Clon Soberano' que abra el mirror sanitizado. 6) Validar con npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b098-market-dominance-interview-and-monetization-200q",
+      "title": "B0.98: Cuestionario Estratégico de Dominancia de Mercado (200-300 Preguntas) & Blindaje Anti-Fugas vs Dinosaurio",
+      "block": 0,
+      "status": "PENDING",
+      "description": "Batería estratégica interactiva con el CEO (Edwin Agudelo) para calibrar y blindar los 5 modelos de monetización global, contratos clickwrap LSSI/eIDAS, autogestión en Cockpit Pro y blindaje contra fugas de clientes para los 65.000 proveedores rescatados. Tarea programada para ejecutarse inmediatamente tras finalizar los bloques prioritarios 3, 1 y 2.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/(admin)/admin/compiler/page.tsx",
+          "src/lib/oracle/quantum-oracle-engine.ts",
+          "src/app/(admin)/admin/sourcing/page.tsx"
+        ],
+        "macro_script": "Diseñar interfaz interactiva de auditoría estratégica en /admin/compiler o Cockpit Pro donde el CEO responda por lotes temáticos (Monetización, Blindaje Jurídico, Protocolo Anti-Fugas, Captación por WhatsApp, Conversión de Perfiles Zombi). Integrar con el Quantum Oracle Engine en Modo CEO para asimilar las directrices."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "sclass-b099-edwin-mariachi-and-alquiler-stripe-checkout-activation",
+      "title": "B0.99: Activación y Blindaje de Cierre Directo en Stripe (Edwin Agudelo Mariachi + Alquiler de Sonido)",
+      "block": 0,
+      "status": "PENDING",
+      "description": "REPARACIÓN Y CIERRE DE CAJA INMEDIATO: 1) En src/app/api/payments/checkout/route.ts: Implementar handler GET para que cualquier redirección directa cree la sesión de Stripe Checkout y redirija automáticamente con 303 See Other. 2) En src/components/pricing/SClassPricingTerminal.tsx: Corregir handleStripeDeposit con llamada POST robusta a /api/payments/checkout para depósito Price-Lock de 100€ con spinner de carga. 3) En src/app/components/SClassScreens/AcousticSpatialMatcher.tsx: Asegurar que el cálculo de fianza del 50% (mínimo 50€) derive a Stripe Checkout sin error 405. 4) Validación obligatoria con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/app/api/payments/checkout/route.ts",
+          "src/components/pricing/SClassPricingTerminal.tsx",
+          "src/app/components/SClassScreens/AcousticSpatialMatcher.tsx"
+        ],
+        "macro_script": "1) En src/app/api/payments/checkout/route.ts: añadir export async function GET(req: Request) que extraiga searchParams (amount, concept, ref, format, hash, serviceName), construya el session de Stripe Checkout igual que POST y retorne NextResponse.redirect(session.url, 303). 2) En src/components/pricing/SClassPricingTerminal.tsx: añadir state isProcessingDeposit, hacer POST a /api/payments/checkout con { amount: 100, concept: 'Price-Lock 100€ Depósito - Edwin Agudelo', metadata: { serviceName: 'Edwin Agudelo Solista & Mariachi', orderId: quote.orderId, sha256Token: quote.priceLockHash } } y redirigir a data.url. 3) Validar compilación limpia con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }
   ]
 }

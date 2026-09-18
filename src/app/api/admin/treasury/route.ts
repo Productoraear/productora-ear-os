@@ -45,49 +45,8 @@ export async function GET() {
     }
   }
 
-  // 2. Fallback de transacciones maestras auditadas si DB está vacía o en desarrollo
-  if (transactions.length === 0) {
-    transactions = [
-      {
-        id: "STRIPE-DEP-9941",
-        client: "Carlos Méndez & Laura Gil",
-        service: "Quinteto Imperial Nupcial (750,00 €)",
-        deposit: "100,00 €",
-        hash: "SHA256: 4f9b8ca28e71b56c",
-        status: "PRICE-LOCK ACTIVO (48H)",
-        date: "15 Sep 2026, 08:30"
-      },
-      {
-        id: "STRIPE-DEP-9940",
-        client: "Finca El Bosque Encantado",
-        service: "Reserva Sonido Bose F1 (450,00 €)",
-        deposit: "100,00 €",
-        hash: "SHA256: 7d110e88f1ac3499",
-        status: "CONFIRMADO",
-        date: "14 Sep 2026, 18:45"
-      },
-      {
-        id: "STRIPE-DEP-9939",
-        client: "Ayuntamiento de Méntrida",
-        service: "Anticipo Fiestas Patronales B2G (12.500 €)",
-        deposit: "100,00 €",
-        hash: "SHA256: b32a1999c4d812ef",
-        status: "CONFIRMADO",
-        date: "14 Sep 2026, 12:10"
-      },
-      {
-        id: "STRIPE-DEP-9938",
-        client: "Residencia Los Nogales",
-        service: "Gala Concierto VIMUME Memoria (350,00 €)",
-        deposit: "100,00 €",
-        hash: "SHA256: e812a014bc7723dd",
-        status: "CONFIRMADO",
-        date: "13 Sep 2026, 17:20"
-      }
-    ];
-
-    totalDepositsAmount = 400.00;
-  }
+  // Si no hay transacciones en DB, las métricas reales son 0,00 € (cero vanidad)
+  // totalDepositsAmount se mantiene en 0 si no hay transacciones reales registradas
 
   // Split Soberano Inmutable 80 / 10 / 10
   artistSplit = totalDepositsAmount * 0.80;

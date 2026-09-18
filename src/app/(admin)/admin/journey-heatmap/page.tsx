@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import {
   Compass,
   Flame,
@@ -52,56 +53,100 @@ export default function JourneyHeatmapAdminPage() {
   }, [filterTemp, search]);
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto font-sans">
+    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+        <span>/</span>
+        <span>IA &amp; GPU</span>
+        <span>/</span>
+        <span className="text-[#ecb613]">Journey Heatmap UX</span>
+      </div>
+
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a24] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            <Compass className="w-4 h-4 text-[#ecb613]" />
-            Auditoría Forense de Embudo S-Class
-          </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight mt-1 font-mono">
-            Customer Journey <span className="text-[#ecb613]">Heatmap</span>
+          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+            CUSTOMER JOURNEY HEATMAP S-CLASS
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
-            Validación de la regla de oro: leads HOT capturados en ≤3 clics y ≤45 segundos con depósito Price-Lock.
+          <p className="text-xs font-mono text-zinc-400 mt-1">
+            Validación de la regla de oro: Leads HOT capturados en <span className="text-[#ecb613]">≤3 clics y ≤45 segundos</span> con depósito Price-Lock SHA-256
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <a
             href="/EAR_JOURNEY_HEATMAP.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ecb613]/50 flex items-center gap-1.5 transition-colors"
+            className="px-4 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-2 transition-all font-bold shadow-[0_0_15px_rgba(236,182,19,0.15)]"
           >
-            <ArrowUpRight className="w-4 h-4 text-[#ecb613]" />
-            Ver Reporte Estático Completo (58 Tests)
+            <ArrowUpRight className="w-3.5 h-3.5" />
+            Reporte Estático (58 Tests)
           </a>
         </div>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-xs font-mono text-zinc-500 uppercase block">Score de Eficiencia</span>
-          <span className="text-3xl font-bold text-[#ecb613] font-mono mt-1 block">100%</span>
-          <span className="text-[11px] text-zinc-500 mt-1 block">Promedio ponderado</span>
+      {/* KPI Cards CATMÍN S-Class */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Score Eficiencia</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
+              <Sparkles className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
+            100%
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-[#ecb613]">Promedio</span> ponderado
+          </div>
         </div>
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-xs font-mono text-zinc-500 uppercase block">Golden Path Pass</span>
-          <span className="text-3xl font-bold text-emerald-400 font-mono mt-1 block">100%</span>
-          <span className="text-[11px] text-zinc-500 mt-1 block">Leads HOT ≤3 clics y ≤45s</span>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Golden Path Pass</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+              <CheckCircle2 className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
+            100%
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-emerald-400">Leads HOT</span> ≤3 clics y ≤45s
+          </div>
         </div>
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-xs font-mono text-zinc-500 uppercase block">Simulaciones Auditadas</span>
-          <span className="text-3xl font-bold text-white font-mono mt-1 block">58</span>
-          <span className="text-[11px] text-zinc-500 mt-1 block">Casos de prueba evaluados</span>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Simulaciones Auditadas</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+              <Layers className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+            58 Tests
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-blue-400">Casos reales</span> evaluados
+          </div>
         </div>
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-xs font-mono text-zinc-500 uppercase block">Neural Journey Pass</span>
-          <span className="text-3xl font-bold text-cyan-400 font-mono mt-1 block">100%</span>
-          <span className="text-[11px] text-zinc-500 mt-1 block">Túnel activo en todos los leads</span>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Neural Journey Pass</span>
+            <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
+              <Compass className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-cyan-400 mt-3">
+            100%
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-cyan-400">Túnel activo</span> en todos los leads
+          </div>
         </div>
       </div>
 

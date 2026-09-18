@@ -201,39 +201,32 @@ export default function VoiceStudioAdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030305] text-[#F3F4F6] font-sans antialiased selection:bg-[#ecb613]/20 selection:text-[#ecb613] pb-24 w-full overflow-x-hidden">
-      {/* Top Bar S-Class */}
-      <header className="border-b border-[#1A1A24] bg-[#050507]/90 backdrop-blur-md sticky top-0 z-40 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <Link
-              href="/command-center"
-              className="p-2.5 rounded-lg border border-[#262638] bg-[#09090F] hover:border-[#ecb613]/50 text-[#A1A1AA] hover:text-[#F3F4F6] transition-all group"
-            >
-              <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
-            </Link>
-            <div>
-              <div className="flex items-center gap-2.5">
-                <span className="text-xs uppercase font-mono tracking-wider px-2 py-0.5 rounded bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] font-semibold">
-                  VOICE STUDIO AI // 646 IDIOMAS
-                </span>
-                <span className="flex items-center gap-1.5 text-xs font-mono text-[#10B981] bg-[#10B981]/10 px-2 py-0.5 rounded border border-[#10B981]/20">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
-                  BARE-METAL 0€ CLOUD
-                </span>
-              </div>
-              <h1 className="text-2xl font-bold tracking-tight text-white font-serif mt-1">
-                Personalización de Canciones & Doblaje de Vídeos
-              </h1>
-            </div>
+    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      {/* Breadcrumb */}
+        <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+          <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+          <span>/</span>
+          <span>IA &amp; GPU</span>
+          <span>/</span>
+          <span className="text-[#ecb613]">Voice Studio IA</span>
+        </div>
+
+        {/* Header S-Class */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+              VOICE STUDIO IA // 646 IDIOMAS &amp; CLONAJE
+            </h1>
+            <p className="text-xs font-mono text-zinc-400 mt-1">
+              Personalización lírica con la voz de Edwin Agudelo • Doblaje Higgsfield • <span className="text-[#ecb613]">0 € Coste Cloud Bare-Metal</span>
+            </p>
           </div>
 
-          {/* Estado de conexión VoiceStudio Local */}
-          <div className="flex items-center gap-3">
-            <div className="px-3.5 py-2 rounded-lg border border-[#262638] bg-[#09090F] flex items-center gap-3 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <div className="px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center gap-3 text-xs font-mono">
               <div className="flex items-center gap-2">
-                <div className={`w-2.5 h-2.5 rounded-full ${serverStatus.connected ? 'bg-[#10B981] animate-pulse' : 'bg-[#EAB308]'}`} />
-                <span className="text-zinc-300">
+                <div className={`w-2 h-2 rounded-full ${serverStatus.connected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
+                <span className="text-zinc-300 font-bold">
                   {serverStatus.connected ? 'DAEMON ACTIVO' : 'LOCAL STANDBY'}
                 </span>
               </div>
@@ -242,7 +235,7 @@ export default function VoiceStudioAdminPage() {
               <button
                 onClick={refreshHealth}
                 disabled={isCheckingServer}
-                className="text-zinc-400 hover:text-[#ecb613] transition-colors p-1"
+                className="text-zinc-400 hover:text-[#ecb613] transition-colors"
                 title="Actualizar estado del servidor"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isCheckingServer ? 'animate-spin' : ''}`} />
@@ -253,22 +246,85 @@ export default function VoiceStudioAdminPage() {
               href="http://127.0.0.1:8080"
               target="_blank"
               rel="noreferrer"
-              className="px-3.5 py-2 rounded-lg bg-[#ecb613] hover:bg-[#d9a40e] text-[#050507] font-semibold text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-[#ecb613]/10"
+              className="px-4 py-2 rounded-xl bg-[#ecb613] hover:bg-[#d8a510] text-black font-bold text-xs font-mono transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(236,182,19,0.2)]"
             >
               <Radio className="w-3.5 h-3.5" />
-              Abrir VoiceStudio Web
+              Abrir Standalone (8080)
             </a>
           </div>
         </div>
 
-        {/* Pestañas de Navegación */}
-        <div className="max-w-7xl mx-auto flex gap-2 mt-4 pt-2 border-t border-[#1A1A24]/60">
+        {/* KPI Cards CATMÍN S-Class */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Aceleración GPU</span>
+              <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+                <Cpu className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
+              24GB VRAM
+            </div>
+            <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+              <span className="text-emerald-400">RX 7900 XTX</span> Bare-Metal
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Voz de Gala Solista</span>
+              <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
+                <Mic2 className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
+              Edwin Agudelo
+            </div>
+            <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+              <span className="text-[#ecb613]">Zero-Shot</span> Clone HD
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Canciones en Bóveda</span>
+              <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+                <Music className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+              {EAR_BASE_SONG_CATALOG.length} Temas
+            </div>
+            <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+              <span className="text-blue-400">Bodas</span> &amp; VIMUME
+            </div>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Cobertura Lingüística</span>
+              <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+                <Globe2 className="w-4 h-4" />
+              </div>
+            </div>
+            <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
+              646 Idiomas
+            </div>
+            <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+              <span className="text-purple-400">Multilingüe</span> Zero-Shot
+            </div>
+          </div>
+        </div>
+
+        {/* Pestañas de Navegación CATMÍN */}
+        <div className="flex flex-wrap gap-2 p-1.5 bg-[#050508] border border-[#1a1a24] rounded-2xl">
           <button
             onClick={() => setActiveTab('SONGS')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
               activeTab === 'SONGS'
-                ? 'bg-[#ecb613]/10 border-[#ecb613]/40 text-[#ecb613]'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-[#12121A]'
+                ? 'bg-[#ecb613] text-black shadow-[0_0_15px_rgba(236,182,19,0.3)]'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
             }`}
           >
             <Music className="w-4 h-4" />
@@ -276,10 +332,10 @@ export default function VoiceStudioAdminPage() {
           </button>
           <button
             onClick={() => setActiveTab('DUBBING')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
               activeTab === 'DUBBING'
-                ? 'bg-[#00E5FF]/10 border-[#00E5FF]/40 text-[#00E5FF]'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-[#12121A]'
+                ? 'bg-cyan-400 text-black shadow-[0_0_15px_rgba(0,229,255,0.3)]'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
             }`}
           >
             <Video className="w-4 h-4" />
@@ -287,20 +343,17 @@ export default function VoiceStudioAdminPage() {
           </button>
           <button
             onClick={() => setActiveTab('SERVER')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
               activeTab === 'SERVER'
-                ? 'bg-[#FF2B44]/10 border-[#FF2B44]/40 text-[#FF2B44]'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-[#12121A]'
+                ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(255,43,68,0.3)]'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900/60'
             }`}
           >
             <Cpu className="w-4 h-4" />
-            Voice Gallery & Daemon Local (RX 7900 XTX)
+            Voice Gallery &amp; Daemon Local (RX 7900 XTX)
           </button>
         </div>
-      </header>
 
-      {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-6 pt-8">
         {/* ========================================================================= */}
         {/* PESTAÑA 1: CANCIONES PERSONALIZADAS                                       */}
         {/* ========================================================================= */}
@@ -927,7 +980,6 @@ export default function VoiceStudioAdminPage() {
             </div>
           </div>
         )}
-      </main>
     </div>
   );
 }

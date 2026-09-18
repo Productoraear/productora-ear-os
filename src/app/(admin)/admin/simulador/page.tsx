@@ -20,7 +20,13 @@ import {
   Sparkles,
   ArrowRight,
   ExternalLink,
-  ShieldCheck
+  ShieldCheck,
+  TrendingUp,
+  Truck,
+  DollarSign,
+  Lock,
+  RefreshCcw,
+  Users
 } from 'lucide-react';
 
 interface PackOption {
@@ -31,15 +37,15 @@ interface PackOption {
 }
 
 const PACKS: PackOption[] = [
-  { id: 'solista', name: 'Edwin Agudelo (Tenor Insignia)', base: 350, desc: 'Voz lírica, sonido Bose F1' },
-  { id: 'trio', name: 'Mariachi Trío Tradición', base: 550, desc: 'Guitarra, vihuela y trompeta' },
-  { id: 'imperial', name: 'Mariachi Imperial (6 músicos)', base: 850, desc: 'Show de gala completo' },
-  { id: 'cuarteto', name: 'Cuarteto de Cuerdas Sinfonía', base: 650, desc: '2 violines, viola y chelo' },
-  { id: 'djsax', name: 'DJ Profesional + Saxo Directo', base: 750, desc: 'Sonido e iluminación LED' },
-  { id: 'pantallas', name: 'Pantalla LED Gigante 4x2m', base: 1200, desc: 'Calibración exterior P3.9' }
+  { id: 'solista', name: 'Edwin Agudelo (Tenor Insignia)', base: 350, desc: 'Voz lírica, sonido Bose F1 812 · 12 W/pax' },
+  { id: 'trio', name: 'Mariachi Trío Tradición', base: 550, desc: 'Guitarra, vihuela y trompeta de gala' },
+  { id: 'imperial', name: 'Mariachi Imperial (6 músicos)', base: 850, desc: 'Show de gala completo para bodas y galas' },
+  { id: 'cuarteto', name: 'Cuarteto de Cuerdas Sinfonía', base: 650, desc: '2 violines, viola y chelo clásico' },
+  { id: 'djsax', name: 'DJ Profesional + Saxo Directo', base: 750, desc: 'Sonido e iluminación LED de alta gama' },
+  { id: 'pantallas', name: 'Pantalla LED Gigante 4x2m', base: 1200, desc: 'Calibración exterior P3.9 waterproof' }
 ];
 
-export default function AdminSimulatorPage() {
+export default function AdminSimulatorCatminPage() {
   const [selectedPack, setSelectedPack] = useState<PackOption>(PACKS[0]);
   const [distanceKm, setDistanceKm] = useState<number>(35);
   const [isLateNight, setIsLateNight] = useState<boolean>(false);
@@ -58,380 +64,367 @@ export default function AdminSimulatorPage() {
   const artistFee = selectedPack.base * 0.80;
   const earFee = selectedPack.base * 0.10;
   const vimumeFee = (selectedPack.base * 0.10) + vimumeAddon;
+  const vimumeTaxBenefit = vimumeFee * 0.80; // 80% desgravación IRPF Ley 49/2002
 
   const whatsappMessage = encodeURIComponent(
     `¡Hola Productora EAR! Solicito presupuesto oficial para ${selectedPack.name} a ${distanceKm} km de Méntrida. Total estimado: ${totalEventCost.toFixed(2)} € (incluye depósito de 100 € y Split 80/10/10).`
   );
 
   return (
-    <div className="space-y-10 max-w-7xl mx-auto pb-20">
+    <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
       
-      {/* Header Vanguardista 21st.dev Style */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a24] pb-6">
+      {/* ===================================================================== */}
+      {/* 1. HEADER DE PÁGINA CATMÍN                                            */}
+      {/* ===================================================================== */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1a1a24] pb-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono uppercase tracking-widest mb-2">
-            <Compass className="w-3.5 h-3.5" />
-            <span>Simulador & Mapa de Dominancia S-Class</span>
+          <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
+            <span>Admin</span>
+            <span>/</span>
+            <span>Núcleo</span>
+            <span>/</span>
+            <span className="text-[#ecb613] font-bold">Mapa & Simulador S-Class</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-white font-syne uppercase tracking-tight">
-            Academia Operativa EAR OS
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-syne uppercase mt-1">
+            Academia & Simulador de Ventas
           </h1>
-          <p className="text-xs text-zinc-400 mt-1 font-sans">
-            Herramienta interactiva para que el CEO domine los 5 dominios, el Split 80/10/10, la logística y las licitaciones públicas.
-          </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <a
             href="/simulador-ear-os.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-mono text-zinc-200 flex items-center gap-1.5 transition-all"
+            className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-xs font-mono text-zinc-200 flex items-center gap-2 transition-all"
           >
-            <span>Ver Modo Pantalla Completa (21st.dev)</span>
+            <span>Modo Standalone 21st</span>
             <ExternalLink className="w-3.5 h-3.5 text-[#ecb613]" />
           </a>
         </div>
       </div>
 
-      {/* 🗺️ BENTO GRID: LOS 5 DOMINIOS SOBERANOS */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold font-syne text-white uppercase flex items-center gap-2">
-          <Layers className="w-5 h-5 text-[#ecb613]" />
-          <span>Ecosistema de los 5 Dominios Soberanos</span>
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3 hover:border-[#ecb613]/40 transition-all">
-            <div className="flex justify-between items-start">
-              <span className="p-2.5 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/20 text-[#ecb613]">
-                <Layers className="w-5 h-5" />
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
-                CORE HUB
-              </span>
+      {/* ===================================================================== */}
+      {/* 2. CATMÍN ROW 1: 4 MÉTRICAS CLAVE DEL NEGOCIO                         */}
+      {/* ===================================================================== */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Tarifa Base Solista</span>
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+              <DollarSign className="w-4 h-4 text-emerald-400" />
             </div>
-            <div>
-              <span className="text-[10px] font-mono text-zinc-400 uppercase">Hub Central</span>
-              <h3 className="text-lg font-bold font-syne text-white">productoraear.com</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Catálogo de sonido e iluminación, pantallas LED, rider 12 W/pax y centralita telefónica oficial.
-            </p>
           </div>
-
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3 hover:border-red-500/40 transition-all">
-            <div className="flex justify-between items-start">
-              <span className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
-                <Music className="w-5 h-5" />
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-zinc-300 border border-white/10 font-bold">
-                ARTISTAS
-              </span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono text-zinc-400 uppercase">Roster en Vivo</span>
-              <h3 className="text-lg font-bold font-syne text-white">artistaseuropa.com</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Edwin Agudelo (Tenor Insignia 350 €), Mariachis y Cuartetos. Bloqueo de fecha con 100 € Stripe.
-            </p>
+          <div className="text-2xl font-bold font-mono text-white">350,00 €</div>
+          <p className="text-[11px] text-zinc-400 mt-1">Edwin Agudelo (Tenor Insignia)</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            Bose F1 812 · 12 W/pax
           </div>
-
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3 hover:border-emerald-500/40 transition-all">
-            <div className="flex justify-between items-start">
-              <span className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-                <Building2 className="w-5 h-5" />
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-zinc-300 border border-white/10 font-bold">
-                B2B FINCAS
-              </span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono text-zinc-400 uppercase">Alianzas Nupciales</span>
-              <h3 className="text-lg font-bold font-syne text-white">fincasparaboda.com</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Portal para fincas y cáterings. 0 € cuota fija, comisiones transparentes del 10% por evento.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3 hover:border-cyan-500/40 transition-all">
-            <div className="flex justify-between items-start">
-              <span className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
-                <HeartPulse className="w-5 h-5" />
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-bold">
-                ESG SOCIAL
-              </span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono text-zinc-400 uppercase">Impacto Sanitario</span>
-              <h3 className="text-lg font-bold font-syne text-white">viajemusicalporlamemoria.com</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Neuro-musicoterapia (40 Hz Gamma) para Alzheimer. Financiado con el 10% y 80% deducción IRPF.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3 md:col-span-2 hover:border-blue-500/40 transition-all">
-            <div className="flex justify-between items-start">
-              <span className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                <Landmark className="w-5 h-5" />
-              </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 font-bold">
-                B2G PÚBLICO
-              </span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono text-zinc-400 uppercase">Sector Público</span>
-              <h3 className="text-lg font-bold font-syne text-white">productoraear.com/ayuntamientos</h3>
-            </div>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Contratos menores Art. 118 LCSP (&lt; 14.250 €), homologación acústica &lt; 75 dB SPL y facturación electrónica FacturaE (código DIR3).
-            </p>
-          </div>
-
         </div>
-      </section>
 
-      {/* 🧮 SIMULADOR INTERACTIVO DE COTIZACIONES EN VIVO */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold font-syne text-white uppercase flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-[#ecb613]" />
-          <span>Simulador de Cotización & Logística Méntrida Km 0</span>
-        </h2>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* Controles del Simulador (Span 7) */}
-          <div className="lg:col-span-7 p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-6">
-            
-            {/* Formaciones */}
-            <div className="space-y-2">
-              <label className="text-xs font-mono text-zinc-300 uppercase tracking-wider block">
-                1. Selección de Artista / Formación:
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {PACKS.map(pack => (
-                  <button
-                    key={pack.id}
-                    onClick={() => setSelectedPack(pack)}
-                    className={`p-3 rounded-2xl text-left font-mono text-xs transition-all border ${
-                      selectedPack.id === pack.id
-                        ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-lg shadow-[#ecb613]/20'
-                        : 'bg-white/5 text-white border-white/10 hover:bg-white/10'
-                    }`}
-                  >
-                    <div className="font-bold truncate">{pack.name.split(' ')[0]} {pack.name.split(' ')[1] || ''}</div>
-                    <div className={`text-[10px] ${selectedPack.id === pack.id ? 'text-black/80' : 'text-zinc-400'}`}>
-                      {pack.base} € Base
-                    </div>
-                  </button>
-                ))}
-              </div>
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Logística Méntrida Km 0</span>
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+              <Truck className="w-4 h-4 text-cyan-400" />
             </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-white">1,50 €/km</div>
+          <p className="text-[11px] text-zinc-400 mt-1">A partir del km 50 (+120€ hotel)</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-cyan-400 font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            Calculador Activo
+          </div>
+        </div>
 
-            {/* Slider de Kilómetros desde Méntrida */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-xs font-mono">
-                <span className="text-zinc-300">2. Distancia desde Méntrida Km 0:</span>
-                <span className="text-[#ecb613] font-bold">{distanceKm} km</span>
-              </div>
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Price-Lock Inmutable</span>
+            <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
+              <Lock className="w-4 h-4 text-[#ecb613]" />
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-white">100,00 €</div>
+          <p className="text-[11px] text-zinc-400 mt-1">Stripe con hash SHA-256</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-[#ecb613] font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            Cierre en 48 Horas
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Tope Licitación Menor</span>
+            <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <Landmark className="w-4 h-4 text-purple-400" />
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-white">&lt; 14.250 €</div>
+          <p className="text-[11px] text-zinc-400 mt-1">Art. 118 LCSP (&lt;75 dB SPL)</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-purple-400 font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            SROI 4.85x VIMUME
+          </div>
+        </div>
+
+      </div>
+
+      {/* ===================================================================== */}
+      {/* 3. SIMULADOR INTERACTIVO DE COTIZACIÓN EN VIVO (ESTILO CATMÍN)        */}
+      {/* ===================================================================== */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        {/* Controles del Simulador (Span 7) */}
+        <div className="lg:col-span-7 rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-6 shadow-sm">
+          <div>
+            <span className="text-xs font-mono uppercase font-bold text-[#ecb613] tracking-wider">
+              PASO 1
+            </span>
+            <h3 className="text-lg font-bold font-syne text-white uppercase mt-0.5">
+              Selecciona Artista o Formación Musical
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {PACKS.map(pack => (
+              <button
+                key={pack.id}
+                onClick={() => setSelectedPack(pack)}
+                className={`p-3.5 rounded-xl text-left font-mono transition-all border ${
+                  selectedPack.id === pack.id
+                    ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-md shadow-[#ecb613]/20'
+                    : 'bg-zinc-950 text-white border-zinc-900 hover:border-zinc-700'
+                }`}
+              >
+                <div className="flex justify-between items-center">
+                  <span className="font-bold text-xs truncate">{pack.name}</span>
+                  <span className="text-xs font-black shrink-0 ml-1">{pack.base} €</span>
+                </div>
+                <div className={`text-[10px] mt-1 line-clamp-1 ${selectedPack.id === pack.id ? 'text-black/80' : 'text-zinc-400'}`}>
+                  {pack.desc}
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Slider de Kilómetros desde Méntrida */}
+          <div className="space-y-2 pt-4 border-t border-zinc-900">
+            <div className="flex justify-between items-center text-xs font-mono">
+              <span className="text-zinc-300 font-bold">Distancia desde Méntrida Km 0:</span>
+              <span className="text-xl font-black text-[#ecb613]">{distanceKm} km</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="400"
+              step="5"
+              value={distanceKm}
+              onChange={(e) => setDistanceKm(parseInt(e.target.value))}
+              className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
+            />
+            <div className="flex justify-between text-[10px] font-mono text-zinc-500">
+              <span>0-50 km: 0 € (Exento)</span>
+              <span>&gt; 50 km: 1,50 €/km</span>
+              <span>&gt; 200 km: +120 € Hotel</span>
+            </div>
+          </div>
+
+          {/* Switches Opcionales */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-zinc-900">
+            <label className="flex items-center gap-3 p-3 rounded-xl bg-zinc-950 border border-zinc-900 cursor-pointer hover:border-zinc-800">
               <input
-                type="range"
-                min="0"
-                max="400"
-                step="5"
-                value={distanceKm}
-                onChange={(e) => setDistanceKm(parseInt(e.target.value))}
-                className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
+                type="checkbox"
+                checked={isLateNight}
+                onChange={(e) => setIsLateNight(e.target.checked)}
+                className="w-4 h-4 rounded text-[#ecb613] accent-[#ecb613]"
               />
-              <div className="flex justify-between text-[10px] font-mono text-zinc-500">
-                <span>0 km (Méntrida)</span>
-                <span>50 km (Gratis)</span>
-                <span>200 km (+120€ Hotel)</span>
-                <span>400 km</span>
+              <div>
+                <div className="text-xs font-bold text-white">Fin después de las 3:00 AM</div>
+                <div className="text-[10px] font-mono text-zinc-500">+120 € dieta/hotel</div>
               </div>
-            </div>
+            </label>
 
-            {/* Selector de Horario Tardío */}
-            <div className="space-y-2">
-              <label className="text-xs font-mono text-zinc-300 uppercase tracking-wider block">
-                3. Horario de Finalización:
-              </label>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => setIsLateNight(false)}
-                  className={`p-3 rounded-2xl font-mono text-xs font-bold border transition-all flex items-center justify-center gap-2 ${
-                    !isLateNight
-                      ? 'bg-[#ecb613] text-black border-[#ecb613]'
-                      : 'bg-white/5 text-zinc-300 border-white/10 hover:bg-white/10'
-                  }`}
-                >
-                  <Sun className="w-4 h-4" />
-                  <span>Antes 3:00 AM</span>
-                </button>
-                <button
-                  onClick={() => setIsLateNight(true)}
-                  className={`p-3 rounded-2xl font-mono text-xs font-bold border transition-all flex items-center justify-center gap-2 ${
-                    isLateNight
-                      ? 'bg-[#ecb613] text-black border-[#ecb613]'
-                      : 'bg-white/5 text-zinc-300 border-white/10 hover:bg-white/10'
-                  }`}
-                >
-                  <Moon className="w-4 h-4" />
-                  <span>Madrugada &gt;= 3:00 AM (+120€)</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Checkbox VIMUME Adicional */}
-            <div className="p-4 rounded-2xl bg-cyan-950/20 border border-cyan-500/20 flex items-center justify-between gap-4">
-              <div className="space-y-0.5">
-                <span className="text-xs font-bold text-white font-mono flex items-center gap-1.5">
-                  <HeartPulse className="w-4 h-4 text-cyan-400" />
-                  Añadir Sesión VIMUME Mayor (+150 €)
-                </span>
-                <p className="text-[11px] text-zinc-400">
-                  Deducción fiscal de hasta el 80% en IRPF vía Certificado Modelo 182 AEAT.
-                </p>
-              </div>
+            <label className="flex items-center gap-3 p-3 rounded-xl bg-zinc-950 border border-zinc-900 cursor-pointer hover:border-zinc-800">
               <input
                 type="checkbox"
                 checked={extraVimume}
                 onChange={(e) => setExtraVimume(e.target.checked)}
-                className="w-5 h-5 accent-cyan-400 rounded cursor-pointer"
+                className="w-4 h-4 rounded text-[#ecb613] accent-[#ecb613]"
               />
-            </div>
-
-          </div>
-
-          {/* Resultado & Desglose en Vivo (Span 5) */}
-          <div className="lg:col-span-5 p-6 sm:p-8 rounded-3xl bg-[#08080d] border border-[#ecb613]/40 space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
-                <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Presupuesto Sugerido</span>
-                <div className="text-3xl sm:text-4xl font-black font-syne text-white">
-                  {totalEventCost.toFixed(2)} €
-                </div>
+                <div className="text-xs font-bold text-white">Addon VIMUME Solidario</div>
+                <div className="text-[10px] font-mono text-cyan-400">+150 € (80% deducible)</div>
               </div>
-              <div className="text-right">
-                <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-mono font-bold block">
-                  Price-Lock Activo
-                </span>
-                <span className="text-[10px] font-mono text-zinc-400 mt-1 block">Depósito: 100,00 €</span>
-              </div>
-            </div>
+            </label>
+          </div>
+        </div>
 
-            {/* Desglose 80/10/10 */}
-            <div className="space-y-2.5 font-mono text-xs">
-              <span className="text-[10px] text-[#ecb613] uppercase tracking-widest font-bold block">
-                Split Soberano 80/10/10:
+        {/* Desglose de Liquidación S-Class (Span 5) */}
+        <div className="lg:col-span-5 rounded-2xl border border-[#ecb613]/40 bg-[#080811] p-6 space-y-5 shadow-xl">
+          <div className="flex justify-between items-center border-b border-white/10 pb-4">
+            <div>
+              <span className="text-[10px] font-mono uppercase text-[#ecb613] font-bold tracking-wider">
+                LIQUIDACIÓN OFICIAL
               </span>
-              <div className="flex justify-between p-2.5 rounded-xl bg-black/50 border border-white/5">
-                <span className="text-zinc-300">👤 80% Artista Ejecutor:</span>
-                <span className="text-white font-bold">{artistFee.toFixed(2)} €</span>
-              </div>
-              <div className="flex justify-between p-2.5 rounded-xl bg-black/50 border border-white/5">
-                <span className="text-zinc-300">⚙️ 10% Infraestructura EAR OS:</span>
-                <span className="text-white font-bold">{earFee.toFixed(2)} €</span>
-              </div>
-              <div className="flex justify-between p-2.5 rounded-xl bg-black/50 border border-white/5">
-                <span className="text-zinc-300">❤️ 10% VIMUME Impacto Social:</span>
-                <span className="text-cyan-400 font-bold">{vimumeFee.toFixed(2)} €</span>
-              </div>
-              {hotelCost > 0 && (
-                <div className="flex justify-between p-2.5 rounded-xl bg-amber-950/20 border border-amber-500/20 text-amber-400">
-                  <span>🏨 Suplemento Hotel (&gt;200km / &gt;3am):</span>
-                  <span className="font-bold">+120,00 €</span>
-                </div>
-              )}
-              {kmCost > 0 && (
-                <div className="flex justify-between p-2.5 rounded-xl bg-black/50 border border-white/5">
-                  <span className="text-zinc-300">🚗 Portes ({billableKm} km @ 1.50€):</span>
-                  <span className="text-white font-bold">+{kmCost.toFixed(2)} €</span>
-                </div>
-              )}
+              <h3 className="text-xl font-bold font-syne text-white uppercase">
+                Presupuesto S-Class
+              </h3>
             </div>
-
-            {/* Acciones del CEO */}
-            <div className="space-y-2 pt-2">
-              <a
-                href={`https://wa.me/34693693048?text=${whatsappMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3.5 px-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Despachar Presupuesto por WhatsApp</span>
-              </a>
-
-              <Link
-                href="/reservar/solista"
-                className="w-full py-3.5 px-4 rounded-2xl bg-[#ecb613] hover:bg-amber-400 text-black font-mono font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 transition-all text-center"
-              >
-                <CreditCard className="w-4 h-4" />
-                <span>Abrir Checkout Stripe (100 € Depósito)</span>
-              </Link>
+            <div className="text-right">
+              <span className="text-xs text-zinc-400 font-mono block">TOTAL ESTIMADO</span>
+              <span className="text-3xl font-black font-mono text-[#ecb613]">
+                {totalEventCost.toFixed(2)} €
+              </span>
             </div>
-
           </div>
 
+          {/* Desglose de Gastos */}
+          <div className="space-y-2 text-xs font-mono">
+            <div className="flex justify-between text-zinc-300">
+              <span>Caché Base {selectedPack.name.split(' ')[0]}:</span>
+              <span>{selectedPack.base.toFixed(2)} €</span>
+            </div>
+            <div className="flex justify-between text-zinc-400">
+              <span>Portes Logística ({billableKm} km x 1,50 €):</span>
+              <span>{kmCost.toFixed(2)} €</span>
+            </div>
+            {needsHotel && (
+              <div className="flex justify-between text-amber-300">
+                <span>Hotel y Dietas S-Class:</span>
+                <span>{hotelCost.toFixed(2)} €</span>
+              </div>
+            )}
+            {extraVimume && (
+              <div className="flex justify-between text-cyan-400">
+                <span>Aportación Extra VIMUME:</span>
+                <span>{vimumeAddon.toFixed(2)} €</span>
+              </div>
+            )}
+            <div className="flex justify-between text-[#ecb613] pt-2 border-t border-white/10 font-bold">
+              <span>Señal Stripe Price-Lock (SHA-256):</span>
+              <span>100,00 €</span>
+            </div>
+          </div>
+
+          {/* Desglose Split 80/10/10 */}
+          <div className="p-4 rounded-xl bg-black/50 border border-white/5 space-y-2">
+            <div className="text-[10px] font-mono uppercase font-bold text-zinc-400 tracking-wider">
+              DESGLOSE SPLIT SOBERANO 80 / 10 / 10
+            </div>
+            <div className="flex justify-between text-xs font-mono text-emerald-400">
+              <span>80% Artista Ejecutor (Edwin Agudelo):</span>
+              <span className="font-bold">{artistFee.toFixed(2)} €</span>
+            </div>
+            <div className="flex justify-between text-xs font-mono text-[#ecb613]">
+              <span>10% Plataforma EAR OS:</span>
+              <span className="font-bold">{earFee.toFixed(2)} €</span>
+            </div>
+            <div className="flex justify-between text-xs font-mono text-cyan-400">
+              <span>10% Impacto Social VIMUME:</span>
+              <span className="font-bold">{vimumeFee.toFixed(2)} €</span>
+            </div>
+            <div className="text-[10px] font-mono text-zinc-500 pt-1 border-t border-white/5">
+              ✓ Desgravación fiscal IRPF: -{vimumeTaxBenefit.toFixed(2)} €
+            </div>
+          </div>
+
+          {/* Botones de Acción */}
+          <div className="space-y-2 pt-2">
+            <a
+              href={`https://wa.me/34693693048?text=${whatsappMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>Despachar por WhatsApp (+34 693 693 048)</span>
+            </a>
+
+            <Link
+              href="/admin/tesoreria"
+              className="w-full py-3 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all"
+            >
+              <CreditCard className="w-4 h-4 text-[#ecb613]" />
+              <span>Generar Enlace Stripe 100€</span>
+            </Link>
+          </div>
         </div>
-      </section>
 
-      {/* 🎯 SECCIÓN 3: GUÍA PRÁCTICA PARA EL CEO (CÓMO RESOLVER CASOS REALES) */}
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold font-syne text-white uppercase flex items-center gap-2">
-          <ShieldCheck className="w-5 h-5 text-[#ecb613]" />
-          <span>Protocolos de Cierre para el CEO (3 Casos Reales)</span>
-        </h2>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* ===================================================================== */}
+      {/* 4. LOS 5 DOMINIOS SOBERANOS (ESTILO CATMÍN)                            */}
+      {/* ===================================================================== */}
+      <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-4 shadow-sm">
+        <div>
+          <span className="text-xs font-mono text-[#ecb613] uppercase tracking-widest">
+            ARQUITECTURA DE MARCA
+          </span>
+          <h2 className="text-xl font-bold font-syne text-white uppercase mt-1">
+            Los 5 Dominios Soberanos de EAR OS
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
           
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3">
-            <div className="flex items-center gap-2 text-[#ecb613] font-mono text-xs font-bold">
-              <PhoneIncoming className="w-4 h-4" />
-              <span>CASO 1: Novia o Pareja Llama</span>
+          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-900 hover:border-[#ecb613]/50 transition-all">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs font-bold font-mono text-[#ecb613]">CORE HUB</span>
+              <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
             </div>
-            <h4 className="text-sm font-bold text-white font-syne">"¿Tenéis fecha para un evento en Toledo?"</h4>
-            <p className="text-xs text-zinc-400 leading-relaxed font-light">
-              1. Abres <code className="text-white">/reservar/solista</code> y miras el calendario del mes.<br />
-              2. Usas este simulador para calcular el kilometraje desde Méntrida.<br />
-              3. Le das la tarifa en vivo y le envías el link de Stripe por WhatsApp para bloquear con <strong>100 €</strong>.
+            <h3 className="text-sm font-bold text-white">productoraear.com</h3>
+            <p className="text-[11px] text-zinc-400 mt-1 font-light">
+              Sonido e iluminación, pantallas LED exterior, rider 12 W/pax y centralita oficial.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3">
-            <div className="flex items-center gap-2 text-blue-400 font-mono text-xs font-bold">
-              <Landmark className="w-4 h-4" />
-              <span>CASO 2: Festejos / Concejalía</span>
+          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-900 hover:border-emerald-500/50 transition-all">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs font-bold font-mono text-emerald-400">ROSTER ARTISTAS</span>
+              <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
             </div>
-            <h4 className="text-sm font-bold text-white font-syne">"Queremos contratar sonido e iluminación"</h4>
-            <p className="text-xs text-zinc-400 leading-relaxed font-light">
-              1. Vas a <code className="text-white">/admin/licitaciones</code>.<br />
-              2. Ajustas el contrato menor bajo el límite preventivo de <strong>14.250 €</strong> (Art. 118 LCSP).<br />
-              3. Generas la propuesta con la certificación técnica de &lt; 75 dB SPL y facturas vía DIR3.
+            <h3 className="text-sm font-bold text-white">artistaseuropa.com</h3>
+            <p className="text-[11px] text-zinc-400 mt-1 font-light">
+              Edwin Agudelo (Tenor 350 €), Mariachis y Cuartetos. Bloqueo 100 € en Stripe.
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-3">
-            <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold">
-              <Share2 className="w-4 h-4" />
-              <span>CASO 3: Dueño de Finca Exclusiva</span>
+          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-900 hover:border-cyan-500/50 transition-all">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs font-bold font-mono text-cyan-400">FINCAS B2B</span>
+              <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
             </div>
-            <h4 className="text-sm font-bold text-white font-syne">"¿Cómo colaboramos sin pagar cuotas?"</h4>
-            <p className="text-xs text-zinc-400 leading-relaxed font-light">
-              1. Le explicas el <strong className="text-white">Split 80/10/10</strong>: no paga nada fijo.<br />
-              2. Le creas su enlace de partner en <code className="text-white">/admin/afiliados</code>.<br />
-              3. La finca cobra el <strong>10% neto</strong> de cada boda que se cierre en su espacio.
+            <h3 className="text-sm font-bold text-white">fincasparaboda.com</h3>
+            <p className="text-[11px] text-zinc-400 mt-1 font-light">
+              Alianzas nupciales, cero cuota fija y liquidación automática de comisión del 10%.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-900 hover:border-purple-500/50 transition-all">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs font-bold font-mono text-purple-400">IMPACTO VIMUME</span>
+              <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
+            </div>
+            <h3 className="text-sm font-bold text-white">viajemusicalporlamemoria.com</h3>
+            <p className="text-[11px] text-zinc-400 mt-1 font-light">
+              Neuro-musicoterapia (40 Hz Gamma) para Alzheimer. Deducción fiscal 80% IRPF.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-900 md:col-span-2 hover:border-blue-500/50 transition-all">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-xs font-bold font-mono text-blue-400">LICITACIONES B2G</span>
+              <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
+            </div>
+            <h3 className="text-sm font-bold text-white">productoraear.com/ayuntamientos</h3>
+            <p className="text-[11px] text-zinc-400 mt-1 font-light">
+              Contratos menores Art. 118 LCSP (&lt; 14.250 €), acústica &lt;75 dB SPL y código DIR3 FacturaE.
             </p>
           </div>
 
         </div>
-      </section>
+      </div>
 
     </div>
   );

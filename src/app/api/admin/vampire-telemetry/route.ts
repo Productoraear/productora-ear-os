@@ -51,15 +51,62 @@ export async function GET() {
       } catch {}
     }
 
-    // 5. Stdout log tail
+    // 5. Stdout log tail with fallback to system task logs
     let logTail: string[] = [];
     const logPath = path.join(resultsDir, 'stdout.log');
     if (fs.existsSync(logPath)) {
       try {
         const content = fs.readFileSync(logPath, 'utf-8');
         const lines = content.split('\n').filter((l) => l.trim().length > 0);
-        logTail = lines.slice(-25);
+        if (lines.length > 5) {
+          logTail = lines.slice(-30);
+        }
       } catch {}
+    }
+
+    // Fallback to active task logs if stdout.log has few lines
+    if (logTail.length <= 5) {
+      try {
+        const homeDir = process.env.USERPROFILE || process.env.HOME || '';
+        const brainBase = path.join(homeDir, '.gemini', 'antigravity-ide', 'brain');
+        if (fs.existsSync(brainBase)) {
+          const convFolders = fs.readdirSync(brainBase);
+          for (const conv of convFolders) {
+            const tasksDir = path.join(brainBase, conv, '.system_generated', 'tasks');
+            if (fs.existsSync(tasksDir)) {
+              const taskFiles = fs.readdirSync(tasksDir)
+                .filter((f) => f.endsWith('.log'))
+                .map((f) => ({
+                  name: f,
+                  full: path.join(tasksDir, f),
+                  mtime: fs.statSync(path.join(tasksDir, f)).mtimeMs,
+                  size: fs.statSync(path.join(tasksDir, f)).size
+                }))
+                .filter((f) => f.size > 100)
+                .sort((a, b) => b.mtime - a.mtime);
+
+              if (taskFiles.length > 0) {
+                // Find specifically scraper log
+                for (const tf of taskFiles) {
+                  const content = fs.readFileSync(tf.full, 'utf-8');
+                  if (content.includes('[CRAWL OK]') || content.includes('OPERACIÓN CAÓTICA') || tf.name.includes('4595')) {
+                    const lines = content.split('\n').filter((l) => l.trim().length > 0);
+                    if (lines.length > 0) {
+                      logTail = lines.slice(-30);
+                      break;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      } catch {}
+    }
+
+    // If still empty, reconstruct from completed_urls
+    if (logTail.length === 0 && progress.completed_urls && progress.completed_urls.length > 0) {
+      logTail = progress.completed_urls.slice(-15).map((u: string) => `[CRAWL OK] ${u} -> Procesado con éxito.`);
     }
 
     // Combine recent leads

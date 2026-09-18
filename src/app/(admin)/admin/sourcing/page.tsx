@@ -122,28 +122,96 @@ export default function SourcingHubPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+        <span>/</span>
+        <span>Ventas</span>
+        <span>/</span>
+        <span className="text-[#ecb613]">Scala Leads & Sourcing</span>
+      </div>
+
       {/* Header S-Class */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a24] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            <Flame className="w-4 h-4 text-[#ecb613]" />
-            Sourcing Hub // Scala Leads
-          </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight mt-1 font-mono">
-            Prospección Centros Senior ({stats.total})
+          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+            SCALA LEADS &amp; PROSPECCIÓN SENIOR
           </h1>
-          <p className="text-xs text-zinc-400 mt-1 font-sans">
-            Base Operativa Méntrida (Toledo) • Radio Madrid - Toledo • Tarifa Solista 350 €
+          <p className="text-xs font-mono text-zinc-400 mt-1">
+            Base Operativa Méntrida (Toledo) • <span className="text-[#ecb613]">{stats.total} Centros Senior</span> • Tarifa Solista Gala 350,00 € • Blindaje Acústico &lt; 75 dB SPL
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 font-bold flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 font-bold flex items-center gap-2">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>{stats.verificados} Líneas Verificadas</span>
           </div>
-          <div className="px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs font-mono text-[#ecb613]">
-            {stats.ceroKm} centros &lt;50km (0 € Km)
+          <div className="px-3.5 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-xs font-mono text-[#ecb613] font-bold">
+            {stats.ceroKm} Centros &lt;50km (0 € Km)
+          </div>
+        </div>
+      </div>
+
+      {/* KPI Cards CATMÍN S-Class */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Total Centros Senior</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+              <Building2 className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+            {stats.total}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-blue-400">Radio</span> Madrid • Toledo
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Líneas Verificadas</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+              <PhoneCall className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
+            {stats.verificados}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-emerald-400">Sanitizadas</span> 0 rebotes
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Radio Km 0 (&lt;50 km)</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
+              <MapPin className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
+            {stats.ceroKm}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-[#ecb613]">Desplazamiento</span> 0,00 €
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Pipeline Cualificado</span>
+            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+              <Flame className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
+            {stats.interesados + stats.citas}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-purple-400">{stats.citas} citas</span> agendadas
           </div>
         </div>
       </div>

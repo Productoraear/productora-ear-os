@@ -55,23 +55,55 @@ export default function MariachiDispatchConsole() {
     );
   };
 
-  const handleStripeDeposit = () => {
-    setIsProcessingStripe(true);
-    // Simular enlace seguro a Stripe Checkout con Price-Lock inmutable de 100€
-    setTimeout(() => {
-      const whatsappText = encodeURIComponent(
-        `¡Hola! Quiero confirmar la reserva de Mariachi con EAR OS.\n\n` +
-        `• Formato: ${quote.format.name} (${quote.format.members} integrantes)\n` +
-        `• Destino: ${quote.destinationName}\n` +
-        `• Base Logística: ${quote.hub.name} (${quote.distanceKm} km)\n` +
-        `• Total Estimado: ${quote.totalGrossPrice.toLocaleString('es-ES')} € (IVA incl.)\n` +
-        `• Fianza Inmutable: 100,00 € Stripe\n` +
-        `• Canciones elegidas: ${selectedSongs.length} temas\n\n` +
-        `Deseo proceder al Price-Lock y llamada de verificación con el mariachi.`
-      );
-      window.open(`https://wa.me/34693693048?text=${whatsappText}`, '_blank');
+  const handleStripeDeposit = async () => {
+    try {
+      setIsProcessingStripe(true);
+      const res = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: 100.00,
+          concept: `Price-Lock Mariachi Imperial Edwin Agudelo — ${quote.format.name} (${quote.destinationName})`,
+          metadata: {
+            type: 'RESERVA_ARTISTA',
+            artistName: 'Edwin Agudelo (Mariachi Imperial)',
+            formatId: selectedFormatId,
+            formatName: quote.format.name,
+            members: quote.format.members,
+            destination: quote.destinationName,
+            totalGrossPrice: quote.totalGrossPrice,
+            repertoireSongs: selectedSongs.length,
+            splitArtist: quote.totalGrossPrice * 0.8,
+            splitEar: quote.totalGrossPrice * 0.1,
+            splitVimume: quote.totalGrossPrice * 0.1,
+            sha256Token: '72H-MARIACHI-LOCK'
+          }
+        })
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || 'No se pudo iniciar la pasarela Stripe.');
+      }
+    } catch (err: any) {
+      alert(`Error al conectar con Stripe: ${err.message}`);
+    } finally {
       setIsProcessingStripe(false);
-    }, 600);
+    }
+  };
+
+  const handleDirectWhatsApp = () => {
+    const text = encodeURIComponent(
+      `¡Hola Edwin! Quiero consultar fecha directa para el Mariachi Imperial.\n\n` +
+      `• Formato: ${quote.format.name} (${quote.format.members} integrantes)\n` +
+      `• Destino: ${quote.destinationName}\n` +
+      `• Base Logística: ${quote.hub.name} (${quote.distanceKm} km)\n` +
+      `• Presupuesto Total: ${quote.totalGrossPrice.toLocaleString('es-ES')} € (IVA incl.)\n` +
+      `• Repertorio: ${selectedSongs.length} temas seleccionados\n\n` +
+      `¿Podemos confirmar disponibilidad antes de bloquear con la fianza de 100 €?`
+    );
+    window.open(`https://wa.me/34693693048?text=${text}`, '_blank');
   };
 
   return (
@@ -308,6 +340,41 @@ export default function MariachiDispatchConsole() {
                 Fianza para Price-Lock: <strong>100,00 €</strong> (Resto a liquidar el día del evento)
               </div>
             </div>
+
+            {/* PILA DE VALOR HORMOZI (GRAND SLAM OFFER) */}
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-amber-500/10 via-black/40 to-transparent border border-[#ecb613]/30 space-y-2.5 text-xs font-mono">
+              <div className="text-[#ecb613] font-bold text-[10px] uppercase tracking-widest flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <Sparkles size={13} className="text-[#ecb613]" /> Pila de Valor S-Class (0 € Extra)
+                </span>
+                <span className="px-2 py-0.5 rounded bg-[#ecb613]/20 text-[#ecb613] text-[9px] font-bold">
+                  VALOR REAL +245 €
+                </span>
+              </div>
+              <div className="space-y-1.5 text-white/90 text-[11px]">
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <CheckCircle2 size={13} /> Microfonía Shure Inalámbrica Dedicatorias
+                  </span>
+                  <span className="text-zinc-500 line-through">150 €</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <CheckCircle2 size={13} /> Pista Master Grabada en Audio HD
+                  </span>
+                  <span className="text-zinc-500 line-through">95 €</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 text-emerald-400">
+                    <CheckCircle2 size={13} /> Llegada 30 min antes para pruebas
+                  </span>
+                  <span className="text-[#ecb613] font-bold">GRATIS</span>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-white/10 text-[10px] text-zinc-400 leading-tight">
+                🛡️ <strong>Garantía Incondicional de Elegancia:</strong> Traje de charro de gala impecable. Si el mariachi no está en el recinto a la hora fijada, el servicio es 100% gratuito.
+              </div>
+            </div>
           </div>
 
           <div className="space-y-3">
@@ -318,6 +385,14 @@ export default function MariachiDispatchConsole() {
             >
               <CreditCard size={18} />
               <span>{isProcessingStripe ? 'Conectando Stripe...' : 'Bloquear Fecha con Fianza de 100 €'}</span>
+            </button>
+
+            <button
+              onClick={handleDirectWhatsApp}
+              className="w-full py-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold font-syne uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+            >
+              <MessageCircle size={16} />
+              <span>Hablar con Edwin Agudelo por WhatsApp</span>
             </button>
 
             <p className="text-[10px] text-center text-white/40 leading-relaxed font-sans">

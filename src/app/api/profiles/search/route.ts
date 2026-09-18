@@ -92,6 +92,34 @@ function getApiFallbackImage(category?: string | null, seed?: string | null): st
   return pool[hash % pool.length];
 }
 
+// ── EXTRACCIÓN REAL DEL AFORO MÁXIMO (SSOT: capacidad embebida en el HTML fuente) ──
+// El dataset no expone un campo estructurado de capacidad; el aforo está redactado
+// en `description_full` / `faqs` (ej. "capacidad para 600 personas", "hasta 900 invitados",
+// "eventos desde 150 pax"). Este extractor recupera el máximo real declarado.
+function extractMaxCapacity(text?: string | null): number | null {
+  if (!text || typeof text !== 'string') return null;
+  const t = text.toLowerCase().replace(/\./g, '');
+  const regex = /(\d{2,4})\s*(?:personas|invitados|comensales|pax|plazas|asistentes)/g;
+  let max: number | null = null;
+  let m: RegExpExecArray | null;
+  while ((m = regex.exec(t)) !== null) {
+    const n = parseInt(m[1], 10);
+    if (n >= 20 && n <= 12000) {
+      if (max === null || n > max) max = n;
+    }
+  }
+  return max;
+}
+
+function extractFaqText(faqs: any): string {
+  if (!Array.isArray(faqs)) return '';
+  return faqs.map((f: any) => `${f?.question || ''} ${f?.answer || ''}`).join(' ');
+}
+
+function buildCapacityText(p: any): string {
+  return `${p?.description_full || ''} ${p?.description || ''} ${extractFaqText(p?.faqs)}`;
+}
+
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // MOTOR ESTÁTICO DE ALTA VELOCIDAD (NETLIFY EDGE / ZERO-COLD-START)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -150,7 +178,7 @@ async function queryStaticProviders(options: {
   if (normCat && validCats.includes(normCat)) {
     const raw = await loadStaticDataset(`${normCat}.json`, requestUrl);
     if (raw) {
-      try { list = JSON.parse(raw); } catch (e) {}
+      try { list = JSON.parse(raw); } catch (e) { }
     }
   } else {
     // When no category is selected, load multiple massive datasets to show the true scale (S-Class)
@@ -158,7 +186,7 @@ async function queryStaticProviders(options: {
     for (const f of files) {
       const raw = await loadStaticDataset(f, requestUrl);
       if (raw) {
-        try { list = list.concat(JSON.parse(raw)); } catch (e) {}
+        try { list = list.concat(JSON.parse(raw)); } catch (e) { }
       }
     }
   }
@@ -203,7 +231,6 @@ async function queryStaticProviders(options: {
     u.includes('gen_logoHeader') ||
     u.includes('default_avatar') ||
     u.includes('741e9617168a2484.jpg') ||
-    u.includes('celebrents.s3.amazonaws.com') || // Eliminamos todas las imagenes rotas/placeholder de celebrents (lebrel)
     u.includes('c2524615ca092dc557196134bcbbcdc1');
 
   const providers = list.slice(skip, skip + limit).map((p) => {
@@ -258,6 +285,7 @@ async function queryStaticProviders(options: {
       has_real_phone,
       isClaimed,
       estadoHomologacion,
+      capacidadMaxPax: extractMaxCapacity(buildCapacityText(p)),
       profile_url,
       sourceUrl,
       originHtml,
@@ -342,7 +370,6 @@ export async function GET(request: Request) {
             u.includes('gen_logoHeader') ||
             u.includes('default_avatar') ||
             u.includes('741e9617168a2484.jpg') ||
-            u.includes('celebrents.s3.amazonaws.com') ||
             u.includes('c2524615ca092dc557196134bcbbcdc1');
 
           const cleanImages = (p.imageUrls || []).filter((u: string) => !isDirty(u));
@@ -354,6 +381,7 @@ export async function GET(request: Request) {
           return {
             ...p,
             name: cleanedName || rawName,
+            capacidadMaxPax: extractMaxCapacity(buildCapacityText(p)),
             imageUrls: finalImages,
           };
         });

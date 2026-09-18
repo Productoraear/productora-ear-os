@@ -13,7 +13,12 @@ import {
   Users,
   Building2,
   Mic2,
-  Radio
+  Radio,
+  TrendingUp,
+  CreditCard,
+  Lock,
+  Sparkles,
+  ExternalLink
 } from 'lucide-react';
 
 type Destinatario = 'proveedor' | 'finca' | 'artista' | 'cliente';
@@ -57,7 +62,7 @@ const PLANTILLAS: PlantillaConfig[] = [
   },
 ];
 
-export default function CentralitaWhatsAppPage() {
+export default function CentralitaWhatsAppCatminPage() {
   const [destinatario, setDestinatario] = useState<Destinatario>('proveedor');
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
@@ -65,7 +70,6 @@ export default function CentralitaWhatsAppPage() {
   const [copiado, setCopiado] = useState(false);
 
   const plantillaActiva = PLANTILLAS.find((p) => p.id === plantilla)!;
-
   const telefonoLimpio = useMemo(() => telefono.replace(/\D/g, ''), [telefono]);
 
   const mensajeFinal = useMemo(
@@ -74,8 +78,6 @@ export default function CentralitaWhatsAppPage() {
   );
 
   const waUrl = useMemo(() => {
-    // Si hay teléfono destino, se abre el chat directo a ese contacto.
-    // Si no, la conversación se abre contra la Centralita Soberana.
     const destino = telefonoLimpio.length >= 9 ? telefonoLimpio : CENTRALITA.raw;
     return `https://wa.me/${destino}?text=${encodeURIComponent(mensajeFinal)}`;
   }, [telefonoLimpio, mensajeFinal]);
@@ -95,174 +97,252 @@ export default function CentralitaWhatsAppPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030305] text-white pb-24 font-sans">
-      <header className="border-b border-white/10 bg-[#030305]/90 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MessageCircle className="text-[#00E5FF]" size={20} />
-            <span className="font-bold text-sm tracking-widest uppercase">
-              Centralita <span className="text-[#00E5FF]">WhatsApp</span>
-            </span>
-          </div>
+    <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
+      
+      {/* ===================================================================== */}
+      {/* 1. HEADER DE PÁGINA CATMÍN                                            */}
+      {/* ===================================================================== */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1a1a24] pb-4">
+        <div>
           <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
-            <Phone size={13} className="text-[#00E5FF]" />
+            <span>Admin</span>
+            <span>/</span>
+            <span>Ventas & Conversión</span>
+            <span>/</span>
+            <span className="text-[#ecb613] font-bold">Centralita WhatsApp</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-syne uppercase mt-1">
+            Despacho WhatsApp Soberano
+          </h1>
+        </div>
+
+        <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl text-xs font-mono text-emerald-400">
+            <Phone className="w-3.5 h-3.5" />
             <span>{CENTRALITA.display}</span>
           </div>
         </div>
-      </header>
+      </div>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 mt-10">
-        <div className="mb-10">
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight mb-3">
-            Despacho de WhatsApp <span className="text-[#00E5FF]">Soberano</span>
-          </h1>
-          <p className="text-zinc-400 text-sm max-w-3xl leading-relaxed">
-            Consola de mensajería de 1 clic para proveedores, fincas, artistas y clientes.
-            Los mensajes se generan sobre la Centralita Oficial{' '}
-            <span className="font-mono text-[#00E5FF]">{CENTRALITA.display}</span> con plantillas
-            de activación, seguimiento, cierre y licitación B2G.
-          </p>
+      {/* ===================================================================== */}
+      {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI DE MENSAJERÍA                         */}
+      {/* ===================================================================== */}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Canal Centralita</span>
+            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+              <MessageCircle className="w-4 h-4 text-emerald-400" />
+            </div>
+          </div>
+          <div className="text-xl font-bold font-mono text-white">{CENTRALITA.display}</div>
+          <p className="text-[11px] text-zinc-400 mt-1">Línea directa oficial España</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            WhatsApp Business API Ready
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* CONFIG PANEL */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#050507] border border-white/10 rounded-2xl p-6">
-              <h2 className="text-xs font-mono text-[#00E5FF] uppercase tracking-widest font-bold mb-5">
-                Destinatario
-              </h2>
-              <div className="grid grid-cols-2 gap-2 mb-5">
-                {(
-                  [
-                    { id: 'proveedor', label: 'Proveedor', icon: <Building2 size={14} /> },
-                    { id: 'finca', label: 'Finca', icon: <Building2 size={14} /> },
-                    { id: 'artista', label: 'Artista', icon: <Mic2 size={14} /> },
-                    { id: 'cliente', label: 'Cliente', icon: <Users size={14} /> },
-                  ] as { id: Destinatario; label: string; icon: React.ReactNode }[]
-                ).map((d) => (
-                  <button
-                    key={d.id}
-                    type="button"
-                    onClick={() => setDestinatario(d.id)}
-                    className={`flex items-center justify-center gap-2 py-2.5 rounded-xl border text-xs font-bold transition-all ${
-                      destinatario === d.id
-                        ? 'bg-[#00E5FF]/15 border-[#00E5FF] text-white'
-                        : 'bg-black/30 border-white/10 text-zinc-400 hover:border-white/25'
-                    }`}
-                  >
-                    {d.icon}
-                    {d.label}
-                  </button>
-                ))}
-              </div>
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Plantillas Canónicas</span>
+            <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-[#ecb613]" />
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-white">4 Flujos</div>
+          <p className="text-[11px] text-zinc-400 mt-1">Activación, seguimiento, cierre, B2G</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-[#ecb613] font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            Alta Conversión Verificada
+          </div>
+        </div>
 
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-[11px] font-mono text-zinc-400">Nombre del contacto</label>
-                  <input
-                    type="text"
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
-                    placeholder="Ej. Finca Los Olivos / Antonio"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-[#00E5FF]"
-                  />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-[11px] font-mono text-zinc-400">
-                    Teléfono destino (opcional · si se omite, abre en la Centralita)
-                  </label>
-                  <input
-                    type="tel"
-                    value={telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
-                    placeholder="Ej. 600 123 456"
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-[#00E5FF] font-mono"
-                  />
-                </div>
-              </div>
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-cyan-500/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Depósito Directo</span>
+            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+              <CreditCard className="w-4 h-4 text-cyan-400" />
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-white">100,00 €</div>
+          <p className="text-[11px] text-zinc-400 mt-1">Price-Lock SHA-256 en 1 clic</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-cyan-400 font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            Cierre Inmediato 48h
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-purple-500/50 transition-all">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-medium text-zinc-400">Tiempo de Respuesta</span>
+            <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <ShieldCheck className="w-4 h-4 text-purple-400" />
+            </div>
+          </div>
+          <div className="text-2xl font-bold font-mono text-white">&lt; 3 min</div>
+          <p className="text-[11px] text-zinc-400 mt-1">Protocolo de atención inmediata</p>
+          <div className="mt-2 flex items-center text-xs font-mono text-purple-400 font-medium">
+            <TrendingUp className="mr-1 h-3.5 w-3.5" />
+            92% Retención de Leads
+          </div>
+        </div>
+
+      </div>
+
+      {/* ===================================================================== */}
+      {/* 3. GENERADOR DE MENSAJES CATMÍN (DOS COLUMNAS)                         */}
+      {/* ===================================================================== */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        {/* Columna Izquierda: Configuración (Span 5) */}
+        <div className="lg:col-span-5 rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-5 shadow-sm">
+          <div>
+            <h2 className="text-base font-bold font-syne text-white uppercase">
+              Configuración del Mensaje
+            </h2>
+            <p className="text-xs text-zinc-500">Selecciona el perfil de contacto y la plantilla</p>
+          </div>
+
+          {/* Tipo de Destinatario */}
+          <div className="space-y-2">
+            <label className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">
+              1. Tipo de Destinatario
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { id: 'proveedor', label: 'Proveedor', icon: <Building2 size={13} /> },
+                { id: 'finca', label: 'Finca / Espacio', icon: <Building2 size={13} /> },
+                { id: 'artista', label: 'Artista', icon: <Mic2 size={13} /> },
+                { id: 'cliente', label: 'Novios / Cliente', icon: <Users size={13} /> }
+              ].map(d => (
+                <button
+                  key={d.id}
+                  onClick={() => setDestinatario(d.id as Destinatario)}
+                  className={`p-2.5 rounded-xl text-xs font-mono flex items-center gap-2 transition-all border ${
+                    destinatario === d.id
+                      ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-md shadow-[#ecb613]/20'
+                      : 'bg-zinc-950 text-zinc-300 border-zinc-900 hover:border-zinc-700'
+                  }`}
+                >
+                  {d.icon}
+                  <span>{d.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Campos de Entrada */}
+          <div className="space-y-3 pt-2 border-t border-zinc-900">
+            <div className="space-y-1">
+              <label className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">
+                2. Nombre del Contacto
+              </label>
+              <input
+                type="text"
+                placeholder="Ej. Laura / Finca El Tomillar"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                className="w-full h-9 px-3 text-xs font-mono bg-zinc-950 border border-zinc-800 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
+              />
             </div>
 
-            <div className="bg-[#050507] border border-white/10 rounded-2xl p-6">
-              <h2 className="text-xs font-mono text-[#00E5FF] uppercase tracking-widest font-bold mb-5">
-                Plantilla Operativa
-              </h2>
-              <div className="space-y-2">
-                {PLANTILLAS.map((p) => (
-                  <button
-                    key={p.id}
-                    type="button"
-                    onClick={() => setPlantilla(p.id)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left transition-all ${
-                      plantilla === p.id
-                        ? 'bg-[#00E5FF]/10 border-[#00E5FF]/60 text-white'
-                        : 'bg-black/30 border-white/10 text-zinc-400 hover:border-white/25'
-                    }`}
-                  >
-                    <span className={plantilla === p.id ? 'text-[#00E5FF]' : 'text-zinc-500'}>
+            <div className="space-y-1">
+              <label className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">
+                3. Teléfono Móvil Destino
+              </label>
+              <input
+                type="text"
+                placeholder="Ej. 612 345 678 (o deja en blanco para abrir en Centralita)"
+                value={telefono}
+                onChange={(e) => setTelefono(e.target.value)}
+                className="w-full h-9 px-3 text-xs font-mono bg-zinc-950 border border-zinc-800 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
+              />
+            </div>
+          </div>
+
+          {/* Selector de Plantilla */}
+          <div className="space-y-2 pt-2 border-t border-zinc-900">
+            <label className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">
+              4. Plantilla Comercial
+            </label>
+            <div className="space-y-1.5">
+              {PLANTILLAS.map(p => (
+                <button
+                  key={p.id}
+                  onClick={() => setPlantilla(p.id)}
+                  className={`w-full p-2.5 rounded-xl text-left text-xs font-mono flex items-center justify-between transition-all border ${
+                    plantilla === p.id
+                      ? 'bg-zinc-900 border-[#ecb613]/50 text-white font-bold'
+                      : 'bg-zinc-950 text-zinc-400 border-zinc-900 hover:border-zinc-800'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className={plantilla === p.id ? 'text-[#ecb613]' : 'text-zinc-500'}>
                       {p.icono}
                     </span>
-                    <span className="text-sm font-bold">{p.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* PREVIEW PANEL */}
-          <div className="lg:col-span-7">
-            <div className="bg-[#050507] border border-[#00E5FF]/25 rounded-2xl p-6 sm:p-8 sticky top-24">
-              <div className="flex items-center justify-between mb-5">
-                <span className="text-xs font-mono text-zinc-400 uppercase tracking-widest">
-                  Vista previa del mensaje
-                </span>
-                <span className="text-[10px] font-mono text-[#00E5FF] bg-[#00E5FF]/10 border border-[#00E5FF]/30 px-2 py-0.5 rounded-full uppercase">
-                  {destinatario}
-                </span>
-              </div>
-
-              <div className="bg-black/60 border border-white/10 rounded-2xl p-5 mb-6">
-                <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#00E5FF]/15 border border-[#00E5FF]/30 flex items-center justify-center shrink-0">
-                    <MessageCircle size={16} className="text-[#00E5FF]" />
+                    <span>{p.label}</span>
                   </div>
-                  <div className="text-sm text-zinc-200 leading-relaxed whitespace-pre-wrap">
-                    {mensajeFinal}
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-[#050507] rounded-xl p-4 mb-6 border border-white/10 flex items-center justify-between text-xs font-mono">
-                <span className="text-zinc-500">Enrutado a:</span>
-                <span className="text-[#00E5FF]">
-                  {telefonoLimpio.length >= 9 ? `+${telefonoLimpio}` : CENTRALITA.display}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={handleAbrir}
-                  className="flex items-center justify-center gap-2 bg-[#00E5FF] hover:opacity-90 text-black font-extrabold text-sm py-3.5 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <Send size={16} /> Abrir en WhatsApp
+                  {plantilla === p.id && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#ecb613]" />
+                  )}
                 </button>
-                <button
-                  type="button"
-                  onClick={handleCopy}
-                  className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/15 font-bold text-sm py-3.5 rounded-xl transition-colors"
-                >
-                  {copiado ? <Check size={16} className="text-[#00E5FF]" /> : <Copy size={16} />}
-                  {copiado ? 'Copiado' : 'Copiar texto'}
-                </button>
-              </div>
-
-              <p className="mt-4 text-[11px] text-zinc-500 font-mono text-center">
-                Apertura en 1 clic · encodeURIComponent · Centralita {CENTRALITA.raw}
-              </p>
+              ))}
             </div>
           </div>
         </div>
-      </main>
+
+        {/* Columna Derecha: Vista Previa y Despacho (Span 7) */}
+        <div className="lg:col-span-7 rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-5 shadow-sm">
+          <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
+            <div>
+              <h2 className="text-base font-bold font-syne text-white uppercase">
+                Vista Previa del Mensaje
+              </h2>
+              <p className="text-xs text-zinc-500">Se enviará a través de la API oficial de WhatsApp Web/App</p>
+            </div>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              LISTO
+            </span>
+          </div>
+
+          {/* Burbuja Estilo WhatsApp */}
+          <div className="p-5 rounded-2xl bg-[#0a1410] border border-emerald-500/20 relative shadow-inner">
+            <div className="text-[11px] font-mono text-emerald-400 font-bold mb-2 flex items-center gap-1.5">
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>Productora EAR // Centralita Oficial</span>
+            </div>
+            <p className="text-xs text-zinc-200 leading-relaxed whitespace-pre-wrap font-sans">
+              {mensajeFinal}
+            </p>
+            <div className="text-[10px] font-mono text-zinc-500 text-right mt-3">
+              Hoy · Enviado desde EAR OS
+            </div>
+          </div>
+
+          {/* Botones de Despacho */}
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <button
+              onClick={handleAbrir}
+              className="flex-1 py-3.5 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all"
+            >
+              <Send className="w-4 h-4" />
+              <span>Abrir en WhatsApp Ahora</span>
+            </button>
+
+            <button
+              onClick={handleCopy}
+              className="py-3.5 px-5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-white font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all"
+            >
+              {copiado ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-zinc-400" />}
+              <span>{copiado ? '¡Copiado!' : 'Copiar Texto'}</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   );
 }

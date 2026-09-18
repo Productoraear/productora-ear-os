@@ -1,19 +1,19 @@
 'use client';
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { 
-  MapPin, 
-  Users, 
-  Search, 
-  ShieldCheck, 
-  CheckCircle2, 
-  SlidersHorizontal, 
-  ChevronLeft, 
-  ChevronRight, 
-  Phone, 
-  MessageSquare, 
-  ExternalLink, 
-  Star, 
+import {
+  MapPin,
+  Users,
+  Search,
+  ShieldCheck,
+  CheckCircle2,
+  SlidersHorizontal,
+  ChevronLeft,
+  ChevronRight,
+  Phone,
+  MessageSquare,
+  ExternalLink,
+  Star,
   Building2,
   AlertTriangle,
   RefreshCw,
@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { PROVIDERS_MANIFEST_TOTALS } from '@/lib/constants/providers-manifest';
+import SovereignCarouselSClass from '@/components/sclass/SovereignCarouselSClass';
 
 interface RealFinca {
   id: string;
@@ -43,6 +44,7 @@ interface RealFinca {
   reviews?: number;
   description?: string;
   services_list?: string[];
+  capacidadMaxPax?: number | null;
 }
 
 const PROVINCIAS_ESPANA = [
@@ -181,7 +183,7 @@ export default function FincasNationalCatalogClient() {
                 {total.toLocaleString()} fincas y complejos auditados en España para bodas de alto nivel, con homologación acústica y rider Bose F1.
               </p>
             </div>
-            
+
             <div className="bg-slate-900/90 border border-amber-500/30 backdrop-blur-md rounded-2xl p-5 text-center min-w-[220px] shadow-[0_0_30px_rgba(245,158,11,0.08)]">
               <span className="block text-4xl font-black text-white font-mono tracking-tight">{total.toLocaleString()}</span>
               <span className="block text-xs font-semibold text-amber-500 uppercase tracking-widest mt-1">Fincas Reales en Red</span>
@@ -210,8 +212,8 @@ export default function FincasNationalCatalogClient() {
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Provincia</label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-3.5 w-4 h-4 text-amber-500" />
-                <select 
-                  value={selectedProvince} 
+                <select
+                  value={selectedProvince}
                   onChange={(e) => {
                     setSelectedProvince(e.target.value);
                     setCurrentPage(1);
@@ -227,7 +229,7 @@ export default function FincasNationalCatalogClient() {
 
             {/* Reset / Acción Rápida */}
             <div className="flex items-end">
-              <button 
+              <button
                 onClick={() => {
                   setSelectedProvince('Todas');
                   setSearchQuery('');
@@ -248,10 +250,10 @@ export default function FincasNationalCatalogClient() {
         <div className="text-sm text-slate-400">
           Mostrando <span className="font-bold text-white">{total > 0 ? ((currentPage - 1) * ITEMS_PER_PAGE) + 1 : 0}</span> - <span className="font-bold text-white">{Math.min(currentPage * ITEMS_PER_PAGE, total)}</span> de <span className="font-bold text-amber-500">{total.toLocaleString()}</span> fincas
         </div>
-        
+
         {/* Controles Paginación Superiores */}
         <div className="flex gap-2">
-          <button 
+          <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1 || loading}
             className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
@@ -262,7 +264,7 @@ export default function FincasNationalCatalogClient() {
           <span className="px-3 py-1 bg-slate-900 border border-slate-800 rounded-lg text-xs font-mono text-slate-300 flex items-center">
             {currentPage} / {totalPages}
           </span>
-          <button 
+          <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || loading}
             className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-600 disabled:opacity-40 disabled:cursor-not-allowed transition"
@@ -291,9 +293,9 @@ export default function FincasNationalCatalogClient() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {fincas.map((finca) => (
-              <RealFincaCard 
-                key={finca.id} 
-                finca={finca} 
+              <RealFincaCard
+                key={finca.id}
+                finca={finca}
                 onSelect={() => setSelectedFincaModal(finca)}
               />
             ))}
@@ -303,19 +305,19 @@ export default function FincasNationalCatalogClient() {
         {/* PAGINACIÓN INFERIOR */}
         {!loading && totalPages > 1 && (
           <div className="mt-12 flex items-center justify-center gap-2">
-            <button 
+            <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
               className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 transition font-medium flex items-center gap-2 text-sm"
             >
               <ChevronLeft className="w-4 h-4" /> Anterior
             </button>
-            
+
             <div className="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-sm font-mono text-slate-300">
               Página <span className="text-amber-400 font-bold">{currentPage}</span> de {totalPages}
             </div>
 
-            <button 
+            <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
               className="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white disabled:opacity-40 transition font-medium flex items-center gap-2 text-sm"
@@ -328,9 +330,9 @@ export default function FincasNationalCatalogClient() {
 
       {/* MODAL DETALLE DE FINCA REAL */}
       {selectedFincaModal && (
-        <FincaDetailModal 
-          finca={selectedFincaModal} 
-          onClose={() => setSelectedFincaModal(null)} 
+        <FincaDetailModal
+          finca={selectedFincaModal}
+          onClose={() => setSelectedFincaModal(null)}
         />
       )}
     </div>
@@ -351,8 +353,8 @@ function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => 
     <div className="bg-[#07070b] border border-slate-800/80 rounded-2xl overflow-hidden hover:border-amber-500/60 transition-all duration-300 hover:-translate-y-1 group flex flex-col h-full shadow-lg">
       {/* FOTO REAL DEL ESPACIO */}
       <div className="h-44 bg-slate-900 relative overflow-hidden cursor-pointer" onClick={onSelect}>
-        <img 
-          src={displayImg} 
+        <img
+          src={displayImg}
           alt={finca.name}
           onError={() => setImgError(true)}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -376,29 +378,36 @@ function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => 
           </div>
         )}
       </div>
-      
+
       {/* CUERPO DE LA TARJETA */}
       <div className="p-5 flex flex-col flex-grow">
         <span className="text-[11px] font-mono text-slate-400 block mb-1 line-clamp-1">
           {cleanLocation}
         </span>
-        <h3 
+        <h3
           onClick={onSelect}
-          className="text-base font-bold text-white leading-tight mb-2 line-clamp-1 group-hover:text-amber-400 transition-colors cursor-pointer" 
+          className="text-base font-bold text-white leading-tight mb-2 line-clamp-1 group-hover:text-amber-400 transition-colors cursor-pointer"
           title={finca.name}
         >
           {finca.name}
         </h3>
-        
+
         <p className="text-xs text-slate-400 mb-4 line-clamp-2 min-h-[32px] font-light leading-relaxed">
           {finca.description || 'Espacio singular homologado para celebración de bodas y banquetes de gala con producción integral de Productora EAR.'}
         </p>
-        
+
         {/* INFO TÉCNICA */}
         <div className="mt-auto pt-3 border-t border-slate-800/60 space-y-2 text-xs">
           <div className="flex justify-between items-center text-[11px]">
             <span className="text-slate-400">Rider Productora EAR</span>
             <span className="text-amber-400 font-mono font-medium">Bose F1 Homologado</span>
+          </div>
+
+          <div className="flex justify-between items-center text-[11px]">
+            <span className="text-slate-400">Aforo Máximo</span>
+            <span className="text-white font-mono font-semibold">
+              {finca.capacidadMaxPax ? `Hasta ${finca.capacidadMaxPax.toLocaleString('es-ES')} invitados` : 'Consultar aforo'}
+            </span>
           </div>
 
           <div className="flex justify-between items-center text-[11px]">
@@ -417,13 +426,13 @@ function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => 
 
         {/* ACCIONES */}
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <button 
+          <button
             onClick={onSelect}
             className="w-full bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold py-2 px-2 rounded-xl transition border border-slate-700/60"
           >
             Ficha Completa
           </button>
-          
+
           <a
             href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero consultar disponibilidad y condiciones para la finca ${finca.name} en ${finca.province}.`)}`}
             target="_blank"
@@ -447,7 +456,7 @@ function FincaDetailModal({ finca, onClose }: { finca: RealFinca; onClose: () =>
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       <div className="bg-[#08080d] border border-slate-800 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
-        <button 
+        <button
           onClick={onClose}
           className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg bg-slate-900 border border-slate-800 transition"
         >
@@ -465,15 +474,22 @@ function FincaDetailModal({ finca, onClose }: { finca: RealFinca; onClose: () =>
           <span>{finca.address || finca.province || 'España'}</span>
         </p>
 
-        {finca.img && (
-          <div className="rounded-xl overflow-hidden h-64 mb-6 bg-slate-900 border border-slate-800">
-            <img 
-              src={finca.img} 
-              alt={finca.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        )}
+        {/* CARRUSEL DE FOTOS HD SOVEREIGN S-CLASS */}
+        <div className="mb-6">
+          <SovereignCarouselSClass
+            images={
+              finca.imageUrls && finca.imageUrls.length > 0
+                ? finca.imageUrls
+                : finca.gallery && finca.gallery.length > 0
+                ? finca.gallery
+                : finca.img
+                ? [finca.img]
+                : []
+            }
+            title={finca.name}
+            aspectRatio="video"
+          />
+        </div>
 
         <div className="space-y-4 mb-6 text-sm text-slate-300">
           <div>
@@ -499,19 +515,38 @@ function FincaDetailModal({ finca, onClose }: { finca: RealFinca; onClose: () =>
               <span className="block text-[11px] text-slate-400 uppercase">Acústica S-Class</span>
               <span className="font-bold text-emerald-400 text-sm">Bose F1 812</span>
             </div>
+            <div className="bg-slate-900/60 p-3 rounded-xl border border-amber-500/30 col-span-2 sm:col-span-3">
+              <span className="block text-[11px] text-slate-400 uppercase">Capacidad Máxima de Invitados</span>
+              <span className="font-bold text-amber-400 text-base flex items-center gap-2">
+                <Users className="w-4 h-4" />
+                {finca.capacidadMaxPax
+                  ? `${finca.capacidadMaxPax.toLocaleString('es-ES')} personas`
+                  : 'Consultar disponibilidad de aforo'}
+              </span>
+            </div>
           </div>
         </div>
 
         {/* ACCIONES DEL MODAL */}
         <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-800">
           <a
+            href={`/api/vault/mirror/Fincas_Espacios/${encodeURIComponent(finca.slug || finca.id)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/40 text-amber-400 font-bold py-3 px-4 rounded-xl text-center text-sm transition flex items-center justify-center gap-2"
+          >
+            <ShieldCheck className="w-4 h-4 text-amber-400" />
+            <span>Ver Dossier Espejo</span>
+          </a>
+
+          <a
             href={googleSearchUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-bold py-3 px-4 rounded-xl text-center text-sm transition flex items-center justify-center gap-2"
           >
-            <ExternalLink className="w-4 h-4 text-amber-400" />
-            <span>Ver Ficha en Google</span>
+            <ExternalLink className="w-4 h-4 text-slate-400" />
+            <span>Ficha en Google</span>
           </a>
 
           <a
@@ -521,7 +556,7 @@ function FincaDetailModal({ finca, onClose }: { finca: RealFinca; onClose: () =>
             className="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 px-4 rounded-xl text-center text-sm transition flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(245,158,11,0.2)]"
           >
             <MessageSquare className="w-4 h-4" />
-            <span>Consultar con Concierge EAR</span>
+            <span>Concierge EAR</span>
           </a>
         </div>
       </div>

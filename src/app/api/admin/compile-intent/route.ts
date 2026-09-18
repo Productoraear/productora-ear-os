@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { compileIntentToDAG } from '@/lib/compiler/omega-intent-compiler';
 import type { CompileEngine, CompileMode } from '@/lib/compiler/omega-intent-compiler';
+import { refineQueryWithOracle, type OraclePersona } from '@/lib/oracle/quantum-oracle-engine';
 
 type CompileIntentBody = {
   intent: string;
   mode?: CompileMode | 'SURGICAL' | 'FULL_STACK' | 'ARCHIVAL_SWEEP';
   engine?: CompileEngine | 'LOCAL_OLLAMA' | 'CLOUD_EDGE';
   prompt?: string;
+  oraclePersona?: OraclePersona;
 };
 
 function resolveEngine(value: CompileIntentBody['engine']): CompileEngine {
@@ -28,10 +30,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Cuerpo JSON requerido' }, { status: 400 });
     }
 
-    const intent = body.intent ?? body.prompt;
-    if (!intent || typeof intent !== 'string' || !intent.trim()) {
+    const rawIntent = body.intent ?? body.prompt;
+    if (!rawIntent || typeof rawIntent !== 'string' || !rawIntent.trim()) {
       return NextResponse.json({ error: 'Campo "intent" es requerido' }, { status: 400 });
     }
+
+    const persona = body.oraclePersona || 'CEO';
+    const oracleResult = refineQueryWithOracle(rawIntent, persona);
 
     const options = {
       mode: resolveMode(body.mode),
@@ -39,7 +44,8 @@ export async function POST(req: NextRequest) {
     };
 
     const startedAt = performance.now();
-    const compiled = await compileIntentToDAG(intent, options);
+    // Compilar usando la intención enriquecida por el Oráculo
+    const compiled = await compileIntentToDAG(oracleResult.refinedPrompt, options);
     const latencyMs = Math.round((performance.now() - startedAt) * 100) / 100;
 
     return NextResponse.json({
@@ -48,6 +54,7 @@ export async function POST(req: NextRequest) {
       modo: options.mode,
       motor: options.engine,
       protocolo: compiled.protocol,
+      oracle: oracleResult,
       compiled
     });
   } catch (error: unknown) {
@@ -55,3 +62,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
+

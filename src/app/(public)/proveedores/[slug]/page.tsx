@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { notFound, redirect } from 'next/navigation';
 import { 
   ShieldCheck, 
@@ -302,14 +302,34 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const providerIdShort = (provider.id || slug).substring(0, 8).toUpperCase();
   const category = cleanText(provider.atomic_specs?.category || provider.category || 'Sonido & Iluminación');
   const location = cleanText(provider.atomic_specs?.location || provider.province || 'Madrid');
+  const cleanName = cleanText(provider.name);
+  const basePrice = provider.basePrice || provider.pricing?.rentalBasePrice || 650;
+
+  const isGenericName = !cleanName || cleanName.toLowerCase().startsWith('prov-');
+  const displayTitle = isGenericName
+    ? `Proveedor Homologado S-Class #${providerIdShort} (${category} en ${location}) | Productora EAR`
+    : `${cleanName} — ${category} en ${location} | Precios 2026 & Reserva Directa (Productora EAR)`;
+
+  const canonicalSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-')
+    ? provider.slug.toLowerCase().trim()
+    : slug.toLowerCase().trim();
 
   return {
-    title: `Proveedor Homologado S-Class #${providerIdShort} (${category} · ${location}) | Productora EAR`,
-    description: `Ficha técnica oficial de proveedor homologado por Productora EAR en ${location}. Cobertura acústica garantizada (12 W/pax), seguro de RC y reserva oficial con Price-Lock 72h.`,
+    title: displayTitle,
+    description: `Contrata ${cleanName || 'proveedor homologado'} (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado (12 W/pax), seguro de RC y reserva online con Price-Lock 100€.`,
     alternates: {
-      canonical: `https://productoraear.com/proveedores/${slug.toLowerCase().trim()}`,
+      canonical: `https://productoraear.com/proveedores/${canonicalSlug}`,
     },
-    keywords: ['proveedor homologado ear', 'sonido eventos madrid', 'iluminacion bodas madrid', 'alquiler equipos sonido', 'productora ear']
+    keywords: [
+      cleanName,
+      `${cleanName} ${location}`,
+      `${category} ${location}`,
+      'proveedor homologado ear',
+      'sonido eventos madrid',
+      'iluminacion bodas madrid',
+      'alquiler equipos sonido',
+      'productora ear'
+    ].filter(Boolean)
   };
 }
 

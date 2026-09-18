@@ -18,7 +18,8 @@ import {
   SlidersHorizontal,
   ChevronRight,
   ChevronLeft,
-  Maximize2
+  Maximize2,
+  Users
 } from 'lucide-react';
 import { PROVIDERS_GRAND_TOTAL, formatProviderCount } from '@/lib/constants/providers-manifest';
 
@@ -200,18 +201,23 @@ export default function CallCenterAdminPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+        <span>/</span>
+        <span>Ventas</span>
+        <span>/</span>
+        <span className="text-[#ecb613]">Call Center Outbound</span>
+      </div>
+
       {/* Top Header Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a24] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            <PhoneCall className="w-4 h-4 text-[#ecb613]" />
-            Telemarketing & Prospección Outbound S-Class
-          </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight mt-1 font-mono">
-            Call Center de Proveedores Nacional
+          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+            CALL CENTER &amp; PROSPECCIÓN OUTBOUND
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
-            Consola táctica de telemarketing sobre {GRAND_TOTAL_FORMATTED} fichas auditadas, guiones de objeción y cierre hacia WhatsApp. Paginación real de {PAGE_SIZE} nodos por lote.
+          <p className="text-xs font-mono text-zinc-400 mt-1">
+            Consola táctica de telemarketing sobre <span className="text-[#ecb613]">{GRAND_TOTAL_FORMATTED} fichas</span> auditadas • Guiones de objeción y cierre hacia WhatsApp
           </p>
         </div>
 
@@ -219,7 +225,7 @@ export default function CallCenterAdminPage() {
         <div className="flex flex-wrap items-center gap-2.5">
           <button
             onClick={handleExportCSV}
-            className="px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ecb613]/40 flex items-center gap-1.5 transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white hover:border-[#ecb613]/40 flex items-center gap-2 transition-colors"
           >
             <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
             Exportar CSV
@@ -228,7 +234,7 @@ export default function CallCenterAdminPage() {
             href="/EAR_CALL_CENTER_PROVEEDORES.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-1.5 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-1.5 transition-colors font-semibold"
+            className="px-4 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-2 transition-all font-bold shadow-[0_0_15px_rgba(236,182,19,0.15)]"
           >
             <Maximize2 className="w-3.5 h-3.5" />
             Deck Standalone ({GRAND_TOTAL_FORMATTED})
@@ -236,29 +242,66 @@ export default function CallCenterAdminPage() {
         </div>
       </div>
 
-      {/* Metrics Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-4 rounded-xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase block">Total en Vista</span>
-          <span className="text-2xl font-bold text-white font-mono">{filteredProviders.length}</span>
+      {/* KPI Cards CATMÍN S-Class */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Total en Vista</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+              <Users className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+            {filteredProviders.length}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-blue-400">Paginación real</span> {PAGE_SIZE} por lote
+          </div>
         </div>
-        <div className="p-4 rounded-xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-[10px] font-mono text-amber-500 uppercase block">En Conversación</span>
-          <span className="text-2xl font-bold text-amber-400 font-mono">
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">En Conversación</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
+              <PhoneCall className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-amber-400 mt-3">
             {Object.values(crmData).filter(c => c.status === 'contacted').length}
-          </span>
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-amber-400">Seguimiento</span> en curso
+          </div>
         </div>
-        <div className="p-4 rounded-xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-[10px] font-mono text-emerald-500 uppercase block">Interesados</span>
-          <span className="text-2xl font-bold text-emerald-400 font-mono">
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Interesados HOT</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+              <Flame className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
             {Object.values(crmData).filter(c => c.status === 'interested').length}
-          </span>
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-emerald-400">Pipeline</span> cualificado
+          </div>
         </div>
-        <div className="p-4 rounded-xl bg-[#050508] border border-[#1a1a24]">
-          <span className="text-[10px] font-mono text-purple-500 uppercase block">Cerrados</span>
-          <span className="text-2xl font-bold text-purple-400 font-mono">
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Cerrados / Señal</span>
+            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+              <CheckCircle2 className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
             {Object.values(crmData).filter(c => c.status === 'closed').length}
-          </span>
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-purple-400">Stripe 100€</span> Price-Lock
+          </div>
         </div>
       </div>
 
@@ -341,11 +384,10 @@ export default function CallCenterAdminPage() {
                   <button
                     key={p.id}
                     onClick={() => setSelectedId(p.id)}
-                    className={`w-full p-3.5 text-left transition-colors flex items-center justify-between gap-3 ${
-                      isSelected
-                        ? 'bg-[#ecb613]/10 border-l-2 border-[#ecb613]'
-                        : 'hover:bg-white/[0.02]'
-                    }`}
+                    className={`w-full p-3.5 text-left transition-colors flex items-center justify-between gap-3 ${isSelected
+                      ? 'bg-[#ecb613]/10 border-l-2 border-[#ecb613]'
+                      : 'hover:bg-white/[0.02]'
+                      }`}
                   >
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2">
@@ -374,12 +416,11 @@ export default function CallCenterAdminPage() {
                     </div>
 
                     <div className="shrink-0 flex items-center gap-2">
-                      <span className={`w-2.5 h-2.5 rounded-full ${
-                        st === 'interested' ? 'bg-emerald-400 shadow-[0_0_6px_#34d399]' :
+                      <span className={`w-2.5 h-2.5 rounded-full ${st === 'interested' ? 'bg-emerald-400 shadow-[0_0_6px_#34d399]' :
                         st === 'contacted' ? 'bg-amber-400 shadow-[0_0_6px_#fbbf24]' :
-                        st === 'closed' ? 'bg-purple-400 shadow-[0_0_6px_#c084fc]' :
-                        st === 'rejected' ? 'bg-red-400' : 'bg-zinc-600'
-                      }`} title={`Estado: ${st}`} />
+                          st === 'closed' ? 'bg-purple-400 shadow-[0_0_6px_#c084fc]' :
+                            st === 'rejected' ? 'bg-red-400' : 'bg-zinc-600'
+                        }`} title={`Estado: ${st}`} />
                       <ChevronRight className={`w-4 h-4 ${isSelected ? 'text-[#ecb613]' : 'text-zinc-600'}`} />
                     </div>
                   </button>
@@ -472,7 +513,7 @@ export default function CallCenterAdminPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="px-3 py-2 rounded-xl bg-green-700 hover:bg-green-600 text-white font-mono text-xs flex items-center gap-1.5 transition-colors font-bold"
-                          title="Abrir WhatsApp"
+                          title="Abrir WhatsApp en nueva pestaña"
                         >
                           <MessageSquare className="w-4 h-4" />
                           WA
@@ -511,44 +552,40 @@ export default function CallCenterAdminPage() {
               <div className="flex border-b border-[#1a1a24] bg-zinc-950 px-4 text-xs font-mono">
                 <button
                   onClick={() => setActiveTab('audit')}
-                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${
-                    activeTab === 'audit'
-                      ? 'border-[#ecb613] text-[#ecb613]'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
+                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${activeTab === 'audit'
+                    ? 'border-[#ecb613] text-[#ecb613]'
+                    : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                    }`}
                 >
                   <Flame className="w-3.5 h-3.5" />
                   Auditoría Digital
                 </button>
                 <button
                   onClick={() => setActiveTab('pitch')}
-                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${
-                    activeTab === 'pitch'
-                      ? 'border-[#ecb613] text-[#ecb613]'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
+                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${activeTab === 'pitch'
+                    ? 'border-[#ecb613] text-[#ecb613]'
+                    : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                    }`}
                 >
                   <PhoneCall className="w-3.5 h-3.5" />
                   Guion Telefónico (Pitch)
                 </button>
                 <button
                   onClick={() => setActiveTab('wa')}
-                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${
-                    activeTab === 'wa'
-                      ? 'border-[#ecb613] text-[#ecb613]'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
+                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${activeTab === 'wa'
+                    ? 'border-[#ecb613] text-[#ecb613]'
+                    : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                    }`}
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   Plantilla WhatsApp
                 </button>
                 <button
                   onClick={() => setActiveTab('crm')}
-                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${
-                    activeTab === 'crm'
-                      ? 'border-[#ecb613] text-[#ecb613]'
-                      : 'border-transparent text-zinc-500 hover:text-zinc-300'
-                  }`}
+                  className={`py-3 px-4 border-b-2 font-semibold transition-colors flex items-center gap-1.5 ${activeTab === 'crm'
+                    ? 'border-[#ecb613] text-[#ecb613]'
+                    : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                    }`}
                 >
                   <Clock className="w-3.5 h-3.5" />
                   Registro CRM
@@ -578,6 +615,19 @@ export default function CallCenterAdminPage() {
                             <span className="font-bold">Buscar Teléfono en Google</span>
                           </span>
                           <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+
+                        <a
+                          href={`/api/vault/mirror/${encodeURIComponent(selectedProvider.category || 'Fincas_Espacios')}/${encodeURIComponent(selectedProvider.original_html?.replace(/\.html$/, '') || String(selectedProvider.id))}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-3 rounded-xl bg-amber-500/20 border border-amber-500/50 hover:bg-amber-500/30 text-amber-300 flex items-center justify-between transition-colors shadow-sm col-span-1 sm:col-span-2"
+                        >
+                          <span className="flex items-center gap-2">
+                            <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                            <span className="font-bold">👁️ Ver Clon Soberano Sanitizado (Zero-Leak)</span>
+                          </span>
+                          <span className="text-[10px] font-mono text-amber-400 bg-black/40 px-2 py-0.5 rounded border border-amber-500/30">ABRIR DOSSIER</span>
                         </a>
 
                         {selectedProvider.profile_url && (
@@ -694,11 +744,10 @@ export default function CallCenterAdminPage() {
                           <button
                             key={st}
                             onClick={() => saveCRM(selectedProvider.id, st, currentCRM.notes)}
-                            className={`py-2 px-3 rounded-xl border text-center font-bold transition-all ${
-                              currentCRM.status === st
-                                ? 'bg-[#ecb613] text-black border-[#ecb613]'
-                                : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:border-zinc-700'
-                            }`}
+                            className={`py-2 px-3 rounded-xl border text-center font-bold transition-all ${currentCRM.status === st
+                              ? 'bg-[#ecb613] text-black border-[#ecb613]'
+                              : 'bg-zinc-900 text-zinc-400 border-zinc-800 hover:border-zinc-700'
+                              }`}
                           >
                             {st === 'pending' && '⚪ Pendiente'}
                             {st === 'contacted' && '🟡 Contactado'}

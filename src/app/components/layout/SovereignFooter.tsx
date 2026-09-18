@@ -224,7 +224,13 @@ function SovereignFooterContent() {
                 <Link href="/about" className="hover:text-white transition-colors">Quiénes Somos // Manifiesto</Link>
               </li>
               <li>
-                <Link href="/alianzas" className="hover:text-white transition-colors">Alianzas & Directorio Homologado</Link>
+                <Link href="/directorio" className="hover:text-white transition-colors flex items-center justify-between group">
+                  <span>Directorio & Catálogo S-Class</span>
+                  <span className="text-[10px] bg-[#ecb613]/10 text-[#ecb613] px-1.5 py-0.5 rounded border border-[#ecb613]/20 font-mono">CULT UI</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/alianzas" className="hover:text-white transition-colors">Red de Alianzas & Fincas</Link>
               </li>
               <li>
                 <Link href="/academia" className="hover:text-white transition-colors">EAR Academy :: Talent Campus</Link>

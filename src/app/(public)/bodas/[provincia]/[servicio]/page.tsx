@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Sparkles, MapPin, ShieldCheck, ArrowRight, Award, Star, Phone, CheckCircle2 } from 'lucide-react';
@@ -23,13 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const servTitle = servData ? servData.title : 'Música y Servicios para Bodas';
 
   return {
-    title: `${servTitle} en ${provName} | Tarifas Oficiales y Garantía EAR OS`,
-    description: `Catálogo homologado de ${servTitle.toLowerCase()} en ${provName}. Proveedores verificados, sonorización 12 W/pax, Price-Lock 72h y reserva con depósito de 100 €.`,
+    title: `${servTitle} en ${provName} — Precios 2026 (Desde 350€) | Productora EAR`,
+    description: `Catálogo oficial de ${servTitle.toLowerCase()} en ${provName}. Proveedores homologados, sonorización 12 W/pax (Bose/Shure), seguro de RC 1M€ y reserva online con depósito Price-Lock de 100€.`,
     alternates: {
       canonical: `https://productoraear.com/bodas/${provKey}/${servKey}`,
     },
     keywords: [
       `${servTitle} ${provName}`,
+      `precios ${servTitle} ${provName}`,
       `bodas ${provName}`,
       `fincas ${provName}`,
       `catering ${provName}`,

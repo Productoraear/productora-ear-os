@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import {
   GraduationCap,
   Sparkles,
@@ -65,32 +66,100 @@ export default function TrainingCenterAdminPage() {
   const vimumeShare = totalRevenue * 0.1;
 
   return (
-    <div className="space-y-8 max-w-7xl mx-auto font-sans">
+    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+        <span>/</span>
+        <span>Ventas</span>
+        <span>/</span>
+        <span className="text-[#ecb613]">Omni Training Center</span>
+      </div>
+
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#1a1a24] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-wider">
-            <GraduationCap className="w-4 h-4 text-[#ecb613]" />
-            Academia Táctica S-Class // Cierre de Contratos
-          </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight mt-1 font-mono">
-            Omni Training Center & Simulador de Cierres
+          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+            OMNI TRAINING CENTER &amp; CIERRE TÁCTICO
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
-            Entrenamiento intensivo en manejo de objeciones, guiones de alta conversión y cálculo del Split Soberano.
+          <p className="text-xs font-mono text-zinc-400 mt-1">
+            Entrenamiento en manejo de objeciones • Guiones de conversión • Simulador canónico del <span className="text-[#ecb613]">Split Soberano 80/10/10</span>
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <a
             href="/EAR_OMNI_TRAINING_CENTER.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-1.5 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-1.5 transition-colors font-semibold"
+            className="px-4 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-2 transition-all font-bold shadow-[0_0_15px_rgba(236,182,19,0.15)]"
           >
             <Maximize2 className="w-3.5 h-3.5" />
-            Deck de Entrenamiento Standalone
+            Deck Standalone
           </a>
+        </div>
+      </div>
+
+      {/* KPI Cards CATMÍN S-Class */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Artista Ejecutor (80%)</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+              <Award className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
+            {artistShare.toLocaleString('es-ES')} €
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-emerald-400">Soberanía</span> pago directo neto
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">EAR OS Infra (10%)</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+              <Flame className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+            {earOsShare.toLocaleString('es-ES')} €
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-blue-400">Stripe &amp; Edge</span> 0 cuotas fijas
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Impacto VIMUME (10%)</span>
+            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
+            {vimumeShare.toLocaleString('es-ES')} €
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-purple-400">SROI 4.85x</span> deducible IRPF/IS
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Facturación Bruta</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
+              <DollarSign className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
+            {totalRevenue.toLocaleString('es-ES')} €
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-[#ecb613]">{simulatedEvents} eventos</span> proyectados
+          </div>
         </div>
       </div>
 

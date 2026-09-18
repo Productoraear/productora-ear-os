@@ -63,6 +63,20 @@ function resolveSemanticFiles(cleanInput: string): { files: string[]; macro: str
     };
   }
 
+  // 0.1. Unificación Cromática & Paleta OLED S-Class
+  if (lower.includes('color') || lower.includes('paleta') || lower.includes('oled') || lower.includes('estilo') || lower.includes('diseño') || lower.includes('dorado') || lower.includes('oro')) {
+    return {
+      files: [
+        'src/app/globals.css',
+        'tailwind.config.cjs',
+        'src/app/components/layout/SovereignNavbar.tsx',
+        'src/app/(admin)/admin/layout.tsx'
+      ],
+      macro: 'UNIFICACIÓN CROMÁTICA S-CLASS: 1) Estandarizar fondos OLED profundos (#030305, #050507). 2) Fijar acentos canónicos: Oro (#ecb613) para Admin y Comercial, Rubí (#FF2B44) para Bodas y Acción, y Cyan (#00E5FF) para Ciencia/VIMUME. 3) Eliminar grises lavados y gradientes violeta/azul AI-slop.',
+      validation: 'npx tsc --noEmit -> Exit Code 0'
+    };
+  }
+
   // 1. Auditorías forenses, caza de errores, bit a bit, revisión de código
   if (lower.includes('forense') || lower.includes('auditor') || lower.includes('error') || lower.includes('revision') || lower.includes('bit a bit') || lower.includes('yolo')) {
     return {

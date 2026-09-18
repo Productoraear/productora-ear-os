@@ -82,19 +82,28 @@ export const AcousticSpatialMatcher: React.FC = () => {
         // Refresh catalog state
         setCatalog([...InventoryEngine.getCatalog()]);
 
-        // Proceed to Stripe checkout for the 100€ deposit (S-Class SSOT)
+        // Proceed to Stripe checkout with Alquiler + 50% Fianza (Protocolo Amovens)
+        const fianzaAmount = Math.max(50, Math.round(item.dailyPrice * 0.5));
+        const totalAlquilerYFianza = item.dailyPrice + fianzaAmount;
+
         const payRes = await fetch('/api/payments/checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            amount: 100.00,
-            concept: `Reserva Inventario S-Class: ${item.name} (${eventDate})`,
+            amount: totalAlquilerYFianza,
+            concept: `Alquiler + Fianza Reembolsable (50%): ${item.name} (${eventDate})`,
             metadata: {
+              type: 'FIANZA_ALQUILER',
+              isFianza: true,
+              includeRental: true,
               itemId: item.id,
+              itemName: item.name,
+              dailyPrice: item.dailyPrice,
+              fianzaAmount,
               m2,
               pax,
               eventDate,
-              deposit: 100.00
+              deposit: fianzaAmount
             }
           })
         });
@@ -345,20 +354,44 @@ export const AcousticSpatialMatcher: React.FC = () => {
             <p className="text-xs font-mono font-bold text-slate-200">{reservationMessage}</p>
           )}
 
-          <button
-            onClick={() => handleReserve(recommendation.recommendedSoundPack)}
-            disabled={isReserving || InventoryEngine.getAvailableStock(recommendation.recommendedSoundPack.id) === 0}
-            className={`w-full sm:w-auto px-10 py-4 font-black uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl cursor-pointer ${
-              InventoryEngine.getAvailableStock(recommendation.recommendedSoundPack.id) > 0
-                ? 'bg-[#ecb613] hover:bg-[#d4a210] text-black shadow-[#ecb613]/20 active:scale-95'
-                : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
-            }`}
-          >
-            <Lock size={16} /> 
-            {InventoryEngine.getAvailableStock(recommendation.recommendedSoundPack.id) > 0
-              ? `Bloquear Fecha y Reservar Pack (100,00 € Depósito)`
-              : 'Sin Stock para Esta Fecha'}
-          </button>
+          {(() => {
+            const packDailyPrice = recommendation.recommendedSoundPack.dailyPrice;
+            const packFianza = Math.max(50, Math.round(packDailyPrice * 0.5));
+            const totalPack = packDailyPrice + packFianza;
+            const hasStock = InventoryEngine.getAvailableStock(recommendation.recommendedSoundPack.id) > 0;
+            return (
+              <button
+                onClick={() => handleReserve(recommendation.recommendedSoundPack)}
+                disabled={isReserving || !hasStock}
+                className={`w-full sm:w-auto px-10 py-4 font-black uppercase text-xs tracking-widest rounded-2xl transition-all flex items-center justify-center gap-3 shadow-xl cursor-pointer ${
+                  hasStock
+                    ? 'bg-[#ecb613] hover:bg-[#d4a210] text-black shadow-[#ecb613]/20 active:scale-95'
+                    : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                }`}
+              >
+                <Lock size={16} /> 
+                {hasStock
+                  ? `Bloquear Pack en Stripe (${packDailyPrice} € Alquiler + ${packFianza} € Fianza = ${totalPack},00 €)`
+                  : 'Sin Stock para Esta Fecha'}
+              </button>
+            );
+          })()}
+        </div>
+
+        {/* PROTOCOLO AMOVENS DE INSPECCIÓN FOTOGRÁFICA Y DEVOLUCIÓN DE FIANZA */}
+        <div className="p-4 rounded-2xl bg-zinc-950/80 border border-zinc-800/80 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs font-mono">
+          <div className="flex items-center gap-2.5 text-zinc-300">
+            <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+            <div>
+              <span className="text-white font-bold block">Protocolo Amovens de Fianza Protegida (Check-in & Check-out):</span>
+              <span className="text-zinc-400 text-[11px]">
+                4 fotos del equipo al entregar (rejilla, conexiones y conos) y revisión a la recogida. Devolución automática de la fianza en 48h.
+              </span>
+            </div>
+          </div>
+          <span className="px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20 whitespace-nowrap">
+            100% CERO DISPUTAS
+          </span>
         </div>
       </div>
 
@@ -374,6 +407,8 @@ export const AcousticSpatialMatcher: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {availableItems.map((item) => {
             const available = InventoryEngine.getAvailableStock(item.id);
+            const itemFianza = Math.max(50, Math.round(item.dailyPrice * 0.5));
+            const totalItem = item.dailyPrice + itemFianza;
             return (
               <div 
                 key={item.id}
@@ -392,6 +427,16 @@ export const AcousticSpatialMatcher: React.FC = () => {
                   <div className="flex justify-between items-center text-xs font-mono">
                     <span className="text-slate-400">Tarifa Diaria:</span>
                     <span className="font-bold text-white text-sm">{item.dailyPrice} €/día</span>
+                  </div>
+
+                  <div className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-slate-400">Fianza Reembolsable (50%):</span>
+                    <span className="font-bold text-[#ecb613] text-xs">{itemFianza},00 €</span>
+                  </div>
+
+                  <div className="flex justify-between items-center text-[10px] font-mono text-zinc-400 border-t border-zinc-900 pt-1.5">
+                    <span>Total en Stripe:</span>
+                    <span className="text-white font-bold">{totalItem},00 €</span>
                   </div>
 
                   <div className="flex justify-between items-center text-xs font-mono">
@@ -418,7 +463,7 @@ export const AcousticSpatialMatcher: React.FC = () => {
                         : 'bg-zinc-900 text-zinc-600 cursor-not-allowed'
                     }`}
                   >
-                    {available > 0 ? 'Reservar Unidad (100,00 € Depósito)' : 'Agotado'}
+                    {available > 0 ? `Reservar en Stripe (${totalItem},00 €)` : 'Agotado'}
                   </button>
                 </div>
               </div>

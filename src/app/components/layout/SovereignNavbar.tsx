@@ -19,7 +19,8 @@ import {
   Flame, 
   Camera, 
   Lock,
-  ArrowRight
+  ArrowRight,
+  ShieldCheck
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSharedContext } from '@/app/context/SharedContext';
@@ -43,40 +44,29 @@ interface MenuFolder {
 
 const MENU_FOLDERS: MenuFolder[] = [
   {
-    id: 'produccion',
-    label: 'Producción',
-    href: '/eventos',
+    id: 'fincas',
+    label: 'Fincas & Espacios',
+    href: '/fincas',
     subitems: [
       {
-        title: 'Bodas & Ceremonias',
-        desc: 'Producción de alta costura nupcial y sonido en vivo',
-        href: '/eventos?tipo=bodas',
-        icon: Heart
-      },
-      {
-        title: 'Cumpleaños & Fiestas',
-        desc: 'Serenatas de gala, aniversarios y momentos íntimos',
-        href: '/eventos?tipo=cumpleanos',
-        icon: Sparkles
-      },
-      {
-        title: 'Ayuntamientos & B2G',
-        desc: 'Licitaciones oficiales menores de 15.000 € (Art. 118 LCSP)',
-        href: '/ayuntamientos',
-        badge: 'B2G',
+        title: 'Directorio Nacional (9.559 Fincas)',
+        desc: 'Buscador ultrarrápido por provincia con teléfonos reales',
+        href: '/fincas',
+        badge: '9.559 Fincas',
         icon: Building2
       },
       {
-        title: 'Alquiler Sonido Bose 2.000W',
-        desc: 'Sistemas F1 Model 812 y S1 Pro con técnico de sala',
-        href: '/alquiler-equipos-sonido-audiovisuales',
-        icon: Radio
+        title: '12 Fincas Homologadas S-Class',
+        desc: 'Espacios auditados con acometida CETAC y sonometría',
+        href: '/fincas?tab=homologadas',
+        badge: 'Certificadas',
+        icon: ShieldCheck
       },
       {
-        title: 'Catering & Brasas S-Class',
-        desc: 'Showcooking de paellas gigantes y cortes ibéricos',
-        href: '/catering-brasas',
-        icon: Flame
+        title: 'Fincas para Boda (Catálogo pSEO)',
+        desc: 'Directorio por provincias con semáforo de ocupación',
+        href: '/fincasparaboda',
+        icon: Heart
       }
     ]
   },
@@ -109,55 +99,57 @@ const MENU_FOLDERS: MenuFolder[] = [
     ]
   },
   {
+    id: 'produccion',
+    label: 'Alquiler & Eventos',
+    href: '/alquiler-equipos-sonido-audiovisuales',
+    subitems: [
+      {
+        title: 'Alquiler Sonido Bose 2.000W',
+        desc: 'Sistemas F1 Model 812 y S1 Pro con técnico de sala',
+        href: '/alquiler-equipos-sonido-audiovisuales',
+        badge: 'Bose F1',
+        icon: Radio
+      },
+      {
+        title: 'Bodas & Ceremonias S-Class',
+        desc: 'Producción de alta costura nupcial y sonido en vivo',
+        href: '/eventos?tipo=bodas',
+        icon: Heart
+      },
+      {
+        title: 'Ayuntamientos & B2G',
+        desc: 'Licitaciones oficiales menores de 15.000 € (Art. 118 LCSP)',
+        href: '/ayuntamientos',
+        badge: 'B2G',
+        icon: Building2
+      }
+    ]
+  },
+  {
     id: 'proveedores',
     label: 'Proveedores',
     href: '/proveedores',
     subitems: [
       {
-        title: 'Fincas & Espacios Monumentales',
-        desc: 'Catálogo de 9.559 fincas y salones con auditoría acústica',
-        href: '/fincas',
-        badge: 'Catálogo',
-        icon: Building2
+        title: 'S-Class Pro • Portal B2B Proveedores',
+        desc: 'Cockpit soberano B2B: CRM 223 solicitudes y facturación',
+        href: '/pro',
+        badge: 'B2B Pro',
+        icon: Sliders
       },
       {
-        title: 'VIMUME Senior Care (B2G)',
-        desc: 'Protocolo clínico 40 Hz y licitaciones menores < 14.250 €',
-        href: '/vimume',
-        badge: 'Art. 118',
-        icon: Sparkles
-      },
-      {
-        title: 'Música en Vivo & Mariachis',
-        desc: 'Solistas, agrupaciones y músicos verificados',
-        href: '/proveedores?cat=musica',
-        icon: Music
-      },
-      {
-        title: 'Catering & Gastronomía',
-        desc: 'Banquetería, showcooking y bodegas seleccionadas',
-        href: '/proveedores?cat=catering',
-        icon: Flame
-      },
-      {
-        title: 'Fotografía & Cinematografía',
-        desc: 'Cobertura visual documental y fotomatones',
-        href: '/proveedores?cat=foto',
-        icon: Camera
-      },
-      {
-        title: 'Red de Alianzas & Partners',
-        desc: 'Fincas, planners y caterings homologados',
-        href: '/alianzas',
-        badge: 'S-Class',
-        icon: Users
-      },
-      {
-        title: 'Ver Todo el Directorio Nacional',
-        desc: 'Catálogo de profesionales homologados en España',
+        title: 'Directorio Completo 65.000 Nodos',
+        desc: 'Música, fotógrafos, catering, flores y transporte',
         href: '/proveedores',
-        badge: 'Directorio',
+        badge: '65k Nodos',
         icon: ArrowRight
+      },
+      {
+        title: 'Red de Afiliados & Partners B2B',
+        desc: 'Fincas, planners y comisiones del 10% auto-facturables',
+        href: '/afiliados',
+        badge: 'Afiliación',
+        icon: Users
       }
     ]
   }
@@ -194,7 +186,7 @@ const SovereignNavbar = () => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  if (pathname === '/' || pathname?.startsWith('/admin')) {
+  if (pathname === '/' || pathname?.startsWith('/admin') || pathname?.startsWith('/pro') || pathname?.startsWith('/emp-menu')) {
     return null;
   }
 

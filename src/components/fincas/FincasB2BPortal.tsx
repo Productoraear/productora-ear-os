@@ -3,26 +3,26 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Building2, 
-  ShieldCheck, 
-  Zap, 
-  Volume2, 
-  CreditCard, 
-  FileText, 
-  ArrowRight, 
-  Phone, 
-  CheckCircle2, 
-  AlertTriangle, 
-  Clock, 
-  Calendar, 
-  Percent, 
-  Sliders, 
-  Download, 
-  Sparkles, 
-  Lock, 
-  MapPin, 
-  Users, 
+import {
+  Building2,
+  ShieldCheck,
+  Zap,
+  Volume2,
+  CreditCard,
+  FileText,
+  ArrowRight,
+  Phone,
+  CheckCircle2,
+  AlertTriangle,
+  Clock,
+  Calendar,
+  Percent,
+  Sliders,
+  Download,
+  Sparkles,
+  Lock,
+  MapPin,
+  Users,
   ChevronRight,
   TrendingUp,
   Award,
@@ -37,7 +37,7 @@ type PortalView = 'DIRECTORIO_NACIONAL_COMPLETO' | 'CATALOGO_12_FINCAS' | 'SIMUL
 
 export default function FincasB2BPortal() {
   const [activeView, setActiveView] = useState<PortalView>('DIRECTORIO_NACIONAL_COMPLETO');
-  
+
   // Filtros de Catálogo
   const [provinciaFilter, setProvinciaFilter] = useState<string>('Todas');
   const [selectedFinca, setSelectedFinca] = useState<FincaHomologada | null>(null);
@@ -165,7 +165,7 @@ export default function FincasB2BPortal() {
 
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#050507] text-white selection:bg-[#ecb613] selection:text-black font-sans">
-      
+
       {/* ── TOPBAR DE GOBERNANZA B2B ── */}
       <aside aria-label="Gobernanza B2B" className="w-full border-b border-white/10 bg-[#09090d]/90 backdrop-blur-md px-4 sm:px-6 py-2 text-xs text-white/60">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 font-mono text-[11px]">
@@ -235,12 +235,22 @@ export default function FincasB2BPortal() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setActiveView('CATALOGO_12_FINCAS')}
-              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeView === 'CATALOGO_12_FINCAS'
+              onClick={() => setActiveView('DIRECTORIO_NACIONAL_COMPLETO')}
+              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'DIRECTORIO_NACIONAL_COMPLETO'
                   ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
                   : 'text-white/60 hover:bg-white/5 hover:text-white'
-              }`}
+                }`}
+            >
+              <MapPin size={14} />
+              <span>Directorio Nacional (9.559)</span>
+            </button>
+
+            <button
+              onClick={() => setActiveView('CATALOGO_12_FINCAS')}
+              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'CATALOGO_12_FINCAS'
+                  ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                  : 'text-white/60 hover:bg-white/5 hover:text-white'
+                }`}
             >
               <Building2 size={14} />
               <span>12 Fincas Homologadas</span>
@@ -248,11 +258,10 @@ export default function FincasB2BPortal() {
 
             <button
               onClick={() => setActiveView('SIMULADOR_AFILIACION')}
-              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeView === 'SIMULADOR_AFILIACION'
+              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'SIMULADOR_AFILIACION'
                   ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
                   : 'text-white/60 hover:bg-white/5 hover:text-white'
-              }`}
+                }`}
             >
               <Percent size={14} />
               <span>Simulador de Comisiones & Autofactura</span>
@@ -260,11 +269,10 @@ export default function FincasB2BPortal() {
 
             <button
               onClick={() => setActiveView('ONBOARDING_EXPRESS_15MIN')}
-              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeView === 'ONBOARDING_EXPRESS_15MIN'
+              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'ONBOARDING_EXPRESS_15MIN'
                   ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
                   : 'text-white/60 hover:bg-white/5 hover:text-white'
-              }`}
+                }`}
             >
               <Clock size={14} />
               <span>Onboarding Express &lt; 15 min</span>
@@ -285,13 +293,20 @@ export default function FincasB2BPortal() {
 
       {/* ── CUERPO DINÁMICO SEGÚN VISTA SELECCIONADA ── */}
       <div className="mx-auto max-w-7xl px-6 py-12 sm:px-10 lg:px-12">
-        
+
+        {/* ═══════════════════════════════════════════════════════ */}
+        {/* VISTA 0: DIRECTORIO NACIONAL COMPLETO (9.559 FINCAS REALES) */}
+        {/* ═══════════════════════════════════════════════════════ */}
+        {activeView === 'DIRECTORIO_NACIONAL_COMPLETO' && (
+          <FincasNationalCatalogClient />
+        )}
+
         {/* ═══════════════════════════════════════════════════════ */}
         {/* VISTA 1: CATÁLOGO DE LAS 12 FINCAS HOMOLOGADAS */}
         {/* ═══════════════════════════════════════════════════════ */}
         {activeView === 'CATALOGO_12_FINCAS' && (
           <div className="space-y-10">
-            
+
             {/* BARRA DE FILTRADO */}
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 rounded-2xl border border-white/10 bg-[#09090d] p-4">
               <div className="flex items-center gap-3">
@@ -308,11 +323,10 @@ export default function FincasB2BPortal() {
                   <button
                     key={p}
                     onClick={() => setProvinciaFilter(p)}
-                    className={`rounded-lg px-3 py-1.5 font-mono text-xs font-bold uppercase transition-colors cursor-pointer ${
-                      provinciaFilter === p
+                    className={`rounded-lg px-3 py-1.5 font-mono text-xs font-bold uppercase transition-colors cursor-pointer ${provinciaFilter === p
                         ? 'bg-[#ecb613] text-black'
                         : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
-                    }`}
+                      }`}
                   >
                     {p}
                   </button>
@@ -425,7 +439,7 @@ export default function FincasB2BPortal() {
         {/* ═══════════════════════════════════════════════════════ */}
         {activeView === 'SIMULADOR_AFILIACION' && (
           <div className="space-y-12">
-            
+
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
                 Transparencia Algorítmica & Cash-Flow B2B
@@ -439,7 +453,7 @@ export default function FincasB2BPortal() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-              
+
               {/* CONTROLES DEL SIMULADOR */}
               <div className="lg:col-span-5 rounded-3xl border border-white/10 bg-[#09090d] p-6 md:p-8 space-y-6">
                 <div className="border-b border-white/10 pb-4">
@@ -453,12 +467,12 @@ export default function FincasB2BPortal() {
                     <span className="text-white/70">Ticket de Contratación EAR:</span>
                     <span className="text-[#ecb613] font-bold text-base">{eventTicket.toLocaleString('es-ES')} €</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="3800" 
-                    max="14990" 
+                  <input
+                    type="range"
+                    min="3800"
+                    max="14990"
                     step="100"
-                    value={eventTicket} 
+                    value={eventTicket}
                     onChange={(e) => setEventTicket(Number(e.target.value))}
                     className="w-full accent-[#ecb613] cursor-pointer"
                   />
@@ -481,11 +495,10 @@ export default function FincasB2BPortal() {
                       <button
                         key={btn.rate}
                         onClick={() => setCommissionRate(btn.rate)}
-                        className={`rounded-xl py-2.5 font-mono text-xs font-bold transition-all cursor-pointer ${
-                          commissionRate === btn.rate
+                        className={`rounded-xl py-2.5 font-mono text-xs font-bold transition-all cursor-pointer ${commissionRate === btn.rate
                             ? 'bg-[#ecb613] text-black shadow-md'
                             : 'bg-white/5 text-white/60 hover:bg-white/10 border border-white/10'
-                        }`}
+                          }`}
                       >
                         {btn.label}
                       </button>
@@ -499,12 +512,12 @@ export default function FincasB2BPortal() {
                     <span className="text-white/70">Eventos Referenciados al Año:</span>
                     <span className="text-white font-bold text-base">{annualEventsCount} bodas/año</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="5" 
-                    max="60" 
+                  <input
+                    type="range"
+                    min="5"
+                    max="60"
                     step="1"
-                    value={annualEventsCount} 
+                    value={annualEventsCount}
                     onChange={(e) => setAnnualEventsCount(Number(e.target.value))}
                     className="w-full accent-[#AAD6CD] cursor-pointer"
                   />
@@ -528,7 +541,7 @@ export default function FincasB2BPortal() {
 
               {/* RESULTADOS Y LIQUIDACIÓN EN VIVO */}
               <div className="lg:col-span-7 space-y-6">
-                
+
                 {/* TARJETA DE IMPACTO UNITARIO */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="rounded-3xl border border-emerald-500/30 bg-emerald-950/20 p-6 space-y-2">
@@ -647,7 +660,7 @@ export default function FincasB2BPortal() {
         {/* ═══════════════════════════════════════════════════════ */}
         {activeView === 'ONBOARDING_EXPRESS_15MIN' && (
           <div className="space-y-12">
-            
+
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#ecb613] font-bold">
                 Homologación Sin Fricción B2B
@@ -661,12 +674,12 @@ export default function FincasB2BPortal() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
+
               {/* FORMULARIO DE ONBOARDING */}
               <div className="lg:col-span-8 rounded-3xl border border-white/10 bg-[#09090d] p-6 md:p-10 space-y-8">
-                
+
                 <form onSubmit={handleSubmitOnboarding} className="space-y-6">
-                  
+
                   {/* SECCIÓN 1: DATOS FISCALES DEL ESPACIO */}
                   <div className="space-y-4">
                     <h3 className="font-syne text-base font-bold uppercase text-[#ecb613] flex items-center gap-2">
@@ -675,7 +688,7 @@ export default function FincasB2BPortal() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block font-mono text-xs text-white/60 mb-1">Nombre Comercial de la Finca *</label>
-                        <input 
+                        <input
                           type="text"
                           required
                           placeholder="Ej: Finca Monte Real"
@@ -686,7 +699,7 @@ export default function FincasB2BPortal() {
                       </div>
                       <div>
                         <label className="block font-mono text-xs text-white/60 mb-1">Ubicación / Municipio *</label>
-                        <input 
+                        <input
                           type="text"
                           required
                           placeholder="Ej: San Lorenzo de El Escorial (Madrid)"
@@ -697,7 +710,7 @@ export default function FincasB2BPortal() {
                       </div>
                       <div>
                         <label className="block font-mono text-xs text-white/60 mb-1">CIF / NIF de la Empresa *</label>
-                        <input 
+                        <input
                           type="text"
                           required
                           placeholder="B-12345678"
@@ -708,7 +721,7 @@ export default function FincasB2BPortal() {
                       </div>
                       <div>
                         <label className="block font-mono text-xs text-white/60 mb-1">Director o Wedding Planner Responsable *</label>
-                        <input 
+                        <input
                           type="text"
                           required
                           placeholder="Nombre y Apellidos"
@@ -728,7 +741,7 @@ export default function FincasB2BPortal() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block font-mono text-xs text-white/60 mb-1">Potencia Contratada Dedicada (kW) *</label>
-                        <input 
+                        <input
                           type="number"
                           min="5"
                           max="150"
@@ -774,7 +787,7 @@ export default function FincasB2BPortal() {
                       </div>
                       <div>
                         <label className="block font-mono text-xs text-white/60 mb-1">Aseguradora *</label>
-                        <input 
+                        <input
                           type="text"
                           placeholder="Mapfre, Allianz, Zurich..."
                           value={onboardingData.aseguradora}
@@ -784,7 +797,7 @@ export default function FincasB2BPortal() {
                       </div>
                       <div>
                         <label className="block font-mono text-xs text-white/60 mb-1">Nº de Póliza *</label>
-                        <input 
+                        <input
                           type="text"
                           placeholder="POL-RC-XXXXXX"
                           value={onboardingData.numeroPoliza}
@@ -802,7 +815,7 @@ export default function FincasB2BPortal() {
                         <span className="font-syne text-sm font-bold uppercase text-white block">Acceso Convoy Logístico de 14 Plazas</span>
                         <p className="text-xs text-white/50 font-mono">¿Cuenta la finca con radio de giro y acceso despejado para furgoneta de producción y carga?</p>
                       </div>
-                      <input 
+                      <input
                         type="checkbox"
                         checked={onboardingData.accesoConvoy14Plazas}
                         onChange={(e) => setOnboardingData({ ...onboardingData, accesoConvoy14Plazas: e.target.checked })}
@@ -827,11 +840,10 @@ export default function FincasB2BPortal() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className={`rounded-2xl p-6 border ${
-                      onboardingResult.resultadoAuditoria.aprobado
+                    className={`rounded-2xl p-6 border ${onboardingResult.resultadoAuditoria.aprobado
                         ? 'border-emerald-500/40 bg-emerald-950/30'
                         : 'border-[#FF455B]/40 bg-rose-950/30'
-                    }`}
+                      }`}
                   >
                     <div className="flex items-center gap-3">
                       {onboardingResult.resultadoAuditoria.aprobado ? (
@@ -871,10 +883,9 @@ export default function FincasB2BPortal() {
 
                 {/* BARRA DE PROGRESO */}
                 <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-                  <div 
-                    className={`h-full transition-all duration-500 ${
-                      auditStatus.score >= 80 ? 'bg-emerald-400' : auditStatus.score >= 50 ? 'bg-[#ecb613]' : 'bg-[#FF455B]'
-                    }`}
+                  <div
+                    className={`h-full transition-all duration-500 ${auditStatus.score >= 80 ? 'bg-emerald-400' : auditStatus.score >= 50 ? 'bg-[#ecb613]' : 'bg-[#FF455B]'
+                      }`}
                     style={{ width: `${auditStatus.score}%` }}
                   />
                 </div>

@@ -63,8 +63,38 @@ export function SClassPricingTerminal() {
     window.open(`https://wa.me/34693693048?text=${encodedMessage}`, '_blank');
   };
 
-  const handleStripeDeposit = () => {
-    window.location.href = `/api/payments/checkout?format=${selectedFormat}&ref=${quote.orderId}&hash=${quote.priceLockHash}&amount=${quote.depositAmountEur}`;
+  const [isProcessingStripe, setIsProcessingStripe] = useState<boolean>(false);
+
+  const handleStripeDeposit = async () => {
+    setIsProcessingStripe(true);
+    try {
+      const res = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: quote.depositAmountEur || 100,
+          concept: `Depósito Price-Lock 100 € - Edwin Agudelo (${quote.formatName})`,
+          metadata: {
+            serviceName: `Edwin Agudelo (${quote.formatName})`,
+            orderId: quote.orderId,
+            sha256Token: quote.priceLockHash,
+            deposit: quote.depositAmountEur || 100,
+            finalTotal: quote.totalPriceEur
+          }
+        })
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        // Fallback to GET redirect
+        window.location.href = `/api/payments/checkout?format=${selectedFormat}&ref=${quote.orderId}&hash=${quote.priceLockHash}&amount=${quote.depositAmountEur}`;
+      }
+    } catch {
+      window.location.href = `/api/payments/checkout?format=${selectedFormat}&ref=${quote.orderId}&hash=${quote.priceLockHash}&amount=${quote.depositAmountEur}`;
+    } finally {
+      setIsProcessingStripe(false);
+    }
   };
 
   return (

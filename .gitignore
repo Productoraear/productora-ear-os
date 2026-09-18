@@ -30,6 +30,7 @@ docs/release/COMPREHENSIVE_FORENSIC_INVENTORY.json
 src/data/catalog/ADN_EAR_INDEX.json
 
 vault/
+vault_absorbed/
 vault_secrets_backup/
 scratch/
 EAR_OS_CONTROL/

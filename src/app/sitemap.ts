@@ -296,7 +296,10 @@ export default async function sitemap(props: {
 
           allProviders.forEach(provider => {
             if (!isProviderPublic(provider)) return;
-            const rawSlug = provider.slug || provider.atomic_specs?.slug || provider.id;
+            const hasSemanticSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-');
+            const rawSlug = hasSemanticSlug
+              ? provider.slug!
+              : (provider.name || provider.atomic_specs?.slug || provider.slug || provider.id);
             const validSlug = sanitizeSlug(rawSlug);
             if (validSlug) {
               addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.70, 'weekly');
@@ -321,7 +324,10 @@ export default async function sitemap(props: {
 
           for (const v of harvestedVendors) {
             if (!isProviderPublic(v)) continue;
-            const rawSlug = v.slug || v.id || v.name;
+            const hasSemanticSlug = v.slug && !v.slug.toLowerCase().startsWith('prov-');
+            const rawSlug = hasSemanticSlug
+              ? v.slug!
+              : (v.name || v.slug || v.id);
             const validSlug = sanitizeSlug(rawSlug);
             if (validSlug) {
               addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.65, 'monthly');

@@ -210,69 +210,128 @@ export default function AdminCommandCenterPage() {
     setOracleOutput(null);
     setTimeout(() => {
       setIsConsulting(false);
-      setOracleOutput(`💎 [ORÁCULO VELOCITY CONSULTORÍA]:
+      setOracleOutput(`💎 [ORÁCULO MAESTRO DE CRECIMIENTO MUSICAL EAR OS]:
 1. Diagnóstico: La retención se pierde en los primeros 3 segundos si usas introducciones genéricas.
-2. Marco Mental: El cliente busca certeza y transformación, no características técnicas de producto.
-3. Plan de Acción: Aplica el principio de '1.3 La fórmula de 4 pasos para anuncios convincentes'.
-📂 Clase Recomendada: file:///D:/00_VELOCITY_MEDIA_VAULT/03_CURSOS/Copywriting/1.3 La fórmula de 4 pasos para que un anuncio funcione y sea convincente.mp4`);
+2. Marco Mental: El cliente busca certeza, estatus y emoción real, no especificaciones de cables ni marcas.
+3. Plan de Acción: Aplica la fórmula de 4 pasos para propuestas de alto impacto y anclaje de señal 100 €.
+📂 Módulo Formativo: file:///H:/00_PRODUCTORA_EAR/EAR_ABSORBED_VAULT/03_CURSOS/Copywriting/1.3_formula_4_pasos_anuncios_convincentes.mp4`);
     }, 600);
   };
 
   return (
-    <div className="min-h-screen bg-[#030305] text-zinc-100 font-sans selection:bg-[#ecb613] selection:text-black">
-      {/* Top Bar Militar */}
-      <header className="border-b border-white/10 bg-[#050508]/80 backdrop-blur-xl sticky top-0 z-30 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ecb613] to-amber-600 flex items-center justify-center text-black font-black font-mono shadow-[0_0_20px_rgba(236,182,19,0.3)]">
-              Ω7
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-black font-mono tracking-wider text-white uppercase">
-                  CENTRO DE MANDO // <span className="text-[#ecb613]">COMMAND CENTER</span>
-                </h1>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  LIVE S-CLASS
-                </span>
-              </div>
-              <p className="text-xs text-zinc-400 font-mono">
-                Bóvedas Unificadas: Disco D: (Media) + Disco H: (Cerebro Obsidian)
-              </p>
+    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
+        <span>/</span>
+        <span>IA &amp; GPU</span>
+        <span>/</span>
+        <span className="text-[#ecb613]">Centro de Mando &amp; Skills</span>
+      </div>
+
+      {/* Header S-Class */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+            CENTRO DE MANDO // COMMAND CENTER
+          </h1>
+          <p className="text-xs font-mono text-zinc-400 mt-1">
+            Bóvedas Unificadas: Disco Local + Cerebro Obsidian • <span className="text-[#ecb613]">{GRAND_TOTAL_FORMATTED} Proveedores</span> auditados • GPU Bare-Metal 24GB
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-3.5 py-2 rounded-xl text-xs font-mono text-zinc-300">
+            <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+            <span>GPU: RX 7900 XTX (24GB)</span>
+            <span className="text-zinc-600">|</span>
+            <span className="text-emerald-400 font-bold">ONLINE</span>
+          </div>
+          <Link
+            href="/"
+            className="px-4 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] hover:bg-[#ecb613]/20 transition-all flex items-center gap-2 font-bold shadow-[0_0_15px_rgba(236,182,19,0.15)]"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+            <span>Ver Web</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* KPI Cards CATMÍN S-Class */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Hardware Host</span>
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
+              <Cpu className="w-4 h-4" />
             </div>
           </div>
-
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl text-xs font-mono text-zinc-300">
-              <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-              <span>GPU: 7900 XTX 24GB</span>
-              <span className="text-white/20">|</span>
-              <span className="text-zinc-400">{GRAND_TOTAL_FORMATTED} Provs</span>
-            </div>
-            <Link
-              href="/"
-              className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono text-zinc-300 hover:text-white transition-all flex items-center gap-1.5"
-            >
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span>Ver Web</span>
-            </Link>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400 mt-3">
+            24GB VRAM
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-emerald-400">RDNA3</span> Ollama Local
           </div>
         </div>
-      </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        {/* Banner Consultora Velocity */}
-        <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-black to-zinc-950 border border-[#ecb613]/30 shadow-[0_0_30px_rgba(236,182,19,0.1)] relative overflow-hidden">
-          <div className="relative z-10 space-y-3">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#ecb613]" />
-              <span className="text-xs font-mono uppercase tracking-widest text-[#ecb613] font-bold">
-                CONSULTORA ESTRATÉGICA VELOCITY 24H (INTEGRADA)
-              </span>
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Bóveda SSOT</span>
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
+              <BrainCircuit className="w-4 h-4" />
             </div>
-            <h2 className="text-xl font-bold text-white tracking-tight">
-              Haz una pregunta de negocio, ventas o copywriting a la doctrina Velocity Media
-            </h2>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-[#ecb613] mt-3">
+            {GRAND_TOTAL_FORMATTED}
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-[#ecb613]">Nodos auditados</span> verificados
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Protocolo ZTM</span>
+            <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
+              <Layers className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-white mt-3">
+            0 Tokens
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-blue-400">Obsidian &amp; Memanto</span> hub
+          </div>
+        </div>
+
+        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Gobernanza Militar</span>
+            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
+              <ShieldAlert className="w-4 h-4" />
+            </div>
+          </div>
+          <div className="text-2xl sm:text-3xl font-bold font-mono text-purple-400 mt-3">
+            HSTS + CSP
+          </div>
+          <div className="text-[10px] font-mono text-zinc-500 mt-1 flex items-center gap-1">
+            <span className="text-purple-400">Defensa activa</span> anti-fuerza bruta
+          </div>
+        </div>
+      </div>
+
+      {/* Banner Consultora Soberana */}
+      <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 via-black to-zinc-950 border border-[#ecb613]/30 shadow-[0_0_30px_rgba(236,182,19,0.1)] relative overflow-hidden">
+        <div className="relative z-10 space-y-3">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-[#ecb613]" />
+            <span className="text-xs font-mono uppercase tracking-widest text-[#ecb613] font-bold">
+              ORÁCULO MAESTRO DE CRECIMIENTO MUSICAL &amp; VENTAS 24H
+            </span>
+          </div>
+          <h2 className="text-xl font-bold text-white tracking-tight">
+            Consulta estratégica a los Funnels de Aceleración Cuántica de EAR OS
+          </h2>
             <div className="flex flex-col sm:flex-row gap-2 pt-1">
               <input
                 type="text"
@@ -379,7 +438,6 @@ export default function AdminCommandCenterPage() {
             );
           })}
         </div>
-      </main>
     </div>
   );
 }

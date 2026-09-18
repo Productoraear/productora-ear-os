@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -92,14 +92,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  const provinceCandidate = slug[slug.length - 1];
-  const location = PROVINCIAS.includes(provinceCandidate.toLowerCase()) ? provinceCandidate : 'Madrid';
+  const lastSeg = slug[slug.length - 1].toLowerCase();
+  const isLastProv = PROVINCIAS.includes(lastSeg);
+  const location = isLastProv ? lastSeg.charAt(0).toUpperCase() + lastSeg.slice(1) : 'Madrid';
+  const rawEquipment = isLastProv ? slug.slice(0, slug.length - 1).join(' ') : slug.join(' ');
+  const equipmentName = rawEquipment.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
   return {
-    title: `Alquiler de ${slug.join(' ')} en ${location} | El Arsenal Técnico EAR`,
-    description: `Equipamiento audiovisual profesional, pantallas LED, sonido Line Array y estructuras en ${location}. Garantía S-Class de cero fallos.`,
+    title: `Alquiler de ${equipmentName} en ${location} — Precios 2026 (Desde 350€) | Productora EAR`,
+    description: `Alquiler profesional de ${equipmentName} en ${location} con técnico in-situ y transporte. Equipamiento audiovisual S-Class, sonorización 12 W/pax, seguro RC y reserva online con Price-Lock 100€.`,
     alternates: {
       canonical: `https://productoraear.com/arsenal/${slug.join('/')}`,
-    }
+    },
+    keywords: [
+      `alquiler ${equipmentName} ${location}`,
+      `${equipmentName} ${location}`,
+      'alquiler pantallas led madrid',
+      'alquiler sonido bodas',
+      'productora ear'
+    ]
   };
 }
 
