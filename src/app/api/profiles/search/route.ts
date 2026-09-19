@@ -191,7 +191,26 @@ async function queryStaticProviders(options: {
     }
   }
 
-  // Fallback if nothing was loaded
+  // Fallback de alta resiliencia si no se pudo cargar finca.json por peso o entorno serverless
+  if (list.length === 0) {
+    const fallbackRaw = await loadStaticDataset('all_featured.json', requestUrl);
+    if (fallbackRaw) {
+      try {
+        const featured = JSON.parse(fallbackRaw);
+        if (normCat === 'finca') {
+          list = featured.filter((item: any) => 
+            (item.category || '').toLowerCase().includes('finca') || 
+            (item.category || '').toLowerCase().includes('espacio') ||
+            (item.description || '').toLowerCase().includes('finca')
+          );
+        } else {
+          list = featured;
+        }
+      } catch { /* continuar */ }
+    }
+  }
+
+  // Fallback si tras el primer intento la lista sigue vacía
   if (list.length === 0) {
     return { total: 0, providers: [] };
   }
