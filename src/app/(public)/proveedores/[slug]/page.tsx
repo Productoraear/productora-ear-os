@@ -105,7 +105,7 @@ let cachedVampProviders: any[] | null = null;
 let cachedHarvestedVendors: any[] | null = null;
 
 async function getProviderData(slug: string) {
-  const slugNorm = slug.toLowerCase().trim();
+  const slugNorm = decodeURIComponent(slug || '').toLowerCase().trim();
 
   // ━━━ VETO INMUTABLE S-CLASS & LISTA NEGRA DE OPT-OUT (RGPD / LSSI) ━━━
   if (isProviderBlacklisted({ id: slugNorm, slug: slugNorm, name: slugNorm })) {
@@ -291,6 +291,117 @@ async function getProviderData(slug: string) {
     console.warn(`[PROVIDER_SLUG] Error leyendo bodas-vendors-harvested:`, err);
   }
 
+  // 5. Consulta a las particiones Edge sincronizadas en public/data/providers/ (9.559 fincas y 75k proveedores)
+  try {
+    const staticFound = findInStaticPartitions(slugNorm);
+    if (staticFound) {
+      console.log(`[PROVIDER_SLUG] Encontrado en particiones estáticas: ${slugNorm} -> ${staticFound.name}`);
+      return staticFound;
+    }
+  } catch (err) {
+    console.warn(`[PROVIDER_SLUG] Error buscando en particiones estáticas:`, err);
+  }
+
+  return null;
+}
+
+const staticPartitionCache = new Map<string, any[]>();
+
+function findInStaticPartitions(slugNorm: string) {
+  const candidateFiles = [
+    'all_featured.json',
+    'finca.json',
+    'catering.json',
+    'musica.json',
+    'sonido.json',
+    'decoracion.json',
+    'wedding.json',
+    'transporte.json',
+    'servicios.json',
+    'foto.json',
+    'moda.json',
+    'senior_care.json'
+  ];
+
+  for (const fileName of candidateFiles) {
+    try {
+      let list = staticPartitionCache.get(fileName);
+      if (!list) {
+        const candidatePaths = [
+          path.join(process.cwd(), 'public', 'data', 'providers', fileName),
+          path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', fileName),
+        ];
+        for (const p of candidatePaths) {
+          if (fs.existsSync(p)) {
+            list = JSON.parse(fs.readFileSync(p, 'utf-8'));
+            staticPartitionCache.set(fileName, list!);
+            break;
+          }
+        }
+      }
+
+      if (list && Array.isArray(list)) {
+        const found = list.find((p: any) => {
+          if (p.slug?.toLowerCase() === slugNorm) return true;
+          if (p.id?.toLowerCase() === slugNorm) return true;
+          if (p.shaHash?.toLowerCase() === slugNorm) return true;
+          const nameSlug = (p.name || '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/(^-|-$)/g, '');
+          if (nameSlug === slugNorm) return true;
+          if (slugNorm.startsWith('prov-') && p.id === slugNorm.replace('prov-', '')) return true;
+          if (!slugNorm.startsWith('prov-') && p.id === `prov-${slugNorm}`) return true;
+          return false;
+        });
+
+        if (found) {
+          const rawImages = (found.imageUrls && found.imageUrls.length > 0)
+            ? found.imageUrls
+            : (found.gallery && found.gallery.length > 0)
+            ? found.gallery
+            : (found.img ? [found.img] : []);
+          const cleanImages = rawImages.filter((u: string) => typeof u === 'string' && u.length > 5 && !u.includes('.svg'));
+          const coverImg = cleanImages[0] || found.img || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop';
+          const finalGallery = cleanImages.length > 0 ? cleanImages : [coverImg];
+
+          return {
+            id: found.id || slugNorm,
+            name: (found.name || '').replace(/\s*-\s*Consulta disponibilidad y precios.*/i, '').trim(),
+            category: (found.category === 'finca' || fileName === 'finca.json') ? 'Finca para Bodas' : found.category === 'musica' ? 'Música & Espectáculos' : found.category === 'catering' ? 'Catering & Gastronomía' : found.category || 'Servicio para Eventos',
+            province: found.province || found.location?.province || 'Madrid',
+            address: found.address || (found.province ? `${found.province}, España` : 'España'),
+            phone: found.phone || found.telephone || CENTRALITA.tel,
+            telephone: found.phone || found.telephone || CENTRALITA.tel,
+            rating: found.rating || 5.0,
+            reviews: found.reviews || 24,
+            description: found.description_full || found.description || `Espacio y proveedor homologado para bodas y eventos en ${found.province || 'España'}.`,
+            description_full: found.description_full || found.description,
+            gallery: finalGallery,
+            img: coverImg,
+            basePrice: found.basePrice || (typeof found.price === 'number' ? found.price : 95),
+            price: found.price || `${found.basePrice || 95} €`,
+            capacidadMaxPax: found.capacidadMaxPax || 350,
+            services_list: found.services_list || [
+              'Espacios ajardinados y privacidad total',
+              'Cocina propia o catering de alta gastronomía homologado',
+              'Zona de baile y barra libre sin límite estricto de decibelios',
+              'Acometida eléctrica y sonometría verificada S-Class',
+              'Soporte directo vía Concierge Productora EAR'
+            ],
+            social_links: found.social_links || {},
+            reviews_list: found.reviews_list || [],
+            isClaimed: Boolean(found.isClaimed),
+            estadoHomologacion: found.estadoHomologacion || 'AUDITORIA_VIGENTE'
+          };
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+  }
   return null;
 }
 
@@ -513,6 +624,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 <img 
                   src={gallery[0]} 
                   alt={displayName} 
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop";
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
                 <div className="absolute top-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-xl border border-white/10 text-[#ecb613]">
@@ -526,6 +641,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   <img 
                     src={gallery[1] || gallery[0]} 
                     alt={`${displayName} evento`} 
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop";
+                    }}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
                   />
                   <div className="absolute top-3 right-3 flex items-center gap-2">
@@ -542,6 +661,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   <img 
                     src={gallery[2] || gallery[0]} 
                     alt={`${displayName} montaje`} 
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop";
+                    }}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
                   />
                   {/* Botones Flotantes en la foto inferior */}

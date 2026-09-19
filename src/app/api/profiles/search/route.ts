@@ -302,10 +302,10 @@ async function queryStaticProviders(options: {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const category = searchParams.get('category');
+  const category = searchParams.get('category') || searchParams.get('cat');
   const province = searchParams.get('province');
   const q = searchParams.get('q');
-  const subcategory = searchParams.get('subcategory') || searchParams.get('subcat');
+  const subcategory = searchParams.get('subcategory') || searchParams.get('subcat') || searchParams.get('sub');
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
   const limit = Math.min(2000, Math.max(1, parseInt(searchParams.get('limit') || '24', 10)));
   const skip = (page - 1) * limit;
@@ -393,6 +393,7 @@ export async function GET(request: Request) {
           limit,
           totalPages: Math.ceil(total / limit),
           providers: sanitizedProviders,
+          items: sanitizedProviders,
           source: 'PRISMA_DATABASE'
         });
       }
@@ -421,6 +422,7 @@ export async function GET(request: Request) {
       limit,
       totalPages: Math.ceil(total / limit),
       providers,
+      items: providers,
       source: 'STATIC_EDGE_SYNCHRONIZED'
     });
   } catch (staticErr: any) {

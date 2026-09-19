@@ -90,7 +90,7 @@ export default function FincasParaBodaPortal() {
     setLoading(true);
     try {
       const params = new URLSearchParams();
-      params.set('cat', 'finca');
+      params.set('category', 'finca');
       params.set('limit', '18');
       params.set('page', currentPage.toString());
 
@@ -101,40 +101,21 @@ export default function FincasParaBodaPortal() {
         params.set('q', searchKeyword.trim());
       }
       if (selectedCategory !== 'all') {
-        params.set('sub', selectedCategory);
+        params.set('subcategory', selectedCategory);
       }
 
       const res = await fetch(`/api/profiles/search?${params.toString()}`);
       if (res.ok) {
         const json = await res.json();
-        if (json.items && json.items.length > 0) {
-          setFincas(json.items);
+        const list = json.providers || json.items || [];
+        if (list.length > 0) {
+          setFincas(list);
           setTotalPages(json.totalPages || 1);
-          setTotalFound(json.total || 9559);
+          setTotalFound(json.total || list.length);
         } else {
-          // Fallback a las fincas homologadas
-          setFincas(
-            SCLASS_12_FINCAS_HOMOLOGADAS.map(f => ({
-              id: f.id,
-              name: f.name,
-              category: 'Finca Homologada S-Class',
-              province: f.provincia,
-              address: `${f.location}, ${f.provincia}`,
-              phone: CENTRALITA.tel,
-              telephone: CENTRALITA.tel,
-              img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
-              imageUrls: [
-                'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop'
-              ],
-              rating: 5.0,
-              reviews: 24,
-              basePrice: 95,
-              capacidadMaxPax: f.capacidadMaxPax,
-              description: f.description
-            }))
-          );
+          setFincas([]);
+          setTotalPages(1);
+          setTotalFound(0);
         }
       }
     } catch (err) {
@@ -466,8 +447,14 @@ export default function FincasParaBodaPortal() {
         ) : displayedFincas.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayedFincas.map((finca) => {
-              const coverImg = (finca.imageUrls && finca.imageUrls[0]) || finca.img || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop';
-              const gallery = finca.imageUrls && finca.imageUrls.length > 0 ? finca.imageUrls : [coverImg];
+              const rawImgs = (finca.imageUrls && finca.imageUrls.length > 0)
+                ? finca.imageUrls
+                : (finca.gallery && finca.gallery.length > 0)
+                ? finca.gallery
+                : (finca.img ? [finca.img] : []);
+              const cleanGallery = rawImgs.filter((u: string) => typeof u === 'string' && u.length > 5 && !u.includes('.svg'));
+              const coverImg = cleanGallery[0] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop';
+              const gallery = cleanGallery.length > 0 ? cleanGallery : [coverImg];
 
               return (
                 <div

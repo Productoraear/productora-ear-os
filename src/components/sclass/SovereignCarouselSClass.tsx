@@ -137,6 +137,7 @@ export default function SovereignCarouselSClass({
           <img
             src={cleanImages[currentIndex]}
             alt={`${title} - Foto ${currentIndex + 1}`}
+            referrerPolicy="no-referrer"
             onError={(e) => {
               (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop";
             }}
@@ -210,6 +211,10 @@ export default function SovereignCarouselSClass({
                 <img
                   src={img}
                   alt={`Miniatura ${idx + 1}`}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=300&auto=format&fit=crop";
+                  }}
                   className="w-full h-full object-cover"
                 />
               </button>
@@ -255,6 +260,10 @@ export default function SovereignCarouselSClass({
             <img
               src={cleanImages[currentIndex]}
               alt={`${title} - Ampliada`}
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop";
+              }}
               className="max-h-[82vh] max-w-[95vw] object-contain rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.9)]"
             />
 
