@@ -140,8 +140,13 @@ export default function FincasNationalCatalogClient() {
       const res = await fetch(`/api/profiles/search?${params.toString()}`);
       if (res.ok) {
         const data = await res.json();
-        setFincas(data.providers || []);
-        if (data.total) setTotal(data.total);
+        const providers = Array.isArray(data.providers) ? data.providers : [];
+        setFincas(providers);
+        if (typeof data.total === 'number' && data.total > 0) {
+          setTotal(data.total);
+        } else {
+          setTotal(providers.length);
+        }
       }
     } catch (err) {
       console.error('Error fetching real fincas:', err);
