@@ -186,7 +186,7 @@ const SovereignNavbar = () => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  if (pathname === '/' || pathname?.startsWith('/admin') || pathname?.startsWith('/pro') || pathname?.startsWith('/emp-menu')) {
+  if (pathname === '/' || pathname?.startsWith('/admin') || pathname?.startsWith('/pro') || pathname?.startsWith('/emp-menu') || pathname?.startsWith('/fincasparaboda')) {
     return null;
   }
 

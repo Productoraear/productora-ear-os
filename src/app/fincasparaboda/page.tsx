@@ -26,7 +26,8 @@ import {
   ChevronRight,
   Heart,
   HelpCircle,
-  Crown
+  Crown,
+  Menu
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { SCLASS_12_FINCAS_HOMOLOGADAS, FincaHomologada } from '@/lib/constants/fincas-catalog';
@@ -80,6 +81,7 @@ export default function FincasParaBodaPortal() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalFound, setTotalFound] = useState<number>(9559);
+  const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
 
   // Modal de Presupuesto / Contacto Directo
   const [activeFincaContact, setActiveFincaContact] = useState<FincaItem | null>(null);
@@ -137,32 +139,153 @@ export default function FincasParaBodaPortal() {
   }, [fincas, selectedCapacity]);
 
   return (
-    <div className="min-h-screen bg-[#050508] text-white selection:bg-[#ecb613] selection:text-black font-sans w-full overflow-x-hidden pt-24 pb-32">
+    <div className="min-h-screen bg-[#050508] text-white selection:bg-[#ecb613] selection:text-black font-sans w-full overflow-x-hidden pt-28 sm:pt-32 pb-32">
       
-      {/* ── TOP BAR INFORMATIVA S-CLASS ── */}
-      <div className="bg-gradient-to-r from-[#0a0a12] via-[#0d0d18] to-[#0a0a12] border-b border-white/10 py-2.5 px-4 sm:px-8 text-xs text-zinc-400">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
-          <div className="flex items-center gap-2 text-zinc-300 font-mono">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[#ecb613] font-bold">fincasparaboda.com</span>
-            <span className="text-zinc-500 hidden sm:inline">|</span>
-            <span className="hidden sm:inline">El Mayor Directorio Nacional de Fincas sin Intermediarios</span>
-          </div>
-          <div className="flex items-center gap-4 text-[11px] font-mono">
-            <span className="text-emerald-400 flex items-center gap-1">
-              <ShieldCheck size={13} /> 0% Comisiones Parásitas
-            </span>
-            <span className="text-zinc-500 hidden md:inline">•</span>
-            <span className="text-amber-300 flex items-center gap-1 hidden md:flex">
-              <Lock size={12} /> Price-Lock 100€
-            </span>
-            <span className="text-zinc-500 hidden md:inline">•</span>
-            <a href={CENTRALITA.tel} className="hover:text-white flex items-center gap-1">
-              <Phone size={12} className="text-[#ecb613]" /> Centralita: {CENTRALITA.display}
-            </a>
+      {/* ── 🏰 NAVEGACIÓN DEDICADA S-CLASS: FINCASPARABODA.COM (BODAS.NET KILLER) ── */}
+      <header className="fixed top-0 left-0 w-full z-[100] transition-all">
+        {/* Ribbon Superior Informativo */}
+        <div className="bg-gradient-to-r from-[#0a0a14] via-[#121220] to-[#0a0a14] border-b border-white/10 py-1.5 px-4 sm:px-8 text-xs text-zinc-400">
+          <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2 font-mono text-[11px]">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-[#ecb613] font-bold">fincasparaboda.com</span>
+              <span className="text-zinc-500 hidden sm:inline">|</span>
+              <span className="hidden sm:inline">Directorio Nacional de Espacios para Bodas · 0% Comisiones de Agencia</span>
+            </div>
+            <div className="flex items-center gap-4">
+              <span className="text-emerald-400 hidden sm:flex items-center gap-1">
+                <ShieldCheck size={12} /> Trato Directo Propietario
+              </span>
+              <span className="text-zinc-500 hidden md:inline">•</span>
+              <span className="text-amber-300 flex items-center gap-1">
+                <Lock size={11} /> Price-Lock 100€ SHA-256
+              </span>
+              <span className="text-zinc-500 hidden sm:inline">•</span>
+              <a href={CENTRALITA.tel} className="hover:text-white flex items-center gap-1 text-zinc-300">
+                <Phone size={11} className="text-[#ecb613]" /> Centralita: {CENTRALITA.display}
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+
+        {/* Barra de Navegación Flotante */}
+        <div className="px-3 py-2 sm:px-8">
+          <nav className="max-w-7xl mx-auto rounded-full bg-[#07070d]/90 backdrop-blur-2xl border border-white/10 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
+            
+            {/* LOGO FINCASPARABODA */}
+            <Link href="/fincasparaboda" className="flex items-center gap-2.5 group shrink-0">
+              <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#ecb613] to-amber-600 p-0.5 flex items-center justify-center shadow-[0_0_20px_rgba(236,182,19,0.35)] group-hover:scale-105 transition-all">
+                <div className="w-full h-full bg-black rounded-[14px] flex items-center justify-center">
+                  <Crown size={18} className="text-[#ecb613]" />
+                </div>
+              </div>
+              <div>
+                <span className="font-syne font-black text-base sm:text-lg text-white tracking-tight uppercase block leading-none">
+                  Fincas<span className="text-[#ecb613]">ParaBoda</span>
+                </span>
+                <span className="text-[9px] font-mono text-zinc-400 tracking-widest uppercase block">
+                  by Productora EAR // S-Class
+                </span>
+              </div>
+            </Link>
+
+            {/* ENLACES DE NAVEGACIÓN DESKTOP */}
+            <div className="hidden lg:flex items-center gap-6 font-mono text-xs uppercase tracking-wider text-zinc-300">
+              <a href="#catalogo-nacional" className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5">
+                <span>Directorio ({totalFound.toLocaleString('es-ES')})</span>
+              </a>
+              <a href="#coleccion-privada" className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5">
+                <ShieldCheck size={13} className="text-[#ecb613]" />
+                <span>12 Homologadas</span>
+              </a>
+              <a href="#por-que-nosotros" className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5">
+                <span className="text-emerald-400 font-bold">0% Comisiones</span>
+              </a>
+              <Link href="/reservar/solista" className="hover:text-[#ecb613] transition-colors flex items-center gap-1.5 text-zinc-400">
+                <span>Música Edwin Agudelo (350€)</span>
+              </Link>
+            </div>
+
+            {/* ACCIONES DERECHA */}
+            <div className="flex items-center gap-2.5">
+              <a
+                href={`https://wa.me/34693693048?text=${encodeURIComponent(
+                  'Hola Edwin, estoy buscando finca para mi boda en fincasparaboda.com. ¿Podéis verificarme disponibilidad y fechas sin comisiones de agencia?'
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3.5 sm:px-4 py-2 bg-[#ecb613] hover:bg-[#d9a40e] text-black font-black font-mono text-xs uppercase rounded-full transition-all shadow-md shadow-amber-500/20 active:scale-95"
+              >
+                <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+                <MessageCircle size={14} />
+                <span className="hidden sm:inline">Concierge WhatsApp en 15 Min</span>
+                <span className="sm:hidden">WhatsApp</span>
+              </a>
+
+              <a
+                href={CENTRALITA.tel}
+                className="hidden xl:flex items-center gap-1.5 px-3.5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-full font-mono text-xs font-bold transition-all"
+              >
+                <Phone size={12} className="text-[#ecb613]" />
+                <span>{CENTRALITA.display}</span>
+              </a>
+
+              {/* Botón menú móvil */}
+              <button
+                onClick={() => setMobileNavOpen(!mobileNavOpen)}
+                className="lg:hidden p-2 rounded-xl bg-white/5 border border-white/10 text-white hover:text-[#ecb613] transition-colors"
+                aria-label="Abrir menú"
+              >
+                {mobileNavOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
+            </div>
+
+          </nav>
+
+          {/* Menú Móvil Desplegable */}
+          {mobileNavOpen && (
+            <div className="lg:hidden mt-2 p-4 rounded-3xl bg-[#090912]/95 backdrop-blur-2xl border border-white/10 space-y-3 font-mono text-xs uppercase tracking-wider text-zinc-300 shadow-2xl">
+              <a 
+                href="#catalogo-nacional" 
+                onClick={() => setMobileNavOpen(false)}
+                className="block py-2 px-3 rounded-xl hover:bg-white/5 hover:text-[#ecb613]"
+              >
+                🏰 Catálogo Nacional ({totalFound.toLocaleString('es-ES')} Fincas)
+              </a>
+              <a 
+                href="#coleccion-privada" 
+                onClick={() => setMobileNavOpen(false)}
+                className="block py-2 px-3 rounded-xl hover:bg-white/5 hover:text-[#ecb613]"
+              >
+                👑 12 Fincas Homologadas S-Class
+              </a>
+              <a 
+                href="#por-que-nosotros" 
+                onClick={() => setMobileNavOpen(false)}
+                className="block py-2 px-3 rounded-xl hover:bg-white/5 text-emerald-400 font-bold"
+              >
+                🛡️ Ventaja 0% Comisiones de Agencia
+              </a>
+              <Link 
+                href="/reservar/solista"
+                onClick={() => setMobileNavOpen(false)}
+                className="block py-2 px-3 rounded-xl hover:bg-white/5 hover:text-[#ecb613]"
+              >
+                🎤 Solista Edwin Agudelo (Desde 350€)
+              </Link>
+              <div className="pt-2 border-t border-white/10 flex gap-2">
+                <a
+                  href={CENTRALITA.tel}
+                  className="w-full py-2.5 bg-white/5 border border-white/10 text-white rounded-xl font-bold flex items-center justify-center gap-1.5"
+                >
+                  <Phone size={13} className="text-[#ecb613]" />
+                  <span>Llamar: {CENTRALITA.display}</span>
+                </a>
+              </div>
+            </div>
+          )}
+        </div>
+      </header>
 
       {/* ── HERO HEADER & BUSCADOR FAMILIAR BODAS.NET ── */}
       <section className="relative pt-12 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#0a0a14] via-[#06060a] to-[#050508] border-b border-white/5">
@@ -286,7 +409,7 @@ export default function FincasParaBodaPortal() {
       </section>
 
       {/* ── 🚀 ALEX HORMOZI GRAND OFFER ($100M OFFERS) VALUE STACK ── */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 border-b border-white/10 bg-[#07070b]">
+      <section id="por-que-nosotros" className="py-12 px-4 sm:px-6 lg:px-8 border-b border-white/10 bg-[#07070b]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center space-y-2 mb-8">
             <span className="text-xs font-mono uppercase text-[#ecb613] tracking-widest font-bold">
@@ -348,7 +471,7 @@ export default function FincasParaBodaPortal() {
       </section>
 
       {/* ── 🏰 RED DE LAS 12 FINCAS HOMOLOGADAS S-CLASS (EXCLUSIVAS) ── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+      <section id="coleccion-privada" className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#ecb613] uppercase font-bold tracking-wider mb-1">
@@ -422,7 +545,7 @@ export default function FincasParaBodaPortal() {
       </section>
 
       {/* ── 📋 DIRECTORIO NACIONAL COMPLETO DE FINCAS (BODAS.NET KILLER) ── */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
+      <section id="catalogo-nacional" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
