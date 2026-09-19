@@ -8,7 +8,7 @@
     /* 60% Dominant Canvas (OLED Pure Black) */
     --background: #050505;
     --foreground: #f4f4f5;
-    
+
     /* 30% Structure (Bento Surfaces, Cards & Borders) */
     --card: #0d0d10;
     --card-foreground: #e4e4e7;
@@ -18,7 +18,7 @@
     --border-glass: rgba(255, 255, 255, 0.14);
     --muted: #16161c;
     --muted-foreground: #9ca3af;
-    
+
     /* 10% Accent (S-Class Sovereign Diamond Ruby Red #FF2B44) */
     --primary: #FF2B44;
     --primary-foreground: #ffffff;
@@ -78,7 +78,7 @@
     --primary-light: #FF6B7D;
     --primary-dark: #E11D48;
     --primary-aura: rgba(255, 43, 68, 0.28);
-    
+
     /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
     --color-ear-cyan: #AAD6CD;
     --color-ear-blue: #258DCD;
@@ -92,7 +92,9 @@
     --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     hyphens: none !important;
     -webkit-hyphens: none !important;
     -moz-hyphens: none !important;
@@ -104,7 +106,25 @@
     max-width: 100%;
   }
 
-  html, body, p, span, div, h1, h2, h3, h4, h5, h6, li, a, button, blockquote, cite, strong, em, b {
+  html,
+  body,
+  p,
+  span,
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  li,
+  a,
+  button,
+  blockquote,
+  cite,
+  strong,
+  em,
+  b {
     hyphens: none !important;
     -webkit-hyphens: none !important;
     -moz-hyphens: none !important;
@@ -124,7 +144,12 @@
     transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-syne), sans-serif;
     letter-spacing: -0.025em;
     text-wrap: balance;
@@ -138,7 +163,8 @@
   body.theme-vimume {
     --background: #050507;
     --foreground: #f4f4f5;
-    --primary: #8b5cf6; /* Violeta Neón */
+    --primary: #8b5cf6;
+    /* Violeta Neón */
     --primary-light: #a78bfa;
     --primary-dark: #7c3aed;
     --primary-aura: rgba(139, 92, 246, 0.25);
@@ -168,13 +194,17 @@
   }
 
   /* Forzar contraste nítido absoluto en inputs, selects y formularios */
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     color: #ffffff !important;
     background-color: #121212 !important;
     border-color: rgba(255, 255, 255, 0.2) !important;
   }
 
-  input:focus, select:focus, textarea:focus {
+  input:focus,
+  select:focus,
+  textarea:focus {
     border-color: #ecb613 !important;
     outline: none !important;
   }
@@ -389,13 +419,13 @@ html {
 }
 
 /* --- S-CLASS DYNAMIC LIGHT MODE PURGE OVERRIDES --- */
-.light main, 
+.light main,
 .light body,
-.light .bg-black, 
-.light .bg-\[\#050505\], 
+.light .bg-black,
+.light .bg-\[\#050505\],
 .light .bg-\[\#090909\],
-.light .bg-\[\#0a0a0a\], 
-.light .bg-\[\#0c0c0c\], 
+.light .bg-\[\#0a0a0a\],
+.light .bg-\[\#0c0c0c\],
 .light .bg-\[\#121212\],
 .light .bg-gradient-to-br {
   background-color: var(--background) !important;
@@ -472,9 +502,11 @@ div[class*="netlify-identity"],
   0% {
     left: -25%;
   }
+
   50% {
     left: 100%;
   }
+
   100% {
     left: -25%;
   }
@@ -484,16 +516,20 @@ div[class*="netlify-identity"],
   0% {
     offset-distance: 0%;
   }
+
   100% {
     offset-distance: 100%;
   }
 }
 
 @keyframes pipeline-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.35;
     transform: scale(0.9);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.15);
@@ -518,13 +554,11 @@ div[class*="netlify-identity"],
 }
 
 .qronos-hatching-divider {
-  background: repeating-linear-gradient(
-    135deg,
-    transparent 0,
-    transparent 6px,
-    rgba(255, 255, 255, 0.06) 6px,
-    rgba(255, 255, 255, 0.06) 7px
-  );
+  background: repeating-linear-gradient(135deg,
+      transparent 0,
+      transparent 6px,
+      rgba(255, 255, 255, 0.06) 6px,
+      rgba(255, 255, 255, 0.06) 7px);
 }
 
 /* 🌟 CULT UI DIRECTORY TEMPLATE VAMPIRIZED UTILITIES */
@@ -566,6 +600,7 @@ div[class*="netlify-identity"],
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -590,8 +625,8 @@ div[class*="netlify-identity"],
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  box-shadow: inset 0 -1px 1px 0 rgba(255, 255, 255, 0.12), 
-              inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
+  box-shadow: inset 0 -1px 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -599,9 +634,9 @@ div[class*="netlify-identity"],
   background: linear-gradient(135deg, rgba(236, 182, 19, 0.08) 0%, rgba(5, 5, 7, 0.95) 100%);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  box-shadow: inset 0 1px 1px 0 rgba(236, 182, 19, 0.35), 
-              inset 0 -1px 1px 0 rgba(236, 182, 19, 0.15),
-              0 0 35px -5px rgba(236, 182, 19, 0.2);
+  box-shadow: inset 0 1px 1px 0 rgba(236, 182, 19, 0.35),
+    inset 0 -1px 1px 0 rgba(236, 182, 19, 0.15),
+    0 0 35px -5px rgba(236, 182, 19, 0.2);
   border: 1px solid rgba(236, 182, 19, 0.3);
 }
 
@@ -643,10 +678,13 @@ div[class*="netlify-identity"],
 }
 
 @keyframes crystal-pulse-wave {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.3;
     transform: scale(0.98);
   }
+
   50% {
     opacity: 0.7;
     transform: scale(1.02);
@@ -657,3 +695,45 @@ div[class*="netlify-identity"],
   animation: crystal-pulse-wave 6s ease-in-out infinite;
 }
 
+/* ── 🎬 CINEMATIC VANGUARD CAROUSEL ── */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.35s ease-out;
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1.0) translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: scale(1.12) translate3d(-1.5%, -1%, 0);
+  }
+
+  100% {
+    transform: scale(1.0) translate3d(0, 0, 0);
+  }
+}
+
+.kenburns {
+  animation: kenburns 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

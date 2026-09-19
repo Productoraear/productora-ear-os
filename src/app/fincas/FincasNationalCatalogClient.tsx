@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { PROVIDERS_MANIFEST_TOTALS } from '@/lib/constants/providers-manifest';
-import SovereignCarouselSClass from '@/components/sclass/SovereignCarouselSClass';
+import CinematicVanguardCarousel from '@/components/sclass/CinematicVanguardCarousel';
 
 interface RealFinca {
   id: string;
@@ -476,15 +476,15 @@ function FincaDetailModal({ finca, onClose }: { finca: RealFinca; onClose: () =>
 
         {/* CARRUSEL DE FOTOS HD SOVEREIGN S-CLASS */}
         <div className="mb-6">
-          <SovereignCarouselSClass
+          <CinematicVanguardCarousel
             images={
               finca.imageUrls && finca.imageUrls.length > 0
                 ? finca.imageUrls
                 : finca.gallery && finca.gallery.length > 0
-                ? finca.gallery
-                : finca.img
-                ? [finca.img]
-                : []
+                  ? finca.gallery
+                  : finca.img
+                    ? [finca.img]
+                    : []
             }
             title={finca.name}
             aspectRatio="video"

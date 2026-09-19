@@ -1466,6 +1466,44 @@
         "macro_script": "1) En src/app/api/payments/checkout/route.ts: añadir export async function GET(req: Request) que extraiga searchParams (amount, concept, ref, format, hash, serviceName), construya el session de Stripe Checkout igual que POST y retorne NextResponse.redirect(session.url, 303). 2) En src/components/pricing/SClassPricingTerminal.tsx: añadir state isProcessingDeposit, hacer POST a /api/payments/checkout con { amount: 100, concept: 'Price-Lock 100€ Depósito - Edwin Agudelo', metadata: { serviceName: 'Edwin Agudelo Solista & Mariachi', orderId: quote.orderId, sha256Token: quote.priceLockHash } } y redirigir a data.url. 3) Validar compilación limpia con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "b100-calibrador-bidireccional-200-dimensiones",
+      "title": "B1.00: Calibrador Bidireccional de 200 Dimensiones — Motor Neural Finca ↔ Pareja",
+      "block": 1,
+      "status": "COMPLETED",
+      "description": "SISTEMA DE MATCHING BILATERAL: 100 dimensiones del lado pareja + 100 dimensiones del lado finca/proveedor. Tipos en calibratorTypes.ts, presets en calibratorPresets.ts, motor bilateral en neuralFincaMatcher.ts, APIs save/get, UI ProviderCalibrator y AdminCalibratorProxy con modelo Prisma ProviderCalibration y queries raw SQL.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/matching/calibratorTypes.ts",
+          "src/lib/matching/calibratorPresets.ts",
+          "src/lib/matching/neuralFincaMatcher.ts",
+          "src/components/vendor/ProviderCalibrator.tsx",
+          "src/components/admin/AdminCalibratorProxy.tsx",
+          "src/app/(vendor)/vendor/calibrator/page.tsx",
+          "src/app/(admin)/admin/calibrador-proveedores/page.tsx",
+          "src/app/api/calibrator/save/route.ts",
+          "src/app/api/calibrator/[providerId]/route.ts"
+        ],
+        "macro_script": "Implementación base 200D completada con éxito y validada con tsc --noEmit (Exit Code 0)."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "b101-calibrador-200d-enrichment-and-bodasnet-supremacy",
+      "title": "B1.01: Enriquecimiento Taxonómico Supremo Bodas.net/Celebrents (22 Tipologías, 14 Entornos, 16 Estilos) y Expansión Front 200D",
+      "block": 1,
+      "status": "PENDING",
+      "description": "SUPERACIÓN TOTAL DE BODAS.NET Y CELEBRENTS: 1) En src/lib/matching/calibratorTypes.ts: Expandir y unificar de forma estricta e idéntica las opciones multi-select entre Pareja (Dims 1, 2, 3) y Finca (Dims 135, 136, 138) resolviendo el bug de discrepancia de strings. Incorporar las 22 Tipologías (Castillo, Monasterio, Hotel 5★, Parador, Restaurante Gastronómico, Alquería, Beach Club, Golf Club, etc.), los 14 Entornos (Primera línea de playa, Acantilado, Olivar, Dehesa, Ribera, etc.) y los 16 Estilos (Romántico, Vintage, Campestre, Mediterráneo, Glamour, Nórdico, etc.). 2) En src/lib/matching/calibratorPresets.ts: Añadir presets y enriquecer detectPresetByTypology. 3) En src/components/fincas/NeuralFincaTinderMatch.tsx: Actualizar cabecera a '200 Dimensiones' y añadir selectores interactivos visuales (chips/pills) para tipología arquitectónica, entorno paisajístico y estilo decorativo, cruzándolos con el motor neural bilateral.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/matching/calibratorTypes.ts",
+          "src/lib/matching/calibratorPresets.ts",
+          "src/components/fincas/NeuralFincaTinderMatch.tsx"
+        ],
+        "macro_script": "1) En calibratorTypes.ts: Definir constantes canónicas exportadas: CANONICAL_TYPOLOGIES (22 opciones), CANONICAL_ENVIRONMENTS (14 opciones), CANONICAL_DECORATIVE_STYLES (16 opciones). Asignar CANONICAL_TYPOLOGIES tanto a Dim 1 como a Dim 135. Asignar CANONICAL_ENVIRONMENTS tanto a Dim 2 como a Dim 136. Asignar CANONICAL_DECORATIVE_STYLES tanto a Dim 3 como a Dim 138. 2) En calibratorPresets.ts: Actualizar valores por defecto de presets para que usen strings del catálogo canónico y ampliar detectPresetByTypology con palabras clave (castillo, hotel, monasterio, restaurante, playa, golf, alqueria). 3) En NeuralFincaTinderMatch.tsx: Renombrar título a 'Calibrador Neural de Boda (200 Dimensiones)'. Añadir estados para selectedTypologies, selectedEnvironments, selectedStyles y renderizar chips seleccionables con estética OLED (#030305, borde white/10, oro #ecb613). 4) Validar con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }
   ]
 }

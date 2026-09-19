@@ -4,6 +4,20 @@
  * Cero menciones a 'S-Class' (Doctrina de la Vanguardia Demostrada).
  */
 
+import {
+  CALIBRATION_DIMENSIONS,
+  COUPLE_TO_PROVIDER_PAIRS,
+  NEUTRAL_SELECT_VALUES,
+  getDimensionById,
+  type BilateralMatchResult,
+  type CalibrationDimension,
+  type CoupleCalibration,
+  type DimensionMatchDetail,
+  type DimensionType,
+  type DimensionValue,
+  type ProviderCalibration
+} from './calibratorTypes';
+
 export interface HormoziCategory {
   id: string;
   slug: string;
@@ -237,5 +251,291 @@ export function calculateNeuralMatchScore(
     warnings,
     estimatedTotalWithCanons: Math.round(estimatedTotal),
     costPerGuestEur: costPerGuest
+  };
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   🏛️ MOTOR BILATERAL 200 DIMENSIONES — Finca ↔ Pareja
+   Score Bilateral = (coupleScore × 0.5) + (providerScore × 0.5)
+   Knockout ⇒ Score 0 inmediato. Visibilidad ⇒ >= 65. WhatsApp ⇒ >= 85.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const clampScore = (n: number, lo = 0, hi = 100): number =>
+  Math.max(lo, Math.min(hi, Math.round(n)));
+
+function isBlankDimensionValue(v: DimensionValue): boolean {
+  return v === undefined || v === null || v === '';
+}
+
+function isNeutralSelectValue(v: DimensionValue): boolean {
+  return typeof v === 'string' && NEUTRAL_SELECT_VALUES.has(v);
+}
+
+function matchDimensionValues(
+  coupleValue: DimensionValue,
+  providerValue: DimensionValue,
+  type: DimensionType,
+  dimension: Pick<CalibrationDimension, 'min' | 'max'>
+): number {
+  if (isBlankDimensionValue(coupleValue)) return 100;
+  if (isNeutralSelectValue(coupleValue)) return 100;
+  if (isBlankDimensionValue(providerValue)) return 50;
+
+  switch (type) {
+    case 'toggle': {
+      if (coupleValue === true) return providerValue === true ? 100 : 0;
+      return 100; // La pareja no lo exige
+    }
+
+    case 'select': {
+      if (String(coupleValue) === String(providerValue)) return 100;
+      return 30;
+    }
+
+    case 'multi-select': {
+      const c = Array.isArray(coupleValue) ? coupleValue.map(String) : [];
+      const p = Array.isArray(providerValue) ? providerValue.map(String) : [];
+      if (c.length === 0) return 100;
+      if (p.length === 0) return 20;
+      const overlap = c.filter((x) => p.includes(x)).length;
+      if (overlap === 0) return 10;
+      return clampScore((overlap / Math.min(c.length, 3)) * 100);
+    }
+
+    case 'scale': {
+      const c = Number(coupleValue);
+      const p = Number(providerValue);
+      if (!Number.isFinite(c) || !Number.isFinite(p)) return 50;
+      const min = dimension.min ?? 1;
+      const max = dimension.max ?? 5;
+      return clampScore(100 - (Math.abs(c - p) / Math.max(max - min, 1)) * 100);
+    }
+
+    case 'slider': {
+      const c = Number(coupleValue);
+      const p = Number(providerValue);
+      if (!Number.isFinite(c) || !Number.isFinite(p)) return 50;
+      const min = dimension.min ?? 0;
+      const max = dimension.max ?? 100;
+      return clampScore(100 - (Math.abs(c - p) / Math.max(max - min, 1)) * 100);
+    }
+
+    case 'date':
+    case 'text':
+    default:
+      return 50;
+  }
+}
+
+export interface BilateralMatchInput {
+  coupleCalibration: CoupleCalibration;
+  providerCalibration: ProviderCalibration;
+  /** Invitados declarados por la pareja (fuera de las 100 dimensiones de pareja) */
+  guestCount: number;
+  /** Presupuesto total declarado por la pareja (€) */
+  totalBudget: number;
+  /** ¿La pareja abonó el micro-depósito de 1 € verificado? */
+  hasVerifiedDeposit: boolean;
+  /** ¿La pareja confirmó fecha de boda? */
+  hasConfirmedDate: boolean;
+}
+
+export function calculateBilateralMatch(input: BilateralMatchInput): BilateralMatchResult {
+  const {
+    coupleCalibration,
+    providerCalibration,
+    guestCount,
+    totalBudget,
+    hasVerifiedDeposit,
+    hasConfirmedDate
+  } = input;
+
+  const breakdown: DimensionMatchDetail[] = [];
+  const coupleStrengths: string[] = [];
+  const warnings: string[] = [];
+  const knockouts: string[] = [];
+
+  /* ── LADO PAREJA (100 dimensiones) sobre contraparte de la finca ── */
+  const coupleDims = CALIBRATION_DIMENSIONS.filter((d) => d.side === 'couple');
+  let coupleWeightedSum = 0;
+  let coupleTotalWeight = 0;
+
+  for (const cDim of coupleDims) {
+    const coupleValue = coupleCalibration.dimensions[cDim.id];
+    const providerId = COUPLE_TO_PROVIDER_PAIRS[cDim.id];
+    const providerDim = providerId != null ? getDimensionById(providerId) : undefined;
+    const providerValue =
+      providerId != null ? providerCalibration.dimensions[providerId] ?? undefined : undefined;
+
+    if (isBlankDimensionValue(coupleValue)) {
+      breakdown.push({
+        dimensionId: cDim.id,
+        label: cDim.label,
+        coupleValue: null,
+        providerValue: providerValue ?? null,
+        matchPercent: 100,
+        isKnockout: cDim.isKnockout,
+        passed: true
+      });
+      continue;
+    }
+
+    const matchPercent = matchDimensionValues(coupleValue, providerValue, cDim.type, cDim);
+    const passed = matchPercent >= 100;
+
+    if (cDim.isKnockout && matchPercent < 100) {
+      knockouts.push(cDim.label);
+      warnings.push(`${cDim.label}: requisito no cubierto por la finca`);
+    } else if (providerDim && matchPercent >= 80) {
+      coupleStrengths.push(cDim.label);
+    } else if (providerDim && matchPercent < 50) {
+      warnings.push(`${cDim.label}: afinidad baja (${matchPercent}%)`);
+    }
+
+    breakdown.push({
+      dimensionId: cDim.id,
+      label: cDim.label,
+      coupleValue,
+      providerValue: providerValue ?? null,
+      matchPercent,
+      isKnockout: cDim.isKnockout,
+      passed
+    });
+
+    coupleWeightedSum += matchPercent * cDim.weight;
+    coupleTotalWeight += cDim.weight;
+  }
+
+  const coupleScore =
+    coupleTotalWeight > 0 ? clampScore(coupleWeightedSum / coupleTotalWeight) : 50;
+
+  /* ── LADO PROVEEDOR / FINCA (compuertas de negocio) ── */
+  const providerStrengths: string[] = [];
+  let providerScore = 100;
+
+  const dim = (id: number): DimensionValue => providerCalibration.dimensions[id];
+  const num = (id: number, fallback: number): number => {
+    const v = dim(id);
+    if (typeof v === 'number' && Number.isFinite(v)) return v;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : fallback;
+  };
+  const bool = (id: number): boolean => dim(id) === true;
+
+  const maxPax = num(114, 600);
+  const minPax = num(113, 0);
+  const sweetSpot = num(115, guestCount);
+  const ticketMin = num(101, 0);
+  const ticketMax = num(102, 999999);
+  const menuAdult = num(103, 120);
+  const minBudgetGate = num(194, 0);
+  const minGuestsGate = num(195, 0);
+
+  const penalizeProvider = (amount: number, reason: string, isKnockout = false) => {
+    providerScore = Math.max(0, providerScore - amount);
+    warnings.push(reason);
+    if (isKnockout) knockouts.push(reason);
+  };
+
+  // 1. Aforo máximo legal — knockout duro
+  if (maxPax > 0 && guestCount > maxPax) {
+    penalizeProvider(
+      100,
+      `Aforo máximo legal superado (${guestCount} pax vs ${maxPax} pax)`,
+      true
+    );
+  } else if (minPax > 0 && guestCount < minPax) {
+    penalizeProvider(40, `No alcanza el aforo mínimo rentable (${guestCount} pax vs ${minPax} pax)`);
+  } else if (guestCount <= 60 && !bool(116)) {
+    penalizeProvider(20, 'La pareja es íntima (<60 pax) y la finca no acepta bodas íntimas');
+  } else if (guestCount > 300 && !bool(117)) {
+    penalizeProvider(20, 'La pareja supera 300 pax y la finca no admite multitudinarias');
+  } else {
+    providerStrengths.push(`Aforo admitido: ${guestCount} pax dentro de rango ${minPax}-${maxPax}`);
+  }
+
+  // 2. Sweet spot
+  const sweetDelta = Math.abs(guestCount - sweetSpot);
+  const sweetPenalty = Math.min(30, Math.round((sweetDelta / Math.max(sweetSpot, 1)) * 100));
+  if (sweetPenalty > 0) {
+    penalizeProvider(sweetPenalty, `Distancia al aforo sweet spot de ${sweetSpot} pax`);
+  } else {
+    providerStrengths.push(`Aforo en sweet spot exacto (${sweetSpot} pax)`);
+  }
+
+  // 3. Ticket económico
+  if (totalBudget > 0) {
+    if (totalBudget < ticketMin) {
+      penalizeProvider(35, `Presupuesto declarado (${totalBudget} €) por debajo del ticket mínimo (${ticketMin} €)`);
+    } else if (totalBudget > ticketMax) {
+      penalizeProvider(10, `Presupuesto declarado (${totalBudget} €) muy por encima del ticket máximo`);
+    } else {
+      providerStrengths.push(`Presupuesto en ticket óptimo (${ticketMin}-${ticketMax} €)`);
+    }
+
+    const statedPerGuest = totalBudget / Math.max(guestCount, 1);
+    if (menuAdult > 0 && statedPerGuest < menuAdult * 0.85) {
+      penalizeProvider(15, `Ratio presupuesto/invitado (${Math.round(statedPerGuest)} €) por debajo del menú de ${menuAdult} €/pax`);
+    }
+  }
+
+  // 4. Filtro anti-lead-basura
+  if (minBudgetGate > 0 && totalBudget < minBudgetGate) {
+    penalizeProvider(
+      100,
+      `Presupuesto declarado (${totalBudget} €) menor que el filtro anti-lead (${minBudgetGate} €)`,
+      true
+    );
+  }
+  if (minGuestsGate > 0 && guestCount < minGuestsGate) {
+    penalizeProvider(
+      100,
+      `Invitados declarados (${guestCount}) menores que el filtro anti-lead (${minGuestsGate})`,
+      true
+    );
+  }
+  if (bool(191) && !hasVerifiedDeposit) {
+    penalizeProvider(
+      100,
+      'La finca solo acepta leads con depósito 1 € verificado y esta pareja no lo ha abonado',
+      true
+    );
+  }
+  if (bool(192) && !hasConfirmedDate) {
+    penalizeProvider(
+      100,
+      'La finca solo acepta leads con fecha confirmada y esta pareja no tiene fecha fija',
+      true
+    );
+  }
+
+  providerScore = clampScore(providerScore);
+
+  /* ── FUSIÓN BILATERAL ── */
+  const bilateralRaw = clampScore(coupleScore * 0.5 + providerScore * 0.5);
+  const bilateralScore = knockouts.length > 0 ? 0 : bilateralRaw;
+
+  let affinityTier: BilateralMatchResult['affinityTier'] = 'POTENTIAL_FIT';
+  if (bilateralScore >= 85) affinityTier = 'EXACT_MATCH';
+  else if (bilateralScore >= 65) affinityTier = 'HIGH_COMPATIBILITY';
+  else if (bilateralScore >= 50) affinityTier = 'POTENTIAL_FIT';
+  else affinityTier = 'DISMISSED';
+
+  const rentalFee = num(105, 0);
+  const estimatedTotalEur = Math.round(menuAdult * guestCount + rentalFee);
+  const costPerGuestEur = clampScore(estimatedTotalEur / Math.max(guestCount, 1));
+
+  return {
+    coupleScore,
+    providerScore,
+    bilateralScore,
+    affinityTier,
+    coupleStrengths,
+    providerStrengths,
+    warnings,
+    knockouts,
+    estimatedTotalEur,
+    costPerGuestEur,
+    dimensionBreakdown: breakdown
   };
 }

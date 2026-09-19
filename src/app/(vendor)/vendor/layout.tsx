@@ -1,24 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
-import { 
-  LayoutDashboard, 
-  Image as ImageIcon, 
-  Speaker, 
-  CalendarDays, 
-  WalletCards, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Image as ImageIcon,
+  Speaker,
+  CalendarDays,
+  WalletCards,
+  Settings,
   LogOut,
   Sparkles,
   ShieldCheck,
   Menu,
-  X
+  X,
+  SlidersHorizontal
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 
 export default function VendorLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col lg:flex-row selection:bg-[#ecb613] selection:text-black font-sans">
-      
+
       {/* 📱 Mobile Header */}
       <header className="lg:hidden w-full bg-[#09090d]/90 backdrop-blur-2xl border-b border-white/10 p-4 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-2">
@@ -30,14 +31,14 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <Link 
-            href="/vendor/dashboard" 
+          <Link
+            href="/vendor/dashboard"
             className="text-xs font-mono text-[#ecb613] px-3 py-1 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-xl"
           >
             Dashboard
           </Link>
-          <Link 
-            href="/vendor/login" 
+          <Link
+            href="/vendor/login"
             className="text-xs text-zinc-400 hover:text-white p-1.5"
           >
             <LogOut size={18} />
@@ -58,51 +59,59 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
               <span>WORKSPACE ACTIVO S-CLASS</span>
             </div>
           </div>
-          
+
           {/* Navigation Links */}
           <nav className="py-6 px-4 space-y-1.5 font-mono text-xs">
             <div className="text-[10px] font-bold text-zinc-500 mb-3 px-3 uppercase tracking-widest">
               Gestión de Proveedor
             </div>
-            
-            <Link 
-              href="/vendor/dashboard" 
+
+            <Link
+              href="/vendor/dashboard"
               className="flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] font-bold transition-all hover:scale-[1.02]"
             >
-              <LayoutDashboard className="w-4 h-4 text-[#ecb613]" /> 
+              <LayoutDashboard className="w-4 h-4 text-[#ecb613]" />
               <span>Dashboard</span>
             </Link>
 
-            <Link 
-              href="/vendor/media" 
+            <Link
+              href="/vendor/media"
               className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
-              <ImageIcon className="w-4 h-4 text-zinc-400" /> 
+              <ImageIcon className="w-4 h-4 text-zinc-400" />
               <span>Galería Multimedia</span>
             </Link>
 
-            <Link 
-              href="/vendor/rider" 
+            <Link
+              href="/vendor/rider"
               className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
-              <Speaker className="w-4 h-4 text-zinc-400" /> 
+              <Speaker className="w-4 h-4 text-zinc-400" />
               <span>Rider S-Class (12 W/pax)</span>
             </Link>
 
-            <Link 
-              href="/vendor/calendar" 
+            <Link
+              href="/vendor/calendar"
               className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
-              <CalendarDays className="w-4 h-4 text-zinc-400" /> 
+              <CalendarDays className="w-4 h-4 text-zinc-400" />
               <span>Disponibilidad (72h Lock)</span>
             </Link>
 
-            <Link 
-              href="/vendor/billing" 
+            <Link
+              href="/vendor/billing"
               className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
-              <WalletCards className="w-4 h-4 text-zinc-400" /> 
+              <WalletCards className="w-4 h-4 text-zinc-400" />
               <span>Split 80/10/10</span>
+            </Link>
+
+            <Link
+              href="/vendor/calibrator"
+              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+            >
+              <SlidersHorizontal className="w-4 h-4 text-zinc-400" />
+              <span>Calibrador Captación</span>
             </Link>
           </nav>
         </div>
@@ -114,7 +123,7 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
             <span className="text-[#ecb613] font-bold block">{CENTRALITA.display}</span>
           </div>
 
-          <Link 
+          <Link
             href="/vendor/login"
             className="flex w-full items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-rose-500/10 text-zinc-400 hover:text-rose-400 text-xs font-mono transition-colors"
           >

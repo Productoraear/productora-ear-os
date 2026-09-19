@@ -261,6 +261,7 @@ model providerProfile {
   packages             ProviderPackage[]
   technicalRider       TechnicalRider?
   auditLogs            ProviderAuditLog[]
+  calibrator           ProviderCalibration?
 
   createdAt            DateTime          @default(now())
   updatedAt            DateTime          @updatedAt
@@ -272,6 +273,22 @@ model providerProfile {
 // ==================================================
 // 🏢 MÓDULO MULTI-TENANT S-CLASS (PROVEEDORES)
 // ==================================================
+
+model ProviderCalibration {
+  id               String   @id @default(cuid())
+  providerId       String   @unique
+  presetSlug       String   @default("cortijo-rural")
+  dimensions       Json     @default("{}")
+  completionPercent Int     @default(0)
+  calibratedBy     String   @default("self") // self | admin
+  lastModifiedBy   String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  provider         providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  @@index([providerId], name: "idx_calibrator_provider")
+}
 
 model MediaAsset {
   id              String          @id @default(cuid())

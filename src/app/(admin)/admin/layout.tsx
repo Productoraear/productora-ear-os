@@ -80,6 +80,7 @@ const NAVIGATION_MODULES: NavItem[] = [
   { id: 'cult-directory', name: '📁 Directorio & IA', href: '/admin/directorio', icon: Layers, badge: 'CULT UI', group: '3. PROSPECCIÓN & FINCAS' },
   { id: 'sourcing', name: 'Scala Leads & Sourcing', href: '/admin/sourcing', icon: Flame, badge: 'LEADS', group: '3. PROSPECCIÓN & FINCAS' },
   { id: 'providers', name: 'Proveedores Edge CDN', href: '/admin/proveedores', icon: Users, badge: `${PROVIDERS_BADGE} CDN`, group: '3. PROSPECCIÓN & FINCAS' },
+  { id: 'calibrador', name: '🎛️ Calibrador Proveedores', href: '/admin/calibrador-proveedores', icon: Sliders, badge: '200D', group: '3. PROSPECCIÓN & FINCAS' },
 
   // 4. VIMUME & COMERCIAL
   { id: 'training', name: 'Omni Training Center', href: '/admin/training', icon: GraduationCap, badge: 'SALES', group: '4. VIMUME & COMERCIAL' },
@@ -107,12 +108,12 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
 
   return (
     <div className="min-h-screen bg-[#030305] text-zinc-100 flex flex-col font-sans antialiased overflow-x-hidden" suppressHydrationWarning>
-      
+
       {/* ===================================================================== */}
       {/* 1. HEADER SUPERIOR STICKY (ESTILO CATMÍN TEMPLATE 21ST.DEV)           */}
       {/* ===================================================================== */}
       <header className="sticky top-0 z-50 w-full h-14 bg-[#06060a]/90 backdrop-blur-md border-b border-[#1a1a24] px-4 flex items-center justify-between">
-        
+
         {/* Izquierda: Toggle Sidebar + Separador + Buscador */}
         <div className="flex items-center gap-3">
           {/* Botón Toggle Desktop & Mobile */}
@@ -215,7 +216,7 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
       {/* 2. CUERPO PRINCIPAL (SIDEBAR + CONTENIDO FLEXIBLE)                     */}
       {/* ===================================================================== */}
       <div className="flex flex-1 relative min-h-[calc(100vh-3.5rem)]">
-        
+
         {/* BACKDROP PARA MÓVILES */}
         {mobileOpen && (
           <div
@@ -228,11 +229,9 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
         {/* SIDEBAR CATMÍN RESPONSIVE                                           */}
         {/* =================================================================== */}
         <aside
-          className={`fixed lg:sticky top-14 h-[calc(100vh-3.5rem)] bg-[#050508] border-r border-[#1a1a24] z-50 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
-            mobileOpen ? 'left-0 w-72 shadow-2xl' : '-left-72 lg:left-0'
-          } ${
-            collapsed ? 'lg:w-16' : 'lg:w-64'
-          }`}
+          className={`fixed lg:sticky top-14 h-[calc(100vh-3.5rem)] bg-[#050508] border-r border-[#1a1a24] z-50 transition-all duration-300 flex flex-col justify-between overflow-hidden ${mobileOpen ? 'left-0 w-72 shadow-2xl' : '-left-72 lg:left-0'
+            } ${collapsed ? 'lg:w-16' : 'lg:w-64'
+            }`}
         >
           {/* Header del Sidebar con Marca */}
           <div className="p-3 border-b border-[#1a1a24] flex items-center justify-between">
@@ -288,24 +287,22 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
                         key={item.id}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className={`flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs transition-all group ${
-                          isActive
+                        className={`flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs transition-all group ${isActive
                             ? 'bg-[#ecb613]/15 text-[#ecb613] font-bold border border-[#ecb613]/30 shadow-[0_0_12px_rgba(236,182,19,0.1)]'
                             : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60 border border-transparent'
-                        }`}
+                          }`}
                         title={isColl ? item.name : undefined}
                       >
                         <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#ecb613]' : 'group-hover:text-[#ecb613] transition-colors'}`} />
-                        
+
                         {!isColl && (
                           <div className="flex items-center justify-between w-full min-w-0">
                             <span className="truncate">{item.name}</span>
                             <span
-                              className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ml-1.5 shrink-0 ${
-                                isActive
+                              className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ml-1.5 shrink-0 ${isActive
                                   ? 'bg-[#ecb613]/20 border-[#ecb613]/40 text-[#ecb613]'
                                   : 'bg-zinc-900 border-zinc-800 text-zinc-500 group-hover:text-zinc-300'
-                              }`}
+                                }`}
                             >
                               {item.badge}
                             </span>

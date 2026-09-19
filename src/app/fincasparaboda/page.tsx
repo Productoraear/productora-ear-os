@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { SCLASS_12_FINCAS_HOMOLOGADAS, FincaHomologada } from '@/lib/constants/fincas-catalog';
-import SovereignCarouselSClass from '@/components/sclass/SovereignCarouselSClass';
+import CinematicVanguardCarousel from '@/components/sclass/CinematicVanguardCarousel';
 import NeuralFincaTinderMatch from '@/components/fincas/NeuralFincaTinderMatch';
 import { createSupplierUnlockCheckout } from '@/app/actions/vipCheckoutActions';
 
@@ -66,7 +66,7 @@ const CATEGORIAS_ICONS = [
 ];
 
 const PROVINCIAS_POPULARES = [
-  'Todas', 'Madrid', 'Toledo', 'Barcelona', 'Valencia', 'Sevilla', 
+  'Todas', 'Madrid', 'Toledo', 'Barcelona', 'Valencia', 'Sevilla',
   'Málaga', 'Alicante', 'Cádiz', 'Baleares', 'Girona', 'Segovia', 'Guadalajara'
 ];
 
@@ -175,7 +175,7 @@ export default function FincasParaBodaPortal() {
 
   return (
     <div className="min-h-screen bg-[#050508] text-white selection:bg-[#ecb613] selection:text-black font-sans w-full overflow-x-hidden pt-28 sm:pt-32 pb-32">
-      
+
       {/* ── 🏰 NAVEGACIÓN DEDICADA S-CLASS: FINCASPARABODA.COM (BODAS.NET KILLER) ── */}
       <header className="fixed top-0 left-0 w-full z-[100] transition-all">
         {/* Ribbon Superior Informativo */}
@@ -206,7 +206,7 @@ export default function FincasParaBodaPortal() {
         {/* Barra de Navegación Flotante */}
         <div className="px-3 py-2 sm:px-8">
           <nav className="max-w-7xl mx-auto rounded-full bg-[#07070d]/90 backdrop-blur-2xl border border-white/10 px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-            
+
             {/* LOGO FINCASPARABODA */}
             <Link href="/fincasparaboda" className="flex items-center gap-2.5 group shrink-0">
               <div className="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#ecb613] to-amber-600 p-0.5 flex items-center justify-center shadow-[0_0_20px_rgba(236,182,19,0.35)] group-hover:scale-105 transition-all">
@@ -280,28 +280,28 @@ export default function FincasParaBodaPortal() {
           {/* Menú Móvil Desplegable */}
           {mobileNavOpen && (
             <div className="lg:hidden mt-2 p-4 rounded-3xl bg-[#090912]/95 backdrop-blur-2xl border border-white/10 space-y-3 font-mono text-xs uppercase tracking-wider text-zinc-300 shadow-2xl">
-              <a 
-                href="#catalogo-nacional" 
+              <a
+                href="#catalogo-nacional"
                 onClick={() => setMobileNavOpen(false)}
                 className="block py-2 px-3 rounded-xl hover:bg-white/5 hover:text-[#ecb613]"
               >
                 🏰 Catálogo Nacional ({totalFound.toLocaleString('es-ES')} Fincas)
               </a>
-              <a 
-                href="#coleccion-privada" 
+              <a
+                href="#coleccion-privada"
                 onClick={() => setMobileNavOpen(false)}
                 className="block py-2 px-3 rounded-xl hover:bg-white/5 hover:text-[#ecb613]"
               >
                 👑 12 Fincas Homologadas Oficiales
               </a>
-              <a 
-                href="#por-que-nosotros" 
+              <a
+                href="#por-que-nosotros"
                 onClick={() => setMobileNavOpen(false)}
                 className="block py-2 px-3 rounded-xl hover:bg-white/5 text-emerald-400 font-bold"
               >
                 🛡️ Ventaja 0% Comisiones de Agencia
               </a>
-              <Link 
+              <Link
                 href="/reservar/solista"
                 onClick={() => setMobileNavOpen(false)}
                 className="block py-2 px-3 rounded-xl hover:bg-white/5 hover:text-[#ecb613]"
@@ -327,7 +327,7 @@ export default function FincasParaBodaPortal() {
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-amber-500/10 rounded-full blur-[160px] pointer-events-none" />
 
         <div className="max-w-6xl mx-auto text-center space-y-6 relative z-10">
-          
+
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono uppercase font-bold tracking-widest shadow-lg">
             <Sparkles size={14} />
             <span>Directorio de Bodas 2026 // {totalFound.toLocaleString('es-ES')} Espacios Exclusivos</span>
@@ -344,7 +344,7 @@ export default function FincasParaBodaPortal() {
           {/* 🔍 GRAN BUSCADOR BODAS.NET STYLE */}
           <div className="pt-4 max-w-5xl mx-auto">
             <div className="p-3 sm:p-4 rounded-3xl bg-[#0e0e16]/90 border border-[#ecb613]/40 shadow-[0_20px_60px_rgba(0,0,0,0.8)] backdrop-blur-xl grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-              
+
               {/* 1. Selector Tipo de Finca */}
               <div className="sm:col-span-3 text-left px-3 py-2 bg-black/50 rounded-2xl border border-white/10">
                 <label className="text-[10px] font-mono uppercase text-zinc-400 block mb-0.5">
@@ -428,11 +428,10 @@ export default function FincasParaBodaPortal() {
                   setSelectedCategory(cat.id);
                   setCurrentPage(1);
                 }}
-                className={`px-4 py-2 rounded-xl text-xs font-mono transition-all flex items-center gap-2 shrink-0 ${
-                  selectedCategory === cat.id
+                className={`px-4 py-2 rounded-xl text-xs font-mono transition-all flex items-center gap-2 shrink-0 ${selectedCategory === cat.id
                     ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
                     : 'bg-white/5 text-zinc-300 border border-white/10 hover:border-[#ecb613]/50 hover:text-white'
-                }`}
+                  }`}
               >
                 <span>{cat.icon}</span>
                 <span>{cat.label}</span>
@@ -456,7 +455,7 @@ export default function FincasParaBodaPortal() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            
+
             {/* Beneficio 1 */}
             <div className="p-6 rounded-3xl bg-[#0c0c14] border border-white/10 hover:border-emerald-500/40 transition-all space-y-3">
               <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
@@ -586,7 +585,7 @@ export default function FincasParaBodaPortal() {
 
       {/* ── 📋 DIRECTORIO NACIONAL COMPLETO DE FINCAS (BODAS.NET KILLER) ── */}
       <section id="catalogo-nacional" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-8">
-        
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <span className="text-xs font-mono text-zinc-400 uppercase tracking-wider block">
@@ -613,8 +612,8 @@ export default function FincasParaBodaPortal() {
               const rawImgs = (finca.imageUrls && finca.imageUrls.length > 0)
                 ? finca.imageUrls
                 : (finca.gallery && finca.gallery.length > 0)
-                ? finca.gallery
-                : (finca.img ? [finca.img] : []);
+                  ? finca.gallery
+                  : (finca.img ? [finca.img] : []);
               const cleanGallery = rawImgs.filter((u: string) => typeof u === 'string' && u.length > 5 && !u.includes('.svg'));
               const coverImg = cleanGallery[0] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop';
               const gallery = cleanGallery.length > 0 ? cleanGallery : [coverImg];
@@ -626,7 +625,7 @@ export default function FincasParaBodaPortal() {
                 >
                   {/* Carrusel de Fotos */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-black">
-                    <SovereignCarouselSClass
+                    <CinematicVanguardCarousel
                       images={gallery}
                       title={finca.name}
                     />
