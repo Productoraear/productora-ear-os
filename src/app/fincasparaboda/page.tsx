@@ -32,6 +32,8 @@ import {
 import { CENTRALITA } from '@/lib/phone-constants';
 import { SCLASS_12_FINCAS_HOMOLOGADAS, FincaHomologada } from '@/lib/constants/fincas-catalog';
 import SovereignCarouselSClass from '@/components/sclass/SovereignCarouselSClass';
+import NeuralFincaTinderMatch from '@/components/fincas/NeuralFincaTinderMatch';
+import { createSupplierUnlockCheckout } from '@/app/actions/vipCheckoutActions';
 
 interface FincaItem {
   id: string;
@@ -184,7 +186,7 @@ export default function FincasParaBodaPortal() {
                   Fincas<span className="text-[#ecb613]">ParaBoda</span>
                 </span>
                 <span className="text-[9px] font-mono text-zinc-400 tracking-widest uppercase block">
-                  by Productora EAR // S-Class
+                  by Productora EAR // Colección Oficial
                 </span>
               </div>
             </Link>
@@ -257,7 +259,7 @@ export default function FincasParaBodaPortal() {
                 onClick={() => setMobileNavOpen(false)}
                 className="block py-2 px-3 rounded-xl hover:bg-white/5 hover:text-[#ecb613]"
               >
-                👑 12 Fincas Homologadas S-Class
+                👑 12 Fincas Homologadas Oficiales
               </a>
               <a 
                 href="#por-que-nosotros" 
@@ -476,7 +478,7 @@ export default function FincasParaBodaPortal() {
           <div>
             <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#ecb613] uppercase font-bold tracking-wider mb-1">
               <Award size={14} />
-              <span>Colección Privada S-Class // Madrid, Toledo & Guadalajara</span>
+              <span>Colección Privada Oficial // Madrid, Toledo & Guadalajara</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black font-syne text-white uppercase">
               12 Fincas Homologadas con Producción Acústica Incluida
@@ -542,6 +544,11 @@ export default function FincasParaBodaPortal() {
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ── 🧠 MOTOR NEURAL AIRBNB + TINDER // COLECCIONES GRAND SLAM ── */}
+      <section id="matchmaking-neural" className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <NeuralFincaTinderMatch fincas={fincas} onSelectFinca={(f) => setActiveFincaContact(f)} />
       </section>
 
       {/* ── 📋 DIRECTORIO NACIONAL COMPLETO DE FINCAS (BODAS.NET KILLER) ── */}
@@ -804,12 +811,48 @@ export default function FincasParaBodaPortal() {
                   </select>
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-4 bg-[#ecb613] hover:bg-[#d9a40e] text-black font-black text-xs font-mono uppercase rounded-xl transition-all shadow-lg shadow-amber-500/20 mt-2"
-                >
-                  Solicitar Presupuesto y Visita Gratis
-                </button>
+                <div className="space-y-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!activeFincaContact) return;
+                      try {
+                        const res = await createSupplierUnlockCheckout({
+                          supplierId: activeFincaContact.id,
+                          supplierName: activeFincaContact.name,
+                          category: 'Fincas para Boda',
+                          city: activeFincaContact.province || 'Madrid',
+                          slug: activeFincaContact.slug || activeFincaContact.id
+                        });
+                        if (res?.url) window.location.href = res.url;
+                      } catch (err) {
+                        console.error('Error:', err);
+                      }
+                    }}
+                    className="w-full py-4 bg-[#ecb613] hover:bg-amber-400 text-black font-black text-xs font-mono uppercase rounded-xl transition-all shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <Lock size={14} />
+                    <span>Desbloquear Teléfono Directo Maître & WhatsApp · 1,00 €</span>
+                  </button>
+
+                  <p className="text-[10px] font-mono text-emerald-400 text-center font-bold">
+                    ✓ 1,00 € descontable al 100% de tu reserva · Trato directo sin comisiones
+                  </p>
+
+                  <div className="flex items-center gap-2 my-2">
+                    <div className="h-px bg-white/10 flex-1" />
+                    <span className="text-[9px] font-mono text-zinc-500 uppercase">o bien agenda visita presencial</span>
+                    <div className="h-px bg-white/10 flex-1" />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs font-mono uppercase rounded-xl transition-all flex items-center justify-center gap-2"
+                  >
+                    <Calendar size={14} className="text-[#ecb613]" />
+                    <span>Confirmar Cita de Visita en Agenda de la Finca</span>
+                  </button>
+                </div>
 
                 <p className="text-[10px] font-mono text-zinc-500 text-center">
                   🔒 Garantía RGPD y Safe Harbor. Cero spam. Solo contacto directo con la finca.
@@ -828,7 +871,7 @@ export default function FincasParaBodaPortal() {
           <span>fincasparaboda.com // Productora EAR</span>
         </div>
         <p className="font-mono text-[11px] max-w-xl mx-auto">
-          El portal nupcial de espacios singulares operado bajo tecnología S-Class. 0% comisiones parásitas de intermediación, reserva con Price-Lock 100 € y rider acústico garantizado (12 W/pax).
+          El portal nupcial de espacios singulares con tecnología soberana. 0% comisiones parásitas de intermediación, reserva con Price-Lock 100 € y rider acústico garantizado (12 W/pax).
         </p>
         <div className="flex flex-wrap justify-center items-center gap-4 text-xs font-mono text-zinc-400 pt-2">
           <span>Centralita 24/7: {CENTRALITA.display}</span>

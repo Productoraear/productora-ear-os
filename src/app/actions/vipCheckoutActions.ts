@@ -189,8 +189,9 @@ export async function createB2GLightingCheckout(input: B2GLightingCheckoutInput)
 }
 
 /**
- * 🛡️ STRIPE CHECKOUT: SUPPLIER BLUR-LOCK & DESBLOQUEO DE CONTACTO DIRECTO (10 €)
- * Bloquea la fuga de datos y cobra 10 € (Smart-Lock 72h) para revelar teléfono, email y contratación directa con garantía 0 Fallos.
+ * 🛡️ STRIPE CHECKOUT: FILTRO DE SEGURIDAD 1,00 € (DESBLOQUEO NOVIO)
+ * Desbloquea teléfono directo y WhatsApp personal del maître o fotógrafo.
+ * 100% descontable de la reserva formal.
  */
 export async function createSupplierUnlockCheckout(input: SupplierUnlockCheckoutInput) {
   const headersList = await headers();
@@ -207,9 +208,9 @@ export async function createSupplierUnlockCheckout(input: SupplierUnlockCheckout
 
   const { supplierId, supplierName, category, city, slug } = parsed.data;
 
-  const chargeAmount = 10; // 10 € Desbloqueo Smart-Lock 72h
-  const conceptTitle = `Smart-Lock 72h · Desbloqueo Ficha y Contacto Directo: ${supplierName}`;
-  const conceptDesc = `Acceso inmediato al canal de contacto directo, teléfono auditado, disponibilidad en tiempo real y Garantía de 0 Fallos EAR OS S-Class para ${category} en ${city}.`;
+  const chargeAmount = 1; // 1,00 € Filtro Cuántico de Pareja (Descontable de Reserva)
+  const conceptTitle = `Filtro de Seguridad 1,00 € · Contacto Directo: ${supplierName}`;
+  const conceptDesc = `Acceso inmediato al teléfono directo auditado y WhatsApp personal del maître o profesional en ${city}. Descontable al 100% de la reserva formal del evento.`;
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
   const returnPath = slug ? `/proveedores/${slug}` : '/proveedores';
@@ -225,19 +226,20 @@ export async function createSupplierUnlockCheckout(input: SupplierUnlockCheckout
             name: conceptTitle,
             description: conceptDesc,
           },
-          unit_amount: Math.round(chargeAmount * 100),
+          unit_amount: 100, // 100 céntimos = 1,00 €
         },
         quantity: 1,
       },
     ],
     metadata: {
-      type: 'SUPPLIER_CONTACT_UNLOCK',
+      type: 'TRIPWIRE_COUPLE_UNLOCK',
       supplierId,
       supplierName,
       category,
       city,
       slug: slug || '',
-      depositPaid: '10'
+      depositPaid: '1',
+      isTripwire: 'true'
     },
     success_url: `${baseUrl}${returnPath}?unlocked=true&session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${baseUrl}${returnPath}`,
@@ -254,4 +256,164 @@ export async function createSupplierUnlockCheckout(input: SupplierUnlockCheckout
     url: session.url
   };
 }
+
+/**
+ * 👑 STRIPE CHECKOUT: SUSCRIPCIÓN FINCA PRO (250 € con VIMUME / 290 € Estándar)
+ * Citas ilimitadas gratuitas a 0 €, teléfono y WhatsApp siempre abiertos sin candado,
+ * catálogo 4K y perfil sin enlaces de competidores.
+ */
+export async function createFincaProSubscriptionCheckout(input: {
+  fincaId: string;
+  fincaName: string;
+  billingCycle: 'MONTHLY' | 'ANNUAL';
+  hasVimumeShield?: boolean;
+}) {
+  const { fincaId, fincaName, billingCycle, hasVimumeShield = true } = input;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+
+  const isAnnual = billingCycle === 'ANNUAL';
+  let unitAmountCents: number;
+  let interval: 'month' | 'year';
+
+  if (hasVimumeShield) {
+    unitAmountCents = isAnnual ? 2500 * 100 : 250 * 100; // 250€/mes o 2.500€/año
+    interval = isAnnual ? 'year' : 'month';
+  } else {
+    unitAmountCents = isAnnual ? 2900 * 100 : 290 * 100; // 290€/mes o 2.900€/año
+    interval = isAnnual ? 'year' : 'month';
+  }
+
+  const productName = hasVimumeShield
+    ? `Suscripción Finca Pro (Escudo Fiscal VIMUME) · ${fincaName}`
+    : `Suscripción Finca Pro Estándar · ${fincaName}`;
+
+  const productDesc = `Tarifa plana mensual con citas cualificadas ilimitadas a 0 €, contacto directo y WhatsApp abierto sin candado, y perfil blindado sin publicidad de la competencia.`;
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    mode: 'subscription',
+    line_items: [
+      {
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: productName,
+            description: productDesc,
+          },
+          unit_amount: unitAmountCents,
+          recurring: {
+            interval: interval
+          }
+        },
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      type: 'FINCA_PRO_SUBSCRIPTION',
+      fincaId,
+      fincaName,
+      billingCycle,
+      hasVimumeShield: hasVimumeShield ? 'true' : 'false'
+    },
+    success_url: `${baseUrl}/fincasparaboda?subscription=success&fincaId=${fincaId}&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}/fincasparaboda`,
+  });
+
+  if (!session.url) {
+    throw new Error('No se pudo generar la sesión de suscripción Finca Pro.');
+  }
+
+  return {
+    sessionId: session.id,
+    url: session.url
+  };
+}
+
+/**
+ * ⭐ STRIPE CHECKOUT: TOP 3 PROVINCIAL DESTACADO (490 €/mes)
+ * Posición fija #1, #2 o #3 en la cabecera de la provincia con máxima exposición.
+ */
+export async function createTopProvincialSubscriptionCheckout(input: {
+  fincaId: string;
+  fincaName: string;
+  province: string;
+}) {
+  const { fincaId, fincaName, province } = input;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    mode: 'subscription',
+    line_items: [
+      {
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: `Top 3 Provincial Destacado (${province}) · ${fincaName}`,
+            description: `Posición fija preferente en portada provincial de FincasParaBoda. Citas ilimitadas y máxima visibilidad.`,
+          },
+          unit_amount: 490 * 100, // 490,00 €/mes
+          recurring: {
+            interval: 'month'
+          }
+        },
+        quantity: 1,
+      },
+    ],
+    metadata: {
+      type: 'TOP_PROVINCIAL_SUBSCRIPTION',
+      fincaId,
+      fincaName,
+      province
+    },
+    success_url: `${baseUrl}/fincasparaboda?top_provincial=success&fincaId=${fincaId}&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}/fincasparaboda`,
+  });
+
+  if (!session.url) {
+    throw new Error('No se pudo generar la sesión de suscripción Top Provincial.');
+  }
+
+  return {
+    sessionId: session.id,
+    url: session.url
+  };
+}
+
+/**
+ * 💳 STRIPE SETUP-INTENT: FACTURACIÓN AGRUPADA A FIN DE MES (CERO FRICCIÓN)
+ * Autoriza la tarjeta bancaria de la finca una sola vez para liquidar el lote de citas confirmadas
+ * a final de mes (10 € por cita confirmada en agenda) con factura desglosada y deducible.
+ */
+export async function createProviderCardSetupSession(input: {
+  fincaId: string;
+  fincaName: string;
+  contactEmail?: string;
+}) {
+  const { fincaId, fincaName, contactEmail } = input;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
+
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    mode: 'setup',
+    customer_email: contactEmail || undefined,
+    metadata: {
+      type: 'PROVIDER_SETUP_CARD_FOR_APPOINTMENTS',
+      fincaId,
+      fincaName
+    },
+    success_url: `${baseUrl}/panel/proveedor?card_setup=success&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${baseUrl}/fincasparaboda`,
+  });
+
+  if (!session.url) {
+    throw new Error('No se pudo generar la sesión de autorización de tarjeta.');
+  }
+
+  return {
+    sessionId: session.id,
+    url: session.url
+  };
+}
+
 

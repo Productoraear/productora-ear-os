@@ -97,15 +97,15 @@ export const SupplierBlurLock: React.FC<SupplierBlurLockProps> = ({
 
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono font-bold tracking-widest uppercase mb-3">
           <ShieldCheck className="w-3.5 h-3.5" />
-          Ficha Técnica Protegida por EAR OS S-Class
+          Ficha Oficial Verificada · Garantía EAR OS
         </div>
 
         <h3 className="text-xl sm:text-2xl font-extrabold text-white font-syne max-w-xl leading-snug">
-          Verificación Oficial & <span className="text-[#ecb613]">Disponibilidad en Tiempo Real</span>
+          Contacto Directo & <span className="text-[#ecb613]">Disponibilidad en Tiempo Real</span>
         </h3>
 
         <p className="text-xs sm:text-sm text-zinc-400 mt-2 max-w-lg leading-relaxed">
-          Consulta fechas, caché oficial y disponibilidad de <strong className="text-zinc-200">{supplierName}</strong> ({category} en {city}) a través de la centralita técnica de Productora EAR.
+          Accede al teléfono directo auditado y WhatsApp personal de <strong className="text-zinc-200">{supplierName}</strong> ({category} en {city}) sin intermediarios ni comisiones de agencia.
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 my-4 w-full max-w-md text-left text-xs font-mono text-zinc-300">
@@ -119,57 +119,61 @@ export const SupplierBlurLock: React.FC<SupplierBlurLockProps> = ({
           </div>
           <div className="flex items-center gap-1.5 bg-black/60 p-2.5 rounded-xl border border-white/5">
             <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />
-            <span>Garantía 0 Fallos</span>
+            <span>Garantía Oficial</span>
           </div>
         </div>
 
-        {/* CANALES DE CONTACTO DIRECTO INMEDIATO (CONVERSIÓN 0€) */}
-        <div className="w-full max-w-md space-y-2.5 my-2">
-          <a
-            href="tel:+34693693048"
-            className="w-full py-3.5 px-5 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-sm rounded-2xl shadow-xl shadow-emerald-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-mono uppercase tracking-wider"
-          >
-            <Phone className="w-4 h-4 fill-current" />
-            <span>Llamar a Centralita: 693 693 048</span>
-          </a>
-
-          <a
-            href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero consultar disponibilidad y presupuesto para ${supplierName} (${category} en ${city}).`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full py-3.5 px-5 bg-[#25D366]/20 hover:bg-[#25D366]/30 border border-[#25D366]/40 text-[#25D366] hover:text-white font-bold text-xs rounded-2xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-mono uppercase tracking-wider"
-          >
-            <Mail className="w-4 h-4" />
-            <span>Consultar por WhatsApp Express</span>
-          </a>
-        </div>
-
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-red-950/60 border border-red-500/30 text-red-300 text-xs font-mono flex items-center gap-2">
+          <div className="mb-3 p-3 rounded-xl bg-red-950/60 border border-red-500/30 text-red-300 text-xs font-mono flex items-center gap-2 w-full max-w-md">
             <ShieldAlert className="w-4 h-4 text-red-400 shrink-0" />
             <span>{error}</span>
           </div>
         )}
 
-        {/* PASARELA ALTERNATIVA VIP UNLOCK (OPCIONAL) */}
-        <div className="pt-2 border-t border-white/10 w-full max-w-md">
+        {/* 🎯 ACCIÓN PRINCIPAL: TRIPWIRE CUÁNTICO 1,00 € (DESCONTABLE DE RESERVA) */}
+        <div className="w-full max-w-md space-y-2 my-2">
           <button
             onClick={handleUnlock}
             disabled={loading}
-            className="w-full py-2.5 px-4 bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-400 hover:text-white text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 font-mono"
+            className="w-full py-4 px-5 bg-gradient-to-r from-[#ecb613] via-amber-500 to-[#ecb613] hover:brightness-110 text-black font-extrabold text-xs sm:text-sm rounded-2xl shadow-xl shadow-amber-500/25 active:scale-[0.98] transition-all flex items-center justify-center gap-2 font-mono uppercase tracking-wider cursor-pointer"
           >
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Conectando con Stripe...</span>
+                <span>Conectando con Stripe Seguro...</span>
               </>
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
-                <span>Desbloqueo VIP Autónomo Directo (10 €)</span>
+                <Lock className="w-4 h-4" />
+                <span>Desbloquear Teléfono Maître & WhatsApp · 1,00 €</span>
               </>
             )}
           </button>
+
+          <div className="p-2.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-[11px] font-mono text-emerald-400 text-center font-bold">
+            ✓ 1,00 € descontable al 100% de tu reserva · Trato directo sin comisiones
+          </div>
+        </div>
+
+        {/* CANALES DE CONTACTO ALTERNATIVOS CON CENTRALITA */}
+        <div className="pt-3 border-t border-white/10 w-full max-w-md grid grid-cols-2 gap-2">
+          <a
+            href="tel:+34693693048"
+            className="py-2.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-zinc-300 hover:text-white text-[11px] rounded-xl transition-all flex items-center justify-center gap-1.5 font-mono uppercase"
+          >
+            <Phone className="w-3.5 h-3.5 text-[#ecb613]" />
+            <span>Centralita EAR</span>
+          </a>
+
+          <a
+            href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola, quiero consultar disponibilidad y condiciones oficiales para ${supplierName} (${category} en ${city}).`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-2.5 px-3 bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-[#25D366] text-[11px] rounded-xl transition-all flex items-center justify-center gap-1.5 font-mono uppercase"
+          >
+            <Mail className="w-3.5 h-3.5" />
+            <span>Asesor WhatsApp</span>
+          </a>
         </div>
       </div>
     </div>

@@ -1432,18 +1432,22 @@
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     },
     {
-      "id": "sclass-b098-market-dominance-interview-and-monetization-200q",
-      "title": "B0.98: Cuestionario Estratégico de Dominancia de Mercado (200-300 Preguntas) & Blindaje Anti-Fugas vs Dinosaurio",
+      "id": "b098-airbnb-tinder-neural-matcher-and-sovereign-purged-dominance",
+      "title": "B0.98: Motor Neural Bidireccional Airbnb+Tinder de Fincas, Purga Pública 'S-Class' y Autopista de Monetización 290€/mes",
       "block": 0,
       "status": "PENDING",
-      "description": "Batería estratégica interactiva con el CEO (Edwin Agudelo) para calibrar y blindar los 5 modelos de monetización global, contratos clickwrap LSSI/eIDAS, autogestión en Cockpit Pro y blindaje contra fugas de clientes para los 65.000 proveedores rescatados. Tarea programada para ejecutarse inmediatamente tras finalizar los bloques prioritarios 3, 1 y 2.",
+      "description": "AUTOPISTA ASFALTADA DEL 97% RESTANTE (EL FINCASPARABODA DEFINITIVO): 1) Purga radical de la palabra 'S-Class' en todas las interfaces públicas, botones y títulos, sustituyéndola por atributos tangibles y demostrados en la latencia (<200ms) y estética OLED. 2) Motor Neural Bidireccional Airbnb+Tinder (src/lib/matching/neuralFincaMatcher.ts) con 50 variables atómicas: Presupuesto total, Atmósfera (Rústico, Palacio, Minimalista, Bosque), Aforo min/max, Cocina propia vs Catering homologado, Canones de proveedores externos (penalización foto/música), Hora de corte música, Límite dBA, Alojamiento de invitados in situ, Capilla consagrada/Civil legal, Exclusividad de 1 boda/día. 3) Componente UI Airbnb+Tinder (src/components/fincas/NeuralFincaTinderMatch.tsx) con selector visual de atmósfera, micro-filtros instantáneos y porcentaje de afinidad neural (Match Score). 4) Activación de Suscripción Finca Pro en Stripe (290 €/mes o 2.900 €/año): Citas ilimitadas gratuitas y teléfono/WhatsApp siempre abierto sin candado. 5) Candado de 1,00 € (Novios) y Cita Cualificada a 10,00 € (Proveedores gratuitos). 6) Validación estricta con npx tsc --noEmit -> Exit Code 0.",
       "scaffold": {
         "files_to_touch": [
-          "src/app/(admin)/admin/compiler/page.tsx",
-          "src/lib/oracle/quantum-oracle-engine.ts",
-          "src/app/(admin)/admin/sourcing/page.tsx"
+          "src/lib/matching/neuralFincaMatcher.ts",
+          "src/components/fincas/NeuralFincaTinderMatch.tsx",
+          "src/app/actions/vipCheckoutActions.ts",
+          "src/components/ui/SupplierBlurLock.tsx",
+          "src/app/fincasparaboda/page.tsx",
+          "src/app/(public)/proveedores/[slug]/page.tsx",
+          "src/app/api/payments/checkout/route.ts"
         ],
-        "macro_script": "Diseñar interfaz interactiva de auditoría estratégica en /admin/compiler o Cockpit Pro donde el CEO responda por lotes temáticos (Monetización, Blindaje Jurídico, Protocolo Anti-Fugas, Captación por WhatsApp, Conversión de Perfiles Zombi). Integrar con el Quantum Oracle Engine en Modo CEO para asimilar las directrices."
+        "macro_script": "1) En src/lib/matching/neuralFincaMatcher.ts: Crear tipos FincaNeuralSpecs (50 dimensiones: canonMusicaEur, canonFotoEur, horaLimiteMusica, interiorDBA, exteriorDBA, capacidadMin, capacidadMax, precioMenuMin, exclusividadDia, cocinaPropia, habitacionesPax, ceremoniaCivilLegal, capillaConsagrada, atmosferaTag) y CoupleRequirements. Implementar calculateNeuralMatchScore(finca, couple): number (0-100%) y getMatchBreakdown. 2) En src/components/fincas/NeuralFincaTinderMatch.tsx: Diseñar experiencia reactiva estilo Tinder/Airbnb con slider de presupuesto, tags de atmósfera visual, selector de comensales y tarjetas con swipe/filtro interactivo. 3) En src/app/actions/vipCheckoutActions.ts: Crear createFincaProSubscriptionCheckout({ fincaId, billingCycle: 'MONTHLY' | 'ANNUAL' }) fijando 290€/mes o 2.900€/año en Stripe Checkout mode 'subscription'. Actualizar createSupplierUnlockCheckout a 1,00€ fijo. 4) En src/components/ui/SupplierBlurLock.tsx: Si isSubscribed=true, no aplicar blur y mostrar badge 'Finca Verificada · Atención Directa'; si no, mostrar botón 'Desbloquear Contacto Directo Maître · 1,00€ (Descontable de Reserva)'. 5) Purgar de forma estricta todo texto 'S-Class' o 'SClass' en src/app/fincasparaboda/page.tsx y src/app/(public)/proveedores/[slug]/page.tsx. 6) Certificar compilación limpia con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     },
