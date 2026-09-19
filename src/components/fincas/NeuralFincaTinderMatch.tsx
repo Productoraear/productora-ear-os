@@ -1,31 +1,36 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { 
-  Sparkles, 
-  Heart, 
-  X, 
-  SlidersHorizontal, 
-  CheckCircle2, 
-  AlertCircle, 
-  Lock, 
-  Calendar, 
-  Crown, 
-  MapPin, 
-  Users, 
-  Clock, 
+import {
+  Sparkles,
+  Heart,
+  X,
+  SlidersHorizontal,
+  CheckCircle2,
+  AlertCircle,
+  Lock,
+  Calendar,
+  Crown,
+  MapPin,
+  Users,
+  Clock,
   ArrowRight,
   ShieldCheck,
   ChevronRight,
   Zap
 } from 'lucide-react';
-import { 
-  HORMOZI_GRAND_SLAM_CATEGORIES, 
-  calculateNeuralMatchScore, 
-  type CouplePreferences, 
-  type FincaNeuralSpecs 
+import {
+  HORMOZI_GRAND_SLAM_CATEGORIES,
+  calculateNeuralMatchScore,
+  type CouplePreferences,
+  type FincaNeuralSpecs
 } from '@/lib/matching/neuralFincaMatcher';
 import { createSupplierUnlockCheckout, createProviderCardSetupSession } from '@/app/actions/vipCheckoutActions';
+import {
+  CANONICAL_TYPOLOGIES,
+  CANONICAL_ENVIRONMENTS,
+  CANONICAL_DECORATIVE_STYLES
+} from '@/lib/matching/calibratorTypes';
 
 interface NeuralFincaTinderMatchProps {
   fincas: any[];
@@ -39,6 +44,11 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
   const [favorites, setFavorites] = useState<string[]>([]);
   const [dismissed, setDismissed] = useState<string[]>([]);
   const [isUnlocking, setIsUnlocking] = useState(false);
+
+  // B1.01 — Chips OLED de Taxonomía Suprema (22 Tipologías / 14 Entornos / 16 Estilos)
+  const [selectedTypologies, setSelectedTypologies] = useState<string[]>([]);
+  const [selectedEnvironments, setSelectedEnvironments] = useState<string[]>([]);
+  const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
 
   // Filtros interactivos del viaje asistido
   const [guestCount, setGuestCount] = useState<number>(150);
@@ -60,33 +70,65 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
 
   // Cálculo de Matches Neurales
   const matchedFincas = useMemo(() => {
-    return fincas.map((f: any) => {
-      const specs: FincaNeuralSpecs = {
-        id: f.id || f.slug,
-        name: f.name,
-        province: f.province || f.provincia || 'Madrid',
-        address: f.address || f.location,
-        basePrice: f.basePrice || f.precioMenuMin || 135,
-        rentalFee: f.rentalFee || 2500,
-        capacidadMaxPax: f.capacidadMaxPax || 350,
-        capacidadMinPax: f.capacidadMinPax || 70,
-        hasOwnKitchen: f.hasOwnKitchen ?? true,
-        hasAccommodation: f.hasAccommodation ?? false,
-        accommodationPax: f.accommodationPax || 16,
-        hasCivilLegalCeremony: f.hasCivilLegalCeremony ?? true,
-        maxPartyHour: f.maxPartyHour || '05:00',
-        musicCanonEur: f.musicCanonEur || 0,
-        photoCanonEur: f.photoCanonEur || 0
-      };
+    const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-      const matchResult = calculateNeuralMatchScore(specs, couplePrefs);
-      return {
-        ...f,
-        matchResult,
-        specs
-      };
-    }).sort((a, b) => b.matchResult.score - a.matchResult.score);
-  }, [fincas, couplePrefs]);
+    const matchesChip = (fincaTags: string[], chips: string[], requireAny: boolean): boolean => {
+      if (chips.length === 0) return true;
+      const hay = fincaTags.map(norm);
+      return requireAny
+        ? chips.some((c) => hay.includes(norm(c)))
+        : !chips.some((c) => hay.includes(norm(c)));
+    };
+
+    return fincas
+      .map((f: any) => {
+        const specs: FincaNeuralSpecs = {
+          id: f.id || f.slug,
+          name: f.name,
+          province: f.province || f.provincia || 'Madrid',
+          address: f.address || f.location,
+          basePrice: f.basePrice || f.precioMenuMin || 135,
+          rentalFee: f.rentalFee || 2500,
+          capacidadMaxPax: f.capacidadMaxPax || 350,
+          capacidadMinPax: f.capacidadMinPax || 70,
+          hasOwnKitchen: f.hasOwnKitchen ?? true,
+          hasAccommodation: f.hasAccommodation ?? false,
+          accommodationPax: f.accommodationPax || 16,
+          hasCivilLegalCeremony: f.hasCivilLegalCeremony ?? true,
+          maxPartyHour: f.maxPartyHour || '05:00',
+          musicCanonEur: f.musicCanonEur || 0,
+          photoCanonEur: f.photoCanonEur || 0,
+          categorySlug: f.categorySlug,
+          atmosphereTags: f.atmosphereTags
+        };
+
+        const matchResult = calculateNeuralMatchScore(specs, couplePrefs);
+
+        const taxonomyTags: string[] = [
+          f.typology ?? f.tipologia ?? '',
+          f.environment ?? f.entorno ?? '',
+          f.decorativeStyle ?? f.estilo ?? '',
+          ...(Array.isArray(f.atmosphereTags) ? f.atmosphereTags : []),
+          ...(Array.isArray(f.styleTags) ? f.styleTags : []),
+          ...(Array.isArray(f.typologyTags) ? f.typologyTags : []),
+          f.categorySlug ?? ''
+        ].filter(Boolean);
+
+        const pasaChips =
+          matchesChip(taxonomyTags, selectedTypologies, true) &&
+          matchesChip(taxonomyTags, selectedEnvironments, true) &&
+          matchesChip(taxonomyTags, selectedStyles, true);
+
+        return {
+          ...f,
+          matchResult,
+          specs,
+          pasaChips
+        };
+      })
+      .filter((f) => f.pasaChips)
+      .sort((a, b) => b.matchResult.score - a.matchResult.score);
+  }, [fincas, couplePrefs, selectedTypologies, selectedEnvironments, selectedStyles]);
 
   const activeSwipeFinca = matchedFincas[currentSwipeIndex] || null;
 
@@ -121,7 +163,7 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
 
   return (
     <div className="w-full space-y-8">
-      
+
       {/* 👑 CATEGORÍAS GRAND SLAM (HORMOZI) */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -147,11 +189,10 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
               <button
                 key={cat.id}
                 onClick={() => setSelectedHormoziCategory(isSelected ? null : cat.slug)}
-                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between h-28 relative overflow-hidden group ${
-                  isSelected 
-                    ? 'bg-gradient-to-br from-[#1c1a0e] to-[#09090d] border-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.2)]' 
-                    : 'bg-[#08080e]/90 border-white/10 hover:border-white/20 hover:bg-[#0c0c14]'
-                }`}
+                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between h-28 relative overflow-hidden group ${isSelected
+                  ? 'bg-gradient-to-br from-[#1c1a0e] to-[#09090d] border-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.2)]'
+                  : 'bg-[#08080e]/90 border-white/10 hover:border-white/20 hover:bg-[#0c0c14]'
+                  }`}
               >
                 <div className="flex items-center justify-between w-full">
                   <span className="text-xl">{cat.icon}</span>
@@ -179,7 +220,7 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
           <div>
             <h3 className="text-base sm:text-lg font-bold font-syne text-white flex items-center gap-2">
               <SlidersHorizontal size={16} className="text-[#ecb613]" />
-              <span>Calibrador Neural de Boda (50 Dimensiones)</span>
+              <span>Calibrador Neural de Boda (200 Dimensiones)</span>
             </h3>
             <p className="text-xs text-zinc-400">
               Ajusta tus parámetros reales. El motor descarta automáticamente fincas incompatibles.
@@ -238,13 +279,105 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
           </div>
         </div>
 
+        {/* B1.01 — Chips OLED Taxonomía Suprema: 22 Tipologías */}
+        <div className="space-y-3 pt-2 border-t border-white/5">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              Tipologías Arquitectónicas (22)
+            </span>
+            <span className="text-[10px] font-mono text-[#ecb613]">
+              {selectedTypologies.length} seleccionadas
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {CANONICAL_TYPOLOGIES.map((t) => {
+              const active = selectedTypologies.includes(t);
+              return (
+                <button
+                  key={t}
+                  onClick={() =>
+                    setSelectedTypologies((prev) =>
+                      active ? prev.filter((x) => x !== t) : [...prev, t]
+                    )
+                  }
+                  className={`px-3 py-1.5 rounded-full border text-[11px] font-mono transition-all ${active
+                    ? 'bg-[#ecb613]/15 border-[#ecb613] text-[#ecb613]'
+                    : 'bg-black/40 border-white/10 text-zinc-400 hover:border-white/30'
+                    }`}
+                >
+                  {t}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              Entornos Paisajísticos (14)
+            </span>
+            <span className="text-[10px] font-mono text-[#ecb613]">
+              {selectedEnvironments.length} seleccionados
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {CANONICAL_ENVIRONMENTS.map((t) => {
+              const active = selectedEnvironments.includes(t);
+              return (
+                <button
+                  key={t}
+                  onClick={() =>
+                    setSelectedEnvironments((prev) =>
+                      active ? prev.filter((x) => x !== t) : [...prev, t]
+                    )
+                  }
+                  className={`px-3 py-1.5 rounded-full border text-[11px] font-mono transition-all ${active
+                    ? 'bg-[#00E5FF]/15 border-[#00E5FF] text-[#00E5FF]'
+                    : 'bg-black/40 border-white/10 text-zinc-400 hover:border-white/30'
+                    }`}
+                >
+                  {t}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+              Estilos Decorativos (16)
+            </span>
+            <span className="text-[10px] font-mono text-[#ecb613]">
+              {selectedStyles.length} seleccionados
+            </span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {CANONICAL_DECORATIVE_STYLES.map((t) => {
+              const active = selectedStyles.includes(t);
+              return (
+                <button
+                  key={t}
+                  onClick={() =>
+                    setSelectedStyles((prev) =>
+                      active ? prev.filter((x) => x !== t) : [...prev, t]
+                    )
+                  }
+                  className={`px-3 py-1.5 rounded-full border text-[11px] font-mono transition-all ${active
+                    ? 'bg-[#FF2B44]/15 border-[#FF2B44] text-[#FF2B44]'
+                    : 'bg-black/40 border-white/10 text-zinc-400 hover:border-white/30'
+                    }`}
+                >
+                  {t}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Toggles Excluyentes */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
           <button
             onClick={() => setRequiresOwnKitchen(!requiresOwnKitchen)}
-            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${
-              requiresOwnKitchen ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
-            }`}
+            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${requiresOwnKitchen ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
+              }`}
           >
             <span className="block text-[10px] uppercase text-zinc-500">Gastronomía</span>
             <strong>{requiresOwnKitchen ? '✓ Cocina Propia In Situ' : 'Cualquier Cocina'}</strong>
@@ -252,9 +385,8 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
 
           <button
             onClick={() => setRequiresAccommodation(!requiresAccommodation)}
-            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${
-              requiresAccommodation ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
-            }`}
+            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${requiresAccommodation ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
+              }`}
           >
             <span className="block text-[10px] uppercase text-zinc-500">Alojamiento</span>
             <strong>{requiresAccommodation ? '✓ Con Habitaciones' : 'Sin Alojamiento'}</strong>
@@ -262,9 +394,8 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
 
           <button
             onClick={() => setRequiresCivilLegal(!requiresCivilLegal)}
-            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${
-              requiresCivilLegal ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
-            }`}
+            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${requiresCivilLegal ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
+              }`}
           >
             <span className="block text-[10px] uppercase text-zinc-500">Ceremonia</span>
             <strong>{requiresCivilLegal ? '✓ Civil con Validez Legal' : 'Cualquier Ceremonia'}</strong>
@@ -272,9 +403,8 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
 
           <button
             onClick={() => setRequiresAllNightParty(!requiresAllNightParty)}
-            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${
-              requiresAllNightParty ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
-            }`}
+            className={`p-3 rounded-2xl border text-left text-xs font-mono transition-all ${requiresAllNightParty ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/5 text-zinc-400 hover:border-white/20'
+              }`}
           >
             <span className="block text-[10px] uppercase text-zinc-500">Horario de Fiesta</span>
             <strong>{requiresAllNightParty ? '✓ Hasta 05:00+ AM' : 'Horario Normal'}</strong>
@@ -286,8 +416,8 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
       {isSwipeMode && activeSwipeFinca && (
         <div className="max-w-md mx-auto p-4 bg-[#090912] rounded-3xl border border-[#ecb613]/40 shadow-2xl space-y-4 text-center">
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-black">
-            <img 
-              src={activeSwipeFinca.img || activeSwipeFinca.imageUrls?.[0] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop'} 
+            <img
+              src={activeSwipeFinca.img || activeSwipeFinca.imageUrls?.[0] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop'}
               alt={activeSwipeFinca.name}
               className="w-full h-full object-cover"
             />
@@ -372,17 +502,16 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
                   className="rounded-3xl bg-[#090910] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between overflow-hidden group shadow-xl hover:-translate-y-1 duration-300"
                 >
                   <div className="relative aspect-[16/10] bg-black overflow-hidden">
-                    <img 
-                      src={finca.img || finca.imageUrls?.[0] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop'} 
+                    <img
+                      src={finca.img || finca.imageUrls?.[0] || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=800&auto=format&fit=crop'}
                       alt={finca.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
                     />
 
                     {/* Badge Match Score */}
                     <div className="absolute top-3 left-3">
-                      <span className={`px-3 py-1 rounded-full text-xs font-mono font-black backdrop-blur-md border ${
-                        isTop ? 'bg-[#ecb613] text-black border-amber-300' : 'bg-black/80 text-[#ecb613] border-[#ecb613]/40'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-xs font-mono font-black backdrop-blur-md border ${isTop ? 'bg-[#ecb613] text-black border-amber-300' : 'bg-black/80 text-[#ecb613] border-[#ecb613]/40'
+                        }`}>
                         {matchResult.score}% Match
                       </span>
                     </div>

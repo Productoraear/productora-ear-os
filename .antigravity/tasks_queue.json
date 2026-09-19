@@ -1493,7 +1493,7 @@
       "id": "b101-calibrador-200d-enrichment-and-bodasnet-supremacy",
       "title": "B1.01: Enriquecimiento Taxonómico Supremo Bodas.net/Celebrents (22 Tipologías, 14 Entornos, 16 Estilos) y Expansión Front 200D",
       "block": 1,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "SUPERACIÓN TOTAL DE BODAS.NET Y CELEBRENTS: 1) En src/lib/matching/calibratorTypes.ts: Expandir y unificar de forma estricta e idéntica las opciones multi-select entre Pareja (Dims 1, 2, 3) y Finca (Dims 135, 136, 138) resolviendo el bug de discrepancia de strings. Incorporar las 22 Tipologías (Castillo, Monasterio, Hotel 5★, Parador, Restaurante Gastronómico, Alquería, Beach Club, Golf Club, etc.), los 14 Entornos (Primera línea de playa, Acantilado, Olivar, Dehesa, Ribera, etc.) y los 16 Estilos (Romántico, Vintage, Campestre, Mediterráneo, Glamour, Nórdico, etc.). 2) En src/lib/matching/calibratorPresets.ts: Añadir presets y enriquecer detectPresetByTypology. 3) En src/components/fincas/NeuralFincaTinderMatch.tsx: Actualizar cabecera a '200 Dimensiones' y añadir selectores interactivos visuales (chips/pills) para tipología arquitectónica, entorno paisajístico y estilo decorativo, cruzándolos con el motor neural bilateral.",
       "scaffold": {
         "files_to_touch": [
@@ -1502,6 +1502,57 @@
           "src/components/fincas/NeuralFincaTinderMatch.tsx"
         ],
         "macro_script": "1) En calibratorTypes.ts: Definir constantes canónicas exportadas: CANONICAL_TYPOLOGIES (22 opciones), CANONICAL_ENVIRONMENTS (14 opciones), CANONICAL_DECORATIVE_STYLES (16 opciones). Asignar CANONICAL_TYPOLOGIES tanto a Dim 1 como a Dim 135. Asignar CANONICAL_ENVIRONMENTS tanto a Dim 2 como a Dim 136. Asignar CANONICAL_DECORATIVE_STYLES tanto a Dim 3 como a Dim 138. 2) En calibratorPresets.ts: Actualizar valores por defecto de presets para que usen strings del catálogo canónico y ampliar detectPresetByTypology con palabras clave (castillo, hotel, monasterio, restaurante, playa, golf, alqueria). 3) En NeuralFincaTinderMatch.tsx: Renombrar título a 'Calibrador Neural de Boda (200 Dimensiones)'. Añadir estados para selectedTypologies, selectedEnvironments, selectedStyles y renderizar chips seleccionables con estética OLED (#030305, borde white/10, oro #ecb613). 4) Validar con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "b102-calibrador-600d-artistas-y-proveedores-scaffold",
+      "title": "B1.02: Andamiaje de Tipos y Motores Bilaterales 200D para Artistas (Artistaseuropa.com) y 200D para Proveedores (ProductoraEAR.com)",
+      "block": 1,
+      "status": "COMPLETED",
+      "description": "ARQUITECTURA DE CALIBRACIÓN SOBERANA 600D: 1) Crear src/lib/matching/artistCalibratorTypes.ts con 200 dimensiones bilaterales (100 Cliente ↔ 100 Artista) basadas en TRATADO_MAESTRO_CALIBRADOR_600D_ARTISTAS_Y_PROVEEDORES.md (Caché base 350€, Split 80/10/10, Rider Bose/Shure, 1,50€/km Méntrida, hotel +120€ >3AM o >200km). 2) Crear src/lib/matching/providerServiceCalibratorTypes.ts con 200 dimensiones bilaterales (100 Cliente/B2G ↔ 100 Proveedor Homologado) (Catering cocina in situ, Dron AESA, Licitación B2G <14.250€, Carpas M2, Autobuses PMR). 3) Implementar funciones calculateBilateralArtistMatch() y calculateBilateralProviderMatch() replicando la lógica matemática 50/50 y knockouts. 4) Validar con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/lib/matching/artistCalibratorTypes.ts",
+          "src/lib/matching/providerServiceCalibratorTypes.ts",
+          "src/lib/matching/artistMatcher.ts",
+          "src/lib/matching/providerServiceMatcher.ts"
+        ],
+        "macro_script": "1) En artistCalibratorTypes.ts: Definir tipos inmutables ARTIST_CALIBRATION_DIMENSIONS (IDs 1-200), ARTIST_COUPLE_TO_PROVIDER_PAIRS y presets canónicos (Mariachi Solista Edwin Agudelo, Cuarteto Clásico, Banda Pop Covers, DJ Live Sax). 2) En providerServiceCalibratorTypes.ts: Definir PROVIDER_SERVICE_CALIBRATION_DIMENSIONS (IDs 201-400) y pares de correspondencia. 3) En artistMatcher.ts y providerServiceMatcher.ts: Implementar cálculo de score bilateral, knockouts y asignación de affinity tiers. 4) Validar con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "b103-artist-neural-ui-celebrents",
+      "title": "B1.03: Interfaz UI Neural 200D para Artistas (Artistaseuropa.com) + Mapeo Celebrents",
+      "block": 1,
+      "status": "PENDING",
+      "description": "DESPLIEGUE FRONTEND DE ARTISTAS: 1) Crear src/components/artists/NeuralArtistTinderMatch.tsx replicando el estilo Airbnb/Tinder OLED de las fincas. 2) Implementar selectores rápidos para Formato (Solista, Banda, Mariachi), Presupuesto (Price-Lock 100€) y Logística (Todas las provincias). 3) Crear un script de ingesta (scripts/absorb_celebrents_artists.cjs) que lea el JSON crudo de Celebrents y lo parsee al modelo estricto de ArtistCalibration (artistCalibratorTypes.ts). 4) Conectar el frontend a este dataset curado de artistas para que el usuario pueda deslizar/descartar.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/components/artists/NeuralArtistTinderMatch.tsx",
+          "src/app/(public)/artistas/page.tsx",
+          "scripts/absorb_celebrents_artists.cjs",
+          "public/data/artists/artists_canonical.json"
+        ],
+        "macro_script": "1) NeuralArtistTinderMatch.tsx: Renderizar chips de Formato, Slider de Presupuesto y Match Score bidireccional. 2) scripts/absorb_celebrents_artists.cjs: Leer JSON de Celebrents, mapear campos a las 100 dimensiones del proveedor artístico, generar artists_canonical.json. 3) Validar con npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "b104-provider-neural-ui-bodasnet",
+      "title": "B1.04: Interfaz UI Neural 200D para Proveedores B2B/B2G (ProductoraEAR.com) + Mapeo Bodas.net",
+      "block": 1,
+      "status": "PENDING",
+      "description": "DESPLIEGUE FRONTEND DE PROVEEDORES DE SERVICIOS: 1) Crear src/components/providers/NeuralProviderTinderMatch.tsx con diseño S-Class OLED. 2) Añadir filtros por Categoría (Catering, Foto/Vídeo, Carpas), Ticket Mínimo y Tiempos de Entrega. 3) Crear script (scripts/absorb_bodasnet_providers.cjs) para leer los proveedores de Bodas.net extraídos en vault y mapearlos al tipo ProviderServiceCalibration. 4) Conectar la UI para que la pareja/cliente B2G vea el nivel de afinidad con cada catering o fotógrafo basado en el Gasto Mínimo y restricciones.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/components/providers/NeuralProviderTinderMatch.tsx",
+          "src/app/(public)/proveedores-servicios/page.tsx",
+          "scripts/absorb_bodasnet_providers.cjs",
+          "public/data/providers/providers_canonical.json"
+        ],
+        "macro_script": "1) NeuralProviderTinderMatch.tsx: Interfaz interactiva de filtrado de proveedores usando providerServiceMatcher.ts. 2) scripts/absorb_bodasnet_providers.cjs: Procesar vault de proveedores y convertir a array estricto con las 100 dimensiones. 3) Validar con npx tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }

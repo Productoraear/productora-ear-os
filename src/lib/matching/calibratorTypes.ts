@@ -20,7 +20,7 @@ export interface CalibrationDimension {
   pillarName: string;
   label: string;
   type: DimensionType;
-  side: 'couple' | 'provider';
+  side: 'couple' | 'provider' | 'artist' | 'providerService';
   options?: string[];
   min?: number;
   max?: number;
@@ -108,6 +108,77 @@ function defaultDimensionValue(type: DimensionType, opts: DimensionOptions): Dim
   }
 }
 
+/* ────────────────────────────────────────────────────────────────
+   TAXONOMÍA SUPREMA FINCAS (SSOT canónico B1.01)
+   Arrays inmutables aplicados SIMÉTRICAMENTE a Pareja y Finca.
+   Resuelven colisiones de strings con Bodas.net.
+   ──────────────────────────────────────────────────────────────── */
+
+export const CANONICAL_TYPOLOGIES = [
+  'Palacio',
+  'Castillo',
+  'Cortijo',
+  'Masía',
+  'Cigarral',
+  'Invernadero',
+  'Bodega',
+  'Vanguardista',
+  'Casa Rural',
+  'Hacienda',
+  'Pazo',
+  'Monasterio',
+  'Convento',
+  'Ermita',
+  'Mas',
+  'Molino',
+  'Fábrica Industrial',
+  'Loft Urbano',
+  'Hotel Boutique',
+  'Dehesa',
+  'Finca Rústica',
+  'Yate'
+] as const;
+
+export const CANONICAL_ENVIRONMENTS = [
+  'Jardines',
+  'Sierra',
+  'Pinar',
+  'Viñedos',
+  'Ribera',
+  'Costa',
+  'Campo',
+  'Urbano',
+  'Olivos',
+  'Dehesa',
+  'Acantilado',
+  'Isla',
+  'Embalse',
+  'Desierto'
+] as const;
+
+export const CANONICAL_DECORATIVE_STYLES = [
+  'Rústico-Chic',
+  'Provenzal',
+  'Industrial',
+  'Minimalista',
+  'Barroco',
+  'Boho',
+  'Tropical',
+  'Clásico-Elegante',
+  'Mediterráneo',
+  'Nórdico',
+  'Vintage',
+  'Art-Decó',
+  'Moderno',
+  'Romántico',
+  'Étnico',
+  'Glam'
+] as const;
+
+export type CanonicalTypology = (typeof CANONICAL_TYPOLOGIES)[number];
+export type CanonicalEnvironment = (typeof CANONICAL_ENVIRONMENTS)[number];
+export type CanonicalDecorativeStyle = (typeof CANONICAL_DECORATIVE_STYLES)[number];
+
 function build(
   side: 'couple' | 'provider',
   pillar: number,
@@ -139,9 +210,9 @@ function build(
 const BLOQUE_A = [
   /* P1 — Atmósfera y Estilo Visual (10) */
   ...build('couple', 1, 'Atmósfera y Estilo Visual', 1, [
-    ['Tipología Arquitectónica Deseada', 'multi-select', { options: ['Palacio', 'Cortijo', 'Masía', 'Cigarral', 'Invernadero', 'Bodega', 'Vanguardista', 'Casa Rural', 'Hacienda', 'Pazo'], weight: 3, isKnockout: true }],
-    ['Entorno Paisajístico Preferido', 'multi-select', { options: ['Jardines botánicos', 'Sierra/Montaña', 'Pinar/Bosque', 'Viñedos', 'Ribera/Lago', 'Costa/Mar', 'Campo abierto', 'Urbano'], weight: 2 }],
-    ['Estilo Decorativo Dominante', 'multi-select', { options: ['Rústico-Chic', 'Provenzal', 'Industrial', 'Minimalista', 'Barroco', 'Boho', 'Tropical', 'Clásico-Elegante'], weight: 2 }],
+    ['Tipología Arquitectónica Deseada', 'multi-select', { options: [...CANONICAL_TYPOLOGIES] as unknown as string[], weight: 3, isKnockout: true }],
+    ['Entorno Paisajístico Preferido', 'multi-select', { options: [...CANONICAL_ENVIRONMENTS] as unknown as string[], weight: 2 }],
+    ['Estilo Decorativo Dominante', 'multi-select', { options: [...CANONICAL_DECORATIVE_STYLES] as unknown as string[], weight: 2 }],
     ['Plan B Climatológico Exigido', 'select', { options: ['Salón acristalado', 'Carpa fija', 'Nave rehabilitada', 'Invernadero', 'Sin necesidad (solo exterior)'], weight: 2 }],
     ['Libertad de Decoración Personalizada', 'toggle', { weight: 1 }],
     ['Iluminación Nocturna Base Incluida', 'toggle', { weight: 1 }],
@@ -315,10 +386,10 @@ const BLOQUE_B = [
   ]),
   /* P14 — Estilo y Tipología (10) */
   ...build('provider', 14, 'Estilo y Tipología del Espacio', 135, [
-    ['Tipología Arquitectónica', 'multi-select', { options: ['Palacio', 'Cortijo', 'Masía', 'Cigarral', 'Invernadero', 'Bodega', 'Vanguardista', 'Casa Rural', 'Hacienda', 'Pazo'], weight: 3, isKnockout: true }],
-    ['Entorno Paisajístico', 'multi-select', { options: ['Jardines', 'Sierra', 'Pinar', 'Viñedos', 'Ribera', 'Costa', 'Campo', 'Urbano'], weight: 2 }],
+    ['Tipología Arquitectónica', 'multi-select', { options: [...CANONICAL_TYPOLOGIES] as unknown as string[], weight: 3, isKnockout: true }],
+    ['Entorno Paisajístico', 'multi-select', { options: [...CANONICAL_ENVIRONMENTS] as unknown as string[], weight: 2 }],
     ['Plan B Climatológico Disponible', 'select', { options: ['Salón acristalado', 'Carpa fija', 'Nave', 'Invernadero', 'No tiene'], weight: 2 }],
-    ['Estilo Decorativo de la Finca', 'multi-select', { options: ['Rústico-Chic', 'Provenzal', 'Industrial', 'Minimalista', 'Barroco', 'Boho', 'Clásico-Elegante'], weight: 2 }],
+    ['Estilo Decorativo de la Finca', 'multi-select', { options: [...CANONICAL_DECORATIVE_STYLES] as unknown as string[], weight: 2 }],
     ['Superficie Total de Jardines (m²)', 'slider', { min: 100, max: 50000, step: 500, defaultValue: 5000, weight: 1 }],
     ['Iluminación Nocturna Permanente', 'toggle', { weight: 1 }],
     ['Nº de Espacios Diferenciados', 'slider', { min: 1, max: 10, step: 1, defaultValue: 4, weight: 1 }],
@@ -457,7 +528,7 @@ export function getProviderDimensions(): CalibrationDimension[] {
 }
 
 export function getDimensionsByPillar(
-  side: 'couple' | 'provider',
+  side: 'couple' | 'provider' | 'artist' | 'providerService',
   pillar: number
 ): CalibrationDimension[] {
   return CALIBRATION_DIMENSIONS.filter((d) => d.side === side && d.pillar === pillar);

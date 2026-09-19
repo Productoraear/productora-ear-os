@@ -291,14 +291,31 @@ export function detectPresetByTypology(
   roomCount?: number
 ): PresetSlug {
   const t = (typology || '').toLowerCase();
+
+  // 22 TIPOLOGÍAS S-CLASS -> presets canónicos (B1.01)
   if (t.includes('palacio') || t.includes('castillo')) return 'palacio-historico';
-  if (t.includes('cortijo') || t.includes('finca rústica')) return 'cortijo-rural';
-  if (t.includes('masía') || t.includes('masia')) return 'masia-catalana';
+  if (t.includes('cortijo') || t.includes('finca rústica') || t.includes('finca rustica')) return 'cortijo-rural';
+  if (t.includes('masía') || t.includes('masia') || t.includes('mas ')) return 'masia-catalana';
   if (t.includes('vanguardista') || t.includes('moderno') || t.includes('nave')) return 'finca-vanguardista';
   if (t.includes('bodega') || t.includes('viñedo') || t.includes('vinedo')) return 'bodega-vinedo';
-  if (t.includes('invernadero') || t.includes('botánico') || t.includes('botanico')) return 'invernadero-botanico';
+  if (
+    t.includes('invernadero') ||
+    t.includes('botánico') ||
+    t.includes('botanico') ||
+    t.includes('desierto')
+  ) {
+    return 'invernadero-botanico';
+  }
   if (t.includes('hacienda') || t.includes('andaluz')) return 'hacienda-andaluza';
   if (t.includes('pazo') || t.includes('gallego')) return 'pazo-gallego';
+
+  // Ampliación S-Class — 22 tipologías
+  if (t.includes('monasterio') || t.includes('convento') || t.includes('ermita')) return 'palacio-historico';
+  if (t.includes('molino')) return 'cortijo-rural';
+  if (t.includes('fábrica') || t.includes('fabrica') || t.includes('industrial') || t.includes('loft')) return 'finca-vanguardista';
+  if (t.includes('hotel')) return 'finca-vanguardista';
+  if (t.includes('dehesa')) return 'hacienda-andaluza';
+  if (t.includes('yate')) return 'finca-vanguardista';
 
   // Heurística de respaldo por infraestructura
   if (hasOwnKitchen && (roomCount ?? 0) >= 10) return 'hacienda-andaluza';
