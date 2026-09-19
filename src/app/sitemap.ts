@@ -133,6 +133,7 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/fincasparaboda`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/fincas-landing`, 0.88, 'weekly');
       addEntry(`${BASE_URL}/proveedores`, 0.96, 'daily');
+      addEntry(`${BASE_URL}/proveedores-servicios`, 0.96, 'daily');
       addEntry(`${BASE_URL}/simulacion-mariachis`, 0.90, 'weekly');
       addEntry(`${BASE_URL}/estudio-diseno`, 0.85, 'weekly');
 

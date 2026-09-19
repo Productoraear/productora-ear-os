@@ -23,6 +23,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import initialLeads from '@/data/sourcing/vimume_senior_leads.json';
+import { BudgetMatrix } from './components/BudgetMatrix';
 
 interface Lead {
   id: string;
@@ -41,6 +42,7 @@ interface Lead {
 }
 
 export default function SourcingHubPage() {
+  const [activeTab, setActiveTab] = useState<'LEADS' | 'MATRIX'>('LEADS');
   const [leads, setLeads] = useState<Lead[]>(() => {
     return (initialLeads as any[]).map((item, idx) => ({
       id: item.id || `senior-lead-${idx + 1}`,
@@ -143,15 +145,39 @@ export default function SourcingHubPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() => setActiveTab('LEADS')}
+            className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              activeTab === 'LEADS'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+            }`}
+          >
+            📋 Leads & Prospección Senior
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('MATRIX')}
+            className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
+              activeTab === 'MATRIX'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+            }`}
+          >
+            📊 Matriz Predictiva Presupuestos
+          </button>
           <div className="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono text-emerald-400 font-bold flex items-center gap-2">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>{stats.verificados} Líneas Verificadas</span>
           </div>
-          <div className="px-3.5 py-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-xs font-mono text-[#ecb613] font-bold">
-            {stats.ceroKm} Centros &lt;50km (0 € Km)
-          </div>
         </div>
       </div>
+
+      {activeTab === 'MATRIX' ? (
+        <BudgetMatrix />
+      ) : (
+        <>
 
       {/* KPI Cards CATMÍN S-Class */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -435,6 +461,8 @@ export default function SourcingHubPage() {
           </table>
         </div>
       </div>
+      </>
+      )}
     </div>
   );
 }

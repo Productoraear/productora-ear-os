@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ArtistCinematicProfile from "@/components/artists/ArtistCinematicProfile";
+import ArtistNeuralMatcherView from "@/components/artists/ArtistNeuralMatcherView";
 import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
 
 export const metadata: Metadata = {
@@ -118,6 +119,7 @@ export default function ArtistasCinematicPage() {
         specialty="Cantante y Compositor · Rancheras, Boleros y Música de Gala"
         imageUrl="/images/brand/ear_logo_official_diamond.png"
       />
+      <ArtistNeuralMatcherView />
     </main>
   );
 }

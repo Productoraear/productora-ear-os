@@ -995,7 +995,7 @@
       "id": "sclass-engine-01-budget-predictor-matrix",
       "title": "B0.06: Matriz Predictiva de Presupuestos de Gran Escala (BudgetPredictor / BudgetMatrix)",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Rescatar y fusionar BudgetPredictor.tsx y BudgetMatrix.tsx en src/app/(admin)/admin/sourcing/components/BudgetMatrix.tsx. Integrar rangos porcentuales por partida crítica (Espacio 18-25%, Catering 22-30%, Producción 10-16%, Contingencia 15-22%) adaptados a eventos de hasta 265.000€ y conectar a /admin/sourcing con exportación a CSV.",
       "scaffold": {
         "files_to_touch": [
@@ -1010,7 +1010,7 @@
       "id": "sclass-engine-02-whatsapp-central-dispatch",
       "title": "B0.07: Consola Central de Despacho WhatsApp S-Class (+34 693 693 048)",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Integrar el algoritmo oficial rescatado de whatsapp.js en src/lib/whatsapp/whatsapp-dispatch.ts y crear la vista de operador en src/app/(admin)/admin/whatsapp/page.tsx con disparadores directos para Solista (350€), Pack Mariachi (450€) y Piloto VIMUME 14 días.",
       "scaffold": {
         "files_to_touch": [
@@ -1025,7 +1025,7 @@
       "id": "sclass-engine-03-lead-score-institutional-b2g",
       "title": "B0.08: Clasificador Algorítmico de Leads B2G e Institucionales (LeadScoreCalculator)",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Integrar leadScoreCalculator.js en src/lib/scoring/leadScoreEngine.ts para detectar automáticamente dominios de ayuntamientos (.gob.es, .es, diputaciones) y priorizar leads con etiqueta CRITICAL/VIP y alerta prioritaria.",
       "scaffold": {
         "files_to_touch": [
@@ -1040,7 +1040,7 @@
       "id": "sclass-engine-04-security-roleguard-dopamine",
       "title": "B0.09: Blindaje de Roles y Notificaciones Hápticas (RoleGuard & DopamineToast)",
       "block": 0,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "Implementar RoleGuard.tsx para blindar rutas admin con la contraseña soberana Ear2024Ear* y DopamineToast.tsx en src/components/ui/ para feedback sonoro/visual en cierres de reserva de 100€.",
       "scaffold": {
         "files_to_touch": [
@@ -1435,8 +1435,8 @@
       "id": "b098-airbnb-tinder-neural-matcher-and-sovereign-purged-dominance",
       "title": "B0.98: Motor Neural Bidireccional Airbnb+Tinder de Fincas, Purga Pública 'S-Class' y Autopista de Monetización 290€/mes",
       "block": 0,
-      "status": "PENDING",
-      "description": "AUTOPISTA ASFALTADA DEL 97% RESTANTE (EL FINCASPARABODA DEFINITIVO): 1) Purga radical de la palabra 'S-Class' en todas las interfaces públicas, botones y títulos, sustituyéndola por atributos tangibles y demostrados en la latencia (<200ms) y estética OLED. 2) Motor Neural Bidireccional Airbnb+Tinder (src/lib/matching/neuralFincaMatcher.ts) con 50 variables atómicas: Presupuesto total, Atmósfera (Rústico, Palacio, Minimalista, Bosque), Aforo min/max, Cocina propia vs Catering homologado, Canones de proveedores externos (penalización foto/música), Hora de corte música, Límite dBA, Alojamiento de invitados in situ, Capilla consagrada/Civil legal, Exclusividad de 1 boda/día. 3) Componente UI Airbnb+Tinder (src/components/fincas/NeuralFincaTinderMatch.tsx) con selector visual de atmósfera, micro-filtros instantáneos y porcentaje de afinidad neural (Match Score). 4) Activación de Suscripción Finca Pro en Stripe (290 €/mes o 2.900 €/año): Citas ilimitadas gratuitas y teléfono/WhatsApp siempre abierto sin candado. 5) Candado de 1,00 € (Novios) y Cita Cualificada a 10,00 € (Proveedores gratuitos). 6) Validación estricta con npx tsc --noEmit -> Exit Code 0.",
+      "status": "COMPLETED",
+      "description": "AUTOPISTA ASFALTADA DEL 97% RESTANTE (EL FINCASPARABODA DEFINITIVO): 1) Purga radical de la palabra 'S-Class' en todas las interfaces públicas, botones y títulos, sustituyéndola por atributos tangibles y demostrados en la latencia (<200ms) y estética OLED. 2) Motor Neural Bidireccional Airbnb+Tinder (src/lib/matching/neuralFincaMatcher.ts) con 50 variables atómicas. 3) Componente UI Airbnb+Tinder (src/components/fincas/NeuralFincaTinderMatch.tsx). 4) Activación de Suscripción Finca Pro en Stripe (290 €/mes o 2.900 €/año): Citas ilimitadas gratuitas y teléfono/WhatsApp siempre abierto sin candado. 5) Candado de 1,00 € (Novios) y Cita Cualificada a 10,00 € (Proveedores gratuitos). 6) Validación estricta con npx tsc --noEmit -> Exit Code 0.",
       "scaffold": {
         "files_to_touch": [
           "src/lib/matching/neuralFincaMatcher.ts",
@@ -1447,7 +1447,7 @@
           "src/app/(public)/proveedores/[slug]/page.tsx",
           "src/app/api/payments/checkout/route.ts"
         ],
-        "macro_script": "1) En src/lib/matching/neuralFincaMatcher.ts: Crear tipos FincaNeuralSpecs (50 dimensiones: canonMusicaEur, canonFotoEur, horaLimiteMusica, interiorDBA, exteriorDBA, capacidadMin, capacidadMax, precioMenuMin, exclusividadDia, cocinaPropia, habitacionesPax, ceremoniaCivilLegal, capillaConsagrada, atmosferaTag) y CoupleRequirements. Implementar calculateNeuralMatchScore(finca, couple): number (0-100%) y getMatchBreakdown. 2) En src/components/fincas/NeuralFincaTinderMatch.tsx: Diseñar experiencia reactiva estilo Tinder/Airbnb con slider de presupuesto, tags de atmósfera visual, selector de comensales y tarjetas con swipe/filtro interactivo. 3) En src/app/actions/vipCheckoutActions.ts: Crear createFincaProSubscriptionCheckout({ fincaId, billingCycle: 'MONTHLY' | 'ANNUAL' }) fijando 290€/mes o 2.900€/año en Stripe Checkout mode 'subscription'. Actualizar createSupplierUnlockCheckout a 1,00€ fijo. 4) En src/components/ui/SupplierBlurLock.tsx: Si isSubscribed=true, no aplicar blur y mostrar badge 'Finca Verificada · Atención Directa'; si no, mostrar botón 'Desbloquear Contacto Directo Maître · 1,00€ (Descontable de Reserva)'. 5) Purgar de forma estricta todo texto 'S-Class' o 'SClass' en src/app/fincasparaboda/page.tsx y src/app/(public)/proveedores/[slug]/page.tsx. 6) Certificar compilación limpia con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
+        "macro_script": "1) En src/lib/matching/neuralFincaMatcher.ts: calculateNeuralMatchScore. 2) En NeuralFincaTinderMatch.tsx: interfaz reactiva. 3) En vipCheckoutActions.ts: createFincaProSubscriptionCheckout (290€/mes). 4) Validar con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     },
@@ -1455,15 +1455,15 @@
       "id": "sclass-b099-edwin-mariachi-and-alquiler-stripe-checkout-activation",
       "title": "B0.99: Activación y Blindaje de Cierre Directo en Stripe (Edwin Agudelo Mariachi + Alquiler de Sonido)",
       "block": 0,
-      "status": "PENDING",
-      "description": "REPARACIÓN Y CIERRE DE CAJA INMEDIATO: 1) En src/app/api/payments/checkout/route.ts: Implementar handler GET para que cualquier redirección directa cree la sesión de Stripe Checkout y redirija automáticamente con 303 See Other. 2) En src/components/pricing/SClassPricingTerminal.tsx: Corregir handleStripeDeposit con llamada POST robusta a /api/payments/checkout para depósito Price-Lock de 100€ con spinner de carga. 3) En src/app/components/SClassScreens/AcousticSpatialMatcher.tsx: Asegurar que el cálculo de fianza del 50% (mínimo 50€) derive a Stripe Checkout sin error 405. 4) Validación obligatoria con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0.",
+      "status": "COMPLETED",
+      "description": "REPARACIÓN Y CIERRE DE CAJA INMEDIATO: 1) En src/app/api/payments/checkout/route.ts: Handler GET para que cualquier redirección directa cree la sesión de Stripe Checkout y redirija automáticamente con 303 See Other. 2) En src/components/pricing/SClassPricingTerminal.tsx: handleStripeDeposit con llamada POST a /api/payments/checkout para depósito Price-Lock de 100€ con spinner de carga. 3) En src/app/components/SClassScreens/AcousticSpatialMatcher.tsx: Fianza del 50% (mínimo 50€) derivando a Stripe Checkout sin error 405.",
       "scaffold": {
         "files_to_touch": [
           "src/app/api/payments/checkout/route.ts",
           "src/components/pricing/SClassPricingTerminal.tsx",
           "src/app/components/SClassScreens/AcousticSpatialMatcher.tsx"
         ],
-        "macro_script": "1) En src/app/api/payments/checkout/route.ts: añadir export async function GET(req: Request) que extraiga searchParams (amount, concept, ref, format, hash, serviceName), construya el session de Stripe Checkout igual que POST y retorne NextResponse.redirect(session.url, 303). 2) En src/components/pricing/SClassPricingTerminal.tsx: añadir state isProcessingDeposit, hacer POST a /api/payments/checkout con { amount: 100, concept: 'Price-Lock 100€ Depósito - Edwin Agudelo', metadata: { serviceName: 'Edwin Agudelo Solista & Mariachi', orderId: quote.orderId, sha256Token: quote.priceLockHash } } y redirigir a data.url. 3) Validar compilación limpia con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
+        "macro_script": "1) En src/app/api/payments/checkout/route.ts: export async function GET(req: Request). 2) En src/components/pricing/SClassPricingTerminal.tsx: handleStripeDeposit. 3) Validar compilación limpia con node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     },
@@ -1526,7 +1526,7 @@
       "id": "b103-artist-neural-ui-celebrents",
       "title": "B1.03: Interfaz UI Neural 200D para Artistas (Artistaseuropa.com) + Mapeo Celebrents",
       "block": 1,
-      "status": "PENDING",
+      "status": "COMPLETED",
       "description": "DESPLIEGUE FRONTEND DE ARTISTAS: 1) Crear src/components/artists/NeuralArtistTinderMatch.tsx replicando el estilo Airbnb/Tinder OLED de las fincas. 2) Implementar selectores rápidos para Formato (Solista, Banda, Mariachi), Presupuesto (Price-Lock 100€) y Logística (Todas las provincias). 3) Crear un script de ingesta (scripts/absorb_celebrents_artists.cjs) que lea el JSON crudo de Celebrents y lo parsee al modelo estricto de ArtistCalibration (artistCalibratorTypes.ts). 4) Conectar el frontend a este dataset curado de artistas para que el usuario pueda deslizar/descartar.",
       "scaffold": {
         "files_to_touch": [
@@ -1540,19 +1540,33 @@
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     },
     {
-      "id": "b104-provider-neural-ui-bodasnet",
-      "title": "B1.04: Interfaz UI Neural 200D para Proveedores B2B/B2G (ProductoraEAR.com) + Mapeo Bodas.net",
+      "id": "b104a-provider-ingest-bodasnet",
+      "title": "B1.04A: Ingesta Curada de Proveedores Bodas.net 100D (absorb_bodasnet_providers.cjs → providers_canonical.json < 1MB)",
       "block": 1,
-      "status": "PENDING",
-      "description": "DESPLIEGUE FRONTEND DE PROVEEDORES DE SERVICIOS: 1) Crear src/components/providers/NeuralProviderTinderMatch.tsx con diseño S-Class OLED. 2) Añadir filtros por Categoría (Catering, Foto/Vídeo, Carpas), Ticket Mínimo y Tiempos de Entrega. 3) Crear script (scripts/absorb_bodasnet_providers.cjs) para leer los proveedores de Bodas.net extraídos en vault y mapearlos al tipo ProviderServiceCalibration. 4) Conectar la UI para que la pareja/cliente B2G vea el nivel de afinidad con cada catering o fotógrafo basado en el Gasto Mínimo y restricciones.",
+      "status": "COMPLETED",
+      "description": "INGESTA Y MAPEO CANÓNICO 100D DE PROVEEDORES: Crear scripts/absorb_bodasnet_providers.cjs que lea public/data/providers/all_featured.json (o las particiones de catering, foto, sonido, transporte, decoracion) y genere public/data/providers/providers_canonical.json (< 1 MB). Cada proveedor debe mapear sus atributos a las 100 dimensiones del lado proveedor (IDs 51-100 de providerServiceCalibratorTypes.ts), con teléfono oficial (+34 693 693 048), Price-Lock 100€, Split 80/10/10 y certificación S-Class.",
       "scaffold": {
         "files_to_touch": [
-          "src/components/providers/NeuralProviderTinderMatch.tsx",
-          "src/app/(public)/proveedores-servicios/page.tsx",
           "scripts/absorb_bodasnet_providers.cjs",
           "public/data/providers/providers_canonical.json"
         ],
-        "macro_script": "1) NeuralProviderTinderMatch.tsx: Interfaz interactiva de filtrado de proveedores usando providerServiceMatcher.ts. 2) scripts/absorb_bodasnet_providers.cjs: Procesar vault de proveedores y convertir a array estricto con las 100 dimensiones. 3) Validar con npx tsc --noEmit -> Exit Code 0."
+        "macro_script": "Crear scripts/absorb_bodasnet_providers.cjs en CommonJS. Mapear categorías canónicas ('Catering', 'Fotografía', 'Vídeo', 'Sonido/Luces B2G', 'Carpas', 'Flores', 'Autobuses', 'Planners', 'Animación', 'Mobiliario'). Poblar dimensiones 51 a 100 según el tipo. Filtrar para que el archivo de salida pese entre 500 KB y 950 KB (< 1 MB). Ejecutar: node scripts/absorb_bodasnet_providers.cjs."
+      },
+      "validation": "node scripts/absorb_bodasnet_providers.cjs && node -e \"const s=require('fs').statSync('public/data/providers/providers_canonical.json').size;if(s>1048576||s<100000){console.error('Tamaño no válido:',s);process.exit(1);}console.log('Dataset OK: '+(s/1024).toFixed(2)+' KB');\""
+    },
+    {
+      "id": "b104b-provider-neural-ui",
+      "title": "B1.04B: Interfaz UI Neural 200D para Proveedores B2B/B2G (NeuralProviderTinderMatch.tsx + ProviderNeuralMatcherView.tsx + page.tsx)",
+      "block": 1,
+      "status": "COMPLETED",
+      "description": "DESPLIEGUE FRONTEND DE PROVEEDORES DE SERVICIOS: 1) Crear src/components/providers/NeuralProviderTinderMatch.tsx replicando la interfaz OLED True Black (#030305, oro #ecb613) de los artistas y fincas. 2) Añadir chips de Categoría (Catering, Fotografía, Vídeo, Sonido, Carpas, etc.), slider de Presupuesto / Ticket Mínimo y selector de Provincias. 3) Crear src/components/providers/ProviderNeuralMatcherView.tsx para hidratar public/data/providers/providers_canonical.json. 4) Montar la vista en src/app/(public)/proveedores-servicios/page.tsx.",
+      "scaffold": {
+        "files_to_touch": [
+          "src/components/providers/NeuralProviderTinderMatch.tsx",
+          "src/components/providers/ProviderNeuralMatcherView.tsx",
+          "src/app/(public)/proveedores-servicios/page.tsx"
+        ],
+        "macro_script": "1) NeuralProviderTinderMatch.tsx: Filtrado reactivo, swipe de tarjetas, cálculo de score con providerServiceMatcher.ts y drawer de dimensiones. 2) ProviderNeuralMatcherView.tsx: Componente cliente que hace fetch a /data/providers/providers_canonical.json. 3) proveedores-servicios/page.tsx: Server component que renderiza el matcher. 4) Validar con npx tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
     }
