@@ -15,34 +15,46 @@ function getPrismaClient() {
   return prisma;
 }
 
-const FINCAS_HOMOLOGADAS_ITEMS = SCLASS_12_FINCAS_HOMOLOGADAS.map((f, idx) => ({
-  id: f.id,
-  name: f.name,
-  slug: f.slug,
-  category: 'finca',
-  province: f.provincia,
-  address: `${f.location}, España`,
-  phone: '+34 693 693 048',
-  telephone: '+34 693 693 048',
-  hasDirectPhone: true,
-  phoneType: 'Oficial S-Class',
-  img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
-  imageUrls: [
-    'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop'
-  ],
-  gallery: [
-    'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop'
-  ],
-  basePrice: 1200 + (idx * 250),
-  price: `${1200 + (idx * 250)} €`,
-  rating: 5.0,
-  reviews: 32 + idx * 4,
-  description: f.description,
-  services_list: f.espaciosDisponibles,
-  capacidadMaxPax: f.capacidadMaxPax
-}));
+const UNIQUE_HD_FINCA_IMAGES = [
+  'https://cdn0.bodas.net/vendor/0530/3_2/1280/jpg/jardines-la-cartuja-grupo-la-cartuja-16_1_530.jpeg',
+  'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop'
+];
+
+const FINCAS_HOMOLOGADAS_ITEMS = SCLASS_12_FINCAS_HOMOLOGADAS.map((f, idx) => {
+  const selectedImg = UNIQUE_HD_FINCA_IMAGES[idx % UNIQUE_HD_FINCA_IMAGES.length];
+  return {
+    id: f.id,
+    name: f.name,
+    slug: f.slug,
+    category: 'finca',
+    province: f.provincia,
+    address: `${f.location}, España`,
+    phone: '+34 693 693 048',
+    telephone: '+34 693 693 048',
+    hasDirectPhone: true,
+    phoneType: 'Oficial S-Class',
+    img: selectedImg,
+    imageUrls: [selectedImg],
+    gallery: [selectedImg],
+    basePrice: 1200 + (idx * 250),
+    price: `${1200 + (idx * 250)} €`,
+    rating: 5.0,
+    reviews: 32 + idx * 4,
+    description: f.description,
+    services_list: f.espaciosDisponibles,
+    capacidadMaxPax: f.capacidadMaxPax
+  };
+});
 
 // Subcategory keyword mappings for deep domain search
 const SUBCATEGORY_KEYWORD_MAP: Record<string, string[]> = {
@@ -274,12 +286,36 @@ async function queryStaticProviders(options: {
     );
   }
 
-  // 3. Filtro por subcategoría semántica
+  // 3. Filtro por subcategoría semántica (Estricto por gremioTag)
   if (subcategory && subcategory !== 'all') {
-    const keywords = SUBCATEGORY_KEYWORD_MAP[subcategory.toLowerCase()] || [subcategory.toLowerCase()];
+    const subcatLower = subcategory.toLowerCase().trim();
+    const keywords = SUBCATEGORY_KEYWORD_MAP[subcatLower] || [subcatLower];
+
     list = list.filter((p) => {
-      const text = `${p.name || ''} ${p.description || ''} ${p.category || ''}`.toLowerCase();
-      return keywords.some((k) => text.includes(k));
+      // Si el registro ya fue etiquetado quirúrgicamente con gremioTag
+      if (p.gremioTag) {
+        return p.gremioTag.toLowerCase() === subcatLower;
+      }
+
+      // De lo contrario, comprobación estricta en el nombre y categoría
+      const nameLower = (p.name || '').toLowerCase();
+      const catLower = (p.category || '').toLowerCase();
+      const descLower = (p.description || '').toLowerCase();
+
+      if (subcatLower === 'mariachi') {
+        return /mariachi|ranchera|charro/i.test(nameLower) || /mariachi/i.test(descLower);
+      }
+      if (subcatLower === 'dj') {
+        return /\b(dj|djs|discomovil|discomóvil|disc-jockey)\b/i.test(nameLower) || /\b(dj|discomovil)\b/i.test(catLower);
+      }
+      if (subcatLower === 'flamenco') {
+        return /flamenco|rumba|sevillana|rociero/i.test(nameLower) || /flamenco/i.test(descLower);
+      }
+      if (subcatLower === 'cuerdas') {
+        return /cuarteto|violín|violin|cuerda|chelo|soprano|tenor lírico|ópera/i.test(nameLower);
+      }
+
+      return keywords.some((k) => nameLower.includes(k));
     });
   }
 

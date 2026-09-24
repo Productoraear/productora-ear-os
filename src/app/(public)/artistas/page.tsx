@@ -1,21 +1,22 @@
 import type { Metadata } from "next";
 import ArtistCinematicProfile from "@/components/artists/ArtistCinematicProfile";
 import ArtistNeuralMatcherView from "@/components/artists/ArtistNeuralMatcherView";
+import ArtistasNationalCatalogClient from "@/app/artistas/ArtistasNationalCatalogClient";
 import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
 
 export const metadata: Metadata = {
-  title: "Edwin Agudelo · Cantante y Compositor · Tarifas y Formatos Oficiales",
+  title: "Directorio Nacional de Artistas & Shows en Directo (5.359 Auditados) · Productora EAR",
   description:
-    "Contratación directa de Edwin Agudelo: Show Solista Premium (350€ con sonido Bose 2.000W, sombreros, fotos y ramo) y Agrupaciones en vivo de 6, 9 y 13 músicos (desde 600€). Trato directo desde Méntrida (Toledo). Reserva de fecha con depósito de 100 €.",
+    "Catálogo nacional de música en directo: Edwin Agudelo (Solista Premium 350€), Mariachis (6, 9 y 13 músicos), DJs en vivo, Saxofonistas y Grupos de Versiones. Sonido profesional Bose y reserva directa con 100 € de depósito.",
   keywords: [
+    "contratar artistas bodas",
     "Edwin Agudelo",
     "contratar mariachi Madrid",
     "contratar mariachi Toledo",
+    "djs bodas madrid",
     "solista rancheras Madrid",
-    "solista premium 350",
-    "mariachi 6 musicos",
-    "mariachi bodas Madrid",
-    "musica mexicana en vivo",
+    "grupos versiones bodas",
+    "musica en vivo bodas",
     "Productora EAR",
     "Méntrida Toledo",
   ],
@@ -25,23 +26,23 @@ export const metadata: Metadata = {
     locale: "es_ES",
     url: "https://productoraear.com/artistas",
     siteName: "Productora EAR",
-    title: "Edwin Agudelo · Música en Directo para Bodas y Celebraciones",
+    title: "Directorio Nacional de Artistas & Shows en Directo · Productora EAR",
     description:
-      "Cantante y compositor. Show Solista Premium 350€ y Agrupaciones Mariachi en vivo (6, 9 y 13 integrantes). Sonido profesional Bose y reserva directa de fecha.",
+      "5.359 artistas y formaciones musicales auditadas. Show Solista Premium 350€, Mariachi en vivo, DJs y Grupos. Sonido profesional Bose F1 812.",
     images: [
       {
         url: "https://productoraear.com/images/brand/ear_logo_official_diamond.png",
         width: 1200,
         height: 630,
-        alt: "Edwin Agudelo Productora EAR",
+        alt: "Productora EAR Catálogo de Artistas",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Edwin Agudelo · Cantante y Compositor · Tarifas Oficiales",
+    title: "Directorio Nacional de Artistas & Shows · Productora EAR",
     description:
-      "Show Solista Premium (350€) y Mariachi en vivo de 6, 9 y 13 músicos. Reserva directa con 100 € de depósito.",
+      "Show Solista Premium (350€), Mariachi en vivo, DJs y Grupos de Versiones. Reserva directa con 100 € de depósito.",
     images: ["https://productoraear.com/images/brand/ear_logo_official_diamond.png"],
   },
 };
@@ -108,12 +109,13 @@ const artistSchema = {
 
 export default function ArtistasCinematicPage() {
   return (
-    <main>
+    <main className="w-full max-w-full overflow-x-hidden">
       {/* Schema.org estructurado JSON-LD con los formatos oficiales */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(artistSchema) }}
       />
+      <ArtistasNationalCatalogClient />
       <ArtistCinematicProfile
         name="Edwin Agudelo"
         specialty="Cantante y Compositor · Rancheras, Boleros y Música de Gala"
@@ -123,3 +125,4 @@ export default function ArtistasCinematicPage() {
     </main>
   );
 }
+

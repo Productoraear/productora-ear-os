@@ -49,107 +49,81 @@ const MENU_FOLDERS: MenuFolder[] = [
     href: '/fincas',
     subitems: [
       {
-        title: 'Directorio Nacional (9.559 Fincas)',
-        desc: 'Buscador ultrarrápido por provincia con teléfonos reales',
+        title: 'Directorio Unificado de Fincas y Espacios (9.559 Espacios)',
+        desc: 'Catálogo nacional S-Class con Motor Omni-Builder 2030 en tiempo real y reserva Price-Lock de 100 €',
         href: '/fincas',
-        badge: '9.559 Fincas',
+        badge: '9.559 Espacios',
         icon: Building2
-      },
-      {
-        title: '12 Fincas Homologadas S-Class',
-        desc: 'Espacios auditados con acometida CETAC y sonometría',
-        href: '/fincas?tab=homologadas',
-        badge: 'Certificadas',
-        icon: ShieldCheck
-      },
-      {
-        title: 'Fincas para Boda (Catálogo pSEO)',
-        desc: 'Directorio por provincias con semáforo de ocupación',
-        href: '/fincasparaboda',
-        icon: Heart
       }
     ]
   },
   {
     id: 'artistas',
-    label: 'Artistas',
+    label: 'Artistas & Shows',
     href: '/artistas',
     subitems: [
       {
-        title: 'Edwin Agudelo · Solista Premium',
-        desc: 'Show 1h (2 pases), Bose 2.000W, sombreros charros, flores y fotos',
-        href: '/reservar/solista',
-        badge: '350 €',
+        title: 'Directorio Nacional de Artistas & Shows (5.359 Auditados)',
+        desc: 'Catálogo de música en directo: Solistas, Mariachis, DJs, Bandas y Lírico con Rider Bose F1',
+        href: '/artistas',
+        badge: '5.359 Artistas',
         icon: Music
       },
       {
+        title: 'Edwin Agudelo · Solista Premium (350 €)',
+        desc: 'Show 1h (2 pases), Bose 2.000W, sombreros charros, flores y fotos',
+        href: '/reservar/solista',
+        badge: '350 €',
+        icon: Sparkles
+      },
+      {
         title: 'Mariachis & Cuartetos de Gala',
-        desc: 'Trío (450€), Quinteto Imperial (750€) o Monumental (1.300€)',
+        desc: 'Packs Trío (450€), Quinteto Imperial (750€) o Monumental (1.300€)',
         href: '/simulacion-mariachis',
         badge: 'Packs',
         icon: Users
-      },
-      {
-        title: 'Cotizador Rápido con Kilometraje',
-        desc: 'Cálculo transparente desde Méntrida con reserva de 100 €',
-        href: '/reservar/solista',
-        badge: 'Price-Lock',
-        icon: Lock
       }
     ]
   },
   {
-    id: 'produccion',
-    label: 'Alquiler & Eventos',
+    id: 'sonido',
+    label: 'Audiovisuales & Equipamiento',
     href: '/alquiler-equipos-sonido-audiovisuales',
     subitems: [
       {
-        title: 'Alquiler Sonido Bose 2.000W',
-        desc: 'Sistemas F1 Model 812 y S1 Pro con técnico de sala',
+        title: 'Alquiler Sonido Bose F1 812 & S1 Pro',
+        desc: 'Equipos de alta presión sonora con calibración acústica',
         href: '/alquiler-equipos-sonido-audiovisuales',
         badge: 'Bose F1',
         icon: Radio
-      },
-      {
-        title: 'Bodas & Ceremonias S-Class',
-        desc: 'Producción de alta costura nupcial y sonido en vivo',
-        href: '/eventos?tipo=bodas',
-        icon: Heart
-      },
-      {
-        title: 'Ayuntamientos & B2G',
-        desc: 'Licitaciones oficiales menores de 15.000 € (Art. 118 LCSP)',
-        href: '/ayuntamientos',
-        badge: 'B2G',
-        icon: Building2
       }
     ]
   },
   {
     id: 'proveedores',
-    label: 'Proveedores',
-    href: '/proveedores',
+    label: 'Catering & Servicios',
+    href: '/proveedores-servicios',
     subitems: [
       {
-        title: 'S-Class Pro • Portal B2B Proveedores',
-        desc: 'Cockpit soberano B2B: CRM 223 solicitudes y facturación',
-        href: '/pro',
-        badge: 'B2B Pro',
+        title: 'Directorio Canónico de Proveedores Verificados',
+        desc: 'Catering de Autor, Fotografía, Vídeo, Decoración y Planners',
+        href: '/proveedores-servicios',
+        badge: 'Catálogo Verificado',
         icon: Sliders
-      },
+      }
+    ]
+  },
+  {
+    id: 'vimume',
+    label: 'VIMUME Senior & B2G',
+    href: '/vimume',
+    subitems: [
       {
-        title: 'Directorio Completo 65.000 Nodos',
-        desc: 'Música, fotógrafos, catering, flores y transporte',
-        href: '/proveedores',
-        badge: '65k Nodos',
-        icon: ArrowRight
-      },
-      {
-        title: 'Red de Afiliados & Partners B2B',
-        desc: 'Fincas, planners y comisiones del 10% auto-facturables',
-        href: '/afiliados',
-        badge: 'Afiliación',
-        icon: Users
+        title: 'Impacto Social VIMUME & Deducción Fiscal',
+        desc: 'Neuro-musicoterapia en residencias mayores (Hasta 80% Deducible Ley 49/2002) y Licitaciones B2G',
+        href: '/vimume',
+        badge: '80% Deducible',
+        icon: Heart
       }
     ]
   }

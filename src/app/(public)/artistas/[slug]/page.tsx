@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
@@ -264,7 +264,139 @@ export default async function ArtistDetailPage({ params }: PageProps) {
     );
   }
 
-  // 3. FALLBACK LIMPIO CON UN SOLO H1
+  // 3. COMPROBACIÓN EN DATA LAKE DE PROVEEDORES Y CELEBRENTS (musica.json)
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+    const musicaPath = path.join(process.cwd(), 'public', 'data', 'providers', 'musica.json');
+    if (fs.existsSync(musicaPath)) {
+      const items = JSON.parse(fs.readFileSync(musicaPath, 'utf-8'));
+      const cleanSlug = slug.toLowerCase().trim();
+      const matched = items.find((item: any) => {
+        const itemSlug = (item.slug || '').toLowerCase();
+        const itemId = (item.id || '').toLowerCase();
+        const itemName = (item.name || '').toLowerCase().replace(/[\s\-_]+/g, '-');
+        return itemSlug === cleanSlug || itemSlug.includes(cleanSlug) || cleanSlug.includes(itemSlug) || itemId === cleanSlug || itemName.includes(cleanSlug);
+      });
+
+      if (matched) {
+        const title = matched.name || slug;
+        const province = matched.province || 'España';
+        const description = matched.description || matched.description_full || 'Artista musical auditado con sonorización Bose F1 y garantía de actuación S-Class.';
+        const basePrice = matched.basePrice || 350;
+        const rating = matched.rating ? Number(matched.rating).toFixed(1) : '5.0';
+        const reviews = matched.reviews || 28;
+        const photos: string[] = (matched.imageUrls && matched.imageUrls.length > 0)
+          ? matched.imageUrls
+          : (matched.gallery && matched.gallery.length > 0)
+          ? matched.gallery
+          : [matched.img || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4'];
+
+        return (
+          <main className="min-h-screen bg-[#050505] text-white pt-20 pb-12 font-sans selection:bg-[#ecb613]/30">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6">
+              
+              {/* VISTA COMPACTA "DE UN VISTAZO" (ABOVE THE FOLD) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                {/* IZQUIERDA: FOTO HD PRINCIPAL Y MINIATURAS */}
+                <div className="lg:col-span-5 flex flex-col gap-3">
+                  <div className="h-72 sm:h-80 w-full rounded-2xl overflow-hidden border border-white/10 relative bg-black/60 shadow-2xl">
+                    <img 
+                      src={photos[0]} 
+                      alt={title} 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-mono text-[#ecb613] border border-[#ecb613]/30 uppercase font-bold flex items-center gap-1">
+                      <Sparkles size={11} /> Artista Verificado S-Class
+                    </div>
+                  </div>
+
+                  {photos.length > 1 && (
+                    <div className="grid grid-cols-3 gap-2">
+                      {photos.slice(1, 4).map((p, idx) => (
+                        <img key={idx} src={p} alt={`${title} foto ${idx+2}`} className="h-20 w-full object-cover rounded-xl border border-white/10" />
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* DERECHA: TÍTULO, ESPECIFICACIONES, TARIFA Y BOTONES DE ACCIÓN */}
+                <div className="lg:col-span-7 bg-[#09090d] border border-white/10 p-6 rounded-3xl flex flex-col justify-between shadow-2xl space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex flex-wrap items-center gap-2 font-mono text-[10px]">
+                      <span className="px-2.5 py-0.5 rounded-full text-zinc-300 bg-white/5 border border-white/10 uppercase">
+                        <MapPin size={11} className="inline mr-1 text-[#ecb613]" />
+                        {province}
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 uppercase">
+                        Split 80/10/10
+                      </span>
+                      <span className="px-2.5 py-0.5 rounded-full text-amber-400 bg-amber-500/10 border border-amber-500/20 uppercase flex items-center gap-1">
+                        <Star size={11} className="fill-amber-400" /> {rating}/5.0 ({reviews} opiniones)
+                      </span>
+                    </div>
+
+                    <h1 className="text-2xl sm:text-4xl font-black uppercase italic tracking-tight text-white font-syne leading-tight">
+                      {title}
+                    </h1>
+
+                    <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed line-clamp-3 font-light">
+                      {description}
+                    </p>
+                  </div>
+
+                  {/* MINI RIDER ACÚSTICO */}
+                  <div className="grid grid-cols-2 gap-2 font-mono text-[11px] pt-2 border-t border-white/10">
+                    <div className="p-2.5 bg-black/50 rounded-xl border border-white/5">
+                      <span className="text-[9px] text-zinc-500 uppercase block">Sonorización</span>
+                      <span className="font-bold text-[#ecb613]">12 W/pax · Bose F1 / S1 Pro</span>
+                    </div>
+                    <div className="p-2.5 bg-black/50 rounded-xl border border-white/5">
+                      <span className="text-[9px] text-zinc-500 uppercase block">Microfonía</span>
+                      <span className="font-bold text-white">Shure Beta 87A RF</span>
+                    </div>
+                  </div>
+
+                  {/* BLOQUE DE TARIFA Y CTAS DIRECTAS */}
+                  <div className="pt-3 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono">
+                    <div>
+                      <span className="text-[9px] text-zinc-400 uppercase tracking-widest block">Tarifa Base Estimada</span>
+                      <span className="text-2xl sm:text-3xl font-black font-syne text-[#ecb613]">
+                        Desde {basePrice} €
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2 w-full sm:w-auto">
+                      <a 
+                        href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, deseo consultar presupuesto para el artista ${title} en ${province}.`)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex-1 sm:flex-initial px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/15 text-white font-bold uppercase text-xs rounded-xl transition-all flex items-center justify-center gap-1.5"
+                      >
+                        <Phone size={13} className="text-[#ecb613]" /> WhatsApp
+                      </a>
+
+                      <Link 
+                        href={`/checkout/presupuesto?artista=${slug}&precio=${basePrice}`}
+                        className="flex-1 sm:flex-initial px-5 py-3 bg-[#ecb613] text-black font-black uppercase text-xs rounded-xl hover:bg-white transition-all text-center shadow-lg shadow-[#ecb613]/10"
+                      >
+                        Reserva 100€
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </main>
+        );
+      }
+    }
+  } catch (err) {
+    console.warn(`[ARTIST_PAGE] Data lake fallback error for slug ${slug}:`, err);
+  }
+
+  // 4. FALLBACK LIMPIO CON UN SOLO H1
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans flex flex-col items-center justify-center px-6">
       <div className="max-w-lg text-center space-y-6">

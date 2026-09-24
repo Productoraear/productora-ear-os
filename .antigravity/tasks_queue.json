@@ -1569,6 +1569,21 @@
         "macro_script": "1) NeuralProviderTinderMatch.tsx: Filtrado reactivo, swipe de tarjetas, cálculo de score con providerServiceMatcher.ts y drawer de dimensiones. 2) ProviderNeuralMatcherView.tsx: Componente cliente que hace fetch a /data/providers/providers_canonical.json. 3) proveedores-servicios/page.tsx: Server component que renderiza el matcher. 4) Validar con npx tsc --noEmit -> Exit Code 0."
       },
       "validation": "node node_modules/typescript/bin/tsc --noEmit -> Exit Code 0"
+    },
+    {
+      "id": "b105-jardines-la-cartuja-grand-slam",
+      "title": "B1.05: Landing Page estilo Alex Hormozi para Jardines La Cartuja y Comparador 1:1 de HTML Original",
+      "block": 1,
+      "status": "COMPLETED",
+      "description": "REVISIÓN Y TRANSFORMACIÓN DE HTMLS DE PROVEEDORES ÚNICOS: Seleccionado el proveedor Jardines La Cartuja (vault/proveedores_html_indexados/Fincas_Espacios/jardines-la-cartuja--e530.html). Extracción purificada bit-a-bit (170 opiniones 4.9*, 60 fotos reales, salones Ara Christi/Invernadero, aforo 400 pax, barra libre 06:00 AM, parking, FAQs). Construido sistema de vista dividida en paralelo 1:1 y Landing Page estilo Alex Hormozi con doble enfoque (Parejas B2C / Proveedor B2B Match Perfecto), paleta de colores personalizada de Trello + OLED S-Class, calculadora dinámica de menú e integración de depósito inmutable de 100€ Stripe Price-Lock (SHA-256).",
+      "scaffold": {
+        "files_to_touch": [
+          "src/components/fincas/JardinesLaCartujaGrandSlam.tsx",
+          "src/app/fincas/jardines-la-cartuja/page.tsx"
+        ],
+        "macro_script": "1) Crear JardinesLaCartujaGrandSlam.tsx con conmutador de vista (Dividida 1:1, Landing Hormozi, HTML Original) y selector de enfoque (Pareja B2C / Match Perfecto B2B). 2) Incorporar paleta personalizada Trello (#030305, oro #ecb613, esmeralda #10b981, rubí #FF2B44). 3) Stack de Valor completa estilo Hormozi + Calculadora dinámica de menú/pax + Depósito Price-Lock 100€ Stripe + Transparencia Split 80/10/10 VIMUME. 4) Crear la ruta Next.js /fincas/jardines-la-cartuja/page.tsx. 5) Validar npx tsc --noEmit -> Exit Code 0."
+      },
+      "validation": "npx tsc --noEmit -> Exit Code 0"
     }
   ]
 }

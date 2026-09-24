@@ -344,11 +344,26 @@ export default function FincasNationalCatalogClient() {
   );
 }
 
+const FALLBACK_FINCA_IMAGES = [
+  'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1200&auto=format&fit=crop'
+];
+
 function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => void }) {
   const [imgError, setImgError] = useState(false);
-  const defaultFincaImg = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop";
+  
+  // Hash determinista para fallback único por id
+  const charCodeSum = (finca.id || finca.name || 'finca').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const fallbackImg = FALLBACK_FINCA_IMAGES[charCodeSum % FALLBACK_FINCA_IMAGES.length];
 
-  const displayImg = (!imgError && (finca.img || (finca.imageUrls && finca.imageUrls[0]))) || defaultFincaImg;
+  const displayImg = (!imgError && (finca.img || (finca.imageUrls && finca.imageUrls[0]) || (finca.gallery && finca.gallery[0]))) || fallbackImg;
   const directPhone = finca.hasDirectPhone ? (finca.phone || finca.telephone) : null;
   const isDirect = Boolean(directPhone);
 
