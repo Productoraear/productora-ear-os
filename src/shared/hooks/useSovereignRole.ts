@@ -44,7 +44,7 @@ export function useSovereignRole() {
           const { auth } = require('@/lib/services/auth_nexus');
           const user = auth?.currentUser;
           if (user) {
-            if (user.email?.endsWith('@productoraear.com')) return 'ROLE_ADMIN';
+            if (user.email?.endsWith('@productoraear.com') || user.email === 'productoraear@gmail.com') return 'ROLE_ADMIN';
             return 'ROLE_CLIENT';
           }
         } catch {
