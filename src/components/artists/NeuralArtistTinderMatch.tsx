@@ -390,7 +390,7 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                                             </p>
                                             <p className="text-[11px] text-zinc-400 font-mono flex items-center gap-1">
                                                 <Guitar size={12} className="text-[#ecb613]" />
-                                                <span>{artist.formats.join(' · ')}</span>
+                                                <span>{Array.isArray(artist.formats) && artist.formats.length > 0 ? artist.formats.join(' · ') : (artist.gremioTag || artist.category || 'Música en Directo')}</span>
                                             </p>
 
                                             <div className="p-3 bg-black/50 rounded-2xl border border-white/5 text-[11px] font-mono space-y-1">
