@@ -52,8 +52,12 @@ const CATEGORY_TABS = [
   { id: 'sonido', label: `Sonido & Iluminación (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.sonido)})` },
   { id: 'catering', label: `Catering (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.catering)})` },
   { id: 'foto', label: `Fotografía (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.foto)})` },
-  { id: 'senior_care', label: `Centros Senior VIMUME (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.senior_care)})` },
-  { id: 'wedding', label: `Wedding Planners (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.wedding)})` }
+  { id: 'decoracion', label: `Decoración & Flores (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.decoracion)})` },
+  { id: 'moda', label: `Moda Nupcial (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.moda)})` },
+  { id: 'transporte', label: `Transporte & Flota (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.transporte)})` },
+  { id: 'servicios', label: `Servicios & Animación (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.servicios)})` },
+  { id: 'wedding', label: `Wedding Planners (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.wedding)})` },
+  { id: 'senior_care', label: `Centros Senior VIMUME (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.senior_care)})` }
 ];
 
 export default function ProveedoresSyncPage() {

@@ -123,6 +123,7 @@ model clientProfile {
   companyName String?
   waybills    waybill[]
   contracts   smartContract[]
+  proposals   Proposal[]
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
 }
@@ -605,5 +606,150 @@ model Vendor {
   expenses Expense[]
 
   @@map("vendors")
+}
+
+// ==========================================
+// MÓDULO OMEGA DE PRESUPUESTOS (LA MÁQUINA S-CLASS)
+// ==========================================
+
+model ProposalRequest {
+  id              String      @id @default(cuid())
+  clientName      String
+  phone           String?
+  email           String?
+  address         String
+  title           String
+  urgency         String
+  rawText         String      @db.Text
+  aiConcepts      String      @db.Text // JSON
+  origin          String      @default("manolo") // manolo | cliente
+  status          String      @default("pendiente")
+  proposalId      String?
+  proposal        Proposal?   @relation(fields: [proposalId], references: [id])
+  createdAt       DateTime    @default(now())
+}
+
+model Proposal {
+  id              String      @id @default(cuid())
+  number          String      @unique
+  token           String      @unique
+  clientProfileId String?
+  clientProfile   clientProfile? @relation(fields: [clientProfileId], references: [id])
+  location        String
+  title           String
+  status          String      @default("borrador")
+  taxPct          Float
+  discountPct     Float       @default(0)
+  baseCents       Int         @default(0)
+  taxCents        Int         @default(0)
+  totalCents      Int         @default(0)
+  costCents       Int         @default(0)
+  marginPct       Float       @default(0)
+  validDays       Int
+  validUntil      DateTime?
+  eventDate       DateTime
+  createdAt       DateTime    @default(now())
+  sentAt          DateTime?
+  closedAt        DateTime?
+  lostReason      String?
+  repliedAt       DateTime?
+  replyText       String?     @db.Text
+  signaturePng    String?     @db.Text
+  signedAt        DateTime?
+  signatureIp     String?
+  signatureDevice String?
+  lastAlertAt     DateTime?
+  templateId      String?
+  
+  lines           ProposalLineItem[]
+  readEvents      ProposalReadTelemetry[]
+  tasks           CRMTask[]
+  timeline        ProposalActivityTimeline[]
+  requests        ProposalRequest[]
+  adminAlerts     AdminNotification[]
+}
+
+model ProposalLineItem {
+  id              String      @id @default(cuid())
+  proposalId      String
+  proposal        Proposal    @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  catalogItemId   String?     // Link to pricing bank / SSOT
+  providerId      String?     // Link to 85k database (VendorShadowProfile or providerProfile)
+  chapter         String
+  description     String
+  unit            String
+  quantity        Float       @default(0)
+  priceCents      Int         @default(0)
+  manualPrice     Boolean     @default(false)
+  marginPct       Float       @default(0)
+  totalCents      Int         @default(0)
+  aiConfidence    Float?
+  isYellow        Boolean     @default(false) // A CONFIRMAR (for 85k providers)
+  isOptional      Boolean     @default(false)
+  isSelected      Boolean     @default(true)
+  order           Int         @default(0)
+  aiReason        String?     @db.Text
+
+  @@index([proposalId])
+}
+
+model ProposalReadTelemetry {
+  id              String      @id @default(cuid())
+  proposalId      String
+  proposal        Proposal    @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  visitorId       String
+  visitNumber     Int         @default(1)
+  section         String?
+  durationSeconds Int?
+  ip              String?
+  city            String?
+  country         String?
+  device          String?
+  timestamp       DateTime    @default(now())
+
+  @@index([proposalId])
+}
+
+model CRMTask {
+  id              String      @id @default(cuid())
+  proposalId      String
+  proposal        Proposal    @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  type            String
+  executeAt       DateTime
+  status          String      @default("pendiente")
+  subject         String
+  bodyText        String      @db.Text
+  executedAt      DateTime?
+
+  @@index([proposalId])
+  @@index([status, executeAt])
+}
+
+model ProposalActivityTimeline {
+  id              String      @id @default(cuid())
+  proposalId      String?
+  proposal        Proposal?   @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  type            String
+  metaJson        String      @default("{}") @db.Text
+  timestamp       DateTime    @default(now())
+
+  @@index([proposalId])
+}
+
+model AdminNotification {
+  id              String      @id @default(cuid())
+  proposalId      String?
+  proposal        Proposal?   @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  message         String      @db.Text
+  isRead          Boolean     @default(false)
+  timestamp       DateTime    @default(now())
+
+  @@index([isRead])
+}
+
+model AdminPulse {
+  id              Int         @id @default(1)
+  version         Int         @default(0)
+  updatedAt       DateTime    @default(now())
 }
 

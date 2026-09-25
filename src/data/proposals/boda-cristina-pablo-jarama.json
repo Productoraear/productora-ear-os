@@ -54,7 +54,7 @@
       "precioUnitarioCéntimos": 60000,
       "totalCéntimos": 60000,
       "esOpcional": true,
-      "seleccionada": true,
+      "seleccionada": false,
       "esAmarilla": false,
       "proveedorVerificado": true,
       "proveedorNombre": "Música en Bodas Alba Lírica",
