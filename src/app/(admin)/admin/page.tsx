@@ -52,6 +52,7 @@ const ALL_ADMIN_DIRECT_URLS = [
   { category: "Núcleo & Simulación", name: "Aura Cinematic Portfolio", url: "/aura", badge: "AURA S-CLASS", desc: "Showcase cinematográfico con partículas GPU, audio lírico y física interactiva.", icon: Sparkles },
 
   // VENTAS, LEADS & CONVERSIÓN
+  { category: "Ventas & Conversión", name: "Propuestas S-Class & Dictado Voz", url: "/admin/propuestas", badge: "LA MÁQUINA", desc: "Dictado por voz en fincas, propuestas interactivas con firma y telemetría Telegram.", icon: Mic },
   { category: "Ventas & Conversión", name: "Call Center Outbound", url: "/admin/call-center", badge: GRAND_TOTAL_BADGE, desc: "Despacho telefónico con clon soberano sanitizado y 19.608 registros.", icon: Phone },
   { category: "Ventas & Conversión", name: "Centralita WhatsApp", url: "/admin/whatsapp", badge: "693 048", desc: "Monitor de mensajes directos y cierre de depósitos vía WhatsApp.", icon: Radio },
   { category: "Ventas & Conversión", name: "Scala Leads & Sourcing", url: "/admin/sourcing", badge: "LEADS", desc: "Prospección automática y absorción de centros senior y fincas.", icon: Flame },
