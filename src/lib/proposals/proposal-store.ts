@@ -47,10 +47,6 @@ export async function guardarPropuesta(propuesta: SovereignProposal): Promise<vo
  * Obtiene una propuesta a partir de su token público indescifrable.
  */
 export async function obtenerPropuestaPorToken(token: string): Promise<SovereignProposal | null> {
-  if (memoryByToken.has(token)) {
-    return memoryByToken.get(token)!;
-  }
-
   try {
     const filePath = path.join(PROPOSALS_DIR, `${token}.json`);
     if (fs.existsSync(filePath)) {
@@ -61,7 +57,11 @@ export async function obtenerPropuestaPorToken(token: string): Promise<Sovereign
       return propuesta;
     }
   } catch {
-    // Fallback silencioso
+    // Fallback a memoria si el filesystem no está accesible
+  }
+
+  if (memoryByToken.has(token)) {
+    return memoryByToken.get(token)!;
   }
 
   return null;

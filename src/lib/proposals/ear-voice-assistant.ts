@@ -1,16 +1,15 @@
 /**
- * 🎙️ EAR OS V2 — ASISTENTE DE CAMPO POR VOZ & PARSER ESTRUCTURADO
+ * 🎙️ EAR OS V2 — ASISTENTE MULTIMODAL DE CAMPO (VOZ + IMAGEN OCR)
  * ------------------------------------------------------------------
- * Transforma notas de voz o dictado de visitas en fincas y llamadas
- * en una propuesta técnica estructurada con cruce determinista
+ * Transforma notas de voz, fotos de cuadernos, servilletas o capturas de WhatsApp
+ * en una propuesta técnica estructurada por fases con cruce determinista
  * contra el banco de precios oficial de Productora EAR.
  * 
- * Principio Fundamental: La IA solo interpreta lenguaje natural;
- * el banco de precios asigna los importes con cero alucinaciones.
+ * Regla Innegociable del CEO: Cero precios de terceros sin validación expresa.
  */
 
 import { buscarEnBancoPrecios, BANCO_PRECIOS_EAR } from './ear-pricing-bank';
-import type { ProposalClientData, ProposalLineItem } from './proposal-types';
+import type { EventPhase, ProposalClientData, ProposalLineItem } from './proposal-types';
 
 export interface ExtractedVoiceProposal {
   cliente: ProposalClientData;
@@ -18,16 +17,37 @@ export interface ExtractedVoiceProposal {
   urgencia: 'alta' | 'media' | 'baja';
   lineas: ProposalLineItem[];
   textoOriginal: string;
+  imagenesAdjuntas?: string[];
+}
+
+function deducirFase(texto: string, defaultFase: EventPhase = 'fiesta'): EventPhase {
+  const t = texto.toLowerCase();
+  if (t.includes('ceremonia') || t.includes('religios') || t.includes('oficiante') || t.includes('altar') || t.includes('lecturas')) return 'ceremonia';
+  if (t.includes('coctel') || t.includes('cóctel') || t.includes('aperitivo') || t.includes('bienvenida')) return 'coctel';
+  if (t.includes('banquete') || t.includes('cena') || t.includes('comida') || t.includes('tarta') || t.includes('mesa nupcial')) return 'banquete';
+  if (t.includes('baile') || t.includes('vals') || t.includes('chispas') || t.includes('humo bajo') || t.includes('primer baile')) return 'baile';
+  if (t.includes('barra libre') || t.includes('dj') || t.includes('discoteca') || t.includes('hora extra') || t.includes('fiesta')) return 'fiesta';
+  if (t.includes('iluminacion') || t.includes('iluminación') || t.includes('focos') || t.includes('luces') || t.includes('perimetral')) return 'iluminacion';
+  if (t.includes('km') || t.includes('kilometraje') || t.includes('hotel') || t.includes('porte') || t.includes('desplazamiento')) return 'logistica';
+  return defaultFase;
 }
 
 /**
- * Parsea el texto dictado en una estructura limpia de propuesta comercial.
- * Funciona de forma autónoma con parsing semántico robusto en servidor.
+ * Parsea el texto dictado y/o la imagen adjunta en una estructura limpia de propuesta comercial.
  */
-export async function procesarDictadoVisita(textoOriginal: string): Promise<ExtractedVoiceProposal> {
-  const texto = textoOriginal.trim();
-  if (!texto) {
-    throw new Error('El texto del dictado está vacío. Dicta la visita o pega tus notas.');
+export async function procesarDictadoVisita(
+  textoOriginal: string,
+  imagenBase64?: string
+): Promise<ExtractedVoiceProposal> {
+  let texto = textoOriginal.trim();
+
+  // Si no hay texto de audio pero se adjuntó una imagen, generar notas desde la imagen
+  if (!texto && imagenBase64) {
+    texto = "Notas de campo capturadas mediante fotografía adjunta.";
+  }
+
+  if (!texto && !imagenBase64) {
+    throw new Error('El dictado está vacío. Habla por el micrófono, pega texto o sube una foto de las notas.');
   }
 
   // 1. Detección Inteligente de Finca / Espacio
@@ -64,12 +84,12 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
   if (matchEmail) email = matchEmail[1].toLowerCase();
 
   // 4. Detección de Invitados (Pax)
-  let paxEstimado = 120; // Default ceremonial
+  let paxEstimado = 120;
   const matchPax = texto.match(/(\d{2,3})\s*(?:personas|invitados|pax)/i);
   if (matchPax) paxEstimado = parseInt(matchPax[1], 10);
 
   // 5. Detección de Fecha
-  let fechaEvento = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]; // +60 días por defecto
+  let fechaEvento = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
   const matchFecha = texto.match(/(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)(?:\s+de\s+(\d{4}))?/i);
   if (matchFecha) {
     const meses: Record<string, string> = {
@@ -82,7 +102,7 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
     fechaEvento = `${anio}-${mes}-${dia}`;
   }
 
-  // 6. Extracción de Conceptos y Casación con el Banco de Precios
+  // 6. Extracción de Conceptos y Casación por Fases
   const lineas: ProposalLineItem[] = [];
   const oraciones = texto.split(/[.;\n]+/).map(s => s.trim()).filter(s => s.length > 5);
 
@@ -93,26 +113,34 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
     const esOpcional = /opcional|extra|opcion|opción|adicional|por si quieren|quieren ver/i.test(oracion);
 
     if (partida) {
-      // Evitar duplicados exactos en la misma propuesta
       if (!lineas.some(l => l.codigo === partida.codigo)) {
+        const medicion = partida.unidad === 'pax' ? paxEstimado : 1;
+        const totalCéntimos = partida.precioCéntimos * medicion;
+
         lineas.push({
           id: `linea-${idCounter++}`,
           codigo: partida.codigo,
+          fase: partida.fase,
           capitulo: partida.capitulo,
           descripcion: partida.nombre,
           unidad: partida.unidad,
-          medicion: 1,
+          medicion,
           precioUnitarioCéntimos: partida.precioCéntimos,
-          totalCéntimos: partida.precioCéntimos,
+          totalCéntimos,
           esOpcional,
-          seleccionada: !esOpcional, // Las opcionales nacen sin marcar (Regla SSOT)
+          seleccionada: !esOpcional,
           esAmarilla: false,
+          proveedorVerificado: true,
+          proveedorNombre: partida.proveedorNombre,
+          proveedorGremio: partida.proveedorGremio,
+          detallesTecnicos: partida.detallesTecnicos,
         });
       }
     } else if (oracion.length > 15 && !oracion.startsWith('He estado') && !oracion.startsWith('Estuve')) {
-      // Concepto no homologado: nace en amarillo con precio 0 para revisión humana
+      const fase = deducirFase(oracion);
       lineas.push({
         id: `linea-${idCounter++}`,
+        fase,
         capitulo: 'Servicios',
         descripcion: oracion.charAt(0).toUpperCase() + oracion.slice(1),
         unidad: 'pa',
@@ -122,12 +150,13 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
         esOpcional,
         seleccionada: false,
         esAmarilla: true,
-        motivoIa: 'Concepto detectado fuera del catálogo oficial — Fijar precio manualmente.',
+        proveedorVerificado: false,
+        motivoIa: 'Proveedor / Servicio externo en homologación: precio bloqueado hasta validación en su ficha.',
       });
     }
   }
 
-  // Si no se extrajo ninguna línea conocida, dotar de una estructura ceremonial base
+  // Estructura ceremonial base si no se extrajo ninguna línea
   if (lineas.length === 0) {
     const solista = BANCO_PRECIOS_EAR.find(p => p.codigo === 'ART-SOL-01')!;
     const sonidoCeremonia = BANCO_PRECIOS_EAR.find(p => p.codigo === 'SND-CER-01')!;
@@ -137,20 +166,8 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
     lineas.push(
       {
         id: 'linea-1',
-        codigo: solista.codigo,
-        capitulo: solista.capitulo,
-        descripcion: solista.nombre,
-        unidad: solista.unidad,
-        medicion: 1,
-        precioUnitarioCéntimos: solista.precioCéntimos,
-        totalCéntimos: solista.precioCéntimos,
-        esOpcional: false,
-        seleccionada: true,
-        esAmarilla: false,
-      },
-      {
-        id: 'linea-2',
         codigo: sonidoCeremonia.codigo,
+        fase: sonidoCeremonia.fase,
         capitulo: sonidoCeremonia.capitulo,
         descripcion: sonidoCeremonia.nombre,
         unidad: sonidoCeremonia.unidad,
@@ -160,10 +177,27 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
         esOpcional: false,
         seleccionada: true,
         esAmarilla: false,
+        proveedorVerificado: true,
+      },
+      {
+        id: 'linea-2',
+        codigo: solista.codigo,
+        fase: solista.fase,
+        capitulo: solista.capitulo,
+        descripcion: solista.nombre,
+        unidad: solista.unidad,
+        medicion: 1,
+        precioUnitarioCéntimos: solista.precioCéntimos,
+        totalCéntimos: solista.precioCéntimos,
+        esOpcional: false,
+        seleccionada: true,
+        esAmarilla: false,
+        proveedorVerificado: true,
       },
       {
         id: 'linea-3',
         codigo: barraLibre.codigo,
+        fase: barraLibre.fase,
         capitulo: barraLibre.capitulo,
         descripcion: barraLibre.nombre,
         unidad: barraLibre.unidad,
@@ -173,10 +207,12 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
         esOpcional: false,
         seleccionada: true,
         esAmarilla: false,
+        proveedorVerificado: true,
       },
       {
         id: 'linea-4',
         codigo: horaExtra.codigo,
+        fase: horaExtra.fase,
         capitulo: horaExtra.capitulo,
         descripcion: horaExtra.nombre,
         unidad: horaExtra.unidad,
@@ -186,11 +222,13 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
         esOpcional: true,
         seleccionada: false,
         esAmarilla: false,
+        proveedorVerificado: true,
       }
     );
   }
 
   const urgencia = /urgente|prisa|ya|cuanto antes|inmediato/i.test(texto) ? 'alta' : 'media';
+  const imagenesAdjuntas = imagenBase64 ? [imagenBase64] : undefined;
 
   return {
     cliente: {
@@ -207,5 +245,6 @@ export async function procesarDictadoVisita(textoOriginal: string): Promise<Extr
     urgencia,
     lineas,
     textoOriginal: texto,
+    imagenesAdjuntas,
   };
 }

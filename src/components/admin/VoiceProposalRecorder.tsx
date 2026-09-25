@@ -1,10 +1,11 @@
 'use client';
 
 /**
- * 🎙️ EAR OS V2 — ASISTENTE DE CAMPO POR VOZ S-CLASS
+ * 🎙️ EAR OS V2 — ASISTENTE MULTIMODAL DE CAMPO S-CLASS (VOZ + FOTO)
  * ------------------------------------------------------------------
  * Interfaz de administración para dictado continuo con Web Speech API
- * y generación automática de propuestas en 30 segundos.
+ * y subida de fotos (notas manuscritas, capturas de WhatsApp, bocetos).
+ * Genera propuestas comerciales con cruce determinista en 30 segundos.
  */
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -13,17 +14,18 @@ import {
   MicOff,
   Sparkles,
   CheckCircle2,
-  AlertCircle,
   Copy,
   ExternalLink,
   Send,
-  Trash2,
-  Plus,
+  Camera,
+  Image as ImageIcon,
+  X,
+  UploadCloud,
+  ShieldCheck,
 } from 'lucide-react';
 import type { ExtractedVoiceProposal } from '@/lib/proposals/ear-voice-assistant';
-import { formatoEuros, formatoEurosCorto } from '@/lib/proposals/proposal-calculator';
+import { formatoEuros } from '@/lib/proposals/proposal-calculator';
 
-// Declaración de tipos para Web Speech API
 interface IWindow extends Window {
   webkitSpeechRecognition?: any;
   SpeechRecognition?: any;
@@ -33,6 +35,7 @@ export function VoiceProposalRecorder() {
   const [transcription, setTranscription] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [isSupported, setIsSupported] = useState<boolean | null>(null);
+  const [attachedImage, setAttachedImage] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [extractedData, setExtractedData] = useState<ExtractedVoiceProposal | null>(null);
   const [saving, setSaving] = useState(false);
@@ -40,6 +43,7 @@ export function VoiceProposalRecorder() {
   const [copied, setCopied] = useState(false);
 
   const recognitionRef = useRef<any>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -69,7 +73,6 @@ export function VoiceProposalRecorder() {
         };
 
         reco.onend = () => {
-          // Si el usuario aún quería escuchar, reanudar
           if (isListening) {
             try {
               reco.start();
@@ -101,8 +104,29 @@ export function VoiceProposalRecorder() {
     }
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor selecciona un archivo de imagen (PNG, JPG, WEBP).');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setAttachedImage(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const removeImage = () => {
+    setAttachedImage(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
   const handleAnalyze = async () => {
-    if (!transcription.trim()) return;
+    if (!transcription.trim() && !attachedImage) return;
     if (isListening) toggleListen();
     setAnalyzing(true);
     setGeneratedUrl(null);
@@ -111,7 +135,10 @@ export function VoiceProposalRecorder() {
       const res = await fetch('/api/proposals/extract-voice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ texto: transcription }),
+        body: JSON.stringify({
+          texto: transcription,
+          imagen: attachedImage,
+        }),
       });
 
       const body = await res.json();
@@ -138,6 +165,7 @@ export function VoiceProposalRecorder() {
           titulo: extractedData.titulo,
           lineas: extractedData.lineas,
           caducidadDias: 14,
+          imagenesAdjuntas: attachedImage ? [attachedImage] : undefined,
         }),
       });
 
@@ -166,23 +194,39 @@ export function VoiceProposalRecorder() {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-6">
-      {/* Caja de Dictado & Reconocimiento */}
+      {/* Caja de Entrada Multimodal (Dictado + Foto) */}
       <div className="rounded-2xl border border-white/10 bg-[#07070a] p-6 shadow-xl">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
           <div>
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#ecb613]">
-              EAR Voice Field Assistant · Entrada Rápida
+              EAR Multimodal Field Assistant · Entrada Rápida
             </span>
             <h2 className="text-xl font-bold text-white font-syne mt-0.5">
-              Dictar Visita o Pegar Notas de Finca
+              Dictar Visita o Subir Foto de Notas / WhatsApp
             </h2>
           </div>
 
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border border-white/20 bg-white/5 hover:bg-white/10 text-neutral-200 flex items-center gap-2 transition-all cursor-pointer"
+              title="Adjuntar foto de notas manuscritas o captura de pantalla"
+            >
+              <Camera className="w-4 h-4 text-[#ecb613]" />
+              <span className="hidden sm:inline">Subir Foto</span>
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleImageUpload}
+            />
+
             {isSupported ? (
               <button
                 onClick={toggleListen}
-                className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
                   isListening
                     ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/30'
                     : 'bg-[#ecb613] text-black hover:bg-[#d8a40f] shadow-lg shadow-[#ecb613]/20'
@@ -200,21 +244,17 @@ export function VoiceProposalRecorder() {
                   </>
                 )}
               </button>
-            ) : (
-              <span className="text-xs text-neutral-400 font-mono">
-                Dictado no soportado en este navegador (usa Chrome o Safari)
-              </span>
-            )}
+            ) : null}
           </div>
         </div>
 
-        {/* Textarea para transcripción en vivo o pegado de notas */}
+        {/* Textarea para transcripción */}
         <div className="mt-4 relative">
           <textarea
             value={transcription}
             onChange={(e) => setTranscription(e.target.value)}
-            placeholder="Ejemplo: Estuve con los novios Cristina y Pablo en La Quinta de Jarama. Quieren ceremonia civil con microfonía Shure y técnico, solista Edwin Agudelo para el cóctel, y 4 horas de barra libre con equipo Bose F1. Dejar como opcional iluminación perimetral y dos horas extra..."
-            rows={5}
+            placeholder="Dicta con tu voz o escribe las notas de la visita: novios, finca, servicios de ceremonia, cóctel, barra libre, opcionales..."
+            rows={4}
             className="w-full rounded-xl border border-white/10 bg-[#0a0a0e] p-4 text-sm text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-[#ecb613]/60 font-sans leading-relaxed"
           />
           {isListening && (
@@ -224,6 +264,34 @@ export function VoiceProposalRecorder() {
             </div>
           )}
         </div>
+
+        {/* Miniatura de imagen adjunta si existe */}
+        {attachedImage && (
+          <div className="mt-3 flex items-center gap-3 p-3 rounded-xl border border-[#ecb613]/30 bg-[#ecb613]/5">
+            <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-white/10 bg-black flex-shrink-0">
+              <img
+                src={attachedImage}
+                alt="Notas adjuntas"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <span className="text-xs font-semibold text-white block">
+                Foto de notas / WhatsApp adjunta
+              </span>
+              <span className="text-[11px] text-neutral-400 block">
+                Se procesará junto al dictado y quedará archivada en el dossier.
+              </span>
+            </div>
+            <button
+              onClick={removeImage}
+              className="p-1.5 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-rose-400 transition-colors"
+              title="Quitar imagen"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         {/* Ejemplos de prueba rápida */}
         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -254,26 +322,26 @@ export function VoiceProposalRecorder() {
         <div className="mt-4 flex justify-end">
           <button
             onClick={handleAnalyze}
-            disabled={!transcription.trim() || analyzing}
+            disabled={(!transcription.trim() && !attachedImage) || analyzing}
             className={`px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all ${
-              transcription.trim() && !analyzing
-                ? 'bg-white text-black hover:bg-neutral-200 cursor-pointer'
+              (transcription.trim() || attachedImage) && !analyzing
+                ? 'bg-white text-black hover:bg-neutral-200 cursor-pointer shadow-lg'
                 : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
             }`}
           >
             <Sparkles className="w-4 h-4 text-[#ecb613]" />
-            {analyzing ? 'Procesando con IA...' : 'Analizar Dictado y Casar Catálogo'}
+            {analyzing ? 'Analizando Multimodal...' : 'Analizar Dictado + Imagen y Casar'}
           </button>
         </div>
       </div>
 
-      {/* Resultados de Extracción & Catálogo Casado */}
+      {/* Resultados de Extracción Estructurada */}
       {extractedData && (
         <div className="rounded-2xl border border-[#ecb613]/30 bg-[#07070a] p-6 shadow-2xl animate-in fade-in duration-300">
           <div className="flex items-center justify-between pb-4 border-b border-white/10">
             <div>
               <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold">
-                ✓ Extracción Estructurada Completada
+                ✓ Extracción Multimodal Exitosa
               </span>
               <h3 className="text-lg font-bold text-white font-syne">
                 {extractedData.titulo}
@@ -307,7 +375,7 @@ export function VoiceProposalRecorder() {
           {/* Lista de partidas casadas */}
           <div className="mt-6 space-y-2.5">
             <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400">
-              Partidas Casadas con el Catálogo Oficial ({extractedData.lineas.length})
+              Servicios Clasificados por Fases del Evento ({extractedData.lineas.length})
             </h4>
 
             {extractedData.lineas.map((linea) => (
@@ -323,8 +391,8 @@ export function VoiceProposalRecorder() {
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white/5 text-neutral-400">
-                      {linea.codigo || 'SIN-CÓDIGO'}
+                    <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/20">
+                      Fase: {linea.fase}
                     </span>
                     <span className="font-semibold text-white truncate">
                       {linea.descripcion}
@@ -336,7 +404,7 @@ export function VoiceProposalRecorder() {
                     )}
                   </div>
                   {linea.motivoIa && (
-                    <p className="mt-0.5 text-[11px] text-amber-400/90 font-mono">
+                    <p className="mt-0.5 text-[11px] text-amber-400 font-mono">
                       {linea.motivoIa}
                     </p>
                   )}
@@ -390,7 +458,7 @@ export function VoiceProposalRecorder() {
 
             <button
               onClick={copyToClipboard}
-              className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold text-white flex items-center gap-1.5 transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold text-white flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <Copy className="w-3.5 h-3.5" />
               {copied ? '¡Copiado!' : 'Copiar'}

@@ -1,7 +1,7 @@
 /**
  * 🌟 SEED DE DEMO S-CLASS: PROPUESTA INAUGURAL CRISTINA & PABLO
  * -------------------------------------------------------------
- * Inicializa una propuesta viva para verificación inmediata.
+ * Inicializa una propuesta viva estructurada por las 7 fases del evento.
  */
 
 const fs = require('fs');
@@ -32,6 +32,7 @@ const propuesta = {
     {
       id: "linea-1",
       codigo: "SND-CER-01",
+      fase: "ceremonia",
       capitulo: "Sonorización",
       descripcion: "Pack Sonorización Ceremonia Civil S-Class (Bose S1 Pro + Shure Beta 87A)",
       unidad: "pa",
@@ -40,11 +41,13 @@ const propuesta = {
       totalCéntimos: 25000,
       esOpcional: false,
       seleccionada: true,
-      esAmarilla: false
+      esAmarilla: false,
+      proveedorVerificado: true
     },
     {
       id: "linea-2",
       codigo: "ART-SOL-01",
+      fase: "coctel",
       capitulo: "Artistas",
       descripcion: "Solista Edwin Agudelo (Voz Lírica y Repertorio Acústico para Cóctel)",
       unidad: "ud",
@@ -53,11 +56,43 @@ const propuesta = {
       totalCéntimos: 35000,
       esOpcional: false,
       seleccionada: true,
-      esAmarilla: false
+      esAmarilla: false,
+      proveedorVerificado: true
     },
     {
       id: "linea-3",
+      codigo: "SND-BAN-01",
+      fase: "banquete",
+      capitulo: "Sonorización",
+      descripcion: "Megafonía & Hilo Musical Banquete / Entrada Nupcial",
+      unidad: "pa",
+      medicion: 1,
+      precioUnitarioCéntimos: 18000,
+      totalCéntimos: 18000,
+      esOpcional: false,
+      seleccionada: true,
+      esAmarilla: false,
+      proveedorVerificado: true
+    },
+    {
+      id: "linea-4",
+      codigo: "EFE-CHI-01",
+      fase: "baile",
+      capitulo: "Efectos",
+      descripcion: "Efecto Chispas Frías Cold Spark (2 Cabezas no pirotécnicas para primer baile)",
+      unidad: "pa",
+      medicion: 1,
+      precioUnitarioCéntimos: 22000,
+      totalCéntimos: 22000,
+      esOpcional: true,
+      seleccionada: false,
+      esAmarilla: false,
+      proveedorVerificado: true
+    },
+    {
+      id: "linea-5",
       codigo: "SND-DIS-01",
+      fase: "fiesta",
       capitulo: "Sonorización",
       descripcion: "Pack Barra Libre S-Class 4 Horas (Bose F1 1000W + Cabina Pioneer DJ + Iluminación)",
       unidad: "pa",
@@ -66,11 +101,28 @@ const propuesta = {
       totalCéntimos: 65000,
       esOpcional: false,
       seleccionada: true,
-      esAmarilla: false
+      esAmarilla: false,
+      proveedorVerificado: true
     },
     {
-      id: "linea-4",
+      id: "linea-6",
+      codigo: "SND-HRX-01",
+      fase: "fiesta",
+      capitulo: "Sonorización",
+      descripcion: "Hora Extra Adicional de Barra Libre y DJ Residente",
+      unidad: "h",
+      medicion: 1,
+      precioUnitarioCéntimos: 12000,
+      totalCéntimos: 12000,
+      esOpcional: true,
+      seleccionada: false,
+      esAmarilla: false,
+      proveedorVerificado: true
+    },
+    {
+      id: "linea-7",
       codigo: "ILU-PER-01",
+      fase: "iluminacion",
       capitulo: "Iluminación",
       descripcion: "Pack Iluminación Perimetral Wireless (12 Focos LED RGBW a Batería)",
       unidad: "pa",
@@ -79,33 +131,23 @@ const propuesta = {
       totalCéntimos: 28000,
       esOpcional: true,
       seleccionada: false,
-      esAmarilla: false
+      esAmarilla: false,
+      proveedorVerificado: true
     },
     {
-      id: "linea-5",
-      codigo: "EFE-CHI-01",
-      capitulo: "Efectos",
-      descripcion: "Efecto Chispas Frías Cold Spark (2 Cabezas no pirotécnicas para entrada/baile)",
+      id: "linea-8",
+      codigo: "LOG-KM-01",
+      fase: "logistica",
+      capitulo: "Logística",
+      descripcion: "Desplazamiento Técnico y Logística Flota Méntrida",
       unidad: "pa",
       medicion: 1,
-      precioUnitarioCéntimos: 22000,
-      totalCéntimos: 22000,
-      esOpcional: true,
-      seleccionada: false,
-      esAmarilla: false
-    },
-    {
-      id: "linea-6",
-      codigo: "SND-HRX-01",
-      capitulo: "Sonorización",
-      descripcion: "Hora Extra Adicional de Barra Libre y Sonido en Directo",
-      unidad: "h",
-      medicion: 1,
-      precioUnitarioCéntimos: 12000,
-      totalCéntimos: 12000,
-      esOpcional: true,
-      seleccionada: false,
-      esAmarilla: false
+      precioUnitarioCéntimos: 0,
+      totalCéntimos: 0,
+      esOpcional: false,
+      seleccionada: true,
+      esAmarilla: false,
+      proveedorVerificado: true
     }
   ],
   ivaPct: 21,
@@ -119,5 +161,5 @@ const propuesta = {
 const targetPath = path.join(dir, `${propuesta.token}.json`);
 fs.writeFileSync(targetPath, JSON.stringify(propuesta, null, 2), 'utf-8');
 
-console.log('✅ Propuesta inaugural sembrada con éxito en:', targetPath);
+console.log('✅ Propuesta inaugural 7 fases sembrada con éxito en:', targetPath);
 console.log('🔗 URL pública de prueba: /propuesta/' + propuesta.token);
