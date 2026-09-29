@@ -13,7 +13,8 @@ export const CENTRALITA = {
   /** WhatsApp deep link */
   whatsapp: "https://wa.me/34693693048",
   /** mailto href */
-  email: "mailto:hola@productoraear.com",
+  email: "mailto:productoraear@gmail.com",
   /** Display email */
-  emailDisplay: "hola@productoraear.com",
+  emailDisplay: "productoraear@gmail.com",
 } as const;
+

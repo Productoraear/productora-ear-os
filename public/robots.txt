@@ -1,5 +1,5 @@
-# 🤖 ROBOTS.TXT CANÓNICO // PRODUCTORA EAR (S-CLASS SEO & AEO)
-# Permite rastreo universal de páginas y recursos estáticos (_next, css, js, fonts)
+# 🤖 ROBOTS.TXT CANÓNICO // PRODUCTORA EAR (S-CLASS SEO, AEO & AI GOVERNANCE)
+# Directivas para Google, Bing, ChatGPT, Claude, Perplexity y Motores Generativos
 
 User-agent: *
 Allow: /
@@ -7,21 +7,26 @@ Allow: /_next/
 Allow: /assets/
 Allow: /images/
 Allow: /fonts/
+Allow: /llms.txt
+Allow: /llms-full.txt
 
-# Exclusiones de seguridad y áreas privadas
+# Exclusiones de seguridad, checkout y áreas administrativas privadas
 Disallow: /api/
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /nexus/
 Disallow: /portal/
 Disallow: /login
+Disallow: /propuesta/
+Disallow: /dossier/
 Disallow: /*?*provider=
 Disallow: /*?from=
 
-# Directivas de Motores de Búsqueda e Inteligencia Artificial
+# Directivas de Motores de Búsqueda Convencionales
 User-agent: Googlebot
 Allow: /
 Allow: /_next/
+Allow: /llms.txt
 
 User-agent: Googlebot-Image
 Allow: /
@@ -31,16 +36,40 @@ Allow: /images/
 User-agent: Bingbot
 Allow: /
 Allow: /_next/
+Allow: /llms.txt
 
+# Directivas de Inteligencia Artificial & AEO (Answer Engine Optimization)
 User-agent: GPTBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: ClaudeBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: PerplexityBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
+User-agent: Google-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+User-agent: OAI-SearchBot
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+
+# Sitemaps XML Canónicos (79.000+ URLs indexables)
 Sitemap: https://productoraear.com/sitemap.xml
 Sitemap: https://productoraear.com/sitemap-index.xml
 Sitemap: https://productoraear.com/sitemap/0.xml
@@ -48,3 +77,4 @@ Sitemap: https://productoraear.com/sitemap/1.xml
 Sitemap: https://productoraear.com/sitemap/2.xml
 Sitemap: https://productoraear.com/sitemap/3.xml
 Sitemap: https://productoraear.com/sitemap/4.xml
+Sitemap: https://productoraear.com/sitemap/5.xml

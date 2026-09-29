@@ -381,8 +381,14 @@ export const MUNICIPALITIES_DATASET: Record<string, TownNode[]> = {
 
 export const SERVICES_PSEO_EXPANDED = [
   { id: 'mariachis', title: 'Mariachis de Gala & Serenatas', path: 'mariachi-gala', basePrice: 350 },
+  { id: 'dj', title: 'DJs Profesionales para Bodas & Eventos', path: 'dj', basePrice: 450 },
   { id: 'bodas', title: 'Música de Bodas & Ceremonias de Lujo', path: 'bodas', basePrice: 750 },
   { id: 'catering-brasas', title: 'Catering de Brasas & Fuego Vivo', path: 'catering-brasas', basePrice: 45 },
   { id: 'vimume-b2g', title: 'Programa VIMUME Neuroacústica B2G', path: 'vimume-b2g', basePrice: 2800 },
-  { id: 'sonido-bose', title: 'Sonorización 12 W/pax Bose F1', path: 'sonido-bose', basePrice: 1800 }
+  { id: 'sonido-bose', title: 'Sonorización 12 W/pax Bose F1', path: 'sonido-bose', basePrice: 1800 },
+  { id: 'sonido-iluminacion', title: 'Sonido Profesional & Iluminación Robótica', path: 'sonido-iluminacion', basePrice: 650 },
+  { id: 'fotografia', title: 'Fotografía & Vídeo Cinematográfico de Bodas', path: 'fotografia', basePrice: 850 },
+  { id: 'fincas', title: 'Fincas Homologadas & Espacios para Bodas', path: 'fincas', basePrice: 1200 },
+  { id: 'animacion', title: 'Animación & Orquestas de Baile', path: 'animacion', basePrice: 500 },
+  { id: 'eventos', title: 'Producción Integral de Eventos Corporativos & Galas', path: 'eventos', basePrice: 950 }
 ];

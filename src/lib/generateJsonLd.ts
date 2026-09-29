@@ -16,7 +16,7 @@ export function generateJsonLd(provincia: string, evento: string, artistName: st
     "description": `Contratación de Mariachis profesionales para ${eventClean} en ${provCapitalized}. Servicio verificado S-Class con Edwin Agudelo.`,
     "url": canonicalUrl,
     "telephone": "+34 693 693 048",
-    "email": "hola@productoraear.com",
+    "email": "productoraear@gmail.com",
     "priceRange": "0.50€ - 3.500€",
     "address": {
       "@type": "PostalAddress",

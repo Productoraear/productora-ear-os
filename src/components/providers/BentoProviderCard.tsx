@@ -37,6 +37,7 @@ export interface ProviderItem {
   // ── TRAZABILIDAD CANÓNICA (directivas 5, 6, 7, 8) ──
   phone?: string | null;
   has_real_phone?: boolean;
+  hasDirectPhone?: boolean;
   profile_url?: string | null;
   sourceUrl?: string | null;
   originHtml?: string | null;
@@ -298,12 +299,12 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
         </button>
 
         <a
-          href={`https://wa.me/34693693048?text=${whatsappMessage}`}
+          href={`https://wa.me/${(provider.hasDirectPhone && provider.phone) ? provider.phone.replace(/\D/g, '') : '34693693048'}?text=${whatsappMessage}`}
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
           className="p-2 rounded-lg bg-[#111115] hover:bg-emerald-500/10 text-neutral-400 hover:text-emerald-400 border border-[#22222a] transition-colors"
-          title="Consulta Inmediata vía WhatsApp"
+          title={provider.hasDirectPhone ? "Consulta Directa vía WhatsApp con Proveedor" : "Consulta Centralizada vía Concierge EAR"}
         >
           <PhoneCall className="w-3.5 h-3.5" />
         </a>

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { useSharedContext } from '@/app/context/SharedContext';
 import { GLOBAL_SEARCH_INDEX, SEARCH_CATEGORY_PILLS, SearchIndexItem } from '@/data/global-search-index';
+import { matchSitemapIntent } from '@/lib/seo/sitemapIntentCrossEngine';
 
 export default function OmniSearchModal() {
   const { isSearchOpen, setIsSearchOpen } = useSharedContext();
@@ -18,6 +19,13 @@ export default function OmniSearchModal() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isSearchingRag, setIsSearchingRag] = useState(false);
   const [ragAnswer, setRagAnswer] = useState<string | null>(null);
+
+  // Live Intent Match S-Class
+  const intentMatch = useMemo(() => {
+    if (!query || query.trim().length < 2) return null;
+    const match = matchSitemapIntent(query);
+    return match.isMatch ? match : null;
+  }, [query]);
   
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -238,6 +246,40 @@ export default function OmniSearchModal() {
                   <Bot className="w-4 h-4" /> Respuesta del Oráculo EAR RAG
                 </div>
                 <p className="leading-relaxed whitespace-pre-line">{ragAnswer}</p>
+              </div>
+            )}
+
+            {/* Live Intent Banner S-Class (Position 0) */}
+            {intentMatch && (
+              <div
+                onClick={() => handleNavigate(intentMatch.targetUrl)}
+                className="p-4 rounded-2xl bg-gradient-to-r from-[#ecb613]/20 via-[#ecb613]/10 to-transparent border border-[#ecb613] shadow-[0_0_30px_rgba(236,182,19,0.2)] cursor-pointer hover:border-white transition-all mb-3 group"
+              >
+                <div className="flex items-center justify-between gap-3 mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#ecb613] text-black text-[10px] font-mono font-black uppercase tracking-wider">
+                      <Sparkles className="w-3 h-3" /> INTENCIÓN DIRECTA IA
+                    </span>
+                    <span className="text-xs font-mono text-[#ecb613]/80">
+                      {intentMatch.category}
+                    </span>
+                  </div>
+                  <span className="px-3 py-1 rounded-xl bg-black border border-[#ecb613]/40 text-xs font-mono font-black text-[#ecb613]">
+                    {intentMatch.priceFormatted}
+                  </span>
+                </div>
+                <h3 className="text-base font-black text-white font-syne group-hover:text-[#ecb613] transition-colors flex items-center justify-between">
+                  <span>{intentMatch.recommendedProvider} — {intentMatch.recommendedService}</span>
+                  <ArrowRight className="w-4 h-4 text-[#ecb613] shrink-0 group-hover:translate-x-1 transition-transform" />
+                </h3>
+                <p className="text-xs text-zinc-300 mt-1 line-clamp-2">
+                  {intentMatch.highlightText}
+                </p>
+                <div className="flex items-center gap-4 mt-3 pt-2 border-t border-white/10 text-[11px] font-mono text-zinc-400">
+                  <span>📞 {intentMatch.canonicalPhone}</span>
+                  <span>🔒 Depósito Stripe 100 €</span>
+                  <span className="text-[#ecb613]">Recomendación Canónica</span>
+                </div>
               </div>
             )}
 

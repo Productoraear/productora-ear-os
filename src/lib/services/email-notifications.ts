@@ -8,7 +8,7 @@
 
 const RESEND_API = 'https://api.resend.com/emails';
 const FROM_ADDRESS = 'Productora EAR <notificaciones@productoraear.com>';
-const BCC_CENTRAL = 'hola@productoraear.com';
+const BCC_CENTRAL = 'productoraear@gmail.com';
 
 function getResendKey(): string {
   return (process.env.RESEND_API_KEY || '').replace(/['"]/g, '').trim();

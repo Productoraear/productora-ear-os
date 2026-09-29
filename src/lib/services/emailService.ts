@@ -135,7 +135,7 @@ export class EmailService {
           body: JSON.stringify({
             from: 'Productora EAR <presupuestos@productoraear.com>',
             to: [payload.toEmail],
-            bcc: ['hola@productoraear.com'],
+            bcc: ['productoraear@gmail.com'],
             subject: `Propuesta Técnica & Dossier Oficial • ${payload.occasion} (${payload.dossierId})`,
             html: htmlContent
           })
@@ -151,7 +151,7 @@ export class EmailService {
     }
 
     // 3. LOG FALLBACK (Zero Crash)
-    console.log(`📧 [EMAIL SIMULATION LOG] Correo preparado para ${payload.toName} (${payload.toEmail}) con copia a hola@productoraear.com`);
+    console.log(`📧 [EMAIL SIMULATION LOG] Correo preparado para ${payload.toName} (${payload.toEmail}) con copia a productoraear@gmail.com`);
     return {
       success: true,
       message: 'Propuesta emitida y registrada para despacho.'

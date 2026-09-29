@@ -1,6 +1,7 @@
-﻿import React from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { Sparkles, MapPin, ShieldCheck, ArrowRight, Phone, Clock, Award, CheckCircle2, ChevronRight, Star, Building2 } from 'lucide-react';
 import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
@@ -24,11 +25,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const municipio = resolvedParams?.municipio || 'navalcarnero';
 
   const provKey = provincia.toLowerCase();
+  const muniKey = municipio.toLowerCase();
+
+  // Consolidación canónica anti-duplicados (ej: /bodas/madrid/dj/madrid -> /bodas/madrid/dj)
+  if (provKey === muniKey) {
+    return {
+      title: `Servicios para Bodas en ${provKey} | Productora EAR`,
+      alternates: {
+        canonical: `https://productoraear.com/bodas/${provKey}/${servicio}`,
+      },
+    };
+  }
+
   const provData = PROVINCIAS_52_GRAPH[provKey];
   const provName = provData ? provData.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
   
   const townList = MUNICIPALITIES_DATASET[provKey] || [];
-  const townData = townList.find(t => t.slug === municipio.toLowerCase());
+  const townData = townList.find(t => t.slug === muniKey);
   const townName = townData ? townData.name : municipio.charAt(0).toUpperCase() + municipio.slice(1).replace(/-/g, ' ');
 
   const servData = SERVICES_PSEO_EXPANDED.find(s => s.path === servicio || s.id === servicio);
@@ -38,7 +51,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${servTitle} en ${townName} (${provName}) | Calibración 12 W/pax & Price-Lock 72h`,
     description: `Contratación oficial de ${servTitle.toLowerCase()} en ${townName} (${provName}). Sonorización Bose F1, voz de tenor de Edwin Agudelo, Price-Lock 72h y garantía 0 fallos acústicos.`,
     alternates: {
-      canonical: `https://productoraear.com/bodas/${provKey}/${servicio}/${municipio.toLowerCase()}`,
+      canonical: `https://productoraear.com/bodas/${provKey}/${servicio}/${muniKey}`,
     },
     keywords: [
       `${servTitle} ${townName}`,
@@ -57,6 +70,12 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
   const municipio = resolvedParams?.municipio || 'navalcarnero';
 
   const provKey = provincia.toLowerCase();
+  const muniKey = municipio.toLowerCase();
+
+  // Redirección 301 permanente a la landing provincial canónica
+  if (provKey === muniKey) {
+    redirect(`/bodas/${provKey}/${servicio}`);
+  }
   const provData = PROVINCIAS_52_GRAPH[provKey];
   const provName = provData ? provData.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
 

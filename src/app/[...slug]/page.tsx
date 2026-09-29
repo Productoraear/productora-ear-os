@@ -8,6 +8,7 @@ import { PROVINCIAS, GUIAS } from '@/lib/constants/seo-data';
 import { generateSemanticPageData, resolveGeoLocation } from '@/lib/seo/semantic-engine';
 import madridAlquilerCatalog from '@/data/madridalquiler_catalog.json';
 import qualityVipCatalog from '@/data/qualityvipsolutions_catalog.json';
+import gscIntentLandings from '@/data/telemetry/gsc-sitemap-intent-landings.json';
 
 export const dynamicParams = true;
 export const revalidate = 3600;
@@ -99,6 +100,35 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         siteName: 'Productora EAR',
         locale: 'es_ES',
         type: 'website'
+      }
+    };
+  }
+
+  // 1.C. Coincidencia con Intenciones de Búsqueda GSC / GEO Top 1
+  const gscItem = (gscIntentLandings.allIntents as any[])?.find(
+    (item: any) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
+  );
+  if (gscItem) {
+    return {
+      title: `${gscItem.seoTitle} | Productora EAR`,
+      description: gscItem.metaDescription,
+      alternates: {
+        canonical: gscItem.canonicalUrl,
+      },
+      openGraph: {
+        title: gscItem.seoTitle,
+        description: gscItem.metaDescription,
+        url: gscItem.canonicalUrl,
+        images: ['/og-image-vimume.jpg'],
+        siteName: 'Productora EAR',
+        locale: 'es_ES',
+        type: 'website'
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: gscItem.seoTitle,
+        description: gscItem.metaDescription,
+        images: ['/og-image-vimume.jpg']
       }
     };
   }
@@ -207,6 +237,25 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
 
   if (vipItem) {
     return <ChauffeurVipView location="Madrid" />;
+  }
+
+  // 2.C. INTENCIONES DE BÚSQUEDA GSC / GEO TOP 1 (gscIntentLandings)
+  const gscItem = (gscIntentLandings.allIntents as any[])?.find(
+    (item: any) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
+  );
+
+  if (gscItem) {
+    return (
+      <BespokeTemplate
+        title={gscItem.seoTitle}
+        description={gscItem.metaDescription}
+        location={gscItem.province ? gscItem.province.toUpperCase() : 'MADRID'}
+        province={gscItem.province ? gscItem.province.toUpperCase() : 'MADRID'}
+        category={gscItem.intentType.replace(/_/g, ' ')}
+        serviceId={gscItem.query}
+        isApex={true}
+      />
+    );
   }
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

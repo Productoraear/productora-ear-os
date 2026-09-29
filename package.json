@@ -16,6 +16,7 @@
     "rag:gravitational": "node scripts/ingestion/gravitational_vampirizer.js",
     "ingest:gravitational": "node scripts/ingestion/gravitational_vampirizer.js",
     "gsc:ingest": "ts-node scripts/ingest_gsc_data.ts",
+    "telemetry:geo": "py scripts/telemetry_gsc_geo_hunter.py",
     "staging:vampirize": "npx tsx src/scripts/vampire-staging-processor.ts",
     "seed:b2g": "npx tsx src/scripts/seed-national-b2g.ts"
   },

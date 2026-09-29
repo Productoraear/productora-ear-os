@@ -53,6 +53,7 @@ const ALL_ADMIN_DIRECT_URLS = [
 
   // VENTAS, LEADS & CONVERSIÓN
   { category: "Ventas & Conversión", name: "Propuestas S-Class & Dictado Voz", url: "/admin/propuestas", badge: "LA MÁQUINA", desc: "Dictado por voz en fincas, propuestas interactivas con firma y telemetría Telegram.", icon: Mic },
+  { category: "Ventas & Conversión", name: "Mailerfind Prospecting IA", url: "/admin/mailerfind", badge: "84K B2B", desc: "Captura masiva de leads B2B, extracción @bodasnet, Google Maps e Instagram.", icon: Search },
   { category: "Ventas & Conversión", name: "Call Center Outbound", url: "/admin/call-center", badge: GRAND_TOTAL_BADGE, desc: "Despacho telefónico con clon soberano sanitizado y 19.608 registros.", icon: Phone },
   { category: "Ventas & Conversión", name: "Centralita WhatsApp", url: "/admin/whatsapp", badge: "693 048", desc: "Monitor de mensajes directos y cierre de depósitos vía WhatsApp.", icon: Radio },
   { category: "Ventas & Conversión", name: "Scala Leads & Sourcing", url: "/admin/sourcing", badge: "LEADS", desc: "Prospección automática y absorción de centros senior y fincas.", icon: Flame },

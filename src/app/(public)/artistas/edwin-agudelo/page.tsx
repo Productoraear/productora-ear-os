@@ -11,9 +11,79 @@ export const metadata: Metadata = {
 };
 
 export default function EdwinAgudeloPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': ['Person', 'MusicArtist'],
+        '@id': 'https://productoraear.com/artistas/edwin-agudelo#artist',
+        name: 'Edwin Agudelo',
+        alternateName: 'Edwin Agudelo Tenor',
+        jobTitle: 'Tenor Lírico, Compositor y Mariachi Solista',
+        description: 'Tenor lírico de conservatorio con 25 años de trayectoria escénica. Especialista en serenatas de mariachi de gran gala, boleros, baladas y repertorio clásico para bodas y galas en España y Europa.',
+        url: 'https://productoraear.com/artistas/edwin-agudelo',
+        telephone: '+34693693048',
+        email: 'productoraear@gmail.com',
+        image: 'https://productoraear.com/media/edwin-hero.jpg',
+        sameAs: [
+          'https://www.youtube.com/@EdwinAgudeloTenor',
+          'https://www.instagram.com/edwinagudelotenor',
+          'https://wa.me/34693693048'
+        ],
+        offers: {
+          '@type': 'Offer',
+          url: 'https://productoraear.com/artistas/edwin-agudelo',
+          price: '350.00',
+          priceCurrency: 'EUR',
+          priceValidUntil: '2026-12-31',
+          availability: 'https://schema.org/InStock',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Actuación Solista Premium Edwin Agudelo con Sonido Bose F1'
+          }
+        }
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://productoraear.com/artistas/edwin-agudelo#faq',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: '¿Cuánto cobra Edwin Agudelo por cantar en una boda o cóctel?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'La tarifa base oficial de Edwin Agudelo como solista lírico es de 350 € e incluye sistema de sonido profesional Bose F1 Model 812 (1.000 W), microfonía inalámbrica Shure Axient Digital y repertorio a medida.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: '¿Qué repertorio interpreta Edwin Agudelo en sus actuaciones?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'Su repertorio abarca más de 400 temas: serenatas mexicanas tradicionales de mariachi (El Rey, Si Nos Dejan, Volver Volver), boleros de oro, baladas románticas, arias líricas y crossover pop internacional.'
+            }
+          },
+          {
+            '@type': 'Question',
+            name: '¿Cómo reservar la fecha con exclusividad 24/7?',
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: 'La reserva se formaliza con un depósito de 100 € a través de la pasarela Stripe Price-Lock SHA-256 de Productora EAR, garantizando la exclusividad total de la fecha y el bloqueo inmutable de la tarifa por 72 horas.'
+            }
+          }
+        ]
+      }
+    ]
+  };
+
   return (
-    <main className="min-h-screen bg-[#050505] text-white pt-28 pb-28 px-4 md:px-8 font-sans selection:bg-[#ecb613] selection:text-black">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="min-h-screen bg-[#050505] text-white pt-28 pb-28 px-4 md:px-8 font-sans selection:bg-[#ecb613] selection:text-black">
+        <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Top Hero Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -79,5 +149,6 @@ export default function EdwinAgudeloPage() {
 
       </div>
     </main>
+    </>
   );
 }

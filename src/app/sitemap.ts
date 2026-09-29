@@ -20,15 +20,18 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com'
 //   2 = pseo (municipios × servicios expandidos — alta conversión)
 //   3 = proveedores-curados (all_providers_database.json)
 //   4 = proveedores-cosechados (bodas-vendors-harvested.json)
+//   5 = gsc-intent-landings (gsc-sitemap-intent-landings.json — 100% Cobertura TOP 1)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 export async function generateSitemaps() {
+  // Retorna las 6 particiones canónicas 0..5
   return [
     { id: '0' },
     { id: '1' },
     { id: '2' },
     { id: '3' },
     { id: '4' },
+    { id: '5' },
   ];
 }
 
@@ -119,16 +122,24 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/vimume/propuesta`, 0.98, 'daily');
       addEntry(`${BASE_URL}/arroces`, 0.98, 'daily');
       addEntry(`${BASE_URL}/catering-brasas`, 0.95, 'weekly');
+      addEntry(`${BASE_URL}/bodas/dj`, 1.0, 'daily');
       addEntry(`${BASE_URL}/artistas/representacion`, 0.95, 'daily');
       addEntry(`${BASE_URL}/eventos/municipales`, 0.95, 'daily');
       addEntry(`${BASE_URL}/instituciones/catalogo-360`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/vimume/archivo-clinico`, 0.92, 'weekly');
-      addEntry(`${BASE_URL}/fincas`, 0.92, 'weekly');
+      addEntry(`${BASE_URL}/fincas`, 0.95, 'daily');
       const fincaProvinces = new Set(
         SCLASS_12_FINCAS_HOMOLOGADAS.map((f) => normalizeForUrl(f.provincia)),
       );
       for (const prov of fincaProvinces) {
-        addEntry(`${BASE_URL}/fincas/${prov}`, 0.80, 'weekly');
+        addEntry(`${BASE_URL}/fincas/${prov}`, 0.85, 'weekly');
+      }
+      for (const finca of SCLASS_12_FINCAS_HOMOLOGADAS) {
+        addEntry(
+          `${BASE_URL}/fincas/${finca.slug}`,
+          finca.slug === 'villa-escorial-park' ? 1.0 : 0.90,
+          finca.slug === 'villa-escorial-park' ? 'daily' : 'weekly'
+        );
       }
       addEntry(`${BASE_URL}/fincasparaboda`, 0.92, 'weekly');
       addEntry(`${BASE_URL}/fincas-landing`, 0.88, 'weekly');
@@ -176,7 +187,6 @@ export default async function sitemap(props: {
       addEntry(`${BASE_URL}/arsenal`, 0.85, 'weekly');
       addEntry(`${BASE_URL}/arsenal/luces-navidad`, 0.95, 'daily');
       addEntry(`${BASE_URL}/infraestructura/mundial-2026`, 0.80, 'monthly');
-      addEntry(`${BASE_URL}/contacto`, 0.80, 'monthly');
       addEntry(`${BASE_URL}/cotizador`, 0.80, 'weekly');
 
       // Hubs canónicos S-Class (marcas soberanas & flasheo EAR SOS)
@@ -250,6 +260,11 @@ export default async function sitemap(props: {
         addEntry(`${BASE_URL}/bodas/${prov}/eventos`, 0.85, 'weekly');
         addEntry(`${BASE_URL}/b2g/${prov}`, 0.85, 'weekly');
 
+        // Servicios regionales de bodas S-Class
+        for (const s of ['dj', 'mariachis', 'sonido-iluminacion', 'catering-brasas', 'fotografia', 'fincas']) {
+          addEntry(`${BASE_URL}/bodas/${prov}/${s}`, 0.90, 'weekly');
+        }
+
         for (const serv of CANONICAL_GREMIO_SLUGS) {
           addEntry(`${BASE_URL}/servicios/${serv}/${prov}`, 0.90, 'weekly');
         }
@@ -272,12 +287,12 @@ export default async function sitemap(props: {
       for (const provKey of Object.keys(MUNICIPALITIES_DATASET)) {
         const towns = MUNICIPALITIES_DATASET[provKey] || [];
         for (const t of towns) {
-          if (t.slug) {
-            for (const s of servicePseoList) {
-              const sPath = s.path || s.id;
-              if (sPath) {
-                addEntry(`${BASE_URL}/bodas/${provKey}/${sPath}/${t.slug}`, 0.75, 'weekly');
-              }
+          // Anti-duplicados: Evitar /bodas/madrid/dj/madrid cuando la provincia coincide con el municipio
+          if (!t.slug || t.slug.toLowerCase() === provKey.toLowerCase()) continue;
+          for (const s of servicePseoList) {
+            const sPath = s.path || s.id;
+            if (sPath) {
+              addEntry(`${BASE_URL}/bodas/${provKey}/${sPath}/${t.slug}`, 0.75, 'weekly');
             }
           }
         }
@@ -337,6 +352,31 @@ export default async function sitemap(props: {
         }
       } catch (err) {
         console.warn('[SITEMAP-4] Error leyendo bodas-vendors-harvested:', err);
+      }
+      break;
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // PARTITION 5: GSC INTENT LANDINGS (gsc-sitemap-intent-landings.json)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    case '5': {
+      try {
+        const intentPath = path.join(process.cwd(), 'src', 'data', 'telemetry', 'gsc-sitemap-intent-landings.json');
+        if (fs.existsSync(intentPath)) {
+          const raw = fs.readFileSync(intentPath, 'utf-8');
+          const intentData = JSON.parse(raw);
+          const allIntents: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> = intentData.allIntents || [];
+
+          for (const item of allIntents) {
+            if (!item.canonicalUrl) continue;
+            // Ponderación dinámica de prioridad según Opportunity Score
+            const opp = item.opportunityScore || 0;
+            const priority = opp > 20 ? 0.95 : opp > 10 ? 0.85 : 0.75;
+            addEntry(item.canonicalUrl, priority, 'daily');
+          }
+        }
+      } catch (err) {
+        console.warn('[SITEMAP-5] Error leyendo gsc-sitemap-intent-landings:', err);
       }
       break;
     }

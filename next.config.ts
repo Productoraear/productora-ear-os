@@ -107,11 +107,6 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
-        source: "/catering-brasas",
-        destination: "/catering-de-brasas",
-        permanent: true,
-      },
-      {
         source: "/admin/mobile_studio",
         destination: "/admin/mobile-studio",
         permanent: true,

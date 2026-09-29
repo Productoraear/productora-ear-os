@@ -40,11 +40,12 @@ import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 import { EarConcierge } from "@/components/Astra/EarConcierge";
 import { SovereignFloatingCallBar } from "@/components/layout/SovereignFloatingCallBar";
+import { GlobalLiveVisualEditor } from "@/components/editor/GlobalLiveVisualEditor";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"),
   alternates: {
-    canonical: "./",
+    canonical: "https://productoraear.com",
   },
   robots: {
     index: true,
@@ -108,6 +109,21 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <VimumeThemeInjector />
+        {/* Google Analytics 4 (GA4) */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || 'G-W0JKLSZRQV'}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics-ga4" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || 'G-W0JKLSZRQV'}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
         {process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID && (
           <Script id="microsoft-clarity" strategy="afterInteractive">
             {`
@@ -142,6 +158,7 @@ export default function RootLayout({
                             <EarConcierge />
                             <DynamicMobileExperienceOrchestrator />
                             <SovereignFloatingCallBar />
+                            <GlobalLiveVisualEditor />
                           </div>
                         </SmoothScrollProvider>
                       </EventCartProvider>

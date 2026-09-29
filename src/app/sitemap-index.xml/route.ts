@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
-const PARTITIONS = ['0', '1', '2', '3', '4'];
+const PARTITIONS = ['0', '1', '2', '3', '4', '5'];
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600;

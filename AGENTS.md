@@ -19,11 +19,15 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
 
 ━━ 3. REGLAS DE NEGOCIO INMUTABLES (SSOT S-CLASS) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - Tarifa Base Solista (Edwin Agudelo): 350,00 €.
-- Logística S-Class: 1,50 €/km desde Méntrida a partir del km 50. +120 € (Hotel) si hora fin >= 3:00 AM o distancia > 200 km.
+- Logística S-Class: 1,50 €/km a partir del km 50 (+120 € Hotel si hora fin >= 3:00 AM o distancia > 200 km). ORIGEN: Hub Méntrida aplica EXCLUSIVAMENTE a Edwin Agudelo y empresas con base en Méntrida. Para el resto de la red nacional, el kilometraje se calcula por GPS / Dirección fiscal del proveedor hasta el evento del cliente.
 - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
 - Cierre: Depósito de 100,00 € en Stripe (Price-Lock SHA-256).
-- Rider Acústico: 12 W/pax (Bose F1 812 / S1 Pro, Shure Beta 87A).
-- Límite B2G (Art. 118 LCSP): < 15.000,00 € (Ajuste preventivo = 14.250,00 €) y < 75 dB SPL.
+- Rider Acústico y Presión Sonora Realista (Ley 37/2003 del Ruido):
+  * Festejos Populares / Plazas / Conciertos: 90 - 102 dBA (con limitador telemático homologado).
+  * Bodas & Fincas: 85 - 90 dBA en exteriores / 80 - 85 dBA en interiores.
+  * Cóctel / Solista (Edwin Agudelo): 70 - 80 dBA (acústica de gala).
+  * Residencias / Centros Senior (VIMUME): 65 - 75 dBA (protocolo 40 Hz no invasivo).
+- Límite B2G (Art. 118 LCSP): < 15.000,00 € (Ajuste preventivo = 14.250,00 €).
 
 ━━ 4. PROTECCIÓN DE MOTORES Y NORMAS NEXT.JS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 - ZONA CERO (Inmutables): `src/lib/vimume/b2g-tender-engine.ts` y `src/lib/astra/astra-conversation-engine.ts`.

@@ -86,7 +86,7 @@ Se hace constar la carencia de medios técnicos (equipos Line Array y microfoní
 
 ================================================================================
 EXPEDIENTE HOMOLOGADO POR PRODUCTORA EAR (EAR OS B2G DIVISION)
-Centralita de Validación Oficial: +34 693 693 048 | hola@productoraear.com
+Centralita de Validación Oficial: +34 693 693 048 | productoraear@gmail.com
 Sede: Calle Tórtola 5, Encinasola (Toledo) • Cobertura Nacional
 ================================================================================`;
       

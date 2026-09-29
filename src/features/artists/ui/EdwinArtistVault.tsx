@@ -43,7 +43,7 @@ export const EdwinArtistVault: React.FC = () => {
                 Centralita de Contratación Directa
               </span>
               <span className="text-lg font-black text-white font-mono">
-                {CENTRALITA.display} • hola@productoraear.com
+                {CENTRALITA.display} • {CENTRALITA.emailDisplay}
               </span>
             </div>
           </div>

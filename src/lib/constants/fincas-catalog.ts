@@ -48,6 +48,57 @@ export interface FincaHomologada {
 
 export const SCLASS_12_FINCAS_HOMOLOGADAS: FincaHomologada[] = [
   {
+    id: 'villa-escorial-park',
+    name: 'Villa Escorial Park • Mansión & Finca de Lujo',
+    slug: 'villa-escorial-park',
+    location: 'San Lorenzo de El Escorial (Madrid)',
+    provincia: 'Madrid',
+    distanciaHubMentridaKm: 58,
+    capacidadMaxPax: 30,
+    potenciaKw: 45,
+    tomaElectrica: 'CETAC 32A 3P+N+T',
+    limiteAcustico: {
+      interiorDBA: 85,
+      exteriorDBA: 90,
+      limitadorInstalado: true,
+      tipoLimitador: 'Cesva LRF-05 Calibrado'
+    },
+    polizaRC: {
+      coberturaEuros: 1200000,
+      aseguradora: 'Allianz Luxury Estates',
+      numeroPoliza: 'ALZ-VEP-992104',
+      vigenteHasta: '2028-12-31'
+    },
+    slaOnboardingMinutos: 10,
+    plazoLiquidacionDias: 3,
+    comisionAfiliacionPct: 0.10,
+    accesoConvoy14Plazas: true,
+    espaciosDisponibles: [
+      'Jardines Arbolados de 3.000 m²',
+      'Piscina Privada Vallada & Zona Chillout',
+      'Gran Comedor para 30 Comensales',
+      'Salón de Lectura / Coworking con Chimenea (80 m²)',
+      'Sala de Cine con 12 Sofás de Masaje y Proyector',
+      'Cocina Equipada con 2 Islas para Catering',
+      '9 Suites y Dormitorios Equipados (30 Huéspedes)',
+      'Gran Porche Techado y Zona de Barbacoa / Paellas'
+    ],
+    serviciosCoordinados: [
+      'Alquiler Íntegro Disponible Todo el Año (Fines de semana y estancias entre semana)',
+      'Fin de semana completo (4.500 € - Viernes 14:00h a Domingo 14:00h)',
+      'Alojamiento Exclusivo hasta 30 Personas (9 suites)',
+      'Aparcamiento Privado 30 Plazas',
+      'Coordinación Personalizada Productora EAR'
+    ],
+    directorioContacto: {
+      director: 'Edwin Agudelo • Productora EAR',
+      telefono: '+34 693 693 048',
+      email: 'productoraear@gmail.com'
+    },
+    estadoHomologacion: 'CERTIFICADA_GOLD_MASTER',
+    description: 'Exclusiva finca de 20.000 m² con 3.000 m² de jardines a los pies de San Lorenzo de El Escorial. Alquiler íntegro disponible todo el año: fines de semana completos (4.500 € de viernes 14:00h a domingo 14:00h) y estancias entre semana con alojamiento para 30 personas en 9 suites, piscina vallada, sala de cine con sofás de masaje y cocina profesional con dos islas.'
+  },
+  {
     id: 'finca-la-chopera',
     name: 'Finca La Chopera',
     slug: 'finca-la-chopera',
