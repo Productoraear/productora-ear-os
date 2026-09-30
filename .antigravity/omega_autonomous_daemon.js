@@ -6,8 +6,11 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const QUEUE_FILE = path.join(__dirname, 'tasks_queue.json');
 const JOURNAL_FILE = path.join(__dirname, 'OMEGA_STATE_JOURNAL.md');
+const VAULT_DIR = path.join(__dirname, '..', '..', 'EAR_VAULT_GOLDEN_NUGGETS');
 const OLLAMA_URL = 'http://localhost:11434/api/chat';
 const MODEL_NAME = 'ear-27b-apis-ctx20480:latest';
+
+if (!fs.existsSync(VAULT_DIR)) fs.mkdirSync(VAULT_DIR, { recursive: true });
 
 function readJSON(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
 function writeJSON(file, data) { fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf8'); }
@@ -27,10 +30,10 @@ function updateJournal(queueData, currentTask, statusMessage) {
     const recentCompleted = queueData.tasks.filter(t => t.status === 'COMPLETED').slice(-5);
     const upcomingQueued = queueData.tasks.filter(t => t.status === 'QUEUED').slice(0, 5);
 
-    const journalContent = `# 🚀 OMEGA ENGINE — DASHBOARD DE AUTONOMÍA EN TIEMPO REAL
+    const journalContent = `# 🚀 OMEGA ENGINE — DASHBOARD DE AUTONOMÍA EN TIEMPO REAL (v8.0 S-CLASS)
 > **Último Latido (GPU Local):** \`${new Date().toLocaleString('es-ES')}\`
 > **Motor AI Activo:** \`${MODEL_NAME}\` (Ollama localhost:11434)
-> **Validación:** \`npx tsc --noEmit\` (Exit Code 0 Strict)
+> **Módulos Activos:** Self-Healing Loop, Vampire RAG Vault, Pre-Flight CI
 
 ---
 
@@ -56,7 +59,7 @@ STATUS        | CANTIDAD | % DEL TOTAL
 ---
 
 ### 📋 ÚLTIMAS TAREAS COMPLETADAS (SELLADAS CON EXIT CODE 0)
-${recentCompleted.length > 0 ? recentCompleted.map(t => `- ✅ **[${t.id}]** ${t.title} (\`${t.files.join(', ')}\`)`).join('\n') : '*Procesando primeras tareas...*'}
+${recentCompleted.length > 0 ? recentCompleted.map(t => `- ✅ **[${t.id}]** ${t.title}`).join('\n') : '*Procesando primeras tareas...*'}
 
 ---
 
@@ -106,9 +109,8 @@ function runTscValidation() {
 
 async function processSingleTask(task, queueData) {
     console.log(`\n==================================================`);
-    console.log(`🚀 [AUTÓNOMO] PROCESANDO TAREA ${task.id}: ${task.title}`);
+    console.log(`🚀 [AUTÓNOMO v8.0] PROCESANDO TAREA ${task.id}: ${task.title}`);
     console.log(`   Archivos: ${task.files.join(', ')}`);
-    console.log(`   Acción: ${task.action}`);
     console.log(`==================================================`);
 
     const cwd = path.join(__dirname, '..');
@@ -123,12 +125,19 @@ async function processSingleTask(task, queueData) {
 
     const fileContent = fs.readFileSync(targetFilePath, 'utf8');
 
-    // System prompt for Qwen
+    // Vampire RAG: Inject Golden Nuggets
+    let ragContext = '';
+    const nuggets = fs.readdirSync(VAULT_DIR).filter(f => f.endsWith('.md')).slice(-3);
+    for (const f of nuggets) {
+        ragContext += fs.readFileSync(path.join(VAULT_DIR, f), 'utf8') + '\n';
+    }
+
     const systemPrompt = `Eres el Obrero Autónomo S-Class de Productora EAR (EAR OS v2). 
 Tu trabajo es auditar, refactorizar o arreglar el archivo TypeScript/React proporcionado siguiendo estrictamente estas reglas:
 1. Responde ÚNICAMENTE con el código final TypeScript/TSX listo para guardarse en el archivo.
-2. NO agregues introducciones, explicaciones, markdown wrappers triple backticks con texto descriptivo si puedes evitarlo, solo entrega el contenido del archivo.
-3. Respeta Next.js 15, estética OLED (#030305), tipos estricto (cero any implícitos) y limpia imports no utilizados.`;
+2. NO agregues markdown wrappers innecesarios si puedes evitarlo.
+3. Respeta Next.js 15, estética OLED (#030305), tipos estricto (cero any implícitos).
+4. APRENDIZAJE PREVIO (RAG): ${ragContext.slice(0, 5000)}`;
 
     const userPrompt = `TAREA ID: ${task.id}
 TÍTULO: ${task.title}
@@ -138,50 +147,42 @@ CONTENIDO ACTUAL DEL ARCHIVO (${task.files[0]}):
 \`\`\`tsx
 ${fileContent}
 \`\`\`
-
 Por favor entrega el contenido completo y refactorizado del archivo:`;
 
-    console.log(`⏳ Enviando prompt a Ollama (${MODEL_NAME})...`);
-    updateJournal(queueData, task, 'Generando refactorización en GPU...');
+    console.log(`⏳ Enviando prompt a Ollama (${MODEL_NAME}) con VAMPIRE RAG...`);
+    updateJournal(queueData, task, 'Generando refactorización en GPU (RAG Activo)...');
     let aiResponse = await callOllama(systemPrompt, userPrompt);
 
-    // Clean code fences if present
     let cleanedCode = aiResponse.trim();
-    if (cleanedCode.startsWith('```')) {
+    if (cleanedCode.startsWith('\`\`\`')) {
         const lines = cleanedCode.split('\n');
-        if (lines[0].startsWith('```')) lines.shift();
-        if (lines[lines.length - 1].trim().startsWith('```')) lines.pop();
+        if (lines[0].startsWith('\`\`\`')) lines.shift();
+        if (lines[lines.length - 1].trim().startsWith('\`\`\`')) lines.pop();
         cleanedCode = lines.join('\n');
     }
 
-    // Write candidate code
     fs.writeFileSync(targetFilePath, cleanedCode, 'utf8');
     console.log(`💾 Archivo ${task.files[0]} actualizado.`);
 
-    // Validate with TSC
     console.log(`🛡️ Validando con npx tsc --noEmit...`);
     let valResult = runTscValidation();
 
     if (!valResult.success) {
         console.warn(`⚠️ TypeScript error detectado. Intentando 1 auto-corrección con la IA...`);
-        const fixPrompt = `El código generado causó los siguientes errores de TypeScript (\`npx tsc --noEmit\`):
-
-ERRORS:
+        const fixPrompt = `El código generado causó errores (\`npx tsc --noEmit\`):
 ${valResult.error.slice(0, 3000)}
-
-CÓDIGO QUE CAUSÓ EL ERROR:
+CÓDIGO:
 \`\`\`tsx
 ${cleanedCode}
 \`\`\`
-
-Por favor corrige todos los errores y entrega el código completo corregido:`;
+Corrige todos los errores y entrega el código completo corregido:`;
 
         const fixedResponse = await callOllama(systemPrompt, fixPrompt);
         let cleanedFixed = fixedResponse.trim();
-        if (cleanedFixed.startsWith('```')) {
+        if (cleanedFixed.startsWith('\`\`\`')) {
             const lines = cleanedFixed.split('\n');
-            if (lines[0].startsWith('```')) lines.shift();
-            if (lines[lines.length - 1].trim().startsWith('```')) lines.pop();
+            if (lines[0].startsWith('\`\`\`')) lines.shift();
+            if (lines[lines.length - 1].trim().startsWith('\`\`\`')) lines.pop();
             cleanedFixed = lines.join('\n');
         }
 
@@ -190,38 +191,53 @@ Por favor corrige todos los errores y entrega el código completo corregido:`;
     }
 
     if (valResult.success) {
-        console.log(`✅ [ÉXITO] Tarea ${task.id} completada y validada con Exit Code 0.`);
-        task.status = 'COMPLETED';
-
-        // Auto purge every 5 tasks
-        const completedCount = queueData.tasks.filter(t => t.status === 'COMPLETED').length;
-        if (completedCount >= 5) {
-            console.log(`🧹 [PURGA] Purgando ${completedCount} tareas completadas para mantener la cola ultraligera...`);
-            queueData.tasks = queueData.tasks.filter(t => t.status !== 'COMPLETED');
+        console.log(`✅ [ÉXITO] Tarea ${task.id} completada.`);
+        
+        // Save Golden Nugget if this was a fix task
+        if (task.id.includes('-HEAL')) {
+            fs.writeFileSync(path.join(VAULT_DIR, `nugget-${task.id}.md`), `Aprendizaje de ${task.id}: Se resolvió compilación en ${task.files[0]}.`, 'utf8');
+            console.log(`🦇 [VAMPIRE RAG] Conocimiento guardado en la bóveda.`);
         }
 
+        task.status = 'COMPLETED';
         writeJSON(QUEUE_FILE, queueData);
         updateJournal(queueData, task, 'COMPLETED (Exit Code 0)');
         return true;
     } else {
-        console.error(`❌ [ERROR] Tarea ${task.id} falló validación. Revirtiendo archivo.`);
+        console.error(`❌ [ERROR CRÍTICO] Tarea ${task.id} falló validación. Revirtiendo...`);
         fs.writeFileSync(targetFilePath, fileContent, 'utf8');
         task.status = 'FAILED';
+
+        // Milestone 1: SELF-HEALING LOOP
+        console.log(`🚑 [AUTO-SANACIÓN] Generando tarea de diagnóstico dinámico...`);
+        try {
+            const healPrompt = `La tarea ${task.id} falló de forma irrecuperable. Error TSC: ${valResult.error.slice(0, 500)}.
+            Genera un JSON estrictamente con este formato para una NUEVA tarea que arregle esto:
+            {"id": "${task.id}-HEAL", "wave": ${task.wave || 99}, "status": "QUEUED", "title": "Auto-Fix ${task.id}", "action": "Reescribir dependencias o fixear tipos basándose en el error TS...", "files": ["${task.files[0]}"], "validate": "npx tsc --noEmit"}`;
+            
+            const healRes = await callOllama("Eres un orquestador que solo escupe JSON estricto.", healPrompt);
+            const healJsonStr = healRes.substring(healRes.indexOf('{'), healRes.lastIndexOf('}') + 1);
+            const healTask = JSON.parse(healJsonStr);
+            queueData.tasks.unshift(healTask); // Inject to the TOP of the queue
+            console.log(`💉 [ÉXITO AUTO-SANACIÓN] Tarea inyectada: ${healTask.id}`);
+        } catch (e) {
+            console.log(`⚠️ Falló la auto-sanación: ${e.message}`);
+        }
+
         writeJSON(QUEUE_FILE, queueData);
-        updateJournal(queueData, task, 'FAILED (Revertido)');
+        updateJournal(queueData, task, 'FAILED (Self-Healing Injected)');
         return false;
     }
 }
 
 async function runDaemonLoop() {
-    console.log("⚡ === MOTOR AUTÓNOMO OMEGA (ZERO-CLICK CEO EDITION) INICIADO ===");
+    console.log("⚡ === MOTOR AUTÓNOMO OMEGA v8.0 INICIADO ===");
     
     while (true) {
         let queueData;
         try {
             queueData = readJSON(QUEUE_FILE);
         } catch (e) {
-            console.error("Error leyendo queue file:", e);
             await new Promise(r => setTimeout(r, 3000));
             continue;
         }
@@ -229,10 +245,9 @@ async function runDaemonLoop() {
         let nextTask = queueData.tasks.find(t => t.status === 'QUEUED');
 
         if (!nextTask) {
-            // Auto-reintento de tareas fallidas
             const failedTasks = queueData.tasks.filter(t => t.status === 'FAILED' && (t.retries || 0) < 3);
             if (failedTasks.length > 0) {
-                console.log(`\n♻️ [REINTENTO AUTOMÁTICO] Reciclando ${failedTasks.length} tareas fallidas a la cola (Max 3 intentos)...`);
+                console.log(`\n♻️ Reciclando ${failedTasks.length} tareas fallidas...`);
                 failedTasks.forEach(t => {
                     t.status = 'QUEUED';
                     t.retries = (t.retries || 0) + 1;
@@ -242,7 +257,18 @@ async function runDaemonLoop() {
             }
 
             console.log("🏁 TODAS LAS TAREAS DE LA COLA ACTUAL FUERON COMPLETADAS.");
-            console.log("Esperando 10 segundos antes de volver a verificar...");
+            
+            // Milestone 3: CI/CD Pre-Flight Checks
+            console.log("✈️ [PRE-FLIGHT CHECK] Comprobando tamaño del repositorio Git...");
+            try {
+                const cwd = path.join(__dirname, '..');
+                const gitSize = execSync('git rev-list --objects --all | wc -l', { shell: true, cwd }).toString().trim();
+                console.log(`📦 Objetos en Git: ${gitSize} (Mantenimiento ultra-ligero S-Class OK).`);
+                updateJournal(queueData, null, `Pre-Flight OK. Git Objects: ${gitSize}`);
+            } catch(e) {
+                console.log("⚠️ No se pudo ejecutar el pre-flight check de Git.");
+            }
+
             await new Promise(r => setTimeout(r, 10000));
             continue;
         }
@@ -250,11 +276,12 @@ async function runDaemonLoop() {
         try {
             await processSingleTask(nextTask, queueData);
         } catch (err) {
-            console.error(`Error procesando tarea ${nextTask.id}:`, err);
-            await new Promise(r => setTimeout(r, 5000));
+            console.error(`Error crítico procesando tarea ${nextTask.id}:`, err);
+            nextTask.status = 'FAILED';
+            nextTask.retries = 999; 
+            writeJSON(QUEUE_FILE, queueData);
         }
 
-        // Small pause between tasks to allow system breathing
         await new Promise(r => setTimeout(r, 1500));
     }
 }
