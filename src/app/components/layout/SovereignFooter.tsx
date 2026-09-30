@@ -4,15 +4,15 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { 
-  MapPin, 
-  Search, 
-  ShieldCheck, 
-  Phone, 
-  Sparkles, 
-  Compass, 
-  ChevronDown, 
-  ChevronUp, 
+import {
+  MapPin,
+  Search,
+  ShieldCheck,
+  Phone,
+  Sparkles,
+  Compass,
+  ChevronDown,
+  ChevronUp,
   Volume2,
   Instagram,
   Facebook,
@@ -30,9 +30,10 @@ type RegionTab = 'TODAS' | 'CENTRO' | 'SUR' | 'ESTE' | 'NORTE' | 'INSULAR';
 export default function SovereignFooter() {
   const pathname = usePathname();
   const isHomePage = pathname === '/' || pathname === '' || pathname === '/home';
-  const isCleanFunnel = isHomePage || 
-    pathname?.startsWith('/admin') || 
-    pathname?.startsWith('/reservar') || 
+  const isCleanFunnel = isHomePage ||
+    pathname?.startsWith('/admin') ||
+    pathname?.startsWith('/panel') ||
+    pathname?.startsWith('/reservar') ||
     pathname?.startsWith('/calculadora') ||
     pathname?.startsWith('/ayuntamientos') ||
     pathname?.startsWith('/fincas');
@@ -76,7 +77,7 @@ function SovereignFooterContent() {
   const filteredProvinces = useMemo(() => {
     return allProvinces.filter((prov) => {
       const matchesRegion = activeRegion === 'TODAS' || prov.region === activeRegion;
-      const matchesSearch = searchQuery.trim() === '' || 
+      const matchesSearch = searchQuery.trim() === '' ||
         prov.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prov.capital.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prov.community.toLowerCase().includes(searchQuery.toLowerCase());
@@ -95,16 +96,16 @@ function SovereignFooterContent() {
   return (
     <footer className="bg-[#030305] border-t border-white/10 pt-16 pb-28 text-white selection:bg-[#FF2B44] selection:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        
+
         {/* 💎 FILA SUPERIOR: ESTRUCTURA SOBERANA DE 4 COLUMNAS (CUADERNO DE MARCA OFICIAL) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 pb-10 border-b border-white/10">
-          
+
           {/* COLUMNA 1: IDENTIDAD & LOGOTIPO DEL DIAMANTE EAR */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative w-11 h-11 rounded-2xl overflow-hidden border border-[#FF2B44]/70 shadow-[0_0_20px_rgba(255,43,68,0.45)] bg-black shrink-0">
-                <Image 
-                  src="/images/brand/ear_logo_official_diamond.png" 
+                <Image
+                  src="/images/brand/ear_logo_official_diamond.png"
                   alt="Productora EAR Logotipo Oficial Diamante"
                   fill
                   className="object-cover"
@@ -119,7 +120,7 @@ function SovereignFooterContent() {
                 </span>
               </div>
             </div>
-            
+
             <p className="text-[#ecb613] text-xs font-mono italic font-medium">
               &ldquo;Mensajes de calidad para una sociedad de calidad&rdquo;
             </p>
@@ -134,46 +135,46 @@ function SovereignFooterContent() {
                 Redes Operativas
               </span>
               <div className="flex items-center gap-2">
-                <a 
-                  href="https://instagram.com/productoraear" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://instagram.com/productoraear"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Instagram de Productora EAR"
                   className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF2B44]/70 hover:bg-[#FF2B44]/20 hover:text-[#FF2B44] text-zinc-400 flex items-center justify-center transition-all"
                 >
                   <Instagram size={15} />
                 </a>
-                <a 
-                  href="https://facebook.com/productoraear" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://facebook.com/productoraear"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Facebook de Productora EAR"
                   className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/20 hover:text-[#00E5FF] text-zinc-400 flex items-center justify-center transition-all"
                 >
                   <Facebook size={15} />
                 </a>
-                <a 
-                  href="https://linkedin.com/company/productoraear" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://linkedin.com/company/productoraear"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="LinkedIn de Productora EAR"
                   className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#00E5FF]/70 hover:bg-[#00E5FF]/20 hover:text-[#00E5FF] text-zinc-400 flex items-center justify-center transition-all"
                 >
                   <Linkedin size={15} />
                 </a>
-                <a 
-                  href="https://youtube.com/@productoraear" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://youtube.com/@productoraear"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="YouTube de Productora EAR"
                   className="w-9 h-9 rounded-xl bg-white/[0.03] border border-white/10 hover:border-[#FF2B44]/70 hover:bg-[#FF2B44]/20 hover:text-[#FF2B44] text-zinc-400 flex items-center justify-center transition-all"
                 >
                   <Youtube size={15} />
                 </a>
-                <a 
-                  href="https://wa.me/34693693048?text=Hola%20Productora%20EAR,%20deseo%20consultar%20sobre%20un%20evento" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href="https://wa.me/34693693048?text=Hola%20Productora%20EAR,%20deseo%20consultar%20sobre%20un%20evento"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="WhatsApp Oficial de Productora EAR"
                   className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-400 text-emerald-400 flex items-center justify-center transition-all"
                 >
@@ -295,7 +296,7 @@ function SovereignFooterContent() {
               </div>
 
               <div className="space-y-1.5">
-                <a 
+                <a
                   href="tel:+34693693048"
                   className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#FF2B44]/50 text-white hover:text-[#FF2B44] text-xs font-bold transition-all"
                 >
@@ -303,7 +304,7 @@ function SovereignFooterContent() {
                   <span>+34 693 693 048</span>
                 </a>
 
-                <a 
+                <a
                   href="mailto:productoraear@gmail.com"
                   className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#00E5FF]/50 text-white hover:text-[#00E5FF] text-xs font-bold transition-all"
                 >
@@ -361,11 +362,10 @@ function SovereignFooterContent() {
               <button
                 key={tab.id}
                 onClick={() => setActiveRegion(tab.id as RegionTab)}
-                className={`px-3 py-1 rounded-lg font-bold transition-all cursor-pointer ${
-                  activeRegion === tab.id
+                className={`px-3 py-1 rounded-lg font-bold transition-all cursor-pointer ${activeRegion === tab.id
                     ? 'bg-[#ecb613] text-black shadow-sm'
                     : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                }`}
+                  }`}
               >
                 {tab.label}
               </button>

@@ -3,21 +3,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { 
-  Search, 
-  Menu, 
-  X, 
-  ChevronDown, 
-  Activity, 
-  Sparkles, 
-  Music, 
-  Users, 
-  Building2, 
-  Sliders, 
-  Radio, 
-  Heart, 
-  Flame, 
-  Camera, 
+import {
+  Search,
+  Menu,
+  X,
+  ChevronDown,
+  Activity,
+  Sparkles,
+  Music,
+  Users,
+  Building2,
+  Sliders,
+  Radio,
+  Heart,
+  Flame,
+  Camera,
   Lock,
   ArrowRight,
   ShieldCheck
@@ -140,7 +140,7 @@ const SovereignNavbar = () => {
   const { scrollY } = useScroll();
   const { role, isAdmin } = useSovereignRole();
 
-  const navY = useTransform(scrollY, [0, 300], [0, -5]); 
+  const navY = useTransform(scrollY, [0, 300], [0, -5]);
   const shadowOpacity = useTransform(scrollY, [0, 100], [0.1, 0.8]);
 
   useEffect(() => {
@@ -160,7 +160,14 @@ const SovereignNavbar = () => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  if (pathname === '/' || pathname?.startsWith('/admin') || pathname?.startsWith('/pro') || pathname?.startsWith('/emp-menu') || pathname?.startsWith('/fincasparaboda')) {
+  if (
+    pathname === '/' ||
+    pathname?.startsWith('/admin') ||
+    pathname?.startsWith('/panel') ||
+    pathname?.startsWith('/pro') ||
+    pathname?.startsWith('/emp-menu') ||
+    pathname?.startsWith('/fincasparaboda')
+  ) {
     return null;
   }
 
@@ -188,11 +195,11 @@ const SovereignNavbar = () => {
   };
 
   return (
-    <motion.header 
+    <motion.header
       style={{ y: navY }}
       className="fixed top-0 left-0 w-full z-[100] px-3 py-3 md:px-8"
     >
-      <motion.nav 
+      <motion.nav
         style={{ boxShadow: `0 20px 40px -10px rgba(0,0,0, ${shadowOpacity.get()})` }}
         className={cn(
           "max-w-7xl mx-auto flex items-center justify-between px-5 py-2.5 transition-all duration-700 rounded-full border backdrop-blur-2xl",
@@ -205,13 +212,13 @@ const SovereignNavbar = () => {
             "w-9 h-9 rounded-2xl overflow-hidden border p-0.5 flex items-center justify-center transition-all group-hover:scale-105 bg-black",
             pathname?.startsWith('/vimume')
               ? "border-[#00E5FF]/60 shadow-[0_0_20px_rgba(0,229,255,0.4)]"
-              : role === 'ROLE_B2G' 
-                ? "border-blue-400/60 shadow-[0_0_20px_rgba(59,130,246,0.4)]" 
+              : role === 'ROLE_B2G'
+                ? "border-blue-400/60 shadow-[0_0_20px_rgba(59,130,246,0.4)]"
                 : "border-[#FF2B44]/70 shadow-[0_0_20px_rgba(255,43,68,0.45)]"
           )}>
-            <img 
-              src={pathname?.startsWith('/vimume') ? "/images/brand/colibri_isotipo.png" : "/images/brand/ear_logo_official_diamond.png"} 
-              alt={pathname?.startsWith('/vimume') ? "VIMUME Logo Colibrí" : "Productora EAR Logotipo Oficial Diamante"} 
+            <img
+              src={pathname?.startsWith('/vimume') ? "/images/brand/colibri_isotipo.png" : "/images/brand/ear_logo_official_diamond.png"}
+              alt={pathname?.startsWith('/vimume') ? "VIMUME Logo Colibrí" : "Productora EAR Logotipo Oficial Diamante"}
               className="w-full h-full object-cover rounded-xl"
             />
           </div>
@@ -238,8 +245,8 @@ const SovereignNavbar = () => {
             const isOpen = activeDropdown === folder.id;
 
             return (
-              <div 
-                key={folder.id} 
+              <div
+                key={folder.id}
                 className="relative"
                 onMouseEnter={() => handleMouseEnter(folder.id)}
                 onMouseLeave={handleMouseLeave}
@@ -313,12 +320,12 @@ const SovereignNavbar = () => {
               </div>
             );
           })}
-          
+
           {/* VIMUME HIGHLIGHT */}
           <Link href="/vimume" className={cn(
             "flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider ml-1",
-            role === 'ROLE_B2G' 
-              ? "border-blue-400/50 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300" 
+            role === 'ROLE_B2G'
+              ? "border-blue-400/50 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300"
               : "border-[#00E5FF]/30 hover:border-[#00E5FF] hover:bg-[#00E5FF]/10 text-[#00E5FF]"
           )}>
             <Activity size={13} />
@@ -328,7 +335,7 @@ const SovereignNavbar = () => {
 
         {/* OMNI-SEARCH & WALLET */}
         <div className="hidden md:flex items-center gap-3">
-          <button 
+          <button
             className="flex items-center gap-2 bg-black/50 border border-white/10 hover:border-[#FF2B44]/50 px-3.5 py-1.5 rounded-full text-white/50 text-xs font-mono transition-all group cursor-pointer"
             onClick={() => setIsSearchOpen(true)}
           >
@@ -352,7 +359,7 @@ const SovereignNavbar = () => {
               <Link href="/admin" className="px-4 py-1.5 bg-[#FF2B44] text-white rounded-full font-bold text-xs hover:scale-105 shadow-[0_0_15px_rgba(255,43,68,0.4)] transition-all font-mono uppercase tracking-wider">
                 ADMIN
               </Link>
-              <button 
+              <button
                 onClick={async () => {
                   await fetch('/api/auth/logout', { method: 'POST' });
                   document.cookie = 'ear_auth_signal=; path=/; max-age=0';
@@ -369,9 +376,9 @@ const SovereignNavbar = () => {
         </div>
 
         {/* MOBILE TOGGLE */}
-        <button 
+        <button
           aria-label="Abrir Menú de Navegación"
-          className="lg:hidden text-white hover:text-[#FF2B44] transition-colors p-1" 
+          className="lg:hidden text-white hover:text-[#FF2B44] transition-colors p-1"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -381,14 +388,14 @@ const SovereignNavbar = () => {
       {/* MOBILE MENU (CON ACORDEONES POR SUBCARPETAS) */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             className="absolute top-20 left-3 right-3 bg-[#07070b]/98 backdrop-blur-3xl border border-white/15 rounded-3xl p-5 flex flex-col gap-3 shadow-[0_25px_60px_rgba(0,0,0,0.95)] lg:hidden max-h-[85vh] overflow-y-auto z-50"
           >
             {/* Buscador Móvil */}
-            <button 
+            <button
               className="flex items-center justify-between bg-white/5 border border-white/10 px-4 py-2.5 rounded-xl text-white/70 text-xs font-mono"
               onClick={() => {
                 setIsSearchOpen(true);
@@ -417,7 +424,7 @@ const SovereignNavbar = () => {
 
                     {isExpanded && (
                       <div className="px-3 pb-3 pt-1 space-y-1 border-t border-white/5 bg-white/[0.02]">
-                        <Link 
+                        <Link
                           href={folder.href}
                           onClick={() => setMobileMenuOpen(false)}
                           className="block text-xs font-mono text-[#AAD6CD] hover:underline py-1"
@@ -445,8 +452,8 @@ const SovereignNavbar = () => {
                 );
               })}
 
-              <Link 
-                href="/vimume" 
+              <Link
+                href="/vimume"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-between p-3 rounded-xl border border-[#00E5FF]/20 bg-[#00E5FF]/5 text-[#00E5FF] font-syne text-sm font-bold uppercase"
               >

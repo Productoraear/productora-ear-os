@@ -1,20 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   CreditCard,
-  ShieldCheck,
-  CheckCircle2,
   Lock,
-  ArrowDownLeft,
-  FileText,
   DollarSign,
   RefreshCw,
   TrendingUp,
   Landmark,
-  Wallet,
-  Sparkles,
-  ExternalLink
+  Wallet
 } from 'lucide-react';
 
 interface TreasuryData {
@@ -63,7 +57,7 @@ export default function TesoreriaAdminCatminPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
-      
+
       {/* ===================================================================== */}
       {/* 1. HEADER DE PÁGINA CATMÍN                                            */}
       {/* ===================================================================== */}
@@ -101,7 +95,7 @@ export default function TesoreriaAdminCatminPage() {
       {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI DE TESORERÍA                          */}
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        
+
         {/* Card 1: Total Señales */}
         <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">

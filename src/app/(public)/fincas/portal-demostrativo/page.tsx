@@ -1,5 +1,4 @@
 "use client";
-import React from 'react';
 import Link from 'next/link';
 import {
   buildExecutiveDashboard,
@@ -45,10 +44,10 @@ export default function FincaExecutiveCockpitPage() {
               <Gauge size={14} />
               FINCASPARABODA.COM · S-CLASS VERTICAL
             </div>
-            <a 
-              href="https://fincasparaboda.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://fincasparaboda.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-zinc-300 text-[11px] font-mono transition-colors"
             >
               <span>fincasparaboda.com</span>

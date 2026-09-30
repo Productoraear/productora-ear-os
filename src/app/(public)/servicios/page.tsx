@@ -4,18 +4,17 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, Shield, Zap, Activity, Award, CheckCircle2, 
-  Layers, Sliders, ArrowRight, Lock, Unlock, Radio, Users, 
-  Cpu, Music, Flame, GlassWater, Crown, Disc, Utensils, 
-  Headphones, Camera, Video, Lightbulb, ClipboardList, ChevronRight
+import {
+  Sparkles, Shield, Activity, CheckCircle2,
+  Lock, Unlock, Users,
+  Flame, GlassWater, Crown, Disc
 } from 'lucide-react';
 import { featuredVendors, FEATURED_VENDORS_TOTAL } from '@/data/featured-vendors';
 import { useEventCart, CartItem } from '@/context/EventCartContext';
 import { NeuralJourneyApex } from '@/app/components/SClassScreens/NeuralJourneyApex';
 import { AcousticSpatialMatcher } from '@/app/components/SClassScreens/AcousticSpatialMatcher';
 import { EventEngineProvider } from '@/contexts/EventEngineContext';
-import type { AuraType, ClimaxType, ServiceCategory, WeddingPreferences } from '@/lib/engines/weddingMatchEngine';
+import type { WeddingPreferences } from '@/lib/engines/weddingMatchEngine';
 
 // Activos de Infraestructura Propia (Tier 0 - Margen >75% / S-Class Certified)
 const TIER_ZERO_ARSENAL: CartItem[] = [
@@ -140,7 +139,7 @@ function UnifiedMatchmakerContent() {
       </div>
 
       <main className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pt-28">
-        
+
         {/* 🏢 BANNER PERSISTENTE: RECLAMACIÓN DE PERFIL B2B */}
         <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-950/40 via-[#0a0a0a] to-[#0a0a0a] border border-[#ecb613]/30 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
           <div className="flex items-center gap-3">
@@ -178,11 +177,10 @@ function UnifiedMatchmakerContent() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setPriceLockActive(!priceLockActive)}
-              className={`px-5 py-3 rounded-2xl text-xs font-mono font-bold flex items-center gap-3 transition-all duration-500 border ${
-                priceLockActive
+              className={`px-5 py-3 rounded-2xl text-xs font-mono font-bold flex items-center gap-3 transition-all duration-500 border ${priceLockActive
                   ? 'bg-emerald-950/60 border-emerald-500/50 text-emerald-300 shadow-[0_0_30px_rgba(16,185,129,0.2)] backdrop-blur-xl'
                   : 'bg-white/5 border-white/10 text-white/60 hover:border-[#ecb613]/40'
-              }`}
+                }`}
             >
               {priceLockActive ? <Lock size={16} className="text-emerald-400" /> : <Unlock size={16} />}
               <div className="text-left">
@@ -200,7 +198,7 @@ function UnifiedMatchmakerContent() {
 
         {/* BENTO GRID: ATMÓSFERAS Y AFORO */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
-          
+
           {/* SELECTOR DE ATMÓSFERAS (7 COLS) */}
           <div className="lg:col-span-7 bg-[#0a0a0a]/80 border border-white/10 rounded-3xl p-6 md:p-8 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
             <div className="flex items-center justify-between mb-6">
@@ -228,11 +226,10 @@ function UnifiedMatchmakerContent() {
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.99 }}
                     onClick={() => setAtmosphere(atm.id)}
-                    className={`p-4 rounded-2xl border transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between ${
-                      isSelected
+                    className={`p-4 rounded-2xl border transition-all cursor-pointer relative overflow-hidden flex flex-col justify-between ${isSelected
                         ? `bg-gradient-to-br ${atm.glow} border-[#ecb613] shadow-[0_0_25px_rgba(236,182,19,0.15)]`
                         : 'bg-white/[0.02] border-white/5 hover:border-white/20 hover:bg-white/[0.04]'
-                    }`}
+                      }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2">
@@ -310,22 +307,20 @@ function UnifiedMatchmakerContent() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setActiveTab('tier0')}
-              className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
-                activeTab === 'tier0'
+              className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${activeTab === 'tier0'
                   ? 'bg-[#ecb613] text-black shadow-[0_0_25px_rgba(236,182,19,0.3)]'
                   : 'text-white/60 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               <Sparkles size={15} />
               INFRAESTRUCTURA TÉCNICA & ARTISTAS S-CLASS ({TIER_ZERO_ARSENAL.length})
             </button>
             <button
               onClick={() => setActiveTab('catalog')}
-              className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
-                activeTab === 'catalog'
+              className={`px-5 py-2.5 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${activeTab === 'catalog'
                   ? 'bg-[#ecb613] text-black shadow-[0_0_25px_rgba(236,182,19,0.3)]'
                   : 'text-white/60 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               <Users size={15} />
               CATÁLOGO NACIONAL ZK ({FEATURED_VENDORS_TOTAL})
@@ -378,11 +373,10 @@ function UnifiedMatchmakerContent() {
               return (
                 <div
                   key={item.slug}
-                  className={`rounded-3xl p-6 border transition-all duration-500 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden group ${
-                    isInCart
+                  className={`rounded-3xl p-6 border transition-all duration-500 backdrop-blur-2xl flex flex-col justify-between relative overflow-hidden group ${isInCart
                       ? 'bg-gradient-to-b from-[#ecb613]/10 to-[#0a0a0a] border-[#ecb613] shadow-[0_0_30px_rgba(236,182,19,0.15)]'
                       : 'bg-[#0a0a0a]/80 border-white/10 hover:border-white/20 hover:shadow-2xl'
-                  }`}
+                    }`}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
@@ -413,11 +407,10 @@ function UnifiedMatchmakerContent() {
                           addToCart(item);
                         }
                       }}
-                      className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all ${
-                        isInCart
+                      className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all ${isInCart
                           ? 'bg-red-950/60 border border-red-500/40 text-red-300 hover:bg-red-900/60'
                           : 'bg-[#ecb613] text-black hover:bg-[#ffd700] shadow-[0_0_20px_rgba(236,182,19,0.2)]'
-                      }`}
+                        }`}
                     >
                       {isInCart ? 'Retirar' : '+ Inyectar al Pack'}
                     </button>
@@ -469,9 +462,8 @@ function UnifiedMatchmakerContent() {
                           });
                         }
                       }}
-                      className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition ${
-                        isInCart ? 'bg-red-950/60 text-red-300 border border-red-500/30' : 'bg-white/10 text-white hover:bg-white/20'
-                      }`}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition ${isInCart ? 'bg-red-950/60 text-red-300 border border-red-500/30' : 'bg-white/10 text-white hover:bg-white/20'
+                        }`}
                     >
                       {isInCart ? 'Quitar' : '+ Añadir'}
                     </button>

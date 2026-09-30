@@ -3,20 +3,20 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { useRouter, usePathname } from 'next/navigation';
-import { 
-  Home, 
-  Sparkles, 
-  Calculator, 
-  ShieldCheck, 
-  MessageCircle, 
-  X, 
-  Zap, 
-  Building2, 
-  Users, 
-  Phone, 
-  ArrowRight, 
-  CheckCircle2, 
-  Volume2, 
+import {
+  Home,
+  Sparkles,
+  Calculator,
+  ShieldCheck,
+  MessageCircle,
+  X,
+  Zap,
+  Building2,
+  Users,
+  Phone,
+  ArrowRight,
+  CheckCircle2,
+  Volume2,
   Lock,
   ChevronRight,
   Music,
@@ -88,7 +88,7 @@ export function SovereignMobileHUD() {
   const pathname = usePathname();
 
   // Si estamos en /admin, el HUD público no debe interferir con el Centro de Mando
-  if (pathname?.startsWith('/admin')) {
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/panel')) {
     return null;
   }
 
@@ -97,14 +97,14 @@ export function SovereignMobileHUD() {
 
   const sheetVariants: Variants = {
     hidden: { y: '100%', opacity: 0 },
-    visible: { 
-      y: 0, 
-      opacity: 1, 
+    visible: {
+      y: 0,
+      opacity: 1,
       transition: { type: 'spring', damping: 28, stiffness: 260 }
     },
-    exit: { 
-      y: '100%', 
-      opacity: 0, 
+    exit: {
+      y: '100%',
+      opacity: 0,
       transition: { duration: 0.2 }
     }
   };
@@ -125,7 +125,7 @@ export function SovereignMobileHUD() {
       {/* TELÓN DE FONDO GLASSMORPHIC */}
       <AnimatePresence>
         {isCockpitOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -137,7 +137,7 @@ export function SovereignMobileHUD() {
 
       {/* CONTENEDOR FLOTANTE MÓVIL (ANCLADO AL BOTTOM CON SAFE-AREA) */}
       <div className="fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-lg z-[995] flex flex-col justify-end pointer-events-none md:hidden">
-        
+
         {/* DRAWER / COCKPIT ACOMPAÑANTE ASTRA (MOMENTO WOW DEL VIAJE DEL CLIENTE) */}
         <AnimatePresence>
           {isCockpitOpen && (
@@ -161,7 +161,7 @@ export function SovereignMobileHUD() {
                     Tu Viaje <span className="text-[#ecb613]">100% Asistido</span>
                   </h2>
                 </div>
-                <button 
+                <button
                   onClick={() => setIsCockpitOpen(false)}
                   className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors"
                   aria-label="Cerrar Cockpit"
@@ -189,11 +189,10 @@ export function SovereignMobileHUD() {
                       <button
                         key={r}
                         onClick={() => setSelectedRole(r)}
-                        className={`p-2 rounded-xl flex flex-col items-center gap-1 border text-center transition-all ${
-                          isSelected
+                        className={`p-2 rounded-xl flex flex-col items-center gap-1 border text-center transition-all ${isSelected
                             ? 'bg-[#ecb613]/20 border-[#ecb613] text-white shadow-md'
                             : 'bg-white/[0.03] border-white/5 text-zinc-400 hover:text-white'
-                        }`}
+                          }`}
                       >
                         <ItemIcon size={14} className={isSelected ? 'text-[#ecb613]' : 'text-zinc-400'} />
                         <span className="text-[10px] font-mono font-bold leading-tight">{labels[r].name}</span>
@@ -249,14 +248,14 @@ export function SovereignMobileHUD() {
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 bg-[#12121c] p-1 rounded-xl border border-white/10">
-                  <button 
+                  <button
                     onClick={() => setPaxCount(Math.max(20, paxCount - 20))}
                     className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 text-white font-mono text-xs flex items-center justify-center"
                   >
                     -
                   </button>
                   <span className="font-mono text-xs font-bold text-white px-1.5">{paxCount}</span>
-                  <button 
+                  <button
                     onClick={() => setPaxCount(paxCount + 20)}
                     className="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/15 text-white font-mono text-xs flex items-center justify-center"
                   >
@@ -302,28 +301,26 @@ export function SovereignMobileHUD() {
         </AnimatePresence>
 
         {/* 🚀 BARRA DE NAVEGACIÓN INFERIOR S-CLASS (AEROESPACIAL · CERO RUIDO · ERGONÓMICA) */}
-        <nav 
+        <nav
           aria-label="Navegación Móvil Principal"
           className="w-full h-15 bg-[#06060a]/92 backdrop-blur-2xl border border-white/15 rounded-2xl flex items-center justify-between px-3 shadow-[0_10px_35px_rgba(0,0,0,0.8)] pointer-events-auto"
         >
           {/* 1. INICIO / EXPLORAR */}
-          <button 
+          <button
             onClick={() => router.push('/')}
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${
-              pathname === '/' ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${pathname === '/' ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
+              }`}
             aria-label="Ir a Inicio"
           >
             <Home size={18} />
             <span className="text-[9px] font-mono font-medium">Inicio</span>
           </button>
-          
+
           {/* 2. COTIZADOR EXPRESS */}
-          <button 
+          <button
             onClick={() => router.push('/checkout/presupuesto')}
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${
-              pathname?.startsWith('/checkout') ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${pathname?.startsWith('/checkout') ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
+              }`}
             aria-label="Calcular Presupuesto"
           >
             <Calculator size={18} />
@@ -331,14 +328,14 @@ export function SovereignMobileHUD() {
           </button>
 
           {/* 3. BOTÓN CENTRAL WOW: ORÁCULO ASTRA ACOMPAÑANTE */}
-          <button 
+          <button
             onClick={() => setIsCockpitOpen(!isCockpitOpen)}
             className="relative -top-4 w-13 h-13 rounded-full bg-gradient-to-tr from-[#ecb613] via-amber-400 to-[#fff2a3] flex items-center justify-center text-black border-4 border-[#06060a] shadow-[0_0_25px_rgba(236,182,19,0.6)] active:scale-90 transition-all group"
             aria-label="Abrir Oráculo Copilot"
             title="Oráculo Astra Copilot"
           >
-            <motion.div 
-              animate={{ 
+            <motion.div
+              animate={{
                 rotate: isCockpitOpen ? 90 : 0,
                 scale: isCockpitOpen ? 0.9 : 1
               }}
@@ -350,11 +347,10 @@ export function SovereignMobileHUD() {
           </button>
 
           {/* 4. GARANTÍA & B2G */}
-          <button 
+          <button
             onClick={() => router.push('/ocasiones/ayuntamientos')}
-            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${
-              pathname?.startsWith('/ocasiones') ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`flex flex-col items-center justify-center gap-0.5 w-14 py-1 transition-colors ${pathname?.startsWith('/ocasiones') ? 'text-[#ecb613]' : 'text-zinc-400 hover:text-white'
+              }`}
             aria-label="Garantía y Contratación"
           >
             <ShieldCheck size={18} />
@@ -362,7 +358,7 @@ export function SovereignMobileHUD() {
           </button>
 
           {/* 5. WHATSAPP VIP / ORÁCULO DIRECTO */}
-          <a 
+          <a
             href={officialWhatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"

@@ -15,8 +15,14 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { cliente, titulo, lineas, caducidadDias = 14 } = body;
 
-    if (!cliente || !lineas || !Array.isArray(lineas)) {
-      return NextResponse.json({ error: 'Datos de propuesta incompletos' }, { status: 400 });
+    if (!cliente || typeof cliente.nombre !== 'string' || !cliente.nombre.trim() || !lineas || !Array.isArray(lineas) || lineas.length === 0) {
+      return NextResponse.json({ error: 'Datos de propuesta incompletos o cliente inválido' }, { status: 400 });
+    }
+
+    for (const linea of lineas) {
+      if (typeof linea.precio !== 'number' || linea.precio < 0) {
+        return NextResponse.json({ error: 'El precio de las líneas debe ser un número válido >= 0' }, { status: 400 });
+      }
     }
 
     const token = crypto.randomBytes(12).toString('hex');

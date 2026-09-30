@@ -6,22 +6,34 @@ import {
   Speaker,
   CalendarDays,
   WalletCards,
-  Settings,
   LogOut,
-  Sparkles,
-  ShieldCheck,
-  Menu,
-  X,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Tag,
+  Inbox,
+  Store,
+  ShieldAlert,
+  Star
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import { getVendorSessionAction } from '@/app/actions/vendorAuthActions';
 
-export default function VendorLayout({ children }: { children: React.ReactNode }) {
+export default async function VendorLayout({ children }: { children: React.ReactNode }) {
+  const session = await getVendorSessionAction();
+  const isImpersonated = session?.isImpersonated || false;
+
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col lg:flex-row selection:bg-[#ecb613] selection:text-black font-sans">
 
+      {/* ⚠️ BANNER DE SUPLANTACIÓN ASISTIDA ADMIN */}
+      {isImpersonated && (
+        <div className="bg-amber-500/10 border-b border-amber-500/30 px-4 py-2 text-center text-xs font-mono text-amber-300 font-bold flex items-center justify-center gap-2 fixed top-0 w-full z-[100] backdrop-blur-md">
+          <ShieldAlert size={14} className="text-[#ecb613]" />
+          <span>MODO SOPORTE ADMIN ACTIVO — SUPLANTANDO CON AUDITORÍA A: <strong className="text-white uppercase">{session?.vendorSlug}</strong></span>
+        </div>
+      )}
+
       {/* 📱 Mobile Header */}
-      <header className="lg:hidden w-full bg-[#09090d]/90 backdrop-blur-2xl border-b border-white/10 p-4 flex items-center justify-between sticky top-0 z-50">
+      <header className={`lg:hidden w-full bg-[#09090d]/90 backdrop-blur-2xl border-b border-white/10 p-4 flex items-center justify-between sticky z-50 ${isImpersonated ? 'top-8' : 'top-0'}`}>
         <div className="flex items-center gap-2">
           <span className="text-xl font-black font-syne text-white tracking-tighter">
             EAR<span className="text-[#ecb613]">.OS</span>
@@ -47,7 +59,7 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
       </header>
 
       {/* 🖥️ Desktop Sidebar S-Class (OLED Dark Glass) */}
-      <aside className="hidden lg:flex w-72 bg-[#09090d]/80 backdrop-blur-2xl border-r border-white/10 flex-col fixed h-full z-50 justify-between">
+      <aside className={`hidden lg:flex w-72 bg-[#09090d]/80 backdrop-blur-2xl border-r border-white/10 flex-col fixed h-full z-50 justify-between ${isImpersonated ? 'top-8 pt-0 pb-8' : 'top-0'}`}>
         <div>
           {/* Logo & Status */}
           <div className="p-6 border-b border-white/10">
@@ -68,15 +80,39 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
 
             <Link
               href="/vendor/dashboard"
-              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] font-bold transition-all hover:scale-[1.02]"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] font-bold transition-all hover:scale-[1.02]"
             >
               <LayoutDashboard className="w-4 h-4 text-[#ecb613]" />
               <span>Dashboard</span>
             </Link>
 
             <Link
+              href="/vendor/inbox"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+            >
+              <Inbox className="w-4 h-4 text-blue-400" />
+              <span>Bandeja de Leads</span>
+            </Link>
+
+            <Link
+              href="/vendor/promociones"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+            >
+              <Tag className="w-4 h-4 text-amber-400" />
+              <span>Ofertas & Regalos</span>
+            </Link>
+
+            <Link
+              href="/vendor/escaparate"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+            >
+              <Store className="w-4 h-4 text-purple-400" />
+              <span>Escaparate Público</span>
+            </Link>
+
+            <Link
               href="/vendor/media"
-              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
               <ImageIcon className="w-4 h-4 text-zinc-400" />
               <span>Galería Multimedia</span>
@@ -84,34 +120,34 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
 
             <Link
               href="/vendor/rider"
-              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
               <Speaker className="w-4 h-4 text-zinc-400" />
-              <span>Rider S-Class (12 W/pax)</span>
+              <span>Rider S-Class</span>
             </Link>
 
             <Link
               href="/vendor/calendar"
-              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
               <CalendarDays className="w-4 h-4 text-zinc-400" />
-              <span>Disponibilidad (72h Lock)</span>
+              <span>Disponibilidad (iCal)</span>
             </Link>
 
             <Link
               href="/vendor/billing"
-              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
               <WalletCards className="w-4 h-4 text-zinc-400" />
               <span>Split 80/10/10</span>
             </Link>
 
             <Link
-              href="/vendor/calibrator"
-              className="flex items-center gap-3 px-3.5 py-3 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
+              href="/vendor/resenas"
+              className="flex items-center gap-3 px-3.5 py-2.5 rounded-2xl hover:bg-white/5 text-zinc-400 hover:text-white transition-all"
             >
-              <SlidersHorizontal className="w-4 h-4 text-zinc-400" />
-              <span>Calibrador Captación</span>
+              <Star className="w-4 h-4 text-amber-400" />
+              <span>Reseñas Verificadas</span>
             </Link>
           </nav>
         </div>
@@ -134,7 +170,7 @@ export default function VendorLayout({ children }: { children: React.ReactNode }
       </aside>
 
       {/* 🌟 Main Content Area */}
-      <main className="flex-1 lg:ml-72 min-h-screen">
+      <main className={`flex-1 lg:ml-72 min-h-screen ${isImpersonated ? 'pt-8' : ''}`}>
         <div className="max-w-6xl mx-auto p-4 sm:p-8 lg:p-12">
           {children}
         </div>

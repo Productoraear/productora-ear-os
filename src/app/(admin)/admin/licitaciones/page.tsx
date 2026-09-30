@@ -1,17 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Landmark,
-  ShieldCheck,
   Volume2,
   FileCheck,
-  AlertTriangle,
-  ArrowUpRight,
   TrendingUp,
-  FileText,
-  Building2,
-  CheckCircle2,
   Search,
   Sparkles
 } from 'lucide-react';
@@ -70,7 +64,7 @@ export default function LicitacionesAdminCatminPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
-      
+
       {/* ===================================================================== */}
       {/* 1. HEADER DE PÁGINA CATMÍN                                            */}
       {/* ===================================================================== */}
@@ -100,7 +94,7 @@ export default function LicitacionesAdminCatminPage() {
       {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI LEGALES                               */}
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        
+
         <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Tope Preventivo Legal</span>

@@ -1,0 +1,470 @@
+{
+  "timestamp": "2026-09-29T07:44:55.505032",
+  "stats": {
+    "total_analyzed": 50,
+    "classified_count": 24,
+    "potential_impressions": 1504,
+    "potential_clicks": 8
+  },
+  "clusters": {
+    "TRANSACTIONAL_BODAS_EVENTOS": {
+      "vectorInfo": {
+        "target": "Depósito 100€ / Cotizador Inmediato (Price-Lock)",
+        "priority": "P0_REVENUE",
+        "action": "Vincular a /cotizador con precarga de servicios y Split 80/10/10",
+        "pattern": "(?!.*(edwin|productora\\s?ear|vimume)).*(musica|saxofonista|violinista|cantante|grupo|dj|amenizacion|boda|evento|coctel|precio|tarifa|contratar|cuanto\\scuesta|fiesta|show|animacion)"
+      },
+      "totalQueries": 12,
+      "queries": [
+        {
+          "query": "alquiler de pantallas gigantes para eventos",
+          "clicks": 0,
+          "impressions": 83,
+          "position": 47.67,
+          "ctr": 0.0,
+          "opportunityScore": 17.05,
+          "wordsCount": 6
+        },
+        {
+          "query": "alquiler de pantallas led para eventos",
+          "clicks": 0,
+          "impressions": 98,
+          "position": 64.64,
+          "ctr": 0.0,
+          "opportunityScore": 14.93,
+          "wordsCount": 6
+        },
+        {
+          "query": "alquiler pantallas led eventos",
+          "clicks": 0,
+          "impressions": 100,
+          "position": 69.53,
+          "ctr": 0.0,
+          "opportunityScore": 14.18,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler de pantalla led para eventos",
+          "clicks": 0,
+          "impressions": 84,
+          "position": 62.24,
+          "ctr": 0.0,
+          "opportunityScore": 13.28,
+          "wordsCount": 6
+        },
+        {
+          "query": "dj para bodas",
+          "clicks": 0,
+          "impressions": 112,
+          "position": 86.64,
+          "ctr": 0.0,
+          "opportunityScore": 12.78,
+          "wordsCount": 3
+        },
+        {
+          "query": "precio alquiler pantalla led gigante",
+          "clicks": 0,
+          "impressions": 72,
+          "position": 58.76,
+          "ctr": 0.0,
+          "opportunityScore": 12.05,
+          "wordsCount": 5
+        },
+        {
+          "query": "dj bodas",
+          "clicks": 0,
+          "impressions": 93,
+          "position": 79.2,
+          "ctr": 0.0,
+          "opportunityScore": 11.6,
+          "wordsCount": 2
+        },
+        {
+          "query": "alquiler pantalla gigante precio",
+          "clicks": 0,
+          "impressions": 67,
+          "position": 60.18,
+          "ctr": 0.0,
+          "opportunityScore": 10.95,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler de pantallas led precios",
+          "clicks": 0,
+          "impressions": 74,
+          "position": 70.65,
+          "ctr": 0.0,
+          "opportunityScore": 10.33,
+          "wordsCount": 5
+        },
+        {
+          "query": "alquiler de pantallas led para eventos madrid",
+          "clicks": 0,
+          "impressions": 67,
+          "position": 65.06,
+          "ctr": 0.0,
+          "opportunityScore": 10.14,
+          "wordsCount": 7
+        },
+        {
+          "query": "alquiler pantallas led para eventos precios",
+          "clicks": 0,
+          "impressions": 67,
+          "position": 72.18,
+          "ctr": 0.0,
+          "opportunityScore": 9.16,
+          "wordsCount": 6
+        },
+        {
+          "query": "alquiler de pantallas para eventos precio",
+          "clicks": 0,
+          "impressions": 68,
+          "position": 76.93,
+          "ctr": 0.0,
+          "opportunityScore": 8.73,
+          "wordsCount": 6
+        }
+      ]
+    },
+    "GEO_AI_CONVERSATIONAL_LONGTAIL": {
+      "vectorInfo": {
+        "target": "pSEO Landing Pages & Dominancia IA (Google AI / GEO)",
+        "priority": "P1_PSEO_EXPANSION",
+        "action": "Generar/Actualizar Landing pSEO con Schema JSON-LD de alta densidad",
+        "pattern": "^(\\S+\\s+){4,}\\S+"
+      },
+      "totalQueries": 10,
+      "queries": [
+        {
+          "query": "alquiler de pantallas gigantes para eventos",
+          "clicks": 0,
+          "impressions": 83,
+          "position": 47.67,
+          "ctr": 0.0,
+          "opportunityScore": 17.05,
+          "wordsCount": 6
+        },
+        {
+          "query": "alquiler de pantallas led para eventos",
+          "clicks": 0,
+          "impressions": 98,
+          "position": 64.64,
+          "ctr": 0.0,
+          "opportunityScore": 14.93,
+          "wordsCount": 6
+        },
+        {
+          "query": "alquiler de pantalla led para eventos",
+          "clicks": 0,
+          "impressions": 84,
+          "position": 62.24,
+          "ctr": 0.0,
+          "opportunityScore": 13.28,
+          "wordsCount": 6
+        },
+        {
+          "query": "precio alquiler pantalla led gigante",
+          "clicks": 0,
+          "impressions": 72,
+          "position": 58.76,
+          "ctr": 0.0,
+          "opportunityScore": 12.05,
+          "wordsCount": 5
+        },
+        {
+          "query": "alquiler equipos de sonido galicia",
+          "clicks": 0,
+          "impressions": 67,
+          "position": 63.24,
+          "ctr": 0.0,
+          "opportunityScore": 10.43,
+          "wordsCount": 5
+        },
+        {
+          "query": "alquiler de pantallas led precios",
+          "clicks": 0,
+          "impressions": 74,
+          "position": 70.65,
+          "ctr": 0.0,
+          "opportunityScore": 10.33,
+          "wordsCount": 5
+        },
+        {
+          "query": "alquiler de pantallas led para eventos madrid",
+          "clicks": 0,
+          "impressions": 67,
+          "position": 65.06,
+          "ctr": 0.0,
+          "opportunityScore": 10.14,
+          "wordsCount": 7
+        },
+        {
+          "query": "alquiler de pantallas en madrid",
+          "clicks": 0,
+          "impressions": 69,
+          "position": 67.75,
+          "ctr": 0.0,
+          "opportunityScore": 10.04,
+          "wordsCount": 5
+        },
+        {
+          "query": "alquiler pantallas led para eventos precios",
+          "clicks": 0,
+          "impressions": 67,
+          "position": 72.18,
+          "ctr": 0.0,
+          "opportunityScore": 9.16,
+          "wordsCount": 6
+        },
+        {
+          "query": "alquiler de pantallas para eventos precio",
+          "clicks": 0,
+          "impressions": 68,
+          "position": 76.93,
+          "ctr": 0.0,
+          "opportunityScore": 8.73,
+          "wordsCount": 6
+        }
+      ]
+    },
+    "B2G_INSTITUTIONAL": {
+      "vectorInfo": {
+        "target": "Licitaciones Menores B2G (< 14.250€ Art. 118 LCSP / VIMUME)",
+        "priority": "P0_B2G_TENDER",
+        "action": "Despachar Dossier B2G Institucional + Certificado VIMUME 10% Impacto",
+        "pattern": ".*\\b(concierto|espectaculo|actuacion|sonorizacion|fiestas\\spatronales|navidad|cultura|ayuntamiento|concejalia|licitacion|contrato\\smenor|teatro|auditorio)\\b.*"
+      },
+      "totalQueries": 0,
+      "queries": []
+    },
+    "B2B_FINCAS_SOURCING": {
+      "vectorInfo": {
+        "target": "Red de Fincas & Proveedores Aliados (Split 80/10/10)",
+        "priority": "P1_B2B_SOURCING",
+        "action": "Inyectar en Call Center / Radar de Proveedores para propuesta de Alianza",
+        "pattern": ".*\\b(finca|espacio|catering|wedding\\splanner|salon|cortijo|palacio|complejo|hacienda)\\b.*"
+      },
+      "totalQueries": 10,
+      "queries": [
+        {
+          "query": "finca alubian",
+          "clicks": 1,
+          "impressions": 44,
+          "position": 8.48,
+          "ctr": 2.27,
+          "opportunityScore": 46.41,
+          "wordsCount": 2
+        },
+        {
+          "query": "finca san dámaso",
+          "clicks": 1,
+          "impressions": 25,
+          "position": 10.72,
+          "ctr": 4.0,
+          "opportunityScore": 21.33,
+          "wordsCount": 3
+        },
+        {
+          "query": "wedding planner girona",
+          "clicks": 0,
+          "impressions": 97,
+          "position": 56.82,
+          "ctr": 0.0,
+          "opportunityScore": 16.78,
+          "wordsCount": 3
+        },
+        {
+          "query": "wedding planner sevilla",
+          "clicks": 0,
+          "impressions": 93,
+          "position": 72.31,
+          "ctr": 0.0,
+          "opportunityScore": 12.69,
+          "wordsCount": 3
+        },
+        {
+          "query": "wedding planner barcelona",
+          "clicks": 0,
+          "impressions": 103,
+          "position": 87.95,
+          "ctr": 0.0,
+          "opportunityScore": 11.58,
+          "wordsCount": 3
+        },
+        {
+          "query": "finca salvago",
+          "clicks": 1,
+          "impressions": 8,
+          "position": 10.25,
+          "ctr": 12.5,
+          "opportunityScore": 7.11,
+          "wordsCount": 2
+        },
+        {
+          "query": "la finca medina",
+          "clicks": 1,
+          "impressions": 4,
+          "position": 9.0,
+          "ctr": 25.0,
+          "opportunityScore": 4.0,
+          "wordsCount": 3
+        },
+        {
+          "query": "finca torre valdeflores",
+          "clicks": 2,
+          "impressions": 3,
+          "position": 23.0,
+          "ctr": 66.67,
+          "opportunityScore": 1.25,
+          "wordsCount": 3
+        },
+        {
+          "query": "catering cuenca",
+          "clicks": 1,
+          "impressions": 5,
+          "position": 55.0,
+          "ctr": 20.0,
+          "opportunityScore": 0.89,
+          "wordsCount": 2
+        },
+        {
+          "query": "cortijo las mozas",
+          "clicks": 1,
+          "impressions": 1,
+          "position": 49.0,
+          "ctr": 100.0,
+          "opportunityScore": 0.2,
+          "wordsCount": 3
+        }
+      ]
+    },
+    "UNCLASSIFIED_LONGTAIL": {
+      "vectorInfo": {
+        "target": "Longtail general",
+        "priority": "P2",
+        "action": "Revisar",
+        "pattern": ""
+      },
+      "totalQueries": 13,
+      "queries": [
+        {
+          "query": "vestidos de novia houghton",
+          "clicks": 0,
+          "impressions": 227,
+          "position": 7.09,
+          "ctr": 0.0,
+          "opportunityScore": 280.59,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler pantallas led mallorca",
+          "clicks": 0,
+          "impressions": 81,
+          "position": 34.32,
+          "ctr": 0.0,
+          "opportunityScore": 22.93,
+          "wordsCount": 4
+        },
+        {
+          "query": "pantalla led gigante madrid",
+          "clicks": 0,
+          "impressions": 78,
+          "position": 49.21,
+          "ctr": 0.0,
+          "opportunityScore": 15.53,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler de pantallas led",
+          "clicks": 0,
+          "impressions": 113,
+          "position": 75.73,
+          "ctr": 0.0,
+          "opportunityScore": 14.73,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler de pantallas gigantes",
+          "clicks": 0,
+          "impressions": 78,
+          "position": 60.68,
+          "ctr": 0.0,
+          "opportunityScore": 12.65,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler pantalla led madrid",
+          "clicks": 0,
+          "impressions": 80,
+          "position": 65.64,
+          "ctr": 0.0,
+          "opportunityScore": 12.0,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler de pantalla gigante",
+          "clicks": 0,
+          "impressions": 71,
+          "position": 62.31,
+          "ctr": 0.0,
+          "opportunityScore": 11.21,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler pantallas led madrid",
+          "clicks": 0,
+          "impressions": 73,
+          "position": 65.34,
+          "ctr": 0.0,
+          "opportunityScore": 11.0,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler pantalla led gigante",
+          "clicks": 0,
+          "impressions": 70,
+          "position": 62.94,
+          "ctr": 0.0,
+          "opportunityScore": 10.95,
+          "wordsCount": 4
+        },
+        {
+          "query": "mejor floristería en getafe",
+          "clicks": 0,
+          "impressions": 69,
+          "position": 64.07,
+          "ctr": 0.0,
+          "opportunityScore": 10.6,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler pantallas led gigantes",
+          "clicks": 0,
+          "impressions": 67,
+          "position": 63.07,
+          "ctr": 0.0,
+          "opportunityScore": 10.46,
+          "wordsCount": 4
+        },
+        {
+          "query": "pantallas gigantes para conciertos",
+          "clicks": 0,
+          "impressions": 70,
+          "position": 72.84,
+          "ctr": 0.0,
+          "opportunityScore": 9.48,
+          "wordsCount": 4
+        },
+        {
+          "query": "alquiler de pantallas leds",
+          "clicks": 0,
+          "impressions": 68,
+          "position": 75.51,
+          "ctr": 0.0,
+          "opportunityScore": 8.89,
+          "wordsCount": 4
+        }
+      ]
+    }
+  }
+}

@@ -1,16 +1,15 @@
 'use client';
 
-import React, { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { 
-  Terminal, 
-  Sparkles, 
-  Copy, 
-  Check, 
-  Send, 
-  ArrowLeft, 
-  Cpu, 
-  ShieldAlert, 
+import {
+  Terminal,
+  Sparkles,
+  Copy,
+  Check,
+  Send,
+  Cpu,
+  ShieldAlert,
   Zap,
   Code2,
   Mic,
@@ -19,12 +18,11 @@ import {
   Crown,
   Music2,
   Flame,
-  CheckCircle2,
-  BookOpen
+  CheckCircle2
 } from 'lucide-react';
-import { 
-  DOCTRINA_CEO_EMPRESARIO, 
-  DOCTRINA_ARTISTA_SOBERANO, 
+import {
+  DOCTRINA_CEO_EMPRESARIO,
+  DOCTRINA_ARTISTA_SOBERANO,
   refineQueryWithOracle,
   type OraclePersona,
   type OracleRefinedResult
@@ -63,11 +61,11 @@ export default function VibeCodingCompilerPage() {
       const res = await fetch('/api/admin/compile-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          intent: prompt, 
-          mode, 
+        body: JSON.stringify({
+          intent: prompt,
+          mode,
           engine,
-          oraclePersona 
+          oraclePersona
         })
       });
       const data = await res.json();
@@ -213,11 +211,10 @@ export default function VibeCodingCompilerPage() {
                 setOraclePersona('CEO');
                 setOracleResult(null);
               }}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${
-                oraclePersona === 'CEO'
+              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${oraclePersona === 'CEO'
                   ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
                   : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-              }`}
+                }`}
             >
               <Crown className="w-3.5 h-3.5" />
               <span>Modo CEO / Empresario</span>
@@ -228,11 +225,10 @@ export default function VibeCodingCompilerPage() {
                 setOraclePersona('ARTISTA');
                 setOracleResult(null);
               }}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${
-                oraclePersona === 'ARTISTA'
+              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${oraclePersona === 'ARTISTA'
                   ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-lg shadow-rose-500/20'
                   : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-              }`}
+                }`}
             >
               <Music2 className="w-3.5 h-3.5" />
               <span>Modo Artista Soberano</span>
@@ -343,7 +339,7 @@ export default function VibeCodingCompilerPage() {
                 </span>
                 <span className="text-[10px] text-zinc-500">Regla 10 Activa</span>
               </div>
-              
+
               <div className="text-xs font-mono text-zinc-300 bg-zinc-950 p-3 rounded-xl border border-zinc-800 leading-relaxed max-h-40 overflow-y-auto whitespace-pre-wrap">
                 {oracleResult.refinedPrompt}
               </div>

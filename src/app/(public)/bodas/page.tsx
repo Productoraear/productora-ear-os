@@ -2,22 +2,18 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { 
   Heart, 
-  Sparkles, 
   ShieldCheck, 
   Crown, 
   Music, 
   Wine, 
   Mic2, 
-  Layers, 
   Palette, 
   Disc, 
   ArrowRight, 
   Phone,
   Calendar,
-  CheckCircle2,
   Star,
   ExternalLink
 } from 'lucide-react';

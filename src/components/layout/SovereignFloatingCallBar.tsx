@@ -7,8 +7,8 @@ import { Phone, MessageCircle } from 'lucide-react';
 export function SovereignFloatingCallBar() {
   const pathname = usePathname();
 
-  // No mostrar en panel de administración
-  if (pathname?.startsWith('/admin')) {
+  // No mostrar en panel de administración ni paneles privados (afiliado)
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/panel')) {
     return null;
   }
 
@@ -21,7 +21,7 @@ export function SovereignFloatingCallBar() {
   return (
     <>
       {/* 📱 MOBILE STICKY BAR: Visible en pantallas < md (la mayor fuente de tráfico de bodas/eventos) */}
-      <aside 
+      <aside
         aria-label="Atención Telefónica y WhatsApp"
         className="md:hidden fixed bottom-0 left-0 right-0 z-[95] bg-[#09090e]/95 backdrop-blur-xl border-t border-amber-500/30 p-2.5 px-3 flex items-center justify-between gap-2 shadow-[0_-10px_30px_rgba(0,0,0,0.8)]"
       >
@@ -45,7 +45,7 @@ export function SovereignFloatingCallBar() {
       </aside>
 
       {/* 💻 DESKTOP FLOATING PILL: Visible en pantallas md+ en esquina inferior derecha */}
-      <aside 
+      <aside
         aria-label="Contacto Directo Gabinete Técnico"
         className="hidden md:flex fixed bottom-6 right-6 z-[95] items-center gap-2 bg-[#09090e]/90 backdrop-blur-xl border border-amber-500/30 p-1.5 pl-4 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.8)] hover:border-amber-400 transition-all duration-300"
       >

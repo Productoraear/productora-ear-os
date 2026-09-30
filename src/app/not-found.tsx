@@ -1,15 +1,19 @@
-"use client";
-
-import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Sparkles, ArrowRight } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: '404 | Productora EAR',
+  description: 'La ruta solicitada no existe o ha sido redirigida al nuevo estándar canónico S-Class.',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen bg-[#050505] text-white flex items-center justify-center p-6 selection:bg-[#ecb613]/30 selection:text-black">
+    <main className="min-h-screen bg-[#030305] text-white flex items-center justify-center p-6 selection:bg-[#ecb613]/30 selection:text-black">
       <div className="max-w-md w-full text-center space-y-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 text-[#ecb613] text-xs font-mono border border-[#ecb613]/20">
-          <Sparkles size={14} />
+          <Sparkles size={14} aria-hidden />
           <span>Error 404 // Productora EAR</span>
         </div>
 
@@ -24,13 +28,14 @@ export default function NotFound() {
         <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/"
-            className="px-6 py-3 bg-[#ecb613] text-black font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-white transition-all font-mono"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#ecb613] text-black font-bold text-xs uppercase tracking-wider rounded-xl hover:bg-white transition-all font-mono"
           >
             Volver al Inicio
+            <ArrowRight size={14} aria-hidden />
           </Link>
           <Link
             href="/arsenal"
-            className="px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl border border-white/10 transition-all font-mono"
+            className="inline-flex items-center justify-center px-6 py-3 bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider rounded-xl border border-white/10 transition-all font-mono"
           >
             Ver Arsenal
           </Link>

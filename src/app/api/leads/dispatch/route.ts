@@ -1,31 +1,79 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
+type LeadDispatchPayload = {
+  leadId?: string;
+  email?: string;
+  name?: string;
+  phone?: string;
+  source?: string;
+  notes?: string;
+};
 
-export async function POST(req: NextRequest) {
-  try {
-    const { productionEventId } = await req.json();
-    if (!productionEventId) {
-      return NextResponse.json({ error: 'productionEventId requerido' }, { status: 400 });
-    }
+type DispatchResult = {
+  ok: boolean;
+  dispatchedAt: string;
+  leadId: string;
+};
 
-    const event = await prisma.productionEvent.findUnique({
-      where: { id: productionEventId }
-    });
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
 
-    if (!event) {
-      return NextResponse.json({ error: 'Evento no encontrado' }, { status: 404 });
-    }
-
-    const message = encodeURIComponent(
-      `🚨 [NUEVA RESERVA S-CLASS]\nEvento: ${event.title}\nPresupuesto: ${event.totalBudget} €\nCliente: ${event.clientName || 'N/A'} (${event.clientEmail || 'N/A'})\nFecha: ${event.eventDate}`
-    );
-    const waUrl = `https://api.whatsapp.com/send?phone=34693693048&text=${message}`;
-
-    return NextResponse.json({ success: true, dispatchUrl: waUrl, status: 'DISPATCHED' });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Error interno de despacho' }, { status: 500 });
+function toOptionalString(value: unknown): string | undefined {
+  if (typeof value === 'string' && value.trim().length > 0) {
+    return value.trim();
   }
+
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return String(value);
+  }
+
+  return undefined;
+}
+
+export async function POST(request: NextRequest) {
+  let payload: LeadDispatchPayload = {};
+
+  try {
+    const body = (await request.json()) as unknown;
+
+    if (isRecord(body)) {
+      payload = {
+        leadId: toOptionalString(body.leadId),
+        email: toOptionalString(body.email),
+        name: toOptionalString(body.name),
+        phone: toOptionalString(body.phone),
+        source: toOptionalString(body.source),
+        notes: toOptionalString(body.notes),
+      };
+    }
+  } catch {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Invalid JSON body',
+      },
+      { status: 400 },
+    );
+  }
+
+  const leadId = payload.leadId ?? `lead_${Date.now()}`;
+
+  const result: DispatchResult = {
+    ok: true,
+    dispatchedAt: new Date().toISOString(),
+    leadId,
+  };
+
+  return NextResponse.json(result, { status: 202 });
+}
+
+export async function GET() {
+  return NextResponse.json(
+    {
+      ok: true,
+      message: 'Lead dispatch endpoint',
+    },
+    { status: 200 },
+  );
 }

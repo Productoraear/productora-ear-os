@@ -22,6 +22,11 @@ import {
   ChevronDown,
   ChevronUp,
   Eye,
+  UserPlus,
+  Pencil,
+  Save,
+  X,
+  Power,
 } from 'lucide-react';
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -92,6 +97,19 @@ export default function AfiliadosAdminCatminPage() {
   const [approvingAll, setApprovingAll] = useState(false);
   const [approveMsg, setApproveMsg] = useState<string | null>(null);
 
+  // Alta / Baja / Ajuste de % y Tier (Indie Affiliates Pro)
+  const [createOpen, setCreateOpen] = useState(false);
+  const [newAffiliate, setNewAffiliate] = useState({ name: '', email: '', companyName: '' });
+  const [creating, setCreating] = useState(false);
+  const [createMsg, setCreateMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editRate, setEditRate] = useState('');
+  const [editTier, setEditTier] = useState('');
+  const [savingEdit, setSavingEdit] = useState(false);
+  const [editMsg, setEditMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [togglingId, setTogglingId] = useState<string | null>(null);
+
   const fetchAffiliates = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -129,6 +147,73 @@ export default function AfiliadosAdminCatminPage() {
     }
   };
 
+  const handleCreate = async () => {
+    setCreating(true);
+    setCreateMsg(null);
+    try {
+      const { registerAffiliateV2Action } = await import("@/app/actions/affiliateV2Actions");
+      const result = await registerAffiliateV2Action({
+        name: newAffiliate.name || newAffiliate.email.split("@")[0],
+        email: newAffiliate.email,
+        companyName: newAffiliate.companyName || undefined,
+      });
+      setCreateMsg({ ok: true, text: `✅ Alta creada: ${result.affiliateCode}` });
+      setNewAffiliate({ name: '', email: '', companyName: '' });
+      setCreateOpen(false);
+      await fetchAffiliates();
+    } catch (e: any) {
+      setCreateMsg({ ok: false, text: `❌ ${e?.message ?? "Error en el alta"}` });
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const startEdit = (a: AffiliateItem) => {
+    setEditingId(a.id);
+    setEditRate(String(a.commissionRate));
+    setEditTier(a.tier);
+    setEditMsg(null);
+  };
+
+  const handleSaveEdit = async (a: AffiliateItem) => {
+    setSavingEdit(true);
+    setEditMsg(null);
+    try {
+      const { adminUpdateAffiliateAction } = await import("@/app/actions/affiliateV2Actions");
+      const result = await adminUpdateAffiliateAction({
+        adminEmail: "admin@productoraear.com",
+        profileId: a.id,
+        commissionRate: parseFloat(editRate),
+        tier: editTier,
+      });
+      setEditMsg({ ok: true, text: `✅ ${result.message}` });
+      setEditingId(null);
+      await fetchAffiliates();
+    } catch (e: any) {
+      setEditMsg({ ok: false, text: `❌ ${e?.message ?? "Error al actualizar"}` });
+    } finally {
+      setSavingEdit(false);
+    }
+  };
+
+  const handleToggleActive = async (a: AffiliateItem) => {
+    setTogglingId(a.id);
+    try {
+      const { adminDeactivateAffiliateAction, adminReactivateAffiliateAction } =
+        await import("@/app/actions/affiliateV2Actions");
+      if (a.isActive) {
+        await adminDeactivateAffiliateAction({ adminEmail: "admin@productoraear.com", profileId: a.id });
+      } else {
+        await adminReactivateAffiliateAction({ adminEmail: "admin@productoraear.com", profileId: a.id });
+      }
+      await fetchAffiliates();
+    } catch (e: any) {
+      console.warn("Toggle active failed:", e?.message);
+    } finally {
+      setTogglingId(null);
+    }
+  };
+
   const filtered = affiliates.filter(p =>
     (p.companyName ?? "").toLowerCase().includes(search.toLowerCase()) ||
     (p.name ?? "").toLowerCase().includes(search.toLowerCase()) ||
@@ -146,7 +231,7 @@ export default function AfiliadosAdminCatminPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
-      
+
       {/* ===================================================================== */}
       {/* HEADER                                                                 */}
       {/* ===================================================================== */}
@@ -165,6 +250,13 @@ export default function AfiliadosAdminCatminPage() {
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
+          <button
+            onClick={() => setCreateOpen(!createOpen)}
+            className="flex items-center gap-1.5 bg-[#ecb613] text-black px-3 py-1.5 rounded-xl text-xs font-mono font-bold hover:bg-amber-300 transition-colors cursor-pointer"
+          >
+            <UserPlus className="w-3.5 h-3.5" />
+            <span>Nuevo Afiliado</span>
+          </button>
           <button
             onClick={fetchAffiliates}
             disabled={isLoading}
@@ -189,12 +281,68 @@ export default function AfiliadosAdminCatminPage() {
       </div>
 
       {approveMsg && (
-        <div className={`p-3 rounded-xl text-xs font-mono flex items-center gap-2 ${
-          approveMsg.startsWith("✅") 
-            ? "bg-emerald-950/60 border border-emerald-700/40 text-emerald-300"
-            : "bg-rose-950/60 border border-rose-500/40 text-rose-300"
-        }`}>
+        <div className={`p-3 rounded-xl text-xs font-mono flex items-center gap-2 ${approveMsg.startsWith("✅")
+          ? "bg-emerald-950/60 border border-emerald-700/40 text-emerald-300"
+          : "bg-rose-950/60 border border-rose-500/40 text-rose-300"
+          }`}>
           {approveMsg}
+        </div>
+      )}
+
+      {createOpen && (
+        <div className="rounded-2xl border border-[#ecb613]/30 bg-[#09090d] p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold font-syne text-white uppercase">Alta Manual de Afiliado</h2>
+              <p className="text-xs text-zinc-500">Crea prescriptor con enlace canónico y Aura Wallet automática.</p>
+            </div>
+            <button
+              onClick={() => setCreateOpen(false)}
+              className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-all cursor-pointer"
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <input
+              type="text"
+              placeholder="Nombre (*)"
+              value={newAffiliate.name}
+              onChange={(e) => setNewAffiliate({ ...newAffiliate, name: e.target.value })}
+              className="h-10 px-3 text-xs font-mono bg-black/60 border border-white/10 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
+            />
+            <input
+              type="email"
+              placeholder="Email (*)"
+              value={newAffiliate.email}
+              onChange={(e) => setNewAffiliate({ ...newAffiliate, email: e.target.value })}
+              className="h-10 px-3 text-xs font-mono bg-black/60 border border-white/10 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
+            />
+            <input
+              type="text"
+              placeholder="Empresa / Marca (opcional)"
+              value={newAffiliate.companyName}
+              onChange={(e) => setNewAffiliate({ ...newAffiliate, companyName: e.target.value })}
+              className="h-10 px-3 text-xs font-mono bg-black/60 border border-white/10 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]"
+            />
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleCreate}
+              disabled={creating || !newAffiliate.email.trim()}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#ecb613] text-black font-mono text-xs font-bold hover:bg-amber-300 transition-all cursor-pointer disabled:opacity-40"
+            >
+              <UserPlus size={14} />
+              <span>{creating ? 'Creando...' : 'Dar de Alta'}</span>
+            </button>
+            {createMsg && (
+              <span className={`text-xs font-mono ${createMsg.ok ? 'text-emerald-400' : 'text-rose-400'}`}>
+                {createMsg.text}
+              </span>
+            )}
+          </div>
         </div>
       )}
 
@@ -202,7 +350,7 @@ export default function AfiliadosAdminCatminPage() {
       {/* KPIs REALES                                                            */}
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        
+
         <AdminKpi
           label="Partners Activos"
           value={`${activeCount}`}
@@ -390,7 +538,7 @@ export default function AfiliadosAdminCatminPage() {
                         <span className="text-white font-bold">{new Date(a.createdAt).toLocaleDateString("es-ES")}</span>
                       </div>
                     </div>
-                    <div className="flex gap-2 mt-3">
+                    <div className="flex gap-2 mt-3 flex-wrap items-center">
                       <a
                         href={`/panel/afiliado?email=${a.email}`}
                         target="_blank"
@@ -399,10 +547,78 @@ export default function AfiliadosAdminCatminPage() {
                       >
                         <Eye size={12} /> Ver Panel Soberano
                       </a>
+                      <button
+                        onClick={() => startEdit(a)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-950/40 border border-cyan-800/40 rounded-lg text-[10px] font-mono text-cyan-300 hover:bg-cyan-900 transition-all cursor-pointer"
+                      >
+                        <Pencil size={12} /> Ajustar % / Tier
+                      </button>
+                      <button
+                        onClick={() => handleToggleActive(a)}
+                        disabled={togglingId === a.id}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono border transition-all cursor-pointer disabled:opacity-40 ${a.isActive
+                          ? "bg-rose-950/40 border-rose-800/40 text-rose-300 hover:bg-rose-900"
+                          : "bg-emerald-950/40 border-emerald-800/40 text-emerald-300 hover:bg-emerald-900"
+                          }`}
+                      >
+                        <Power size={12} /> {a.isActive ? 'Dar de Baja' : 'Reactivar'}
+                      </button>
                       <span className={`flex items-center gap-1 px-3 py-1.5 rounded-lg text-[10px] font-mono border ${a.isActive ? "bg-emerald-950/40 border-emerald-800/40 text-emerald-300" : "bg-rose-950/40 border-rose-800/40 text-rose-300"}`}>
                         {a.isActive ? <><CheckCircle2 size={10} /> ACTIVO</> : <><AlertCircle size={10} /> INACTIVO</>}
                       </span>
                     </div>
+
+                    {editingId === a.id && (
+                      <div className="mt-3 p-3 rounded-xl bg-black/40 border border-cyan-800/30 space-y-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div>
+                            <span className="text-[10px] font-mono text-zinc-500 block mb-1">Comisión (%)</span>
+                            <input
+                              type="number"
+                              min={0}
+                              max={100}
+                              step="0.1"
+                              value={editRate}
+                              onChange={(e) => setEditRate(e.target.value)}
+                              className="w-full h-9 px-3 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#ecb613]"
+                            />
+                          </div>
+                          <div>
+                            <span className="text-[10px] font-mono text-zinc-500 block mb-1">Tier</span>
+                            <select
+                              value={editTier}
+                              onChange={(e) => setEditTier(e.target.value)}
+                              className="w-full h-9 px-3 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-white focus:outline-none focus:border-[#ecb613]"
+                            >
+                              <option value="BRONZE">BRONCE · 10%</option>
+                              <option value="SILVER">PLATA · 12%</option>
+                              <option value="GOLD">ORO · 15%</option>
+                              <option value="PLATINUM">PLATINO · 20%</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleSaveEdit(a)}
+                            disabled={savingEdit}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#ecb613] text-black text-[10px] font-mono font-bold hover:bg-amber-300 transition-all cursor-pointer disabled:opacity-40"
+                          >
+                            <Save size={12} /> {savingEdit ? 'Guardando...' : 'Guardar Cambios'}
+                          </button>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] font-mono text-zinc-300 hover:text-white transition-all cursor-pointer"
+                          >
+                            <X size={12} /> Cancelar
+                          </button>
+                          {editMsg && (
+                            <span className={`text-[10px] font-mono ${editMsg.ok ? 'text-emerald-400' : 'text-rose-400'}`}>
+                              {editMsg.text}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

@@ -21,8 +21,8 @@ export function DynamicMobileExperienceOrchestrator() {
     }
   }, [config, pathname, isLoading]);
 
-  // En el panel de administración (/admin), no se inyectan interfaces públicas de cliente
-  if (pathname?.startsWith('/admin')) {
+  // En panel de administración (/admin) y paneles privados (/panel), no se inyectan interfaces públicas
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/panel')) {
     return null;
   }
 
@@ -32,7 +32,7 @@ export function DynamicMobileExperienceOrchestrator() {
   }
 
   // Determinar el modo activo: Si está en modo adaptativo usa el seleccionado por el motor, si no, el modo manual
-  const effectiveMode: MobileExperienceMode = 
+  const effectiveMode: MobileExperienceMode =
     config.routingStrategy === 'AUTONOMOUS_ADAPTIVE' && profile
       ? profile.selectedAdaptiveMode
       : config.activeMode;

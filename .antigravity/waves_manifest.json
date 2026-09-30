@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "total_waves": 20,
+    "tasks_per_wave": 50,
+    "total_tasks": 1000,
+    "model": "qwen3.8-27b-fast",
+    "instructions": "Antigravity genera cada wave en tasks_queue.json cuando el obrero completa y purga la wave anterior. El obrero NUNCA debe generar waves, solo ejecutar tareas."
+  },
+  "waves": [
+    {"wave":1,"category":"AUDIT: Imports muertos y exports default en 50 páginas principales","status":"ACTIVE","tasks":50},
+    {"wave":2,"category":"SECURITY: Validación de inputs en API routes + SEO metadata en 25 páginas públicas","status":"ACTIVE","tasks":50},
+    {"wave":3,"category":"FIX: params async en 30 rutas dinámicas + UNIFY: colores/tipografía OLED","status":"ACTIVE","tasks":50},
+    {"wave":4,"category":"API-HARDEN: try/catch en 40 API routes + COMPONENT: imports muertos en 10 componentes","status":"ACTIVE","tasks":50},
+    {"wave":5,"category":"COMPONENT-AUDIT: Eliminar imports muertos en 50 componentes de src/components/","status":"PENDING","tasks":50},
+    {"wave":6,"category":"LIB-AUDIT: Eliminar exports muertos y tipado estricto en 50 archivos de src/lib/","status":"PENDING","tasks":50},
+    {"wave":7,"category":"A11Y: Añadir aria-labels, alt texts y roles ARIA en 50 componentes interactivos","status":"PENDING","tasks":50},
+    {"wave":8,"category":"MOBILE: Verificar responsive (min-h-screen, overflow-x-hidden, touch targets 48px) en 50 páginas","status":"PENDING","tasks":50},
+    {"wave":9,"category":"PERF: Lazy loading de componentes pesados, next/dynamic en 30 páginas + Image optimization en 20","status":"PENDING","tasks":50},
+    {"wave":10,"category":"ERROR-BOUNDARY: Añadir Suspense/ErrorBoundary en 50 páginas con fetching de datos","status":"PENDING","tasks":50},
+    {"wave":11,"category":"SCHEMA-ORG: Verificar/añadir JSON-LD structured data en 50 páginas comerciales","status":"PENDING","tasks":50},
+    {"wave":12,"category":"UX-COPY: Eliminar copy vacío (revoluciona, transforma, experiencia) y sustituir por datos reales en 50 componentes","status":"PENDING","tasks":50},
+    {"wave":13,"category":"DEAD-CODE: Eliminar archivos huérfanos sin importar de src/components/ y src/lib/ (50 archivos)","status":"PENDING","tasks":50},
+    {"wave":14,"category":"API-CONSOLIDATE: Unificar API routes duplicados (quote vs quotes, checkout vs payments) 50 archivos","status":"PENDING","tasks":50},
+    {"wave":15,"category":"TESTING: Crear smoke tests mínimos para 50 API routes críticas (curl + status 200/201/400)","status":"PENDING","tasks":50},
+    {"wave":16,"category":"ADMIN-POLISH: Mejorar UX de las 22 páginas admin (loading states, empty states, error states)","status":"PENDING","tasks":50},
+    {"wave":17,"category":"VENDOR-POLISH: Mejorar UX de las 12 páginas vendor (loading, empty, error + PWA icons)","status":"PENDING","tasks":50},
+    {"wave":18,"category":"PUBLIC-POLISH: Mejorar CTA buttons, hover states y micro-animations en 50 páginas públicas","status":"PENDING","tasks":50},
+    {"wave":19,"category":"INTEGRATION: Verificar que los 10 flujos de negocio E2E funcionan (Reserva->Stripe->WhatsApp->Confirmación)","status":"PENDING","tasks":50},
+    {"wave":20,"category":"PRODUCTION-SEAL: Build final, lighthouse audit, git commit + deploy a ambos remotos","status":"PENDING","tasks":50}
+  ]
+}

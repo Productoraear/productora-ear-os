@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Metadata } from 'next';
 import { AllianceNetwork } from '@/modules/SClassScreens/AllianceNetwork';
 

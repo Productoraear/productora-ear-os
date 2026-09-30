@@ -7,7 +7,7 @@
  * Estética OLED #030305 · Acento Rubí #FF2B44.
  */
 
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Diamond, Search, FileText, AlertTriangle, Target } from 'lucide-react';
 import OraculoSearchConsole from '@/components/academia/OraculoSearchConsole';
@@ -153,11 +153,10 @@ export default function OraculoDiamanteRojoPage() {
                 key={cat}
                 type="button"
                 onClick={() => setActiveCategory(cat)}
-                className={`rounded-full border px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-all ${
-                  activeCategory === cat
+                className={`rounded-full border px-4 py-1.5 font-mono text-[10px] uppercase tracking-widest transition-all ${activeCategory === cat
                     ? 'border-[#FF2B44] bg-[#FF2B44] text-black font-bold'
                     : 'border-white/10 bg-white/5 text-white/50 hover:text-white'
-                }`}
+                  }`}
               >
                 {cat === 'todos' ? 'Todos' : CATEGORY_LABEL[cat]}
               </button>

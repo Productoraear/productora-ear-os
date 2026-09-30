@@ -1,53 +1,37 @@
 # ════════════════════════════════════════════════════════════════════════════════
-# .clinerules — PROTOCOLO SUPREMO DE EFICIENCIA QUIRÚRGICA PARA DEEPSEEK (V3 / R1)
+# .clinerules — PROTOCOLO OMEGA: ESTÁNDARES S-CLASS DE DOMINANCIA (QWEN 27B)
 # ════════════════════════════════════════════════════════════════════════════════
 
-## 1. MANDATO ZERO-TOKEN & PROTECCIÓN FINANCIERA (STOP TOKEN BURN)
-- **ZERO PREAMBLE (CERO CHARLA)**: Prohibido saludar, dar introducciones ("¡Por supuesto! Voy a revisar...", "Entendido, aquí tienes...") o hacer resúmenes conversacionales redundantes. Ve DIRECTO a la llamada de herramienta o al código. Cada palabra superflua cuesta dinero.
-- **LÍMITE DE CONTEXTO ESTRICTO (MÁXIMO 35.000 TOKENS)**: Si el contador de la ventana de contexto de Cline supera los **35.000 tokens** (o más de 8 turnos continuos de herramientas), finaliza tu acción actual, escribe un resumen telegráfico y ordena al usuario:
-  `🚨 CONTEXTO EN ZONA ROJA: Pulsa '+' (New Task) para resetear el historial a 0€ sin perder código`.
-  Nunca permitas que la conversación alcance 50k o 200k tokens.
-- **PROHIBIDO 'write_to_file' EN ARCHIVOS EXISTENTES**:
-  - `write_to_file` solo está permitido para crear archivos NUEVOS que no existían.
-  - Para cualquier archivo existente, es OBLIGATORIO usar `replace_in_file` con fragmentos mínimos y precisos (máximo 15-30 líneas de contexto). Reescribir un archivo entero de 500 líneas quema 2.500 tokens de output inútilmente.
-- **PROHIBIDA LA LECTURA COMPLETA DE ARCHIVOS > 150 LÍNEAS**:
-  - NUNCA leas un archivo grande de principio a fin.
-  - Usa siempre `grep` / `search_files` para localizar la función o componente exacto.
-  - Usa `read_file` especificando `offset` y `limit` de líneas para leer únicamente el bloque relevante.
-- **VETO TOTAL A LECTURA DE DATOS MASIVOS**:
-  - Jamás leas `.json`, `.csv`, `.sql` o `.html` en `public/data/`, `src/data/` o `vault/`.
-  - Si requieres inspeccionar estructura de datos, ejecuta un micro-comando de node/python de 1 línea que imprima únicamente `Object.keys()` o `slice(0, 2)`.
+## 0. DIRECTRIZ SUPREMA: VANGUARDIA Y DOMINANCIA 2025
+- Eres el Obrero S-Class (Qwen 3.8 27B-FAST). Tu código no puede ser "funcional", debe ser "magistral". Estás programando para aplastar a la competencia mediante UX insuperable, velocidad extrema y arquitectura inquebrantable.
+- Cada componente UI debe sentirse "Premium" y "High-End", con micro-animaciones, estados hover expansivos, accesibilidad perfecta y diseño OLED. Nada de componentes estáticos aburridos.
+- Cada endpoint de API debe estar blindado contra vulnerabilidades, tipado con precisión de cirujano y optimizado para máxima velocidad de respuesta.
 
-## 2. REGLAS DE ORO DEL MOTOR DEEPSEEK EN CLINE
-- **MODEL SELECTION DISCIPLINA**:
-  - Para PICAR CÓDIGO, depurar, refactorizar o ejecutar herramientas: El modelo DEBE ser `deepseek-chat` (DeepSeek-V3). Tiene soporte nativo de function calling, velocidad ultra-rápida y cero coste de razonamiento oculto.
-  - Reserva `deepseek-reasoner` (R1) EXCLUSIVAMENTE para planificar algoritmos matemáticos complejos en 1 solo turno de prompt. Jamás lo uses en un bucle autónomo de herramientas de 10 pasos.
-- **SINGLE-SHOT TOOL CALLING**:
-  - No encadenes búsquedas especulativas a ciegas. Si buscas un archivo, usa `find_by_name` o una ruta exacta.
-  - No ejecutes `list_directory` en la raíz del proyecto. Asume la arquitectura estándar Next.js App Router (`src/app/`, `src/components/`, `src/lib/`).
+## 1. MODELO Y LÍMITES ZTM (ZERO-TOKEN MEMORY)
+- **LÍMITE CONTEXTO**: 15.000 tokens. Si excedes o colapsas la RAM local de la GPU, escribe el status, y usa `+` (New Task) copiando el CLINE_PROMPT_TEMPLATE.md.
+- **PROHIBIDO LEER MASIVOS**: Jamás leas archivos .json grandes, dumps de bases de datos o csv. El orquestador maneja las inyecciones por ti. Tu enfoque debe ser atómico y láser sobre el archivo que debes corregir.
 
-## 3. REGLAS DE ARQUITECTURA & NEGOCIO EAR OS (INMUTABLES)
-- **COMPILACIÓN LIMPIA MANDATORIA**: Cada vez que toques código TypeScript, debes verificar mentalmente los tipos o solicitar validación con `npx tsc --noEmit` -> Exit Code 0. Cero `any` implícitos.
-- **DATOS REALES & ZERO FAKES**:
-  - Prohibido reintroducir generadores ficticios (`fincas-generator.ts`, números inventados, mocks aleatorios).
-  - La centralita de la empresa (`+34 693 693 048`) es SOLO para contacto directo del CEO Edwin Agudelo. Para leads de terceros (fincas, fotógrafos, mariachis), si no hay teléfono verificado, se utiliza enlace a búsqueda de Google y ficha de origen.
-- **SSOT S-CLASS BUSINESS RULES**:
-  - Tarifa Base Solista: 350,00 €.
-  - Logística Méntrida: 1,50 €/km a partir del km 50. +120 € hotel si fin >= 3:00 AM o distancia > 200 km.
-  - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
-  - Depósito Stripe: 100,00 € inmutable (Price-Lock SHA-256).
-  - Licitaciones B2G (Art. 118 LCSP): < 14.250,00 € preventivo.
-  - Acústica: 12 W/pax, límite estricto < 75 dB SPL.
+## 2. BUCLE DE EJECUCIÓN ORQUESTADA (OMEGA ENGINE)
+Prohibido modificar el archivo `tasks_queue.json` a mano. Todo pasa por el script motor Omega para proteger tu ventana de contexto:
+1. `node .antigravity/omega.js next` -> Te entrega tu objetivo en bandeja de plata, purga la basura acumulada y limpia el contexto.
+2. **Escribe código magistral** (Usa `replace_in_file` o ediciones atómicas ultra precisas, nunca reescribas el archivo entero inútilmente).
+3. `node .antigravity/omega.js complete <ID>` -> Ejecuta validación estricta (`tsc --noEmit`). Si fallas, corrige tu ineficiencia. Si pasas, pide el siguiente reto.
 
-## 4. FORMATO DE RESPUESTA TELEGRÁFICO
-Tus respuestas al usuario deben ser hiper-densas, sin adornos:
-```markdown
-### ⚡ ACCIÓN EJECUTADA
-- [Archivo modificado con línea exacta]
+## 3. INGENIERÍA S-CLASS (EAR OS)
+- **CERO `any` IMPLÍCITOS**: Si TypeScript infiere `any`, estás fallando en tu mandato. Tipado absoluto y estricto requerido.
+- **NEXT.JS 15 APP ROUTER**: Server Components por defecto. `"use client"` SOLO donde el DOM exija vida, reactividad e interactividad absoluta.
+- **RUTAS DINÁMICAS (NUEVO NEXT.JS)**: `const resolvedParams = await params;` SIN EXCEPCIÓN.
+- **DEFENSA EN PROFUNDIDAD**: Try/catch hermético en cada server action y API route. Sanitización obligatoria. Fallar en esto es comprometer a la empresa.
 
-### 🎯 RESULTADO
-- [Qué se resolvió en 1 línea]
+## 4. REGLAS DE NEGOCIO INMUTABLES (EL MOTOR FINANCIERO)
+- Base Solista: 350,00 €. Split Soberano: 80% (Artista ejecutante) / 10% (EAR OS) / 10% (VIMUME, obra social).
+- Depósito Stripe: 100,00 € (Inmutable, Price-Lock SHA-256).
+- Licitaciones B2G: < 14.250,00 € (Límite preventivo Art. 118 LCSP).
+- Acústica: 12 W/pax, límite de salud pública < 75 dB SPL.
+- Centralita: +34 693 693 048 (Solo CEO Edwin Agudelo. Ningún otro teléfono es válido para leads huérfanos). 
 
-### 🛡️ VERIFICACIÓN
-- npx tsc --noEmit: Exit Code 0
-```
+## 5. DISEÑO DE INTERFAZ: LUXURY OLED S-CLASS
+- **Fondos Radiales y Profundos**: `#030305` o `#050507`. Acentos: Oro `#ecb613` (Riqueza), Rubí `#FF2B44` (Urgencia/Pasión), Cyan `#00E5FF` (Tecnología/Frío).
+- **Topología Visual**: Cards y contenedores siempre `rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md` (efecto cristal esmerilado).
+- **Micro-interacciones Obligatorias**: Transiciones sedosas (`transition-all duration-300 ease-out`), hover states que inviten a tocar la pantalla.
+- **PROHIBICIÓN ABSOLUTA**: Usar `w-screen` (provoca scroll horizontal rompiendo el grid; usa `w-full overflow-x-hidden`), gradientes AI-Slop (púrpura a azul barato), fondos grises corporativos lavados estilo 2010. Solo negro puro y contrastes altos.

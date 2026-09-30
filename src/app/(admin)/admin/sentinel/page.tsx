@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Satellite } from 'lucide-react';
 import SentinelAbsorptionRadar from '@/components/admin/SentinelAbsorptionRadar';
 
 export const metadata: Metadata = {

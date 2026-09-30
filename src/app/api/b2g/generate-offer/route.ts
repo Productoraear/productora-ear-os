@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
@@ -10,10 +10,14 @@ const TENDERS_PATH = path.join(process.cwd(), 'src', 'data', 'b2g', 'placsp_harv
 
 export async function POST(req: NextRequest) {
   try {
-    const { expediente_id } = await req.json();
+    const { expediente_id, amount } = await req.json();
 
-    if (!expediente_id) {
-      return NextResponse.json({ error: 'expediente_id es obligatorio' }, { status: 400 });
+    if (!expediente_id || typeof expediente_id !== 'string') {
+      return NextResponse.json({ error: 'expediente_id es obligatorio y debe ser texto' }, { status: 400 });
+    }
+
+    if (amount !== undefined && (typeof amount !== 'number' || amount >= 14250)) {
+      return NextResponse.json({ error: 'El monto (amount) debe ser un número estricto menor a 14.250 € (Art. 118 LCSP)' }, { status: 400 });
     }
 
     if (!fs.existsSync(TENDERS_PATH)) {

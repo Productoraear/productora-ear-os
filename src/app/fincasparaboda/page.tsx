@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Search,
   MapPin,
-  Users,
   ShieldCheck,
   Star,
   Award,
@@ -17,20 +16,16 @@ import {
   Lock,
   Building2,
   Zap,
-  TrendingUp,
   Volume2,
   Calendar,
   X,
-  SlidersHorizontal,
   ChevronLeft,
   ChevronRight,
-  Heart,
-  HelpCircle,
   Crown,
   Menu
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
-import { SCLASS_12_FINCAS_HOMOLOGADAS, FincaHomologada } from '@/lib/constants/fincas-catalog';
+import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
 import CinematicVanguardCarousel from '@/components/sclass/CinematicVanguardCarousel';
 import NeuralFincaTinderMatch from '@/components/fincas/NeuralFincaTinderMatch';
 import { createSupplierUnlockCheckout } from '@/app/actions/vipCheckoutActions';
@@ -429,8 +424,8 @@ export default function FincasParaBodaPortal() {
                   setCurrentPage(1);
                 }}
                 className={`px-4 py-2 rounded-xl text-xs font-mono transition-all flex items-center gap-2 shrink-0 ${selectedCategory === cat.id
-                    ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
-                    : 'bg-white/5 text-zinc-300 border border-white/10 hover:border-[#ecb613]/50 hover:text-white'
+                  ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-amber-500/20'
+                  : 'bg-white/5 text-zinc-300 border border-white/10 hover:border-[#ecb613]/50 hover:text-white'
                   }`}
               >
                 <span>{cat.icon}</span>

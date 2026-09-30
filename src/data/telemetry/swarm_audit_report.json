@@ -1,0 +1,227 @@
+{
+  "timestamp": "2026-09-29T07:08:34.564Z",
+  "totalAudited": 24,
+  "passedCount": 23,
+  "failedCount": 1,
+  "passRate": "96%",
+  "averageLatencyMs": 3238,
+  "stripeCheckoutCoverage": "96%",
+  "results": [
+    {
+      "path": "/",
+      "statusCode": 200,
+      "latencyMs": 830,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/fincas",
+      "statusCode": 200,
+      "latencyMs": 809,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/fincas/madrid",
+      "statusCode": 200,
+      "latencyMs": 336,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/fincas/madrid/finca-alubian",
+      "statusCode": 200,
+      "latencyMs": 330,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/fincas/sevilla/finca-salvago",
+      "statusCode": 200,
+      "latencyMs": 284,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/fincas/valencia/alqueria-balada",
+      "statusCode": 200,
+      "latencyMs": 290,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/bodas/toledo/mariachi-gala/talavera-de-la-reina",
+      "statusCode": 200,
+      "latencyMs": 1727,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/bodas/zaragoza/mariachi-gala/calatayud",
+      "statusCode": 200,
+      "latencyMs": 1718,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/bodas/madrid/dj/madrid",
+      "statusCode": 200,
+      "latencyMs": 1638,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/bodas/toledo/catering-brasas/ocana",
+      "statusCode": 200,
+      "latencyMs": 1641,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/bodas/bilbao/sonido-iluminacion/getxo",
+      "statusCode": 200,
+      "latencyMs": 431,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/bodas/toledo/bodas-lujo/escalona",
+      "statusCode": 200,
+      "latencyMs": 437,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/arsenal/pantallas-led/madrid",
+      "statusCode": 200,
+      "latencyMs": 1579,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/arsenal/pantallas-led/baleares",
+      "statusCode": 200,
+      "latencyMs": 1581,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/proveedores/regalos-ana-mari",
+      "statusCode": 200,
+      "latencyMs": 5805,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/proveedores/setroimagen",
+      "statusCode": 200,
+      "latencyMs": 5814,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/proveedores/vestidos-de-novia-houghton",
+      "statusCode": 200,
+      "latencyMs": 16044,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/vimume/propuesta",
+      "statusCode": 200,
+      "latencyMs": 15923,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/reservar/solista",
+      "statusCode": 200,
+      "latencyMs": 4424,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/ocasiones/ayuntamientos",
+      "statusCode": 200,
+      "latencyMs": 4426,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/alquiler/escalona",
+      "statusCode": 200,
+      "latencyMs": 5127,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/alquiler/talavera-de-la-reina",
+      "statusCode": 200,
+      "latencyMs": 5195,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/arroces",
+      "statusCode": 200,
+      "latencyMs": 1283,
+      "hasStripe": true,
+      "hasSchema": true,
+      "hasInvalid75": false,
+      "success": true
+    },
+    {
+      "path": "/catering-brasas",
+      "statusCode": 308,
+      "latencyMs": 40,
+      "hasStripe": false,
+      "hasSchema": false,
+      "hasInvalid75": false,
+      "success": false
+    }
+  ]
+}

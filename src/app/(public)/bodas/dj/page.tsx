@@ -5,20 +5,14 @@ import fs from 'fs';
 import path from 'path';
 import {
   Sparkles,
-  Music,
   ShieldCheck,
   Zap,
   CheckCircle2,
-  Clock,
   Phone,
   MessageCircle,
   Lock,
-  ChevronRight,
   Star,
-  MapPin,
-  Volume2,
-  Radio,
-  Sliders
+  MapPin
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';

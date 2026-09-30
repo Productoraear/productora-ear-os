@@ -1,67 +1,61 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { AlertTriangle, RefreshCw, Home, ShieldAlert } from 'lucide-react';
+import { useEffect } from 'react';
+import { Home, RefreshCw, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 
-/**
- * 🛡️ ERROR BOUNDARY DE RESILIENCIA S-CLASS (EAR OS V2)
- * Intercepta y aisla cualquier excepción de servidor en tiempo de ejecución, erradicando los errores 5xx en Search Console.
- */
-export default function GlobalError({
-  error,
-  reset,
-}: {
+type GlobalErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+};
+
+export default function GlobalError({ error, reset }: GlobalErrorProps) {
   useEffect(() => {
-    // Telemetría silenciosa de resiliencia
     console.error('🛡️ [S-Class Resilience] Interceptada fluctuación en nodo servidor:', error);
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center p-6 text-center font-sans selection:bg-[#ecb613] selection:text-black">
-      {/* Halo de fondo atmosférico */}
-      <div className="absolute w-[500px] h-[500px] bg-[#ecb613]/5 blur-[160px] rounded-full pointer-events-none" />
+    <div className="relative min-h-screen overflow-hidden bg-[#030305] text-white flex flex-col items-center justify-center p-6 text-center font-sans selection:bg-[#ecb613] selection:text-black">
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ecb613]/5 blur-[160px]" />
 
-      <div className="relative z-10 border border-[#ecb613]/30 bg-[#09090d] p-8 md:p-12 rounded-[2.5rem] max-w-lg shadow-[0_20px_70px_rgba(0,0,0,0.9)] space-y-6">
-        <div className="w-16 h-16 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613] mx-auto">
-          <ShieldAlert size={32} />
+      <div className="relative z-10 w-full max-w-lg space-y-6 rounded-[2.5rem] border border-[#ecb613]/30 bg-[#09090d] p-8 shadow-[0_20px_70px_rgba(0,0,0,0.9)] md:p-12">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-[#ecb613]/30 bg-[#ecb613]/10 text-[#ecb613]">
+          <ShieldAlert size={32} aria-hidden="true" />
         </div>
 
         <div className="space-y-2">
-          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-[#ecb613]">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-[#ecb613]">
             S-Class Resilience Shield
           </span>
-          <h2 className="text-2xl md:text-3xl font-black uppercase text-white font-syne">
+          <h2 className="font-syne text-2xl font-black uppercase text-white md:text-3xl">
             Fluctuación Técnica Interceptada
           </h2>
-          <p className="text-xs text-white/60 leading-relaxed">
+          <p className="text-xs leading-relaxed text-white/60">
             El nodo del servidor ha contenido la solicitud para proteger la integridad del sistema y evitar interrupciones de servicio.
           </p>
         </div>
 
-        {error?.digest && (
-          <div className="bg-black/60 border border-white/5 px-3 py-1.5 rounded-xl text-[10px] font-mono text-white/40">
+        {error?.digest ? (
+          <div className="rounded-xl border border-white/5 bg-black/60 px-3 py-1.5 font-mono text-[10px] text-white/40">
             Digest: {error.digest}
           </div>
-        )}
+        ) : null}
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+        <div className="flex flex-col items-center justify-center gap-3 pt-2 sm:flex-row">
           <button
+            type="button"
             onClick={() => reset()}
-            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider hover:bg-amber-400 transition-all flex items-center justify-center gap-2 shadow-lg"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#ecb613] px-6 py-3 text-xs font-black uppercase tracking-wider text-black shadow-lg transition-all hover:bg-amber-400 sm:w-auto"
           >
-            <RefreshCw size={14} />
+            <RefreshCw size={14} aria-hidden="true" />
             <span>Reintentar Nodo</span>
           </button>
 
           <Link
             href="/"
-            className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all hover:bg-white/10 sm:w-auto"
           >
-            <Home size={14} />
+            <Home size={14} aria-hidden="true" />
             <span>Inicio</span>
           </Link>
         </div>

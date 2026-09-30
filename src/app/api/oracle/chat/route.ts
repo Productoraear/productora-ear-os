@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
 /**
  * 🏛️ ORÁCULO S-CLASS — MOTOR BARE-METAL (OLLAMA LOCAL · AMD RX 7900 XTX 24GB)
@@ -73,6 +73,18 @@ export async function POST(req: Request) {
   const incoming = Array.isArray(payload.messages) ? payload.messages : [];
   if (incoming.length === 0) {
     return NextResponse.json({ error: 'SIN_MENSAJES' }, { status: 400 });
+  }
+
+  // Validación y sanitización de seguridad (Max 2000 chars, Anti-XSS)
+  for (const msg of incoming) {
+    if (typeof msg.content !== 'string') {
+      return NextResponse.json({ error: 'TIPO_INVALIDO' }, { status: 400 });
+    }
+    if (msg.content.length > 2000) {
+      return NextResponse.json({ error: 'MENSAJE_EXCEDE_2000_CHARS' }, { status: 400 });
+    }
+    // Basic XSS Sanitization
+    msg.content = msg.content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
   }
 
   // Inyectar el SSOT como primer mensaje 'system' (idempotente si ya viene).

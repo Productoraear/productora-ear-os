@@ -1,4 +1,3 @@
-import { SovereignMobileHUD } from '@/components/sclass/SovereignMobileHUD';
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Syne, Inter } from "next/font/google";
@@ -98,13 +97,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html 
-      lang="es" 
-      suppressHydrationWarning 
+    <html
+      lang="es"
+      suppressHydrationWarning
       className={`dark scroll-smooth ${syne.variable} ${inter.variable}`}
     >
       <head />
-      <body 
+      <body
         className={`antialiased bg-[#050505] text-white selection:bg-[#FF2B44] selection:text-white font-sans ${syne.variable} ${inter.variable}`}
         suppressHydrationWarning
       >

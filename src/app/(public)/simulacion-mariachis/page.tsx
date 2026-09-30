@@ -1,12 +1,8 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Music, MapPin, Clock, ShieldCheck, Zap, 
-  Play, RefreshCw, AlertTriangle, CheckCircle2, 
-  Users, DollarSign, Compass, ArrowRight, Phone, MessageSquare, Key, Building
-} from 'lucide-react';
+import { Music, Zap, Play, RefreshCw, AlertTriangle, Phone, MessageSquare, Key, Building } from 'lucide-react';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
 import { runHighTrafficMariachiSimulation, MariachiSimulationReport } from '@/lib/matchmaker/mariachiHighTrafficSimulator';
 import { UberFleetVisualizer } from '@/components/neural/UberFleetVisualizer';
@@ -28,7 +24,7 @@ export default function SimulacionMariachisPage() {
     <MeshGradientBackground intensity="stage">
       <main className="min-h-screen pt-28 sm:pt-32 pb-40 px-4 md:px-8 text-white font-sans selection:bg-[#ecb613] selection:text-black">
         <div className="max-w-7xl mx-auto space-y-8">
-          
+
           {/* Header Hero */}
           <div className="text-center space-y-4 max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(236,182,19,0.15)]">
@@ -57,11 +53,10 @@ export default function SimulacionMariachisPage() {
 
               <button
                 onClick={() => setInjectOvertime(!injectOvertime)}
-                className={`px-6 py-3.5 rounded-2xl font-bold uppercase tracking-wider transition-all border flex items-center gap-2 cursor-pointer ${
-                  injectOvertime 
-                    ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-500/30' 
+                className={`px-6 py-3.5 rounded-2xl font-bold uppercase tracking-wider transition-all border flex items-center gap-2 cursor-pointer ${injectOvertime
+                    ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-500/30'
                     : 'bg-white/5 border-white/10 text-zinc-300 hover:text-white hover:bg-white/10'
-                }`}
+                  }`}
               >
                 <AlertTriangle size={16} className={injectOvertime ? 'animate-bounce' : ''} />
                 <span>{injectOvertime ? '⚡ Horas Extra Activadas (Relevos Uber Exitosos)' : 'Simular +3h Extra Inesperadas'}</span>
@@ -98,8 +93,8 @@ export default function SimulacionMariachisPage() {
 
           {/* 🗺️ MAPA TÁCTICO GOOGLE MAPS HD // CENTRO DE MANDO EN VIVO */}
           <div className="pt-2">
-            <UberFleetVisualizer 
-              report={simulation} 
+            <UberFleetVisualizer
+              report={simulation}
               isRunning={isRunning}
               onTogglePlay={handleStartSimulation}
               onToggleOvertime={() => setInjectOvertime(!injectOvertime)}
@@ -129,11 +124,10 @@ export default function SimulacionMariachisPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.02 }}
-                  className={`p-5 rounded-2xl border space-y-3 relative overflow-hidden ${
-                    b.status === 'UBER_REASSIGNED'
+                  className={`p-5 rounded-2xl border space-y-3 relative overflow-hidden ${b.status === 'UBER_REASSIGNED'
                       ? 'bg-rose-500/10 border-rose-500/40 shadow-lg shadow-rose-500/10'
                       : 'bg-white/[0.02] border-white/10 hover:border-white/20'
-                  }`}
+                    }`}
                 >
                   <div className="flex justify-between items-start">
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-zinc-300">
@@ -162,7 +156,7 @@ export default function SimulacionMariachisPage() {
                     </div>
                     <p className="text-white font-bold">{b.mariachiLeadName}</p>
                     <p className="text-zinc-400 text-[9px]">Furgoneta: {b.mariachiVehiclePlate}</p>
-                    
+
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <a
                         href={`tel:${b.mariachiPhone}`}

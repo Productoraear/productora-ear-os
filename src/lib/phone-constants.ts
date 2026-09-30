@@ -4,10 +4,12 @@
  * Never hardcode the number elsewhere.
  */
 export const CENTRALITA = {
-  /** International format without spaces (for programmatic use) */
-  raw: "34693693048",
+  /** International format with plus sign (for programmatic use) */
+  phone: "+34693693048",
   /** Human-readable display format */
   display: "+34 693 693 048",
+  /** International format without spaces (for programmatic use) */
+  raw: "34693693048",
   /** Click-to-call href for <a> tags */
   tel: "tel:+34693693048",
   /** WhatsApp deep link */
@@ -17,4 +19,3 @@ export const CENTRALITA = {
   /** Display email */
   emailDisplay: "productoraear@gmail.com",
 } as const;
-

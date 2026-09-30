@@ -2,25 +2,23 @@
 export const dynamic = 'force-dynamic';
 
 import React, { useState, useMemo, useRef } from 'react';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Calculator, 
-  MapPin, 
-  Clock, 
-  ShieldCheck, 
-  Music, 
-  ArrowRight, 
-  Phone, 
-  MessageCircle, 
-  Calendar as CalendarIcon, 
-  Lock, 
-  CheckCircle2, 
+import {
+  Calculator,
+  MapPin,
+  Clock,
+  ShieldCheck,
+  Music,
+  ArrowRight,
+  Phone,
+  MessageCircle,
+  Calendar as CalendarIcon,
+  Lock,
+  CheckCircle2,
   AlertCircle,
   Star,
   Search,
   Check,
-  UserCheck,
   Filter,
   Sparkles
 } from 'lucide-react';
@@ -167,12 +165,12 @@ interface CalendarDay {
 export default function SolistaReservationPage() {
   const [distance, setDistance] = useState<number>(0);
   const [endTime, setEndTime] = useState<string>('23:00');
-  
+
   // Advanced Calendar State
   const [selectedMonth, setSelectedMonth] = useState<number>(9); // 9 = Septiembre 2026
   const [selectedDate, setSelectedDate] = useState<string>('2026-09-27');
   const [dayTypeFilter, setDayTypeFilter] = useState<'all' | 'weekends' | 'high_demand'>('all');
-  
+
   // S-Class Multi-Artist Selection State
   const [selectedArtistId, setSelectedArtistId] = useState<string>('edwin-solista');
   const [artistCategoryFilter, setArtistCategoryFilter] = useState<'all' | 'mariachi' | 'solista' | 'cuerdas' | 'fiesta'>('all');
@@ -186,7 +184,7 @@ export default function SolistaReservationPage() {
   const filteredArtists = useMemo(() => {
     return ARTIST_FORMATS.filter(a => {
       const matchCat = artistCategoryFilter === 'all' || a.category === artistCategoryFilter;
-      const matchSearch = artistSearch.trim() === '' || 
+      const matchSearch = artistSearch.trim() === '' ||
         a.name.toLowerCase().includes(artistSearch.toLowerCase()) ||
         a.role.toLowerCase().includes(artistSearch.toLowerCase()) ||
         a.repertoire.some(r => r.toLowerCase().includes(artistSearch.toLowerCase()));
@@ -258,10 +256,10 @@ export default function SolistaReservationPage() {
       if (selectedMonth === 9 && (d === 25 || d === 26)) {
         status = 'blocked';
         reason = 'Cerrado por Depósito S-Class (Confirmado)';
-      } 
+      }
       // Fines de semana clave con alta demanda
-      else if ((selectedMonth === 9 && [18, 19, 20, 27].includes(d)) || 
-               (selectedMonth === 10 && [2, 3, 4, 9, 10, 11, 16, 17].includes(d))) {
+      else if ((selectedMonth === 9 && [18, 19, 20, 27].includes(d)) ||
+        (selectedMonth === 10 && [2, 3, 4, 9, 10, 11, 16, 17].includes(d))) {
         status = 'high_demand';
         reason = 'Alta Demanda — Último Cupo';
       }
@@ -369,7 +367,7 @@ export default function SolistaReservationPage() {
       </header>
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 mt-10">
-        
+
         {/* HERO TITLE */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#258DCD]/10 border border-[#258DCD]/30 text-xs font-mono text-[#AAD6CD] mb-4">
@@ -385,13 +383,13 @@ export default function SolistaReservationPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          
+
           {/* LEFT COLUMN: ADVANCED SOTA CALENDAR & LOGISTICS */}
           <div className="lg:col-span-7 space-y-8">
 
             {/* SOTA CALENDAR CONTAINER */}
             <div className="bg-[#0A0A0C] border border-white/10 rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
-              
+
               {/* CALENDAR HEADER & MONTH SWITCHER */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-white/10">
                 <div className="flex items-center gap-2">
@@ -404,19 +402,19 @@ export default function SolistaReservationPage() {
 
                 {/* MONTH SELECTOR */}
                 <div className="flex items-center gap-1 bg-[#111] p-1 rounded-xl border border-white/10 text-xs font-mono">
-                  <button 
+                  <button
                     onClick={() => setSelectedMonth(9)}
                     className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 9 ? 'bg-[#258DCD] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
                   >
                     Septiembre
                   </button>
-                  <button 
+                  <button
                     onClick={() => setSelectedMonth(10)}
                     className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 10 ? 'bg-[#258DCD] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
                   >
                     Octubre
                   </button>
-                  <button 
+                  <button
                     onClick={() => setSelectedMonth(11)}
                     className={`px-3 py-1.5 rounded-lg transition-all ${selectedMonth === 11 ? 'bg-[#258DCD] text-white font-bold shadow' : 'text-zinc-400 hover:text-white'}`}
                   >
@@ -432,19 +430,19 @@ export default function SolistaReservationPage() {
                   <span>Filtro de Días:</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <button 
+                  <button
                     onClick={() => setDayTypeFilter('all')}
                     className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${dayTypeFilter === 'all' ? 'bg-white/10 text-white font-bold border border-white/20' : 'text-zinc-500 hover:text-zinc-300'}`}
                   >
                     Todos
                   </button>
-                  <button 
+                  <button
                     onClick={() => setDayTypeFilter('weekends')}
                     className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${dayTypeFilter === 'weekends' ? 'bg-[#258DCD]/20 text-[#258DCD] font-bold border border-[#258DCD]/30' : 'text-zinc-500 hover:text-zinc-300'}`}
                   >
                     Fines de Semana
                   </button>
-                  <button 
+                  <button
                     onClick={() => setDayTypeFilter('high_demand')}
                     className={`px-2.5 py-1 rounded-lg text-xs transition-colors ${dayTypeFilter === 'high_demand' ? 'bg-amber-500/20 text-amber-400 font-bold border border-amber-500/30' : 'text-zinc-500 hover:text-zinc-300'}`}
                   >
@@ -510,11 +508,10 @@ export default function SolistaReservationPage() {
                       <button
                         key={dateStr}
                         onClick={() => handleDateSelect(item)}
-                        className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all relative ${
-                          isSelected 
-                            ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10' 
+                        className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all relative ${isSelected
+                            ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
                             : 'border-amber-500/30 bg-amber-500/5 hover:border-amber-400 text-zinc-200'
-                        }`}
+                          }`}
                       >
                         <div className="flex justify-between items-center w-full">
                           <span className={`text-xs font-bold font-mono ${isSelected ? 'text-white' : 'text-amber-400'}`}>{item.day}</span>
@@ -532,11 +529,10 @@ export default function SolistaReservationPage() {
                     <button
                       key={dateStr}
                       onClick={() => handleDateSelect(item)}
-                      className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all ${
-                        isSelected 
-                          ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10' 
+                      className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all ${isSelected
+                          ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
                           : 'border-white/10 bg-[#050505] hover:border-[#258DCD]/50 text-zinc-300 hover:text-white'
-                      }`}
+                        }`}
                     >
                       <span className="text-xs font-mono font-bold">{item.day}</span>
                       <span className={`text-[9px] uppercase tracking-tight leading-none ${isSelected ? 'text-white font-bold' : 'text-zinc-500'}`}>
@@ -600,11 +596,10 @@ export default function SolistaReservationPage() {
                   <button
                     key={tab.id}
                     onClick={() => setArtistCategoryFilter(tab.id as any)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
-                      artistCategoryFilter === tab.id
+                    className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${artistCategoryFilter === tab.id
                         ? 'bg-[#258DCD] text-white font-bold shadow-[0_0_15px_rgba(37,141,205,0.4)]'
                         : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
-                    }`}
+                      }`}
                   >
                     {tab.label}
                   </button>
@@ -619,11 +614,10 @@ export default function SolistaReservationPage() {
                     <div
                       key={artist.id}
                       onClick={() => setSelectedArtistId(artist.id)}
-                      className={`relative rounded-xl border p-4 transition-all cursor-pointer flex flex-col justify-between group ${
-                        isSelected
+                      className={`relative rounded-xl border p-4 transition-all cursor-pointer flex flex-col justify-between group ${isSelected
                           ? 'bg-[#258DCD]/15 border-[#258DCD] shadow-[0_0_25px_rgba(37,141,205,0.3)] ring-1 ring-[#258DCD]'
                           : 'bg-[#050505] border-white/10 hover:border-white/20'
-                      }`}
+                        }`}
                     >
                       <div className="flex gap-3 items-start">
                         <img
@@ -670,11 +664,10 @@ export default function SolistaReservationPage() {
                         </div>
                         <button
                           type="button"
-                          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-                            isSelected
+                          className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${isSelected
                               ? 'bg-[#258DCD] text-white shadow'
                               : 'bg-white/5 text-zinc-300 group-hover:bg-white/10'
-                          }`}
+                            }`}
                         >
                           {isSelected ? (
                             <>
@@ -705,12 +698,12 @@ export default function SolistaReservationPage() {
                     <span className="flex items-center gap-2"><MapPin size={16} className="text-zinc-500" /> Distancia desde Méntrida (Toledo)</span>
                     <span className="font-mono text-[#258DCD]">{distance} km</span>
                   </label>
-                  <input 
-                    type="range" 
-                    min="0" 
-                    max="600" 
+                  <input
+                    type="range"
+                    min="0"
+                    max="600"
                     step="10"
-                    value={distance} 
+                    value={distance}
                     onChange={(e) => setDistance(Number(e.target.value))}
                     className="w-full accent-[#258DCD]"
                   />
@@ -721,8 +714,8 @@ export default function SolistaReservationPage() {
                   <label className="flex items-center gap-2 text-sm text-zinc-300">
                     <Clock size={16} className="text-zinc-500" /> Hora estimada de finalización
                   </label>
-                  <input 
-                    type="time" 
+                  <input
+                    type="time"
                     value={endTime}
                     onChange={(e) => setEndTime(e.target.value)}
                     className="w-full bg-[#111] border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#258DCD] font-mono text-sm"
@@ -759,7 +752,7 @@ export default function SolistaReservationPage() {
           {/* RIGHT COLUMN: SUMMARY & CHECKOUT */}
           <div className="lg:col-span-5">
             <div className="bg-[#0A0A0C] border border-[#258DCD]/30 rounded-2xl p-6 sm:p-8 sticky top-24 shadow-[0_0_50px_rgba(37,141,205,0.05)]">
-              
+
               {/* SELECTED ARTIST PREVIEW CARD */}
               <div className="bg-[#111] border border-[#258DCD]/30 rounded-xl p-4 mb-4 flex items-center gap-3">
                 <img
@@ -797,7 +790,7 @@ export default function SolistaReservationPage() {
                   <span className="text-zinc-400">Tarifa Base ({selectedArtist.name})</span>
                   <span className="font-mono text-white">{BASE_RATE.toFixed(2)} €</span>
                 </div>
-                
+
                 {logisticsCost > 0 && (
                   <div className="flex justify-between items-center text-sm animate-in fade-in">
                     <span className="text-zinc-400">Logística ({distance - FREE_KM} km extra)</span>
@@ -853,7 +846,7 @@ export default function SolistaReservationPage() {
               </AnimatePresence>
 
               {/* STRIPE PAYMENT BUTTON */}
-              <div 
+              <div
                 onMouseEnter={() => {
                   hoverTimerRef.current = setTimeout(() => {
                     setShowHesitationBanner(true);
@@ -879,15 +872,15 @@ export default function SolistaReservationPage() {
 
               {/* DIRECT CONTACT BUTTONS */}
               <div className="grid grid-cols-2 gap-3">
-                <a 
-                  href={whatsappUrl} 
-                  target="_blank" 
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 text-xs font-bold py-3 rounded-xl transition-colors"
                 >
                   <MessageCircle size={14} /> WhatsApp
                 </a>
-                <a 
+                <a
                   href="tel:+34693693048"
                   className="flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 text-xs font-bold py-3 rounded-xl transition-colors"
                 >

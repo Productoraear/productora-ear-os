@@ -2,17 +2,17 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { 
-  Sliders, 
-  Save, 
-  RotateCcw, 
-  Check, 
-  X, 
-  ExternalLink, 
-  Download, 
-  Sparkles, 
-  Eye, 
-  Edit3, 
+import {
+  Sliders,
+  Save,
+  RotateCcw,
+  Check,
+  X,
+  ExternalLink,
+  Download,
+  Sparkles,
+  Eye,
+  Edit3,
   Palette,
   Maximize2,
   Minimize2,
@@ -274,7 +274,7 @@ export function GlobalLiveVisualEditor() {
       allTextNodes.forEach((el) => {
         const html = el as HTMLElement;
         if (html.closest('#ear-global-builder-dock') || html.closest('#ear-elementor-floating-bar') || html.closest('#ear-ai-copy-modal')) return;
-        
+
         if (html.innerText && html.innerText.trim().length > 0) {
           html.style.cursor = 'text';
           html.style.outline = '1px dashed rgba(236, 182, 19, 0.25)';
@@ -521,6 +521,12 @@ export function GlobalLiveVisualEditor() {
     setShowLinkModal(false);
   };
 
+  // El editor visual es herramienta de la web pública / landings comerciales.
+  // En paneles privados (afiliado, admin) no debe pintarse.
+  if (nextPathname?.startsWith('/panel') || nextPathname?.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <>
       {/* 🚀 BARRA FLOTANTE CONTEXTUAL DE ELEMENTO SELECCIONADO (ESTILO ELEMENTOR / DIVI) */}
@@ -683,7 +689,7 @@ export function GlobalLiveVisualEditor() {
       {/* 🎛️ PANEL PRINCIPAL DEL CONSTRUCTOR S-CLASS (DOCK FIJO INFERIOR DERECHO) */}
       <div id="ear-global-builder-dock" className="fixed bottom-6 right-6 z-[99999] font-sans">
         <div className="bg-[#08080c]/95 border-2 border-[#ecb613]/70 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] backdrop-blur-2xl text-white p-3 flex flex-col gap-2.5 max-w-sm transition-all duration-300">
-          
+
           {/* CABECERA */}
           <div className="flex items-center justify-between gap-3 border-b border-neutral-800 pb-2">
             <div className="flex items-center gap-2">
@@ -717,11 +723,10 @@ export function GlobalLiveVisualEditor() {
                       setToolbarPos(null);
                     }
                   }}
-                  className={`flex-grow py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all ${
-                    isEditMode 
-                      ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 ring-2 ring-[#ecb613]' 
-                      : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-200'
-                  }`}
+                  className={`flex-grow py-2 px-3 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all ${isEditMode
+                    ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 ring-2 ring-[#ecb613]'
+                    : 'bg-neutral-800 hover:bg-neutral-700 text-neutral-200'
+                    }`}
                 >
                   <Sliders className="w-3.5 h-3.5" />
                   {isEditMode ? 'MODO EDICIÓN ACTIVO' : 'ACTIVAR EDICIÓN VISUAL'}
@@ -882,11 +887,10 @@ export function GlobalLiveVisualEditor() {
                   setAiStyle('titular_hero');
                   handleGenerateAiCopy('titular_hero');
                 }}
-                className={`p-2 rounded-xl border text-left transition-all ${
-                  aiStyle === 'titular_hero'
-                    ? 'border-[#ecb613] bg-[#ecb613]/10 text-[#ecb613]'
-                    : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
-                }`}
+                className={`p-2 rounded-xl border text-left transition-all ${aiStyle === 'titular_hero'
+                  ? 'border-[#ecb613] bg-[#ecb613]/10 text-[#ecb613]'
+                  : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
+                  }`}
               >
                 <div className="font-bold text-[11px]">👑 Titular Hero S-Class</div>
                 <div className="text-[9px] text-neutral-500">Autoridad, Syne display</div>
@@ -897,11 +901,10 @@ export function GlobalLiveVisualEditor() {
                   setAiStyle('propuesta_valor');
                   handleGenerateAiCopy('propuesta_valor');
                 }}
-                className={`p-2 rounded-xl border text-left transition-all ${
-                  aiStyle === 'propuesta_valor'
-                    ? 'border-[#ecb613] bg-[#ecb613]/10 text-[#ecb613]'
-                    : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
-                }`}
+                className={`p-2 rounded-xl border text-left transition-all ${aiStyle === 'propuesta_valor'
+                  ? 'border-[#ecb613] bg-[#ecb613]/10 text-[#ecb613]'
+                  : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
+                  }`}
               >
                 <div className="font-bold text-[11px]">💼 Propuesta & Split 80/10/10</div>
                 <div className="text-[9px] text-neutral-500">Transparencia y conversión</div>
@@ -912,11 +915,10 @@ export function GlobalLiveVisualEditor() {
                   setAiStyle('boton_cta');
                   handleGenerateAiCopy('boton_cta');
                 }}
-                className={`p-2 rounded-xl border text-left transition-all ${
-                  aiStyle === 'boton_cta'
-                    ? 'border-[#FF2B44] bg-[#FF2B44]/10 text-[#FF2B44]'
-                    : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
-                }`}
+                className={`p-2 rounded-xl border text-left transition-all ${aiStyle === 'boton_cta'
+                  ? 'border-[#FF2B44] bg-[#FF2B44]/10 text-[#FF2B44]'
+                  : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
+                  }`}
               >
                 <div className="font-bold text-[11px]">💳 Cierre Stripe 100€</div>
                 <div className="text-[9px] text-neutral-500">Price-Lock SHA-256</div>
@@ -927,11 +929,10 @@ export function GlobalLiveVisualEditor() {
                   setAiStyle('rider_acustico');
                   handleGenerateAiCopy('rider_acustico');
                 }}
-                className={`p-2 rounded-xl border text-left transition-all ${
-                  aiStyle === 'rider_acustico'
-                    ? 'border-cyan-500 bg-cyan-950/20 text-cyan-300'
-                    : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
-                }`}
+                className={`p-2 rounded-xl border text-left transition-all ${aiStyle === 'rider_acustico'
+                  ? 'border-cyan-500 bg-cyan-950/20 text-cyan-300'
+                  : 'border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-neutral-700'
+                  }`}
               >
                 <div className="font-bold text-[11px]">🔊 Rider Ley 37/2003</div>
                 <div className="text-[9px] text-neutral-500">Festejos 90-102 dBA</div>

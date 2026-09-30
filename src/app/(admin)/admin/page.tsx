@@ -8,12 +8,9 @@ import {
   CreditCard,
   TrendingUp,
   Activity,
-  Calendar,
   Wallet,
   QrCode,
   ArrowUpRight,
-  ArrowDownLeft,
-  ShoppingCart,
   RefreshCcw,
   Sparkles,
   Search,
@@ -105,7 +102,7 @@ export default function CatminAdminDashboardPage() {
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
-      
+
       {/* ===================================================================== */}
       {/* 1. HEADER DE PÁGINA (ESTILO CATMÍN TEMPLATE 21ST.DEV)                 */}
       {/* ===================================================================== */}
@@ -144,7 +141,7 @@ export default function CatminAdminDashboardPage() {
       {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI DE ALTO IMPACTO                       */}
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        
+
         {/* Card 1: Total Revenue (Facturación Bruta) */}
         <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
@@ -220,10 +217,10 @@ export default function CatminAdminDashboardPage() {
       {/* 3. CATMÍN ROW 2: GRÁFICOS ANALÍTICOS Y BUDGET OVERVIEW (SPLIT 80/10/10) */}
       {/* ===================================================================== */}
       <div className="grid gap-6 xl:grid-cols-3">
-        
+
         {/* Columna Izquierda: 2 Gráficos (Subscriptions Area + Revenue Bars) */}
         <div className="grid gap-6 md:grid-cols-2 xl:col-span-2">
-          
+
           {/* Gráfico 1: Subscriptions / Cierres de Contratos */}
           <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
             <div>
@@ -323,7 +320,7 @@ export default function CatminAdminDashboardPage() {
       {/* 4. CATMÍN ROW 3: METAS ESTRATÉGICAS Y FONDOS                          */}
       {/* ===================================================================== */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        
+
         {/* Milestone 1: Fondo de Reserva Stripe */}
         <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
           <div className="space-y-3">
@@ -450,7 +447,7 @@ export default function CatminAdminDashboardPage() {
       {/* 5. CATMÍN ROW 4: CUENTAS OPERATIVAS Y ACTIVIDAD RECIENTE (TRANSACCIONES)*/}
       {/* ===================================================================== */}
       <div className="grid gap-6 lg:grid-cols-2">
-        
+
         {/* Card Izquierda: Total Balance y Cuentas Operativas */}
         <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] shadow-sm">
           <div className="p-5 border-b border-[#1a1a24]">
@@ -601,11 +598,10 @@ export default function CatminAdminDashboardPage() {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
-                selectedCategory === cat.id
+              className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${selectedCategory === cat.id
                   ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-[#ecb613]/20'
                   : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
-              }`}
+                }`}
             >
               {cat.label}
             </button>

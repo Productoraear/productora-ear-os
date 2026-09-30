@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   MessageSquare,
   PhoneCall,
@@ -87,11 +87,10 @@ export default function WhatsAppDispatchPage() {
               <button
                 type="button"
                 onClick={() => { setTemplateType('solista'); setCustomPrice(350); }}
-                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${
-                  templateType === 'solista'
+                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'solista'
                     ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
                     : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
-                }`}
+                  }`}
               >
                 <Music size={14} />
                 Solista 350 €
@@ -100,11 +99,10 @@ export default function WhatsAppDispatchPage() {
               <button
                 type="button"
                 onClick={() => { setTemplateType('mariachi'); setCustomPrice(450); }}
-                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${
-                  templateType === 'mariachi'
+                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'mariachi'
                     ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
                     : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
-                }`}
+                  }`}
               >
                 <Sparkles size={14} />
                 Mariachi
@@ -113,11 +111,10 @@ export default function WhatsAppDispatchPage() {
               <button
                 type="button"
                 onClick={() => { setTemplateType('vimume'); setCustomPrice(0); }}
-                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${
-                  templateType === 'vimume'
+                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'vimume'
                     ? 'bg-violet-950/30 border-violet-500 text-violet-400'
                     : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
-                }`}
+                  }`}
               >
                 <HeartPulse size={14} />
                 VIMUME 14D
@@ -126,11 +123,10 @@ export default function WhatsAppDispatchPage() {
               <button
                 type="button"
                 onClick={() => { setTemplateType('b2g'); setCustomPrice(14250); }}
-                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${
-                  templateType === 'b2g'
+                className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'b2g'
                     ? 'bg-cyan-950/30 border-cyan-500 text-cyan-400'
                     : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
-                }`}
+                  }`}
               >
                 <Building2 size={14} />
                 B2G Licitación

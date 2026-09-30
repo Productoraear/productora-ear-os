@@ -44,8 +44,30 @@ enum WaybillParticipantRole {
 
 enum CommissionStatus {
   PENDING
+  APPROVED
   PAID
   CANCELLED
+}
+
+enum AffiliateTier {
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  PAID
+  REJECTED
+}
+
+enum KycStatus {
+  NOT_REQUIRED
+  PENDING
+  VERIFIED
+  REJECTED
 }
 
 enum ClaimStatus {
@@ -79,8 +101,11 @@ model User {
   artistProfile     artistProfile?
   clientProfile     clientProfile?
   providerProfile   providerProfile?
+  affiliateProfile  AffiliateProfile?
   auraWallet        auraWallet?
   commissionLedgers commissionLedger[]
+  payouts           Payout[]
+  referralsMade     AffiliateReferral[]  @relation("AffiliateReferral_referrer")
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
 }
@@ -158,15 +183,21 @@ model commissionLedger {
   id          String           @id @default(cuid())
   userId      String?
   user        User?            @relation(fields: [userId], references: [id])
+  affiliateId String?
+  affiliate   AffiliateProfile? @relation(fields: [affiliateId], references: [id])
+  reference   String?          @unique
   amount      Float
   currency    String           @default("EUR")
   status      CommissionStatus @default(PENDING)
-  reference   String?
   sourceEvent String?
   description String?
   notes       String?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
+
+  @@index([userId], name: "idx_ledger_user")
+  @@index([affiliateId], name: "idx_ledger_affiliate")
+  @@index([status], name: "idx_ledger_status")
 }
 
 model smartContract {
@@ -751,5 +782,87 @@ model AdminPulse {
   id              Int         @id @default(1)
   version         Int         @default(0)
   updatedAt       DateTime    @default(now())
+}
+
+// ==========================================
+// 💎 MÓDULO S-CLASS DE AFILIADOS & COMMISSION ENGINE
+// SSOT: Split Soberano 80/10/10 · Depósito 100€ Price-Lock
+// ==========================================
+
+model AffiliateProfile {
+  id             String        @id @default(cuid())
+  userId         String        @unique
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  affiliateCode  String        @unique
+  companyName    String?
+  cifNif         String?
+  phone          String?
+  category       String        @default("PRESCRIPTOR")
+  payoutMethod   String        @default("IBAN")
+  payoutDetails  String?
+  tier           AffiliateTier @default(BRONZE)
+  commissionRate Float         @default(10.0)
+  isHomologated  Boolean       @default(true)
+  isActive       Boolean       @default(true)
+  kycStatus      KycStatus     @default(NOT_REQUIRED)
+  totalSalesGenerated Int      @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  ledgers        commissionLedger[]
+  referrals      AffiliateReferral[] @relation("AffiliateReferral_affiliate")
+  payouts        Payout[]
+
+  @@index([affiliateCode], name: "idx_aff_code")
+  @@index([tier], name: "idx_aff_tier")
+}
+
+model AffiliateReferral {
+  id                String           @id @default(cuid())
+  affiliateId       String?
+  affiliate         AffiliateProfile? @relation("AffiliateReferral_affiliate", fields: [affiliateId], references: [id])
+  referrerId        String?
+  referrer          User?            @relation("AffiliateReferral_referrer", fields: [referrerId], references: [id])
+  referralCode      String
+  landingUrl        String
+  customerEmail     String?
+  customerPhone     String?
+  source            String           @default("ORGANIC")
+  status            String           @default("REGISTERED") // REGISTERED | CONVERTED | PAID | CANCELLED
+  attributedAt      DateTime         @default(now())
+  convertedAt       DateTime?
+  conversionAmount  Float            @default(0)
+  commissionDue     Float            @default(0)
+  bookingReference  String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@index([affiliateId], name: "idx_ref_affiliate")
+  @@index([referrerId], name: "idx_ref_referrer")
+  @@index([status], name: "idx_ref_status")
+}
+
+model Payout {
+  id               String       @id @default(cuid())
+  userId           String?
+  user             User?        @relation(fields: [userId], references: [id])
+  affiliateId      String?
+  affiliate        AffiliateProfile? @relation(fields: [affiliateId], references: [id])
+  amount           Float
+  currency         String       @default("EUR")
+  status           PayoutStatus @default(PENDING)
+  payoutMethod     String       @default("IBAN")
+  payoutDetails    String?
+  kycRequired      Boolean      @default(false)
+  scheduledFor     DateTime?
+  executedAt       DateTime?
+  reference        String?      @unique
+  notes            String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([userId], name: "idx_payout_user")
+  @@index([affiliateId], name: "idx_payout_affiliate")
+  @@index([status], name: "idx_payout_status")
 }
 
