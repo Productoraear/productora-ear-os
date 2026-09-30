@@ -1,11 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import { 
-  Building2, ShieldCheck, ArrowRight, FileText, CheckCircle2, 
+import {
+  Building2, ShieldCheck, ArrowRight, FileText, CheckCircle2,
   Crown, Sparkles, Activity, Phone, Mail, Award, Zap, ChevronRight,
   Target, Calendar, Check, Compass, HeartHandshake, TrendingUp
 } from 'lucide-react';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { CENTRALITA } from '@/lib/phone-constants';
 
 export const metadata: Metadata = {
@@ -47,21 +47,21 @@ export default function EmpresariosPage() {
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 px-4 sm:px-6 md:px-8 selection:bg-[#ecb613] selection:text-black font-sans">
       <div className="max-w-7xl mx-auto space-y-20">
-        
+
         {/* 🚀 HERO SECTION */}
         <div className="text-center space-y-6 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.3em]">
             <Sparkles size={13} className="animate-spin" />
             Acompañamiento Estratégico & Táctico
           </div>
-          
+
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white font-syne leading-[0.95]">
-            Los directorios tradicionales cobran por leads <br className="hidden sm:inline"/>
+            Los directorios tradicionales cobran por leads <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">
               que luego subastan a tu competencia.
             </span>
           </h1>
-          
+
           <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed max-w-3xl mx-auto">
             Reclama tu ficha dentro de 24.869 proveedores homologados. Cero comisiones ocultas, enlace directo a tu WhatsApp y control total de tu agenda con acompañamiento táctico de alto nivel.
           </p>
@@ -76,7 +76,7 @@ export default function EmpresariosPage() {
               <Calendar size={16} />
               <span>Agenda cita de 30 min (Gratis)</span>
             </a>
-            
+
             <a
               href={CENTRALITA.tel}
               className="w-full sm:w-auto py-4 px-8 rounded-2xl bg-white/10 hover:bg-white/15 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-white/10 transition-all cursor-pointer"
@@ -99,16 +99,16 @@ export default function EmpresariosPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            
+
             {/* PLAN 1: EMPRESARIOS (1000€/mes) */}
             <div className="p-8 sm:p-12 rounded-[2.5rem] bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/40 transition-all flex flex-col justify-between space-y-8 shadow-2xl relative overflow-hidden group">
               <div className="space-y-6">
-<div className="flex items-center justify-between">
-  <span className="px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
-    Plan Ejecución
-  </span>
-  <span className="text-xs font-mono text-white/40 uppercase">Garantía Escrita</span>
-</div>
+                <div className="flex items-center justify-between">
+                  <span className="px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
+                    Plan Ejecución
+                  </span>
+                  <span className="text-xs font-mono text-white/40 uppercase">Garantía Escrita</span>
+                </div>
 
                 <div>
                   <h3 className="text-3xl font-black uppercase text-white font-syne tracking-tight">
@@ -156,12 +156,12 @@ export default function EmpresariosPage() {
             {/* PLAN 2: PREMIUM BUSINESS (3000€/mes) */}
             <div className="p-8 sm:p-12 rounded-[2.5rem] bg-gradient-to-b from-[#100d04] via-[#0a0a0f] to-[#0a0a0f] border border-[#ecb613]/50 transition-all flex flex-col justify-between space-y-8 shadow-[0_20px_50px_rgba(236,182,19,0.15)] relative overflow-hidden group">
               <div className="space-y-6">
-<div className="flex items-center justify-between">
-  <span className="px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
-    Escalado Máximo
-  </span>
-  <span className="text-xs font-mono text-white/40 uppercase">Full-Service VIP</span>
-</div>
+                <div className="flex items-center justify-between">
+                  <span className="px-3.5 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black uppercase tracking-wider font-mono">
+                    Escalado Máximo
+                  </span>
+                  <span className="text-xs font-mono text-white/40 uppercase">Full-Service VIP</span>
+                </div>
 
                 <div>
                   <h3 className="text-3xl font-black uppercase text-white font-syne tracking-tight">
@@ -222,35 +222,35 @@ export default function EmpresariosPage() {
 
         {/* 🏢 GARANTÍAS CORPORATIVAS B2B */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
-  <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-    <FileText size={24} />
-  </div>
-  <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Compliance & Facturación</h3>
-  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
-    Facturas proforma inmediatas, contratos mercantiles homologados, certificados de estar al corriente con TGSS/Hacienda y desglose de IVA.
-  </p>
-</div>
+          <div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+              <FileText size={24} />
+            </div>
+            <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Compliance & Facturación</h3>
+            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+              Facturas proforma inmediatas, contratos mercantiles homologados, certificados de estar al corriente con TGSS/Hacienda y desglose de IVA.
+            </p>
+          </div>
 
-<div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
-  <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-    <ShieldCheck size={24} />
-  </div>
-  <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Póliza RC de 1.000.000€</h3>
-  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
-    Máxima cobertura aseguradora para recintos históricos, hoteles de 5 estrellas, centros de convenciones y fincas de prestigio en toda España.
-  </p>
-</div>
+          <div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+              <ShieldCheck size={24} />
+            </div>
+            <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Póliza RC de 1.000.000€</h3>
+            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+              Máxima cobertura aseguradora para recintos históricos, hoteles de 5 estrellas, centros de convenciones y fincas de prestigio en toda España.
+            </p>
+          </div>
 
-<div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
-  <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-    <Crown size={24} />
-  </div>
-  <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Rigor Técnico Militar</h3>
-  <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
-    Puntualidad garantizada T-120min antes de la apertura de puertas, prueba de sonido profesional y soporte in situ continuo.
-  </p>
-</div>
+          <div className="bg-[#0e0e0e] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4 shadow-xl">
+            <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
+              <Crown size={24} />
+            </div>
+            <h3 className="text-xl font-black uppercase italic tracking-tight text-white font-syne">Rigor Técnico Militar</h3>
+            <p className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">
+              Puntualidad garantizada T-120min antes de la apertura de puertas, prueba de sonido profesional y soporte in situ continuo.
+            </p>
+          </div>
         </section>
 
         {/* 🎭 FORMATOS B2B DE ESCENARIO */}

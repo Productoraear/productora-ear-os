@@ -1,31 +1,51 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { 
-  Sparkles, 
-  MapPin, 
-  ShieldCheck, 
-  ArrowRight, 
-  Award, 
-  Star, 
-  Phone, 
-  CheckCircle2, 
-  Flame, 
-  Music, 
-  Sliders, 
-  Clock, 
+import { redirect } from 'next/navigation';
+import {
+  Sparkles,
+  MapPin,
+  ShieldCheck,
+  ArrowRight,
+  Award,
+  Star,
+  Phone,
+  CheckCircle2,
+  Flame,
+  Music,
+  Sliders,
+  Clock,
   HelpCircle,
   AlertTriangle,
   ChevronRight
 } from 'lucide-react';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
-import { SERVICES_PSEO_EXPANDED, MUNICIPALITIES_DATASET } from '@/lib/constants/spanish-municipalities';
+import { MUNICIPALITIES_DATASET } from '@/lib/constants/spanish-municipalities';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { getProvidersByLocation } from '@/lib/data/vampire-service';
 import { resolveSearchIntent } from '@/lib/seo/searchIntentEngine';
+import {
+  resolveCanonicalBodasService,
+  getCanonicalService,
+  getCanonicalServiceLabel,
+  CANONICAL_SERVICES
+} from '@/lib/navigation/canonical-taxonomy';
 
 interface Props {
   params: Promise<{ provincia: string; servicio: string }>;
+}
+
+export function generateStaticParams() {
+  const provinces = Object.keys(PROVINCIAS_52_GRAPH);
+  const params: Array<{ provincia: string; servicio: string }> = [];
+
+  for (const prov of provinces) {
+    for (const serv of CANONICAL_SERVICES) {
+      params.push({ provincia: prov, servicio: serv.slug });
+    }
+  }
+  
+  return params;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -33,24 +53,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const provKey = provincia.toLowerCase();
   const servKey = servicio.toLowerCase();
 
-  const provData = PROVINCIAS_52_GRAPH[provKey];
-  const provName = provData ? provData.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
-
-  const servData = SERVICES_PSEO_EXPANDED.find(s => s.path === servKey || s.id === servKey);
-  const servTitle = servData ? servData.title : 'Música y Servicios para Bodas';
-  const basePrice = servData?.basePrice ?? 350;
+  // Resolución canónica SSOT (normaliza provincias/ciudades y servicios legacy).
+  const canonical = resolveCanonicalBodasService(provincia, servicio);
+  const provName = canonical
+    ? PROVINCIAS_52_GRAPH[canonical.province]?.name ?? canonical.province
+    : provincia.charAt(0).toUpperCase() + provincia.slice(1);
+  const serviceSlug = canonical?.service ?? servKey;
+  const service = getCanonicalService(serviceSlug);
+  const servTitle = service?.label ?? getCanonicalServiceLabel(serviceSlug) ?? 'Música y Servicios para Bodas';
+  const basePrice = service?.basePrice ?? 350;
+  const canonicalUrl = canonical
+    ? `https://productoraear.com${canonical.path}`
+    : `https://productoraear.com/bodas/${provKey}/${servKey}`;
 
   return {
     title: `${servTitle} en ${provName} · Precios 2026 (Desde ${basePrice}€) | Productora EAR`,
     description: `Oferta Grand Slam de ${servTitle.toLowerCase()} en ${provName}. Proveedores homologados, sonido Bose 12 W/pax, seguro RC 1M€ y reserva blindada con depósito Price-Lock de 100€.`,
     alternates: {
-      canonical: `https://productoraear.com/bodas/${provKey}/${servKey}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
       title: `${servTitle} en ${provName} · Calibración 12 W/pax & Price-Lock 100€`,
       description: `Contratación oficial sin intermediarios abusivos en ${provName}. Garantía 0% cancelaciones con protocolo de relevo inmediato.`,
-      url: `https://productoraear.com/bodas/${provKey}/${servKey}`,
-      type: 'website'
+      url: canonicalUrl,
+      type: 'website',
+      images: [
+        {
+          url: 'https://productoraear.com/images/brand/ear_logo_official_diamond.png',
+          alt: `${servTitle} en ${provName} · Productora EAR`
+        }
+      ]
     },
     keywords: [
       `${servTitle} ${provName}`,
@@ -68,17 +100,27 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
   const provKey = provincia.toLowerCase();
   const servKey = servicio.toLowerCase();
 
-  const provData = PROVINCIAS_52_GRAPH[provKey] || { name: provincia, slug: provKey };
-  const servData = SERVICES_PSEO_EXPANDED.find(s => s.path === servKey || s.id === servKey) || {
-    title: 'Música y Producción de Bodas',
-    id: servKey,
-    path: servKey,
-    basePrice: 350
+  // SSOT canónico: redirigir slugs legacy o geo incoherente con 301 permanente.
+  const canonical = resolveCanonicalBodasService(provincia, servicio);
+  if (!canonical) {
+    redirect(`/bodas/${provKey}`);
+  }
+  if (canonical.needsRedirect) {
+    redirect(canonical.path);
+  }
+
+  const provData = PROVINCIAS_52_GRAPH[canonical.province] || { name: canonical.province, slug: canonical.province };
+  const service = getCanonicalService(canonical.service);
+  const servData = {
+    title: service?.label ?? getCanonicalServiceLabel(canonical.service) ?? 'Música y Producción de Bodas',
+    id: canonical.service,
+    path: canonical.service,
+    basePrice: service?.basePrice ?? 350
   };
 
-  const intent = resolveSearchIntent(servKey, provKey);
-  const providers = await getProvidersByLocation(provKey, servKey, 12);
-  const topTowns = (MUNICIPALITIES_DATASET[provKey] || []).slice(0, 8);
+  const intent = resolveSearchIntent(service?.intentGremio ?? canonical.service, canonical.province);
+  const providers = await getProvidersByLocation(canonical.province, canonical.service, 12);
+  const topTowns = (MUNICIPALITIES_DATASET[canonical.province] || []).slice(0, 8);
   const basePrice = servData.basePrice || intent.basePrice || 350;
 
   // Schema.org JSON-LD
@@ -104,7 +146,7 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
       priceCurrency: 'EUR',
       priceValidUntil: '2026-12-31',
       availability: 'https://schema.org/InStock',
-      url: `https://productoraear.com/bodas/${provKey}/${servKey}`
+      url: `https://productoraear.com${canonical.path}`
     }
   };
 
@@ -134,14 +176,14 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
       />
 
       <div className="max-w-7xl mx-auto space-y-16">
-        
+
         {/* Breadcrumb S-Class */}
         <nav className="flex items-center gap-2 text-xs font-mono text-zinc-500">
           <Link href="/" className="hover:text-[#ecb613] transition-colors">Inicio</Link>
           <span>/</span>
           <Link href="/bodas" className="hover:text-[#ecb613] transition-colors">Bodas</Link>
           <span>/</span>
-          <Link href={`/bodas/${provKey}`} className="hover:text-[#ecb613] transition-colors">{provData.name}</Link>
+          <Link href={`/bodas/${canonical.province}`} className="hover:text-[#ecb613] transition-colors">{provData.name}</Link>
           <span>/</span>
           <span className="text-[#ecb613] font-bold">{servData.title}</span>
         </nav>
@@ -290,7 +332,7 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
 
           <div className="space-y-3">
             {intent.hormoziValueStack.map((item, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="flex items-center justify-between p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors"
               >
@@ -428,7 +470,7 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {intent.faqs.map((q, idx) => (
-              <div 
+              <div
                 key={idx}
                 className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 space-y-2"
               >
@@ -454,7 +496,7 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
               {topTowns.map((town, idx) => (
                 <Link
                   key={idx}
-                  href={`/bodas/${provKey}/${servKey}/${town.slug}`}
+                  href={`/bodas/${canonical.province}/${canonical.service}/${town.slug}`}
                   className="px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-[#ecb613]/10 border border-white/10 hover:border-[#ecb613]/30 text-xs font-mono text-zinc-400 hover:text-[#ecb613] transition-all"
                 >
                   {town.name}

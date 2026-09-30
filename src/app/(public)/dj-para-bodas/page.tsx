@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'DJ para Bodas S-Class · Calibración 12 W/pax & Price-Lock 100€ | Productora EAR',

@@ -4,15 +4,15 @@ import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { HIGH_VALUE_VARIANTS, SEOVariant } from '@/lib/artists/matrix';
-import { 
-  Sparkles, 
-  MapPin, 
-  Calendar, 
-  ShieldCheck, 
-  Music, 
-  Award, 
-  ArrowRight, 
-  CheckCircle2, 
+import {
+  Sparkles,
+  MapPin,
+  Calendar,
+  ShieldCheck,
+  Music,
+  Award,
+  ArrowRight,
+  CheckCircle2,
   Star,
   Users,
   Clock,
@@ -29,7 +29,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const variant = HIGH_VALUE_VARIANTS.find(v => v.slug === slug);
-  
+
   if (variant) {
     return {
       title: variant.title,
@@ -43,7 +43,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         url: `https://productoraear.com/artistas/${slug}`,
         siteName: 'Productora EAR',
         locale: 'es_ES',
-        type: 'profile'
+        type: 'profile',
+        images: [
+          {
+            url: 'https://productoraear.com/images/brand/ear_logo_official_diamond.png',
+            alt: `${variant.title} · Productora EAR`
+          }
+        ]
       }
     };
   }
@@ -54,12 +60,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: `https://productoraear.com/artistas/${slug}`,
     },
+    openGraph: {
+      title: `Artista ${slug} | Productora EAR`,
+      description: 'Perfil y rider técnico oficial en Productora EAR',
+      url: `https://productoraear.com/artistas/${slug}`,
+      siteName: 'Productora EAR',
+      locale: 'es_ES',
+      type: 'website'
+    },
   };
 }
 
 export default async function ArtistDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  
+
   // 1. COMPROBACIÓN EN MATRIZ DE ALTO VALOR (HIGH_VALUE_VARIANTS)
   const variant = HIGH_VALUE_VARIANTS.find(v => v.slug === slug);
 
@@ -69,7 +83,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
     return (
       <main className="min-h-screen bg-[#050505] text-white pt-32 pb-24 font-sans selection:bg-[#ecb613]/30">
         <div className="max-w-6xl mx-auto px-6 space-y-16">
-          
+
           {/* HEADER / HERO DE ARTISTA (EXACTAMENTE UN H1) */}
           <header className="space-y-6 text-center max-w-4xl mx-auto">
             <div className="flex flex-wrap justify-center items-center gap-3">
@@ -96,10 +110,10 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
           {/* TARJETA PRINCIPAL DE ESPECIFICACIONES (H2) */}
           <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
+
             {/* COLUMNA IZQUIERDA: DETALLES Y REPERTORIO */}
             <div className="lg:col-span-8 space-y-8">
-              
+
               {/* Formato y Puesta en Escena */}
               <div className="p-8 rounded-3xl bg-[#0a0a0d] border border-white/10 space-y-6">
                 <div className="flex items-center justify-between border-b border-white/10 pb-4">
@@ -161,7 +175,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
             {/* COLUMNA DERECHA: TARJETA DE RESERVA Y STRIPE */}
             <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-32">
               <div className="p-8 rounded-3xl bg-gradient-to-b from-[#141418] to-[#09090d] border border-[#ecb613]/40 shadow-[0_0_50px_rgba(236,182,19,0.15)] space-y-6">
-                
+
                 <div className="space-y-1">
                   <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Tarifa Base Estimada</span>
                   <div className="p-4 bg-black/60 rounded-2xl border border-white/10 text-center">
@@ -173,14 +187,14 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                 </div>
 
                 <div className="space-y-3 pt-2">
-                  <Link 
+                  <Link
                     href={`/checkout/presupuesto?artista=${slug}&precio=${basePrice}`}
                     className="w-full py-4 bg-[#ecb613] text-black font-black uppercase tracking-[0.2em] text-xs rounded-2xl hover:bg-white transition-all text-center block shadow-lg shadow-[#ecb613]/10"
                   >
                     Bloquear Fecha (Smart-Lock 10€)
                   </Link>
 
-                  <a 
+                  <a
                     href={`https://wa.me/${CENTRALITA.raw}?text=${encodeURIComponent(`Hola Productora EAR, deseo contratar ${variant.title} en ${variant.city}. Precio de referencia: desde ${basePrice}€.`)}`}
                     target="_blank"
                     rel="noreferrer"
@@ -246,13 +260,13 @@ export default async function ArtistDetailPage({ params }: PageProps) {
               {artist.bio || 'Perfil artístico homologado por Productora EAR.'}
             </p>
           </header>
-          
+
           <div className="p-8 rounded-3xl bg-[#0a0a0d] border border-white/10 flex flex-col sm:flex-row justify-between items-center gap-6">
             <div>
               <h2 className="text-lg font-bold text-white">Contratación Directa S-Class</h2>
               <p className="text-xs text-zinc-400">Reserva con seguro de actuación y rider técnico garantizado.</p>
             </div>
-            <Link 
+            <Link
               href={`/checkout/presupuesto?artista=${slug}`}
               className="px-8 py-4 bg-[#ecb613] text-black font-black uppercase text-xs rounded-xl hover:bg-white transition-all"
             >
@@ -289,21 +303,21 @@ export default async function ArtistDetailPage({ params }: PageProps) {
         const photos: string[] = (matched.imageUrls && matched.imageUrls.length > 0)
           ? matched.imageUrls
           : (matched.gallery && matched.gallery.length > 0)
-          ? matched.gallery
-          : [matched.img || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4'];
+            ? matched.gallery
+            : [matched.img || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4'];
 
         return (
           <main className="min-h-screen bg-[#050505] text-white pt-20 pb-12 font-sans selection:bg-[#ecb613]/30">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6">
-              
+
               {/* VISTA COMPACTA "DE UN VISTAZO" (ABOVE THE FOLD) */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                 {/* IZQUIERDA: FOTO HD PRINCIPAL Y MINIATURAS */}
                 <div className="lg:col-span-5 flex flex-col gap-3">
                   <div className="h-72 sm:h-80 w-full rounded-2xl overflow-hidden border border-white/10 relative bg-black/60 shadow-2xl">
-                    <img 
-                      src={photos[0]} 
-                      alt={title} 
+                    <img
+                      src={photos[0]}
+                      alt={title}
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-mono text-[#ecb613] border border-[#ecb613]/30 uppercase font-bold flex items-center gap-1">
@@ -313,8 +327,8 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
                   {photos.length > 1 && (
                     <div className="grid grid-cols-3 gap-2">
-                      {photos.slice(1, 4).map((p, idx) => (
-                        <img key={idx} src={p} alt={`${title} foto ${idx+2}`} className="h-20 w-full object-cover rounded-xl border border-white/10" />
+                      {photos.slice(1, 4).map((p: string, idx: number) => (
+                        <img key={idx} src={p} alt={`${title} foto ${idx + 2}`} className="h-20 w-full object-cover rounded-xl border border-white/10" />
                       ))}
                     </div>
                   )}
@@ -367,7 +381,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                     </div>
 
                     <div className="flex items-center gap-2 w-full sm:w-auto">
-                      <a 
+                      <a
                         href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, deseo consultar presupuesto para el artista ${title} en ${province}.`)}`}
                         target="_blank"
                         rel="noreferrer"
@@ -376,7 +390,7 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                         <Phone size={13} className="text-[#ecb613]" /> WhatsApp
                       </a>
 
-                      <Link 
+                      <Link
                         href={`/checkout/presupuesto?artista=${slug}&precio=${basePrice}`}
                         className="flex-1 sm:flex-initial px-5 py-3 bg-[#ecb613] text-black font-black uppercase text-xs rounded-xl hover:bg-white transition-all text-center shadow-lg shadow-[#ecb613]/10"
                       >
@@ -409,8 +423,8 @@ export default async function ArtistDetailPage({ params }: PageProps) {
         <p className="text-zinc-400 text-sm">
           Perfil en proceso de sincronización con la Bóveda de Talento EAR.
         </p>
-        <Link 
-          href="/artistas" 
+        <Link
+          href="/artistas"
           className="inline-block px-6 py-3 bg-white/10 hover:bg-[#ecb613] hover:text-black text-white font-bold text-xs uppercase rounded-xl transition-all font-mono"
         >
           Volver al Catálogo de Artistas

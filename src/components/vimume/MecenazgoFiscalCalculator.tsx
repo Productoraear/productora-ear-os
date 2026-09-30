@@ -483,56 +483,53 @@ export function MecenazgoFiscalCalculator({
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    const printWindow = window.open('', '_blank');
-                    if (printWindow) {
-                      printWindow.document.write(`
-                        <html>
-                          <head>
-                            <title>Certificado Modelo 182 AEAT - VIMUME</title>
-                            <style>
-                              body { font-family: 'Courier New', monospace; padding: 40px; color: #111; line-height: 1.6; }
-                              h1 { font-size: 20px; border-bottom: 2px solid #000; padding-bottom: 8px; }
-                              .meta { margin: 20px 0; font-size: 12px; }
-                              .section { margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px; }
-                              .total { font-size: 16px; font-weight: bold; margin-top: 10px; }
-                            </style>
-                          </head>
-                          <body>
-                            <h1>CERTIFICADO FISCAL LEY 49/2002 // MODELO 182 AEAT</h1>
-                            <div class="meta">
-                              <strong>ID Certificado:</strong> ${modelo182Draft.certificadoId}<br/>
-                              <strong>Ejercicio:</strong> ${modelo182Draft.ejercicioFiscal}<br/>
-                              <strong>Fecha:</strong> ${new Date(modelo182Draft.fechaEmision).toLocaleDateString('es-ES')}
-                            </div>
-                            <div class="section">
-                              <strong>ENTIDAD BENEFICIARIA:</strong><br/>
-                              ${modelo182Draft.entidadBeneficiaria.razonSocial}<br/>
-                              NIF: ${modelo182Draft.entidadBeneficiaria.nif} | Reg: ${modelo182Draft.entidadBeneficiaria.registroEntidades}
-                            </div>
-                            <div class="section">
-                              <strong>DONANTE:</strong><br/>
-                              ${modelo182Draft.donante.nombreOrazonSocial} (NIF: ${modelo182Draft.donante.nifCif})<br/>
-                              Tipo: ${modelo182Draft.donante.tipo}
-                            </div>
-                            <div class="section">
-                              <strong>DETALLE ECONÓMICO:</strong><br/>
-                              Aportación Donada: ${modelo182Draft.detalleAportacion.donacionBruta.toFixed(2)} €<br/>
-                              Deducción Cuota: ${modelo182Draft.detalleAportacion.deduccionTotal.toFixed(2)} €<br/>
-                              <div class="total">Coste Real Neto Donante: ${modelo182Draft.detalleAportacion.costeRealNeto.toFixed(2)} €</div>
-                              Impacto Social SROI Generado: ${modelo182Draft.detalleAportacion.sroiGenerado.toFixed(2)} €
-                            </div>
-                            <div class="section" style="font-size: 10px;">
-                              <strong>FIRMA DIGITAL SHA-256:</strong><br/>
-                              ${modelo182Draft.firmaCriptograficaSha256}
-                            </div>
-                            <p style="font-size: 10px; color: #666;">${modelo182Draft.avisoLegalAeat}</p>
-                          </body>
-                        </html>
-                      `);
-                      printWindow.document.close();
-                      printWindow.focus();
-                      printWindow.print();
+                  onClick={async () => {
+                    try {
+                      // Dynamically load html2pdf
+                      const html2pdf = (await import('html2pdf.js')).default;
+                      const element = document.createElement('div');
+                      element.innerHTML = `
+                        <div style="font-family: 'Courier New', monospace; padding: 40px; color: #111; line-height: 1.6;">
+                          <h1 style="font-size: 20px; border-bottom: 2px solid #000; padding-bottom: 8px;">CERTIFICADO FISCAL LEY 49/2002 // MODELO 182 AEAT</h1>
+                          <div style="margin: 20px 0; font-size: 12px;">
+                            <strong>ID Certificado:</strong> ${modelo182Draft.certificadoId}<br/>
+                            <strong>Ejercicio:</strong> ${modelo182Draft.ejercicioFiscal}<br/>
+                            <strong>Fecha:</strong> ${new Date(modelo182Draft.fechaEmision).toLocaleDateString('es-ES')}
+                          </div>
+                          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px;">
+                            <strong>ENTIDAD BENEFICIARIA:</strong><br/>
+                            ${modelo182Draft.entidadBeneficiaria.razonSocial}<br/>
+                            NIF: ${modelo182Draft.entidadBeneficiaria.nif} | Reg: ${modelo182Draft.entidadBeneficiaria.registroEntidades}
+                          </div>
+                          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px;">
+                            <strong>DONANTE:</strong><br/>
+                            ${modelo182Draft.donante.nombreOrazonSocial} (NIF: ${modelo182Draft.donante.nifCif})<br/>
+                            Tipo: ${modelo182Draft.donante.tipo}
+                          </div>
+                          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px;">
+                            <strong>DETALLE ECONÓMICO:</strong><br/>
+                            Aportación Donada: ${modelo182Draft.detalleAportacion.donacionBruta.toFixed(2)} €<br/>
+                            Deducción Cuota: ${modelo182Draft.detalleAportacion.deduccionTotal.toFixed(2)} €<br/>
+                            <div style="font-size: 16px; font-weight: bold; margin-top: 10px;">Coste Real Neto Donante: ${modelo182Draft.detalleAportacion.costeRealNeto.toFixed(2)} €</div>
+                            Impacto Social SROI Generado: ${modelo182Draft.detalleAportacion.sroiGenerado.toFixed(2)} €
+                          </div>
+                          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px; font-size: 10px;">
+                            <strong>FIRMA DIGITAL SHA-256:</strong><br/>
+                            ${modelo182Draft.firmaCriptograficaSha256}
+                          </div>
+                          <p style="font-size: 10px; color: #666;">${modelo182Draft.avisoLegalAeat}</p>
+                        </div>
+                      `;
+                      const opt = {
+                        margin:       10,
+                        filename:     `Certificado_Mecenazgo_${modelo182Draft.certificadoId}.pdf`,
+                        image:        { type: 'jpeg' as const, quality: 0.98 },
+                        html2canvas:  { scale: 2 },
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' as const }
+                      };
+                      html2pdf().from(element).set(opt).save();
+                    } catch (error) {
+                      console.error("Error generating PDF:", error);
                     }
                   }}
                   className="px-5 py-2.5 rounded-xl bg-[#8b5cf6] hover:bg-[#7c3aed] text-xs font-mono font-bold text-white flex items-center justify-center gap-2 transition-colors"

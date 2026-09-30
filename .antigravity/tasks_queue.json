@@ -13,17 +13,6 @@
   "_instructions_for_cline": "PROTOCOLO DE EJECUCIÓN AUTÓNOMA: 1) Lee SOLO la tarea con status QUEUED más cercana al inicio. 2) Ejecuta EXACTAMENTE lo que dice 'action'. 3) Valida con el comando en 'validate'. 4) Si Exit Code 0, cambia status a COMPLETED. 5) Si falla, corrige y reintenta 1 vez. 6) Al completar 50 tareas, PURGA las COMPLETED del archivo (bórralas) y continúa. 7) NUNCA leas el archivo entero ni lo reescribas completo, usa replace_in_file. 8) CADA tarea es independiente: no necesitas contexto de tareas anteriores.",
   "tasks": [
     {
-      "id": "W02-037-HEAL-HEAL",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "Auto-Fix W02-037-HEAL",
-      "action": "Reescribir dependencias o fixear tipos basándose en el error TS2306: File 'H:/EAR_OS_V2/EAR_OS_V2/src/app/(vendor)/vendor/dashboard/page.tsx' is not a module.",
-      "files": [
-        "src/app/(vendor)/vendor/dashboard/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W02-037-HEAL",
       "wave": 2,
       "status": "FAILED",
@@ -31,28 +20,6 @@
       "action": "Corregir el error TS2339 añadiendo hasAffiliateReferral al tipo VendorQuoteBreakdown y resolver el error TS2304 definiendo o importando Circle en src/app/(vendor)/vendor/dashboard/page.tsx",
       "files": [
         "src/app/(vendor)/vendor/dashboard/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-036-HEAL",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "Auto-Fix W02-036",
-      "action": "Corregir el error TS2306 verificando que src/app/(public)/blog/page.tsx sea un módulo válido, con exportación correcta y sin sintaxis inválida.",
-      "files": [
-        "src/app/(public)/blog/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-031-HEAL",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "Auto-Fix W02-031",
-      "action": "Corregir src/app/(public)/eventos/page.tsx para que sea un módulo válido: revisar export default, sintaxis, imports y tipos; eliminar código inválido que cause TS2306",
-      "files": [
-        "src/app/(public)/eventos/page.tsx"
       ],
       "validate": "npx tsc --noEmit"
     },
@@ -134,17 +101,6 @@
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W02-016",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Verificar que /api/system/read-file/route.ts NO existe en producción",
-      "action": "Abrir el archivo. Si permite leer archivos arbitrarios del servidor, DESACTIVARLO con return NextResponse.json({error:'disabled'},status:403).",
-      "files": [
-        "src/app/api/system/read-file/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W02-017",
       "wave": 2,
       "status": "FAILED",
@@ -155,39 +111,6 @@
       ],
       "validate": "npx tsc --noEmit",
       "retries": 999
-    },
-    {
-      "id": "W02-018",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Añadir try/catch a /api/auth/login/route.ts",
-      "action": "Abrir el archivo. Envolver el handler en try/catch que devuelva 500 con mensaje genérico (sin stack trace).",
-      "files": [
-        "src/app/api/auth/login/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-019",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Añadir try/catch a /api/auth/register/route.ts",
-      "action": "Abrir el archivo. Envolver el handler en try/catch.",
-      "files": [
-        "src/app/api/auth/register/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-020",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Añadir try/catch a /api/auth/send-otp/route.ts",
-      "action": "Abrir el archivo. Envolver el handler en try/catch.",
-      "files": [
-        "src/app/api/auth/send-otp/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
     },
     {
       "id": "W02-021",
@@ -211,17 +134,6 @@
       ],
       "validate": "npx tsc --noEmit",
       "retries": 999
-    },
-    {
-      "id": "W02-023",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Verificar que /api/health/route.ts devuelve JSON limpio",
-      "action": "Abrir el archivo. Verificar que devuelve {status:'ok',timestamp} sin exponer datos internos.",
-      "files": [
-        "src/app/api/health/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
     },
     {
       "id": "W02-024",
@@ -281,28 +193,6 @@
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W02-029",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "HARDEN: Verificar que next.config.ts tiene headers de seguridad",
-      "action": "Abrir next.config.ts. Verificar que tiene bloque headers() con HSTS, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff.",
-      "files": [
-        "next.config.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-030",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "HARDEN: Verificar que .gitignore excluye .env* y datos pesados",
-      "action": "Abrir .gitignore. Verificar que incluye .env, .env.local, .env.production, public/data/providers/*.json (excepto manifest.json), node_modules, .next.",
-      "files": [
-        ".gitignore"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W02-031",
       "wave": 2,
       "status": "FAILED",
@@ -310,50 +200,6 @@
       "action": "Abrir el archivo. Verificar/añadir export const metadata = {title:'Eventos Musicales...',description:'...'}.",
       "files": [
         "src/app/(public)/eventos/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-032",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SEO: Añadir metadata a src/app/(public)/marketplace/page.tsx",
-      "action": "Verificar/añadir metadata SEO con title y description relevantes.",
-      "files": [
-        "src/app/(public)/marketplace/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-033",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SEO: Añadir metadata a src/app/(public)/infraestructura/page.tsx",
-      "action": "Verificar/añadir metadata SEO.",
-      "files": [
-        "src/app/(public)/infraestructura/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-034",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SEO: Añadir metadata a src/app/(public)/arsenal/page.tsx",
-      "action": "Verificar/añadir metadata SEO para equipamiento audiovisual.",
-      "files": [
-        "src/app/(public)/arsenal/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-035",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SEO: Añadir metadata a src/app/(public)/alquiler/page.tsx",
-      "action": "Verificar/añadir metadata SEO para alquiler de equipos de sonido.",
-      "files": [
-        "src/app/(public)/alquiler/page.tsx"
       ],
       "validate": "npx tsc --noEmit"
     },
@@ -382,7 +228,7 @@
     {
       "id": "W02-038",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SEO: Añadir metadata a src/app/(public)/rider-tecnico/page.tsx",
       "action": "Verificar/añadir metadata SEO.",
       "files": [
@@ -391,108 +237,9 @@
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W02-039",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Añadir metadata a src/app/(public)/social/page.tsx",
-      "action": "Verificar/añadir metadata SEO.",
-      "files": [
-        "src/app/(public)/social/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-040",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Añadir metadata a src/app/(public)/dj-para-bodas/page.tsx",
-      "action": "Verificar/añadir metadata SEO optimizada para 'DJ para bodas'.",
-      "files": [
-        "src/app/(public)/dj-para-bodas/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-041",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Añadir metadata a src/app/(public)/catering-brasas/page.tsx",
-      "action": "Verificar/añadir metadata SEO.",
-      "files": [
-        "src/app/(public)/catering-brasas/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-042",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Añadir metadata a src/app/(public)/empresarios/page.tsx",
-      "action": "Verificar/añadir metadata SEO.",
-      "files": [
-        "src/app/(public)/empresarios/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-043",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Añadir metadata a src/app/(public)/ayuntamientos/page.tsx",
-      "action": "Verificar/añadir metadata SEO orientada a ayuntamientos y contratación menor.",
-      "files": [
-        "src/app/(public)/ayuntamientos/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-044",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Añadir metadata a src/app/(public)/sos-rescate/page.tsx",
-      "action": "Verificar/añadir metadata SEO.",
-      "files": [
-        "src/app/(public)/sos-rescate/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-045",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Verificar canonical URL en src/app/layout.tsx",
-      "action": "Verificar que metadataBase está configurado a 'https://productoraear.com' y no './' (bug corregido anteriormente).",
-      "files": [
-        "src/app/layout.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-046",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Verificar alternateLanguages en layout.tsx",
-      "action": "Verificar que metadata tiene alternates con canonical apuntando a productoraear.com.",
-      "files": [
-        "src/app/layout.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-047",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SEO: Verificar OpenGraph en src/app/(public)/bodas/[provincia]/[servicio]/page.tsx",
-      "action": "Verificar que generateMetadata produce og:title, og:description y og:image dinámicos.",
-      "files": [
-        "src/app/(public)/bodas/[provincia]/[servicio]/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W02-048",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SEO: Verificar OpenGraph en src/app/(public)/artistas/[slug]/page.tsx",
       "action": "Verificar que generateMetadata produce og:title, og:description dinámicos.",
       "files": [
@@ -503,7 +250,7 @@
     {
       "id": "W02-049",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SEO: Verificar OpenGraph en src/app/(public)/proveedores/[slug]/page.tsx",
       "action": "Verificar que generateMetadata produce metadatos dinámicos.",
       "files": [
@@ -514,7 +261,7 @@
     {
       "id": "W02-050",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SEO: Verificar que src/app/sitemap.ts incluye todas las rutas comerciales clave",
       "action": "Abrir sitemap.ts. Verificar que incluye: /bodas, /mariachis, /artistas, /vimume, /fincasparaboda, /acg, /calculadora, /servicios, /alquiler, /arsenal.",
       "files": [

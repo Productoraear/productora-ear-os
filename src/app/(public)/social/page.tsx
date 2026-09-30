@@ -1,4 +1,10 @@
-import React from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Social | EAR',
+  description: 'Comunidad e impacto social de la Productora EAR',
+};
+
 export default function Page() {
   return (
     <div className="min-h-screen bg-[#050505] flex items-center justify-center text-white border-l-2 border-[#D4AF37]">

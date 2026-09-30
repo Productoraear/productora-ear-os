@@ -3,7 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/payments";
 import { calculateGeoPricing } from "@/lib/services/pricing/geo-pricer";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
 import { isRateLimited } from "@/lib/security/shield";
 import { logger } from "@/lib/logger";
 import { z } from "zod";
@@ -131,6 +131,9 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   logger.info({ event: "CHECKOUT_PRICING_CALCULATED", distanceKm: pricing.distanceKm, totalAmount: pricing.totalAmount, ip });
 
   // 6. Creación de la sesión de Stripe Checkout con metadatos enriquecidos de geolocalización
+  const cookieStore = await cookies();
+  const affiliateCode = cookieStore.get('ear_affiliate_code')?.value;
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     mode: "payment",
@@ -155,6 +158,7 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
       eventDate: eventDate,
       origin: origin,
       destination: destination,
+      ...(affiliateCode ? { affiliateCode } : {})
     },
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"}/contacto`,

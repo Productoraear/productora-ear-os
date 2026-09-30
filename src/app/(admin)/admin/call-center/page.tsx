@@ -507,16 +507,21 @@ export default function CallCenterAdminPage() {
                         >
                           {copiedField === 'phone' ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                         </button>
-                        <a
-                          href={`https://wa.me/${(selectedProvider.phone || '').replace(/\D/g, '')}?text=${encodeURIComponent(getWhatsAppMessage(selectedProvider))}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3 py-2 rounded-xl bg-green-700 hover:bg-green-600 text-white font-mono text-xs flex items-center gap-1.5 transition-colors font-bold"
-                          title="Abrir WhatsApp en nueva pestaña"
-                        >
-                          <MessageSquare className="w-4 h-4" />
-                          WA
-                        </a>
+                      <a
+                        href={`https://wa.me/${(() => {
+                          let num = (selectedProvider.phone || '').replace(/\D/g, '');
+                          if (num.length === 9 && ['6','7','8','9'].includes(num[0])) num = '34' + num;
+                          else if (num.startsWith('0034')) num = num.slice(2);
+                          return num;
+                        })()}?text=${encodeURIComponent(getWhatsAppMessage(selectedProvider))}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-2 rounded-xl bg-green-700 hover:bg-green-600 text-white font-mono text-xs flex items-center gap-1.5 transition-colors font-bold"
+                        title="Abrir WhatsApp en nueva pestaña"
+                      >
+                        <MessageSquare className="w-4 h-4" />
+                        WA
+                      </a>
                       </>
                     ) : (
                       <>

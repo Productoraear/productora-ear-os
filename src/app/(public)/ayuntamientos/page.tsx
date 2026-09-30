@@ -1,18 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Metadata } from 'next';
 import { B2GMemoryGenerator } from '@/features/b2g/ui/B2GMemoryGenerator';
-import { 
-  Building2, 
-  ShieldCheck, 
-  FileText, 
-  CheckCircle2, 
-  Award, 
-  Zap, 
-  Landmark, 
-  Users2, 
-  ArrowRight, 
+import {
+  Building2,
+  ShieldCheck,
+  FileText,
+  CheckCircle2,
+  Award,
+  Zap,
+  Landmark,
+  Users2,
+  ArrowRight,
   PhoneCall,
   Sliders
 } from 'lucide-react';
@@ -28,7 +27,7 @@ export default function AyuntamientosB2GPage() {
   return (
     <main className="min-h-screen bg-[#030305] text-white pt-24 pb-40 px-4 md:px-8 selection:bg-[#06b6d4] selection:text-black">
       <div className="max-w-7xl mx-auto space-y-12">
-        
+
         {/* HERO SECTION INSTITUCIONAL */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#06b6d4]/10 border border-[#06b6d4]/30 rounded-full text-[#06b6d4] text-[10px] font-mono uppercase tracking-[0.3em]">
@@ -76,11 +75,10 @@ export default function AyuntamientosB2GPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <button
               onClick={() => setSelectedInst('gobiernos')}
-              className={`px-4 py-3 rounded-xl text-xs font-mono uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
-                selectedInst === 'gobiernos'
+              className={`px-4 py-3 rounded-xl text-xs font-mono uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${selectedInst === 'gobiernos'
                   ? 'bg-[#06b6d4] text-black font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)]'
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               <Landmark size={15} />
               <span>1. Gobiernos</span>
@@ -88,11 +86,10 @@ export default function AyuntamientosB2GPage() {
 
             <button
               onClick={() => setSelectedInst('ayuntamientos')}
-              className={`px-4 py-3 rounded-xl text-xs font-mono uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
-                selectedInst === 'ayuntamientos'
+              className={`px-4 py-3 rounded-xl text-xs font-mono uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${selectedInst === 'ayuntamientos'
                   ? 'bg-[#06b6d4] text-black font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)]'
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               <Building2 size={15} />
               <span>2. Ayuntamientos</span>
@@ -100,11 +97,10 @@ export default function AyuntamientosB2GPage() {
 
             <button
               onClick={() => setSelectedInst('fundaciones')}
-              className={`px-4 py-3 rounded-xl text-xs font-mono uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
-                selectedInst === 'fundaciones'
+              className={`px-4 py-3 rounded-xl text-xs font-mono uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${selectedInst === 'fundaciones'
                   ? 'bg-[#06b6d4] text-black font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)]'
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               <Users2 size={15} />
               <span>3. Fundaciones</span>

@@ -62,13 +62,19 @@ const FINCA_SEO_INTENTS: Record<string, { title: string; description: string }> 
   },
 };
 
+import { resolveGeoSegment } from '@/lib/navigation/canonical-taxonomy';
+
 function resolveProvincia(raw: string): { slug: string; display: string } | null {
-  const slug = normalizeForUrl(raw);
-  if (!slug) return null;
+  const geo = resolveGeoSegment(raw);
+  if (!geo.province) return null;
+  const slug = geo.province;
   const fincas = SCLASS_12_FINCAS_HOMOLOGADAS.filter(
     (f) => normalizeForUrl(f.provincia) === slug,
   );
-  if (fincas.length === 0) return null;
+  if (fincas.length === 0) {
+    // If no fincas, return the province slug to allow redirects instead of 404
+    return { slug, display: geo.province.charAt(0).toUpperCase() + geo.province.slice(1).replace(/-/g, ' ') };
+  }
   return { slug, display: fincas[0].provincia };
 }
 
@@ -195,6 +201,12 @@ export default async function ProvinciaFincasPage({ params }: ProvinciaFincasPro
   }
 
   if (!resolved) notFound();
+
+  // If the URL has a non-canonical slug (e.g. city instead of province or unnormalized string)
+  if (resolved.slug !== provincia.toLowerCase()) {
+    const { redirect } = await import('next/navigation');
+    redirect(`/fincas/${resolved.slug}`);
+  }
 
   const fincas = SCLASS_12_FINCAS_HOMOLOGADAS.filter(
     (f) => normalizeForUrl(f.provincia) === resolved.slug,

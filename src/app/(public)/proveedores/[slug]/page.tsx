@@ -1,14 +1,14 @@
 import React from 'react';
 import { notFound, redirect } from 'next/navigation';
-import { 
-  ShieldCheck, 
-  Sparkles, 
-  ArrowRight, 
-  CheckCircle2, 
-  Star, 
-  MapPin, 
-  Users, 
-  Calendar, 
+import {
+  ShieldCheck,
+  Sparkles,
+  ArrowRight,
+  CheckCircle2,
+  Star,
+  MapPin,
+  Users,
+  Calendar,
   HelpCircle,
   Award,
   Crown,
@@ -163,7 +163,7 @@ async function getProviderData(slug: string) {
           basePrice: 900,
         };
       }
-    } catch {}
+    } catch { }
   }
 
   // 2. Consulta al Dataset Principal Curado (Con caché singleton)
@@ -361,8 +361,8 @@ function findInStaticPartitions(slugNorm: string) {
           const rawImages = (found.imageUrls && found.imageUrls.length > 0)
             ? found.imageUrls
             : (found.gallery && found.gallery.length > 0)
-            ? found.gallery
-            : (found.img ? [found.img] : []);
+              ? found.gallery
+              : (found.img ? [found.img] : []);
           const cleanImages = rawImages.filter((u: string) => typeof u === 'string' && u.length > 5 && !u.includes('.svg'));
           const coverImg = cleanImages[0] || found.img || 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop';
           const finalGallery = cleanImages.length > 0 ? cleanImages : [coverImg];
@@ -407,20 +407,20 @@ function findInStaticPartitions(slugNorm: string) {
   const cleanTitle = slugNorm
     .replace(/-/g, ' ')
     .replace(/\b\w/g, l => l.toUpperCase());
-  
+
   const detectedCategory = slugNorm.includes('catering') ? 'Catering & Gastronomía'
     : slugNorm.includes('musica') || slugNorm.includes('dj') || slugNorm.includes('sonido') ? 'Música & Espectáculos'
-    : slugNorm.includes('finca') || slugNorm.includes('espacio') ? 'Finca para Bodas'
-    : slugNorm.includes('foto') || slugNorm.includes('video') ? 'Fotografía & Vídeo'
-    : slugNorm.includes('vestido') || slugNorm.includes('traje') || slugNorm.includes('joyeria') ? 'Moda & Complementos'
-    : 'Servicio para Bodas & Eventos';
+      : slugNorm.includes('finca') || slugNorm.includes('espacio') ? 'Finca para Bodas'
+        : slugNorm.includes('foto') || slugNorm.includes('video') ? 'Fotografía & Vídeo'
+          : slugNorm.includes('vestido') || slugNorm.includes('traje') || slugNorm.includes('joyeria') ? 'Moda & Complementos'
+            : 'Servicio para Bodas & Eventos';
 
   const detectedProv = slugNorm.includes('madrid') ? 'Madrid'
     : slugNorm.includes('toledo') ? 'Toledo'
-    : slugNorm.includes('barcelona') ? 'Barcelona'
-    : slugNorm.includes('valencia') ? 'Valencia'
-    : slugNorm.includes('sevilla') ? 'Sevilla'
-    : 'Madrid';
+      : slugNorm.includes('barcelona') ? 'Barcelona'
+        : slugNorm.includes('valencia') ? 'Valencia'
+          : slugNorm.includes('sevilla') ? 'Sevilla'
+            : 'Madrid';
 
   // Selección inteligente de fotografía cinemática Banana Prompts XYZ
   let selectedCover = '/images/banana/finca_minimalist.jpg';
@@ -501,11 +501,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? provider.slug.toLowerCase().trim()
     : slug.toLowerCase().trim();
 
+  const firstGallery = Array.isArray(provider.gallery) ? provider.gallery[0] : undefined;
+  const coverImg = provider.img || firstGallery
+    || 'https://productoraear.com/images/brand/ear_logo_official_diamond.png';
+
+  const metaDescription = `Contrata ${cleanName || 'proveedor homologado'} (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado (12 W/pax), seguro de RC y reserva online con Price-Lock 100€.`;
+
   return {
     title: displayTitle,
-    description: `Contrata ${cleanName || 'proveedor homologado'} (${category}) en ${location}. Tarifas oficiales desde ${basePrice}€, rider certificado (12 W/pax), seguro de RC y reserva online con Price-Lock 100€.`,
+    description: metaDescription,
     alternates: {
       canonical: `https://productoraear.com/proveedores/${canonicalSlug}`,
+    },
+    openGraph: {
+      title: displayTitle,
+      description: metaDescription,
+      url: `https://productoraear.com/proveedores/${canonicalSlug}`,
+      siteName: 'Productora EAR',
+      locale: 'es_ES',
+      type: 'website',
+      images: [
+        {
+          url: coverImg,
+          alt: `${cleanName || 'Proveedor homologado'} · ${category} en ${location}`
+        }
+      ]
     },
     keywords: [
       cleanName,
@@ -533,15 +553,15 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const category = cleanText(rawProvider.atomic_specs?.category || rawProvider.category || 'Música & Sonido');
   const location = cleanText(rawProvider.atomic_specs?.location || rawProvider.address || `${rawProvider.province || 'Madrid'}, España`);
   const providerIdShort = (rawProvider.id || slug).substring(0, 8).toUpperCase();
-  
+
   const tier = getProviderTier({ id: rawProvider.id || slug, slug, name: rawProvider.name });
   const isUnclaimed = tier === 'DIRECTORY_UNCLAIMED';
-  
+
   // 🏛️ IDENTIDAD S-CLASS: Mostrar nombre real del profesional/agrupación para directorio legal
   const cleanName = cleanText(rawProvider.name);
   const displayName = cleanName && !cleanName.toLowerCase().startsWith('prov-')
     ? cleanName
-    : isUnlocked 
+    : isUnlocked
       ? `División Técnica Homologada #${providerIdShort} · ${category}`
       : `Proveedor Homologado S-Class #${providerIdShort} — ${category} (${location.split(',')[0]})`;
 
@@ -549,7 +569,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   const reviewsCount = rawProvider.atomic_specs?.metrics?.reviewCount || rawProvider.reviews || 27;
   const priceDisplay = rawProvider.atomic_specs?.price || `Precio desde ${rawProvider.basePrice || 900}€`;
   const description = cleanText(rawProvider.atomic_specs?.description || rawProvider.description_full || rawProvider.description);
-  
+
   // Galería de imágenes
   const coverImg = rawProvider.atomic_specs?.media?.coverImage || rawProvider.img;
   const rawGallery = Array.isArray(rawProvider.gallery) ? rawProvider.gallery : [coverImg];
@@ -579,7 +599,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pt-28 pb-36 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
-        
+
         {/* BREADCRUMBS S-CLASS */}
         <nav className="flex items-center gap-2 text-xs font-mono text-neutral-500 uppercase tracking-wider">
           <Link href="/" className="hover:text-white transition-colors">Inicio</Link>
@@ -592,7 +612,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
           <span>/</span>
           <span className="text-white font-bold truncate max-w-[200px] sm:max-w-xs">{rawProvider.name}</span>
         </nav>
-        
+
         {/* 🛡️ BANNER ÉTICO DE DIRECTORIO PROFESIONAL / DEMANDA EN MANO */}
         {isUnclaimed && (
           <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/70 via-[#0d0d12] to-black border border-blue-500/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -608,7 +628,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2 shrink-0">
-              <ClaimProfileTrigger 
+              <ClaimProfileTrigger
                 provider={{
                   id: rawProvider.id || slug,
                   name: displayName,
@@ -618,7 +638,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                   phone: rawProvider.phone || ''
                 }}
               />
-              <a 
+              <a
                 href={`/api/providers/opt-out?slug=${slug}`}
                 className="px-3.5 py-2.5 bg-red-950/30 hover:bg-red-900/50 border border-red-500/30 text-red-300 font-mono text-xs rounded-xl transition-all"
               >
@@ -635,12 +655,12 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               <Users size={16} />
             </span>
             <span>
-              Hay <strong className="text-white font-bold">3 parejas</strong> interesadas en este proveedor. 
+              Hay <strong className="text-white font-bold">3 parejas</strong> interesadas en este proveedor.
               <span className="text-zinc-400 hidden sm:inline"> Las fechas de temporada se reservan rápidamente.</span>
             </span>
           </div>
-          <Link 
-            href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&base=${rawProvider.basePrice || 650}`} 
+          <Link
+            href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&base=${rawProvider.basePrice || 650}`}
             className="px-3.5 py-1.5 bg-[#ecb613] text-black font-mono text-xs font-black uppercase rounded-xl hover:scale-105 transition-all shrink-0"
           >
             ¡Pedir Presupuesto!
@@ -649,10 +669,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
         {/* 📸 HERO HEADER & COLLAGE FOTOGRÁFICO BODAS.NET */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           {/* Left Area: Title, Rating & Photo Grid (Span 8) */}
           <div className="lg:col-span-8 space-y-6">
-            
+
             {/* Header info */}
             <div className="space-y-3">
               <div className="flex flex-wrap items-center gap-2">
@@ -694,14 +714,14 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
             {/* Collage Grid de 3 Fotos */}
             <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 h-[380px] sm:h-[420px] rounded-3xl overflow-hidden border border-white/10 relative group">
-              
+
               {/* Foto Principal Grande (Span 7) */}
               <div className="sm:col-span-7 relative h-full overflow-hidden bg-zinc-900">
-                <img 
-                  src={gallery[0]} 
-                  alt={displayName} 
+                <img
+                  src={gallery[0]}
+                  alt={displayName}
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute top-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-xl border border-white/10 text-[#ecb613]">
                   <Crown size={16} />
@@ -711,11 +731,11 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               {/* Columna Derecha con 2 Fotos (Span 5) */}
               <div className="sm:col-span-5 grid grid-rows-2 gap-3 h-full">
                 <div className="relative overflow-hidden bg-zinc-900">
-                  <img 
-                    src={gallery[1] || gallery[0]} 
-                    alt={`${displayName} evento`} 
+                  <img
+                    src={gallery[1] || gallery[0]}
+                    alt={`${displayName} evento`}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 right-3 flex items-center gap-2">
                     <span className="px-2.5 py-1 bg-black/70 backdrop-blur-md rounded-lg text-[10px] font-mono text-white border border-white/10">
@@ -728,11 +748,11 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 </div>
 
                 <div className="relative overflow-hidden bg-zinc-900">
-                  <img 
-                    src={gallery[2] || gallery[0]} 
-                    alt={`${displayName} montaje`} 
+                  <img
+                    src={gallery[2] || gallery[0]}
+                    alt={`${displayName} montaje`}
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                   {/* Botones Flotantes en la foto inferior */}
                   <div className="absolute bottom-3 right-3 flex items-center gap-2">
@@ -926,7 +946,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
 
           {/* Right Area: Sticky Booking Card (Span 4) */}
           <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
-            
+
             {/* 🛡️ SUPPLIER BLUR-LOCK (P0 ANTI-FUGA & REVENUE ENGINE) */}
             <SupplierBlurLock
               supplierId={rawProvider.id || slug}
@@ -972,7 +992,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             </SupplierBlurLock>
 
             <div className="p-6 sm:p-8 rounded-[2.5rem] bg-gradient-to-b from-[#141418] to-[#09090d] border border-[#ecb613]/40 shadow-[0_0_50px_rgba(236,182,19,0.15)] space-y-6">
-              
+
               {/* Tarifa base */}
               <div className="space-y-1">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Tarifa Oficial Homologada</span>
@@ -1023,7 +1043,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               </div>
 
               {/* 🛡️ RECLAMAR FICHA CON VERIFICACIÓN EN 2 PASOS */}
-              <ClaimProfileTrigger 
+              <ClaimProfileTrigger
                 provider={{
                   id: rawProvider.id || slug,
                   name: displayName,

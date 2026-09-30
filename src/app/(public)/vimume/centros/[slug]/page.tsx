@@ -1,7 +1,10 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect, notFound } from 'next/navigation';
 import { Brain, Stethoscope, Activity, ShieldCheck, ArrowRight, Phone } from 'lucide-react';
+import { resolveGeoSegment } from '@/lib/navigation/canonical-taxonomy';
+import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -9,16 +12,38 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolved = await params;
-  const name = resolved.slug.replace(/-/g, ' ').toUpperCase();
+  const geo = resolveGeoSegment(resolved.slug);
+  
+  if (!geo.province) {
+    const name = resolved.slug.replace(/-/g, ' ').toUpperCase();
+    return {
+      title: `Programa Clínico VIMUME // Centro ${name}`,
+      description: `Protocolo de estimulación acústica 40 Hz Gamma para residentes y centros de día en ${name}. Retorno social y reducción del 38.2% en agitación.`,
+    };
+  }
+
+  const provData = PROVINCIAS_52_GRAPH[geo.province] || { name: geo.province.charAt(0).toUpperCase() + geo.province.slice(1) };
   return {
-    title: `Programa Clínico VIMUME // Centro ${name}`,
-    description: `Protocolo de estimulación acústica 40 Hz Gamma para residentes y centros de día en ${name}. Retorno social y reducción del 38.2% en agitación.`,
+    title: `Programa Clínico VIMUME en ${provData.name}`,
+    description: `Protocolo de estimulación acústica 40 Hz Gamma para residentes y centros de día en ${provData.name}. Retorno social y reducción del 38.2% en agitación.`,
   };
 }
 
 export default async function CentroSlugPage({ params }: Props) {
   const resolved = await params;
-  const centerName = resolved.slug.replace(/-/g, ' ').toUpperCase();
+  const originalSlug = resolved.slug.toLowerCase();
+  
+  const geo = resolveGeoSegment(originalSlug);
+
+  // Redireccionar a la provincia canónica si la URL usa un slug mal formado o una ciudad anidada
+  if (geo.province && geo.province !== originalSlug) {
+    redirect(`/vimume/centros/${geo.province}`);
+  }
+
+  const isGeo = !!geo.province;
+  const centerName = (isGeo && geo.province)
+    ? (PROVINCIAS_52_GRAPH[geo.province]?.name || geo.province.charAt(0).toUpperCase() + geo.province.slice(1))
+    : resolved.slug.replace(/-/g, ' ').toUpperCase();
 
   return (
     <div className="min-h-screen bg-[#050505] text-white pt-28 pb-32 px-4 sm:px-6 lg:px-8 font-sans">

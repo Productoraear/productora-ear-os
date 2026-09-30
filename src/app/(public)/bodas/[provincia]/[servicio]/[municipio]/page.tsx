@@ -3,12 +3,16 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Sparkles, MapPin, ShieldCheck, ArrowRight, Phone, Clock, Award, CheckCircle2, ChevronRight, Star, Building2 } from 'lucide-react';
-import { MUNICIPALITIES_DATASET, SERVICES_PSEO_EXPANDED } from '@/lib/constants/spanish-municipalities';
+import { MUNICIPALITIES_DATASET } from '@/lib/constants/spanish-municipalities';
 import { PROVINCIAS_52_GRAPH } from '@/lib/constants/seo-data-hydrated';
 import { MeshGradientBackground } from '@/components/sclass/MeshGradientBackground';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { getProvidersByLocation } from '@/lib/data/vampire-service';
 import { AdjacentMunicipalitiesCrossLinker } from '@/components/geo/AdjacentMunicipalitiesCrossLinker';
+import {
+  resolveCanonicalBodasMunicipio,
+  getCanonicalService
+} from '@/lib/navigation/canonical-taxonomy';
 
 interface PageProps {
   params: Promise<{
@@ -27,31 +31,43 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const provKey = provincia.toLowerCase();
   const muniKey = municipio.toLowerCase();
 
-  // Consolidación canónica anti-duplicados (ej: /bodas/madrid/dj/madrid -> /bodas/madrid/dj)
-  if (provKey === muniKey) {
+  // Resolución canónica SSOT (normaliza provincia/servicio legacy y municipios).
+  const canonical = resolveCanonicalBodasMunicipio(provincia, servicio, municipio);
+
+  if (!canonical) {
     return {
       title: `Servicios para Bodas en ${provKey} | Productora EAR`,
       alternates: {
-        canonical: `https://productoraear.com/bodas/${provKey}/${servicio}`,
+        canonical: `https://productoraear.com/bodas/${provKey}`,
       },
     };
   }
 
-  const provData = PROVINCIAS_52_GRAPH[provKey];
-  const provName = provData ? provData.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
-  
-  const townList = MUNICIPALITIES_DATASET[provKey] || [];
-  const townData = townList.find(t => t.slug === muniKey);
-  const townName = townData ? townData.name : municipio.charAt(0).toUpperCase() + municipio.slice(1).replace(/-/g, ' ');
+  if (canonical.municipality === undefined) {
+    // Colapso a 2 niveles (municipio capital duplicado).
+    return {
+      title: `${getCanonicalService(canonical.service)?.label ?? 'Servicios para Bodas'} en ${PROVINCIAS_52_GRAPH[canonical.province]?.name ?? canonical.province} | Productora EAR`,
+      alternates: {
+        canonical: `https://productoraear.com${canonical.path}`,
+      },
+    };
+  }
 
-  const servData = SERVICES_PSEO_EXPANDED.find(s => s.path === servicio || s.id === servicio);
-  const servTitle = servData ? servData.title : 'Mariachis & Música de Gala';
+  const provData = PROVINCIAS_52_GRAPH[canonical.province];
+  const provName = provData ? provData.name : canonical.province;
+
+  const townList = MUNICIPALITIES_DATASET[canonical.province] || [];
+  const townData = townList.find(t => t.slug === canonical.municipality);
+  const townName = townData ? townData.name : canonical.municipality!.charAt(0).toUpperCase() + canonical.municipality!.slice(1).replace(/-/g, ' ');
+
+  const service = getCanonicalService(canonical.service);
+  const servTitle = service?.label ?? 'Mariachis & Música de Gala';
 
   return {
     title: `${servTitle} en ${townName} (${provName}) | Calibración 12 W/pax & Price-Lock 72h`,
     description: `Contratación oficial de ${servTitle.toLowerCase()} en ${townName} (${provName}). Sonorización Bose F1, voz de tenor de Edwin Agudelo, Price-Lock 72h y garantía 0 fallos acústicos.`,
     alternates: {
-      canonical: `https://productoraear.com/bodas/${provKey}/${servicio}/${muniKey}`,
+      canonical: `https://productoraear.com${canonical.path}`,
     },
     keywords: [
       `${servTitle} ${townName}`,
@@ -72,23 +88,28 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
   const provKey = provincia.toLowerCase();
   const muniKey = municipio.toLowerCase();
 
-  // Redirección 301 permanente a la landing provincial canónica
-  if (provKey === muniKey) {
-    redirect(`/bodas/${provKey}/${servicio}`);
+  // Resolución canónica SSOT.
+  const canonical = resolveCanonicalBodasMunicipio(provincia, servicio, municipio);
+  if (!canonical) {
+    redirect(`/bodas/${provKey}`);
   }
-  const provData = PROVINCIAS_52_GRAPH[provKey];
-  const provName = provData ? provData.name : provincia.charAt(0).toUpperCase() + provincia.slice(1);
+  if (canonical.needsRedirect) {
+    redirect(canonical.path);
+  }
 
-  const townList = MUNICIPALITIES_DATASET[provKey] || [];
-  const townData = townList.find(t => t.slug === municipio.toLowerCase());
-  const townName = townData ? townData.name : municipio.charAt(0).toUpperCase() + municipio.slice(1).replace(/-/g, ' ');
+  const provData = PROVINCIAS_52_GRAPH[canonical.province];
+  const provName = provData ? provData.name : canonical.province;
+
+  const townList = MUNICIPALITIES_DATASET[canonical.province] || [];
+  const townData = townList.find(t => t.slug === canonical.municipality);
+  const townName = townData ? townData.name : canonical.municipality!.charAt(0).toUpperCase() + canonical.municipality!.slice(1).replace(/-/g, ' ');
   const comarca = townData?.comarca || 'Comarca Histórica';
   const distanceKm = townData?.distanceFromMentrideKm ?? 35;
   const staticVenues = townData?.featuredVenues || ['Fincas y Salones Exclusivos'];
 
-  const servData = SERVICES_PSEO_EXPANDED.find(s => s.path === servicio || s.id === servicio);
-  const servTitle = servData ? servData.title : 'Mariachis de Gala & Serenatas';
-  const basePrice = servData?.basePrice ?? 350;
+  const service = getCanonicalService(canonical.service);
+  const servTitle = service?.label ?? 'Mariachis de Gala & Serenatas';
+  const basePrice = service?.basePrice ?? 350;
 
   // Consultar proveedores y fincas homologadas en PostgreSQL/Prisma (con caché e índice B-Tree)
   const localVendors = await getProvidersByLocation(provName, servTitle, 6);
@@ -101,7 +122,7 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
     <MeshGradientBackground intensity="subtle">
       <main className="min-h-screen pt-28 pb-32 px-4 md:px-8 font-sans text-white">
         <div className="max-w-6xl mx-auto space-y-12">
-          
+
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-xs font-mono text-zinc-400">
             <Link href="/" className="hover:text-white">Inicio</Link>
@@ -279,9 +300,9 @@ export default async function LocalMunicipalityPage({ params }: PageProps) {
 
           {/* Malla de Enlaces Internos a Municipios Colindantes */}
           <AdjacentMunicipalitiesCrossLinker
-            currentProvince={provincia}
-            currentLocation={municipio}
-            currentServiceSlug={servicio}
+            currentProvince={canonical.province}
+            currentLocation={canonical.municipality ?? municipio}
+            currentServiceSlug={canonical.service}
           />
 
         </div>

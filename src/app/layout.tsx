@@ -43,9 +43,6 @@ import { GlobalLiveVisualEditor } from "@/components/editor/GlobalLiveVisualEdit
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"),
-  alternates: {
-    canonical: "https://productoraear.com",
-  },
   robots: {
     index: true,
     follow: true,

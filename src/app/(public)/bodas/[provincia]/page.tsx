@@ -1,9 +1,9 @@
-﻿import React from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { 
-  Heart, Sparkles, MapPin, ShieldCheck, Music, 
+import { notFound, redirect } from 'next/navigation';
+import {
+  Heart, Sparkles, MapPin, ShieldCheck, Music,
   Flame, Tv, Clock, Phone, ArrowRight, CheckCircle2,
   Calendar, Star, Sliders, MessageCircle, Building2
 } from 'lucide-react';
@@ -11,9 +11,16 @@ import { PROVINCIAS_52_GRAPH, generateGeoSchema } from '@/lib/constants/seo-data
 import { CENTRALITA } from '@/lib/phone-constants';
 import { DarkFeatureGrid, FeatureCardItem } from '@/components/ui/DarkFeatureGrid';
 import { StatDisplayBand, StatItem } from '@/components/ui/StatDisplayBand';
+import { isCanonicalProvinceSlug, resolveGeoSegment } from '@/lib/navigation/canonical-taxonomy';
 
 interface Props {
   params: Promise<{ provincia: string }>;
+}
+
+export function generateStaticParams() {
+  return Object.keys(PROVINCIAS_52_GRAPH).map((provincia) => ({
+    provincia,
+  }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -46,6 +53,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ProvincialWeddingPage({ params }: Props) {
   const { provincia } = await params;
   const provKey = provincia.toLowerCase();
+
+  // SSOT canónico: redirigir ciudades mal anidadas en el hueco de provincia.
+  if (!isCanonicalProvinceSlug(provKey)) {
+    const geo = resolveGeoSegment(provKey);
+    if (geo.province) {
+      redirect(geo.municipality
+        ? `/bodas/${geo.province}/mariachis/${geo.municipality}`
+        : `/bodas/${geo.province}`);
+    }
+    notFound();
+  }
+
   const data = PROVINCIAS_52_GRAPH[provKey] || {
     slug: provKey,
     name: provincia.charAt(0).toUpperCase() + provincia.slice(1),

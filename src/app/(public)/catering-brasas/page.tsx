@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { 
-  Flame, CheckCircle2, Star, ShieldCheck, Sparkles, 
+import {
+  Flame, CheckCircle2, Star, ShieldCheck, Sparkles,
   MessageCircle, Lock, ArrowRight, ChevronRight, Check,
   Clock, MapPin, Users, Heart
 } from 'lucide-react';
@@ -117,11 +117,10 @@ export default function CateringBrasasPage() {
               <div
                 key={menu.id}
                 onClick={() => setSelectedMenu(menu)}
-                className={`p-6 rounded-[2rem] border transition-all duration-300 cursor-pointer flex flex-col justify-between group ${
-                  isSelected 
-                    ? 'bg-gradient-to-b from-[#181822] via-[#0f0f15] to-[#0a0a0e] border-[#ecb613] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.9),0_0_30px_rgba(236,182,19,0.2)] scale-[1.02]' 
-                    : 'bg-[#0b0b10] border-white/10 hover:border-white/20'
-                }`}
+                className={`p-6 rounded-[2rem] border transition-all duration-300 cursor-pointer flex flex-col justify-between group ${isSelected
+                  ? 'bg-gradient-to-b from-[#181822] via-[#0f0f15] to-[#0a0a0e] border-[#ecb613] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.9),0_0_30px_rgba(236,182,19,0.2)] scale-[1.02]'
+                  : 'bg-[#0b0b10] border-white/10 hover:border-white/20'
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -136,8 +135,8 @@ export default function CateringBrasasPage() {
                   </div>
 
                   <div className="h-44 rounded-2xl overflow-hidden bg-black/60 relative mb-4 border border-white/10">
-                    <img 
-                      src={menu.image} 
+                    <img
+                      src={menu.image}
                       alt={menu.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                     />
@@ -169,9 +168,8 @@ export default function CateringBrasasPage() {
                   <span className="text-lg font-black text-[#ecb613] font-mono">
                     {menu.price} € <span className="text-[10px] font-light text-zinc-400">/ pax</span>
                   </span>
-                  <button className={`px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase transition-all ${
-                    isSelected ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-white/80 hover:bg-white/15'
-                  }`}>
+                  <button className={`px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase transition-all ${isSelected ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-white/80 hover:bg-white/15'
+                    }`}>
                     {isSelected ? '✓ Seleccionado' : 'Cotizar'}
                   </button>
                 </div>
@@ -205,11 +203,11 @@ export default function CateringBrasasPage() {
                 <span>Número de Comensales</span>
                 <span className="text-[#ecb613] font-black text-sm">{pax} PAX</span>
               </div>
-              <input 
-                type="range" 
-                min={20} 
-                max={400} 
-                value={pax} 
+              <input
+                type="range"
+                min={20}
+                max={400}
+                value={pax}
                 onChange={e => setPax(Number(e.target.value))}
                 className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
               />
@@ -223,11 +221,11 @@ export default function CateringBrasasPage() {
                 <span>Distancia Desplazamiento desde Madrid</span>
                 <span className="text-[#ecb613] font-black text-sm">{distanceKm} KM</span>
               </div>
-              <input 
-                type="range" 
-                min={0} 
-                max={300} 
-                value={distanceKm} 
+              <input
+                type="range"
+                min={0}
+                max={300}
+                value={distanceKm}
                 onChange={e => setDistanceKm(Number(e.target.value))}
                 className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
               />

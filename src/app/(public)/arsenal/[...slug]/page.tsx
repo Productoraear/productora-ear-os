@@ -11,8 +11,7 @@ import { CHRISTMAS_LIGHTING_PRODUCTS, CHRISTMAS_LIGHTING_CATEGORIES } from '@/da
 import ChristmasLightingCatalogView from '@/features/catalog/ui/ChristmasLightingCatalogView';
 import LightingDetailActions from '@/features/catalog/ui/LightingDetailActions';
 import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
-import { PROVINCIAS } from '@/lib/constants/seo-data';
-import { resolveGeoLocation } from '@/lib/seo/semantic-engine';
+import { resolveGeoSegment } from '@/lib/navigation/canonical-taxonomy';
 
 interface PageProps {
   params: Promise<{
@@ -93,8 +92,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const lastSeg = slug[slug.length - 1].toLowerCase();
-  const isLastProv = PROVINCIAS.includes(lastSeg);
-  const location = isLastProv ? lastSeg.charAt(0).toUpperCase() + lastSeg.slice(1) : 'Madrid';
+  const geo = resolveGeoSegment(lastSeg);
+  const isLastProv = !!geo.province;
+  const locationRaw = isLastProv ? (geo.municipality || geo.province!) : 'madrid';
+  const location = locationRaw.charAt(0).toUpperCase() + locationRaw.slice(1).replace(/-/g, ' ');
   const rawEquipment = isLastProv ? slug.slice(0, slug.length - 1).join(' ') : slug.join(' ');
   const equipmentName = rawEquipment.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
 
@@ -295,12 +296,12 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
   // 3. ARSENAL TÉCNICO GENERAL (/arsenal/[equipo]/[provincia])
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const lastSeg = slug[slug.length - 1].toLowerCase();
-  const isLastProv = PROVINCIAS.includes(lastSeg);
-  const provinceSlug = isLastProv ? lastSeg : 'madrid';
+  const geoInfo = resolveGeoSegment(lastSeg);
+  const isLastProv = !!geoInfo.province;
+  const provinceSlug = isLastProv ? (geoInfo.municipality || geoInfo.province!) : 'madrid';
   const equipmentSlug = isLastProv ? slug.slice(0, slug.length - 1).join('-') : slug.join('-');
 
-  const geo = resolveGeoLocation(provinceSlug);
-  const cityName = geo?.cityName || geo?.name || (provinceSlug ? provinceSlug.charAt(0).toUpperCase() + provinceSlug.slice(1) : 'Madrid');
+  const cityName = provinceSlug.charAt(0).toUpperCase() + provinceSlug.slice(1).replace(/-/g, ' ');
 
   return (
     <BespokeTemplate

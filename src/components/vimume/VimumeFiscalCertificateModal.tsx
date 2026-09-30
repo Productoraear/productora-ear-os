@@ -75,56 +75,53 @@ export default function VimumeFiscalCertificateModal({
     }, 500);
   };
 
-  const handlePrint = () => {
-    const printWindow = window.open('', '_blank');
-    if (!printWindow) return;
-    printWindow.document.write(`
-      <html>
-        <head>
-          <title>Certificado Modelo 182 AEAT - VIMUME</title>
-          <style>
-            body { font-family: 'Courier New', monospace; padding: 40px; color: #111; line-height: 1.6; }
-            h1 { font-size: 20px; border-bottom: 2px solid #000; padding-bottom: 8px; }
-            .meta { margin: 20px 0; font-size: 12px; }
-            .section { margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px; }
-            .total { font-size: 16px; font-weight: bold; margin-top: 10px; }
-          </style>
-        </head>
-        <body>
-          <h1>CERTIFICADO FISCAL LEY 49/2002 // MODELO 182 AEAT</h1>
-          <div class="meta">
+  const handlePrint = async () => {
+    try {
+      const html2pdf = (await import('html2pdf.js')).default;
+      const element = document.createElement('div');
+      element.innerHTML = `
+        <div style="font-family: 'Courier New', monospace; padding: 40px; color: #111; line-height: 1.6;">
+          <h1 style="font-size: 20px; border-bottom: 2px solid #000; padding-bottom: 8px;">CERTIFICADO FISCAL LEY 49/2002 // MODELO 182 AEAT</h1>
+          <div style="margin: 20px 0; font-size: 12px;">
             <strong>ID Certificado:</strong> ${draft.certificadoId}<br/>
             <strong>Ejercicio:</strong> ${draft.ejercicioFiscal}<br/>
             <strong>Fecha:</strong> ${new Date(draft.fechaEmision).toLocaleDateString('es-ES')}
           </div>
-          <div class="section">
+          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px;">
             <strong>ENTIDAD BENEFICIARIA:</strong><br/>
             ${draft.entidadBeneficiaria.razonSocial}<br/>
             NIF: ${draft.entidadBeneficiaria.nif} | Reg: ${draft.entidadBeneficiaria.registroEntidades}
           </div>
-          <div class="section">
+          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px;">
             <strong>DONANTE:</strong><br/>
             ${draft.donante.nombreOrazonSocial} (NIF: ${draft.donante.nifCif})<br/>
             Tipo: ${draft.donante.tipo}
           </div>
-          <div class="section">
+          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px;">
             <strong>DETALLE ECONÓMICO:</strong><br/>
             Aportación Donada: ${draft.detalleAportacion.donacionBruta.toFixed(2)} €<br/>
             Deducción Cuota: ${draft.detalleAportacion.deduccionTotal.toFixed(2)} €<br/>
-            <div class="total">Coste Real Neto Donante: ${draft.detalleAportacion.costeRealNeto.toFixed(2)} €</div>
+            <div style="font-size: 16px; font-weight: bold; margin-top: 10px;">Coste Real Neto Donante: ${draft.detalleAportacion.costeRealNeto.toFixed(2)} €</div>
             Impacto Social SROI Generado: ${draft.detalleAportacion.sroiGenerado.toFixed(2)} €
           </div>
-          <div class="section" style="font-size: 10px;">
+          <div style="margin: 15px 0; border: 1px solid #ccc; padding: 15px; border-radius: 6px; font-size: 10px;">
             <strong>FIRMA DIGITAL SHA-256:</strong><br/>
             ${draft.firmaCriptograficaSha256}
           </div>
           <p style="font-size: 10px; color: #666;">${draft.avisoLegalAeat}</p>
-        </body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
+        </div>
+      `;
+      const opt = {
+        margin:       10,
+        filename:     `Certificado_Mecenazgo_${draft.certificadoId}.pdf`,
+        image:        { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' as const }
+      };
+      html2pdf().from(element).set(opt).save();
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
   };
 
   return (
