@@ -209,19 +209,24 @@ Corrige todos los errores y entrega el código completo corregido:`;
         task.status = 'FAILED';
 
         // Milestone 1: SELF-HEALING LOOP
-        console.log(`🚑 [AUTO-SANACIÓN] Generando tarea de diagnóstico dinámico...`);
-        try {
-            const healPrompt = `La tarea ${task.id} falló de forma irrecuperable. Error TSC: ${valResult.error.slice(0, 500)}.
-            Genera un JSON estrictamente con este formato para una NUEVA tarea que arregle esto:
-            {"id": "${task.id}-HEAL", "wave": ${task.wave || 99}, "status": "QUEUED", "title": "Auto-Fix ${task.id}", "action": "Reescribir dependencias o fixear tipos basándose en el error TS...", "files": ["${task.files[0]}"], "validate": "npx tsc --noEmit"}`;
-            
-            const healRes = await callOllama("Eres un orquestador que solo escupe JSON estricto.", healPrompt);
-            const healJsonStr = healRes.substring(healRes.indexOf('{'), healRes.lastIndexOf('}') + 1);
-            const healTask = JSON.parse(healJsonStr);
-            queueData.tasks.unshift(healTask); // Inject to the TOP of the queue
-            console.log(`💉 [ÉXITO AUTO-SANACIÓN] Tarea inyectada: ${healTask.id}`);
-        } catch (e) {
-            console.log(`⚠️ Falló la auto-sanación: ${e.message}`);
+        const healCount = (task.id.match(/-HEAL/g) || []).length;
+        if (healCount >= 2) {
+            console.log(`⚠️ Abortando Auto-Sanación para ${task.id} (límite de 2 alcanzado).`);
+        } else {
+            console.log(`🚑 [AUTO-SANACIÓN] Generando tarea de diagnóstico dinámico...`);
+            try {
+                const healPrompt = `La tarea ${task.id} falló de forma irrecuperable. Error TSC: ${valResult.error.slice(0, 500)}.
+                Genera un JSON estrictamente con este formato para una NUEVA tarea que arregle esto:
+                {"id": "${task.id}-HEAL", "wave": ${task.wave || 99}, "status": "QUEUED", "title": "Auto-Fix ${task.id}", "action": "Reescribir dependencias o fixear tipos basándose en el error TS...", "files": ["${task.files[0]}"], "validate": "npx tsc --noEmit"}`;
+                
+                const healRes = await callOllama("Eres un orquestador que solo escupe JSON estricto.", healPrompt);
+                const healJsonStr = healRes.substring(healRes.indexOf('{'), healRes.lastIndexOf('}') + 1);
+                const healTask = JSON.parse(healJsonStr);
+                queueData.tasks.unshift(healTask); // Inject to the TOP of the queue
+                console.log(`💉 [ÉXITO AUTO-SANACIÓN] Tarea inyectada: ${healTask.id}`);
+            } catch (e) {
+                console.log(`⚠️ Falló la auto-sanación: ${e.message}`);
+            }
         }
 
         writeJSON(QUEUE_FILE, queueData);

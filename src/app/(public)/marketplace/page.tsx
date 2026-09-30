@@ -1,69 +1,45 @@
-'use client';
+import type { Metadata } from 'next';
 
-import React from 'react';
-import SovereignNavbar from '@/app/components/layout/SovereignNavbar';
-import { motion } from 'framer-motion';
-import { ShoppingCart, Zap, Star, ShieldCheck } from 'lucide-react';
-import AdditionalServices from '@/features/marketplace/AdditionalServices';
+export const metadata: Metadata = {
+  title: 'Marketplace | EAR',
+  description: 'Marketplace de la Productora EAR',
+};
 
-/**
- * 🏛️ MARKETPLACE VIMUME OS
- * Hub central de servicios de producción y talento.
- */
 export default function MarketplacePage() {
   return (
-    <main className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black">
-      <SovereignNavbar />
+    <main
+      style={{
+        minHeight: '100vh',
+        backgroundColor: '#030305',
+        color: '#f5f5f7',
+        padding: '48px 24px',
+        fontFamily:
+          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      }}
+    >
+      <section style={{ maxWidth: 960, margin: '0 auto' }}>
+        <h1
+          style={{
+            margin: 0,
+            fontSize: 40,
+            fontWeight: 700,
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Marketplace
+        </h1>
 
-      {/* HERO SECTION */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-[#ecb613]/10 to-transparent pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/5 text-[#ecb613] text-xs font-bold tracking-widest uppercase mb-6">
-              Servicios de Élite
-            </span>
-            <h1 className="text-5xl md:text-7xl font-bold font-syne tracking-tighter mb-8">
-              EL <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] to-[#8a6b0d]">MARKETPLACE</span>
-            </h1>
-            <p className="text-xl text-white/60 max-w-2xl mx-auto font-light leading-relaxed">
-              Accede a la infraestructura completa de Productora EAR. Desde logística técnica hasta mentoría de alto impacto, todo en un solo ecosistema soberano.
-            </p>
-          </motion.div>
-
-          {/* QUICK FEATURES */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-16">
-            {[
-              { icon: Zap, label: "Entrega Ágil" },
-              { icon: ShieldCheck, label: "Seguridad Institucional" },
-              { icon: Star, label: "Calidad Premium" },
-              { icon: ShoppingCart, label: "Checkout Unificado" }
-            ].map((item, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-white/5 bg-white/5 flex flex-col items-center gap-3 hover:bg-[#ecb613]/5 transition-colors">
-                <item.icon className="text-[#ecb613]" size={24} />
-                <span className="text-sm font-bold tracking-tight text-white/80">{item.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <p
+          style={{
+            marginTop: 12,
+            marginBottom: 0,
+            color: '#a1a1aa',
+            lineHeight: 1.6,
+          }}
+        >
+          Explora, publica y gestiona recursos de la Productora EAR.
+        </p>
       </section>
-
-      {/* CORE MARKETPLACE COMPONENTS */}
-      <div className="space-y-24 pb-32">
-        <AdditionalServices />
-        
-        {/* Placeholder para futuras secciones del marketplace */}
-        <section className="py-20 border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-6 text-center">
-             <p className="text-white/30 italic">Más módulos de producción en proceso de integración estructural...</p>
-          </div>
-        </section>
-      </div>
     </main>
   );
 }

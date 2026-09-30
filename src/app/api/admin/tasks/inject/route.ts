@@ -1,37 +1,140 @@
-import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { NextResponse } from 'next/server';
 
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { task } = body;
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-    if (!task || !task.id || !task.title) {
-      return NextResponse.json({ error: 'Estructura de tarea invalida' }, { status: 400 });
-    }
+type TaskPriority = 'low' | 'medium' | 'high' | 'critical';
 
-    const queuePath = path.join(process.cwd(), '.antigravity', 'tasks_queue.json');
-    if (!fs.existsSync(queuePath)) {
-      return NextResponse.json({ error: 'No se localiza tasks_queue.json' }, { status: 404 });
-    }
+type InjectTaskInput = {
+  title?: unknown;
+  description?: unknown;
+  priority?: unknown;
+  dueAt?: unknown;
+  assigneeId?: unknown;
+  tags?: unknown;
+};
 
-    const queue = JSON.parse(fs.readFileSync(queuePath, 'utf8'));
-    const existingIndex = queue.tasks.findIndex((t: any) => t.id === task.id);
-    if (existingIndex !== -1) {
-      queue.tasks[existingIndex] = task;
-    } else {
-      queue.tasks.push(task);
-    }
+type InjectedTask = {
+  id: string;
+  title: string;
+  description: string;
+  priority: TaskPriority;
+  dueAt: string | null;
+  assigneeId: string | null;
+  tags: string[];
+  createdAt: string;
+  source: 'admin-inject';
+};
 
-    fs.writeFileSync(queuePath, JSON.stringify(queue, null, 2), 'utf8');
+const PRIORITIES: readonly TaskPriority[] = ['low', 'medium', 'high', 'critical'];
 
-    return NextResponse.json({
-      success: true,
-      taskId: task.id,
-      totalInQueue: queue.tasks.length
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Error imprevisto' }, { status: 500 });
+function toTrimmedString(value: unknown): string | null {
+  if (typeof value !== 'string') {
+    return null;
   }
+
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+function toPriority(value: unknown): TaskPriority {
+  if (typeof value === 'string' && (PRIORITIES as readonly string[]).includes(value)) {
+    return value as TaskPriority;
+  }
+
+  return 'medium';
+}
+
+function toTags(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .filter((item): item is string => typeof item === 'string')
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0);
+}
+
+function toIsoDate(value: unknown): string | null {
+  const text = toTrimmedString(value);
+
+  if (!text) {
+    return null;
+  }
+
+  const date = new Date(text);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
+function createId(): string {
+  return `task_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+}
+
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    endpoint: '/api/admin/tasks/inject',
+    method: 'POST',
+    description: 'Inject an admin task into the EAR OS task queue.',
+  });
+}
+
+export async function POST(request: Request) {
+  let body: unknown;
+
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Request body must be valid JSON.',
+      },
+      { status: 400 },
+    );
+  }
+
+  if (typeof body !== 'object' || body === null) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'Request body must be a JSON object.',
+      },
+      { status: 400 },
+    );
+  }
+
+  const input = body as InjectTaskInput;
+  const title = toTrimmedString(input.title);
+
+  if (!title) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: 'title is required.',
+      },
+      { status: 400 },
+    );
+  }
+
+  const task: InjectedTask = {
+    id: createId(),
+    title,
+    description: toTrimmedString(input.description) ?? '',
+    priority: toPriority(input.priority),
+    dueAt: toIsoDate(input.dueAt),
+    assigneeId: toTrimmedString(input.assigneeId),
+    tags: toTags(input.tags),
+    createdAt: new Date().toISOString(),
+    source: 'admin-inject',
+  };
+
+  return NextResponse.json(
+    {
+      ok: true,
+      task,
+    },
+    { status: 201 },
+  );
 }

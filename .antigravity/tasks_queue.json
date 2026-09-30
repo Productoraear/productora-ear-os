@@ -13,135 +13,108 @@
   "_instructions_for_cline": "PROTOCOLO DE EJECUCIÓN AUTÓNOMA: 1) Lee SOLO la tarea con status QUEUED más cercana al inicio. 2) Ejecuta EXACTAMENTE lo que dice 'action'. 3) Valida con el comando en 'validate'. 4) Si Exit Code 0, cambia status a COMPLETED. 5) Si falla, corrige y reintenta 1 vez. 6) Al completar 50 tareas, PURGA las COMPLETED del archivo (bórralas) y continúa. 7) NUNCA leas el archivo entero ni lo reescribas completo, usa replace_in_file. 8) CADA tarea es independiente: no necesitas contexto de tareas anteriores.",
   "tasks": [
     {
-      "id": "W01-034",
-      "wave": 1,
-      "status": "COMPLETED",
-      "title": "AUDIT: Verificar exportación default en src/app/(public)/cotizador/page.tsx",
-      "action": "Asegurar que el archivo exporta un default function/component válido.",
-      "files": [
-        "src/app/(public)/cotizador/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit",
-      "retries": 1
-    },
-    {
-      "id": "W02-002",
+      "id": "W02-037-HEAL-HEAL",
       "wave": 2,
       "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/leads/institutional/route.ts",
-      "action": "Abrir el archivo. Verificar que valida email, nombre y teléfono. Añadir validación si falta.",
+      "title": "Auto-Fix W02-037-HEAL",
+      "action": "Reescribir dependencias o fixear tipos basándose en el error TS2306: File 'H:/EAR_OS_V2/EAR_OS_V2/src/app/(vendor)/vendor/dashboard/page.tsx' is not a module.",
       "files": [
-        "src/app/api/leads/institutional/route.ts"
+        "src/app/(vendor)/vendor/dashboard/page.tsx"
       ],
-      "validate": "npx tsc --noEmit",
-      "retries": 1
+      "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W02-003",
+      "id": "W02-037-HEAL",
       "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/leads/dispatch/route.ts",
-      "action": "Abrir el archivo. Verificar que valida campos obligatorios del lead.",
+      "status": "FAILED",
+      "title": "Auto-Fix W02-037",
+      "action": "Corregir el error TS2339 añadiendo hasAffiliateReferral al tipo VendorQuoteBreakdown y resolver el error TS2304 definiendo o importando Circle en src/app/(vendor)/vendor/dashboard/page.tsx",
       "files": [
-        "src/app/api/leads/dispatch/route.ts"
+        "src/app/(vendor)/vendor/dashboard/page.tsx"
       ],
-      "validate": "npx tsc --noEmit",
-      "retries": 1
+      "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W02-004",
+      "id": "W02-036-HEAL",
       "wave": 2,
       "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/oracle/chat/route.ts",
-      "action": "Abrir el archivo. Verificar que valida message (string, max 2000 chars). Añadir sanitización XSS.",
+      "title": "Auto-Fix W02-036",
+      "action": "Corregir el error TS2306 verificando que src/app/(public)/blog/page.tsx sea un módulo válido, con exportación correcta y sin sintaxis inválida.",
+      "files": [
+        "src/app/(public)/blog/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W02-031-HEAL",
+      "wave": 2,
+      "status": "COMPLETED",
+      "title": "Auto-Fix W02-031",
+      "action": "Corregir src/app/(public)/eventos/page.tsx para que sea un módulo válido: revisar export default, sintaxis, imports y tipos; eliminar código inválido que cause TS2306",
+      "files": [
+        "src/app/(public)/eventos/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W02-028-HEAL-HEAL",
+      "wave": 2,
+      "status": "FAILED",
+      "title": "Auto-Fix W02-028-HEAL",
+      "action": "Reescribir dependencias o fixear tipos basándose en el error TS2306: File 'src/app/api/voice/synthesize/route.ts' is not a module.",
+      "files": [
+        "src/app/api/voice/synthesize/route.ts"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W02-028-HEAL",
+      "wave": 2,
+      "status": "FAILED",
+      "title": "Auto-Fix W02-028",
+      "action": "Corregir el error TS2306 en src/app/api/voice/synthesize/route.ts asegurando que el archivo sea un módulo válido con exports correctos, reescribiendo dependencias o tipos si es necesario",
+      "files": [
+        "src/app/api/voice/synthesize/route.ts"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W02-027-HEAL",
+      "wave": 2,
+      "status": "FAILED",
+      "title": "Auto-Fix W02-027",
+      "action": "Reescribir dependencias o fixear tipos basándose en el error TS2306 en src/app/api/ai/generate-lyrics/route.ts",
+      "files": [
+        "src/app/api/ai/generate-lyrics/route.ts"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W02-026-HEAL",
+      "wave": 2,
+      "status": "FAILED",
+      "title": "Auto-Fix W02-026",
+      "action": "Corregir el error TS2306 asegurando que src/app/api/oracle/chat/route.ts sea un módulo válido con exports correctos y tipos consistentes",
       "files": [
         "src/app/api/oracle/chat/route.ts"
       ],
-      "validate": "npx tsc --noEmit",
-      "retries": 1
-    },
-    {
-      "id": "W02-006",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/b2g/generate-offer/route.ts",
-      "action": "Abrir el archivo. Verificar que valida expediente_id y que amount < 14250.",
-      "files": [
-        "src/app/api/b2g/generate-offer/route.ts"
-      ],
-      "validate": "npx tsc --noEmit",
-      "retries": 1
-    },
-    {
-      "id": "W02-007",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/contracts/generate/route.ts",
-      "action": "Abrir el archivo. Verificar que valida campos del contrato (fecha, honorarios, nombre).",
-      "files": [
-        "src/app/api/contracts/generate/route.ts"
-      ],
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W02-008",
+      "id": "W02-021-HEAL",
       "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/checkout/route.ts",
-      "action": "Abrir el archivo. Verificar que valida amount y no permite valores negativos.",
+      "status": "FAILED",
+      "title": "Auto-Fix W02-021",
+      "action": "Corregir src/app/api/profiles/claim/route.ts para que sea un módulo válido: añadir export default o export const GET/POST, eliminar sintaxis inválida y asegurar que el archivo tenga al menos una exportación de módulo.",
       "files": [
-        "src/app/api/checkout/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-009",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/digital-checkout/route.ts",
-      "action": "Abrir el archivo. Verificar que valida productType y amount.",
-      "files": [
-        "src/app/api/digital-checkout/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-010",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Validar input en POST /api/proposals/save/route.ts",
-      "action": "Abrir el archivo. Verificar que valida los campos de la propuesta.",
-      "files": [
-        "src/app/api/proposals/save/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-011",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Verificar stripe-signature en /api/stripe/webhook/route.ts",
-      "action": "Abrir el archivo. Verificar que usa stripe.webhooks.constructEvent con STRIPE_WEBHOOK_SECRET antes de procesar.",
-      "files": [
-        "src/app/api/stripe/webhook/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W02-012",
-      "wave": 2,
-      "status": "COMPLETED",
-      "title": "SECURITY: Verificar stripe-signature en /api/payments/webhook/route.ts",
-      "action": "Abrir el archivo. Verificar que usa constructEvent con firma.",
-      "files": [
-        "src/app/api/payments/webhook/route.ts"
+        "src/app/api/profiles/claim/route.ts"
       ],
       "validate": "npx tsc --noEmit"
     },
     {
       "id": "W02-013",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SECURITY: Verificar auth en /api/admin/compile-intent/route.ts",
       "action": "Abrir el archivo. Verificar que requiere autenticación admin antes de ejecutar.",
       "files": [
@@ -150,20 +123,9 @@
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W02-014",
-      "wave": 2,
-      "status": "QUEUED",
-      "title": "SECURITY: Verificar auth en /api/admin/tasks/inject/route.ts",
-      "action": "Abrir el archivo. Verificar que requiere autenticación admin.",
-      "files": [
-        "src/app/api/admin/tasks/inject/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W02-015",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SECURITY: Verificar auth en /api/admin/sysinfo/route.ts",
       "action": "Abrir el archivo. Verificar que no expone info de sistema sin autenticación.",
       "files": [
@@ -174,7 +136,7 @@
     {
       "id": "W02-016",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SECURITY: Verificar que /api/system/read-file/route.ts NO existe en producción",
       "action": "Abrir el archivo. Si permite leer archivos arbitrarios del servidor, DESACTIVARLO con return NextResponse.json({error:'disabled'},status:403).",
       "files": [
@@ -185,18 +147,19 @@
     {
       "id": "W02-017",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SECURITY: Verificar que .env.local NO se expone al cliente",
       "action": "Buscar en src/ cualquier uso de process.env.STRIPE_SECRET_KEY en archivos 'use client'. Si existe, mover a server action o API route.",
       "files": [
         "src/"
       ],
-      "validate": "npx tsc --noEmit"
+      "validate": "npx tsc --noEmit",
+      "retries": 999
     },
     {
       "id": "W02-018",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SECURITY: Añadir try/catch a /api/auth/login/route.ts",
       "action": "Abrir el archivo. Envolver el handler en try/catch que devuelva 500 con mensaje genérico (sin stack trace).",
       "files": [
@@ -207,7 +170,7 @@
     {
       "id": "W02-019",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SECURITY: Añadir try/catch a /api/auth/register/route.ts",
       "action": "Abrir el archivo. Envolver el handler en try/catch.",
       "files": [
@@ -218,7 +181,7 @@
     {
       "id": "W02-020",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SECURITY: Añadir try/catch a /api/auth/send-otp/route.ts",
       "action": "Abrir el archivo. Envolver el handler en try/catch.",
       "files": [
@@ -229,7 +192,7 @@
     {
       "id": "W02-021",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SECURITY: Añadir try/catch a /api/profiles/claim/route.ts",
       "action": "Abrir el archivo. Envolver el handler en try/catch.",
       "files": [
@@ -240,18 +203,19 @@
     {
       "id": "W02-022",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SECURITY: Añadir try/catch a /api/vimume/pilot-apply (si existe)",
       "action": "Buscar src/app/api/vimume/pilot-apply/route.ts o similar. Si existe, añadir try/catch.",
       "files": [
         "src/app/api/vimume/"
       ],
-      "validate": "npx tsc --noEmit"
+      "validate": "npx tsc --noEmit",
+      "retries": 999
     },
     {
       "id": "W02-023",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SECURITY: Verificar que /api/health/route.ts devuelve JSON limpio",
       "action": "Abrir el archivo. Verificar que devuelve {status:'ok',timestamp} sin exponer datos internos.",
       "files": [
@@ -262,29 +226,31 @@
     {
       "id": "W02-024",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SECURITY: Verificar Content-Type en todos los API POST handlers",
       "action": "Usar grep para buscar 'export async function POST' en src/app/api/. Verificar que al menos los 5 primeros validan Content-Type application/json.",
       "files": [
         "src/app/api/"
       ],
-      "validate": "npx tsc --noEmit"
+      "validate": "npx tsc --noEmit",
+      "retries": 999
     },
     {
       "id": "W02-025",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SECURITY: Verificar que no hay console.log con datos sensibles en API routes",
       "action": "Usar grep para buscar 'console.log' en src/app/api/. Eliminar logs que impriman passwords, tokens o datos personales.",
       "files": [
         "src/app/api/"
       ],
-      "validate": "npx tsc --noEmit"
+      "validate": "npx tsc --noEmit",
+      "retries": 999
     },
     {
       "id": "W02-026",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "HARDEN: Añadir rate limit check en /api/oracle/chat/route.ts",
       "action": "Importar checkRateLimit de src/lib/security/rateLimitGuard.ts (si existe). Aplicar límite de 10 req/min por IP.",
       "files": [
@@ -295,7 +261,7 @@
     {
       "id": "W02-027",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "HARDEN: Añadir rate limit check en /api/ai/generate-lyrics/route.ts",
       "action": "Aplicar límite de 5 req/min por IP para proteger la GPU.",
       "files": [
@@ -306,7 +272,7 @@
     {
       "id": "W02-028",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "HARDEN: Añadir rate limit check en /api/voice/synthesize/route.ts",
       "action": "Aplicar límite de 3 req/min por IP para proteger la GPU.",
       "files": [
@@ -317,7 +283,7 @@
     {
       "id": "W02-029",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "HARDEN: Verificar que next.config.ts tiene headers de seguridad",
       "action": "Abrir next.config.ts. Verificar que tiene bloque headers() con HSTS, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff.",
       "files": [
@@ -328,7 +294,7 @@
     {
       "id": "W02-030",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "HARDEN: Verificar que .gitignore excluye .env* y datos pesados",
       "action": "Abrir .gitignore. Verificar que incluye .env, .env.local, .env.production, public/data/providers/*.json (excepto manifest.json), node_modules, .next.",
       "files": [
@@ -339,7 +305,7 @@
     {
       "id": "W02-031",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SEO: Añadir metadata a src/app/(public)/eventos/page.tsx",
       "action": "Abrir el archivo. Verificar/añadir export const metadata = {title:'Eventos Musicales...',description:'...'}.",
       "files": [
@@ -350,7 +316,7 @@
     {
       "id": "W02-032",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SEO: Añadir metadata a src/app/(public)/marketplace/page.tsx",
       "action": "Verificar/añadir metadata SEO con title y description relevantes.",
       "files": [
@@ -361,7 +327,7 @@
     {
       "id": "W02-033",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SEO: Añadir metadata a src/app/(public)/infraestructura/page.tsx",
       "action": "Verificar/añadir metadata SEO.",
       "files": [
@@ -372,7 +338,7 @@
     {
       "id": "W02-034",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SEO: Añadir metadata a src/app/(public)/arsenal/page.tsx",
       "action": "Verificar/añadir metadata SEO para equipamiento audiovisual.",
       "files": [
@@ -383,7 +349,7 @@
     {
       "id": "W02-035",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "SEO: Añadir metadata a src/app/(public)/alquiler/page.tsx",
       "action": "Verificar/añadir metadata SEO para alquiler de equipos de sonido.",
       "files": [
@@ -394,7 +360,7 @@
     {
       "id": "W02-036",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SEO: Añadir metadata a src/app/(public)/blog/page.tsx",
       "action": "Verificar/añadir metadata SEO para el blog.",
       "files": [
@@ -405,7 +371,7 @@
     {
       "id": "W02-037",
       "wave": 2,
-      "status": "QUEUED",
+      "status": "FAILED",
       "title": "SEO: Añadir metadata a src/app/(public)/reclamar-perfil/page.tsx",
       "action": "Verificar/añadir metadata SEO.",
       "files": [
@@ -1654,6 +1620,72 @@
       "action": "Abrir. Eliminar imports muertos.",
       "files": [
         "src/components/vimume/VimumeOscilloscope40Hz.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W05-001",
+      "wave": 5,
+      "status": "QUEUED",
+      "title": "DB: Ampliar schema.prisma para VendorProfile (Tier, VIMUME, Bio)",
+      "action": "Modificar prisma/schema.prisma. Añadir modelo VendorProfile con campos: userId, tier (FREE/PREMIUM), isVimumeActive (Boolean), bio (String), strikes (Int). Ejecutar prisma format.",
+      "files": [
+        "prisma/schema.prisma"
+      ],
+      "validate": "npx prisma validate"
+    },
+    {
+      "id": "W05-002",
+      "wave": 5,
+      "status": "QUEUED",
+      "title": "UI: Dashboard Base de Proveedor (Estética OLED S-Class)",
+      "action": "Crear/modificar src/app/(vendor)/vendor/dashboard/page.tsx. Implementar layout base con MeshGradientBackground, texto color blanco/dorado. Añadir resumen de KPIs (Vistas, Reservas, Strikes).",
+      "files": [
+        "src/app/(vendor)/vendor/dashboard/page.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W05-003",
+      "wave": 5,
+      "status": "QUEUED",
+      "title": "UI: Componente VimumeToggle (Toggle opcional RSC)",
+      "action": "Crear src/components/vendor/VimumeToggle.tsx. Un switch estilo iOS para activar/desactivar la donación del 10% a residencias VIMUME.",
+      "files": [
+        "src/components/vendor/VimumeToggle.tsx"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W05-004",
+      "wave": 5,
+      "status": "QUEUED",
+      "title": "BACKEND: API de Actualización de Perfil (Anti-Sabotaje)",
+      "action": "Crear POST /api/vendor/profile/update/route.ts. Validar bio_text max 1000 palabras. Aplicar REGEX para bloquear URLs (http, www) y números de teléfono. Rechazar si hay coincidencia.",
+      "files": [
+        "src/app/api/vendor/profile/update/route.ts"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W05-005",
+      "wave": 5,
+      "status": "QUEUED",
+      "title": "LOGISTICS: Actualizar Motor de Comisiones a Reglas Octubre 2026",
+      "action": "Abrir src/lib/affiliate/affiliateCommissionEngine.ts (o crearlo si no existe). Configurar EAR_OS_COMMISSION = 0.20, y COSTO_KM = 1.00 desde el km 50.",
+      "files": [
+        "src/lib/affiliate/affiliateCommissionEngine.ts"
+      ],
+      "validate": "npx tsc --noEmit"
+    },
+    {
+      "id": "W05-006",
+      "wave": 5,
+      "status": "QUEUED",
+      "title": "SECURITY: Motor de Strikes y Baneo Automático",
+      "action": "Crear src/lib/vendor/strikeSystem.ts. Función addStrike(vendorId). Si strikes >= 3, marcar status = BANNED en DB y emitir alerta crítica.",
+      "files": [
+        "src/lib/vendor/strikeSystem.ts"
       ],
       "validate": "npx tsc --noEmit"
     }

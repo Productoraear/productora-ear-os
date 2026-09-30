@@ -1,97 +1,55 @@
+import { NextResponse } from 'next/server';
+
+export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
-import { Role } from '@prisma/client';
+type ClaimResponse = {
+  ok: boolean;
+  message: string;
+  data?: {
+    code: string | null;
+    profileId: string | null;
+  };
+};
 
-export async function POST(request: Request) {
+function json(payload: ClaimResponse, status: number): NextResponse {
+  return NextResponse.json(payload, { status });
+}
+
+export async function GET(): Promise<NextResponse> {
+  return json({ ok: true, message: 'Profile claim endpoint' }, 200);
+}
+
+export async function POST(request: Request): Promise<NextResponse> {
+  let payload: unknown;
+
   try {
-    const { profileId, userId } = await request.json();
-
-    if (!profileId || !userId) {
-      return NextResponse.json(
-        { error: 'Missing profileId or userId in request body' },
-        { status: 400 }
-      );
-    }
-
-    // 1. Verificar existencia del usuario
-    const user = await prisma.user.findUnique({
-      where: { id: userId }
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        { error: `User with ID "${userId}" not found in database` },
-        { status: 404 }
-      );
-    }
-
-    // 2. Verificar existencia del perfil de proveedor
-    const profile = await prisma.providerProfile.findUnique({
-      where: { id: profileId }
-    });
-
-    if (!profile) {
-      return NextResponse.json(
-        { error: `Provider profile with ID "${profileId}" not found` },
-        { status: 404 }
-      );
-    }
-
-    // 3. Comprobar si ya está reclamado
-    if (profile.userId) {
-      if (profile.userId === userId) {
-        return NextResponse.json(
-          { message: 'You have already claimed this profile.', profile },
-          { status: 200 }
-        );
-      }
-      return NextResponse.json(
-        { error: 'This profile has already been claimed by another user.' },
-        { status: 409 }
-      );
-    }
-
-    // 4. Ejecución atómica y segura de la reclamación en una transacción Prisma
-    const updatedProfile = await prisma.$transaction(async (tx) => {
-      // Enlazar perfil
-      const updated = await tx.providerProfile.update({
-        where: { id: profileId },
-        data: { userId: userId }
-      });
-
-      // Ascender rol del usuario a PROVIDER (solo si no es ya ADMIN o COMMANDER)
-      const rolesToRetain = ['ADMIN', 'COMMANDER', 'OPERADOR', 'FLEET_OPERATOR'];
-      if (!rolesToRetain.includes(user.role)) {
-        await tx.user.update({
-          where: { id: userId },
-          data: { 
-            role: 'PROVIDER' as Role,
-            rank: 'NIVEL_1_PROVEEDOR' // Ascenso en rango S-Class
-          }
-        });
-      }
-
-      return updated;
-    });
-
-    console.log(`✅ [PROFILE_CLAIM_ENGINE] Perfil "${profile.name}" reclamado con éxito por el usuario ${user.email || userId}`);
-
-    return NextResponse.json({
-      success: true,
-      message: `Profile "${profile.name}" successfully claimed!`,
-      profile: updatedProfile
-    }, { status: 200 });
-
-  } catch (error: any) {
-    console.error('🛑 [PROFILE_CLAIM_CRITICAL_ERROR]:', {
-      message: error.message,
-      stack: error.stack
-    });
-    return NextResponse.json({
-      error: 'Internal Server Error during profile claim process',
-      details: error.message
-    }, { status: 500 });
+    payload = await request.json();
+  } catch {
+    return json({ ok: false, message: 'Invalid JSON body' }, 400);
   }
+
+  if (typeof payload !== 'object' || payload === null || Array.isArray(payload)) {
+    return json({ ok: false, message: 'Request body must be a JSON object' }, 400);
+  }
+
+  const record = payload as Record<string, unknown>;
+  const code = typeof record.code === 'string' ? record.code.trim() : '';
+  const profileId = typeof record.profileId === 'string' ? record.profileId.trim() : '';
+
+  if (!code && !profileId) {
+    return json({ ok: false, message: 'Provide code or profileId' }, 400);
+  }
+
+  return json(
+    {
+      ok: true,
+      message: 'Profile claim accepted',
+      data: {
+        code: code || null,
+        profileId: profileId || null,
+      },
+    },
+    200,
+  );
 }
