@@ -19,6 +19,8 @@ interface ReservaConfirmadaPageProps {
   searchParams: Promise<{
     session_id?: string;
     production_id?: string;
+    order_id?: string;
+    tipo?: string;
   }>;
 }
 
@@ -49,8 +51,8 @@ function asCoords(
 }
 
 /**
- * Server Component: resuelve searchParams (async), consulta ProductionEvent en Prisma
- * y construye el ClientLiveTrackingData inicial para el mapa Leaflet HD + drawer.
+ * Server Component: resuelve searchParams (async), consulta ProductionEvent o la sesión Stripe
+ * y construye el ClientLiveTrackingData inicial para el mapa Leaflet HD + drawer con tramo horario.
  */
 export default async function ReservaConfirmadaPage({
   searchParams
@@ -116,6 +118,15 @@ export default async function ReservaConfirmadaPage({
           Math.round((remainingKm / effectiveSpeed) * 60)
         );
 
+        const slotTime = asString(metadata.timeSlot || metadata.horaTramo, '18:00');
+        const dateFormatted = production.eventDate
+          ? new Date(production.eventDate).toLocaleDateString('es-ES', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric'
+            })
+          : '';
+
         initialData = {
           bookingId: production.id,
           clientName: asString(production.clientName, 'Cliente EAR OS'),
@@ -132,7 +143,7 @@ export default async function ReservaConfirmadaPage({
           originCoords,
           currentLocationCoords,
           assignedProviderName: asString(
-            convoy.assignedProviderName,
+            convoy.assignedProviderName || metadata.artistName,
             'Productora EAR OS'
           ),
           driverName: asString(convoy.driverName, 'Jefe de Convoy EAR OS'),
@@ -147,11 +158,55 @@ export default async function ReservaConfirmadaPage({
           clientAccessNotes: asString(
             convoy.clientAccessNotes,
             'Acceso por el portón principal. El convoy se anunciará por teléfono al llegar.'
-          )
+          ),
+          timeSlot: slotTime,
+          eventDate: asString(metadata.fecha, dateFormatted),
+          serviceType: asString(metadata.formato, 'Artista / Agrupación de Gala'),
+          bufferMinutes: asNumber(metadata.bufferMinutes, 30)
         };
       }
     } catch {
       initialData = null;
+    }
+  }
+
+  // Fallback si viene directamente de Stripe Checkout sin productionId en query
+  if (!initialData && sessionId) {
+    try {
+      const Stripe = (await import('stripe')).default;
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build', {
+        apiVersion: '2025-01-27.acacia' as any
+      });
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      if (session && session.metadata) {
+        const meta = session.metadata;
+        initialData = {
+          bookingId: meta.orderId || sessionId,
+          clientName: asString(session.customer_details?.name, 'Cliente EAR OS'),
+          venueName: asString(meta.municipio || 'Ubicación Confirmada', 'Ubicación de Gala'),
+          venueAddress: asString(meta.municipio, 'Provincia / Sede Seleccionada'),
+          destinationCoords: { lat: 40.4168, lng: -3.7038 },
+          originPointName: 'Base Logística Méntrida',
+          originCoords: { lat: 40.2383, lng: -4.1956 },
+          currentLocationCoords: { lat: 40.2383, lng: -4.1956 },
+          assignedProviderName: asString(meta.artistName, 'Artista de Roster S-Class'),
+          driverName: 'Despacho Central EAR OS',
+          driverPhone: '+34693693048',
+          vehiclePlate: 'S-CLASS-VIP',
+          vehicleModel: 'Logística In Situ',
+          currentStatus: 'EN_ORIGEN',
+          etaMinutes: 45,
+          speedKmh: 0,
+          depositStripeConfirmed: true,
+          clientAccessNotes: 'Reserva con bloqueo de tramo horario y buffer previo de 30 min para accesos y montaje.',
+          timeSlot: asString(meta.horaTramo, '18:00'),
+          eventDate: asString(meta.fecha, 'Fecha Confirmada'),
+          serviceType: asString(meta.formato, 'Artista / Agrupación'),
+          bufferMinutes: asNumber(meta.bufferMinutes, 30)
+        };
+      }
+    } catch {
+      // Ignorar fallos de Stripe en local
     }
   }
 

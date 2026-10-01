@@ -25,6 +25,10 @@ export interface ClientLiveTrackingData {
   speedKmh: number;
   depositStripeConfirmed: boolean;
   clientAccessNotes: string;
+  timeSlot?: string;
+  eventDate?: string;
+  serviceType?: string;
+  bufferMinutes?: number;
 }
 
 interface ClientLiveTrackingDrawerProps {
@@ -68,6 +72,31 @@ export function ClientLiveTrackingDrawer({ data, onClose }: ClientLiveTrackingDr
           <span>RESERVA Y CONVOY CONFIRMADO</span>
         </div>
         <span className="text-zinc-400 text-[9px]">Fianza 100€ Stripe OK</span>
+      </div>
+
+      {/* ⏰ Bloque Tramo Horario & Servicio Multigremio */}
+      <div className="bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-2xl p-3 space-y-1.5">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] uppercase text-[#ecb613] tracking-wider font-bold flex items-center gap-1.5">
+            <Clock size={13} className="text-[#ecb613]" />
+            <span>Pase Horario Confirmado</span>
+          </span>
+          <span className="text-[10px] bg-emerald-950/80 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold">
+            🟢 Bloqueo Activo
+          </span>
+        </div>
+        <div className="flex items-baseline justify-between">
+          <div className="text-lg font-black text-white font-syne">
+            {data.timeSlot ? `${data.timeSlot} hrs` : 'Horario a confirmar'}
+          </div>
+          <span className="text-[10px] text-zinc-400 font-mono">
+            {data.eventDate || 'Fecha Confirmada'}
+          </span>
+        </div>
+        <div className="text-[10px] text-zinc-400 flex items-center justify-between border-t border-white/5 pt-1">
+          <span>Servicio: <strong className="text-white">{data.assignedProviderName}</strong></span>
+          <span className="text-[#ecb613]">+{data.bufferMinutes || 30} min buffer acceso</span>
+        </div>
       </div>
 
       {/* Ficha del Destino */}

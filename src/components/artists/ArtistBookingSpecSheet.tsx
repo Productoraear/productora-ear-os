@@ -16,7 +16,8 @@ import {
   HelpCircle,
   ArrowRight,
   Sliders,
-  DollarSign
+  DollarSign,
+  Loader2
 } from 'lucide-react';
 import ArtistAvailabilityCalendar from './ArtistAvailabilityCalendar';
 
@@ -77,7 +78,7 @@ export default function ArtistBookingSpecSheet({
   const [selectedFormat, setSelectedFormat] = useState(SHOW_FORMATS[0].id);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(TIME_SLOTS[1].id); // Cóctel por defecto
   const [selectedEventType, setSelectedEventType] = useState(EVENT_TYPES[0].id); // Boda
-  const [selectedHourSlot, setSelectedHourSlot] = useState<string>('19:00 - 20:30');
+  const [selectedHourSlot, setSelectedHourSlot] = useState<string>('18:00');
   const [selectedPax, setSelectedPax] = useState(PAX_RANGES[1].id); // 50-150 pax
   const [selectedAcoustic, setSelectedAcoustic] = useState(ACOUSTIC_RIDERS[0].id); // Interior
   const [eventMunicipality, setEventMunicipality] = useState(artistProvince || 'Madrid');
@@ -85,6 +86,8 @@ export default function ArtistBookingSpecSheet({
   const [finHoraTardia, setFinHoraTardia] = useState(false);
   const [necesitaMicroDiscurso, setNecesitaMicroDiscurso] = useState(true);
   const [temaPersonalizado, setTemaPersonalizado] = useState('');
+  const [depositLoading, setDepositLoading] = useState(false);
+  const [depositError, setDepositError] = useState<string | null>(null);
 
   // 2. Cálculos económicos SSOT S-Class
   const formatObj = SHOW_FORMATS.find((f) => f.id === selectedFormat) || SHOW_FORMATS[0];
@@ -111,13 +114,52 @@ export default function ArtistBookingSpecSheet({
   const splitEarOs = tarifaArtistica * 0.1;
   const splitVimume = tarifaArtistica * 0.1;
 
+  // Despacho del depósito vinculante de 100 € en Stripe con bloqueo de tramo
+  const handleStripeDeposit = async () => {
+    if (!selectedDate) {
+      setDepositError('Por favor selecciona primero una fecha disponible en el calendario para fijar el pase.');
+      return;
+    }
+
+    setDepositLoading(true);
+    setDepositError(null);
+
+    try {
+      const res = await fetch('/api/reservar/artist-deposit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          artistId,
+          artistName,
+          fecha: selectedDate,
+          horaTramo: selectedHourSlot,
+          formato: formatObj.name,
+          distanciaKm: distanceKm,
+          municipio: eventMunicipality,
+          totalEstimado: Math.round(totalPresupuesto)
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || 'No se pudo iniciar el depósito vinculante de Stripe.');
+      }
+
+      window.location.href = data.url;
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Error al conectar con la pasarela Stripe';
+      setDepositError(msg);
+      setDepositLoading(false);
+    }
+  };
+
   // Mensaje para WhatsApp Directo
   const whatsappText = useMemo(() => {
     const lines = [
       `¡Hola Edwin! Deseo coordinar la contratación oficial del artista *${artistName}* con la siguiente especificación técnica:`,
       ``,
       `📅 *Fecha Seleccionada:* ${selectedDate || 'Por definir con el artista'}`,
-      `⏰ *Pase Horario en Ruta:* ${selectedHourSlot}`,
+      `⏰ *Pase Horario en Ruta:* ${selectedHourSlot} hrs (con margen de +30 min buffer)`,
       `🎭 *Formato:* ${formatObj.name} (${formatObj.members})`,
       `⏳ *Duración y Momento:* ${timeSlotObj.label} (${timeSlotObj.duration})`,
       `🥂 *Tipo de Evento:* ${EVENT_TYPES.find((e) => e.id === selectedEventType)?.label}`,
@@ -127,7 +169,7 @@ export default function ArtistBookingSpecSheet({
       temaPersonalizado ? `🎵 *Tema Especial Solicitado:* ${temaPersonalizado}` : null,
       ``,
       `💶 *Presupuesto Estimado:* ${totalPresupuesto.toFixed(2)} € (IVA incl.)`,
-      `🔒 *Bloqueo de Fecha:* 100,00 € en Stripe (Price-Lock SHA-256)`,
+      `🔒 *Bloqueo de Tramo:* 100,00 € en Stripe (Price-Lock SHA-256)`,
       `🤝 *Split Soberano Aplicado:* 80% Artista / 10% EAR OS / 10% VIMUME`,
       ``,
       `Por favor confirmadme disponibilidad final para formalizar el cierre.`
@@ -137,6 +179,7 @@ export default function ArtistBookingSpecSheet({
   }, [
     artistName,
     selectedDate,
+    selectedHourSlot,
     formatObj,
     timeSlotObj,
     selectedEventType,
@@ -425,17 +468,36 @@ export default function ArtistBookingSpecSheet({
         </div>
       </div>
 
+      {/* FEEDBACK DE ERROR EN DEPÓSITO */}
+      {depositError && (
+        <div className="p-3 bg-red-950/40 border border-red-500/40 rounded-2xl text-red-300 text-xs font-mono flex items-start gap-2 animate-fadeIn">
+          <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+          <span>{depositError}</span>
+        </div>
+      )}
+
       {/* ═══════════════════════════════════════════════════════════════════
           SECCIÓN 6: BOTONES DE ACCIÓN Y CIERRE INMEDIATO
          ═══════════════════════════════════════════════════════════════════ */}
       <div className="flex flex-col sm:flex-row gap-3 pt-2 font-mono">
-        <a
-          href={`/checkout/presupuesto?artista=${encodeURIComponent(artistName)}&fecha=${selectedDate || ''}&formato=${selectedFormat}&precio=${totalPresupuesto.toFixed(0)}`}
-          className="flex-1 bg-[#ecb613] hover:bg-white text-black font-black uppercase text-xs py-4 px-6 rounded-2xl text-center transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(236,182,19,0.3)]"
+        <button
+          type="button"
+          onClick={handleStripeDeposit}
+          disabled={depositLoading}
+          className="flex-1 bg-[#ecb613] hover:bg-white text-black font-black uppercase text-xs py-4 px-6 rounded-2xl text-center transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(236,182,19,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <Lock className="w-4 h-4 fill-black" />
-          <span>Bloquear Fecha con 100 € en Stripe</span>
-        </a>
+          {depositLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin text-black" />
+              <span>Conectando con Pasarela Stripe...</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 fill-black" />
+              <span>Bloquear Franja {selectedHourSlot} hrs (100 € Stripe)</span>
+            </>
+          )}
+        </button>
 
         <a
           href={`https://wa.me/34693693048?text=${whatsappText}`}

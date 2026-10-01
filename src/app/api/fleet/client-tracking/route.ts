@@ -130,6 +130,15 @@ export async function GET(request: NextRequest) {
     const effectiveSpeed = speedKmh > 5 ? speedKmh : 60;
     const etaMinutes = Math.max(1, Math.round((remainingKm / effectiveSpeed) * 60));
 
+    const slotTime = asString(metadata.timeSlot || metadata.horaTramo, '18:00');
+    const dateFormatted = production.eventDate
+      ? new Date(production.eventDate).toLocaleDateString('es-ES', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        })
+      : '';
+
     const payload = {
       bookingId: production.id,
       clientName: asString(production.clientName, 'Cliente EAR OS'),
@@ -140,7 +149,7 @@ export async function GET(request: NextRequest) {
       originCoords,
       currentLocationCoords,
       assignedProviderName: asString(
-        convoy.assignedProviderName,
+        convoy.assignedProviderName || metadata.artistName,
         'Productora EAR OS'
       ),
       driverName: asString(convoy.driverName, 'Jefe de Convoy EAR OS'),
@@ -155,7 +164,11 @@ export async function GET(request: NextRequest) {
       clientAccessNotes: asString(
         convoy.clientAccessNotes,
         'Acceso por el portón principal. El convoy se anunciará por teléfono al llegar.'
-      )
+      ),
+      timeSlot: slotTime,
+      eventDate: asString(metadata.fecha, dateFormatted),
+      serviceType: asString(metadata.formato, 'Artista / Agrupación de Gala'),
+      bufferMinutes: asNumber(metadata.bufferMinutes, 30)
     };
 
     return NextResponse.json(payload, {

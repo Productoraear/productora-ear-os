@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic';
 const AvailabilityQuerySchema = z.object({
   date: z.string().min(4, 'Se requiere una fecha válida'),
   artistProfileId: z.string().optional(),
+  timeSlot: z.string().optional(),
   productionId: z.string().optional(),
   lock: z.enum(['true', 'false']).optional()
 });
@@ -36,12 +37,13 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const { date, artistProfileId, productionId, lock } = parsed.data;
+    const { date, artistProfileId, timeSlot, productionId, lock } = parsed.data;
 
     if (lock === 'true') {
       const lockResult = await lockDateAtomically({
         eventDate: date,
         artistProfileId,
+        timeSlot,
         productionEventId: productionId
       });
 
@@ -57,6 +59,7 @@ export async function GET(req: NextRequest) {
     const result = await checkDateAvailability({
       eventDate: date,
       artistProfileId,
+      timeSlot,
       excludeProductionId: productionId
     });
 
@@ -75,7 +78,7 @@ export async function GET(req: NextRequest) {
 
 /**
  * POST /api/availability/check
- * Body: { date, artistProfileId?, productionId?, lock? }
+ * Body: { date, artistProfileId?, timeSlot?, productionId?, lock? }
  */
 export async function POST(req: NextRequest) {
   const startTime = Date.now();
@@ -90,12 +93,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { date, artistProfileId, productionId, lock } = parsed.data;
+    const { date, artistProfileId, timeSlot, productionId, lock } = parsed.data;
 
     if (lock === 'true') {
       const lockResult = await lockDateAtomically({
         eventDate: date,
         artistProfileId,
+        timeSlot,
         productionEventId: productionId
       });
 
@@ -108,6 +112,7 @@ export async function POST(req: NextRequest) {
     const result = await checkDateAvailability({
       eventDate: date,
       artistProfileId,
+      timeSlot,
       excludeProductionId: productionId
     });
 

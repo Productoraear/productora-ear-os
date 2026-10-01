@@ -18,20 +18,24 @@ import {
 
 export interface RouteTimeSlot {
   id: string;
-  time: string;
+  startTime: string;
+  timeRange: string;
   label: string;
   period: 'manana' | 'tarde' | 'noche';
   isLateNight?: boolean;
 }
 
+export const MAX_ACTIVITIES_PER_DAY = 6;
+export const LOGISTICS_BUFFER_MINUTES = 30;
+
 export const ROUTE_TIME_SLOTS: RouteTimeSlot[] = [
-  { id: 'slot_1200', time: '12:00 - 13:30', label: 'Cóctel Mediodía / Vermut', period: 'manana' },
-  { id: 'slot_1400', time: '14:00 - 15:30', label: 'Banquete Comida / Brindis', period: 'manana' },
-  { id: 'slot_1700', time: '17:00 - 18:30', label: 'Ceremonia Tarde / Serenata', period: 'tarde' },
-  { id: 'slot_1900', time: '19:00 - 20:30', label: 'Cóctel Atardecer / Recepción', period: 'tarde' },
-  { id: 'slot_2130', time: '21:30 - 23:00', label: 'Cena de Gala / Serenata Noche', period: 'noche' },
-  { id: 'slot_2330', time: '23:30 - 01:00', label: 'Fiesta / Barra Libre Principal', period: 'noche' },
-  { id: 'slot_0130', time: '01:30 - 03:00', label: 'Cierre Nocturno (+Suplemento)', period: 'noche', isLateNight: true }
+  { id: 'slot_1200', startTime: '12:00', timeRange: '12:00 - 13:30', label: 'Vermut / Cóctel Mediodía', period: 'manana' },
+  { id: 'slot_1400', startTime: '14:00', timeRange: '14:00 - 15:30', label: 'Banquete Comida / Brindis', period: 'manana' },
+  { id: 'slot_1700', startTime: '17:00', timeRange: '17:00 - 18:30', label: 'Ceremonia Tarde / Tardeo', period: 'tarde' },
+  { id: 'slot_1800', startTime: '18:00', timeRange: '18:00 - 19:30', label: 'Cóctel Atardecer / Recepción', period: 'tarde' },
+  { id: 'slot_2130', startTime: '21:30', timeRange: '21:30 - 23:00', label: 'Cena de Gala / Serenata', period: 'noche' },
+  { id: 'slot_2330', startTime: '23:30', timeRange: '23:30 - 01:00', label: 'Fiesta / Barra Libre', period: 'noche' },
+  { id: 'slot_0130', startTime: '01:30', timeRange: '01:30 - 03:00', label: 'Cierre Nocturno (+Suplemento)', period: 'noche', isLateNight: true }
 ];
 
 interface ArtistAvailabilityCalendarProps {
@@ -55,8 +59,8 @@ const DAY_NAMES = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
 /**
  * Genera fechas completamente bloqueadas y horas ocupadas por ruta de forma determinista
- * garantizando que los mariachis y solistas en ruta puedan atender múltiples pases
- * en un mismo día sin solapamientos.
+ * garantizando que los mariachis, tunas, solistas y terapeutas en ruta puedan atender múltiples pases
+ * en un mismo día sin solapamientos (tope digno de 6 actuaciones/día).
  */
 function getDeterministicBlockedData(artistId: string, year: number, month: number) {
   const fullBlockedDates = new Set<string>();
@@ -74,18 +78,24 @@ function getDeterministicBlockedData(artistId: string, year: number, month: numb
 
     const dateSeed = (idHash + day * 19 + month * 29 + year) % 100;
 
-    // Fines de semana (viernes/sábados)
-    if (dayOfWeek === 6 || dayOfWeek === 5) {
-      if (dateSeed < 20) {
+    // Fines de semana (viernes/sábados/domingos)
+    if (dayOfWeek === 6 || dayOfWeek === 5 || dayOfWeek === 0) {
+      if (dateSeed < 15) {
         // Día completo bloqueado
         fullBlockedDates.add(dateString);
-      } else if (dateSeed < 70) {
-        // Día con ruta activa: tiene 1 o 2 horas ya reservadas, pero las demás libres
+      } else if (dateSeed < 75) {
+        // Día con ruta activa: tiene tramos ya reservados, pero las demás franjas quedan disponibles
         const booked = new Set<string>();
-        if (dateSeed % 2 === 0) booked.add('slot_1400');
-        if (dateSeed % 3 === 0) booked.add('slot_2130');
-        if (booked.size === 0) booked.add('slot_1200');
-        partialBookedSlots[dateString] = booked;
+        // Bloqueo canónico de 14:00 para demostrar la liberación simultánea de 18:00 y 21:30
+        booked.add('slot_1400');
+        if (dateSeed % 3 === 0) booked.add('slot_2330');
+
+        // Si alcanzara el tope de 6 actuaciones, se bloquea el día completo
+        if (booked.size >= MAX_ACTIVITIES_PER_DAY) {
+          fullBlockedDates.add(dateString);
+        } else {
+          partialBookedSlots[dateString] = booked;
+        }
       }
     }
   }
@@ -159,7 +169,7 @@ export default function ArtistAvailabilityCalendar({
       const bookedSlots = partialBookedSlots[dateString] || new Set();
       const firstAvailable = ROUTE_TIME_SLOTS.find((s) => !bookedSlots.has(s.id));
       if (firstAvailable && (!selectedTimeSlot || bookedSlots.has(selectedTimeSlot))) {
-        onSelectTimeSlot(firstAvailable.time);
+        onSelectTimeSlot(firstAvailable.startTime);
       }
     }
   };
@@ -169,6 +179,8 @@ export default function ArtistAvailabilityCalendar({
     if (!selectedDate) return new Set<string>();
     return partialBookedSlots[selectedDate] || new Set<string>();
   }, [selectedDate, partialBookedSlots]);
+
+  const pasesRestantes = Math.max(0, MAX_ACTIVITIES_PER_DAY - activeDateBookedSlots.size);
 
   return (
     <div className="w-full bg-[#07070c] border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl font-sans space-y-4">
@@ -245,7 +257,7 @@ export default function ArtistAvailabilityCalendar({
               }`}
               title={
                 isFullBlocked
-                  ? `Fecha Completa Bloqueada: ${artistName} ya tiene actuación confirmada`
+                  ? `Fecha Completa Bloqueada: ${artistName} ya tiene cupo completo o exclusividad asignada`
                   : hasPartialSlots
                   ? `Ruta activa: Horas disponibles para el ${day}`
                   : `Totalmente disponible: ${dateString}`
@@ -277,48 +289,72 @@ export default function ArtistAvailabilityCalendar({
       {/* ⏰ SELECTOR DE TRAMOS HORARIOS POR RUTA (SE DESPLIEGA AL PULSAR LA FECHA) */}
       {selectedDate && onSelectTimeSlot && (
         <div className="pt-3 border-t border-slate-800/80 space-y-2.5 animate-fadeIn">
-          <div className="flex items-center justify-between text-xs font-mono">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono">
             <span className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5 text-[#ecb613]" />
-              <span>Franja Horaria del Pase en Ruta ({selectedDate})</span>
+              <span>Franja Horaria del Pase ({selectedDate})</span>
             </span>
-            <span className="text-[10px] text-emerald-400 font-mono">
-              ● Compatible con ruta de varias actuaciones
-            </span>
+            <div className="flex items-center gap-2 text-[10px] font-mono">
+              <span className="text-emerald-400">
+                🟢 {pasesRestantes} pases libres hoy (Tope {MAX_ACTIVITIES_PER_DAY}/día)
+              </span>
+              <span className="text-slate-500">|</span>
+              <span className="text-amber-400">+{LOGISTICS_BUFFER_MINUTES} min buffer logístico</span>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 font-mono">
             {ROUTE_TIME_SLOTS.map((slot) => {
               const isSlotBooked = activeDateBookedSlots.has(slot.id);
-              const isSlotSelected = selectedTimeSlot === slot.time;
+              const isSlotSelected = selectedTimeSlot === slot.startTime || selectedTimeSlot === slot.timeRange;
 
               return (
                 <button
                   key={slot.id}
                   type="button"
                   disabled={isSlotBooked}
-                  onClick={() => onSelectTimeSlot(slot.time)}
-                  className={`p-2 rounded-xl text-left border transition-all text-xs flex items-center justify-between ${
+                  onClick={() => onSelectTimeSlot(slot.startTime)}
+                  className={`p-2.5 rounded-2xl text-left border transition-all text-xs flex flex-col justify-between gap-1.5 ${
                     isSlotSelected
-                      ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-md'
+                      ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-[0_0_15px_rgba(236,182,19,0.35)] scale-[1.02] z-10'
                       : isSlotBooked
-                      ? 'bg-slate-950 border-red-950/40 text-slate-600 cursor-not-allowed line-through'
-                      : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-600 hover:text-white'
+                      ? 'bg-slate-950/80 border-red-950/40 text-slate-600 cursor-not-allowed opacity-60'
+                      : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-emerald-500/60 hover:text-white'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5">
-                    {slot.period === 'manana' ? (
-                      <Sun className={`w-3 h-3 ${isSlotSelected ? 'text-black' : 'text-amber-400'}`} />
-                    ) : slot.period === 'tarde' ? (
-                      <Sunset className={`w-3 h-3 ${isSlotSelected ? 'text-black' : 'text-orange-400'}`} />
-                    ) : (
-                      <Moon className={`w-3 h-3 ${isSlotSelected ? 'text-black' : 'text-indigo-400'}`} />
-                    )}
-                    <span className="font-bold">{slot.time}</span>
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-center gap-1.5">
+                      {slot.period === 'manana' ? (
+                        <Sun className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-amber-400'}`} />
+                      ) : slot.period === 'tarde' ? (
+                        <Sunset className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-orange-400'}`} />
+                      ) : (
+                        <Moon className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-indigo-400'}`} />
+                      )}
+                      <span className="font-extrabold text-sm">
+                        {isSlotBooked ? `🔒 ${slot.startTime} (Ocupado)` : isSlotSelected ? `🎯 ${slot.startTime}` : `🟢 ${slot.startTime} (Disponible)`}
+                      </span>
+                    </div>
+
+                    <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
+                      isSlotSelected 
+                        ? 'bg-black/20 text-black font-black' 
+                        : isSlotBooked 
+                        ? 'bg-red-950/40 text-red-500/80 line-through' 
+                        : 'bg-emerald-950/50 text-emerald-400 border border-emerald-500/20'
+                    }`}>
+                      {isSlotBooked ? 'Ocupado' : slot.timeRange}
+                    </span>
                   </div>
-                  <span className={`text-[10px] ${isSlotSelected ? 'text-black/80' : isSlotBooked ? 'text-red-500/70' : 'text-slate-500'}`}>
-                    {isSlotBooked ? '🔒 Ocupado' : slot.period}
-                  </span>
+
+                  <div className="flex items-center justify-between w-full text-[10px]">
+                    <span className={isSlotSelected ? 'text-black/80 font-bold' : isSlotBooked ? 'text-slate-600 line-through' : 'text-slate-400'}>
+                      {slot.label}
+                    </span>
+                    <span className={isSlotSelected ? 'text-black/70' : isSlotBooked ? 'text-red-500/60' : 'text-slate-500'}>
+                      +{LOGISTICS_BUFFER_MINUTES}m buffer
+                    </span>
+                  </div>
                 </button>
               );
             })}
@@ -331,7 +367,7 @@ export default function ArtistAvailabilityCalendar({
         <div className="p-2.5 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-xl text-[#ecb613] text-xs font-mono flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Pase fijado: <strong>{selectedDate}</strong> {selectedTimeSlot ? `a las ${selectedTimeSlot}` : ''}</span>
+            <span>Pase fijado: <strong>{selectedDate}</strong> {selectedTimeSlot ? `a las ${selectedTimeSlot} hrs` : ''}</span>
           </div>
           <span className="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
             Libre para Bloqueo 100€
