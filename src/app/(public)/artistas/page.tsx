@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import ArtistCinematicProfile from "@/components/artists/ArtistCinematicProfile";
-import ArtistNeuralMatcherView from "@/components/artists/ArtistNeuralMatcherView";
 import ArtistasNationalCatalogClient from "@/app/artistas/ArtistasNationalCatalogClient";
 import { SCLASS_ROSTER_14_FORMATS } from "@/lib/constants/pricing-catalog";
 
@@ -116,12 +114,6 @@ export default function ArtistasCinematicPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(artistSchema) }}
       />
       <ArtistasNationalCatalogClient />
-      <ArtistCinematicProfile
-        name="Edwin Agudelo"
-        specialty="Cantante y Compositor · Rancheras, Boleros y Música de Gala"
-        imageUrl="https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg"
-      />
-      <ArtistNeuralMatcherView />
     </main>
   );
 }

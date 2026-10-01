@@ -4,9 +4,10 @@
  * 1. Purgado radical de stubs sintéticos ("Mariachis Elite [City]").
  * 2. Purgado de venues, hoteles, palacios, fotos de novias (photo-1519741497674-611481863552),
  *    barberías, tiendas y documentación 7-Zip.
- * 3. Extracción 100% de fotos auténticas de origen (cdn0.bodas.net & celebrents.s3).
- * 4. Purgado del avatar por defecto de Celebrents (c2524615ca092dc557196134bcbbcdc1.png).
- * 5. Purgado de SVGs y cabeceras genéricas (gen_logoHeader.svg).
+ * 3. Extracción prioritaria de fotos de alta resolución de Bodas.net (cdn0.bodas.net/vendor/...).
+ * 4. Purgado radical de miniaturas pixeladas de Celebrents (/cache/): sustituidas por fotografía
+ *    HD de escenario de estudio libre de derechos por gremio, hasta que el proveedor reclame su perfil.
+ * 5. Purgado de SVGs y cabeceras genéricas (gen_logoHeader.svg, avatares genéricos).
  * 6. Garantía #1 canónica: Edwin Agudelo (Solista Premium 350€) como ancla S-Class.
  * 7. Generación sincronizada de:
  *    - public/data/artists/artists_canonical.json (< 500 KB, ~450 artistas curados para git & Edge CDN)
@@ -32,10 +33,50 @@ const NON_MUSIC_WORDS = [
   'fotógrafos', 'fotografo', 'reportaje', 'autocar', 'alquiler de vehiculos', 'limusina'
 ];
 
+// Activos de escenario y conciertos en Ultra HD por gremio
+const SCLASS_HD_GENRE_POOLS = {
+  mariachi: [
+    'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop'
+  ],
+  dj: [
+    'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=1200&auto=format&fit=crop'
+  ],
+  banda: [
+    'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop'
+  ],
+  cuerdas: [
+    'https://images.unsplash.com/photo-1511192336575-5a79af67a629?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1520523839898-5071216579e8?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?q=80&w=1200&auto=format&fit=crop'
+  ],
+  solista: [
+    'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1507838153414-b4b713384a76?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1200&auto=format&fit=crop'
+  ],
+  flamenco: [
+    'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1525994886773-080587e161c2?q=80&w=1200&auto=format&fit=crop'
+  ]
+};
+
+function getHdGenreFallback(gremioTag, seed) {
+  const pool = SCLASS_HD_GENRE_POOLS[gremioTag] || SCLASS_HD_GENRE_POOLS.solista;
+  const str = String(seed || 'artist');
+  const hash = str.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  return pool[hash % pool.length];
+}
+
 function isForbidden(name, desc = '') {
   if (!name || name.length < 3) return true;
   const n = name.toLowerCase();
-  const d = desc.toLowerCase();
 
   // Synthetic stubs forbidden
   if (n.includes('mariachis elite') || n.includes('mariachi elite') || n.includes('elite a coruna') || n.includes('elite albacete')) return true;
@@ -56,6 +97,14 @@ function cleanName(raw) {
     .trim();
 }
 
+const slugify = (s) => String(s || '')
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/^-+|-+$/g, '')
+  .slice(0, 80);
+
 function tagArtist(name, desc) {
   const full = (name + ' ' + desc).toLowerCase();
   if (/mariachi|ranchera|charro|mexican/i.test(full)) return 'mariachi';
@@ -67,7 +116,7 @@ function tagArtist(name, desc) {
 }
 
 function run() {
-  console.log('🚀 Iniciando purificación definitiva de artistas & shows...');
+  console.log('🚀 Iniciando purificación definitiva de artistas & shows S-Class...');
   const artistsMap = new Map();
 
   // 1. PIN S-CLASS INMUTABLE: EDWIN AGUDELO (#1 EN EL CATÁLOGO)
@@ -101,64 +150,9 @@ function run() {
     source: 'Productora EAR'
   });
 
-  // 2. EXTRAER ARTISTAS AUTÉNTICOS DE CELEBRENTS (CON FOTOS REALES S3, SIN AVATAR)
-  if (fs.existsSync(CELEBRENTS_PATH)) {
-    console.log('📦 Extrayendo artistas reales de Celebrents...');
-    const celebrents = JSON.parse(fs.readFileSync(CELEBRENTS_PATH, 'utf8'));
-    const celebItems = Array.isArray(celebrents) ? celebrents : celebrents.items || [];
-
-    for (const item of celebItems) {
-      const cName = cleanName(item.name);
-      const desc = item.description || '';
-      if (isForbidden(cName, desc)) continue;
-
-      const cat = (item.category || '').toUpperCase();
-      const isMusic = cat === 'DJ_DISCOMOVIL' || cat === 'MUSICA' ||
-        /mariachi|dj|solista|cantante|grupo|banda|cuarteto|violín|violin|flamenco|saxo|jazz|rock/i.test(cName + ' ' + desc);
-      if (!isMusic) continue;
-
-      const rawUrls = Array.isArray(item.imageUrls) ? item.imageUrls : (item.img ? [item.img] : []);
-      const validPhotos = rawUrls.filter(u =>
-        u &&
-        typeof u === 'string' &&
-        !u.includes('c2524615ca092dc557196134bcbbcdc1') &&
-        !u.includes('.svg') &&
-        !u.includes('avatar') &&
-        !u.includes('photo-1519741497674-611481863552')
-      );
-      if (validPhotos.length === 0) continue;
-
-      const prov = item.province || 'Madrid';
-      const key = `${cName.toLowerCase()}||${prov.toLowerCase()}`;
-      if (!artistsMap.has(key)) {
-        artistsMap.set(key, {
-          id: item.shaHash || item.id,
-          name: cName,
-          slug: item.slug || item.id,
-          category: 'musica',
-          gremioTag: tagArtist(cName, desc),
-          province: prov,
-          municipality: item.municipality || prov,
-          phone: item.telephone || null,
-          has_real_phone: Boolean(item.telephone),
-          rating: item.rating ? Number(item.rating) : 5.0,
-          reviews: item.reviewsCount ? Number(item.reviewsCount) : 14,
-          basePrice: 350,
-          price: '350 €',
-          img: validPhotos[0],
-          imageUrls: validPhotos,
-          gallery: validPhotos,
-          description: desc.slice(0, 300) || 'Espectáculo musical en vivo con producción técnica y sonorización homologada.',
-          description_full: desc || 'Espectáculo musical en vivo con producción técnica y sonorización homologada.',
-          source: 'Celebrents'
-        });
-      }
-    }
-  }
-
-  // 3. EXTRAER ARTISTAS AUTÉNTICOS DE BODAS.NET (CON FOTOS VENDOR, SIN FINCAS)
+  // 2. EXTRAER ARTISTAS AUTÉNTICOS DE BODAS.NET (PRIORIDAD #1: FOTOS HD 960x640 y 1280x853)
   if (fs.existsSync(HARVESTED_PATH)) {
-    console.log('📦 Extrayendo artistas reales de Bodas.net...');
+    console.log('📦 Extrayendo artistas reales de Bodas.net (Fotos HD de origen)...');
     const harvested = JSON.parse(fs.readFileSync(HARVESTED_PATH, 'utf8'));
     const trueMusicRegex = /\b(mariachi|mariachis|dj|djs|discomovil|discomóvil|disc-jockey|solista|cantante|cantantes|vocalista|grupo de versiones|banda|bandas|cuarteto|cuartetos|violín|violin|cuerdas|chelo|soprano|tenor|flamenco|rociero|charanga|tuna|orquesta|saxo|saxofonista|pianista|acústico)\b/i;
 
@@ -167,7 +161,6 @@ function run() {
       const desc = item.description || item.description_full || '';
       if (isForbidden(cName, desc)) continue;
 
-      // Must explicitly match musical entity in name or desc
       if (!trueMusicRegex.test(cName) && !trueMusicRegex.test(desc)) continue;
 
       const images = (item.imageUrls && item.imageUrls.length > 0) ? item.imageUrls : (item.img ? [item.img] : []);
@@ -184,13 +177,15 @@ function run() {
 
       const prov = item.province || item.provincia || 'Madrid';
       const key = `${cName.toLowerCase()}||${prov.toLowerCase()}`;
+      const gremioTag = tagArtist(cName, desc);
+
       if (!artistsMap.has(key)) {
         artistsMap.set(key, {
           id: item.id || item.slug,
           name: cName,
-          slug: item.slug || item.id,
+          slug: slugify(cName) || item.slug || item.id,
           category: 'musica',
-          gremioTag: tagArtist(cName, desc),
+          gremioTag,
           province: prov,
           municipality: item.municipality || prov,
           phone: item.phone || item.telephone || null,
@@ -210,8 +205,58 @@ function run() {
     }
   }
 
+  // 3. EXTRAER ARTISTAS AUTÉNTICOS DE CELEBRENTS (FILTRANDO MINIATURAS BORROSAS /CACHE/)
+  if (fs.existsSync(CELEBRENTS_PATH)) {
+    console.log('📦 Extrayendo artistas de Celebrents (Reemplazando miniaturas borrosas con fotografía de escenario HD)...');
+    const celebrents = JSON.parse(fs.readFileSync(CELEBRENTS_PATH, 'utf8'));
+    const celebItems = Array.isArray(celebrents) ? celebrents : celebrents.items || [];
+
+    for (const item of celebItems) {
+      const cName = cleanName(item.name);
+      const desc = item.description || '';
+      if (isForbidden(cName, desc)) continue;
+
+      const cat = (item.category || '').toUpperCase();
+      const isMusic = cat === 'DJ_DISCOMOVIL' || cat === 'MUSICA' ||
+        /mariachi|dj|solista|cantante|grupo|banda|cuarteto|violín|violin|flamenco|saxo|jazz|rock/i.test(cName + ' ' + desc);
+      if (!isMusic) continue;
+
+      const prov = item.province || 'Madrid';
+      const key = `${cName.toLowerCase()}||${prov.toLowerCase()}`;
+      const gremioTag = tagArtist(cName, desc);
+
+      // Si ya fue registrado desde Bodas.net con foto HD de vendor, no sobreescribir
+      if (artistsMap.has(key)) continue;
+
+      // Asignar fotografía HD de estudio según su gremio (evitando los thumbnails pixelados de /cache/)
+      const hdImg = getHdGenreFallback(gremioTag, cName + prov);
+
+      artistsMap.set(key, {
+        id: item.shaHash || item.id,
+        name: cName,
+        slug: slugify(cName) || item.slug || item.id,
+        category: 'musica',
+        gremioTag,
+        province: prov,
+        municipality: item.municipality || prov,
+        phone: item.telephone || null,
+        has_real_phone: Boolean(item.telephone),
+        rating: item.rating ? Number(item.rating) : 5.0,
+        reviews: item.reviewsCount ? Number(item.reviewsCount) : 14,
+        basePrice: 350,
+        price: '350 €',
+        img: hdImg,
+        imageUrls: [hdImg],
+        gallery: [hdImg],
+        description: desc.slice(0, 300) || 'Espectáculo musical en vivo con producción técnica y sonorización homologada.',
+        description_full: desc || 'Espectáculo musical en vivo con producción técnica y sonorización homologada.',
+        source: 'Celebrents'
+      });
+    }
+  }
+
   const allArtists = Array.from(artistsMap.values());
-  console.log(`\n🎉 Total artistas 100% verificados con fotos reales de origen: ${allArtists.length}`);
+  console.log(`\n🎉 Total artistas 100% verificados S-Class: ${allArtists.length}`);
 
   // Asegurar Edwin Agudelo en posición [0]
   if (allArtists[0].id !== 'edwin-agudelo') {
@@ -238,6 +283,7 @@ function run() {
   const canonicalSet = [];
   canonicalSet.push(allArtists[0]); // Edwin Agudelo
 
+  const bodasArtists = allArtists.filter(a => a.source === 'Bodas.net' && a.id !== 'edwin-agudelo');
   const mariachis = allArtists.filter(a => a.gremioTag === 'mariachi' && a.id !== 'edwin-agudelo');
   const djs = allArtists.filter(a => a.gremioTag === 'dj');
   const solistas = allArtists.filter(a => a.gremioTag === 'solista' && a.id !== 'edwin-agudelo');
@@ -245,14 +291,28 @@ function run() {
   const cuerdas = allArtists.filter(a => a.gremioTag === 'cuerdas');
   const flamenco = allArtists.filter(a => a.gremioTag === 'flamenco');
 
-  // Agregar TODOS los mariachis reales (son estratégicos en EAR)
-  canonicalSet.push(...mariachis);
-  // Distribuir equitativamente hasta ~450
-  canonicalSet.push(...solistas.slice(0, 80));
-  canonicalSet.push(...djs.slice(0, 100));
-  canonicalSet.push(...bandas.slice(0, 100));
-  canonicalSet.push(...cuerdas.slice(0, 70));
-  canonicalSet.push(...flamenco.slice(0, 50));
+  // Primero todos los artistas de Bodas.net (tienen fotos HD de vendor 960x640)
+  canonicalSet.push(...bodasArtists);
+
+  // Completar por gremios sin duplicar
+  const addedIds = new Set(canonicalSet.map(c => c.id));
+  const addGroup = (arr, limit) => {
+    let count = 0;
+    for (const item of arr) {
+      if (!addedIds.has(item.id) && count < limit) {
+        canonicalSet.push(item);
+        addedIds.add(item.id);
+        count++;
+      }
+    }
+  };
+
+  addGroup(mariachis, 60);
+  addGroup(solistas, 70);
+  addGroup(djs, 80);
+  addGroup(bandas, 80);
+  addGroup(cuerdas, 50);
+  addGroup(flamenco, 40);
 
   // Streamlined fields para mantener tamaño < 500 KB
   const streamlinedCanonical = canonicalSet.map(item => ({

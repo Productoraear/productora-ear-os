@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import path from 'path';
+import fs from 'fs';
 import { HIGH_VALUE_VARIANTS, SEOVariant } from '@/lib/artists/matrix';
 import {
   Sparkles,
@@ -280,17 +282,30 @@ export default async function ArtistDetailPage({ params }: PageProps) {
 
   // 3. COMPROBACIÓN EN DATA LAKE DE PROVEEDORES Y CELEBRENTS (musica.json)
   try {
-    const fs = await import('fs');
-    const path = await import('path');
     const musicaPath = path.join(process.cwd(), 'public', 'data', 'providers', 'musica.json');
+    const canonicalPath = path.join(process.cwd(), 'public', 'data', 'artists', 'artists_canonical.json');
+    let items: any[] = [];
     if (fs.existsSync(musicaPath)) {
-      const items = JSON.parse(fs.readFileSync(musicaPath, 'utf-8'));
+      items = JSON.parse(fs.readFileSync(musicaPath, 'utf-8'));
+    } else if (fs.existsSync(canonicalPath)) {
+      items = JSON.parse(fs.readFileSync(canonicalPath, 'utf-8'));
+    }
+
+    if (items.length > 0) {
       const cleanSlug = slug.toLowerCase().trim();
       const matched = items.find((item: any) => {
-        const itemSlug = (item.slug || '').toLowerCase();
-        const itemId = (item.id || '').toLowerCase();
-        const itemName = (item.name || '').toLowerCase().replace(/[\s\-_]+/g, '-');
-        return itemSlug === cleanSlug || itemSlug.includes(cleanSlug) || cleanSlug.includes(itemSlug) || itemId === cleanSlug || itemName.includes(cleanSlug);
+        const itemSlug = (item.slug || '').toLowerCase().trim();
+        const itemId = (item.id || '').toLowerCase().trim();
+        const itemNameSlug = (item.name || '').toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+
+        if (itemSlug && itemSlug === cleanSlug) return true;
+        if (itemId && itemId === cleanSlug) return true;
+        if (itemNameSlug && itemNameSlug === cleanSlug) return true;
+        return false;
       });
 
       if (matched) {

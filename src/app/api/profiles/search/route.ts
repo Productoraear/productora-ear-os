@@ -224,11 +224,12 @@ async function queryStaticProviders(options: {
   province?: string | null;
   q?: string | null;
   subcategory?: string | null;
+  maxPrice?: number | null;
   page: number;
   limit: number;
   requestUrl: string;
 }) {
-  const { category, province, q, subcategory, page, limit, requestUrl } = options;
+  const { category, province, q, subcategory, maxPrice, page, limit, requestUrl } = options;
   const normCat = (category || '').toLowerCase().trim();
   const validCats = [
     'finca', 'musica', 'sonido', 'catering', 'foto',
@@ -350,6 +351,14 @@ async function queryStaticProviders(options: {
     });
   }
 
+  // 4. Filtro por presupuesto máximo
+  if (maxPrice && !isNaN(maxPrice) && maxPrice > 0) {
+    list = list.filter((p) => {
+      const price = typeof p.basePrice === 'number' ? p.basePrice : parseInt(String(p.price || ''), 10);
+      return !price || isNaN(price) || price <= maxPrice;
+    });
+  }
+
   // Filtro preventivo Anti-Synthetic-Stubs
   list = list.filter((p) => {
     const n = (p.name || '').toLowerCase();
@@ -369,6 +378,9 @@ async function queryStaticProviders(options: {
     u.includes('default_avatar') ||
     u.includes('741e9617168a2484.jpg') ||
     u.includes('c2524615ca092dc557196134bcbbcdc1') ||
+    u.includes('cobi%2fmedia%2fcct61%2fcache') ||
+    u.includes('/cct61/cache/') ||
+    u.includes('celebrents.s3.amazonaws.com') ||
     u.includes('photo-1519741497674-611481863552');
 
   const providers = list.slice(skip, skip + limit).map((p) => {
@@ -442,8 +454,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const category = searchParams.get('category') || searchParams.get('cat');
   const province = searchParams.get('province');
-  const q = searchParams.get('q');
   const subcategory = searchParams.get('subcategory') || searchParams.get('subcat') || searchParams.get('sub');
+  const maxPriceParam = searchParams.get('maxPrice');
+  const maxPrice = maxPriceParam ? parseInt(maxPriceParam, 10) : null;
+  const q = (searchParams.get('q') || searchParams.get('search') || '').trim();
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
   const limit = Math.min(2000, Math.max(1, parseInt(searchParams.get('limit') || '24', 10)));
   const skip = (page - 1) * limit;
@@ -548,6 +562,7 @@ export async function GET(request: Request) {
       province,
       q,
       subcategory,
+      maxPrice,
       page,
       limit,
       requestUrl: request.url,
