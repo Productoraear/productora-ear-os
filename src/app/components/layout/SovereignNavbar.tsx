@@ -20,7 +20,8 @@ import {
   Camera,
   Lock,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Calculator
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSharedContext } from '@/app/context/SharedContext';
@@ -331,6 +332,20 @@ const SovereignNavbar = () => {
             <Activity size={13} />
             <span>VIMUME</span>
           </Link>
+
+          {/* PRESUPUESTADOR S-CLASS HIGHLIGHT */}
+          <Link
+            href="/calculadora"
+            className={cn(
+              "flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider ml-1",
+              pathname === '/calculadora'
+                ? "bg-[#ecb613] text-black border-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.35)]"
+                : "border-[#ecb613]/40 bg-[#ecb613]/10 text-[#ecb613] hover:bg-[#ecb613] hover:text-black hover:border-[#ecb613]"
+            )}
+          >
+            <Calculator size={13} />
+            <span>Presupuestador</span>
+          </Link>
         </div>
 
         {/* OMNI-SEARCH & WALLET */}
@@ -459,6 +474,15 @@ const SovereignNavbar = () => {
               >
                 <span className="flex items-center gap-2"><Activity size={16} /> VIMUME OS</span>
                 <span className="font-mono text-[10px] text-white/60">Neuroacústica</span>
+              </Link>
+
+              <Link
+                href="/calculadora"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between p-3 rounded-xl border border-[#ecb613]/30 bg-[#ecb613]/10 text-[#ecb613] font-syne text-sm font-bold uppercase"
+              >
+                <span className="flex items-center gap-2"><Calculator size={16} /> Presupuestador S-Class</span>
+                <span className="font-mono text-[10px] text-white/60">13 Partidas</span>
               </Link>
             </div>
 

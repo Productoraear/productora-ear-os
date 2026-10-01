@@ -24,6 +24,7 @@ import {
   Info
 } from 'lucide-react';
 import Link from 'next/link';
+import SovereignBudgetPlanner from './SovereignBudgetPlanner';
 
 export interface ProductionPack {
   id: string;
@@ -132,6 +133,7 @@ const PROVINCE_PRESETS = [
 ];
 
 export function CommercialEventCalculator() {
+  const [mainView, setMainView] = useState<'PLANIFICADOR' | 'PACKS'>('PLANIFICADOR');
   const [selectedPackId, setSelectedPackId] = useState<string>('mariachi_imperial');
   const [selectedCategory, setSelectedCategory] = useState<'all' | 'boda' | 'mariachi' | 'solista' | 'finca' | 'b2g'>('all');
   const [distance, setDistance] = useState<number>(46); // Default Madrid 46 km
@@ -228,26 +230,57 @@ export function CommercialEventCalculator() {
   }, [selectedCategory]);
 
   return (
-    <div className="w-full space-y-12">
-      
-      {/* 👑 HEADER PRINCIPAL DEL COTIZADOR */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-xs font-mono text-[#ecb613] tracking-widest uppercase">
+    <div className="w-full space-y-8">
+      {/* 🏛️ SELECTOR MAESTRO DE VISTA: PLANIFICADOR EXHAUSTIVO vs COTIZADOR DE PACKS */}
+      <div className="flex items-center justify-center p-1.5 bg-black/80 border border-slate-800 rounded-2xl max-w-2xl mx-auto font-mono text-xs shadow-xl">
+        <button
+          type="button"
+          onClick={() => setMainView('PLANIFICADOR')}
+          className={`flex-1 py-3 px-3 rounded-xl font-bold uppercase transition flex items-center justify-center gap-2 ${
+            mainView === 'PLANIFICADOR'
+              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/25 font-black'
+              : 'text-slate-400 hover:text-white'
+          }`}
+        >
           <Calculator size={14} />
-          COTIZADOR OFICIAL S-CLASS // TRANSPARENCIA TOTAL
-        </div>
-        <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white font-syne leading-tight">
-          Cotiza tu Evento en 1 Clic // <span className="text-[#ecb613]">Precio Cerrado</span>
-        </h1>
-        <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-          Selecciona tu formato musical o técnico, calcula la logística exacta desde Méntrida (Km 0) y bloquea tu fecha con garantía contractual y fianza protegida de 100 €.
-        </p>
+          <span>Planificador Exhaustivo (13 Partidas)</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setMainView('PACKS')}
+          className={`flex-1 py-3 px-3 rounded-xl font-bold uppercase transition flex items-center justify-center gap-2 ${
+            mainView === 'PACKS'
+              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/25 font-black'
+              : 'text-slate-400 hover:text-white'
+          }`}
+        >
+          <Sparkles size={14} />
+          <span>Cotizador Rápido de Packs S-Class</span>
+        </button>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* 🎴 COLUMNA IZQUIERDA: CONFIGURADOR DE EVENTO */}
-        <div className="lg:col-span-7 space-y-8">
+      {mainView === 'PLANIFICADOR' ? (
+        <SovereignBudgetPlanner />
+      ) : (
+        <div className="w-full space-y-12">
+          {/* 👑 HEADER PRINCIPAL DEL COTIZADOR */}
+          <div className="text-center space-y-4 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-xs font-mono text-[#ecb613] tracking-widest uppercase">
+              <Calculator size={14} />
+              COTIZADOR OFICIAL S-CLASS // TRANSPARENCIA TOTAL
+            </div>
+            <h1 className="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white font-syne leading-tight">
+              Cotiza tu Evento en 1 Clic // <span className="text-[#ecb613]">Precio Cerrado</span>
+            </h1>
+            <p className="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+              Selecciona tu formato musical o técnico, calcula la logística exacta desde Méntrida (Km 0) y bloquea tu fecha con garantía contractual y fianza protegida de 100 €.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* 🎴 COLUMNA IZQUIERDA: CONFIGURADOR DE EVENTO */}
+            <div className="lg:col-span-7 space-y-8">
           
           {/* PASO 1: SELECTOR DE PACKS DE PRODUCCIÓN */}
           <div className="bg-[#0A0A0C] border border-white/10 rounded-2xl p-6 sm:p-8 space-y-6">
@@ -567,6 +600,8 @@ export function CommercialEventCalculator() {
         </div>
 
       </div>
+    </div>
+      )}
 
     </div>
   );
