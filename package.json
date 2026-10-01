@@ -103,7 +103,7 @@
     "react-dom": "^19.2.6",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "uuid": "8.4.0"
+    "uuid": "^9.0.0"
   },
   "browserslist": [
     "last 2 Chrome versions",
