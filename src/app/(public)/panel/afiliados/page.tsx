@@ -1,4 +1,4 @@
-"use client";
+import PanelAfiliadoPage, { metadata } from '../afiliado/page';
 
-import PanelAfiliadoPage from '../afiliado/page';
+export { metadata };
 export default PanelAfiliadoPage;
