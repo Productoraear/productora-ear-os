@@ -77,6 +77,7 @@ export default function ArtistBookingSpecSheet({
   const [selectedFormat, setSelectedFormat] = useState(SHOW_FORMATS[0].id);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(TIME_SLOTS[1].id); // Cóctel por defecto
   const [selectedEventType, setSelectedEventType] = useState(EVENT_TYPES[0].id); // Boda
+  const [selectedHourSlot, setSelectedHourSlot] = useState<string>('19:00 - 20:30');
   const [selectedPax, setSelectedPax] = useState(PAX_RANGES[1].id); // 50-150 pax
   const [selectedAcoustic, setSelectedAcoustic] = useState(ACOUSTIC_RIDERS[0].id); // Interior
   const [eventMunicipality, setEventMunicipality] = useState(artistProvince || 'Madrid');
@@ -116,8 +117,9 @@ export default function ArtistBookingSpecSheet({
       `¡Hola Edwin! Deseo coordinar la contratación oficial del artista *${artistName}* con la siguiente especificación técnica:`,
       ``,
       `📅 *Fecha Seleccionada:* ${selectedDate || 'Por definir con el artista'}`,
+      `⏰ *Pase Horario en Ruta:* ${selectedHourSlot}`,
       `🎭 *Formato:* ${formatObj.name} (${formatObj.members})`,
-      `⏰ *Franja Horaria:* ${timeSlotObj.label} (${timeSlotObj.duration})`,
+      `⏳ *Duración y Momento:* ${timeSlotObj.label} (${timeSlotObj.duration})`,
       `🥂 *Tipo de Evento:* ${EVENT_TYPES.find((e) => e.id === selectedEventType)?.label}`,
       `👥 *Aforo Estimado:* ${paxObj.label}`,
       `🔊 *Presión Acústica:* ${acousticObj.label} (${acousticObj.dba})`,
@@ -188,6 +190,8 @@ export default function ArtistBookingSpecSheet({
           artistName={artistName}
           selectedDate={selectedDate}
           onSelectDate={(date) => setSelectedDate(date)}
+          selectedTimeSlot={selectedHourSlot}
+          onSelectTimeSlot={(hour) => setSelectedHourSlot(hour)}
         />
       </div>
 
