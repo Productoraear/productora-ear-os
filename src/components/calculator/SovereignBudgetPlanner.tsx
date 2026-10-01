@@ -777,10 +777,10 @@ export default function SovereignBudgetPlanner() {
                 <span>TERMINAL SOBERANO MULTI-GREMIO // S-CLASS OMEGA</span>
               </div>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black font-syne uppercase tracking-tight text-white leading-none">
-                Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">de Riqueza Nupcial</span>
+                Planificador Maestro <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ecb613] via-amber-200 to-white">de Alta Producción</span>
               </h1>
               <p className="text-xs sm:text-sm text-zinc-400 font-normal max-w-2xl leading-relaxed">
-                Control absoluto sobre todos los gremios del evento: Fincas, Catering, Artistas, Fotografía, Flores, Protocolo, Moda y Logística. Conecta tus partidas con más de 90.000 proveedores en tiempo real.
+                Control absoluto sobre todos los gremios del evento: Fincas, Catering, Artistas, Fotografía, Flores, Protocolo, Moda y Logística. Extrapolable a Bodas, Cumbres Corporativas, Festejos B2G y Galas Privadas con más de 90.000 proveedores en vivo.
               </p>
             </div>
 
