@@ -21,6 +21,7 @@ import {
   Phone
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
+import ArtistBookingSpecSheet from '@/components/artists/ArtistBookingSpecSheet';
 
 export const dynamic = 'force-dynamic';
 
@@ -414,6 +415,17 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* FICHA TÉCNICA EXHAUSTIVA DE CONTRATACIÓN (CALENDARIO EN TIEMPO REAL + FILTROS DE CONTRATACIÓN) */}
+              <div className="pt-6">
+                <ArtistBookingSpecSheet
+                  artistId={matched.id || slug}
+                  artistName={title}
+                  artistProvince={province}
+                  basePrice={basePrice}
+                  slug={slug}
+                />
               </div>
 
             </div>

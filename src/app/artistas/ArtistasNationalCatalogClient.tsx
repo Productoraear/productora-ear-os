@@ -11,6 +11,8 @@ import {
   MessageSquare,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   RefreshCw,
   AlertTriangle,
   Radio,
@@ -26,13 +28,19 @@ import {
   Disc,
   Volume2,
   Award,
-  Layers
+  Layers,
+  Smile,
+  Baby,
+  Wand2,
+  Theater,
+  X
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import CinematicVanguardCarousel from '@/components/sclass/CinematicVanguardCarousel';
 import { NeuralArtistTinderMatch, type CanonicalArtist } from '@/components/artists/NeuralArtistTinderMatch';
 import type { CoupleCalibration } from '@/lib/matching/calibratorTypes';
 import { ARTIST_CALIBRATION_DIMENSIONS } from '@/lib/matching/artistCalibratorTypes';
+import ArtistBookingSpecSheet from '@/components/artists/ArtistBookingSpecSheet';
 
 interface RealArtist {
   id: string;
@@ -70,14 +78,119 @@ const PROVINCIAS_ESPANA = [
   'Cáceres', 'Gipuzkoa', 'Huesca', 'Bizkaia', 'Zamora'
 ];
 
-const ARTIST_CATEGORIES = [
-  { id: 'all', label: 'Todos los Artistas', icon: Music, badge: '6.710' },
-  { id: 'solista', label: 'Solistas & Vocalistas', icon: Mic, badge: '350€ Base' },
-  { id: 'mariachi', label: 'Mariachis & Mexicano', icon: Sparkles, badge: 'En Directo' },
-  { id: 'dj', label: 'DJs & Disco Móvil', icon: Disc, badge: 'Sonido + Luz' },
-  { id: 'banda', label: 'Bandas & Pop/Rock', icon: Users, badge: 'Versiones' },
-  { id: 'cuerdas', label: 'Lírico, Cuerda & Violín', icon: Heart, badge: 'Gala Bodas' },
-  { id: 'flamenco', label: 'Flamenco & Rumba', icon: Flame, badge: 'Cuadro Vivo' }
+/**
+ * Atlas Completo de Familias y Categorías del Mundo Artístico
+ * Sin exclusiones: 12 Grandes Familias y 48 Especialidades Escénicas
+ */
+const ARTISTIC_FAMILIES = [
+  {
+    id: 'all',
+    label: 'Todos los Artistas & Shows',
+    shortLabel: 'Todos',
+    icon: Music,
+    badge: '6.710',
+    desc: 'Directorio nacional completo homologado con split 80/10/10 y sonido Bose F1.',
+    genres: ['Solistas', 'Mariachis', 'DJs', 'Bandas', 'Cuerdas', 'Flamenco', 'Jazz', 'Magia', 'Circo']
+  },
+  {
+    id: 'solista',
+    label: 'Solistas, Cantantes & Vocalistas',
+    shortLabel: 'Solistas',
+    icon: Mic,
+    badge: '350€ Base',
+    desc: 'Cantantes solistas, tenores líricos, crooners, baladas románticas, boleros y acústicos.',
+    genres: ['Tenor Lírico', 'Cantautor Acústico', 'Crooner Jazz', 'Boleros de Gala', 'Balada & Pop']
+  },
+  {
+    id: 'mariachi',
+    label: 'Mariachis & Folclore Tradicional',
+    shortLabel: 'Mariachis & Folclore',
+    icon: Sparkles,
+    badge: '3 - 13 Pax',
+    desc: 'Agrupaciones de mariachi en vivo, coros rocieros, tunas universitarias y folclore regional.',
+    genres: ['Mariachi 6 Pax', 'Gran Ensamble 13 Pax', 'Coro Rociero', 'Tuna Universitaria', 'Gaiteros']
+  },
+  {
+    id: 'dj',
+    label: 'DJs, Disco Móvil & Sonorización',
+    shortLabel: 'DJs & Disco Móvil',
+    icon: Disc,
+    badge: 'Sonido + Luz',
+    desc: 'Deejays para bodas y galas, DJ Live con saxo o percusión, discomóviles y animación.',
+    genres: ['DJ Bodas & Eventos', 'DJ + Saxo Live', 'Disco Móvil Iluminada', 'Música Electrónica']
+  },
+  {
+    id: 'banda',
+    label: 'Bandas en Directo & Versiones',
+    shortLabel: 'Bandas & Pop/Rock',
+    icon: Users,
+    badge: 'Pop/Rock',
+    desc: 'Bandas de versiones 80s/90s, grupos indie/pop, orquestas de fiesta y charangas.',
+    genres: ['Versiones 80s & 90s', 'Bandas Tributo', 'Orquestas de Baile', 'Charangas', 'Rock Clásico']
+  },
+  {
+    id: 'cuerdas',
+    label: 'Música Clásica, Cuerda & Liturgia',
+    shortLabel: 'Clásica & Cuerdas',
+    icon: Heart,
+    badge: 'Gala & Boda',
+    desc: 'Cuartetos de cuerda, violín eléctrico, violonchelo, arpa, piano clásico, ópera y coro gospel.',
+    genres: ['Cuarteto de Cuerda', 'Violín Eléctrico Show', 'Arpa & Piano', 'Ópera & Tenor', 'Coro Gospel']
+  },
+  {
+    id: 'flamenco',
+    label: 'Flamenco, Rumba & Raíz',
+    shortLabel: 'Flamenco & Rumba',
+    icon: Flame,
+    badge: 'Cuadro Vivo',
+    desc: 'Cuadros flamencos con cante y baile, guitarristas españoles, rumbas y fusión festiva.',
+    genres: ['Cuadro Flamenco', 'Guitarra Española', 'Rumba Catalana', 'Cantaor Solista', 'Sevillanas']
+  },
+  {
+    id: 'jazz',
+    label: 'Jazz, Blues, Soul & Swing',
+    shortLabel: 'Jazz & Swing',
+    icon: Radio,
+    badge: 'Club & Cóctel',
+    desc: 'Tríos y cuartetos de jazz, crooners estilo Sinatra, bossa nova, soul elegante y big bands.',
+    genres: ['Cuarteto de Jazz', 'Swing & Dixieland', 'Bossa Nova', 'Soul & Funk', 'Big Band']
+  },
+  {
+    id: 'magia',
+    label: 'Magia, Ilusionismo & Mentalismo',
+    shortLabel: 'Magia & Mentalismo',
+    icon: Wand2,
+    badge: 'Asombro VIP',
+    desc: 'Magia de cerca en cóctel (close-up), mentalistas, hipnosis y grandes ilusiones de escenario.',
+    genres: ['Magia de Cerca (Close-up)', 'Mentalismo & Lectura', 'Magia de Escena', 'Magia Cómica']
+  },
+  {
+    id: 'artes_escenicas',
+    label: 'Artes Escénicas, Circo & Variedades',
+    shortLabel: 'Circo & Escénicas',
+    icon: Theater,
+    badge: 'Show Visual',
+    desc: 'Acróbatas, zancudos, espectáculos de fuego, cabaret, drag queens, danza aérea y batucadas.',
+    genres: ['Acróbatas & Telas', 'Zancudos & Fuego', 'Cabaret & Burlesque', 'Batucadas', 'Danza Étnica']
+  },
+  {
+    id: 'humor',
+    label: 'Humor, Comedia & Monólogos',
+    shortLabel: 'Humor & Stand-Up',
+    icon: Smile,
+    badge: 'Risas Live',
+    desc: 'Monologuistas profesionales, cómicos de televisión, stand-up comedy y maestros de ceremonias.',
+    genres: ['Monólogos de Humor', 'Comedia a la Carta', 'Maestros de Ceremonias', 'Improvisación']
+  },
+  {
+    id: 'infantil',
+    label: 'Música & Shows Infantiles',
+    shortLabel: 'Infantil & Familiar',
+    icon: Baby,
+    badge: 'Familiar',
+    desc: 'Cantajuegos en vivo, cuentacuentos con música, títeres musicales y magia infantil.',
+    genres: ['Cantajuegos en Directo', 'Cuentacuentos Musical', 'Títeres & Marionetas', 'Animación Musical']
+  }
 ];
 
 const BUDGET_PRESETS = [
@@ -87,13 +200,6 @@ const BUDGET_PRESETS = [
   { label: '1.300 € Gran Ensamble', value: 1300 },
   { label: '2.500 € Gala B2B', value: 2500 },
   { label: 'Todo Presupuesto', value: 5000 }
-];
-
-const ACOUSTIC_LEVELS = [
-  { id: 'all', label: 'Todos los Riders', dba: '65 - 102 dBA' },
-  { id: 'coctel', label: 'Cóctel & Residencias', dba: '70 - 80 dBA' },
-  { id: 'bodas', label: 'Bodas & Fincas', dba: '85 - 90 dBA' },
-  { id: 'plazas', label: 'Plazas & Festivales', dba: '90 - 102 dBA' }
 ];
 
 const ITEMS_PER_PAGE = 24;
@@ -120,9 +226,12 @@ export default function ArtistasNationalCatalogClient() {
   const [maxBudget, setMaxBudget] = useState(5000);
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [acousticLevel, setAcousticLevel] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedArtistModal, setSelectedArtistModal] = useState<RealArtist | null>(null);
+
+  // Acordeón / Desplegable de Familias Artísticas
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [categorySearchFilter, setCategorySearchFilter] = useState('');
 
   // Modo Tinder Swipe Neural
   const [isSwipeMode, setIsSwipeMode] = useState(false);
@@ -179,7 +288,7 @@ export default function ArtistasNationalCatalogClient() {
       if (res.ok) {
         const data = await res.json();
         const providers: RealArtist[] = Array.isArray(data.providers) ? data.providers : [];
-        
+
         // Excluir a Edwin Agudelo de la cuadrícula estándar para que no aparezca duplicado
         // (ya que tiene su Escaparate de Élite S-Class exclusivo en la parte superior)
         const filteredProviders = providers.filter(
@@ -221,9 +330,24 @@ export default function ArtistasNationalCatalogClient() {
     setSelectedSubcat('all');
     setMaxBudget(5000);
     setSearchQuery('');
-    setAcousticLevel('all');
     setCurrentPage(1);
   };
+
+  const activeCategoryObj = useMemo(() => {
+    return ARTISTIC_FAMILIES.find((f) => f.id === selectedSubcat) || ARTISTIC_FAMILIES[0];
+  }, [selectedSubcat]);
+
+  // Familias filtradas dentro del acordeón
+  const filteredFamilies = useMemo(() => {
+    if (!categorySearchFilter.trim()) return ARTISTIC_FAMILIES;
+    const q = categorySearchFilter.toLowerCase();
+    return ARTISTIC_FAMILIES.filter(
+      (f) =>
+        f.label.toLowerCase().includes(q) ||
+        f.desc.toLowerCase().includes(q) ||
+        f.genres.some((g) => g.toLowerCase().includes(q))
+    );
+  }, [categorySearchFilter]);
 
   return (
     <div className="w-full bg-[#030305] text-slate-100 font-sans">
@@ -282,20 +406,35 @@ export default function ArtistasNationalCatalogClient() {
           </div>
 
           {/* 🎛️ PANEL DE CONTROL NEURAL: VISTA DE PÁJARO */}
-          <div className="bg-[#08080e]/90 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-5">
-            {/* 1. SELECTOR DE FORMATOS / GREMIOS MUSICALES (CHIPS INTERACTIVOS) */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-center text-xs font-mono">
-                <span className="text-slate-400 uppercase tracking-wider flex items-center gap-1.5 font-bold">
-                  <Music className="w-3.5 h-3.5 text-[#ecb613]" />
-                  <span>Formación Escénica & Especialidad Musical</span>
-                </span>
-                <span className="text-[#ecb613] font-bold">
-                  {ARTIST_CATEGORIES.find((c) => c.id === selectedSubcat)?.label || 'Todos'}
-                </span>
+          <div className="bg-[#08080e]/95 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-5">
+            {/* 1. NAVEGACIÓN LIMPIA POR ACORDEÓN / DESPLEGABLE DE TODAS LAS FAMILIAS ARTÍSTICAS */}
+            <div className="space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold flex items-center gap-1.5">
+                    <Music className="w-4 h-4 text-[#ecb613]" />
+                    <span>Navegación de Familias Artísticas:</span>
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#ecb613]/20 border border-[#ecb613]/40 text-[#ecb613] font-mono text-xs font-black">
+                    {activeCategoryObj.label}
+                  </span>
+                </div>
+
+                {/* BOTÓN TOGGLE ACORDEÓN DE ÚLTIMA GENERACIÓN */}
+                <button
+                  type="button"
+                  onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+                  className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-mono font-bold text-slate-200 hover:text-white flex items-center gap-2 transition shadow-md"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
+                  <span>{isAccordionOpen ? 'Plegar Atlas de Categorías' : 'Desplegar Atlas de Familias Artísticas (12 Familias · 48 Géneros)'}</span>
+                  {isAccordionOpen ? <ChevronUp className="w-4 h-4 text-[#ecb613]" /> : <ChevronDown className="w-4 h-4 text-[#ecb613]" />}
+                </button>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {ARTIST_CATEGORIES.map((cat) => {
+
+              {/* BARRA HORIZONTAL RÁPIDA DE PILLS (Acceso Inmediato a las más Populares) */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-slate-800">
+                {ARTISTIC_FAMILIES.slice(0, 8).map((cat) => {
                   const Icon = cat.icon;
                   const isActive = selectedSubcat === cat.id;
                   return (
@@ -305,21 +444,88 @@ export default function ArtistasNationalCatalogClient() {
                         setSelectedSubcat(cat.id);
                         setCurrentPage(1);
                       }}
-                      className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl text-xs font-mono font-bold uppercase transition-all duration-200 ${
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-bold whitespace-nowrap transition-all ${
                         isActive
-                          ? 'bg-[#ecb613] text-black shadow-[0_0_20px_rgba(236,182,19,0.35)] scale-[1.02]'
-                          : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:border-slate-700'
+                          ? 'bg-[#ecb613] text-black shadow-[0_0_15px_rgba(236,182,19,0.3)]'
+                          : 'bg-slate-950/80 hover:bg-slate-900 text-slate-300 border border-slate-800'
                       }`}
                     >
-                      <Icon className="w-4 h-4 shrink-0" />
-                      <span>{cat.label}</span>
-                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${isActive ? 'bg-black/20 text-black' : 'bg-slate-800 text-slate-400'}`}>
-                        {cat.badge}
-                      </span>
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{cat.shortLabel}</span>
                     </button>
                   );
                 })}
               </div>
+
+              {/* 📂 ACORDEÓN / DESPLEGABLE COMPLETO DE ÚLTIMA GENERACIÓN */}
+              {isAccordionOpen && (
+                <div className="p-5 rounded-2xl bg-black/80 border border-[#ecb613]/40 shadow-2xl space-y-4 animate-fadeIn">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+                    <p className="text-xs text-slate-400 font-mono">
+                      Explora el espectro completo del mundo artístico: selecciona cualquier familia para calibrar el catálogo.
+                    </p>
+                    <div className="relative max-w-xs w-full">
+                      <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#ecb613]" />
+                      <input
+                        type="text"
+                        value={categorySearchFilter}
+                        onChange={(e) => setCategorySearchFilter(e.target.value)}
+                        placeholder="Filtrar géneros (magia, jazz, circo...)"
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 font-mono focus:outline-none focus:border-[#ecb613]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-h-[380px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-800">
+                    {filteredFamilies.map((cat) => {
+                      const Icon = cat.icon;
+                      const isActive = selectedSubcat === cat.id;
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedSubcat(cat.id);
+                            setCurrentPage(1);
+                            setIsAccordionOpen(false); // Cierre suave tras seleccionar
+                          }}
+                          className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between group ${
+                            isActive
+                              ? 'bg-[#ecb613]/20 border-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.3)]'
+                              : 'bg-slate-950/70 border-slate-800 hover:border-slate-700 hover:bg-slate-900/60'
+                          }`}
+                        >
+                          <div>
+                            <div className="flex justify-between items-start mb-1.5">
+                              <span className="flex items-center gap-2 text-xs font-bold text-white font-syne uppercase group-hover:text-[#ecb613] transition-colors">
+                                <Icon className="w-4 h-4 text-[#ecb613]" />
+                                <span>{cat.label}</span>
+                              </span>
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${isActive ? 'bg-[#ecb613] text-black font-bold' : 'bg-slate-800 text-slate-400'}`}>
+                                {cat.badge}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-slate-400 font-sans leading-tight mb-2">
+                              {cat.desc}
+                            </p>
+                          </div>
+
+                          <div className="flex flex-wrap gap-1 pt-2 border-t border-white/5">
+                            {cat.genres.map((g) => (
+                              <span
+                                key={g}
+                                className="text-[9px] font-mono px-2 py-0.5 rounded bg-black/50 text-slate-300 border border-white/5"
+                              >
+                                {g}
+                              </span>
+                            ))}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 2. SLIDER DINÁMICO DE PRESUPUESTO + SELECTORES DE TERRITORIO Y BÚSQUEDA */}
@@ -385,7 +591,7 @@ export default function ArtistasNationalCatalogClient() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Ej. Boleros, Mariachi 6p, DJ Bodas, Cuerda..."
+                    placeholder="Ej. Magia, Boleros, Mariachi 6p, DJ Bodas, Jazz..."
                     className="w-full bg-slate-950 border border-slate-700/80 rounded-xl pl-10 pr-3 py-2.5 text-xs text-white placeholder:text-slate-500 font-medium focus:outline-none focus:ring-1 focus:ring-[#ecb613]"
                   />
                 </div>
@@ -473,7 +679,7 @@ export default function ArtistasNationalCatalogClient() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90" />
-                
+
                 {/* Badges sobre la foto */}
                 <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md text-[#ecb613] border border-[#ecb613]/40 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase font-mono">
                   Méntrida (Toledo) / Hub Madrid
@@ -656,6 +862,7 @@ export default function ArtistasNationalCatalogClient() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-slate-800/60 pb-4 mb-6 font-mono text-xs">
             <div className="text-slate-400">
               Mostrando <span className="font-bold text-white">{total > 0 ? ((currentPage - 1) * ITEMS_PER_PAGE) + 1 : 0}</span> - <span className="font-bold text-white">{Math.min(currentPage * ITEMS_PER_PAGE, total)}</span> de <span className="font-bold text-[#ecb613]">{total.toLocaleString()}</span> artistas auditados
+              {selectedSubcat !== 'all' && <span className="text-slate-300"> en <strong className="text-[#ecb613]">{activeCategoryObj.shortLabel}</strong></span>}
               {selectedProvince !== 'Todas' && <span className="text-slate-300"> en <strong className="text-white">{selectedProvince}</strong></span>}
               {maxBudget < 5000 && <span className="text-slate-300"> (hasta <strong className="text-[#ecb613]">{maxBudget} €</strong>)</span>}
             </div>
@@ -744,7 +951,9 @@ export default function ArtistasNationalCatalogClient() {
         </section>
       )}
 
-      {/* MODAL DETALLE DE ARTISTA */}
+      {/* ══════════════════════════════════════════════════════════════════════════
+          4. MODAL DETALLE DE ARTISTA CON FICHA COMPLETA DE CONTRATACIÓN Y CALENDARIO
+         ══════════════════════════════════════════════════════════════════════════ */}
       {selectedArtistModal && (
         <ArtistDetailModal
           artist={selectedArtistModal}
@@ -858,7 +1067,7 @@ function RealArtistCard({ artist, onSelect }: { artist: RealArtist; onSelect: ()
             onClick={onSelect}
             className="w-full bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-semibold py-2 px-2 rounded-xl transition border border-slate-700/60"
           >
-            Ficha Completa
+            Ficha & Fechas
           </button>
 
           <a
@@ -881,28 +1090,18 @@ function ArtistDetailModal({ artist, onClose }: { artist: RealArtist; onClose: (
   const artistSlug = artist.slug || artist.id;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 overflow-y-auto font-sans">
-      <div className="bg-[#08080d] border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
+    <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto font-sans">
+      <div className="bg-[#07070b] border border-slate-800 rounded-3xl max-w-4xl w-full p-4 sm:p-8 shadow-2xl relative my-8 max-h-[92vh] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-xl bg-slate-900 border border-slate-800 transition"
+          className="absolute top-4 right-4 text-slate-400 hover:text-white p-2.5 rounded-2xl bg-slate-900 border border-slate-800 transition z-20"
+          aria-label="Cerrar modal"
         >
-          ✕
+          <X className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] mb-2 uppercase tracking-wider">
-          <ShieldCheck className="w-4 h-4" />
-          <span>Ficha Técnica de Artista Homologado • Productora EAR</span>
-        </div>
-
-        <h2 className="text-2xl sm:text-3xl font-black text-white mb-2 font-syne uppercase">{artist.name}</h2>
-        <p className="text-sm text-slate-400 mb-6 flex items-center gap-1.5 font-mono">
-          <MapPin className="w-4 h-4 text-[#ecb613] shrink-0" />
-          <span>{artist.province} · Split 80% Artista / 10% EAR OS / 10% VIMUME</span>
-        </p>
-
         {/* CARRUSEL DE FOTOS HD */}
-        <div className="mb-6">
+        <div className="mb-6 rounded-2xl overflow-hidden border border-slate-800">
           <CinematicVanguardCarousel
             images={(() => {
               const all = (artist.imageUrls && artist.imageUrls.length > 0)
@@ -927,61 +1126,15 @@ function ArtistDetailModal({ artist, onClose }: { artist: RealArtist; onClose: (
           />
         </div>
 
-        <div className="space-y-4 mb-6 text-sm text-slate-300">
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1 font-mono">Propuesta Escénica y Ficha</h4>
-            <p className="leading-relaxed font-light text-slate-300">
-              {artist.description_full || artist.description || 'Espectáculo musical en vivo homologado con equipamiento de sonido Bose de alta fidelidad y presión controlada.'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-800/80 font-mono">
-            <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-              <span className="block text-[11px] text-slate-400 uppercase">Provincia</span>
-              <span className="font-bold text-white text-sm">{artist.province}</span>
-            </div>
-            <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-              <span className="block text-[11px] text-slate-400 uppercase">Rating Auditado</span>
-              <span className="font-bold text-[#ecb613] text-sm flex items-center gap-1">
-                <Star className="w-3.5 h-3.5 fill-[#ecb613]" />
-                {Number(artist.rating || 5.0).toFixed(1)} / 5.0
-              </span>
-            </div>
-            <div className="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
-              <span className="block text-[11px] text-slate-400 uppercase">Sonorización</span>
-              <span className="font-bold text-emerald-400 text-sm">Bose F1 / S1 Pro</span>
-            </div>
-            <div className="bg-slate-900/60 p-3 rounded-xl border border-[#ecb613]/30 col-span-2 sm:col-span-3">
-              <span className="block text-[11px] text-slate-400 uppercase">Tarifa Base Estimada</span>
-              <span className="font-bold text-[#ecb613] text-base">
-                Desde {basePrice} € (Reserva directa con depósito de 100 € en Stripe)
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* ACCIONES DEL MODAL */}
-        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-800 font-mono">
-          <a
-            href={`/artistas/${encodeURIComponent(artistSlug)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 font-bold py-3 px-4 rounded-xl text-center text-sm transition flex items-center justify-center gap-2"
-          >
-            <ExternalLink className="w-4 h-4 text-slate-400" />
-            <span>Perfil Completo</span>
-          </a>
-
-          <a
-            href={`https://wa.me/34693693048?text=${encodeURIComponent(`Hola Edwin, quiero consultar disponibilidad del artista ${artist.name} en ${artist.province}.`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 bg-[#ecb613] hover:bg-white text-black font-extrabold py-3 px-4 rounded-xl text-center text-sm transition flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(236,182,19,0.2)]"
-          >
-            <MessageSquare className="w-4 h-4" />
-            <span>WhatsApp Directo</span>
-          </a>
-        </div>
+        {/* FICHA TÉCNICA EXHAUSTIVA DE CONTRATACIÓN (CON CALENDARIO Y TODOS LOS FILTROS) */}
+        <ArtistBookingSpecSheet
+          artistId={artist.id}
+          artistName={artist.name}
+          artistProvince={artist.province}
+          basePrice={basePrice}
+          slug={artistSlug}
+          onClose={onClose}
+        />
       </div>
     </div>
   );

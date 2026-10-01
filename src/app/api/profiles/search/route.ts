@@ -57,7 +57,7 @@ const FINCAS_HOMOLOGADAS_ITEMS = SCLASS_12_FINCAS_HOMOLOGADAS.map((f, idx) => {
   };
 });
 
-// Subcategory keyword mappings for deep domain search
+// Subcategory keyword mappings for deep domain search across all artistic families
 const SUBCATEGORY_KEYWORD_MAP: Record<string, string[]> = {
   // Fincas & Espacios
   cortijo: ['cortijo', 'hacienda'],
@@ -65,12 +65,28 @@ const SUBCATEGORY_KEYWORD_MAP: Record<string, string[]> = {
   masia: ['masia', 'masía', 'casa rural'],
   salon: ['salon', 'salón', 'hotel', 'complejo'],
   rustica: ['rústica', 'rustica', 'dehesa', 'finca rústica'],
-  // Música & Espectáculos
-  solista: ['solista', 'edwin agudelo', 'cantante', 'bolero', 'balada', 'tributo', 'acústico'],
-  mariachi: ['mariachi', 'ranchera', 'mexicano', 'charro', 'jarabe'],
-  dj: ['dj', 'deejay', 'discomovil', 'discomóvil', 'animación musical'],
-  banda: ['banda', 'grupo', 'orquesta', 'rock', 'pop', 'tributo', 'combo'],
-  cuerdas: ['cuerdas', 'violín', 'violin', 'chelo', 'cello', 'cuarteto', 'clásica', 'arpa'],
+  // 1. Solistas & Cantantes
+  solista: ['solista', 'edwin agudelo', 'cantante', 'vocalista', 'bolero', 'balada', 'tributo', 'acústico', 'acustico', 'crooner', 'cantautor'],
+  // 2. Mariachis, Folclore & Tradicional
+  mariachi: ['mariachi', 'ranchera', 'mexicano', 'charro', 'jarabe', 'coro rociero', 'rociero', 'tuna', 'folclore', 'folklore', 'gaitero', 'chirigota'],
+  // 3. DJs, Disco Móvil & Animación
+  dj: ['dj', 'deejay', 'discomovil', 'discomóvil', 'animación musical', 'animador', 'disco móvil', 'electronic', 'dance'],
+  // 4. Bandas en Vivo & Versiones
+  banda: ['banda', 'grupo', 'orquesta', 'rock', 'pop', 'tributo', 'combo', 'charanga', 'brass', 'versiones'],
+  // 5. Cuerda Clásica, Lírico & Ceremonias
+  cuerdas: ['cuerdas', 'cuerda', 'violín', 'violin', 'chelo', 'cello', 'cuarteto', 'clásica', 'clasica', 'arpa', 'piano', 'ópera', 'opera', 'lírico', 'lirico', 'sacra', 'gospel', 'tenor', 'soprano'],
+  // 6. Flamenco & Rumba
+  flamenco: ['flamenco', 'rumba', 'cantaor', 'guitarra', 'guitarrista', 'cuadro flamenco', 'sevillanas', 'zapateado'],
+  // 7. Jazz, Blues & Swing
+  jazz: ['jazz', 'blues', 'swing', 'bossa nova', 'bossa', 'soul', 'funk', 'dixieland', 'big band', 'crooner'],
+  // 8. Magia & Ilusionismo
+  magia: ['mago', 'magia', 'ilusionista', 'mentalista', 'ilusionismo', 'close-up'],
+  // 9. Artes Escénicas, Circo & Variedades
+  artes_escenicas: ['circo', 'acróbata', 'acrobata', 'zancudo', 'fuego', 'malabares', 'danza', 'bailarines', 'cabaret', 'drag queen', 'performance', 'batucada', 'zancudos'],
+  // 10. Humor & Monólogos
+  humor: ['humor', 'comedia', 'cómico', 'comico', 'monólogo', 'monologo', 'monologuista', 'stand up', 'presentador', 'showman'],
+  // 11. Infantil & Familiar
+  infantil: ['infantil', 'cantajuegos', 'animación infantil', 'cuentacuentos', 'títeres', 'marionetas', 'magia infantil', 'payaso']
 };
 
 const API_FALLBACK_POOLS: Record<string, string[]> = {
@@ -324,9 +340,9 @@ async function queryStaticProviders(options: {
     const keywords = SUBCATEGORY_KEYWORD_MAP[subcatLower] || [subcatLower];
 
     list = list.filter((p) => {
-      // Si el registro ya fue etiquetado quirúrgicamente con gremioTag
-      if (p.gremioTag) {
-        return p.gremioTag.toLowerCase() === subcatLower;
+      // Si el registro coincide exactamente con su gremioTag asignado
+      if (p.gremioTag && p.gremioTag.toLowerCase() === subcatLower) {
+        return true;
       }
 
       // De lo contrario, comprobación estricta en el nombre y categoría
@@ -335,19 +351,34 @@ async function queryStaticProviders(options: {
       const descLower = (p.description || '').toLowerCase();
 
       if (subcatLower === 'mariachi') {
-        return /mariachi|ranchera|charro/i.test(nameLower) || /mariachi/i.test(descLower);
+        return /mariachi|ranchera|charro|mexicano|rociero/i.test(nameLower) || /mariachi|ranchera|charro|rociero/i.test(descLower);
       }
       if (subcatLower === 'dj') {
-        return /\b(dj|djs|discomovil|discomóvil|disc-jockey)\b/i.test(nameLower) || /\b(dj|discomovil)\b/i.test(catLower);
+        return /\b(dj|djs|discomovil|discomóvil|disc-jockey)\b/i.test(nameLower) || /\b(dj|discomovil)\b/i.test(catLower) || /\b(dj|discomovil)\b/i.test(descLower);
       }
       if (subcatLower === 'flamenco') {
-        return /flamenco|rumba|sevillana|rociero/i.test(nameLower) || /flamenco/i.test(descLower);
+        return /flamenco|rumba|sevillana|rociero|guitarra/i.test(nameLower) || /flamenco|rumba/i.test(descLower);
       }
       if (subcatLower === 'cuerdas') {
-        return /cuarteto|violín|violin|cuerda|chelo|soprano|tenor lírico|ópera/i.test(nameLower);
+        return /cuarteto|violín|violin|cuerda|chelo|soprano|tenor lírico|ópera|arpa|piano/i.test(nameLower) || /cuarteto|violín|cuerda/i.test(descLower);
+      }
+      if (subcatLower === 'jazz') {
+        return /jazz|blues|swing|bossa|soul|crooner/i.test(nameLower) || /jazz|blues|swing/i.test(descLower);
+      }
+      if (subcatLower === 'magia') {
+        return /mago|magia|ilusionis|mentalist/i.test(nameLower) || /mago|magia|ilusion/i.test(descLower);
+      }
+      if (subcatLower === 'artes_escenicas') {
+        return /circo|acróbata|acrobata|zancudo|fuego|malabar|danza|cabaret|drag|batucada/i.test(nameLower) || /circo|acróbata|zancudo|fuego/i.test(descLower);
+      }
+      if (subcatLower === 'humor') {
+        return /humor|comedia|cómico|comico|monólogo|monologo|stand up|showman/i.test(nameLower) || /humor|comedia|cómico|monólogo/i.test(descLower);
+      }
+      if (subcatLower === 'infantil') {
+        return /infantil|cantajuegos|cuentacuentos|títeres|marionetas|payaso/i.test(nameLower) || /infantil|cantajuegos/i.test(descLower);
       }
 
-      return keywords.some((k) => nameLower.includes(k));
+      return keywords.some((k) => nameLower.includes(k) || descLower.includes(k));
     });
   }
 
