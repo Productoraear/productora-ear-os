@@ -119,7 +119,7 @@ export default function ArtistasCinematicPage() {
       <ArtistCinematicProfile
         name="Edwin Agudelo"
         specialty="Cantante y Compositor · Rancheras, Boleros y Música de Gala"
-        imageUrl="/images/brand/ear_logo_official_diamond.png"
+        imageUrl="https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg"
       />
       <ArtistNeuralMatcherView />
     </main>

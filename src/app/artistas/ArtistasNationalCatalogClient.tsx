@@ -366,7 +366,14 @@ function RealArtistCard({ artist, onSelect }: { artist: RealArtist; onSelect: ()
   const charCodeSum = (artist.id || artist.name || 'artist').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const fallbackImg = FALLBACK_ARTIST_IMAGES[charCodeSum % FALLBACK_ARTIST_IMAGES.length];
 
-  const displayImg = (!imgError && (artist.img || (artist.imageUrls && artist.imageUrls[0]) || (artist.gallery && artist.gallery[0]))) || fallbackImg;
+  const rawImg = artist.img || (artist.imageUrls && artist.imageUrls[0]) || (artist.gallery && artist.gallery[0]);
+  const isForbiddenImg = !rawImg || 
+    rawImg.includes('photo-1519741497674-611481863552') || 
+    rawImg.includes('c2524615ca092dc557196134bcbbcdc1') ||
+    rawImg.includes('.svg') ||
+    rawImg.includes('gen_logoHeader');
+
+  const displayImg = (!imgError && !isForbiddenImg) ? rawImg : fallbackImg;
   const baseTariff = artist.basePrice || 350;
 
   return (
@@ -489,15 +496,22 @@ function ArtistDetailModal({ artist, onClose }: { artist: RealArtist; onClose: (
         {/* CARRUSEL DE FOTOS HD */}
         <div className="mb-6">
           <CinematicVanguardCarousel
-            images={
-              artist.imageUrls && artist.imageUrls.length > 0
+            images={(() => {
+              const all = (artist.imageUrls && artist.imageUrls.length > 0)
                 ? artist.imageUrls
-                : artist.gallery && artist.gallery.length > 0
+                : (artist.gallery && artist.gallery.length > 0)
                   ? artist.gallery
-                  : artist.img
-                    ? [artist.img]
-                    : []
-            }
+                  : artist.img ? [artist.img] : [];
+              const clean = all.filter((u: string) =>
+                u &&
+                typeof u === 'string' &&
+                !u.includes('photo-1519741497674-611481863552') &&
+                !u.includes('c2524615ca092dc557196134bcbbcdc1') &&
+                !u.includes('.svg') &&
+                !u.includes('gen_logoHeader')
+              );
+              return clean.length > 0 ? clean : [FALLBACK_ARTIST_IMAGES[0]];
+            })()}
             title={artist.name}
             aspectRatio="video"
           />

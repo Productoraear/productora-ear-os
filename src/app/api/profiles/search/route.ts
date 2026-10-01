@@ -128,8 +128,13 @@ const API_FALLBACK_POOLS: Record<string, string[]> = {
 };
 
 function getApiFallbackImage(category?: string | null, seed?: string | null): string {
-  const cat = (category || 'servicios').toLowerCase();
-  const pool = API_FALLBACK_POOLS[cat] || API_FALLBACK_POOLS.servicios;
+  let cat = (category || '').toLowerCase().trim();
+  if (cat.includes('music') || cat.includes('dj') || cat.includes('mariachi') || cat.includes('banda') || cat.includes('solista') || cat.includes('cuerda') || cat.includes('flamenco') || cat.includes('animacion')) {
+    cat = 'musica';
+  } else if (!cat) {
+    cat = 'servicios';
+  }
+  const pool = API_FALLBACK_POOLS[cat] || API_FALLBACK_POOLS.musica;
   if (!seed) return pool[0];
   const str = String(seed);
   const hash = str.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
@@ -174,6 +179,16 @@ async function loadStaticDataset(targetFile: string, requestUrl: string): Promis
     path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'providers', targetFile),
     path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'providers', targetFile),
   ];
+
+  // Si la petición es para música, comprobar también la ruta canónica de artistas
+  if (targetFile === 'musica.json') {
+    candidatePaths.push(
+      path.join(process.cwd(), 'public', 'data', 'artists', 'artists_canonical.json'),
+      path.join(process.cwd(), '.next', 'standalone', 'public', 'data', 'artists', 'artists_canonical.json'),
+      path.join(__dirname, '..', '..', '..', '..', '..', 'public', 'data', 'artists', 'artists_canonical.json')
+    );
+  }
+
   for (const p of candidatePaths) {
     try {
       if (fs.existsSync(/*turbopackIgnore: true*/ p)) {
@@ -189,6 +204,10 @@ async function loadStaticDataset(targetFile: string, requestUrl: string): Promis
   //    Esto mantiene el bundle serverless < 250 MB sin perder el dataset.
   try {
     const origin = new URL(requestUrl).origin;
+    if (targetFile === 'musica.json') {
+      const artRes = await fetch(`${origin}/data/artists/artists_canonical.json`, { cache: 'no-store' });
+      if (artRes.ok) return await artRes.text();
+    }
     const res = await fetch(`${origin}/data/providers/${targetFile}`, {
       cache: 'no-store',
     });
@@ -237,24 +256,31 @@ async function queryStaticProviders(options: {
 
   // Fallback de alta resiliencia si no se pudo cargar finca.json por peso o entorno serverless
   if (list.length === 0) {
-    const fallbackRaw = await loadStaticDataset('all_featured.json', requestUrl);
-    if (fallbackRaw) {
-      try {
-        const featured = JSON.parse(fallbackRaw);
-        if (normCat === 'finca') {
-          list = featured.filter((item: any) => 
-            (item.category || '').toLowerCase().includes('finca') || 
-            (item.category || '').toLowerCase().includes('espacio') ||
-            (item.description || '').toLowerCase().includes('finca')
-          );
-        } else {
-          list = featured;
-        }
-      } catch { /* continuar */ }
+    if (normCat === 'musica') {
+      const fallbackMusic = await loadStaticDataset('musica.json', requestUrl);
+      if (fallbackMusic) {
+        try { list = JSON.parse(fallbackMusic); } catch { /* continuar */ }
+      }
+    } else {
+      const fallbackRaw = await loadStaticDataset('all_featured.json', requestUrl);
+      if (fallbackRaw) {
+        try {
+          const featured = JSON.parse(fallbackRaw);
+          if (normCat === 'finca') {
+            list = featured.filter((item: any) => 
+              (item.category || '').toLowerCase().includes('finca') || 
+              (item.category || '').toLowerCase().includes('espacio') ||
+              (item.description || '').toLowerCase().includes('finca')
+            );
+          } else {
+            list = featured;
+          }
+        } catch { /* continuar */ }
+      }
     }
   }
 
-  // Fallback garantizado S-Class para Fincas y Proveedores
+  // Fallback garantizado S-Class exclusivamente para Fincas
   if (normCat === 'finca') {
     if (list.length === 0) {
       list = FINCAS_HOMOLOGADAS_ITEMS;
@@ -267,7 +293,11 @@ async function queryStaticProviders(options: {
 
   // Fallback final si la lista sigue vacía
   if (list.length === 0) {
-    return { total: FINCAS_HOMOLOGADAS_ITEMS.length, providers: FINCAS_HOMOLOGADAS_ITEMS };
+    if (normCat === 'finca') {
+      return { total: FINCAS_HOMOLOGADAS_ITEMS.length, providers: FINCAS_HOMOLOGADAS_ITEMS };
+    }
+    // JAMÁS devolver fincas cuando la categoría buscada es música
+    return { total: 0, providers: [] };
   }
 
   // 1. Filtro por provincia
@@ -320,6 +350,15 @@ async function queryStaticProviders(options: {
     });
   }
 
+  // Filtro preventivo Anti-Synthetic-Stubs
+  list = list.filter((p) => {
+    const n = (p.name || '').toLowerCase();
+    if (n.includes('mariachis elite') || n.includes('mariachi elite') || n.includes('elite a coruna') || n.includes('elite albacete')) {
+      return false;
+    }
+    return true;
+  });
+
   const total = list.length;
   const skip = (page - 1) * limit;
   const isDirty = (u: any) =>
@@ -329,7 +368,8 @@ async function queryStaticProviders(options: {
     u.includes('gen_logoHeader') ||
     u.includes('default_avatar') ||
     u.includes('741e9617168a2484.jpg') ||
-    u.includes('c2524615ca092dc557196134bcbbcdc1');
+    u.includes('c2524615ca092dc557196134bcbbcdc1') ||
+    u.includes('photo-1519741497674-611481863552');
 
   const providers = list.slice(skip, skip + limit).map((p) => {
     const rawName = p.name || '';
