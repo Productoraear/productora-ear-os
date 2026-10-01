@@ -1,51 +1,46 @@
 {
-  "all_featured": {
-    "count": 150,
-    "sizeKB": "558.5"
+  "finca": {
+    "count": 407,
+    "sizeKB": "269.1"
   },
   "catering": {
-    "count": 4096,
-    "sizeKB": "15288.2"
-  },
-  "decoracion": {
-    "count": 1650,
-    "sizeKB": "7388.7"
-  },
-  "finca": {
-    "count": 9559,
-    "sizeKB": "64724.5"
-  },
-  "foto": {
-    "count": 35153,
-    "sizeKB": "112271.4"
-  },
-  "moda": {
-    "count": 8777,
-    "sizeKB": "44306.8"
+    "count": 404,
+    "sizeKB": "271.8"
   },
   "musica": {
-    "count": 5359,
-    "sizeKB": "24512.7"
+    "count": 1200,
+    "sizeKB": "740.1"
   },
-  "senior_care": {
-    "count": 800,
-    "sizeKB": "429.4"
+  "foto": {
+    "count": 403,
+    "sizeKB": "265.4"
+  },
+  "decoracion": {
+    "count": 386,
+    "sizeKB": "260.1"
   },
   "servicios": {
-    "count": 8617,
-    "sizeKB": "26729"
+    "count": 410,
+    "sizeKB": "271.7"
   },
-  "sonido": {
-    "count": 8963,
-    "sizeKB": "33795.2"
+  "moda": {
+    "count": 390,
+    "sizeKB": "253.5"
   },
   "transporte": {
-    "count": 1961,
-    "sizeKB": "11820.3"
+    "count": 395,
+    "sizeKB": "263.0"
+  },
+  "sonido": {
+    "count": 486,
+    "sizeKB": "322.4"
   },
   "wedding": {
-    "count": 1011,
-    "sizeKB": "5584"
+    "count": 381,
+    "sizeKB": "258.6"
   },
-  "items": []
+  "senior_care": {
+    "count": 380,
+    "sizeKB": "214.9"
+  }
 }
