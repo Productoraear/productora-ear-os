@@ -281,15 +281,22 @@ export default async function ArtistDetailPage({ params }: PageProps) {
     );
   }
 
-  // 3. COMPROBACIÓN EN DATA LAKE DE PROVEEDORES Y CELEBRENTS (musica.json)
+  // 3. COMPROBACIÓN EN DATA LAKE DE PROVEEDORES Y CELEBRENTS (musica.json y artists_canonical.json)
   try {
     const musicaPath = path.join(process.cwd(), 'public', 'data', 'providers', 'musica.json');
     const canonicalPath = path.join(process.cwd(), 'public', 'data', 'artists', 'artists_canonical.json');
     let items: any[] = [];
+    if (fs.existsSync(canonicalPath)) {
+      try {
+        const canonicalItems = JSON.parse(fs.readFileSync(canonicalPath, 'utf-8'));
+        if (Array.isArray(canonicalItems)) items.push(...canonicalItems);
+      } catch {}
+    }
     if (fs.existsSync(musicaPath)) {
-      items = JSON.parse(fs.readFileSync(musicaPath, 'utf-8'));
-    } else if (fs.existsSync(canonicalPath)) {
-      items = JSON.parse(fs.readFileSync(canonicalPath, 'utf-8'));
+      try {
+        const musicaItems = JSON.parse(fs.readFileSync(musicaPath, 'utf-8'));
+        if (Array.isArray(musicaItems)) items.push(...musicaItems);
+      } catch {}
     }
 
     if (items.length > 0) {
@@ -406,19 +413,19 @@ export default async function ArtistDetailPage({ params }: PageProps) {
                         <Phone size={13} className="text-[#ecb613]" /> WhatsApp
                       </a>
 
-                      <Link
-                        href={`/checkout/presupuesto?artista=${slug}&precio=${basePrice}`}
+                      <a
+                        href="#contratacion-spec-sheet"
                         className="flex-1 sm:flex-initial px-5 py-3 bg-[#ecb613] text-black font-black uppercase text-xs rounded-xl hover:bg-white transition-all text-center shadow-lg shadow-[#ecb613]/10"
                       >
                         Reserva 100€
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* FICHA TÉCNICA EXHAUSTIVA DE CONTRATACIÓN (CALENDARIO EN TIEMPO REAL + FILTROS DE CONTRATACIÓN) */}
-              <div className="pt-6">
+              <div id="contratacion-spec-sheet" className="pt-6 scroll-mt-24">
                 <ArtistBookingSpecSheet
                   artistId={matched.id || slug}
                   artistName={title}

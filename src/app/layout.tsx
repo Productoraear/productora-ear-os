@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Syne, Inter } from "next/font/google";
+import { Syne, Montserrat } from "next/font/google";
 import "./globals.css";
 
 const syne = Syne({
@@ -11,11 +11,12 @@ const syne = Syne({
   weight: ["400", "600", "700", "800"],
 });
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-montserrat",
   display: "swap",
   preload: true,
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
 
 import { SharedProvider } from "@/app/context/SharedContext";
@@ -97,11 +98,11 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
-      className={`dark scroll-smooth ${syne.variable} ${inter.variable}`}
+      className={`dark scroll-smooth ${syne.variable} ${montserrat.variable}`}
     >
       <head />
       <body
-        className={`antialiased bg-[#050505] text-white selection:bg-[#FF2B44] selection:text-white font-sans ${syne.variable} ${inter.variable}`}
+        className={`antialiased bg-[#050505] text-white selection:bg-[#FF2B44] selection:text-white font-sans ${syne.variable} ${montserrat.variable}`}
         suppressHydrationWarning
       >
         <VimumeThemeInjector />

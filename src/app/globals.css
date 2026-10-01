@@ -56,10 +56,11 @@
     --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
     --glow-ear-red: 0 0 25px rgba(255, 43, 68, 0.4);
 
-    /* 🖋️ TIPOGRAFÍA SOBERANA S-CLASS: SYNE (DISPLAY) + INTER (BODY) */
+    /* 🖋️ TIPOGRAFÍA SOBERANA S-CLASS: MONTSERRAT (BODY GLOBAL) + SYNE (DISPLAY TITLES) */
+    --font-montserrat: var(--font-montserrat), 'Montserrat', sans-serif;
+    --font-inter: var(--font-montserrat), 'Montserrat', sans-serif;
+    --font-sans: var(--font-montserrat), 'Montserrat', sans-serif;
     --font-syne: var(--font-syne), 'Syne', sans-serif;
-    --font-inter: var(--font-inter), 'Inter', sans-serif;
-    --font-sans: var(--font-inter), 'Inter', sans-serif;
   }
 
   .dark {
@@ -136,12 +137,16 @@
   body {
     background-color: var(--background) !important;
     color: var(--foreground) !important;
-    font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     max-width: 100%;
     transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+
+  p, span, div, a, button, input, textarea, select, label, li {
+    font-family: var(--font-montserrat), 'Montserrat', sans-serif;
   }
 
   h1,
@@ -150,7 +155,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-syne), sans-serif;
+    font-family: var(--font-syne), 'Syne', sans-serif;
     letter-spacing: -0.025em;
     text-wrap: balance;
   }
