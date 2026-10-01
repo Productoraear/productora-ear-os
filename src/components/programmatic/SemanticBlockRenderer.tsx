@@ -429,7 +429,7 @@ const SPECIFIC_INTENT_MAP: Record<string, SemanticBlockContent> = {
     hero: 'Quinteto de Gala Mariachi S-Class · Mínimo 5 Músicos Garantizados',
     sub: 'Formato oficial de agrupación en directo con Edwin Agudelo + 2 Trompetas + Vihuela + Guitarrón. Gran potencia y empaque visual para bodas, ferias y fiestas patronales desde 750€.',
     gear: 'Sonorización Multicanal Bose F1 + Microfonía Shure para Vientos y Voces',
-    gearDetail: '5 Músicos uniformados con trajes charros de gran gala mexicana, sonidista in-situ y seguro RC 300.000€.',
+    gearDetail: '5 Músicos uniformados con trajes charros de gran gala mexicana, sonidista in-situ y garantía de ejecución profesional.',
     priceBase: 750,
     priceMax: 1800,
     guaranteeBadge: 'Mínimo 5 Músicos por Contrato',

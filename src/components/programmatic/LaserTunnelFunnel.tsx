@@ -333,7 +333,7 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
             'PA Line Array calibrada con presión 12 W/pax',
             'Pantalla LED P2.9 de alta definición',
             'Línea de retardo acústico y conmutación backup <50ms',
-            'SLA de Cero Silencios y Seguro RC 300.000 €'
+            'SLA de Cero Silencios y Póliza Oficial de Origen'
           ]
         },
         {
@@ -605,7 +605,7 @@ export default function LaserTunnelFunnel({ vertical, intentSlug, basePrice }: L
       {/* Trust guarantees bar */}
       <div className="mt-6 flex flex-wrap items-center justify-center gap-6 text-[11px] text-neutral-400 font-mono relative z-10">
         <span className="flex items-center gap-1.5">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" /> Seguro RC 300.000 € Incluido
+          <ShieldCheck className="w-4 h-4 text-emerald-400" /> Fianza Protegida Stripe Price-Lock
         </span>
         <span className="flex items-center gap-1.5">
           <Award className="w-4 h-4 text-[#ecb613]" /> Garantía Mercantil NIF: B87910311
