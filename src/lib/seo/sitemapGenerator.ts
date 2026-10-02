@@ -121,17 +121,22 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
       addEntry(`${BASE_URL}/fincas/portal-demostrativo`, 0.85, 'weekly');
 
       const fincaProvinces = new Set(
-        SCLASS_12_FINCAS_HOMOLOGADAS.map((f) => normalizeForUrl(f.provincia)),
+        (SCLASS_12_FINCAS_HOMOLOGADAS || [])
+          .filter((f) => f && f.provincia)
+          .map((f) => normalizeForUrl(f.provincia))
+          .filter(Boolean)
       );
       for (const prov of fincaProvinces) {
         addEntry(`${BASE_URL}/fincas/${prov}`, 0.85, 'weekly');
       }
-      for (const finca of SCLASS_12_FINCAS_HOMOLOGADAS) {
-        addEntry(
-          `${BASE_URL}/fincas/${finca.slug}`,
-          finca.slug === 'villa-escorial-park' ? 1.0 : 0.90,
-          finca.slug === 'villa-escorial-park' ? 'daily' : 'weekly'
-        );
+      for (const finca of (SCLASS_12_FINCAS_HOMOLOGADAS || [])) {
+        if (finca && finca.slug) {
+          addEntry(
+            `${BASE_URL}/fincas/${finca.slug}`,
+            finca.slug === 'villa-escorial-park' ? 1.0 : 0.90,
+            finca.slug === 'villa-escorial-park' ? 'daily' : 'weekly'
+          );
+        }
       }
       addEntry(`${BASE_URL}/fincas/jardines-la-cartuja`, 0.90, 'weekly');
 
