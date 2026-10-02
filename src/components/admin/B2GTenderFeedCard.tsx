@@ -103,7 +103,7 @@ export function B2GTenderFeedCard() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest flex items-center gap-1.5">
-            <Landmark className="w-3.5 h-3.5" /> Escáner de Licitaciones PLACSP · Art. 118 LCSP
+            <Landmark className="w-3.5 h-3.5" aria-hidden="true" /> Escáner de Licitaciones PLACSP · Art. 118 LCSP
           </span>
           <h2 className="text-xl md:text-2xl font-bold text-white mt-1">
             Licitaciones & Festejos Municipales B2G
@@ -117,7 +117,7 @@ export function B2GTenderFeedCard() {
           disabled={loading}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#ecb613]/40 text-white text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} aria-hidden="true" />
           {loading ? 'Escaneando PLACSP...' : `Refrescar Feed`}
           {lastRefresh && <span className="text-gray-500 normal-case">({lastRefresh})</span>}
         </button>
@@ -135,13 +135,13 @@ export function B2GTenderFeedCard() {
         </div>
         <div className="p-3 rounded-xl bg-[#09090d] border border-emerald-500/20">
           <span className="text-[10px] text-gray-500 font-mono uppercase flex items-center gap-1">
-            <Volume2 className="w-3 h-3 text-emerald-400" /> VIMUME Compatible
+            <Volume2 className="w-3 h-3 text-emerald-400" aria-hidden="true" /> VIMUME Compatible
           </span>
           <p className="text-2xl font-bold text-emerald-400 mt-1">{vimumeCount}</p>
         </div>
         <div className="p-3 rounded-xl bg-[#09090d] border border-orange-500/20">
           <span className="text-[10px] text-gray-500 font-mono uppercase flex items-center gap-1">
-            <AlertTriangle className="w-3 h-3 text-orange-400" /> Urgentes (≤3 días)
+            <AlertTriangle className="w-3 h-3 text-orange-400" aria-hidden="true" /> Urgentes (≤3 días)
           </span>
           <p className="text-2xl font-bold text-orange-400 mt-1">{urgentCount}</p>
         </div>
@@ -157,9 +157,8 @@ export function B2GTenderFeedCard() {
           return (
             <article
               key={tender.id}
-              className={`p-5 rounded-2xl bg-[#09090d] border transition-all hover:border-[#ecb613]/30 ${
-                isUrgent ? 'border-orange-500/30' : 'border-white/10'
-              }`}
+              className={`p-5 rounded-2xl bg-[#09090d] border transition-all hover:border-[#ecb613]/30 ${isUrgent ? 'border-orange-500/30' : 'border-white/10'
+                }`}
             >
               {/* Top Row: Status + Match + Urgency */}
               <div className="flex flex-wrap items-center gap-2 mb-3">
@@ -171,17 +170,17 @@ export function B2GTenderFeedCard() {
                 </span>
                 {tender.vimumeCompatible && (
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 flex items-center gap-1">
-                    <Volume2 className="w-3 h-3" /> VIMUME &lt;75 dB
+                    <Volume2 className="w-3 h-3" aria-hidden="true" /> VIMUME &lt;75 dB
                   </span>
                 )}
                 {isUrgent && (
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-orange-400 flex items-center gap-1 animate-pulse">
-                    <AlertTriangle className="w-3 h-3" /> {tender.diasRestantes} días restantes
+                    <AlertTriangle className="w-3 h-3" aria-hidden="true" /> {tender.diasRestantes} días restantes
                   </span>
                 )}
                 {tender.isLCSPCompliant && (
                   <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-sky-500/30 bg-sky-500/10 text-sky-400 flex items-center gap-1">
-                    <ShieldCheck className="w-3 h-3" /> Art. 118 LCSP
+                    <ShieldCheck className="w-3 h-3" aria-hidden="true" /> Art. 118 LCSP
                   </span>
                 )}
               </div>
@@ -193,14 +192,14 @@ export function B2GTenderFeedCard() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-gray-400 mb-4">
                 <div className="flex items-start gap-2">
-                  <Building2 className="w-3.5 h-3.5 text-[#258DCD] shrink-0 mt-0.5" />
+                  <Building2 className="w-3.5 h-3.5 text-[#258DCD] shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <span className="text-gray-500 block">Órgano Contratante</span>
                     <span className="text-white">{tender.organoContratante}</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-[#AAD6CD] shrink-0 mt-0.5" />
+                  <MapPin className="w-3.5 h-3.5 text-[#AAD6CD] shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <span className="text-gray-500 block">Municipio</span>
                     <span className="text-white">{tender.municipio} ({tender.provincia})</span>
@@ -208,7 +207,7 @@ export function B2GTenderFeedCard() {
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
-                  <CircleDollarSign className="w-3.5 h-3.5 text-[#ecb613] shrink-0 mt-0.5" />
+                  <CircleDollarSign className="w-3.5 h-3.5 text-[#ecb613] shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <span className="text-gray-500 block">Importe Base (sin IVA)</span>
                     <span className="text-[#ecb613] text-base font-bold">{tender.importeBase.toLocaleString('es-ES')} €</span>
@@ -232,10 +231,10 @@ export function B2GTenderFeedCard() {
               {/* Timeline */}
               <div className="flex flex-wrap items-center gap-4 text-[11px] font-mono text-gray-500 mb-4 pb-3 border-b border-white/5">
                 <span className="flex items-center gap-1">
-                  <Clock className="w-3 h-3" /> Publicado: {tender.fechaPublicacion}
+                  <Clock className="w-3 h-3" aria-hidden="true" /> Publicado: {tender.fechaPublicacion}
                 </span>
                 <span className={`flex items-center gap-1 ${isUrgent ? 'text-orange-400 font-bold' : ''}`}>
-                  <BadgeAlert className="w-3 h-3" /> Límite: {tender.fechaLimite}
+                  <BadgeAlert className="w-3 h-3" aria-hidden="true" /> Límite: {tender.fechaLimite}
                 </span>
                 <span>Exp: {tender.expedienteRef}</span>
               </div>
@@ -249,14 +248,14 @@ export function B2GTenderFeedCard() {
                     className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50"
                   >
                     {isGenerating ? (
-                      <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Generando Expediente Art. 118...</>
+                      <><Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> Generando Expediente Art. 118...</>
                     ) : (
-                      <><FileText className="w-3.5 h-3.5" /> Generar Expediente Art. 118</>
+                      <><FileText className="w-3.5 h-3.5" aria-hidden="true" /> Generar Expediente Art. 118</>
                     )}
                   </button>
                 ) : tender.status === 'BORRADOR_EMITIDO' ? (
                   <span className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-500/10 border border-violet-500/30 text-violet-400 text-xs font-mono uppercase">
-                    <CheckCircle2 className="w-3.5 h-3.5" /> Borrador Listo — Firma Pendiente
+                    <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" /> Borrador Listo — Firma Pendiente
                   </span>
                 ) : null}
 
@@ -264,7 +263,7 @@ export function B2GTenderFeedCard() {
                   href={`/checkout/presupuesto?format=vimume-b2g&entity=${encodeURIComponent(tender.organoContratante)}&base=${tender.importeBase}`}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#ecb613]/40 text-white text-xs font-mono uppercase tracking-wider transition-all"
                 >
-                  <Sparkles className="w-3.5 h-3.5" /> Calcular Split Soberano
+                  <Sparkles className="w-3.5 h-3.5" aria-hidden="true" /> Calcular Split Soberano
                 </Link>
               </div>
             </article>
@@ -275,7 +274,7 @@ export function B2GTenderFeedCard() {
       {/* Footer */}
       <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-black/40 border border-white/5 text-xs text-gray-400 font-mono">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
           <span>Techo Art. 118 LCSP: 14.250,00 € (Ajuste automático al 95%). Split Soberano 80/10/10.</span>
         </div>
         <span>Teléfono Retención: <strong className="text-white">+34 693 693 048</strong></span>

@@ -53,7 +53,7 @@ export const ArtistNeuralMatcherView: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="w-full py-16 text-center font-mono text-xs text-zinc-500">
+            <div role="status" aria-live="polite" className="w-full py-16 text-center font-mono text-xs text-zinc-500">
                 Cargando dataset neural de artistas…
             </div>
         );
@@ -61,7 +61,7 @@ export const ArtistNeuralMatcherView: React.FC = () => {
 
     if (error) {
         return (
-            <div className="w-full py-16 text-center font-mono text-xs text-amber-400">
+            <div role="alert" className="w-full py-16 text-center font-mono text-xs text-amber-400">
                 No se pudo cargar el dataset de artistas: {error}
             </div>
         );

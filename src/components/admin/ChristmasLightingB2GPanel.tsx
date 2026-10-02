@@ -1,19 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-  Lightbulb, 
-  Shield, 
-  Download, 
-  FileText, 
-  Search, 
-  ExternalLink, 
-  Zap, 
-  Building2, 
-  MapPin, 
-  Sparkles, 
-  Layers, 
-  DollarSign, 
+import {
+  Lightbulb,
+  Shield,
+  Download,
+  FileText,
+  Search,
+  ExternalLink,
+  Zap,
+  Building2,
+  MapPin,
+  Sparkles,
+  Layers,
+  DollarSign,
   CheckCircle2,
   FileDown
 } from 'lucide-react';
@@ -46,12 +46,12 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
 
   const filtered = initialData.filter(p => {
     const q = search.toLowerCase();
-    const matchQuery = 
+    const matchQuery =
       p.empresa.toLowerCase().includes(q) ||
       p.ambito.toLowerCase().includes(q) ||
       p.capacidades.some(c => c.toLowerCase().includes(q)) ||
       p.cpv_activos.some(cpv => cpv.toLowerCase().includes(q));
-    
+
     const matchType = selectedType === 'ALL' || p.tipo_partner.toLowerCase().includes(selectedType.toLowerCase());
     return matchQuery && matchType;
   });
@@ -62,7 +62,7 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
       <div className="p-6 rounded-3xl bg-gradient-to-r from-[#0d0d14] via-[#161626] to-[#0d0d14] border border-[#ecb613]/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-2xl">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono mb-2">
-            <Lightbulb size={14} /> RADAR PRIVADO B2G · CPV 31522000 (ALUMBRADO NAVIDEÑO)
+            <Lightbulb size={14} aria-hidden="true" /> RADAR PRIVADO B2G · CPV 31522000 (ALUMBRADO NAVIDEÑO)
           </div>
           <h2 className="text-2xl sm:text-3xl font-black uppercase text-white tracking-tight font-syne">
             Catálogo Soberano de Iluminación y Licitaciones Municipales
@@ -77,7 +77,7 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
             href="/arsenal/luces-navidad"
             className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs font-mono flex items-center gap-2 border border-white/20 transition-all cursor-pointer"
           >
-            <Sparkles size={14} className="text-[#ecb613]" /> Catálogo 2026 EAR (530 Refs)
+            <Sparkles size={14} className="text-[#ecb613]" aria-hidden="true" /> Catálogo 2026 EAR (530 Refs)
           </a>
           <a
             href="/dossiers/dossier-embajadores-culturales-fitur-2026.pdf"
@@ -85,7 +85,7 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
             rel="noopener noreferrer"
             className="px-4 py-2.5 rounded-xl bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-bold text-xs font-mono flex items-center gap-2 transition-all shadow-lg shadow-amber-500/20 cursor-pointer"
           >
-            <Download size={14} /> Dossier PDF Oficial
+            <Download size={14} aria-hidden="true" /> Dossier PDF Oficial
           </a>
         </div>
       </div>
@@ -93,26 +93,31 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
       {/* Barra de Búsqueda y Filtros Rápidos */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" size={16} />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40" size={16} aria-hidden="true" />
           <input
             type="text"
             placeholder="Buscar por empresa, capacidad (3D, túneles, LED, arcos), CPV o provincia..."
+            aria-label="Buscar proveedor de iluminación"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#09090f] border border-white/10 text-white text-xs placeholder:text-white/30 focus:outline-none focus:border-[#ecb613]/50 font-mono"
           />
         </div>
 
-        <div className="flex gap-2 overflow-x-auto no-scrollbar">
+        <div
+          role="group"
+          aria-label="Filtrar por tipo de entidad"
+          className="flex gap-2 overflow-x-auto no-scrollbar"
+        >
           {['ALL', 'Licitación', 'Fabricante', 'Instalador', 'Mayorista'].map((type) => (
             <button
               key={type}
               onClick={() => setSelectedType(type)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap ${
-                selectedType === type
-                  ? 'bg-[#ecb613] text-black shadow-md'
-                  : 'bg-[#09090f] border border-white/10 text-zinc-400 hover:text-white'
-              }`}
+              aria-pressed={selectedType === type}
+              className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap ${selectedType === type
+                ? 'bg-[#ecb613] text-black shadow-md'
+                : 'bg-[#09090f] border border-white/10 text-zinc-400 hover:text-white'
+                }`}
             >
               {type === 'ALL' ? 'Todos' : type}
             </button>
@@ -142,7 +147,7 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
                   {item.empresa}
                 </h3>
                 <p className="text-[11px] font-mono text-white/40 mt-0.5 flex items-center gap-1.5">
-                  <Building2 size={12} className="text-[#ecb613]" /> {item.sede_principal || item.ambito}
+                  <Building2 size={12} className="text-[#ecb613]" aria-hidden="true" /> {item.sede_principal || item.ambito}
                 </p>
                 <p className="text-[10px] font-mono text-zinc-500 mt-0.5">
                   CNAE: {item.cnae}
@@ -188,8 +193,9 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
                     rel="noopener noreferrer"
                     className="p-2 rounded-lg bg-white/5 hover:bg-[#ecb613]/20 text-zinc-300 hover:text-[#ecb613] transition-colors border border-white/5"
                     title="Ver Catálogo PDF Oficial"
+                    aria-label={`Ver catálogo PDF de ${item.empresa}`}
                   >
-                    <FileDown size={14} />
+                    <FileDown size={14} aria-hidden="true" />
                   </a>
                 )}
                 <a
@@ -198,8 +204,9 @@ export function ChristmasLightingB2GPanel({ initialData = [] }: LightingPanelPro
                   rel="noopener noreferrer"
                   className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-colors border border-white/5"
                   title="Visitar Web Oficial"
+                  aria-label={`Visitar web oficial de ${item.empresa}`}
                 >
-                  <ExternalLink size={14} />
+                  <ExternalLink size={14} aria-hidden="true" />
                 </a>
               </div>
             </div>

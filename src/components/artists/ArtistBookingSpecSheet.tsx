@@ -197,7 +197,7 @@ export default function ArtistBookingSpecSheet({
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800/80 pb-5">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-wider mb-1 font-bold">
-            <ShieldCheck className="w-4 h-4" />
+            <ShieldCheck className="w-4 h-4" aria-hidden="true" />
             <span>Ficha de Contratación Homologada · EAR OS S-Class</span>
           </div>
           <h3 className="text-2xl sm:text-3xl font-black text-white font-syne uppercase">
@@ -209,7 +209,7 @@ export default function ArtistBookingSpecSheet({
         </div>
 
         <div className="flex items-center gap-2 bg-emerald-950/40 border border-emerald-500/30 px-3.5 py-1.5 rounded-full text-xs font-mono text-emerald-400">
-          <Lock className="w-3.5 h-3.5" />
+          <Lock className="w-3.5 h-3.5" aria-hidden="true" />
           <span>Reserva con solo 100 €</span>
         </div>
       </div>
@@ -220,7 +220,7 @@ export default function ArtistBookingSpecSheet({
       <div className="space-y-3">
         <div className="flex justify-between items-center text-xs font-mono">
           <span className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
-            <CalendarIcon className="w-4 h-4 text-[#ecb613]" />
+            <CalendarIcon className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
             <span>1. Fecha del Evento & Calendario en Tiempo Real</span>
           </span>
           <span className="text-[11px] text-slate-500">
@@ -243,7 +243,7 @@ export default function ArtistBookingSpecSheet({
          ═══════════════════════════════════════════════════════════════════ */}
       <div className="space-y-3">
         <label className="text-xs font-mono text-slate-300 uppercase font-bold flex items-center gap-1.5">
-          <Users className="w-4 h-4 text-[#ecb613]" />
+          <Users className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
           <span>2. Formato Escénico & Integrantes</span>
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 font-mono">
@@ -255,11 +255,11 @@ export default function ArtistBookingSpecSheet({
                 key={fmt.id}
                 type="button"
                 onClick={() => setSelectedFormat(fmt.id)}
-                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between ${
-                  isSelected
-                    ? 'bg-[#ecb613]/15 border-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.25)]'
-                    : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-300'
-                }`}
+                aria-pressed={isSelected}
+                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between ${isSelected
+                  ? 'bg-[#ecb613]/15 border-[#ecb613] shadow-[0_0_15px_rgba(236,182,19,0.25)]'
+                  : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 text-slate-300'
+                  }`}
               >
                 <div>
                   <div className="flex justify-between items-start mb-1">
@@ -284,12 +284,13 @@ export default function ArtistBookingSpecSheet({
         {/* FRANJA HORARIA */}
         <div className="space-y-2">
           <label className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-[#ecb613]" />
+            <Clock className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
             <span>3. Franja Horaria</span>
           </label>
           <select
             value={selectedTimeSlot}
             onChange={(e) => setSelectedTimeSlot(e.target.value)}
+            aria-label="Franja horaria del pase"
             className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#ecb613]"
           >
             {TIME_SLOTS.map((ts) => (
@@ -303,12 +304,13 @@ export default function ArtistBookingSpecSheet({
         {/* TIPO DE EVENTO */}
         <div className="space-y-2">
           <label className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" />
+            <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
             <span>4. Tipo de Celebración</span>
           </label>
           <select
             value={selectedEventType}
             onChange={(e) => setSelectedEventType(e.target.value)}
+            aria-label="Tipo de celebración"
             className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#ecb613]"
           >
             {EVENT_TYPES.map((et) => (
@@ -322,12 +324,13 @@ export default function ArtistBookingSpecSheet({
         {/* AFORO ESTIMADO */}
         <div className="space-y-2">
           <label className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
-            <Users className="w-3.5 h-3.5 text-[#ecb613]" />
+            <Users className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
             <span>5. Aforo Estimado (Pax)</span>
           </label>
           <select
             value={selectedPax}
             onChange={(e) => setSelectedPax(e.target.value)}
+            aria-label="Aforo estimado"
             className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#ecb613]"
           >
             {PAX_RANGES.map((pr) => (
@@ -346,12 +349,13 @@ export default function ArtistBookingSpecSheet({
         {/* RIDER ACÚSTICO LEY 37/2003 */}
         <div className="space-y-2">
           <label className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
-            <Volume2 className="w-3.5 h-3.5 text-[#ecb613]" />
+            <Volume2 className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
             <span>6. Rider Acústico & Espacio (Ley 37/2003)</span>
           </label>
           <select
             value={selectedAcoustic}
             onChange={(e) => setSelectedAcoustic(e.target.value)}
+            aria-label="Rider acústico y espacio"
             className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-[#ecb613]"
           >
             {ACOUSTIC_RIDERS.map((ar) => (
@@ -369,7 +373,7 @@ export default function ArtistBookingSpecSheet({
         <div className="space-y-2">
           <div className="flex justify-between items-center">
             <label className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-[#ecb613]" />
+              <MapPin className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
               <span>7. Logística Km 0 (Distancia)</span>
             </label>
             <span className="text-[#ecb613] font-bold">{distanceKm} km</span>
@@ -381,6 +385,8 @@ export default function ArtistBookingSpecSheet({
             step={5}
             value={distanceKm}
             onChange={(e) => setDistanceKm(Number(e.target.value))}
+            aria-label="Distancia en kilómetros"
+            aria-valuetext={`${distanceKm} kilómetros`}
             className="w-full accent-[#ecb613] bg-slate-800 h-2 rounded-lg cursor-pointer"
           />
           <div className="flex justify-between text-[10px] text-slate-500">
@@ -401,6 +407,7 @@ export default function ArtistBookingSpecSheet({
             type="text"
             value={temaPersonalizado}
             onChange={(e) => setTemaPersonalizado(e.target.value)}
+            aria-label="Canción especial o vals nupcial personalizado"
             placeholder="Ej: Si nos dejan, Bésame mucho, Vals Vienés..."
             className="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-[#ecb613]"
           />
@@ -435,7 +442,7 @@ export default function ArtistBookingSpecSheet({
       <div className="p-5 rounded-2xl bg-black/60 border border-[#ecb613]/40 space-y-3 font-mono text-xs">
         <div className="flex justify-between items-center border-b border-white/10 pb-2">
           <span className="font-bold text-white uppercase flex items-center gap-1.5">
-            <DollarSign className="w-4 h-4 text-[#ecb613]" />
+            <DollarSign className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
             <span>Desglose Económico Transparente (Split Soberano 80/10/10)</span>
           </span>
           <span className="text-[#ecb613] font-bold text-sm">
@@ -470,8 +477,8 @@ export default function ArtistBookingSpecSheet({
 
       {/* FEEDBACK DE ERROR EN DEPÓSITO */}
       {depositError && (
-        <div className="p-3 bg-red-950/40 border border-red-500/40 rounded-2xl text-red-300 text-xs font-mono flex items-start gap-2 animate-fadeIn">
-          <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+        <div role="alert" className="p-3 bg-red-950/40 border border-red-500/40 rounded-2xl text-red-300 text-xs font-mono flex items-start gap-2 animate-fadeIn">
+          <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" aria-hidden="true" />
           <span>{depositError}</span>
         </div>
       )}
@@ -488,12 +495,12 @@ export default function ArtistBookingSpecSheet({
         >
           {depositLoading ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin text-black" />
+              <Loader2 className="w-4 h-4 animate-spin text-black" aria-hidden="true" />
               <span>Conectando con Pasarela Stripe...</span>
             </>
           ) : (
             <>
-              <Lock className="w-4 h-4 fill-black" />
+              <Lock className="w-4 h-4 fill-black" aria-hidden="true" />
               <span>Bloquear Franja {selectedHourSlot} hrs (100 € Stripe)</span>
             </>
           )}
@@ -505,7 +512,7 @@ export default function ArtistBookingSpecSheet({
           rel="noopener noreferrer"
           className="flex-1 bg-[#25D366] hover:bg-emerald-400 text-black font-extrabold uppercase text-xs py-4 px-6 rounded-2xl text-center transition flex items-center justify-center gap-2 shadow-lg"
         >
-          <MessageSquare className="w-4 h-4 fill-black" />
+          <MessageSquare className="w-4 h-4 fill-black" aria-hidden="true" />
           <span>Enviar Especificación por WhatsApp</span>
         </a>
 

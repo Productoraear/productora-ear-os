@@ -30,7 +30,7 @@ export default function OraculoSearchConsole() {
     <div className="rounded-[2rem] border border-[#FF2B44]/20 bg-[#030305] p-6 md:p-8">
       <div className="mb-5 flex items-center gap-3">
         <div className="rounded-xl border border-[#FF2B44]/30 bg-[#FF2B44]/5 p-2 text-[#FF2B44]">
-          <Search size={18} />
+          <Search size={18} aria-hidden="true" />
         </div>
         <div>
           <h3 className="font-mono text-sm font-bold uppercase tracking-widest text-white">
@@ -45,6 +45,7 @@ export default function OraculoSearchConsole() {
       <div className="relative">
         <Search
           size={16}
+          aria-hidden="true"
           className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/30"
         />
         <input
@@ -56,12 +57,17 @@ export default function OraculoSearchConsole() {
         />
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div
+        role="group"
+        aria-label="Consultas rápidas"
+        className="mt-3 flex flex-wrap gap-2"
+      >
         {QUICK_QUERIES.map((q) => (
           <button
             key={q}
             type="button"
             onClick={() => setQuery(q)}
+            aria-label={`Consultar: ${q}`}
             className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-white/50 transition-all hover:border-[#FF2B44]/40 hover:text-white"
           >
             {q}
@@ -69,7 +75,12 @@ export default function OraculoSearchConsole() {
         ))}
       </div>
 
-      <div className="mt-5 space-y-2">
+      <div
+        role="region"
+        aria-label="Resultados de la consulta"
+        aria-live="polite"
+        className="mt-5 space-y-2"
+      >
         {query && results.length === 0 && (
           <p className="py-6 text-center text-xs italic text-white/40">
             Sin coincidencias. Reformula la consulta con otro término.
@@ -80,7 +91,9 @@ export default function OraculoSearchConsole() {
             key={`${result.kind}-${result.refId}`}
             className="flex gap-3 rounded-2xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-[#FF2B44]/30"
           >
-            <span className="mt-0.5 text-[#FF2B44]">{KIND_ICON[result.kind]}</span>
+            <span className="mt-0.5 text-[#FF2B44]" aria-hidden="true">
+              {KIND_ICON[result.kind]}
+            </span>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[9px] uppercase tracking-widest text-white/30">

@@ -68,7 +68,7 @@ export default function AdminCalibratorProxy({ initialVendors = [] }: AdminCalib
             <div className="p-5 border-b border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div>
                     <div className="inline-flex items-center gap-2 text-[11px] font-mono text-[#ecb613] uppercase tracking-widest font-black">
-                        <ShieldCheck size={13} />
+                        <ShieldCheck size={13} aria-hidden="true" />
                         <span>Gestión Delegada · EAR OS Admin</span>
                     </div>
                     <h2 className="text-xl font-black font-syne text-white mt-1.5">
@@ -77,11 +77,12 @@ export default function AdminCalibratorProxy({ initialVendors = [] }: AdminCalib
                 </div>
 
                 <div className="relative w-full lg:w-80">
-                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600" />
+                    <Search size={14} aria-hidden="true" className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-600" />
                     <input
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Buscar proveedor…"
+                        aria-label="Buscar proveedor"
                         className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-[#ecb613]"
                     />
                 </div>
@@ -98,9 +99,11 @@ export default function AdminCalibratorProxy({ initialVendors = [] }: AdminCalib
                                 <li key={v.id}>
                                     <button
                                         onClick={() => setSelected(v)}
+                                        aria-pressed={selected?.id === v.id}
+                                        aria-label={`Seleccionar ${v.name ?? v.companyName}`}
                                         className={`w-full text-left px-4 py-3 transition-colors ${selected?.id === v.id
-                                                ? 'bg-[#ecb613]/10 border-l-2 border-[#ecb613]'
-                                                : 'hover:bg-white/5 border-l-2 border-transparent'
+                                            ? 'bg-[#ecb613]/10 border-l-2 border-[#ecb613]'
+                                            : 'hover:bg-white/5 border-l-2 border-transparent'
                                             }`}
                                     >
                                         <span className="block text-xs font-bold text-white truncate">
@@ -132,7 +135,7 @@ export default function AdminCalibratorProxy({ initialVendors = [] }: AdminCalib
                         />
                     ) : (
                         <div className="flex flex-col items-center justify-center py-16 text-zinc-600 gap-3">
-                            <SlidersHorizontal size={28} />
+                            <SlidersHorizontal size={28} aria-hidden="true" />
                             <p className="text-xs font-mono">Selecciona un proveedor para calibrarlo</p>
                         </div>
                     )}

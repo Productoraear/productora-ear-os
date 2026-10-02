@@ -5,11 +5,11 @@ interface AuthGuardProps {
 }
 
 const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
-const isAuthenticated = true; // Replace with actual authentication check
+  const isAuthenticated = true; // Replace with actual authentication check
 
-if (!isAuthenticated) {
-  return <div>No estás autenticado</div>;
-}
+  if (!isAuthenticated) {
+    return <div role="alert">No estás autenticado</div>;
+  }
   return <div>{children}</div>;
 };
 

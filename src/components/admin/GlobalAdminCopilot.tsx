@@ -84,19 +84,27 @@ export default function GlobalAdminCopilot() {
         }}
         className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-[#ecb613] text-neutral-950 hover:bg-amber-300 font-mono font-bold text-xs shadow-2xl shadow-amber-400/30 transition-all cursor-pointer border border-amber-300"
         title="Copiloto Global EAR OS"
+        aria-expanded={isOpen}
+        aria-controls="global-admin-copilot-panel"
+        aria-label={isOpen ? 'Cerrar Copiloto Global EAR OS' : 'Abrir Copiloto Global EAR OS'}
       >
-        <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '4s' }} />
+        <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '4s' }} aria-hidden="true" />
         <span>Copiloto IA</span>
       </button>
 
       {/* VENTANA FLOTANTE DEL COPILOTO */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 max-w-md w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div
+          id="global-admin-copilot-panel"
+          role="dialog"
+          aria-label="Copiloto Global EAR OS"
+          className="fixed bottom-24 right-6 z-50 max-w-md w-full animate-in fade-in slide-in-from-bottom-4 duration-300"
+        >
           <div className="p-4 rounded-2xl bg-neutral-950 border border-amber-500/40 shadow-2xl shadow-amber-500/10 text-neutral-100 backdrop-blur-xl space-y-3">
             <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 rounded-xl bg-[#ecb613] text-neutral-950 flex items-center justify-center font-bold shadow-md shadow-amber-400/20">
-                  <Bot className="w-4 h-4" />
+                  <Bot className="w-4 h-4" aria-hidden="true" />
                 </div>
                 <div>
                   <span className="text-xs font-mono font-bold text-amber-400 block">COPILOTO GLOBAL EAR OS</span>
@@ -106,8 +114,9 @@ export default function GlobalAdminCopilot() {
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-neutral-500 hover:text-white transition-colors p-1 cursor-pointer"
+                aria-label="Cerrar Copiloto Global"
               >
-                <X className="w-4 h-4" />
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
 
@@ -124,10 +133,10 @@ export default function GlobalAdminCopilot() {
                   className="w-full text-left flex items-center justify-between gap-2 p-2.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 hover:border-amber-400/50 text-xs font-mono text-neutral-200 hover:text-white transition-all cursor-pointer group"
                 >
                   <span className="flex items-center gap-2">
-                    <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0 group-hover:scale-110 transition-transform" />
+                    <Zap className="w-3.5 h-3.5 text-amber-400 shrink-0 group-hover:scale-110 transition-transform" aria-hidden="true" />
                     {opt}
                   </span>
-                  <ChevronRight className="w-3.5 h-3.5 text-neutral-500 group-hover:translate-x-0.5 transition-transform shrink-0" />
+                  <ChevronRight className="w-3.5 h-3.5 text-neutral-500 group-hover:translate-x-0.5 transition-transform shrink-0" aria-hidden="true" />
                 </button>
               ))}
             </div>

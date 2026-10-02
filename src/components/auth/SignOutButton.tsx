@@ -24,13 +24,14 @@ const SignOutButton = () => {
   };
 
   return (
-    <button 
-      onClick={handleSignOut} 
+    <button
+      onClick={handleSignOut}
       disabled={loading}
+      aria-label="Cerrar sesión"
       className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-neutral-900 border border-neutral-800 text-neutral-300 hover:text-red-400 hover:border-red-900/60 hover:bg-red-950/20 transition duration-200 cursor-pointer disabled:opacity-50"
       title="Cerrar sesión soberana"
     >
-      {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <LogOut className="w-3.5 h-3.5" />}
+      {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> : <LogOut className="w-3.5 h-3.5" aria-hidden="true" />}
       <span>{loading ? 'Saliendo...' : 'Cerrar Sesión'}</span>
     </button>
   );

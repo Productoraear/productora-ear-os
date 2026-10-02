@@ -1,26 +1,26 @@
 'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { 
-  Building2, 
-  Download, 
-  Copy, 
-  Check, 
-  Search, 
-  Filter, 
-  ExternalLink, 
-  FileText, 
-  ShieldCheck, 
-  Sparkles, 
-  MapPin, 
-  Send, 
-  Award, 
-  Globe, 
-  Compass, 
-  Table, 
-  Grid, 
-  User, 
-  CheckCircle2, 
+import {
+  Building2,
+  Download,
+  Copy,
+  Check,
+  Search,
+  Filter,
+  ExternalLink,
+  FileText,
+  ShieldCheck,
+  Sparkles,
+  MapPin,
+  Send,
+  Award,
+  Globe,
+  Compass,
+  Table,
+  Grid,
+  User,
+  CheckCircle2,
   ChevronRight,
   TrendingUp,
   Clock
@@ -128,14 +128,14 @@ export function FiturDiplomaticViewer() {
   const filteredDispatches = useMemo(() => {
     return dispatches.filter(d => {
       const q = searchTerm.toLowerCase();
-      const matchesSearch = 
+      const matchesSearch =
         d.entity_name.toLowerCase().includes(q) ||
         d.country_region.toLowerCase().includes(q) ||
         d.contact_person.toLowerCase().includes(q) ||
         d.ifema_stand.toLowerCase().includes(q);
-      
-      const matchesPavilion = 
-        selectedPavilion === 'ALL' || 
+
+      const matchesPavilion =
+        selectedPavilion === 'ALL' ||
         d.ifema_stand.toLowerCase().includes(selectedPavilion.toLowerCase());
 
       return matchesSearch && matchesPavilion;
@@ -158,7 +158,7 @@ export function FiturDiplomaticViewer() {
       <div className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-emerald-950/40 via-[#0a1410] to-[#0a0a10] border border-emerald-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
         <div className="flex items-start sm:items-center gap-3">
           <div className="p-2 sm:p-2.5 rounded-xl bg-emerald-500/20 text-emerald-300 shrink-0 mt-0.5 sm:mt-0">
-            <ShieldCheck size={20} />
+            <ShieldCheck size={20} aria-hidden="true" />
           </div>
           <div>
             <div className="flex flex-wrap items-center gap-2">
@@ -180,7 +180,7 @@ export function FiturDiplomaticViewer() {
           rel="noopener noreferrer"
           className="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shrink-0 shadow-lg shadow-emerald-500/20"
         >
-          <Download size={13} />
+          <Download size={13} aria-hidden="true" />
           <span>Ver Dossier Oficial</span>
         </a>
       </div>
@@ -191,7 +191,7 @@ export function FiturDiplomaticViewer() {
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-full text-xs font-mono font-bold uppercase">
-                <Award size={14} />
+                <Award size={14} aria-hidden="true" />
                 <span>Directorio Íntegro FITUR 2026 // IFEMA</span>
               </div>
               <span className="px-3 py-1 bg-sky-500/10 border border-sky-500/30 text-sky-300 rounded-full text-xs font-mono font-bold">
@@ -221,24 +221,22 @@ export function FiturDiplomaticViewer() {
           <div className="flex items-center gap-2 bg-white/5 p-1 rounded-xl border border-white/10 w-full sm:w-auto">
             <button
               onClick={() => setViewMode('TABLE')}
-              className={`flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all ${
-                viewMode === 'TABLE'
-                  ? 'bg-[#ecb613] text-black shadow-md'
-                  : 'text-zinc-400 hover:text-white'
-              }`}
+              className={`flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all ${viewMode === 'TABLE'
+                ? 'bg-[#ecb613] text-black shadow-md'
+                : 'text-zinc-400 hover:text-white'
+                }`}
             >
-              <Table size={14} />
+              <Table size={14} aria-hidden="true" />
               <span>Tabla Íntegra ({filteredDispatches.length})</span>
             </button>
             <button
               onClick={() => setViewMode('CARDS')}
-              className={`flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all ${
-                viewMode === 'CARDS'
-                  ? 'bg-[#ecb613] text-black shadow-md'
-                  : 'text-zinc-400 hover:text-white'
-              }`}
+              className={`flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all ${viewMode === 'CARDS'
+                ? 'bg-[#ecb613] text-black shadow-md'
+                : 'text-zinc-400 hover:text-white'
+                }`}
             >
-              <Grid size={14} />
+              <Grid size={14} aria-hidden="true" />
               <span>Tarjetas de Oficio</span>
             </button>
           </div>
@@ -247,10 +245,11 @@ export function FiturDiplomaticViewer() {
         {/* Barra de Filtros */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
           <div className="relative sm:col-span-2">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" size={16} aria-hidden="true" />
             <input
               type="text"
               placeholder="Buscar por país, entidad, delegado o stand (ej. Colombia, Marruecos, Pabellón 4)..."
+              aria-label="Buscar entidad B2G"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#06060a] border border-white/10 text-white placeholder-zinc-500 text-xs font-mono focus:outline-none focus:border-[#ecb613]"
@@ -318,7 +317,7 @@ export function FiturDiplomaticViewer() {
                           className="text-[10px] text-sky-400 hover:underline flex items-center gap-1 mt-0.5"
                         >
                           <span>Buscar Contacto</span>
-                          <ExternalLink size={10} />
+                          <ExternalLink size={10} aria-hidden="true" />
                         </a>
                       </td>
 
@@ -332,7 +331,7 @@ export function FiturDiplomaticViewer() {
                             rel="noopener noreferrer"
                             className="px-2 py-1 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 rounded text-[10px] flex items-center gap-1 transition-all"
                           >
-                            <Compass size={11} />
+                            <Compass size={11} aria-hidden="true" />
                             <span>IFEMA Stand</span>
                           </a>
 
@@ -343,7 +342,7 @@ export function FiturDiplomaticViewer() {
                             rel="noopener noreferrer"
                             className="px-2 py-1 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded text-[10px] flex items-center gap-1 transition-all"
                           >
-                            <Globe size={11} />
+                            <Globe size={11} aria-hidden="true" />
                             <span>Turismo</span>
                           </a>
 
@@ -354,7 +353,7 @@ export function FiturDiplomaticViewer() {
                             rel="noopener noreferrer"
                             className="px-2 py-1 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded text-[10px] flex items-center gap-1 transition-all"
                           >
-                            <ExternalLink size={11} />
+                            <ExternalLink size={11} aria-hidden="true" />
                             <span>Web</span>
                           </a>
                         </div>
@@ -381,20 +380,19 @@ export function FiturDiplomaticViewer() {
                           <button
                             onClick={() => handleCopyText(d)}
                             title="Copiar oficio formal"
-                            className={`p-1.5 rounded-lg border text-xs transition-all cursor-pointer ${
-                              copiedId === d.lead_id
-                                ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
-                                : 'bg-white/5 hover:bg-white/10 border-white/10 text-zinc-300'
-                            }`}
+                            className={`p-1.5 rounded-lg border text-xs transition-all cursor-pointer ${copiedId === d.lead_id
+                              ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                              : 'bg-white/5 hover:bg-white/10 border-white/10 text-zinc-300'
+                              }`}
                           >
-                            {copiedId === d.lead_id ? <Check size={13} /> : <Copy size={13} />}
+                            {copiedId === d.lead_id ? <Check size={13} aria-hidden="true" /> : <Copy size={13} aria-hidden="true" />}
                           </button>
 
                           <button
                             onClick={() => setActiveDispatch(d)}
                             className="px-2.5 py-1.5 rounded-lg bg-[#ecb613]/15 hover:bg-[#ecb613]/30 border border-[#ecb613]/40 text-[#ecb613] font-bold text-[10px] flex items-center gap-1 transition-all cursor-pointer"
                           >
-                            <FileText size={12} />
+                            <FileText size={12} aria-hidden="true" />
                             <span>Oficio</span>
                           </button>
                         </div>
@@ -443,7 +441,7 @@ export function FiturDiplomaticViewer() {
                       {d.entity_name}
                     </h3>
                     <div className="flex items-center gap-1.5 text-xs text-zinc-400 font-mono mt-0.5">
-                      <MapPin size={12} className="text-[#ecb613]" />
+                      <MapPin size={12} className="text-[#ecb613]" aria-hidden="true" />
                       <span>{d.country_region} — {d.ifema_stand}</span>
                     </div>
                   </div>
@@ -456,7 +454,7 @@ export function FiturDiplomaticViewer() {
                       rel="noopener noreferrer"
                       className="px-2 py-1 rounded bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-[10px] font-mono border border-amber-500/20 flex items-center gap-1"
                     >
-                      <Compass size={11} /> Stand IFEMA
+                      <Compass size={11} aria-hidden="true" /> Stand IFEMA
                     </a>
                     <a
                       href={d.navigable_urls?.official_tourism_portal || `https://www.google.com/search?q=${encodeURIComponent(d.country_region + ' portal turismo oficial')}`}
@@ -464,7 +462,7 @@ export function FiturDiplomaticViewer() {
                       rel="noopener noreferrer"
                       className="px-2 py-1 rounded bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 text-[10px] font-mono border border-blue-500/20 flex items-center gap-1"
                     >
-                      <Globe size={11} /> Portal Oficial
+                      <Globe size={11} aria-hidden="true" /> Portal Oficial
                     </a>
                   </div>
 
@@ -478,13 +476,12 @@ export function FiturDiplomaticViewer() {
                   <div className="grid grid-cols-2 gap-2">
                     <button
                       onClick={() => handleCopyText(d)}
-                      className={`py-2 px-3 rounded-xl border text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                        copiedId === d.lead_id
-                          ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
-                          : 'bg-white/5 hover:bg-white/10 border-white/10 text-zinc-200'
-                      }`}
+                      className={`py-2 px-3 rounded-xl border text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${copiedId === d.lead_id
+                        ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                        : 'bg-white/5 hover:bg-white/10 border-white/10 text-zinc-200'
+                        }`}
                     >
-                      {copiedId === d.lead_id ? <Check size={13} /> : <Copy size={13} />}
+                      {copiedId === d.lead_id ? <Check size={13} aria-hidden="true" /> : <Copy size={13} aria-hidden="true" />}
                       <span>{copiedId === d.lead_id ? '¡Copiado!' : 'Copiar Oficio'}</span>
                     </button>
 
@@ -492,7 +489,7 @@ export function FiturDiplomaticViewer() {
                       onClick={() => setActiveDispatch(d)}
                       className="py-2 px-3 rounded-xl bg-[#ecb613]/10 hover:bg-[#ecb613]/20 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                     >
-                      <FileText size={13} />
+                      <FileText size={13} aria-hidden="true" />
                       <span>Ver Carta</span>
                     </button>
                   </div>
@@ -506,7 +503,12 @@ export function FiturDiplomaticViewer() {
       {/* 5. MODAL DE PREVISUALIZACIÓN DE CARTA OFICIAL */}
       {activeDispatch && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
-          <div className="max-w-2xl w-full max-h-[85vh] bg-[#0c0c14] border border-white/20 rounded-3xl p-4 sm:p-6 flex flex-col space-y-4 shadow-2xl overflow-hidden">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Carta oficial de ${activeDispatch.entity_name}`}
+            className="max-w-2xl w-full max-h-[85vh] bg-[#0c0c14] border border-white/20 rounded-3xl p-4 sm:p-6 flex flex-col space-y-4 shadow-2xl overflow-hidden"
+          >
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div>
                 <h4 className="text-base sm:text-lg font-bold font-syne text-white line-clamp-1">
@@ -518,6 +520,7 @@ export function FiturDiplomaticViewer() {
               </div>
               <button
                 onClick={() => setActiveDispatch(null)}
+                aria-label="Cerrar carta oficial"
                 className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-all text-xs font-mono cursor-pointer"
               >
                 Cerrar ✕
@@ -532,7 +535,7 @@ export function FiturDiplomaticViewer() {
                 rel="noopener noreferrer"
                 className="text-amber-400 hover:underline flex items-center gap-1"
               >
-                <Compass size={12} /> Stand IFEMA
+                <Compass size={12} aria-hidden="true" /> Stand IFEMA
               </a>
               <span className="text-zinc-600">·</span>
               <a
@@ -541,7 +544,7 @@ export function FiturDiplomaticViewer() {
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:underline flex items-center gap-1"
               >
-                <Globe size={12} /> Portal Oficial
+                <Globe size={12} aria-hidden="true" /> Portal Oficial
               </a>
               <span className="text-zinc-600">·</span>
               <a
@@ -550,7 +553,7 @@ export function FiturDiplomaticViewer() {
                 rel="noopener noreferrer"
                 className="text-purple-400 hover:underline flex items-center gap-1"
               >
-                <ExternalLink size={12} /> Web Entidad
+                <ExternalLink size={12} aria-hidden="true" /> Web Entidad
               </a>
             </div>
 
@@ -567,7 +570,7 @@ export function FiturDiplomaticViewer() {
                   onClick={() => handleCopyText(activeDispatch)}
                   className="flex-1 sm:flex-none px-4 py-2 bg-[#ecb613] text-black font-mono text-xs font-bold uppercase rounded-xl flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <Copy size={14} />
+                  <Copy size={14} aria-hidden="true" />
                   <span>Copiar al Portapapeles</span>
                 </button>
               </div>

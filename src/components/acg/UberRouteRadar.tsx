@@ -57,7 +57,13 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
     const destY = 38;
 
     return (
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-40" preserveAspectRatio="none">
+      <svg
+        viewBox={`0 0 ${width} ${height}`}
+        className="w-full h-40"
+        preserveAspectRatio="none"
+        role="img"
+        aria-label={`Ruta logística desde Méntrida Hub hasta ${selectedFinca.name}, ${state.finca.distanceKm} kilómetros`}
+      >
         <defs>
           <linearGradient id="acg-route-grad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor={ACG_ACCENT.oro} stopOpacity="0.95" />
@@ -93,7 +99,7 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <span className="w-8 h-8 rounded-lg bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center">
-                <Navigation size={15} className="text-[#ecb613]" />
+                <Navigation size={15} className="text-[#ecb613]" aria-hidden="true" />
               </span>
               <div>
                 <p className="font-syne text-sm font-black uppercase tracking-tight text-white">Radar Logístico Vectorial</p>
@@ -110,6 +116,7 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
           <select
             value={selectedFinca.id}
             onChange={(e) => handleSelectFinca(e.target.value)}
+            aria-label="Finca de destino homologada"
             className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-[#ecb613]"
           >
             {fincas.map((f) => (
@@ -128,7 +135,7 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
       <div className="lg:col-span-5 space-y-5">
         <div className="rounded-2xl bg-[#050507] border border-white/10 p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <Zap size={15} className="text-[#ecb613]" />
+            <Zap size={15} className="text-[#ecb613]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Aforo · {state.space.pax} pax</span>
           </div>
           <input
@@ -138,6 +145,8 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
             step={10}
             value={state.space.pax}
             onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { pax: Number(e.target.value) } })}
+            aria-label="Aforo del evento"
+            aria-valuetext={`${state.space.pax} personas`}
             className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer accent-[#ecb613]"
           />
           <div className="grid grid-cols-2 gap-3">
@@ -155,7 +164,7 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
 
         <div className="rounded-2xl bg-[#050507] border border-white/10 p-6 space-y-3">
           <div className="flex items-center gap-2">
-            <MapPin size={15} className="text-[#00E5FF]" />
+            <MapPin size={15} className="text-[#00E5FF]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Desglose Logístico SSOT</span>
           </div>
           <div className="space-y-2 font-mono text-xs">
@@ -170,6 +179,7 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
             <select
               value={state.space.venueType}
               onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { venueType: e.target.value as AcgVenueType } })}
+              aria-label="Tipo de venue y límite SPL"
               className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-[#00E5FF]"
             >
               {VENUE_OPTIONS.map((v) => (
@@ -180,7 +190,7 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
         </div>
 
         <div className={`p-4 rounded-xl border flex items-start gap-3 ${acoustic.isB2GCompliant ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-[#ecb613]/30 bg-[#ecb613]/5'}`}>
-          <ShieldCheck size={18} className={acoustic.isB2GCompliant ? 'text-emerald-400 shrink-0' : 'text-[#ecb613] shrink-0'} />
+          <ShieldCheck size={18} aria-hidden="true" className={acoustic.isB2GCompliant ? 'text-emerald-400 shrink-0' : 'text-[#ecb613] shrink-0'} />
           <p className="font-mono text-[11px] leading-relaxed text-white/70">
             {acoustic.isB2GCompliant
               ? `Protocolo B2G compatible: ${acoustic.maxSplDb} dB SPL < 75 dB (Art. 118 LCSP).`
@@ -193,7 +203,7 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
           onClick={() => dispatch({ type: 'GO_NEXT' })}
           className="w-full py-4 rounded-xl bg-[#ecb613] text-black font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(236,182,19,0.4)] transition-all flex items-center justify-center gap-2"
         >
-          <Home size={16} /> Confirmar ruta · Siguiente
+          <Home size={16} aria-hidden="true" /> Confirmar ruta · Siguiente
         </button>
       </div>
     </div>

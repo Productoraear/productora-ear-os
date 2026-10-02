@@ -42,8 +42,8 @@ function StripeCheckoutForm({ clientSecret, onSuccess }: { clientSecret: string,
       <div className="bg-white p-3 rounded-md mb-4">
         <PaymentElement />
       </div>
-      {error && <div className="text-[#FF455B] text-xs mb-4">{error}</div>}
-      <button 
+      {error && <div role="alert" className="text-[#FF455B] text-xs mb-4">{error}</div>}
+      <button
         disabled={isProcessing || !stripe || !elements}
         className="w-full bg-[#258DCD] text-white py-3 rounded-md font-bold uppercase tracking-widest text-xs hover:bg-[#258DCD]/80 transition-colors disabled:opacity-50"
       >
@@ -58,7 +58,7 @@ export function EarConcierge() {
   const [query, setQuery] = React.useState('');
   const [clientSecret, setClientSecret] = React.useState<string | null>(null);
   const [isFetchingSecret, setIsFetchingSecret] = React.useState(false);
-  
+
   const pathname = usePathname();
 
   // Web Audio API Sound Design
@@ -67,18 +67,18 @@ export function EarConcierge() {
       const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      
+
       osc.type = 'sine';
       osc.frequency.setValueAtTime(60, ctx.currentTime); // Deep sub frequency
       osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.1);
-      
+
       gain.gain.setValueAtTime(0, ctx.currentTime);
       gain.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 0.01);
       gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-      
+
       osc.connect(gain);
       gain.connect(ctx.destination);
-      
+
       osc.start();
       osc.stop(ctx.currentTime + 0.1);
     } catch (e) {
@@ -119,29 +119,30 @@ export function EarConcierge() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: 100, concept: 'Reserva vía Concierge' })
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.clientSecret) {
-          setClientSecret(data.clientSecret);
-        }
-        setIsFetchingSecret(false);
-      })
-      .catch(() => setIsFetchingSecret(false));
+        .then(res => res.json())
+        .then(data => {
+          if (data.clientSecret) {
+            setClientSecret(data.clientSecret);
+          }
+          setIsFetchingSecret(false);
+        })
+        .catch(() => setIsFetchingSecret(false));
     }
   }, [query, clientSecret, isFetchingSecret]);
 
   return (
-    <Command.Dialog 
-      open={open} 
-      onOpenChange={setOpen} 
+    <Command.Dialog
+      open={open}
+      onOpenChange={setOpen}
       label="EAR Concierge"
       className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]"
     >
       <div className="fixed inset-0 bg-[#030305]/80 backdrop-blur-xl" aria-hidden="true" />
-      
+      <span className="sr-only">Pulsa Escape para cerrar el concierge</span>
+
       <div className="relative w-full max-w-xl mx-4 bg-[#1a1a1a]/90 backdrop-blur-md border border-[#258DCD]/20 rounded-xl shadow-2xl overflow-hidden text-[#FFFFFF] z-10">
         <div className="flex items-center px-4 border-b border-[#258DCD]/20">
-          <Command.Input 
+          <Command.Input
             autoFocus
             value={query}
             onValueChange={setQuery}
@@ -157,13 +158,13 @@ export function EarConcierge() {
 
           {!clientSecret && query.length > 0 && !query.toLowerCase().includes('reservar') && (
             <Command.Group heading="Acciones Sugeridas" className="text-[#AAD6CD] text-xs px-2 py-3 uppercase tracking-widest">
-              <Command.Item 
+              <Command.Item
                 onSelect={() => setQuery('reservar fecha')}
                 className="px-4 py-3 cursor-pointer text-white hover:bg-[#258DCD]/20 rounded-md transition-colors"
               >
                 Inyectar Bloqueo de Fecha S-Class (100€)
               </Command.Item>
-              <Command.Item 
+              <Command.Item
                 className="px-4 py-3 cursor-pointer text-white hover:bg-[#258DCD]/20 rounded-md transition-colors"
               >
                 Auditar acústica de sala <span className="opacity-50">(Rider S-Class)</span>
@@ -175,15 +176,15 @@ export function EarConcierge() {
           {clientSecret && (
             <div className="p-2 animate-in fade-in zoom-in duration-300">
               <Elements stripe={stripePromise} options={{ clientSecret, appearance: { theme: 'night' } }}>
-                <StripeCheckoutForm 
-                  clientSecret={clientSecret} 
+                <StripeCheckoutForm
+                  clientSecret={clientSecret}
                   onSuccess={() => {
                     setQuery('');
                     setClientSecret(null);
                     setOpen(false);
                     // trigger success redirect or animation
                     window.location.href = '/success?source=concierge';
-                  }} 
+                  }}
                 />
               </Elements>
             </div>

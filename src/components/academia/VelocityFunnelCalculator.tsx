@@ -33,7 +33,7 @@ export default function VelocityFunnelCalculator() {
     <div className="rounded-[2rem] border border-[#FF2B44]/20 bg-[#030305] p-6 md:p-8">
       <div className="mb-6 flex items-center gap-3">
         <div className="rounded-xl border border-[#FF2B44]/30 bg-[#FF2B44]/5 p-2 text-[#FF2B44]">
-          <TrendingUp size={18} />
+          <TrendingUp size={18} aria-hidden="true" />
         </div>
         <div>
           <h3 className="font-mono text-sm font-bold uppercase tracking-widest text-white">
@@ -59,6 +59,7 @@ export default function VelocityFunnelCalculator() {
           onChange={(e) => setMonthlyListeners(Number(e.target.value))}
           className="w-full accent-[#FF2B44]"
           aria-label="Oyentes mensuales"
+          aria-valuetext={`${monthlyListeners.toLocaleString('es-ES')}`}
         />
       </label>
 
@@ -67,7 +68,7 @@ export default function VelocityFunnelCalculator() {
           <React.Fragment key={stage.id}>
             <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
-                <Users size={18} className="text-[#FF2B44]" />
+                <Users size={18} className="text-[#FF2B44]" aria-hidden="true" />
                 <div>
                   <p className="font-mono text-xs font-bold uppercase tracking-widest text-white">
                     {stage.label}
@@ -86,7 +87,7 @@ export default function VelocityFunnelCalculator() {
             </div>
             {idx < QUANTUM_GROWTH_FUNNEL.length - 1 && (
               <div className="flex justify-center text-[#FF2B44]/50">
-                <ArrowDown size={16} />
+                <ArrowDown size={16} aria-hidden="true" />
               </div>
             )}
           </React.Fragment>

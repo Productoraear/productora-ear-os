@@ -109,7 +109,7 @@ export default function AffiliateV2SovereignPanel() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-[#050505] text-white">
-                <RefreshCw className="w-6 h-6 text-[#ecb613] animate-spin" />
+                <RefreshCw className="w-6 h-6 text-[#ecb613] animate-spin" aria-hidden="true" />
             </div>
         );
     }
@@ -121,7 +121,7 @@ export default function AffiliateV2SovereignPanel() {
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5 border-b border-white/10 pb-6">
                     <div>
                         <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.25em] mb-3">
-                            <Crown size={12} />
+                            <Crown size={12} aria-hidden="true" />
                             <span>COMMISSION ENGINE · SPLIT SOBERANO 80/10/10</span>
                         </div>
                         <h1 className="text-3xl sm:text-5xl font-black uppercase text-white font-syne tracking-tight leading-none">
@@ -138,6 +138,7 @@ export default function AffiliateV2SovereignPanel() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             onKeyDown={(e) => e.key === "Enter" && load(email)}
+                            aria-label="Email del prescriptor"
                             className="flex-1 lg:flex-none px-4 py-2.5 bg-black/60 border border-white/10 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-[#ecb613] w-full lg:w-72"
                             placeholder="Email del prescriptor..."
                         />
@@ -146,15 +147,16 @@ export default function AffiliateV2SovereignPanel() {
                             disabled={loading}
                             className="p-2.5 bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 rounded-xl text-white transition-all cursor-pointer shrink-0"
                             title="Recargar telemetría"
+                            aria-label="Recargar telemetría del afiliado"
                         >
-                            <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
+                            <RefreshCw size={15} className={loading ? "animate-spin" : ""} aria-hidden="true" />
                         </button>
                     </div>
                 </div>
 
                 {error && (
-                    <div className="p-4 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs font-mono flex items-center gap-2">
-                        <AlertCircle size={16} /> {error}
+                    <div role="alert" className="p-4 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs font-mono flex items-center gap-2">
+                        <AlertCircle size={16} aria-hidden="true" /> {error}
                     </div>
                 )}
 
@@ -215,7 +217,7 @@ export default function AffiliateV2SovereignPanel() {
                                 disabled={!data?.referralLink}
                                 className="px-6 py-3 bg-[#ecb613] hover:bg-white text-black font-black text-xs font-mono uppercase tracking-wider rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-40 shadow-lg shadow-[#ecb613]/20"
                             >
-                                {copied ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                                {copied ? <CheckCircle2 size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
                                 <span>{copied ? "¡Copiado!" : "Copiar"}</span>
                             </button>
                         </div>
@@ -263,6 +265,7 @@ export default function AffiliateV2SovereignPanel() {
                                 type="number"
                                 value={payoutAmount}
                                 onChange={(e) => setPayoutAmount(e.target.value)}
+                                aria-label="Importe a retirar en euros"
                                 className="flex-1 p-3 bg-black/60 border border-white/10 rounded-2xl font-mono text-sm text-white focus:outline-none focus:border-[#ecb613]"
                                 placeholder="Importe en €"
                             />
@@ -271,7 +274,7 @@ export default function AffiliateV2SovereignPanel() {
                                 disabled={submittingPayout || !data || data.wallet.balance <= 0}
                                 className="px-6 py-3 bg-white/10 hover:bg-emerald-600 hover:text-white disabled:opacity-40 text-emerald-400 font-bold text-xs font-mono uppercase rounded-2xl transition-all cursor-pointer flex items-center gap-2"
                             >
-                                {submittingPayout ? <RefreshCw size={14} className="animate-spin" /> : <ArrowUpRight size={16} />}
+                                {submittingPayout ? <RefreshCw size={14} className="animate-spin" aria-hidden="true" /> : <ArrowUpRight size={16} aria-hidden="true" />}
                                 Solicitar
                             </button>
                         </div>
@@ -296,6 +299,7 @@ export default function AffiliateV2SovereignPanel() {
                                 <button
                                     key={t}
                                     onClick={() => setTab(t)}
+                                    aria-pressed={tab === t}
                                     className={`px-4 py-2 rounded-xl text-[10px] font-mono uppercase tracking-wider border transition-all cursor-pointer ${tab === t ? "bg-[#ecb613] text-black border-[#ecb613] font-bold" : "bg-black/30 border-white/10 text-zinc-400 hover:border-white/30"}`}
                                 >
                                     {t === "ledger" ? "Ledger" : t === "referrals" ? "Referidos" : "Payouts"}

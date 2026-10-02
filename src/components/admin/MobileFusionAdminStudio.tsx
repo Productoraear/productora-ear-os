@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Smartphone, Sliders, Sparkles, CheckCircle2, 
-  Layers, Save, RotateCcw, Zap, Heart, Radio, 
+import {
+  Smartphone, Sliders, Sparkles, CheckCircle2,
+  Layers, Save, RotateCcw, Zap, Heart, Radio,
   ShieldCheck, Volume2, ArrowRight, Eye, Play, Award,
   Home as HomeIcon, Check, Palette, Compass, Flame
 } from 'lucide-react';
@@ -180,7 +180,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
       setActiveTab(initialTab);
     }
   }, [initialTab]);
-  
+
   const [customConfig, setCustomConfig] = useState<CustomMixerConfig>({
     header: 'dynamic-island',
     discovery: 'tinder-deck',
@@ -214,7 +214,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
       if (savedHome) {
         setActiveHomepageMode(savedHome);
       }
-    } catch (e) {}
+    } catch (e) { }
   }, []);
 
   const handleSetHomepageScreen = (screenId: string) => {
@@ -224,7 +224,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
       window.dispatchEvent(new Event('storage'));
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2500);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleApplyPreset = (preset: typeof PRESET_COMBOS[0]) => {
@@ -234,7 +234,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
       localStorage.setItem('ear_mobile_fusion_config', JSON.stringify(preset.config));
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2500);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   const handleSaveCustom = () => {
@@ -243,7 +243,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
       localStorage.setItem('ear_editorial_hero_config', JSON.stringify(editorialConfig));
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 2500);
-    } catch (e) {}
+    } catch (e) { }
   };
 
   // Render the live preview dynamically in the iPhone simulator
@@ -279,7 +279,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
 
   return (
     <div className="bg-[#08080c] border border-white/10 rounded-3xl p-4 sm:p-8 space-y-6 text-white max-w-full overflow-hidden">
-      
+
       {/* 👑 HEADER ADMIN STUDIO */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 border-b border-white/10 pb-5">
         <div>
@@ -307,7 +307,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
               animate={{ opacity: 1, scale: 1 }}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-xs font-mono font-bold"
             >
-              <CheckCircle2 size={14} />
+              <CheckCircle2 size={14} aria-hidden="true" />
               <span>Guardado</span>
             </motion.div>
           )}
@@ -316,7 +316,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
             onClick={handleSaveCustom}
             className="py-2.5 px-5 rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#ecb613]/25 active:scale-95 transition-all"
           >
-            <Save size={16} />
+            <Save size={16} aria-hidden="true" />
             <span>Guardar Configuración</span>
           </button>
         </div>
@@ -326,71 +326,76 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
       <div className="flex flex-wrap items-center gap-2 bg-[#111116] p-2 rounded-2xl border border-white/10 w-full">
         <button
           onClick={() => setActiveTab('homepage')}
-          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-            activeTab === 'homepage' 
-              ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white hover:bg-white/5'
-          }`}
+          aria-pressed={activeTab === 'homepage'}
+          aria-label="Portada Activa"
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${activeTab === 'homepage'
+            ? 'bg-[#ecb613] text-black shadow-md'
+            : 'text-white/60 hover:text-white hover:bg-white/5'
+            }`}
         >
-          <HomeIcon size={14} />
+          <HomeIcon size={14} aria-hidden="true" />
           <span>Portada Activa</span>
         </button>
 
         <button
           onClick={() => setActiveTab('editorial-lego')}
-          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-            activeTab === 'editorial-lego' 
-              ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white hover:bg-white/5'
-          }`}
+          aria-pressed={activeTab === 'editorial-lego'}
+          aria-label="Lego 4 Perfiles"
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${activeTab === 'editorial-lego'
+            ? 'bg-[#ecb613] text-black shadow-md'
+            : 'text-white/60 hover:text-white hover:bg-white/5'
+            }`}
         >
-          <Sparkles size={14} />
+          <Sparkles size={14} aria-hidden="true" />
           <span>Lego 4 Perfiles</span>
         </button>
 
         <button
           onClick={() => setActiveTab('custom')}
-          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-            activeTab === 'custom' 
-              ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white hover:bg-white/5'
-          }`}
+          aria-pressed={activeTab === 'custom'}
+          aria-label="Mezclador Lego"
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${activeTab === 'custom'
+            ? 'bg-[#ecb613] text-black shadow-md'
+            : 'text-white/60 hover:text-white hover:bg-white/5'
+            }`}
         >
-          <Sliders size={14} />
+          <Sliders size={14} aria-hidden="true" />
           <span>Mezclador Lego</span>
         </button>
 
         <button
           onClick={() => setActiveTab('presets')}
-          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-            activeTab === 'presets' 
-              ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white hover:bg-white/5'
-          }`}
+          aria-pressed={activeTab === 'presets'}
+          aria-label="5 Combos Mobile"
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${activeTab === 'presets'
+            ? 'bg-[#ecb613] text-black shadow-md'
+            : 'text-white/60 hover:text-white hover:bg-white/5'
+            }`}
         >
-          <Compass size={14} />
+          <Compass size={14} aria-hidden="true" />
           <span>5 Combos Mobile</span>
         </button>
 
         <button
           onClick={() => setActiveTab('catalog')}
-          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${
-            activeTab === 'catalog' 
-              ? 'bg-[#ecb613] text-black shadow-md' 
-              : 'text-white/60 hover:text-white hover:bg-white/5'
-          }`}
+          aria-pressed={activeTab === 'catalog'}
+          aria-label="10 Arquetipos"
+          className={`py-2 px-3.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${activeTab === 'catalog'
+            ? 'bg-[#ecb613] text-black shadow-md'
+            : 'text-white/60 hover:text-white hover:bg-white/5'
+            }`}
         >
-          <Layers size={14} />
+          <Layers size={14} aria-hidden="true" />
           <span>10 Arquetipos</span>
         </button>
       </div>
 
       {/* 🚀 MAIN STUDIO GRID: CONTROLS (LEFT) + LIVE MOBILE PREVIEW (RIGHT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
+
         {/* LEFT COLUMN: CONTROLS & SETTINGS (7 COLS) */}
         <div className="lg:col-span-7 space-y-5">
-          
+
           {/* TAB 0: HOMEPAGE SCREEN SELECTOR */}
           {activeTab === 'homepage' && (
             <div className="space-y-3.5">
@@ -404,12 +409,20 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                   return (
                     <div
                       key={screen.id}
+                      role="button"
+                      tabIndex={0}
+                      aria-pressed={isSelected}
                       onClick={() => handleSetHomepageScreen(screen.id)}
-                      className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-start justify-between ${
-                        isSelected 
-                          ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-lg shadow-[#ecb613]/10 scale-[1.01]' 
-                          : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
-                      }`}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleSetHomepageScreen(screen.id);
+                        }
+                      }}
+                      className={`p-3.5 rounded-2xl border cursor-pointer transition-all flex items-start justify-between ${isSelected
+                        ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-lg shadow-[#ecb613]/10 scale-[1.01]'
+                        : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
+                        }`}
                     >
                       <div className="space-y-1 pr-3">
                         <div className="flex items-center gap-2">
@@ -470,11 +483,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={opt.id}
                       onClick={() => setEditorialConfig({ ...editorialConfig, activeDefaultProfile: opt.id as any })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-center transition-all ${
-                        editorialConfig.activeDefaultProfile === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-center transition-all ${editorialConfig.activeDefaultProfile === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -496,11 +508,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={opt.id}
                       onClick={() => setEditorialConfig({ ...editorialConfig, themeStyle: opt.id as any })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
-                        editorialConfig.themeStyle === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${editorialConfig.themeStyle === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -521,11 +532,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={i}
                       onClick={() => setEditorialConfig({ ...editorialConfig, parallaxEnabled: opt.id })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
-                        editorialConfig.parallaxEnabled === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${editorialConfig.parallaxEnabled === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -547,11 +557,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={opt.id}
                       onClick={() => setEditorialConfig({ ...editorialConfig, ctaAction: opt.id as any })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
-                        editorialConfig.ctaAction === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${editorialConfig.ctaAction === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613]'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -587,11 +596,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={opt.id}
                       onClick={() => setCustomConfig({ ...customConfig, header: opt.id as any })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
-                        customConfig.header === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${customConfig.header === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -614,11 +622,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={opt.id}
                       onClick={() => setCustomConfig({ ...customConfig, discovery: opt.id as any })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
-                        customConfig.discovery === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${customConfig.discovery === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -641,11 +648,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={opt.id}
                       onClick={() => setCustomConfig({ ...customConfig, logistics: opt.id as any })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
-                        customConfig.logistics === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${customConfig.logistics === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -667,11 +673,10 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                     <button
                       key={opt.id}
                       onClick={() => setCustomConfig({ ...customConfig, cta: opt.id as any })}
-                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${
-                        customConfig.cta === opt.id 
-                          ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md' 
-                          : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                      className={`p-2.5 rounded-xl border text-xs font-mono text-left transition-all ${customConfig.cta === opt.id
+                        ? 'bg-[#ecb613] text-black font-bold border-[#ecb613] shadow-md'
+                        : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                        }`}
                     >
                       {opt.label}
                     </button>
@@ -687,19 +692,27 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
                 SELECCIONA UNA COMBINACIÓN MAESTRA PRECONFIGURADA
               </span>
-              
+
               <div className="space-y-2.5">
                 {PRESET_COMBOS.map(preset => {
                   const isSelected = preset.id === selectedPresetId;
                   return (
                     <div
                       key={preset.id}
+                      role="button"
+                      tabIndex={0}
+                      aria-pressed={isSelected}
                       onClick={() => handleApplyPreset(preset)}
-                      className={`p-3.5 rounded-2xl border cursor-pointer transition-all relative overflow-hidden ${
-                        isSelected 
-                          ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-lg shadow-[#ecb613]/10' 
-                          : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
-                      }`}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          handleApplyPreset(preset);
+                        }
+                      }}
+                      className={`p-3.5 rounded-2xl border cursor-pointer transition-all relative overflow-hidden ${isSelected
+                        ? 'bg-gradient-to-r from-[#181822] to-[#121218] border-[#ecb613] shadow-lg shadow-[#ecb613]/10'
+                        : 'bg-[#0e0e13] border-white/10 hover:border-white/20'
+                        }`}
                     >
                       <div className="flex items-start justify-between">
                         <div className="space-y-1 pr-2">
@@ -714,7 +727,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
 
                         {isSelected && (
                           <div className="w-5 h-5 rounded-full bg-[#ecb613] text-black flex items-center justify-center shrink-0">
-                            <CheckCircle2 size={14} />
+                            <CheckCircle2 size={14} aria-hidden="true" />
                           </div>
                         )}
                       </div>
@@ -731,7 +744,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
               <span className="text-xs font-mono font-bold uppercase tracking-widest text-white/50 block">
                 EXPLORA LOS 10 ARQUETIPOS EN BRUTO
               </span>
-              
+
               <div className="grid grid-cols-2 gap-2">
                 {[
                   { id: 1, name: '1. Neural Tinder-Deck' },
@@ -748,11 +761,11 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
                   <button
                     key={item.id}
                     onClick={() => setCatalogArchetypeIndex(item.id)}
-                    className={`p-3 rounded-2xl border text-xs font-mono font-bold text-left transition-all ${
-                      catalogArchetypeIndex === item.id 
-                        ? 'bg-[#ecb613] text-black border-[#ecb613] shadow-md' 
-                        : 'bg-[#0e0e13] border-white/10 text-white/70 hover:bg-white/5'
-                    }`}
+                    aria-pressed={catalogArchetypeIndex === item.id}
+                    className={`p-3 rounded-2xl border text-xs font-mono font-bold text-left transition-all ${catalogArchetypeIndex === item.id
+                      ? 'bg-[#ecb613] text-black border-[#ecb613] shadow-md'
+                      : 'bg-[#0e0e13] border-white/10 text-white/70 hover:bg-white/5'
+                      }`}
                   >
                     {item.name}
                   </button>
@@ -767,7 +780,7 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
         <div className="lg:col-span-5 flex flex-col items-center">
           <div className="w-full flex items-center justify-between mb-2 px-2 text-xs font-mono text-white/60">
             <span className="flex items-center gap-1.5">
-              <Eye size={14} className="text-[#ecb613]" /> Previsualización en Vivo
+              <Eye size={14} className="text-[#ecb613]" aria-hidden="true" /> Previsualización en Vivo
             </span>
             <span className="text-emerald-400">● S-Class Simulator</span>
           </div>
@@ -784,15 +797,15 @@ export default function MobileFusionAdminStudio({ initialTab = 'homepage' }: Mob
             <div className="flex-1 overflow-y-auto overflow-x-hidden no-scrollbar pt-5 relative flex flex-col bg-[#050505] w-full max-w-full">
               {activeTab === 'catalog' ? (
                 catalogArchetypeIndex === 1 ? <Archetype1_TinderDeck /> :
-                catalogArchetypeIndex === 2 ? <Archetype2_UberRadar /> :
-                catalogArchetypeIndex === 3 ? <Archetype3_AirbnbBento /> :
-                catalogArchetypeIndex === 4 ? <Archetype4_BodasTimeline /> :
-                catalogArchetypeIndex === 5 ? <Archetype5_CyberGlassDock /> :
-                catalogArchetypeIndex === 6 ? <Archetype6_FastMatchDispatch /> :
-                catalogArchetypeIndex === 7 ? <Archetype7_WeddingMoodboardConcierge /> :
-                catalogArchetypeIndex === 8 ? <Archetype8_AcousticPressureMatrix /> :
-                catalogArchetypeIndex === 9 ? <Archetype9_StorysellingStream /> :
-                <Archetype10_SovereignFusionMaster />
+                  catalogArchetypeIndex === 2 ? <Archetype2_UberRadar /> :
+                    catalogArchetypeIndex === 3 ? <Archetype3_AirbnbBento /> :
+                      catalogArchetypeIndex === 4 ? <Archetype4_BodasTimeline /> :
+                        catalogArchetypeIndex === 5 ? <Archetype5_CyberGlassDock /> :
+                          catalogArchetypeIndex === 6 ? <Archetype6_FastMatchDispatch /> :
+                            catalogArchetypeIndex === 7 ? <Archetype7_WeddingMoodboardConcierge /> :
+                              catalogArchetypeIndex === 8 ? <Archetype8_AcousticPressureMatrix /> :
+                                catalogArchetypeIndex === 9 ? <Archetype9_StorysellingStream /> :
+                                  <Archetype10_SovereignFusionMaster />
               ) : (
                 renderCustomPreview()
               )}

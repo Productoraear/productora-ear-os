@@ -95,8 +95,8 @@ export default function ScraperLiveMonitorWidget() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-[#1a1a24] pb-4">
         <div className="flex items-center gap-3">
           <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
-            <Radio className="w-5 h-5 text-emerald-400 animate-pulse" />
-            <span className="absolute -top-1 -right-1 flex h-3 w-3">
+            <Radio className="w-5 h-5 text-emerald-400 animate-pulse" aria-hidden="true" />
+            <span className="absolute -top-1 -right-1 flex h-3 w-3" aria-hidden="true">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
             </span>
@@ -126,6 +126,7 @@ export default function ScraperLiveMonitorWidget() {
               type="checkbox"
               checked={autoRefresh}
               onChange={(e) => setAutoRefresh(e.target.checked)}
+              aria-label="Auto-sync de telemetría"
               className="rounded bg-zinc-900 border-zinc-700 text-[#ecb613] focus:ring-0 focus:ring-offset-0 w-3.5 h-3.5"
             />
             <span>Auto-Sync (3.5s)</span>
@@ -137,7 +138,7 @@ export default function ScraperLiveMonitorWidget() {
             className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-[#ecb613]/50 text-xs font-mono text-zinc-300 flex items-center gap-1.5 transition-all"
             title="Sincronizar ahora"
           >
-            <RefreshCw className={`w-3.5 h-3.5 text-[#ecb613] ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-3.5 h-3.5 text-[#ecb613] ${isRefreshing ? 'animate-spin' : ''}`} aria-hidden="true" />
             <span>Refrescar</span>
           </button>
         </div>
@@ -148,7 +149,7 @@ export default function ScraperLiveMonitorWidget() {
         <div className="bg-[#030305] p-3 rounded-xl border border-zinc-800/60">
           <div className="flex items-center justify-between text-zinc-400 text-xs mb-1">
             <span className="flex items-center gap-1">
-              <Flame className="w-3.5 h-3.5 text-[#ecb613]" /> Capturados Hoy
+              <Flame className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" /> Capturados Hoy
             </span>
           </div>
           <div className="text-xl font-mono font-bold text-white">
@@ -162,7 +163,7 @@ export default function ScraperLiveMonitorWidget() {
         <div className="bg-[#030305] p-3 rounded-xl border border-zinc-800/60">
           <div className="flex items-center justify-between text-zinc-400 text-xs mb-1">
             <span className="flex items-center gap-1">
-              <Database className="w-3.5 h-3.5 text-cyan-400" /> Bóveda SSOT
+              <Database className="w-3.5 h-3.5 text-cyan-400" aria-hidden="true" /> Bóveda SSOT
             </span>
           </div>
           <div className="text-xl font-mono font-bold text-white">112.189</div>
@@ -174,7 +175,7 @@ export default function ScraperLiveMonitorWidget() {
         <div className="bg-[#030305] p-3 rounded-xl border border-zinc-800/60">
           <div className="flex items-center justify-between text-zinc-400 text-xs mb-1">
             <span className="flex items-center gap-1">
-              <Zap className="w-3.5 h-3.5 text-purple-400" /> Peticiones WAF
+              <Zap className="w-3.5 h-3.5 text-purple-400" aria-hidden="true" /> Peticiones WAF
             </span>
           </div>
           <div className="text-xl font-mono font-bold text-white">
@@ -188,7 +189,7 @@ export default function ScraperLiveMonitorWidget() {
         <div className="bg-[#030305] p-3 rounded-xl border border-zinc-800/60">
           <div className="flex items-center justify-between text-zinc-400 text-xs mb-1">
             <span className="flex items-center gap-1">
-              <Activity className="w-3.5 h-3.5 text-emerald-400" /> Cola Caótica
+              <Activity className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" /> Cola Caótica
             </span>
           </div>
           <div className="text-xl font-mono font-bold text-white">2.835</div>
@@ -202,7 +203,7 @@ export default function ScraperLiveMonitorWidget() {
       <div className="mt-4">
         <div className="flex items-center justify-between pb-2 text-xs font-mono text-zinc-400">
           <div className="flex items-center gap-2">
-            <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+            <Terminal className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
             <span className="text-white font-medium">Terminal Telemetría Daemon (Salida Estocástica en Vivo)</span>
           </div>
           <div className="text-[11px] text-zinc-500 font-mono">
@@ -216,7 +217,7 @@ export default function ScraperLiveMonitorWidget() {
         >
           {loading ? (
             <div className="text-zinc-500 flex items-center gap-2 py-4">
-              <RefreshCw className="w-4 h-4 animate-spin text-[#ecb613]" />
+              <RefreshCw className="w-4 h-4 animate-spin text-[#ecb613]" aria-hidden="true" />
               <span>Sincronizando flujo del scraper en segundo plano...</span>
             </div>
           ) : data?.log_tail && data.log_tail.length > 0 ? (
@@ -245,7 +246,7 @@ export default function ScraperLiveMonitorWidget() {
       {/* FOOTER CON ENLACES OPERATIVOS */}
       <div className="mt-4 pt-3 border-t border-[#1a1a24] flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="text-zinc-400 text-[11px] font-mono flex items-center gap-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
           <span>Volcado directo a bóveda segura: <code className="text-zinc-300">scripts/nightcrawler_results/new_online_providers.json</code></span>
         </div>
 
@@ -254,7 +255,7 @@ export default function ScraperLiveMonitorWidget() {
             href="/admin/proveedores"
             className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 text-xs font-mono flex items-center gap-1.5 transition-all"
           >
-            <Eye className="w-3.5 h-3.5 text-[#ecb613]" />
+            <Eye className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
             <span>Ver Fichas en Directorio</span>
           </Link>
 
@@ -262,7 +263,7 @@ export default function ScraperLiveMonitorWidget() {
             href="/admin/call-center"
             className="px-3 py-1.5 rounded-lg bg-[#ecb613] hover:bg-amber-400 text-black font-extrabold text-xs font-mono flex items-center gap-1.5 transition-all shadow-md shadow-[#ecb613]/20"
           >
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Abrir Call Center</span>
           </Link>
         </div>

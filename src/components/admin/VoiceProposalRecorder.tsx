@@ -212,7 +212,7 @@ export function VoiceProposalRecorder() {
               className="px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border border-white/20 bg-white/5 hover:bg-white/10 text-neutral-200 flex items-center gap-2 transition-all cursor-pointer"
               title="Adjuntar foto de notas manuscritas o captura de pantalla"
             >
-              <Camera className="w-4 h-4 text-[#ecb613]" />
+              <Camera className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
               <span className="hidden sm:inline">Subir Foto</span>
             </button>
             <input
@@ -227,18 +227,18 @@ export function VoiceProposalRecorder() {
               <button
                 onClick={toggleListen}
                 className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${isListening
-                    ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/30'
-                    : 'bg-[#ecb613] text-black hover:bg-[#d8a40f] shadow-lg shadow-[#ecb613]/20'
+                  ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/30'
+                  : 'bg-[#ecb613] text-black hover:bg-[#d8a40f] shadow-lg shadow-[#ecb613]/20'
                   }`}
               >
                 {isListening ? (
                   <>
-                    <MicOff className="w-4 h-4" />
+                    <MicOff className="w-4 h-4" aria-hidden="true" />
                     Pausar Dictado
                   </>
                 ) : (
                   <>
-                    <Mic className="w-4 h-4" />
+                    <Mic className="w-4 h-4" aria-hidden="true" />
                     Pulsar para Hablar
                   </>
                 )}
@@ -252,13 +252,14 @@ export function VoiceProposalRecorder() {
           <textarea
             value={transcription}
             onChange={(e) => setTranscription(e.target.value)}
+            aria-label="Transcripción del dictado"
             placeholder="Dicta con tu voz o escribe las notas de la visita: novios, finca, servicios de ceremonia, cóctel, barra libre, opcionales..."
             rows={4}
             className="w-full rounded-xl border border-white/10 bg-[#0a0a0e] p-4 text-sm text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-[#ecb613]/60 font-sans leading-relaxed"
           />
           {isListening && (
             <div className="absolute bottom-3 right-3 flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#FF2B44]/20 border border-[#FF2B44]/30 text-[#FF2B44] text-[10px] font-mono">
-              <span className="w-2 h-2 rounded-full bg-[#FF2B44] animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-[#FF2B44] animate-ping" aria-hidden="true" />
               Escuchando en vivo...
             </div>
           )}
@@ -287,7 +288,7 @@ export function VoiceProposalRecorder() {
               className="p-1.5 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-rose-400 transition-colors"
               title="Quitar imagen"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4" aria-hidden="true" />
             </button>
           </div>
         )}
@@ -323,11 +324,11 @@ export function VoiceProposalRecorder() {
             onClick={handleAnalyze}
             disabled={(!transcription.trim() && !attachedImage) || analyzing}
             className={`px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all ${(transcription.trim() || attachedImage) && !analyzing
-                ? 'bg-white text-black hover:bg-neutral-200 cursor-pointer shadow-lg'
-                : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
+              ? 'bg-white text-black hover:bg-neutral-200 cursor-pointer shadow-lg'
+              : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
               }`}
           >
-            <Sparkles className="w-4 h-4 text-[#ecb613]" />
+            <Sparkles className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
             {analyzing ? 'Analizando Multimodal...' : 'Analizar Dictado + Imagen y Casar'}
           </button>
         </div>
@@ -380,10 +381,10 @@ export function VoiceProposalRecorder() {
               <div
                 key={linea.id}
                 className={`flex items-center justify-between p-3 rounded-xl border text-xs ${linea.esAmarilla
-                    ? 'border-amber-500/40 bg-amber-500/5'
-                    : linea.esOpcional
-                      ? 'border-[#ecb613]/30 bg-[#ecb613]/5'
-                      : 'border-white/10 bg-[#09090d]'
+                  ? 'border-amber-500/40 bg-amber-500/5'
+                  : linea.esOpcional
+                    ? 'border-[#ecb613]/30 bg-[#ecb613]/5'
+                    : 'border-white/10 bg-[#09090d]'
                   }`}
               >
                 <div className="min-w-0 flex-1">
@@ -429,7 +430,7 @@ export function VoiceProposalRecorder() {
               disabled={saving}
               className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#ecb613] text-black font-extrabold text-xs uppercase tracking-wider hover:bg-[#d8a40f] transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 cursor-pointer"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4" aria-hidden="true" />
               {saving ? 'Generando Propuesta...' : 'Generar Propuesta y Enlace Soberano'}
             </button>
           </div>
@@ -440,7 +441,7 @@ export function VoiceProposalRecorder() {
       {generatedUrl && (
         <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-6 shadow-xl animate-in zoom-in-95 duration-200">
           <div className="flex items-center gap-2 text-emerald-400 text-sm font-bold">
-            <CheckCircle2 className="w-5 h-5" />
+            <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
             ¡Propuesta Oficial Creada con Éxito!
           </div>
 
@@ -457,7 +458,7 @@ export function VoiceProposalRecorder() {
               onClick={copyToClipboard}
               className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-bold text-white flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              <Copy className="w-3.5 h-3.5" />
+              <Copy className="w-3.5 h-3.5" aria-hidden="true" />
               {copied ? '¡Copiado!' : 'Copiar'}
             </button>
 
@@ -468,7 +469,7 @@ export function VoiceProposalRecorder() {
               className="p-1.5 rounded-lg bg-[#ecb613] text-black hover:bg-[#d8a40f] transition-colors"
               title="Abrir Propuesta"
             >
-              <ExternalLink className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" aria-hidden="true" />
             </a>
           </div>
         </div>

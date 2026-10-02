@@ -69,7 +69,7 @@ export default function SpotifyAlgorithmAuditor() {
     <div className="rounded-[2rem] border border-[#FF2B44]/20 bg-[#030305] p-6 md:p-8">
       <div className="mb-6 flex items-center gap-3">
         <div className="rounded-xl border border-[#FF2B44]/30 bg-[#FF2B44]/5 p-2 text-[#FF2B44]">
-          <Gauge size={18} />
+          <Gauge size={18} aria-hidden="true" />
         </div>
         <div>
           <h3 className="font-mono text-sm font-bold uppercase tracking-widest text-white">
@@ -107,6 +107,7 @@ export default function SpotifyAlgorithmAuditor() {
                 }
                 className="w-full accent-[#FF2B44]"
                 aria-label={field.label}
+                aria-valuetext={`${input[field.key]}${field.suffix}`}
               />
             </label>
           ))}
@@ -114,7 +115,12 @@ export default function SpotifyAlgorithmAuditor() {
 
         {/* Resultado */}
         <div className="space-y-5">
-          <div className={`rounded-2xl border p-6 text-center ${TIER_STYLE[result.tier]}`}>
+          <div
+            role="status"
+            aria-live="polite"
+            aria-label={`Score algorítmico: ${result.score}. Nivel ${result.tier}`}
+            className={`rounded-2xl border p-6 text-center ${TIER_STYLE[result.tier]}`}
+          >
             <div className="font-mono text-5xl font-black">{result.score}</div>
             <div className="mt-1 font-mono text-xs uppercase tracking-[0.3em]">
               {result.tier}
@@ -128,7 +134,15 @@ export default function SpotifyAlgorithmAuditor() {
                   <span>{item.signal}</span>
                   <span>{item.normalized}%</span>
                 </div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
+                <div
+                  role="progressbar"
+                  aria-label={`${item.signal}: ${item.normalized}%`}
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={item.normalized}
+                  aria-valuetext={`${item.normalized}%`}
+                  className="h-1.5 overflow-hidden rounded-full bg-white/5"
+                >
                   <div
                     className="h-full rounded-full bg-[#FF2B44]"
                     style={{ width: `${item.normalized}%` }}
@@ -143,7 +157,7 @@ export default function SpotifyAlgorithmAuditor() {
             <ul className="mt-3 space-y-1.5">
               {result.nextActions.map((action) => (
                 <li key={action} className="flex gap-2 text-[11px] text-white/50">
-                  <Activity size={12} className="mt-0.5 shrink-0 text-[#FF2B44]" />
+                  <Activity size={12} aria-hidden="true" className="mt-0.5 shrink-0 text-[#FF2B44]" />
                   {action}
                 </li>
               ))}
@@ -163,13 +177,13 @@ export default function SpotifyAlgorithmAuditor() {
               onClick={handleExport}
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#FF2B44] px-5 py-3 font-mono text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-[#ff5063]"
             >
-              <Download size={14} /> Exportar
+              <Download size={14} aria-hidden="true" /> Exportar
             </button>
           </div>
 
           {exported && (
             <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-[#00E5FF]">
-              <ShieldCheck size={12} /> Auditoría sellada por EAR OS
+              <ShieldCheck size={12} aria-hidden="true" /> Auditoría sellada por EAR OS
             </p>
           )}
         </div>

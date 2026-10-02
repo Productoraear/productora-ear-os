@@ -2,19 +2,19 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Smartphone, 
-  Sparkles, 
-  MessageSquare, 
-  Phone, 
-  CheckCircle2, 
-  Save, 
-  Sliders, 
-  Eye, 
-  Zap, 
-  ShieldCheck, 
-  Users, 
-  Volume2, 
+import {
+  Smartphone,
+  Sparkles,
+  MessageSquare,
+  Phone,
+  CheckCircle2,
+  Save,
+  Sliders,
+  Eye,
+  Zap,
+  ShieldCheck,
+  Users,
+  Volume2,
   ArrowRight,
   Radio,
   Layers,
@@ -35,11 +35,11 @@ import {
   RotateCcw,
   Check
 } from 'lucide-react';
-import { 
-  useMobileExperience, 
-  MobileExperienceMode, 
+import {
+  useMobileExperience,
+  MobileExperienceMode,
   RoutingStrategy,
-  MobileStudioConfig 
+  MobileStudioConfig
 } from '@/lib/config/mobile-experience-store';
 
 interface ModeCardOption {
@@ -192,7 +192,7 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
       {onNavigateToTab && (
         <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-[#ecb613]/5 to-transparent border border-[#ecb613]/30 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <Sparkles size={18} className="text-[#ecb613]" />
+            <Sparkles size={18} className="text-[#ecb613]" aria-hidden="true" />
             <span className="text-xs font-mono text-zinc-300">
               <strong className="text-white">Laboratorio Completo S-Class:</strong> ¿Deseas modificar los módulos Lego, los 5 Combos o las Portadas Home?
             </span>
@@ -202,28 +202,28 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
               onClick={() => onNavigateToTab('presets')}
               className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-zinc-200 text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Smartphone size={13} />
+              <Smartphone size={13} aria-hidden="true" />
               <span>5 Combos Maestros</span>
             </button>
             <button
               onClick={() => onNavigateToTab('custom')}
               className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-zinc-200 text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Layers size={13} />
+              <Layers size={13} aria-hidden="true" />
               <span>Mezclador Modular Lego</span>
             </button>
             <button
               onClick={() => onNavigateToTab('homepage')}
               className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-zinc-200 text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Eye size={13} />
+              <Eye size={13} aria-hidden="true" />
               <span>7 Portadas Home</span>
             </button>
             <button
               onClick={() => onNavigateToTab('editorial-lego')}
               className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-[#ecb613] hover:text-black text-zinc-200 text-xs font-mono font-bold transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Sliders size={13} />
+              <Sliders size={13} aria-hidden="true" />
               <span>Editorial Bento</span>
             </button>
           </div>
@@ -234,7 +234,7 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#0d0d14] via-[#121220] to-[#0d0d14] border border-[#ecb613]/30 shadow-2xl relative overflow-hidden">
         <div className="space-y-2 relative z-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono font-bold uppercase tracking-wider">
-            <Cpu size={14} />
+            <Cpu size={14} aria-hidden="true" />
             <span>CENTRO DE MANDO TÁCTICO · ENRUTAMIENTO CONTEXTUAL EN EL EDGE</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-black uppercase text-white tracking-tight font-syne">
@@ -249,14 +249,14 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
           {/* BOTÓN KILL-SWITCH DE EMERGENCIA */}
           <button
             onClick={toggleEmergencyKillSwitch}
-            className={`px-4 py-3 rounded-2xl border font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
-              guardrails.emergencyKillSwitch
-                ? 'bg-red-500 text-white border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.5)] animate-pulse'
-                : 'bg-white/5 border-white/10 text-zinc-400 hover:text-red-400 hover:border-red-500/30'
-            }`}
+            className={`px-4 py-3 rounded-2xl border font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${guardrails.emergencyKillSwitch
+              ? 'bg-red-500 text-white border-red-400 shadow-[0_0_20px_rgba(239,68,68,0.5)] animate-pulse'
+              : 'bg-white/5 border-white/10 text-zinc-400 hover:text-red-400 hover:border-red-500/30'
+              }`}
             title="Drena instantáneamente todos los widgets flotantes en caso de fallo técnico"
+            aria-pressed={guardrails.emergencyKillSwitch}
           >
-            <AlertTriangle size={15} />
+            <AlertTriangle size={15} aria-hidden="true" />
             <span>{guardrails.emergencyKillSwitch ? 'Kill-Switch ACTIVO' : 'Kill-Switch'}</span>
           </button>
 
@@ -270,12 +270,12 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
               <span className="animate-pulse">Guardando...</span>
             ) : savedSuccess ? (
               <>
-                <CheckCircle2 size={16} className="text-black" />
+                <CheckCircle2 size={16} className="text-black" aria-hidden="true" />
                 <span>¡Aplicado en Vivo!</span>
               </>
             ) : (
               <>
-                <Save size={16} />
+                <Save size={16} aria-hidden="true" />
                 <span>Guardar y Aplicar</span>
               </>
             )}
@@ -355,22 +355,22 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
         <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-black/60 border border-white/10 shrink-0">
           <button
             onClick={() => setLocalRoutingStrategy('AUTONOMOUS_ADAPTIVE')}
-            className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
-              routingStrategy === 'AUTONOMOUS_ADAPTIVE'
-                ? 'bg-[#ecb613] text-black shadow-lg'
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            aria-pressed={routingStrategy === 'AUTONOMOUS_ADAPTIVE'}
+            className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${routingStrategy === 'AUTONOMOUS_ADAPTIVE'
+              ? 'bg-[#ecb613] text-black shadow-lg'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             ⚡ Autónomo Adaptativo
           </button>
 
           <button
             onClick={() => setLocalRoutingStrategy('MANUAL_OVERRIDE')}
-            className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${
-              routingStrategy === 'MANUAL_OVERRIDE'
-                ? 'bg-white/20 text-white shadow-lg'
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            aria-pressed={routingStrategy === 'MANUAL_OVERRIDE'}
+            className={`px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase tracking-wider transition-all cursor-pointer ${routingStrategy === 'MANUAL_OVERRIDE'
+              ? 'bg-white/20 text-white shadow-lg'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             🎮 Manual Override
           </button>
@@ -379,10 +379,10 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
 
       {/* GRID PRINCIPAL: SELECCIÓN DE MODOS (IZQUIERDA) + MOCKUP EN VIVO (DERECHA) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* COLUMNA IZQUIERDA: TRAJES MÓVILES + GUARDRAILS + PERSONALIDAD */}
         <div className="lg:col-span-7 space-y-6">
-          
+
           {/* SELECCIÓN DE MODO */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
@@ -401,12 +401,20 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                 return (
                   <div
                     key={mode.id}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isSelected}
                     onClick={() => setSelectedMode(mode.id)}
-                    className={`p-5 rounded-2xl border transition-all cursor-pointer relative group ${
-                      isSelected
-                        ? 'bg-gradient-to-r from-[#12121f] to-[#0a0a14] border-[#ecb613] shadow-[0_0_30px_rgba(236,182,19,0.15)]'
-                        : 'bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
-                    }`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setSelectedMode(mode.id);
+                      }
+                    }}
+                    className={`p-5 rounded-2xl border transition-all cursor-pointer relative group ${isSelected
+                      ? 'bg-gradient-to-r from-[#12121f] to-[#0a0a14] border-[#ecb613] shadow-[0_0_30px_rgba(236,182,19,0.15)]'
+                      : 'bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
+                      }`}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-1.5 flex-1">
@@ -426,10 +434,9 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                         </p>
                       </div>
 
-                      <div className={`w-6 h-6 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
-                        isSelected ? 'border-[#ecb613] bg-[#ecb613]' : 'border-white/20'
-                      }`}>
-                        {isSelected && <CheckCircle2 size={16} className="text-black" />}
+                      <div className={`w-6 h-6 rounded-full border flex items-center justify-center shrink-0 transition-colors ${isSelected ? 'border-[#ecb613] bg-[#ecb613]' : 'border-white/20'
+                        }`}>
+                        {isSelected && <CheckCircle2 size={16} className="text-black" aria-hidden="true" />}
                       </div>
                     </div>
                   </div>
@@ -448,38 +455,34 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <button
                 onClick={() => setGuardrails(g => ({ ...g, shadowDomIsolation: !g.shadowDomIsolation }))}
-                className={`p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${
-                  guardrails.shadowDomIsolation
-                    ? 'bg-emerald-500/10 border-emerald-500/40 text-white'
-                    : 'bg-white/[0.02] border-white/5 text-zinc-500'
-                }`}
+                className={`p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${guardrails.shadowDomIsolation
+                  ? 'bg-emerald-500/10 border-emerald-500/40 text-white'
+                  : 'bg-white/[0.02] border-white/5 text-zinc-500'
+                  }`}
               >
                 <div className="space-y-0.5">
                   <span className="text-xs font-mono font-bold block">Shadow DOM Isolation</span>
                   <span className="text-[10px] text-zinc-400 block leading-tight">Impide colisiones CSS con layouts externos</span>
                 </div>
-                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase shrink-0 ${
-                  guardrails.shadowDomIsolation ? 'bg-emerald-500 text-black' : 'bg-white/10 text-zinc-500'
-                }`}>
+                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase shrink-0 ${guardrails.shadowDomIsolation ? 'bg-emerald-500 text-black' : 'bg-white/10 text-zinc-500'
+                  }`}>
                   {guardrails.shadowDomIsolation ? 'ON' : 'OFF'}
                 </span>
               </button>
 
               <button
                 onClick={() => setGuardrails(g => ({ ...g, degradeOnSlowConnection: !g.degradeOnSlowConnection }))}
-                className={`p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${
-                  guardrails.degradeOnSlowConnection
-                    ? 'bg-sky-500/10 border-sky-500/40 text-white'
-                    : 'bg-white/[0.02] border-white/5 text-zinc-500'
-                }`}
+                className={`p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-2 cursor-pointer ${guardrails.degradeOnSlowConnection
+                  ? 'bg-sky-500/10 border-sky-500/40 text-white'
+                  : 'bg-white/[0.02] border-white/5 text-zinc-500'
+                  }`}
               >
                 <div className="space-y-0.5">
                   <span className="text-xs font-mono font-bold block">Degradación por Latencia</span>
                   <span className="text-[10px] text-zinc-400 block leading-tight">Degrada a WhatsApp si la conexión es 2G</span>
                 </div>
-                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase shrink-0 ${
-                  guardrails.degradeOnSlowConnection ? 'bg-sky-500 text-black' : 'bg-white/10 text-zinc-500'
-                }`}>
+                <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase shrink-0 ${guardrails.degradeOnSlowConnection ? 'bg-sky-500 text-black' : 'bg-white/10 text-zinc-500'
+                  }`}>
                   {guardrails.degradeOnSlowConnection ? 'ON' : 'OFF'}
                 </span>
               </button>
@@ -502,11 +505,10 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                 <button
                   key={p.id}
                   onClick={() => setPersona(prev => ({ ...prev, activeTone: p.id }))}
-                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${
-                    persona.activeTone === p.id
-                      ? 'bg-[#ecb613]/15 border-[#ecb613] text-white'
-                      : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white'
-                  }`}
+                  className={`p-3 rounded-2xl border text-left transition-all cursor-pointer ${persona.activeTone === p.id
+                    ? 'bg-[#ecb613]/15 border-[#ecb613] text-white'
+                    : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:text-white'
+                    }`}
                 >
                   <div className="text-xs font-mono font-bold">{p.name}</div>
                   <div className="text-[10px] text-zinc-500 mt-1 leading-tight">{p.desc}</div>
@@ -531,7 +533,7 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
 
             {/* MARCO DE TELÉFONO SMARTPHONE */}
             <div className="w-full h-[650px] rounded-[3rem] p-3 bg-[#181822] border-4 border-zinc-800 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_40px_rgba(236,182,19,0.15)] relative flex flex-col overflow-hidden">
-              
+
               {/* DYNAMIC ISLAND / NOTCH SUPERIOR */}
               <div className="w-28 h-5 bg-black rounded-full mx-auto mb-2 shrink-0 flex items-center justify-center">
                 <div className="w-2.5 h-2.5 rounded-full bg-zinc-900 ml-auto mr-2"></div>
@@ -539,16 +541,17 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
 
               {/* PANTALLA MÓVIL SIMULADA */}
               <div className="flex-1 bg-[#050505] rounded-[2.2rem] overflow-hidden flex flex-col justify-between p-3.5 relative border border-white/5">
-                
+
                 {/* CABECERA MÓVIL SIMULADA */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-2 shrink-0">
                   <div className="flex items-center gap-1.5">
                     {previewScreen !== 'HOME' ? (
                       <button
                         onClick={() => setPreviewScreen('HOME')}
+                        aria-label="Volver a inicio"
                         className="px-2 py-0.5 rounded-lg bg-white/10 text-zinc-300 hover:text-white flex items-center gap-1 text-[9px] font-mono cursor-pointer"
                       >
-                        <ChevronLeft size={12} />
+                        <ChevronLeft size={12} aria-hidden="true" />
                         <span>Volver</span>
                       </button>
                     ) : (
@@ -580,11 +583,12 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                     <button
                       key={tab.id}
                       onClick={() => setPreviewScreen(tab.id as any)}
-                      className={`px-1.5 py-0.5 rounded cursor-pointer transition-all ${
-                        previewScreen === tab.id
-                          ? 'bg-[#ecb613] text-black font-bold shadow'
-                          : 'text-zinc-400 hover:text-white bg-white/5'
-                      }`}
+                      aria-pressed={previewScreen === tab.id}
+                      aria-label={`Ver pantalla ${tab.label}`}
+                      className={`px-1.5 py-0.5 rounded cursor-pointer transition-all ${previewScreen === tab.id
+                        ? 'bg-[#ecb613] text-black font-bold shadow'
+                        : 'text-zinc-400 hover:text-white bg-white/5'
+                        }`}
                     >
                       {tab.label}
                     </button>
@@ -593,7 +597,7 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
 
                 {/* CONTENIDO DE PANTALLA DINÁMICO SEGÚN PANTALLA SELECCIONADA */}
                 <div className="flex-1 py-2 space-y-2.5 overflow-y-auto no-scrollbar">
-                  
+
                   {/* 1. PANTALLA HOME */}
                   {previewScreen === 'HOME' && (
                     <div className="space-y-2.5">
@@ -674,6 +678,8 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                           step="10"
                           value={simPax}
                           onChange={(e) => setSimPax(Number(e.target.value))}
+                          aria-label="Aforo del evento"
+                          aria-valuetext={`${simPax} personas`}
                           className="w-full h-1 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
                         />
                       </div>
@@ -690,6 +696,8 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                           step="5"
                           value={simKm}
                           onChange={(e) => setSimKm(Number(e.target.value))}
+                          aria-label="Distancia desde Méntrida"
+                          aria-valuetext={`${simKm} kilómetros`}
                           className="w-full h-1 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
                         />
                       </div>
@@ -713,11 +721,10 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
 
                       <button
                         onClick={() => setSimLocked(!simLocked)}
-                        className={`w-full py-1.5 rounded-xl font-mono text-[9px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all cursor-pointer ${
-                          simLocked
-                            ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.5)]'
-                            : 'bg-gradient-to-r from-[#ecb613] to-amber-500 text-black hover:brightness-110'
-                        }`}
+                        className={`w-full py-1.5 rounded-xl font-mono text-[9px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all cursor-pointer ${simLocked
+                          ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.5)]'
+                          : 'bg-gradient-to-r from-[#ecb613] to-amber-500 text-black hover:brightness-110'
+                          }`}
                       >
                         <Lock size={11} />
                         <span>{simLocked ? '✓ Bloqueado (Depósito 100€)' : 'Bloquear Fecha (100€)'}</span>
@@ -740,11 +747,10 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                         {astraChat.map((msg, idx) => (
                           <div
                             key={idx}
-                            className={`p-1.5 rounded-xl ${
-                              msg.sender === 'user'
-                                ? 'bg-amber-500/20 text-white ml-3 border border-[#ecb613]/30'
-                                : 'bg-[#121220] text-zinc-300 mr-2 border border-white/10'
-                            }`}
+                            className={`p-1.5 rounded-xl ${msg.sender === 'user'
+                              ? 'bg-amber-500/20 text-white ml-3 border border-[#ecb613]/30'
+                              : 'bg-[#121220] text-zinc-300 mr-2 border border-white/10'
+                              }`}
                           >
                             <span className="text-[7px] font-mono text-zinc-500 block">
                               {msg.sender === 'user' ? 'Tú' : 'Astra'}
@@ -779,13 +785,15 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                           onChange={(e) => setAstraInput(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && handleSendAstra()}
                           placeholder="Pregunta a Astra..."
+                          aria-label="Pregunta a Astra"
                           className="flex-1 bg-black/60 border border-white/20 rounded-lg px-2 py-1 text-[8px] text-white font-mono focus:border-[#ecb613] outline-none"
                         />
                         <button
                           onClick={() => handleSendAstra()}
+                          aria-label="Enviar mensaje a Astra"
                           className="p-1 rounded-lg bg-[#ecb613] text-black hover:bg-amber-400 transition-all cursor-pointer"
                         >
-                          <Send size={11} />
+                          <Send size={11} aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -862,25 +870,21 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
                     <div className="w-full bg-[#06060a]/95 border border-white/20 rounded-2xl p-1.5 flex items-center justify-between shadow-2xl">
                       <button
                         onClick={() => setPreviewScreen('HOME')}
-                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${
-                          previewScreen === 'HOME' ? 'text-[#ecb613] bg-white/10 font-bold' : 'text-zinc-400 hover:text-white'
-                        }`}
+                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${previewScreen === 'HOME' ? 'text-[#ecb613] bg-white/10 font-bold' : 'text-zinc-400 hover:text-white'
+                          }`}
                       >
-                        <div className={`w-4 h-4 rounded flex items-center justify-center text-[9px] ${
-                          previewScreen === 'HOME' ? 'bg-[#ecb613] text-black font-bold' : 'bg-white/10 text-white'
-                        }`}>H</div>
+                        <div className={`w-4 h-4 rounded flex items-center justify-center text-[9px] ${previewScreen === 'HOME' ? 'bg-[#ecb613] text-black font-bold' : 'bg-white/10 text-white'
+                          }`}>H</div>
                         <span>Inicio</span>
                       </button>
 
                       <button
                         onClick={() => setPreviewScreen('QUOTE')}
-                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${
-                          previewScreen === 'QUOTE' ? 'text-[#ecb613] bg-white/10 font-bold' : 'text-zinc-400 hover:text-white'
-                        }`}
+                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${previewScreen === 'QUOTE' ? 'text-[#ecb613] bg-white/10 font-bold' : 'text-zinc-400 hover:text-white'
+                          }`}
                       >
-                        <div className={`w-4 h-4 rounded flex items-center justify-center text-[9px] ${
-                          previewScreen === 'QUOTE' ? 'bg-[#ecb613] text-black font-bold' : 'bg-white/10 text-white'
-                        }`}>€</div>
+                        <div className={`w-4 h-4 rounded flex items-center justify-center text-[9px] ${previewScreen === 'QUOTE' ? 'bg-[#ecb613] text-black font-bold' : 'bg-white/10 text-white'
+                          }`}>€</div>
                         <span>Cotizar</span>
                       </button>
 
@@ -894,21 +898,18 @@ export function MobileExperienceSelectorOLED({ onNavigateToTab }: MobileExperien
 
                       <button
                         onClick={() => setPreviewScreen('WARRANTY')}
-                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${
-                          previewScreen === 'WARRANTY' ? 'text-emerald-400 bg-emerald-500/10 font-bold' : 'text-zinc-400 hover:text-white'
-                        }`}
+                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${previewScreen === 'WARRANTY' ? 'text-emerald-400 bg-emerald-500/10 font-bold' : 'text-zinc-400 hover:text-white'
+                          }`}
                       >
-                        <div className={`w-4 h-4 rounded flex items-center justify-center text-[9px] ${
-                          previewScreen === 'WARRANTY' ? 'bg-emerald-500 text-black font-bold' : 'bg-white/10 text-white'
-                        }`}>✓</div>
+                        <div className={`w-4 h-4 rounded flex items-center justify-center text-[9px] ${previewScreen === 'WARRANTY' ? 'bg-emerald-500 text-black font-bold' : 'bg-white/10 text-white'
+                          }`}>✓</div>
                         <span>Garantía</span>
                       </button>
 
                       <button
                         onClick={() => setPreviewScreen('WHATSAPP')}
-                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${
-                          previewScreen === 'WHATSAPP' ? 'text-emerald-400 bg-emerald-500/10 font-bold' : 'text-emerald-400 hover:text-white'
-                        }`}
+                        className={`flex flex-col items-center gap-0.5 text-[8px] font-mono transition-all cursor-pointer p-1 rounded-lg ${previewScreen === 'WHATSAPP' ? 'text-emerald-400 bg-emerald-500/10 font-bold' : 'text-emerald-400 hover:text-white'
+                          }`}
                       >
                         <div className="w-4 h-4 rounded bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-[9px]">W</div>
                         <span>Directo</span>

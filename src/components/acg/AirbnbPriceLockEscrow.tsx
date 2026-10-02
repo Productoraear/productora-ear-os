@@ -113,7 +113,7 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
       <div className="lg:col-span-7 space-y-5">
         <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Calendar size={15} className="text-[#00E5FF]" />
+            <Calendar size={15} className="text-[#00E5FF]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Disponibilidad real · reserva en 1 clic</span>
           </div>
           <label className="block font-mono text-[10px] text-white/40 uppercase mb-2">Fecha del evento</label>
@@ -121,15 +121,20 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
             type="date"
             value={eventDate}
             onChange={(e) => handleDateChange(e.target.value)}
+            aria-label="Fecha del evento"
             className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-[#00E5FF]"
           />
 
           <div className="mt-5">
             <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-3">Vista FOH / Escenario del destino</p>
-            <div className="rounded-2xl border border-[#00E5FF]/20 bg-gradient-to-br from-[#0a141a] to-[#030305] p-8 flex items-center justify-center">
+            <div
+              role="img"
+              aria-label={`Vista del escenario de ${selectedFinca?.name ?? 'Finca Homologada'} en ${selectedFinca?.provincia ?? 'destino homologado'}, capacidad ${selectedFinca?.capacidadMaxPax ?? '—'} personas`}
+              className="rounded-2xl border border-[#00E5FF]/20 bg-gradient-to-br from-[#0a141a] to-[#030305] p-8 flex items-center justify-center"
+            >
               <div className="text-center space-y-2">
                 <div className="w-20 h-20 mx-auto rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 flex items-center justify-center">
-                  <ShieldCheck size={32} className="text-[#00E5FF]" />
+                  <ShieldCheck size={32} className="text-[#00E5FF]" aria-hidden="true" />
                 </div>
                 <p className="font-syne text-lg font-black text-white">{selectedFinca?.name ?? 'Finca Homologada'}</p>
                 <p className="font-mono text-xs text-white/50">{selectedFinca?.provincia} · Capacidad {selectedFinca?.capacidadMaxPax} pax</p>
@@ -144,7 +149,7 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
       <div className="lg:col-span-5 space-y-5">
         <div className="rounded-2xl bg-[#050507] border border-[#00E5FF]/30 p-6 space-y-4">
           <div className="flex items-center gap-2">
-            <Lock size={15} className="text-[#00E5FF]" />
+            <Lock size={15} className="text-[#00E5FF]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Custodia fiduciaria · Split Soberano</span>
           </div>
 
@@ -180,6 +185,7 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
               placeholder="Nombre o persona de contacto"
               value={state.space.clientName}
               onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { clientName: e.target.value } })}
+              aria-label="Nombre de la persona de contacto"
               className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-[#00E5FF]"
             />
             <input
@@ -187,6 +193,7 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
               placeholder="Teléfono / WhatsApp"
               value={state.space.clientPhone}
               onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { clientPhone: e.target.value } })}
+              aria-label="Teléfono o WhatsApp"
               className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-[#00E5FF]"
             />
           </div>
@@ -198,7 +205,11 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
             </div>
           )}
 
-          {lockError && <p className="font-mono text-xs text-[#FF2B44]">{lockError}</p>}
+          {lockError && (
+            <p role="alert" className="font-mono text-xs text-[#FF2B44]">
+              {lockError}
+            </p>
+          )}
 
           <button
             type="button"
@@ -206,12 +217,12 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
             disabled={isProcessing}
             className="w-full py-4 rounded-xl bg-[#00E5FF] text-black font-black text-sm uppercase tracking-widest hover:shadow-[0_0_35px_rgba(0,229,255,0.5)] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {isProcessing ? <Loader2 size={18} className="animate-spin" /> : <CreditCard size={18} />}
+            {isProcessing ? <Loader2 size={18} className="animate-spin" aria-hidden="true" /> : <CreditCard size={18} aria-hidden="true" />}
             {isProcessing ? 'Firmando y bloqueando...' : `Bloquear fecha (${formatEur(quote.deposit)} €)`}
           </button>
 
           <div className="flex items-center justify-center gap-2 pt-1">
-            <ShieldCheck size={14} className="text-emerald-400" />
+            <ShieldCheck size={14} className="text-emerald-400" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest">Depósito reembolsable · Price-Lock SHA-256 24-72h</span>
           </div>
         </div>

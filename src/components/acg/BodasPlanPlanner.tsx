@@ -93,7 +93,7 @@ export default function BodasPlanPlanner({ state }: BodasPlanPlannerProps) {
       <div className="lg:col-span-5 space-y-5">
         <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
           <div className="flex items-center gap-2 mb-4">
-            <LayoutDashboard size={15} className="text-[#10B981]" />
+            <LayoutDashboard size={15} className="text-[#10B981]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Presupuestador Soberano</span>
           </div>
 
@@ -117,16 +117,16 @@ export default function BodasPlanPlanner({ state }: BodasPlanPlannerProps) {
             onClick={handleExportDossier}
             className="w-full mt-4 py-4 rounded-xl bg-[#10B981] text-black font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all flex items-center justify-center gap-2"
           >
-            <FileDown size={16} /> Exportar Dossier Técnico Ejecutivo
+            <FileDown size={16} aria-hidden="true" /> Exportar Dossier Técnico Ejecutivo
           </button>
         </div>
 
         <div className={`rounded-2xl border p-5 ${zonesAtRisk.length > 0 ? 'border-[#FF2B44]/40 bg-[#FF2B44]/5' : 'border-emerald-500/30 bg-emerald-950/20'}`}>
           <div className="flex items-start gap-3">
             {zonesAtRisk.length > 0 ? (
-              <AlertTriangle size={18} className="text-[#FF2B44] shrink-0" />
+              <AlertTriangle size={18} className="text-[#FF2B44] shrink-0" aria-hidden="true" />
             ) : (
-              <ShieldCheck size={18} className="text-emerald-400 shrink-0" />
+              <ShieldCheck size={18} className="text-emerald-400 shrink-0" aria-hidden="true" />
             )}
             <div>
               <p className="font-mono text-xs font-bold text-white uppercase tracking-widest">
@@ -147,13 +147,17 @@ export default function BodasPlanPlanner({ state }: BodasPlanPlannerProps) {
         <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <LayoutDashboard size={15} className="text-[#10B981]" />
+              <LayoutDashboard size={15} className="text-[#10B981]" aria-hidden="true" />
               <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Plano de Mesas · Simulación isofónica</span>
             </div>
             <span className="font-mono text-[10px] text-white/40">Escenario arriba · dB por mesa</span>
           </div>
 
-          <div className="relative w-full aspect-[4/3] rounded-2xl bg-[#030305] border border-white/10 overflow-hidden">
+          <div
+            role="img"
+            aria-label={`Plano acústico de mesas. ${zonesAtRisk.length > 0 ? `${zonesAtRisk.length} mesa(s) en riesgo de superar ${acoustic.maxSplDb} dB SPL.` : `Todas las mesas conformes por debajo de ${acoustic.maxSplDb} dB SPL.`}`}
+            className="relative w-full aspect-[4/3] rounded-2xl bg-[#030305] border border-white/10 overflow-hidden"
+          >
             {/* Escenario */}
             <div className="absolute top-3 left-1/2 -translate-x-1/2 w-2/3 h-10 rounded-lg bg-[#10B981]/15 border border-[#10B981]/30 flex items-center justify-center">
               <span className="font-mono text-[10px] text-[#10B981] uppercase tracking-widest">Escenario</span>
@@ -163,11 +167,11 @@ export default function BodasPlanPlanner({ state }: BodasPlanPlannerProps) {
             {evaluation.map((zone) => (
               <div
                 key={zone.id}
-                className={`absolute w-14 h-14 rounded-lg border flex flex-col items-center justify-center transition-all ${
-                  zone.isTooLoud
+                aria-label={`${zone.label}: ${zone.splExposureDb} dB SPL${zone.isTooLoud ? ', requiere reubicación' : ', conforme'}${zone.isSeniorZone ? ', zona sénior' : ''}`}
+                className={`absolute w-14 h-14 rounded-lg border flex flex-col items-center justify-center transition-all ${zone.isTooLoud
                     ? 'border-[#FF2B44]/60 bg-[#FF2B44]/15'
                     : 'border-emerald-500/30 bg-emerald-950/20'
-                }`}
+                  }`}
                 style={{ left: `${zone.x}%`, top: `${zone.y}%` }}
               >
                 <span className={`font-mono text-[9px] font-bold ${zone.isTooLoud ? 'text-[#FF2B44]' : 'text-white/70'}`}>
@@ -182,7 +186,7 @@ export default function BodasPlanPlanner({ state }: BodasPlanPlannerProps) {
           <div className="flex items-center gap-4 mt-4 font-mono text-[10px] text-white/50">
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-500/50" /> Conforme</span>
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded bg-[#FF2B44]/20 border border-[#FF2B44]/60" /> Reubicar</span>
-            <span className="flex items-center gap-1.5"><CheckCircle2 size={12} className="text-[#10B981]" /> Split 80/10/10 liquidado</span>
+            <span className="flex items-center gap-1.5"><CheckCircle2 size={12} className="text-[#10B981]" aria-hidden="true" /> Split 80/10/10 liquidado</span>
           </div>
         </div>
       </div>

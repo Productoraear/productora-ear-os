@@ -3,34 +3,34 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Landmark, 
-  ShieldCheck, 
-  FileText, 
-  CheckCircle2, 
-  AlertTriangle, 
-  Scale, 
-  Award, 
-  Activity, 
-  Radio, 
-  Volume2, 
-  Tv, 
-  Users, 
-  Sparkles, 
-  Clock, 
-  Download, 
-  Copy, 
-  Check, 
-  ChevronRight, 
-  Lock, 
-  Phone, 
-  Building, 
+import {
+  Landmark,
+  ShieldCheck,
+  FileText,
+  CheckCircle2,
+  AlertTriangle,
+  Scale,
+  Award,
+  Activity,
+  Radio,
+  Volume2,
+  Tv,
+  Users,
+  Sparkles,
+  Clock,
+  Download,
+  Copy,
+  Check,
+  ChevronRight,
+  Lock,
+  Phone,
+  Building,
   Layers
 } from 'lucide-react';
-import { 
-  MAX_LCSP_MINOR_CONTRACT_LIMIT, 
-  SAFE_LCSP_CEILING, 
-  validateDIR3Code, 
+import {
+  MAX_LCSP_MINOR_CONTRACT_LIMIT,
+  SAFE_LCSP_CEILING,
+  validateDIR3Code,
   validateDIR3Trio,
   calculateLCSPMinorContract,
   B2GPackageItem,
@@ -78,7 +78,7 @@ const INITIAL_SERVICES: B2GPackageItem[] = [
 
 export default function B2GInstitutionalPortal() {
   const [activeTab, setActiveTab] = useState<B2GTabKey>('SIMULADOR_LCSP');
-  
+
   // Estado del empaquetador de servicios
   const [services, setServices] = useState<B2GPackageItem[]>(INITIAL_SERVICES);
   const [entidad, setEntidad] = useState<string>('Ayuntamiento de Toledo');
@@ -97,7 +97,7 @@ export default function B2GInstitutionalPortal() {
   // Cálculos reactivos de presupuesto
   const selectedItems = services.filter(s => s.quantity > 0);
   const rawBaseBudget = selectedItems.reduce((acc, it) => acc + (it.unitPrice * it.quantity), 0);
-  
+
   const isCeilingExceeded = rawBaseBudget >= MAX_LCSP_MINOR_CONTRACT_LIMIT;
   const effectiveBase = isCeilingExceeded ? SAFE_LCSP_CEILING : rawBaseBudget;
   const vat21 = Number((effectiveBase * 0.21).toFixed(2));
@@ -154,7 +154,7 @@ export default function B2GInstitutionalPortal() {
 
   return (
     <div className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-[#050507] text-white selection:bg-[#ecb613] selection:text-black font-sans">
-      
+
       {/* ── TOPBAR INSTITUCIONAL ── */}
       <aside aria-label="Gobernanza B2G" className="w-full border-b border-white/10 bg-[#09090d]/90 backdrop-blur-md px-4 sm:px-6 py-2 text-xs text-white/60 font-mono">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 text-[11px]">
@@ -229,37 +229,37 @@ export default function B2GInstitutionalPortal() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab('SIMULADOR_LCSP')}
-              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeTab === 'SIMULADOR_LCSP'
-                  ? 'bg-[#AAD6CD] text-black shadow-lg shadow-[#AAD6CD]/20'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
-              }`}
+              aria-pressed={activeTab === 'SIMULADOR_LCSP'}
+              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeTab === 'SIMULADOR_LCSP'
+                ? 'bg-[#AAD6CD] text-black shadow-lg shadow-[#AAD6CD]/20'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
+                }`}
             >
-              <Scale size={14} />
+              <Scale size={14} aria-hidden="true" />
               <span>Simulador Contrato Menor (14.250 €)</span>
             </button>
 
             <button
               onClick={() => setActiveTab('SERVICIOS_360')}
-              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeTab === 'SERVICIOS_360'
-                  ? 'bg-[#AAD6CD] text-black shadow-lg shadow-[#AAD6CD]/20'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
-              }`}
+              aria-pressed={activeTab === 'SERVICIOS_360'}
+              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeTab === 'SERVICIOS_360'
+                ? 'bg-[#AAD6CD] text-black shadow-lg shadow-[#AAD6CD]/20'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
+                }`}
             >
-              <Layers size={14} />
+              <Layers size={14} aria-hidden="true" />
               <span>Catálogo Institucional 360</span>
             </button>
 
             <button
               onClick={() => setActiveTab('MARCO_LEGAL_ODS')}
-              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeTab === 'MARCO_LEGAL_ODS'
-                  ? 'bg-[#AAD6CD] text-black shadow-lg shadow-[#AAD6CD]/20'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
-              }`}
+              aria-pressed={activeTab === 'MARCO_LEGAL_ODS'}
+              className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeTab === 'MARCO_LEGAL_ODS'
+                ? 'bg-[#AAD6CD] text-black shadow-lg shadow-[#AAD6CD]/20'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
+                }`}
             >
-              <ShieldCheck size={14} />
+              <ShieldCheck size={14} aria-hidden="true" />
               <span>Marco Legal LCSP & ODS 2030</span>
             </button>
           </div>
@@ -278,13 +278,13 @@ export default function B2GInstitutionalPortal() {
 
       {/* ── CUERPO PRINCIPAL DEL PORTAL B2G ── */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-12 space-y-12">
-        
+
         {/* ═══════════════════════════════════════════════════════ */}
         {/* VISTA 1: SIMULADOR DE CONTRATO MENOR ART. 118 LCSP */}
         {/* ═══════════════════════════════════════════════════════ */}
         {activeTab === 'SIMULADOR_LCSP' && (
           <div className="space-y-10">
-            
+
             <div className="max-w-3xl space-y-3">
               <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#AAD6CD] font-bold">
                 Empaquetador de Expedientes Telemáticos
@@ -298,7 +298,7 @@ export default function B2GInstitutionalPortal() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              
+
               {/* SELECTOR DE SERVICIOS MUNICIPALES */}
               <div className="lg:col-span-7 space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-[#09090d] p-4 flex items-center justify-between font-mono text-xs">
@@ -308,13 +308,12 @@ export default function B2GInstitutionalPortal() {
 
                 <div className="space-y-4">
                   {services.map((item) => (
-                    <div 
+                    <div
                       key={item.id}
-                      className={`rounded-2xl border p-5 transition-all ${
-                        item.quantity > 0 
-                          ? 'border-[#AAD6CD]/50 bg-[#09090d]' 
-                          : 'border-white/10 bg-black/40 opacity-70'
-                      }`}
+                      className={`rounded-2xl border p-5 transition-all ${item.quantity > 0
+                        ? 'border-[#AAD6CD]/50 bg-[#09090d]'
+                        : 'border-white/10 bg-black/40 opacity-70'
+                        }`}
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div className="space-y-1 max-w-md">
@@ -339,6 +338,7 @@ export default function B2GInstitutionalPortal() {
                           <button
                             onClick={() => handleUpdateQuantity(item.id, -1)}
                             disabled={item.quantity === 0}
+                            aria-label={`Reducir cantidad de ${item.name}`}
                             className="h-9 w-9 rounded-xl bg-white/10 flex items-center justify-center text-white font-mono font-bold hover:bg-white/20 disabled:opacity-30 cursor-pointer"
                           >
                             -
@@ -348,6 +348,7 @@ export default function B2GInstitutionalPortal() {
                           </span>
                           <button
                             onClick={() => handleUpdateQuantity(item.id, 1)}
+                            aria-label={`Aumentar cantidad de ${item.name}`}
                             className="h-9 w-9 rounded-xl bg-[#AAD6CD] flex items-center justify-center text-black font-mono font-bold hover:bg-white cursor-pointer"
                           >
                             +
@@ -379,20 +380,22 @@ export default function B2GInstitutionalPortal() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block font-mono text-xs text-white/60 mb-1">Entidad Contratante *</label>
-                      <input 
+                      <input
                         type="text"
                         value={entidad}
                         onChange={(e) => setEntidad(e.target.value)}
+                        aria-label="Entidad contratante"
                         placeholder="Ej: Ayuntamiento de Toledo"
                         className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#AAD6CD] outline-none"
                       />
                     </div>
                     <div>
                       <label className="block font-mono text-xs text-white/60 mb-1">CIF de la Entidad Pública *</label>
-                      <input 
+                      <input
                         type="text"
                         value={cif}
                         onChange={(e) => setCif(e.target.value)}
+                        aria-label="CIF de la entidad pública"
                         placeholder="P-4516800E"
                         className="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:border-[#AAD6CD] outline-none font-mono"
                       />
@@ -402,10 +405,11 @@ export default function B2GInstitutionalPortal() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="block font-mono text-xs text-white/60 mb-1">Oficina Contable *</label>
-                      <input 
+                      <input
                         type="text"
                         value={dir3.oficinaContable}
                         onChange={(e) => setDir3({ ...dir3, oficinaContable: e.target.value })}
+                        aria-label="Oficina contable DIR3"
                         placeholder="L01451688"
                         className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:border-[#AAD6CD] outline-none font-mono uppercase"
                       />
@@ -414,10 +418,11 @@ export default function B2GInstitutionalPortal() {
 
                     <div>
                       <label className="block font-mono text-xs text-white/60 mb-1">Órgano Gestor *</label>
-                      <input 
+                      <input
                         type="text"
                         value={dir3.organoGestor}
                         onChange={(e) => setDir3({ ...dir3, organoGestor: e.target.value })}
+                        aria-label="Órgano gestor DIR3"
                         placeholder="L01451688"
                         className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:border-[#AAD6CD] outline-none font-mono uppercase"
                       />
@@ -426,10 +431,11 @@ export default function B2GInstitutionalPortal() {
 
                     <div>
                       <label className="block font-mono text-xs text-white/60 mb-1">Unidad Tramitadora *</label>
-                      <input 
+                      <input
                         type="text"
                         value={dir3.unidadTramitadora}
                         onChange={(e) => setDir3({ ...dir3, unidadTramitadora: e.target.value })}
+                        aria-label="Unidad tramitadora DIR3"
                         placeholder="L01451688"
                         className="w-full bg-black/60 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:border-[#AAD6CD] outline-none font-mono uppercase"
                       />
@@ -442,7 +448,7 @@ export default function B2GInstitutionalPortal() {
 
               {/* PANEL DE CONTROL FINANCIERO Y GENERACIÓN */}
               <div className="lg:col-span-5 space-y-6">
-                
+
                 <div className="rounded-3xl border border-white/10 bg-[#09090d] p-6 space-y-6">
                   <div>
                     <span className="font-mono text-xs uppercase tracking-widest text-[#AAD6CD] font-bold">
@@ -495,10 +501,11 @@ export default function B2GInstitutionalPortal() {
                   {/* BOTÓN GENERADOR */}
                   <button
                     onClick={handleGenerateExpediente}
-                    disabled={isProcessing || selectedItems.length === 0}
-                    className="w-full py-4 rounded-xl bg-gradient-to-r from-[#AAD6CD] to-sky-300 text-black font-mono text-xs font-black uppercase tracking-widest hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-lg shadow-[#AAD6CD]/20 cursor-pointer disabled:opacity-50"
+                    disabled={isProcessing}
+                    aria-label="Generar memoria y factura electrónica"
+                    className="w-full py-3.5 rounded-xl bg-[#AAD6CD] text-black font-bold font-mono text-xs flex items-center justify-center gap-2 hover:bg-white transition-all cursor-pointer disabled:opacity-50"
                   >
-                    <FileText size={16} />
+                    <FileText size={16} aria-hidden="true" />
                     <span>{isProcessing ? 'Procesando con FACe...' : 'Generar Memoria & Facturae XML'}</span>
                   </button>
                 </div>
@@ -517,9 +524,11 @@ export default function B2GInstitutionalPortal() {
                       </div>
                       <button
                         onClick={handleCopyXml}
-                        className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] text-white hover:bg-white hover:text-black transition-all flex items-center gap-1.5 cursor-pointer"
+                        disabled={!facturaeXml}
+                        aria-label="Copiar XML de factura electrónica"
+                        className="px-4 py-2 rounded-xl bg-[#AAD6CD] text-black font-mono text-xs font-bold flex items-center gap-2 hover:bg-white transition-all cursor-pointer disabled:opacity-50"
                       >
-                        {copiedXml ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                        {copiedXml ? <Check size={12} className="text-emerald-400" aria-hidden="true" /> : <Copy size={12} aria-hidden="true" />}
                         <span>{copiedXml ? 'Copiado' : 'Copiar XML'}</span>
                       </button>
                     </div>
@@ -531,7 +540,7 @@ export default function B2GInstitutionalPortal() {
                           &ldquo;{generatedProposal.justificacionInsuficienciaMedios}&rdquo;
                         </p>
                       </div>
-                      
+
                       <div className="border-t border-white/10 pt-2 text-[10px] text-white/50">
                         <strong className="text-[#AAD6CD] block">Alineación ODS 2030 Verificada:</strong>
                         <ul className="list-disc list-inside mt-1 space-y-0.5">
@@ -574,7 +583,7 @@ export default function B2GInstitutionalPortal() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
+
               {/* CARD 1: FIESTAS PATRONALES */}
               <div className="rounded-3xl border border-white/10 bg-[#09090d] p-8 space-y-4 hover:border-[#AAD6CD]/40 transition-all flex flex-col justify-between">
                 <div className="space-y-3">

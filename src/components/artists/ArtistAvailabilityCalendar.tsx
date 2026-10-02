@@ -187,7 +187,7 @@ export default function ArtistAvailabilityCalendar({
       {/* CABECERA DEL CALENDARIO + SINCRONIZACIÓN */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3 font-mono">
         <div className="flex items-center gap-2">
-          <CalendarIcon className="w-4 h-4 text-[#ecb613]" />
+          <CalendarIcon className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
           <span className="text-xs font-black uppercase text-white tracking-wider">
             Disponibilidad & Ruta por Horas
           </span>
@@ -201,7 +201,7 @@ export default function ArtistAvailabilityCalendar({
             className="p-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition"
             aria-label="Mes anterior"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4" aria-hidden="true" />
           </button>
           <span className="text-xs font-bold text-[#ecb613] min-w-[120px] text-center">
             {MONTH_NAMES[currentMonth]} {currentYear}
@@ -212,7 +212,7 @@ export default function ArtistAvailabilityCalendar({
             className="p-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition"
             aria-label="Mes siguiente"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -246,32 +246,39 @@ export default function ArtistAvailabilityCalendar({
               type="button"
               onClick={() => handleDayClick(day)}
               disabled={isFullBlocked && readOnly}
-              className={`h-8 sm:h-9 rounded-xl font-mono text-xs font-bold transition-all flex flex-col items-center justify-center relative ${
-                isSelected
+              aria-pressed={isSelected}
+              aria-label={
+                isFullBlocked
+                  ? `Fecha bloqueada: ${dateString}`
+                  : hasPartialSlots
+                    ? `Ruta parcial disponible: ${day}`
+                    : `Disponible: ${dateString}`
+              }
+              className={`h-8 sm:h-9 rounded-xl font-mono text-xs font-bold transition-all flex flex-col items-center justify-center relative ${isSelected
                   ? 'bg-[#ecb613] text-black shadow-[0_0_15px_rgba(236,182,19,0.5)] font-black scale-105 z-10'
                   : isFullBlocked
-                  ? 'bg-slate-950 border border-red-950/40 text-slate-600 cursor-not-allowed'
-                  : hasPartialSlots
-                  ? 'bg-slate-900/90 border border-amber-500/40 text-slate-200 hover:border-[#ecb613]'
-                  : 'bg-slate-900/60 border border-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
-              }`}
+                    ? 'bg-slate-950 border border-red-950/40 text-slate-600 cursor-not-allowed'
+                    : hasPartialSlots
+                      ? 'bg-slate-900/90 border border-amber-500/40 text-slate-200 hover:border-[#ecb613]'
+                      : 'bg-slate-900/60 border border-slate-800/80 text-slate-300 hover:bg-slate-800 hover:text-white'
+                }`}
               title={
                 isFullBlocked
                   ? `Fecha Completa Bloqueada: ${artistName} ya tiene cupo completo o exclusividad asignada`
                   : hasPartialSlots
-                  ? `Ruta activa: Horas disponibles para el ${day}`
-                  : `Totalmente disponible: ${dateString}`
+                    ? `Ruta activa: Horas disponibles para el ${day}`
+                    : `Totalmente disponible: ${dateString}`
               }
             >
               <span>{day}</span>
               {isFullBlocked && (
-                <Lock className="w-2 h-2 text-red-500/70 absolute top-0.5 right-0.5" />
+                <Lock className="w-2 h-2 text-red-500/70 absolute top-0.5 right-0.5" aria-hidden="true" />
               )}
               {hasPartialSlots && !isSelected && !isFullBlocked && (
                 <span className="w-1.5 h-1.5 rounded-full bg-[#ecb613] absolute bottom-1" />
               )}
               {isSelected && (
-                <CheckCircle2 className="w-2 h-2 text-black absolute top-0.5 right-0.5" />
+                <CheckCircle2 className="w-2 h-2 text-black absolute top-0.5 right-0.5" aria-hidden="true" />
               )}
             </button>
           );
@@ -280,8 +287,8 @@ export default function ArtistAvailabilityCalendar({
 
       {/* FEEDBACK ERROR DE DÍA BLOQUEADO */}
       {feedbackMsg && (
-        <div className="p-2.5 bg-red-950/40 border border-red-500/40 rounded-xl text-red-300 text-xs font-mono flex items-start gap-2 animate-fadeIn">
-          <ShieldAlert className="w-3.5 h-3.5 text-red-400 shrink-0 mt-0.5" />
+        <div role="alert" className="p-2.5 bg-red-950/40 border border-red-500/40 rounded-xl text-red-300 text-xs font-mono flex items-start gap-2 animate-fadeIn">
+          <ShieldAlert className="w-3.5 h-3.5 text-red-400 shrink-0 mt-0.5" aria-hidden="true" />
           <span>{feedbackMsg}</span>
         </div>
       )}
@@ -291,7 +298,7 @@ export default function ArtistAvailabilityCalendar({
         <div className="pt-3 border-t border-slate-800/80 space-y-2.5 animate-fadeIn">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono">
             <span className="text-slate-300 uppercase font-bold flex items-center gap-1.5">
-              <Clock className="w-3.5 h-3.5 text-[#ecb613]" />
+              <Clock className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
               <span>Franja Horaria del Pase ({selectedDate})</span>
             </span>
             <div className="flex items-center gap-2 text-[10px] font-mono">
@@ -314,35 +321,35 @@ export default function ArtistAvailabilityCalendar({
                   type="button"
                   disabled={isSlotBooked}
                   onClick={() => onSelectTimeSlot(slot.startTime)}
-                  className={`p-2.5 rounded-2xl text-left border transition-all text-xs flex flex-col justify-between gap-1.5 ${
-                    isSlotSelected
+                  aria-pressed={isSlotSelected}
+                  aria-label={`${slot.label} (${slot.timeRange})${isSlotBooked ? ', ocupado' : ', disponible'}`}
+                  className={`p-2.5 rounded-2xl text-left border transition-all text-xs flex flex-col justify-between gap-1.5 ${isSlotSelected
                       ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-[0_0_15px_rgba(236,182,19,0.35)] scale-[1.02] z-10'
                       : isSlotBooked
-                      ? 'bg-slate-950/80 border-red-950/40 text-slate-600 cursor-not-allowed opacity-60'
-                      : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-emerald-500/60 hover:text-white'
-                  }`}
+                        ? 'bg-slate-950/80 border-red-950/40 text-slate-600 cursor-not-allowed opacity-60'
+                        : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-emerald-500/60 hover:text-white'
+                    }`}
                 >
                   <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-1.5">
                       {slot.period === 'manana' ? (
-                        <Sun className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-amber-400'}`} />
+                        <Sun className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-amber-400'}`} aria-hidden="true" />
                       ) : slot.period === 'tarde' ? (
-                        <Sunset className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-orange-400'}`} />
+                        <Sunset className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-orange-400'}`} aria-hidden="true" />
                       ) : (
-                        <Moon className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-indigo-400'}`} />
+                        <Moon className={`w-3.5 h-3.5 ${isSlotSelected ? 'text-black' : isSlotBooked ? 'text-red-900' : 'text-indigo-400'}`} aria-hidden="true" />
                       )}
                       <span className="font-extrabold text-sm">
                         {isSlotBooked ? `🔒 ${slot.startTime} (Ocupado)` : isSlotSelected ? `🎯 ${slot.startTime}` : `🟢 ${slot.startTime} (Disponible)`}
                       </span>
                     </div>
 
-                    <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
-                      isSlotSelected 
-                        ? 'bg-black/20 text-black font-black' 
-                        : isSlotBooked 
-                        ? 'bg-red-950/40 text-red-500/80 line-through' 
-                        : 'bg-emerald-950/50 text-emerald-400 border border-emerald-500/20'
-                    }`}>
+                    <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${isSlotSelected
+                        ? 'bg-black/20 text-black font-black'
+                        : isSlotBooked
+                          ? 'bg-red-950/40 text-red-500/80 line-through'
+                          : 'bg-emerald-950/50 text-emerald-400 border border-emerald-500/20'
+                      }`}>
                       {isSlotBooked ? 'Ocupado' : slot.timeRange}
                     </span>
                   </div>
@@ -366,7 +373,7 @@ export default function ArtistAvailabilityCalendar({
       {selectedDate && (
         <div className="p-2.5 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-xl text-[#ecb613] text-xs font-mono flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Pase fijado: <strong>{selectedDate}</strong> {selectedTimeSlot ? `a las ${selectedTimeSlot} hrs` : ''}</span>
           </div>
           <span className="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/30">
@@ -398,7 +405,7 @@ export default function ArtistAvailabilityCalendar({
             title="Sincronización de reuniones o eventos con TidyCal / iCal"
           >
             <span>Sincronizar con TidyCal / iCal</span>
-            <ExternalLink className="w-2.5 h-2.5" />
+            <ExternalLink className="w-2.5 h-2.5" aria-hidden="true" />
           </a>
         )}
       </div>

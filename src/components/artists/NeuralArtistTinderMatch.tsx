@@ -174,7 +174,7 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-4">
                     <div>
                         <h3 className="text-base sm:text-lg font-bold font-syne text-white flex items-center gap-2">
-                            <SlidersHorizontal size={16} className="text-[#ecb613]" />
+                            <SlidersHorizontal size={16} className="text-[#ecb613]" aria-hidden="true" />
                             <span>Selector Neural de Artista (200 Dimensiones)</span>
                         </h3>
                         <p className="text-xs text-zinc-400">
@@ -186,7 +186,7 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                         onClick={() => setIsSwipeMode(!isSwipeMode)}
                         className="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-mono text-zinc-300 flex items-center gap-1.5 transition-all"
                     >
-                        <Sparkles size={12} className="text-[#ecb613]" />
+                        <Sparkles size={12} className="text-[#ecb613]" aria-hidden="true" />
                         <span>{isSwipeMode ? 'Vista Cuadrícula' : 'Activar Modo Match Rápido'}</span>
                     </button>
                 </div>
@@ -208,6 +208,7 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                                 <button
                                     key={f}
                                     onClick={() => setSelectedFormat(active ? null : f)}
+                                    aria-pressed={active}
                                     className={`px-3 py-1.5 rounded-full border text-[11px] font-mono transition-all ${active
                                         ? 'bg-[#ecb613]/15 border-[#ecb613] text-[#ecb613]'
                                         : 'bg-black/40 border-white/10 text-zinc-400 hover:border-white/30'
@@ -234,6 +235,8 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                             step={50}
                             value={budget}
                             onChange={(e) => setBudget(Number(e.target.value))}
+                            aria-label="Presupuesto de música en vivo"
+                            aria-valuetext={`${formatEuro(budget)}`}
                             className="w-full accent-[#ecb613] bg-zinc-800 h-2 rounded-lg cursor-pointer"
                         />
                         <div className="flex justify-between text-[10px] font-mono text-zinc-500">
@@ -251,6 +254,7 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                         <select
                             value={province}
                             onChange={(e) => setProvince(e.target.value)}
+                            aria-label="Provincia del evento"
                             className="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-[#ecb613]"
                         >
                             {PROVINCIAS.map((p) => (
@@ -264,7 +268,7 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
 
                 {/* Indicador Price-Lock SSOT */}
                 <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-4 py-2 rounded-full w-fit">
-                    <Lock size={12} />
+                    <Lock size={12} aria-hidden="true" />
                     <span>Price-Lock 100 € · Split 80/10/10 · Límite acústico 75 dBA</span>
                 </div>
             </div>
@@ -286,7 +290,7 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                     <div className="space-y-1 text-left">
                         <h3 className="text-xl font-bold font-syne text-white">{activeSwipeArtist.name}</h3>
                         <p className="text-xs font-mono text-zinc-400 flex items-center gap-1">
-                            <MapPin size={12} className="text-[#ecb613]" />
+                            <MapPin size={12} className="text-[#ecb613]" aria-hidden="true" />
                             <span>{activeSwipeArtist.province || 'Madrid'}, España</span>
                         </p>
                         <p className="text-xs font-mono text-[#ecb613]">
@@ -297,13 +301,13 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                     <div className="p-3 bg-black/50 rounded-2xl border border-white/5 text-left text-xs font-mono space-y-1.5">
                         {activeSwipeArtist.matchResult.coupleStrengths.slice(0, 2).map((st, idx) => (
                             <div key={idx} className="flex items-center gap-1.5 text-emerald-400 text-[11px]">
-                                <CheckCircle2 size={13} className="shrink-0" />
+                                <CheckCircle2 size={13} className="shrink-0" aria-hidden="true" />
                                 <span>{st}</span>
                             </div>
                         ))}
                         {activeSwipeArtist.matchResult.warnings.slice(0, 1).map((wn, idx) => (
                             <div key={idx} className="flex items-center gap-1.5 text-amber-400 text-[11px]">
-                                <AlertCircle size={13} className="shrink-0" />
+                                <AlertCircle size={13} className="shrink-0" aria-hidden="true" />
                                 <span>{wn}</span>
                             </div>
                         ))}
@@ -324,14 +328,14 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                             className="w-14 h-14 rounded-full bg-red-950/40 border border-red-500/40 text-red-400 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all active:scale-90"
                             aria-label="Descartar"
                         >
-                            <X size={24} />
+                            <X size={24} aria-hidden="true" />
                         </button>
                         <button
                             onClick={() => handleSwipe('right')}
                             className="w-16 h-16 rounded-full bg-emerald-950/40 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500 hover:text-white flex items-center justify-center transition-all active:scale-90 shadow-xl"
                             aria-label="Guardar en favoritos"
                         >
-                            <Heart size={28} className="fill-current" />
+                            <Heart size={28} className="fill-current" aria-hidden="true" />
                         </button>
                     </div>
                     <p className="text-[10px] font-mono text-zinc-500">
@@ -385,18 +389,18 @@ export const NeuralArtistTinderMatch: React.FC<NeuralArtistTinderMatchProps> = (
                                                 {artist.name}
                                             </h4>
                                             <p className="text-xs text-zinc-400 flex items-center gap-1 font-mono">
-                                                <MapPin size={12} className="text-[#ecb613]" />
+                                                <MapPin size={12} className="text-[#ecb613]" aria-hidden="true" />
                                                 <span>{artist.province || 'Madrid'}, España</span>
                                             </p>
                                             <p className="text-[11px] text-zinc-400 font-mono flex items-center gap-1">
-                                                <Guitar size={12} className="text-[#ecb613]" />
+                                                <Guitar size={12} className="text-[#ecb613]" aria-hidden="true" />
                                                 <span>{Array.isArray(artist.formats) && artist.formats.length > 0 ? artist.formats.join(' · ') : ((artist as any).gremioTag || artist.category || 'Música en Directo')}</span>
                                             </p>
 
                                             <div className="p-3 bg-black/50 rounded-2xl border border-white/5 text-[11px] font-mono space-y-1">
                                                 {matchResult.coupleStrengths.slice(0, 2).map((st, idx) => (
                                                     <div key={idx} className="flex items-center gap-1.5 text-emerald-400 line-clamp-1">
-                                                        <CheckCircle2 size={12} className="shrink-0" />
+                                                        <CheckCircle2 size={12} className="shrink-0" aria-hidden="true" />
                                                         <span>{st}</span>
                                                     </div>
                                                 ))}

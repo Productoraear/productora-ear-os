@@ -3,29 +3,29 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Mic2, 
-  Volume2, 
-  Sliders, 
-  ShieldCheck, 
-  Award, 
-  Trophy, 
-  HeartHandshake, 
-  Calendar, 
-  Phone, 
-  ArrowRight, 
-  ArrowLeft, 
-  Sparkles, 
-  CheckCircle2, 
-  Music, 
-  Radio, 
-  Cpu, 
-  Zap, 
-  Activity, 
-  FileText, 
-  Layers, 
-  Globe2, 
-  ChevronRight, 
+import {
+  Mic2,
+  Volume2,
+  Sliders,
+  ShieldCheck,
+  Award,
+  Trophy,
+  HeartHandshake,
+  Calendar,
+  Phone,
+  ArrowRight,
+  ArrowLeft,
+  Sparkles,
+  CheckCircle2,
+  Music,
+  Radio,
+  Cpu,
+  Zap,
+  Activity,
+  FileText,
+  Layers,
+  Globe2,
+  ChevronRight,
   Lock,
   Compass,
   Landmark,
@@ -157,7 +157,7 @@ export default function ArtistCinematicProfile({
 
   return (
     <div className="relative min-h-screen bg-[#030305] text-white selection:bg-[#FF2B44] selection:text-white font-sans pt-28 md:pt-32">
-      
+
       {/* ── BARRA SUPERIOR DE DISPONIBILIDAD Y TRATO DIRECTO ── */}
       <aside aria-label="Contacto Directo" className="border-b border-white/10 bg-[#07070b]/90 backdrop-blur-xl px-6 py-2.5 text-xs text-white/70">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
@@ -182,13 +182,13 @@ export default function ArtistCinematicProfile({
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[550px] w-[1000px] bg-gradient-radial from-[#FF2B44]/15 via-[#258DCD]/5 to-transparent blur-[140px]" />
 
         <div className="relative mx-auto max-w-7xl space-y-8">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            
+
             {/* VÍDEO EN ALTA RETENCIÓN 1080p (SIN FUGAS A YOUTUBE) */}
             <div className="lg:col-span-7 flex flex-col items-center">
               <div className="relative w-full rounded-3xl overflow-hidden border border-white/15 bg-black shadow-[0_25px_70px_rgba(0,0,0,0.95)] group">
-                
+
                 {/* Frame de Vídeo High-End con Parámetros Anti-Fuga */}
                 <div className="relative w-full aspect-video bg-black overflow-hidden">
                   <iframe
@@ -199,7 +199,7 @@ export default function ArtistCinematicProfile({
                     className="absolute inset-0 w-full h-full border-0"
                   />
                 </div>
-                
+
                 {/* Barra de Telemetría Inferior */}
                 <div className="px-5 py-3.5 bg-[#08080c] border-t border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -220,7 +220,7 @@ export default function ArtistCinematicProfile({
 
             {/* PROPUESTA DE VALOR DE IMPACTO INMEDIATO (VOZ REAL DE EDWIN) */}
             <div className="lg:col-span-5 space-y-6">
-              
+
               <div className="flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-[#FF2B44] px-3.5 py-1 text-[10px] font-mono font-black uppercase tracking-widest text-white shadow-[0_0_15px_rgba(255,43,68,0.4)]">
                   Cantante & Compositor
@@ -279,7 +279,7 @@ export default function ArtistCinematicProfile({
                   onClick={() => handleSelectFormatAndQuote('solista-edwin-agudelo')}
                   className="rounded-xl bg-[#FF2B44] px-6 py-3.5 font-mono text-xs font-black uppercase tracking-[0.15em] text-white shadow-[0_0_25px_rgba(255,43,68,0.4)] transition-all hover:scale-105 hover:bg-white hover:text-black flex items-center gap-2.5 cursor-pointer"
                 >
-                  <Lock size={14} />
+                  <Lock size={14} aria-hidden="true" />
                   <span>Reservar Fecha (100 €)</span>
                 </button>
                 <button
@@ -290,7 +290,7 @@ export default function ArtistCinematicProfile({
                   }}
                   className="rounded-xl border border-white/20 bg-white/5 px-5 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-white transition-colors hover:bg-white/10 flex items-center gap-2 cursor-pointer"
                 >
-                  <Layers size={14} className="text-[#AAD6CD]" />
+                  <Layers size={14} className="text-[#AAD6CD]" aria-hidden="true" />
                   <span>Ver las 4 Tarifas</span>
                 </button>
                 <a
@@ -301,7 +301,7 @@ export default function ArtistCinematicProfile({
                   rel="noopener noreferrer"
                   className="rounded-xl border border-[#AAD6CD]/40 bg-[#AAD6CD]/10 px-4 py-3.5 font-mono text-xs font-semibold uppercase tracking-wider text-[#AAD6CD] transition-colors hover:bg-[#AAD6CD]/20 flex items-center gap-2"
                 >
-                  <Phone size={13} />
+                  <Phone size={13} aria-hidden="true" />
                   <span>Hablar con Edwin</span>
                 </a>
               </div>
@@ -337,17 +337,15 @@ export default function ArtistCinematicProfile({
                   <div
                     key={format.id}
                     onClick={() => handleSelectFormatAndQuote(format.id)}
-                    className={`rounded-2xl border p-4 flex flex-col justify-between space-y-3 transition-all cursor-pointer group ${
-                      isSelected
+                    className={`rounded-2xl border p-4 flex flex-col justify-between space-y-3 transition-all cursor-pointer group ${isSelected
                         ? 'border-[#FF2B44] bg-[#12080c] shadow-[0_0_30px_rgba(255,43,68,0.25)] ring-1 ring-[#FF2B44]'
                         : 'border-white/10 bg-black/40 hover:border-white/30 hover:bg-black/70'
-                    }`}
+                      }`}
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className={`px-2 py-0.5 rounded-md font-mono text-[9px] font-bold uppercase ${
-                          isSolista ? 'bg-[#FF2B44]/20 text-[#FF2B44]' : 'bg-[#AAD6CD]/20 text-[#AAD6CD]'
-                        }`}>
+                        <span className={`px-2 py-0.5 rounded-md font-mono text-[9px] font-bold uppercase ${isSolista ? 'bg-[#FF2B44]/20 text-[#FF2B44]' : 'bg-[#AAD6CD]/20 text-[#AAD6CD]'
+                          }`}>
                           {isSolista ? 'Show + Atrezzo' : `${format.members} Músicos`}
                         </span>
                         <span className="font-mono text-xl font-black text-white group-hover:text-[#FF2B44] transition-colors">
@@ -398,13 +396,13 @@ export default function ArtistCinematicProfile({
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
-                className={`flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                  isSelected
+                aria-pressed={isSelected}
+                className={`flex shrink-0 items-center gap-2 rounded-xl px-3.5 py-2 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${isSelected
                     ? 'bg-[#FF2B44] text-white shadow-md shadow-[#FF2B44]/25'
                     : 'text-white/60 hover:bg-white/5 hover:text-white'
-                }`}
+                  }`}
               >
-                <Icon size={13} />
+                <Icon size={13} aria-hidden="true" />
                 <span>{tab.label}</span>
               </button>
             );
@@ -414,12 +412,12 @@ export default function ArtistCinematicProfile({
 
       {/* ── CUERPO PRINCIPAL DE LA FICHA INTEGRAL ── */}
       <div className="mx-auto max-w-7xl px-6 py-16 sm:px-10 lg:px-12 space-y-20">
-        
+
         {/* TAB 1: EL MANIFIESTO (BIOGRAFÍA Y PROPÓSITO) */}
         {activeTab === 'MANIFIESTO' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="space-y-12"
           >
@@ -437,7 +435,7 @@ export default function ArtistCinematicProfile({
 
             {/* BENTO GRID BIOGRÁFICO */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-              
+
               {/* Origen y Forja de Carácter */}
               {/* Origen y Forja de Carácter (Efecto Fénix & Hitos Innegociables) */}
               <div className="md:col-span-12 rounded-3xl border border-[#FF2B44]/30 bg-gradient-to-br from-[#09090d] via-[#12080c] to-[#09090d] p-8 space-y-6 shadow-[0_0_40px_rgba(255,43,68,0.1)]">
@@ -450,7 +448,7 @@ export default function ArtistCinematicProfile({
                 <p className="text-sm text-white/80 leading-relaxed max-w-3xl">
                   El recorrido de Edwin Agudelo es el testimonio de un dominio absoluto sobre el escenario y la acústica, forjando una resiliencia única donde cada minuto frente al público es un pacto de entrega irrenunciable, sin artificios ni concesiones a la mediocridad.
                 </p>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-white/10">
                   <div className="space-y-3">
                     <span className="font-mono text-[10px] uppercase tracking-widest text-[#AAD6CD] font-bold">Hito 1: Identidad Sonora</span>
@@ -597,9 +595,9 @@ export default function ArtistCinematicProfile({
 
         {/* TAB 2: CATÁLOGO OFICIAL DE FORMATOS (4 OPCIONES) */}
         {activeTab === 'ROSTER_14' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="space-y-12"
           >
@@ -638,20 +636,18 @@ export default function ArtistCinematicProfile({
                   <div
                     key={format.id}
                     onClick={() => setSelectedFormatId(format.id)}
-                    className={`rounded-3xl border p-6 flex flex-col justify-between space-y-6 transition-all cursor-pointer relative overflow-hidden group ${
-                      isSelected 
-                        ? 'border-[#FF2B44] bg-[#0c090e] shadow-[0_0_35px_rgba(255,43,68,0.2)]' 
+                    className={`rounded-3xl border p-6 flex flex-col justify-between space-y-6 transition-all cursor-pointer relative overflow-hidden group ${isSelected
+                        ? 'border-[#FF2B44] bg-[#0c090e] shadow-[0_0_35px_rgba(255,43,68,0.2)]'
                         : 'border-white/10 bg-[#09090d] hover:border-white/25'
-                    }`}
+                      }`}
                   >
                     {/* Badge de Distinción de Estrategia */}
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${
-                          isSolista 
-                            ? 'bg-[#FF2B44]/20 text-[#FF2B44] border border-[#FF2B44]/30' 
+                        <span className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider ${isSolista
+                            ? 'bg-[#FF2B44]/20 text-[#FF2B44] border border-[#FF2B44]/30'
                             : 'bg-[#AAD6CD]/10 text-[#AAD6CD] border border-[#AAD6CD]/25'
-                        }`}>
+                          }`}>
                           {isSolista ? 'Show + Complementos' : `${format.members} Músicos en Vivo`}
                         </span>
                         <span className="font-mono text-2xl font-black text-white group-hover:text-[#FF2B44] transition-colors">
@@ -723,11 +719,10 @@ export default function ArtistCinematicProfile({
                           e.stopPropagation();
                           handleSelectFormatAndQuote(format.id);
                         }}
-                        className={`w-full rounded-xl py-3 text-center font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${
-                          isSelected
+                        className={`w-full rounded-xl py-3 text-center font-mono text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer ${isSelected
                             ? 'bg-[#FF2B44] text-white shadow-lg shadow-[#FF2B44]/25'
                             : 'bg-white/10 text-white hover:bg-white/20'
-                        }`}
+                          }`}
                       >
                         <Lock size={13} />
                         <span>Elegir y Cotizar</span>
@@ -766,9 +761,9 @@ export default function ArtistCinematicProfile({
 
         {/* TAB 3: REPERTORIO Y CATARSIS EMOCIONAL */}
         {activeTab === 'REPERTORIO' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="space-y-12"
           >
@@ -787,7 +782,7 @@ export default function ArtistCinematicProfile({
             {/* 3 PILARES DEL REPERTORIO */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {REPERTOIRE_PILLARS.map((pillar, idx) => (
-                <div 
+                <div
                   key={idx}
                   className="rounded-3xl border border-white/10 bg-[#09090d] p-8 flex flex-col justify-between space-y-6 hover:border-[#ecb613]/40 transition-colors"
                 >
@@ -851,9 +846,9 @@ export default function ArtistCinematicProfile({
 
         {/* TAB 4: RIDER TÉCNICO Y ARSENAL S-CLASS */}
         {activeTab === 'RIDER' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="space-y-12"
           >
@@ -874,7 +869,7 @@ export default function ArtistCinematicProfile({
               {TECHNICAL_RIDER.map((item, idx) => {
                 const Icon = item.icon;
                 return (
-                  <div 
+                  <div
                     key={idx}
                     className="rounded-3xl border border-white/10 bg-[#09090d] p-8 space-y-4 hover:border-[#ecb613]/30 transition-all flex flex-col justify-between"
                   >
@@ -941,9 +936,9 @@ export default function ArtistCinematicProfile({
 
         {/* TAB 5: IMPACTO SOCIOSANITARIO (PROYECTO VIMUME) */}
         {activeTab === 'VIMUME' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="space-y-12"
           >
@@ -961,7 +956,7 @@ export default function ArtistCinematicProfile({
 
             {/* BENTO VIMUME */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-              
+
               <div className="md:col-span-8 rounded-3xl border border-white/10 bg-[#09090d] p-8 md:p-10 space-y-5">
                 <span className="rounded-full bg-[#AAD6CD]/10 border border-[#AAD6CD]/30 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-[#AAD6CD]">
                   Neuroacústica & Frecuencia Gamma 40Hz
@@ -1011,9 +1006,9 @@ export default function ArtistCinematicProfile({
 
         {/* TAB 6: TRAYECTORIA Y RECONOCIMIENTOS */}
         {activeTab === 'TRAYECTORIA' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="space-y-12"
           >
@@ -1032,7 +1027,7 @@ export default function ArtistCinematicProfile({
             {/* TIMELINE DE RECONOCIMIENTOS */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {RECOGNITIONS.map((rec, i) => (
-                <div 
+                <div
                   key={i}
                   className="rounded-3xl border border-white/10 bg-[#09090d] p-8 space-y-4 hover:border-[#ecb613]/40 transition-colors"
                 >
@@ -1079,9 +1074,9 @@ export default function ArtistCinematicProfile({
 
         {/* TAB 7: COTIZADOR & CIERRE TRANSACCIONAL */}
         {activeTab === 'BOOKING' && (
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }} 
-            animate={{ opacity: 1, y: 0 }} 
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="space-y-12"
           >

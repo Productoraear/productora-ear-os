@@ -109,17 +109,28 @@ export default function OracleAmbientInterface() {
     <aside aria-label="Oráculo S-Class" className="fixed bottom-6 right-6 z-50 transition-all duration-300">
       <div className="relative group">
         {/* Glow dorado ambiental */}
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ecb613]/40 to-amber-600/20 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition duration-500" />
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-[#ecb613]/40 to-amber-600/20 rounded-2xl blur-md opacity-75 group-hover:opacity-100 transition duration-500" aria-hidden="true" />
 
-        <div className={`relative bg-[#050508]/95 border border-[#ecb613]/30 backdrop-blur-xl rounded-2xl p-4 shadow-2xl text-white transition-all duration-300 ${
-          expanded ? 'w-[420px] max-h-[580px] flex flex-col' : 'min-w-[300px]'
-        }`}>
+        <div className={`relative bg-[#050508]/95 border border-[#ecb613]/30 backdrop-blur-xl rounded-2xl p-4 shadow-2xl text-white transition-all duration-300 ${expanded ? 'w-[420px] max-h-[580px] flex flex-col' : 'min-w-[300px]'
+          }`}>
           {/* Header */}
           <div className="flex items-center justify-between gap-3 border-b border-white/5 pb-3">
-            <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => setExpanded(!expanded)}>
+            <div
+              className="flex items-center gap-2.5 cursor-pointer"
+              role="button"
+              tabIndex={0}
+              aria-expanded={expanded}
+              onClick={() => setExpanded(!expanded)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setExpanded(!expanded);
+                }
+              }}
+            >
               <div className="relative flex items-center justify-center w-8 h-8 rounded-lg bg-[#ecb613]/10 border border-[#ecb613]/30 shrink-0">
-                <Sparkles className="w-4 h-4 text-[#ecb613] animate-pulse" />
-                <span className="absolute -top-1 -right-1 flex h-2 w-2">
+                <Sparkles className="w-4 h-4 text-[#ecb613] animate-pulse" aria-hidden="true" />
+                <span className="absolute -top-1 -right-1 flex h-2 w-2" aria-hidden="true">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ecb613] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ecb613]" />
                 </span>
@@ -132,7 +143,7 @@ export default function OracleAmbientInterface() {
                   </span>
                 </div>
                 <div className="text-xs text-zinc-400 flex items-center gap-1.5 font-sans">
-                  <Radio className="w-3 h-3 text-emerald-400 animate-pulse" />
+                  <Radio className="w-3 h-3 text-emerald-400 animate-pulse" aria-hidden="true" />
                   {loading ? 'Calculando inferencia...' : 'Enlace GPU Bare-Metal'}
                 </div>
               </div>
@@ -143,9 +154,10 @@ export default function OracleAmbientInterface() {
                 <button
                   onClick={handleClear}
                   title="Limpiar chat"
+                  aria-label="Limpiar chat"
                   className="p-1.5 rounded-md hover:bg-white/5 text-zinc-400 hover:text-red-400 transition-colors"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
                 </button>
               )}
               <button
@@ -153,7 +165,7 @@ export default function OracleAmbientInterface() {
                 aria-label={expanded ? "Contraer panel del oráculo" : "Expandir telemetría y chat"}
                 className="p-1.5 rounded-md hover:bg-white/5 text-zinc-400 hover:text-white transition-colors"
               >
-                {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
+                {expanded ? <ChevronDown className="w-4 h-4" aria-hidden="true" /> : <ChevronUp className="w-4 h-4" aria-hidden="true" />}
               </button>
             </div>
           </div>
@@ -186,26 +198,25 @@ export default function OracleAmbientInterface() {
                   >
                     {m.role === 'assistant' && (
                       <div className="w-6 h-6 rounded bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center shrink-0 mt-0.5">
-                        <Bot className="w-3.5 h-3.5 text-[#ecb613]" />
+                        <Bot className="w-3.5 h-3.5 text-[#ecb613]" aria-hidden="true" />
                       </div>
                     )}
                     <div
-                      className={`rounded-xl p-2.5 max-w-[85%] leading-relaxed ${
-                        m.role === 'user'
-                          ? 'bg-[#ecb613]/20 border border-[#ecb613]/40 text-white font-medium'
-                          : 'bg-white/5 border border-white/10 text-zinc-300 font-mono text-[11px]'
-                      }`}
+                      className={`rounded-xl p-2.5 max-w-[85%] leading-relaxed ${m.role === 'user'
+                        ? 'bg-[#ecb613]/20 border border-[#ecb613]/40 text-white font-medium'
+                        : 'bg-white/5 border border-white/10 text-zinc-300 font-mono text-[11px]'
+                        }`}
                     >
                       {m.content || (loading && idx === messages.length - 1 ? (
                         <span className="flex items-center gap-1.5 text-zinc-400">
-                          <Loader2 className="w-3 h-3 animate-spin text-[#ecb613]" />
+                          <Loader2 className="w-3 h-3 animate-spin text-[#ecb613]" aria-hidden="true" />
                           Generando...
                         </span>
                       ) : null)}
                     </div>
                     {m.role === 'user' && (
                       <div className="w-6 h-6 rounded bg-white/10 border border-white/20 flex items-center justify-center shrink-0 mt-0.5">
-                        <User className="w-3.5 h-3.5 text-zinc-300" />
+                        <User className="w-3.5 h-3.5 text-zinc-300" aria-hidden="true" />
                       </div>
                     )}
                   </div>
@@ -246,18 +257,20 @@ export default function OracleAmbientInterface() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Pregunta al Oráculo sobre finanzas, rutas o B2G..."
+                  aria-label="Pregunta al Oráculo"
                   disabled={loading}
                   className="flex-1 bg-black/60 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]/50 focus:ring-1 focus:ring-[#ecb613]/50 disabled:opacity-50 font-sans"
                 />
                 <button
                   type="submit"
                   disabled={loading || !input.trim()}
+                  aria-label="Enviar pregunta al Oráculo"
                   className="bg-[#ecb613] hover:bg-amber-400 text-black font-semibold px-3 py-2 rounded-xl text-xs flex items-center justify-center transition-colors disabled:opacity-40 disabled:cursor-not-allowed shrink-0"
                 >
                   {loading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
                   ) : (
-                    <Send className="w-4 h-4" />
+                    <Send className="w-4 h-4" aria-hidden="true" />
                   )}
                 </button>
               </form>

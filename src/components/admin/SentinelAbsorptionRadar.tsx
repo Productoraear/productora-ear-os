@@ -118,7 +118,7 @@ export default function SentinelAbsorptionRadar() {
         <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
           <div className="flex items-center justify-between text-zinc-400 mb-2">
             <span className="text-xs font-medium">Documentos pendientes</span>
-            <FileStack className="w-4 h-4 text-[#00E5FF]" />
+            <FileStack className="w-4 h-4 text-[#00E5FF]" aria-hidden="true" />
           </div>
           <div className="text-3xl font-bold text-white font-mono">
             {scan ? scan.pending : '—'}
@@ -129,7 +129,7 @@ export default function SentinelAbsorptionRadar() {
         <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
           <div className="flex items-center justify-between text-zinc-400 mb-2">
             <span className="text-xs font-medium">Volumen escaneado</span>
-            <HardDrive className="w-4 h-4 text-[#00E5FF]" />
+            <HardDrive className="w-4 h-4 text-[#00E5FF]" aria-hidden="true" />
           </div>
           <div className="text-3xl font-bold text-white font-mono">
             {scan ? formatSize(scan.sizeMB) : '—'}
@@ -140,7 +140,7 @@ export default function SentinelAbsorptionRadar() {
         <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
           <div className="flex items-center justify-between text-zinc-400 mb-2">
             <span className="text-xs font-medium">Absorbidos históricos</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" aria-hidden="true" />
           </div>
           <div className="text-3xl font-bold text-white font-mono">
             {scan ? scan.absorbed : '—'}
@@ -151,12 +151,20 @@ export default function SentinelAbsorptionRadar() {
         <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24]">
           <div className="flex items-center justify-between text-zinc-400 mb-2">
             <span className="text-xs font-medium">Absorción en vivo</span>
-            <Activity className="w-4 h-4 text-[#00E5FF]" />
+            <Activity className="w-4 h-4 text-[#00E5FF]" aria-hidden="true" />
           </div>
           <div className="text-3xl font-bold text-[#00E5FF] font-mono">
             {normalizedPct.toFixed(1)}%
           </div>
-          <div className="w-full h-2 bg-zinc-900 rounded-full mt-3 overflow-hidden border border-zinc-800">
+          <div
+            role="progressbar"
+            aria-label="Porcentaje de absorción"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={normalizedPct}
+            aria-valuetext={`${normalizedPct.toFixed(1)}%`}
+            className="w-full h-2 bg-zinc-900 rounded-full mt-3 overflow-hidden border border-zinc-800"
+          >
             <div
               className="h-full bg-[#00E5FF] transition-all duration-700"
               style={{ width: `${normalizedPct}%` }}
@@ -169,7 +177,7 @@ export default function SentinelAbsorptionRadar() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="p-6 rounded-2xl bg-[#050508] border border-[#1a1a24]">
           <div className="flex items-center gap-2 mb-4">
-            <Radar className="w-5 h-5 text-[#00E5FF]" />
+            <Radar className="w-5 h-5 text-[#00E5FF]" aria-hidden="true" />
             <h2 className="text-sm font-bold text-white font-mono tracking-wide">
               RADAR DE ABSORCIÓN
             </h2>
@@ -177,7 +185,7 @@ export default function SentinelAbsorptionRadar() {
 
           {loading ? (
             <div className="flex items-center justify-center py-16 text-zinc-500">
-              <Loader2 className="w-6 h-6 animate-spin text-[#00E5FF]" />
+              <Loader2 className="w-6 h-6 animate-spin text-[#00E5FF]" aria-hidden="true" />
             </div>
           ) : scan && scan.sample.length > 0 ? (
             <ul className="space-y-2">
@@ -204,7 +212,7 @@ export default function SentinelAbsorptionRadar() {
 
         <div className="p-6 rounded-2xl bg-[#050508] border border-[#1a1a24]">
           <div className="flex items-center gap-2 mb-4">
-            <ShieldCheck className="w-5 h-5 text-[#00E5FF]" />
+            <ShieldCheck className="w-5 h-5 text-[#00E5FF]" aria-hidden="true" />
             <h2 className="text-sm font-bold text-white font-mono tracking-wide">
               SUGERENCIAS DE NEGOCIO (A/B/C)
             </h2>
@@ -232,16 +240,15 @@ export default function SentinelAbsorptionRadar() {
 
           {absorb && (
             <div
-              className={`mt-4 rounded-lg border px-3 py-3 text-xs font-mono flex items-start gap-2 ${
-                absorb.status === 'ok'
-                  ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
-                  : 'border-amber-500/40 bg-amber-500/10 text-amber-300'
-              }`}
+              className={`mt-4 rounded-lg border px-3 py-3 text-xs font-mono flex items-start gap-2 ${absorb.status === 'ok'
+                ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
+                : 'border-amber-500/40 bg-amber-500/10 text-amber-300'
+                }`}
             >
               {absorb.status === 'ok' ? (
-                <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" />
+                <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
               ) : (
-                <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
+                <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
               )}
               <span>{absorb.message}</span>
             </div>
@@ -262,7 +269,7 @@ export default function SentinelAbsorptionRadar() {
             disabled={loading}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono hover:border-[#00E5FF]/50 hover:text-white transition-colors disabled:opacity-50"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} aria-hidden="true" />
             Escanear
           </button>
           <button
@@ -270,7 +277,7 @@ export default function SentinelAbsorptionRadar() {
             disabled={absorbing || loading}
             className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-[#00E5FF] text-[#030305] text-xs font-bold font-mono hover:bg-[#00c9e0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {absorbing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+            {absorbing ? <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" /> : <Download className="w-4 h-4" aria-hidden="true" />}
             {absorbing ? 'Absorbiendo…' : 'Absorber & Mover'}
           </button>
         </div>
@@ -278,7 +285,7 @@ export default function SentinelAbsorptionRadar() {
 
       {error && (
         <div className="p-4 rounded-xl border border-[#FF2B44]/40 bg-[#FF2B44]/10 text-[#FF2B44] text-xs font-mono flex items-start gap-2">
-          <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
+          <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" />
           <span>{error}</span>
         </div>
       )}

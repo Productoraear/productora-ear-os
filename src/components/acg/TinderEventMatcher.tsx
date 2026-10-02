@@ -108,11 +108,11 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
                 className="w-11 h-11 rounded-xl bg-[#FF2B44] text-white flex items-center justify-center hover:shadow-[0_0_25px_rgba(255,43,68,0.5)] transition-all shrink-0"
                 aria-label={isPlaying ? 'Pausar fragmento de audio' : 'Reproducir fragmento de audio'}
               >
-                {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+                {isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
               </button>
               <div className="flex-1 min-w-0">
                 <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest flex items-center gap-1.5">
-                  <Volume2 size={12} className="text-[#FF2B44]" /> Fragmento en caliente
+                  <Volume2 size={12} className="text-[#FF2B44]" aria-hidden="true" /> Fragmento en caliente
                 </p>
                 <p className="font-mono text-xs text-white/70 truncate">Edwin Agudelo · Podcast Cumpleaños</p>
               </div>
@@ -121,7 +121,7 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
 
             {/* Aviso de compatibilidad acústica */}
             <div className={`p-3 rounded-xl border flex items-start gap-2 ${isArtistCompatible ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-[#FF2B44]/40 bg-[#FF2B44]/5'}`}>
-              <Info size={15} className={isArtistCompatible ? 'text-emerald-400 shrink-0 mt-0.5' : 'text-[#FF2B44] shrink-0 mt-0.5'} />
+              <Info size={15} aria-hidden="true" className={isArtistCompatible ? 'text-emerald-400 shrink-0 mt-0.5' : 'text-[#FF2B44] shrink-0 mt-0.5'} />
               <p className="font-mono text-[11px] leading-relaxed text-white/70">
                 {isArtistCompatible
                   ? 'Match acústico compatible: rider aprobado para la finca seleccionada.'
@@ -137,7 +137,7 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
                 className="w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white transition-all flex items-center justify-center"
                 aria-label="Descartar artista"
               >
-                <X size={24} />
+                <X size={24} aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -145,7 +145,7 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
                 className="w-16 h-16 rounded-full bg-[#FF2B44] text-white hover:shadow-[0_0_40px_rgba(255,43,68,0.6)] transition-all flex items-center justify-center scale-105"
                 aria-label="Seleccionar artista"
               >
-                <Heart size={28} />
+                <Heart size={28} aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
       <div className="lg:col-span-5 space-y-5">
         <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles size={15} className="text-[#FF2B44]" />
+            <Sparkles size={15} className="text-[#FF2B44]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Event Matcher · Doble opt-in</span>
           </div>
           <p className="font-body text-sm text-white/60 leading-relaxed mb-4">
@@ -172,11 +172,12 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
                   key={offer.id}
                   type="button"
                   onClick={() => dispatch({ type: 'SELECT_ARTIST', payload: offer.id })}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${
-                    active
-                      ? 'border-[#FF2B44]/50 bg-[#FF2B44]/10'
-                      : 'border-white/10 bg-black/30 hover:border-white/30'
-                  }`}
+                  aria-pressed={active}
+                  aria-label={`Seleccionar ${offer.name} (${offer.formatLabel})`}
+                  className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${active
+                    ? 'border-[#FF2B44]/50 bg-[#FF2B44]/10'
+                    : 'border-white/10 bg-black/30 hover:border-white/30'
+                    }`}
                 >
                   <div className="text-left">
                     <span className={`block font-syne text-sm font-bold ${active ? 'text-white' : 'text-white/70'}`}>{offer.name}</span>

@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
-import { 
-  PhoneCall, TrendingUp, Video, ShieldCheck, 
-  CheckCircle2, AlertTriangle, Play, Sparkles, MessageSquare, 
+import {
+  PhoneCall, TrendingUp, Video, ShieldCheck,
+  CheckCircle2, AlertTriangle, Play, Sparkles, MessageSquare,
   Terminal, DollarSign, Users, Award, FileText, ChevronRight
 } from 'lucide-react';
 import { SSOT_PROVIDER_METRICS } from '@/lib/constants/SClassNexus';
@@ -49,7 +49,7 @@ export default function OperationalTrainingManual() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/20 text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.3em] mb-3">
-              <ShieldCheck size={12} />
+              <ShieldCheck size={12} aria-hidden="true" />
               DOCTRINA OPERATIVA 2030-2050 // SSOT MILITAR
             </div>
             <h1 className="text-2xl sm:text-4xl font-black font-syne uppercase text-white tracking-tight">
@@ -88,11 +88,11 @@ export default function OperationalTrainingManual() {
             <button
               key={tab.id}
               onClick={() => setActiveRole(tab.id)}
-              className={`p-4 sm:p-5 rounded-2xl border text-left transition-all cursor-pointer flex items-center gap-3 ${
-                isActive
+              aria-pressed={isActive}
+              className={`p-4 sm:p-5 rounded-2xl border text-left transition-all cursor-pointer flex items-center gap-3 ${isActive
                   ? 'bg-white/10 border-white/30 text-white shadow-xl'
                   : 'bg-[#050508] border-white/5 text-white/50 hover:text-white hover:border-white/15'
-              }`}
+                }`}
             >
               <div
                 className="p-2.5 rounded-xl border"
@@ -102,7 +102,7 @@ export default function OperationalTrainingManual() {
                   color: tab.color
                 }}
               >
-                <Icon size={18} />
+                <Icon size={18} aria-hidden="true" />
               </div>
               <div>
                 <span className="text-xs sm:text-sm font-bold block">{tab.label}</span>
@@ -192,11 +192,11 @@ export default function OperationalTrainingManual() {
                     <button
                       key={idx}
                       onClick={() => setActiveObjectionIndex(idx)}
-                      className={`px-3 py-1 rounded-lg text-xs font-mono cursor-pointer transition-all ${
-                        activeObjectionIndex === idx
+                      aria-pressed={activeObjectionIndex === idx}
+                      className={`px-3 py-1 rounded-lg text-xs font-mono cursor-pointer transition-all ${activeObjectionIndex === idx
                           ? 'bg-[#ecb613] text-black font-bold'
                           : 'bg-white/5 text-white/50 hover:text-white'
-                      }`}
+                        }`}
                     >
                       Objeción {idx + 1}
                     </button>

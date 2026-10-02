@@ -105,7 +105,7 @@ export default function DecisionBelt() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <div className="flex items-center gap-2">
-            <Radio size={15} className="text-[#ecb613] animate-pulse" />
+            <Radio size={15} className="text-[#ecb613] animate-pulse" aria-hidden="true" />
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/40">Autonomous Commerce Grid · Cinta de Decisión</span>
           </div>
           <h1 className="font-syne text-3xl md:text-5xl font-black tracking-tighter text-white mt-2">
@@ -121,7 +121,11 @@ export default function DecisionBelt() {
       </div>
 
       {/* Barra de progreso interactiva */}
-      <div className="flex items-center gap-2 mb-10">
+      <div
+        role="group"
+        aria-label="Progreso de la reserva"
+        className="flex items-center gap-2 mb-10"
+      >
         {DECISION_STEPS.map((step) => {
           const isActive = step.id === activeStep.id;
           const isCompleted = step.index < state.currentStepIndex;
@@ -132,6 +136,7 @@ export default function DecisionBelt() {
               onClick={() => goToStep(step.index)}
               className="flex-1 text-left group"
               aria-label={`Ir a etapa ${step.label}`}
+              aria-current={isActive ? 'step' : undefined}
             >
               <div className="flex items-center gap-2 mb-2">
                 <span
@@ -175,7 +180,7 @@ export default function DecisionBelt() {
           disabled={state.currentStepIndex === 0}
           className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 disabled:opacity-30 flex items-center gap-2 font-mono text-xs uppercase tracking-widest"
         >
-          <ArrowLeft size={14} /> Anterior
+          <ArrowLeft size={14} aria-hidden="true" /> Anterior
         </button>
 
         <p className="hidden md:block font-mono text-[10px] text-white/30 uppercase tracking-widest">
@@ -189,7 +194,7 @@ export default function DecisionBelt() {
           className="px-5 py-3 rounded-xl text-black font-mono text-xs uppercase tracking-widest flex items-center gap-2 disabled:opacity-30"
           style={{ backgroundColor: activeStep.accent }}
         >
-          Siguiente <ArrowRight size={14} />
+          Siguiente <ArrowRight size={14} aria-hidden="true" />
         </button>
       </div>
     </div>

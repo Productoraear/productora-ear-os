@@ -30,7 +30,7 @@ export default function GanttChronogram6199() {
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <div className="rounded-xl border border-[#FF2B44]/30 bg-[#FF2B44]/5 p-2 text-[#FF2B44]">
-            <CalendarRange size={18} />
+            <CalendarRange size={18} aria-hidden="true" />
           </div>
           <div>
             <h3 className="font-mono text-sm font-bold uppercase tracking-widest text-white">
@@ -42,17 +42,22 @@ export default function GanttChronogram6199() {
           </div>
         </div>
 
-        <div className="inline-flex rounded-full border border-white/10 bg-black/40 p-1">
+        <div
+          role="group"
+          aria-label="Seleccionar duración del ciclo"
+          className="inline-flex rounded-full border border-white/10 bg-black/40 p-1"
+        >
           {([61, 99] as Cycle[]).map((c) => (
             <button
               key={c}
               type="button"
               onClick={() => setCycle(c)}
-              className={`rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-all ${
-                cycle === c
+              aria-pressed={cycle === c}
+              aria-label={`Cronograma de ${c} días`}
+              className={`rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-all ${cycle === c
                   ? 'bg-[#FF2B44] text-black font-bold'
                   : 'text-white/50 hover:text-white'
-              }`}
+                }`}
             >
               {c} días
             </button>
@@ -60,18 +65,34 @@ export default function GanttChronogram6199() {
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div
+        role="list"
+        aria-label={`Fases del cronograma de ${cycle} días`}
+        className="space-y-3"
+      >
         {phases.map((phase, idx) => {
           const widthPct = Math.max(
             10,
             Math.round((phase.day / totalDays) * 100),
           );
           return (
-            <div key={`${cycle}-${idx}`} className="flex items-center gap-4">
+            <div
+              key={`${cycle}-${idx}`}
+              role="listitem"
+              className="flex items-center gap-4"
+            >
               <div className="w-24 shrink-0 font-mono text-[10px] uppercase tracking-widest text-[#FF2B44]">
                 {phase.window}
               </div>
-              <div className="relative h-12 flex-1 overflow-hidden rounded-xl border border-white/5 bg-white/[0.02]">
+              <div
+                role="progressbar"
+                aria-label={`${phase.title}: ${phase.window}`}
+                aria-valuemin={0}
+                aria-valuemax={totalDays}
+                aria-valuenow={phase.day}
+                aria-valuetext={`Día ${phase.day} de ${totalDays}. ${phase.title}. Ventana ${phase.window}. KPI: ${phase.kpi}`}
+                className="relative h-12 flex-1 overflow-hidden rounded-xl border border-white/5 bg-white/[0.02]"
+              >
                 <div
                   className="absolute inset-y-0 left-0 flex items-center rounded-xl border border-[#FF2B44]/30 bg-gradient-to-r from-[#FF2B44]/25 to-[#FF2B44]/5 pl-3"
                   style={{ width: `${Math.min(100, widthPct + 12)}%` }}
@@ -81,7 +102,7 @@ export default function GanttChronogram6199() {
                   </span>
                 </div>
                 <div className="absolute right-3 top-1/2 flex -translate-y-1/2 items-center gap-1 font-mono text-[9px] uppercase tracking-widest text-white/40">
-                  <Flag size={10} /> {phase.kpi}
+                  <Flag size={10} aria-hidden="true" /> {phase.kpi}
                 </div>
               </div>
             </div>

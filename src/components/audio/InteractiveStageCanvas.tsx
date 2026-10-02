@@ -218,8 +218,14 @@ export const InteractiveStageCanvas: React.FC<Props> = ({
 
   return (
     <div className="relative w-full h-full min-h-[480px] flex items-center justify-center overflow-hidden rounded-2xl border border-zinc-800 bg-black">
+      <span id="stage-canvas-instructions" className="sr-only">
+        Plano interactivo del escenario con {musicians.length} músicos. Haz clic sobre un músico para seleccionarlo y ver su monitor asignado.
+      </span>
       <canvas
         ref={canvasRef}
+        role="application"
+        aria-label={`Plano del escenario interactivo. Ángulo ${cameraAngle}. Haz clic en un músico para seleccionarlo.`}
+        aria-describedby="stage-canvas-instructions"
         className="cursor-crosshair w-full h-full"
         onClick={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();
