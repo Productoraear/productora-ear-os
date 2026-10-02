@@ -1,14 +1,15 @@
 FROM node:20-alpine AS base
 
-# Install dependencies only when needed
+# 1. Install dependencies only when needed (with npm cache mount)
 FROM base AS deps
 RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
 
 COPY package.json package-lock.json* ./
-RUN npm install --legacy-peer-deps
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --legacy-peer-deps
 
-# Rebuild the source code only when needed
+# 2. Rebuild the source code (with Next.js build cache mount)
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -18,9 +19,10 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
 RUN npx prisma generate || true
-RUN npm run build
+RUN --mount=type=cache,target=/app/.next/cache \
+    npm run build
 
-# Production image, copy all the files and run next
+# 3. Production runner
 FROM base AS runner
 WORKDIR /app
 
@@ -35,7 +37,6 @@ COPY --from=builder /app/public ./public
 RUN mkdir .next
 RUN chown nextjs:nodejs .next
 
-# Copy Next.js standalone build outputs
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
