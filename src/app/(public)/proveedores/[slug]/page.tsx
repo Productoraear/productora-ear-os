@@ -479,6 +479,8 @@ function findInStaticPartitions(slugNorm: string) {
             address_exact: found.address_exact || found.address,
             gps_coordinates: found.gps_coordinates || { lat: 43.2925, lng: -2.8872 },
             google_maps_embed: found.google_maps_embed || `https://maps.google.com/maps?q=${encodeURIComponent(found.address || found.province || 'Derio')}&z=15&output=embed`,
+            raw_html: found.raw_html || found.scraped_content || null,
+            scraped_content: found.scraped_content || null,
             video_url: found.video_url || null,
             menus_list: found.menus_list || []
           };
@@ -801,9 +803,16 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               </div>
 
               <div className="p-6 rounded-3xl bg-[#09090d] border border-white/10 space-y-4">
-                <p className="text-sm text-zinc-300 leading-relaxed font-light">
-                  {description}
-                </p>
+                {rawProvider.raw_html || rawProvider.scraped_content ? (
+                  <div
+                    className="text-sm text-zinc-300 leading-relaxed font-light space-y-3 prose prose-invert max-w-none [&_a]:text-[#ecb613] [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+                    dangerouslySetInnerHTML={{ __html: cleanText(rawProvider.raw_html || rawProvider.scraped_content) }}
+                  />
+                ) : (
+                  <p className="text-sm text-zinc-300 leading-relaxed font-light">
+                    {description}
+                  </p>
+                )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-white/5">
                   <div className="p-3 bg-black/40 rounded-2xl border border-white/5 space-y-1">
