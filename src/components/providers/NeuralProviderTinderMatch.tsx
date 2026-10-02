@@ -8,10 +8,8 @@ import {
     Lock,
     MapPin,
     ShieldCheck,
-    ChevronRight,
     Info,
     PhoneCall,
-    Briefcase,
     Zap,
     Heart,
     X
@@ -198,11 +196,10 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                                 <button
                                     key={cat}
                                     onClick={() => setSelectedCategory(cat)}
-                                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                                        isSelected
+                                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${isSelected
                                             ? 'bg-[#ecb613] text-black font-semibold shadow-lg shadow-[#ecb613]/20 scale-105'
                                             : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5'
-                                    }`}
+                                        }`}
                                 >
                                     {cat}
                                 </button>
@@ -509,13 +506,12 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                                     >
                                         <span className="text-zinc-300 truncate max-w-[240px]">{d.label}</span>
                                         <span
-                                            className={`font-bold ${
-                                                d.matchPercent >= 80
+                                            className={`font-bold ${d.matchPercent >= 80
                                                     ? 'text-emerald-400'
                                                     : d.matchPercent >= 50
-                                                    ? 'text-[#ecb613]'
-                                                    : 'text-zinc-500'
-                                            }`}
+                                                        ? 'text-[#ecb613]'
+                                                        : 'text-zinc-500'
+                                                }`}
                                         >
                                             {d.matchPercent}%
                                         </span>

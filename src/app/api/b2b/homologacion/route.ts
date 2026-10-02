@@ -55,9 +55,10 @@ export async function POST(req: NextRequest) {
         ? 'Homologación técnica completada con éxito (< 15 min). La finca cumple con la normativa de seguridad de Productora EAR.'
         : 'Se han detectado desviaciones técnicas que deben subsanarse antes de la inclusión en la red oficial.'
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error('B2B_HOMOLOGACION_ERROR:', error);
     return NextResponse.json(
-      { success: false, error: error?.message || 'Error al procesar la homologación express' },
+      { success: false, error: 'Error al procesar la homologación express' },
       { status: 500 }
     );
   }

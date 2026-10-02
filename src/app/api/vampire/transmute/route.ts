@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
     try {
         // En un entorno S-Class real, aquí verificaríamos privilegios ALPHA_GOD_MODE
-        
+
         const result = await vampireService.processNewLeads();
 
         if (result.success) {
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: result.error }, { status: 500 });
         }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error('❌ VAMPIRE_API_ERROR:', error);
         return NextResponse.json({ error: 'Error en la cámara de transmutación' }, { status: 500 });
     }

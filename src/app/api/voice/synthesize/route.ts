@@ -44,7 +44,7 @@ function generateHarmonicAcousticWav(durationSeconds: number = 8): Buffer {
 
   for (let i = 0; i < totalSamples; i++) {
     const t = i / sampleRate;
-    
+
     // Envolvente de entrada suave (fade in 1s) y salida suave (fade out 1.5s)
     let envelope = 1.0;
     if (t < 1.0) {
@@ -55,7 +55,7 @@ function generateHarmonicAcousticWav(durationSeconds: number = 8): Buffer {
 
     // Vibrato sutil y resonancia acústica
     const vibrato = 1.0 + 0.006 * Math.sin(2 * Math.PI * 5 * t);
-    
+
     // Mezcla armónica de notas
     let sampleVal = 0;
     chordNotes.forEach((freq, idx) => {
@@ -98,9 +98,10 @@ export async function GET(req: NextRequest) {
         'Accept-Ranges': 'bytes'
       }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error('VOICE_SYNTHESIZE_ERROR:', error);
     return NextResponse.json(
-      { error: error.message || 'Error en síntesis acústica' },
+      { error: 'Error en síntesis acústica' },
       { status: 500 }
     );
   }

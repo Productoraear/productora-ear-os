@@ -9,7 +9,10 @@ export async function GET() {
       orderBy: { name: 'asc' },
     });
 
-    let catalogueVendors: Array<{ id: string; name: string; category: string; phone?: string; email?: string }> = [];
+    type CatalogueEntry = { id: string; name: string; category: string; phone?: string; email?: string };
+    type RawProvider = { id?: string; slug?: string; name?: string; category?: string; vertical?: string; phone?: string; email?: string };
+
+    let catalogueVendors: Array<CatalogueEntry> = [];
     const ssotPath = path.join(process.cwd(), 'src/data/vampirized_providers.json');
 
     if (fs.existsSync(ssotPath)) {
@@ -17,8 +20,8 @@ export async function GET() {
         const raw = fs.readFileSync(ssotPath, 'utf-8');
         const parsed = JSON.parse(raw);
         const list = Array.isArray(parsed) ? parsed : (parsed.providers || []);
-        
-        catalogueVendors = list.slice(0, 300).map((v: any) => ({
+
+        catalogueVendors = list.slice(0, 300).map((v: RawProvider) => ({
           id: v.id || v.slug || String(Math.random()),
           name: v.name || 'Proveedor Verificado EAR',
           category: v.category || v.vertical || 'General',
@@ -37,7 +40,7 @@ export async function GET() {
     ];
 
     return NextResponse.json(merged);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error fetching vendors:', error);
     return NextResponse.json([], { status: 200 });
   }

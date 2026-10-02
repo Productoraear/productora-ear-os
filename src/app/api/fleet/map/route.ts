@@ -24,7 +24,8 @@ export async function GET() {
 
     return NextResponse.json(units);
 
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error('FLEET_MAP_ERROR:', error);
     return NextResponse.json({ error: "Failed to fetch map data" }, { status: 500 });
   }
 }

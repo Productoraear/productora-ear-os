@@ -26,7 +26,7 @@ export default function AdminCalibratorProxyPage() {
             <AdminCalibratorProxy />
 
             {/* Nota de gobernanza */}
-            <div className="rounded-2xl border border-white/10 bg-black/30 p-4 text-[11px] font-mono text-zinc-500 leading-relaxed">
+            <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-4 text-[11px] font-mono text-zinc-500 leading-relaxed">
                 ⚠️ <span className="text-zinc-300 font-bold">Preconfiguración inteligente:</span> toda finca
                 nueva se autoconfigura con el preset más cercano a su tipología (Palacio, Cortijo, Masía…).
                 El admin puede ajustarlo manualmente o delegar su aprobación final al proveedor.

@@ -9,7 +9,13 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const response = await fetch(imageUrl, {
+    // Defensa en profundidad: solo HTTP(S) público, sin protocolos internos (SSRF).
+    const target = new URL(imageUrl);
+    if (target.protocol !== 'http:' && target.protocol !== 'https:') {
+      return new NextResponse('Protocolo no permitido', { status: 400 });
+    }
+
+    const response = await fetch(target.toString(), {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
         'Referer': 'https://www.bodas.net/',
@@ -29,7 +35,8 @@ export async function GET(req: NextRequest) {
         'Cache-Control': 'public, max-age=31536000, immutable',
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error('MEDIA_PROXY_ERROR:', error);
     return new NextResponse('Error interno del proxy', { status: 500 });
   }
 }

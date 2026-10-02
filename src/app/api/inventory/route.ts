@@ -2,23 +2,28 @@ import { NextResponse } from 'next/server';
 import { InventoryEngine } from '@/lib/constants/inventory-catalog';
 
 export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const m2Param = searchParams.get('m2');
-  const paxParam = searchParams.get('pax');
+  try {
+    const { searchParams } = new URL(req.url);
+    const m2Param = searchParams.get('m2');
+    const paxParam = searchParams.get('pax');
 
-  if (m2Param || paxParam) {
-    const m2 = Math.max(10, parseInt(m2Param || '50', 10));
-    const pax = Math.max(5, parseInt(paxParam || '50', 10));
-    const recommendation = InventoryEngine.recommendGearForSpace(m2, pax);
+    if (m2Param || paxParam) {
+      const m2 = Math.max(10, parseInt(m2Param || '50', 10));
+      const pax = Math.max(5, parseInt(paxParam || '50', 10));
+      const recommendation = InventoryEngine.recommendGearForSpace(m2, pax);
+      return NextResponse.json({
+        recommendation,
+        catalog: InventoryEngine.getCatalog()
+      });
+    }
+
     return NextResponse.json({
-      recommendation,
       catalog: InventoryEngine.getCatalog()
     });
+  } catch (error: unknown) {
+    console.error('INVENTORY_GET_ERROR:', error);
+    return NextResponse.json({ error: 'No se pudo cargar el inventario.' }, { status: 500 });
   }
-
-  return NextResponse.json({
-    catalog: InventoryEngine.getCatalog()
-  });
 }
 
 export async function POST(req: Request) {
@@ -42,7 +47,8 @@ export async function POST(req: Request) {
       eventDate,
       customerEmail
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Error al procesar reserva de inventario.' }, { status: 500 });
+  } catch (error: unknown) {
+    console.error('INVENTORY_POST_ERROR:', error);
+    return NextResponse.json({ error: 'Error al procesar reserva de inventario.' }, { status: 500 });
   }
 }

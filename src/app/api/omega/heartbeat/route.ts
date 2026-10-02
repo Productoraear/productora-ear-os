@@ -30,21 +30,29 @@ export async function GET(request: Request) {
     );
   }
 
-  const matrix = await getOmegaSystemStatus();
+  try {
+    const matrix = await getOmegaSystemStatus();
 
-  return NextResponse.json(
-    {
-      success: true,
-      rateLimit: {
-        remaining: guard.remaining,
+    return NextResponse.json(
+      {
+        success: true,
+        rateLimit: {
+          remaining: guard.remaining,
+        },
+        ...matrix,
       },
-      ...matrix,
-    },
-    {
-      status: 200,
-      headers: {
-        "Cache-Control": "no-store, max-age=0",
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store, max-age=0",
+        },
       },
-    },
-  );
+    );
+  } catch (error: unknown) {
+    console.error("OMEGA_HEARTBEAT_ERROR:", error);
+    return NextResponse.json(
+      { success: false, error: "Error interno del heartbeat" },
+      { status: 500 },
+    );
+  }
 }

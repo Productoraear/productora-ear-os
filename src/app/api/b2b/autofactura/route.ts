@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { 
-  generateAutoInvoiceDraft, 
-  B2BAffiliatePartner, 
+import {
+  generateAutoInvoiceDraft,
+  B2BAffiliatePartner,
   B2BCommissionEvent,
   calculateB2BCommission
 } from '@/lib/b2b-billing-engine';
@@ -9,10 +9,10 @@ import {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { 
-      razonSocial = 'Finca El Olivar S.L.', 
-      cif = 'B-87654321', 
-      iban = 'ES9121000418450200051332', 
+    const {
+      razonSocial = 'Finca El Olivar S.L.',
+      cif = 'B-87654321',
+      iban = 'ES9121000418450200051332',
       direccionFiscal = 'Carretera de Toledo km 24, Madrid',
       tipoPartner = 'FINCA_HOMOLOGADA',
       eventos = []
@@ -59,9 +59,10 @@ export async function POST(req: NextRequest) {
       draft,
       slaNotice: 'Liquidación programada a 7 días hábiles bancarios bajo protocolo EAR OS v2.'
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error('B2B_AUTOFACTURA_ERROR:', error);
     return NextResponse.json(
-      { success: false, error: error?.message || 'Error al generar borrador de autofactura' },
+      { success: false, error: 'Error al generar borrador de autofactura' },
       { status: 500 }
     );
   }

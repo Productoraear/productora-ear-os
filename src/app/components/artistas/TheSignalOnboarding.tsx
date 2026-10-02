@@ -189,7 +189,7 @@ export const TheSignalOnboarding: React.FC<TheSignalOnboardingProps> = ({ onQual
           <button
             onClick={calculateScore}
             disabled={isSubmitting}
-            className="w-full py-4 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-mono text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-xl shadow-purple-500/20 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-4 bg-gradient-to-r from-[#ecb613] via-amber-500 to-[#ecb613] hover:from-amber-400 hover:to-amber-400 text-white font-mono text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-xl shadow-[#ecb613]/20 flex items-center justify-center gap-2 cursor-pointer"
           >
             {isSubmitting ? (
               <>

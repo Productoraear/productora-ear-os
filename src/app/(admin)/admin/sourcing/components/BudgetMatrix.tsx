@@ -74,7 +74,7 @@ export const BudgetMatrix: React.FC = () => {
       </div>
 
       {/* Controles */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-2xl bg-black/50 border border-white/5 font-mono">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 font-mono">
         <div className="space-y-2">
           <div className="flex justify-between text-xs">
             <span className="text-zinc-400">Presupuesto Global del Evento</span>

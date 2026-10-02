@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useReducer, useEffect, useCallback, useRef } from 'react';
+import { useReducer, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ArrowLeft, ArrowRight, Radio } from 'lucide-react';
 import {

@@ -330,7 +330,7 @@ export default function AdminCommandCenterPage() {
             return (
               <div
                 key={tool.id}
-                className="group relative p-5 rounded-2xl bg-[#07070a] hover:bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/50 transition-all duration-200 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:scale-[1.01]"
+                className="group relative p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/50 transition-all duration-200 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:scale-[1.01]"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">

@@ -10,7 +10,8 @@ export async function POST(req: Request) {
       timestamp: new Date().toISOString()
     });
     return NextResponse.json({ success: true, status: 'RECORDED_SSOT' });
-  } catch {
+  } catch (error: unknown) {
+    console.error('[EAR OS TELEMETRY] Lead Intent Error:', error);
     return NextResponse.json({ success: false }, { status: 400 });
   }
 }

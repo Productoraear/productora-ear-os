@@ -178,20 +178,25 @@ function generateLiveTenderFeed(): B2GTenderOpportunity[] {
 }
 
 export async function GET() {
-  const tenders = generateLiveTenderFeed();
+  try {
+    const tenders = generateLiveTenderFeed();
 
-  const response: B2GAlertFeedResponse = {
-    success: true,
-    timestamp: new Date().toISOString(),
-    count: tenders.length,
-    tenders,
-    presets: B2G_PRESETS,
-  };
+    const response: B2GAlertFeedResponse = {
+      success: true,
+      timestamp: new Date().toISOString(),
+      count: tenders.length,
+      tenders,
+      presets: B2G_PRESETS,
+    };
 
-  return NextResponse.json(response, {
-    status: 200,
-    headers: {
-      'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
-    },
-  });
+    return NextResponse.json(response, {
+      status: 200,
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+      },
+    });
+  } catch (error: unknown) {
+    console.error('B2G_ALERTS_ERROR:', error);
+    return NextResponse.json({ success: false, error: 'No se pudieron cargar las alertas B2G.' }, { status: 500 });
+  }
 }

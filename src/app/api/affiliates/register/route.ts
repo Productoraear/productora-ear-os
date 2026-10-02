@@ -16,6 +16,15 @@ interface AffiliatePayload {
   payoutDetails: string;
 }
 
+interface AffiliateRecord extends AffiliatePayload {
+  id: string;
+  affiliateCode: string;
+  splitRate: string;
+  status: string;
+  registeredAt: string;
+  referralUrl: string;
+}
+
 export async function POST(req: Request) {
   try {
     const body: AffiliatePayload = await req.json();
@@ -47,7 +56,7 @@ export async function POST(req: Request) {
     const uniqueSuffix = Math.floor(1000 + Math.random() * 9000);
     const affiliateCode = `EAR-${cleanCompany.toUpperCase()}-${uniqueSuffix}`;
 
-    const affiliateRecord = {
+    const affiliateRecord: AffiliateRecord = {
       id: `aff_${Date.now()}`,
       affiliateCode,
       name,
@@ -89,7 +98,7 @@ export async function POST(req: Request) {
     // 2. Persistencia en bóveda local JSON para resiliencia absoluta
     try {
       const dataFilePath = path.join(process.cwd(), 'src', 'data', 'affiliates_registered.json');
-      let currentAffiliates = [];
+      let currentAffiliates: AffiliateRecord[] = [];
       if (fs.existsSync(dataFilePath)) {
         const fileContent = fs.readFileSync(dataFilePath, 'utf8');
         try {
@@ -110,9 +119,9 @@ export async function POST(req: Request) {
       affiliate: affiliateRecord
     }, { status: 201 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [AFFILIATE REGISTER ERROR]:', error);
-    return NextResponse.json({ error: error.message || 'Error en el alta de afiliado.' }, { status: 500 });
+    return NextResponse.json({ error: 'Error en el alta de afiliado.' }, { status: 500 });
   }
 }
 
@@ -121,11 +130,12 @@ export async function GET() {
     const dataFilePath = path.join(process.cwd(), 'src', 'data', 'affiliates_registered.json');
     if (fs.existsSync(dataFilePath)) {
       const fileContent = fs.readFileSync(dataFilePath, 'utf8');
-      const affiliates = JSON.parse(fileContent);
+      const affiliates = JSON.parse(fileContent) as AffiliateRecord[];
       return NextResponse.json({ success: true, count: affiliates.length, affiliates });
     }
     return NextResponse.json({ success: true, count: 0, affiliates: [] });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, count: 0, affiliates: [], error: error.message });
+  } catch (error: unknown) {
+    console.error('AFFILIATE_GET_ERROR:', error);
+    return NextResponse.json({ success: false, count: 0, affiliates: [], error: 'No se pudieron cargar los afiliados.' });
   }
 }

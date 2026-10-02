@@ -1,17 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Mic, 
-  Calendar, 
-  Building2, 
-  Landmark, 
+import {
+  Mic,
+  Calendar,
+  Building2,
+  Landmark,
   ArrowRight,
   Heart
 } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export interface ProfileJourney {
@@ -121,7 +120,7 @@ export default function CinematicHeroSClass() {
 
   return (
     <section className="relative w-full min-h-[85vh] bg-[#030305] text-white flex flex-col justify-between overflow-hidden selection:bg-[#ecb613] selection:text-black pb-12">
-      
+
       {/* 👑 HERO COMERCIAL DE ALTA GAMA PRODUCTORA EAR */}
       <div className="pt-8 sm:pt-12 pb-6 px-4 z-20 flex flex-col items-center justify-center text-center">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-black/70 border border-[#ecb613]/30 rounded-full backdrop-blur-2xl shadow-lg">
@@ -152,15 +151,14 @@ export default function CinematicHeroSClass() {
                 onMouseEnter={() => setHoveredId(p.id)}
                 onMouseLeave={() => setHoveredId(null)}
                 onClick={() => handleCardNavigation(p.href)}
-                className={`relative rounded-3xl overflow-hidden border transition-all duration-500 flex flex-col justify-between p-5 sm:p-6 cursor-pointer group ${
-                  isHovered 
-                    ? 'shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-[1.02]' 
+                className={`relative rounded-3xl overflow-hidden border transition-all duration-500 flex flex-col justify-between p-5 sm:p-6 cursor-pointer group ${isHovered
+                    ? 'shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-[1.02]'
                     : 'border-white/10 hover:border-white/20 bg-[#08090d]/90'
-                }`}
+                  }`}
                 style={{
                   borderColor: isHovered ? p.accentColor : undefined,
-                  background: isHovered 
-                    ? `linear-gradient(180deg, ${p.accentColor}18 0%, #050507 100%)` 
+                  background: isHovered
+                    ? `linear-gradient(180deg, ${p.accentColor}18 0%, #050507 100%)`
                     : undefined
                 }}
               >
@@ -179,23 +177,23 @@ export default function CinematicHeroSClass() {
                 {/* Sección Superior: Icono (o Colibrí) & Badge */}
                 <div className="relative z-10 space-y-3">
                   <div className="flex justify-between items-start">
-                    <div 
+                    <div
                       className="p-2.5 rounded-2xl border transition-transform duration-300 group-hover:scale-110 flex items-center justify-center min-w-[44px] min-h-[44px]"
-                      style={{ 
-                        backgroundColor: `${p.accentColor}15`, 
+                      style={{
+                        backgroundColor: `${p.accentColor}15`,
                         borderColor: `${p.accentColor}40`,
-                        color: p.accentColor 
+                        color: p.accentColor
                       }}
                     >
                       {Icon && <Icon size={20} />}
                     </div>
 
-                    <span 
+                    <span
                       className="text-[8px] font-mono font-bold tracking-wider px-2 py-1 rounded-full border uppercase truncate max-w-[120px]"
-                      style={{ 
-                        backgroundColor: `${p.accentColor}10`, 
+                      style={{
+                        backgroundColor: `${p.accentColor}10`,
                         borderColor: `${p.accentColor}30`,
-                        color: p.accentColor 
+                        color: p.accentColor
                       }}
                     >
                       {p.badge.split('//')[0]}

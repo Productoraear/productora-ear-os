@@ -127,10 +127,10 @@ export async function GET(req: NextRequest) {
     // 2. Filtrado de licitaciones bajo Art. 118 LCSP (<15.000 €) y CPVs homologados
     const eligibleTenders = OPPORTUNITY_RADAR_POOL.filter(tender => {
       const isMinorContract = tender.importeBase < 15000;
-      const isTargetCpv = tender.cpvCode.startsWith('9230') || 
-                          tender.cpvCode.startsWith('8532') || 
-                          tender.cpvCode.startsWith('3152') || 
-                          tender.cpvCode.startsWith('5131');
+      const isTargetCpv = tender.cpvCode.startsWith('9230') ||
+        tender.cpvCode.startsWith('8532') ||
+        tender.cpvCode.startsWith('3152') ||
+        tender.cpvCode.startsWith('5131');
       return isMinorContract && isTargetCpv;
     });
 
@@ -156,11 +156,11 @@ export async function GET(req: NextRequest) {
       governance: 'ANTIGRAVITY_OMEGA_V4.1'
     }, { status: 200 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [CRON B2G HUNTER ERROR]:', error);
-    return NextResponse.json({ 
-      success: false, 
-      error: error?.message || 'INTERNAL_SCANNER_ERROR' 
+    return NextResponse.json({
+      success: false,
+      error: 'INTERNAL_SCANNER_ERROR'
     }, { status: 500 });
   }
 }

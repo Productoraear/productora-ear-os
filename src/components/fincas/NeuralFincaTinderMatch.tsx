@@ -9,15 +9,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Lock,
-  Calendar,
-  Crown,
-  MapPin,
-  Users,
-  Clock,
-  ArrowRight,
-  ShieldCheck,
-  ChevronRight,
-  Zap
+  MapPin
 } from 'lucide-react';
 import {
   HORMOZI_GRAND_SLAM_CATEGORIES,
@@ -25,7 +17,7 @@ import {
   type CouplePreferences,
   type FincaNeuralSpecs
 } from '@/lib/matching/neuralFincaMatcher';
-import { createSupplierUnlockCheckout, createProviderCardSetupSession } from '@/app/actions/vipCheckoutActions';
+import { createSupplierUnlockCheckout } from '@/app/actions/vipCheckoutActions';
 import {
   CANONICAL_TYPOLOGIES,
   CANONICAL_ENVIRONMENTS,

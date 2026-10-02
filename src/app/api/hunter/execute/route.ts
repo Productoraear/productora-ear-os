@@ -39,13 +39,13 @@ export async function POST(req: Request) {
             }
         });
 
-        return NextResponse.json({ 
-            success: true, 
+        return NextResponse.json({
+            success: true,
             message: `Protocolo ${script} iniciado en segundo plano.`,
-            pid: childProcess.pid 
+            pid: childProcess.pid
         });
 
-    } catch (error) {
+    } catch (error: unknown) {
         console.error('❌ HUNTER_EXECUTION_ERROR:', error);
         return NextResponse.json({ error: 'Error interno del motor de ejecución' }, { status: 500 });
     }

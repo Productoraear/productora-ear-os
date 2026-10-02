@@ -102,7 +102,7 @@ export default function TrainingCenterAdminPage() {
 
       {/* KPI Cards CATMÍN S-Class */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Artista Ejecutor (80%)</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -117,7 +117,7 @@ export default function TrainingCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">EAR OS Infra (10%)</span>
             <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
@@ -132,7 +132,7 @@ export default function TrainingCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Impacto VIMUME (10%)</span>
             <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
@@ -147,7 +147,7 @@ export default function TrainingCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Facturación Bruta</span>
             <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
@@ -164,7 +164,7 @@ export default function TrainingCenterAdminPage() {
       </div>
 
       {/* Simulator Section: Split Soberano 80/10/10 */}
-      <div className="p-6 rounded-2xl bg-[#050508] border border-[#1a1a24] space-y-6">
+      <div className="p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-6">
         <div className="flex items-center justify-between border-b border-[#1a1a24] pb-4">
           <div>
             <h2 className="text-lg font-bold text-white font-mono flex items-center gap-2">
@@ -277,7 +277,7 @@ export default function TrainingCenterAdminPage() {
         </div>
 
         {/* Right Column: Counter-Script Mastery (7 Cols) */}
-        <div className="lg:col-span-7 p-6 rounded-2xl bg-[#050508] border border-[#1a1a24] flex flex-col justify-between space-y-6">
+        <div className="lg:col-span-7 p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-[#1a1a24] pb-3">
               <span className="text-xs font-mono text-[#ecb613] font-bold uppercase">

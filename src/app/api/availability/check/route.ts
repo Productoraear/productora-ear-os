@@ -71,8 +71,8 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Error interno';
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error('AVAILABILITY_GET_ERROR:', error);
+    return NextResponse.json({ error: 'Error interno de disponibilidad' }, { status: 500 });
   }
 }
 
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Error interno';
-    return NextResponse.json({ error: message }, { status: 500 });
+    console.error('AVAILABILITY_POST_ERROR:', error);
+    return NextResponse.json({ error: 'Error interno de disponibilidad' }, { status: 500 });
   }
 }

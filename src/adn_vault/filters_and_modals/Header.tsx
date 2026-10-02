@@ -92,7 +92,7 @@ export const Header: React.FC<HeaderProps> = ({
                     </motion.button>
                 ) : (
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-900/20">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#ecb613] to-amber-500 flex items-center justify-center shadow-lg shadow-[#ecb613]/20">
                             <Icon className="w-5 h-5 text-white"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 1-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 1 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 1 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 1-3.09 3.09Z" /></Icon>
                         </div>
                         <span className="text-lg font-bold text-white tracking-tight">Astra</span>

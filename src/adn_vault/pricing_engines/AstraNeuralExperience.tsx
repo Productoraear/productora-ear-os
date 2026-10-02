@@ -51,7 +51,7 @@ export type UserRole =
   | 'AUTOR_LEGADO';
 
 const ROLES: { id: UserRole; label: string; desc: string; badge: string; color: string }[] = [
-  { id: 'ARTISTA_VISIONARIO', label: 'Artista Visionario', desc: 'Atleta cultural enfocado en arte, excelencia y caché de 7 cifras (Paciente Cero).', badge: 'Atleta Cultural', color: 'from-purple-600 to-blue-600' },
+  { id: 'ARTISTA_VISIONARIO', label: 'Artista Visionario', desc: 'Atleta cultural enfocado en arte, excelencia y caché de 7 cifras (Paciente Cero).', badge: 'Atleta Cultural', color: 'from-[#ecb613] to-amber-500' },
   { id: 'EMANAGER_ESTRATEGICO', label: 'Emanager Estratégico', desc: 'Gobernanza de Dani Aragón, contratos B2B, negociación y split 80/10/10.', badge: 'Dani Aragón Suite', color: 'from-emerald-600 to-teal-600' },
   { id: 'DIRECTOR_PROYECTOS', label: 'Director de Proyectos', desc: 'SLA operativo 99.9%, montaje militar T-120min y riders Bose/Shure.', badge: 'SLA 99.9%', color: 'from-blue-600 to-cyan-600' },
   { id: 'EMPRENDEDOR_IMPACTO', label: 'Emprendedor de Impacto', desc: 'Economía plateada, estimulación Gamma 40Hz e impacto social VIMUME.', badge: 'VIMUME Social', color: 'from-pink-600 to-rose-600' },
@@ -755,7 +755,7 @@ export const AstraNeuralExperience: React.FC = () => {
                     <button
                       onClick={handleGenerateSynthesis}
                       disabled={isGeneratingSynthesis}
-                      className="w-full py-3.5 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-mono text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-lg shadow-purple-500/20 flex items-center justify-center gap-2 cursor-pointer"
+                      className="w-full py-3.5 bg-gradient-to-r from-[#ecb613] to-amber-500 hover:from-amber-400 hover:to-amber-400 text-white font-mono text-xs font-black uppercase tracking-wider rounded-2xl transition-all shadow-lg shadow-[#ecb613]/20 flex items-center justify-center gap-2 cursor-pointer"
                     >
                       {isGeneratingSynthesis ? (
                         <>

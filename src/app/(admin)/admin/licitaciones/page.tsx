@@ -95,7 +95,7 @@ export default function LicitacionesAdminCatminPage() {
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Tope Preventivo Legal</span>
             <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
@@ -110,7 +110,7 @@ export default function LicitacionesAdminCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-emerald-500/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-emerald-500/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Blindaje Acústico</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
@@ -125,7 +125,7 @@ export default function LicitacionesAdminCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-cyan-500/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-cyan-500/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Retorno Social VIMUME</span>
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
@@ -140,7 +140,7 @@ export default function LicitacionesAdminCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-purple-500/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-purple-500/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Facturación Electrónica</span>
             <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
@@ -160,7 +160,7 @@ export default function LicitacionesAdminCatminPage() {
       {/* ===================================================================== */}
       {/* 3. LISTADO DE EXPEDIENTES Y PLIEGOS MENORES (ESTILO CATMÍN)           */}
       {/* ===================================================================== */}
-      <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 shadow-sm space-y-4">
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-3">
           <div>
             <h2 className="text-base font-bold font-syne text-white uppercase">
@@ -176,7 +176,7 @@ export default function LicitacionesAdminCatminPage() {
               placeholder="Buscar ayuntamiento o pliego..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-8 pl-8 pr-3 text-xs font-mono bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
+              className="w-full h-8 pl-8 pr-3 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
             />
           </div>
         </div>

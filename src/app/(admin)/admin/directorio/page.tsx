@@ -69,7 +69,7 @@ export default function AdminCultDirectoryPage() {
 
       {/* KPI Stats Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
-        <div className="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800 space-y-1">
+        <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
           <span className="text-xs text-zinc-500 uppercase tracking-wider block">
             Nodos Homologados
           </span>
@@ -79,7 +79,7 @@ export default function AdminCultDirectoryPage() {
           <span className="text-[10px] text-zinc-400">100% Sincronizados Edge CDN</span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800 space-y-1">
+        <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
           <span className="text-xs text-zinc-500 uppercase tracking-wider block">
             Red Fincas S-Class
           </span>
@@ -89,7 +89,7 @@ export default function AdminCultDirectoryPage() {
           <span className="text-[10px] text-zinc-400">CETAC 32A / 16A Auditado</span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800 space-y-1">
+        <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
           <span className="text-xs text-zinc-500 uppercase tracking-wider block">
             Rider Bose 12W/pax
           </span>
@@ -99,7 +99,7 @@ export default function AdminCultDirectoryPage() {
           <span className="text-[10px] text-zinc-400">Certificación acústica SSOT</span>
         </div>
 
-        <div className="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800 space-y-1">
+        <div className="p-4 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-1">
           <span className="text-xs text-zinc-500 uppercase tracking-wider block">
             Split Soberano
           </span>

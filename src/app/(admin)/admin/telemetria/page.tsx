@@ -97,7 +97,7 @@ export default function TelemetriaCatminPage() {
 
       {/* KPI Cards CATMÍN S-Class */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Ollama Local</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -112,7 +112,7 @@ export default function TelemetriaCatminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Memoria RAM</span>
             <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
@@ -127,7 +127,7 @@ export default function TelemetriaCatminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">SSOT Bóveda Proveedores</span>
             <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
@@ -142,7 +142,7 @@ export default function TelemetriaCatminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Stripe Price-Lock</span>
             <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
@@ -169,7 +169,7 @@ export default function TelemetriaCatminPage() {
       {/* Hardware Details Grid */}
       {data && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] space-y-3">
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-3">
             <div className="flex items-center justify-between border-b border-[#1a1a24] pb-3">
               <span className="text-xs font-mono text-zinc-400 uppercase">CPU Host</span>
               <span className="text-xs font-mono text-emerald-400 font-bold">{data.cpu.cores} Cores</span>
@@ -180,7 +180,7 @@ export default function TelemetriaCatminPage() {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] space-y-3">
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-3">
             <div className="flex items-center justify-between border-b border-[#1a1a24] pb-3">
               <span className="text-xs font-mono text-zinc-400 uppercase">GPU VRAM</span>
               <span className="text-xs font-mono text-[#ecb613] font-bold">24GB VRAM</span>
@@ -191,7 +191,7 @@ export default function TelemetriaCatminPage() {
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] space-y-3">
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-3">
             <div className="flex items-center justify-between border-b border-[#1a1a24] pb-3">
               <span className="text-xs font-mono text-zinc-400 uppercase">Host Node</span>
               <span className="text-xs font-mono text-cyan-400 font-bold">Node {data.host.node}</span>
@@ -206,7 +206,7 @@ export default function TelemetriaCatminPage() {
 
       {/* Modelos Ollama Cargados */}
       {data && (
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] space-y-3">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-3">
           <div className="flex items-center justify-between border-b border-[#1a1a24] pb-3">
             <span className="text-xs font-mono text-zinc-400 uppercase flex items-center gap-2">
               <Cpu className="w-4 h-4 text-[#ecb613]" />

@@ -198,7 +198,7 @@ export default function WhatsAppDispatchPage() {
               </button>
             </div>
 
-            <pre className="p-5 rounded-2xl bg-black/80 border border-white/10 text-xs font-mono text-zinc-200 whitespace-pre-wrap leading-relaxed max-h-80 overflow-y-auto">
+            <pre className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 text-xs font-mono text-zinc-200 whitespace-pre-wrap leading-relaxed max-h-80 overflow-y-auto">
               {dispatchData.rawText}
             </pre>
           </div>

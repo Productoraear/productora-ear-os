@@ -11,7 +11,7 @@ export const runtime = 'nodejs';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const { 
+    const {
       municipio = 'Ayuntamiento de Toledo',
       presupuestoMax = 14950,
       cpv = '92300000-4 (Servicios de Espectáculos y Técnicos)',
@@ -26,9 +26,9 @@ export async function POST(req: NextRequest) {
       objeto,
       codigoDIR3
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [B2G DISPATCHER ERROR]:', error);
-    return NextResponse.json({ error: error.message || 'Error en el despacho de expediente B2G' }, { status: 500 });
+    return NextResponse.json({ error: 'Error en el despacho de expediente B2G' }, { status: 500 });
   }
 }
 
@@ -48,9 +48,9 @@ export async function GET(req: NextRequest) {
       objeto,
       codigoDIR3
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [B2G DISPATCHER GET ERROR]:', error);
-    return NextResponse.json({ error: error.message || 'Error en consulta B2G' }, { status: 500 });
+    return NextResponse.json({ error: 'Error en consulta B2G' }, { status: 500 });
   }
 }
 

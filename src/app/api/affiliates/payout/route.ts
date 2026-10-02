@@ -11,7 +11,7 @@ export const runtime = 'nodejs';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { 
+    const {
       affiliateCode = 'finca_escorial',
       bookingId = `BK-${Date.now().toString().slice(-6)}`,
       totalBookingAmount = 1450,
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
     // Cálculo transparente del 10% para el afiliado
     const affiliateCommission = Math.round(amountNum * 0.10 * 100) / 100;
 
-    let ledgerRecord = null;
+    let ledgerRecord: { id: string } | null = null;
     try {
       ledgerRecord = await prisma.commissionLedger.create({
         data: {
@@ -59,8 +59,8 @@ export async function POST(req: Request) {
       payout: payoutReport
     }, { status: 200 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [AFFILIATE PAYOUT ERROR]:', error);
-    return NextResponse.json({ error: error.message || 'Error acreditando comisión de afiliado' }, { status: 500 });
+    return NextResponse.json({ error: 'Error acreditando comisión de afiliado' }, { status: 500 });
   }
 }

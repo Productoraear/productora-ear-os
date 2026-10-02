@@ -11,7 +11,7 @@ export const runtime = 'nodejs';
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { 
+    const {
       bookingId = `BK-${Date.now().toString().slice(-6)}`,
       location = 'Navalcarnero, Madrid',
       eventDate = new Date().toISOString().split('T')[0],
@@ -62,8 +62,8 @@ export async function POST(req: Request) {
       waybill: waybillData
     }, { status: 200 });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [WAYBILL ENGINE ERROR]:', error);
-    return NextResponse.json({ error: error.message || 'Error emitiendo hoja de ruta' }, { status: 500 });
+    return NextResponse.json({ error: 'Error emitiendo hoja de ruta' }, { status: 500 });
   }
 }

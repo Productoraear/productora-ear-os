@@ -7,13 +7,13 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        
+
         // El adaptador simplemente delega al route principal de Astra
         // En una arquitectura S-Class, detectamos el host actual para evitar fallos de resolución
         const host = req.headers.get('host');
         const protocol = host?.includes('localhost') ? 'http' : 'https';
         const baseUrl = `${protocol}://${host}`;
-        
+
         const response = await fetch(`${baseUrl}/api/astra`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -27,11 +27,11 @@ export async function POST(req: Request) {
 
         const data = await response.json();
         return NextResponse.json(data);
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("❌ ASTRA_QUERY_ADAPTER_FAILURE:", error);
-        return NextResponse.json({ 
-            error: "ADAPTER_SYNAPSE_FAILURE", 
-            details: error.message 
+        return NextResponse.json({
+            error: "ADAPTER_SYNAPSE_FAILURE",
+            details: "Error interno al procesar la búsqueda semántica."
         }, { status: 500 });
     }
 }

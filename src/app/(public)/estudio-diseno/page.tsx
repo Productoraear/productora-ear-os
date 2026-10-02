@@ -434,7 +434,7 @@ NUNCA (FILTRO ANTI-SLOP):
                       Nuestra plataforma de última generación te ofrece soluciones innovadoras para tus eventos. Descubre el poder de la música sin fricción.
                     </p>
                     <div className="pt-2">
-                      <button type="button" className="px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium shadow-lg hover:opacity-90">
+                      <button type="button" className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#ecb613] to-amber-500 text-white font-medium shadow-lg hover:opacity-90">
                         Comenzar Ahora →
                       </button>
                     </div>

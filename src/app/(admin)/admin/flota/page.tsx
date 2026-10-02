@@ -98,7 +98,7 @@ export default function FlotaAdminCatminPage() {
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Tarifa Portes S-Class</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
@@ -113,7 +113,7 @@ export default function FlotaAdminCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-cyan-500/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-cyan-500/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Regla Suplemento Hotel</span>
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
@@ -128,7 +128,7 @@ export default function FlotaAdminCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Unidades en Flota</span>
             <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
@@ -143,7 +143,7 @@ export default function FlotaAdminCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-purple-500/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-purple-500/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Radio de Cobertura</span>
             <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
@@ -166,7 +166,7 @@ export default function FlotaAdminCatminPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Calculadora (Span 6) */}
-        <div className="lg:col-span-6 rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-5 shadow-sm">
+        <div className="lg:col-span-6 rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 space-y-5 shadow-sm">
           <div>
             <h2 className="text-base font-bold font-syne text-white uppercase">
               Calculadora Oficial de Portes y Dietas
@@ -238,7 +238,7 @@ export default function FlotaAdminCatminPage() {
         </div>
 
         {/* Unidades en Ruta (Span 6) */}
-        <div className="lg:col-span-6 rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-4 shadow-sm">
+        <div className="lg:col-span-6 rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 space-y-4 shadow-sm">
           <div>
             <h2 className="text-base font-bold font-syne text-white uppercase">
               Estado de la Flota en Vivo
@@ -288,7 +288,7 @@ export default function FlotaAdminCatminPage() {
       {/* ===================================================================== */}
       {/* 4. INVENTARIO S-CLASS DE EQUIPOS & CONTROL DE FIANZAS (50% MÍNIMO)  */}
       {/* ===================================================================== */}
-      <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-6 shadow-xl">
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 space-y-6 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1a1a24] pb-4">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/20">

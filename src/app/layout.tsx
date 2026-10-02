@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Syne, Montserrat } from "next/font/google";
+import { Syne, Montserrat, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const syne = Syne({
@@ -12,6 +12,18 @@ const syne = Syne({
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
@@ -94,11 +106,11 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
-      className={`dark scroll-smooth ${syne.variable} ${montserrat.variable}`}
+      className={`dark scroll-smooth ${syne.variable} ${montserrat.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <head />
       <body
-        className={`antialiased bg-[#050505] text-white selection:bg-[#FF2B44] selection:text-white font-sans ${syne.variable} ${montserrat.variable}`}
+        className={`antialiased bg-[#050505] text-white selection:bg-[#FF2B44] selection:text-white font-inter ${syne.variable} ${montserrat.variable} ${inter.variable} ${jetbrainsMono.variable}`}
         suppressHydrationWarning
       >
         <VimumeThemeInjector />

@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const parsed = OrchestrateCheckoutSchema.safeParse(body);
-    
+
     if (!parsed.success) {
       return NextResponse.json({ error: parsed.error.issues }, { status: 400 });
     }
@@ -109,7 +109,8 @@ export async function POST(req: NextRequest) {
       executionTimeMs: Date.now() - startTime
     }, { status: 201 });
 
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message || 'Error interno' }, { status: 500 });
+  } catch (error: unknown) {
+    console.error('[API/orchestrate] Error:', error);
+    return NextResponse.json({ error: 'Error interno al orquestar el checkout.' }, { status: 500 });
   }
 }

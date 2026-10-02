@@ -23,7 +23,8 @@ export async function POST(req: Request) {
     const resultado = await procesarDictadoVisita(texto || '', imagen);
 
     return NextResponse.json({ ok: true, data: resultado });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Error al procesar dictado' }, { status: 500 });
+  } catch (err: unknown) {
+    console.error('PROPOSAL_EXTRACT_VOICE_ERROR:', err);
+    return NextResponse.json({ error: 'Error al procesar dictado' }, { status: 500 });
   }
 }

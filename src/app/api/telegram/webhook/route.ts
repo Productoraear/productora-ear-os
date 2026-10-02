@@ -115,8 +115,8 @@ ${quote.artistSelection ? `\n🎤 *TALENTO ASIGNADO:*\n• *${quote.artistSelect
       quoteHash: quote.quoteHash,
       estimatedTotal: quote.estimatedTotal,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [TELEGRAM WEBHOOK ERROR]:', error);
-    return NextResponse.json({ ok: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ ok: false, error: 'Error interno del webhook de Telegram' }, { status: 500 });
   }
 }

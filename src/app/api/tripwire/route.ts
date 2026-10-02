@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req: Request) {
     try {
         const { type, data } = await req.json();
-        
+
         const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
         const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
@@ -30,7 +30,8 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json({ status: "SENT" });
-    } catch (error) {
-        return NextResponse.json({ error: "TRIPWIRE_FAILURE", details: error }, { status: 500 });
+    } catch (error: unknown) {
+        console.error('TRIPWIRE_FAILURE:', error);
+        return NextResponse.json({ error: "TRIPWIRE_FAILURE" }, { status: 500 });
     }
 }

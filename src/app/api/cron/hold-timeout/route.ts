@@ -73,8 +73,8 @@ export async function GET(req: Request) {
           });
         }
       }
-    } catch (stripeErr: any) {
-      console.warn('⚠️ [HOLD TIMEOUT CRON] Stripe API list notice:', stripeErr.message);
+    } catch (stripeErr: unknown) {
+      console.warn('⚠️ [HOLD TIMEOUT CRON] Stripe API list notice:', stripeErr);
     }
 
     return NextResponse.json({
@@ -86,8 +86,8 @@ export async function GET(req: Request) {
         details: releasedHolds,
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [HOLD TIMEOUT CRON ERROR]:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Error interno del cron de timeout' }, { status: 500 });
   }
 }

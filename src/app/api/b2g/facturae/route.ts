@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { 
-  validateDIR3Trio, 
-  calculateLCSPMinorContract, 
+import {
+  validateDIR3Trio,
+  calculateLCSPMinorContract,
   generateFacturaeXML,
   DIR3Codes,
   B2GPackageItem
@@ -79,9 +79,10 @@ export async function POST(req: NextRequest) {
         portalTramitacion: 'Punto General de Entrada de Facturas Electrónicas (FACe)'
       }
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error('FACTURAE_ERROR:', error);
     return NextResponse.json(
-      { success: false, error: error?.message || 'Error al generar la factura electrónica Facturae' },
+      { success: false, error: 'Error al generar la factura electrónica Facturae' },
       { status: 500 }
     );
   }

@@ -97,7 +97,7 @@ export default function TesoreriaAdminCatminPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
         {/* Card 1: Total Señales */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Total Señales Custodia</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
@@ -117,7 +117,7 @@ export default function TesoreriaAdminCatminPage() {
         </div>
 
         {/* Card 2: 80% Artistas */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-emerald-500/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-emerald-500/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Liquidación Artista (80%)</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
@@ -135,7 +135,7 @@ export default function TesoreriaAdminCatminPage() {
         </div>
 
         {/* Card 3: 10% Plataforma EAR OS */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Infraestructura EAR OS (10%)</span>
             <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
@@ -153,7 +153,7 @@ export default function TesoreriaAdminCatminPage() {
         </div>
 
         {/* Card 4: 10% VIMUME */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-cyan-500/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-cyan-500/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Impacto VIMUME (10%)</span>
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
@@ -175,7 +175,7 @@ export default function TesoreriaAdminCatminPage() {
       {/* ===================================================================== */}
       {/* 3. TABLA DE MOVIMIENTOS EN VIVO (ESTILO CATMÍN)                       */}
       {/* ===================================================================== */}
-      <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 shadow-sm space-y-4">
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 shadow-sm space-y-4">
         <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
           <div>
             <h2 className="text-base font-bold font-syne text-white uppercase">

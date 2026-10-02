@@ -63,7 +63,7 @@ export default function RadarCoveragePage() {
 
       {/* Tarjetas Métricas */}
       <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-[#081226]/40 border border-[#1a1a1a] p-5 rounded-2xl">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5">
           <span className="text-zinc-500 font-mono text-xs uppercase tracking-wider block">Coverage Ratio</span>
           <div className="flex items-baseline gap-2 mt-2">
             <span className="text-3xl font-extrabold text-[#258DCD] font-mono">
@@ -79,7 +79,7 @@ export default function RadarCoveragePage() {
           </div>
         </div>
 
-        <div className="bg-zinc-950 border border-[#1a1a1a] p-5 rounded-2xl">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5">
           <span className="text-zinc-500 font-mono text-xs uppercase tracking-wider block">Total Firmas Auditadas</span>
           <span className="text-3xl font-extrabold text-white font-mono mt-2 block">
             {reportData.total_signatures}
@@ -87,7 +87,7 @@ export default function RadarCoveragePage() {
           <span className="text-xs text-zinc-500 mt-2 block">Extraídas de Bóveda y Chats</span>
         </div>
 
-        <div className="bg-zinc-950 border border-[#1a1a1a] p-5 rounded-2xl">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5">
           <span className="text-zinc-500 font-mono text-xs uppercase tracking-wider block">Implementadas Activas</span>
           <span className="text-3xl font-extrabold text-[#AAD6CD] font-mono mt-2 block">
             {reportData.implemented_count}
@@ -97,7 +97,7 @@ export default function RadarCoveragePage() {
           </span>
         </div>
 
-        <div className="bg-zinc-950 border border-[#1a1a1a] p-5 rounded-2xl">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5">
           <span className="text-zinc-500 font-mono text-xs uppercase tracking-wider block">Brechas Pendientes</span>
           <span className="text-3xl font-extrabold text-[#FF455B] font-mono mt-2 block">
             {reportData.missing_count}
@@ -109,7 +109,7 @@ export default function RadarCoveragePage() {
       </section>
 
       {/* Lista de Deuda Técnica / Missing Signatures */}
-      <section className="bg-zinc-950 border border-[#1a1a1a] rounded-2xl p-6">
+      <section className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6">
         <div className="border-b border-[#1a1a1a] pb-4 mb-4 flex items-center justify-between">
           <div>
             <h2 className="text-lg font-bold text-white flex items-center gap-2">

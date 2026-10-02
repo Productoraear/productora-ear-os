@@ -256,7 +256,7 @@ export default function VoiceStudioAdminPage() {
 
       {/* KPI Cards CATMÍN S-Class */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Aceleración GPU</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -271,7 +271,7 @@ export default function VoiceStudioAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Voz de Gala Solista</span>
             <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
@@ -286,7 +286,7 @@ export default function VoiceStudioAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Canciones en Bóveda</span>
             <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
@@ -301,7 +301,7 @@ export default function VoiceStudioAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Cobertura Lingüística</span>
             <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
@@ -318,7 +318,7 @@ export default function VoiceStudioAdminPage() {
       </div>
 
       {/* Pestañas de Navegación CATMÍN */}
-      <div className="flex flex-wrap gap-2 p-1.5 bg-[#050508] border border-[#1a1a24] rounded-2xl">
+      <div className="flex flex-wrap gap-2 p-1.5 rounded-3xl bg-[#09090d]/80 border border-white/10">
         <button
           onClick={() => setActiveTab('SONGS')}
           className={`px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${activeTab === 'SONGS'

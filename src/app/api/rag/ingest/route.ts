@@ -5,6 +5,19 @@ import crypto from 'crypto';
 
 const RAG_DB_PATH = path.join(process.cwd(), 'src', 'data', 'ear-rag-database.json');
 
+type RagNode = {
+  id: string;
+  title: string;
+  category: string;
+  summary: string;
+  content: string;
+  tags: string[];
+  source_file: string;
+  createdAt: string;
+  updatedAt?: string;
+  [key: string]: unknown;
+};
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -30,10 +43,10 @@ export async function POST(req: NextRequest) {
       createdAt: new Date().toISOString()
     };
 
-    let ragDb: any[] = [];
+    let ragDb: RagNode[] = [];
     if (fs.existsSync(RAG_DB_PATH)) {
       const raw = fs.readFileSync(RAG_DB_PATH, 'utf-8');
-      ragDb = JSON.parse(raw);
+      ragDb = JSON.parse(raw) as RagNode[];
     }
 
     // Comprobar si ya existe por ID o título
@@ -53,10 +66,10 @@ export async function POST(req: NextRequest) {
       node: newNode,
       totalNodes: ragDb.length
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error en /api/rag/ingest:', error);
     return NextResponse.json(
-      { error: 'Error interno inyectando nodo RAG.', details: error.message },
+      { error: 'Error interno inyectando nodo RAG.' },
       { status: 500 }
     );
   }

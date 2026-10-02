@@ -89,7 +89,7 @@ export default function JourneyHeatmapAdminPage() {
 
       {/* KPI Cards CATMÍN S-Class */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Score Eficiencia</span>
             <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
@@ -104,7 +104,7 @@ export default function JourneyHeatmapAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Golden Path Pass</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -119,7 +119,7 @@ export default function JourneyHeatmapAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Simulaciones Auditadas</span>
             <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
@@ -134,7 +134,7 @@ export default function JourneyHeatmapAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Neural Journey Pass</span>
             <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:scale-105 transition-transform">
@@ -180,7 +180,7 @@ export default function JourneyHeatmapAdminPage() {
       </div>
 
       {/* Performance Matrix Table */}
-      <div className="bg-[#050508] border border-[#1a1a24] rounded-2xl overflow-hidden">
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse font-mono text-xs">
             <thead>

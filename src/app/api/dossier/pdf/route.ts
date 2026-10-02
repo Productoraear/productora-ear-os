@@ -21,15 +21,21 @@ export async function GET(req: NextRequest) {
   const sigId = searchParams.get('sigId') || '';
   const sigDate = searchParams.get('sigDate') || '';
 
-  let quote = PriceLockEngine.generateQuote({
-    serviceName: service,
-    location,
-    eventDate: date,
-    baseAmount: total,
-    pax,
-    clientName,
-    isB2G,
-  });
+  let quote: ReturnType<typeof PriceLockEngine.generateQuote>;
+  try {
+    quote = PriceLockEngine.generateQuote({
+      serviceName: service,
+      location,
+      eventDate: date,
+      baseAmount: total,
+      pax,
+      clientName,
+      isB2G,
+    });
+  } catch (error: unknown) {
+    console.error('DOSSIER_PDF_ERROR:', error);
+    return NextResponse.json({ error: 'No se pudo generar el dossier.' }, { status: 500 });
+  }
 
   if (token) {
     try {

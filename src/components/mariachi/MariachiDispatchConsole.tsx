@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { 
-  Users, MapPin, Clock, ShieldCheck, CreditCard, 
-  ArrowRight, Sparkles, Navigation, CheckCircle2, MessageCircle
+import {
+  MapPin, ShieldCheck, CreditCard,
+  Sparkles, Navigation, CheckCircle2, MessageCircle
 } from 'lucide-react';
-import { 
-  MARIACHI_FORMATS, 
-  MARIACHI_DISPATCH_HUBS, 
-  calculateMariachiQuote, 
-  MariachiFormat,
-  MariachiHubBase
+import {
+  MARIACHI_FORMATS,
+  MARIACHI_DISPATCH_HUBS,
+  calculateMariachiQuote,
+  MariachiFormat
 } from '@/lib/mariachi/mariachiDispatchCore';
 import MariachiRepertoireSelector from './MariachiRepertoireSelector';
 
@@ -86,8 +85,9 @@ export default function MariachiDispatchConsole() {
       } else {
         alert(data.error || 'No se pudo iniciar la pasarela Stripe.');
       }
-    } catch (err: any) {
-      alert(`Error al conectar con Stripe: ${err.message}`);
+    } catch (err: unknown) {
+      console.error('STRIPE_DEPOSIT_ERROR:', err);
+      alert('Error al conectar con Stripe.');
     } finally {
       setIsProcessingStripe(false);
     }
@@ -129,11 +129,10 @@ export default function MariachiDispatchConsole() {
               <div
                 key={fmt.id}
                 onClick={() => setSelectedFormatId(fmt.id)}
-                className={`p-6 rounded-3xl border transition-all cursor-pointer flex flex-col justify-between relative overflow-hidden ${
-                  isSelected
-                    ? 'bg-[#ecb613]/10 border-[#ecb613] shadow-xl shadow-[#ecb613]/10'
-                    : 'bg-[#050508] border-white/10 hover:border-white/20'
-                }`}
+                className={`p-6 rounded-3xl border transition-all cursor-pointer flex flex-col justify-between relative overflow-hidden ${isSelected
+                  ? 'bg-[#ecb613]/10 border-[#ecb613] shadow-xl shadow-[#ecb613]/10'
+                  : 'bg-[#050508] border-white/10 hover:border-white/20'
+                  }`}
               >
                 {isSelected && (
                   <div className="absolute top-3 right-3 text-[#ecb613]">
@@ -191,11 +190,10 @@ export default function MariachiDispatchConsole() {
                     setSelectedDestinationIndex(i);
                     setCustomDestinationName('');
                   }}
-                  className={`p-2.5 rounded-xl text-left text-xs transition-all border cursor-pointer truncate ${
-                    selectedDestinationIndex === i && !customDestinationName
-                      ? 'bg-[#00E5FF]/10 border-[#00E5FF] text-white font-bold'
-                      : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
-                  }`}
+                  className={`p-2.5 rounded-xl text-left text-xs transition-all border cursor-pointer truncate ${selectedDestinationIndex === i && !customDestinationName
+                    ? 'bg-[#00E5FF]/10 border-[#00E5FF] text-white font-bold'
+                    : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
+                    }`}
                 >
                   <MapPin size={12} className="inline mr-1 text-[#00E5FF]" />
                   {dest.name}

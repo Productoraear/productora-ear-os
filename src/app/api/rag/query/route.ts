@@ -11,7 +11,7 @@ import path from 'path';
 function sanitizeRagNode(node: DocumentNode) {
   const text = node.texto || node.text || node.content || node.preview || '';
   const snippet = text.length > 250 ? text.slice(0, 250).trim() + '...' : text.trim();
-  
+
   return {
     id: node.id || node.archivo || node.title || 'rag_node',
     title: node.title || node.archivo || 'Documento EAR OS',
@@ -120,9 +120,9 @@ export async function GET(req: Request) {
         }
       }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [RAG GET ERROR]', error);
-    return NextResponse.json({ error: 'Fallo en la extracción RAG', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Fallo en la extracción RAG' }, { status: 500 });
   }
 }
 
@@ -164,8 +164,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ error: 'Se requiere query o vector de embedding válido.' }, { status: 400 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [RAG POST ERROR]', error);
-    return NextResponse.json({ error: 'Fallo en la extracción RAG', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Fallo en la extracción RAG' }, { status: 500 });
   }
 }

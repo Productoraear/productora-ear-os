@@ -118,7 +118,7 @@ module.exports = {
         montserrat: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
         body: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
         sans: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
-        inter: ["var(--font-montserrat)", "Montserrat", "sans-serif"],
+        inter: ["var(--font-inter)", "Inter", "sans-serif"],
         syne: ["var(--font-syne)", "Syne", "sans-serif"],
         display: ["var(--font-syne)", "Syne", "sans-serif"],
         headline: ["var(--font-syne)", "Syne", "sans-serif"],
@@ -126,13 +126,13 @@ module.exports = {
         fraunces: ["var(--font-fraunces)", "Fraunces", "serif"],
         serif: ["var(--font-fraunces)", "Fraunces", "serif"],
         label: ["Space Grotesk", "sans-serif"],
-        mono: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
-        jm: ["JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
+        jm: ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       borderRadius: {
-        "DEFAULT": "0px", 
-        "lg": "0px", 
-        "xl": "0px", 
+        "DEFAULT": "0px",
+        "lg": "0px",
+        "xl": "0px",
         "full": "9999px"
       }
     },

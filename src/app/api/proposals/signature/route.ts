@@ -26,7 +26,8 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ ok: true, status: 'ganado' });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message || 'Error en firma digital' }, { status: 500 });
+  } catch (err: unknown) {
+    console.error('PROPOSAL_SIGNATURE_ERROR:', err);
+    return NextResponse.json({ error: 'Error en firma digital' }, { status: 500 });
   }
 }

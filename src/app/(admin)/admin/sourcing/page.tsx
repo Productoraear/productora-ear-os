@@ -172,7 +172,7 @@ export default function SourcingHubPage() {
 
           {/* KPI Cards CATMÍN S-Class */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Total Centros Senior</span>
                 <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
@@ -187,7 +187,7 @@ export default function SourcingHubPage() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Líneas Verificadas</span>
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -202,7 +202,7 @@ export default function SourcingHubPage() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Radio Km 0 (&lt;50 km)</span>
                 <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-[#ecb613] group-hover:scale-105 transition-transform">
@@ -217,7 +217,7 @@ export default function SourcingHubPage() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Pipeline Cualificado</span>
                 <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
@@ -317,7 +317,7 @@ export default function SourcingHubPage() {
           </div>
 
           {/* Tabla de Leads */}
-          <div className="bg-[#050508] border border-[#1a1a24] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 overflow-hidden shadow-2xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs text-zinc-300">
                 <thead className="bg-white/5 border-b border-white/10 font-mono text-[11px] text-zinc-400 uppercase">

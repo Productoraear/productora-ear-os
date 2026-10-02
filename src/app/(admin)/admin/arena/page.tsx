@@ -159,7 +159,7 @@ export default function AdminArenaDashboardPage() {
       </div>
 
       {/* 🏆 TABLA DE CLASIFICACIÓN ELO (LEADERBOARD) */}
-      <div className="p-6 bg-neutral-950 border border-neutral-800 rounded-2xl space-y-4">
+      <div className="p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-4">
         <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
           <h2 className="text-sm font-mono font-bold text-white flex items-center gap-2 uppercase">
             <Trophy className="w-4 h-4 text-[#ecb613]" /> Leaderboard Elo Oficial de Copys & Bloques
@@ -200,7 +200,7 @@ export default function AdminArenaDashboardPage() {
       </div>
 
       {/* 🍌 BANANA PROMPTS XYZ — GALERÍA PEDAGÓGICA NO SATURADA */}
-      <div className="p-6 bg-neutral-950 border border-neutral-800 rounded-2xl space-y-4">
+      <div className="p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-4">
         <div className="flex items-center justify-between border-b border-neutral-800 pb-4">
           <div>
             <h2 className="text-sm font-mono font-bold text-white flex items-center gap-2 uppercase">

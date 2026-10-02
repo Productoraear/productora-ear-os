@@ -44,7 +44,7 @@ const App: React.FC = () => {
     const [userRole, setUserRole] = useLocalStorage<UserRole | null>('astra-userRole', null);
     const [currentView, setCurrentView] = useState<AppView>(AppView.ROLE_SELECTOR);
     const [activeToolId, setActiveToolId] = useState<string | null>(null);
-    
+
     // --- Data State ---
     const [sessions, setSessions] = useLocalStorage<Session[]>('astra-sessions', []);
     const [projects, setProjects] = useLocalStorage<Project[]>('astra-projects', []);
@@ -121,19 +121,19 @@ const App: React.FC = () => {
 
     const handleCompleteTool = useCallback((toolId: string, data?: any) => {
         console.log(`Tool ${toolId} completed`, data);
-        
+
         // Clean data to avoid circular references before storing
         let safeData = data;
         if (data && (data.nativeEvent || data._reactName)) {
-             safeData = true; 
+            safeData = true;
         }
 
         setCompletedTools(prev => ({ ...prev, [toolId]: safeData || true }));
-        
+
         if (toolId === 'visionBoard' && Array.isArray(safeData)) {
             setVisions(safeData);
         }
-        
+
         setActiveToolId(null);
         setCurrentView(AppView.DASHBOARD);
     }, [setCompletedTools, setVisions]);
@@ -160,7 +160,7 @@ const App: React.FC = () => {
             if (toolConfig && toolConfig.component) {
                 const ToolComponent = toolConfig.component;
                 return (
-                    <ToolComponent 
+                    <ToolComponent
                         userRole={userRole}
                         onComplete={(data: any) => handleCompleteTool(activeToolId, data)}
                         onLaunchTool={handleLaunchTool}
@@ -183,7 +183,7 @@ const App: React.FC = () => {
                         userNuggets={userNuggets}
                         userProfile={userProfile}
                         dataContextString={""}
-                        onUpdateUserProfile={() => {}}
+                        onUpdateUserProfile={() => { }}
                         completedTools={completedTools}
                         visions={visions}
                     />
@@ -199,40 +199,40 @@ const App: React.FC = () => {
                 );
             case AppView.TOOLKIT_HUB:
                 return (
-                    <ToolkitHub 
+                    <ToolkitHub
                         userRole={userRole}
                         onLaunchTool={handleLaunchTool}
                     />
                 );
             default:
-                return <StrategicCommandDashboard 
-                            userRole={userRole}
-                            onNavigateToJourney={() => setCurrentView(AppView.STRATEGIC_JOURNEY)}
-                            onLaunchTool={handleLaunchTool}
-                            projects={projects}
-                            userNuggets={userNuggets}
-                            userProfile={userProfile}
-                            dataContextString={""}
-                            onUpdateUserProfile={() => {}}
-                            completedTools={completedTools}
-                            visions={visions}
-                        />;
+                return <StrategicCommandDashboard
+                    userRole={userRole}
+                    onNavigateToJourney={() => setCurrentView(AppView.STRATEGIC_JOURNEY)}
+                    onLaunchTool={handleLaunchTool}
+                    projects={projects}
+                    userNuggets={userNuggets}
+                    userProfile={userProfile}
+                    dataContextString={""}
+                    onUpdateUserProfile={() => { }}
+                    completedTools={completedTools}
+                    visions={visions}
+                />;
         }
     };
 
     return (
-        <div className="bg-zinc-950 text-white font-sans flex flex-col h-screen w-screen overflow-hidden selection:bg-blue-500/30 selection:text-blue-200">
+        <div className="bg-zinc-950 text-white font-sans flex flex-col h-screen w-full overflow-x-hidden selection:bg-blue-500/30 selection:text-blue-200">
             {/* Global Background Ambience */}
             <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40">
-                 <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-900/30 rounded-full blur-[120px]" />
-                 <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-900/30 rounded-full blur-[120px]" />
+                <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-900/30 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-900/30 rounded-full blur-[120px]" />
             </div>
 
             {/* Header */}
             {userRole && (
                 <Header
                     onSave={() => setIsSaveModalOpen(true)}
-                    onExport={() => {}}
+                    onExport={() => { }}
                     onToggleHistory={() => setIsHistoryOpen(true)}
                     onToggleSettings={() => setIsSettingsOpen(true)}
                     onToggleAIAssistant={() => setIsAIAssistantOpen(true)}
@@ -240,7 +240,7 @@ const App: React.FC = () => {
                     onToggleProjectsDashboard={() => setIsProjectsDashboardOpen(true)}
                     onToggleWisdomVault={() => setIsWisdomVaultOpen(true)}
                     onToggleAbout={() => setIsAboutModalOpen(true)}
-                    onDemoCalibration={() => {}}
+                    onDemoCalibration={() => { }}
                     hasAnalysis={false}
                     activeRole={userRole}
                     onRoleSelect={handleRoleSelect}
@@ -269,65 +269,65 @@ const App: React.FC = () => {
             {userRole && (
                 <>
                     <SettingsPanel isOpen={isSettingsOpen} onClose={() => setIsSettingsOpen(false)} />
-                    <HistoryPanel 
-                        isOpen={isHistoryOpen} 
-                        onClose={() => setIsHistoryOpen(false)} 
-                        sessions={sessions} 
-                        onLoad={() => {}} 
-                        onDelete={() => {}} 
-                        onPreview={(s) => { setPreviewSession(s); setIsPreviewModalOpen(true); }} 
+                    <HistoryPanel
+                        isOpen={isHistoryOpen}
+                        onClose={() => setIsHistoryOpen(false)}
+                        sessions={sessions}
+                        onLoad={() => { }}
+                        onDelete={() => { }}
+                        onPreview={(s) => { setPreviewSession(s); setIsPreviewModalOpen(true); }}
                     />
-                    <SaveSessionModal 
-                        isOpen={isSaveModalOpen} 
-                        onClose={() => setIsSaveModalOpen(false)} 
-                        onSave={() => {}} 
-                        projects={projects} 
-                        onAddProject={() => ({} as any)} 
-                        currentProblem="" 
+                    <SaveSessionModal
+                        isOpen={isSaveModalOpen}
+                        onClose={() => setIsSaveModalOpen(false)}
+                        onSave={() => { }}
+                        projects={projects}
+                        onAddProject={() => ({} as any)}
+                        currentProblem=""
                     />
                     {previewSession && (
-                        <SessionPreviewModal 
-                            isOpen={isPreviewModalOpen} 
-                            onClose={() => setIsPreviewModalOpen(false)} 
-                            session={previewSession} 
+                        <SessionPreviewModal
+                            isOpen={isPreviewModalOpen}
+                            onClose={() => setIsPreviewModalOpen(false)}
+                            session={previewSession}
                         />
                     )}
-                    <AIAssistantModal 
-                        isOpen={isAIAssistantOpen} 
-                        onClose={() => setIsAIAssistantOpen(false)} 
-                        onGenerate={(text, action) => generateAIAssistantResponse(text, action, language)} 
+                    <AIAssistantModal
+                        isOpen={isAIAssistantOpen}
+                        onClose={() => setIsAIAssistantOpen(false)}
+                        onGenerate={(text, action) => generateAIAssistantResponse(text, action, language)}
                     />
-                    <KnowledgeExplorerModal 
-                        isOpen={isKnowledgeExplorerOpen} 
-                        onClose={() => setIsKnowledgeExplorerOpen(false)} 
-                        knowledgeBase={knowledgeBase} 
-                        onConfirmSelection={() => {}} 
-                        initiallySelectedIds={[]} 
+                    <KnowledgeExplorerModal
+                        isOpen={isKnowledgeExplorerOpen}
+                        onClose={() => setIsKnowledgeExplorerOpen(false)}
+                        knowledgeBase={knowledgeBase}
+                        onConfirmSelection={() => { }}
+                        initiallySelectedIds={[]}
                     />
-                    <ProjectsDashboard 
-                        isOpen={isProjectsDashboardOpen} 
-                        onClose={() => setIsProjectsDashboardOpen(false)} 
-                        projects={projects} 
-                        sessions={sessions} 
-                        onAddProject={() => ({} as any)} 
-                        onUpdateProject={() => {}} 
-                        onDeleteProject={() => {}} 
-                        onLoadSession={() => {}} 
+                    <ProjectsDashboard
+                        isOpen={isProjectsDashboardOpen}
+                        onClose={() => setIsProjectsDashboardOpen(false)}
+                        projects={projects}
+                        sessions={sessions}
+                        onAddProject={() => ({} as any)}
+                        onUpdateProject={() => { }}
+                        onDeleteProject={() => { }}
+                        onLoadSession={() => { }}
                     />
-                    <WisdomVaultModal 
-                        isOpen={isWisdomVaultOpen} 
-                        onClose={() => setIsWisdomVaultOpen(false)} 
-                        nuggets={userNuggets} 
+                    <WisdomVaultModal
+                        isOpen={isWisdomVaultOpen}
+                        onClose={() => setIsWisdomVaultOpen(false)}
+                        nuggets={userNuggets}
                     />
-                    <AboutModal 
-                        isOpen={isAboutModalOpen} 
-                        onClose={() => setIsAboutModalOpen(false)} 
+                    <AboutModal
+                        isOpen={isAboutModalOpen}
+                        onClose={() => setIsAboutModalOpen(false)}
                     />
-                    <CommandPalette 
-                        isOpen={isCommandPaletteOpen} 
-                        onClose={() => setIsCommandPaletteOpen(false)} 
-                        onLaunchTool={handleLaunchTool} 
-                        userRole={userRole} 
+                    <CommandPalette
+                        isOpen={isCommandPaletteOpen}
+                        onClose={() => setIsCommandPaletteOpen(false)}
+                        onLaunchTool={handleLaunchTool}
+                        userRole={userRole}
                     />
                 </>
             )}

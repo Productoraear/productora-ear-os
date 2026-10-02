@@ -251,7 +251,7 @@ export default function VibeCodingCompilerPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Input Prompt & Controls */}
         <div className="lg:col-span-5 flex flex-col gap-4">
-          <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] flex flex-col gap-4">
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <label className="text-xs font-mono uppercase text-zinc-400 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" /> Visión del Negocio
@@ -366,7 +366,7 @@ export default function VibeCodingCompilerPage() {
 
         {/* Right Column: Compiled Manifest DAG */}
         <div className="lg:col-span-7 flex flex-col gap-4">
-          <div className="p-5 rounded-2xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-md flex flex-col flex-1 min-h-[520px]">
+          <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md flex flex-col flex-1 min-h-[520px]">
             <div className="flex items-center justify-between pb-3 border-b border-zinc-800 mb-4">
               <div className="flex items-center gap-2">
                 <Code2 className="w-4 h-4 text-[#ecb613]" />

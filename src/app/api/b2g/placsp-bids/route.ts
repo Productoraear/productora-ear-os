@@ -17,7 +17,8 @@ export async function GET() {
       });
     }
     return NextResponse.json({ success: true, total: 0, tenders: [] });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    console.error('PLACSP_BIDS_ERROR:', error);
+    return NextResponse.json({ success: false, error: 'No se pudieron cargar las licitaciones.' }, { status: 500 });
   }
 }

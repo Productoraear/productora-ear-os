@@ -151,7 +151,7 @@ export default function AdminSchedulerPage() {
             placeholder="Nueva tarea autónoma (ej. Prospección fincas Toledo norte o auditoría B2G Méntrida)..."
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
-            className="w-full rounded-lg bg-black/60 border border-zinc-800 px-3.5 py-2 text-xs text-zinc-100 placeholder-zinc-500 font-mono focus:border-[#ecb613] focus:outline-none"
+            className="w-full rounded-lg bg-black/60 border border-white/10 px-3.5 py-2 text-xs text-zinc-100 placeholder-zinc-500 font-mono focus:border-[#ecb613] focus:outline-none"
           />
         </div>
 

@@ -48,7 +48,8 @@ async function handleSync() {
       ],
       attribution: 'EAR_OS_SOVEREIGN_NETWORK'
     });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    console.error('INVENTORY_SYNC_ERROR:', error);
+    return NextResponse.json({ error: 'Error al sincronizar el inventario.' }, { status: 500 });
   }
 }

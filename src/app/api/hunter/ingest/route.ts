@@ -32,8 +32,8 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     return NextResponse.json({ success: true, message: 'Inteligencia ingerida correctamente en la Bóveda.', data });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [HUNTER INGEST ERROR]', error);
-    return NextResponse.json({ error: 'Fallo crítico en el motor de ingestión', details: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Fallo crítico en el motor de ingestión' }, { status: 500 });
   }
 }

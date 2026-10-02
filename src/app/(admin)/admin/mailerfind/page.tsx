@@ -265,7 +265,7 @@ export default function AdminMailerfindProspectingPage() {
       </div>
 
       {/* 🎛️ FILTROS DE BÚSQUEDA Y CALIBRACIÓN MULTIDIMENSIONAL */}
-      <div className="p-5 bg-neutral-950 border border-neutral-800 rounded-2xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs font-mono">
+      <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs font-mono">
         <div>
           <label className="text-neutral-400 block mb-1.5 font-bold">GREMIO / NICHO</label>
           <select
@@ -358,7 +358,7 @@ export default function AdminMailerfindProspectingPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Mariachi, cigarral, paella, bose..."
-            className="w-full bg-neutral-900 border border-neutral-700 rounded-xl px-3 py-2 text-white outline-none focus:border-[#ecb613]"
+            className="w-full bg-black/60 border border-white/10 rounded-xl px-3 py-2 text-white outline-none focus:border-[#ecb613]"
           />
         </div>
 
@@ -477,7 +477,7 @@ export default function AdminMailerfindProspectingPage() {
 
           {/* PANEL DE DESPACHO ORGÁNICO S-CLASS (Col 5) */}
           {selectedLead && (
-            <div className="lg:col-span-5 bg-neutral-950 border border-neutral-800 rounded-2xl p-5 space-y-4 font-mono text-xs">
+            <div className="lg:col-span-5 rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 space-y-4 font-mono text-xs">
               <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
                 <div>
                   <span className="text-[10px] text-neutral-500 uppercase tracking-widest">DESPACHO ORGÁNICO ACTIVO</span>

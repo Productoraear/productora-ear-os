@@ -33,11 +33,9 @@ export async function GET(request: Request) {
 
     return NextResponse.json(results);
   } catch (error: unknown) {
-    const message =
-      error instanceof Error ? error.message : "Unknown database error";
-    console.error("⚠️ [Omni-Drive] Database query failed:", message);
+    console.error("⚠️ [Omni-Drive] Database query failed:", error);
     return NextResponse.json(
-      { error: "Database unavailable", detail: message },
+      { error: "Database unavailable" },
       { status: 503 }
     );
   }

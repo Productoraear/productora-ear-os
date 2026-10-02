@@ -108,7 +108,7 @@ export default function AdminSimulatorCatminPage() {
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Tarifa Base Solista</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
@@ -123,7 +123,7 @@ export default function AdminSimulatorCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Logística Méntrida Km 0</span>
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
@@ -138,7 +138,7 @@ export default function AdminSimulatorCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Price-Lock Inmutable</span>
             <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
@@ -153,7 +153,7 @@ export default function AdminSimulatorCatminPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Tope Licitación Menor</span>
             <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
@@ -176,7 +176,7 @@ export default function AdminSimulatorCatminPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Controles del Simulador (Span 7) */}
-        <div className="lg:col-span-7 rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-6 shadow-sm">
+        <div className="lg:col-span-7 rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 space-y-6 shadow-sm">
           <div>
             <span className="text-xs font-mono uppercase font-bold text-[#ecb613] tracking-wider">
               PASO 1
@@ -356,7 +356,7 @@ export default function AdminSimulatorCatminPage() {
       {/* ===================================================================== */}
       {/* 4. LOS 5 DOMINIOS SOBERANOS (ESTILO CATMÍN)                            */}
       {/* ===================================================================== */}
-      <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 space-y-4 shadow-sm">
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 space-y-4 shadow-sm">
         <div>
           <span className="text-xs font-mono text-[#ecb613] uppercase tracking-widest">
             ARQUITECTURA DE MARCA

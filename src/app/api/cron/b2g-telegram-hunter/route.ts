@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
   // Validación de seguridad opcional de Vercel Cron
   const authHeader = req.headers.get('authorization');
   const cronSecret = process.env.CRON_SECRET;
-  
+
   if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: 'UNAUTHORIZED' }, { status: 401 });
   }
@@ -20,13 +20,13 @@ export async function GET(req: NextRequest) {
   try {
     console.log('⏰ [CRON B2G HUNTER] Disparo automático diario a las 09:00 CEST...');
     await runHunterB2GScan();
-    return NextResponse.json({ 
-      success: true, 
+    return NextResponse.json({
+      success: true,
       status: 'RADAR_B2G_TELEGRAM_DISPATCHED',
-      timestamp: new Date().toISOString() 
+      timestamp: new Date().toISOString()
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ [CRON B2G HUNTER ERROR]:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'Error interno del radar B2G' }, { status: 500 });
   }
 }

@@ -3,22 +3,30 @@ import { stripe } from '@/lib/payments';
 
 export async function POST(req: Request) {
   try {
-    const { amount, concept } = await req.json();
+    const body = await req.json();
 
-    let finalAmount = amount || 100;
-    
-    // Security: Price-Lock
-    if (process.env.NODE_ENV === 'production') {
-      finalAmount = 100;
+    // Sanitización del concepto (nunca reflejar strings crudos sin recortar)
+    const concept: string =
+      typeof body?.concept === 'string'
+        ? body.concept.trim().slice(0, 120)
+        : 'EAR OS Concierge Reservation';
+
+    // Price-Lock inmutable: el depósito canónico es 100,00 € en producción.
+    let finalAmount = 100;
+    if (process.env.NODE_ENV !== 'production') {
+      const parsed = Number(body?.amount);
+      if (Number.isFinite(parsed) && parsed > 0 && parsed <= 100000) {
+        finalAmount = parsed;
+      }
     }
 
-    const totalCents = Math.round(Number(finalAmount) * 100);
+    const totalCents = Math.round(finalAmount * 100);
     const platformFeeCents = Math.round(totalCents * 0.10);
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCents,
       currency: 'eur',
-      description: concept || 'EAR OS Concierge Reservation',
+      description: concept,
       metadata: {
         source: 'EAR_CONCIERGE_CMD_K',
         split_platform: String(platformFeeCents),
@@ -28,8 +36,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ clientSecret: paymentIntent.client_secret });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('PAYMENT_INTENT_ERROR:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: 'No se pudo procesar el pago. Inténtelo de nuevo.' }, { status: 500 });
   }
 }

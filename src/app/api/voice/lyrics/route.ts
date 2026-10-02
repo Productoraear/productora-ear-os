@@ -69,9 +69,10 @@ El tono debe ser noble, poético y solemne. Solo devuelve los versos poéticos, 
       source: 'sovereign_lyrics_engine',
       model: 'ear-poetic-master'
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error('VOICE_LYRICS_ERROR:', error);
     return NextResponse.json(
-      { error: error.message || 'Error en generador de lírica' },
+      { error: 'Error en generador de lírica' },
       { status: 500 }
     );
   }

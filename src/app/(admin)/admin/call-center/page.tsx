@@ -243,7 +243,7 @@ export default function CallCenterAdminPage() {
 
       {/* KPI Cards CATMÍN S-Class */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Total en Vista</span>
             <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
@@ -258,7 +258,7 @@ export default function CallCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">En Conversación</span>
             <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
@@ -273,7 +273,7 @@ export default function CallCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Interesados HOT</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -288,7 +288,7 @@ export default function CallCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Cerrados / Señal</span>
             <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
@@ -307,7 +307,7 @@ export default function CallCenterAdminPage() {
       {/* Main Two-Column Deck */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[680px]">
         {/* Left Column: Filterable Provider List (5 Cols) */}
-        <div className="lg:col-span-5 flex flex-col bg-[#050507] border border-[#1a1a24] rounded-2xl overflow-hidden">
+        <div className="lg:col-span-5 flex flex-col rounded-3xl bg-[#09090d]/80 border border-white/10 overflow-hidden">
           {/* Filters Bar */}
           <div className="p-3 border-b border-[#1a1a24] space-y-2 bg-black/40">
             <div className="relative">
@@ -317,7 +317,7 @@ export default function CallCenterAdminPage() {
                 placeholder="Buscar por nombre, municipio, provincia..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full bg-zinc-900/80 border border-zinc-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]/50 font-mono"
+                className="w-full bg-black/60 border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613]/50 font-mono"
               />
             </div>
             <div className="grid grid-cols-3 gap-2 text-[11px] font-mono">
@@ -458,7 +458,7 @@ export default function CallCenterAdminPage() {
         </div>
 
         {/* Right Column: Tactical Calling Deck & Scripts (7 Cols) */}
-        <div className="lg:col-span-7 flex flex-col bg-[#050507] border border-[#1a1a24] rounded-2xl overflow-hidden">
+        <div className="lg:col-span-7 flex flex-col rounded-3xl bg-[#09090d]/80 border border-white/10 overflow-hidden">
           {selectedProvider ? (
             <>
               {/* Top Details Card */}

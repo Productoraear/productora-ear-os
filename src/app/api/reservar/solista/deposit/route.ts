@@ -66,10 +66,10 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ url: session.url, orderId, priceLockHash });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('[SOLISTA DEPOSIT ERROR]', error);
     return NextResponse.json(
-      { error: error.message || 'Error al crear el depósito de reserva' },
+      { error: 'Error al crear el depósito de reserva' },
       { status: 500 }
     );
   }

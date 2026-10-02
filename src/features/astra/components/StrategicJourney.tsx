@@ -72,7 +72,7 @@ export const StrategicJourney: React.FC<StrategicJourneyProps> = ({
   return (
     <div className="h-full overflow-y-auto p-4 md:p-8 max-w-7xl mx-auto space-y-8">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-950/40 via-zinc-900/60 to-purple-950/30 p-6 md:p-8 rounded-3xl border border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="bg-[#09090d]/80 p-6 md:p-8 rounded-3xl border border-white/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <div className="flex items-center gap-2 text-blue-400 text-xs font-semibold uppercase tracking-wider">
             <SparklesIcon className="w-4 h-4" />

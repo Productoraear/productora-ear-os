@@ -405,7 +405,7 @@ export default function AfiliadosAdminCatminPage() {
       {/* ===================================================================== */}
       {/* TABLA DE PARTNERS                                                      */}
       {/* ===================================================================== */}
-      <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 shadow-sm space-y-4">
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-3">
           <div>
             <h2 className="text-base font-bold font-syne text-white uppercase">
@@ -422,7 +422,7 @@ export default function AfiliadosAdminCatminPage() {
                 placeholder="Buscar partner, código, email..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full h-8 pl-8 pr-3 text-xs font-mono bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
+                className="w-full h-8 pl-8 pr-3 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
               />
             </div>
 
@@ -647,7 +647,7 @@ function AdminKpi({
   accentText: string;
 }) {
   return (
-    <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-white/20 transition-all">
+    <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-white/20 transition-all">
       <div className="flex items-center justify-between pb-2">
         <span className="text-xs font-medium text-zinc-400">{label}</span>
         <div className={`w-8 h-8 rounded-lg ${accentBg} flex items-center justify-center ${accentText}`}>

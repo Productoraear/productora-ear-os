@@ -67,10 +67,10 @@ export async function POST(req: Request) {
       },
       { status: 200 }
     );
-  } catch (error) {
-    const message = error instanceof Error ? error.message : 'Fallo interno en Geo-Acoustic Radar';
+  } catch (error: unknown) {
+    console.error('GEO_ACOUSTIC_RADAR_ERROR:', error);
     return NextResponse.json(
-      { success: false, error: message },
+      { success: false, error: 'Fallo interno en Geo-Acoustic Radar' },
       { status: 500 }
     );
   }

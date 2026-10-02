@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Activity,
@@ -280,18 +280,16 @@ export default function DawWorkspace() {
                     <button
                       type="button"
                       onClick={() => toggleMute(stem.id)}
-                      className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-colors ${
-                        stem.muted ? "bg-[#FF2B44] text-white" : "bg-white/5 text-zinc-400 hover:text-white"
-                      }`}
+                      className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-colors ${stem.muted ? "bg-[#FF2B44] text-white" : "bg-white/5 text-zinc-400 hover:text-white"
+                        }`}
                     >
                       Mute
                     </button>
                     <button
                       type="button"
                       onClick={() => toggleSolo(stem.id)}
-                      className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-colors ${
-                        stem.solo ? "bg-[#ecb613] text-black" : "bg-white/5 text-zinc-400 hover:text-white"
-                      }`}
+                      className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-colors ${stem.solo ? "bg-[#ecb613] text-black" : "bg-white/5 text-zinc-400 hover:text-white"
+                        }`}
                     >
                       Solo
                     </button>
