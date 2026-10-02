@@ -62,10 +62,10 @@ export const VendorClaimProposalModal: React.FC<VendorClaimProposalModalProps> =
     },
     {
       num: '02',
-      title: 'Misma Tarifa de tu Histórico Actual · Congelada Sin Subidas',
-      description: `El proveedor simplemente nos acredita el importe que venía abonando en su portal actual en los últimos ejercicios. Productora EAR iguala esa tarifa y la congela por contrato al 0% de subidas de por vida, sustituyendo la cuota pasiva por un Contrato con Garantía de Retorno 100% de la Inversión.`,
-      badge: 'Tarifa Histórica Acreditada',
-      highlight: 'Igualación de tarifa histórica acreditada (0% subidas)'
+      title: 'Tarifa Acreditada + 10% Comisión por Negocio Generado',
+      description: `El proveedor acredita la cuota que venía abonando en su portal actual y EAR OS la congela al 0% de subidas por contrato con Garantía ROI. Además, por cada evento en su local donde la pareja contrate servicios musicales o técnicos de Productora EAR, el proveedor percibe un 10% de comisión que puede descontarse al 100% de su cuota anual para el siguiente ejercicio o ingresarse directamente.`,
+      badge: 'Tarifa Histórica + 10% Comisión',
+      highlight: '0% Subidas + 10% Comisión aplicable a cuota anual o abono directo'
     },
     {
       num: '03',
