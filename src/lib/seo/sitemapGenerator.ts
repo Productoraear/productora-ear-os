@@ -289,7 +289,7 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '3': {
       try {
-        const curatedPath = path.join(process.cwd(), 'src', 'data', 'all_providers_database.json');
+        const curatedPath = path.join(process.cwd(), 'src', 'data', 'curated_providers.json');
         if (fs.existsSync(curatedPath)) {
           const raw = fs.readFileSync(curatedPath, 'utf-8');
           const allProviders: Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }> = JSON.parse(raw);
@@ -307,35 +307,29 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
           });
         }
       } catch (err) {
-        console.warn('[SITEMAP-3] Error leyendo all_providers_database:', err);
+        console.warn('[SITEMAP-3] Error leyendo curated_providers:', err);
       }
       break;
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // PARTITION 4: PROVEEDORES COSECHADOS (bodas-vendors-harvested.json)
+    // PARTITION 4: RUTAS ESTRATÉGICAS Y PROVEEDORES (sitemap_routes_index.json)
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '4': {
       try {
-        const harvestedPath = path.join(process.cwd(), 'src', 'data', 'bodas-vendors-harvested.json');
-        if (fs.existsSync(harvestedPath)) {
-          const raw = fs.readFileSync(harvestedPath, 'utf-8');
-          const harvestedVendors: Array<{ slug?: string; id?: string; name?: string }> = JSON.parse(raw);
+        const routesPath = path.join(process.cwd(), 'src', 'data', 'sitemap_routes_index.json');
+        if (fs.existsSync(routesPath)) {
+          const raw = fs.readFileSync(routesPath, 'utf-8');
+          const routes: string[] = JSON.parse(raw);
 
-          for (const v of harvestedVendors) {
-            if (!isProviderPublic(v)) continue;
-            const hasSemanticSlug = v.slug && !v.slug.toLowerCase().startsWith('prov-');
-            const rawSlug = hasSemanticSlug
-              ? v.slug!
-              : (v.name || v.slug || v.id);
-            const validSlug = sanitizeSlug(rawSlug);
-            if (validSlug) {
-              addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.65, 'monthly');
+          for (const routeUrl of routes) {
+            if (routeUrl && typeof routeUrl === 'string') {
+              addEntry(routeUrl, 0.75, 'weekly');
             }
           }
         }
       } catch (err) {
-        console.warn('[SITEMAP-4] Error leyendo bodas-vendors-harvested:', err);
+        console.warn('[SITEMAP-4] Error leyendo sitemap_routes_index:', err);
       }
       break;
     }
