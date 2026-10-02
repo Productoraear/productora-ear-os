@@ -2,19 +2,19 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Brain, 
-  Activity, 
-  Calculator, 
-  Sparkles, 
-  ShieldCheck, 
-  HeartHandshake, 
-  Layers, 
-  FileText, 
-  Building2, 
-  Phone, 
-  ArrowRight, 
-  Volume2, 
+import {
+  Brain,
+  Activity,
+  Calculator,
+  Sparkles,
+  ShieldCheck,
+  HeartHandshake,
+  Layers,
+  FileText,
+  Building2,
+  Phone,
+  ArrowRight,
+  Volume2,
   HelpCircle,
   Feather,
   CheckCircle2,
@@ -49,7 +49,7 @@ export function VimumeClinicalPortal() {
 
   return (
     <div className="w-full space-y-12 relative">
-      
+
       {/* 🌌 HERO SECTION ARISTOCRÁTICO TRUE BLACK */}
       <section className="relative rounded-[2.5rem] bg-[#050508] border border-white/10 p-6 sm:p-12 overflow-hidden shadow-[0_0_90px_rgba(139,92,246,0.1)]">
         {/* GLOW DE FONDO */}
@@ -57,13 +57,13 @@ export function VimumeClinicalPortal() {
         <div className="absolute -bottom-24 right-10 w-[400px] h-[400px] bg-[#ecb613]/10 rounded-full blur-[140px] pointer-events-none" />
 
         <div className="relative z-10 space-y-8">
-          
+
           {/* BADGES METADATA CONECTADO CON VIAJEMUSICALPORLAMEMORIA.COM */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <a 
-              href="https://viajemusicalporlamemoria.com" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://viajemusicalporlamemoria.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#8b5cf6]/20 hover:bg-[#8b5cf6]/30 border border-[#8b5cf6]/50 text-[#8b5cf6] text-[10px] font-mono tracking-widest uppercase font-bold transition-all shadow-[0_0_15px_rgba(139,92,246,0.3)]"
             >
               <Brain size={13} />
@@ -74,7 +74,7 @@ export function VimumeClinicalPortal() {
               <Activity size={12} />
               <span>40 HZ GAMMA • N=45 (p &lt; 0.05)</span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-[10px] font-mono tracking-widest uppercase font-bold">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF2B44]/10 border border-[#FF2B44]/30 text-[#FF2B44] text-[10px] font-mono tracking-widest uppercase font-bold">
               <ShieldCheck size={12} />
               <span>&lt; 75 dB SPL CALIBRADO</span>
             </div>
@@ -153,11 +153,10 @@ export function VimumeClinicalPortal() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-xs font-mono font-bold uppercase transition-all shrink-0 cursor-pointer ${
-                isActive
+              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-xs font-mono font-bold uppercase transition-all shrink-0 cursor-pointer ${isActive
                   ? 'bg-gradient-to-r from-[#8b5cf6] to-purple-700 text-white shadow-[0_0_25px_rgba(139,92,246,0.4)]'
                   : 'text-zinc-400 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               <Icon size={15} />
               <span>{tab.label}</span>
@@ -169,7 +168,7 @@ export function VimumeClinicalPortal() {
       {/* 🚀 CONTENIDO PRINCIPAL POR PESTAÑA */}
       <div className="min-h-[500px]">
         <AnimatePresence mode="wait">
-          
+
           {/* VISTA 1: BÓVEDA DE EVIDENCIA (40Hz & Recharts) */}
           {activeTab === 'evidencia' && (
             <motion.div
@@ -180,9 +179,9 @@ export function VimumeClinicalPortal() {
               className="space-y-12"
             >
               <VimumeBovedaEvidencia />
-              
+
               {/* Callout hacia Calculadora */}
-              <div 
+              <div
                 className="p-8 rounded-3xl bg-gradient-to-r from-[#8b5cf6]/10 to-transparent border border-[#8b5cf6]/30 flex flex-col sm:flex-row items-center justify-between gap-6"
                 data-proactive-zone="mecenazgo"
               >
@@ -245,10 +244,10 @@ export function VimumeClinicalPortal() {
               data-observe-concierge
               id="seccion-sonometria"
             >
-              <LiveSonometryGuard 
-                initialVenue="Centro Residencial Homologado VIMUME" 
-                maxAllowedDb={75} 
-                isVimumeMode={true} 
+              <LiveSonometryGuard
+                initialVenue="Centro Residencial Homologado VIMUME"
+                maxAllowedDb={75}
+                isVimumeMode={true}
               />
 
               {/* 🏛️ ARQUITECTURA DE ENTREGA FÍSICA BOSE (12 W/PAX) */}

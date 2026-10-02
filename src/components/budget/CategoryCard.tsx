@@ -20,10 +20,10 @@ export default function CategoryCard({ category, onAddExpense, onEditCategory, o
 
   return (
     <div className={`bg-[#09090d] rounded-2xl border transition-all duration-300 overflow-hidden group shadow-lg ${isOverBudget
-        ? 'border-red-500/40 bg-red-950/10'
-        : isNearBudget
-          ? 'border-yellow-500/30'
-          : 'border-white/10 hover:border-[#ecb613]/40'
+      ? 'border-[#FF2B44]/40 bg-[#FF2B44]/10'
+      : isNearBudget
+        ? 'border-yellow-500/30'
+        : 'border-white/10 hover:border-[#ecb613]/40'
       }`}>
       <div
         className="p-5 cursor-pointer hover:bg-white/[0.02] transition-colors"
@@ -90,7 +90,7 @@ export default function CategoryCard({ category, onAddExpense, onEditCategory, o
             <span className="text-white/40">
               {category.estimatedCost > 0 ? `${percentage.toFixed(0)}% utilizado` : 'Presupuesto dinámico'}
             </span>
-            <span className={`font-bold font-jetbrains ${isOverBudget ? 'text-red-400' : 'text-[#ecb613]'}`}>
+            <span className={`font-bold font-jetbrains ${isOverBudget ? 'text-[#FF2B44]' : 'text-[#ecb613]'}`}>
               {category.estimatedCost > 0
                 ? `${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(category.estimatedCost - category.finalCost)} disp.`
                 : `${category.expenses?.length || 0} gastos`}
@@ -99,10 +99,10 @@ export default function CategoryCard({ category, onAddExpense, onEditCategory, o
           <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
             <div
               className={`h-full rounded-full transition-all duration-500 ${isOverBudget
-                  ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]'
-                  : isNearBudget
-                    ? 'bg-[#ecb613]'
-                    : 'bg-gradient-to-r from-[#ecb613] to-amber-500 shadow-[0_0_8px_rgba(236,182,19,0.3)]'
+                ? 'bg-[#FF2B44] shadow-[0_0_8px_rgba(255,43,68,0.5)]'
+                : isNearBudget
+                  ? 'bg-[#ecb613]'
+                  : 'bg-gradient-to-r from-[#ecb613] to-amber-500 shadow-[0_0_8px_rgba(236,182,19,0.3)]'
                 }`}
               style={{ width: `${Math.min(percentage, 100)}%` }}
             />

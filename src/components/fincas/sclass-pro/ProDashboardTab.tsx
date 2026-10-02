@@ -208,9 +208,9 @@ export const ProDashboardTab: React.FC<ProDashboardTabProps> = ({ onNavigateTab,
       {/* 4. Comparativa Demoledora: Directorio Tradicional vs S-Class Pro */}
       <div className="p-6 rounded-3xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-black border border-rose-500/20 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
-        
+
         <div className="space-y-2 mb-6">
-          <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-rose-500/10 border border-rose-500/30 text-rose-400">
+          <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase bg-[#FF2B44]/10 border border-[#FF2B44]/30 text-[#FF2B44]">
             DICTAMEN FINANCIERO DEMOLEDOR
           </span>
           <h3 className="text-xl sm:text-2xl font-black font-syne text-white uppercase tracking-tight">

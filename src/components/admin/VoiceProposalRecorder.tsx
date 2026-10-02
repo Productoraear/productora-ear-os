@@ -226,11 +226,10 @@ export function VoiceProposalRecorder() {
             {isSupported ? (
               <button
                 onClick={toggleListen}
-                className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
-                  isListening
+                className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${isListening
                     ? 'bg-rose-500 text-white animate-pulse shadow-lg shadow-rose-500/30'
                     : 'bg-[#ecb613] text-black hover:bg-[#d8a40f] shadow-lg shadow-[#ecb613]/20'
-                }`}
+                  }`}
               >
                 {isListening ? (
                   <>
@@ -258,8 +257,8 @@ export function VoiceProposalRecorder() {
             className="w-full rounded-xl border border-white/10 bg-[#0a0a0e] p-4 text-sm text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-[#ecb613]/60 font-sans leading-relaxed"
           />
           {isListening && (
-            <div className="absolute bottom-3 right-3 flex items-center gap-2 px-2.5 py-1 rounded-full bg-rose-500/20 border border-rose-500/30 text-rose-300 text-[10px] font-mono">
-              <span className="w-2 h-2 rounded-full bg-rose-400 animate-ping" />
+            <div className="absolute bottom-3 right-3 flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#FF2B44]/20 border border-[#FF2B44]/30 text-[#FF2B44] text-[10px] font-mono">
+              <span className="w-2 h-2 rounded-full bg-[#FF2B44] animate-ping" />
               Escuchando en vivo...
             </div>
           )}
@@ -323,11 +322,10 @@ export function VoiceProposalRecorder() {
           <button
             onClick={handleAnalyze}
             disabled={(!transcription.trim() && !attachedImage) || analyzing}
-            className={`px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all ${
-              (transcription.trim() || attachedImage) && !analyzing
+            className={`px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all ${(transcription.trim() || attachedImage) && !analyzing
                 ? 'bg-white text-black hover:bg-neutral-200 cursor-pointer shadow-lg'
                 : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
-            }`}
+              }`}
           >
             <Sparkles className="w-4 h-4 text-[#ecb613]" />
             {analyzing ? 'Analizando Multimodal...' : 'Analizar Dictado + Imagen y Casar'}
@@ -381,13 +379,12 @@ export function VoiceProposalRecorder() {
             {extractedData.lineas.map((linea) => (
               <div
                 key={linea.id}
-                className={`flex items-center justify-between p-3 rounded-xl border text-xs ${
-                  linea.esAmarilla
+                className={`flex items-center justify-between p-3 rounded-xl border text-xs ${linea.esAmarilla
                     ? 'border-amber-500/40 bg-amber-500/5'
                     : linea.esOpcional
-                    ? 'border-[#ecb613]/30 bg-[#ecb613]/5'
-                    : 'border-white/10 bg-[#09090d]'
-                }`}
+                      ? 'border-[#ecb613]/30 bg-[#ecb613]/5'
+                      : 'border-white/10 bg-[#09090d]'
+                  }`}
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">

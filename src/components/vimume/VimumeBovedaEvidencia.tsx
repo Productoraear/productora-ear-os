@@ -2,17 +2,17 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Activity, 
-  Brain, 
-  ShieldCheck, 
-  Volume2, 
-  VolumeX, 
-  Sparkles, 
-  Clock, 
-  FileText, 
-  CheckCircle2, 
-  ArrowUpRight, 
+import {
+  Activity,
+  Brain,
+  ShieldCheck,
+  Volume2,
+  VolumeX,
+  Sparkles,
+  Clock,
+  FileText,
+  CheckCircle2,
+  ArrowUpRight,
   Microscope,
   Zap,
   Ear,
@@ -29,7 +29,7 @@ export function VimumeBovedaEvidencia() {
 
   return (
     <div className="space-y-12" data-observe-concierge id="seccion-evidencia" data-proactive-zone="evidencia">
-      
+
       {/* CABECERA BENTO */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
         <div className="space-y-2">
@@ -67,7 +67,7 @@ export function VimumeBovedaEvidencia() {
 
       {/* 🏛️ 3. BENTO GRID DE PROTOCOLO Y LÍMITES ACÚSTICOS BOSE */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-        
+
         {/* PANEL 1: LA CIENCIA MIT PICOWER (6 COLS) */}
         <div className="md:col-span-6 rounded-[2rem] bg-gradient-to-br from-[#0e0c1a] via-[#07060d] to-black border border-[#8b5cf6]/40 p-6 sm:p-8 space-y-6 relative overflow-hidden group shadow-[0_0_50px_rgba(139,92,246,0.1)]">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#8b5cf6]/10 rounded-full blur-[100px] pointer-events-none" />
@@ -115,7 +115,7 @@ export function VimumeBovedaEvidencia() {
             <div className="w-12 h-12 rounded-2xl bg-[#ecb613]/20 border border-[#ecb613]/40 flex items-center justify-center text-[#ecb613]">
               <Ear size={24} />
             </div>
-            <span className="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-[10px] font-mono text-red-400 uppercase font-bold">
+            <span className="px-3 py-1 rounded-full bg-[#FF2B44]/10 border border-[#FF2B44]/30 text-[10px] font-mono text-[#FF2B44] uppercase font-bold">
               Barrera Anti-Reclutamiento Coclear
             </span>
           </div>

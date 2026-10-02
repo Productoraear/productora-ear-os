@@ -274,7 +274,7 @@ function DimensionControl({
                 <label className="text-xs text-zinc-300 font-medium leading-snug">
                     {dim.label}
                     {dim.isKnockout && (
-                        <span className="ml-1.5 text-[9px] font-mono px-1.5 py-0.5 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400">
+                        <span className="ml-1.5 text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#FF2B44]/10 border border-[#FF2B44]/30 text-[#FF2B44]">
                             KNOCKOUT
                         </span>
                     )}

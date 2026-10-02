@@ -29,21 +29,21 @@ export default function BudgetOverview({ budget }: Props) {
       title: 'Comprometido / Gastado',
       value: totalSpent,
       icon: CreditCard,
-      color: isOverBudget ? 'from-red-500/20 to-red-500/5' : 'from-emerald-500/20 to-emerald-500/5',
-      textColor: isOverBudget ? 'text-red-400' : 'text-emerald-400',
-      borderColor: isOverBudget ? 'border-red-500/30' : 'border-emerald-500/30',
+      color: isOverBudget ? 'from-[#FF2B44]/20 to-[#FF2B44]/5' : 'from-emerald-500/20 to-emerald-500/5',
+      textColor: isOverBudget ? 'text-[#FF2B44]' : 'text-emerald-400',
+      borderColor: isOverBudget ? 'border-[#FF2B44]/30' : 'border-emerald-500/30',
       badge: `${percentageUsed.toFixed(1)}% Usado`,
-      badgeStyle: isOverBudget ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+      badgeStyle: isOverBudget ? 'bg-[#FF2B44]/10 text-[#FF2B44] border-[#FF2B44]/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
     },
     {
       title: remaining >= 0 ? 'Margen Disponible' : 'Desviación / Excedido',
       value: Math.abs(remaining),
       icon: remaining >= 0 ? TrendingDown : TrendingUp,
-      color: remaining >= 0 ? 'from-purple-500/20 to-purple-500/5' : 'from-red-600/20 to-red-600/5',
-      textColor: remaining >= 0 ? 'text-purple-300' : 'text-red-400 font-bold',
-      borderColor: remaining >= 0 ? 'border-purple-500/30' : 'border-red-600/50',
+      color: remaining >= 0 ? 'from-purple-500/20 to-purple-500/5' : 'from-[#FF2B44]/20 to-[#FF2B44]/5',
+      textColor: remaining >= 0 ? 'text-purple-300' : 'text-[#FF2B44] font-bold',
+      borderColor: remaining >= 0 ? 'border-purple-500/30' : 'border-[#FF2B44]/50',
       badge: remaining >= 0 ? `${(budget.totalBudget > 0 ? (remaining / budget.totalBudget) * 100 : 0).toFixed(1)}% Libre` : 'ALERTA',
-      badgeStyle: remaining >= 0 ? 'bg-purple-500/10 text-purple-300 border-purple-500/20' : 'bg-red-500/20 text-red-400 border-red-500/40 animate-pulse'
+      badgeStyle: remaining >= 0 ? 'bg-purple-500/10 text-purple-300 border-purple-500/20' : 'bg-[#FF2B44]/20 text-[#FF2B44] border-[#FF2B44]/40 animate-pulse'
     },
     {
       title: 'Liquidado / Pagado',

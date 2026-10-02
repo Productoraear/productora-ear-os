@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  HelpCircle, 
-  ChevronDown, 
-  Brain, 
-  Ear, 
-  BarChart3, 
-  FileText, 
-  Building, 
+import {
+  HelpCircle,
+  ChevronDown,
+  Brain,
+  Ear,
+  BarChart3,
+  FileText,
+  Building,
   Feather,
   Sparkles
 } from 'lucide-react';
@@ -17,7 +17,7 @@ import { VIMUME_CLINICAL_SSOT, VimumeSovereignFAQ } from '@/lib/constants/vimume
 
 const TAG_COLORS: Record<VimumeSovereignFAQ['authorityTag'], { bg: string; text: string; border: string }> = {
   NEUROCIENCIA: { bg: 'bg-[#8b5cf6]/10', text: 'text-[#8b5cf6]', border: 'border-[#8b5cf6]/30' },
-  AUDIOLOGIA: { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' },
+  AUDIOLOGIA: { bg: 'bg-[#FF2B44]/10', text: 'text-[#FF2B44]', border: 'border-[#FF2B44]/30' },
   ESTADISTICA: { bg: 'bg-[#AAD6CD]/10', text: 'text-[#AAD6CD]', border: 'border-[#AAD6CD]/30' },
   FISCAL_LEGAL: { bg: 'bg-[#ecb613]/10', text: 'text-[#ecb613]', border: 'border-[#ecb613]/30' },
   CONCERTACION_B2G: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/30' },
@@ -66,11 +66,10 @@ export function VimumeRagFaqSection() {
             key={tag}
             type="button"
             onClick={() => setSelectedTag(tag)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-mono uppercase font-bold transition-all ${
-              selectedTag === tag
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-mono uppercase font-bold transition-all ${selectedTag === tag
                 ? 'bg-white text-black shadow-[0_0_15px_rgba(255,255,255,0.4)]'
                 : 'bg-white/5 text-zinc-400 hover:text-white border border-white/5'
-            }`}
+              }`}
           >
             {tag}
           </button>

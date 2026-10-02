@@ -261,7 +261,7 @@
     {
       "id": "W03-040",
       "wave": 3,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "UNIFY: Verificar que badges rubí usan #FF2B44 consistente",
       "action": "Grep por bg-red o bg-rose en src/components/. Reemplazar los de alerta por bg-[#FF2B44] o text-[#FF2B44].",
       "files": [

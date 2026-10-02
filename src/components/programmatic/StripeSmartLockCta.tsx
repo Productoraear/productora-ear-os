@@ -298,7 +298,7 @@ export default function StripeSmartLockCta({
           {/* ── STATE: ERROR ── */}
           {state === 'ERROR' && (
             <div className="text-center py-6 space-y-3">
-              <div className="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/40 flex items-center justify-center mx-auto">
+              <div className="w-12 h-12 rounded-full bg-[#FF2B44]/20 text-[#FF2B44] border border-[#FF2B44]/40 flex items-center justify-center mx-auto">
                 <AlertCircle size={22} />
               </div>
               <h4 className="text-lg font-bold text-white">Error en la Conexión</h4>
