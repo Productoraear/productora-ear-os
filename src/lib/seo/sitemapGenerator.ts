@@ -8,8 +8,6 @@ import { MUNICIPALITIES_DATABASE } from '@/lib/geo/spanish-municipalities';
 import { isProviderPublic } from '@/lib/providers/visibility';
 import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
-import curatedProviders from '@/data/curated_providers.json';
-import sitemapRoutes from '@/data/sitemap_routes_index.json';
 import gscIntentData from '@/data/telemetry/gsc-sitemap-intent-landings.json';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
@@ -289,56 +287,45 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     // PARTITION 3: PROVEEDORES CURADOS (all_providers_database.json)
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // PARTITION 3: PROVEEDORES Y GREMIOS TERRITORIALES
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '3': {
       try {
-        const rawProviders: any = curatedProviders;
-        const providersList: Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }> =
-          Array.isArray(rawProviders)
-            ? rawProviders
-            : Array.isArray(rawProviders?.default)
-            ? rawProviders.default
-            : Array.isArray(rawProviders?.default?.default)
-            ? rawProviders.default.default
-            : [];
-
-        providersList.forEach(provider => {
-          if (!isProviderPublic(provider)) return;
-          const hasSemanticSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-');
-          const rawSlug = hasSemanticSlug
-            ? provider.slug!
-            : (provider.name || provider.atomic_specs?.slug || provider.slug || provider.id);
-          const validSlug = sanitizeSlug(rawSlug);
-          if (validSlug) {
-            addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.70, 'weekly');
+        const provinceSlugs = Object.keys(PROVINCIAS_52_GRAPH);
+        for (const prov of provinceSlugs) {
+          for (const serv of CANONICAL_GREMIO_SLUGS) {
+            addEntry(`${BASE_URL}/proveedores/${serv}-${prov}`, 0.75, 'weekly');
           }
-        });
+        }
+        for (const muni of MUNICIPALITIES_DATABASE) {
+          if (muni.slug) {
+            addEntry(`${BASE_URL}/proveedores/${muni.slug}`, 0.70, 'weekly');
+          }
+        }
       } catch (err) {
-        console.warn('[SITEMAP-3] Error procesando curated_providers:', err);
+        console.warn('[SITEMAP-3] Error generando proveedores territoriales:', err);
       }
       break;
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // PARTITION 4: RUTAS ESTRATÉGICAS Y PROVEEDORES (sitemap_routes_index.json)
+    // PARTITION 4: DIRECTORIO Y COBERTURA MUNICIPAL
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '4': {
       try {
-        const rawRoutes: any = sitemapRoutes;
-        const routes: string[] = Array.isArray(rawRoutes)
-          ? rawRoutes
-          : Array.isArray(rawRoutes?.default)
-          ? rawRoutes.default
-          : Array.isArray(rawRoutes?.default?.default)
-          ? rawRoutes.default.default
-          : [];
-
-        for (const routeUrl of routes) {
-          if (routeUrl && typeof routeUrl === 'string') {
-            addEntry(routeUrl, 0.75, 'weekly');
+        const provinceSlugs = Object.keys(PROVINCIAS_52_GRAPH);
+        for (const prov of provinceSlugs) {
+          addEntry(`${BASE_URL}/directorio/${prov}`, 0.80, 'weekly');
+          addEntry(`${BASE_URL}/proveedores-servicios/${prov}`, 0.80, 'weekly');
+        }
+        for (const muni of MUNICIPALITIES_DATABASE) {
+          if (muni.slug && muni.provinciaSlug) {
+            addEntry(`${BASE_URL}/directorio/${muni.provinciaSlug}/${muni.slug}`, 0.70, 'weekly');
           }
         }
       } catch (err) {
-        console.warn('[SITEMAP-4] Error procesando sitemap_routes_index:', err);
+        console.warn('[SITEMAP-4] Error generando cobertura municipal:', err);
       }
       break;
     }
