@@ -291,7 +291,10 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '3': {
       try {
-        const providersList = (curatedProviders as Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }>) || [];
+        const rawProviders = curatedProviders as any;
+        const providersList: Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }> =
+          Array.isArray(rawProviders) ? rawProviders : (rawProviders?.default || []);
+
         providersList.forEach(provider => {
           if (!isProviderPublic(provider)) return;
           const hasSemanticSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-');
@@ -314,7 +317,9 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '4': {
       try {
-        const routes = (sitemapRoutes as string[]) || [];
+        const rawRoutes = sitemapRoutes as any;
+        const routes: string[] = Array.isArray(rawRoutes) ? rawRoutes : (rawRoutes?.default || []);
+
         for (const routeUrl of routes) {
           if (routeUrl && typeof routeUrl === 'string') {
             addEntry(routeUrl, 0.75, 'weekly');
@@ -331,7 +336,10 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '5': {
       try {
-        const allIntents: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> = (gscIntentData as { allIntents?: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> }).allIntents || [];
+        const rawIntents = gscIntentData as any;
+        const intentObj = rawIntents?.default || rawIntents || {};
+        const allIntents: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> =
+          intentObj.allIntents || (Array.isArray(rawIntents) ? rawIntents : []);
 
         for (const item of allIntents) {
           if (!item.canonicalUrl) continue;
