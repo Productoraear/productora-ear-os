@@ -12,27 +12,7 @@ import { normalizeForUrl } from '@/lib/acg/acgSemanticGraph';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// SITEMAP INDEX STRATEGY (SOTA GSC — 48.000+ A 80.000+ URLs ACTIVAS)
-// Particiones canónicas alineadas con public/robots.txt:
-//   0 = core (páginas estructurales + artistas + fincas + checkout + luces de navidad)
-//   1 = territorial (52 provincias × servicios regionales + alquiler audiovisual)
-//   2 = pseo (municipios × servicios expandidos — alta conversión long-tail)
-//   3 = proveedores-curados (all_providers_database.json — 40.000+ slugs válidos)
-//   4 = proveedores-cosechados (bodas-vendors-harvested.json — 34.000+ slugs válidos)
-//   5 = gsc-intent-landings (gsc-sitemap-intent-landings.json — 100% Cobertura TOP 1)
-// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-export async function generateSitemaps() {
-  return [
-    { id: '0' },
-    { id: '1' },
-    { id: '2' },
-    { id: '3' },
-    { id: '4' },
-    { id: '5' },
-  ];
-}
+export const SITEMAP_PARTITIONS = ['0', '1', '2', '3', '4', '5'] as const;
 
 // Servicios prioritarios regionales por provincia
 const REGIONAL_SERVICES = [
@@ -110,16 +90,7 @@ function createEntryBuilder() {
   return { addEntry, entries };
 }
 
-export default async function sitemap(props?: {
-  id?: string | Promise<string>;
-}): Promise<MetadataRoute.Sitemap> {
-  const rawId = props?.id;
-  const partitionId = String(
-    rawId && typeof rawId === 'object' && 'then' in rawId
-      ? await rawId
-      : (rawId ?? '0')
-  );
-
+export async function generateSitemapPartition(partitionId: string): Promise<MetadataRoute.Sitemap> {
   const { addEntry, entries } = createEntryBuilder();
 
   switch (partitionId) {

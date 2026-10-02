@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import sitemap from '@/app/sitemap';
+import { generateSitemapPartition } from '@/lib/seo/sitemapGenerator';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 86400;
@@ -12,7 +12,7 @@ export async function GET(
     const resolvedParams = await props.params;
     const cleanId = resolvedParams.id.replace(/\.xml$/, '');
 
-    const entries = await sitemap({ id: cleanId });
+    const entries = await generateSitemapPartition(cleanId);
 
     const xmlEntries = entries
       .map(
@@ -42,3 +42,4 @@ ${xmlEntries}
     return new NextResponse('Error generating sitemap partition', { status: 500 });
   }
 }
+

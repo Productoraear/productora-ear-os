@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
+import { SITEMAP_PARTITIONS } from '@/lib/seo/sitemapGenerator';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
-const PARTITIONS = ['0', '1', '2', '3', '4', '5'];
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
@@ -9,7 +9,7 @@ export const revalidate = 3600;
 export async function GET() {
   const today = new Date().toISOString().split('T')[0];
 
-  const sitemapsXml = PARTITIONS.map(
+  const sitemapsXml = SITEMAP_PARTITIONS.map(
     (id) => `  <sitemap>
     <loc>${BASE_URL}/sitemap/${id}.xml</loc>
     <lastmod>${today}</lastmod>
