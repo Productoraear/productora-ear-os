@@ -1,40 +1,10 @@
-# 🚀 OMEGA ENGINE — DASHBOARD DE AUTONOMÍA EN TIEMPO REAL (v8.0 S-CLASS)
-> **Último Latido (GPU Local):** `2/10/2026, 16:05:35`
-> **Motor AI Activo:** `ear-27b-apis-ctx20480:latest` (Ollama localhost:11434)
-> **Estado de Producción:** `DEPLOYED & SYNCED TO ORIGIN & VERCEL-REPO (Commit fb316159)`
-> **Validación:** `npx tsc --noEmit -> Exit Code 0 (Strict SSOT)`
+# 🧠 OMEGA STATE JOURNAL (MEMORIA PERSISTENTE)
+> **Última actualización:** 2026-10-02T17:58:47.617Z
 
----
+## ESTADO DE LA WAVE ACTUAL
+- Pendientes (QUEUED): 1
+- Completadas (COMPLETED): 0 (Auto-purgado activo)
+- Fallidas (FAILED): 0
 
-### 📊 TELEMETRÍA EN DIRECTO
-```
-PROGRESO BATCH: [█████████████████████████] 100% (0/0)
----------------------------------------------------------------------
-STATUS        | CANTIDAD | % DEL TOTAL
----------------------------------------------------------------------
-✅ COMPLETED  |        0 | NaN%
-⏳ QUEUED     |        0 | NaN%
-❌ FAILED     |        0 | NaN%
-```
-
----
-
-### ⚡ TAREA EN EJECUCIÓN AHORA MISMO
-- **ID:** `DONE`
-- **Título:** Todas las tareas en cola procesadas
-- **Archivo Objetivo:** `N/A`
-- **Acción:** Ejecutando orden SSOT...
-- **Estado:** `Enviando prompt a GPU (Ollama / Qwen-27B)... Esperando respuesta...`
-
----
-
-### 📋 ÚLTIMAS TAREAS COMPLETADAS (SELLADAS CON EXIT CODE 0)
-
-
----
-
-### 🔮 PRÓXIMAS TAREAS EN COLA
-
-
----
-*🛡️ Sistema Autónomo ZTM (Zero-Token Memory). Impulsado por Antigravity S-Class.*
+## 🛡️ SISTEMA ANTI-REINICIOS (CRASH RECOVERY)
+Todo el progreso está guardado y validado. Para continuar, ejecuta `node .antigravity/omega.js next`.

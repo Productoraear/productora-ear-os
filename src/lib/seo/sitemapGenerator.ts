@@ -8,6 +8,7 @@ import { MUNICIPALITIES_DATABASE } from '@/lib/geo/spanish-municipalities';
 import { isProviderPublic } from '@/lib/providers/visibility';
 import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
+import { normalizeForUrl } from '@/lib/acg/acgSemanticGraph';
 import gscIntentData from '@/data/telemetry/gsc-sitemap-intent-landings.json';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
@@ -326,8 +327,8 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
           addEntry(`${BASE_URL}/proveedores-servicios/${prov}`, 0.80, 'weekly');
         }
         for (const muni of MUNICIPALITIES_DATABASE) {
-          if (muni.slug && muni.provinciaSlug) {
-            addEntry(`${BASE_URL}/directorio/${muni.provinciaSlug}/${muni.slug}`, 0.70, 'weekly');
+          if (muni.slug && muni.provinceSlug) {
+            addEntry(`${BASE_URL}/directorio/${muni.provinceSlug}/${muni.slug}`, 0.70, 'weekly');
           }
         }
       } catch (err) {

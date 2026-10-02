@@ -1,10 +1,23 @@
 {
   "_meta": {
-    "version": "5.1-DEEPSEEK-AUDIT-FIRST",
-    "doctrine": "AUDITORIA FORENSE PREVENTIVA + COMPOSICION AVANZADA",
-    "waves": "7-10",
-    "model": "deepseek-pro-v4"
+    "version": "7.0-ANTIGRAVITY-OMEGA-SCLASS",
+    "doctrine": "BARE-METAL GOVERNANCE + SCAFFOLDING FIRST + FRAMER DESIGN VAULT",
+    "waves": "11",
+    "model": "claude-3-7-sonnet-sclass"
   },
-  "_instructions_for_cline": "PACTO SAGRADO ANTI-SOBRECOSTES (ZTM 1-TASK): 1) node .antigravity/omega.js next 2) Modifica con excelencia 3) node .antigravity/omega.js complete <ID> 4) DETENTE Y FINALIZA TURNO. Prohibido continuar en el mismo chat. Clic en 'Start New Task' en Cline para 0 tokens acumulados.",
-  "tasks": []
+  "_instructions_for_cline": "PACTO SAGRADO ANTI-SOBRECOSTES (ZTM 1-TASK): 1) node .antigravity/omega.js next 2) Modifica con excelencia 3) node .antigravity/omega.js complete <ID> 4) DETENTE Y FINALIZA TURNO. Clic en 'Start New Task' en Cline para 0 tokens acumulados.",
+  "tasks": [
+    {
+      "id": "TASK-FRAMER-01",
+      "title": "Arquitectura Framer Design Vault & Componente Ultra-Animación Scroll Canvas S-Class",
+      "status": "QUEUED",
+      "files": [
+        "src/lib/framer/framerDesignVault.ts",
+        "src/app/components/ui/FramerMotionScrollCanvas.tsx"
+      ],
+      "action": "Crear el módulo framerDesignVault.ts con presets de física Framer Motion, tokens OLED S-Class y el componente FramerMotionScrollCanvas.tsx para animaciones ultra-fluidas de scroll.",
+      "scaffold": "1. Crear src/lib/framer/framerDesignVault.ts exportando FRAMER_PHYSICS_PRESETS (spring stiffness/damping), OLED_DESIGN_TOKENS (colores, sombras glassmorphism) e interfaces para componentes Framer.\n2. Crear src/app/components/ui/FramerMotionScrollCanvas.tsx usando 'use client', framer-motion useScroll y useTransform para renderizado adaptativo de scroll y soporte de imágenes/videos transparentes.\n3. Validar obligatoriamente con npx tsc --noEmit -> Exit Code 0.",
+      "validation": "npx tsc --noEmit"
+    }
+  ]
 }
