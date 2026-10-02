@@ -10,7 +10,7 @@ export interface FramerPhysicsPreset {
   damping?: number;
   mass?: number;
   duration?: number;
-  ease?: number[] | string;
+  ease?: any;
 }
 
 export interface FramerDesignToken {
