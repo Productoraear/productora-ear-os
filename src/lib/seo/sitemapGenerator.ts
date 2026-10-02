@@ -291,9 +291,15 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '3': {
       try {
-        const rawProviders = curatedProviders as any;
+        const rawProviders: any = curatedProviders;
         const providersList: Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }> =
-          Array.isArray(rawProviders) ? rawProviders : (rawProviders?.default || []);
+          Array.isArray(rawProviders)
+            ? rawProviders
+            : Array.isArray(rawProviders?.default)
+            ? rawProviders.default
+            : Array.isArray(rawProviders?.default?.default)
+            ? rawProviders.default.default
+            : [];
 
         providersList.forEach(provider => {
           if (!isProviderPublic(provider)) return;
@@ -317,8 +323,14 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '4': {
       try {
-        const rawRoutes = sitemapRoutes as any;
-        const routes: string[] = Array.isArray(rawRoutes) ? rawRoutes : (rawRoutes?.default || []);
+        const rawRoutes: any = sitemapRoutes;
+        const routes: string[] = Array.isArray(rawRoutes)
+          ? rawRoutes
+          : Array.isArray(rawRoutes?.default)
+          ? rawRoutes.default
+          : Array.isArray(rawRoutes?.default?.default)
+          ? rawRoutes.default.default
+          : [];
 
         for (const routeUrl of routes) {
           if (routeUrl && typeof routeUrl === 'string') {
@@ -336,10 +348,10 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '5': {
       try {
-        const rawIntents = gscIntentData as any;
-        const intentObj = rawIntents?.default || rawIntents || {};
+        const rawIntents: any = gscIntentData;
+        const intentObj = rawIntents?.default?.default || rawIntents?.default || rawIntents || {};
         const allIntents: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> =
-          intentObj.allIntents || (Array.isArray(rawIntents) ? rawIntents : []);
+          intentObj.allIntents || (Array.isArray(intentObj) ? intentObj : []);
 
         for (const item of allIntents) {
           if (!item.canonicalUrl) continue;
