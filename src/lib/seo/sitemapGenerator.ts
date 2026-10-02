@@ -8,7 +8,9 @@ import { MUNICIPALITIES_DATABASE } from '@/lib/geo/spanish-municipalities';
 import { isProviderPublic } from '@/lib/providers/visibility';
 import { CANONICAL_GREMIO_SLUGS } from '@/lib/seo/searchIntentEngine';
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
-import { normalizeForUrl } from '@/lib/acg/acgSemanticGraph';
+import curatedProviders from '@/data/curated_providers.json';
+import sitemapRoutes from '@/data/sitemap_routes_index.json';
+import gscIntentData from '@/data/telemetry/gsc-sitemap-intent-landings.json';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
@@ -289,25 +291,20 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '3': {
       try {
-        const curatedPath = path.join(process.cwd(), 'src', 'data', 'curated_providers.json');
-        if (fs.existsSync(curatedPath)) {
-          const raw = fs.readFileSync(curatedPath, 'utf-8');
-          const allProviders: Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }> = JSON.parse(raw);
-
-          allProviders.forEach(provider => {
-            if (!isProviderPublic(provider)) return;
-            const hasSemanticSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-');
-            const rawSlug = hasSemanticSlug
-              ? provider.slug!
-              : (provider.name || provider.atomic_specs?.slug || provider.slug || provider.id);
-            const validSlug = sanitizeSlug(rawSlug);
-            if (validSlug) {
-              addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.70, 'weekly');
-            }
-          });
-        }
+        const providersList = (curatedProviders as Array<{ slug?: string; atomic_specs?: { slug?: string }; id?: string; name?: string }>) || [];
+        providersList.forEach(provider => {
+          if (!isProviderPublic(provider)) return;
+          const hasSemanticSlug = provider.slug && !provider.slug.toLowerCase().startsWith('prov-');
+          const rawSlug = hasSemanticSlug
+            ? provider.slug!
+            : (provider.name || provider.atomic_specs?.slug || provider.slug || provider.id);
+          const validSlug = sanitizeSlug(rawSlug);
+          if (validSlug) {
+            addEntry(`${BASE_URL}/proveedores/${validSlug}`, 0.70, 'weekly');
+          }
+        });
       } catch (err) {
-        console.warn('[SITEMAP-3] Error leyendo curated_providers:', err);
+        console.warn('[SITEMAP-3] Error procesando curated_providers:', err);
       }
       break;
     }
@@ -317,19 +314,14 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '4': {
       try {
-        const routesPath = path.join(process.cwd(), 'src', 'data', 'sitemap_routes_index.json');
-        if (fs.existsSync(routesPath)) {
-          const raw = fs.readFileSync(routesPath, 'utf-8');
-          const routes: string[] = JSON.parse(raw);
-
-          for (const routeUrl of routes) {
-            if (routeUrl && typeof routeUrl === 'string') {
-              addEntry(routeUrl, 0.75, 'weekly');
-            }
+        const routes = (sitemapRoutes as string[]) || [];
+        for (const routeUrl of routes) {
+          if (routeUrl && typeof routeUrl === 'string') {
+            addEntry(routeUrl, 0.75, 'weekly');
           }
         }
       } catch (err) {
-        console.warn('[SITEMAP-4] Error leyendo sitemap_routes_index:', err);
+        console.warn('[SITEMAP-4] Error procesando sitemap_routes_index:', err);
       }
       break;
     }
@@ -339,22 +331,17 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     case '5': {
       try {
-        const intentPath = path.join(process.cwd(), 'src', 'data', 'telemetry', 'gsc-sitemap-intent-landings.json');
-        if (fs.existsSync(intentPath)) {
-          const raw = fs.readFileSync(intentPath, 'utf-8');
-          const intentData = JSON.parse(raw);
-          const allIntents: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> = intentData.allIntents || [];
+        const allIntents: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> = (gscIntentData as { allIntents?: Array<{ canonicalUrl?: string; internalPath?: string; opportunityScore?: number }> }).allIntents || [];
 
-          for (const item of allIntents) {
-            if (!item.canonicalUrl) continue;
-            // Ponderación dinámica de prioridad según Opportunity Score
-            const opp = item.opportunityScore || 0;
-            const priority = opp > 20 ? 0.95 : opp > 10 ? 0.85 : 0.75;
-            addEntry(item.canonicalUrl, priority, 'daily');
-          }
+        for (const item of allIntents) {
+          if (!item.canonicalUrl) continue;
+          // Ponderación dinámica de prioridad según Opportunity Score
+          const opp = item.opportunityScore || 0;
+          const priority = opp > 20 ? 0.95 : opp > 10 ? 0.85 : 0.75;
+          addEntry(item.canonicalUrl, priority, 'daily');
         }
       } catch (err) {
-        console.warn('[SITEMAP-5] Error leyendo gsc-sitemap-intent-landings:', err);
+        console.warn('[SITEMAP-5] Error procesando gsc-sitemap-intent-landings:', err);
       }
       break;
     }
