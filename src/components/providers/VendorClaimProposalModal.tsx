@@ -62,10 +62,10 @@ export const VendorClaimProposalModal: React.FC<VendorClaimProposalModalProps> =
     },
     {
       num: '02',
-      title: 'Tarifa Acreditada + 10% Comisión por Negocio Generado',
-      description: `El proveedor acredita la cuota que venía abonando en su portal actual y EAR OS la congela al 0% de subidas por contrato con Garantía ROI. Además, por cada evento en su local donde la pareja contrate servicios musicales o técnicos de Productora EAR, el proveedor percibe un 10% de comisión que puede descontarse al 100% de su cuota anual para el siguiente ejercicio o ingresarse directamente.`,
+      title: 'Tarifa Acreditada + 10% Comisión en Producción & Sonido',
+      description: `El proveedor acredita su cuota histórica y la congelamos al 0% de subidas por contrato con Garantía ROI. Además, percibe un 10% de comisión sobre cualquier contratación de sonido (Bose/luces), producción o música realizada en sus instalaciones. El saldo acumulado se puede descontar de la cuota anual del siguiente ejercicio, abonarse en cuenta o canjearse por actuaciones exclusivas (ej. Edwin Agudelo) abonando únicamente los costes logísticos de desplazamiento, dietas y hotel.`,
       badge: 'Tarifa Histórica + 10% Comisión',
-      highlight: '0% Subidas + 10% Comisión aplicable a cuota anual o abono directo'
+      highlight: 'Saldo canjeable en cuota futura, abono directo o actuaciones exclusivas'
     },
     {
       num: '03',
