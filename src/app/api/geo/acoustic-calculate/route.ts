@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { VenueAcousticInput, GeoAcousticOutput } from '@/lib/geo/geo-acoustic-radar';
 import { calculateGeoAcousticRadar } from '@/lib/geo/geo-acoustic-radar';
+import { computeLogisticsFee } from '@/lib/affiliate/affiliateCommissionEngine';
 
 export const runtime = 'nodejs';
 
@@ -57,13 +58,24 @@ export async function POST(req: Request) {
 
     const result: GeoAcousticOutput = calculateGeoAcousticRadar(body);
 
+    // SSOT Cross-Verification: computeLogisticsFee del affiliateCommissionEngine
+    const endHourNum = body.eventEndHour ? parseInt(body.eventEndHour.split(':')[0], 10) : undefined;
+    const ssotLogistics = computeLogisticsFee(body.distanceKmFromMentrida, endHourNum);
+
     return NextResponse.json(
       {
         success: true,
         engine: 'GEO_ACOUSTIC_RADAR_FLEET_DISPATCHER',
-        version: '1.0.0',
+        version: '1.2.0',
         timestamp: new Date().toISOString(),
         ...result,
+        acousticSetup: result.acousticRider,
+        logisticsFee: {
+          travelFee: ssotLogistics.travelFee,
+          hotelFee: ssotLogistics.hotelFee,
+          totalLogistics: ssotLogistics.totalLogistics,
+        },
+        sha256Hash: result.sha256VerificationHash,
       },
       { status: 200 }
     );

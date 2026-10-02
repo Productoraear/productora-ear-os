@@ -87,27 +87,33 @@ enum VendorCategory {
   DECORACION_ILUMINACION
 }
 
+enum VendorTier {
+  FREE
+  PREMIUM
+}
+
 // ==========================================
 // MODELOS CORE Y RELACIONES
 // ==========================================
 
 model User {
-  id                String             @id @default(cuid())
-  email             String             @unique
+  id                String              @id @default(cuid())
+  email             String              @unique
   name              String?
   displayName       String?
-  role              Role               @default(USER)
+  role              Role                @default(USER)
   rank              String?
   artistProfile     artistProfile?
   clientProfile     clientProfile?
   providerProfile   providerProfile?
+  vendorProfile     VendorProfile?
   affiliateProfile  AffiliateProfile?
   auraWallet        auraWallet?
   commissionLedgers commissionLedger[]
   payouts           Payout[]
-  referralsMade     AffiliateReferral[]  @relation("AffiliateReferral_referrer")
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+  referralsMade     AffiliateReferral[] @relation("AffiliateReferral_referrer")
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 }
 
 model artistProfile {
@@ -180,20 +186,20 @@ model Transaction {
 }
 
 model commissionLedger {
-  id          String           @id @default(cuid())
+  id          String            @id @default(cuid())
   userId      String?
-  user        User?            @relation(fields: [userId], references: [id])
+  user        User?             @relation(fields: [userId], references: [id])
   affiliateId String?
   affiliate   AffiliateProfile? @relation(fields: [affiliateId], references: [id])
-  reference   String?          @unique
+  reference   String?           @unique
   amount      Float
-  currency    String           @default("EUR")
-  status      CommissionStatus @default(PENDING)
+  currency    String            @default("EUR")
+  status      CommissionStatus  @default(PENDING)
   sourceEvent String?
   description String?
   notes       String?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 
   @@index([userId], name: "idx_ledger_user")
   @@index([affiliateId], name: "idx_ledger_affiliate")
@@ -249,54 +255,54 @@ model waybill {
 }
 
 model WaybillItem {
-  id        String   @id @default(cuid())
+  id        String  @id @default(cuid())
   waybillId String
-  waybill   waybill  @relation(fields: [waybillId], references: [id], onDelete: Cascade)
+  waybill   waybill @relation(fields: [waybillId], references: [id], onDelete: Cascade)
   name      String
-  quantity  Int      @default(1)
+  quantity  Int     @default(1)
 
   @@index([waybillId], name: "idx_waybill_item")
 }
 
 model providerProfile {
-  id                   String            @id @default(cuid())
-  slug                 String?           @unique
-  name                 String?           @unique
-  companyName          String?           @default("")
-  category             VendorCategory    @default(FINCA_ALQUILER)
+  id                   String         @id @default(cuid())
+  slug                 String?        @unique
+  name                 String?        @unique
+  companyName          String?        @default("")
+  category             VendorCategory @default(FINCA_ALQUILER)
   city                 String?
   location             String?
-  province             String?           @default("Madrid / Toledo")
+  province             String?        @default("Madrid / Toledo")
   phone                String?
   email                String?
-  userId               String?           @unique
-  user                 User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId               String?        @unique
+  user                 User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
   stripeAccountId      String?
-  isVerified           Boolean           @default(false)
-  roiGuaranteeScore    Float?            @default(0.0)
-  roiProjected         Float?            @default(0.0)
-  technicalReliability Float?            @default(0.0)
-  auraLevel            Float?            @default(0.0)
-  claimStatus          ClaimStatus       @default(GHOST_UNCLAIMED)
-  claimToken           String?           @unique
-  rating               Float             @default(5.0)
-  reviewsCount         Int               @default(0)
-  basePrice            Float             @default(500.0)
-  description          String?           @db.Text
-  status               String            @default("DRAFT") // DRAFT, ACTIVE_VERIFIED, SUSPENDED
+  isVerified           Boolean        @default(false)
+  roiGuaranteeScore    Float?         @default(0.0)
+  roiProjected         Float?         @default(0.0)
+  technicalReliability Float?         @default(0.0)
+  auraLevel            Float?         @default(0.0)
+  claimStatus          ClaimStatus    @default(GHOST_UNCLAIMED)
+  claimToken           String?        @unique
+  rating               Float          @default(5.0)
+  reviewsCount         Int            @default(0)
+  basePrice            Float          @default(500.0)
+  description          String?        @db.Text
+  status               String         @default("DRAFT") // DRAFT, ACTIVE_VERIFIED, SUSPENDED
   claimedAt            DateTime?
 
   // Relaciones (Aislamiento Multi-Tenant & Operaciones)
-  waybills             waybill[]
-  mediaAssets          MediaAsset[]
-  quota                ProviderQuota?
-  packages             ProviderPackage[]
-  technicalRider       TechnicalRider?
-  auditLogs            ProviderAuditLog[]
-  calibrator           ProviderCalibration?
+  waybills       waybill[]
+  mediaAssets    MediaAsset[]
+  quota          ProviderQuota?
+  packages       ProviderPackage[]
+  technicalRider TechnicalRider?
+  auditLogs      ProviderAuditLog[]
+  calibrator     ProviderCalibration?
 
-  createdAt            DateTime          @default(now())
-  updatedAt            DateTime          @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([category], name: "idx_provider_category")
   @@index([category, rating(sort: Desc)], name: "idx_provider_cat_rating")
@@ -307,80 +313,80 @@ model providerProfile {
 // ==================================================
 
 model ProviderCalibration {
-  id               String   @id @default(cuid())
-  providerId       String   @unique
-  presetSlug       String   @default("cortijo-rural")
-  dimensions       Json     @default("{}")
-  completionPercent Int     @default(0)
-  calibratedBy     String   @default("self") // self | admin
-  lastModifiedBy   String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id                String   @id @default(cuid())
+  providerId        String   @unique
+  presetSlug        String   @default("cortijo-rural")
+  dimensions        Json     @default("{}")
+  completionPercent Int      @default(0)
+  calibratedBy      String   @default("self") // self | admin
+  lastModifiedBy    String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
-  provider         providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
 
   @@index([providerId], name: "idx_calibrator_provider")
 }
 
 model MediaAsset {
-  id              String          @id @default(cuid())
-  providerId      String
-  url             String
-  type            String          // IMAGE, VIDEO, DOCUMENT
-  sizeBytes       Float           // Float evita serialización BigInt en Next.js
-  displayOrder    Int             @default(0)
-  createdAt       DateTime        @default(now())
+  id           String   @id @default(cuid())
+  providerId   String
+  url          String
+  type         String // IMAGE, VIDEO, DOCUMENT
+  sizeBytes    Float // Float evita serialización BigInt en Next.js
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
 
-  provider        providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
 
   @@index([providerId], name: "idx_media_provider")
 }
 
 model ProviderQuota {
-  id                  String          @id @default(cuid())
-  providerId          String          @unique
-  tier                String          @default("FREE") // FREE, GOLD, S_CLASS
-  maxStorageMB        Int             @default(15) // Límite en Megabytes
-  currentStorageBytes Float           @default(0)
-  maxPhotos           Int             @default(10)
+  id                  String @id @default(cuid())
+  providerId          String @unique
+  tier                String @default("FREE") // FREE, GOLD, S_CLASS
+  maxStorageMB        Int    @default(15) // Límite en Megabytes
+  currentStorageBytes Float  @default(0)
+  maxPhotos           Int    @default(10)
 
-  provider            providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
 }
 
 model TechnicalRider {
-  id                    String          @id @default(cuid())
-  providerId            String          @unique
-  powerRequirementWatts Int             @default(3000)
-  mixerModel            String          @default("Behringer XR18")
-  micSystem             String          @default("Shure Axient Digital")
-  paSpeakers            String          @default("Bose F1 Model 812")
+  id                    String @id @default(cuid())
+  providerId            String @unique
+  powerRequirementWatts Int    @default(3000)
+  mixerModel            String @default("Behringer XR18")
+  micSystem             String @default("Shure Axient Digital")
+  paSpeakers            String @default("Bose F1 Model 812")
 
-  provider              providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
 }
 
 model ProviderPackage {
-  id                  String          @id @default(cuid())
-  providerId          String
-  name                String
-  basePrice           Float
-  servicesIncluded    String          @db.Text // Array de strings serializado
-  
-  provider            providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  id               String @id @default(cuid())
+  providerId       String
+  name             String
+  basePrice        Float
+  servicesIncluded String @db.Text // Array de strings serializado
+
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
 
   @@index([providerId], name: "idx_package_provider")
 }
 
 model ProviderAuditLog {
-  id           String          @id @default(cuid())
+  id           String   @id @default(cuid())
   providerId   String
   changedBy    String
   field        String
-  oldValue     String          @db.Text
-  newValue     String          @db.Text
+  oldValue     String   @db.Text
+  newValue     String   @db.Text
   snapshotHash String
-  createdAt    DateTime        @default(now())
+  createdAt    DateTime @default(now())
 
-  provider     providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  provider providerProfile @relation(fields: [providerId], references: [id], onDelete: Cascade)
 
   @@index([providerId], name: "idx_audit_provider")
 }
@@ -397,17 +403,17 @@ model workspace {
 }
 
 model fleetUnit {
-  id              String     @id @default(cuid())
-  unitCode        String?    @unique
-  code            String?    @unique
-  status          String     @default("IDLE")
+  id              String          @id @default(cuid())
+  unitCode        String?         @unique
+  code            String?         @unique
+  status          String          @default("IDLE")
   currentLocation String?
   workspaceId     String?
-  workspace       workspace? @relation(fields: [workspaceId], references: [id])
+  workspace       workspace?      @relation(fields: [workspaceId], references: [id])
   waybills        waybill[]
   positions       FleetPosition[]
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model fleetTelemetryEvent {
@@ -426,26 +432,27 @@ model FleetPosition {
   speed     Float?
   heading   Float?
   timestamp DateTime  @default(now())
+
   @@index([unitId, timestamp(sort: Desc)])
 }
 
 model ProductionEvent {
-  id            String   @id @default(cuid())
-  title         String
-  eventDate     DateTime
-  eventType     String   @default("WEDDING")
-  status        String   @default("DRAFT")
-  totalBudget   Float    @default(0)
-  clientEmail   String?
-  clientName    String?
-  clientPhone   String?
-  location      String?
-  guestCount    Int      @default(100)
-  serviceLines  Json     @default("[]")
-  stakeholders  Json     @default("[]")
-  metadata      Json?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id           String   @id @default(cuid())
+  title        String
+  eventDate    DateTime
+  eventType    String   @default("WEDDING")
+  status       String   @default("DRAFT")
+  totalBudget  Float    @default(0)
+  clientEmail  String?
+  clientName   String?
+  clientPhone  String?
+  location     String?
+  guestCount   Int      @default(100)
+  serviceLines Json     @default("[]")
+  stakeholders Json     @default("[]")
+  metadata     Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model calendarBlock {
@@ -479,11 +486,27 @@ model VendorShadowProfile {
   @@index([telephone], name: "idx_vendor_shadow_telephone")
 }
 
+model VendorProfile {
+  id             String     @id @default(cuid())
+  userId         String     @unique
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tier           VendorTier @default(FREE)
+  isVimumeActive Boolean    @default(false)
+  bio            String?    @db.Text
+  strikes        Int        @default(0)
+  status         String     @default("ACTIVE") // ACTIVE | BANNED
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([userId], name: "idx_vendor_profile_user")
+  @@index([tier], name: "idx_vendor_profile_tier")
+}
+
 model EquipmentInventory {
   id             String   @id @default(uuid())
-  modelName      String   // Ej: "Bose F1 Model 812"
+  modelName      String // Ej: "Bose F1 Model 812"
   serialNumber   String   @unique
-  category       String   // SOUND_PA, MIXER, MICROPHONE, LIGHTING
+  category       String // SOUND_PA, MIXER, MICROPHONE, LIGHTING
   isAvailable    Boolean  @default(true)
   suitableForPax Int      @default(300)
   createdAt      DateTime @default(now())
@@ -509,17 +532,17 @@ model SmartLock {
   email               String
   phone               String?
   ipAddress           String?
-  vertical            String          // bodas, corporativo, vimume, etc.
-  intentSlug          String          // madrid-precios-musica-directo
+  vertical            String // bodas, corporativo, vimume, etc.
+  intentSlug          String // madrid-precios-musica-directo
   stripeSessionId     String?         @unique
   stripePaymentIntent String?         @unique
   amountCents         Int             @default(1000) // 10.00 EUR
   currency            String          @default("EUR")
   status              SmartLockStatus @default(PENDING_PAYMENT)
-  lockedAt            DateTime?       // Momento en que se activó el lock
-  expiresAt           DateTime?       // lockedAt + 72h
+  lockedAt            DateTime? // Momento en que se activó el lock
+  expiresAt           DateTime? // lockedAt + 72h
   walletBalance       Float           @default(0.0) // Saldo a favor tras expiración
-  walletExpiresAt     DateTime?       // walletBalance válido 1 año
+  walletExpiresAt     DateTime? // walletBalance válido 1 año
   urgencyBypassed     Boolean         @default(false) // true si P0 eliminó la barrera
   recoveryEmailSent   Boolean         @default(false) // true si se envió el Lead Magnet
   contractConverted   Boolean         @default(false)
@@ -644,144 +667,144 @@ model Vendor {
 // ==========================================
 
 model ProposalRequest {
-  id              String      @id @default(cuid())
-  clientName      String
-  phone           String?
-  email           String?
-  address         String
-  title           String
-  urgency         String
-  rawText         String      @db.Text
-  aiConcepts      String      @db.Text // JSON
-  origin          String      @default("manolo") // manolo | cliente
-  status          String      @default("pendiente")
-  proposalId      String?
-  proposal        Proposal?   @relation(fields: [proposalId], references: [id])
-  createdAt       DateTime    @default(now())
+  id         String    @id @default(cuid())
+  clientName String
+  phone      String?
+  email      String?
+  address    String
+  title      String
+  urgency    String
+  rawText    String    @db.Text
+  aiConcepts String    @db.Text // JSON
+  origin     String    @default("manolo") // manolo | cliente
+  status     String    @default("pendiente")
+  proposalId String?
+  proposal   Proposal? @relation(fields: [proposalId], references: [id])
+  createdAt  DateTime  @default(now())
 }
 
 model Proposal {
-  id              String      @id @default(cuid())
-  number          String      @unique
-  token           String      @unique
+  id              String         @id @default(cuid())
+  number          String         @unique
+  token           String         @unique
   clientProfileId String?
   clientProfile   clientProfile? @relation(fields: [clientProfileId], references: [id])
   location        String
   title           String
-  status          String      @default("borrador")
+  status          String         @default("borrador")
   taxPct          Float
-  discountPct     Float       @default(0)
-  baseCents       Int         @default(0)
-  taxCents        Int         @default(0)
-  totalCents      Int         @default(0)
-  costCents       Int         @default(0)
-  marginPct       Float       @default(0)
+  discountPct     Float          @default(0)
+  baseCents       Int            @default(0)
+  taxCents        Int            @default(0)
+  totalCents      Int            @default(0)
+  costCents       Int            @default(0)
+  marginPct       Float          @default(0)
   validDays       Int
   validUntil      DateTime?
   eventDate       DateTime
-  createdAt       DateTime    @default(now())
+  createdAt       DateTime       @default(now())
   sentAt          DateTime?
   closedAt        DateTime?
   lostReason      String?
   repliedAt       DateTime?
-  replyText       String?     @db.Text
-  signaturePng    String?     @db.Text
+  replyText       String?        @db.Text
+  signaturePng    String?        @db.Text
   signedAt        DateTime?
   signatureIp     String?
   signatureDevice String?
   lastAlertAt     DateTime?
   templateId      String?
-  
-  lines           ProposalLineItem[]
-  readEvents      ProposalReadTelemetry[]
-  tasks           CRMTask[]
-  timeline        ProposalActivityTimeline[]
-  requests        ProposalRequest[]
-  adminAlerts     AdminNotification[]
+
+  lines       ProposalLineItem[]
+  readEvents  ProposalReadTelemetry[]
+  tasks       CRMTask[]
+  timeline    ProposalActivityTimeline[]
+  requests    ProposalRequest[]
+  adminAlerts AdminNotification[]
 }
 
 model ProposalLineItem {
-  id              String      @id @default(cuid())
-  proposalId      String
-  proposal        Proposal    @relation(fields: [proposalId], references: [id], onDelete: Cascade)
-  catalogItemId   String?     // Link to pricing bank / SSOT
-  providerId      String?     // Link to 85k database (VendorShadowProfile or providerProfile)
-  chapter         String
-  description     String
-  unit            String
-  quantity        Float       @default(0)
-  priceCents      Int         @default(0)
-  manualPrice     Boolean     @default(false)
-  marginPct       Float       @default(0)
-  totalCents      Int         @default(0)
-  aiConfidence    Float?
-  isYellow        Boolean     @default(false) // A CONFIRMAR (for 85k providers)
-  isOptional      Boolean     @default(false)
-  isSelected      Boolean     @default(true)
-  order           Int         @default(0)
-  aiReason        String?     @db.Text
+  id            String   @id @default(cuid())
+  proposalId    String
+  proposal      Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  catalogItemId String? // Link to pricing bank / SSOT
+  providerId    String? // Link to 85k database (VendorShadowProfile or providerProfile)
+  chapter       String
+  description   String
+  unit          String
+  quantity      Float    @default(0)
+  priceCents    Int      @default(0)
+  manualPrice   Boolean  @default(false)
+  marginPct     Float    @default(0)
+  totalCents    Int      @default(0)
+  aiConfidence  Float?
+  isYellow      Boolean  @default(false) // A CONFIRMAR (for 85k providers)
+  isOptional    Boolean  @default(false)
+  isSelected    Boolean  @default(true)
+  order         Int      @default(0)
+  aiReason      String?  @db.Text
 
   @@index([proposalId])
 }
 
 model ProposalReadTelemetry {
-  id              String      @id @default(cuid())
+  id              String   @id @default(cuid())
   proposalId      String
-  proposal        Proposal    @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  proposal        Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
   visitorId       String
-  visitNumber     Int         @default(1)
+  visitNumber     Int      @default(1)
   section         String?
   durationSeconds Int?
   ip              String?
   city            String?
   country         String?
   device          String?
-  timestamp       DateTime    @default(now())
+  timestamp       DateTime @default(now())
 
   @@index([proposalId])
 }
 
 model CRMTask {
-  id              String      @id @default(cuid())
-  proposalId      String
-  proposal        Proposal    @relation(fields: [proposalId], references: [id], onDelete: Cascade)
-  type            String
-  executeAt       DateTime
-  status          String      @default("pendiente")
-  subject         String
-  bodyText        String      @db.Text
-  executedAt      DateTime?
+  id         String    @id @default(cuid())
+  proposalId String
+  proposal   Proposal  @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  type       String
+  executeAt  DateTime
+  status     String    @default("pendiente")
+  subject    String
+  bodyText   String    @db.Text
+  executedAt DateTime?
 
   @@index([proposalId])
   @@index([status, executeAt])
 }
 
 model ProposalActivityTimeline {
-  id              String      @id @default(cuid())
-  proposalId      String?
-  proposal        Proposal?   @relation(fields: [proposalId], references: [id], onDelete: Cascade)
-  type            String
-  metaJson        String      @default("{}") @db.Text
-  timestamp       DateTime    @default(now())
+  id         String    @id @default(cuid())
+  proposalId String?
+  proposal   Proposal? @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  type       String
+  metaJson   String    @default("{}") @db.Text
+  timestamp  DateTime  @default(now())
 
   @@index([proposalId])
 }
 
 model AdminNotification {
-  id              String      @id @default(cuid())
-  proposalId      String?
-  proposal        Proposal?   @relation(fields: [proposalId], references: [id], onDelete: Cascade)
-  message         String      @db.Text
-  isRead          Boolean     @default(false)
-  timestamp       DateTime    @default(now())
+  id         String    @id @default(cuid())
+  proposalId String?
+  proposal   Proposal? @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  message    String    @db.Text
+  isRead     Boolean   @default(false)
+  timestamp  DateTime  @default(now())
 
   @@index([isRead])
 }
 
 model AdminPulse {
-  id              Int         @id @default(1)
-  version         Int         @default(0)
-  updatedAt       DateTime    @default(now())
+  id        Int      @id @default(1)
+  version   Int      @default(0)
+  updatedAt DateTime @default(now())
 }
 
 // ==========================================
@@ -790,52 +813,52 @@ model AdminPulse {
 // ==========================================
 
 model AffiliateProfile {
-  id             String        @id @default(cuid())
-  userId         String        @unique
-  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  affiliateCode  String        @unique
-  companyName    String?
-  cifNif         String?
-  phone          String?
-  category       String        @default("PRESCRIPTOR")
-  payoutMethod   String        @default("IBAN")
-  payoutDetails  String?
-  tier           AffiliateTier @default(BRONZE)
-  commissionRate Float         @default(10.0)
-  isHomologated  Boolean       @default(true)
-  isActive       Boolean       @default(true)
-  kycStatus      KycStatus     @default(NOT_REQUIRED)
-  totalSalesGenerated Int      @default(0)
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  id                  String        @id @default(cuid())
+  userId              String        @unique
+  user                User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  affiliateCode       String        @unique
+  companyName         String?
+  cifNif              String?
+  phone               String?
+  category            String        @default("PRESCRIPTOR")
+  payoutMethod        String        @default("IBAN")
+  payoutDetails       String?
+  tier                AffiliateTier @default(BRONZE)
+  commissionRate      Float         @default(10.0)
+  isHomologated       Boolean       @default(true)
+  isActive            Boolean       @default(true)
+  kycStatus           KycStatus     @default(NOT_REQUIRED)
+  totalSalesGenerated Int           @default(0)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
 
-  ledgers        commissionLedger[]
-  referrals      AffiliateReferral[] @relation("AffiliateReferral_affiliate")
-  payouts        Payout[]
+  ledgers   commissionLedger[]
+  referrals AffiliateReferral[] @relation("AffiliateReferral_affiliate")
+  payouts   Payout[]
 
   @@index([affiliateCode], name: "idx_aff_code")
   @@index([tier], name: "idx_aff_tier")
 }
 
 model AffiliateReferral {
-  id                String           @id @default(cuid())
-  affiliateId       String?
-  affiliate         AffiliateProfile? @relation("AffiliateReferral_affiliate", fields: [affiliateId], references: [id])
-  referrerId        String?
-  referrer          User?            @relation("AffiliateReferral_referrer", fields: [referrerId], references: [id])
-  referralCode      String
-  landingUrl        String
-  customerEmail     String?
-  customerPhone     String?
-  source            String           @default("ORGANIC")
-  status            String           @default("REGISTERED") // REGISTERED | CONVERTED | PAID | CANCELLED
-  attributedAt      DateTime         @default(now())
-  convertedAt       DateTime?
-  conversionAmount  Float            @default(0)
-  commissionDue     Float            @default(0)
-  bookingReference  String?
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
+  id               String            @id @default(cuid())
+  affiliateId      String?
+  affiliate        AffiliateProfile? @relation("AffiliateReferral_affiliate", fields: [affiliateId], references: [id])
+  referrerId       String?
+  referrer         User?             @relation("AffiliateReferral_referrer", fields: [referrerId], references: [id])
+  referralCode     String
+  landingUrl       String
+  customerEmail    String?
+  customerPhone    String?
+  source           String            @default("ORGANIC")
+  status           String            @default("REGISTERED") // REGISTERED | CONVERTED | PAID | CANCELLED
+  attributedAt     DateTime          @default(now())
+  convertedAt      DateTime?
+  conversionAmount Float             @default(0)
+  commissionDue    Float             @default(0)
+  bookingReference String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 
   @@index([affiliateId], name: "idx_ref_affiliate")
   @@index([referrerId], name: "idx_ref_referrer")
@@ -843,26 +866,25 @@ model AffiliateReferral {
 }
 
 model Payout {
-  id               String       @id @default(cuid())
-  userId           String?
-  user             User?        @relation(fields: [userId], references: [id])
-  affiliateId      String?
-  affiliate        AffiliateProfile? @relation(fields: [affiliateId], references: [id])
-  amount           Float
-  currency         String       @default("EUR")
-  status           PayoutStatus @default(PENDING)
-  payoutMethod     String       @default("IBAN")
-  payoutDetails    String?
-  kycRequired      Boolean      @default(false)
-  scheduledFor     DateTime?
-  executedAt       DateTime?
-  reference        String?      @unique
-  notes            String?
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
+  id            String            @id @default(cuid())
+  userId        String?
+  user          User?             @relation(fields: [userId], references: [id])
+  affiliateId   String?
+  affiliate     AffiliateProfile? @relation(fields: [affiliateId], references: [id])
+  amount        Float
+  currency      String            @default("EUR")
+  status        PayoutStatus      @default(PENDING)
+  payoutMethod  String            @default("IBAN")
+  payoutDetails String?
+  kycRequired   Boolean           @default(false)
+  scheduledFor  DateTime?
+  executedAt    DateTime?
+  reference     String?           @unique
+  notes         String?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
 
   @@index([userId], name: "idx_payout_user")
   @@index([affiliateId], name: "idx_payout_affiliate")
   @@index([status], name: "idx_payout_status")
 }
-

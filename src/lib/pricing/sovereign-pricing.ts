@@ -1,13 +1,22 @@
 import { createHash } from 'crypto';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  SPLIT_SOBERANO as SSOT_SPLIT_RATIOS,
+} from '@/lib/constants/ear-os-ssot';
 
-export const BASE_SOLISTA = 350;
+export const BASE_SOLISTA = TARIFA_BASE_SOLISTA_EUR;
 export const COSTE_KM = 0.35;
 export const SUPLEMENTO_TRIO = 250;
 export const SUPLEMENTO_QUINTETO = 400;
-export const DEPOSITO_STRIPE = 100;
+export const DEPOSITO_STRIPE = DEPOSITO_STRIPE_EUR;
 
 /** Split Soberano Inmutable: 80% Artista / 10% EAR OS / 10% VIMUME. */
-export const SPLIT_SOBERANO = { artist: 0.8, earOs: 0.1, vimume: 0.1 } as const;
+export const SPLIT_SOBERANO = {
+  artist: SSOT_SPLIT_RATIOS.artista,
+  earOs: SSOT_SPLIT_RATIOS.earOs,
+  vimume: SSOT_SPLIT_RATIOS.vimume,
+} as const;
 
 export type FormatType = 'solista' | 'trio' | 'quinteto';
 export type SoundRiderType = 'standard' | 'bose_f1_elite';

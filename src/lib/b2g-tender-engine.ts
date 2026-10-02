@@ -10,18 +10,19 @@
  * - Estructura XML normalizada Facturae v3.2.2 para el Punto General FACe.
  */
 
-import { 
-  generateVimumeTender, 
-  B2GTenderInput, 
-  B2GTenderOutput, 
-  B2G_PRESETS 
+import {
+  generateVimumeTender,
+  B2GTenderInput,
+  B2GTenderOutput,
+  B2G_PRESETS
 } from '@/lib/vimume/b2g-tender-engine';
+import { SAFE_LCSP_CEILING_EUR } from '@/lib/constants/ear-os-ssot';
 
 export { generateVimumeTender, B2G_PRESETS };
 export type { B2GTenderInput, B2GTenderOutput };
 
 export const MAX_LCSP_MINOR_CONTRACT_LIMIT = 14990.00;
-export const SAFE_LCSP_CEILING = 14250.00; // 95% del límite de seguridad
+export const SAFE_LCSP_CEILING = SAFE_LCSP_CEILING_EUR; // 95% del límite de seguridad
 
 export interface DIR3Codes {
   oficinaContable: string; // Ej: L01450000
@@ -72,9 +73,9 @@ export function validateDIR3Code(code: string): { valid: boolean; message: strin
   const dir3Regex = /^[A-Z0-9]{9}$/;
 
   if (!dir3Regex.test(clean)) {
-    return { 
-      valid: false, 
-      message: `El código DIR3 '${clean}' no es válido. Debe tener exactamente 9 caracteres alfanuméricos (ej: L01450000).` 
+    return {
+      valid: false,
+      message: `El código DIR3 '${clean}' no es válido. Debe tener exactamente 9 caracteres alfanuméricos (ej: L01450000).`
     };
   }
 
@@ -119,7 +120,7 @@ export function calculateLCSPMinorContract(
   dir3: DIR3Codes
 ): LCSPMinorContractProposal {
   const rawBase = items.reduce((acc, it) => acc + (it.unitPrice * it.quantity), 0);
-  
+
   let finalBase = rawBase;
   let ajustePreventivoAplicado = false;
 

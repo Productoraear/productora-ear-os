@@ -25,12 +25,16 @@ import {
   calculateAcousticRequirements,
   BASE_HUBS
 } from '@/features/search/utils/mentridaDistanceEngine';
+import {
+  LIMITE_B2G_LCSP_EUR,
+  SAFE_LCSP_CEILING_EUR
+} from '@/lib/constants/ear-os-ssot';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONSTANTES CANÓNICAS INMUTABLES (SSOT S-CLASS)
 // ─────────────────────────────────────────────────────────────────────────────
-export const MAX_LCSP_MINOR_CONTRACT_LIMIT = 15000.0;
-export const SAFE_LCSP_CEILING = 14250.0; // 95% del techo legal
+export const MAX_LCSP_MINOR_CONTRACT_LIMIT = LIMITE_B2G_LCSP_EUR;
+export const SAFE_LCSP_CEILING = SAFE_LCSP_CEILING_EUR; // 95% del techo legal
 export const SPL_LIMIT_DB = 75;
 export const SPL_SENSITIVE_DB = 70; // Margen reforzado en zonas sensibles
 export const SOVEREIGN_SPLIT = { artist: 0.8, earOs: 0.1, vimume: 0.1 } as const;

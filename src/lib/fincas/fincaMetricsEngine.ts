@@ -15,6 +15,10 @@ import {
   FincaHomologada,
   SCLASS_12_FINCAS_HOMOLOGADAS,
 } from '@/lib/constants/fincas-catalog';
+import {
+  LIMITE_B2G_LCSP_EUR,
+  SAFE_LCSP_CEILING_EUR,
+} from '@/lib/constants/ear-os-ssot';
 
 export const SSOT = {
   TARIFA_BASE_SOLISTA_EUR: 350,
@@ -28,8 +32,8 @@ export const SSOT = {
   SPLIT_VIMUME_PCT: 0.1,
   DEPOSITO_STRIPE_EUR: 100,
   RIDER_W_PAX: 12,
-  LIMITE_B2G_LCSV_EUR: 15000,
-  AJUSTE_PREVENTIVO_B2G_EUR: 14250,
+  LIMITE_B2G_LCSV_EUR: LIMITE_B2G_LCSP_EUR,
+  AJUSTE_PREVENTIVO_B2G_EUR: SAFE_LCSP_CEILING_EUR,
   LIMITE_SPL_DB: 75,
   PRECIO_SONIDO_POR_PAX_B2C: 6.5,
   COMISION_MEDIA_BODAS_NET_PCT: 0.18,
@@ -141,7 +145,7 @@ export function calcularProfitability(finca: FincaHomologada, eventosAnio = 28):
   // producción técnica de EAR y menos la tarifa base del solista por evento.
   const margenFincaAnual = Math.round(
     ingresoTotalesAnual -
-      eventosAnio * (SSOT.TARIFA_BASE_SOLISTA_EUR + logisticaCostePorEvento),
+    eventosAnio * (SSOT.TARIFA_BASE_SOLISTA_EUR + logisticaCostePorEvento),
   );
 
   const comisionAfiliacionAnual = Math.round(ingresoTotalesAnual * finca.comisionAfiliacionPct);
@@ -234,7 +238,7 @@ export function buildExecutiveDashboard(): ExecutiveDashboard {
 
   const ahorroMedioMultasEur = Math.round(
     rentabilidad.reduce((acc, r) => acc + r.ahorroMultasAnualEstimado, 0) /
-      SCLASS_12_FINCAS_HOMOLOGADAS.length,
+    SCLASS_12_FINCAS_HOMOLOGADAS.length,
   );
 
   return {

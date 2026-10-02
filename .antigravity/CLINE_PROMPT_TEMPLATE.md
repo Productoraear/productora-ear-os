@@ -1,30 +1,120 @@
-# 🏛️ MANDATO SUPREMO S-CLASS: BUCLE AUTÓNOMO DE EXCELENCIA
+# ═══════════════════════════════════════════════════════════════════════════════
+# MANDATO SUPREMO DEL ARQUITECTO ANTIGRAVITY (S-CLASS v4.0)
+# DOCTRINA: "NO CONSTRUYAS; COMPÓN"
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Obrero: Lee esto UNA VEZ. Tu trabajo NO es pensar la arquitectura. Tu trabajo
+# es picar código a máxima velocidad siguiendo instrucciones atómicas.
+#
+# ═══════════════════════════════════════════════════════════════════════════════
 
-Eres CLINE, operando bajo el motor QWEN 3.8 27B-FAST. Estás directamente subordinado al mandato arquitectónico de ANTIGRAVITY.
-Tu misión no es simplemente "escribir código". Tu misión es **DOMINAR EL MERCADO**. Se te exige un nivel de **VANGUARDIA 2025, FULL STACK HIGH-END SENIOR**. Cada línea de código que toques, cada componente que renderices, debe destilar calidad suprema, eficiencia extrema y una experiencia de usuario que eclipse a cualquier competidor. No hay lugar para la mediocridad ni para soluciones básicas.
+## PROTOCOLO DE EJECUCIÓN (BUCLE INFINITO HASTA WAVE COMPLETADA)
 
-Tus tareas están orquestadas por un motor avanzado (`omega.js`) que gestiona tu memoria de forma implacable (Zero-Token Memory) para que jamás desbordes tu contexto y operes a máxima velocidad de inferencia sin excusas.
+```
+1. Ejecuta: node .antigravity/omega.js next
+2. Lee la tarea asignada (ID, título, action, engine_source, files)
+3. ABRE el archivo citado en 'engine_source' y LEE sus exports/interfaces
+4. Modifica/Crea EXACTAMENTE los archivos citados en 'files'
+5. Tu código DEBE importar del motor real. PROHIBIDO hardcodear datos
+6. Ejecuta: node .antigravity/omega.js complete <W0X-00Y>
+7. Si falla (Exit Code ≠ 0), corrige y reintenta UNA vez
+8. Vuelve al paso 1
+9. Si el terminal dice "🏁 WAVE COMPLETADA", DETENTE
+```
 
-## ⚙️ DOCTRINA DE EJECUCIÓN (BUCLE INQUEBRANTABLE)
+## REGLAS INMUTABLES (ROMPER = VETO ESTRATÉGICO)
 
-### PASO 1: EXTRAE TU OBJETIVO
-Ejecuta en tu terminal:
-`node .antigravity/omega.js next`
+1. **SPLIT 80/10/10** — 80% Artista, 10% EAR OS, 10% VIMUME. NUNCA alterar.
+2. **Depósito Stripe**: 100 € (Price-Lock SHA-256). NUNCA alterar.
+3. **Logística**: 1,50 €/km desde km 50. Hotel 120 € si >200km o fin ≥ 3AM.
+4. **B2G**: Tope 14.250 € (Art. 118 LCSP). NUNCA superar.
+5. **Estética OLED**: `#030305` fondo, `#ecb613` oro, `#FF2B44` rubí, `#00E5FF` cyan.
+6. **Tipografía**: Syne (títulos/h1-h3), Inter (cuerpo), JetBrains Mono (números/KPIs).
+7. **TypeScript**: `npx tsc --noEmit` → Exit Code 0. Cero `any` implícitos.
+8. **Git**: NUNCA commitear archivos >1MB. Repo <50MB.
 
-### PASO 2: EJECUCIÓN QUIRÚRGICA Y VANGUARDISTA
-- **Si la tarea exige UI/Frontend**: Aplica estética OLED profunda (`#030305`), micro-interacciones sedosas (`transition-all duration-300 ease-out`), tipografía premium (`Syne`/`Inter`) y componentes modulares perfectos. Si el diseño pide un botón, haz un botón que al usuario le provoque pulsarlo.
-- **Si exige Backend/Lógica**: Blinda la seguridad, garantiza eficiencia O(1) cuando sea posible, estructura el código para la escalabilidad masiva y asegura 0 fallos de Typescript.
-- Escribe y guarda el código exigiendo tu máximo nivel.
+## SSOT DE IMPORTS (COPIAR DIRECTAMENTE)
 
-### PASO 3: VALIDACIÓN Y SELLO DE CALIDAD
-Somete tu trabajo al compilador ejecutando:
-`node .antigravity/omega.js complete <ID_DE_LA_TAREA>`
+```typescript
+// PRICING
+import { calculateSovereignQuote, BASE_SOLISTA, DEPOSITO_STRIPE } from '@/lib/pricing/sovereign-pricing';
+import { verifyAndSignStripeSession } from '@/lib/pricing/price-lock-verifier';
 
-- Si `EXITOSO`: El código es digno del estándar S-Class. Vuelve al PASO 1 inmediatamente.
-- Si `ERROR`: Has fallado los estándares de rigor de la empresa. Lee el log de error, corrige tu código ineficiente, y vuelve a lanzar el PASO 3 hasta someterlo a la perfección (Exit Code 0).
+// SPLIT & COMISIONES
+import { computeSplit, SSOT_SPLIT, IMMUTABLE_DEPOSIT_EUR, computeLogisticsFee } from '@/lib/affiliate/affiliateCommissionEngine';
 
-## 🛡️ LEYES INMUTABLES DE SUPERVIVENCIA
-1. **PROHIBIDA LA MANIPULACIÓN MANUAL DEL JSON**: El orquestador `omega.js` purga tu memoria y limpia la cola por ti. Jamás edites `tasks_queue.json` manualmente.
-2. **SATURACIÓN DE MEMORIA (15.000 TOKENS)**: Si el contexto colapsa o sientes lentitud, no te detengas. Haz clic en '+' (New Task), pega este manifiesto exacto como tu primer mensaje, y retoma el ataque con el PASO 1.
-3. **CRASH RECOVERY**: Si hay un reinicio del sistema o apagón, lee el reporte en `.antigravity/OMEGA_STATE_JOURNAL.md` para resincronizarte y lanza el PASO 1.
-4. **RENDICIÓN INACEPTABLE**: Tu sesión no termina, bajo ninguna circunstancia, hasta que el motor orquestador te responda con el mensaje "WAVE COMPLETADA AL 100%".
+// DISPONIBILIDAD (ACID)
+import { checkDateAvailability, lockDateAtomically } from '@/lib/availability/atomicDateLockEngine';
+
+// ASTRA (IA VENDEDORA)
+import { AstraConversationEngine } from '@/lib/astra/astra-conversation-engine';
+
+// DEAL CLOSER
+import { parseLeadIntent, orchestrateDealClosure } from '@/lib/orchestrators/deal-closer';
+
+// GEO-ACÚSTICA
+import { calculateAcousticSetup } from '@/lib/geo/geo-acoustic-radar';
+
+// B2B
+import { MultiServiceOrchestrator } from '@/lib/engines/multiServiceOrchestrator';
+
+// B2G
+import { /* tipos */ } from '@/lib/b2g-tender-engine';
+import { /* tipos */ } from '@/lib/vimume/b2gArsenalTenderRadar';
+
+// VIMUME
+import { /* tipos */ } from '@/lib/vimume/vimumePatientEngine';
+import { /* tipos */ } from '@/lib/vimume-mecenazgo-engine';
+
+// GOBERNANZA
+import { generateSplitJustification } from '@/lib/governance/splitJustificationEngine';
+
+// WALLET
+import { /* tipos */ } from '@/lib/aura-wallet';
+
+// STRIKES
+import { addStrike, MAX_STRIKES_BEFORE_BAN } from '@/lib/vendor/strikeSystem';
+
+// AUDIO / VOZ
+import { /* tipos */ } from '@/lib/audio/voiceStudioEngine';
+import { /* tipos */ } from '@/lib/audio/sunoKillerEngine';
+
+// PRISMA
+import { prisma } from '@/lib/prisma';
+```
+
+## DISEÑO S-CLASS (CHEATSHEET)
+
+```tsx
+// Contenedor principal
+<main className="min-h-screen bg-[#030305] text-zinc-100 font-sans p-6 sm:p-12 overflow-x-hidden relative">
+
+// Glow OLED de fondo
+<div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#ecb613]/5 blur-[120px] rounded-full pointer-events-none" />
+
+// Título S-Class
+<h1 className="text-4xl sm:text-5xl font-syne font-black tracking-tight text-white">
+
+// Subtítulo sistema
+<p className="text-[10px] font-mono text-[#ecb613] font-bold tracking-widest uppercase">
+
+// Card KPI
+<article className="bg-[#050508] border border-white/5 rounded-2xl p-6 backdrop-blur-md">
+
+// Valor monetario
+<span className="text-3xl font-mono font-bold text-[#ecb613]">
+
+// Badge alerta
+<span className="bg-[#FF2B44]/10 text-[#FF2B44] px-2 py-0.5 rounded-full text-xs font-mono">
+
+// Botón primario
+<button className="px-6 py-2.5 rounded-xl bg-[#00E5FF]/10 border border-[#00E5FF]/30 text-[#00E5FF] hover:bg-[#00E5FF]/20 transition-all font-mono text-xs uppercase tracking-wider font-bold">
+```
+
+## ARRANQUE
+
+Ejecuta este comando en la terminal y no pares hasta que la WAVE esté completa:
+
+```bash
+node .antigravity/omega.js next
+```

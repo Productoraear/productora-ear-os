@@ -3,6 +3,8 @@
  * Bloque B0.07 — Generación determinista de enlaces wa.me con plantillas contractuales SSOT.
  */
 
+import { SAFE_LCSP_CEILING_EUR } from '@/lib/constants/ear-os-ssot';
+
 export const CENTRAL_PHONE = '+34693693048';
 export const DISPLAY_PHONE = '+34 693 693 048';
 
@@ -73,11 +75,11 @@ Solicito llamada del equipo clínico VIMUME para iniciar evaluación inicial.`;
     }
 
     case 'b2g': {
-      const amount = params.totalEur || 14250;
+      const amount = params.totalEur || SAFE_LCSP_CEILING_EUR;
       text = `🏛️ *LICITACIÓN MENOR B2G / AYUNTAMIENTO (ART. 118 LCSP)*
 • *Entidad:* ${name}
 • *Provincia / Municipio:* ${province}
-• *Presupuesto Estimado:* ${amount} € (< 14.250 € Sin Impuestos)
+• *Presupuesto Estimado:* ${amount} € (< ${SAFE_LCSP_CEILING_EUR.toLocaleString('es-ES', { minimumFractionDigits: 2 })} € Sin Impuestos)
 • *Requisitos:* Factura Electrónica FACe/DIR3, Límite dBA <75 SPL, Certificado Drones AESA y Seguro RC 1.2M€.
 
 Solicito envío de memoria técnica y propuesta contractual de urgencia.`;

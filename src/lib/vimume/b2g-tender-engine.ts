@@ -1,10 +1,14 @@
 import { createHash } from 'crypto';
-import { 
-  getClinicalJustificationText, 
-  getLegalLcspJustificationText, 
-  getSroiJustificationText, 
-  getTechnicalRiderJustificationText 
+import {
+  getClinicalJustificationText,
+  getLegalLcspJustificationText,
+  getSroiJustificationText,
+  getTechnicalRiderJustificationText
 } from '@/lib/constants/vimume-100-levels';
+import {
+  LIMITE_B2G_LCSP_EUR,
+  SAFE_LCSP_CEILING_EUR
+} from '@/lib/constants/ear-os-ssot';
 
 export interface B2GTenderInput {
   entityName: string; // Ej: "Ayuntamiento de Toledo"
@@ -73,14 +77,14 @@ export const B2G_PRESETS = {
   }
 };
 
-const MAX_LCSP_MINOR_CONTRACT_LIMIT = 15000.00;
-const SAFE_LCSP_CEILING = 14250.00; // 95% del techo legal
+const MAX_LCSP_MINOR_CONTRACT_LIMIT = LIMITE_B2G_LCSP_EUR;
+const SAFE_LCSP_CEILING = SAFE_LCSP_CEILING_EUR; // 95% del techo legal
 
 export function generateVimumeTender(input: B2GTenderInput): B2GTenderOutput {
   const presetConfig = B2G_PRESETS[input.programPreset] || B2G_PRESETS.PILOTO_TRIMESTRAL;
-  
-  let rawBudget = input.customBudget !== undefined && input.customBudget > 0 
-    ? input.customBudget 
+
+  let rawBudget = input.customBudget !== undefined && input.customBudget > 0
+    ? input.customBudget
     : presetConfig.basePrice;
 
   let adjustedCeilingApplied = false;

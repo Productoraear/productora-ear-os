@@ -85,10 +85,19 @@ if (command === 'next') {
         updateJournal(data);
 
         console.log(`\n🚀 TAREA ${taskId} SELLADA Y REGISTRADA EN LA BLOCKCHAIN INTERNA.`);
-        console.log("⚠️ ATENCIÓN OBRERO: PARA PREVENIR COLAPSO DE CONTEXTO (ZTM):");
-        console.log("   1. DETENTE AHORA MISMO.");
-        console.log("   2. PULSA EL BOTÓN '+' (NEW TASK) EN CLINE.");
-        console.log("   3. PEGA TU MANIFIESTO (CLINE_PROMPT_TEMPLATE.md) PARA INICIAR LA SIGUIENTE TAREA EN LIMPIO.");
+        const metaModel = (data._meta?.model || '').toLowerCase();
+        const isLocalModel = metaModel.includes('ollama') || metaModel.includes('qwen') || metaModel.includes('local') || process.env.EAR_LOCAL_MODEL === '1';
+
+        if (isLocalModel) {
+            console.log("🛡️ MODO LOCAL DETECTADO (PROTECCIÓN GPU & ZTM):");
+            console.log("   1. Para proteger la VRAM y evitar saturación de tokens, abre New Task (+).");
+            console.log("   2. Pega tu plantilla de prompt e inicia con: node .antigravity/omega.js next\n");
+        } else {
+            console.log("⚡ MODO ONLINE / FRONTIER DETECTADO (DEEPSEEK / CLAUDE / GEMINI 100K+ LIBERADO):");
+            console.log("   CONTINUIDAD TOTAL: NO TE DETENGAS.");
+            console.log("   Ejecuta INMEDIATAMENTE: node .antigravity/omega.js next");
+            console.log("   Continúa en bucle autónomo hasta que la terminal anuncie: '🏁 WAVE COMPLETADA AL 100%'.\n");
+        }
 
     } catch (error) {
         console.error("\n❌ ALARMA: CÓDIGO MEDIOCRE O ROTO.");

@@ -14,22 +14,32 @@
  */
 
 import { createHash } from 'crypto';
-import { BASE_SOLISTA, DEPOSITO_STRIPE } from '../pricing/sovereign-pricing';
-import { RECARGO_URGENCIA_24_7 } from '../mariachi/mariachi-dispatch-engine';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  LOGISTICA_KM_EXENTOS,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_HOTEL,
+  SUPLEMENTO_HOTEL_EUR,
+  WATTS_PER_PAX as SSOT_WATTS_PER_PAX,
+} from '@/lib/constants/ear-os-ssot';
+
+const BASE_SOLISTA = TARIFA_BASE_SOLISTA_EUR;
+const DEPOSITO_STRIPE = DEPOSITO_STRIPE_EUR;
 
 /* ------------------------------------------------------------------ */
 /* Constantes S-Class — Logística y Acústica                           */
 /* ------------------------------------------------------------------ */
 
 export const HUB_MENTRIDA = 'Méntrida, Toledo (Hub Central EAR)';
-const KM_EXENTO = 50;
-const COSTE_KM_SCLASS = 1.50; // €/km a partir del km 50
-const SUPLEMENTO_HOTELERO = RECARGO_URGENCIA_24_7; // 120 € (extiende mariachi-dispatch-engine)
-const DISTANCIA_MAXIMA_SIN_HOTELES_KM = 200;
+const KM_EXENTO = LOGISTICA_KM_EXENTOS;
+const COSTE_KM_SCLASS = LOGISTICA_EUR_PER_KM; // €/km a partir del km 50
+const SUPLEMENTO_HOTELERO = SUPLEMENTO_HOTEL_EUR; // 120 €
+const DISTANCIA_MAXIMA_SIN_HOTELES_KM = LOGISTICA_KM_HOTEL;
 const HORA_LIMITE_NOCTURNA = '03:00';
 
 /* Constantes Acústicas */
-export const WATTS_PER_PAX = 12;
+export const WATTS_PER_PAX = SSOT_WATTS_PER_PAX;
 const MIN_WATTS_INTERIOR = 500;
 const MIN_WATTS_EXTERIOR = 1000;
 const SPL_VIMUME_MAX = 74; // < 75 dB SPL obligatorio (Art. VIMUME B2G)

@@ -275,17 +275,14 @@ export default function BodasPage() {
                 <span>100% Recomendado por Parejas</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-black uppercase text-white font-syne">
-                Opiniones Reales en <span className="text-[#ecb613]">Bodas.net</span>
+                Opiniones Reales & <span className="text-[#ecb613]">Garantía S-Class</span>
               </h2>
             </div>
             <a
-              href="https://www.bodas.net/musica/productora-ear--e78903#reviews"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-xs font-black uppercase tracking-wider transition-all min-h-[48px]"
+              href="/reservar/solista"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-[#ecb613] hover:bg-[#ecb613]/90 text-black border border-[#ecb613] text-xs font-black uppercase tracking-wider transition-all min-h-[48px] shadow-[0_0_25px_rgba(236,182,19,0.35)]"
             >
-              <span>Ver Escaparate en Bodas.net (5.0★)</span>
-              <ExternalLink size={14} />
+              <span>Bloquear Fecha con Garantía Oficial (5.0★)</span>
             </a>
           </div>
 

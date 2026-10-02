@@ -6,6 +6,15 @@ import {
     PayoutStatus,
     Role,
 } from "@prisma/client";
+import {
+    DEPOSITO_STRIPE_EUR,
+    SPLIT_SOBERANO,
+    LOGISTICA_EUR_PER_KM,
+    LOGISTICA_KM_EXENTOS,
+    SUPLEMENTO_HOTEL_EUR,
+    LOGISTICA_KM_HOTEL,
+    HORA_FIN_HOTEL,
+} from "@/lib/constants/ear-os-ssot";
 
 // ════════════════════════════════════════════════════════════════════════════
 // SSOT S-CLASS — COMMISSION ENGINE (Split Soberano 80/10/10)
@@ -19,14 +28,39 @@ import {
 // ════════════════════════════════════════════════════════════════════════════
 
 export const SSOT_SPLIT = {
-    providerPercent: 80,
-    platformEarPercent: 10,
-    vimumePercent: 10,
+    providerPercent: SPLIT_SOBERANO.artista * 100,
+    platformEarPercent: SPLIT_SOBERANO.earOs * 100,
+    vimumePercent: SPLIT_SOBERANO.vimume * 100,
 } as const;
 
-export const IMMUTABLE_DEPOSIT_EUR = 100;
-
+export const IMMUTABLE_DEPOSIT_EUR = DEPOSITO_STRIPE_EUR;
 export const KYC_THRESHOLD_EUR = 3000;
+
+// Logística S-Class (Reglas Octubre 2026)
+export const LOGISTICS_BASE_RATE_PER_KM = LOGISTICA_EUR_PER_KM;
+export const LOGISTICS_FREE_KM = LOGISTICA_KM_EXENTOS;
+export const LOGISTICS_HOTEL_ALLOWANCE = SUPLEMENTO_HOTEL_EUR;
+export const LOGISTICS_HOTEL_KM_THRESHOLD = LOGISTICA_KM_HOTEL;
+export const LOGISTICS_HOTEL_TIME_THRESHOLD = HORA_FIN_HOTEL; // 3:00 AM
+
+export function computeLogisticsFee(distanceKm: number, endTimeHours?: number): { travelFee: number; hotelFee: number; totalLogistics: number } {
+    let travelFee = 0;
+    if (distanceKm > LOGISTICS_FREE_KM) {
+        travelFee = (distanceKm - LOGISTICS_FREE_KM) * LOGISTICS_BASE_RATE_PER_KM;
+    }
+
+    let hotelFee = 0;
+    // Hotel aplica si distancia > 200km O si hora fin es >= 3:00 AM (y antes de mediodía para evitar falsos positivos PM)
+    if (distanceKm > LOGISTICS_HOTEL_KM_THRESHOLD || (endTimeHours !== undefined && endTimeHours >= LOGISTICS_HOTEL_TIME_THRESHOLD && endTimeHours < 12)) {
+        hotelFee = LOGISTICS_HOTEL_ALLOWANCE;
+    }
+
+    return {
+        travelFee,
+        hotelFee,
+        totalLogistics: travelFee + hotelFee
+    };
+}
 
 export interface TierConfig {
     tier: AffiliateTier;

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import crypto from 'crypto';
+import { checkDateAvailability } from '@/lib/availability/atomicDateLockEngine';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -15,12 +16,36 @@ const DEPOSIT_CENTS = 10000;
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { fecha, formato, distanciaKm, horaFin, totalEstimado } = body;
+    const { fecha, formato, distanciaKm, horaFin, totalEstimado, artistProfileId } = body;
 
     if (!fecha || typeof distanciaKm !== 'number') {
       return NextResponse.json(
         { error: 'Datos de reserva incompletos (fecha y distancia requeridas)' },
         { status: 400 }
+      );
+    }
+
+    // ── W06-001 · GUARDIÁN ANTI-COLISIÓN ACID ──────────────────────────────
+    // Verificación atómica de disponibilidad ANTES de materializar la sesión
+    // Stripe. Impide que dos clientes reserven el mismo sábado.
+    const availability = await checkDateAvailability({
+      eventDate: fecha,
+      artistProfileId:
+        typeof artistProfileId === 'string' && artistProfileId.length > 0
+          ? artistProfileId
+          : undefined,
+    });
+
+    if (!availability.available) {
+      return NextResponse.json(
+        {
+          error:
+            'La fecha solicitada ya está comprometida por una reserva activa. Selecciona otro día o contacta por WhatsApp para la lista de espera prioritaria.',
+          reason: availability.reason,
+          conflictingBlockId: availability.conflictingBlockId,
+          conflictingProductionId: availability.conflictingProductionId,
+        },
+        { status: 409 }
       );
     }
 

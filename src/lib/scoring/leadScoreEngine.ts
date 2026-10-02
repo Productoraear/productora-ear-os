@@ -3,6 +3,8 @@
  * Bloque B0.08 — Detección algorítmica de dominios gubernamentales y scoring de prioridad.
  */
 
+import { SAFE_LCSP_CEILING_EUR } from '@/lib/constants/ear-os-ssot';
+
 export interface LeadInput {
   email?: string;
   phone?: string;
@@ -48,10 +50,10 @@ export function calculateLeadScore(input: LeadInput): LeadScoreResult {
   }
 
   // 2. Encaje en Contrato Menor B2G (Art. 118 LCSP < 14.250 € sin IVA)
-  const isContractorUnder15k = budget > 0 && budget <= 14250;
+  const isContractorUnder15k = budget > 0 && budget <= SAFE_LCSP_CEILING_EUR;
   if (isGovDomain && isContractorUnder15k) {
     score += 20;
-    factors.push(`Presupuesto en rango de Adjudicación Directa B2G (${budget} € <= 14.250 €)`);
+    factors.push(`Presupuesto en rango de Adjudicación Directa B2G (${budget} € <= ${SAFE_LCSP_CEILING_EUR.toLocaleString('es-ES', { minimumFractionDigits: 2 })} €)`);
   } else if (budget >= 3000) {
     score += 15;
     factors.push(`Presupuesto alto (${budget} €)`);

@@ -985,7 +985,6 @@ export function generateGeoSchema(provinceSlug: string, serviceKey: 'mariachi' |
     telephone: '+34693693048',
     url: `https://www.productoraear.com/bodas/${province.slug}`,
     sameAs: [
-      'https://www.bodas.net/musica/productora-ear--e78903',
       'https://www.youtube.com/c/EdwinAgudelocantante'
     ]
   };

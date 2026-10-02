@@ -243,17 +243,14 @@ export const EdwinPressAndMetrics: React.FC = () => {
                 <span>100% Recomendado por Parejas</span>
               </div>
               <h3 className="text-3xl md:text-5xl font-black uppercase italic tracking-tighter text-white font-syne">
-                Reseñas Verificadas en <span className="text-[#ecb613]">Bodas.net</span>
+                Reseñas Verificadas & <span className="text-[#ecb613]">Auditoría S-Class</span>
               </h3>
             </div>
             <a
-              href="https://www.bodas.net/musica/productora-ear--e78903#reviews"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-xs font-black uppercase tracking-wider transition-all"
+              href="/reservar/solista"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ecb613] hover:bg-[#ecb613]/90 text-black border border-[#ecb613] text-xs font-black uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)]"
             >
-              <span>Ver Escaparate en Bodas.net (5.0★)</span>
-              <ExternalLink size={14} />
+              <span>Reservar Fecha con Garantía (5.0★)</span>
             </a>
           </div>
 

@@ -7,6 +7,9 @@ import { headers, cookies } from "next/headers";
 import { isRateLimited } from "@/lib/security/shield";
 import { logger } from "@/lib/logger";
 import { z } from "zod";
+import { calculateSovereignQuote } from "@/lib/pricing/sovereign-pricing";
+import { verifyAndSignStripeSession } from "@/lib/pricing/price-lock-verifier";
+import type { SovereignQuoteInput, FormatType } from "@/lib/pricing/sovereign-pricing";
 
 export interface EliteCheckoutInput {
   artistId: string;    // ID del ArtistProfile o ProviderProfile verificado
@@ -81,16 +84,16 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
   if (artist) {
     isAuthorized = true;
     artistName = artist.displayName ?? "";
-    
+
     // FORENSIC STRIPE REVENUE SEAL: Edwin Agudelo Pricing Engine
     if (artist.slug === "edwin-agudelo" || artistName.toLowerCase().includes("edwin agudelo")) {
-        costPerKm = 0.35;
-        const form = parsed.data.formation || 'solista';
-        if (form === 'solista') baseFee = 350;
-        else if (form === 'duo') baseFee = 550;
-        else if (form === 'cuarteto') baseFee = 900;
-        else if (form === 'gran_show') baseFee = 1800;
-        else baseFee = 350;
+      costPerKm = 0.35;
+      const form = parsed.data.formation || 'solista';
+      if (form === 'solista') baseFee = 350;
+      else if (form === 'duo') baseFee = 550;
+      else if (form === 'cuarteto') baseFee = 900;
+      else if (form === 'gran_show') baseFee = 1800;
+      else baseFee = 350;
     }
   } else {
     // B. Buscar en perfiles de proveedores verificados
@@ -130,7 +133,28 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
 
   logger.info({ event: "CHECKOUT_PRICING_CALCULATED", distanceKm: pricing.distanceKm, totalAmount: pricing.totalAmount, ip });
 
-  // 6. Creación de la sesión de Stripe Checkout con metadatos enriquecidos de geolocalización
+  // 6. FIRMADO CRIPTOGRÁFICO PRICE-LOCK SHA-256 (SSOT: verifyAndSignStripeSession)
+  const sovereignInput: SovereignQuoteInput = {
+    format: (parsed.data.formation === 'duo' ? 'trio' : parsed.data.formation === 'cuarteto' ? 'quinteto' : 'solista') as FormatType,
+    distanceKm: pricing.distanceKm,
+    soundRider: 'standard',
+  };
+  const clientHash = calculateSovereignQuote(sovereignInput).priceLockHash;
+  const priceLock = verifyAndSignStripeSession({
+    input: sovereignInput,
+    clientHash,
+    issuedAtTimestamp: Date.now(),
+    artistSlug: artist?.slug ?? artistId,
+  });
+
+  if (!priceLock.isValid) {
+    logger.error({ event: "PRICE_LOCK_VERIFICATION_FAILED", status: priceLock.status, artistId, ip });
+    throw new Error(`PRICE_LOCK_REJECTED: ${priceLock.status}. La sesión no puede firmarse sin verificación criptográfica válida.`);
+  }
+
+  const { stripeMetadata } = priceLock;
+
+  // 7. Creación de la sesión de Stripe Checkout con metadatos firmados SHA-256
   const cookieStore = await cookies();
   const affiliateCode = cookieStore.get('ear_affiliate_code')?.value;
 
@@ -145,7 +169,7 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
             name: `Reserva Roster Oficial Elite - ${artistName}`,
             description: `Actuación oficial programada para el ${eventDate}. Trayecto: ${origin} -> ${destination} (${pricing.distanceKm} km)`,
           },
-          unit_amount: Math.round(pricing.totalAmount * 100), // Stripe procesa en céntimos
+          unit_amount: Math.round(stripeMetadata.totalBudget * 100), // Stripe procesa en céntimos
         },
         quantity: 1,
       },
@@ -154,22 +178,30 @@ export async function createEliteCheckout(input: EliteCheckoutInput) {
       artistId: artistId,
       clientId: resolvedClientId || "GUEST",
       calculatedDistance: String(pricing.distanceKm),
-      totalAmount: String(pricing.totalAmount),
+      totalAmount: String(stripeMetadata.totalBudget),
       eventDate: eventDate,
       origin: origin,
       destination: destination,
+      priceLockHash: stripeMetadata.priceLockHash,
+      artistSplit: String(stripeMetadata.artistSplit),
+      earOsSplit: String(stripeMetadata.earOsSplit),
+      vimumeSplit: String(stripeMetadata.vimumeSplit),
+      depositAmount: String(stripeMetadata.depositAmount),
+      verifiedAt: String(stripeMetadata.verifiedAt),
       ...(affiliateCode ? { affiliateCode } : {})
     },
     success_url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"}/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL || "https://productoraear.com"}/contacto`,
   });
 
-  logger.info({ event: "CHECKOUT_SESSION_CREATED", sessionId: session.id, ip });
+  logger.info({ event: "CHECKOUT_SESSION_CREATED", sessionId: session.id, priceLockHash: stripeMetadata.priceLockHash, ip });
 
   return {
     sessionId: session.id,
     url: session.url,
-    totalAmount: pricing.totalAmount,
+    totalAmount: stripeMetadata.totalBudget,
     distanceKm: pricing.distanceKm,
+    priceLockHash: stripeMetadata.priceLockHash,
+    depositAmount: stripeMetadata.depositAmount,
   };
 }
