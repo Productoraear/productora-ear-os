@@ -380,6 +380,26 @@ export default function SolistaReservationPage() {
           <p className="text-zinc-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
             Consulta el calendario en tiempo real, bloquea tu fecha con garantía contractual y asegura rider Bose/Shure sin intermediarios ni cancelaciones.
           </p>
+
+          {/* BANNER RESTRICCIÓN SOLISTA vs CATÁLOGO COMPLETO NACIONAL */}
+          <div className="mt-6 p-4 rounded-2xl bg-gradient-to-r from-[#121008] via-[#08080d] to-[#121008] border border-[#ecb613]/50 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+            <div className="flex items-center gap-3 text-left">
+              <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center shrink-0">
+                <Music className="w-5 h-5 text-[#ecb613]" />
+              </div>
+              <div>
+                <h3 className="text-xs sm:text-sm font-bold font-syne text-white uppercase tracking-tight">¿Buscas Flamenco, Pop/Rock, Jazz, DJs, Magia u otros estilos?</h3>
+                <p className="text-[11px] text-slate-300 font-mono">Accede al Catálogo Nacional Auditado con 6.710+ Artistas en las 52 provincias de España.</p>
+              </div>
+            </div>
+            <a
+              href="/artistas"
+              className="bg-[#ecb613] hover:bg-white text-black font-mono font-black text-xs uppercase px-4 py-2.5 rounded-xl transition shrink-0 flex items-center gap-1.5 shadow-md"
+            >
+              <span>Explorar 6.710+ Artistas</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
