@@ -1,22 +1,22 @@
 {
   "_meta": {
     "version": "7.0-ANTIGRAVITY-OMEGA-SCLASS",
-    "doctrine": "BARE-METAL GOVERNANCE + SCAFFOLDING FIRST + FRAMER DESIGN VAULT",
+    "doctrine": "BARE-METAL GOVERNANCE + SCAFFOLDING FIRST + FRAMER LANDING INTEGRATION",
     "waves": "11",
     "model": "claude-3-7-sonnet-sclass"
   },
   "_instructions_for_cline": "PACTO SAGRADO ANTI-SOBRECOSTES (ZTM 1-TASK): 1) node .antigravity/omega.js next 2) Modifica con excelencia 3) node .antigravity/omega.js complete <ID> 4) DETENTE Y FINALIZA TURNO. Clic en 'Start New Task' en Cline para 0 tokens acumulados.",
   "tasks": [
     {
-      "id": "TASK-FRAMER-01",
-      "title": "Arquitectura Framer Design Vault & Componente Ultra-Animación Scroll Canvas S-Class",
-      "status": "QUEUED",
+      "id": "TASK-FRAMER-02",
+      "title": "Integración Vanguardista Framer Motion Canvas en Landings Principales",
+      "status": "COMPLETED",
       "files": [
-        "src/lib/framer/framerDesignVault.ts",
-        "src/app/components/ui/FramerMotionScrollCanvas.tsx"
+        "src/app/page.tsx",
+        "src/app/(public)/bodas/page.tsx"
       ],
-      "action": "Crear el módulo framerDesignVault.ts con presets de física Framer Motion, tokens OLED S-Class y el componente FramerMotionScrollCanvas.tsx para animaciones ultra-fluidas de scroll.",
-      "scaffold": "1. Crear src/lib/framer/framerDesignVault.ts exportando FRAMER_PHYSICS_PRESETS (spring stiffness/damping), OLED_DESIGN_TOKENS (colores, sombras glassmorphism) e interfaces para componentes Framer.\n2. Crear src/app/components/ui/FramerMotionScrollCanvas.tsx usando 'use client', framer-motion useScroll y useTransform para renderizado adaptativo de scroll y soporte de imágenes/videos transparentes.\n3. Validar obligatoriamente con npx tsc --noEmit -> Exit Code 0.",
+      "action": "Invocación e integración del componente FramerMotionScrollCanvas y tokens de diseño Framer en la página principal y la landing de bodas S-Class.",
+      "scaffold": "1. Importar FramerMotionScrollCanvas desde '@/components/ui/FramerMotionScrollCanvas' en src/app/page.tsx y src/app/(public)/bodas/page.tsx.\n2. Reemplazar o integrar secciones estáticas con la experiencia de scroll 60FPS Framer Motion Canvas.\n3. Aplicar acentos de color S-Class (#ecb613 oro para portada, #FF2B44 rubí para bodas).\n4. Ejecutar y validar obligatoriamente npx tsc --noEmit -> Exit Code 0.",
       "validation": "npx tsc --noEmit"
     }
   ]

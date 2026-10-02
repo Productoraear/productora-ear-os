@@ -2,16 +2,16 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { 
-  Heart, 
-  ShieldCheck, 
-  Crown, 
-  Music, 
-  Wine, 
-  Mic2, 
-  Palette, 
-  Disc, 
-  ArrowRight, 
+import {
+  Heart,
+  ShieldCheck,
+  Crown,
+  Music,
+  Wine,
+  Mic2,
+  Palette,
+  Disc,
+  ArrowRight,
   Phone,
   Calendar,
   Star,
@@ -20,6 +20,8 @@ import {
 import { CENTRALITA } from '@/lib/phone-constants';
 import ThermodynamicNeuralTunnel from '@/features/bodas/ui/ThermodynamicNeuralTunnel';
 import SmartMarketplaceNav from '@/features/marketplace/ui/SmartMarketplaceNav';
+import { FramerMotionScrollCanvas } from '@/components/ui/FramerMotionScrollCanvas';
+import { FRAMER_PHYSICS_PRESETS, FRAMER_OLED_TOKENS } from '@/lib/framer/framerDesignVault';
 
 interface WeddingBlock {
   id: string;
@@ -98,12 +100,12 @@ const weddingBlocks: WeddingBlock[] = [
 export default function BodasPage() {
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-28 pb-20 px-4 md:px-8 font-sans selection:bg-[#ecb613]/30">
-      
+
       {/* Background ambient lighting */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-radial from-[#ecb613]/10 via-transparent to-transparent blur-[160px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto space-y-20 relative z-10">
-        
+
         {/* 1. HERO SECTION: BODA S-CLASS */}
         <section className="text-center max-w-4xl mx-auto space-y-6 pt-6">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black tracking-[0.4em] uppercase font-mono">
@@ -149,9 +151,18 @@ export default function BodasPage() {
 
         {/* 3. TÚNEL NEURAL TERMODINÁMICO S-CLASS (MATCHMAKING NUPCIAL) */}
         <section className="pt-2">
-          <ThermodynamicNeuralTunnel 
-            initialProvince="Madrid" 
-            initialService="Producción de Boda S-Class" 
+          <ThermodynamicNeuralTunnel
+            initialProvince="Madrid"
+            initialService="Producción de Boda S-Class"
+          />
+        </section>
+
+        {/* 3.5. CANVAS FRAMER MOTION S-CLASS (EXPERIENCIA INMERSIVA 60FPS) */}
+        <section>
+          <FramerMotionScrollCanvas
+            title="BODAS S-CLASS & MÚSICA EN VIVO"
+            badge="EXPERIENCIA INMERSIVA 60FPS"
+            accentColor={FRAMER_OLED_TOKENS.accentRuby}
           />
         </section>
 
@@ -168,7 +179,7 @@ export default function BodasPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {weddingBlocks.map((block) => (
-              <div 
+              <div
                 key={block.id}
                 className="p-8 rounded-3xl bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between space-y-6 group shadow-xl relative overflow-hidden"
               >
@@ -213,7 +224,7 @@ export default function BodasPage() {
         {/* 3. PACK SOLISTA PREMIUM & SHOWS CON GRUPO */}
         <section className="p-8 sm:p-14 rounded-[3rem] bg-gradient-to-r from-[#0d0d14] via-[#120f08] to-[#0d0d14] border border-[#ecb613]/30 shadow-2xl relative overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
+
             <div className="lg:col-span-8 space-y-6">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ecb613]/10 text-[#ecb613] text-[10px] font-black uppercase tracking-widest font-mono border border-[#ecb613]/30">
                 <Crown size={14} /> Banda Sonora de Vuestra Boda

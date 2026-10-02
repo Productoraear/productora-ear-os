@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Phone, ArrowRight } from 'lucide-react';
 import CinematicHeroSClass from '@/components/sclass/CinematicHeroSClass';
+import { FramerMotionScrollCanvas } from '@/components/ui/FramerMotionScrollCanvas';
+import { FRAMER_PHYSICS_PRESETS, FRAMER_OLED_TOKENS } from '@/lib/framer/framerDesignVault';
 
 export default function Home() {
   return (
@@ -49,6 +51,13 @@ export default function Home() {
       <div className="relative min-h-screen pt-20 md:pt-24 pb-12 flex flex-col justify-between">
         <CinematicHeroSClass />
       </div>
+
+      {/* Banner Dinámico Framer Motion Canvas — Producción Técnica de Alta Gama */}
+      <FramerMotionScrollCanvas
+        title="PRODUCCIÓN TÉCNICA DE ALTA GAMA"
+        badge="EAR OS // FRAMER ENGINE"
+        accentColor={FRAMER_OLED_TOKENS.accentGold}
+      />
     </main>
   );
 }
