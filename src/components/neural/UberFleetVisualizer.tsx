@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useMemo } from 'react';
-import { 
-  Navigation, Maximize2, RotateCcw, 
-  Car, MapPin, Zap, AlertTriangle, Layers, 
+import {
+  Navigation, Maximize2, RotateCcw,
+  Car, MapPin, Zap, AlertTriangle, Layers,
   LocateFixed, ShieldCheck, Clock, Compass, Activity,
   Phone, MessageSquare, ExternalLink, Key, CheckCircle2,
   Search, Eye, UserCheck, Truck, Sparkles, Building
@@ -21,8 +21,8 @@ interface UberFleetVisualizerProps {
 
 type TileLayerMode = 'dark' | 'satellite' | 'street';
 
-export function UberFleetVisualizer({ 
-  report, 
+export function UberFleetVisualizer({
+  report,
   isRunning,
   onTogglePlay,
   onToggleOvertime,
@@ -154,7 +154,7 @@ export function UberFleetVisualizer({
       if (!mapInstanceRef.current) return;
       const L = (await import('leaflet')).default;
       const map = mapInstanceRef.current;
-      
+
       if (tileLayerRef.current) map.removeLayer(tileLayerRef.current);
       if (labelLayerRef.current) map.removeLayer(labelLayerRef.current);
 
@@ -202,7 +202,7 @@ export function UberFleetVisualizer({
 
         // 🛣️ Línea de Ruta GPS real
         const polyline = L.polyline(
-          [[originLat, originLng], [destLat, destLng]], 
+          [[originLat, originLng], [destLat, destLng]],
           {
             color: routeColor,
             weight: isReassigned ? 3.5 : 2,
@@ -393,16 +393,16 @@ export function UberFleetVisualizer({
   const filteredBookings = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const q = searchQuery.toLowerCase();
-    return report.bookings.filter(b => 
-      b.municipality.toLowerCase().includes(q) || 
+    return report.bookings.filter(b =>
+      b.municipality.toLowerCase().includes(q) ||
       b.venueName.toLowerCase().includes(q) ||
       b.mariachiLeadName.toLowerCase().includes(q)
     ).slice(0, 5);
   }, [report.bookings, searchQuery]);
 
   return (
-    <div className="w-full bg-[#030305]/95 border border-white/10 rounded-3xl overflow-hidden backdrop-blur-3xl shadow-2xl space-y-0">
-      
+    <div className="w-full bg-[#030305]/95 border border-white/10 rounded-3xl overflow-hidden overflow-x-hidden backdrop-blur-3xl shadow-2xl space-y-0">
+
       {/* 🧭 BARRA SUPERIOR DE CONTROL TÁCTICO & BUSCADOR HIPER-DETALLADO */}
       <div className="p-4 sm:p-5 border-b border-white/10 flex flex-wrap items-center justify-between gap-4 bg-gradient-to-r from-black/90 via-[#0a0a14] to-black/90">
         <div className="flex items-center gap-3">
@@ -437,7 +437,7 @@ export function UberFleetVisualizer({
               placeholder="Buscar finca, municipio o seña..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-all"
+              className="w-full min-h-[48px] touch-manipulation bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-all"
             />
           </div>
 
@@ -450,7 +450,7 @@ export function UberFleetVisualizer({
                     handleFocusBooking(b);
                     setSearchQuery('');
                   }}
-                  className="w-full text-left p-2 rounded-xl hover:bg-white/5 flex items-center justify-between text-xs font-mono text-zinc-300 hover:text-white transition-all cursor-pointer"
+                  className="w-full text-left p-2 min-h-[48px] touch-manipulation rounded-xl hover:bg-white/5 flex items-center justify-between text-xs font-mono text-zinc-300 hover:text-white transition-all cursor-pointer"
                 >
                   <div className="truncate pr-2">
                     <strong className="text-white block truncate">{b.venueName.split('(')[0]}</strong>
@@ -468,11 +468,10 @@ export function UberFleetVisualizer({
           {onTogglePlay && (
             <button
               onClick={onTogglePlay}
-              className={`px-4 py-2 rounded-xl text-xs font-syne font-bold uppercase transition-all flex items-center gap-2 shadow-lg cursor-pointer ${
-                isRunning
-                  ? 'bg-amber-500 text-black shadow-amber-500/20'
-                  : 'bg-[#ecb613] text-black hover:bg-amber-300 shadow-[#ecb613]/20'
-              }`}
+              className={`px-4 py-2 min-h-[48px] touch-manipulation rounded-xl text-xs font-syne font-bold uppercase transition-all flex items-center gap-2 shadow-lg cursor-pointer ${isRunning
+                ? 'bg-amber-500 text-black shadow-amber-500/20'
+                : 'bg-[#ecb613] text-black hover:bg-amber-300 shadow-[#ecb613]/20'
+                }`}
             >
               <Car size={14} />
               <span>{isRunning ? 'Pausar Flota' : '▶ Desplegar Flota'}</span>
@@ -482,11 +481,10 @@ export function UberFleetVisualizer({
           {onToggleOvertime && (
             <button
               onClick={onToggleOvertime}
-              className={`px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all border flex items-center gap-1.5 cursor-pointer ${
-                injectOvertime
-                  ? 'bg-rose-500 text-white border-rose-400 shadow-rose-500/30'
-                  : 'bg-white/5 border-white/10 text-zinc-300 hover:text-white'
-              }`}
+              className={`px-3 py-2 min-h-[48px] touch-manipulation rounded-xl text-xs font-mono font-bold uppercase transition-all border flex items-center gap-1.5 cursor-pointer ${injectOvertime
+                ? 'bg-rose-500 text-white border-rose-400 shadow-rose-500/30'
+                : 'bg-white/5 border-white/10 text-zinc-300 hover:text-white'
+                }`}
             >
               <AlertTriangle size={13} className={injectOvertime ? 'animate-bounce' : ''} />
               <span>{injectOvertime ? '⚡ Relevos Activos' : 'Simular Relevo'}</span>
@@ -497,11 +495,10 @@ export function UberFleetVisualizer({
           <button
             onClick={() => setShowAccessPoints(!showAccessPoints)}
             title="Mostrar / Ocultar Puntos de Acceso y Señas de Entrada"
-            className={`px-3 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all border flex items-center gap-1.5 cursor-pointer ${
-              showAccessPoints 
-                ? 'bg-[#00E5FF]/15 text-[#00E5FF] border-[#00E5FF]/40' 
-                : 'bg-white/5 border-white/10 text-zinc-400 hover:text-white'
-            }`}
+            className={`px-3 py-2 min-h-[48px] touch-manipulation rounded-xl text-xs font-mono font-bold uppercase transition-all border flex items-center gap-1.5 cursor-pointer ${showAccessPoints
+              ? 'bg-[#00E5FF]/15 text-[#00E5FF] border-[#00E5FF]/40'
+              : 'bg-white/5 border-white/10 text-zinc-400 hover:text-white'
+              }`}
           >
             <Key size={13} />
             <span>Señas {showAccessPoints ? 'ON' : 'OFF'}</span>
@@ -511,7 +508,7 @@ export function UberFleetVisualizer({
 
       {/* 🗺️ CONTENEDOR DEL MAPA INTERACTIVO GOOGLE MAPS */}
       <div className="relative w-full h-[620px] sm:h-[700px] bg-[#050507]">
-        
+
         {/* Canvas Leaflet */}
         <div ref={mapContainerRef} className="w-full h-full z-0 cursor-grab active:cursor-grabbing" />
 
@@ -519,33 +516,30 @@ export function UberFleetVisualizer({
         <div className="absolute top-4 right-4 z-[400] flex items-center bg-black/85 backdrop-blur-xl border border-white/15 rounded-2xl p-1 shadow-2xl">
           <button
             onClick={() => setTileMode('dark')}
-            className={`px-3 py-1.5 rounded-xl text-[10px] font-mono uppercase font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              tileMode === 'dark' 
-                ? 'bg-[#ecb613] text-black shadow-md' 
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`px-3 py-1.5 min-h-[48px] touch-manipulation rounded-xl text-[10px] font-mono uppercase font-bold transition-all flex items-center gap-1.5 cursor-pointer ${tileMode === 'dark'
+              ? 'bg-[#ecb613] text-black shadow-md'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             <Layers size={12} />
             <span>Dark OLED</span>
           </button>
           <button
             onClick={() => setTileMode('satellite')}
-            className={`px-3 py-1.5 rounded-xl text-[10px] font-mono uppercase font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              tileMode === 'satellite' 
-                ? 'bg-[#00E5FF] text-black shadow-md' 
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`px-3 py-1.5 min-h-[48px] touch-manipulation rounded-xl text-[10px] font-mono uppercase font-bold transition-all flex items-center gap-1.5 cursor-pointer ${tileMode === 'satellite'
+              ? 'bg-[#00E5FF] text-black shadow-md'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             <Maximize2 size={12} />
             <span>Satélite HD</span>
           </button>
           <button
             onClick={() => setTileMode('street')}
-            className={`px-3 py-1.5 rounded-xl text-[10px] font-mono uppercase font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-              tileMode === 'street' 
-                ? 'bg-white text-black shadow-md' 
-                : 'text-zinc-400 hover:text-white'
-            }`}
+            className={`px-3 py-1.5 min-h-[48px] touch-manipulation rounded-xl text-[10px] font-mono uppercase font-bold transition-all flex items-center gap-1.5 cursor-pointer ${tileMode === 'street'
+              ? 'bg-white text-black shadow-md'
+              : 'text-zinc-400 hover:text-white'
+              }`}
           >
             <span>Callejero</span>
           </button>
@@ -575,14 +569,14 @@ export function UberFleetVisualizer({
           <button
             onClick={handleRecenter}
             title="Centrar en Plaza Elíptica"
-            className="w-11 h-11 rounded-2xl bg-black/85 backdrop-blur-xl border border-white/15 text-white hover:text-[#00E5FF] hover:border-[#00E5FF] flex items-center justify-center transition-all shadow-xl cursor-pointer"
+            className="w-12 h-12 min-w-[48px] min-h-[48px] touch-manipulation rounded-2xl bg-black/85 backdrop-blur-xl border border-white/15 text-white hover:text-[#00E5FF] hover:border-[#00E5FF] flex items-center justify-center transition-all shadow-xl cursor-pointer"
           >
             <LocateFixed size={18} />
           </button>
           <button
             onClick={handleFitBounds}
             title="Ajustar Toda la Flota (Madrid & Provincias)"
-            className="w-11 h-11 rounded-2xl bg-black/85 backdrop-blur-xl border border-white/15 text-white hover:text-[#ecb613] hover:border-[#ecb613] flex items-center justify-center transition-all shadow-xl cursor-pointer"
+            className="w-12 h-12 min-w-[48px] min-h-[48px] touch-manipulation rounded-2xl bg-black/85 backdrop-blur-xl border border-white/15 text-white hover:text-[#ecb613] hover:border-[#ecb613] flex items-center justify-center transition-all shadow-xl cursor-pointer"
           >
             <Maximize2 size={18} />
           </button>
@@ -590,14 +584,14 @@ export function UberFleetVisualizer({
             <button
               onClick={handleZoomIn}
               title="Acercar (+)"
-              className="w-11 h-10 text-white hover:bg-white/10 flex items-center justify-center font-mono font-bold text-lg border-b border-white/10 cursor-pointer"
+              className="w-11 h-10 min-h-[48px] min-w-[48px] touch-manipulation text-white hover:bg-white/10 flex items-center justify-center font-mono font-bold text-lg border-b border-white/10 cursor-pointer"
             >
               +
             </button>
             <button
               onClick={handleZoomOut}
               title="Alejar (-)"
-              className="w-11 h-10 text-white hover:bg-white/10 flex items-center justify-center font-mono font-bold text-lg cursor-pointer"
+              className="w-11 h-10 min-h-[48px] min-w-[48px] touch-manipulation text-white hover:bg-white/10 flex items-center justify-center font-mono font-bold text-lg cursor-pointer"
             >
               −
             </button>
@@ -608,26 +602,25 @@ export function UberFleetVisualizer({
         {selectedBooking && (
           <div className="absolute top-4 bottom-4 left-4 right-4 sm:right-auto sm:w-[420px] z-[500] animate-in fade-in slide-in-from-left-4 duration-300 overflow-y-auto pr-1">
             <div className="bg-[#0a0a14]/98 backdrop-blur-3xl border border-white/20 rounded-3xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.95)] space-y-4 relative">
-              
+
               {/* Botón cerrar */}
               <button
                 onClick={() => setSelectedBooking(null)}
-                className="absolute top-4 right-4 text-zinc-400 hover:text-white text-xs font-mono font-bold bg-white/5 hover:bg-white/10 w-7 h-7 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                className="absolute top-4 right-4 text-zinc-400 hover:text-white text-xs font-mono font-bold bg-white/5 hover:bg-white/10 w-12 h-12 min-w-[48px] min-h-[48px] touch-manipulation rounded-full flex items-center justify-center transition-all cursor-pointer"
               >
                 ✕
               </button>
 
               {/* Status Header */}
               <div className="flex items-center gap-2 flex-wrap">
-                <span className={`px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase flex items-center gap-1.5 ${
-                  selectedBooking.status === 'UBER_REASSIGNED'
-                    ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
-                    : 'bg-[#ecb613] text-black font-black'
-                }`}>
+                <span className={`px-3 py-1 rounded-full text-[9px] font-mono font-bold uppercase flex items-center gap-1.5 ${selectedBooking.status === 'UBER_REASSIGNED'
+                  ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/30'
+                  : 'bg-[#ecb613] text-black font-black'
+                  }`}>
                   <ShieldCheck size={12} />
                   <span>{selectedBooking.status === 'UBER_REASSIGNED' ? 'RELEVO UBER EN CAMINO' : 'CONVOY CONFIRMADO'}</span>
                 </span>
-                
+
                 <span className="px-2.5 py-1 rounded-full text-[9px] font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
                   <CheckCircle2 size={11} />
                   <span>FIANZA 100€ STRIPE OK</span>
@@ -678,7 +671,7 @@ export function UberFleetVisualizer({
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <a
                     href={`tel:${selectedBooking.mariachiPhone}`}
-                    className="py-2.5 px-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-syne font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-lg shadow-emerald-500/20"
+                    className="py-2.5 px-3 min-h-[48px] touch-manipulation rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-syne font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-lg shadow-emerald-500/20"
                   >
                     <Phone size={14} />
                     <span>Llamar Mariachi</span>
@@ -688,7 +681,7 @@ export function UberFleetVisualizer({
                     href={`https://wa.me/${selectedBooking.mariachiPhone.replace(/\D/g, '')}?text=Hola%20${encodeURIComponent(selectedBooking.mariachiLeadName)}%2C%20te%20escribo%20desde%20la%20reserva%20EAR%20OS%20para%20${encodeURIComponent(selectedBooking.venueName)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-2.5 px-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-black font-syne font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-lg shadow-[#25D366]/20"
+                    className="py-2.5 px-3 min-h-[48px] touch-manipulation rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-black font-syne font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-lg shadow-[#25D366]/20"
                   >
                     <MessageSquare size={14} />
                     <span>WhatsApp</span>
@@ -702,7 +695,7 @@ export function UberFleetVisualizer({
                   <Key size={14} />
                   <span>Señas de Acceso Proveedores (Cliente)</span>
                 </div>
-                
+
                 <p className="text-zinc-300 leading-relaxed bg-black/50 p-2.5 rounded-xl border border-white/5 text-[11px]">
                   &ldquo;{selectedBooking.clientAccessNotes}&rdquo;
                 </p>
@@ -752,7 +745,7 @@ export function UberFleetVisualizer({
                 href={`https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${selectedBooking.lat},${selectedBooking.lng}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs flex items-center justify-center gap-2 transition-all border border-white/15 cursor-pointer"
+                className="w-full py-2.5 px-4 min-h-[48px] touch-manipulation rounded-xl bg-white/10 hover:bg-white/15 text-white font-mono text-xs flex items-center justify-center gap-2 transition-all border border-white/15 cursor-pointer"
               >
                 <ExternalLink size={14} />
                 <span>Abrir Ruta en Google Maps App</span>

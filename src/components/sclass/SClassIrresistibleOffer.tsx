@@ -1,18 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  Gift, 
-  Lock, 
-  Flame, 
-  HelpCircle, 
-  CheckCircle2, 
-  Sparkles, 
+import {
+  ShieldCheck,
+  Gift,
+  Lock,
+  Flame,
+  HelpCircle,
+  CheckCircle2,
+  Sparkles,
   ArrowRight,
-  Clock,
-  Award,
   ChevronDown
 } from 'lucide-react';
 
@@ -84,7 +81,7 @@ export interface SClassIrresistibleOfferProps {
   };
 }
 
-export default function SClassIrresistibleOffer({
+export default React.memo(function SClassIrresistibleOffer({
   promiseBadge = "LA FÓRMULA DE VALOR S-CLASS // AUDITORÍA DIRECTA",
   headlinePromise,
   subPromise,
@@ -110,7 +107,7 @@ export default function SClassIrresistibleOffer({
       <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-radial from-[#FF2B44]/15 via-[#258DCD]/10 to-transparent blur-[140px]" />
 
       <div className="relative mx-auto max-w-5xl space-y-16">
-        
+
         {/* ── PASO 1: LA PROMESA TRANSFORMACIONAL (Lo que compran, no el producto) ── */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#FF2B44]/50 bg-[#FF2B44]/10 px-4 py-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.25em] text-[#FF2B44]">
@@ -128,8 +125,8 @@ export default function SClassIrresistibleOffer({
         {/* ── PASO 2: EL VALOR Y LOS BENEFICIOS (La transformación en acción) ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {benefits.map((b, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className="rounded-2xl border border-white/10 bg-[#09090e] p-6 space-y-3 hover:border-[#FF2B44]/40 transition-colors"
             >
               <div className="flex items-center gap-3">
@@ -160,8 +157,8 @@ export default function SClassIrresistibleOffer({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {deliverables.map((d, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="flex items-start gap-4 rounded-xl border border-white/5 bg-white/[0.02] p-4 hover:border-[#AAD6CD]/30 transition-colors"
               >
                 <CheckCircle2 size={20} className="text-[#FF2B44] shrink-0 mt-0.5" />
@@ -251,8 +248,8 @@ export default function SClassIrresistibleOffer({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {bonuses.map((bonus, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="rounded-2xl border border-white/10 bg-[#07070b] p-6 space-y-3 relative overflow-hidden hover:border-[#AAD6CD]/30 transition-colors"
               >
                 <div className="flex items-center justify-between">
@@ -289,8 +286,8 @@ export default function SClassIrresistibleOffer({
             {objections.map((obj, i) => {
               const isOpen = openObjection === i;
               return (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className="rounded-xl border border-white/10 bg-[#07070b] overflow-hidden hover:border-white/20 transition-colors"
                 >
                   <button
@@ -301,9 +298,9 @@ export default function SClassIrresistibleOffer({
                       <HelpCircle size={16} className="text-[#FF2B44] shrink-0" />
                       <span>{obj.question}</span>
                     </span>
-                    <ChevronDown 
-                      size={16} 
-                      className={`text-white/50 transition-transform ${isOpen ? 'rotate-180 text-[#FF2B44]' : ''}`} 
+                    <ChevronDown
+                      size={16}
+                      className={`text-white/50 transition-transform ${isOpen ? 'rotate-180 text-[#FF2B44]' : ''}`}
                     />
                   </button>
                   {isOpen && (
@@ -361,4 +358,4 @@ export default function SClassIrresistibleOffer({
       </div>
     </section>
   );
-}
+});

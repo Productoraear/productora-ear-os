@@ -1,10 +1,15 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { useNeuralTunnelStore } from '@/store/useNeuralTunnelStore';
-import { ThermodynamicNeuralTunnel } from '@/features/bodas/ui/ThermodynamicNeuralTunnel';
-import { X, Sparkles, Sliders } from 'lucide-react';
-import Image from 'next/image';
+import { X, Sliders } from 'lucide-react';
+
+// Lazy loading del túnel termodinámico pesado: se monta solo al abrir el modal.
+const ThermodynamicNeuralTunnel = dynamic(
+  () => import('@/features/bodas/ui/ThermodynamicNeuralTunnel').then((mod) => ({ default: mod.ThermodynamicNeuralTunnel })),
+  { ssr: false, loading: () => null }
+);
 
 export type TunnelProfile = 'solista' | 'mariachi' | 'productora' | 'vimume' | 'b2b' | string;
 

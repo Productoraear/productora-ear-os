@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { 
-  Target, 
-  Truck, 
-  Activity, 
-  Sparkles, 
-  Shield, 
-  Globe, 
-  Boxes, 
+import {
+  Target,
+  Truck,
+  Activity,
+  Sparkles,
+  Shield,
+  Globe,
+  Boxes,
   ChevronRight,
   Lock,
   BarChart3,
@@ -19,7 +19,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/lib/api";
 
-export default function CommandCenter() {
+function CommandCenter() {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [activeTab, setActiveTab] = useState<'Live' | 'History' | 'Config'>('Live');
@@ -75,11 +75,11 @@ export default function CommandCenter() {
 
   const handleNavigation = (path: string) => {
     const implementedRoutes = [
-      "/ayuntamientospremium", 
-      "/admin/oraculo", 
-      "/arsenal", 
-      "/admin/flota", 
-      "/admin/vimume", 
+      "/ayuntamientospremium",
+      "/admin/oraculo",
+      "/arsenal",
+      "/admin/flota",
+      "/admin/vimume",
       "/admin/hunter"
     ];
     if (implementedRoutes.includes(path)) {
@@ -92,7 +92,7 @@ export default function CommandCenter() {
   return (
     <div className="min-h-screen bg-[#050505] text-white p-6 font-sans relative overflow-hidden">
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#d4a855]/5 blur-[150px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      
+
       <header className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6 relative z-10">
         <div className="flex items-center gap-5">
           <div className="w-14 h-14 bg-gradient-to-br from-[#d4a855] to-[#ffd471] rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(212,168,85,0.3)] hover:rotate-3 transition-all duration-300">
@@ -168,8 +168,8 @@ export default function CommandCenter() {
             </h2>
             <div className="flex gap-2">
               {(['Live', 'History', 'Config'] as const).map(t => (
-                <button 
-                  key={t} 
+                <button
+                  key={t}
                   onClick={() => setActiveTab(t)}
                   className={`text-[9px] font-black uppercase px-3 py-1.5 rounded-lg border transition-colors ${activeTab === t ? 'bg-[#d4a855] text-black border-[#d4a855]' : 'bg-white/5 border-white/10 hover:bg-white/10 text-white'}`}
                 >
@@ -178,7 +178,7 @@ export default function CommandCenter() {
               ))}
             </div>
           </div>
-          
+
           <div className="space-y-4 relative z-10">
             {activeTab === 'Live' && [1, 2, 3].map((i) => (
               <div key={i} className="flex items-center justify-between p-4 bg-black/40 border border-white/5 rounded-2xl hover:border-[#d4a855]/20 transition-all">
@@ -195,7 +195,7 @@ export default function CommandCenter() {
                 </div>
               </div>
             ))}
-            
+
             {activeTab === 'History' && (
               <div className="p-8 text-center text-white/30 uppercase text-[9px] font-black tracking-widest border border-white/5 rounded-2xl bg-black/40">
                 <CheckCircle2 className="mx-auto mb-3 text-white/10" size={24} />
@@ -288,3 +288,5 @@ export default function CommandCenter() {
     </div>
   );
 }
+
+export default React.memo(CommandCenter);

@@ -2,19 +2,19 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ShieldCheck, 
-  CheckCircle2, 
-  X, 
-  Lock, 
-  Mail, 
-  Phone, 
-  User, 
-  Building2, 
-  FileText, 
-  Sparkles, 
-  ArrowRight, 
-  Loader2, 
+import {
+  ShieldCheck,
+  CheckCircle2,
+  X,
+  Lock,
+  Mail,
+  Phone,
+  User,
+  Building2,
+  FileText,
+  Sparkles,
+  ArrowRight,
+  Loader2,
   KeyRound,
   ExternalLink,
   BadgeCheck
@@ -34,7 +34,7 @@ interface ClaimProviderModalProps {
   onClaimSuccess?: (providerId: string, token: string) => void;
 }
 
-export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = ({
+export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = React.memo(({
   isOpen,
   onClose,
   provider,
@@ -72,7 +72,7 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = ({
       const code = Math.floor(100000 + Math.random() * 900000).toString();
       const slug = provider.slug || provider.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
       const token = `claim_${slug}_${Date.now().toString(36)}`;
-      
+
       setGeneratedOtp(code);
       setClaimToken(token);
 
@@ -364,4 +364,4 @@ export const ClaimProviderModal: React.FC<ClaimProviderModalProps> = ({
       </div>
     </AnimatePresence>
   );
-};
+});

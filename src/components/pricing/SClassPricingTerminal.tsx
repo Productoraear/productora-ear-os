@@ -1,16 +1,16 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { 
-  Calculator, 
-  ShieldCheck, 
-  Sparkles, 
-  MapPin, 
-  Clock, 
-  Flame, 
-  CheckCircle2, 
-  Lock, 
-  Send, 
+import {
+  Calculator,
+  ShieldCheck,
+  Sparkles,
+  MapPin,
+  Clock,
+  Flame,
+  CheckCircle2,
+  Lock,
+  Send,
   HeartHandshake,
   Music2,
   Volume2
@@ -24,7 +24,12 @@ export function SClassPricingTerminal() {
   const [urgency, setUrgency] = useState<ServiceUrgency>('estandar');
   const [soundRider, setSoundRider] = useState<SoundRiderType>('standard');
   const [city, setCity] = useState<string>('Madrid');
-  const [showBreakdown, setShowBreakdown] = useState<boolean>(false);
+  const [eventDate, setEventDate] = useState<string>(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 14); // 2 semanas por defecto
+    return d.toISOString().split('T')[0];
+  });
+  const [bookingError, setBookingError] = useState<string | null>(null);
 
   // Cálculo en tiempo real consumiendo los motores SSOT
   const quote = useMemo(() => {
@@ -58,8 +63,33 @@ export function SClassPricingTerminal() {
     };
   }, [selectedFormat, distanceKm, urgency, soundRider, city]);
 
+  const notifyN8nLead = (channel: 'whatsapp' | 'stripe') => {
+    try {
+      fetch('https://n8n.productoraear.com/webhook/b2b-quote', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: `quote_${channel}_initiated`,
+          quoteId: quote.orderId,
+          fincaRazonSocial: `Reserva Directa Edwin Agudelo (${city})`,
+          fincaCif: 'PARTICULAR',
+          totalWithVat: quote.totalPriceEur,
+          subtotal: Math.round(quote.totalPriceEur / 1.21),
+          eventDate,
+          integrityHash: quote.priceLockHash,
+          selectedFormat,
+          distanceKm,
+          urgency,
+          soundRider
+        })
+      }).catch(() => {});
+    } catch {}
+  };
+
   const handleWhatsAppCheckout = () => {
-    const encodedMessage = encodeURIComponent(quote.whatsappConfirmationCopy);
+    notifyN8nLead('whatsapp');
+    const customCopy = `${quote.whatsappConfirmationCopy}\n📅 Fecha Prevista: ${eventDate}`;
+    const encodedMessage = encodeURIComponent(customCopy);
     window.open(`https://wa.me/34693693048?text=${encodedMessage}`, '_blank');
   };
 
@@ -67,38 +97,38 @@ export function SClassPricingTerminal() {
 
   const handleStripeDeposit = async () => {
     setIsProcessingStripe(true);
+    setBookingError(null);
+    notifyN8nLead('stripe');
+
     try {
-      const res = await fetch('/api/payments/checkout', {
+      const res = await fetch('/api/reservar/solista/deposit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: quote.depositAmountEur || 100,
-          concept: `Depósito Price-Lock 100 € - Edwin Agudelo (${quote.formatName})`,
-          metadata: {
-            serviceName: `Edwin Agudelo (${quote.formatName})`,
-            orderId: quote.orderId,
-            sha256Token: quote.priceLockHash,
-            deposit: quote.depositAmountEur || 100,
-            finalTotal: quote.totalPriceEur
-          }
+          fecha: eventDate,
+          formato: selectedFormat,
+          distanciaKm: distanceKm,
+          horaFin: urgency === 'urgencia_nocturna_24_7' ? '04:00' : '23:00',
+          totalEstimado: quote.totalPriceEur,
+          artistProfileId: 'edwin-agudelo'
         })
       });
+
       const data = await res.json();
-      if (data.url) {
+      if (res.ok && data.url) {
         window.location.href = data.url;
       } else {
-        // Fallback to GET redirect
-        window.location.href = `/api/payments/checkout?format=${selectedFormat}&ref=${quote.orderId}&hash=${quote.priceLockHash}&amount=${quote.depositAmountEur}`;
+        setBookingError(data.error || 'No se pudo iniciar el checkout de Stripe. Por favor contacta por WhatsApp.');
       }
     } catch {
-      window.location.href = `/api/payments/checkout?format=${selectedFormat}&ref=${quote.orderId}&hash=${quote.priceLockHash}&amount=${quote.depositAmountEur}`;
+      setBookingError('Error de conexión al procesar el depósito. Por favor contacta por WhatsApp.');
     } finally {
       setIsProcessingStripe(false);
     }
   };
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto rounded-[2.5rem] bg-[#050505]/95 border border-[#ecb613]/30 p-6 md:p-10 shadow-[0_0_80px_rgba(236,182,19,0.12)] backdrop-blur-2xl text-white overflow-hidden">
+    <div className="relative w-full max-w-4xl mx-auto rounded-[2.5rem] bg-[#050505]/95 border border-[#ecb613]/30 p-6 md:p-10 shadow-[0_0_80px_rgba(236,182,19,0.12)] backdrop-blur-2xl text-white overflow-hidden overflow-x-hidden min-h-screen">
       {/* Ambient Glows */}
       <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#ecb613]/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute -bottom-32 -left-32 w-80 h-80 bg-[#a855f7]/15 rounded-full blur-[100px] pointer-events-none" />
@@ -128,10 +158,10 @@ export function SClassPricingTerminal() {
 
       {/* Grid de Configuración */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         {/* Columna Izquierda: Selectores Interactivos */}
         <div className="lg:col-span-7 space-y-6">
-          
+
           {/* 1. Selector de Formato */}
           <div>
             <label className="block text-xs font-mono font-bold uppercase tracking-wider text-white/60 mb-3 flex items-center gap-2">
@@ -149,11 +179,10 @@ export function SClassPricingTerminal() {
                 <button
                   key={f.id}
                   onClick={() => setSelectedFormat(f.id)}
-                  className={`p-3 rounded-2xl border text-left transition-all duration-200 relative overflow-hidden group ${
-                    selectedFormat === f.id
+                  className={`p-3 min-h-[48px] touch-manipulation rounded-2xl border text-left transition-all duration-200 relative overflow-hidden group ${selectedFormat === f.id
                       ? 'bg-gradient-to-br from-[#ecb613]/20 to-[#09090d] border-[#ecb613] text-white shadow-[0_0_20px_rgba(236,182,19,0.2)]'
                       : 'bg-white/[0.03] border-white/10 text-white/60 hover:border-white/30 hover:text-white'
-                  }`}
+                    }`}
                 >
                   {f.badge && (
                     <span className="absolute top-1.5 right-1.5 text-[8px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-[#ecb613]/20 text-[#ecb613] border border-[#ecb613]/30">
@@ -167,30 +196,46 @@ export function SClassPricingTerminal() {
             </div>
           </div>
 
-          {/* 2. Slider de Distancia y Ubicación */}
-          <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-4">
-            <div className="flex justify-between items-center mb-2">
-              <label className="text-xs font-mono font-bold uppercase tracking-wider text-white/60 flex items-center gap-1.5">
-                <MapPin size={14} className="text-[#ecb613]" /> 2. Radio de Desplazamiento
-              </label>
-              <span className="font-mono text-xs text-[#ecb613] font-bold bg-[#ecb613]/10 px-2 py-0.5 rounded-lg border border-[#ecb613]/20">
-                {distanceKm} km ({Math.round(distanceKm * 0.35)} €)
-              </span>
+          {/* 2. Slider de Distancia y Fecha del Evento */}
+          <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-4 space-y-4">
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-xs font-mono font-bold uppercase tracking-wider text-white/60 flex items-center gap-1.5">
+                  <MapPin size={14} className="text-[#ecb613]" /> 2. Radio de Desplazamiento
+                </label>
+                <span className="font-mono text-xs text-[#ecb613] font-bold bg-[#ecb613]/10 px-2 py-0.5 rounded-lg border border-[#ecb613]/20">
+                  {distanceKm} km ({Math.round(distanceKm * 0.35)} €)
+                </span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="250"
+                step="5"
+                value={distanceKm}
+                onChange={(e) => setDistanceKm(Number(e.target.value))}
+                className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
+              />
+              <div className="flex justify-between text-[10px] font-mono text-white/30 mt-1.5">
+                <span>0 km (Centro)</span>
+                <span>50 km (Toledo/Gua)</span>
+                <span>150 km</span>
+                <span>250 km (Nacional)</span>
+              </div>
             </div>
-            <input 
-              type="range" 
-              min="0" 
-              max="250" 
-              step="5"
-              value={distanceKm}
-              onChange={(e) => setDistanceKm(Number(e.target.value))}
-              className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
-            />
-            <div className="flex justify-between text-[10px] font-mono text-white/30 mt-1.5">
-              <span>0 km (Centro)</span>
-              <span>50 km (Toledo/Gua)</span>
-              <span>150 km</span>
-              <span>250 km (Nacional)</span>
+
+            {/* Selector de Fecha para Price-Lock Anti-Colisión */}
+            <div className="pt-2 border-t border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <label className="text-xs font-mono font-bold uppercase tracking-wider text-white/60 flex items-center gap-1.5">
+                <Clock size={14} className="text-[#ecb613]" /> Fecha del Evento:
+              </label>
+              <input
+                type="date"
+                value={eventDate}
+                min={new Date().toISOString().split('T')[0]}
+                onChange={(e) => setEventDate(e.target.value)}
+                className="bg-[#09090d] border border-white/15 rounded-xl px-3 py-1.5 min-h-[40px] text-xs font-mono text-white focus:outline-none focus:border-[#ecb613]"
+              />
             </div>
           </div>
 
@@ -205,7 +250,7 @@ export function SClassPricingTerminal() {
               <select
                 value={urgency}
                 onChange={(e) => setUrgency(e.target.value as ServiceUrgency)}
-                className="bg-[#09090d] border border-white/15 rounded-xl px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-[#ecb613]"
+                className="bg-[#09090d] border border-white/15 rounded-xl px-3 py-2 min-h-[48px] text-xs font-mono text-white focus:outline-none focus:border-[#ecb613]"
               >
                 <option value="estandar">📅 Planificado (0 € extra)</option>
                 <option value="express_hoy">⚡ Serenata Express Hoy (+120 €)</option>
@@ -222,11 +267,10 @@ export function SClassPricingTerminal() {
               <button
                 type="button"
                 onClick={() => setSoundRider(soundRider === 'standard' ? 'bose_f1_elite' : 'standard')}
-                className={`px-3 py-2 rounded-xl text-xs font-mono text-left border transition-all flex items-center justify-between ${
-                  soundRider === 'bose_f1_elite'
+                className={`px-3 py-2 min-h-[48px] touch-manipulation rounded-xl text-xs font-mono text-left border transition-all flex items-center justify-between ${soundRider === 'bose_f1_elite'
                     ? 'bg-purple-950/40 border-purple-500/50 text-purple-200'
                     : 'bg-[#09090d] border-white/15 text-white/60 hover:text-white'
-                }`}
+                  }`}
               >
                 <span>{soundRider === 'bose_f1_elite' ? '🔊 Bose F1 2000W (+150€)' : '🔈 Acústico Directo (0€)'}</span>
                 {soundRider === 'bose_f1_elite' && <CheckCircle2 size={14} className="text-purple-400" />}
@@ -238,7 +282,7 @@ export function SClassPricingTerminal() {
 
         {/* Columna Derecha: Tarjeta de Liquidación y Checkout S-Class */}
         <div className="lg:col-span-5 flex flex-col justify-between bg-gradient-to-b from-[#09090d] to-black border border-white/15 rounded-3xl p-6 shadow-2xl relative">
-          
+
           <div>
             <div className="flex justify-between items-center border-b border-white/10 pb-3 mb-4">
               <span className="text-xs font-mono uppercase text-white/50">Presupuesto Certificado</span>
@@ -289,20 +333,30 @@ export function SClassPricingTerminal() {
             </div>
           </div>
 
+          {/* Mensaje de Error / Alerta de Reserva */}
+          {bookingError && (
+            <div className="mb-3 p-3 rounded-xl bg-red-950/60 border border-red-500/40 text-red-200 text-xs font-mono">
+              ⚠️ {bookingError}
+            </div>
+          )}
+
           {/* Botones de Cierre y Conversión */}
           <div className="space-y-3 pt-2">
             <button
               onClick={handleWhatsAppCheckout}
-              className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              className="w-full py-4 px-6 min-h-[48px] touch-manipulation rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-black font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all transform hover:scale-[1.02] active:scale-[0.98]"
             >
               <Send size={18} /> Bloquear por WhatsApp (menos de 10 min)
             </button>
 
             <button
               onClick={handleStripeDeposit}
-              className="w-full py-3 px-6 rounded-2xl bg-[#09090d] hover:bg-white/10 border border-[#ecb613]/50 text-[#ecb613] font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+              disabled={isProcessingStripe}
+              className={`w-full py-3 px-6 min-h-[48px] touch-manipulation rounded-2xl bg-[#09090d] hover:bg-white/10 border border-[#ecb613]/50 text-[#ecb613] font-mono font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
+                isProcessingStripe ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
             >
-              <Lock size={14} /> Pagar 100€ Depósito (Stripe Checkout)
+              <Lock size={14} /> {isProcessingStripe ? 'Conectando con Stripe...' : 'Pagar 100€ Depósito (Stripe Checkout)'}
             </button>
           </div>
 

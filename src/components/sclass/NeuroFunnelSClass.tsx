@@ -2,20 +2,20 @@
 
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, 
-  ShieldCheck, 
-  Volume2, 
-  Clock, 
-  Flame, 
-  ArrowRight, 
-  CheckCircle2, 
-  PhoneCall, 
-  Send, 
-  Lock, 
-  Building2, 
-  Heart, 
-  Activity, 
+import {
+  Sparkles,
+  ShieldCheck,
+  Volume2,
+  Clock,
+  Flame,
+  ArrowRight,
+  CheckCircle2,
+  PhoneCall,
+  Send,
+  Lock,
+  Building2,
+  Heart,
+  Activity,
   Landmark,
   Zap,
   ChevronRight,
@@ -161,7 +161,7 @@ const CATEGORIES_DATA: Record<MacroCategory, {
   },
 };
 
-export function NeuroFunnelSClass() {
+export const NeuroFunnelSClass: React.FC = React.memo(function NeuroFunnelSClass() {
   const [selectedMacro, setSelectedMacro] = useState<MacroCategory>('SOCIAL_WEDDINGS');
   const [selectedSubEvent, setSelectedSubEvent] = useState<SubEvent>(CATEGORIES_DATA.SOCIAL_WEDDINGS.subEvents[0]);
   const [daysUntilEvent, setDaysUntilEvent] = useState<number>(45);
@@ -243,21 +243,19 @@ export function NeuroFunnelSClass() {
                   setSelectedMacro(catKey);
                   setSelectedSubEvent(cat.subEvents[0]);
                 }}
-                className={`p-6 rounded-3xl text-left border transition-all duration-300 relative overflow-hidden group ${
-                  isSelected
+                className={`p-6 rounded-3xl text-left border transition-all duration-300 relative overflow-hidden group ${isSelected
                     ? 'border-[#ecb613] bg-[#09090d] shadow-xl shadow-amber-950/20 scale-[1.02]'
                     : 'border-white/10 bg-[#09090d]/60 hover:border-white/30 hover:bg-[#09090d]'
-                }`}
+                  }`}
               >
                 <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${cat.gradient} rounded-bl-full pointer-events-none`} />
 
                 <div className="space-y-4 relative z-10">
                   <div className="flex items-center justify-between">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${
-                      isSelected 
-                        ? 'bg-[#ecb613] text-black border-[#ecb613]' 
+                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${isSelected
+                        ? 'bg-[#ecb613] text-black border-[#ecb613]'
                         : 'bg-white/5 text-zinc-300 border-white/10 group-hover:text-white'
-                    }`}>
+                      }`}>
                       <Icon size={22} />
                     </div>
                     <span className="text-[9px] font-mono text-zinc-400 bg-white/5 px-2 py-0.5 rounded-full border border-white/5">
@@ -289,16 +287,14 @@ export function NeuroFunnelSClass() {
             <button
               key={sub.id}
               onClick={() => setSelectedSubEvent(sub)}
-              className={`px-4 py-2 rounded-2xl text-xs font-mono transition-all flex items-center gap-2 border ${
-                isSubSelected
+              className={`px-4 py-2 rounded-2xl text-xs font-mono transition-all flex items-center gap-2 border ${isSubSelected
                   ? 'bg-white text-black font-bold border-white shadow-md'
                   : 'bg-white/5 text-zinc-400 hover:text-white border-white/10 hover:border-white/20'
-              }`}
+                }`}
             >
               <span>{sub.name}</span>
-              <span className={`text-[9px] px-1.5 py-0.5 rounded-md ${
-                isSubSelected ? 'bg-black text-[#ecb613]' : 'bg-white/10 text-zinc-400'
-              }`}>
+              <span className={`text-[9px] px-1.5 py-0.5 rounded-md ${isSubSelected ? 'bg-black text-[#ecb613]' : 'bg-white/10 text-zinc-400'
+                }`}>
                 {sub.monthlySearches}
               </span>
             </button>
@@ -494,4 +490,4 @@ export function NeuroFunnelSClass() {
 
     </div>
   );
-}
+});

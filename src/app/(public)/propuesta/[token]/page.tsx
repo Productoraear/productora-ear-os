@@ -7,11 +7,17 @@
  */
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { obtenerPropuestaPorToken } from '@/lib/proposals/proposal-store';
 import { ProposalInteractiveClient } from '@/components/proposals/ProposalInteractiveClient';
-import { ProposalTelemetryTracker } from '@/components/proposals/ProposalTelemetryTracker';
+
+// Telemetría del lado cliente: carga diferida para no lastrar el bundle SSR.
+const ProposalTelemetryTracker = dynamic(
+  () => import('@/components/proposals/ProposalTelemetryTracker').then((mod) => ({ default: mod.ProposalTelemetryTracker })),
+  { ssr: false, loading: () => null }
+);
 
 interface PageProps {
   params: Promise<{ token: string }>;

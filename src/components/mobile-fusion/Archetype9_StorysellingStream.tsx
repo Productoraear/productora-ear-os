@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Play, Pause, Heart, Share2, MessageCircle, 
-  Volume2, ShieldCheck, ChevronUp, Sparkles, ArrowRight 
+import {
+  Play, Pause, Heart, Share2, MessageCircle,
+  Volume2, ShieldCheck, ChevronUp, Sparkles, ArrowRight
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST } from './types';
 
@@ -33,10 +33,10 @@ export default function Archetype9_StorysellingStream() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-black text-white select-none relative overflow-hidden">
-      
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-black text-white select-none relative overflow-hidden">
+
       {/* 📱 FULLSCREEN STORY CARD REEL BACKGROUND */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${format.image})` }}
       >
@@ -63,33 +63,33 @@ export default function Archetype9_StorysellingStream() {
       {/* 侧 SIDE ACTION BAR (TIKTOK / REELS STYLE) */}
       <div className="absolute right-3 bottom-28 z-20 flex flex-col items-center gap-4">
         {/* Like */}
-        <button 
+        <button
           onClick={handleLike}
           className="flex flex-col items-center gap-1 text-white"
         >
-          <div className={`w-10 h-10 rounded-full flex items-center justify-center backdrop-blur-md ${hasLiked ? 'bg-rose-500 text-white' : 'bg-black/50 border border-white/20'}`}>
+          <div className={`w-12 h-12 min-w-[48px] min-h-[48px] rounded-full flex items-center justify-center backdrop-blur-md ${hasLiked ? 'bg-rose-500 text-white' : 'bg-black/50 border border-white/20'}`}>
             <Heart size={20} className={hasLiked ? 'fill-white' : ''} />
           </div>
           <span className="text-[10px] font-mono">{likes}</span>
         </button>
 
         {/* WhatsApp Direct */}
-        <button 
+        <button
           onClick={handleContact}
           className="flex flex-col items-center gap-1 text-white"
         >
-          <div className="w-10 h-10 rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-lg">
+          <div className="w-12 h-12 min-w-[48px] min-h-[48px] rounded-full bg-emerald-500 text-black flex items-center justify-center shadow-lg">
             <MessageCircle size={20} className="fill-black" />
           </div>
           <span className="text-[10px] font-mono">Chat</span>
         </button>
 
         {/* Audio Toggle */}
-        <button 
+        <button
           onClick={() => setIsPlaying(!isPlaying)}
           className="flex flex-col items-center gap-1 text-white"
         >
-          <div className="w-10 h-10 rounded-full bg-black/50 border border-white/20 flex items-center justify-center backdrop-blur-md">
+          <div className="w-12 h-12 min-w-[48px] min-h-[48px] rounded-full bg-black/50 border border-white/20 flex items-center justify-center backdrop-blur-md">
             {isPlaying ? <Volume2 size={20} className="text-[#ecb613]" /> : <Pause size={20} />}
           </div>
         </button>
@@ -116,7 +116,7 @@ export default function Archetype9_StorysellingStream() {
         {/* Direct CTA */}
         <button
           onClick={handleContact}
-          className="w-full py-3.5 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all"
+          className="w-full py-3.5 min-h-[48px] touch-manipulation rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#ecb613]/20 active:scale-95 transition-all"
         >
           <span>Cotizar Directo con Edwin</span>
           <ArrowRight size={16} />

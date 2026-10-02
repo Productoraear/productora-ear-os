@@ -20,16 +20,16 @@ interface PremiumPacksCarouselProps {
   servicesList: string[];
 }
 
-export function PremiumPacksCarousel({ providerSlug, providerName, basePrice, servicesList }: PremiumPacksCarouselProps) {
+export const PremiumPacksCarousel: React.FC<PremiumPacksCarouselProps> = React.memo(function PremiumPacksCarousel({ providerSlug, providerName, basePrice, servicesList }) {
   const parsedBasePrice = typeof basePrice === 'string' ? parseFloat(basePrice.replace(/[^\d.-]/g, '')) || 900 : basePrice;
 
-  const realServices = Array.isArray(servicesList) && servicesList.length > 0 
+  const realServices = Array.isArray(servicesList) && servicesList.length > 0
     ? servicesList.map(s => typeof s === 'string' ? s : (s as any).name || JSON.stringify(s))
     : ['Servicio según descripción y presupuesto'];
 
   const baseFeatures = realServices.slice(0, Math.ceil(realServices.length / 2));
   const premiumFeatures = realServices;
-  
+
   const packs: PackItem[] = [
     {
       title: 'Pack Original',
@@ -77,7 +77,7 @@ export function PremiumPacksCarousel({ providerSlug, providerName, basePrice, se
         </span>
       </div>
 
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="show"
@@ -89,7 +89,7 @@ export function PremiumPacksCarousel({ providerSlug, providerName, basePrice, se
       </motion.div>
     </div>
   );
-}
+});
 
 function PackCard({ pack, providerSlug, providerName }: { pack: PackItem, providerSlug: string, providerName: string }) {
   const divRef = useRef<HTMLDivElement>(null);
@@ -123,7 +123,7 @@ function PackCard({ pack, providerSlug, providerName }: { pack: PackItem, provid
   };
 
   return (
-    <motion.div 
+    <motion.div
       variants={{
         hidden: { opacity: 0, y: 20, scale: 0.95 },
         show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 300, damping: 24 } }
@@ -135,11 +135,10 @@ function PackCard({ pack, providerSlug, providerName }: { pack: PackItem, provid
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative w-full h-full flex flex-col justify-between p-6 rounded-3xl overflow-hidden border transition-colors duration-500 ${
-        pack.isPremium 
-          ? 'bg-[#0a0a0c] border-white/10' 
+      className={`relative w-full h-full flex flex-col justify-between p-6 rounded-3xl overflow-hidden border transition-colors duration-500 ${pack.isPremium
+          ? 'bg-[#0a0a0c] border-white/10'
           : 'bg-[#050508] border-white/5'
-      }`}
+        }`}
     >
       {/* Spotlight Effect para el pack Premium */}
       {pack.isPremium && (
@@ -165,13 +164,12 @@ function PackCard({ pack, providerSlug, providerName }: { pack: PackItem, provid
         {/* Header */}
         <div className="space-y-4">
           <div className="flex justify-between items-start">
-            <span className={`text-[10px] px-3 py-1 rounded-full font-mono uppercase tracking-widest font-bold border ${
-              pack.isPremium ? 'text-[#ecb613] bg-[#ecb613]/10 border-[#ecb613]/30 shadow-[0_0_15px_rgba(236,182,19,0.2)]' : 'text-neutral-400 bg-white/5 border-white/10'
-            }`}>
+            <span className={`text-[10px] px-3 py-1 rounded-full font-mono uppercase tracking-widest font-bold border ${pack.isPremium ? 'text-[#ecb613] bg-[#ecb613]/10 border-[#ecb613]/30 shadow-[0_0_15px_rgba(236,182,19,0.2)]' : 'text-neutral-400 bg-white/5 border-white/10'
+              }`}>
               {pack.category}
             </span>
             {pack.isPremium && (
-              <motion.span 
+              <motion.span
                 animate={{ rotate: [0, 15, -15, 0] }}
                 transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                 className="p-1.5 bg-gradient-to-tr from-[#ecb613] to-amber-300 text-black rounded-lg shadow-lg"
@@ -197,8 +195,8 @@ function PackCard({ pack, providerSlug, providerName }: { pack: PackItem, provid
           {pack.features.map((feat, fIdx) => {
             const isCustom = feat.includes('🛡️') || feat.includes('⚡') || feat.includes('🔒') || feat.includes('🤝');
             return (
-              <motion.li 
-                key={fIdx} 
+              <motion.li
+                key={fIdx}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + (fIdx * 0.05) }}
@@ -217,11 +215,10 @@ function PackCard({ pack, providerSlug, providerName }: { pack: PackItem, provid
         <div className="pt-6 mt-auto">
           <Link
             href={`/checkout/presupuesto?proveedor=${encodeURIComponent(providerName || providerSlug)}&pack=${encodeURIComponent(pack.title)}&precio=${pack.price}`}
-            className={`group relative w-full py-4 rounded-2xl font-mono text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 overflow-hidden transition-all ${
-              pack.isPremium 
-                ? 'text-black shadow-[0_0_20px_rgba(236,182,19,0.3)]' 
+            className={`group relative w-full py-4 rounded-2xl font-mono text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2 overflow-hidden transition-all ${pack.isPremium
+                ? 'text-black shadow-[0_0_20px_rgba(236,182,19,0.3)]'
                 : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'
-            }`}
+              }`}
           >
             {pack.isPremium && (
               <div className="absolute inset-0 bg-gradient-to-r from-[#ecb613] via-yellow-400 to-[#ecb613] group-hover:scale-[1.05] transition-transform duration-500" />

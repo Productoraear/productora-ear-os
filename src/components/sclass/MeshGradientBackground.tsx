@@ -8,10 +8,10 @@ interface MeshGradientBackgroundProps {
   children?: React.ReactNode;
 }
 
-export function MeshGradientBackground({ 
-  intensity = 'stage', 
-  children 
-}: MeshGradientBackgroundProps) {
+export const MeshGradientBackground: React.FC<MeshGradientBackgroundProps> = React.memo(function MeshGradientBackground({
+  intensity = 'stage',
+  children
+}) {
   return (
     <div className="relative min-h-screen w-full bg-[#050505] overflow-hidden text-white">
       {/* 🔮 Dynamic Mesh Gradients (WebGL-Simulated 60FPS Ambient Lights) */}
@@ -62,7 +62,7 @@ export function MeshGradientBackground({
         />
 
         {/* High-End Film Noise Grid Layer */}
-        <div 
+        <div
           className="absolute inset-0 opacity-[0.025] mix-blend-overlay"
           style={{
             backgroundImage: `radial-gradient(#ecb613 1px, transparent 1px)`,
@@ -80,4 +80,4 @@ export function MeshGradientBackground({
       </div>
     </div>
   );
-}
+});

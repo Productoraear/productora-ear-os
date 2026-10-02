@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Sparkles, Heart, ShieldCheck, Check, 
+import {
+  Sparkles, Heart, ShieldCheck, Check,
   ArrowRight, Music, Volume2, Camera
 } from 'lucide-react';
 import { MOODBOARD_AESTHETICS, ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
@@ -31,8 +31,8 @@ export default function Archetype7_WeddingMoodboardConcierge() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-20">
-      
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-20">
+
       {/* 🎨 TOP MOODBOARD HEADER */}
       <div className="space-y-1">
         <span className="px-3 py-1 rounded-full bg-[#ecb613]/20 border border-[#ecb613]/40 text-[#ecb613] text-[9px] font-black uppercase font-mono tracking-widest">
@@ -54,13 +54,12 @@ export default function Archetype7_WeddingMoodboardConcierge() {
             <div
               key={item.id}
               onClick={() => setSelectedAestheticId(item.id)}
-              className={`h-36 rounded-2xl overflow-hidden relative border cursor-pointer transition-all ${
-                isSelected 
-                  ? 'border-[#ecb613] shadow-lg shadow-[#ecb613]/20 scale-[1.02]' 
+              className={`h-36 min-h-[48px] touch-manipulation rounded-2xl overflow-hidden relative border cursor-pointer transition-all ${isSelected
+                  ? 'border-[#ecb613] shadow-lg shadow-[#ecb613]/20 scale-[1.02]'
                   : 'border-white/10 opacity-70 hover:opacity-90'
-              }`}
+                }`}
             >
-              <div 
+              <div
                 className="absolute inset-0 bg-cover bg-center"
                 style={{ backgroundImage: `url(${item.image})` }}
               />
@@ -110,7 +109,7 @@ export default function Archetype7_WeddingMoodboardConcierge() {
       {/* 🏷️ STICKY ACTION BUTTON */}
       <button
         onClick={handleBookMoodboard}
-        className="w-full py-4 rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/25 active:scale-95 transition-all"
+        className="w-full py-4 min-h-[48px] touch-manipulation rounded-2xl bg-[#ecb613] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/25 active:scale-95 transition-all"
       >
         <span>Bloquear Atmósfera ({quote.total}€)</span>
         <ArrowRight size={16} />

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import {
     ChevronLeft,
     ChevronRight,
@@ -249,13 +250,17 @@ export default function CinematicVanguardCarousel({
                         onTouchMove={onTouchMove}
                         onTouchEnd={onTouchEnd}
                     >
-                        <img
-                            src={cleanImages[index]}
-                            alt={`${title} ampliada`}
-                            referrerPolicy="no-referrer"
-                            onError={(e) => { (e.target as HTMLImageElement).src = PLACEHOLDER; }}
-                            className="max-h-[80vh] max-w-[95vw] object-contain rounded-xl shadow-[0_0_60px_rgba(0,0,0,0.9)]"
-                        />
+                        <div className="relative h-[80vh] w-[95vw]">
+                            <Image
+                                src={cleanImages[index]}
+                                alt={`${title} ampliada`}
+                                fill
+                                unoptimized
+                                priority
+                                sizes="95vw"
+                                className="object-contain rounded-xl shadow-[0_0_60px_rgba(0,0,0,0.9)]"
+                            />
+                        </div>
                         {total > 1 && (
                             <>
                                 <button onClick={prev} className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/70 border border-zinc-700 hover:border-[#ecb613] text-[#ecb613] transition"><ChevronLeft className="w-6 h-6" /></button>

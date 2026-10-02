@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, { Component, Suspense, useRef, useState, useCallback, useEffect, type ErrorInfo, type ReactNode } from 'react';
 import { motion, useSpring, useTransform, SpringOptions } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -9,6 +9,32 @@ type SpotlightProps = {
   size?: number;
   springOptions?: SpringOptions;
 };
+
+class SpotlightErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[Spotlight] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const SpotlightFallback: React.FC = () => (
+  <div className="pointer-events-none absolute rounded-full blur-2xl z-0" />
+);
 
 export function Spotlight({
   className,
@@ -61,21 +87,25 @@ export function Spotlight({
   }, [parentElement, handleMouseMove]);
 
   return (
-    <motion.div
-      ref={containerRef}
-      className={cn(
-        'pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] blur-2xl transition-opacity duration-300 z-0',
-        'from-white/25 via-white/10 to-transparent',
-        isHovered ? 'opacity-100' : 'opacity-0',
-        className
-      )}
-      style={{
-        width: size,
-        height: size,
-        left: spotlightLeft,
-        top: spotlightTop,
-      }}
-    />
+    <SpotlightErrorBoundary fallback={<SpotlightFallback />}>
+      <Suspense fallback={<SpotlightFallback />}>
+        <motion.div
+          ref={containerRef}
+          className={cn(
+            'pointer-events-none absolute rounded-full bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops),transparent_80%)] blur-2xl transition-opacity duration-300 z-0',
+            'from-white/25 via-white/10 to-transparent',
+            isHovered ? 'opacity-100' : 'opacity-0',
+            className
+          )}
+          style={{
+            width: size,
+            height: size,
+            left: spotlightLeft,
+            top: spotlightTop,
+          }}
+        />
+      </Suspense>
+    </SpotlightErrorBoundary>
   );
 }
 

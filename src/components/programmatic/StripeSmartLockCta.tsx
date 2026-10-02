@@ -42,7 +42,7 @@ type FunnelState =
  * 3. Si P0 urgencia → pregunta de validación → bypass sin cobro.
  * 4. Si estándar → Stripe Checkout 10 € → unlock 72h.
  */
-export default function StripeSmartLockCta({
+function StripeSmartLockCta({
   vertical,
   intentSlug,
   priceBase,
@@ -316,3 +316,5 @@ export default function StripeSmartLockCta({
     </div>
   );
 }
+
+export default React.memo(StripeSmartLockCta);

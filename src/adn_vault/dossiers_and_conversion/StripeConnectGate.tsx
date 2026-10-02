@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import React, { useState, useTransition } from "react";
 import { createConnectOnboardingLink } from "@/app/actions/stripeConnectActions";
 
 interface StripeConnectGateProps {
@@ -20,7 +20,7 @@ interface StripeConnectGateProps {
  *
  * isVerified is NEVER set from this component. Only the webhook can.
  */
-export function StripeConnectGate({
+export const StripeConnectGate: React.FC<StripeConnectGateProps> = React.memo(function StripeConnectGate({
   providerId,
   userId,
   stripeConnected,
@@ -127,4 +127,4 @@ export function StripeConnectGate({
       </div>
     </div>
   );
-}
+});

@@ -154,7 +154,7 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
   };
 
   return (
-    <div className="w-full space-y-8">
+    <div className="w-full space-y-8 overflow-x-hidden">
 
       {/* 👑 CATEGORÍAS GRAND SLAM (HORMOZI) */}
       <div className="space-y-3">
@@ -240,6 +240,8 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
               step={10}
               value={guestCount}
               onChange={(e) => setGuestCount(Number(e.target.value))}
+              aria-label="Número de invitados"
+              aria-valuetext={`${guestCount} comensales`}
               className="w-full accent-[#ecb613] bg-zinc-800 h-2 rounded-lg cursor-pointer"
             />
             <div className="flex justify-between text-[10px] font-mono text-zinc-500">
@@ -261,6 +263,8 @@ export const NeuralFincaTinderMatch: React.FC<NeuralFincaTinderMatchProps> = ({ 
               step={2500}
               value={totalBudget}
               onChange={(e) => setTotalBudget(Number(e.target.value))}
+              aria-label="Presupuesto objetivo total"
+              aria-valuetext={`${totalBudget.toLocaleString('es-ES')} euros`}
               className="w-full accent-[#ecb613] bg-zinc-800 h-2 rounded-lg cursor-pointer"
             />
             <div className="flex justify-between text-[10px] font-mono text-zinc-500">

@@ -39,7 +39,7 @@ export default function MariachiRepertoireSelector({
   };
 
   return (
-    <div className="rounded-[2rem] border border-[#ecb613]/20 bg-[#030305] p-6 md:p-8 space-y-6">
+    <div className="rounded-[2rem] border border-[#ecb613]/20 bg-[#030305] p-6 md:p-8 space-y-6 overflow-x-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-6">
         <div>
           <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.3em] text-[#ecb613]">
@@ -55,10 +55,11 @@ export default function MariachiRepertoireSelector({
         </div>
 
         <div className="relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" aria-hidden="true" />
           <input
             type="text"
             placeholder="Buscar tema o compositor..."
+            aria-label="Buscar tema o compositor"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full sm:w-64 rounded-xl border border-white/10 bg-white/5 pl-9 pr-3 py-2 text-xs text-white placeholder-white/40 focus:border-[#ecb613] focus:outline-none"
@@ -72,11 +73,11 @@ export default function MariachiRepertoireSelector({
           <button
             key={cat}
             onClick={() => setFilterCategory(cat)}
-            className={`px-3 py-1.5 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-all cursor-pointer ${
-              filterCategory === cat
+            aria-pressed={filterCategory === cat}
+            className={`px-3 py-2.5 min-h-[44px] rounded-lg text-[10px] font-mono uppercase tracking-wider transition-all cursor-pointer ${filterCategory === cat
                 ? 'bg-[#ecb613] text-black font-bold shadow-lg shadow-[#ecb613]/20'
                 : 'bg-white/5 text-white/60 hover:text-white hover:bg-white/10 border border-white/5'
-            }`}
+              }`}
           >
             {cat}
           </button>
@@ -92,12 +93,20 @@ export default function MariachiRepertoireSelector({
           return (
             <div
               key={song.id}
+              role="button"
+              tabIndex={0}
+              aria-pressed={isSelected}
               onClick={() => onToggleSong(song.id)}
-              className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                isSelected
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onToggleSong(song.id);
+                }
+              }}
+              className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${isSelected
                   ? 'bg-[#ecb613]/10 border-[#ecb613]/50 text-white'
                   : 'bg-white/[0.02] border-white/5 text-white/70 hover:border-white/20 hover:bg-white/[0.04]'
-              }`}
+                }`}
             >
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
@@ -120,21 +129,19 @@ export default function MariachiRepertoireSelector({
                     handleSimulateAudio(song.id);
                   }}
                   title="Audio Preview (simulación acústica)"
-                  className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${
-                    isPlaying
+                  className={`p-1.5 rounded-lg border transition-colors cursor-pointer ${isPlaying
                       ? 'bg-rose-500 text-white border-rose-400 animate-pulse'
                       : 'bg-white/5 border-white/10 text-white/50 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Volume2 size={13} />
                 </button>
 
                 <div
-                  className={`w-6 h-6 rounded-lg flex items-center justify-center border transition-all ${
-                    isSelected
+                  className={`w-6 h-6 rounded-lg flex items-center justify-center border transition-all ${isSelected
                       ? 'bg-[#ecb613] border-[#ecb613] text-black'
                       : 'border-white/20 bg-transparent text-transparent'
-                  }`}
+                    }`}
                 >
                   <Check size={13} strokeWidth={3} />
                 </div>

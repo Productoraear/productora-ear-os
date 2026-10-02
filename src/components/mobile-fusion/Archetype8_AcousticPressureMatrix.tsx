@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Sliders, Volume2, ShieldCheck, Activity, 
+import {
+  Sliders, Volume2, ShieldCheck, Activity,
   Zap, CheckCircle2, ArrowRight, Gauge
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
@@ -34,8 +34,8 @@ export default function Archetype8_AcousticPressureMatrix() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-20">
-      
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-20">
+
       {/* 📊 ENGINEERING TELEMETRY HEADER */}
       <div className="space-y-1">
         <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 text-[9px] font-black uppercase font-mono tracking-widest">
@@ -93,12 +93,14 @@ export default function Archetype8_AcousticPressureMatrix() {
               <span className="text-[9px] text-white/40">Para jardines históricos y bienestar</span>
             </div>
           </div>
-          <input
-            type="checkbox"
-            checked={isVimumeProtected}
-            onChange={(e) => setIsVimumeProtected(e.target.checked)}
-            className="w-5 h-5 accent-emerald-400 rounded cursor-pointer"
-          />
+          <label className="flex items-center justify-center w-12 h-12 min-h-[48px] touch-manipulation cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={isVimumeProtected}
+              onChange={(e) => setIsVimumeProtected(e.target.checked)}
+              className="w-6 h-6 accent-emerald-400 rounded cursor-pointer"
+            />
+          </label>
         </div>
       </div>
 
@@ -114,11 +116,10 @@ export default function Archetype8_AcousticPressureMatrix() {
               <button
                 key={fmt.id}
                 onClick={() => setSelectedFormatId(fmt.id)}
-                className={`p-3 rounded-2xl border text-left transition-all ${
-                  isSelected 
-                    ? 'bg-[#15151c] border-[#ecb613] text-white' 
-                    : 'bg-[#0e0e12] border-white/10 text-white/60'
-                }`}
+                className={`p-3 min-h-[48px] touch-manipulation rounded-2xl border text-left transition-all ${isSelected
+                  ? 'bg-[#15151c] border-[#ecb613] text-white'
+                  : 'bg-[#0e0e12] border-white/10 text-white/60'
+                  }`}
               >
                 <span className="text-[9px] font-mono text-[#ecb613] block uppercase font-bold">{fmt.musiciansCount} Músicos</span>
                 <h4 className="text-xs font-black text-white truncate">{fmt.name}</h4>
@@ -132,7 +133,7 @@ export default function Archetype8_AcousticPressureMatrix() {
       {/* 🚀 ACTION BUTTON */}
       <button
         onClick={handleBookMatrix}
-        className="w-full py-4 rounded-2xl bg-emerald-400 hover:bg-emerald-300 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all"
+        className="w-full py-4 min-h-[48px] touch-manipulation rounded-2xl bg-emerald-400 hover:bg-emerald-300 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/20 active:scale-95 transition-all"
       >
         <span>Validar y Bloquear Ingeniería ({quote.total}€)</span>
         <ArrowRight size={16} />

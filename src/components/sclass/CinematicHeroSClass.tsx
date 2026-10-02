@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   Mic,
@@ -152,8 +153,8 @@ export default function CinematicHeroSClass() {
                 onMouseLeave={() => setHoveredId(null)}
                 onClick={() => handleCardNavigation(p.href)}
                 className={`relative rounded-3xl overflow-hidden border transition-all duration-500 flex flex-col justify-between p-5 sm:p-6 cursor-pointer group ${isHovered
-                    ? 'shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-[1.02]'
-                    : 'border-white/10 hover:border-white/20 bg-[#08090d]/90'
+                  ? 'shadow-[0_0_50px_rgba(0,0,0,0.8)] scale-[1.02]'
+                  : 'border-white/10 hover:border-white/20 bg-[#08090d]/90'
                   }`}
                 style={{
                   borderColor: isHovered ? p.accentColor : undefined,
@@ -163,14 +164,15 @@ export default function CinematicHeroSClass() {
                 }}
               >
                 {/* Fondo sutil con viñeta oscura */}
-                <img
+                <Image
                   src={p.bgImage}
                   alt=""
                   aria-hidden="true"
-                  loading="eager"
-                  decoding="async"
-                  fetchPriority={index === 0 ? "high" : "auto"}
-                  className="absolute inset-0 h-full w-full object-cover opacity-15 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none mix-blend-luminosity"
+                  fill
+                  unoptimized
+                  priority={index === 0}
+                  sizes="(max-width: 1024px) 100vw, 20vw"
+                  className="object-cover opacity-15 group-hover:opacity-25 transition-opacity duration-700 pointer-events-none mix-blend-luminosity"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-[#050507]/80 to-transparent pointer-events-none" />
 

@@ -26,8 +26,8 @@ export function SparringProvider({ children }: { children: React.ReactNode }) {
     <SparringContext.Provider value={{ triggerSparring }}>
       {children}
       {isActive && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md">
-          <div className="bg-neutral-950 border border-red-500/50 p-10 rounded-2xl max-w-2xl w-full relative overflow-hidden shadow-[0_0_50px_rgba(239,68,68,0.2)]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md overflow-y-auto overflow-x-hidden p-4">
+          <div className="bg-neutral-950 border border-red-500/50 p-6 sm:p-10 rounded-2xl max-w-2xl w-full relative overflow-y-auto max-h-[90vh] no-scrollbar shadow-[0_0_50px_rgba(239,68,68,0.2)] my-auto">
             <div
               className="absolute top-0 left-0 h-1 bg-red-500 transition-all duration-1000"
               style={{ width: `${(timeLeft / 10) * 100}%` }}
@@ -48,7 +48,7 @@ export function SparringProvider({ children }: { children: React.ReactNode }) {
               <span className="text-4xl font-mono font-bold text-red-500">{timeLeft}s</span>
               <button
                 onClick={() => setIsActive(false)}
-                className="bg-[#ecb613] text-black px-8 py-3 rounded-md font-bold uppercase hover:bg-amber-400"
+                className="bg-[#ecb613] text-black px-8 py-3 min-h-[48px] touch-manipulation rounded-md font-bold uppercase hover:bg-amber-400"
               >
                 Ejecutar Cierre
               </button>

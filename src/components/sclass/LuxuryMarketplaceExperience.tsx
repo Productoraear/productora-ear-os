@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, Flame, Music, ShieldCheck, Heart, 
+import {
+  Sparkles, Flame, Music, ShieldCheck, Heart,
   MapPin, Clock, Star, Sliders, Lock, CheckCircle2,
   ArrowRight, MessageCircle, ChevronRight, Share2,
   Tv, Award, Zap, Compass, Search, Filter, Layers
@@ -225,8 +226,8 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
   const [distanceKm, setDistanceKm] = useState(25);
   const [isLocked, setIsLocked] = useState(false);
 
-  const filteredItems = selectedCategory === 'all' 
-    ? LUXURY_CATALOG 
+  const filteredItems = selectedCategory === 'all'
+    ? LUXURY_CATALOG
     : LUXURY_CATALOG.filter(i => i.category === selectedCategory);
 
   // Dynamic Quote Calculation
@@ -240,7 +241,7 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
 
   return (
     <div className={`w-full bg-[#050505] text-white flex flex-col justify-between overflow-x-hidden font-sans select-none ${isSimulator ? 'p-3 h-full' : 'p-4 sm:p-8 min-h-screen'}`}>
-      
+
       {/* Background Ambient Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[600px] h-[300px] rounded-full blur-[140px] bg-[#ecb613]/10 pointer-events-none" />
 
@@ -272,11 +273,10 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id as any)}
-                className={`py-2 px-1 rounded-xl text-[9px] font-mono font-bold transition-all flex flex-col items-center justify-center gap-0.5 ${
-                  isSel 
-                    ? 'bg-[#ecb613] text-black shadow-md scale-[1.02]' 
+                className={`py-2 px-1 rounded-xl text-[9px] font-mono font-bold transition-all flex flex-col items-center justify-center gap-0.5 ${isSel
+                    ? 'bg-[#ecb613] text-black shadow-md scale-[1.02]'
                     : 'text-white/50 hover:text-white hover:bg-white/5'
-                }`}
+                  }`}
               >
                 <Icon size={12} />
                 <span className="truncate">{cat.label}</span>
@@ -294,11 +294,10 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
             <div
               key={item.id}
               onClick={() => setSelectedItem(item)}
-              className={`rounded-3xl border p-3.5 transition-all cursor-pointer relative overflow-hidden ${
-                isSelected 
-                  ? 'bg-gradient-to-r from-[#181824] via-[#12121a] to-[#0c0c12] border-[#ecb613] shadow-xl shadow-[#ecb613]/10 scale-[1.01]' 
+              className={`rounded-3xl border p-3.5 transition-all cursor-pointer relative overflow-hidden ${isSelected
+                  ? 'bg-gradient-to-r from-[#181824] via-[#12121a] to-[#0c0c12] border-[#ecb613] shadow-xl shadow-[#ecb613]/10 scale-[1.01]'
                   : 'bg-[#0d0d14] border-white/10 hover:border-white/20'
-              }`}
+                }`}
             >
               {/* Badge & Rating */}
               <div className="flex items-center justify-between mb-2">
@@ -315,10 +314,13 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
               {/* Card Main Info */}
               <div className="flex gap-3">
                 <div className="w-20 h-20 rounded-2xl overflow-hidden bg-black/50 shrink-0 border border-white/10 relative">
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    unoptimized
+                    sizes="80px"
+                    className="object-cover group-hover:scale-105 transition-transform"
                   />
                   <span className="absolute bottom-1 right-1 px-1 rounded bg-black/80 text-[7px] font-mono text-[#ecb613]">
                     {item.affinity}
@@ -380,11 +382,11 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
                 <span>Número de Asistentes</span>
                 <span className="text-[#ecb613] font-bold">{paxCount} PAX</span>
               </div>
-              <input 
-                type="range" 
-                min={20} 
-                max={350} 
-                value={paxCount} 
+              <input
+                type="range"
+                min={20}
+                max={350}
+                value={paxCount}
                 onChange={e => setPaxCount(Number(e.target.value))}
                 className="w-full accent-[#ecb613] h-1 bg-white/10 rounded-lg cursor-pointer"
               />
@@ -396,11 +398,11 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
               <span>Desplazamiento desde Madrid</span>
               <span className="text-[#ecb613] font-bold">{distanceKm} KM</span>
             </div>
-            <input 
-              type="range" 
-              min={0} 
-              max={250} 
-              value={distanceKm} 
+            <input
+              type="range"
+              min={0}
+              max={250}
+              value={distanceKm}
               onChange={e => setDistanceKm(Number(e.target.value))}
               className="w-full accent-[#ecb613] h-1 bg-white/10 rounded-lg cursor-pointer"
             />
@@ -423,13 +425,12 @@ export default function LuxuryMarketplaceExperience({ isSimulator = false }: { i
 
         {/* Closing Trigger: Slide-to-Lock or WhatsApp */}
         <div className="space-y-1.5 pt-1">
-          <div 
+          <div
             onClick={() => setIsLocked(!isLocked)}
-            className={`w-full py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
-              isLocked 
-                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/25' 
+            className={`w-full py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${isLocked
+                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/25'
                 : 'bg-gradient-to-r from-[#ecb613] to-[#d99f0b] text-black shadow-lg shadow-[#ecb613]/25 hover:brightness-110 active:scale-95'
-            }`}
+              }`}
           >
             <div className="flex items-center gap-1.5">
               <Lock size={14} />

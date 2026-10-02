@@ -107,7 +107,7 @@ export default function MariachiDispatchConsole() {
   };
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 overflow-x-hidden">
       {/* SECCIÓN 1: SELECCIÓN DE FORMATO */}
       <div>
         <div className="flex items-center justify-between mb-4">
@@ -190,7 +190,8 @@ export default function MariachiDispatchConsole() {
                     setSelectedDestinationIndex(i);
                     setCustomDestinationName('');
                   }}
-                  className={`p-2.5 rounded-xl text-left text-xs transition-all border cursor-pointer truncate ${selectedDestinationIndex === i && !customDestinationName
+                  aria-pressed={selectedDestinationIndex === i && !customDestinationName}
+                  className={`p-2.5 min-h-[44px] rounded-xl text-left text-xs transition-all border cursor-pointer truncate ${selectedDestinationIndex === i && !customDestinationName
                     ? 'bg-[#00E5FF]/10 border-[#00E5FF] text-white font-bold'
                     : 'bg-white/5 border-white/5 text-white/60 hover:text-white hover:bg-white/10'
                     }`}
@@ -265,6 +266,8 @@ export default function MariachiDispatchConsole() {
               step={1}
               value={endHour}
               onChange={(e) => setEndHour(Number(e.target.value))}
+              aria-label="Hora estimada de finalización"
+              aria-valuetext={`${endHour.toString().padStart(2, '0')}:00`}
               className="w-full accent-[#ecb613]"
             />
             <div className="flex justify-between text-[10px] text-white/30 font-mono">
@@ -379,17 +382,17 @@ export default function MariachiDispatchConsole() {
             <button
               onClick={handleStripeDeposit}
               disabled={isProcessingStripe}
-              className="w-full py-4 rounded-2xl bg-[#ecb613] hover:bg-amber-300 text-black font-black font-syne uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-[#ecb613]/20 cursor-pointer disabled:opacity-50"
+              className="w-full min-h-[48px] py-4 rounded-2xl bg-[#ecb613] hover:bg-amber-300 text-black font-black font-syne uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-[#ecb613]/20 cursor-pointer disabled:opacity-50"
             >
-              <CreditCard size={18} />
+              <CreditCard size={18} aria-hidden="true" />
               <span>{isProcessingStripe ? 'Conectando Stripe...' : 'Bloquear Fecha con Fianza de 100 €'}</span>
             </button>
 
             <button
               onClick={handleDirectWhatsApp}
-              className="w-full py-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold font-syne uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+              className="w-full min-h-[48px] py-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold font-syne uppercase tracking-wider text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
-              <MessageCircle size={16} />
+              <MessageCircle size={16} aria-hidden="true" />
               <span>Hablar con Edwin Agudelo por WhatsApp</span>
             </button>
 

@@ -1,15 +1,13 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import Image from 'next/image';
 import {
   ChevronLeft,
   ChevronRight,
   Maximize2,
-  Minimize2,
   X,
-  Sparkles,
-  Camera,
-  Layers
+  Sparkles
 } from 'lucide-react';
 
 interface SovereignCarouselProps {
@@ -20,7 +18,7 @@ interface SovereignCarouselProps {
   autoPlayInterval?: number; // en ms, 0 para desactivar
 }
 
-export default function SovereignCarouselSClass({
+export default React.memo(function SovereignCarouselSClass({
   images = [],
   title = 'Galería S-Class',
   className = '',
@@ -117,9 +115,8 @@ export default function SovereignCarouselSClass({
                 className="h-1 flex-1 rounded-full bg-white/20 overflow-hidden backdrop-blur-sm"
               >
                 <div
-                  className={`h-full bg-amber-400 transition-all duration-300 ${
-                    idx === currentIndex ? 'w-full shadow-[0_0_8px_#ecb613]' : idx < currentIndex ? 'w-full opacity-60' : 'w-0'
-                  }`}
+                  className={`h-full bg-amber-400 transition-all duration-300 ${idx === currentIndex ? 'w-full shadow-[0_0_8px_#ecb613]' : idx < currentIndex ? 'w-full opacity-60' : 'w-0'
+                    }`}
                 />
               </div>
             ))}
@@ -134,15 +131,14 @@ export default function SovereignCarouselSClass({
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          <img
+          <Image
             src={cleanImages[currentIndex]}
             alt={`${title} - Foto ${currentIndex + 1}`}
-            referrerPolicy="no-referrer"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop";
-            }}
-            className="w-full h-full object-cover transition-all duration-700 ease-out select-none group-hover:scale-[1.02]"
-            loading="lazy"
+            fill
+            unoptimized
+            priority
+            sizes="(max-width: 768px) 100vw, 80vw"
+            className="object-cover transition-all duration-700 ease-out select-none group-hover:scale-[1.02]"
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#030305] via-transparent to-transparent opacity-80 pointer-events-none" />
@@ -202,20 +198,18 @@ export default function SovereignCarouselSClass({
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`relative w-16 h-12 rounded-lg overflow-hidden shrink-0 border transition-all duration-200 ${
-                  idx === currentIndex
-                    ? 'border-amber-400 ring-2 ring-amber-500/30 scale-105 opacity-100'
-                    : 'border-white/10 opacity-50 hover:opacity-80'
-                }`}
+                className={`relative w-16 h-12 rounded-lg overflow-hidden shrink-0 border transition-all duration-200 ${idx === currentIndex
+                  ? 'border-amber-400 ring-2 ring-amber-500/30 scale-105 opacity-100'
+                  : 'border-white/10 opacity-50 hover:opacity-80'
+                  }`}
               >
-                <img
+                <Image
                   src={img}
                   alt={`Miniatura ${idx + 1}`}
-                  referrerPolicy="no-referrer"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=300&auto=format&fit=crop";
-                  }}
-                  className="w-full h-full object-cover"
+                  fill
+                  unoptimized
+                  sizes="64px"
+                  className="object-cover"
                 />
               </button>
             ))}
@@ -257,15 +251,17 @@ export default function SovereignCarouselSClass({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            <img
-              src={cleanImages[currentIndex]}
-              alt={`${title} - Ampliada`}
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200&auto=format&fit=crop";
-              }}
-              className="max-h-[82vh] max-w-[95vw] object-contain rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.9)]"
-            />
+            <div className="relative h-[82vh] w-[95vw]">
+              <Image
+                src={cleanImages[currentIndex]}
+                alt={`${title} - Ampliada`}
+                fill
+                unoptimized
+                priority
+                sizes="95vw"
+                className="object-contain rounded-xl shadow-[0_0_50px_rgba(0,0,0,0.9)]"
+              />
+            </div>
 
             {total > 1 && (
               <>
@@ -295,13 +291,12 @@ export default function SovereignCarouselSClass({
                 <button
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`w-14 h-10 rounded-lg overflow-hidden shrink-0 border transition ${
-                    idx === currentIndex
-                      ? 'border-amber-400 ring-2 ring-amber-500/50 scale-105'
-                      : 'border-zinc-800 opacity-40 hover:opacity-80'
-                  }`}
+                  className={`w-14 h-10 rounded-lg overflow-hidden shrink-0 border transition ${idx === currentIndex
+                    ? 'border-amber-400 ring-2 ring-amber-500/50 scale-105'
+                    : 'border-zinc-800 opacity-40 hover:opacity-80'
+                    }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <Image src={img} alt="" fill unoptimized sizes="56px" className="object-cover" />
                 </button>
               ))}
             </div>
@@ -310,4 +305,4 @@ export default function SovereignCarouselSClass({
       )}
     </>
   );
-}
+});

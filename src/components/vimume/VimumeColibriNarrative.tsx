@@ -1,15 +1,45 @@
 'use client';
 
-import React from 'react';
+import React, { Component, Suspense, type ErrorInfo, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Heart, Shield, Compass, Feather, Quote } from 'lucide-react';
 import { VIMUME_CLINICAL_SSOT } from '@/lib/constants/vimume-clinical-ssot';
+
+class ColibriErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeColibriNarrative] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const ColibriFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 md:p-10 text-center text-sm text-white/70">
+    Narrativa del Colibrí VIMUME temporalmente no disponible.
+  </div>
+);
 
 export function VimumeColibriNarrative() {
   const { LEGACY_COLIBRI } = VIMUME_CLINICAL_SSOT;
 
   return (
-    <section className="relative rounded-[2.5rem] bg-gradient-to-b from-[#090810] via-[#050508] to-black border border-white/10 p-6 sm:p-12 overflow-hidden shadow-[0_0_90px_rgba(139,92,246,0.08)]">
+    <ColibriErrorBoundary fallback={<ColibriFallback />}>
+      <Suspense fallback={<ColibriFallback />}>
+        <section className="relative rounded-[2.5rem] bg-gradient-to-b from-[#090810] via-[#050508] to-black border border-white/10 p-6 sm:p-12 overflow-hidden shadow-[0_0_90px_rgba(139,92,246,0.08)]">
       {/* GLOW ATMOSFÉRICO */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-[#8b5cf6]/10 rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-[#ecb613]/10 rounded-full blur-[140px] pointer-events-none" />
@@ -152,6 +182,8 @@ export function VimumeColibriNarrative() {
         </div>
 
       </div>
-    </section>
+        </section>
+      </Suspense>
+    </ColibriErrorBoundary>
   );
 }

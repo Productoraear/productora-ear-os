@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
-import { 
-  Heart, X, Sparkles, Volume2, ShieldCheck, 
-  ChevronRight, ArrowRight, Share2, Info, Check, 
+import {
+  Heart, X, Sparkles, Volume2, ShieldCheck,
+  ChevronRight, ArrowRight, Share2, Info, Check,
   Music, MapPin, Zap, Star
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
@@ -45,8 +45,8 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-hidden">
-      
+    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-hidden overflow-x-hidden">
+
       {/* 🧭 TOP BRAND & MATCH PILL */}
       <div className="flex items-center justify-between mb-3 z-10">
         <div className="flex items-center gap-2">
@@ -90,7 +90,7 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
             className="absolute inset-0 rounded-[2rem] overflow-hidden border border-white/15 bg-gradient-to-b from-[#16161c] to-[#0a0a0d] shadow-2xl flex flex-col justify-end p-5 cursor-grab active:cursor-grabbing"
           >
             {/* Background Image with Cinematic Overlay */}
-            <div 
+            <div
               className="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105"
               style={{ backgroundImage: `url(${currentFormat.image})` }}
             />
@@ -98,13 +98,13 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent" />
 
             {/* Stamp Overlays during Swipe */}
-            <motion.div 
+            <motion.div
               style={{ opacity: opacityLike }}
               className="absolute top-8 right-6 rotate-12 border-2 border-emerald-400 bg-emerald-500/20 backdrop-blur-md text-emerald-400 font-black text-sm uppercase px-4 py-1.5 rounded-xl tracking-widest shadow-lg pointer-events-none"
             >
               ¡ME ENCANTA! 🔥
             </motion.div>
-            <motion.div 
+            <motion.div
               style={{ opacity: opacityNope }}
               className="absolute top-8 left-6 -rotate-12 border-2 border-rose-500 bg-rose-500/20 backdrop-blur-md text-rose-400 font-black text-sm uppercase px-4 py-1.5 rounded-xl tracking-widest shadow-lg pointer-events-none"
             >
@@ -113,7 +113,7 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
 
             {/* Live Audio Waveform Simulation Bar */}
             <div className="relative z-10 mb-3 bg-black/50 backdrop-blur-xl border border-white/10 p-2.5 rounded-2xl flex items-center justify-between">
-              <button 
+              <button
                 onClick={(e) => { e.stopPropagation(); setIsPlayingAudio(!isPlayingAudio); }}
                 className="flex items-center gap-2 text-xs font-bold text-white hover:text-[#ecb613] transition-colors"
               >
@@ -198,7 +198,8 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
         {/* Pass Button */}
         <button
           onClick={() => handleSwipe('left')}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#121216] border border-white/10 hover:border-rose-500/50 text-white/70 hover:text-rose-400 active:scale-95 transition-all shadow-lg"
+          aria-label="Descartar formato"
+          className="flex flex-col items-center justify-center p-3 min-h-[48px] rounded-2xl bg-[#121216] border border-white/10 hover:border-rose-500/50 text-white/70 hover:text-rose-400 active:scale-95 transition-all shadow-lg"
           title="Descartar"
         >
           <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center">
@@ -210,7 +211,8 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
         {/* Super Like / Match */}
         <button
           onClick={() => handleSwipe('right')}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-gradient-to-b from-[#ecb613]/20 to-[#121216] border border-[#ecb613]/50 text-[#ecb613] active:scale-95 transition-all shadow-lg shadow-[#ecb613]/10"
+          aria-label="Marcar formato como favorito"
+          className="flex flex-col items-center justify-center p-3 min-h-[48px] rounded-2xl bg-gradient-to-b from-[#ecb613]/20 to-[#121216] border border-[#ecb613]/50 text-[#ecb613] active:scale-95 transition-all shadow-lg shadow-[#ecb613]/10"
           title="Super-Like"
         >
           <div className="w-9 h-9 rounded-full bg-[#ecb613] text-black flex items-center justify-center">
@@ -222,7 +224,8 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
         {/* Info Dossier */}
         <button
           onClick={() => setShowDetailModal(true)}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#121216] border border-white/10 hover:border-blue-500/50 text-white/70 hover:text-blue-400 active:scale-95 transition-all shadow-lg"
+          aria-label="Ver rider técnico del formato"
+          className="flex flex-col items-center justify-center p-3 min-h-[48px] rounded-2xl bg-[#121216] border border-white/10 hover:border-blue-500/50 text-white/70 hover:text-blue-400 active:scale-95 transition-all shadow-lg"
         >
           <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center">
             <Info size={18} />
@@ -233,7 +236,8 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
         {/* Direct Stripe / WhatsApp Lock */}
         <button
           onClick={handleWhatsApp}
-          className="flex flex-col items-center justify-center p-3 rounded-2xl bg-[#ecb613] text-black active:scale-95 transition-all shadow-lg shadow-[#ecb613]/30 font-black"
+          aria-label="Bloquear fecha con Edwin"
+          className="flex flex-col items-center justify-center p-3 min-h-[48px] rounded-2xl bg-[#ecb613] text-black active:scale-95 transition-all shadow-lg shadow-[#ecb613]/30 font-black"
         >
           <div className="w-9 h-9 rounded-full bg-black text-[#ecb613] flex items-center justify-center">
             <Zap size={18} className="fill-[#ecb613]" />
@@ -257,7 +261,7 @@ export default function Archetype1_TinderDeck({ onBook }: { onBook?: (formatId: 
                   <span className="text-[9px] font-mono text-[#ecb613] uppercase">Especificaciones de Concierto</span>
                   <h4 className="text-lg font-black text-white uppercase">{currentFormat.name}</h4>
                 </div>
-                <button 
+                <button
                   onClick={() => setShowDetailModal(false)}
                   className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white"
                 >

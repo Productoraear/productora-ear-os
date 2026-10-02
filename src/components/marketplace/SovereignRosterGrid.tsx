@@ -422,7 +422,7 @@ export default function SovereignRosterGrid() {
   };
 
   return (
-    <section id="roster" style={{ background: "#050505", color: "#ffffff" }} className="px-6 py-16 sm:px-10">
+    <section id="roster" style={{ background: "#050505", color: "#ffffff" }} className="px-6 py-16 sm:px-10 overflow-x-hidden">
       <style>{GLOBAL_CSS}</style>
 
       <div className="mx-auto max-w-7xl">
@@ -448,12 +448,13 @@ export default function SovereignRosterGrid() {
                 key={filter.id}
                 type="button"
                 onClick={() => setCategory(filter.id)}
+                aria-pressed={category === filter.id}
                 style={{
                   background: category === filter.id ? "#ecb613" : "transparent",
                   color: category === filter.id ? "#050505" : "rgba(255,255,255,0.7)",
                   border: `1px solid ${category === filter.id ? "#ecb613" : "rgba(255,255,255,0.18)"}`,
                 }}
-                className="rounded-full px-4 py-2 text-xs font-semibold tracking-wide transition-colors"
+                className="rounded-full px-4 py-2 min-h-[44px] text-xs font-semibold tracking-wide transition-colors"
               >
                 {filter.label}
               </button>
@@ -516,7 +517,7 @@ export default function SovereignRosterGrid() {
               type="button"
               onClick={resetFilters}
               style={{ background: "#ecb613", color: "#050505" }}
-              className="mt-4 rounded-xl px-5 py-2 text-sm font-bold"
+              className="mt-4 rounded-xl px-5 py-2 min-h-[44px] text-sm font-bold"
             >
               Restablecer filtros
             </button>

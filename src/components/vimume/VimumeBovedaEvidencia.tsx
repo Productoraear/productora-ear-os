@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Component, Suspense, useState, type ErrorInfo, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import {
   Activity,
@@ -24,11 +24,41 @@ import { VIMUME_CLINICAL_SSOT } from '@/lib/constants/vimume-clinical-ssot';
 import { VimumeAcousticEngine } from '@/components/vimume/VimumeAcousticEngine';
 import { ClinicalMetricsChart } from '@/components/vimume/ClinicalMetricsChart';
 
+class VimumeBovedaErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeBovedaEvidencia] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const VimumeBovedaFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 md:p-10 text-center text-sm text-white/70">
+    Bóveda de Evidencia Clínica VIMUME temporalmente no disponible.
+  </div>
+);
+
 export function VimumeBovedaEvidencia() {
   const [selectedMetric, setSelectedMetric] = useState<number>(0);
 
   return (
-    <div className="space-y-12" data-observe-concierge id="seccion-evidencia" data-proactive-zone="evidencia">
+    <VimumeBovedaErrorBoundary fallback={<VimumeBovedaFallback />}>
+      <Suspense fallback={<VimumeBovedaFallback />}>
+        <div className="space-y-12" data-observe-concierge id="seccion-evidencia" data-proactive-zone="evidencia">
 
       {/* CABECERA BENTO */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
@@ -192,6 +222,8 @@ export function VimumeBovedaEvidencia() {
 
       </div>
 
-    </div>
+        </div>
+      </Suspense>
+    </VimumeBovedaErrorBoundary>
   );
 }

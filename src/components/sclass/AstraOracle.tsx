@@ -1,23 +1,23 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, 
-  Brain, 
-  Cpu, 
-  Copy, 
-  Check, 
-  X, 
-  Search, 
-  Layers, 
-  ChevronUp, 
-  ChevronDown, 
-  Flame, 
-  Zap, 
-  Phone, 
-  ShieldCheck, 
+import {
+  Sparkles,
+  Brain,
+  Cpu,
+  Copy,
+  Check,
+  X,
+  Search,
+  Layers,
+  ChevronUp,
+  ChevronDown,
+  Flame,
+  Zap,
+  Phone,
+  ShieldCheck,
   Radio,
   BookOpen,
   CheckCircle2
@@ -101,7 +101,7 @@ const TACTICAL_PLAYBOOKS: TacticalPlaybook[] = [
   }
 ];
 
-export const AstraOracle: React.FC = () => {
+export const AstraOracle: React.FC = React.memo(function AstraOracle() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
@@ -148,7 +148,7 @@ export const AstraOracle: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 font-sans select-none">
-      
+
       {/* 🔮 FLOATING PILL TRIGGER */}
       {!isOpen && (
         <motion.button
@@ -327,6 +327,6 @@ export const AstraOracle: React.FC = () => {
 
     </div>
   );
-};
+});
 
 export default AstraOracle;

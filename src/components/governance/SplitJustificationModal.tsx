@@ -57,30 +57,33 @@ export default function SplitJustificationModal({
         onClick={() => setOpen(true)}
         className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-mono font-bold text-xs uppercase tracking-wider transition-colors ${className}`}
       >
-        <Scale className="w-4 h-4" />
+        <Scale className="w-4 h-4" aria-hidden="true" />
         {triggerLabel}
       </button>
 
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+          <div role="presentation" className="fixed inset-0 z-[80] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-x-hidden">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="split-justification-title"
               className="relative w-full max-w-3xl bg-[#030305] border border-[#ecb613]/30 rounded-3xl p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto text-white shadow-[0_0_80px_rgba(236,182,19,0.18)]"
             >
               {/* Header */}
               <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
                 <div className="flex items-center gap-3">
                   <div className="p-3 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30">
-                    <ShieldCheck className="w-6 h-6 text-[#ecb613]" />
+                    <ShieldCheck className="w-6 h-6 text-[#ecb613]" aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-[10px] font-mono uppercase tracking-widest text-[#ecb613] font-bold">
                       Gobernanza · Ley 49/2002 · Modelo 182 AEAT
                     </p>
-                    <h3 className="text-xl font-black font-syne tracking-tight">
+                    <h3 id="split-justification-title" className="text-xl font-black font-syne tracking-tight">
                       Justificación del Split Soberano 80/10/10
                     </h3>
                   </div>
@@ -88,10 +91,10 @@ export default function SplitJustificationModal({
                 <button
                   type="button"
                   onClick={() => setOpen(false)}
-                  className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
+                  className="min-w-[48px] min-h-[48px] rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors"
                   aria-label="Cerrar"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
 
@@ -131,6 +134,8 @@ export default function SplitJustificationModal({
                     step={1}
                     value={managerPct}
                     onChange={(e) => setManagerPct(Number(e.target.value))}
+                    aria-label="Comisión de mánager tradicional"
+                    aria-valuetext={`${managerPct}%`}
                     className="w-full accent-[#ecb613]"
                   />
                 </div>
@@ -167,7 +172,7 @@ export default function SplitJustificationModal({
               {/* Comparativa parasitaria */}
               <div className="rounded-2xl bg-black/50 border border-[#ecb613]/20 p-4 space-y-2">
                 <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#ecb613]">
-                  <TrendingUp className="w-4 h-4" />
+                  <TrendingUp className="w-4 h-4" aria-hidden="true" />
                   Ventaja soberana frente al mánager tradicional
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -186,7 +191,7 @@ export default function SplitJustificationModal({
               {/* Retorno fiscal */}
               <div className="rounded-2xl bg-[#00E5FF]/5 border border-[#00E5FF]/25 p-4 space-y-2">
                 <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#00E5FF]">
-                  <Calculator className="w-4 h-4" />
+                  <Calculator className="w-4 h-4" aria-hidden="true" />
                   Deducción fiscal del 10% VIMUME
                 </div>
                 <div className="grid grid-cols-2 gap-3 text-xs font-mono">
@@ -200,7 +205,7 @@ export default function SplitJustificationModal({
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono">
-                  <Sparkles className="w-4 h-4 text-[#00E5FF]" />
+                  <Sparkles className="w-4 h-4 text-[#00E5FF]" aria-hidden="true" />
                   <span className="text-zinc-300">SROI generado:</span>
                   <strong className="text-[#00E5FF]">{eur(report.fiscal.sroiGenerado)}</strong>
                 </div>
@@ -209,7 +214,7 @@ export default function SplitJustificationModal({
               {/* Impacto clínico */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-xs font-mono font-bold text-white">
-                  <HeartPulse className="w-4 h-4 text-[#ecb613]" />
+                  <HeartPulse className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
                   Impacto social contrastado
                 </div>
                 {report.impactoSocial.map((metric) => (
@@ -229,7 +234,7 @@ export default function SplitJustificationModal({
               {/* Argumentos jurídicos */}
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-xs font-mono font-bold text-white">
-                  <FileBadge className="w-4 h-4 text-[#ecb613]" />
+                  <FileBadge className="w-4 h-4 text-[#ecb613]" aria-hidden="true" />
                   Blindaje jurídico europeo
                 </div>
                 <ul className="space-y-1.5">

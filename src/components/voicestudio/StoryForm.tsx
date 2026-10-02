@@ -1,8 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {
+  Component,
+  Suspense,
+  useState,
+  type ErrorInfo,
+  type ReactNode,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Sparkles, HeartHandshake, CheckCircle2 } from "lucide-react";
+
+class StoryFormErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[StoryForm] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const StoryFormFallback: React.FC = () => (
+  <div className="w-full max-w-3xl mx-auto p-8 rounded-2xl border border-[#1A1A24] bg-[#09090F] text-center text-xs text-white/70">
+    Formulario de historia temporalmente no disponible.
+  </div>
+);
 
 export interface StoryPayload {
   protagonists: string;
@@ -69,7 +103,7 @@ const STEPS: StepDefinition[] = [
   },
 ];
 
-export default function StoryForm({ onSubmit }: StoryFormProps) {
+function StoryFormContent({ onSubmit }: StoryFormProps) {
   const [stepIndex, setStepIndex] = useState(0);
   const [direction, setDirection] = useState<1 | -1>(1);
   const [form, setForm] = useState<StoryPayload>({
@@ -277,3 +311,13 @@ export default function StoryForm({ onSubmit }: StoryFormProps) {
     </div>
   );
 }
+
+export default function StoryForm(props: StoryFormProps) {
+  return (
+    <StoryFormErrorBoundary fallback={<StoryFormFallback />}>
+      <Suspense fallback={<StoryFormFallback />}>
+        <StoryFormContent {...props} />
+      </Suspense>
+    </StoryFormErrorBoundary>
+  );
+}

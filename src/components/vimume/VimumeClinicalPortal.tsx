@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Component, Suspense, useState, type ErrorInfo, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Brain,
@@ -35,6 +35,34 @@ import { AIConciergeProactive } from '@/components/neural/AIConciergeProactive';
 
 type VimumeTabId = 'evidencia' | 'mecenazgo' | 'colibri' | 'sonometria' | 'ontologia' | 'b2g_concertacion';
 
+class VimumePortalErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeClinicalPortal] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const VimumePortalFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 md:p-10 text-center text-sm text-white/70">
+    Portal Clínico VIMUME temporalmente no disponible.
+  </div>
+);
+
 const TABS: { id: VimumeTabId; label: string; icon: any }[] = [
   { id: 'evidencia', label: 'Bóveda de Evidencia (40Hz)', icon: Brain },
   { id: 'mecenazgo', label: 'Calculadora Fiscal (80%)', icon: Calculator },
@@ -48,7 +76,9 @@ export function VimumeClinicalPortal() {
   const [activeTab, setActiveTab] = useState<VimumeTabId>('evidencia');
 
   return (
-    <div className="w-full space-y-12 relative">
+    <VimumePortalErrorBoundary fallback={<VimumePortalFallback />}>
+      <Suspense fallback={<VimumePortalFallback />}>
+        <div className="w-full space-y-12 relative">
 
       {/* 🌌 HERO SECTION ARISTOCRÁTICO TRUE BLACK */}
       <section className="relative rounded-[2.5rem] bg-[#050508] border border-white/10 p-6 sm:p-12 overflow-hidden shadow-[0_0_90px_rgba(139,92,246,0.1)]">
@@ -402,6 +432,8 @@ export function VimumeClinicalPortal() {
       {/* 🔮 ORÁCULO PREDICTIVO CON HEURÍSTICA DE CURSOR */}
       <AIConciergeProactive onSelectTab={(tabId) => setActiveTab(tabId as VimumeTabId)} />
 
-    </div>
+        </div>
+      </Suspense>
+    </VimumePortalErrorBoundary>
   );
 }

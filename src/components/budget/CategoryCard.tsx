@@ -26,8 +26,18 @@ export default function CategoryCard({ category, onAddExpense, onEditCategory, o
         : 'border-white/10 hover:border-[#ecb613]/40'
       }`}>
       <div
-        className="p-5 cursor-pointer hover:bg-white/[0.02] transition-colors"
+        role="button"
+        tabIndex={0}
+        aria-expanded={isExpanded}
+        aria-label={`${category.name}: ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(category.finalCost)} de ${category.estimatedCost > 0 ? new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(category.estimatedCost) : 'Sin estimar'}. Pulsa para expandir detalles.`}
+        className="p-5 cursor-pointer hover:bg-white/[0.02] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 rounded-2xl"
         onClick={() => setIsExpanded(!isExpanded)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsExpanded(!isExpanded);
+          }
+        }}
       >
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-3">
@@ -58,17 +68,19 @@ export default function CategoryCard({ category, onAddExpense, onEditCategory, o
           <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
             <button
               onClick={() => onAddExpense(category.id)}
+              aria-label={`Añadir gasto a la categoría ${category.name}`}
               className="p-2 bg-[#ecb613] hover:bg-[#d9a60e] text-black rounded-lg font-bold transition-transform hover:scale-105 shadow-md shadow-[#ecb613]/10"
               title="Añadir Gasto"
             >
-              <Plus size={15} />
+              <Plus size={15} aria-hidden="true" />
             </button>
             <button
               onClick={() => onEditCategory(category)}
+              aria-label={`Editar estimación de ${category.name}`}
               className="p-2 text-white/50 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
               title="Editar Estimación"
             >
-              <Edit2 size={14} />
+              <Edit2 size={14} aria-hidden="true" />
             </button>
             <button
               onClick={() => {
@@ -76,10 +88,11 @@ export default function CategoryCard({ category, onAddExpense, onEditCategory, o
                   onDeleteCategory(category.id);
                 }
               }}
+              aria-label={`Eliminar categoría ${category.name}`}
               className="p-2 text-red-400/60 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
               title="Eliminar Categoría"
             >
-              <Trash2 size={14} />
+              <Trash2 size={14} aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -96,7 +109,14 @@ export default function CategoryCard({ category, onAddExpense, onEditCategory, o
                 : `${category.expenses?.length || 0} gastos`}
             </span>
           </div>
-          <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
+          <div
+            role="progressbar"
+            aria-valuenow={Math.round(Math.min(percentage, 100))}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label={`Porcentaje utilizado de ${category.name}`}
+            className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5"
+          >
             <div
               className={`h-full rounded-full transition-all duration-500 ${isOverBudget
                 ? 'bg-[#FF2B44] shadow-[0_0_8px_rgba(255,43,68,0.5)]'

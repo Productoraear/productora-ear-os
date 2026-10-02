@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import { 
-  Users, DollarSign, ShieldCheck, Zap, Globe, 
+import {
+  Users, DollarSign, ShieldCheck, Zap, Globe,
   CheckCircle2, ArrowRight, Phone, MessageSquare, Send
 } from 'lucide-react';
 
@@ -34,7 +34,7 @@ export default function MariachiJoinNetwork() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto space-y-12">
+    <div className="max-w-5xl mx-auto space-y-12 min-h-screen overflow-x-hidden">
       {/* Hero Header */}
       <div className="text-center space-y-4">
         <div className="inline-flex items-center gap-2 px-5 py-2 bg-[#ecb613]/10 border border-[#ecb613]/30 rounded-full text-[#ecb613] text-[10px] font-mono uppercase tracking-[0.3em]">
@@ -54,7 +54,7 @@ export default function MariachiJoinNetwork() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono">
         <div className="p-6 rounded-3xl bg-[#050508] border border-white/10 space-y-3">
           <div className="p-3 w-fit rounded-2xl bg-[#ecb613]/10 text-[#ecb613]">
-            <DollarSign size={24} />
+            <DollarSign size={24} aria-hidden="true" />
           </div>
           <h3 className="text-base font-bold text-white font-syne">Split Soberano 80%</h3>
           <p className="text-xs text-white/50 leading-relaxed">
@@ -64,7 +64,7 @@ export default function MariachiJoinNetwork() {
 
         <div className="p-6 rounded-3xl bg-[#050508] border border-white/10 space-y-3">
           <div className="p-3 w-fit rounded-2xl bg-[#00E5FF]/10 text-[#00E5FF]">
-            <Zap size={24} />
+            <Zap size={24} aria-hidden="true" />
           </div>
           <h3 className="text-base font-bold text-white font-syne">Despacho Uber Cercano</h3>
           <p className="text-xs text-white/50 leading-relaxed">
@@ -74,7 +74,7 @@ export default function MariachiJoinNetwork() {
 
         <div className="p-6 rounded-3xl bg-[#050508] border border-white/10 space-y-3">
           <div className="p-3 w-fit rounded-2xl bg-emerald-500/10 text-emerald-400">
-            <ShieldCheck size={24} />
+            <ShieldCheck size={24} aria-hidden="true" />
           </div>
           <h3 className="text-base font-bold text-white font-syne">Cero Cancelaciones Fantasma</h3>
           <p className="text-xs text-white/50 leading-relaxed">
@@ -170,9 +170,9 @@ export default function MariachiJoinNetwork() {
 
               <button
                 type="submit"
-                className="w-full mt-4 py-4 rounded-2xl bg-[#ecb613] hover:bg-amber-300 text-black font-black font-syne uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-[#ecb613]/20 cursor-pointer"
+                className="w-full mt-4 py-4 min-h-[48px] rounded-2xl bg-[#ecb613] hover:bg-amber-300 text-black font-black font-syne uppercase tracking-wider text-sm flex items-center justify-center gap-2 transition-all shadow-xl shadow-[#ecb613]/20 cursor-pointer"
               >
-                <Send size={16} />
+                <Send size={16} aria-hidden="true" />
                 <span>Enviar Solicitud y Hablar con la Centralita</span>
               </button>
 

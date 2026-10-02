@@ -1,7 +1,8 @@
 'use client';
+import React from 'react';
 import { MessageCircle } from 'lucide-react';
 
-export function FloatingWhatsAppCta() {
+export const FloatingWhatsAppCta: React.FC = React.memo(function FloatingWhatsAppCta() {
   const whatsappNumber = "34693693048";
   const defaultMessage = "Hola, me gustaría recibir información sobre los servicios de Productora EAR.";
 
@@ -20,4 +21,4 @@ export function FloatingWhatsAppCta() {
       </span>
     </a>
   );
-}
+});

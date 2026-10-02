@@ -2,20 +2,20 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { 
-  Sparkles, 
-  MessageSquare, 
-  X, 
-  Send, 
-  MapPin, 
-  Star, 
-  CheckCircle2, 
-  ArrowRight, 
-  ShieldCheck, 
-  Phone, 
-  Music, 
-  Zap, 
-  Building2, 
+import {
+  Sparkles,
+  MessageSquare,
+  X,
+  Send,
+  MapPin,
+  Star,
+  CheckCircle2,
+  ArrowRight,
+  ShieldCheck,
+  Phone,
+  Music,
+  Zap,
+  Building2,
   Loader2,
   Minimize2,
   Maximize2
@@ -76,7 +76,7 @@ export function AIConciergeDock() {
           },
         ]);
       }
-    } catch {}
+    } catch { }
   }, []);
 
   // Guardar en LocalStorage al actualizar
@@ -84,7 +84,7 @@ export function AIConciergeDock() {
     if (messages.length > 0) {
       try {
         localStorage.setItem('ear_concierge_history', JSON.stringify(messages.slice(-15)));
-      } catch {}
+      } catch { }
     }
   }, [messages]);
 
@@ -158,7 +158,7 @@ export function AIConciergeDock() {
       {!isOpen && (
         <div className="hidden md:flex fixed bottom-6 right-6 z-50 items-center gap-3">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0c0c14]/90 border border-[#ecb613]/30 text-[11px] font-mono text-[#ecb613] shadow-2xl backdrop-blur-md animate-pulse">
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
             <span>AI Concierge Territorial</span>
           </div>
 
@@ -167,8 +167,8 @@ export function AIConciergeDock() {
             className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#ecb613] via-amber-400 to-amber-200 text-black font-bold flex items-center justify-center shadow-2xl shadow-[#ecb613]/30 hover:scale-105 transition-all group relative border-2 border-black"
             aria-label="Abrir Asistente Conversacional"
           >
-            <MessageSquare className="w-6 h-6 text-black group-hover:rotate-12 transition-transform" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-black"></span>
+            <MessageSquare className="w-6 h-6 text-black group-hover:rotate-12 transition-transform" aria-hidden="true" />
+            <span aria-hidden="true" className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-black"></span>
           </button>
         </div>
       )}
@@ -176,17 +176,19 @@ export function AIConciergeDock() {
       {/* Modal / Panel Conversacional Slide-over */}
       {isOpen && (
         <div
-          className={`fixed z-50 transition-all duration-300 ${
-            isExpanded
-              ? 'inset-4 md:inset-10'
-              : 'bottom-4 right-4 w-[calc(100vw-2rem)] sm:w-[460px] h-[640px] max-h-[88vh]'
-          } rounded-[2rem] bg-[#09090f]/95 border border-[#ecb613]/30 shadow-2xl backdrop-blur-2xl flex flex-col overflow-hidden`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Asistente Concierge de Productora EAR"
+          className={`fixed z-50 transition-all duration-300 ${isExpanded
+            ? 'inset-4 md:inset-10'
+            : 'bottom-4 right-4 w-[calc(100vw-2rem)] sm:w-[460px] h-[640px] max-h-[88vh]'
+            } rounded-[2rem] bg-[#09090f]/95 border border-[#ecb613]/30 shadow-2xl backdrop-blur-2xl flex flex-col overflow-hidden`}
         >
           {/* Header del Concierge */}
           <div className="px-6 py-4 bg-gradient-to-r from-[#12121e] to-[#0a0a10] border-b border-white/10 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613]">
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
                 <h3 className="text-sm font-bold text-white font-syne flex items-center gap-1.5">
@@ -204,36 +206,36 @@ export function AIConciergeDock() {
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
+                aria-label={isExpanded ? 'Minimizar panel del concierge' : 'Expandir panel del concierge'}
                 className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors hidden sm:block"
                 title={isExpanded ? 'Minimizar' : 'Expandir'}
               >
-                {isExpanded ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                {isExpanded ? <Minimize2 className="w-4 h-4" aria-hidden="true" /> : <Maximize2 className="w-4 h-4" aria-hidden="true" />}
               </button>
               <button
                 onClick={() => setIsOpen(false)}
+                aria-label="Cerrar panel del concierge"
                 className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-colors"
                 title="Cerrar"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
           </div>
 
           {/* Stream de Mensajes */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 font-sans text-xs">
+          <div role="log" aria-live="polite" aria-label="Historial de mensajes del concierge" className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 font-sans text-xs">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex flex-col ${
-                  msg.sender === 'user' ? 'items-end' : 'items-start'
-                } space-y-2`}
+                className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'
+                  } space-y-2`}
               >
                 <div
-                  className={`max-w-[88%] p-4 rounded-2xl ${
-                    msg.sender === 'user'
-                      ? 'bg-[#ecb613] text-black font-semibold rounded-tr-none'
-                      : 'bg-[#12121c] text-zinc-200 border border-white/10 rounded-tl-none space-y-2'
-                  }`}
+                  className={`max-w-[88%] p-4 rounded-2xl ${msg.sender === 'user'
+                    ? 'bg-[#ecb613] text-black font-semibold rounded-tr-none'
+                    : 'bg-[#12121c] text-zinc-200 border border-white/10 rounded-tl-none space-y-2'
+                    }`}
                 >
                   <p className="leading-relaxed whitespace-pre-wrap">{msg.text}</p>
 
@@ -255,7 +257,7 @@ export function AIConciergeDock() {
                               </h4>
                             </div>
                             <div className="flex items-center gap-1 text-[#ecb613] text-[10px] font-mono">
-                              <Star className="w-2.5 h-2.5 fill-current" />
+                              <Star className="w-2.5 h-2.5 fill-current" aria-hidden="true" />
                               <span>{prov.rating ?? 4.9}</span>
                             </div>
                           </div>
@@ -263,7 +265,7 @@ export function AIConciergeDock() {
                           <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[10px] font-mono">
                             {prov.telephone ? (
                               <span className="text-emerald-400 flex items-center gap-1">
-                                <CheckCircle2 className="w-3 h-3" /> Tel. Verificado
+                                <CheckCircle2 className="w-3 h-3" aria-hidden="true" /> Tel. Verificado
                               </span>
                             ) : (
                               <span className="text-zinc-500">Hold & Ping Activo</span>
@@ -274,7 +276,7 @@ export function AIConciergeDock() {
                               className="py-1 px-2.5 rounded-md bg-[#ecb613] text-black font-bold uppercase tracking-wider flex items-center gap-1 hover:bg-amber-400 transition-all"
                             >
                               <span>Bloquear 100 €</span>
-                              <ArrowRight className="w-2.5 h-2.5" />
+                              <ArrowRight className="w-2.5 h-2.5" aria-hidden="true" />
                             </Link>
                           </div>
                         </div>
@@ -286,7 +288,7 @@ export function AIConciergeDock() {
                   {msg.rosterRecommendation && (
                     <div className="p-3 rounded-xl bg-gradient-to-br from-[#1a1505] to-[#0d0b03] border border-[#ecb613]/40 space-y-1.5 mt-2">
                       <span className="text-[9px] font-mono text-[#ecb613] font-bold uppercase tracking-wider flex items-center gap-1">
-                        <Zap className="w-3 h-3 text-[#ecb613]" /> Venta Cruzada Oficial
+                        <Zap className="w-3 h-3 text-[#ecb613]" aria-hidden="true" /> Venta Cruzada Oficial
                       </span>
                       <p className="text-[11px] font-bold text-white">
                         {msg.rosterRecommendation.artist}
@@ -298,15 +300,14 @@ export function AIConciergeDock() {
                         href="/artistas/edwin-agudelo"
                         className="inline-flex items-center gap-1 text-[10px] font-mono text-[#ecb613] hover:underline pt-1"
                       >
-                        Ver Dossier y Repertorio Lírico <ArrowRight className="w-2.5 h-2.5" />
+                        Ver Dossier y Repertorio Lírico <ArrowRight className="w-2.5 h-2.5" aria-hidden="true" />
                       </Link>
                     </div>
                   )}
 
                   <span
-                    className={`text-[9px] font-mono block ${
-                      msg.sender === 'user' ? 'text-black/60 text-right' : 'text-zinc-500'
-                    }`}
+                    className={`text-[9px] font-mono block ${msg.sender === 'user' ? 'text-black/60 text-right' : 'text-zinc-500'
+                      }`}
                   >
                     {msg.timestamp}
                   </span>
@@ -331,7 +332,7 @@ export function AIConciergeDock() {
 
             {isLoading && (
               <div className="flex items-center gap-2 p-3.5 rounded-2xl bg-[#12121c] border border-white/10 text-zinc-400 w-fit text-xs">
-                <Loader2 className="w-4 h-4 animate-spin text-[#ecb613]" />
+                <Loader2 className="w-4 h-4 animate-spin text-[#ecb613]" aria-hidden="true" />
                 <span>Consultando índice territorial y disponibilidad...</span>
               </div>
             )}
@@ -353,6 +354,7 @@ export function AIConciergeDock() {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Escribe: 'Finca para 180 pax en Toledo'..."
+                aria-label="Escribe tu solicitud de evento"
                 className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-zinc-500 text-xs focus:outline-none focus:border-[#ecb613] transition-colors"
                 disabled={isLoading}
               />
@@ -362,7 +364,7 @@ export function AIConciergeDock() {
                 className="p-3 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold disabled:opacity-30 disabled:cursor-not-allowed transition-all"
                 aria-label="Enviar Mensaje"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4" aria-hidden="true" />
               </button>
             </form>
             <div className="mt-2 flex items-center justify-between text-[9px] font-mono text-zinc-500 px-1">

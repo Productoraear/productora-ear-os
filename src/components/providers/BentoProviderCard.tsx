@@ -2,13 +2,14 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { 
-  Star, 
-  MapPin, 
-  ShieldCheck, 
-  PhoneCall, 
-  Video, 
-  Camera, 
+import Image from 'next/image';
+import {
+  Star,
+  MapPin,
+  ShieldCheck,
+  PhoneCall,
+  Video,
+  Camera,
   ArrowUpRight,
   Lock,
   Sparkles
@@ -136,7 +137,7 @@ function isValidImage(url?: string): boolean {
   );
 }
 
-export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
+export const BentoProviderCard: React.FC<BentoProviderCardProps> = React.memo(({
   provider,
   onSelect,
   onClaim
@@ -155,8 +156,8 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
   const provinceDisplay = provider.province && provider.province !== 'None' ? provider.province.toUpperCase() : 'ESPAÑA';
   const categoryDisplay = provider.category ? provider.category.toUpperCase() : 'EVENTOS';
 
-  const reservationUrl = provider.customUrl 
-    ? provider.customUrl 
+  const reservationUrl = provider.customUrl
+    ? provider.customUrl
     : `/checkout/presupuesto?format=Solista&base=350&venue=${encodeURIComponent(provider.name)}`;
 
   const whatsappMessage = encodeURIComponent(
@@ -164,7 +165,7 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
   );
 
   return (
-    <article 
+    <article
       onClick={() => onSelect(provider)}
       className="group relative bg-[#050505] border border-[#1a1a1a] hover:border-[#258DCD] rounded-2xl overflow-hidden transition-all duration-300 flex flex-col justify-between cursor-pointer hover:-translate-y-0.5"
     >
@@ -172,10 +173,12 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
           1. MEDIA HEADER CON ASPECT-RATIO CONTROLADO (ZERO CLS)
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0a0a0f]">
-        <img
+        <Image
           src={currentImg}
           alt={provider.name}
-          loading="lazy"
+          fill
+          unoptimized
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           onError={() => {
             if (provider.gallery && provider.gallery.length > 1) {
               const currentIdx = provider.gallery.findIndex(g => g === currentImg);
@@ -197,11 +200,10 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
 
         {/* Badge de Categoría / Homologación Superior Izquierda */}
         <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-          <span className={`px-2.5 py-1 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider backdrop-blur-md border ${
-            provider.isPreferred 
-              ? 'bg-[#258DCD]/20 text-[#AAD6CD] border-[#258DCD]/50' 
+          <span className={`px-2.5 py-1 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider backdrop-blur-md border ${provider.isPreferred
+              ? 'bg-[#258DCD]/20 text-[#AAD6CD] border-[#258DCD]/50'
               : 'bg-black/80 text-neutral-300 border-white/10'
-          }`}>
+            }`}>
             {provider.badge || categoryDisplay}
           </span>
         </div>
@@ -311,4 +313,4 @@ export const BentoProviderCard: React.FC<BentoProviderCardProps> = ({
       </div>
     </article>
   );
-};
+});

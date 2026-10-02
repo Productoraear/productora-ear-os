@@ -193,12 +193,12 @@ export default function NeuralGraph({
     const primaryChildren = MASTER_TAXONOMY.children || [];
 
     primaryChildren.forEach((pChild, idx) => {
-      const coord = DIAMOND_COORDS[pChild.role] || { 
-        x: Math.cos((idx / primaryChildren.length) * Math.PI * 2) * 270, 
+      const coord = DIAMOND_COORDS[pChild.role] || {
+        x: Math.cos((idx / primaryChildren.length) * Math.PI * 2) * 270,
         y: Math.sin((idx / primaryChildren.length) * Math.PI * 2) * 270,
         fanBaseAngle: (idx / primaryChildren.length) * Math.PI * 2
       };
-      
+
       const px = coord.x;
       const py = coord.y;
       const orbitDist = Math.sqrt(px * px + py * py);
@@ -251,8 +251,8 @@ export default function NeuralGraph({
 
       secChildren.forEach((sChild, sIdx) => {
         const fanBase = coord.fanBaseAngle;
-        const sAngleOffset = secCount === 1 
-          ? 0 
+        const sAngleOffset = secCount === 1
+          ? 0
           : -secFanSpread / 2 + (sIdx / (secCount - 1)) * secFanSpread;
         const sAngle = fanBase + sAngleOffset;
         const sx = px + Math.cos(sAngle) * secBaseDist;
@@ -302,8 +302,8 @@ export default function NeuralGraph({
         const leafDist = 120;
 
         leafChildren.forEach((lChild, lIdx) => {
-          const lAngleOffset = leafCount === 1 
-            ? 0 
+          const lAngleOffset = leafCount === 1
+            ? 0
             : -leafSpread / 2 + (lIdx / (leafCount - 1)) * leafSpread;
           const lAngle = sAngle + lAngleOffset;
           const lx = sx + Math.cos(lAngle) * leafDist;
@@ -437,7 +437,7 @@ export default function NeuralGraph({
             n.orbitAngle += n.orbitSpeed;
             const targetAnchorX = parent.x + Math.cos(n.orbitAngle) * n.orbitRadius;
             const targetAnchorY = parent.y + Math.sin(n.orbitAngle) * n.orbitRadius;
-            
+
             const ax = (targetAnchorX - n.x) * 0.008;
             const ay = (targetAnchorY - n.y) * 0.008;
             n.vx += ax;
@@ -482,7 +482,7 @@ export default function NeuralGraph({
           const dy = b.y - a.y;
           const distSq = dx * dx + dy * dy;
           const minDist = (a.radius + b.radius) * 2.2;
-          
+
           if (distSq < minDist * minDist && distSq > 0) {
             const dist = Math.sqrt(distSq);
             const repForce = ((minDist - dist) / dist) * 0.08;
@@ -718,7 +718,7 @@ export default function NeuralGraph({
         const glow = ctx.createRadialGradient(n.renderX, n.renderY, n.radius * 0.4, n.renderX, n.renderY, glowRadius);
         glow.addColorStop(0, n.glowColor);
         glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        
+
         ctx.fillStyle = glow;
         ctx.beginPath();
         ctx.arc(n.renderX, n.renderY, glowRadius, 0, Math.PI * 2);
@@ -960,7 +960,7 @@ export default function NeuralGraph({
     if (!canvas) return;
     try {
       canvas.releasePointerCapture(e.pointerId);
-    } catch {}
+    } catch { }
 
     const pointer = pointerRef.current;
     if (!pointer.hasMoved) {
@@ -1013,7 +1013,7 @@ export default function NeuralGraph({
   };
 
   return (
-    <div className={`relative w-full h-full overflow-hidden select-none ${className}`}>
+    <div className={`relative w-full min-h-screen overflow-x-hidden overflow-hidden select-none ${className}`}>
       <canvas
         ref={canvasRef}
         className="w-full h-full block touch-none cursor-grab active:cursor-grabbing"

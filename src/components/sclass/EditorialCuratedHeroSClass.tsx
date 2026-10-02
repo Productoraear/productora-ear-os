@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Heart, Zap, Building2, ShieldCheck, ArrowRight, 
-  Sparkles, Award, ChevronRight, Music, Users, 
+import {
+  Heart, Zap, Building2, ShieldCheck, ArrowRight,
+  Sparkles, Award, ChevronRight, Music, Users,
   Layers, Sliders, Volume2, Star, CheckCircle2,
   Phone, MessageCircle, Play, Pause, Radio, Bell, ArrowUpRight,
   Compass, LayoutGrid
@@ -145,7 +146,7 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
   const [activeProfileId, setActiveProfileId] = useState<'unio' | 'arsenal' | 'signal' | 'vimume'>('unio');
   const [likedItems, setLikedItems] = useState<Record<string, boolean>>({});
   const [isPlayingAudio, setIsPlayingAudio] = useState<string | null>(null);
-  
+
   // Mobile View Switcher
   const [mobileViewTab, setMobileViewTab] = useState<'editorial' | 'bento'>('editorial');
 
@@ -159,7 +160,7 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
           setActiveProfileId(parsed.activeDefaultProfile);
         }
       }
-    } catch (e) {}
+    } catch (e) { }
   }, []);
 
   const activeCategory = PROFILE_CATEGORIES.find(c => c.id === activeProfileId) || PROFILE_CATEGORIES[0];
@@ -180,9 +181,9 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
   if (isSimulator) {
     return (
       <div className="w-full h-full min-h-full bg-[#050505] text-white flex flex-col justify-between p-3.5 overflow-x-hidden overflow-y-auto no-scrollbar relative select-none">
-        
+
         {/* Dynamic Glow */}
-        <div 
+        <div
           className="absolute -top-10 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full blur-[90px] opacity-25 pointer-events-none transition-colors duration-700"
           style={{ backgroundColor: activeCategory.color }}
         />
@@ -192,11 +193,10 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
           <div className="grid grid-cols-2 bg-[#121218] p-1 rounded-2xl border border-white/15 shadow-lg">
             <button
               onClick={() => setMobileViewTab('editorial')}
-              className={`py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold transition-all flex items-center justify-center gap-1 ${
-                mobileViewTab === 'editorial' 
-                  ? 'bg-[#ecb613] text-black shadow-md' 
+              className={`py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold transition-all flex items-center justify-center gap-1 ${mobileViewTab === 'editorial'
+                  ? 'bg-[#ecb613] text-black shadow-md'
                   : 'text-white/60 hover:text-white'
-              }`}
+                }`}
             >
               <Compass size={12} />
               <span>1. Portada Editorial</span>
@@ -204,11 +204,10 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
 
             <button
               onClick={() => setMobileViewTab('bento')}
-              className={`py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold transition-all flex items-center justify-center gap-1 ${
-                mobileViewTab === 'bento' 
-                  ? 'bg-[#ecb613] text-black shadow-md' 
+              className={`py-1.5 px-2 rounded-xl text-[10px] font-mono font-bold transition-all flex items-center justify-center gap-1 ${mobileViewTab === 'bento'
+                  ? 'bg-[#ecb613] text-black shadow-md'
                   : 'text-white/60 hover:text-white'
-              }`}
+                }`}
             >
               <LayoutGrid size={12} />
               <span>2. Catálogo Bento</span>
@@ -298,11 +297,10 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
                     <button
                       key={cat.id}
                       onClick={() => setActiveProfileId(cat.id as any)}
-                      className={`py-1.5 px-1 rounded-xl border flex flex-col items-center justify-center gap-0.5 transition-all ${
-                        isSelected 
-                          ? 'bg-white text-black font-black border-white shadow-md scale-[1.02]' 
+                      className={`py-1.5 px-1 rounded-xl border flex flex-col items-center justify-center gap-0.5 transition-all ${isSelected
+                          ? 'bg-white text-black font-black border-white shadow-md scale-[1.02]'
                           : 'bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/10'
-                      }`}
+                        }`}
                     >
                       <IconComp size={13} className={isSelected ? 'text-black' : 'text-white/70'} />
                       <span className="text-[8px] uppercase tracking-wider font-mono font-bold truncate max-w-full">
@@ -327,10 +325,13 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
                   >
                     {/* Thumbnail */}
                     <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/40 shrink-0">
-                      <img 
-                        src={item.image} 
+                      <Image
+                        src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover"
+                        fill
+                        unoptimized
+                        sizes="64px"
+                        className="object-cover"
                       />
                       <button
                         onClick={(e) => toggleAudio(item.id, e)}
@@ -401,9 +402,9 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
   // =========================================================================
   return (
     <div className="relative w-full max-w-full overflow-x-hidden bg-[#050505] text-white flex flex-col items-center justify-center p-3 sm:p-6 lg:p-8">
-      
+
       {/* Dynamic Glow */}
-      <div 
+      <div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[600px] lg:w-[900px] h-[350px] rounded-full blur-[100px] sm:blur-[140px] opacity-25 pointer-events-none transition-colors duration-1000"
         style={{ backgroundColor: activeCategory.color }}
       />
@@ -414,11 +415,10 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
         <div className="grid grid-cols-2 bg-[#121218] p-1 rounded-2xl border border-white/15 shadow-xl">
           <button
             onClick={() => setMobileViewTab('editorial')}
-            className={`py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
-              mobileViewTab === 'editorial' 
-                ? 'bg-[#ecb613] text-black shadow-md' 
+            className={`py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${mobileViewTab === 'editorial'
+                ? 'bg-[#ecb613] text-black shadow-md'
                 : 'text-white/60 hover:text-white'
-            }`}
+              }`}
           >
             <Compass size={14} />
             <span>Portada Editorial</span>
@@ -426,11 +426,10 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
 
           <button
             onClick={() => setMobileViewTab('bento')}
-            className={`py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${
-              mobileViewTab === 'bento' 
-                ? 'bg-[#ecb613] text-black shadow-md' 
+            className={`py-2 px-3 rounded-xl text-xs font-mono font-bold transition-all flex items-center justify-center gap-1.5 ${mobileViewTab === 'bento'
+                ? 'bg-[#ecb613] text-black shadow-md'
                 : 'text-white/60 hover:text-white'
-            }`}
+              }`}
           >
             <LayoutGrid size={14} />
             <span>Catálogo Bento</span>
@@ -440,14 +439,13 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
 
       {/* Main Luxury Frame */}
       <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 items-stretch">
-        
+
         {/* LEFT COLUMN: EDITORIAL MAGAZINE COVER */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`w-full lg:col-span-6 relative rounded-3xl sm:rounded-[2.5rem] p-4 sm:p-8 lg:p-10 bg-gradient-to-b from-[#141418]/95 via-[#0c0c10]/98 to-[#060608] border border-white/15 shadow-2xl backdrop-blur-2xl overflow-hidden flex flex-col justify-between min-h-[440px] sm:min-h-[520px] ${
-            mobileViewTab === 'editorial' ? 'flex' : 'hidden lg:flex'
-          }`}
+          className={`w-full lg:col-span-6 relative rounded-3xl sm:rounded-[2.5rem] p-4 sm:p-8 lg:p-10 bg-gradient-to-b from-[#141418]/95 via-[#0c0c10]/98 to-[#060608] border border-white/15 shadow-2xl backdrop-blur-2xl overflow-hidden flex flex-col justify-between min-h-[440px] sm:min-h-[520px] ${mobileViewTab === 'editorial' ? 'flex' : 'hidden lg:flex'
+            }`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -511,12 +509,11 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
         </motion.div>
 
         {/* RIGHT COLUMN: BENTO INTERACTIVE SUITE */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`w-full lg:col-span-6 relative rounded-3xl sm:rounded-[2.5rem] p-3.5 sm:p-6 lg:p-8 bg-[#0a0a0f] border border-white/15 shadow-2xl overflow-hidden flex flex-col justify-between min-h-[440px] sm:min-h-[520px] ${
-            mobileViewTab === 'bento' ? 'flex' : 'hidden lg:flex'
-          }`}
+          className={`w-full lg:col-span-6 relative rounded-3xl sm:rounded-[2.5rem] p-3.5 sm:p-6 lg:p-8 bg-[#0a0a0f] border border-white/15 shadow-2xl overflow-hidden flex flex-col justify-between min-h-[440px] sm:min-h-[520px] ${mobileViewTab === 'bento' ? 'flex' : 'hidden lg:flex'
+            }`}
         >
           <div className="space-y-3">
             <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
@@ -550,11 +547,10 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
                   <button
                     key={cat.id}
                     onClick={() => setActiveProfileId(cat.id as any)}
-                    className={`py-2 px-1.5 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${
-                      isSelected 
-                        ? 'bg-white text-black font-black border-white shadow-lg scale-[1.02]' 
+                    className={`py-2 px-1.5 rounded-xl border flex flex-col items-center justify-center gap-1 transition-all ${isSelected
+                        ? 'bg-white text-black font-black border-white shadow-lg scale-[1.02]'
                         : 'bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/10 hover:text-white'
-                    }`}
+                      }`}
                   >
                     <IconComp size={15} className={isSelected ? 'text-black' : 'text-white/70'} />
                     <span className="text-[8px] sm:text-[9px] uppercase tracking-wider font-mono font-bold truncate max-w-full">
@@ -593,19 +589,21 @@ export default function EditorialCuratedHeroSClass({ isSimulator = false }: Edit
                       </span>
                       <button
                         onClick={(e) => toggleLike(item.id, e)}
-                        className={`w-6 h-6 rounded-full flex items-center justify-center transition-all shrink-0 ${
-                          isLiked ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40' : 'bg-white/5 text-white/40 hover:text-white'
-                        }`}
+                        className={`w-6 h-6 rounded-full flex items-center justify-center transition-all shrink-0 ${isLiked ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40' : 'bg-white/5 text-white/40 hover:text-white'
+                          }`}
                       >
                         <Heart size={11} className={isLiked ? 'fill-rose-400' : ''} />
                       </button>
                     </div>
 
                     <div className="relative h-20 rounded-xl overflow-hidden mb-2 bg-black/40">
-                      <img 
-                        src={item.image} 
+                      <Image
+                        src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85 group-hover:opacity-100"
+                        fill
+                        unoptimized
+                        sizes="(max-width: 640px) 100vw, 300px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-85 group-hover:opacity-100"
                       />
                       <button
                         onClick={(e) => toggleAudio(item.id, e)}

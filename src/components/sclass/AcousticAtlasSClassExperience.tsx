@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Compass, MapPin, Calendar, Heart, ShieldCheck, 
-  Sparkles, Award, Music, Building2, Zap, ArrowRight, 
+import {
+  Compass, MapPin, Calendar, Heart, ShieldCheck,
+  Sparkles, Award, Music, Building2, Zap, ArrowRight,
   CheckCircle2, Volume2, Globe, Clock, ChevronRight,
   Share2, Lock, Play, Pause, ArrowUpRight, BarChart3, Users
 } from 'lucide-react';
@@ -101,7 +102,7 @@ export default function AcousticAtlasSClassExperience({ isSimulator = false }: {
 
   return (
     <div className={`w-full bg-[#050505] text-white flex flex-col justify-between overflow-x-hidden ${isSimulator ? 'p-3.5 h-full' : 'p-4 sm:p-8 min-h-[90vh]'}`}>
-      
+
       {/* Dynamic Ambient Background */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[700px] h-[350px] rounded-full blur-[130px] bg-[#ecb613]/15 pointer-events-none" />
 
@@ -120,11 +121,10 @@ export default function AcousticAtlasSClassExperience({ isSimulator = false }: {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`py-2 px-1.5 rounded-xl text-[10px] font-mono font-bold transition-all flex flex-col items-center justify-center gap-0.5 ${
-                  isSelected 
-                    ? 'bg-[#ecb613] text-black shadow-md scale-[1.02]' 
+                className={`py-2 px-1.5 rounded-xl text-[10px] font-mono font-bold transition-all flex flex-col items-center justify-center gap-0.5 ${isSelected
+                    ? 'bg-[#ecb613] text-black shadow-md scale-[1.02]'
                     : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
+                  }`}
               >
                 <Icon size={13} />
                 <span className="truncate max-w-full">{tab.label}</span>
@@ -178,7 +178,7 @@ export default function AcousticAtlasSClassExperience({ isSimulator = false }: {
             {/* Map Visual Graphic */}
             <div className="relative h-32 rounded-2xl bg-black/60 border border-white/10 overflow-hidden flex items-center justify-center p-3">
               <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#ecb613_1px,transparent_1px)] [background-size:16px_16px]" />
-              
+
               {/* Highlight Points */}
               <div className="relative z-10 w-full flex items-center justify-around text-center">
                 <div className="space-y-0.5">
@@ -335,9 +335,12 @@ export default function AcousticAtlasSClassExperience({ isSimulator = false }: {
                   </div>
 
                   <div className="h-20 rounded-xl overflow-hidden mb-2 bg-black/40 relative">
-                    <img 
-                      src={v.image} 
+                    <Image
+                      src={v.image}
                       alt={v.name}
+                      fill
+                      unoptimized
+                      sizes="(max-width: 640px) 50vw, 200px"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                     />
                     <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/80 text-[8px] font-mono text-[#ecb613]">
@@ -421,13 +424,12 @@ export default function AcousticAtlasSClassExperience({ isSimulator = false }: {
 
           {/* Slide-to-Lock CTA */}
           <div className="space-y-2">
-            <div 
+            <div
               onClick={() => setLocked(!locked)}
-              className={`w-full py-4 px-5 rounded-full font-black text-xs uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
-                locked 
-                  ? 'bg-emerald-500 text-black shadow-xl shadow-emerald-500/30' 
+              className={`w-full py-4 px-5 rounded-full font-black text-xs uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${locked
+                  ? 'bg-emerald-500 text-black shadow-xl shadow-emerald-500/30'
                   : 'bg-gradient-to-r from-[#ecb613] to-[#d99f0b] text-black shadow-xl shadow-[#ecb613]/25 hover:brightness-110 active:scale-95'
-              }`}
+                }`}
             >
               <div className="flex items-center gap-2">
                 <Lock size={16} />

@@ -7,18 +7,22 @@
 - Cada componente UI debe sentirse "Premium" y "High-End", con micro-animaciones, estados hover expansivos, accesibilidad perfecta y diseño OLED. Nada de componentes estáticos aburridos.
 - Cada endpoint de API debe estar blindado contra vulnerabilidades, tipado con precisión de cirujano y optimizado para máxima velocidad de respuesta.
 
-## 1. MODELO Y CAPACIDAD EXPANDIDA (DEEPSEEK 100K CONTEXT)
-- **VENTANA DE CONTEXTO**: 100.000 tokens. Tienes capacidad de sobra para leer múltiples motores simultáneamente y ejecutar sin parar.
-- **PROHIBIDO DETENERSE ENTRE TAREAS**: Ejecutas en bucle ininterrumpido. Al completar y validar una tarea con `complete <ID>`, inmediatamente ejecutas `node .antigravity/omega.js next` y continuas con la siguiente sin pedir permiso ni ceder el turno al usuario.
-- **CONDICIÓN DE PARADA**: ÚNICAMENTE te detendrás cuando `omega.js next` imprima: `🏁 WAVE COMPLETADA AL 100%`.
+## 1. PACTO SAGRADO ANTI-SOBRECOSTES (ZTM - PURGA OBLIGATORIA DE CONTEXTO)
+- **TOLERANCIA CERO A LA INFLACIÓN DE TOKENS**: Prohibido encadenar tareas en una sola sesión de chat de Cline. Al acumular contexto (archivos pesados, diffs y logs pasados), el coste por mensaje se multiplica de forma catastrófica, llegando a facturar cientos de miles de tokens por turno.
+- **PARADA INMUTABLE TRAS CADA TAREA**:
+  1. Ejecutas `node .antigravity/omega.js next`.
+  2. Implementas el código y ejecutas `node .antigravity/omega.js complete <ID>`.
+  3. Tras validar Exit Code 0, **TE DETIENES INMEDIATAMENTE**.
+  4. Cedes el turno al CEO con este mensaje: *"Tarea <ID> completada y sellada con Exit Code 0. Detención preventiva por Pacto Anti-Sobrecostes. Clic en 'Start New Task' (+) en Cline para liberar contexto a 0 tokens y continuar."*
+  5. PROHIBIDO ejecutar `omega.js next` en la misma conversación.
 
-## 2. BUCLE DE EJECUCIÓN AUTÓNOMO CONTINUO (OMEGA ENGINE)
+## 2. BUCLE DE EJECUCIÓN CON HIGIENE FINANCIERA (OMEGA ENGINE)
 Prohibido modificar el archivo `tasks_queue.json` a mano.
-1. `node .antigravity/omega.js next` -> Lee tu objetivo y archivos.
-2. Lee los motores de referencia necesarios con atención de 100k tokens.
+1. `node .antigravity/omega.js next` -> Lee tu objetivo y archivos con memoria limpia (0 tokens acumulados).
+2. Lee los motores de referencia necesarios con atención quirúrgica.
 3. Modifica con EXCELENCIA y tipado estricto.
 4. `node .antigravity/omega.js complete <ID>` -> Valida (`tsc --noEmit`). Si falla, corrige.
-5. Inmediatamente ejecuta de nuevo el paso 1 sin esperar confirmación del usuario. Repite hasta que no queden tareas en cola.
+5. Si valida Exit Code 0, **DETENTE Y FINALIZA TU TURNO**. Queda terminantemente prohibido ejecutar `next` en el mismo chat.
 
 ## 3. INGENIERÍA S-CLASS (EAR OS)
 - **CERO `any` IMPLÍCITOS**: Si TypeScript infiere `any`, estás fallando en tu mandato. Tipado absoluto y estricto requerido.
@@ -27,8 +31,10 @@ Prohibido modificar el archivo `tasks_queue.json` a mano.
 - **DEFENSA EN PROFUNDIDAD**: Try/catch hermético en cada server action y API route. Sanitización obligatoria. Fallar en esto es comprometer a la empresa.
 
 ## 4. REGLAS DE NEGOCIO INMUTABLES (EL MOTOR FINANCIERO)
-- Base Solista: 350,00 €. Split Soberano: 80% (Artista ejecutante) / 10% (EAR OS) / 10% (VIMUME, obra social).
-- Depósito Stripe: 100,00 € (Inmutable, Price-Lock SHA-256).
+- Base Solista (Edwin Agudelo): 350,00 €. Split Soberano: 80% (Artista ejecutante) / 10% (EAR OS) / 10% (VIMUME, obra social).
+- Garantía Mutua de Doble Vía (Cero Fricción Comercial):
+  * Ruta Libre / Asesoría Rápida: WhatsApp directo (+34 693 693 048) para resolución ágil de dudas sin coste.
+  * Ruta Blindaje VIP (Depósito 100,00 € Stripe Price-Lock SHA-256): 100% deducible del total del show. Bloqueo exclusivo de fecha/hora en `atomicDateLockEngine`. Filtro de respeto mutuo: ahorra tiempo al cliente y blinda la fecha al artista erradicando mirones y cancelaciones.
 - Licitaciones B2G: < 14.250,00 € (Límite preventivo Art. 118 LCSP).
 - Acústica: 12 W/pax, límite de salud pública < 75 dB SPL.
 - Centralita: +34 693 693 048 (Solo CEO Edwin Agudelo. Ningún otro teléfono es válido para leads huérfanos). 
@@ -38,3 +44,13 @@ Prohibido modificar el archivo `tasks_queue.json` a mano.
 - **Topología Visual**: Cards y contenedores siempre `rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md` (efecto cristal esmerilado).
 - **Micro-interacciones Obligatorias**: Transiciones sedosas (`transition-all duration-300 ease-out`), hover states que inviten a tocar la pantalla.
 - **PROHIBICIÓN ABSOLUTA**: Usar `w-screen` (provoca scroll horizontal rompiendo el grid; usa `w-full overflow-x-hidden`), gradientes AI-Slop (púrpura a azul barato), fondos grises corporativos lavados estilo 2010. Solo negro puro y contrastes altos.
+
+## 6. TELEMETRÍA Y AUTOMATIZACIÓN ACTIVA (COOLIFY + N8N)
+- **Hostinger VPS Bare-Metal**: IP `82.29.179.172:8000` (Coolify v4 + PostgreSQL 16).
+- **Cluster n8n Producción**: `https://n8n.productoraear.com`.
+- Webhooks activos para despacho de eventos y reservas:
+  * `/webhook/b2b-quote` — Cotizaciones y presupuestos en tiempo real.
+  * `/webhook/stripe-price-lock` — Cierre y verificación de depósitos 100 €.
+  * `/webhook/finca-partnership` — Cualificación de acuerdos con fincas.
+  * `/webhook/vimume-clinical-report` — Reportes neuroacústicos y certificados RSC.
+  * `/webhook/call-center-intake` — Entrada omnicanal Call Center / WhatsApp.

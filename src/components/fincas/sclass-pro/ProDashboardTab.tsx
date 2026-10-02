@@ -50,7 +50,7 @@ export const ProDashboardTab: React.FC<ProDashboardTabProps> = ({ onNavigateTab,
   const maxVal = Math.max(...monthlyData.map(d => d.count));
 
   return (
-    <div className="space-y-8 font-sans text-zinc-200">
+    <div className="space-y-8 font-sans text-zinc-200 overflow-x-hidden">
       {/* 1. Header Banner & Identity */}
       <div className="p-6 rounded-3xl bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border border-zinc-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 shadow-2xl">
         <div className="space-y-2">
@@ -184,7 +184,7 @@ export const ProDashboardTab: React.FC<ProDashboardTabProps> = ({ onNavigateTab,
         </div>
 
         <div className="pt-6 pb-2">
-          <div className="h-44 flex items-end justify-between gap-1.5 sm:gap-3 px-2">
+          <div role="img" aria-label="Gráfico de barras de impresiones mensuales durante los últimos 12 meses" className="h-44 flex items-end justify-between gap-1.5 sm:gap-3 px-2">
             {monthlyData.map((item, idx) => {
               const heightPercent = Math.max((item.count / maxVal) * 100, 8);
               return (

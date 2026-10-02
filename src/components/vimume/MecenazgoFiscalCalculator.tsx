@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { Component, Suspense, useState, useMemo, type ErrorInfo, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Calculator, 
@@ -32,6 +32,34 @@ interface MecenazgoFiscalCalculatorProps {
   initialType?: ContribuyenteType;
   className?: string;
 }
+
+class MecenazgoErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[MecenazgoFiscalCalculator] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const MecenazgoFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 md:p-10 text-center text-sm text-white/70">
+    Calculadora de Mecenazgo Fiscal VIMUME temporalmente no disponible.
+  </div>
+);
 
 const PRESET_AMOUNTS = [
   { value: 50, label: '50 €', note: 'Sesión Terapéutica' },
@@ -117,7 +145,9 @@ export function MecenazgoFiscalCalculator({
   };
 
   return (
-    <div className={`relative rounded-[2.5rem] bg-[#07070a] border border-[#8b5cf6]/30 p-6 sm:p-10 shadow-[0_0_80px_rgba(139,92,246,0.12)] text-white ${className}`}>
+    <MecenazgoErrorBoundary fallback={<MecenazgoFallback />}>
+      <Suspense fallback={<MecenazgoFallback />}>
+        <div className={`relative rounded-[2.5rem] bg-[#07070a] border border-[#8b5cf6]/30 p-6 sm:p-10 shadow-[0_0_80px_rgba(139,92,246,0.12)] text-white ${className}`}>
       {/* GLOW DECORATIVO */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#8b5cf6]/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#ecb613]/10 rounded-full blur-[120px] pointer-events-none" />
@@ -542,6 +572,8 @@ export function MecenazgoFiscalCalculator({
           </div>
         )}
       </AnimatePresence>
-    </div>
+        </div>
+      </Suspense>
+    </MecenazgoErrorBoundary>
   );
 }

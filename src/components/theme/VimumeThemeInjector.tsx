@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-export function VimumeThemeInjector() {
+export const VimumeThemeInjector: React.FC = React.memo(function VimumeThemeInjector() {
   const pathname = usePathname();
 
   useEffect(() => {
@@ -15,4 +15,4 @@ export function VimumeThemeInjector() {
   }, [pathname]);
 
   return null;
-}
+});

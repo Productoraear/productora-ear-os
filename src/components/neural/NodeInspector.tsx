@@ -95,7 +95,7 @@ export default function NodeInspector({
   return (
     <aside
       aria-label={`Telemetría de ${roleDef.label}`}
-      className="pointer-events-auto w-full max-w-md bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.9)] text-white flex flex-col gap-5 max-h-[88vh] overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-right-4 duration-300 z-50"
+      className="pointer-events-auto w-full max-w-md bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.9)] text-white flex flex-col gap-5 max-h-[88vh] overflow-y-auto overflow-x-hidden no-scrollbar animate-in fade-in slide-in-from-right-4 duration-300 z-50"
     >
       {/* Header del Cockpit */}
       <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
@@ -125,7 +125,7 @@ export default function NodeInspector({
         <button
           type="button"
           onClick={onClose}
-          className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+          className="w-12 h-12 min-w-[48px] min-h-[48px] touch-manipulation rounded-full text-zinc-400 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-center"
           title="Cerrar Inspector"
         >
           <X size={18} />
@@ -279,11 +279,10 @@ export default function NodeInspector({
                     onSelectSubNode(subNode);
                   }}
                   aria-expanded={isExpanded}
-                  className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between border ${
-                    isExpanded || isSelected
+                  className={`w-full text-left p-2.5 min-h-[48px] touch-manipulation rounded-xl text-xs transition-all flex items-center justify-between border ${isExpanded || isSelected
                       ? 'bg-white/10 border-white/20 text-white font-medium'
                       : 'bg-white/[0.02] border-white/5 text-zinc-400 hover:bg-white/[0.06] hover:text-zinc-200'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-2 truncate">
                     <span
@@ -315,7 +314,7 @@ export default function NodeInspector({
                     {subNode.route && (
                       <Link
                         href={subNode.route}
-                        className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg transition-all hover:scale-[1.02]"
+                        className="inline-flex items-center gap-1.5 min-h-[48px] touch-manipulation text-[11px] font-mono font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg transition-all hover:scale-[1.02]"
                         style={{
                           color: roleDef.color,
                           backgroundColor: `${roleDef.color}18`,
@@ -338,7 +337,7 @@ export default function NodeInspector({
       <div className="flex flex-col gap-2 pt-2 border-t border-white/10">
         <Link
           href={roleDef.route}
-          className="w-full py-3 px-4 rounded-xl font-mono text-xs font-bold tracking-wider uppercase text-black flex items-center justify-center gap-2 transition-all hover:scale-[1.02] shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
+          className="w-full py-3 px-4 min-h-[48px] touch-manipulation rounded-xl font-mono text-xs font-bold tracking-wider uppercase text-black flex items-center justify-center gap-2 transition-all hover:scale-[1.02] shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
           style={{ backgroundColor: roleDef.color }}
         >
           <span>EXPLORAR SOLUCIÓN {roleDef.label.toUpperCase()}</span>
@@ -348,7 +347,7 @@ export default function NodeInspector({
         <button
           type="button"
           onClick={handleInvokeAssistant}
-          className="w-full py-2.5 px-4 rounded-xl font-mono text-xs text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center gap-2 transition-colors"
+          className="w-full py-2.5 px-4 min-h-[48px] touch-manipulation rounded-xl font-mono text-xs text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center gap-2 transition-colors"
         >
           <Sparkles size={13} style={{ color: roleDef.color }} />
           <span>CONECTAR CON ASISTENTE LOCAL</span>

@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, {
+  Component,
+  Suspense,
+  useState,
+  type ErrorInfo,
+  type ReactNode,
+} from 'react';
 import { calculateMariachiRate } from '@/lib/pricing-engine';
 import { MapPin, Clock, Info, ShieldCheck, CreditCard, Phone, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -9,11 +15,39 @@ import { generateWhatsAppLink } from '@/lib/whatsapp';
 
 import { SCLASS_ROSTER_14_FORMATS } from '@/lib/constants/pricing-catalog';
 
+class BookingCalculatorErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[BookingCalculator] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const BookingCalculatorFallback: React.FC = () => (
+  <div className="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-md shadow-2xl max-w-lg mx-auto text-center text-xs text-white/70">
+    Calculador de presupuesto temporalmente no disponible.
+  </div>
+);
+
 interface BookingCalculatorProps {
   initialFormatId?: string;
 }
 
-export default function BookingCalculator({ initialFormatId = 'solista-edwin-agudelo' }: BookingCalculatorProps) {
+function BookingCalculatorContent({ initialFormatId = 'solista-edwin-agudelo' }: BookingCalculatorProps) {
   const [formatoId, setFormatoId] = useState<string>(initialFormatId);
   const [distanciaKm, setDistanciaKm] = useState<number>(0);
   const [horaFin, setHoraFin] = useState<number>(20);
@@ -247,5 +281,15 @@ export default function BookingCalculator({ initialFormatId = 'solista-edwin-agu
         </a>
       </div>
     </div>
+  );
+}
+
+export default function BookingCalculator(props: BookingCalculatorProps) {
+  return (
+    <BookingCalculatorErrorBoundary fallback={<BookingCalculatorFallback />}>
+      <Suspense fallback={<BookingCalculatorFallback />}>
+        <BookingCalculatorContent {...props} />
+      </Suspense>
+    </BookingCalculatorErrorBoundary>
   );
 }

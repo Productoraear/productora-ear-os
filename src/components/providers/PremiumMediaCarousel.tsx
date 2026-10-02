@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
 
@@ -38,11 +39,11 @@ const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
 
-export function PremiumMediaCarousel({ images, providerName }: PremiumMediaCarouselProps) {
+export const PremiumMediaCarousel: React.FC<PremiumMediaCarouselProps> = React.memo(function PremiumMediaCarousel({ images, providerName }) {
   const [[page, direction], setPage] = useState([0, 0]);
 
-  const safeImages = images && images.length > 0 
-    ? images 
+  const safeImages = images && images.length > 0
+    ? images
     : ['https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop'];
 
   const imageIndex = Math.abs(page % safeImages.length);
@@ -54,9 +55,8 @@ export function PremiumMediaCarousel({ images, providerName }: PremiumMediaCarou
   return (
     <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[480px] rounded-3xl overflow-hidden bg-[#050505] border border-white/5 group">
       <AnimatePresence initial={false} custom={direction}>
-        <motion.img
+        <motion.div
           key={page}
-          src={safeImages[imageIndex]}
           custom={direction}
           variants={variants}
           initial="enter"
@@ -78,9 +78,18 @@ export function PremiumMediaCarousel({ images, providerName }: PremiumMediaCarou
               paginate(-1);
             }
           }}
-          className="absolute inset-0 w-full h-full object-cover cursor-grab active:cursor-grabbing"
-          alt={`${providerName} - Gallery Image`}
-        />
+          className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
+        >
+          <Image
+            src={safeImages[imageIndex]}
+            alt={`${providerName} - Gallery Image`}
+            fill
+            unoptimized
+            priority={imageIndex === 0}
+            sizes="(max-width: 640px) 100vw, 800px"
+            className="object-cover"
+          />
+        </motion.div>
       </AnimatePresence>
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent pointer-events-none" />
@@ -108,11 +117,10 @@ export function PremiumMediaCarousel({ images, providerName }: PremiumMediaCarou
               <button
                 key={idx}
                 onClick={() => setPage([idx, idx > imageIndex ? 1 : -1])}
-                className={`h-1.5 rounded-full transition-all duration-500 ease-out ${
-                  idx === imageIndex 
-                    ? 'w-8 bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]' 
+                className={`h-1.5 rounded-full transition-all duration-500 ease-out ${idx === imageIndex
+                    ? 'w-8 bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]'
                     : 'w-2 bg-white/30 hover:bg-white/50'
-                }`}
+                  }`}
               />
             ))}
           </div>
@@ -125,4 +133,4 @@ export function PremiumMediaCarousel({ images, providerName }: PremiumMediaCarou
       )}
     </div>
   );
-}
+});

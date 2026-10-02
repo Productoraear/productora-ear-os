@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, Radio, Heart, ShieldCheck, Zap, 
-  MapPin, Clock, Users, Calendar, Volume2, 
+import {
+  Sparkles, Radio, Heart, ShieldCheck, Zap,
+  MapPin, Clock, Users, Calendar, Volume2,
   ArrowRight, Star, Award, ChevronRight, Check
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote, WEDDING_MILESTONES_DEFAULT } from './types';
@@ -32,8 +32,8 @@ export default function Archetype10_SovereignFusionMaster() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-24">
-      
+    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto overflow-x-hidden no-scrollbar space-y-4 pb-24">
+
       {/* 👑 MASTER FUSION S-CLASS PILL & HEADER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -62,11 +62,11 @@ export default function Archetype10_SovereignFusionMaster() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`py-2 rounded-xl text-center font-bold transition-all ${
-              activeTab === tab.id 
-                ? 'bg-[#ecb613] text-black shadow-md' 
+            aria-pressed={activeTab === tab.id}
+            className={`py-2 min-h-[44px] rounded-xl text-center font-bold transition-all ${activeTab === tab.id
+                ? 'bg-[#ecb613] text-black shadow-md'
                 : 'text-white/60 hover:text-white'
-            }`}
+              }`}
           >
             {tab.label}
           </button>
@@ -77,12 +77,12 @@ export default function Archetype10_SovereignFusionMaster() {
       <div className="min-h-[320px]">
         {/* 1. DISCOVER TAB (TINDER STYLE) */}
         {activeTab === 'discover' && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
           >
-            <div 
+            <div
               className="h-56 rounded-3xl bg-cover bg-center relative overflow-hidden border border-[#ecb613]/40 p-4 flex flex-col justify-between"
               style={{ backgroundImage: `url(${selectedFormat.image})` }}
             >
@@ -108,11 +108,11 @@ export default function Archetype10_SovereignFusionMaster() {
                 <button
                   key={fmt.id}
                   onClick={() => setSelectedFormat(fmt)}
-                  className={`p-2.5 rounded-xl border text-left text-xs transition-all ${
-                    selectedFormat.id === fmt.id 
-                      ? 'bg-[#15151c] border-[#ecb613] text-white font-bold' 
+                  aria-pressed={selectedFormat.id === fmt.id}
+                  className={`p-2.5 min-h-[44px] rounded-xl border text-left text-xs transition-all ${selectedFormat.id === fmt.id
+                      ? 'bg-[#15151c] border-[#ecb613] text-white font-bold'
                       : 'bg-white/5 border-white/10 text-white/60'
-                  }`}
+                    }`}
                 >
                   <div className="truncate">{fmt.name}</div>
                   <div className="text-[10px] text-[#ecb613] font-mono">{fmt.basePrice}€</div>
@@ -124,7 +124,7 @@ export default function Archetype10_SovereignFusionMaster() {
 
         {/* 2. RADAR TAB (UBER STYLE) */}
         {activeTab === 'radar' && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-3"
@@ -140,6 +140,8 @@ export default function Archetype10_SovereignFusionMaster() {
                 max="250"
                 value={distanceKm}
                 onChange={(e) => setDistanceKm(Number(e.target.value))}
+                aria-label="Distancia logística"
+                aria-valuetext={`${distanceKm} kilómetros`}
                 className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ecb613]"
               />
 
@@ -159,7 +161,7 @@ export default function Archetype10_SovereignFusionMaster() {
 
         {/* 3. TIMELINE TAB (BODAS STYLE) */}
         {activeTab === 'timeline' && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="space-y-2"
@@ -180,7 +182,7 @@ export default function Archetype10_SovereignFusionMaster() {
 
         {/* 4. CHECKOUT / AIRBNB SPLIT TAB */}
         {activeTab === 'checkout' && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="p-4 rounded-3xl bg-[#111116] border border-white/10 space-y-3 text-xs font-mono"
@@ -218,10 +220,10 @@ export default function Archetype10_SovereignFusionMaster() {
 
         <button
           onClick={handleMasterCheckout}
-          className="py-3 px-5 rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#ecb613]/25 active:scale-95 transition-all"
+          className="py-3 min-h-[48px] px-5 rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-[#ecb613]/25 active:scale-95 transition-all"
         >
           <span>Bloquear Fecha</span>
-          <ArrowRight size={16} />
+          <ArrowRight size={16} aria-hidden="true" />
         </button>
       </div>
 

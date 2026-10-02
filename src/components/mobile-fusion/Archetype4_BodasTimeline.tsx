@@ -51,7 +51,7 @@ export default function Archetype4_BodasTimeline() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-24">
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-24">
 
       {/* 👰 TOP BODAS.NET HEADER & PACK BADGE */}
       <div className="space-y-1">
@@ -99,8 +99,8 @@ export default function Archetype4_BodasTimeline() {
             <div
               key={milestone.id}
               className={`p-3.5 rounded-3xl border transition-all ${isAssigned
-                  ? 'bg-gradient-to-r from-[#181822] to-[#101016] border-[#ecb613]/50 shadow-lg shadow-[#ecb613]/5'
-                  : 'bg-[#0d0d12] border-white/10 opacity-80'
+                ? 'bg-gradient-to-r from-[#181822] to-[#101016] border-[#ecb613]/50 shadow-lg shadow-[#ecb613]/5'
+                : 'bg-[#0d0d12] border-white/10 opacity-80'
                 }`}
             >
               {/* Milestone Header */}
@@ -137,9 +137,9 @@ export default function Archetype4_BodasTimeline() {
                     <button
                       key={fmt.id}
                       onClick={() => toggleMilestone(milestone.id, fmt.id)}
-                      className={`p-2 rounded-xl border text-left text-[10px] transition-all flex items-center justify-between ${isSelected
-                          ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold'
-                          : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10'
+                      className={`p-2 min-h-[48px] touch-manipulation rounded-xl border text-left text-[10px] transition-all flex items-center justify-between ${isSelected
+                        ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold'
+                        : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10'
                         }`}
                     >
                       <span className="truncate">{fmt.name}</span>
@@ -167,12 +167,14 @@ export default function Archetype4_BodasTimeline() {
             <span className="text-[10px] text-white/50">Sesión de fotos y atrezzo de gala (+80€)</span>
           </div>
         </div>
-        <input
-          type="checkbox"
-          checked={includePhotocall}
-          onChange={(e) => setIncludePhotocall(e.target.checked)}
-          className="w-5 h-5 accent-[#ecb613] rounded cursor-pointer"
-        />
+        <label className="flex items-center justify-center w-12 h-12 min-h-[48px] touch-manipulation cursor-pointer select-none">
+          <input
+            type="checkbox"
+            checked={includePhotocall}
+            onChange={(e) => setIncludePhotocall(e.target.checked)}
+            className="w-6 h-6 accent-[#ecb613] rounded cursor-pointer"
+          />
+        </label>
       </div>
 
       {/* 🏷️ STICKY TOTAL WEDDING PACK BAR */}

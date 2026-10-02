@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import intentData from '@/data/intent-dag.json';
 import { Phone, ArrowRight, ShieldCheck } from 'lucide-react';
@@ -19,10 +19,10 @@ interface MatrixCategory {
   nodes: IntentNode[];
 }
 
-export default function IntentFaqAccordion({ vertical = 'bodas_eventos_gala' }: { vertical?: string }) {
+export default React.memo(function IntentFaqAccordion({ vertical = 'bodas_eventos_gala' }: { vertical?: string }) {
   const selectedMatrix = (intentData.matrices as MatrixCategory[]).find((m) => m.vertical === vertical) || intentData.matrices[0];
 
-  const jsonLd = {
+  const jsonLd = useMemo(() => ({
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: selectedMatrix.nodes.map((node) => ({
@@ -33,7 +33,7 @@ export default function IntentFaqAccordion({ vertical = 'bodas_eventos_gala' }: 
         text: node.answer,
       },
     })),
-  };
+  }), [selectedMatrix]);
 
   return (
     <section className="w-full border border-[#1a1a1a] bg-[#050505] rounded-2xl p-6 text-white my-8 shadow-2xl">
@@ -86,4 +86,4 @@ export default function IntentFaqAccordion({ vertical = 'bodas_eventos_gala' }: 
       </div>
     </section>
   );
-}
+});

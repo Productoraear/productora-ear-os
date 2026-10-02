@@ -1,19 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Star, 
-  MessageSquare, 
-  Send, 
-  Copy, 
-  CheckCircle2, 
-  ShieldCheck, 
-  Sparkles, 
-  Share2, 
-  Award, 
-  Filter, 
-  UserCheck, 
-  Calendar, 
+import {
+  Star,
+  MessageSquare,
+  Send,
+  Copy,
+  CheckCircle2,
+  ShieldCheck,
+  Sparkles,
+  Share2,
+  Award,
+  Filter,
+  UserCheck,
+  Calendar,
   Heart,
   ExternalLink,
   Code
@@ -106,10 +106,10 @@ export function ProReviewsTab() {
       `Vuestra opinión nos ayuda enormemente: https://www.productoraear.com/opiniones`
     );
     const cleanPhone = couplePhone.replace(/[^0-9]/g, "");
-    const url = cleanPhone 
-      ? `https://wa.me/${cleanPhone}?text=${message}` 
+    const url = cleanPhone
+      ? `https://wa.me/${cleanPhone}?text=${message}`
       : `https://wa.me/?text=${message}`;
-    
+
     if (typeof window !== "undefined") {
       window.open(url, "_blank");
     }
@@ -129,7 +129,7 @@ export function ProReviewsTab() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
+    <div className="space-y-8 animate-in fade-in duration-300 overflow-x-hidden">
       {/* Header Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="p-6 rounded-2xl border border-[#ecb613]/30 bg-gradient-to-br from-[#0c0c12] to-[#040406] space-y-2">
@@ -179,10 +179,10 @@ export function ProReviewsTab() {
 
       {/* 2-Column: Left Generator & Badge / Right Reviews Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Column: WhatsApp Request Tool & Embed Badge */}
         <div className="lg:col-span-5 space-y-6">
-          
+
           {/* WhatsApp Review Requester */}
           <div className="p-6 rounded-2xl border border-[#ecb613]/25 bg-gradient-to-br from-[#0c0c12] to-[#050508] space-y-4 shadow-xl">
             <div className="flex items-center gap-2 text-[#ecb613] font-bold text-sm font-['Syne'] uppercase tracking-wider">
@@ -201,6 +201,7 @@ export function ProReviewsTab() {
                   placeholder="Ej: Lucía y Marcos"
                   value={coupleName}
                   onChange={(e) => setCoupleName(e.target.value)}
+                  aria-label="Nombre de la pareja o novios"
                   className="w-full mt-1 px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-700 text-white text-xs focus:outline-none focus:border-[#ecb613]"
                 />
               </div>
@@ -212,13 +213,14 @@ export function ProReviewsTab() {
                   placeholder="Ej: +34 600 000 000"
                   value={couplePhone}
                   onChange={(e) => setCouplePhone(e.target.value)}
+                  aria-label="Teléfono WhatsApp de los novios"
                   className="w-full mt-1 px-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-700 text-white text-xs focus:outline-none focus:border-[#ecb613]"
                 />
               </div>
 
               <button
                 onClick={handleGenerateWhatsAppLink}
-                className="w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs tracking-wider uppercase font-['Syne'] transition flex items-center justify-center gap-2 shadow-lg"
+                className="w-full py-3 min-h-[48px] rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs tracking-wider uppercase font-['Syne'] transition flex items-center justify-center gap-2 shadow-lg"
               >
                 <Send className="w-4 h-4" />
                 Despachar Solicitud por WhatsApp
@@ -267,8 +269,8 @@ export function ProReviewsTab() {
 
           <div className="space-y-4">
             {reviews.map((rev) => (
-              <div 
-                key={rev.id} 
+              <div
+                key={rev.id}
                 className="p-5 rounded-2xl border border-zinc-800/80 bg-[#08080c] space-y-3.5 hover:border-zinc-700 transition"
               >
                 <div className="flex flex-wrap items-start justify-between gap-2">
@@ -327,18 +329,19 @@ export function ProReviewsTab() {
                           placeholder="Escribe tu respuesta de agradecimiento..."
                           value={replyDraft}
                           onChange={(e) => setReplyDraft(e.target.value)}
+                          aria-label="Respuesta de agradecimiento a la reseña"
                           className="w-full px-3 py-2 rounded-xl bg-zinc-900 border border-zinc-700 text-white text-xs focus:outline-none focus:border-[#ecb613]"
                         />
                         <div className="flex justify-end gap-2">
                           <button
                             onClick={() => { setActiveReplyId(null); setReplyDraft(""); }}
-                            className="px-3 py-1 rounded-lg text-xs text-zinc-400 hover:text-white"
+                            className="px-3 py-2.5 min-h-[44px] rounded-lg text-xs text-zinc-400 hover:text-white"
                           >
                             Cancelar
                           </button>
                           <button
                             onClick={() => handleSendReply(rev.id)}
-                            className="px-4 py-1.5 rounded-lg bg-[#ecb613] text-black font-semibold text-xs font-['Syne']"
+                            className="px-4 py-2.5 min-h-[44px] rounded-lg bg-[#ecb613] text-black font-semibold text-xs font-['Syne']"
                           >
                             Publicar Respuesta
                           </button>
@@ -347,9 +350,9 @@ export function ProReviewsTab() {
                     ) : (
                       <button
                         onClick={() => setActiveReplyId(rev.id)}
-                        className="text-xs font-mono text-[#ecb613] hover:underline flex items-center gap-1"
+                        className="text-xs font-mono text-[#ecb613] hover:underline flex items-center gap-1 min-h-[44px]"
                       >
-                        <MessageSquare className="w-3.5 h-3.5" />
+                        <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
                         Responder a esta reseña
                       </button>
                     )}

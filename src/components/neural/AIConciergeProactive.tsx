@@ -2,17 +2,17 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, 
-  Brain, 
-  Calculator, 
-  ArrowRight, 
-  X, 
-  MessageSquare, 
-  ChevronRight, 
-  Zap, 
-  ShieldCheck, 
-  Phone 
+import {
+  Sparkles,
+  Brain,
+  Calculator,
+  ArrowRight,
+  X,
+  MessageSquare,
+  ChevronRight,
+  Zap,
+  ShieldCheck,
+  Phone
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 
@@ -219,7 +219,7 @@ export const AIConciergeProactive: React.FC<AIConciergeProactiveProps> = ({ onSe
               <button
                 type="button"
                 onClick={handleDismiss}
-                className="w-7 h-7 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                className="w-12 h-12 min-w-[48px] min-h-[48px] touch-manipulation rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
                 title="Cerrar notificación"
               >
                 <X size={14} />
@@ -241,7 +241,7 @@ export const AIConciergeProactive: React.FC<AIConciergeProactiveProps> = ({ onSe
               <button
                 type="button"
                 onClick={activeMessage.ctaAction}
-                className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#6d28d9] text-white text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-[#8b5cf6]/30"
+                className="flex-1 py-2.5 px-4 min-h-[48px] touch-manipulation rounded-xl bg-gradient-to-r from-[#8b5cf6] to-[#7c3aed] hover:from-[#7c3aed] hover:to-[#6d28d9] text-white text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg shadow-[#8b5cf6]/30"
               >
                 <span>{activeMessage.ctaText}</span>
                 <ArrowRight size={13} />
@@ -251,7 +251,7 @@ export const AIConciergeProactive: React.FC<AIConciergeProactiveProps> = ({ onSe
                 href={CENTRALITA.whatsapp}
                 target="_blank"
                 rel="noreferrer"
-                className="py-2.5 px-3 rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] text-xs font-mono font-bold flex items-center justify-center transition-all cursor-pointer"
+                className="py-2.5 px-3 min-h-[48px] min-w-[48px] touch-manipulation rounded-xl bg-[#25D366]/15 hover:bg-[#25D366]/25 border border-[#25D366]/40 text-[#25D366] text-xs font-mono font-bold flex items-center justify-center transition-all cursor-pointer"
                 title="Consultar por WhatsApp"
               >
                 <Phone size={14} />
@@ -284,7 +284,7 @@ export const AIConciergeProactive: React.FC<AIConciergeProactiveProps> = ({ onSe
         }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="pointer-events-auto p-3.5 rounded-2xl bg-gradient-to-br from-[#8b5cf6] to-[#ecb613] text-white shadow-[0_0_35px_rgba(139,92,246,0.5)] flex items-center gap-2.5 border border-white/20 cursor-pointer"
+        className="pointer-events-auto p-3.5 min-h-[48px] touch-manipulation rounded-2xl bg-gradient-to-br from-[#8b5cf6] to-[#ecb613] text-white shadow-[0_0_35px_rgba(139,92,246,0.5)] flex items-center gap-2.5 border border-white/20 cursor-pointer"
       >
         <Sparkles size={18} className="animate-spin-slow" />
         <span className="text-xs font-mono font-bold tracking-wider uppercase hidden sm:inline">

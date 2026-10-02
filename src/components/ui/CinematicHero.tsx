@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface CinematicHeroProps {
   title: string;
@@ -9,7 +10,7 @@ interface CinematicHeroProps {
   isVideo?: boolean;
 }
 
-export const CinematicHero: React.FC<CinematicHeroProps> = ({
+export const CinematicHero: React.FC<CinematicHeroProps> = React.memo(({
   title,
   subtitle,
   ctaText,
@@ -31,10 +32,14 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
             src={mediaSrc}
           />
         ) : (
-          <img
+          <Image
             src={mediaSrc}
             alt="Hero background"
-            className="w-full h-full object-cover opacity-60"
+            fill
+            unoptimized
+            priority
+            sizes="100vw"
+            className="object-cover opacity-60"
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-obsidian/40" />
@@ -66,6 +71,6 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({
       </div>
     </section>
   );
-};
+});
 
 export default CinematicHero;

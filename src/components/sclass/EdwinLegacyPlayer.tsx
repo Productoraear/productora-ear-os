@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Music, Disc3, Sparkles } from 'lucide-react';
+import { Play, Pause, Disc3 } from 'lucide-react';
 
 export interface EdwinLegacyPlayerProps {
   audioUrl?: string;
@@ -9,11 +9,11 @@ export interface EdwinLegacyPlayerProps {
   subtitle?: string;
 }
 
-export function EdwinLegacyPlayer({ 
-  audioUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 
+export const EdwinLegacyPlayer: React.FC<EdwinLegacyPlayerProps> = React.memo(function EdwinLegacyPlayer({
+  audioUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
   title = 'Edwin Agudelo · Tenor Lírico S-Class',
   subtitle = 'Audición en Vivo de Alta Fidelidad Acústica'
-}: EdwinLegacyPlayerProps) {
+}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1.0);
   const [isMuted, setIsMuted] = useState(false);
@@ -44,13 +44,13 @@ export function EdwinLegacyPlayer({
 
   return (
     <div className="bg-[#0e0e14] border border-white/10 p-6 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
-      <audio 
-        ref={audioRef} 
-        src={audioUrl} 
-        preload="metadata" 
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        preload="metadata"
         onEnded={() => setIsPlaying(false)}
       />
-      
+
       <div className="flex items-center gap-4 text-left w-full sm:w-auto">
         <div className="w-12 h-12 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center text-[#ecb613] shrink-0">
           <Disc3 size={24} className={isPlaying ? "animate-spin text-[#ecb613]" : "text-[#ecb613]/70"} style={{ animationDuration: '3s' }} />
@@ -80,6 +80,6 @@ export function EdwinLegacyPlayer({
       </div>
     </div>
   );
-}
+});
 
 export default EdwinLegacyPlayer;

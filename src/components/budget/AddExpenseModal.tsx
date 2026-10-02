@@ -59,29 +59,30 @@ export default function AddExpenseModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-      <div className="bg-[#09090d] border border-white/10 rounded-3xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-hidden">
+    <div role="presentation" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div role="dialog" aria-modal="true" aria-labelledby="add-expense-title" className="bg-[#09090d] border border-white/10 rounded-3xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-hidden">
         <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/[0.02]">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613]">
+            <div aria-hidden="true" className="p-2 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613]">
               <DollarSign size={18} />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white font-syne uppercase tracking-wider">Nuevo Gasto / Reserva</h2>
+              <h2 id="add-expense-title" className="text-lg font-bold text-white font-syne uppercase tracking-wider">Nuevo Gasto / Reserva</h2>
               <p className="text-[11px] font-mono text-white/40">Vincula proveedores y partidas al presupuesto</p>
             </div>
           </div>
-          <button onClick={handleClose} className="p-2 text-white/40 hover:text-white hover:bg-white/10 rounded-xl transition-colors">
-            <X size={18} />
+          <button onClick={handleClose} aria-label="Cerrar modal de nuevo gasto" className="p-2 text-white/40 hover:text-white hover:bg-white/10 rounded-xl transition-colors">
+            <X size={18} aria-hidden="true" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[calc(90vh-180px)] overflow-y-auto">
           <div>
-            <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
-              <FileText size={13} className="text-[#ecb613]" /> Concepto del Gasto *
+            <label htmlFor="expense-description" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+              <FileText size={13} className="text-[#ecb613]" aria-hidden="true" /> Concepto del Gasto *
             </label>
             <input
+              id="expense-description"
               type="text"
               required
               value={formData.description}
@@ -93,10 +94,11 @@ export default function AddExpenseModal({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
-                <DollarSign size={13} className="text-[#ecb613]" /> Importe (€) *
+              <label htmlFor="expense-amount" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                <DollarSign size={13} className="text-[#ecb613]" aria-hidden="true" /> Importe (€) *
               </label>
               <input
+                id="expense-amount"
                 type="number"
                 required
                 step="0.01"
@@ -107,10 +109,11 @@ export default function AddExpenseModal({
               />
             </div>
             <div>
-              <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
-                <Calendar size={13} className="text-[#ecb613]" /> Fecha *
+              <label htmlFor="expense-date" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+                <Calendar size={13} className="text-[#ecb613]" aria-hidden="true" /> Fecha *
               </label>
               <input
+                id="expense-date"
                 type="date"
                 required
                 value={formData.date}
@@ -121,10 +124,11 @@ export default function AddExpenseModal({
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
-              <Tag size={13} className="text-[#ecb613]" /> Categoría del Presupuesto *
+            <label htmlFor="expense-category" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+              <Tag size={13} className="text-[#ecb613]" aria-hidden="true" /> Categoría del Presupuesto *
             </label>
             <select
+              id="expense-category"
               required
               value={formData.categoryId}
               onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
@@ -140,10 +144,11 @@ export default function AddExpenseModal({
           </div>
 
           <div>
-            <label className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
-              <Building2 size={13} className="text-[#a855f7]" /> Proveedor Homologado (Directorio EAR OS)
+            <label htmlFor="expense-vendor" className="flex items-center gap-2 text-xs font-mono uppercase text-white/60 mb-1.5">
+              <Building2 size={13} className="text-[#a855f7]" aria-hidden="true" /> Proveedor Homologado (Directorio EAR OS)
             </label>
             <select
+              id="expense-vendor"
               value={formData.vendorId}
               onChange={(e) => setFormData({ ...formData, vendorId: e.target.value })}
               className="w-full px-4 py-3 bg-[#12121a] border border-white/10 rounded-xl focus:border-[#ecb613] focus:outline-none text-white text-sm font-sans"
@@ -158,8 +163,9 @@ export default function AddExpenseModal({
           </div>
 
           <div>
-            <label className="text-xs font-mono uppercase text-white/60 mb-1.5 block">Notas / Observaciones del Rider</label>
+            <label htmlFor="expense-notes" className="text-xs font-mono uppercase text-white/60 mb-1.5 block">Notas / Observaciones del Rider</label>
             <textarea
+              id="expense-notes"
               value={formData.notes}
               onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               rows={2}

@@ -114,32 +114,32 @@ export default function SosEquipmentRescueModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div role="presentation" className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-x-hidden">
       <div
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl border border-[#FF2B44]/30 bg-[#030305] text-white shadow-[0_0_60px_rgba(255,43,68,0.15)]">
+      <div role="dialog" aria-modal="true" aria-labelledby="sos-rescue-title" className="relative w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl border border-[#FF2B44]/30 bg-[#030305] text-white shadow-[0_0_60px_rgba(255,43,68,0.15)]">
         {/* Header */}
         <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-white/10 bg-[#030305]/95 px-6 py-5 backdrop-blur">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#FF2B44]/40 bg-[#FF2B44]/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.3em] text-[#FF2B44]">
-              <Zap size={13} />
+              <Zap size={13} aria-hidden="true" />
               EAR SOS Rescue
             </div>
-            <h2 className="font-syne text-2xl font-black uppercase tracking-tight">
+            <h2 id="sos-rescue-title" className="font-syne text-2xl font-black uppercase tracking-tight">
               Despacho de flota de rescate
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full border border-white/10 p-2 text-white/60 transition hover:bg-white/10 hover:text-white"
+            className="min-h-[48px] min-w-[48px] rounded-full border border-white/10 p-2 text-white/60 transition hover:bg-white/10 hover:text-white"
             aria-label="Cerrar"
           >
-            <X size={18} />
+            <X size={18} aria-hidden="true" />
           </button>
         </div>
 
@@ -205,12 +205,12 @@ export default function SosEquipmentRescueModal({
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#FF2B44] px-6 py-4 font-black uppercase tracking-widest text-white transition hover:shadow-[0_0_35px_rgba(255,43,68,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex w-full min-h-[48px] items-center justify-center gap-2 rounded-xl bg-[#FF2B44] px-6 py-4 font-black uppercase tracking-widest text-white transition hover:shadow-[0_0_35px_rgba(255,43,68,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (
-              <Loader2 size={18} className="animate-spin" />
+              <Loader2 size={18} className="animate-spin" aria-hidden="true" />
             ) : (
-              <Truck size={18} />
+              <Truck size={18} aria-hidden="true" />
             )}
             {loading ? "Calculando despacho…" : "Calcular rescate"}
           </button>
@@ -220,7 +220,7 @@ export default function SosEquipmentRescueModal({
         {error && (
           <div className="mx-6 mb-6 rounded-2xl border border-[#FF2B44]/40 bg-[#FF2B44]/10 p-4">
             <p className="flex items-start gap-2 font-body text-sm text-[#FF2B44]">
-              <AlertTriangle size={18} className="shrink-0" />
+              <AlertTriangle size={18} className="shrink-0" aria-hidden="true" />
               {error}
             </p>
           </div>
@@ -282,7 +282,7 @@ export default function SosEquipmentRescueModal({
               onClick={reset}
               className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-white/60 transition hover:bg-white/10 hover:text-white"
             >
-              <RotateCcw size={14} />
+              <RotateCcw size={14} aria-hidden="true" />
               Nuevo cálculo
             </button>
           </div>
@@ -304,7 +304,7 @@ function Metric({
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
       <div className="flex items-center gap-1.5 text-[#FF2B44]">
-        <Icon size={13} />
+        <Icon size={13} aria-hidden="true" />
         <span className="font-mono text-[9px] uppercase tracking-widest text-white/40">
           {label}
         </span>

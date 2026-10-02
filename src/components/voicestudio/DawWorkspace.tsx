@@ -1,6 +1,41 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import React, {
+  Component,
+  Suspense,
+  useMemo,
+  useState,
+  type ErrorInfo,
+  type ReactNode,
+} from "react";
+
+class DawWorkspaceErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[DawWorkspace] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const DawWorkspaceFallback: React.FC = () => (
+  <div className="rounded-3xl border border-white/10 bg-[#050507] p-8 text-center text-xs text-white/70">
+    Espacio de trabajo DAW temporalmente no disponible.
+  </div>
+);
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Activity,
@@ -71,7 +106,7 @@ const STEM_COLORS: Record<StemTrack["role"], string> = {
   Armonía: "#10B981",
 };
 
-export default function DawWorkspace() {
+function DawWorkspaceContent() {
   const [trackState, setTrackState] = useState(DEFAULT_TRACK_STATE);
   const [stems, setStems] = useState<StemTrack[]>(() => renderStems(DEFAULT_TRACK_STATE));
   const [masterFormat, setMasterFormat] = useState<SunoMasterFormat>("WAV 24-bit");
@@ -399,3 +434,13 @@ export default function DawWorkspace() {
     </div>
   );
 }
+
+export default function DawWorkspace() {
+  return (
+    <DawWorkspaceErrorBoundary fallback={<DawWorkspaceFallback />}>
+      <Suspense fallback={<DawWorkspaceFallback />}>
+        <DawWorkspaceContent />
+      </Suspense>
+    </DawWorkspaceErrorBoundary>
+  );
+}

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Heart, Zap, ShieldCheck, Sparkles, Sliders, 
+import {
+  Heart, Zap, ShieldCheck, Sparkles, Sliders,
   MapPin, Clock, ArrowRight, CheckCircle2, ChevronRight,
   MessageCircle, Lock, Volume2, Music, Radio, Award
 } from 'lucide-react';
@@ -31,8 +31,8 @@ export default function DynamicLegoSimulatorRenderer({ config }: DynamicLegoProp
   });
 
   return (
-    <div className="w-full h-full min-h-full bg-[#050505] text-white flex flex-col justify-between p-3.5 overflow-x-hidden overflow-y-auto no-scrollbar relative select-none">
-      
+    <div className="w-full min-h-screen bg-[#050505] text-white flex flex-col justify-between p-3.5 overflow-x-hidden overflow-y-auto no-scrollbar relative select-none">
+
       {/* ================================================================= */}
       {/* 1. DYNAMIC HEADER BLOCK                                            */}
       {/* ================================================================= */}
@@ -98,11 +98,10 @@ export default function DynamicLegoSimulatorRenderer({ config }: DynamicLegoProp
               <button
                 key={fmt.id}
                 onClick={() => setSelectedFormatId(fmt.id)}
-                className={`p-2 rounded-xl border text-left transition-all ${
-                  isSelected 
-                    ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-md' 
+                className={`p-2 min-h-[48px] touch-manipulation rounded-xl border text-left transition-all ${isSelected
+                    ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-md'
                     : 'bg-[#101016] border-white/10 text-white/70 hover:bg-white/5'
-                }`}
+                  }`}
               >
                 <div className="text-[9px] truncate font-mono uppercase">{fmt.name}</div>
                 <div className="text-xs font-black">{fmt.basePrice} €</div>
@@ -153,11 +152,11 @@ export default function DynamicLegoSimulatorRenderer({ config }: DynamicLegoProp
               <span>Distancia Desplazamiento</span>
               <span className="text-[#ecb613] font-bold">{km} KM</span>
             </div>
-            <input 
-              type="range" 
-              min={0} 
-              max={300} 
-              value={km} 
+            <input
+              type="range"
+              min={0}
+              max={300}
+              value={km}
               onChange={e => setKm(Number(e.target.value))}
               className="w-full accent-[#ecb613] h-1 bg-white/10 rounded-lg cursor-pointer"
             />
@@ -168,11 +167,11 @@ export default function DynamicLegoSimulatorRenderer({ config }: DynamicLegoProp
               <span>Aforo Invitados (12 W/pax)</span>
               <span className="text-[#ecb613] font-bold">{pax} PAX ({quote.requiredWatts}W)</span>
             </div>
-            <input 
-              type="range" 
-              min={20} 
-              max={500} 
-              value={pax} 
+            <input
+              type="range"
+              min={20}
+              max={500}
+              value={pax}
               onChange={e => setPax(Number(e.target.value))}
               className="w-full accent-[#ecb613] h-1 bg-white/10 rounded-lg cursor-pointer"
             />
@@ -185,13 +184,12 @@ export default function DynamicLegoSimulatorRenderer({ config }: DynamicLegoProp
       {/* ================================================================= */}
       <div className="pt-2 border-t border-white/10">
         {config.cta === 'slide-lock' && (
-          <div 
+          <div
             onClick={() => setLocked(!locked)}
-            className={`w-full py-3 px-4 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
-              locked 
-                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/25' 
+            className={`w-full py-3 px-4 min-h-[48px] touch-manipulation rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${locked
+                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/25'
                 : 'bg-gradient-to-r from-[#ecb613] to-[#d99f0b] text-black shadow-lg shadow-[#ecb613]/20 hover:brightness-110 active:scale-95'
-            }`}
+              }`}
           >
             <div className="flex items-center gap-1.5">
               <Lock size={14} />
@@ -202,8 +200,8 @@ export default function DynamicLegoSimulatorRenderer({ config }: DynamicLegoProp
         )}
 
         {config.cta === 'sticky-gold' && (
-          <button 
-            className="w-full py-3 px-4 rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/25 active:scale-95 transition-all"
+          <button
+            className="w-full py-3 px-4 min-h-[48px] touch-manipulation rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl shadow-[#ecb613]/25 active:scale-95 transition-all"
           >
             <Sparkles size={14} />
             <span>RESERVAR AHORA ({quote.total} €)</span>
@@ -215,7 +213,7 @@ export default function DynamicLegoSimulatorRenderer({ config }: DynamicLegoProp
             href={`https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20quiero%20cotizar%20${encodeURIComponent(selectedFormat.name)}%20para%20${pax}%20asistentes.`}
             target="_blank"
             rel="noreferrer"
-            className="w-full py-3 px-4 rounded-2xl bg-[#25D366] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/25 active:scale-95 transition-all"
+            className="w-full py-3 px-4 min-h-[48px] touch-manipulation rounded-2xl bg-[#25D366] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-[#25D366]/25 active:scale-95 transition-all"
           >
             <MessageCircle size={14} />
             <span>ENVIAR PAYLOAD A WHATSAPP</span>

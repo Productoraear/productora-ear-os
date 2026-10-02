@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Component, Suspense, useEffect, useRef, useState, type ErrorInfo, type ReactNode } from 'react';
 import { Video, Mic, Square, Play, Trash2, Loader2, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { VIMUME_SENIOR_SSOT } from '@/lib/vimume/vimumePatientEngine';
 
@@ -11,6 +11,34 @@ interface VimumeMediaRecorderProps {
 }
 
 type RecordingState = 'idle' | 'requesting' | 'recording' | 'preview' | 'error';
+
+class MediaRecorderErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeMediaRecorder] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const MediaRecorderFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 text-center text-xs text-white/70">
+    Grabador Multimedia VIMUME temporalmente no disponible.
+  </div>
+);
 
 /**
  * 🎥 VIMUME MEDIA RECORDER (WebRTC)
@@ -131,7 +159,9 @@ export default function VimumeMediaRecorder({
   };
 
   return (
-    <div className={`relative overflow-hidden rounded-3xl border border-[#8b5cf6]/25 bg-[#030305] p-5 text-white ${className}`}>
+    <MediaRecorderErrorBoundary fallback={<MediaRecorderFallback />}>
+      <Suspense fallback={<MediaRecorderFallback />}>
+        <div className={`relative overflow-hidden rounded-3xl border border-[#8b5cf6]/25 bg-[#030305] p-5 text-white ${className}`}>
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#ecb613]/10 blur-[100px] pointer-events-none" />
       <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/10">
         <div className="flex items-center gap-3">
@@ -263,6 +293,8 @@ export default function VimumeMediaRecorder({
           La evidencia se trata conforme a RGPD Art. 9 (categorías especiales de datos de salud).
         </p>
       </div>
-    </div>
+        </div>
+      </Suspense>
+    </MediaRecorderErrorBoundary>
   );
 }

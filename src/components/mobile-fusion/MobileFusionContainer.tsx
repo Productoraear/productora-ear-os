@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Smartphone, Maximize2, Minimize2, Sparkles, 
-  ChevronLeft, ChevronRight, CheckCircle2, Layers, 
+import {
+  Smartphone, Maximize2, Minimize2, Sparkles,
+  ChevronLeft, ChevronRight, CheckCircle2, Layers,
   Share2, ArrowUpRight, Crown, Flame, Sliders
 } from 'lucide-react';
 import Link from 'next/link';
@@ -86,7 +86,7 @@ export default function MobileFusionContainer() {
 
   return (
     <div className="min-h-screen bg-[#020203] text-white selection:bg-[#ecb613] selection:text-black flex flex-col items-center justify-start py-4 px-2 sm:px-4 relative overflow-x-hidden">
-      
+
       {/* 🌌 AMBIENT GLOW */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[#ecb613]/5 blur-[140px] pointer-events-none" />
 
@@ -115,7 +115,7 @@ export default function MobileFusionContainer() {
         <div className="flex items-center gap-2">
           <Link
             href="/admin/mobile-studio"
-            className="py-2 px-3 rounded-xl bg-[#ecb613]/15 hover:bg-[#ecb613]/25 border border-[#ecb613]/40 text-[11px] font-mono text-[#ecb613] flex items-center gap-1.5 transition-all font-bold"
+            className="py-2 px-3 min-h-[48px] touch-manipulation rounded-xl bg-[#ecb613]/15 hover:bg-[#ecb613]/25 border border-[#ecb613]/40 text-[11px] font-mono text-[#ecb613] flex items-center gap-1.5 transition-all font-bold"
           >
             <Sliders size={14} />
             <span>Estudio Admin</span>
@@ -123,7 +123,7 @@ export default function MobileFusionContainer() {
 
           <button
             onClick={() => setIsSimulatorMode(!isSimulatorMode)}
-            className="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-mono text-white/80 flex items-center gap-1.5 transition-all"
+            className="py-2 px-3 min-h-[48px] touch-manipulation rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-mono text-white/80 flex items-center gap-1.5 transition-all"
           >
             <Smartphone size={14} className="text-[#ecb613]" />
             <span>{isSimulatorMode ? 'Marco iPhone' : 'Modo Fluido'}</span>
@@ -133,16 +133,15 @@ export default function MobileFusionContainer() {
 
       {/* 🧭 MODE SWITCHER & ARCHETYPE CONTROLLER */}
       <div className="w-full max-w-3xl mx-auto mb-4 z-20 space-y-3">
-        
+
         {/* Main Mode Pill: Combo 1 (Elegido) vs 10 Arquetipos Raw */}
         <div className="flex items-center justify-center gap-2">
           <button
             onClick={() => setActiveMode('combo1')}
-            className={`py-2 px-5 rounded-2xl text-xs font-mono font-black uppercase transition-all flex items-center gap-2 ${
-              activeMode === 'combo1' 
-                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 scale-105' 
+            className={`py-2 px-5 min-h-[48px] touch-manipulation rounded-2xl text-xs font-mono font-black uppercase transition-all flex items-center gap-2 ${activeMode === 'combo1'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 scale-105'
                 : 'bg-[#121218] border border-white/10 text-white/60 hover:text-white'
-            }`}
+              }`}
           >
             <Crown size={15} />
             <span>Combo 1: VIP Wedding Gala (Selección CEO)</span>
@@ -150,11 +149,10 @@ export default function MobileFusionContainer() {
 
           <button
             onClick={() => setActiveMode('archetypes')}
-            className={`py-2 px-4 rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${
-              activeMode === 'archetypes' 
-                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 scale-105' 
+            className={`py-2 px-4 min-h-[48px] touch-manipulation rounded-2xl text-xs font-mono font-bold transition-all flex items-center gap-2 ${activeMode === 'archetypes'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20 scale-105'
                 : 'bg-[#121218] border border-white/10 text-white/60 hover:text-white'
-            }`}
+              }`}
           >
             <Layers size={15} />
             <span>Ver los 10 Arquetipos</span>
@@ -172,14 +170,14 @@ export default function MobileFusionContainer() {
 
         {/* 10 Archetypes Dock (if mode is archetypes) */}
         {activeMode === 'archetypes' && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="bg-[#121218]/90 border border-white/15 p-2 rounded-2xl backdrop-blur-2xl shadow-xl flex items-center justify-between gap-1 overflow-x-auto no-scrollbar"
           >
             <button
               onClick={handlePrev}
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all shrink-0"
+              className="p-2 min-h-[48px] min-w-[48px] touch-manipulation rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all shrink-0"
             >
               <ChevronLeft size={16} />
             </button>
@@ -191,11 +189,10 @@ export default function MobileFusionContainer() {
                   <button
                     key={arch.id}
                     onClick={() => setSelectedArchetype(arch.id)}
-                    className={`px-3 py-2 rounded-xl text-xs font-mono font-bold transition-all shrink-0 flex items-center gap-1.5 ${
-                      isSelected
+                    className={`px-3 py-2 min-h-[48px] touch-manipulation rounded-xl text-xs font-mono font-bold transition-all shrink-0 flex items-center gap-1.5 ${isSelected
                         ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/25 scale-105'
                         : 'bg-white/5 hover:bg-white/10 text-white/60 hover:text-white'
-                    }`}
+                      }`}
                   >
                     <span className="w-4 h-4 rounded-full bg-black/20 flex items-center justify-center text-[10px] font-black">
                       {arch.id}
@@ -208,7 +205,7 @@ export default function MobileFusionContainer() {
 
             <button
               onClick={handleNext}
-              className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all shrink-0"
+              className="p-2 min-h-[48px] min-w-[48px] touch-manipulation rounded-xl bg-white/5 hover:bg-white/10 text-white/70 hover:text-white transition-all shrink-0"
             >
               <ChevronRight size={16} />
             </button>

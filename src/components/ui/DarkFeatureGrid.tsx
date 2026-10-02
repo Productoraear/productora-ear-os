@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export interface FeatureCardItem {
@@ -15,30 +16,38 @@ interface DarkFeatureGridProps {
   columns?: 2 | 3 | 4;
 }
 
-export const DarkFeatureGrid: React.FC<DarkFeatureGridProps> = ({ 
+export const DarkFeatureGrid: React.FC<DarkFeatureGridProps> = React.memo(({
   items,
-  columns = 4 
+  columns = 4
 }) => {
-  const colClass = columns === 2 
-    ? 'grid-cols-1 sm:grid-cols-2' 
-    : columns === 3 
-    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' 
-    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+  const colClass = columns === 2
+    ? 'grid-cols-1 sm:grid-cols-2'
+    : columns === 3
+      ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+
+  // Blindaje defensivo: evita crash de render si llegan items nulos.
+  const safeItems = (items ?? []).filter(
+    (item): item is FeatureCardItem => Boolean(item && item.id && item.link && item.imageSrc)
+  );
 
   return (
     <section className="w-full max-w-[1200px] mx-auto py-20 px-4">
       <div className={`grid ${colClass} gap-6`}>
-        {items.map((item) => (
+        {safeItems.map((item) => (
           <Link
             key={item.id}
             href={item.link}
             className="group relative h-[420px] rounded-[8px] overflow-hidden bg-charcoal flex flex-col justify-end p-8 transition-transform duration-300 hover:-translate-y-1"
           >
             {/* Imagen de Fondo a Sangre */}
-            <img
+            <Image
               src={item.imageSrc}
               alt={item.title}
-              className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-500"
+              fill
+              unoptimized
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
 
@@ -66,6 +75,6 @@ export const DarkFeatureGrid: React.FC<DarkFeatureGridProps> = ({
       </div>
     </section>
   );
-};
+});
 
 export default DarkFeatureGrid;

@@ -550,6 +550,7 @@ export function GlobalLiveVisualEditor() {
               setShowAiModal(true);
               handleGenerateAiCopy(selectedTag.startsWith('h') ? 'titular_hero' : 'propuesta_valor');
             }}
+            aria-label="Redactar con IA Local GPU Ollama"
             className="p-1 bg-[#ecb613]/20 hover:bg-[#ecb613] text-[#ecb613] hover:text-black rounded transition-colors flex items-center gap-1 px-1.5 font-bold text-[10px]"
             title="Redactar con IA Local (GPU / Ollama)"
           >
@@ -561,26 +562,31 @@ export function GlobalLiveVisualEditor() {
           <div className="flex items-center gap-1 pl-1 border-l border-neutral-800">
             <button
               onClick={() => updateSelectedStyle('color', '#ecb613')}
+              aria-label="Color Oro S-Class"
               className="w-3.5 h-3.5 rounded-full bg-[#ecb613] hover:scale-125 transition-transform"
               title="Color Oro S-Class"
             />
             <button
               onClick={() => updateSelectedStyle('color', '#FF2B44')}
+              aria-label="Color Rubí Festejos"
               className="w-3.5 h-3.5 rounded-full bg-[#FF2B44] hover:scale-125 transition-transform"
               title="Color Rubí Festejos"
             />
             <button
               onClick={() => updateSelectedStyle('color', '#00E5FF')}
+              aria-label="Color Cyan High-Tech"
               className="w-3.5 h-3.5 rounded-full bg-[#00E5FF] hover:scale-125 transition-transform"
               title="Color Cyan High-Tech"
             />
             <button
               onClick={() => updateSelectedStyle('color', '#ffffff')}
+              aria-label="Color Blanco Nieve"
               className="w-3.5 h-3.5 rounded-full bg-white hover:scale-125 transition-transform"
               title="Color Blanco Nieve"
             />
             <button
               onClick={() => updateSelectedStyle('color', '#9ca3af')}
+              aria-label="Color Gris Muted"
               className="w-3.5 h-3.5 rounded-full bg-neutral-400 hover:scale-125 transition-transform"
               title="Color Gris Muted"
             />
@@ -590,6 +596,7 @@ export function GlobalLiveVisualEditor() {
           <div className="flex items-center gap-1 pl-1 border-l border-neutral-800">
             <button
               onClick={() => updateSelectedStyle('fontSize', '1.875rem')}
+              aria-label="Aumentar tamaño de fuente"
               className="px-1.5 py-0.5 bg-neutral-800 hover:bg-neutral-700 rounded text-[10px] font-bold"
               title="Aumentar Tamaño (XL)"
             >
@@ -597,6 +604,7 @@ export function GlobalLiveVisualEditor() {
             </button>
             <button
               onClick={() => updateSelectedStyle('fontSize', '0.875rem')}
+              aria-label="Reducir tamaño de fuente"
               className="px-1.5 py-0.5 bg-neutral-800 hover:bg-neutral-700 rounded text-[10px]"
               title="Reducir Tamaño (SM)"
             >
@@ -607,6 +615,7 @@ export function GlobalLiveVisualEditor() {
           {/* Negrita */}
           <button
             onClick={() => updateSelectedStyle('fontWeight', '800')}
+            aria-label="Poner texto en negrita"
             className="px-1.5 py-0.5 bg-neutral-800 hover:bg-neutral-700 rounded font-black text-[10px]"
             title="Poner en Negrita"
           >
@@ -620,6 +629,7 @@ export function GlobalLiveVisualEditor() {
                 setImageUrlInput(selectedElement instanceof HTMLImageElement ? selectedElement.src : '');
                 setShowImageModal(true);
               }}
+              aria-label="Cambiar URL de imagen"
               className="p-1 bg-neutral-800 hover:bg-[#ecb613] hover:text-black rounded transition-colors"
               title="Cambiar URL de Imagen"
             >
@@ -633,6 +643,7 @@ export function GlobalLiveVisualEditor() {
                 setLinkUrlInput(selectedElement.getAttribute('href') || '');
                 setShowLinkModal(true);
               }}
+              aria-label="Cambiar enlace href"
               className="p-1 bg-neutral-800 hover:bg-[#ecb613] hover:text-black rounded transition-colors"
               title="Cambiar Enlace (href)"
             >
@@ -644,6 +655,7 @@ export function GlobalLiveVisualEditor() {
           <div className="flex items-center gap-1 pl-1 border-l border-neutral-800">
             <button
               onClick={handleMoveUp}
+              aria-label="Mover bloque arriba"
               className="p-1 hover:bg-neutral-800 rounded text-neutral-400 hover:text-white"
               title="Mover Arriba"
             >
@@ -651,6 +663,7 @@ export function GlobalLiveVisualEditor() {
             </button>
             <button
               onClick={handleMoveDown}
+              aria-label="Mover bloque abajo"
               className="p-1 hover:bg-neutral-800 rounded text-neutral-400 hover:text-white"
               title="Mover Abajo"
             >
@@ -658,6 +671,7 @@ export function GlobalLiveVisualEditor() {
             </button>
             <button
               onClick={handleDuplicateBlock}
+              aria-label="Duplicar bloque"
               className="p-1 hover:bg-neutral-800 rounded text-neutral-400 hover:text-white"
               title="Duplicar Bloque"
             >
@@ -665,6 +679,7 @@ export function GlobalLiveVisualEditor() {
             </button>
             <button
               onClick={handleDeleteBlock}
+              aria-label="Ocultar o eliminar bloque"
               className="p-1 hover:bg-red-900/60 rounded text-neutral-400 hover:text-red-400"
               title="Ocultar/Eliminar Bloque"
             >
@@ -678,6 +693,7 @@ export function GlobalLiveVisualEditor() {
               setSelectedElement(null);
               setToolbarPos(null);
             }}
+            aria-label="Cerrar barra de edición"
             className="p-1 hover:bg-neutral-800 rounded text-neutral-400 hover:text-white ml-0.5"
             title="Cerrar barra"
           >
@@ -736,6 +752,7 @@ export function GlobalLiveVisualEditor() {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={handleSaveAll}
+                      aria-label="Guardar cambios en LocalStorage y Servidor"
                       className="p-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all shadow-md active:scale-95 flex items-center gap-1"
                       title="Guardar en LocalStorage y Servidor"
                     >
@@ -744,6 +761,7 @@ export function GlobalLiveVisualEditor() {
 
                     <button
                       onClick={handleExportJson}
+                      aria-label="Descargar JSON de mutaciones"
                       className="p-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-300 rounded-xl text-xs transition-all"
                       title="Descargar JSON de Mutaciones"
                     >
@@ -752,6 +770,7 @@ export function GlobalLiveVisualEditor() {
 
                     <button
                       onClick={handleReset}
+                      aria-label="Restablecer valores iniciales"
                       className="p-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-red-400 rounded-xl text-xs transition-all"
                       title="Restablecer Valores Iniciales"
                     >
@@ -862,8 +881,8 @@ export function GlobalLiveVisualEditor() {
 
       {/* 🤖 MODAL DE GENERACIÓN DE COPY CON IA LOCAL */}
       {showAiModal && (
-        <div id="ear-ai-copy-modal" className="fixed inset-0 z-[9999999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b0b12] border-2 border-[#ecb613] p-5 rounded-2xl max-w-lg w-full text-white font-mono shadow-[0_20px_60px_rgba(0,0,0,0.9)]">
+        <div id="ear-ai-copy-modal" role="presentation" className="fixed inset-0 z-[9999999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Generador de copywriting con IA local" className="bg-[#0b0b12] border-2 border-[#ecb613] p-5 rounded-2xl max-w-lg w-full text-white font-mono shadow-[0_20px_60px_rgba(0,0,0,0.9)]">
             <div className="flex items-center justify-between border-b border-neutral-800 pb-3 mb-4">
               <h3 className="text-xs font-bold text-[#ecb613] flex items-center gap-2 uppercase tracking-wider">
                 <Sparkles className="w-4 h-4 text-[#ecb613]" /> GENERADOR DE COPYWRITING S-CLASS (IA LOCAL)
@@ -994,8 +1013,8 @@ export function GlobalLiveVisualEditor() {
 
       {/* MODAL PARA CAMBIAR URL DE IMAGEN */}
       {showImageModal && (
-        <div className="fixed inset-0 z-[9999999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b0b10] border border-[#ecb613] p-5 rounded-2xl max-w-md w-full text-white font-mono shadow-2xl">
+        <div role="presentation" className="fixed inset-0 z-[9999999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Reemplazar imagen del bloque" className="bg-[#0b0b10] border border-[#ecb613] p-5 rounded-2xl max-w-md w-full text-white font-mono shadow-2xl">
             <h3 className="text-sm font-bold text-[#ecb613] mb-3 flex items-center gap-2">
               <ImageIcon className="w-4 h-4" /> REEMPLAZAR IMAGEN DEL BLOQUE
             </h3>
@@ -1027,8 +1046,8 @@ export function GlobalLiveVisualEditor() {
 
       {/* MODAL PARA CAMBIAR ENLACE (HREF) */}
       {showLinkModal && (
-        <div className="fixed inset-0 z-[9999999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b0b10] border border-[#00E5FF] p-5 rounded-2xl max-w-md w-full text-white font-mono shadow-2xl">
+        <div role="presentation" className="fixed inset-0 z-[9999999] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Editar destino del enlace" className="bg-[#0b0b10] border border-[#00E5FF] p-5 rounded-2xl max-w-md w-full text-white font-mono shadow-2xl">
             <h3 className="text-sm font-bold text-[#00E5FF] mb-3 flex items-center gap-2">
               <LinkIcon className="w-4 h-4" /> EDITAR DESTINO DEL ENLACE (HREF)
             </h3>

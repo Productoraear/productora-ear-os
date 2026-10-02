@@ -10,7 +10,7 @@ interface SovereignConciergeDockProps {
   directPhone?: string;
 }
 
-export default function SovereignConciergeDock({
+export default React.memo(function SovereignConciergeDock({
   providerName = 'Espacio Homologado',
   category = 'Finca',
   directPhone = '+34 693 693 048'
@@ -72,4 +72,4 @@ export default function SovereignConciergeDock({
       </div>
     </aside>
   );
-}
+});

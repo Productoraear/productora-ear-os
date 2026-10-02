@@ -1,8 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {
+  Component,
+  Suspense,
+  useState,
+  type ErrorInfo,
+  type ReactNode,
+} from "react";
 import { motion } from "framer-motion";
 import { Music2, Guitar, Mic2, Disc3, Check } from "lucide-react";
+
+class GenreSelectorErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[GenreSelector] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const GenreSelectorFallback: React.FC = () => (
+  <div className="w-full rounded-2xl border border-white/10 bg-[#0D0D15] p-6 text-center text-xs text-white/70">
+    Selector de género musical temporalmente no disponible.
+  </div>
+);
 
 export interface GenreOption {
   id: string;
@@ -61,7 +95,7 @@ interface GenreSelectorProps {
   onChange: (genreId: string) => void;
 }
 
-export default function GenreSelector({ value, onChange }: GenreSelectorProps) {
+function GenreSelectorContent({ value, onChange }: GenreSelectorProps) {
   const [selectedId, setSelectedId] = useState<string | null>(value ?? null);
 
   const handleSelect = (genreId: string) => {
@@ -141,3 +175,13 @@ export default function GenreSelector({ value, onChange }: GenreSelectorProps) {
     </div>
   );
 }
+
+export default function GenreSelector(props: GenreSelectorProps) {
+  return (
+    <GenreSelectorErrorBoundary fallback={<GenreSelectorFallback />}>
+      <Suspense fallback={<GenreSelectorFallback />}>
+        <GenreSelectorContent {...props} />
+      </Suspense>
+    </GenreSelectorErrorBoundary>
+  );
+}

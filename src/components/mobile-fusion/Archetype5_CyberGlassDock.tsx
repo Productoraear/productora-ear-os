@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Radio, Zap, ShieldCheck, ChevronUp, Music, 
-  Volume2, Users, MapPin, Sparkles, Check, ArrowRight 
+import {
+  Radio, Zap, ShieldCheck, ChevronUp, Music,
+  Volume2, Users, MapPin, Sparkles, Check, ArrowRight
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
 
@@ -31,10 +31,10 @@ export default function Archetype5_CyberGlassDock() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-hidden">
-      
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-hidden">
+
       {/* 🏝️ DYNAMIC ISLAND TOP PILL (iOS 18+ STYLE) */}
-      <motion.div 
+      <motion.div
         layout
         className="w-full bg-[#121218]/90 border border-white/15 backdrop-blur-2xl rounded-full p-2 px-4 flex items-center justify-between shadow-2xl z-20"
       >
@@ -53,7 +53,7 @@ export default function Archetype5_CyberGlassDock() {
 
       {/* 🔮 HERO HOLOGRAPHIC ARTIST CARD */}
       <div className="flex-1 my-4 rounded-3xl overflow-hidden relative border border-white/10 flex flex-col justify-end p-5 bg-[#0a0a0f]">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center transition-all duration-700"
           style={{ backgroundImage: `url(${currentTier.image})` }}
         />
@@ -102,11 +102,10 @@ export default function Archetype5_CyberGlassDock() {
             <button
               key={tier.id}
               onClick={() => setActiveTierIndex(idx)}
-              className={`py-2 px-1 rounded-xl text-center transition-all ${
-                isActive 
-                  ? 'bg-[#ecb613] text-black font-black shadow-lg shadow-[#ecb613]/20 scale-[1.02]' 
+              className={`py-2 px-1 min-h-[48px] touch-manipulation rounded-xl text-center transition-all ${isActive
+                  ? 'bg-[#ecb613] text-black font-black shadow-lg shadow-[#ecb613]/20 scale-[1.02]'
                   : 'text-white/60 hover:text-white hover:bg-white/5'
-              }`}
+                }`}
             >
               <span className="text-[9px] font-mono block uppercase">
                 {idx === 0 ? 'Solista' : idx === 1 ? 'Cuarteto' : idx === 2 ? 'Gala 6' : 'Orquesta'}
@@ -121,7 +120,7 @@ export default function Archetype5_CyberGlassDock() {
       <div className="mt-3 flex items-center gap-2 z-10">
         <button
           onClick={() => setIsDrawerOpen(true)}
-          className="flex-1 py-3 px-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold text-xs uppercase font-mono flex items-center justify-center gap-1.5 transition-all"
+          className="flex-1 py-3 px-4 min-h-[48px] touch-manipulation rounded-2xl bg-white/10 hover:bg-white/15 border border-white/10 text-white font-bold text-xs uppercase font-mono flex items-center justify-center gap-1.5 transition-all"
         >
           <ChevronUp size={16} className="text-[#ecb613]" />
           <span>Configurar Rider</span>
@@ -129,7 +128,7 @@ export default function Archetype5_CyberGlassDock() {
 
         <button
           onClick={handleStripeLock}
-          className="flex-1 py-3 px-4 rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#ecb613]/30 active:scale-95 transition-all"
+          className="flex-1 py-3 px-4 min-h-[48px] touch-manipulation rounded-2xl bg-[#ecb613] hover:bg-[#f5c538] text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#ecb613]/30 active:scale-95 transition-all"
         >
           <span>Bloquear 100€</span>
           <ArrowRight size={16} />
@@ -151,9 +150,9 @@ export default function Archetype5_CyberGlassDock() {
                 <h4 className="text-base font-black uppercase text-white font-syne">
                   Ajustes de Sonorización S-Class
                 </h4>
-                <button 
+                <button
                   onClick={() => setIsDrawerOpen(false)}
-                  className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-xs font-mono"
+                  className="w-12 h-12 min-h-[48px] touch-manipulation rounded-full bg-white/10 flex items-center justify-center text-sm font-mono"
                 >✕</button>
               </div>
 

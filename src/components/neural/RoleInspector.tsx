@@ -52,7 +52,7 @@ export default function RoleInspector({
   return (
     <aside
       aria-label={`Detalles de ${roleDef.label}`}
-      className="pointer-events-auto w-full max-w-md bg-black/85 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.9)] text-white flex flex-col gap-5 max-h-[85vh] overflow-y-auto no-scrollbar animate-in fade-in slide-in-from-right-4 duration-300"
+      className="pointer-events-auto w-full max-w-md bg-black/85 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.9)] text-white flex flex-col gap-5 max-h-[85vh] overflow-y-auto overflow-x-hidden no-scrollbar animate-in fade-in slide-in-from-right-4 duration-300"
     >
       {/* Header del Inspector */}
       <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
@@ -82,7 +82,7 @@ export default function RoleInspector({
         <button
           type="button"
           onClick={onClose}
-          className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-white/10 transition-colors"
+          className="w-12 h-12 min-w-[48px] min-h-[48px] touch-manipulation rounded-full text-zinc-400 hover:text-white hover:bg-white/10 transition-colors flex items-center justify-center"
           title="Cerrar Inspector"
         >
           <X size={18} />
@@ -142,7 +142,7 @@ export default function RoleInspector({
                 <button
                   type="button"
                   onClick={() => onSelectSubNode(sec)}
-                  className="w-full flex items-center justify-between text-left group"
+                  className="w-full min-h-[48px] touch-manipulation flex items-center justify-between text-left group"
                 >
                   <span
                     style={{ color: isSecSelected ? roleDef.color : undefined }}
@@ -174,7 +174,7 @@ export default function RoleInspector({
                             borderColor: isLeafSelected ? roleDef.color : 'rgba(255,255,255,0.08)',
                             backgroundColor: isLeafSelected ? roleDef.accentBg : 'rgba(255,255,255,0.02)'
                           }}
-                          className="text-[10px] font-mono px-2 py-1 rounded-md border text-zinc-400 hover:text-white transition-all flex items-center gap-1.5"
+                          className="text-[10px] font-mono px-2 py-1 min-h-[48px] touch-manipulation rounded-md border text-zinc-400 hover:text-white transition-all flex items-center gap-1.5"
                         >
                           <span
                             style={{ backgroundColor: roleDef.color }}
@@ -200,7 +200,7 @@ export default function RoleInspector({
             backgroundColor: roleDef.color,
             color: '#000000'
           }}
-          className="w-full py-3 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all hover:brightness-110 shadow-[0_4px_20px_rgba(0,0,0,0.5)] group"
+          className="w-full py-3 px-4 min-h-[48px] touch-manipulation rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all hover:brightness-110 shadow-[0_4px_20px_rgba(0,0,0,0.5)] group"
         >
           <span>ACCEDER A LA PLATAFORMA {roleDef.label.toUpperCase()}</span>
           <ArrowRight
@@ -212,7 +212,7 @@ export default function RoleInspector({
         <button
           type="button"
           onClick={handleInvokeAssistant}
-          className="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-mono text-xs text-zinc-300 hover:text-white flex items-center justify-center gap-2 transition-all"
+          className="w-full py-2.5 px-4 min-h-[48px] touch-manipulation rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 font-mono text-xs text-zinc-300 hover:text-white flex items-center justify-center gap-2 transition-all"
         >
           <Sparkles size={13} className="text-[#ecb613]" />
           <span>CONSULTAR CON EL ASISTENTE LOCAL</span>

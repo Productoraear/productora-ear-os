@@ -310,11 +310,11 @@ export default function JardinesLaCartujaGrandSlam({
 
   return (
     <div className="w-full min-h-screen bg-[#030305] text-white font-sans overflow-x-hidden pb-28">
-      
+
       {/* 🧭 ENCABEZADO SUPERIOR: SESIÓN Y MODO DE NAVEGACIÓN */}
       <div className="max-w-7xl mx-auto px-4 pt-20 sm:pt-24 pb-4">
         <header className="bg-[#08080d]/80 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl flex flex-wrap items-center justify-between gap-4">
-          
+
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ecb613]/30 to-[#ecb613]/5 border border-[#ecb613]/40 flex items-center justify-center text-[#ecb613] font-bold font-mono text-xs shadow-[0_0_15px_rgba(236,182,19,0.2)]">
               EAR
@@ -340,21 +340,21 @@ export default function JardinesLaCartujaGrandSlam({
             <span className="text-[10px] text-white/40 uppercase pl-1">Vista:</span>
             <button
               onClick={() => setIsEditMode(false)}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${
-                !isEditMode
-                  ? 'bg-[#ecb613] text-black shadow-md shadow-[#ecb613]/20'
-                  : 'text-white/60 hover:text-white'
-              }`}
+              aria-pressed={!isEditMode}
+              className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${!isEditMode
+                ? 'bg-[#ecb613] text-black shadow-md shadow-[#ecb613]/20'
+                : 'text-white/60 hover:text-white'
+                }`}
             >
               👁️ Novios (Pública / Solo Lectura)
             </button>
             <button
               onClick={() => setIsEditMode(true)}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${
-                isEditMode
-                  ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
-                  : 'text-white/60 hover:text-white'
-              }`}
+              aria-pressed={isEditMode}
+              className={`px-3.5 py-1.5 rounded-lg font-bold transition-all ${isEditMode
+                ? 'bg-purple-600 text-white shadow-md shadow-purple-600/30'
+                : 'text-white/60 hover:text-white'
+                }`}
             >
               ✏️ Editor Proveedor / Admin (100% Control)
             </button>
@@ -364,7 +364,7 @@ export default function JardinesLaCartujaGrandSlam({
 
       {/* ⚡ CONTENEDOR PRINCIPAL DE BLOQUES DE LA FICHA */}
       <main className="max-w-7xl mx-auto px-4 space-y-6">
-        
+
         {/* RENDERIZADO DINÁMICO DE BLOQUES */}
         {blocks.map((block, index) => {
           if (!block.visible && !isEditMode) return null;
@@ -372,9 +372,8 @@ export default function JardinesLaCartujaGrandSlam({
           return (
             <div
               key={block.id}
-              className={`relative transition-all duration-300 ${
-                isEditMode ? 'p-3 rounded-3xl border-2 border-dashed border-purple-500/50 bg-purple-950/10 my-4 shadow-xl' : ''
-              } ${!block.visible ? 'opacity-40 grayscale' : ''}`}
+              className={`relative transition-all duration-300 ${isEditMode ? 'p-3 rounded-3xl border-2 border-dashed border-purple-500/50 bg-purple-950/10 my-4 shadow-xl' : ''
+                } ${!block.visible ? 'opacity-40 grayscale' : ''}`}
             >
               {/* 🛠️ CONTROLES DEL BLOQUE (SOLO EN MODO EDITOR PROVEEDOR/ADMIN) */}
               {isEditMode && (
@@ -390,6 +389,7 @@ export default function JardinesLaCartujaGrandSlam({
                     <button
                       onClick={() => moveBlock(index, 'up')}
                       disabled={index === 0}
+                      aria-label="Subir posición del bloque"
                       className="p-1.5 rounded bg-white/5 hover:bg-white/10 disabled:opacity-30 text-white"
                       title="Subir posición"
                     >
@@ -398,6 +398,7 @@ export default function JardinesLaCartujaGrandSlam({
                     <button
                       onClick={() => moveBlock(index, 'down')}
                       disabled={index === blocks.length - 1}
+                      aria-label="Bajar posición del bloque"
                       className="p-1.5 rounded bg-white/5 hover:bg-white/10 disabled:opacity-30 text-white"
                       title="Bajar posición"
                     >
@@ -405,6 +406,7 @@ export default function JardinesLaCartujaGrandSlam({
                     </button>
                     <button
                       onClick={() => toggleBlockVisibility(index)}
+                      aria-label={block.visible ? 'Ocultar bloque a los novios' : 'Mostrar bloque a los novios'}
                       className={`p-1.5 rounded text-white ${block.visible ? 'bg-emerald-600/30 text-emerald-300' : 'bg-red-600/30 text-red-300'}`}
                       title={block.visible ? 'Ocultar a los novios' : 'Mostrar a los novios'}
                     >
@@ -412,6 +414,7 @@ export default function JardinesLaCartujaGrandSlam({
                     </button>
                     <button
                       onClick={() => deleteBlock(index)}
+                      aria-label="Eliminar bloque"
                       className="p-1.5 rounded bg-red-600/30 hover:bg-red-600 text-red-200"
                       title="Eliminar bloque"
                     >
@@ -492,18 +495,20 @@ export default function JardinesLaCartujaGrandSlam({
                     <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md p-2 rounded-2xl border border-white/10">
                       <button
                         onClick={() => setCurrentPhotoIndex((prev) => (prev - 1 + photosList.length) % photosList.length)}
+                        aria-label="Foto anterior del carrusel"
                         className="p-2.5 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black text-white transition-all"
                       >
-                        <ChevronLeft size={18} />
+                        <ChevronLeft size={18} aria-hidden="true" />
                       </button>
                       <span className="text-xs font-mono px-3 text-white/70">
                         <strong className="text-white">{currentPhotoIndex + 1}</strong> / {photosList.length}
                       </span>
                       <button
                         onClick={() => setCurrentPhotoIndex((prev) => (prev + 1) % photosList.length)}
+                        aria-label="Foto siguiente del carrusel"
                         className="p-2.5 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black text-white transition-all"
                       >
-                        <ChevronRight size={18} />
+                        <ChevronRight size={18} aria-hidden="true" />
                       </button>
                     </div>
                   </div>
@@ -739,11 +744,10 @@ export default function JardinesLaCartujaGrandSlam({
                             <button
                               key={sp.id}
                               onClick={() => setSelectedSpace(sp.id as any)}
-                              className={`p-3 rounded-2xl border text-left transition-all ${
-                                selectedSpace === sp.id
-                                  ? 'border-[#ecb613] bg-[#ecb613]/10 text-white font-bold'
-                                  : 'border-white/10 bg-white/5 text-white/60 hover:text-white'
-                              }`}
+                              className={`p-3 rounded-2xl border text-left transition-all ${selectedSpace === sp.id
+                                ? 'border-[#ecb613] bg-[#ecb613]/10 text-white font-bold'
+                                : 'border-white/10 bg-white/5 text-white/60 hover:text-white'
+                                }`}
                             >
                               <div className="text-[11px] leading-tight">{sp.name}</div>
                               <div className="text-[10px] text-[#ecb613] font-bold mt-1">{sp.baseFee} €</div>
@@ -764,6 +768,8 @@ export default function JardinesLaCartujaGrandSlam({
                           step={10}
                           value={guestsCount}
                           onChange={(e) => setGuestsCount(Number(e.target.value))}
+                          aria-label="Número de invitados"
+                          aria-valuetext={`${guestsCount} invitados`}
                           className="w-full accent-[#ecb613] cursor-pointer"
                         />
                       </div>
@@ -808,10 +814,11 @@ export default function JardinesLaCartujaGrandSlam({
                       <div key={i} className="border border-white/10 rounded-2xl overflow-hidden bg-white/[0.02]">
                         <button
                           onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                          aria-expanded={activeFaq === i}
                           className="w-full p-4 text-left font-bold text-xs sm:text-sm text-white flex justify-between items-center font-syne"
                         >
                           <span>{faq.question}</span>
-                          {activeFaq === i ? <ChevronUp size={16} className="text-[#ecb613]" /> : <ChevronDown size={16} className="text-white/40" />}
+                          {activeFaq === i ? <ChevronUp size={16} className="text-[#ecb613]" aria-hidden="true" /> : <ChevronDown size={16} className="text-white/40" aria-hidden="true" />}
                         </button>
                         {activeFaq === i && (
                           <div className="p-4 pt-0 text-xs text-white/70 leading-relaxed font-sans border-t border-white/5">
@@ -871,8 +878,8 @@ export default function JardinesLaCartujaGrandSlam({
 
       {/* 📦 MODAL OMNI-CONTROL DE BLOQUES (HTML, VÍDEO, IFRAME, MULTIMEDIA, TEXTO, CTA, FAQS) */}
       {isAddBlockModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b0b12] border border-purple-500/50 rounded-3xl p-6 max-w-lg w-full space-y-4 max-h-[85vh] overflow-y-auto">
+        <div role="presentation" className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Catálogo de bloques modulares" className="bg-[#0b0b12] border border-purple-500/50 rounded-3xl p-6 max-w-lg w-full space-y-4 max-h-[85vh] overflow-y-auto">
             <div className="flex justify-between items-center pb-2 border-b border-white/10">
               <div>
                 <h3 className="font-syne font-bold text-base text-white">Catálogo de Bloques Modulares OMNI</h3>
@@ -956,8 +963,8 @@ export default function JardinesLaCartujaGrandSlam({
 
       {/* MODAL RESERVA STRIPE */}
       {isDepositModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b0b12] border border-[#ecb613]/50 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative">
+        <div role="presentation" className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Reserva inmutable con depósito Stripe" className="bg-[#0b0b12] border border-[#ecb613]/50 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative">
             <button onClick={() => setIsDepositModalOpen(false)} className="absolute top-5 right-5 text-white/40 hover:text-white">
               <X size={20} />
             </button>

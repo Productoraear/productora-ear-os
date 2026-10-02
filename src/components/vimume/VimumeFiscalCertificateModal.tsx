@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { Component, Suspense, useMemo, useState, type ErrorInfo, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   FileBadge,
@@ -26,6 +26,34 @@ interface VimumeFiscalCertificateModalProps {
   centerName?: string;
   className?: string;
 }
+
+class CertificateModalErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeFiscalCertificateModal] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const CertificateModalFallback: React.FC = () => (
+  <div className="rounded-2xl bg-[#09090d] border border-white/10 p-4 text-center text-xs text-white/70">
+    Modal de Certificado Fiscal VIMUME temporalmente no disponible.
+  </div>
+);
 
 /**
  * 🏛️ VIMUME FISCAL CERTIFICATE MODAL
@@ -125,7 +153,9 @@ export default function VimumeFiscalCertificateModal({
   };
 
   return (
-    <>
+    <CertificateModalErrorBoundary fallback={<CertificateModalFallback />}>
+      <Suspense fallback={<CertificateModalFallback />}>
+        <>
       <button
         type="button"
         onClick={() => setOpen(true)}
@@ -322,6 +352,8 @@ export default function VimumeFiscalCertificateModal({
           </div>
         )}
       </AnimatePresence>
-    </>
+        </>
+      </Suspense>
+    </CertificateModalErrorBoundary>
   );
 }

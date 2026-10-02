@@ -1,17 +1,17 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { 
-  GraduationCap, 
-  BookOpen, 
-  Target, 
-  ShieldCheck, 
-  Zap, 
-  Sparkles, 
-  Lock, 
-  Clock, 
-  TrendingUp, 
-  CheckCircle2, 
+import {
+  GraduationCap,
+  BookOpen,
+  Target,
+  ShieldCheck,
+  Zap,
+  Sparkles,
+  Lock,
+  Clock,
+  TrendingUp,
+  CheckCircle2,
   AlertTriangle,
   PlayCircle,
   FileText,
@@ -100,7 +100,7 @@ type CampusSubTab = "PLAYBOOKS" | "BOVEDA_ACTIVOS";
 export function ProCampusTab() {
   const [activeSubTab, setActiveSubTab] = useState<CampusSubTab>("BOVEDA_ACTIVOS");
   const [selectedModule, setSelectedModule] = useState<PlaybookModule>(modules[0]);
-  
+
   // Estados para la Bóveda de 61 activos
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("TODAS");
@@ -132,11 +132,11 @@ export function ProCampusTab() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
+    <div className="space-y-8 animate-in fade-in duration-300 overflow-x-hidden">
       {/* Top Banner */}
       <div className="p-6 lg:p-8 rounded-2xl border border-[#ecb613]/30 bg-gradient-to-br from-[#0c0c12] via-[#08080c] to-[#040406] space-y-4 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
-        
+
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono tracking-wider uppercase">
@@ -155,11 +155,11 @@ export function ProCampusTab() {
           <div className="flex items-center gap-2 bg-zinc-950/90 p-1.5 rounded-xl border border-zinc-800">
             <button
               onClick={() => setActiveSubTab("BOVEDA_ACTIVOS")}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${
-                activeSubTab === "BOVEDA_ACTIVOS"
-                  ? "bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20"
-                  : "text-zinc-400 hover:text-white hover:bg-zinc-900"
-              }`}
+              aria-pressed={activeSubTab === "BOVEDA_ACTIVOS"}
+              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${activeSubTab === "BOVEDA_ACTIVOS"
+                ? "bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20"
+                : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+                }`}
             >
               <Database className="w-3.5 h-3.5" />
               <span>Bóveda (61 Activos + 389 PDFs)</span>
@@ -167,11 +167,11 @@ export function ProCampusTab() {
 
             <button
               onClick={() => setActiveSubTab("PLAYBOOKS")}
-              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${
-                activeSubTab === "PLAYBOOKS"
-                  ? "bg-zinc-800 text-white shadow-lg"
-                  : "text-zinc-400 hover:text-white hover:bg-zinc-900"
-              }`}
+              aria-pressed={activeSubTab === "PLAYBOOKS"}
+              className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${activeSubTab === "PLAYBOOKS"
+                ? "bg-zinc-800 text-white shadow-lg"
+                : "text-zinc-400 hover:text-white hover:bg-zinc-900"
+                }`}
             >
               <BookOpen className="w-3.5 h-3.5" />
               <span>Playbooks de Cierre</span>
@@ -216,6 +216,7 @@ export function ProCampusTab() {
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Buscar documento por nombre o ángulo SEO..."
+                aria-label="Buscar documento en la bóveda de activos"
                 className="w-full pl-10 pr-4 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-[#ecb613] font-mono"
               />
             </div>
@@ -225,11 +226,10 @@ export function ProCampusTab() {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-[11px] font-mono transition ${
-                    selectedCategory === cat
-                      ? "bg-[#ecb613] text-black font-bold"
-                      : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
-                  }`}
+                  className={`px-3 py-1.5 rounded-lg text-[11px] font-mono transition ${selectedCategory === cat
+                    ? "bg-[#ecb613] text-black font-bold"
+                    : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
+                    }`}
                 >
                   {cat}
                 </button>
@@ -277,11 +277,10 @@ export function ProCampusTab() {
                     <div className="grid grid-cols-3 gap-1.5">
                       <button
                         onClick={() => handleDecision(doc.id, "BLOG_FINCAS")}
-                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${
-                          decision === "BLOG_FINCAS"
-                            ? "bg-amber-500 text-black font-bold"
-                            : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
-                        }`}
+                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${decision === "BLOG_FINCAS"
+                          ? "bg-amber-500 text-black font-bold"
+                          : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
+                          }`}
                         title="Enviar al Blog de Fincas para Bodas"
                       >
                         <Building2 className="w-3 h-3" /> Fincas
@@ -289,11 +288,10 @@ export function ProCampusTab() {
 
                       <button
                         onClick={() => handleDecision(doc.id, "BLOG_PRODUCTORA")}
-                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${
-                          decision === "BLOG_PRODUCTORA"
-                            ? "bg-[#ecb613] text-black font-bold"
-                            : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
-                        }`}
+                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${decision === "BLOG_PRODUCTORA"
+                          ? "bg-[#ecb613] text-black font-bold"
+                          : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
+                          }`}
                         title="Enviar al Blog de Productora EAR"
                       >
                         <Mic className="w-3 h-3" /> EAR
@@ -301,11 +299,10 @@ export function ProCampusTab() {
 
                       <button
                         onClick={() => handleDecision(doc.id, "LEAD_MAGNET")}
-                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${
-                          decision === "LEAD_MAGNET"
-                            ? "bg-emerald-500 text-black font-bold"
-                            : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
-                        }`}
+                        className={`px-2 py-1.5 rounded-lg text-[10px] font-mono flex items-center justify-center gap-1 transition ${decision === "LEAD_MAGNET"
+                          ? "bg-emerald-500 text-black font-bold"
+                          : "bg-zinc-950 text-zinc-400 hover:text-white border border-zinc-800"
+                          }`}
                         title="Convertir en Lead Magnet Descargable"
                       >
                         <Download className="w-3 h-3" /> Magnet
@@ -330,17 +327,15 @@ export function ProCampusTab() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setOraclePersona("CEO")}
-                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${
-                    oraclePersona === "CEO" ? "bg-[#ecb613] text-black font-bold" : "text-zinc-400 hover:text-white bg-zinc-900"
-                  }`}
+                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${oraclePersona === "CEO" ? "bg-[#ecb613] text-black font-bold" : "text-zinc-400 hover:text-white bg-zinc-900"
+                    }`}
                 >
                   <Crown className="w-3 h-3 inline mr-1" /> Modo CEO
                 </button>
                 <button
                   onClick={() => setOraclePersona("ARTISTA")}
-                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${
-                    oraclePersona === "ARTISTA" ? "bg-amber-500 text-white font-bold" : "text-zinc-400 hover:text-white bg-zinc-900"
-                  }`}
+                  className={`px-3 py-1 text-xs font-mono rounded-lg transition ${oraclePersona === "ARTISTA" ? "bg-amber-500 text-white font-bold" : "text-zinc-400 hover:text-white bg-zinc-900"
+                    }`}
                 >
                   <Music2 className="w-3 h-3 inline mr-1" /> Modo Artista
                 </button>
@@ -353,6 +348,7 @@ export function ProCampusTab() {
                 value={oracleQuery}
                 onChange={e => setOracleQuery(e.target.value)}
                 placeholder="Escribe una consulta estratégica (ej: 'Cómo captar fincas en Sevilla sin pagar comisiones')..."
+                aria-label="Consulta estratégica para el oráculo cuántico"
                 className="flex-1 px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-200 font-mono focus:outline-none focus:border-[#ecb613]"
               />
               <button
@@ -386,12 +382,20 @@ export function ProCampusTab() {
             {modules.map((mod, idx) => (
               <div
                 key={mod.id}
+                role="button"
+                tabIndex={0}
+                aria-pressed={selectedModule.id === mod.id}
                 onClick={() => setSelectedModule(mod)}
-                className={`p-4 rounded-xl border transition cursor-pointer space-y-2 ${
-                  selectedModule.id === mod.id
-                    ? "bg-[#ecb613]/10 border-[#ecb613]/50 text-white shadow-lg"
-                    : "bg-[#08080c] border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/40"
-                }`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedModule(mod);
+                  }
+                }}
+                className={`p-4 rounded-xl border transition cursor-pointer space-y-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 ${selectedModule.id === mod.id
+                  ? "bg-[#ecb613]/10 border-[#ecb613]/50 text-white shadow-lg"
+                  : "bg-[#08080c] border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900/40"
+                  }`}
               >
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-zinc-700/60 text-[#ecb613]">

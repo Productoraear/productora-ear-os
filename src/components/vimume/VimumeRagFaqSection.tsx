@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Component, Suspense, useState, type ErrorInfo, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   HelpCircle,
@@ -14,6 +14,34 @@ import {
   Sparkles
 } from 'lucide-react';
 import { VIMUME_CLINICAL_SSOT, VimumeSovereignFAQ } from '@/lib/constants/vimume-clinical-ssot';
+
+class RagFaqErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeRagFaqSection] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const RagFaqFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 text-center text-xs text-white/70">
+    Sección de FAQs RAG VIMUME temporalmente no disponible.
+  </div>
+);
 
 const TAG_COLORS: Record<VimumeSovereignFAQ['authorityTag'], { bg: string; text: string; border: string }> = {
   NEUROCIENCIA: { bg: 'bg-[#8b5cf6]/10', text: 'text-[#8b5cf6]', border: 'border-[#8b5cf6]/30' },
@@ -36,7 +64,9 @@ export function VimumeRagFaqSection() {
   const tags = ['TODAS', 'NEUROCIENCIA', 'AUDIOLOGIA', 'ESTADISTICA', 'FISCAL_LEGAL', 'CONCERTACION_B2G', 'IDENTIDAD'];
 
   return (
-    <section className="space-y-8">
+    <RagFaqErrorBoundary fallback={<RagFaqFallback />}>
+      <Suspense fallback={<RagFaqFallback />}>
+        <section className="space-y-8">
       {/* CABECERA */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
         <div className="space-y-2">
@@ -130,5 +160,7 @@ export function VimumeRagFaqSection() {
         })}
       </div>
     </section>
+  </Suspense>
+</RagFaqErrorBoundary>
   );
 }

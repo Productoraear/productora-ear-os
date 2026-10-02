@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Volume2, Users, Radio, Shield, Sparkles, Music } from 'lucide-react';
+import { Volume2, Radio, Sparkles, Music } from 'lucide-react';
 
 export type StageFormatType = 'solista' | 'duo' | 'trio' | 'cuarteto' | 'quinteto' | 'imperial';
 export type VenueType = 'SALON_BODA' | 'FINCA_EXTERIOR' | 'IGLESIA' | 'RESIDENCIA_MAYORES' | 'PLAZA_PUBLICA';
@@ -62,7 +62,7 @@ const MUSICIANS_CONFIG: Record<StageFormatType, MusicianNode[]> = {
   ]
 };
 
-export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
+export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = React.memo(({
   format,
   venueType,
   pax,
@@ -98,11 +98,10 @@ export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className={`px-2.5 py-1 rounded-full text-[10px] font-mono border ${
-            isVimume || venueType === 'RESIDENCIA_MAYORES'
-              ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40'
-              : 'bg-blue-950/80 text-blue-300 border-blue-500/40'
-          }`}>
+          <span className={`px-2.5 py-1 rounded-full text-[10px] font-mono border ${isVimume || venueType === 'RESIDENCIA_MAYORES'
+            ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40'
+            : 'bg-blue-950/80 text-blue-300 border-blue-500/40'
+            }`}>
             <Volume2 className="w-3 h-3 inline mr-1" />
             Límite SPL: &lt;{maxDb} dB
           </span>
@@ -131,7 +130,7 @@ export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
 
         {/* Altavoz Bose Izquierdo */}
         <div className="absolute left-6 bottom-8 flex flex-col items-center group z-10">
-          <motion.div 
+          <motion.div
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
             className="w-7 h-16 bg-[#1a1a24] border border-[#258DCD] rounded-md flex flex-col items-center justify-around p-1 shadow-[0_0_15px_rgba(37,141,205,0.4)]"
@@ -150,7 +149,7 @@ export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
 
         {/* Altavoz Bose Derecho */}
         <div className="absolute right-6 bottom-8 flex flex-col items-center group z-10">
-          <motion.div 
+          <motion.div
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}
             className="w-7 h-16 bg-[#1a1a24] border border-[#258DCD] rounded-md flex flex-col items-center justify-around p-1 shadow-[0_0_15px_rgba(37,141,205,0.4)]"
@@ -178,11 +177,11 @@ export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
             className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center cursor-pointer group z-20"
           >
             {/* Aura de Microfonía / Sonido */}
-            <div 
+            <div
               className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg"
-              style={{ 
-                backgroundColor: `${m.iconColor}15`, 
-                borderColor: m.iconColor, 
+              style={{
+                backgroundColor: `${m.iconColor}15`,
+                borderColor: m.iconColor,
                 borderWidth: '1.5px',
                 boxShadow: `0 0 20px ${m.iconColor}40`
               }}
@@ -232,6 +231,6 @@ export const StageVisualizer3D: React.FC<StageVisualizer3DProps> = ({
       </div>
     </div>
   );
-};
+});
 
 export default StageVisualizer3D;

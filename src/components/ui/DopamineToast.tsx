@@ -2,7 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, CheckCircle2, ShieldCheck, Zap, X } from 'lucide-react';
+import { Sparkles, CheckCircle2, ShieldCheck, X } from 'lucide-react';
 
 export interface DopamineToastProps {
   isVisible: boolean;
@@ -12,7 +12,7 @@ export interface DopamineToastProps {
   onClose?: () => void;
 }
 
-export const DopamineToast: React.FC<DopamineToastProps> = ({
+export const DopamineToast: React.FC<DopamineToastProps> = React.memo(({
   isVisible,
   title = '¡RESERVA Y DEPOSIT BLINDAJE CONFIRMADO!',
   message = 'Fianza Price-Lock de 100 € registrada en Stripe (SHA-256).',
@@ -23,7 +23,11 @@ export const DopamineToast: React.FC<DopamineToastProps> = ({
     if (isVisible) {
       // Reproducir feedback auditivo háptico sutil si el navegador lo permite
       try {
-        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        type WebkitWindow = Window & { webkitAudioContext?: typeof AudioContext };
+        const AudioContextCtor = window.AudioContext || (window as WebkitWindow).webkitAudioContext;
+        if (!AudioContextCtor) return;
+
+        const audioCtx = new AudioContextCtor();
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
         osc.type = 'sine';
@@ -85,4 +89,4 @@ export const DopamineToast: React.FC<DopamineToastProps> = ({
       )}
     </AnimatePresence>
   );
-};
+});

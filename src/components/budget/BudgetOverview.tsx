@@ -62,12 +62,14 @@ export default function BudgetOverview({ budget }: Props) {
       {stats.map((stat) => (
         <div
           key={stat.title}
+          role="group"
+          aria-label={`${stat.title}: ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(stat.value)} — ${stat.badge}`}
           className={`relative overflow-hidden bg-[#09090d] rounded-2xl p-5 border ${stat.borderColor} shadow-xl hover:border-white/30 transition-all duration-300 group`}
         >
-          <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-40 group-hover:opacity-70 transition-opacity`} />
+          <div aria-hidden="true" className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-40 group-hover:opacity-70 transition-opacity`} />
           <div className="relative z-10 flex flex-col justify-between h-full">
             <div className="flex items-center justify-between mb-3">
-              <div className={`p-2.5 rounded-xl bg-white/5 border border-white/10 ${stat.textColor}`}>
+              <div aria-hidden="true" className={`p-2.5 rounded-xl bg-white/5 border border-white/10 ${stat.textColor}`}>
                 <stat.icon size={20} />
               </div>
               <span className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-full border ${stat.badgeStyle}`}>

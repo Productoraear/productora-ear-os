@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Navigation, Radio, Zap, Clock, ShieldCheck, 
+import {
+  Navigation, Radio, Zap, Clock, ShieldCheck,
   MapPin, CheckCircle2, ChevronRight, Sliders, Truck,
   Volume2, Users, ArrowRight
 } from 'lucide-react';
@@ -38,8 +38,8 @@ export default function Archetype2_UberRadar({ onDispatch }: { onDispatch?: (dat
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4">
-      
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4">
+
       {/* 📡 TOP TELEMETRY STATUS BAR */}
       <div className="flex items-center justify-between bg-black/60 border border-white/10 px-3.5 py-2 rounded-2xl backdrop-blur-xl">
         <div className="flex items-center gap-2">
@@ -63,7 +63,7 @@ export default function Archetype2_UberRadar({ onDispatch }: { onDispatch?: (dat
           <div className="w-24 h-24 rounded-full border border-dashed border-[#ecb613]/40" />
           <div className="w-12 h-12 rounded-full border border-white/20" />
           {/* Radar sweeping scan needle */}
-          <motion.div 
+          <motion.div
             animate={{ rotate: 360 }}
             transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
             className="absolute w-44 h-44 rounded-full bg-gradient-to-tr from-transparent via-[#ecb613]/10 to-transparent border-t border-[#ecb613]/60"
@@ -104,11 +104,10 @@ export default function Archetype2_UberRadar({ onDispatch }: { onDispatch?: (dat
               <button
                 key={fmt.id}
                 onClick={() => setSelectedFormatId(fmt.id)}
-                className={`p-3 rounded-2xl border text-left transition-all relative overflow-hidden ${
-                  isSelected 
-                    ? 'bg-gradient-to-b from-[#ecb613]/15 to-[#15151c] border-[#ecb613] shadow-lg shadow-[#ecb613]/10' 
+                className={`p-3 min-h-[48px] touch-manipulation rounded-2xl border text-left transition-all relative overflow-hidden ${isSelected
+                    ? 'bg-gradient-to-b from-[#ecb613]/15 to-[#15151c] border-[#ecb613] shadow-lg shadow-[#ecb613]/10'
                     : 'bg-[#101014] border-white/10 hover:border-white/20 text-white/70'
-                }`}
+                  }`}
               >
                 {isSelected && (
                   <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#ecb613] shadow-[0_0_8px_#ecb613]" />
@@ -219,7 +218,7 @@ export default function Archetype2_UberRadar({ onDispatch }: { onDispatch?: (dat
           >
             <ArrowRight size={20} className="stroke-[3]" />
           </motion.div>
-          
+
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 pl-8">
             <span className="text-[11px] font-black uppercase tracking-wider text-white/70 font-mono animate-pulse">
               Desliza para Despachar Unidad ➔

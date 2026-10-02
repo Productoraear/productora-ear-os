@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { 
-  ShieldAlert, 
-  TrendingUp, 
-  Headphones, 
-  Globe, 
+import {
+  ShieldAlert,
+  TrendingUp,
+  Headphones,
+  Globe,
   ActivitySquare,
   Cpu,
   PenTool,
@@ -53,8 +53,8 @@ export default function CognitiveModules() {
   ];
 
   return (
-    <div className="p-6 rounded-3xl bg-[#09090d] border border-[#ecb613]/20 shadow-[0_10px_40px_rgba(236,182,19,0.05)] space-y-8 animate-in fade-in zoom-in duration-500">
-      
+    <div className="p-6 rounded-3xl bg-[#09090d] border border-[#ecb613]/20 shadow-[0_10px_40px_rgba(236,182,19,0.05)] space-y-8 animate-in fade-in zoom-in duration-500 overflow-x-hidden">
+
       {/* Header y Selectores */}
       <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center">
         <div>
@@ -63,39 +63,39 @@ export default function CognitiveModules() {
           </h3>
           <p className="text-gray-400 text-xs mt-1">Configuración del motor de inferencia proactivo (LLM Engine).</p>
         </div>
-        
+
         <div className="flex flex-wrap gap-4">
           <div className="flex items-center gap-2 bg-black/50 p-1.5 rounded-lg border border-white/10">
-            <button 
+            <button
               onClick={() => setBrainType('corporativo')}
-              className={`px-3 py-1.5 rounded-md text-xs font-mono font-bold transition-all ${brainType === 'corporativo' ? 'bg-[#ecb613] text-black' : 'text-gray-400 hover:text-white'}`}
+              className={`px-3 py-1.5 min-h-[48px] touch-manipulation rounded-md text-xs font-mono font-bold transition-all ${brainType === 'corporativo' ? 'bg-[#ecb613] text-black' : 'text-gray-400 hover:text-white'}`}
             >
               CORPORATIVO
             </button>
-            <button 
+            <button
               onClick={() => setBrainType('artistico')}
-              className={`px-3 py-1.5 rounded-md text-xs font-mono font-bold transition-all ${brainType === 'artistico' ? 'bg-[#ecb613] text-black' : 'text-gray-400 hover:text-white'}`}
+              className={`px-3 py-1.5 min-h-[48px] touch-manipulation rounded-md text-xs font-mono font-bold transition-all ${brainType === 'artistico' ? 'bg-[#ecb613] text-black' : 'text-gray-400 hover:text-white'}`}
             >
               ARTÍSTICO
             </button>
-            <button 
+            <button
               onClick={() => setBrainType('hibrido')}
-              className={`px-3 py-1.5 rounded-md text-xs font-mono font-bold transition-all ${brainType === 'hibrido' ? 'bg-white text-black' : 'text-gray-400 hover:text-white'}`}
+              className={`px-3 py-1.5 min-h-[48px] touch-manipulation rounded-md text-xs font-mono font-bold transition-all ${brainType === 'hibrido' ? 'bg-white text-black' : 'text-gray-400 hover:text-white'}`}
             >
               HÍBRIDO
             </button>
           </div>
 
           <div className="flex items-center gap-2 bg-black/50 p-1.5 rounded-lg border border-white/10">
-            <button 
+            <button
               onClick={() => setOperationMode('consultor')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono transition-all ${operationMode === 'consultor' ? 'bg-[#258DCD] text-white' : 'text-gray-400 hover:text-white'}`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 min-h-[48px] touch-manipulation rounded-md text-xs font-mono transition-all ${operationMode === 'consultor' ? 'bg-[#258DCD] text-white' : 'text-gray-400 hover:text-white'}`}
             >
               <MessageSquare className="w-3.5 h-3.5" /> CHAT / CONSULTOR
             </button>
-            <button 
+            <button
               onClick={() => setOperationMode('generador')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono transition-all ${operationMode === 'generador' ? 'bg-[#258DCD] text-white' : 'text-gray-400 hover:text-white'}`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 min-h-[48px] touch-manipulation rounded-md text-xs font-mono transition-all ${operationMode === 'generador' ? 'bg-[#258DCD] text-white' : 'text-gray-400 hover:text-white'}`}
             >
               <PenTool className="w-3.5 h-3.5" /> EDITOR / GENERADOR
             </button>
@@ -121,17 +121,17 @@ export default function CognitiveModules() {
                 {mod.desc}
               </p>
             </div>
-            
+
             <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center">
               <span className="text-[10px] text-gray-600 font-mono uppercase">Inferencia local</span>
-              <button className="text-xs font-bold text-[#ecb613] opacity-0 group-hover:opacity-100 transition-opacity">
+              <button className="text-xs font-bold text-[#ecb613] min-h-[48px] touch-manipulation opacity-0 group-hover:opacity-100 transition-opacity">
                 Configurar →
               </button>
             </div>
           </div>
         ))}
       </div>
-      
+
     </div>
   );
 }

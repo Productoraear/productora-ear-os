@@ -1,10 +1,25 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { CheckCircle, ShieldCheck, Zap, Mic2, Volume2, Lock, ArrowRight } from 'lucide-react';
-import LaserTunnelFunnel from './LaserTunnelFunnel';
-import AnticipationWidget from './AnticipationWidget';
+
+// Lazy loading del túnel de reserva pesado para no bloquear el primer render.
+const LaserTunnelFunnel = dynamic(() => import('./LaserTunnelFunnel'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full max-w-5xl mx-auto my-12 p-10 rounded-3xl bg-[#0c0c0c] border border-white/10 flex items-center justify-center">
+      <span className="text-xs font-mono text-neutral-400 animate-pulse">Preparando pasarela de reserva S-Class...</span>
+    </div>
+  ),
+});
+
+// Widget de anticipación: se monta de forma diferida en el cliente tras scroll, sin bloquear el LCP.
+const AnticipationWidget = dynamic(() => import('./AnticipationWidget'), {
+  ssr: false,
+  loading: () => null,
+});
 
 interface SemanticBlockRendererProps {
   vertical: string;

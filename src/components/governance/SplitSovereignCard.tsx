@@ -53,7 +53,7 @@ export default function SplitSovereignCard({
 
   return (
     <div
-      className={`rounded-[2rem] border border-white/10 bg-[#030305] p-6 md:p-8 space-y-5 ${className}`}
+      className={`rounded-[2rem] border border-white/10 bg-[#030305] p-6 md:p-8 space-y-5 overflow-x-hidden ${className}`}
     >
       <div className="flex items-center justify-between gap-4">
         <div>
@@ -92,7 +92,7 @@ export default function SplitSovereignCard({
                       backgroundColor: `${row.accent}0a`,
                     }}
                   >
-                    <Icon size={16} />
+                    <Icon size={16} aria-hidden="true" />
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white">{row.label}</p>
@@ -111,7 +111,14 @@ export default function SplitSovereignCard({
                   </p>
                 </div>
               </div>
-              <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+              <div
+                role="progressbar"
+                aria-valuenow={Math.round(row.pct)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label={`${row.label}: ${row.pct.toFixed(0)}%`}
+                className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/5"
+              >
                 <div
                   className="h-full rounded-full"
                   style={{
@@ -132,7 +139,7 @@ export default function SplitSovereignCard({
       />
 
       <p className="flex items-center gap-2 text-[10px] font-mono text-white/40">
-        <Scale size={12} className="text-[#00E5FF]" />
+        <Scale size={12} className="text-[#00E5FF]" aria-hidden="true" />
         El 10% social es deducible, no un canon parasitario. Ley 49/2002 · Modelo 182 AEAT.
       </p>
     </div>

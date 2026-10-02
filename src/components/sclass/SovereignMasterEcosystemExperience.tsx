@@ -2,16 +2,24 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, Flame, Music, ShieldCheck, Heart, 
+import {
+  Sparkles, Flame, Music, ShieldCheck, Heart,
   MapPin, Clock, Star, Sliders, Lock, CheckCircle2,
   ArrowRight, MessageCircle, ChevronRight, ChevronLeft, Share2,
   Tv, Award, Zap, Compass, Building2, Users, FileText,
   Calendar, Eye, Check, ArrowUpRight, Radio, Landmark
 } from 'lucide-react';
 import Link from 'next/link';
-import { InstantNeuralTunnelModal, TunnelProfile } from './InstantNeuralTunnelModal';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import type { TunnelProfile } from './InstantNeuralTunnelModal';
 import { useNeuralTunnelStore } from '@/store/useNeuralTunnelStore';
+
+// Lazy loading del modal pesado: solo se monta al abrir el túnel neural.
+const InstantNeuralTunnelModal = dynamic(
+  () => import('./InstantNeuralTunnelModal').then((mod) => ({ default: mod.InstantNeuralTunnelModal })),
+  { ssr: false, loading: () => null }
+);
 
 export const SOVEREIGN_PROFILES = [
   {
@@ -213,7 +221,7 @@ export const ECOSYSTEM_ITEMS = [
   }
 ];
 
-export function SovereignMasterEcosystemExperience() {
+export const SovereignMasterEcosystemExperience: React.FC = React.memo(function SovereignMasterEcosystemExperience() {
   const [activeCategory, setActiveCategory] = useState<'all' | 'bbq' | 'music' | 'arsenal'>('all');
   const [selectedItem, setSelectedItem] = useState(ECOSYSTEM_ITEMS[0]);
   const [pax, setPax] = useState(80);
@@ -223,8 +231,8 @@ export function SovereignMasterEcosystemExperience() {
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const { openTunnel, isOpen } = useNeuralTunnelStore();
 
-  const filteredItems = activeCategory === 'all' 
-    ? ECOSYSTEM_ITEMS 
+  const filteredItems = activeCategory === 'all'
+    ? ECOSYSTEM_ITEMS
     : ECOSYSTEM_ITEMS.filter(i => i.category === activeCategory);
 
   const scrollSlider = (direction: 'left' | 'right') => {
@@ -235,7 +243,7 @@ export function SovereignMasterEcosystemExperience() {
   };
 
   const isPerPax = selectedItem.unit.includes('Comensal');
-  const totalQuote = isPerPax 
+  const totalQuote = isPerPax
     ? Math.round(selectedItem.price * pax + (distanceKm > 30 ? (distanceKm - 30) * 0.95 : 0))
     : Math.round(selectedItem.price + (distanceKm > 30 ? (distanceKm - 30) * 0.95 : 0));
 
@@ -264,7 +272,7 @@ export function SovereignMasterEcosystemExperience() {
         </p>
 
         <div className="mt-8 flex justify-center">
-          <button 
+          <button
             onClick={openTunnel}
             className="px-9 py-4 bg-gradient-to-r from-[#ecb613] to-[#d4a00e] text-black font-mono font-bold text-xs uppercase tracking-widest rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_40px_rgba(236,182,19,0.35)] flex items-center gap-2.5 border border-amber-300/40 cursor-pointer"
           >
@@ -282,30 +290,30 @@ export function SovereignMasterEcosystemExperience() {
                 key={prof.id}
                 className="p-6 rounded-[2rem] bg-gradient-to-b from-[#111118] via-[#0b0b10] to-[#07070a] border border-white/10 hover:border-[#ecb613]/50 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9),0_0_30px_-5px_rgba(236,182,19,0.15)] transition-all duration-400 group flex flex-col justify-between shadow-2xl relative overflow-hidden"
               >
-                <div 
+                <div
                   className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity bg-cover bg-center pointer-events-none mix-blend-luminosity duration-700"
                   style={{ backgroundImage: `url(${prof.image})` }}
                 />
 
                 <div className="relative z-10 space-y-4">
                   <div className="flex items-center justify-between">
-                    <div 
+                    <div
                       className="p-3 rounded-2xl border backdrop-blur-md"
-                      style={{ 
-                        backgroundColor: `${prof.accentColor}18`, 
+                      style={{
+                        backgroundColor: `${prof.accentColor}18`,
                         borderColor: `${prof.accentColor}40`,
-                        color: prof.accentColor 
+                        color: prof.accentColor
                       }}
                     >
                       <Icon size={20} />
                     </div>
 
-                    <span 
+                    <span
                       className="text-[9px] font-mono font-black uppercase px-3 py-1 rounded-full border backdrop-blur-md"
-                      style={{ 
-                        backgroundColor: `${prof.accentColor}12`, 
+                      style={{
+                        backgroundColor: `${prof.accentColor}12`,
                         borderColor: `${prof.accentColor}35`,
-                        color: prof.accentColor 
+                        color: prof.accentColor
                       }}
                     >
                       {prof.badge}
@@ -381,11 +389,10 @@ export function SovereignMasterEcosystemExperience() {
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id as any)}
-                    className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                      isSelected 
-                        ? 'bg-[#ecb613] text-black shadow-[0_0_20px_rgba(236,182,19,0.3)] font-black' 
+                    className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all flex items-center gap-1.5 cursor-pointer ${isSelected
+                        ? 'bg-[#ecb613] text-black shadow-[0_0_20px_rgba(236,182,19,0.3)] font-black'
                         : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                    }`}
+                      }`}
                   >
                     <Icon size={13} />
                     <span>{cat.label}</span>
@@ -413,7 +420,7 @@ export function SovereignMasterEcosystemExperience() {
           </div>
         </div>
 
-        <div 
+        <div
           ref={sliderRef}
           className="flex gap-6 overflow-x-auto no-scrollbar pb-6 pt-1 snap-x snap-mandatory scroll-smooth"
         >
@@ -423,11 +430,10 @@ export function SovereignMasterEcosystemExperience() {
               <div
                 key={item.id}
                 onClick={() => setSelectedItem(item)}
-                className={`min-w-[300px] sm:min-w-[350px] max-w-[350px] rounded-[2rem] p-5 transition-all duration-300 cursor-pointer snap-start flex flex-col justify-between border relative overflow-hidden group shadow-xl ${
-                  isSelected 
-                    ? 'bg-gradient-to-b from-[#181822] via-[#0f0f15] to-[#0a0a0e] border-[#ecb613] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.9),0_0_30px_rgba(236,182,19,0.2)] scale-[1.02]' 
+                className={`min-w-[300px] sm:min-w-[350px] max-w-[350px] rounded-[2rem] p-5 transition-all duration-300 cursor-pointer snap-start flex flex-col justify-between border relative overflow-hidden group shadow-xl ${isSelected
+                    ? 'bg-gradient-to-b from-[#181822] via-[#0f0f15] to-[#0a0a0e] border-[#ecb613] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.9),0_0_30px_rgba(236,182,19,0.2)] scale-[1.02]'
                     : 'bg-[#0b0b10] border-white/10 hover:border-white/20'
-                }`}
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-3.5">
@@ -442,13 +448,16 @@ export function SovereignMasterEcosystemExperience() {
                   </div>
 
                   <div className="h-44 rounded-2xl overflow-hidden bg-black/60 relative mb-4 border border-white/10">
-                    <img 
-                      src={item.image} 
+                    <Image
+                      src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                      fill
+                      unoptimized
+                      sizes="(max-width: 640px) 100vw, 350px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent" />
-                    
+
                     <div className="absolute bottom-3 left-3 right-3 flex justify-between items-center text-[10px] font-mono text-white">
                       <span className="bg-black/80 px-2.5 py-1 rounded-lg border border-white/10 font-bold backdrop-blur-md">
                         {item.price} € / {item.unit.split(' ')[0]}
@@ -481,11 +490,10 @@ export function SovereignMasterEcosystemExperience() {
                     {item.price} € <span className="text-[10px] font-light text-zinc-400">{item.unit}</span>
                   </span>
 
-                  <button className={`px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase transition-all ${
-                    isSelected 
-                      ? 'bg-[#ecb613] text-black shadow-md font-black' 
+                  <button className={`px-4 py-2 rounded-xl font-mono text-xs font-bold uppercase transition-all ${isSelected
+                      ? 'bg-[#ecb613] text-black shadow-md font-black'
                       : 'bg-white/5 text-white/80 hover:bg-white/15 border border-white/10'
-                  }`}>
+                    }`}>
                     {isSelected ? '✓ Seleccionado' : 'Cotizar'}
                   </button>
                 </div>
@@ -522,11 +530,11 @@ export function SovereignMasterEcosystemExperience() {
                   <span>Número de Invitados / Comensales</span>
                   <span className="text-[#ecb613] font-black text-sm">{pax} PAX</span>
                 </div>
-                <input 
-                  type="range" 
-                  min={20} 
-                  max={400} 
-                  value={pax} 
+                <input
+                  type="range"
+                  min={20}
+                  max={400}
+                  value={pax}
                   onChange={e => setPax(Number(e.target.value))}
                   className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
                 />
@@ -541,11 +549,11 @@ export function SovereignMasterEcosystemExperience() {
                 <span>Distancia Desplazamiento desde Madrid</span>
                 <span className="text-[#ecb613] font-black text-sm">{distanceKm} KM</span>
               </div>
-              <input 
-                type="range" 
-                min={0} 
-                max={300} 
-                value={distanceKm} 
+              <input
+                type="range"
+                min={0}
+                max={300}
+                value={distanceKm}
                 onChange={e => setDistanceKm(Number(e.target.value))}
                 className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
               />
@@ -575,13 +583,12 @@ export function SovereignMasterEcosystemExperience() {
           </div>
 
           <div className="space-y-3.5 pt-2">
-            <div 
+            <div
               onClick={() => setLocked(!locked)}
-              className={`w-full py-4.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${
-                locked 
-                  ? 'bg-emerald-500 text-black shadow-2xl shadow-emerald-500/30' 
+              className={`w-full py-4.5 px-6 rounded-2xl font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-between cursor-pointer transition-all ${locked
+                  ? 'bg-emerald-500 text-black shadow-2xl shadow-emerald-500/30'
                   : 'bg-gradient-to-r from-[#ecb613] via-amber-400 to-[#d4a00e] text-black shadow-[0_0_40px_rgba(236,182,19,0.35)] hover:brightness-110 active:scale-98'
-              }`}
+                }`}
             >
               <div className="flex items-center gap-2.5">
                 <Lock size={18} />
@@ -606,6 +613,6 @@ export function SovereignMasterEcosystemExperience() {
       <InstantNeuralTunnelModal />
     </div>
   );
-}
+});
 
 export default SovereignMasterEcosystemExperience;

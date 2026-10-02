@@ -26,7 +26,7 @@ export default function TransmutationGesture({
     if (typeof window !== 'undefined' && 'vibrate' in navigator) {
       try {
         navigator.vibrate(pattern);
-      } catch {}
+      } catch { }
     }
   };
 
@@ -124,7 +124,7 @@ export default function TransmutationGesture({
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center bg-black/60 backdrop-blur-md animate-in fade-in duration-200 overflow-x-hidden overflow-y-auto p-4">
       <div className="flex flex-col items-center gap-5 p-8 rounded-3xl bg-black/85 border border-white/15 shadow-[0_0_80px_rgba(236,182,19,0.3)] text-center max-w-xs mx-4">
         {/* Anillo de Carga Radial Cinemático */}
         <div className="relative w-32 h-32 flex items-center justify-center">

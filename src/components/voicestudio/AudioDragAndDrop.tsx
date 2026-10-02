@@ -1,6 +1,14 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import React, {
+  Component,
+  Suspense,
+  useCallback,
+  useRef,
+  useState,
+  type ErrorInfo,
+  type ReactNode,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   AudioLines,
@@ -14,6 +22,34 @@ import {
   uploadArtistAudio,
   type AudioAnalysis,
 } from "@/modules/audio/actions/audioMediaActions";
+
+class AudioDragAndDropErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[AudioDragAndDrop] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const AudioDragAndDropFallback: React.FC = () => (
+  <div className="rounded-3xl border border-white/10 bg-[#050507] p-6 text-center text-xs text-white/70">
+    Módulo de ingesta de audio temporalmente no disponible.
+  </div>
+);
 
 type AudioRole = "stem" | "master";
 
@@ -29,7 +65,7 @@ interface UploadItem {
 
 const ACCEPTED_MIME = ["audio/wav", "audio/flac", "audio/mpeg"];
 
-export default function AudioDragAndDrop({
+function AudioDragAndDropContent({
   artistId = "edwin-agudelo",
 }: {
   artistId?: string;
@@ -263,3 +299,13 @@ function fileToBase64(file: File): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
+
+export default function AudioDragAndDrop(props: { artistId?: string }) {
+  return (
+    <AudioDragAndDropErrorBoundary fallback={<AudioDragAndDropFallback />}>
+      <Suspense fallback={<AudioDragAndDropFallback />}>
+        <AudioDragAndDropContent {...props} />
+      </Suspense>
+    </AudioDragAndDropErrorBoundary>
+  );
+}

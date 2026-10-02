@@ -1,9 +1,45 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, {
+  Component,
+  Suspense,
+  useRef,
+  useState,
+  useEffect,
+  type ErrorInfo,
+  type ReactNode,
+} from "react";
 import { motion } from "framer-motion";
 import { Play, Pause, Mic2, Check, Sparkles, Radio } from "lucide-react";
 import { EAR_VOICE_PROFILES, type VoiceProfile } from "@/lib/audio/voiceStudioEngine";
+
+class VoiceTimbreSelectorErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[VoiceTimbreSelector] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const VoiceTimbreSelectorFallback: React.FC = () => (
+  <div className="w-full rounded-2xl border border-white/10 bg-[#0D0D15] p-6 text-center text-xs text-white/70">
+    Selector de timbre de voz temporalmente no disponible.
+  </div>
+);
 
 const SAMPLE_LIMIT_SECONDS = 15;
 
@@ -50,7 +86,7 @@ interface VoiceTimbreSelectorProps {
   onChange: (timbreId: string) => void;
 }
 
-export default function VoiceTimbreSelector({ value, onChange }: VoiceTimbreSelectorProps) {
+function VoiceTimbreSelectorContent({ value, onChange }: VoiceTimbreSelectorProps) {
   const [selectedId, setSelectedId] = useState<string | null>(value ?? null);
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
@@ -207,3 +243,13 @@ export default function VoiceTimbreSelector({ value, onChange }: VoiceTimbreSele
     </div>
   );
 }
+
+export default function VoiceTimbreSelector(props: VoiceTimbreSelectorProps) {
+  return (
+    <VoiceTimbreSelectorErrorBoundary fallback={<VoiceTimbreSelectorFallback />}>
+      <Suspense fallback={<VoiceTimbreSelectorFallback />}>
+        <VoiceTimbreSelectorContent {...props} />
+      </Suspense>
+    </VoiceTimbreSelectorErrorBoundary>
+  );
+}

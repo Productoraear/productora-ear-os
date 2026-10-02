@@ -35,10 +35,10 @@ const command = process.argv[2];
 if (command === 'next') {
     const data = readJSON(QUEUE_FILE);
 
-    // Auto-purga más agresiva: Cada 5 tareas para proteger la GPU
+    // Auto-purga inmediata: mantiene el JSON en tamaño mínimo (< 5 KB)
     const completedTasks = data.tasks.filter(t => t.status === 'COMPLETED');
-    if (completedTasks.length >= 5) {
-        console.log(`[⚡ OMEGA ENGINE] Limpieza Táctica Extrema: Purgando ${completedTasks.length} tareas completadas...`);
+    if (completedTasks.length > 0) {
+        console.log(`[⚡ OMEGA ENGINE] Limpieza ZTM: Purgando ${completedTasks.length} tareas completadas para evitar inflación de tokens...`);
         data.tasks = data.tasks.filter(t => t.status !== 'COMPLETED');
         writeJSON(QUEUE_FILE, data);
     }
@@ -85,19 +85,16 @@ if (command === 'next') {
         updateJournal(data);
 
         console.log(`\n🚀 TAREA ${taskId} SELLADA Y REGISTRADA EN LA BLOCKCHAIN INTERNA.`);
-        const metaModel = (data._meta?.model || '').toLowerCase();
-        const isLocalModel = metaModel.includes('ollama') || metaModel.includes('qwen') || metaModel.includes('local') || process.env.EAR_LOCAL_MODEL === '1';
-
-        if (isLocalModel) {
-            console.log("🛡️ MODO LOCAL DETECTADO (PROTECCIÓN GPU & ZTM):");
-            console.log("   1. Para proteger la VRAM y evitar saturación de tokens, abre New Task (+).");
-            console.log("   2. Pega tu plantilla de prompt e inicia con: node .antigravity/omega.js next\n");
-        } else {
-            console.log("⚡ MODO ONLINE / FRONTIER DETECTADO (DEEPSEEK / CLAUDE / GEMINI 100K+ LIBERADO):");
-            console.log("   CONTINUIDAD TOTAL: NO TE DETENGAS.");
-            console.log("   Ejecuta INMEDIATAMENTE: node .antigravity/omega.js next");
-            console.log("   Continúa en bucle autónomo hasta que la terminal anuncie: '🏁 WAVE COMPLETADA AL 100%'.\n");
-        }
+        console.log("════════════════════════════════════════════════════════════════════════════════");
+        console.log("🛑 [PACTO SAGRADO ANTI-SOBRECOSTES — PROTOCOLO ZTM ACTIVO]");
+        console.log("════════════════════════════════════════════════════════════════════════════════");
+        console.log("⚠️  PARADA OBLIGATORIA: PROHIBIDO CONTINUAR EN ESTA MISMA SESIÓN DE CHAT.");
+        console.log("    Cada iteración adicional reenvía todo el historial y genera sobrecostes masivos.");
+        console.log("    INSTRUCCIÓN INMUTABLE PARA CLINE / EL OBRERO:");
+        console.log("    1. DETENTE AQUÍ Y REPORTA AL CEO.");
+        console.log("    2. Clic en 'Start New Task' (+) en la pestaña de Cline.");
+        console.log("    3. En la nueva sesión (0 tokens acumulados), ejecuta: node .antigravity/omega.js next");
+        console.log("════════════════════════════════════════════════════════════════════════════════\n");
 
     } catch (error) {
         console.error("\n❌ ALARMA: CÓDIGO MEDIOCRE O ROTO.");

@@ -15,9 +15,9 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-[#050505] text-[#C6C6C6] font-sans selection:bg-[#F2CA50] selection:text-[#050505]">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-[#C6C6C6] font-sans selection:bg-[#F2CA50] selection:text-[#050505]">
       <Navbar />
-      <main className="pt-16 pb-20">{children}</main>
+      <main className="pt-16 pb-20 w-full max-w-full overflow-x-hidden">{children}</main>
       <Footer />
     </div>
   );

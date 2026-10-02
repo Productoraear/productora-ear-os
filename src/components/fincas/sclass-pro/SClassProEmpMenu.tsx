@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  LayoutDashboard, 
-  Inbox, 
-  Store, 
-  Star, 
-  GraduationCap, 
-  Receipt, 
-  ShieldCheck, 
-  Phone, 
-  Sparkles, 
+import {
+  LayoutDashboard,
+  Inbox,
+  Store,
+  Star,
+  GraduationCap,
+  Receipt,
+  ShieldCheck,
+  Phone,
+  Sparkles,
   ExternalLink,
   ChevronRight,
   UserCheck,
@@ -42,11 +42,11 @@ export function SClassProEmpMenu({ initialTab = "dashboard" }: SClassProEmpMenuP
   ];
 
   return (
-    <div className="min-h-screen bg-[#030305] text-white flex flex-col selection:bg-[#ecb613] selection:text-black">
+    <div className="min-h-screen bg-[#030305] text-white flex flex-col selection:bg-[#ecb613] selection:text-black overflow-x-hidden">
       {/* Top Cockpit Header Bar */}
       <header className="sticky top-0 z-40 bg-[#060609]/95 backdrop-blur-md border-b border-zinc-800/80 px-4 lg:px-8 py-3.5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
-          
+
           {/* Brand & Vendor Badge */}
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#ecb613] to-[#8a6805] p-0.5 shadow-lg shadow-[#ecb613]/10">
@@ -54,7 +54,7 @@ export function SClassProEmpMenu({ initialTab = "dashboard" }: SClassProEmpMenuP
                 EAR
               </div>
             </div>
-            
+
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-base font-bold font-['Syne'] text-white">
@@ -113,21 +113,20 @@ export function SClassProEmpMenu({ initialTab = "dashboard" }: SClassProEmpMenuP
               <button
                 key={tab.id}
                 onClick={() => setCurrentTab(tab.id as ProTabId)}
-                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-xs font-mono whitespace-nowrap transition border ${
-                  isActive
+                aria-pressed={isActive}
+                className={`flex items-center gap-2.5 px-4 py-2.5 min-h-[48px] rounded-xl text-xs font-mono whitespace-nowrap transition border ${isActive
                     ? "bg-[#ecb613] text-black border-[#ecb613] font-bold shadow-lg shadow-[#ecb613]/10"
                     : "bg-zinc-900/40 text-zinc-400 border-zinc-800/60 hover:text-zinc-200 hover:bg-zinc-800/50"
-                }`}
+                  }`}
               >
                 <Icon className={`w-4 h-4 ${isActive ? "text-black" : "text-[#ecb613]"}`} />
                 <span>{tab.label}</span>
                 {tab.badge && (
                   <span
-                    className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
-                      isActive
+                    className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${isActive
                         ? "bg-black/20 text-black font-semibold"
                         : "bg-zinc-800 text-zinc-300 border border-zinc-700/50"
-                    }`}
+                      }`}
                   >
                     {tab.badge}
                   </span>

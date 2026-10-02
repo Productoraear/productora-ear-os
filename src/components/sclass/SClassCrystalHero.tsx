@@ -2,23 +2,23 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Sparkles, 
-  Volume2, 
-  VolumeX, 
-  Play, 
-  Pause, 
-  ShieldCheck, 
-  Sliders, 
-  Phone, 
-  ArrowRight, 
-  Calendar, 
-  Star, 
-  Music, 
-  ChevronLeft, 
-  ChevronRight, 
-  Zap, 
-  Building2, 
+import {
+  Sparkles,
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
+  ShieldCheck,
+  Sliders,
+  Phone,
+  ArrowRight,
+  Calendar,
+  Star,
+  Music,
+  ChevronLeft,
+  ChevronRight,
+  Zap,
+  Building2,
   CheckCircle2,
   Lock,
   ExternalLink
@@ -26,7 +26,7 @@ import {
 import Link from "next/link";
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from "@/lib/constants/fincas-catalog";
 
-export default function SClassCrystalHero() {
+export default React.memo(function SClassCrystalHero() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [activeFincaIndex, setActiveFincaIndex] = useState(0);
@@ -85,7 +85,7 @@ export default function SClassCrystalHero() {
 
   return (
     <section className="relative w-full max-w-full overflow-hidden bg-[#030305] text-white pt-2 sm:pt-4 pb-16 selection:bg-[#ecb613] selection:text-black">
-      
+
       {/* Background Refractive Crystal Gradient */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] pointer-events-none overflow-hidden">
         <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-[#ecb613]/10 rounded-full blur-[140px] crystal-aura-wave" />
@@ -94,12 +94,12 @@ export default function SClassCrystalHero() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        
+
         {/* ========================================================================= */}
         {/* 1. RESTRICTED EDITORIAL HEADER (SYNE DISPLAY + JETBRAINS MONO TELEMETRY) */}
         {/* ========================================================================= */}
         <div className="flex flex-col items-center text-center space-y-4 max-w-4xl mx-auto">
-          
+
           {/* Top Crystal Pill Badge */}
           <div className="crystal-pill-badge crystal-glass-fx-gold animate-in fade-in slide-in-from-top-4 duration-500">
             <span className="w-2 h-2 rounded-full bg-[#ecb613] animate-ping" />
@@ -147,9 +147,9 @@ export default function SClassCrystalHero() {
         {/* 2. ATMOSPHERIC CENTERPIECE (LIVING CRYSTAL PERFORMANCE FRAME)            */}
         {/* ========================================================================= */}
         <div className="relative rounded-[2.5rem] overflow-hidden crystal-glass-fx border border-white/10 p-2 sm:p-4 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9)]">
-          
+
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[2rem] overflow-hidden bg-black flex items-center justify-center group">
-            
+
             {/* Ambient Video / Loop Element */}
             <video
               ref={videoRef}
@@ -159,6 +159,7 @@ export default function SClassCrystalHero() {
               loop
               autoPlay
               playsInline
+              preload="metadata"
               className="w-full h-full object-cover opacity-80 group-hover:scale-[1.01] transition-transform duration-1000 ease-out pointer-events-none"
             />
 
@@ -168,7 +169,7 @@ export default function SClassCrystalHero() {
 
             {/* Floating Top Media Controls */}
             <div className="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between pointer-events-auto z-20">
-              
+
               <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full crystal-glass-fx text-xs font-mono text-zinc-300">
                 <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                 <span>DIRECTO • EDWIN AGUDELO S-CLASS</span>
@@ -197,7 +198,7 @@ export default function SClassCrystalHero() {
 
             {/* Floating Acoustic Selector Overlay (Ceremonia, Cóctel, Banquete) */}
             <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6 flex flex-col md:flex-row md:items-end justify-between gap-4 z-20">
-              
+
               <div className="space-y-1.5 max-w-md bg-black/60 backdrop-blur-xl p-4 rounded-2xl border border-white/10">
                 <div className="flex items-center gap-2 text-[#ecb613] text-xs font-mono font-bold uppercase">
                   <Music className="w-3.5 h-3.5" />
@@ -220,11 +221,10 @@ export default function SClassCrystalHero() {
                     key={mode}
                     type="button"
                     onClick={() => setActiveAcousticMode(mode)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold capitalize transition-all ${
-                      activeAcousticMode === mode
+                    className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold capitalize transition-all ${activeAcousticMode === mode
                         ? "bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20"
                         : "text-zinc-400 hover:text-white"
-                    }`}
+                      }`}
                   >
                     {mode}
                   </button>
@@ -279,7 +279,7 @@ export default function SClassCrystalHero() {
           {/* Active Finca Spotlight Card */}
           {fincas[activeFincaIndex] && (
             <div className="p-6 rounded-3xl crystal-glass-fx border border-zinc-800 bg-gradient-to-br from-[#0c0c12] via-[#08080c] to-[#040406] grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              
+
               <div className="lg:col-span-8 space-y-3">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="px-2.5 py-0.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono font-bold uppercase">
@@ -382,4 +382,4 @@ export default function SClassCrystalHero() {
       </div>
     </section>
   );
-}
+});

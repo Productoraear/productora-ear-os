@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { Component, Suspense, useMemo, useState, type ErrorInfo, type ReactNode } from 'react';
 import {
   UserRound,
   HeartPulse,
@@ -25,6 +25,34 @@ interface VimumePatientDossierProps {
   patient: VimumePatientRecord;
   className?: string;
 }
+
+class PatientDossierErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumePatientDossier] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const PatientDossierFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 text-center text-xs text-white/70">
+    Ficha Clínica VIMUME temporalmente no disponible.
+  </div>
+);
 
 const MILESTONE_META: Record<ClinicalMilestoneType, { label: string; icon: LucideIcon; accent: string }> = {
   SPEECH_RECOVERY: { label: 'Habla Recuperada', icon: Brain, accent: '#00E5FF' },
@@ -52,7 +80,9 @@ export default function VimumePatientDossier({ patient, className = '' }: Vimume
   const activeTrack = patient.vitalSoundtrack.find((t) => t.id === selectedTrack) ?? null;
 
   return (
-    <div className={`relative overflow-hidden rounded-3xl border border-[#8b5cf6]/25 bg-[#030305] p-6 text-white ${className}`}>
+    <PatientDossierErrorBoundary fallback={<PatientDossierFallback />}>
+      <Suspense fallback={<PatientDossierFallback />}>
+        <div className={`relative overflow-hidden rounded-3xl border border-[#8b5cf6]/25 bg-[#030305] p-6 text-white ${className}`}>
       <div className="absolute top-0 left-0 w-96 h-96 bg-[#8b5cf6]/10 blur-[120px] pointer-events-none" />
       <div className="relative z-10 space-y-6">
         {/* Cabecera del paciente */}
@@ -179,8 +209,10 @@ export default function VimumePatientDossier({ patient, className = '' }: Vimume
             </p>
           )}
         </div>
-      </div>
-    </div>
+          </div>
+        </div>
+      </Suspense>
+    </PatientDossierErrorBoundary>
   );
 }
 

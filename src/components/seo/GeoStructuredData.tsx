@@ -16,7 +16,7 @@ interface GeoStructuredDataProps {
  * Genera microdatos JSON-LD de alta densidad para Google Rich Results, ChatGPT Search,
  * Perplexity y Gemini con alcance en España y Europa.
  */
-export const GeoStructuredData: React.FC<GeoStructuredDataProps> = ({
+export const GeoStructuredData: React.FC<GeoStructuredDataProps> = React.memo(({
   pageType = 'general',
   title = 'Productora EAR | Espectáculos, Música en Directo y Audiovisuales',
   description = 'Producción audiovisual, música en vivo, mariachi de gala y alquiler de pantallas LED en España y Europa. Tarifa base Solista 350€, Quinteto Mariachi 750€.',
@@ -281,4 +281,4 @@ export const GeoStructuredData: React.FC<GeoStructuredDataProps> = ({
       )}
     </>
   );
-};
+});

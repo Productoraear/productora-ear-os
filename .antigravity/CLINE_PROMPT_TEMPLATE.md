@@ -8,7 +8,7 @@
 #
 # ═══════════════════════════════════════════════════════════════════════════════
 
-## PROTOCOLO DE EJECUCIÓN (BUCLE INFINITO HASTA WAVE COMPLETADA)
+## PROTOCOLO DE EJECUCIÓN (PACTO ANTI-SOBRECOSTES: 1 TAREA POR SESIÓN)
 
 ```
 1. Ejecuta: node .antigravity/omega.js next
@@ -18,8 +18,8 @@
 5. Tu código DEBE importar del motor real. PROHIBIDO hardcodear datos
 6. Ejecuta: node .antigravity/omega.js complete <W0X-00Y>
 7. Si falla (Exit Code ≠ 0), corrige y reintenta UNA vez
-8. Vuelve al paso 1
-9. Si el terminal dice "🏁 WAVE COMPLETADA", DETENTE
+8. Si valida con éxito (Exit Code 0): ¡DETENTE! Prohibido ejecutar 'next' aquí.
+9. Clic en 'Start New Task' (+) en Cline para liberar memoria a 0 tokens y volver al paso 1.
 ```
 
 ## REGLAS INMUTABLES (ROMPER = VETO ESTRATÉGICO)

@@ -1,8 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {
+  Component,
+  Suspense,
+  useState,
+  type ErrorInfo,
+  type ReactNode,
+} from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Film, Loader2, Lock, ShieldCheck, CheckCircle2 } from "lucide-react";
+
+class DigitalPayButtonErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[DigitalPayButton] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const DigitalPayButtonFallback: React.FC = () => (
+  <div className="w-full rounded-2xl border border-white/10 bg-[#0D0D15] p-5 text-center text-xs text-white/70">
+    Botón de pago digital temporalmente no disponible.
+  </div>
+);
 
 type SongTier = "standard_49" | "cinematic_99";
 
@@ -53,7 +87,7 @@ const TIERS: {
   },
 ];
 
-export default function DigitalPayButton({ details, onCheckoutComplete }: DigitalPayButtonProps) {
+function DigitalPayButtonContent({ details, onCheckoutComplete }: DigitalPayButtonProps) {
   const [loadingTier, setLoadingTier] = useState<SongTier | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<CheckoutResponse["checkout"] | null>(null);
@@ -180,3 +214,13 @@ export default function DigitalPayButton({ details, onCheckoutComplete }: Digita
     </div>
   );
 }
+
+export default function DigitalPayButton(props: DigitalPayButtonProps) {
+  return (
+    <DigitalPayButtonErrorBoundary fallback={<DigitalPayButtonFallback />}>
+      <Suspense fallback={<DigitalPayButtonFallback />}>
+        <DigitalPayButtonContent {...props} />
+      </Suspense>
+    </DigitalPayButtonErrorBoundary>
+  );
+}

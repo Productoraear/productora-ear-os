@@ -9,9 +9,9 @@ interface CouponProps {
   isSolistaSelected?: boolean;
 }
 
-export const CouponBono150Complementos: React.FC<CouponProps> = ({ 
+export const CouponBono150Complementos: React.FC<CouponProps> = React.memo(({
   className = "",
-  isSolistaSelected = true 
+  isSolistaSelected = true
 }) => {
   const [copied, setCopied] = useState(false);
   const couponCode = "EDWIN150-COMPLEMENTOS";
@@ -30,7 +30,7 @@ export const CouponBono150Complementos: React.FC<CouponProps> = ({
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-600/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
       <div className="relative z-10 space-y-6">
-        
+
         {/* Header Badge & Title */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#ecb613]/20">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ecb613]/20 border border-[#ecb613]/40 text-[#ecb613] text-xs font-black uppercase tracking-widest font-mono">
@@ -107,7 +107,7 @@ export const CouponBono150Complementos: React.FC<CouponProps> = ({
 
         {/* Coupon Code & WhatsApp Apply Button */}
         <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-black/60 p-4 rounded-2xl border border-white/10">
-          
+
           {/* Coupon Code with Copy Button */}
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono text-white/60 uppercase">CÓDIGO:</span>
@@ -142,4 +142,4 @@ export const CouponBono150Complementos: React.FC<CouponProps> = ({
       </div>
     </div>
   );
-};
+});

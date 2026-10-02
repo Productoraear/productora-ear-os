@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from 'react';
+import Image from 'next/image';
 import {
     Sparkles,
     CheckCircle2,
@@ -98,7 +99,7 @@ function toProviderCalibration(p: CanonicalProviderService): ProviderServiceCali
 
 const formatEuro = (n: number): string => `${n.toLocaleString('es-ES')} €`;
 
-export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps> = ({
+export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps> = React.memo(({
     providers,
     coupleCalibration,
     onSelectProvider
@@ -197,8 +198,8 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                                     key={cat}
                                     onClick={() => setSelectedCategory(cat)}
                                     className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${isSelected
-                                            ? 'bg-[#ecb613] text-black font-semibold shadow-lg shadow-[#ecb613]/20 scale-105'
-                                            : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5'
+                                        ? 'bg-[#ecb613] text-black font-semibold shadow-lg shadow-[#ecb613]/20 scale-105'
+                                        : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10 border border-white/5'
                                         }`}
                                 >
                                     {cat}
@@ -274,9 +275,11 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                     {activeSwipeProvider ? (
                         <div className="relative rounded-3xl overflow-hidden bg-gradient-to-b from-[#101018] to-[#07070b] border border-white/10 shadow-2xl p-4 space-y-4">
                             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-900">
-                                <img
+                                <Image
                                     src={activeSwipeProvider.img || activeSwipeProvider.imageUrls[0]}
                                     alt={activeSwipeProvider.name}
+                                    fill
+                                    unoptimized
                                     className="w-full h-full object-cover"
                                 />
                                 <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono text-white flex items-center gap-1">
@@ -347,9 +350,11 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                                 <div>
                                     {/* Imagen de Cabecera */}
                                     <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900">
-                                        <img
+                                        <Image
                                             src={p.img || p.imageUrls[0]}
                                             alt={p.name}
+                                            fill
+                                            unoptimized
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c14] via-transparent to-transparent opacity-80" />
@@ -507,10 +512,10 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
                                         <span className="text-zinc-300 truncate max-w-[240px]">{d.label}</span>
                                         <span
                                             className={`font-bold ${d.matchPercent >= 80
-                                                    ? 'text-emerald-400'
-                                                    : d.matchPercent >= 50
-                                                        ? 'text-[#ecb613]'
-                                                        : 'text-zinc-500'
+                                                ? 'text-emerald-400'
+                                                : d.matchPercent >= 50
+                                                    ? 'text-[#ecb613]'
+                                                    : 'text-zinc-500'
                                                 }`}
                                         >
                                             {d.matchPercent}%
@@ -535,4 +540,4 @@ export const NeuralProviderTinderMatch: React.FC<NeuralProviderTinderMatchProps>
             )}
         </div>
     );
-};
+});

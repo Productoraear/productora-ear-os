@@ -1,19 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { 
-  Receipt, 
-  CreditCard, 
-  ShieldCheck, 
-  Download, 
-  ArrowUpRight, 
-  FileText, 
-  DollarSign, 
-  CheckCircle2, 
-  Clock, 
-  Building2, 
-  Sparkles, 
-  Copy, 
+import {
+  Receipt,
+  CreditCard,
+  ShieldCheck,
+  Download,
+  ArrowUpRight,
+  FileText,
+  DollarSign,
+  CheckCircle2,
+  Clock,
+  Building2,
+  Sparkles,
+  Copy,
   ExternalLink,
   Percent,
   Plus
@@ -105,7 +105,7 @@ export function ProBillingTab() {
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-300">
+    <div className="space-y-8 animate-in fade-in duration-300 overflow-x-hidden">
       {/* Top Value Comparison Banner */}
       <div className="p-6 lg:p-8 rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-[#0c0c12] via-[#08080c] to-[#040406] space-y-4 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -157,7 +157,7 @@ export function ProBillingTab() {
 
       {/* Grid: Left Stripe Generator / Right Invoices List */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Left Form: Stripe Price-Lock 100€ Link Generator */}
         <div className="lg:col-span-5 p-6 rounded-2xl border border-[#ecb613]/25 bg-[#08080c] space-y-5">
           <div className="flex items-center gap-2 text-white font-bold text-sm font-['Syne']">
@@ -286,16 +286,17 @@ export function ProBillingTab() {
 
       {/* Modal / Card: Certificado Modelo 182 AEAT */}
       {showCertificateModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="max-w-xl w-full rounded-2xl border border-[#ecb613]/50 bg-[#08080c] p-6 lg:p-8 space-y-5 shadow-2xl relative">
+        <div role="presentation" className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Certificado fiscal Modelo 182 AEAT" className="max-w-xl w-full rounded-2xl border border-[#ecb613]/50 bg-[#08080c] p-6 lg:p-8 space-y-5 shadow-2xl relative">
             <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
               <div className="flex items-center gap-2 text-white font-bold text-base font-['Syne']">
-                <FileText className="w-5 h-5 text-[#ecb613]" />
+                <FileText className="w-5 h-5 text-[#ecb613]" aria-hidden="true" />
                 Certificado Fiscal Modelo 182 AEAT (Ley 49/2002)
               </div>
               <button
                 onClick={() => setShowCertificateModal(false)}
-                className="text-zinc-400 hover:text-white text-xs font-mono px-2 py-1 rounded bg-zinc-900"
+                aria-label="Cerrar certificado fiscal"
+                className="text-zinc-400 hover:text-white text-xs font-mono px-4 py-2.5 rounded bg-zinc-900"
               >
                 Cerrar ✕
               </button>

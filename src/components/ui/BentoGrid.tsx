@@ -5,7 +5,7 @@ interface BentoGridProps {
   compact?: boolean;
 }
 
-const BentoGrid: React.FC<BentoGridProps> = ({ items, compact }) => {
+const BentoGrid: React.FC<BentoGridProps> = React.memo(({ items, compact }) => {
   return (
     <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ${compact ? 'gap-2' : ''}`}>
       {items.map((item, index) => (
@@ -15,6 +15,6 @@ const BentoGrid: React.FC<BentoGridProps> = ({ items, compact }) => {
       ))}
     </div>
   );
-};
+});
 
 export default BentoGrid;

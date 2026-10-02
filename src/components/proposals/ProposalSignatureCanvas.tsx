@@ -17,7 +17,7 @@ interface ProposalSignatureCanvasProps {
   onCancelar: () => void;
 }
 
-export function ProposalSignatureCanvas({
+export const ProposalSignatureCanvas = React.memo(function ProposalSignatureCanvas({
   token,
   totalFormateado,
   onFirmadoExitoso,
@@ -221,11 +221,10 @@ export function ProposalSignatureCanvas({
           <button
             onClick={handleConfirmSignature}
             disabled={!hasStroke || submitting}
-            className={`flex-1 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${
-              hasStroke && !submitting
-                ? 'bg-[#ecb613] text-black hover:bg-[#d8a40f] shadow-lg shadow-[#ecb613]/20 cursor-pointer'
-                : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
-            }`}
+            className={`flex-1 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${hasStroke && !submitting
+              ? 'bg-[#ecb613] text-black hover:bg-[#d8a40f] shadow-lg shadow-[#ecb613]/20 cursor-pointer'
+              : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
+              }`}
           >
             {submitting ? (
               'Guardando...'
@@ -240,4 +239,4 @@ export function ProposalSignatureCanvas({
       </div>
     </div>
   );
-}
+});

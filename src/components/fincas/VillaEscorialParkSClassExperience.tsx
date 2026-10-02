@@ -48,7 +48,7 @@ interface ExperienceProps {
 export default function VillaEscorialParkSClassExperience({ initialTelemetry }: ExperienceProps) {
   const [telemetry, setTelemetry] = useState<VillaEscorialTelemetry | null>(initialTelemetry || null);
   const [loading, setLoading] = useState(!initialTelemetry);
-  
+
   // Modos de reserva: 'WEEKEND' (Fin de semana 4.500€) | 'CUSTOM' (Todo el año día a día)
   const [activeMode, setActiveMode] = useState<'WEEKEND' | 'CUSTOM'>('WEEKEND');
   const [selectedSlot, setSelectedSlot] = useState<VillaWeekendSlot | null>(null);
@@ -207,12 +207,12 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
     activeMode === 'WEEKEND' && selectedSlot
       ? `Hola Edwin, deseo consultar disponibilidad para el fin de semana (${selectedSlot.label}) en Villa Escorial Park (4.500€ de Viernes 14:00h a Domingo 14:00h).`
       : customCheckIn && customCheckOut && customCalculation
-      ? `Hola Edwin, deseo reservar Villa Escorial Park para las fechas del ${customCheckIn} al ${customCheckOut} (${customCalculation.totalNights} noches, ${customCalculation.totalPriceEur}€).`
-      : `Hola Edwin, deseo consultar fechas para alquilar Villa Escorial Park durante el año.`
+        ? `Hola Edwin, deseo reservar Villa Escorial Park para las fechas del ${customCheckIn} al ${customCheckOut} (${customCalculation.totalNights} noches, ${customCalculation.totalPriceEur}€).`
+        : `Hola Edwin, deseo consultar fechas para alquilar Villa Escorial Park durante el año.`
   );
 
   return (
-    <div className="w-full bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black font-sans pb-24">
+    <div className="w-full bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black font-sans pb-24 overflow-x-hidden">
       {/* 👑 BREADCRUMB SOBERANO */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-2">
         <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
@@ -255,7 +255,7 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
               VILLA ESCORIAL PARK
             </h1>
             <p className="text-sm sm:text-base md:text-lg text-zinc-300 font-light leading-relaxed">
-              Exclusiva mansión y finca privada de 20.000 m² con 3.000 m² de jardines arbolados a los pies de San Lorenzo de El Escorial. 
+              Exclusiva mansión y finca privada de 20.000 m² con 3.000 m² de jardines arbolados a los pies de San Lorenzo de El Escorial.
               <strong className="text-white"> Alquiler íntegro todo el año</strong>: fines de semana completos, escapadas de domingo a jueves, semanas completas, retiros y celebraciones privadas.
             </p>
 
@@ -310,9 +310,8 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
               <button
                 key={i}
                 onClick={() => setActivePhotoIdx(i)}
-                className={`relative shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${
-                  activePhotoIdx === i ? 'border-[#ecb613] scale-105' : 'border-transparent opacity-60 hover:opacity-100'
-                }`}
+                className={`relative shrink-0 w-16 h-12 rounded-lg overflow-hidden border-2 transition-all ${activePhotoIdx === i ? 'border-[#ecb613] scale-105' : 'border-transparent opacity-60 hover:opacity-100'
+                  }`}
               >
                 <img src={img.url} alt={img.title} className="w-full h-full object-cover" />
               </button>
@@ -343,24 +342,24 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
           <div className="inline-flex p-1 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-xs font-mono">
             <button
               onClick={() => setActiveMode('WEEKEND')}
-              className={`px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${
-                activeMode === 'WEEKEND'
+              aria-pressed={activeMode === 'WEEKEND'}
+              className={`px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeMode === 'WEEKEND'
                   ? 'bg-[#ecb613] text-black shadow-md'
                   : 'text-zinc-400 hover:text-white'
-              }`}
+                }`}
             >
-              <Calendar className="w-4 h-4" />
+              <Calendar className="w-4 h-4" aria-hidden="true" />
               Fin de Semana (4.500 €)
             </button>
             <button
               onClick={() => setActiveMode('CUSTOM')}
-              className={`px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${
-                activeMode === 'CUSTOM'
+              aria-pressed={activeMode === 'CUSTOM'}
+              className={`px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeMode === 'CUSTOM'
                   ? 'bg-[#ecb613] text-black shadow-md'
                   : 'text-zinc-400 hover:text-white'
-              }`}
+                }`}
             >
-              <Sun className="w-4 h-4" />
+              <Sun className="w-4 h-4" aria-hidden="true" />
               Todo el Año (365 Días)
             </button>
           </div>
@@ -388,13 +387,12 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
                       <div
                         key={slot.weekendId}
                         onClick={() => slot.isAvailable && setSelectedSlot(slot)}
-                        className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${
-                          !slot.isAvailable
+                        className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${!slot.isAvailable
                             ? 'border-white/5 bg-[#050507] opacity-40 cursor-not-allowed'
                             : isSelected
-                            ? 'border-[#ecb613] bg-[#ecb613]/10 shadow-lg shadow-[#ecb613]/10'
-                            : 'border-white/10 bg-[#08080c] hover:border-white/30 hover:bg-[#0c0c12]'
-                        }`}
+                              ? 'border-[#ecb613] bg-[#ecb613]/10 shadow-lg shadow-[#ecb613]/10'
+                              : 'border-white/10 bg-[#08080c] hover:border-white/30 hover:bg-[#0c0c12]'
+                          }`}
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div>
@@ -404,11 +402,10 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
                             </span>
                           </div>
                           <span
-                            className={`px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider ${
-                              slot.isAvailable
+                            className={`px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider ${slot.isAvailable
                                 ? 'bg-emerald-950 text-emerald-400 border border-emerald-800'
                                 : 'bg-zinc-800 text-zinc-500'
-                            }`}
+                              }`}
                           >
                             {slot.isAvailable ? 'DISPONIBLE' : 'OCUPADO'}
                           </span>
@@ -505,9 +502,10 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
                   <button
                     onClick={() => setCalendarMonthOffset((prev) => Math.max(0, prev - 1))}
                     disabled={calendarMonthOffset === 0}
+                    aria-label="Mes anterior"
                     className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 disabled:opacity-30 hover:border-[#ecb613] transition-colors"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-4 h-4" aria-hidden="true" />
                   </button>
                   <h3 className="text-xl font-bold font-mono text-white">
                     {monthViewData.title}
@@ -515,9 +513,10 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
                   <button
                     onClick={() => setCalendarMonthOffset((prev) => Math.min(11, prev + 1))}
                     disabled={calendarMonthOffset >= 11}
+                    aria-label="Mes siguiente"
                     className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 disabled:opacity-30 hover:border-[#ecb613] transition-colors"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
 
@@ -554,15 +553,14 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
                     <div
                       key={day.dateStr}
                       onClick={() => handleDayClick(day.dateStr, day.isAvailable)}
-                      className={`relative aspect-square rounded-xl p-1 sm:p-2 border flex flex-col justify-between transition-all select-none ${
-                        !day.isAvailable
+                      className={`relative aspect-square rounded-xl p-1 sm:p-2 border flex flex-col justify-between transition-all select-none ${!day.isAvailable
                           ? 'border-white/5 bg-[#050507] opacity-35 cursor-not-allowed text-zinc-600'
                           : isCheckIn || isCheckOut
-                          ? 'border-[#ecb613] bg-[#ecb613] text-black font-bold shadow-lg shadow-[#ecb613]/30 cursor-pointer z-10'
-                          : isInRange
-                          ? 'border-[#ecb613]/50 bg-[#ecb613]/20 text-white cursor-pointer'
-                          : 'border-white/5 bg-zinc-900/60 hover:border-white/30 hover:bg-zinc-800 cursor-pointer text-zinc-300'
-                      }`}
+                            ? 'border-[#ecb613] bg-[#ecb613] text-black font-bold shadow-lg shadow-[#ecb613]/30 cursor-pointer z-10'
+                            : isInRange
+                              ? 'border-[#ecb613]/50 bg-[#ecb613]/20 text-white cursor-pointer'
+                              : 'border-white/5 bg-zinc-900/60 hover:border-white/30 hover:bg-zinc-800 cursor-pointer text-zinc-300'
+                        }`}
                     >
                       <span className="text-xs sm:text-sm font-bold block">{day.dayNumber}</span>
                       <span className={`text-[9px] sm:text-[10px] block truncate ${isCheckIn || isCheckOut ? 'text-black' : 'text-zinc-400'}`}>
@@ -831,7 +829,7 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-16">
         <div className="rounded-3xl bg-gradient-to-b from-[#0e0e14] to-[#08080c] border border-[#ecb613]/30 p-8 sm:p-12 relative overflow-hidden shadow-2xl">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#ecb613]/5 rounded-full blur-3xl pointer-events-none" />
-          
+
           <div className="relative z-10 max-w-4xl space-y-6">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5" />
@@ -843,7 +841,7 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
             </h2>
 
             <p className="text-sm sm:text-base text-zinc-300 font-light leading-relaxed">
-              Atención directa sin comisiones parasitarias para particulares, parejas, empresas y productoras. 
+              Atención directa sin comisiones parasitarias para particulares, parejas, empresas y productoras.
               Alquiler de Villa Escorial Park disponible <strong className="text-white">los 365 días del año</strong>: fines de semana completos (4.500 € con check-in viernes 14:00h y check-out domingo 14:00h), escapadas entre semana desde 700 €/noche, retiros exclusivos y rodajes audiovisuales.
             </p>
 
@@ -1018,15 +1016,16 @@ export default function VillaEscorialParkSClassExperience({ initialTelemetry }: 
               >
                 <button
                   onClick={() => setOpenFaq(isOpen ? null : idx)}
+                  aria-expanded={isOpen}
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-white/[0.02]"
                 >
                   <span className="font-mono text-sm sm:text-base font-bold text-white">
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-4 h-4 text-[#ecb613] shrink-0 transition-transform duration-300 ${
-                      isOpen ? 'rotate-180' : ''
-                    }`}
+                    className={`w-4 h-4 text-[#ecb613] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''
+                      }`}
+                    aria-hidden="true"
                   />
                 </button>
                 {isOpen && (

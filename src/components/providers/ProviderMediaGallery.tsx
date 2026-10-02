@@ -11,12 +11,12 @@ interface MediaGalleryProps {
   videoUrls?: string[];
 }
 
-export function ProviderMediaGallery({
+export const ProviderMediaGallery: React.FC<MediaGalleryProps> = React.memo(function ProviderMediaGallery({
   providerName,
   featuredImage,
   galleryImages = [],
   videoUrls = [],
-}: MediaGalleryProps) {
+}) {
   // Deduplicar y normalizar lista de imágenes
   const allImages = Array.from(new Set([featuredImage, ...galleryImages].filter(Boolean)));
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,21 +37,19 @@ export function ProviderMediaGallery({
         <div className="flex items-center gap-2 border-b border-white/10 pb-3">
           <button
             onClick={() => setActiveTab('photos')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${
-              activeTab === 'photos'
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${activeTab === 'photos'
                 ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
                 : 'bg-white/5 text-white/60 hover:text-white'
-            }`}
+              }`}
           >
             <ImageIcon size={14} /> Fotos ({allImages.length})
           </button>
           <button
             onClick={() => setActiveTab('videos')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${
-              activeTab === 'videos'
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-bold uppercase transition-all ${activeTab === 'videos'
                 ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/20'
                 : 'bg-white/5 text-white/60 hover:text-white'
-            }`}
+              }`}
           >
             <Play size={14} /> Vídeos ({videoUrls.length})
           </button>
@@ -121,11 +119,10 @@ export function ProviderMediaGallery({
                 <button
                   key={idx}
                   onClick={() => setSelectedIndex(idx)}
-                  className={`relative h-20 w-28 shrink-0 overflow-hidden rounded-xl border transition-all ${
-                    idx === selectedIndex
+                  className={`relative h-20 w-28 shrink-0 overflow-hidden rounded-xl border transition-all ${idx === selectedIndex
                       ? 'border-[#ecb613] scale-105 shadow-md shadow-[#ecb613]/20 ring-2 ring-[#ecb613]/30'
                       : 'border-white/10 opacity-50 hover:opacity-100'
-                  }`}
+                    }`}
                 >
                   <Image src={img} alt={`Miniatura ${idx + 1}`} className="object-cover" fill sizes="120px" />
                 </button>
@@ -186,4 +183,4 @@ export function ProviderMediaGallery({
       )}
     </div>
   );
-}
+});

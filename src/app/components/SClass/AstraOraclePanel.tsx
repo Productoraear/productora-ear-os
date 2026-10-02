@@ -3,15 +3,15 @@
 import React, { useState } from "react";
 import { runAstraPrediction } from "@/app/actions/commandCenterActions";
 import { AstraPredictionOutput } from "@/lib/ai/astra/predictive-engine";
-import { 
-  Sparkles, 
-  MapPin, 
-  Calendar, 
-  BrainCircuit, 
-  TrendingUp, 
-  DollarSign, 
-  ShieldAlert, 
-  CheckCircle2, 
+import {
+  Sparkles,
+  MapPin,
+  Calendar,
+  BrainCircuit,
+  TrendingUp,
+  DollarSign,
+  ShieldAlert,
+  CheckCircle2,
   AlertTriangle,
   RotateCw,
   Cpu
@@ -69,7 +69,7 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
       {/* Panel Header */}
       <div>
         <h3 className="text-sm font-black uppercase tracking-[0.25em] text-[#d4a855] flex items-center gap-2">
-          <BrainCircuit className="animate-pulse text-[#d4a855]" size={16} /> ORÁCULO NEURAL ASTRA
+          <BrainCircuit className="animate-pulse text-[#d4a855]" size={16} aria-hidden="true" /> ORÁCULO NEURAL ASTRA
         </h3>
         <p className="text-[10px] text-white/40 uppercase font-black tracking-widest mt-1">
           Simulador RAG de tarifas logísticas y riesgo de transporte en España
@@ -80,17 +80,18 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
         {/* Left: Input Simulation Form */}
         <div className="p-6 bg-white/[0.01] border border-white/5 rounded-3xl space-y-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4a855]/3 blur-3xl pointer-events-none rounded-full" />
-          
+
           <form onSubmit={handlePredict} className="space-y-4">
             <div className="space-y-2">
               <label className="text-[9px] font-black uppercase tracking-widest text-white/40 flex items-center gap-1.5">
-                <MapPin size={12} /> Punto de Origen (Base de Flota)
+                <MapPin size={12} aria-hidden="true" /> Punto de Origen (Base de Flota)
               </label>
               <input
                 type="text"
                 value={origin}
                 onChange={(e) => setOrigin(e.target.value)}
                 required
+                aria-label="Punto de origen de la flota"
                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-bold text-white focus:outline-none focus:border-[#d4a855] transition-colors"
                 placeholder="Ej: Madrid, España"
               />
@@ -98,13 +99,14 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
 
             <div className="space-y-2">
               <label className="text-[9px] font-black uppercase tracking-widest text-white/40 flex items-center gap-1.5">
-                <MapPin size={12} /> Punto de Destino (Lugar del Evento)
+                <MapPin size={12} aria-hidden="true" /> Punto de Destino (Lugar del Evento)
               </label>
               <input
                 type="text"
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
                 required
+                aria-label="Punto de destino del evento"
                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-bold text-white focus:outline-none focus:border-[#d4a855] transition-colors"
                 placeholder="Ej: Ibiza, Islas Baleares"
               />
@@ -112,13 +114,14 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
 
             <div className="space-y-2">
               <label className="text-[9px] font-black uppercase tracking-widest text-white/40 flex items-center gap-1.5">
-                <Calendar size={12} /> Fecha del Evento VIP
+                <Calendar size={12} aria-hidden="true" /> Fecha del Evento VIP
               </label>
               <input
                 type="date"
                 value={eventDate}
                 onChange={(e) => setEventDate(e.target.value)}
                 required
+                aria-label="Fecha del evento"
                 className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs font-bold text-white focus:outline-none focus:border-[#d4a855] transition-colors"
               />
             </div>
@@ -130,19 +133,19 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
             >
               {loading ? (
                 <>
-                  <RotateCw size={12} className="animate-spin" /> CANALIZANDO SINAPSIS ASTRA...
+                  <RotateCw size={12} className="animate-spin" aria-hidden="true" /> CANALIZANDO SINAPSIS ASTRA...
                 </>
               ) : (
                 <>
-                  <Sparkles size={12} /> RECALCULAR CON ASTRA
+                  <Sparkles size={12} aria-hidden="true" /> RECALCULAR CON ASTRA
                 </>
               )}
             </button>
           </form>
 
           {errorMsg && (
-            <div className="p-4 bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-wider rounded-xl flex items-center gap-2">
-              <ShieldAlert size={14} />
+            <div role="alert" className="p-4 bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-black uppercase tracking-wider rounded-xl flex items-center gap-2">
+              <ShieldAlert size={14} aria-hidden="true" />
               {errorMsg}
             </div>
           )}
@@ -163,10 +166,10 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
                   <div className="absolute inset-0 border-2 border-[#d4a855]/20 rounded-full" />
                   <div className="absolute inset-0 border-2 border-t-[#d4a855] rounded-full animate-spin" />
                   <div className="absolute inset-0 flex items-center justify-center text-[#d4a855]">
-                    <Cpu size={24} className="animate-pulse" />
+                    <Cpu size={24} className="animate-pulse" aria-hidden="true" />
                   </div>
                 </div>
-                
+
                 <div className="space-y-1">
                   <p className="text-xs font-black uppercase tracking-wider text-white">Sincronizando Embeddings RAG...</p>
                   <p className="text-[8px] text-white/35 font-black uppercase tracking-[0.2em]">Consultando historial de flotas y wallets</p>
@@ -186,7 +189,7 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
                     animate={{ opacity: 1, x: 0 }}
                     className="p-4 bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 text-[9px] font-black uppercase tracking-wider rounded-2xl flex items-center gap-3 shadow-lg"
                   >
-                    <AlertTriangle size={16} className="flex-shrink-0 animate-bounce" />
+                    <AlertTriangle size={16} className="flex-shrink-0 animate-bounce" aria-hidden="true" />
                     <span>{prediction.warningMessage}</span>
                   </motion.div>
                 )}
@@ -194,14 +197,14 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
                 {/* Main recommended price */}
                 <div className="p-6 bg-gradient-to-br from-[#121212] via-[#080808] to-[#1a150b] border border-white/10 rounded-[2.5rem] shadow-[0_15px_40px_rgba(212,168,85,0.08)] relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4a855]/5 blur-3xl pointer-events-none rounded-full" />
-                  
+
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <span className="text-[8px] text-[#d4a855] font-black uppercase tracking-[0.2em]">Sovereign Pricing Suggestion</span>
                       <h4 className="text-xs font-black text-white/50 uppercase tracking-widest">TARIFA RECOMENDADA</h4>
                     </div>
                     <span className="text-[8px] font-black border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 rounded text-emerald-400 uppercase tracking-widest flex items-center gap-1">
-                      <CheckCircle2 size={10} /> SECURE
+                      <CheckCircle2 size={10} aria-hidden="true" /> SECURE
                     </span>
                   </div>
 
@@ -237,7 +240,7 @@ export default function AstraOraclePanel({ userEmail, isAdmin }: AstraOraclePane
               </motion.div>
             ) : (
               <div className="p-8 text-center border border-white/5 bg-black/40 rounded-[2.5rem] space-y-4">
-                <BrainCircuit className="w-12 h-12 text-white/10 mx-auto" />
+                <BrainCircuit className="w-12 h-12 text-white/10 mx-auto" aria-hidden="true" />
                 <div>
                   <p className="text-xs font-black text-white uppercase tracking-tight">Listo para simular</p>
                   <p className="text-[9px] text-white/30 uppercase font-black mt-1">

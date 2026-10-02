@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Flame, Snowflake, Sun, Sparkles, ArrowRight, 
-  ShieldCheck, Volume2, Calendar, CheckCircle2, 
+import {
+  Flame, Snowflake, Sun, Sparkles, ArrowRight,
+  ShieldCheck, Volume2, Calendar, CheckCircle2,
   RotateCcw, Compass, Zap
 } from 'lucide-react';
 import { SOVEREIGN_ARTIST } from './types';
@@ -58,11 +58,11 @@ export default function LeadTemperatureRouter({
 
   return (
     <div className="w-full bg-[#101016]/95 border border-white/15 rounded-2xl p-2.5 backdrop-blur-xl shadow-xl space-y-2 mb-3">
-      
+
       {/* 🌡️ TEMPERATURE BAR HEADER */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div 
+          <div
             className="w-2.5 h-2.5 rounded-full animate-ping"
             style={{ backgroundColor: currentMeta.color }}
           />
@@ -73,7 +73,7 @@ export default function LeadTemperatureRouter({
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="px-2 py-0.5 rounded-lg bg-white/5 hover:bg-white/10 text-[10px] font-mono text-white/70 flex items-center gap-1 transition-all border border-white/10"
+          className="px-2 py-0.5 min-h-[48px] touch-manipulation rounded-lg bg-white/5 hover:bg-white/10 text-[10px] font-mono text-white/70 flex items-center gap-1 transition-all border border-white/10"
         >
           <span style={{ color: currentMeta.color }} className="font-bold">
             {currentMeta.shortLabel}
@@ -93,11 +93,10 @@ export default function LeadTemperatureRouter({
                 onTempChange(t.id);
                 onNavigateToStage(t.targetModule);
               }}
-              className={`py-1.5 px-2 rounded-lg text-center font-bold transition-all truncate ${
-                isActive 
-                  ? 'bg-white/15 text-white shadow-sm border border-white/20' 
+              className={`py-1.5 px-2 min-h-[48px] touch-manipulation rounded-lg text-center font-bold transition-all truncate ${isActive
+                  ? 'bg-white/15 text-white shadow-sm border border-white/20'
                   : 'text-white/50 hover:text-white'
-              }`}
+                }`}
               style={isActive ? { borderLeft: `3px solid ${t.color}` } : {}}
             >
               {t.shortLabel}

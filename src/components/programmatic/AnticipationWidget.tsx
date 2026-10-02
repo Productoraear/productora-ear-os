@@ -167,7 +167,7 @@ export default function AnticipationWidget({ vertical, intent = '' }: Anticipati
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.9 }}
           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-          className="fixed bottom-6 right-6 z-50 max-w-sm"
+          className="fixed bottom-6 right-6 z-50 max-w-sm w-[calc(100vw-2rem)] overflow-x-hidden"
         >
           <div className="bg-[#09090d]/95 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/60 rounded-2xl p-5 relative">
             {/* Ambient Glow */}
@@ -175,7 +175,7 @@ export default function AnticipationWidget({ vertical, intent = '' }: Anticipati
 
             <button
               onClick={handleDismiss}
-              className="absolute top-3 right-3 text-neutral-500 hover:text-white transition-colors z-10 p-1"
+              className="absolute top-3 right-3 text-neutral-500 hover:text-white transition-colors z-10 p-1 min-w-[48px] min-h-[48px] touch-manipulation flex items-center justify-center rounded-xl"
               aria-label="Cerrar"
             >
               <X className="w-4 h-4" />

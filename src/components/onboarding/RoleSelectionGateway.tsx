@@ -52,13 +52,13 @@ export default function RoleSelectionGateway() {
   const handleSelectProfile = (profileId: string, targetRoute: string) => {
     // Persistencia del rol en el contexto soberano
     if (setRole) setRole(profileId);
-    
+
     // Navegación fluida hacia la vertical seleccionada
     router.push(targetRoute);
   };
 
   return (
-    <div className="max-w-6xl w-full px-6 py-12 z-10">
+    <div className="max-w-6xl w-full px-6 py-12 z-10 overflow-x-hidden">
       <div className="text-center mb-12">
         <span className="text-[#ecb613] text-xs font-mono tracking-widest uppercase border border-[#ecb613]/30 px-3 py-1 rounded-full bg-[#ecb613]/5">
           Ecosistema Soberano EAR OS V2
@@ -82,7 +82,7 @@ export default function RoleSelectionGateway() {
               transition={{ duration: 0.4, delay: idx * 0.1 }}
               whileHover={{ scale: 1.03 }}
               onClick={() => handleSelectProfile(profile.id, profile.targetRoute)}
-              className={`bg-[#0a0a0c]/80 backdrop-blur-xl border ${profile.color} p-6 rounded-2xl cursor-pointer transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(236,182,19,0.2)]`}
+              className={`bg-[#0a0a0c]/80 backdrop-blur-xl border ${profile.color} p-6 rounded-2xl cursor-pointer touch-manipulation transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(236,182,19,0.2)]`}
             >
               <div>
                 <div className="flex justify-between items-start mb-6">

@@ -225,7 +225,7 @@ export const ProSolicitudesTab: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 font-sans text-zinc-200">
+    <div className="space-y-6 font-sans text-zinc-200 overflow-x-hidden">
       {/* 1. Header & Telemetría de Respuesta */}
       <div className="p-6 rounded-3xl bg-[#09090b] border border-zinc-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
         <div>
@@ -259,56 +259,57 @@ export const ProSolicitudesTab: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveFolder('TODAS')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-              activeFolder === 'TODAS'
-                ? 'bg-[#ecb613] text-black shadow-[0_0_15px_rgba(236,182,19,0.3)]'
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
+            aria-pressed={activeFolder === 'TODAS'}
+            className={`px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs font-mono font-bold transition-all ${activeFolder === 'TODAS'
+              ? 'bg-[#ecb613] text-black shadow-[0_0_15px_rgba(236,182,19,0.3)]'
+              : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+              }`}
           >
             Entrada ({totalCount})
           </button>
           <button
             type="button"
             onClick={() => setActiveFolder('ATENDIDAS')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-              activeFolder === 'ATENDIDAS'
-                ? 'bg-[#ecb613] text-black shadow-[0_0_15px_rgba(236,182,19,0.3)]'
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
+            aria-pressed={activeFolder === 'ATENDIDAS'}
+            className={`px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs font-mono font-bold transition-all ${activeFolder === 'ATENDIDAS'
+              ? 'bg-[#ecb613] text-black shadow-[0_0_15px_rgba(236,182,19,0.3)]'
+              : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+              }`}
           >
             Atendidas ({atendidasCount})
           </button>
           <button
             type="button"
             onClick={() => setActiveFolder('CONTRATADAS')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-              activeFolder === 'CONTRATADAS'
-                ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
+            aria-pressed={activeFolder === 'CONTRATADAS'}
+            className={`px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs font-mono font-bold transition-all ${activeFolder === 'CONTRATADAS'
+              ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+              : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+              }`}
           >
             Contratadas ({contratadasCount})
           </button>
           <button
             type="button"
             onClick={() => setActiveFolder('DESCARTADAS')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-mono font-bold transition-all ${
-              activeFolder === 'DESCARTADAS'
-                ? 'bg-rose-500 text-white shadow-[0_0_15px_rgba(244,63,94,0.3)]'
-                : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
-            }`}
+            aria-pressed={activeFolder === 'DESCARTADAS'}
+            className={`px-3.5 py-2.5 min-h-[44px] rounded-xl text-xs font-mono font-bold transition-all ${activeFolder === 'DESCARTADAS'
+              ? 'bg-rose-500 text-white shadow-[0_0_15px_rgba(244,63,94,0.3)]'
+              : 'bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-800'
+              }`}
           >
             Descartadas ({descartadasCount})
           </button>
         </div>
 
         <div className="relative flex-1 sm:max-w-xs">
-          <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" />
+          <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500" aria-hidden="true" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar novios, fecha o texto..."
+            aria-label="Buscar solicitudes por novios, fecha o texto"
             className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-zinc-900 border border-zinc-800 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
           />
         </div>
@@ -332,11 +333,10 @@ export const ProSolicitudesTab: React.FC = () => {
                     setSelectedSolicitud(item);
                     setGeneratedReply('');
                   }}
-                  className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                    isSelected
-                      ? 'bg-zinc-900/90 border-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.15)]'
-                      : 'bg-[#09090b] border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-900/40'
-                  }`}
+                  className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${isSelected
+                    ? 'bg-zinc-900/90 border-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.15)]'
+                    : 'bg-[#09090b] border-zinc-800/80 hover:border-zinc-700 hover:bg-zinc-900/40'
+                    }`}
                 >
                   <div className="space-y-1.5 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -347,13 +347,12 @@ export const ProSolicitudesTab: React.FC = () => {
                         #{item.idNumber}
                       </span>
                       <span
-                        className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-full font-bold ${
-                          item.estado === 'CONTRATADA'
-                            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
-                            : item.estado === 'DESCARTADA'
+                        className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded-full font-bold ${item.estado === 'CONTRATADA'
+                          ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
+                          : item.estado === 'DESCARTADA'
                             ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
                             : 'bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/30'
-                        }`}
+                          }`}
                       >
                         {item.estado}
                       </span>
@@ -399,18 +398,20 @@ export const ProSolicitudesTab: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleStatusChange('CONTRATADA')}
-                    className="p-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-mono"
+                    aria-label="Marcar solicitud como contratada"
+                    className="p-2.5 min-h-[44px] rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-mono"
                     title="Marcar como Contratada"
                   >
-                    <CheckCircle2 className="w-4 h-4" />
+                    <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                   </button>
                   <button
                     type="button"
                     onClick={() => handleStatusChange('DESCARTADA')}
-                    className="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-mono"
+                    aria-label="Marcar solicitud como descartada"
+                    className="p-2.5 min-h-[44px] rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-mono"
                     title="Marcar como Descartada"
                   >
-                    <XCircle className="w-4 h-4" />
+                    <XCircle className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -488,6 +489,7 @@ export const ProSolicitudesTab: React.FC = () => {
                       rows={4}
                       value={generatedReply}
                       onChange={(e) => setGeneratedReply(e.target.value)}
+                      aria-label="Respuesta generada por IA"
                       className="w-full p-3 rounded-xl bg-black border border-zinc-800 text-xs text-zinc-200 font-sans focus:outline-none focus:border-[#ecb613]"
                     />
 

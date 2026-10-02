@@ -15,6 +15,8 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import {
   Calendar,
   MapPin,
@@ -48,7 +50,12 @@ import {
 } from 'lucide-react';
 import type { SovereignProposal, ProposalLineItem, EventPhase } from '@/lib/proposals/proposal-types';
 import { calcularTotalesPropuesta, formatoEuros } from '@/lib/proposals/proposal-calculator';
-import { ProposalSignatureCanvas } from './ProposalSignatureCanvas';
+
+// Lazy loading del lienzo de firma manuscrita (componente pesado, cliente puro).
+const ProposalSignatureCanvas = dynamic(
+  () => import('./ProposalSignatureCanvas').then((mod) => ({ default: mod.ProposalSignatureCanvas })),
+  { ssr: false, loading: () => null }
+);
 
 interface ProposalInteractiveClientProps {
   propuestaInicial: SovereignProposal;
@@ -373,8 +380,14 @@ export function ProposalInteractiveClient({ propuestaInicial }: ProposalInteract
             </div>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {propuesta.imagenesAdjuntas.map((img, idx) => (
-                <div key={idx} className="rounded-xl overflow-hidden border border-white/10 bg-black">
-                  <img src={img} alt={`Documento de campo ${idx + 1}`} className="w-full h-auto object-contain max-h-64" />
+                <div key={idx} className="relative h-64 rounded-xl overflow-hidden border border-white/10 bg-black">
+                  <Image
+                    src={img}
+                    alt={`Documento de campo ${idx + 1}`}
+                    fill
+                    unoptimized
+                    className="object-contain"
+                  />
                 </div>
               ))}
             </div>
@@ -409,11 +422,10 @@ export function ProposalInteractiveClient({ propuestaInicial }: ProposalInteract
                 <button
                   key={cap}
                   onClick={() => setSelectedCapituloFilter(cap)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer ${
-                    selectedCapituloFilter === cap
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer ${selectedCapituloFilter === cap
                       ? 'bg-[#ecb613] text-black font-bold'
                       : 'bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/5'
-                  }`}
+                    }`}
                 >
                   {cap}
                 </button>
@@ -481,23 +493,21 @@ export function ProposalInteractiveClient({ propuestaInicial }: ProposalInteract
                           <div
                             key={linea.id}
                             onClick={() => isOpcional && handleToggleOption(linea.id, isSelected)}
-                            className={`p-4 rounded-xl border transition-all ${
-                              isOpcional
+                            className={`p-4 rounded-xl border transition-all ${isOpcional
                                 ? isSelected
                                   ? 'border-[#ecb613] bg-[#ecb613]/5 cursor-pointer shadow-md shadow-[#ecb613]/5'
                                   : 'border-white/10 bg-[#09090d]/60 hover:border-white/25 opacity-75 cursor-pointer'
                                 : 'border-white/10 bg-[#09090d]'
-                            }`}
+                              }`}
                           >
                             <div className="flex items-start justify-between gap-4">
                               <div className="flex items-start gap-3 min-w-0 flex-1">
                                 {isOpcional ? (
                                   <div
-                                    className={`w-5 h-5 mt-0.5 rounded-md flex items-center justify-center border transition-colors flex-shrink-0 ${
-                                      isSelected
+                                    className={`w-5 h-5 mt-0.5 rounded-md flex items-center justify-center border transition-colors flex-shrink-0 ${isSelected
                                         ? 'bg-[#ecb613] border-[#ecb613] text-black'
                                         : 'border-neutral-500 bg-transparent'
-                                    }`}
+                                      }`}
                                   >
                                     {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                                   </div>
@@ -588,9 +598,8 @@ export function ProposalInteractiveClient({ propuestaInicial }: ProposalInteract
                                 ) : (
                                   <div>
                                     <span
-                                      className={`text-sm sm:text-base font-bold font-mono block ${
-                                        isOpcional && !isSelected ? 'text-neutral-400' : 'text-[#ecb613]'
-                                      }`}
+                                      className={`text-sm sm:text-base font-bold font-mono block ${isOpcional && !isSelected ? 'text-neutral-400' : 'text-[#ecb613]'
+                                        }`}
                                     >
                                       {isOpcional ? `+${formatoEuros(linea.totalCéntimos)}` : formatoEuros(linea.totalCéntimos)}
                                     </span>
@@ -598,10 +607,10 @@ export function ProposalInteractiveClient({ propuestaInicial }: ProposalInteract
                                       {isUpdating
                                         ? 'Guardando...'
                                         : isOpcional
-                                        ? isSelected
-                                          ? 'Añadido al total'
-                                          : 'No incluido'
-                                        : 'Base sin IVA'}
+                                          ? isSelected
+                                            ? 'Añadido al total'
+                                            : 'No incluido'
+                                          : 'Base sin IVA'}
                                     </span>
                                   </div>
                                 )}
@@ -755,11 +764,10 @@ export function ProposalInteractiveClient({ propuestaInicial }: ProposalInteract
                   <button
                     onClick={handleSendQuestion}
                     disabled={!questionText.trim() || sendingQuestion}
-                    className={`px-5 py-2 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${
-                      questionText.trim() && !sendingQuestion
+                    className={`px-5 py-2 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${questionText.trim() && !sendingQuestion
                         ? 'bg-[#ecb613] text-black hover:bg-[#d8a40f] cursor-pointer'
                         : 'bg-neutral-800 text-neutral-500 cursor-not-allowed'
-                    }`}
+                      }`}
                   >
                     <Send className="w-3.5 h-3.5" />
                     {sendingQuestion ? 'Enviando...' : 'Enviar Consulta'}

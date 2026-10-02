@@ -29,9 +29,9 @@ export function AdjacentMunicipalitiesCrossLinker({
     sameProvinceMunis.length >= 4
       ? sameProvinceMunis
       : [
-          ...sameProvinceMunis,
-          ...MUNICIPALITIES_DATABASE.filter(m => m.isCoreHub && m.provinceSlug !== normProvince)
-        ]
+        ...sameProvinceMunis,
+        ...MUNICIPALITIES_DATABASE.filter(m => m.isCoreHub && m.provinceSlug !== normProvince)
+      ]
   )
     .filter(m => m.slug !== normLocation)
     .slice(0, 8);
@@ -55,17 +55,17 @@ export function AdjacentMunicipalitiesCrossLinker({
     normalizedSlug = 'serenatas-aniversarios';
   }
 
-  const matchedService = SERVICES_DATABASE.find(s => s.slug === normalizedSlug) || 
-    SERVICES_DATABASE.find(s => s.slug === currentServiceSlug) || 
-    SERVICES_DATABASE.find(s => s.slug === 'mariachi-gala') || 
+  const matchedService = SERVICES_DATABASE.find(s => s.slug === normalizedSlug) ||
+    SERVICES_DATABASE.find(s => s.slug === currentServiceSlug) ||
+    SERVICES_DATABASE.find(s => s.slug === 'mariachi-gala') ||
     SERVICES_DATABASE[0];
 
   return (
-    <section className="mt-16 pt-12 border-t border-white/10 relative overflow-hidden">
+    <section className="mt-16 pt-12 border-t border-white/10 relative overflow-x-hidden">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
         <div>
           <span className="text-[10px] font-mono text-[#ecb613] font-bold uppercase tracking-widest flex items-center gap-1.5">
-            <Navigation className="w-3.5 h-3.5" /> Red Territorial y Cobertura Comarcal
+            <Navigation className="w-3.5 h-3.5" aria-hidden="true" /> Red Territorial y Cobertura Comarcal
           </span>
           <h3 className="text-2xl md:text-3xl font-bold text-white font-serif mt-1">
             {matchedService.title} en Municipios Cercanos
@@ -79,7 +79,7 @@ export function AdjacentMunicipalitiesCrossLinker({
           href={`/checkout/presupuesto?format=${matchedService.slug}&base=${matchedService.averageTicket}`}
           className="py-2.5 px-4 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-all shrink-0"
         >
-          <Sparkles className="w-3.5 h-3.5" /> Cotizar para tu Municipio
+          <Sparkles className="w-3.5 h-3.5" aria-hidden="true" /> Cotizar para tu Municipio
         </Link>
       </div>
 
@@ -101,7 +101,7 @@ export function AdjacentMunicipalitiesCrossLinker({
                 </span>
               </div>
               <h4 className="text-sm font-bold text-white group-hover:text-[#ecb613] transition-colors flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-[#258DCD] shrink-0" />
+                <MapPin className="w-3.5 h-3.5 text-[#258DCD] shrink-0" aria-hidden="true" />
                 {muni.name}
               </h4>
             </div>
@@ -109,7 +109,7 @@ export function AdjacentMunicipalitiesCrossLinker({
             <div className="flex justify-between items-center pt-2 border-t border-white/5 text-[11px] font-mono text-gray-400">
               <span>Desde {matchedService.averageTicket} €</span>
               <span className="text-[#ecb613] flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                Ver Servicio <ArrowRight className="w-3 h-3" />
+                Ver Servicio <ArrowRight className="w-3 h-3" aria-hidden="true" />
               </span>
             </div>
           </Link>
@@ -118,7 +118,7 @@ export function AdjacentMunicipalitiesCrossLinker({
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-black/40 border border-white/5 text-xs text-gray-400 font-mono">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
           <span>Garantía de precio congelado con depósito Stripe de 100,00 € (Price-Lock SHA-256).</span>
         </div>
         <span>Teléfono Directo: <strong className="text-white">+34 693 693 048</strong></span>

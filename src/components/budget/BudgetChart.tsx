@@ -8,8 +8,24 @@ interface Props {
   categories: BudgetCategory[];
 }
 
+interface ChartDatum {
+  name: string;
+  value: number;
+  color: string;
+}
+
+interface TooltipEntry {
+  name?: string;
+  value?: number | string;
+}
+
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: TooltipEntry[];
+}
+
 export default function BudgetChart({ categories }: Props) {
-  const data = categories
+  const data: ChartDatum[] = categories
     .filter((cat) => cat.finalCost > 0)
     .map((cat) => ({
       name: cat.name,
@@ -17,13 +33,15 @@ export default function BudgetChart({ categories }: Props) {
       color: cat.color || '#ecb613',
     }));
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (active && payload && payload.length) {
+  const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+    if (active && payload && payload.length > 0) {
+      const entry = payload[0];
+      const formattedValue = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(Number(entry.value));
       return (
         <div className="bg-[#0e0e14] p-3 rounded-xl border border-white/10 shadow-2xl">
-          <p className="text-xs font-bold text-white font-syne uppercase">{payload[0].name}</p>
+          <p className="text-xs font-bold text-white font-syne uppercase">{entry.name}</p>
           <p className="text-sm font-jetbrains font-black text-[#ecb613] mt-0.5">
-            {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(payload[0].value)}
+            {formattedValue}
           </p>
         </div>
       );
@@ -46,11 +64,11 @@ export default function BudgetChart({ categories }: Props) {
     <div className="bg-[#09090d] rounded-2xl border border-white/10 p-6 mb-8 shadow-xl">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-bold font-syne uppercase tracking-wider text-white flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#ecb613]" /> Distribución Financiera por Partidas
+          <span aria-hidden="true" className="w-2 h-2 rounded-full bg-[#ecb613]" /> Distribución Financiera por Partidas
         </h3>
         <span className="text-[10px] font-mono text-white/40">{data.length} Categorías Activas</span>
       </div>
-      <div className="h-72">
+      <div className="h-72" role="img" aria-label={`Gráfico circular de distribución de gastos por ${data.length} categorías: ${data.map((d) => `${d.name} ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(d.value)}`).join(', ')}`}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -67,7 +85,7 @@ export default function BudgetChart({ categories }: Props) {
               ))}
             </Pie>
             <Tooltip content={<CustomTooltip />} />
-            <Legend 
+            <Legend
               formatter={(value) => <span className="text-xs font-mono text-white/70">{value}</span>}
             />
           </PieChart>

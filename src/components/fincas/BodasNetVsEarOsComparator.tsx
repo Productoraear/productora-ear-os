@@ -14,7 +14,7 @@ const BodasNetVsEarOsComparator: React.FC<BodasNetVsEarOsComparatorProps> = ({ r
   return (
     <section className="bg-[#050507] border border-white/10 rounded-2xl overflow-hidden">
       <div className="px-6 py-5 border-b border-white/10 flex items-center gap-3">
-        <Scale size={18} className="text-[#ecb613]" />
+        <Scale size={18} className="text-[#ecb613]" aria-hidden="true" />
         <h2 className="font-syne text-lg font-black uppercase tracking-tight text-white">
           Bodas.net vs EAR OS · Duelo de Rentabilidad
         </h2>
@@ -47,7 +47,7 @@ const BodasNetVsEarOsComparator: React.FC<BodasNetVsEarOsComparatorProps> = ({ r
               ) : (
                 <span className="text-xs font-body text-white/50 leading-snug">{row.bodasNet}</span>
               )}
-              <XCircle size={14} className="text-white/20" />
+              <XCircle size={14} className="text-white/20" aria-hidden="true" />
             </div>
             <div className="flex flex-col items-center gap-1 text-center">
               {typeof row.earOs === 'number' ? (
@@ -55,14 +55,14 @@ const BodasNetVsEarOsComparator: React.FC<BodasNetVsEarOsComparatorProps> = ({ r
               ) : (
                 <span className="text-xs font-body font-bold text-[#ecb613] leading-snug">{row.earOs}</span>
               )}
-              <CheckCircle2 size={14} className="text-[#ecb613]" />
+              <CheckCircle2 size={14} className="text-[#ecb613]" aria-hidden="true" />
             </div>
           </div>
         ))}
       </div>
 
       <div className="px-6 py-4 bg-[#ecb613]/5 border-t border-[#ecb613]/20 flex items-start gap-3">
-        <TrendingUp size={16} className="text-[#ecb613] shrink-0 mt-0.5" />
+        <TrendingUp size={16} className="text-[#ecb613] shrink-0 mt-0.5" aria-hidden="true" />
         <p className="text-xs font-body text-white/70 leading-relaxed">
           <strong className="text-[#ecb613]">EAR OS transforma el directorio en un motor de cierre real:</strong>{' '}
           depósito inmutable de 100 €, liquidación en 7 días hábiles y blindaje acústico certificado

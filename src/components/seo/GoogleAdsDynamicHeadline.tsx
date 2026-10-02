@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Sparkles, ShieldCheck } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 interface DynamicHeadlineProps {
   fallbackTitle: string;
@@ -15,7 +15,7 @@ interface DynamicHeadlineProps {
  * Detecta parámetros utm_term o kw de la campaña de Google Ads
  * y personaliza el titular en milisegundos para lograr la máxima concordancia de búsqueda.
  */
-export const GoogleAdsDynamicHeadline: React.FC<DynamicHeadlineProps> = ({
+export const GoogleAdsDynamicHeadline: React.FC<DynamicHeadlineProps> = React.memo(({
   fallbackTitle,
   fallbackSubtitle,
   className = ""
@@ -51,7 +51,7 @@ export const GoogleAdsDynamicHeadline: React.FC<DynamicHeadlineProps> = ({
           <span>BÚSQUEDA VERIFICADA S-CLASS</span>
         </div>
       )}
-      
+
       <h1 className="text-4xl sm:text-6xl font-black uppercase tracking-tight text-white font-syne leading-none">
         {headline}
       </h1>
@@ -63,4 +63,4 @@ export const GoogleAdsDynamicHeadline: React.FC<DynamicHeadlineProps> = ({
       )}
     </div>
   );
-};
+});

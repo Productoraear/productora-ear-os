@@ -170,7 +170,7 @@ export default function FincasB2BPortal() {
       <aside aria-label="Gobernanza B2B" className="w-full border-b border-white/10 bg-[#09090d]/90 backdrop-blur-md px-4 sm:px-6 py-2 text-xs text-white/60">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2 font-mono text-[11px]">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
             <span className="text-[#ecb613] font-bold uppercase tracking-wider truncate">Nodo B2B Empresas & Fincas</span>
             <span className="text-white/20 hidden sm:inline">•</span>
             <span className="hidden sm:inline">12 Fincas Clave Homologadas</span>
@@ -189,7 +189,7 @@ export default function FincasB2BPortal() {
 
         <div className="relative mx-auto max-w-7xl space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-[#ecb613] max-w-full truncate">
-            <Sparkles size={12} className="shrink-0" />
+            <Sparkles size={12} className="shrink-0" aria-hidden="true" />
             <span className="truncate">Bloque 5 SSOT · Red de Afiliación & Homologación de Fincas</span>
           </div>
 
@@ -236,45 +236,49 @@ export default function FincasB2BPortal() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveView('DIRECTORIO_NACIONAL_COMPLETO')}
+              aria-pressed={activeView === 'DIRECTORIO_NACIONAL_COMPLETO'}
               className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'DIRECTORIO_NACIONAL_COMPLETO'
-                  ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
             >
-              <MapPin size={14} />
+              <MapPin size={14} aria-hidden="true" />
               <span>Directorio Nacional (9.559)</span>
             </button>
 
             <button
               onClick={() => setActiveView('CATALOGO_12_FINCAS')}
+              aria-pressed={activeView === 'CATALOGO_12_FINCAS'}
               className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'CATALOGO_12_FINCAS'
-                  ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
             >
-              <Building2 size={14} />
+              <Building2 size={14} aria-hidden="true" />
               <span>12 Fincas Homologadas</span>
             </button>
 
             <button
               onClick={() => setActiveView('SIMULADOR_AFILIACION')}
+              aria-pressed={activeView === 'SIMULADOR_AFILIACION'}
               className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'SIMULADOR_AFILIACION'
-                  ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
             >
-              <Percent size={14} />
+              <Percent size={14} aria-hidden="true" />
               <span>Simulador de Comisiones & Autofactura</span>
             </button>
 
             <button
               onClick={() => setActiveView('ONBOARDING_EXPRESS_15MIN')}
+              aria-pressed={activeView === 'ONBOARDING_EXPRESS_15MIN'}
               className={`flex shrink-0 items-center gap-2 rounded-xl px-5 py-2.5 font-mono text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${activeView === 'ONBOARDING_EXPRESS_15MIN'
-                  ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                  : 'text-white/60 hover:bg-white/5 hover:text-white'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
             >
-              <Clock size={14} />
+              <Clock size={14} aria-hidden="true" />
               <span>Onboarding Express &lt; 15 min</span>
             </button>
           </div>
@@ -284,7 +288,7 @@ export default function FincasB2BPortal() {
               href={`tel:${CENTRALITA.display}`}
               className="text-xs font-mono text-white/50 hover:text-[#ecb613] flex items-center gap-1.5"
             >
-              <Phone size={12} className="text-[#ecb613]" />
+              <Phone size={12} className="text-[#ecb613]" aria-hidden="true" />
               <span>Centralita B2B: {CENTRALITA.display}</span>
             </a>
           </div>
@@ -324,8 +328,8 @@ export default function FincasB2BPortal() {
                     key={p}
                     onClick={() => setProvinciaFilter(p)}
                     className={`rounded-lg px-3 py-1.5 font-mono text-xs font-bold uppercase transition-colors cursor-pointer ${provinciaFilter === p
-                        ? 'bg-[#ecb613] text-black'
-                        : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
+                      ? 'bg-[#ecb613] text-black'
+                      : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white border border-white/10'
                       }`}
                   >
                     {p}
@@ -474,6 +478,8 @@ export default function FincasB2BPortal() {
                     step="100"
                     value={eventTicket}
                     onChange={(e) => setEventTicket(Number(e.target.value))}
+                    aria-label="Ticket de contratación del evento"
+                    aria-valuetext={`${eventTicket.toLocaleString('es-ES')} euros`}
                     className="w-full accent-[#ecb613] cursor-pointer"
                   />
                   <div className="flex justify-between font-mono text-[10px] text-white/40">
@@ -496,8 +502,8 @@ export default function FincasB2BPortal() {
                         key={btn.rate}
                         onClick={() => setCommissionRate(btn.rate)}
                         className={`rounded-xl py-2.5 font-mono text-xs font-bold transition-all cursor-pointer ${commissionRate === btn.rate
-                            ? 'bg-[#ecb613] text-black shadow-md'
-                            : 'bg-white/5 text-white/60 hover:bg-white/10 border border-white/10'
+                          ? 'bg-[#ecb613] text-black shadow-md'
+                          : 'bg-white/5 text-white/60 hover:bg-white/10 border border-white/10'
                           }`}
                       >
                         {btn.label}
@@ -519,6 +525,8 @@ export default function FincasB2BPortal() {
                     step="1"
                     value={annualEventsCount}
                     onChange={(e) => setAnnualEventsCount(Number(e.target.value))}
+                    aria-label="Eventos referenciados al año"
+                    aria-valuetext={`${annualEventsCount} bodas al año`}
                     className="w-full accent-[#AAD6CD] cursor-pointer"
                   />
                   <div className="flex justify-between font-mono text-[10px] text-white/40">
@@ -841,8 +849,8 @@ export default function FincasB2BPortal() {
                     initial={{ opacity: 0, scale: 0.98 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className={`rounded-2xl p-6 border ${onboardingResult.resultadoAuditoria.aprobado
-                        ? 'border-emerald-500/40 bg-emerald-950/30'
-                        : 'border-[#FF455B]/40 bg-rose-950/30'
+                      ? 'border-emerald-500/40 bg-emerald-950/30'
+                      : 'border-[#FF455B]/40 bg-rose-950/30'
                       }`}
                   >
                     <div className="flex items-center gap-3">

@@ -2,18 +2,18 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { 
-  Sparkles, 
-  X, 
-  Send, 
-  ShieldAlert, 
-  Lock, 
-  Phone, 
-  ArrowRight, 
-  Bot, 
-  User, 
-  HelpCircle, 
-  Volume2, 
+import {
+  Sparkles,
+  X,
+  Send,
+  ShieldAlert,
+  Lock,
+  Phone,
+  ArrowRight,
+  Bot,
+  User,
+  HelpCircle,
+  Volume2,
   Award,
   CreditCard
 } from 'lucide-react';
@@ -139,7 +139,7 @@ export function OraculoPublicDrawer() {
       <button
         onClick={() => setIsOpen(true)}
         aria-label="Abrir Oráculo de EAR OS"
-        className="fixed bottom-6 right-6 z-40 p-4 rounded-full bg-gradient-to-r from-[#ecb613] via-amber-500 to-[#ecb613] text-black font-bold shadow-[0_10px_35px_rgba(236,182,19,0.45)] hover:scale-105 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
+        className="fixed bottom-6 right-6 z-40 p-4 min-h-[48px] min-w-[48px] touch-manipulation rounded-full bg-gradient-to-r from-[#ecb613] via-amber-500 to-[#ecb613] text-black font-bold shadow-[0_10px_35px_rgba(236,182,19,0.45)] hover:scale-105 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
       >
         <Sparkles className="w-5 h-5 animate-spin" style={{ animationDuration: '6s' }} />
         <span className="text-xs tracking-wider uppercase font-mono hidden sm:inline font-black">
@@ -149,7 +149,7 @@ export function OraculoPublicDrawer() {
 
       {/* Drawer Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-black/70 backdrop-blur-sm transition-opacity flex justify-end animate-in fade-in">
+        <div className="fixed inset-0 z-50 overflow-x-hidden overflow-y-auto bg-black/70 backdrop-blur-sm transition-opacity flex justify-end animate-in fade-in">
           <div className="w-full max-w-md bg-[#09090d] border-l border-[#ecb613]/30 h-full flex flex-col shadow-2xl relative animate-in slide-in-from-right duration-300">
             {/* Header del Drawer */}
             <div className="p-4 md:p-5 border-b border-white/10 flex justify-between items-center bg-[#0d0d14]">
@@ -166,7 +166,7 @@ export function OraculoPublicDrawer() {
               </div>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
+                className="p-2 min-w-[48px] min-h-[48px] touch-manipulation text-gray-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors flex items-center justify-center"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -182,7 +182,7 @@ export function OraculoPublicDrawer() {
                   <button
                     key={idx}
                     onClick={() => handleSend(pq.query)}
-                    className="text-[11px] px-2.5 py-1 rounded-lg bg-white/5 hover:bg-[#ecb613]/15 hover:border-[#ecb613]/40 border border-white/10 text-gray-300 hover:text-[#ecb613] transition-all text-left"
+                    className="text-[11px] px-2.5 py-1 min-h-[48px] touch-manipulation rounded-lg bg-white/5 hover:bg-[#ecb613]/15 hover:border-[#ecb613]/40 border border-white/10 text-gray-300 hover:text-[#ecb613] transition-all text-left"
                   >
                     {pq.label}
                   </button>
@@ -204,13 +204,12 @@ export function OraculoPublicDrawer() {
                   )}
 
                   <div
-                    className={`max-w-[85%] p-3 rounded-2xl text-xs leading-relaxed ${
-                      msg.sender === 'user'
+                    className={`max-w-[85%] p-3 rounded-2xl text-xs leading-relaxed ${msg.sender === 'user'
                         ? 'bg-[#258DCD] text-white rounded-tr-none font-medium'
                         : msg.isWarning
-                        ? 'bg-amber-950/80 border border-amber-500/50 text-amber-200 rounded-tl-none'
-                        : 'bg-[#14141e] border border-white/10 text-gray-200 rounded-tl-none'
-                    }`}
+                          ? 'bg-amber-950/80 border border-amber-500/50 text-amber-200 rounded-tl-none'
+                          : 'bg-[#14141e] border border-white/10 text-gray-200 rounded-tl-none'
+                      }`}
                   >
                     <p>{msg.text}</p>
                     <span className="text-[9px] opacity-50 block mt-1.5 text-right font-mono">
@@ -233,7 +232,7 @@ export function OraculoPublicDrawer() {
               <Link
                 href="/checkout/presupuesto"
                 onClick={() => setIsOpen(false)}
-                className="py-2 px-3 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center"
+                className="py-2 px-3 min-h-[48px] touch-manipulation rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center"
               >
                 <CreditCard className="w-3.5 h-3.5" /> Cotizador S-Class
               </Link>
@@ -241,7 +240,7 @@ export function OraculoPublicDrawer() {
                 href="https://wa.me/34693693048?text=Hola%20Edwin,%20vengo%20del%20Or%C3%A1culo%20EAR%20OS"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center"
+                className="py-2 px-3 min-h-[48px] touch-manipulation rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all text-center"
               >
                 <Phone className="w-3.5 h-3.5" /> WhatsApp
               </a>
@@ -262,12 +261,12 @@ export function OraculoPublicDrawer() {
                   disabled={isRateLimited}
                   value={inputQuery}
                   onChange={(e) => setInputQuery(e.target.value)}
-                  className="flex-1 bg-[#161622] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#ecb613]"
+                  className="flex-1 min-h-[48px] touch-manipulation bg-[#161622] border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#ecb613]"
                 />
                 <button
                   type="submit"
                   disabled={isRateLimited || !inputQuery.trim()}
-                  className="p-2.5 bg-[#ecb613] hover:bg-amber-400 disabled:opacity-40 text-black rounded-xl transition-all cursor-pointer"
+                  className="p-2.5 min-w-[48px] min-h-[48px] touch-manipulation bg-[#ecb613] hover:bg-amber-400 disabled:opacity-40 text-black rounded-xl transition-all cursor-pointer flex items-center justify-center"
                 >
                   <Send className="w-4 h-4" />
                 </button>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Component, Suspense, useEffect, useRef, useState, type ErrorInfo, type ReactNode } from 'react';
 import { Activity, Gauge, AudioWaveform, ShieldCheck } from 'lucide-react';
 import { VIMUME_SENIOR_SSOT } from '@/lib/vimume/vimumePatientEngine';
 
@@ -8,6 +8,34 @@ interface VimumeOscilloscope40HzProps {
   className?: string;
   live?: boolean;
 }
+
+class OscilloscopeErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeOscilloscope40Hz] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const OscilloscopeFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 text-center text-xs text-white/70">
+    Osciloscopio 40 Hz VIMUME temporalmente no disponible.
+  </div>
+);
 
 /**
  * 🔬 VIMUME OSCILOSCOPIO 40 Hz GAMMA
@@ -167,7 +195,9 @@ export default function VimumeOscilloscope40Hz({
   }, [phase, live]);
 
   return (
-    <div className={`relative overflow-hidden rounded-3xl border border-[#8b5cf6]/25 bg-[#030305] p-5 text-white ${className}`}>
+    <OscilloscopeErrorBoundary fallback={<OscilloscopeFallback />}>
+      <Suspense fallback={<OscilloscopeFallback />}>
+        <div className={`relative overflow-hidden rounded-3xl border border-[#8b5cf6]/25 bg-[#030305] p-5 text-white ${className}`}>
       <div className="absolute top-0 right-0 w-72 h-72 bg-[#8b5cf6]/10 blur-[100px] pointer-events-none" />
       <div className="relative z-10 flex items-center justify-between pb-4 border-b border-white/10">
         <div className="flex items-center gap-3">
@@ -217,7 +247,9 @@ export default function VimumeOscilloscope40Hz({
           PORTADORA {VIMUME_SENIOR_SSOT.GAMMA_FREQUENCY_HZ} HZ // ICOPE NO FARMACOLÓGICO
         </span>
       </div>
-    </div>
+        </div>
+      </Suspense>
+    </OscilloscopeErrorBoundary>
   );
 }
 

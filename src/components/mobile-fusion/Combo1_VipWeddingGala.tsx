@@ -2,17 +2,17 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Sparkles, Heart, ShieldCheck, Zap, Volume2, 
-  Users, Calendar, Clock, Star, Award, CheckCircle2, 
+import {
+  Sparkles, Heart, ShieldCheck, Zap, Volume2,
+  Users, Calendar, Clock, Star, Award, CheckCircle2,
   ArrowRight, ChevronDown, ChevronUp, Music, Sliders
 } from 'lucide-react';
-import { 
-  ARTIST_FORMATS, 
-  SOVEREIGN_ARTIST, 
-  WEDDING_MILESTONES_DEFAULT, 
-  calculateQuote, 
-  WeddingMilestone 
+import {
+  ARTIST_FORMATS,
+  SOVEREIGN_ARTIST,
+  WEDDING_MILESTONES_DEFAULT,
+  calculateQuote,
+  WeddingMilestone
 } from './types';
 
 export default function Combo1_VipWeddingGala() {
@@ -25,7 +25,7 @@ export default function Combo1_VipWeddingGala() {
   const [showSplitDrawer, setShowSplitDrawer] = useState(false);
 
   const currentFormat = ARTIST_FORMATS[selectedFormatIndex % ARTIST_FORMATS.length];
-  
+
   // Calculate total across selected timeline milestones or active format
   const activeMilestones = milestones.filter(m => m.selectedFormatId !== null);
   const milestoneSum = activeMilestones.reduce((acc, m) => {
@@ -79,10 +79,10 @@ export default function Combo1_VipWeddingGala() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-28">
-      
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-4 pb-28">
+
       {/* 🏝️ 1. DYNAMIC ISLAND TOP STATUS PILL (iOS 18+ STYLE) */}
-      <motion.div 
+      <motion.div
         layout
         className="w-full bg-[#121218]/90 border border-white/15 backdrop-blur-2xl rounded-full p-2 px-3.5 flex items-center justify-between shadow-2xl z-20"
       >
@@ -101,12 +101,12 @@ export default function Combo1_VipWeddingGala() {
 
       {/* 🎴 2. TINDER-STYLE ARTIST DISCOVERY DECK WITH AUDIO WAVEFORM */}
       <div className="rounded-3xl overflow-hidden relative border border-[#ecb613]/40 bg-gradient-to-b from-[#161622] to-[#0a0a0f] shadow-2xl p-4 space-y-3">
-        <div 
+        <div
           className="h-44 rounded-2xl bg-cover bg-center relative overflow-hidden border border-white/10 flex flex-col justify-between p-3"
           style={{ backgroundImage: `url(${currentFormat.image})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-          
+
           <div className="relative z-10 flex justify-between items-center">
             <span className="px-2 py-0.5 rounded-full bg-[#ecb613] text-black text-[9px] font-mono font-black uppercase">
               {currentFormat.matchScore}% AFINIDAD NUPCIAL
@@ -126,7 +126,7 @@ export default function Combo1_VipWeddingGala() {
         <div className="bg-black/50 p-2 rounded-2xl border border-white/10 flex items-center justify-between">
           <button
             onClick={() => setIsPlayingAudio(!isPlayingAudio)}
-            className="flex items-center gap-2 text-xs font-bold text-white hover:text-[#ecb613] transition-colors"
+            className="flex items-center gap-2 min-h-[48px] touch-manipulation text-xs font-bold text-white hover:text-[#ecb613] transition-colors"
           >
             <div className={`w-6 h-6 rounded-full flex items-center justify-center ${isPlayingAudio ? 'bg-[#ecb613] text-black animate-pulse' : 'bg-white/10 text-white'}`}>
               <Volume2 size={12} />
@@ -155,11 +155,10 @@ export default function Combo1_VipWeddingGala() {
             <button
               key={fmt.id}
               onClick={() => setSelectedFormatIndex(i)}
-              className={`py-1.5 px-1 rounded-xl text-center text-[9px] font-mono transition-all truncate ${
-                selectedFormatIndex === i 
-                  ? 'bg-[#ecb613] text-black font-bold shadow-md' 
+              className={`py-1.5 px-1 min-h-[48px] touch-manipulation rounded-xl text-center text-[9px] font-mono transition-all truncate ${selectedFormatIndex === i
+                  ? 'bg-[#ecb613] text-black font-bold shadow-md'
                   : 'bg-white/5 text-white/60 hover:bg-white/10'
-              }`}
+                }`}
             >
               {fmt.musiciansCount === 1 ? 'Solista' : `${fmt.musiciansCount} Pax`}
             </button>
@@ -182,13 +181,12 @@ export default function Combo1_VipWeddingGala() {
           {milestones.map((m, idx) => {
             const isAssigned = m.selectedFormatId !== null;
             return (
-              <div 
+              <div
                 key={m.id}
-                className={`p-3 rounded-2xl border transition-all ${
-                  isAssigned 
-                    ? 'bg-[#15151c] border-[#ecb613]/50 shadow-md' 
+                className={`p-3 rounded-2xl border transition-all ${isAssigned
+                    ? 'bg-[#15151c] border-[#ecb613]/50 shadow-md'
                     : 'bg-[#0d0d10] border-white/10'
-                }`}
+                  }`}
               >
                 <div className="flex items-center justify-between">
                   <div>
@@ -198,11 +196,10 @@ export default function Combo1_VipWeddingGala() {
 
                   <button
                     onClick={() => toggleMilestone(m.id, currentFormat.id)}
-                    className={`px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold transition-all ${
-                      isAssigned 
-                        ? 'bg-[#ecb613] text-black' 
+                    className={`px-2.5 py-1 min-h-[48px] min-w-[48px] touch-manipulation rounded-xl text-[10px] font-mono font-bold transition-all ${isAssigned
+                        ? 'bg-[#ecb613] text-black'
                         : 'bg-white/10 text-white/70 hover:bg-white/20'
-                    }`}
+                      }`}
                   >
                     {isAssigned ? '✓ Incluido' : '+ Asignar'}
                   </button>
@@ -233,7 +230,7 @@ export default function Combo1_VipWeddingGala() {
 
           <button
             onClick={() => setShowSplitDrawer(!showSplitDrawer)}
-            className="text-[10px] font-mono text-[#ecb613] hover:underline flex items-center gap-1"
+            className="min-h-[48px] min-w-[48px] touch-manipulation text-[10px] font-mono text-[#ecb613] hover:underline flex items-center justify-center gap-1"
           >
             <span>Split 80/10/10</span>
             {showSplitDrawer ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
@@ -241,7 +238,7 @@ export default function Combo1_VipWeddingGala() {
         </div>
 
         {showSplitDrawer && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             className="pt-2 border-t border-white/10 space-y-1.5 text-xs font-mono"
@@ -296,7 +293,7 @@ export default function Combo1_VipWeddingGala() {
             >
               <ArrowRight size={18} className="stroke-[3]" />
             </motion.div>
-            
+
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 pl-6">
               <span className="text-[10px] font-black uppercase tracking-wider text-white/80 font-mono animate-pulse">
                 Desliza para Bloquear Fecha (100€) ➔

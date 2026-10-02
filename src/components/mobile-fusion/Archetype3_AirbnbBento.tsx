@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Star, ShieldCheck, Heart, Share2, Calendar, 
-  Users, CheckCircle2, ChevronRight, Award, Music, 
+import {
+  Star, ShieldCheck, Heart, Share2, Calendar,
+  Users, CheckCircle2, ChevronRight, Award, Music,
   ArrowRight, Sparkles, MapPin
 } from 'lucide-react';
 import { ARTIST_FORMATS, SOVEREIGN_ARTIST, calculateQuote } from './types';
@@ -32,8 +32,8 @@ export default function Archetype3_AirbnbBento() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-5 pb-24">
-      
+    <div className="flex flex-col min-h-screen w-full overflow-x-hidden bg-[#050505] text-white p-4 select-none relative overflow-y-auto no-scrollbar space-y-5 pb-24">
+
       {/* 🏷️ TOP AIRBNB HEADER & HOST BADGE */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
@@ -57,7 +57,7 @@ export default function Archetype3_AirbnbBento() {
 
       {/* 🖼️ BENTO GALLERY GRID */}
       <div className="grid grid-cols-3 gap-2 h-52 rounded-3xl overflow-hidden border border-white/10">
-        <div 
+        <div
           className="col-span-2 h-full bg-cover bg-center relative group"
           style={{ backgroundImage: `url(${selectedFormat.image})` }}
         >
@@ -67,17 +67,17 @@ export default function Archetype3_AirbnbBento() {
           </span>
         </div>
         <div className="grid grid-rows-2 gap-2 h-full">
-          <div 
+          <div
             className="bg-cover bg-center rounded-r-xl relative"
             style={{ backgroundImage: `url(https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=400&auto=format&fit=crop&q=80)` }}
           />
-          <div 
+          <div
             className="bg-cover bg-center rounded-r-xl relative flex items-center justify-center bg-black/60"
             style={{ backgroundImage: `url(https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&auto=format&fit=crop&q=80)` }}
           >
             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
             <span className="relative z-10 text-[10px] font-mono font-bold text-[#ecb613] text-center">
-              +14 Fotos<br/>y Riders
+              +14 Fotos<br />y Riders
             </span>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function Archetype3_AirbnbBento() {
       {/* 👑 SUPERHOST / PACIENTE CERO PROFILE CARD */}
       <div className="p-4 rounded-3xl bg-[#111116] border border-white/10 flex items-center gap-3.5">
         <div className="relative">
-          <div className="w-13 h-13 w-12 h-12 rounded-2xl overflow-hidden border-2 border-[#ecb613]">
+          <div className="w-12 h-12 rounded-2xl overflow-hidden border-2 border-[#ecb613]">
             <img src={SOVEREIGN_ARTIST.avatar} alt="Edwin Agudelo" className="w-full h-full object-cover" />
           </div>
           <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#ecb613] text-black flex items-center justify-center">
@@ -111,9 +111,9 @@ export default function Archetype3_AirbnbBento() {
           <span className="text-[9px] font-mono text-white/40 uppercase block">FECHA DEL EVENTO</span>
           <div className="flex items-center gap-1.5 text-xs font-bold text-white">
             <Calendar size={14} className="text-[#ecb613]" />
-            <input 
-              type="date" 
-              value={eventDate} 
+            <input
+              type="date"
+              value={eventDate}
               onChange={(e) => setEventDate(e.target.value)}
               className="bg-transparent text-white text-xs font-mono outline-none w-full"
             />
@@ -128,13 +128,13 @@ export default function Archetype3_AirbnbBento() {
               <span className="font-mono">{guestCount} pax</span>
             </div>
             <div className="flex items-center gap-1">
-              <button 
+              <button
                 onClick={() => setGuestCount(Math.max(20, guestCount - 10))}
-                className="w-5 h-5 rounded bg-white/10 flex items-center justify-center text-xs"
+                className="w-12 h-12 min-h-[48px] touch-manipulation rounded-xl bg-white/10 flex items-center justify-center text-base"
               >-</button>
-              <button 
+              <button
                 onClick={() => setGuestCount(guestCount + 10)}
-                className="w-5 h-5 rounded bg-white/10 flex items-center justify-center text-xs"
+                className="w-12 h-12 min-h-[48px] touch-manipulation rounded-xl bg-white/10 flex items-center justify-center text-base"
               >+</button>
             </div>
           </div>
@@ -153,11 +153,10 @@ export default function Archetype3_AirbnbBento() {
               <div
                 key={fmt.id}
                 onClick={() => setSelectedFormat(fmt)}
-                className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${
-                  isSelected 
-                    ? 'bg-[#15151c] border-[#ecb613] shadow-lg shadow-[#ecb613]/10' 
+                className={`p-3.5 rounded-2xl border cursor-pointer transition-all ${isSelected
+                    ? 'bg-[#15151c] border-[#ecb613] shadow-lg shadow-[#ecb613]/10'
                     : 'bg-[#0d0d10] border-white/10 hover:border-white/20'
-                }`}
+                  }`}
               >
                 <div className="flex items-start justify-between">
                   <div>
@@ -177,7 +176,7 @@ export default function Archetype3_AirbnbBento() {
 
       {/* ⚖️ TRANSPARENT SPLIT BREAKDOWN (AIRBNB TRANSPARENCY) */}
       <div className="p-4 rounded-3xl bg-[#111116] border border-white/10 space-y-3">
-        <div 
+        <div
           onClick={() => setShowSplitDetails(!showSplitDetails)}
           className="flex items-center justify-between cursor-pointer"
         >

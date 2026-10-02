@@ -33,7 +33,7 @@ interface ActionItem {
   action: () => void;
 }
 
-export const UniversalCommandPalette: React.FC = () => {
+export const UniversalCommandPalette: React.FC = React.memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [ragResults, setRagResults] = useState<any[]>([]);
@@ -240,7 +240,7 @@ export const UniversalCommandPalette: React.FC = () => {
 
               {/* Body Content */}
               <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4 custom-scrollbar">
-                
+
                 {/* RAG Results (Live search) */}
                 {ragResults.length > 0 && (
                   <div className="space-y-1.5">
@@ -327,6 +327,6 @@ export const UniversalCommandPalette: React.FC = () => {
       </AnimatePresence>
     </>
   );
-};
+});
 
 export default UniversalCommandPalette;

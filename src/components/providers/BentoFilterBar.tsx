@@ -1,18 +1,18 @@
 'use client';
 
 import React from 'react';
-import { 
-  Search, 
-  X, 
-  Layers, 
-  Building2, 
-  UtensilsCrossed, 
-  Flower2, 
-  Music2, 
-  Volume2, 
-  Video, 
-  HeartHandshake, 
-  Shirt, 
+import {
+  Search,
+  X,
+  Layers,
+  Building2,
+  UtensilsCrossed,
+  Flower2,
+  Music2,
+  Volume2,
+  Video,
+  HeartHandshake,
+  Shirt,
   Car,
   Filter,
   MapPin
@@ -46,7 +46,7 @@ interface BentoFilterBarProps {
   totalResults: number;
 }
 
-export const BentoFilterBar: React.FC<BentoFilterBarProps> = ({
+export const BentoFilterBar: React.FC<BentoFilterBarProps> = React.memo(({
   categories,
   selectedCategory,
   onSelectCategory,
@@ -134,17 +134,15 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = ({
                 key={cat.id}
                 type="button"
                 onClick={() => onSelectCategory(cat.id)}
-                className={`px-3 py-2 rounded-xl text-[11px] font-mono uppercase tracking-wider flex items-center gap-1.5 shrink-0 transition-all cursor-pointer ${
-                  isSelected
+                className={`px-3 py-2 rounded-xl text-[11px] font-mono uppercase tracking-wider flex items-center gap-1.5 shrink-0 transition-all cursor-pointer ${isSelected
                     ? 'bg-[#258DCD] text-black font-extrabold shadow-md shadow-[#258DCD]/20'
                     : 'bg-[#0a0a0f] text-neutral-400 hover:text-white border border-[#1a1a1a] hover:border-[#258DCD]/40'
-                }`}
+                  }`}
               >
                 <Icon size={13} className={isSelected ? 'text-black' : 'text-[#258DCD]'} />
                 <span>{cat.label}</span>
-                <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${
-                  isSelected ? 'bg-black/20 text-black' : 'bg-white/5 text-neutral-500'
-                }`}>
+                <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${isSelected ? 'bg-black/20 text-black' : 'bg-white/5 text-neutral-500'
+                  }`}>
                   {cat.count}
                 </span>
               </button>
@@ -168,17 +166,15 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = ({
                 key={sub.id}
                 type="button"
                 onClick={() => onSelectSubcategory(sub.id)}
-                className={`px-3 py-1.5 rounded-xl text-[11px] font-mono tracking-wide flex items-center gap-1.5 shrink-0 transition-all cursor-pointer ${
-                  isSelected
+                className={`px-3 py-1.5 rounded-xl text-[11px] font-mono tracking-wide flex items-center gap-1.5 shrink-0 transition-all cursor-pointer ${isSelected
                     ? 'bg-[#258DCD]/20 text-[#258DCD] border border-[#258DCD] font-bold shadow-md shadow-[#258DCD]/10'
                     : 'bg-[#0a0a0f] text-neutral-400 hover:text-white border border-[#1a1a1a] hover:border-neutral-700'
-                }`}
+                  }`}
               >
                 <span>{sub.label}</span>
                 {typeof sub.count === 'number' && (
-                  <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${
-                    isSelected ? 'bg-[#258DCD]/30 text-[#258DCD]' : 'bg-white/5 text-neutral-500'
-                  }`}>
+                  <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-bold ${isSelected ? 'bg-[#258DCD]/30 text-[#258DCD]' : 'bg-white/5 text-neutral-500'
+                    }`}>
                     {sub.count}
                   </span>
                 )}
@@ -189,4 +185,4 @@ export const BentoFilterBar: React.FC<BentoFilterBarProps> = ({
       )}
     </div>
   );
-};
+});

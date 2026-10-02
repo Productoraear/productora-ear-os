@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { useState } from "react";
 import { LogIn, Lock, Mail } from "lucide-react";
 
@@ -9,7 +10,7 @@ export interface SignIn2Props {
   className?: string;
 }
 
-const SignIn2: React.FC<SignIn2Props> = ({ onSuccess, className }) => {
+const SignIn2: React.FC<SignIn2Props> = React.memo(({ onSuccess, className }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -95,23 +96,32 @@ const SignIn2: React.FC<SignIn2Props> = ({ onSuccess, className }) => {
         </div>
         <div className="flex gap-3 w-full justify-center mt-2">
           <button className="flex items-center justify-center w-12 h-12 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition grow">
-            <img
+            <Image
               src="https://www.svgrepo.com/show/475656/google-color.svg"
               alt="Google"
+              width={20}
+              height={20}
+              unoptimized
               className="w-5 h-5"
             />
           </button>
           <button className="flex items-center justify-center w-12 h-12 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition grow">
-            <img
+            <Image
               src="https://www.svgrepo.com/show/448224/facebook.svg"
               alt="Facebook"
+              width={20}
+              height={20}
+              unoptimized
               className="w-5 h-5"
             />
           </button>
           <button className="flex items-center justify-center w-12 h-12 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition grow">
-            <img
+            <Image
               src="https://www.svgrepo.com/show/511330/apple-173.svg"
               alt="Apple"
+              width={20}
+              height={20}
+              unoptimized
               className="w-5 h-5 invert"
             />
           </button>
@@ -119,7 +129,7 @@ const SignIn2: React.FC<SignIn2Props> = ({ onSuccess, className }) => {
       </div>
     </div>
   );
-};
+});
 
 export { SignIn2 };
 export default SignIn2;

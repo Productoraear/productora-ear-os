@@ -7,11 +7,13 @@ export function DynamicContextBar() {
   const isOpen = useNeuralTunnelStore((state) => state.isOpen);
 
   return (
-    <div className="flex items-center justify-between px-4 py-2 bg-black/60 backdrop-blur-md border-b border-white/10">
+    <div className="flex items-center justify-between px-4 py-2 bg-black/60 backdrop-blur-md border-b border-white/10 overflow-x-hidden">
       <span className="text-xs font-mono text-[#ecb613]">EAR OS // S-CLASS</span>
       <button
         onClick={openTunnel}
-        className="px-4 py-1.5 bg-[#ecb613] text-black font-mono font-bold text-xs uppercase rounded-full hover:scale-105 transition-all"
+        aria-pressed={isOpen}
+        aria-label={isOpen ? 'Túnel neural activo' : 'Desplegar túnel neural'}
+        className="px-4 py-1.5 min-h-[48px] bg-[#ecb613] text-black font-mono font-bold text-xs uppercase rounded-full hover:scale-105 transition-all"
       >
         {isOpen ? 'Túnel Activo ⚡' : 'Desplegar Túnel ⚡'}
       </button>

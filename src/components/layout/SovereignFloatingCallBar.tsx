@@ -27,9 +27,9 @@ export function SovereignFloatingCallBar() {
       >
         <a
           href={`tel:${phone}`}
-          className="flex-1 py-3 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 active:scale-95 text-black font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-600/20"
+          className="flex-1 py-3 min-h-[48px] px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-emerald-500 active:scale-95 text-black font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-600/20"
         >
-          <Phone size={15} className="fill-current" />
+          <Phone size={15} className="fill-current" aria-hidden="true" />
           <span>Llamar {displayPhone}</span>
         </a>
 
@@ -37,9 +37,9 @@ export function SovereignFloatingCallBar() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 py-3 px-3 rounded-xl bg-[#25D366] active:scale-95 text-white font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#25D366]/20"
+          className="flex-1 py-3 min-h-[48px] px-3 rounded-xl bg-[#25D366] active:scale-95 text-white font-extrabold text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 shadow-lg shadow-[#25D366]/20"
         >
-          <MessageCircle size={15} className="fill-current" />
+          <MessageCircle size={15} className="fill-current" aria-hidden="true" />
           <span>WhatsApp</span>
         </a>
       </aside>
@@ -67,7 +67,7 @@ export function SovereignFloatingCallBar() {
           className="p-3 bg-emerald-500 hover:bg-emerald-400 text-black rounded-full transition-transform hover:scale-105 active:scale-95 shadow-md shadow-emerald-500/30"
           title="Llamar directamente"
         >
-          <Phone size={16} className="fill-current" />
+          <Phone size={16} className="fill-current" aria-hidden="true" />
         </a>
 
         <a
@@ -78,7 +78,7 @@ export function SovereignFloatingCallBar() {
           className="p-3 bg-[#25D366] hover:bg-emerald-500 text-white rounded-full transition-transform hover:scale-105 active:scale-95 shadow-md shadow-[#25D366]/30"
           title="Enviar WhatsApp"
         >
-          <MessageCircle size={16} className="fill-current" />
+          <MessageCircle size={16} className="fill-current" aria-hidden="true" />
         </a>
       </aside>
     </>

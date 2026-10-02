@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { Component, Suspense, useState, useEffect, type ErrorInfo, type ReactNode } from 'react';
 import { 
   Play, 
   Square, 
@@ -17,6 +17,34 @@ import {
 } from 'lucide-react';
 import { VimumeNeuroacousticEngine, AcousticEngineState } from '@/core/audio/GammaWorklet';
 import { AcousticVisualizer } from '@/components/vimume/AcousticVisualizer';
+
+class VimumeAcousticErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeAcousticEngine] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const VimumeAcousticFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 md:p-10 text-center text-sm text-white/70">
+    Motor Neuroacústico VIMUME temporalmente no disponible.
+  </div>
+);
 
 export const VimumeAcousticEngine: React.FC = () => {
   const [engineState, setEngineState] = useState<AcousticEngineState>({
@@ -67,7 +95,9 @@ export const VimumeAcousticEngine: React.FC = () => {
   };
 
   return (
-    <div className="rounded-[2.5rem] bg-gradient-to-b from-[#0c0a17] via-[#07060f] to-[#040407] border border-[#8b5cf6]/40 p-6 sm:p-10 space-y-8 shadow-[0_0_80px_rgba(139,92,246,0.15)] relative overflow-hidden">
+    <VimumeAcousticErrorBoundary fallback={<VimumeAcousticFallback />}>
+      <Suspense fallback={<VimumeAcousticFallback />}>
+        <div className="rounded-[2.5rem] bg-gradient-to-b from-[#0c0a17] via-[#07060f] to-[#040407] border border-[#8b5cf6]/40 p-6 sm:p-10 space-y-8 shadow-[0_0_80px_rgba(139,92,246,0.15)] relative overflow-hidden">
       {/* Glow ambiental */}
       <div className="absolute -top-24 right-0 w-96 h-96 bg-[#8b5cf6]/15 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute -bottom-24 left-0 w-96 h-96 bg-[#AAD6CD]/10 rounded-full blur-[120px] pointer-events-none" />
@@ -249,6 +279,8 @@ export const VimumeAcousticEngine: React.FC = () => {
         </span>
       </div>
 
-    </div>
+        </div>
+      </Suspense>
+    </VimumeAcousticErrorBoundary>
   );
 };

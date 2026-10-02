@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Component, Suspense, useCallback, useEffect, useMemo, useState, type ErrorInfo, type ReactNode } from 'react';
 import {
     Save,
     RotateCcw,
@@ -42,6 +42,34 @@ const PILLAR_META: Array<{ pillar: number; label: string; icon: string }> = [
 ];
 
 const EMPTY_DIMENSIONS: Record<number, DimensionValue> = {};
+
+class CalibratorErrorBoundary extends Component<
+    { children: ReactNode; fallback: ReactNode },
+    { hasError: boolean }
+> {
+    state = { hasError: false };
+
+    static getDerivedStateFromError() {
+        return { hasError: true };
+    }
+
+    componentDidCatch(error: Error, info: ErrorInfo) {
+        console.error('[ProviderCalibrator] Fallo de render:', error, info.componentStack);
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return this.props.fallback;
+        }
+        return this.props.children;
+    }
+}
+
+const CalibratorFallback: React.FC = () => (
+    <div className="w-full rounded-3xl border border-white/10 bg-[#08080e]/90 backdrop-blur-xl p-8 text-center text-sm text-white/70">
+        Calibrador temporalmente no disponible.
+    </div>
+);
 
 export default function ProviderCalibrator({
     providerId,
@@ -140,119 +168,123 @@ export default function ProviderCalibrator({
     }, []);
 
     return (
-        <div className="w-full rounded-3xl border border-white/10 bg-[#08080e]/90 backdrop-blur-xl overflow-hidden">
-            {/* Cabecera del calibrador */}
-            <div className="p-5 sm:p-6 border-b border-white/10 bg-gradient-to-r from-[#0e0d0a] to-[#08080e]">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <div className="inline-flex items-center gap-2 text-[11px] font-mono text-[#ecb613] uppercase tracking-widest font-black">
-                            <SlidersHorizontal size={13} />
-                            <span>Calibrador de Captación · 100 Dimensiones</span>
+        <CalibratorErrorBoundary fallback={<CalibratorFallback />}>
+            <Suspense fallback={<CalibratorFallback />}>
+                <div className="w-full rounded-3xl border border-white/10 bg-[#08080e]/90 backdrop-blur-xl overflow-hidden">
+                    {/* Cabecera del calibrador */}
+                    <div className="p-5 sm:p-6 border-b border-white/10 bg-gradient-to-r from-[#0e0d0a] to-[#08080e]">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <div className="inline-flex items-center gap-2 text-[11px] font-mono text-[#ecb613] uppercase tracking-widest font-black">
+                                    <SlidersHorizontal size={13} />
+                                    <span>Calibrador de Captación · 100 Dimensiones</span>
+                                </div>
+                                <h2 className="text-xl sm:text-2xl font-black font-syne text-white mt-1.5">
+                                    {providerName ?? 'Tu Finca'}
+                                </h2>
+                                <p className="text-xs text-zinc-400 font-light mt-0.5">
+                                    Solo te llegarán parejas que encajen con tu negocio.
+                                </p>
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono">
+                                <span className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300">
+                                    {completionPercent}/100 dims
+                                </span>
+                                <span className="px-3 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613]">
+                                    {CALIBRATOR_PRESET_META.find((m) => m.slug === presetSlug)?.icon}{' '}
+                                    {CALIBRATOR_PRESET_META.find((m) => m.slug === presetSlug)?.name ?? presetSlug}
+                                </span>
+                                {savedAt && (
+                                    <span className="px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-1">
+                                        <CheckCircle2 size={11} /> Guardado
+                                    </span>
+                                )}
+                            </div>
                         </div>
-                        <h2 className="text-xl sm:text-2xl font-black font-syne text-white mt-1.5">
-                            {providerName ?? 'Tu Finca'}
-                        </h2>
-                        <p className="text-xs text-zinc-400 font-light mt-0.5">
-                            Solo te llegarán parejas que encajen con tu negocio.
-                        </p>
-                    </div>
 
-                    <div className="flex flex-wrap items-center gap-2.5 text-[10px] font-mono">
-                        <span className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-zinc-300">
-                            {completionPercent}/100 dims
-                        </span>
-                        <span className="px-3 py-1.5 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613]">
-                            {CALIBRATOR_PRESET_META.find((m) => m.slug === presetSlug)?.icon}{' '}
-                            {CALIBRATOR_PRESET_META.find((m) => m.slug === presetSlug)?.name ?? presetSlug}
-                        </span>
-                        {savedAt && (
-                            <span className="px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-1">
-                                <CheckCircle2 size={11} /> Guardado
+                        {/* Selector de preset */}
+                        <div className="mt-4 flex flex-wrap items-center gap-2">
+                            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mr-1">
+                                Preset:
                             </span>
-                        )}
+                            {CALIBRATOR_PRESET_META.map((meta) => (
+                                <button
+                                    key={meta.slug}
+                                    onClick={() => handlePresetChange(meta.slug)}
+                                    className={`px-3 py-1.5 rounded-full text-[10px] font-mono border transition-all ${presetSlug === meta.slug
+                                        ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold'
+                                        : 'bg-white/5 border-white/10 text-zinc-300 hover:border-white/25'
+                                        }`}
+                                >
+                                    {meta.icon} {meta.name}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                </div>
 
-                {/* Selector de preset */}
-                <div className="mt-4 flex flex-wrap items-center gap-2">
-                    <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mr-1">
-                        Preset:
-                    </span>
-                    {CALIBRATOR_PRESET_META.map((meta) => (
-                        <button
-                            key={meta.slug}
-                            onClick={() => handlePresetChange(meta.slug)}
-                            className={`px-3 py-1.5 rounded-full text-[10px] font-mono border transition-all ${presetSlug === meta.slug
-                                ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold'
-                                : 'bg-white/5 border-white/10 text-zinc-300 hover:border-white/25'
-                                }`}
-                        >
-                            {meta.icon} {meta.name}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            {/* Tabs de pilares */}
-            <div className="flex flex-wrap gap-1.5 px-4 pt-4 border-b border-white/5 bg-black/30">
-                {PILLAR_META.map((p) => (
-                    <button
-                        key={p.pillar}
-                        onClick={() => setActivePillar(p.pillar)}
-                        className={`px-3.5 py-2 rounded-t-xl text-[11px] font-mono transition-all ${activePillar === p.pillar
-                            ? 'bg-[#0c0c14] border border-b-0 border-white/10 text-[#ecb613] font-bold'
-                            : 'text-zinc-500 hover:text-zinc-200'
-                            }`}
-                    >
-                        {p.icon} {p.label}
-                    </button>
-                ))}
-            </div>
-
-            {/* Contenido del pilar activo */}
-            <div className="p-4 sm:p-6">
-                {loading ? (
-                    <div className="flex items-center justify-center py-16 text-zinc-500 gap-2">
-                        <Loader2 size={18} className="animate-spin" />
-                        <span className="text-sm font-mono">Cargando calibrador…</span>
-                    </div>
-                ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {activeDims.map((dim) => (
-                            <DimensionControl
-                                key={dim.id}
-                                dim={dim}
-                                value={dimensions[dim.id]}
-                                onChange={(v) => setValue(dim.id, v)}
-                            />
+                    {/* Tabs de pilares */}
+                    <div className="flex flex-wrap gap-1.5 px-4 pt-4 border-b border-white/5 bg-black/30">
+                        {PILLAR_META.map((p) => (
+                            <button
+                                key={p.pillar}
+                                onClick={() => setActivePillar(p.pillar)}
+                                className={`px-3.5 py-2 rounded-t-xl text-[11px] font-mono transition-all ${activePillar === p.pillar
+                                    ? 'bg-[#0c0c14] border border-b-0 border-white/10 text-[#ecb613] font-bold'
+                                    : 'text-zinc-500 hover:text-zinc-200'
+                                    }`}
+                            >
+                                {p.icon} {p.label}
+                            </button>
                         ))}
                     </div>
-                )}
-            </div>
 
-            {/* Acciones */}
-            <div className="p-4 sm:p-6 border-t border-white/10 bg-black/30 flex flex-col sm:flex-row items-center justify-end gap-3">
-                {error && (
-                    <span className="text-[11px] font-mono text-rose-400 flex items-center gap-1 mr-auto">
-                        <AlertTriangle size={12} /> {error}
-                    </span>
-                )}
-                <button
-                    onClick={handleReset}
-                    className="px-4 py-2.5 rounded-2xl border border-white/10 text-xs font-mono text-zinc-300 hover:bg-white/5 transition-all flex items-center gap-2"
-                >
-                    <RotateCcw size={13} /> Restaurar Preset
-                </button>
-                <button
-                    onClick={handleSave}
-                    disabled={saving || loading}
-                    className="px-5 py-2.5 rounded-2xl bg-[#ecb613] hover:bg-[#f6c737] text-black text-xs font-mono font-black transition-all flex items-center gap-2 disabled:opacity-50"
-                >
-                    {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
-                    {adminMode ? 'Guardar como Admin' : 'Guardar Calibración'}
-                </button>
-            </div>
-        </div>
+                    {/* Contenido del pilar activo */}
+                    <div className="p-4 sm:p-6">
+                        {loading ? (
+                            <div className="flex items-center justify-center py-16 text-zinc-500 gap-2">
+                                <Loader2 size={18} className="animate-spin" />
+                                <span className="text-sm font-mono">Cargando calibrador…</span>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {activeDims.map((dim) => (
+                                    <DimensionControl
+                                        key={dim.id}
+                                        dim={dim}
+                                        value={dimensions[dim.id]}
+                                        onChange={(v) => setValue(dim.id, v)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Acciones */}
+                    <div className="p-4 sm:p-6 border-t border-white/10 bg-black/30 flex flex-col sm:flex-row items-center justify-end gap-3">
+                        {error && (
+                            <span className="text-[11px] font-mono text-rose-400 flex items-center gap-1 mr-auto">
+                                <AlertTriangle size={12} /> {error}
+                            </span>
+                        )}
+                        <button
+                            onClick={handleReset}
+                            className="px-4 py-2.5 rounded-2xl border border-white/10 text-xs font-mono text-zinc-300 hover:bg-white/5 transition-all flex items-center gap-2"
+                        >
+                            <RotateCcw size={13} /> Restaurar Preset
+                        </button>
+                        <button
+                            onClick={handleSave}
+                            disabled={saving || loading}
+                            className="px-5 py-2.5 rounded-2xl bg-[#ecb613] hover:bg-[#f6c737] text-black text-xs font-mono font-black transition-all flex items-center gap-2 disabled:opacity-50"
+                        >
+                            {saving ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
+                            {adminMode ? 'Guardar como Admin' : 'Guardar Calibración'}
+                        </button>
+                    </div>
+                </div>
+            </Suspense>
+        </CalibratorErrorBoundary>
     );
 }
 

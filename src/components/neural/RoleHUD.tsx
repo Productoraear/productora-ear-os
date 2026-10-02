@@ -29,12 +29,12 @@ export default function RoleHUD({
     icon?: any;
     badge: string;
   }> = [
-    { key: 'artistas', icon: Mic, badge: 'ROSTER' },
-    { key: 'eventos', icon: Calendar, badge: 'B2C' },
-    { key: 'empresas', icon: Building2, badge: 'B2B' },
-    { key: 'instituciones', icon: Landmark, badge: 'B2G' },
-    { key: 'vimume', icon: Heart, badge: '40Hz' },
-  ];
+      { key: 'artistas', icon: Mic, badge: 'ROSTER' },
+      { key: 'eventos', icon: Calendar, badge: 'B2C' },
+      { key: 'empresas', icon: Building2, badge: 'B2B' },
+      { key: 'instituciones', icon: Landmark, badge: 'B2G' },
+      { key: 'vimume', icon: Heart, badge: '40Hz' },
+    ];
 
   const handleRoleClick = (key: RoleKey) => {
     if (selectedRole === key) {
@@ -64,17 +64,15 @@ export default function RoleHUD({
         type="button"
         onClick={() => onSelectRole(null)}
         title="Restaurar Visión Global"
-        className={`flex items-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-mono transition-all duration-200 group shrink-0 ${
-          !selectedRole
+        className={`flex items-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 min-h-[48px] touch-manipulation rounded-full text-[11px] sm:text-xs font-mono transition-all duration-200 group shrink-0 ${!selectedRole
             ? 'bg-white/10 text-white shadow-sm border border-white/15'
             : 'text-zinc-400 hover:text-white hover:bg-white/5'
-        }`}
+          }`}
       >
         <RotateCcw
           size={13}
-          className={`transition-transform duration-300 group-hover:rotate-180 ${
-            !selectedRole ? 'text-[#ecb613]' : 'text-zinc-500'
-          }`}
+          className={`transition-transform duration-300 group-hover:rotate-180 ${!selectedRole ? 'text-[#ecb613]' : 'text-zinc-500'
+            }`}
         />
         <span className="font-semibold tracking-wider text-[10px] sm:text-[11px] uppercase hidden xs:inline sm:inline">
           GLOBAL
@@ -97,11 +95,10 @@ export default function RoleHUD({
               borderColor: isSelected ? def.color : 'transparent',
               backgroundColor: isSelected ? def.accentBg : undefined
             }}
-            className={`relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs transition-all duration-200 border group whitespace-nowrap shrink-0 cursor-pointer ${
-              isSelected
+            className={`relative flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 min-h-[48px] touch-manipulation rounded-full text-[11px] sm:text-xs transition-all duration-200 border group whitespace-nowrap shrink-0 cursor-pointer ${isSelected
                 ? 'shadow-[0_0_20px_rgba(0,0,0,0.5)] scale-[1.02]'
                 : 'border-transparent text-zinc-400 hover:text-zinc-100 hover:bg-white/5'
-            }`}
+              }`}
           >
             {/* Pulsing indicator dot */}
             <span
@@ -109,9 +106,8 @@ export default function RoleHUD({
                 backgroundColor: def.color,
                 boxShadow: isSelected ? `0 0 10px ${def.color}` : 'none'
               }}
-              className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full transition-transform duration-200 ${
-                isSelected ? 'scale-125 animate-pulse' : 'opacity-70 group-hover:opacity-100'
-              }`}
+              className={`w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full transition-transform duration-200 ${isSelected ? 'scale-125 animate-pulse' : 'opacity-70 group-hover:opacity-100'
+                }`}
             />
 
             {Icon && (
@@ -155,7 +151,7 @@ export default function RoleHUD({
           }
         }}
         title="Invocar Asistente Local Neural"
-        className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full text-zinc-400 hover:text-[#ecb613] hover:bg-[#ecb613]/10 border border-transparent hover:border-[#ecb613]/30 transition-all text-[11px] sm:text-xs font-mono group shrink-0 cursor-pointer"
+        className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 min-h-[48px] touch-manipulation rounded-full text-zinc-400 hover:text-[#ecb613] hover:bg-[#ecb613]/10 border border-transparent hover:border-[#ecb613]/30 transition-all text-[11px] sm:text-xs font-mono group shrink-0 cursor-pointer"
       >
         <Sparkles size={13} className="text-[#ecb613] animate-pulse" />
         <span className="text-[10px] sm:text-[11px] tracking-wider hidden lg:inline">ASISTENTE</span>

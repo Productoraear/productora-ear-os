@@ -1,12 +1,16 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-    NeuralProviderTinderMatch,
-    type CanonicalProviderService
-} from './NeuralProviderTinderMatch';
+import dynamic from 'next/dynamic';
+import type { CanonicalProviderService } from './NeuralProviderTinderMatch';
 import type { CoupleCalibration } from '@/lib/matching/calibratorTypes';
 import { PROVIDER_SERVICE_CALIBRATION_DIMENSIONS } from '@/lib/matching/providerServiceCalibratorTypes';
+
+// Lazy loading del motor de matching 200D: se monta tras hidratar el dataset.
+const NeuralProviderTinderMatch = dynamic(
+    () => import('./NeuralProviderTinderMatch').then((mod) => ({ default: mod.NeuralProviderTinderMatch })),
+    { ssr: false, loading: () => null }
+);
 
 /**
  * 📦 B1.04B — PROVIDER NEURAL MATCHER VIEW

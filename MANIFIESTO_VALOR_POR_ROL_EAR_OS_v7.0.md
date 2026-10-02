@@ -102,6 +102,19 @@ Antes de proponer, se auditaron `src/lib/`, `src/lib/*/` y `src/app/api/`. Resul
 | **Multi-Service Orchestrator** | `src/lib/engines/multiServiceOrchestrator.ts` | Orquesta producción multi-servicio. |
 | **Telemetry / Lead Intent / GSC** | `src/app/api/telemetry/*` | Captura de intención, marketplace, datos GSC. |
 
+### 0.10 ⚡ Automatización Cuántica y Telemetría S-Class (Coolify VPS + n8n Cluster Bare-Metal)
+| Componente / Workflow | Endpoint / Ubicación | Qué hace ya hoy en producción |
+|---|---|---|
+| **Hostinger Bare-Metal VPS** | `82.29.179.172:8000` | Ubuntu 24.04 LTS con Coolify v4 + PostgreSQL 16 local con persistencia blindada. |
+| **n8n S-Class Cluster** | `https://n8n.productoraear.com` | Orquestador de eventos autónomo 24/7 sin coste marginal por ejecución. |
+| **B2B / B2G Enterprise Quote** | `POST /webhook/b2b-quote` | Despacho instantáneo de cotizaciones corporativas, cálculo de márgenes y notificación multicanal. |
+| **Stripe Price-Lock Deposit** | `POST /webhook/stripe-price-lock` | Emisión y verificación de depósitos 100 € SHA-256, auto-generación de contrato de reserva. |
+| **Finca Strategic Qualifier** | `POST /webhook/finca-partnership` | Cualificación algorítmica de recintos, evaluación de aforo acústico y propuesta de alianza. |
+| **VIMUME Clinical Impact** | `POST /webhook/vimume-clinical-report` | Generación automatizada de informes de impacto neuroacústico y certificados RSC Modelo 182. |
+| **Call Center Multi-Channel** | `POST /webhook/call-center-intake` | Recepción y transcripción de llamadas/WhatsApps con asignación prioritaria al CEO (+34 693 693 048). |
+| **Autonomous Escalation Engine** | `POST /webhook/autonomous-escalation` | Scoring dinámico de leads en tiempo real con alertas de escalado para deals > 1.000 €. |
+| **Executive KPI Radar** | `POST /webhook/executive-kpi-radar` | Consolidación diaria de pipeline, tasa de conversión y telemetría de negocio para el CEO. |
+
 > **Conclusión arquitectónica para Antigravity:** no hay que *construir* los motores; hay que **conectarlos, exponerlos y monetizarlos**. El riesgo real no es técnico, es de **orquestación de producto**: cada motor ya está blindado y validado; falta la capa de experiencia que los pone frente al rol correcto.
 
 ---

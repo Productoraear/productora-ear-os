@@ -1,14 +1,50 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Component, Suspense, useEffect, useRef, useState, type ErrorInfo, type ReactNode } from 'react';
 import * as THREE from 'three';
 import Link from 'next/link';
 import { Activity, ShieldCheck, Heart, Sparkles, ArrowRight } from 'lucide-react';
 
-export default function LatticeColibriHero3D() {
+interface LatticeColibriErrorBoundaryProps {
+  children: ReactNode;
+}
+
+interface LatticeColibriErrorBoundaryState {
+  hasError: boolean;
+}
+
+class LatticeColibriErrorBoundary extends Component<
+  LatticeColibriErrorBoundaryProps,
+  LatticeColibriErrorBoundaryState
+> {
+  state: LatticeColibriErrorBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): LatticeColibriErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('[LatticeColibriHero3D] Error crítico capturado:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="relative w-full min-h-[580px] flex items-center justify-center bg-[#030305]">
+          <p className="font-mono text-xs tracking-widest uppercase text-[#fdb927]">
+            Escena no disponible — se está restableciendo
+          </p>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function LatticeColibriHero3DScene() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isPlaying40Hz, setIsPlaying40Hz] = useState(false);
+  const [webglError, setWebglError] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -27,12 +63,19 @@ export default function LatticeColibriHero3D() {
     );
     camera.position.z = 12;
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance',
-    });
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        alpha: true,
+        antialias: true,
+        powerPreference: 'high-performance',
+      });
+    } catch (error) {
+      console.error('[LatticeColibriHero3D] WebGL no disponible:', error);
+      setWebglError(true);
+      return;
+    }
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -224,15 +267,23 @@ export default function LatticeColibriHero3D() {
   }, []);
 
   return (
-    <div 
+    <div
       ref={containerRef}
       className="relative w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[760px] flex items-center justify-center overflow-hidden bg-[#030305] select-none"
     >
       {/* ── 1. CANVAS THREE.JS LATTICE 3D ── */}
-      <canvas 
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none z-10"
-      />
+      {!webglError ? (
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full pointer-events-none z-10"
+        />
+      ) : (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.12),rgba(5,5,8,0.92))] pointer-events-none">
+          <p className="font-mono text-xs tracking-widest uppercase text-[#27c3a8]">
+            Modo estático — dispositivo sin aceleración 3D
+          </p>
+        </div>
+      )}
 
       {/* ── 2. GRADIENTES CINEMÁTICOS MONOCROMO & AURA VIMUME ── */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#030305] via-transparent to-[#030305]/80 pointer-events-none z-10" />
@@ -240,7 +291,7 @@ export default function LatticeColibriHero3D() {
 
       {/* ── 3. OVERLAY CLINICO Y ACCIÓN INSTITUCIONAL (100% RESPONSIVE) ── */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center justify-between min-h-full pointer-events-none text-center">
-        
+
         {/* BADGE CLÍNICO DE ALTA AUTORIDAD */}
         <div className="pointer-events-auto inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-black/70 border border-[#8B5CF6]/50 backdrop-blur-xl shadow-[0_0_25px_rgba(139,92,246,0.35)] animate-in fade-in slide-in-from-top-4 duration-700">
           <div className="w-2 h-2 rounded-full bg-[#27c3a8] animate-ping" />
@@ -304,5 +355,23 @@ export default function LatticeColibriHero3D() {
 
       </div>
     </div>
+  );
+}
+
+export default function LatticeColibriHero3D() {
+  return (
+    <LatticeColibriErrorBoundary>
+      <Suspense
+        fallback={
+          <div className="relative w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[760px] flex items-center justify-center bg-[#030305]">
+            <p className="font-mono text-xs tracking-widest uppercase text-[#8B5CF6] animate-pulse">
+              Inicializando escena neuroacústica…
+            </p>
+          </div>
+        }
+      >
+        <LatticeColibriHero3DScene />
+      </Suspense>
+    </LatticeColibriErrorBoundary>
   );
 }

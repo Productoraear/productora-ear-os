@@ -1,6 +1,13 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, {
+  Component,
+  Suspense,
+  useMemo,
+  useState,
+  type ErrorInfo,
+  type ReactNode,
+} from "react";
 import { motion } from "framer-motion";
 import {
   BarChart3,
@@ -27,6 +34,34 @@ import {
   type UnifiedSocialOverview,
 } from "@/lib/social/socialRadarEngine";
 
+class DistributionRadarErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error("[DistributionRadar] Fallo de render:", error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const DistributionRadarFallback: React.FC = () => (
+  <div className="rounded-3xl border border-white/10 bg-[#050507] p-8 text-center text-xs text-white/70">
+    Radar de distribución temporalmente no disponible.
+  </div>
+);
+
 type TabId = "agregadora" | "radar";
 
 const PLATFORM_ACCENTS: Record<string, string> = {
@@ -36,7 +71,7 @@ const PLATFORM_ACCENTS: Record<string, string> = {
   "Instagram Reels": "#ecb613",
 };
 
-export default function DistributionRadar() {
+function DistributionRadarContent() {
   const [activeTab, setActiveTab] = useState<TabId>("agregadora");
   const [release, setRelease] = useState<SovereignRelease>({
     id: "ear-release-001",
@@ -356,3 +391,13 @@ export default function DistributionRadar() {
     </div>
   );
 }
+
+export default function DistributionRadar() {
+  return (
+    <DistributionRadarErrorBoundary fallback={<DistributionRadarFallback />}>
+      <Suspense fallback={<DistributionRadarFallback />}>
+        <DistributionRadarContent />
+      </Suspense>
+    </DistributionRadarErrorBoundary>
+  );
+}

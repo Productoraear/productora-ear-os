@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { HelpCircle, ChevronDown } from 'lucide-react';
 
 interface FaqItem {
@@ -37,14 +37,14 @@ const B2G_FAQS: FaqItem[] = [
   }
 ];
 
-export function B2GGovFaqAccordion() {
+export const B2GGovFaqAccordion: React.FC = React.memo(function B2GGovFaqAccordion() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  const jsonLd = {
+  const jsonLd = useMemo(() => ({
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": B2G_FAQS.map(faq => ({
@@ -55,7 +55,7 @@ export function B2GGovFaqAccordion() {
         "text": faq.answer
       }
     }))
-  };
+  }), []);
 
   return (
     <div className="bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 md:p-8 space-y-6">
@@ -117,6 +117,6 @@ export function B2GGovFaqAccordion() {
       </div>
     </div>
   );
-}
+});
 
 export default B2GGovFaqAccordion;

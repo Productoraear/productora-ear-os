@@ -1,8 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { ShieldCheck, KeyRound, CheckCircle2, Sparkles, TrendingUp, DollarSign, MessageCircle } from 'lucide-react';
-import { ClaimProviderModal } from '@/components/providers/ClaimProviderModal';
+
+// Lazy loading del modal de reclamación 2FA (pesado, solo se monta bajo demanda).
+const ClaimProviderModal = dynamic(
+  () => import('@/components/providers/ClaimProviderModal').then((mod) => ({ default: mod.ClaimProviderModal })),
+  { ssr: false, loading: () => null }
+);
 
 interface ClaimProfileTriggerProps {
   provider: {
@@ -87,8 +93,8 @@ export const ClaimProfileTrigger: React.FC<ClaimProfileTriggerProps> = ({ provid
           loserId: variant === 'A' ? 'variant-b' : 'variant-a',
           context: `claim_profile_${provider.category || 'general'}`
         })
-      }).catch(() => {});
-    } catch {}
+      }).catch(() => { });
+    } catch { }
 
     setIsModalOpen(true);
   };

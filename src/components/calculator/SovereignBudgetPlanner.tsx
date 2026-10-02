@@ -712,18 +712,19 @@ export default function SovereignBudgetPlanner() {
 
   return (
     <div className="w-full space-y-12 font-sans text-slate-100 selection:bg-[#ecb613] selection:text-black">
-      
+
       {/* ── ESCENARIOS PREDEFINIDOS RÁPIDOS (1-CLICK LUXURY SEED) ── */}
       <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-3xl bg-[#09090e]/90 border border-white/10 backdrop-blur-2xl shadow-2xl">
         <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#ecb613] uppercase tracking-wider">
           <Sparkles size={14} className="text-[#ecb613]" />
           <span>Escenarios Maestros 1-Clic:</span>
         </div>
-        
+
         <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={() => applyPresetScenario(18000, 70)}
+            aria-label="Aplicar escenario íntima de 18.000 euros para 70 invitados"
             className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 hover:text-white transition flex items-center gap-1.5"
           >
             <span>💎 Íntima (18.000 € · 70 pax)</span>
@@ -732,6 +733,7 @@ export default function SovereignBudgetPlanner() {
           <button
             type="button"
             onClick={() => applyPresetScenario(35000, 130)}
+            aria-label="Aplicar escenario imperial de 35.000 euros para 130 invitados"
             className="px-3.5 py-1.5 rounded-xl bg-[#ecb613]/15 hover:bg-[#ecb613]/25 border border-[#ecb613]/40 text-xs font-mono text-[#ecb613] font-bold transition flex items-center gap-1.5 shadow-[0_0_15px_rgba(236,182,19,0.2)]"
           >
             <span>👑 Imperial (35.000 € · 130 pax)</span>
@@ -740,6 +742,7 @@ export default function SovereignBudgetPlanner() {
           <button
             type="button"
             onClick={() => applyPresetScenario(65000, 250)}
+            aria-label="Aplicar escenario gran gala de 65.000 euros para 250 invitados"
             className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 hover:text-white transition flex items-center gap-1.5"
           >
             <span>🏛️ Gran Gala (65.000 € · 250 pax)</span>
@@ -752,10 +755,11 @@ export default function SovereignBudgetPlanner() {
               setCategories(INITIAL_CATEGORIES);
               setSelectedOfficialPack(null);
             }}
+            aria-label="Restablecer presupuesto a cero"
             className="px-3 py-1.5 rounded-xl bg-red-950/30 hover:bg-red-900/40 border border-red-500/30 text-xs font-mono text-red-300 transition flex items-center gap-1"
             title="Restablecer presupuesto a cero"
           >
-            <RefreshCw size={12} />
+            <RefreshCw size={12} aria-hidden="true" />
             <span>Limpiar a 0 €</span>
           </button>
         </div>
@@ -768,7 +772,7 @@ export default function SovereignBudgetPlanner() {
         <div className="pointer-events-none absolute -bottom-32 -right-32 w-96 h-96 bg-gradient-radial from-[#00E5FF]/10 via-transparent to-transparent blur-[120px]" />
 
         <div className="relative z-10 space-y-8">
-          
+
           {/* Fila Superior: Título + Acciones Pro */}
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-6 border-b border-white/10">
             <div className="space-y-2">
@@ -789,18 +793,20 @@ export default function SovereignBudgetPlanner() {
               <button
                 type="button"
                 onClick={generateMagicShareLink}
+                aria-label="Copiar enlace mágico del presupuesto al portapapeles"
                 className="px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white flex items-center gap-2 transition shadow-lg active:scale-95"
               >
-                {copiedLink ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} className="text-[#ecb613]" />}
+                {copiedLink ? <Check size={14} className="text-emerald-400" aria-hidden="true" /> : <Copy size={14} className="text-[#ecb613]" aria-hidden="true" />}
                 <span className="font-bold">{copiedLink ? '¡Enlace Guardado!' : 'Copiar Hash'}</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => window.print()}
+                aria-label="Imprimir o guardar el presupuesto en PDF"
                 className="px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-white flex items-center gap-2 transition"
               >
-                <Printer size={14} className="text-zinc-400" />
+                <Printer size={14} className="text-zinc-400" aria-hidden="true" />
                 <span className="font-bold">PDF / Imprimir</span>
               </button>
 
@@ -818,7 +824,7 @@ export default function SovereignBudgetPlanner() {
 
           {/* KPI GRID DE 4 COLUMNAS DE ALTA PRECISIÓN */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            
+
             {/* KPI 1: PRESUPUESTO MAESTRO */}
             <div className="p-5 rounded-3xl bg-[#0e0e17] border border-white/10 space-y-2 hover:border-[#ecb613]/50 transition group">
               <div className="flex justify-between items-center text-xs font-mono text-zinc-400">
@@ -833,6 +839,7 @@ export default function SovereignBudgetPlanner() {
                   value={totalBudget === 0 ? '' : totalBudget}
                   onChange={(e) => setTotalBudget(Number(e.target.value) || 0)}
                   placeholder="0 €"
+                  aria-label="Presupuesto objetivo total en euros"
                   className="w-full bg-transparent text-2xl sm:text-3xl font-black font-mono text-white outline-none focus:text-[#ecb613] transition"
                 />
               </div>
@@ -840,9 +847,10 @@ export default function SovereignBudgetPlanner() {
                 type="button"
                 onClick={handleAutoDistribute}
                 disabled={totalBudget <= 0}
+                aria-label="Auto-distribuir presupuesto proporcionalmente entre todas las partidas"
                 className="text-[10px] font-mono text-[#ecb613] hover:underline flex items-center gap-1 font-bold disabled:opacity-30 pt-1"
               >
-                <RefreshCw size={11} /> Auto-distribuir proporcionalmente
+                <RefreshCw size={11} aria-hidden="true" /> Auto-distribuir proporcionalmente
               </button>
             </div>
 
@@ -858,6 +866,7 @@ export default function SovereignBudgetPlanner() {
                 max={1500}
                 value={paxCount}
                 onChange={(e) => setPaxCount(Math.max(1, Number(e.target.value)))}
+                aria-label="Número de invitados"
                 className="w-full bg-transparent text-2xl sm:text-3xl font-black font-mono text-white outline-none focus:text-[#00E5FF] transition"
               />
               <span className="text-[10px] font-mono text-zinc-500 block pt-1">
@@ -874,6 +883,7 @@ export default function SovereignBudgetPlanner() {
               <select
                 value={province}
                 onChange={(e) => setProvince(e.target.value)}
+                aria-label="Provincia del evento"
                 className="w-full bg-transparent text-lg sm:text-xl font-black font-mono text-white outline-none cursor-pointer"
               >
                 {['Madrid', 'Toledo', 'Barcelona', 'Valencia', 'Sevilla', 'Málaga', 'Alicante', 'Cádiz', 'Segovia', 'Ávila', 'Guadalajara', 'Zaragoza', 'A Coruña', 'Baleares', 'Granada', 'Murcia', 'Valladolid'].map((p) => (
@@ -938,7 +948,7 @@ export default function SovereignBudgetPlanner() {
                 .slice(0, 8)
                 .map((cat) => (
                   <div key={cat.id} className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/5 border border-white/10">
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: cat.color }} />
+                    <span aria-hidden="true" className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: cat.color }} />
                     <span className="text-zinc-300 truncate max-w-[120px]">{cat.name.split(' ')[0]}</span>
                     <span className="font-bold text-white">{cat.allocated.toLocaleString()}€</span>
                   </div>
@@ -980,11 +990,10 @@ export default function SovereignBudgetPlanner() {
               <div
                 key={pack.id}
                 onClick={() => handleSelectOfficialPack(pack)}
-                className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-4 ${
-                  isSelected
-                    ? 'bg-[#ecb613]/15 border-[#ecb613] shadow-[0_0_25px_rgba(236,182,19,0.2)] ring-1 ring-[#ecb613]'
-                    : 'bg-[#06060a] border-white/10 hover:border-white/20 hover:bg-[#0c0c14]'
-                }`}
+                className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between gap-4 ${isSelected
+                  ? 'bg-[#ecb613]/15 border-[#ecb613] shadow-[0_0_25px_rgba(236,182,19,0.2)] ring-1 ring-[#ecb613]'
+                  : 'bg-[#06060a] border-white/10 hover:border-white/20 hover:bg-[#0c0c14]'
+                  }`}
               >
                 <div className="space-y-2">
                   <div className="flex items-start justify-between gap-2">
@@ -1018,18 +1027,16 @@ export default function SovereignBudgetPlanner() {
       </div>
 
       {/* ── ORÁCULO ASTRA: AUDITORÍA DE VIABILIDAD Y BAÑO DE REALIDAD ── */}
-      <div className={`p-6 sm:p-8 rounded-[2rem] border transition-all ${
-        realityAudit.score < 70
-          ? 'bg-red-950/20 border-red-500/40'
-          : realityAudit.score < 90
-            ? 'bg-amber-950/20 border-amber-500/40'
-            : 'bg-emerald-950/20 border-emerald-500/30'
-      }`}>
+      <div className={`p-6 sm:p-8 rounded-[2rem] border transition-all ${realityAudit.score < 70
+        ? 'bg-red-950/20 border-red-500/40'
+        : realityAudit.score < 90
+          ? 'bg-amber-950/20 border-amber-500/40'
+          : 'bg-emerald-950/20 border-emerald-500/30'
+        }`}>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className={`p-2.5 rounded-2xl border ${
-              realityAudit.score < 70 ? 'bg-red-500/20 border-red-500/40 text-red-400' : 'bg-[#ecb613]/20 border-[#ecb613]/40 text-[#ecb613]'
-            }`}>
+            <div className={`p-2.5 rounded-2xl border ${realityAudit.score < 70 ? 'bg-red-500/20 border-red-500/40 text-red-400' : 'bg-[#ecb613]/20 border-[#ecb613]/40 text-[#ecb613]'
+              }`}>
               <Sparkles size={20} />
             </div>
             <div>
@@ -1044,13 +1051,12 @@ export default function SovereignBudgetPlanner() {
 
           <div className="flex items-center gap-2 font-mono text-xs">
             <span className="text-zinc-400">Puntuación de Coherencia:</span>
-            <span className={`px-3 py-1 rounded-full font-black text-xs border ${
-              realityAudit.score < 70
-                ? 'bg-red-500/20 border-red-500 text-red-300'
-                : realityAudit.score < 90
-                  ? 'bg-amber-500/20 border-amber-500 text-amber-300'
-                  : 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
-            }`}>
+            <span className={`px-3 py-1 rounded-full font-black text-xs border ${realityAudit.score < 70
+              ? 'bg-red-500/20 border-red-500 text-red-300'
+              : realityAudit.score < 90
+                ? 'bg-amber-500/20 border-amber-500 text-amber-300'
+                : 'bg-emerald-500/20 border-emerald-500 text-emerald-300'
+              }`}>
               {realityAudit.score} / 100
             </span>
           </div>
@@ -1059,9 +1065,8 @@ export default function SovereignBudgetPlanner() {
         <div className="pt-4 space-y-2">
           {realityAudit.issues.map((issue, idx) => (
             <div key={idx} className="flex items-start gap-2.5 text-xs font-mono leading-relaxed">
-              <span className={`shrink-0 mt-0.5 ${
-                issue.severity === 'critical' ? 'text-red-400' : issue.severity === 'warning' ? 'text-amber-400' : 'text-emerald-400'
-              }`}>
+              <span className={`shrink-0 mt-0.5 ${issue.severity === 'critical' ? 'text-red-400' : issue.severity === 'warning' ? 'text-amber-400' : 'text-emerald-400'
+                }`}>
                 {issue.severity === 'optimal' ? '✓' : '▲'}
               </span>
               <span className="text-zinc-300">{issue.text}</span>
@@ -1088,9 +1093,10 @@ export default function SovereignBudgetPlanner() {
           <button
             type="button"
             onClick={() => setShowAddModal(true)}
+            aria-label="Añadir nueva partida de gasto personalizada"
             className="px-4 py-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-xs font-mono font-bold text-white flex items-center gap-2 transition"
           >
-            <Plus size={15} className="text-[#ecb613]" />
+            <Plus size={15} className="text-[#ecb613]" aria-hidden="true" />
             <span>+ Nueva Partida</span>
           </button>
         </div>
@@ -1104,11 +1110,10 @@ export default function SovereignBudgetPlanner() {
             return (
               <div
                 key={cat.id}
-                className={`p-6 rounded-[2rem] border transition-all flex flex-col justify-between gap-4 group ${
-                  cat.isLocked
-                    ? 'bg-[#0e0e18] border-[#ecb613]/70 shadow-[0_10px_35px_rgba(236,182,19,0.15)] ring-1 ring-[#ecb613]/30'
-                    : 'bg-[#08080d] border-white/10 hover:border-white/25 hover:bg-[#0c0c14]'
-                }`}
+                className={`p-6 rounded-[2rem] border transition-all flex flex-col justify-between gap-4 group ${cat.isLocked
+                  ? 'bg-[#0e0e18] border-[#ecb613]/70 shadow-[0_10px_35px_rgba(236,182,19,0.15)] ring-1 ring-[#ecb613]/30'
+                  : 'bg-[#08080d] border-white/10 hover:border-white/25 hover:bg-[#0c0c14]'
+                  }`}
               >
                 {/* Cabecera Tarjeta: Icono + Nombre + Lock Button */}
                 <div className="flex items-start justify-between gap-3">
@@ -1138,23 +1143,25 @@ export default function SovereignBudgetPlanner() {
                     <button
                       type="button"
                       onClick={() => toggleLock(cat.id)}
-                      className={`p-2 rounded-xl border font-mono text-[10px] font-bold uppercase transition flex items-center gap-1 ${
-                        cat.isLocked
-                          ? 'bg-[#ecb613] text-black border-[#ecb613] shadow-md'
-                          : 'bg-white/5 border-white/10 text-zinc-400 hover:text-white'
-                      }`}
+                      aria-pressed={cat.isLocked}
+                      aria-label={`${cat.isLocked ? 'Desbloquear' : 'Bloquear'} la partida ${cat.name}`}
+                      className={`p-2 rounded-xl border font-mono text-[10px] font-bold uppercase transition flex items-center gap-1 ${cat.isLocked
+                        ? 'bg-[#ecb613] text-black border-[#ecb613] shadow-md'
+                        : 'bg-white/5 border-white/10 text-zinc-400 hover:text-white'
+                        }`}
                       title={cat.isLocked ? 'Fijado: No se altera en auto-distribución' : 'Libre: Se adapta al presupuesto'}
                     >
-                      {cat.isLocked ? <Lock size={13} className="fill-black" /> : <Unlock size={13} />}
+                      {cat.isLocked ? <Lock size={13} className="fill-black" aria-hidden="true" /> : <Unlock size={13} aria-hidden="true" />}
                     </button>
 
                     {isCustom && (
                       <button
                         type="button"
                         onClick={() => handleDeleteCategory(cat.id)}
+                        aria-label={`Eliminar la partida ${cat.name}`}
                         className="p-2 text-zinc-600 hover:text-red-400 transition"
                       >
-                        <Trash2 size={13} />
+                        <Trash2 size={13} aria-hidden="true" />
                       </button>
                     )}
                   </div>
@@ -1175,6 +1182,7 @@ export default function SovereignBudgetPlanner() {
                         value={cat.allocated === 0 ? '' : cat.allocated}
                         onChange={(e) => handleAllocatedChange(cat.id, Number(e.target.value))}
                         placeholder="0"
+                        aria-label={`Importe asignado a ${cat.name} en euros`}
                         className="w-32 text-right bg-[#050508] border border-white/15 focus:border-[#ecb613] rounded-xl px-3 py-1.5 text-lg font-black font-mono text-white outline-none transition"
                       />
                       <span className="ml-1.5 font-mono text-xs text-[#ecb613] font-bold">€</span>
@@ -1190,6 +1198,8 @@ export default function SovereignBudgetPlanner() {
                     value={cat.allocated}
                     disabled={cat.isLocked}
                     onChange={(e) => handleAllocatedChange(cat.id, Number(e.target.value))}
+                    aria-label={`Ajustar importe de ${cat.name} en euros`}
+                    aria-valuetext={`${cat.allocated.toLocaleString('es-ES')} euros`}
                     className="w-full h-1.5 bg-zinc-800 rounded-lg cursor-pointer accent-[#ecb613] disabled:opacity-30"
                   />
                 </div>
@@ -1204,9 +1214,10 @@ export default function SovereignBudgetPlanner() {
                         const el = document.getElementById('radar-neural-proveedores');
                         if (el) el.scrollIntoView({ behavior: 'smooth' });
                       }}
+                      aria-label={`Ver ${cat.name} en el radar de proveedores en vivo`}
                       className="text-[#ecb613] hover:underline flex items-center gap-1 font-bold"
                     >
-                      <Eye size={12} /> Ver en Radar en Vivo
+                      <Eye size={12} aria-hidden="true" /> Ver en Radar en Vivo
                     </button>
 
                     {cat.routeHref && (
@@ -1228,7 +1239,7 @@ export default function SovereignBudgetPlanner() {
       {/* ── 🛰️ RADAR NEURAL MULTI-GREMIO DE PROVEEDORES REALES EN DIRECTO ── */}
       <div id="radar-neural-proveedores" className="space-y-6 pt-4">
         <div className="rounded-[2.5rem] bg-gradient-to-b from-[#0c0c16] via-[#07070d] to-[#040407] border border-white/15 p-6 sm:p-10 shadow-2xl space-y-6">
-          
+
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b border-white/10">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-mono font-bold uppercase tracking-widest">
@@ -1259,13 +1270,14 @@ export default function SovereignBudgetPlanner() {
                   key={trade.key}
                   type="button"
                   onClick={() => setActiveRadarTrade(trade.key)}
-                  className={`px-4 py-2.5 rounded-2xl border transition-all shrink-0 flex items-center gap-2 ${
-                    isActive
-                      ? 'bg-[#ecb613] text-black border-[#ecb613] font-black shadow-lg shadow-[#ecb613]/20'
-                      : 'bg-white/5 border-white/10 text-zinc-300 hover:text-white hover:bg-white/10'
-                  }`}
+                  aria-pressed={isActive}
+                  aria-label={`Mostrar proveedores del gremio ${trade.label}`}
+                  className={`px-4 py-2.5 rounded-2xl border transition-all shrink-0 flex items-center gap-2 ${isActive
+                    ? 'bg-[#ecb613] text-black border-[#ecb613] font-black shadow-lg shadow-[#ecb613]/20'
+                    : 'bg-white/5 border-white/10 text-zinc-300 hover:text-white hover:bg-white/10'
+                    }`}
                 >
-                  <Icon size={14} className={isActive ? 'text-black' : 'text-[#ecb613]'} />
+                  <Icon size={14} className={isActive ? 'text-black' : 'text-[#ecb613]'} aria-hidden="true" />
                   <span>{trade.label}</span>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded-md ${isActive ? 'bg-black/20 text-black' : 'bg-white/5 text-zinc-400'}`}>
                     {trade.count}
@@ -1346,17 +1358,19 @@ export default function SovereignBudgetPlanner() {
                           href={contactUrl}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`Contactar con ${p.name} vía WhatsApp`}
                           className="flex-1 py-2.5 px-3 rounded-xl bg-white/5 hover:bg-[#25D366] hover:text-black border border-white/10 text-white font-bold transition text-center flex items-center justify-center gap-1.5"
                         >
-                          <Phone size={12} /> Contactar
+                          <Phone size={12} aria-hidden="true" /> Contactar
                         </a>
 
                         <Link
                           href={`/proveedores-servicios?category=${activeRadarTrade}&province=${encodeURIComponent(province)}`}
+                          aria-label="Explorar más proveedores de este gremio en el catálogo"
                           className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-zinc-300 hover:text-white transition flex items-center justify-center"
                           title="Explorar más de este gremio"
                         >
-                          <ExternalLink size={12} />
+                          <ExternalLink size={12} aria-hidden="true" />
                         </Link>
                       </div>
                     </div>
@@ -1456,15 +1470,17 @@ export default function SovereignBudgetPlanner() {
 
       {/* ── MODAL AÑADIR NUEVA PARTIDA ── */}
       {showAddModal && (
-        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#0b0b12] border border-white/15 rounded-3xl p-8 max-w-md w-full space-y-5 shadow-2xl">
-            <h3 className="text-xl font-black text-white font-syne uppercase">
+        <div role="presentation" className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-labelledby="add-partida-title" className="bg-[#0b0b12] border border-white/15 rounded-3xl p-8 max-w-md w-full space-y-5 shadow-2xl">
+            <h3 id="add-partida-title" className="text-xl font-black text-white font-syne uppercase">
               Añadir Nueva Partida de Gasto
             </h3>
             <p className="text-xs text-zinc-400 font-mono">
               Escribe el nombre del concepto que deseas incorporar a tu presupuesto.
             </p>
+            <label htmlFor="new-category-name" className="sr-only">Nombre de la nueva partida de gasto</label>
             <input
+              id="new-category-name"
               type="text"
               value={newCatName}
               onChange={(e) => setNewCatName(e.target.value)}

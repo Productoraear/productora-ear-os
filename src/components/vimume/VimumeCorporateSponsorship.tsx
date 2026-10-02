@@ -12,7 +12,7 @@
  *  - Tiers de apadrinamiento: 3.000 € / 5.000 € / 10.000 €.
  */
 
-import React, { useMemo, useState } from 'react';
+import React, { Component, Suspense, useMemo, useState, type ErrorInfo, type ReactNode } from 'react';
 import {
   Building2,
   Leaf,
@@ -28,6 +28,34 @@ import {
   VIMUME_FISCAL_SSOT,
   type ContribuyenteType,
 } from '@/lib/vimume-mecenazgo-engine';
+
+class SponsorshipErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[VimumeCorporateSponsorship] Fallo de render:', error, info.componentStack);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const SponsorshipFallback: React.FC = () => (
+  <div className="w-full rounded-3xl bg-[#09090d] border border-white/10 p-6 md:p-10 text-center text-sm text-white/70">
+    Suite de Apadrinamiento Corporativo VIMUME temporalmente no disponible.
+  </div>
+);
 
 export interface SponsorshipTier {
   id: 'aliado' | 'patrocinador' | 'fundador';
@@ -141,7 +169,9 @@ export default function VimumeCorporateSponsorship({
   const isCompany = donorType === 'persona_juridica';
 
   return (
-    <section className="relative w-full overflow-x-hidden bg-[#030305] text-white">
+    <SponsorshipErrorBoundary fallback={<SponsorshipFallback />}>
+      <Suspense fallback={<SponsorshipFallback />}>
+        <section className="relative w-full overflow-x-hidden bg-[#030305] text-white">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ecb613]/40 to-transparent" />
       <div className="absolute top-0 right-0 h-[520px] w-[520px] translate-x-1/3 -translate-y-1/3 rounded-full bg-[#00E5FF]/10 blur-[180px] pointer-events-none" />
 
@@ -310,7 +340,9 @@ export default function VimumeCorporateSponsorship({
           {VIMUME_FISCAL_SSOT.BENEFICIARY_DATA.registerNumber}
         </p>
       </div>
-    </section>
+        </section>
+      </Suspense>
+    </SponsorshipErrorBoundary>
   );
 }
 

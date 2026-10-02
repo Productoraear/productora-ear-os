@@ -80,7 +80,7 @@ const ROLE_INSIGHTS: Record<MobileRole, RoleInsight> = {
   }
 };
 
-export function SovereignMobileHUD() {
+export const SovereignMobileHUD: React.FC = React.memo(function SovereignMobileHUD() {
   const [isCockpitOpen, setIsCockpitOpen] = useState(false);
   const [selectedRole, setSelectedRole] = useState<MobileRole>('B2C');
   const [paxCount, setPaxCount] = useState<number>(120);
@@ -190,8 +190,8 @@ export function SovereignMobileHUD() {
                         key={r}
                         onClick={() => setSelectedRole(r)}
                         className={`p-2 rounded-xl flex flex-col items-center gap-1 border text-center transition-all ${isSelected
-                            ? 'bg-[#ecb613]/20 border-[#ecb613] text-white shadow-md'
-                            : 'bg-white/[0.03] border-white/5 text-zinc-400 hover:text-white'
+                          ? 'bg-[#ecb613]/20 border-[#ecb613] text-white shadow-md'
+                          : 'bg-white/[0.03] border-white/5 text-zinc-400 hover:text-white'
                           }`}
                       >
                         <ItemIcon size={14} className={isSelected ? 'text-[#ecb613]' : 'text-zinc-400'} />
@@ -372,6 +372,6 @@ export function SovereignMobileHUD() {
       </div>
     </>
   );
-}
+});
 
 export default SovereignMobileHUD;

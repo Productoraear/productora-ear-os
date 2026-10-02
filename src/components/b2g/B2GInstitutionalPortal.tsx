@@ -159,7 +159,7 @@ export default function B2GInstitutionalPortal() {
       <aside aria-label="Gobernanza B2G" className="w-full border-b border-white/10 bg-[#09090d]/90 backdrop-blur-md px-4 sm:px-6 py-2 text-xs text-white/60 font-mono">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 text-[11px]">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#AAD6CD] animate-pulse shrink-0" />
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[#AAD6CD] animate-pulse shrink-0" />
             <span className="text-[#ecb613] font-bold uppercase tracking-wider truncate">Nodo Instituciones · B2G Sovereign Hub</span>
             <span className="text-white/20 hidden sm:inline">•</span>
             <span className="hidden sm:inline">Cumplimiento Estricto Art. 118 LCSP</span>
@@ -178,7 +178,7 @@ export default function B2GInstitutionalPortal() {
 
         <div className="relative mx-auto max-w-7xl space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#AAD6CD]/30 bg-[#AAD6CD]/10 px-3.5 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-[#AAD6CD]">
-            <Landmark size={12} className="shrink-0" />
+            <Landmark size={12} className="shrink-0" aria-hidden="true" />
             <span>Soberanía Administrativa · Bloque 6 SSOT</span>
           </div>
 
@@ -269,7 +269,7 @@ export default function B2GInstitutionalPortal() {
               href={`tel:${CENTRALITA.display}`}
               className="text-xs font-mono text-white/50 hover:text-[#AAD6CD] flex items-center gap-1.5"
             >
-              <Phone size={12} className="text-[#AAD6CD]" />
+              <Phone size={12} className="text-[#AAD6CD]" aria-hidden="true" />
               <span>Gabinete Técnico B2G: {CENTRALITA.display}</span>
             </a>
           </div>
@@ -367,12 +367,12 @@ export default function B2GInstitutionalPortal() {
                       <p className="font-mono text-xs text-white/50">Trío obligatorio de códigos DIR3 para la factura electrónica</p>
                     </div>
                     {allDir3Valid ? (
-                      <span className="rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 font-mono text-[10px] font-bold flex items-center gap-1">
-                        <CheckCircle2 size={12} /> DIR3 Conformes
+                      <span role="status" aria-live="polite" className="rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 font-mono text-[10px] font-bold flex items-center gap-1">
+                        <CheckCircle2 size={12} aria-hidden="true" /> DIR3 Conformes
                       </span>
                     ) : (
-                      <span className="rounded-full bg-[#FF455B]/10 text-[#FF455B] border border-[#FF455B]/30 px-3 py-1 font-mono text-[10px] font-bold flex items-center gap-1">
-                        <AlertTriangle size={12} /> Verificar DIR3
+                      <span role="status" aria-live="polite" className="rounded-full bg-[#FF455B]/10 text-[#FF455B] border border-[#FF455B]/30 px-3 py-1 font-mono text-[10px] font-bold flex items-center gap-1">
+                        <AlertTriangle size={12} aria-hidden="true" /> Verificar DIR3
                       </span>
                     )}
                   </div>
@@ -461,9 +461,9 @@ export default function B2GInstitutionalPortal() {
 
                   {/* ALERTA O ESTADO DEL TECHO LEGAL */}
                   {isCeilingExceeded ? (
-                    <div className="rounded-2xl border border-amber-500/40 bg-amber-950/20 p-4 space-y-1 font-mono text-xs">
+                    <div role="status" aria-live="polite" className="rounded-2xl border border-amber-500/40 bg-amber-950/20 p-4 space-y-1 font-mono text-xs">
                       <div className="flex items-center gap-2 text-amber-400 font-bold">
-                        <AlertTriangle size={15} />
+                        <AlertTriangle size={15} aria-hidden="true" />
                         <span>Ajuste Automático Preventivo Activado</span>
                       </div>
                       <p className="text-white/70 text-[11px] leading-relaxed">
@@ -471,9 +471,9 @@ export default function B2GInstitutionalPortal() {
                       </p>
                     </div>
                   ) : (
-                    <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-4 space-y-1 font-mono text-xs">
+                    <div role="status" aria-live="polite" className="rounded-2xl border border-emerald-500/30 bg-emerald-950/20 p-4 space-y-1 font-mono text-xs">
                       <div className="flex items-center gap-2 text-emerald-400 font-bold">
-                        <CheckCircle2 size={15} />
+                        <CheckCircle2 size={15} aria-hidden="true" />
                         <span>Expediente en Rango de Contrato Menor</span>
                       </div>
                       <p className="text-white/70 text-[11px]">
@@ -591,7 +591,7 @@ export default function B2GInstitutionalPortal() {
                     <span className="rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-[10px] font-bold uppercase text-[#ecb613]">
                       Cultura & Festejos
                     </span>
-                    <Volume2 size={20} className="text-[#AAD6CD]" />
+                    <Volume2 size={20} className="text-[#AAD6CD]" aria-hidden="true" />
                   </div>
                   <h3 className="font-syne text-2xl font-bold uppercase text-white">
                     Fiestas Patronales & Macroconciertos
@@ -618,7 +618,7 @@ export default function B2GInstitutionalPortal() {
                     <span className="rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-[10px] font-bold uppercase text-[#AAD6CD]">
                       Infraestructura Visual
                     </span>
-                    <Tv size={20} className="text-[#AAD6CD]" />
+                    <Tv size={20} className="text-[#AAD6CD]" aria-hidden="true" />
                   </div>
                   <h3 className="font-syne text-2xl font-bold uppercase text-white">
                     Pantallas LED P2.6 Outdoor (&gt; 5.500 nits)
@@ -645,7 +645,7 @@ export default function B2GInstitutionalPortal() {
                     <span className="rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-[10px] font-bold uppercase text-sky-400">
                       Gabinete & Protocolo
                     </span>
-                    <Radio size={20} className="text-[#AAD6CD]" />
+                    <Radio size={20} className="text-[#AAD6CD]" aria-hidden="true" />
                   </div>
                   <h3 className="font-syne text-2xl font-bold uppercase text-white">
                     Protocolo de Estado & Audio Encriptado
@@ -672,7 +672,7 @@ export default function B2GInstitutionalPortal() {
                     <span className="rounded-full bg-[#AAD6CD]/20 border border-[#AAD6CD]/40 px-3 py-1 font-mono text-[10px] font-bold uppercase text-[#AAD6CD]">
                       Bienestar Social & ODS 2030
                     </span>
-                    <Activity size={20} className="text-[#AAD6CD]" />
+                    <Activity size={20} className="text-[#AAD6CD]" aria-hidden="true" />
                   </div>
                   <h3 className="font-syne text-2xl font-bold uppercase text-white">
                     Plan VIMUME Neuroacústica Senior
@@ -715,7 +715,7 @@ export default function B2GInstitutionalPortal() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="rounded-3xl border border-white/10 bg-[#09090d] p-6 space-y-3">
-                <Scale className="text-[#AAD6CD]" size={28} />
+                <Scale className="text-[#AAD6CD]" size={28} aria-hidden="true" />
                 <h3 className="font-syne text-lg font-bold uppercase text-white">Art. 118 LCSP</h3>
                 <p className="text-xs text-white/60 leading-relaxed">
                   Los contratos de servicios de valor estimado inferior a 15.000 € únicamente requieren informe de necesidad y aprobación del gasto. Nuestro ajuste preventivo a 14.250 € blinda el expediente frente a auditorías del Tribunal de Cuentas.
@@ -723,7 +723,7 @@ export default function B2GInstitutionalPortal() {
               </div>
 
               <div className="rounded-3xl border border-white/10 bg-[#09090d] p-6 space-y-3">
-                <FileText className="text-[#ecb613]" size={28} />
+                <FileText className="text-[#ecb613]" size={28} aria-hidden="true" />
                 <h3 className="font-syne text-lg font-bold uppercase text-white">Facturae & FACe</h3>
                 <p className="text-xs text-white/60 leading-relaxed">
                   Emisión telemática automática con esquema XML v3.2.2 y firma electrónica reconocida. Vinculación estricta a los códigos DIR3 del consistorio para ingreso en cuenta en &le; 30 días hábiles.
@@ -731,7 +731,7 @@ export default function B2GInstitutionalPortal() {
               </div>
 
               <div className="rounded-3xl border border-white/10 bg-[#09090d] p-6 space-y-3">
-                <Award className="text-emerald-400" size={28} />
+                <Award className="text-emerald-400" size={28} aria-hidden="true" />
                 <h3 className="font-syne text-lg font-bold uppercase text-white">Ley 49/2002 Mecenazgo</h3>
                 <p className="text-xs text-white/60 leading-relaxed">
                   Los proyectos canalizados a través del Proyecto VIMUME disfrutan de deducción fiscal del 80% en los primeros 250 € y del 40-45% en el resto, con emisión oficial del certificado para el Modelo 182 de la AEAT.

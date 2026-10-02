@@ -1,21 +1,67 @@
-import React from 'react';
-import BentoGrid from './BentoGrid';
+'use client';
+
+import { Component, Suspense, type ErrorInfo, type ReactNode } from 'react';
 
 interface NeuralInterlinkNexusProps {
   currentCategory?: string;
 }
 
+interface NexusBoundaryState {
+  hasError: boolean;
+}
+
+interface NexusBoundaryProps {
+  children: ReactNode;
+  fallback: ReactNode;
+}
+
+class NexusErrorBoundary extends Component<NexusBoundaryProps, NexusBoundaryState> {
+  state: NexusBoundaryState = { hasError: false };
+
+  static getDerivedStateFromError(): NexusBoundaryState {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo): void {
+    console.error('[NeuralInterlinkNexus] Fallo de render:', error, info.componentStack);
+  }
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+const NexusFallback: React.FC = () => (
+  <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-4 text-sm text-white/70 backdrop-blur-md">
+    Contenido temporalmente no disponible.
+  </div>
+);
+
 const NeuralInterlinkNexus: React.FC<NeuralInterlinkNexusProps> = ({ currentCategory }) => {
   const links = generateLinks(currentCategory);
 
   return (
-    <div className="bg-zinc-950/80 border-[#ecb613]/20 p-4">
-{links.map((link, index) => (
-  <a key={index} href={link.href} className="block text-white hover:text-yellow-500">
-    {link.title}
-  </a>
-))}
-    </div>
+    <NexusErrorBoundary fallback={<NexusFallback />}>
+      <Suspense fallback={<NexusFallback />}>
+        <nav className="rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/20 p-4 backdrop-blur-md">
+          <ul className="space-y-2">
+            {links.map((link) => (
+              <li key={`${link.href}-${link.title}`}>
+                <a
+                  href={link.href}
+                  className="block text-white/90 hover:text-[#ecb613] transition-all duration-300 ease-out"
+                >
+                  {link.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Suspense>
+    </NexusErrorBoundary>
   );
 };
 

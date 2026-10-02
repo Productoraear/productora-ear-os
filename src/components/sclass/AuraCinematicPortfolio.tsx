@@ -1,23 +1,19 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import {
   Sparkles,
   Play,
   Pause,
-  Volume2,
-  VolumeX,
   ShieldCheck,
-  Star,
   MapPin,
   Lock,
   ArrowRight,
-  ExternalLink,
   MessageSquare,
   Award,
   Music,
-  CheckCircle2,
-  Maximize2
+  CheckCircle2
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -330,19 +326,17 @@ export default function AuraCinematicPortfolio() {
                       setIsPlaying(true);
                     }
                   }}
-                  className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center justify-between ${
-                    isSelected
-                      ? 'bg-[#ecb613]/10 border-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.15)]'
-                      : 'bg-[#0b0b14] border-white/5 hover:border-white/20'
-                  }`}
+                  className={`p-4 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center justify-between ${isSelected
+                    ? 'bg-[#ecb613]/10 border-[#ecb613] shadow-[0_0_20px_rgba(236,182,19,0.15)]'
+                    : 'bg-[#0b0b14] border-white/5 hover:border-white/20'
+                    }`}
                 >
                   <div className="flex items-center gap-3">
                     <button
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition ${
-                        isSelected && isPlaying
-                          ? 'bg-[#ecb613] text-black shadow-md'
-                          : 'bg-white/10 text-white hover:bg-white/20'
-                      }`}
+                      className={`w-10 h-10 rounded-xl flex items-center justify-center transition ${isSelected && isPlaying
+                        ? 'bg-[#ecb613] text-black shadow-md'
+                        : 'bg-white/10 text-white hover:bg-white/20'
+                        }`}
                     >
                       {isSelected && isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                     </button>
@@ -440,11 +434,13 @@ function TiltBentoCard({ caseStudy }: { caseStudy: CaseStudy }) {
       />
 
       <div className="h-56 w-full relative overflow-hidden bg-slate-900">
-        <img
+        <Image
           src={caseStudy.img}
           alt={caseStudy.title}
+          fill
+          unoptimized
+          sizes="(max-width: 1024px) 100vw, 33vw"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#070710] via-transparent to-transparent opacity-90" />
 

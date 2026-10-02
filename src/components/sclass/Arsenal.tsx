@@ -1,18 +1,17 @@
 "use client";
 
 import React, { useState, useTransition, useEffect } from "react";
-import { 
-  fetchFincasAction, 
-  fetchProvidersAction, 
-  fetchArsenalEnrichedAction 
+import {
+  fetchFincasAction,
+  fetchProvidersAction
 } from "@/app/actions/backupActions";
-import { 
-  Search, 
-  Building2, 
-  Phone, 
-  CheckCircle, 
-  MapPin, 
-  Star, 
+import {
+  Search,
+  Building2,
+  Phone,
+  CheckCircle,
+  MapPin,
+  Star,
   ChevronRight,
   Boxes,
   Compass,
@@ -74,14 +73,14 @@ export default function Arsenal() {
   }, [activeSource, selectedProvincia]);
 
   const uniqueProvincias = [
-    "Madrid", "Barcelona", "Toledo", "Segovia", "Ávila", 
+    "Madrid", "Barcelona", "Toledo", "Segovia", "Ávila",
     "Guadalajara", "Sevilla", "Valencia", "Málaga"
   ];
 
   return (
     <div className="min-h-screen bg-[#050505] text-white p-6 font-sans relative overflow-hidden">
       <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-[#d4a855]/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2" />
-      
+
       <header className="max-w-7xl mx-auto mb-12 relative z-10 space-y-6">
         <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#d4a855]/10 border border-[#d4a855]/20 text-[#d4a855] text-[9px] font-black uppercase tracking-[0.3em]">
           <Boxes size={12} className="animate-pulse" /> Infraestructura EAR OS v5.0
@@ -97,13 +96,13 @@ export default function Arsenal() {
       <section className="max-w-7xl mx-auto mb-12 bg-white/[0.01] border border-white/5 p-8 rounded-[3.5rem] relative z-10 backdrop-blur-3xl space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="flex gap-2 bg-black/40 border border-white/10 rounded-xl p-1">
-            <button 
+            <button
               onClick={() => setActiveSource('fincas')}
               className={`flex-1 py-3 text-[9px] font-black uppercase tracking-widest rounded-lg transition-colors ${activeSource === 'fincas' ? 'bg-[#d4a855] text-black' : 'hover:bg-white/5 text-white/60'}`}
             >
               Fincas Verificadas
             </button>
-            <button 
+            <button
               onClick={() => setActiveSource('providers')}
               className={`flex-1 py-3 text-[9px] font-black uppercase tracking-widest rounded-lg transition-colors ${activeSource === 'providers' ? 'bg-[#d4a855] text-black' : 'hover:bg-white/5 text-white/60'}`}
             >
@@ -112,19 +111,19 @@ export default function Arsenal() {
           </div>
 
           <div className="relative flex items-center">
-            <input 
+            <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              type="text" 
-              className="w-full bg-black/40 border border-white/10 p-4 pl-12 text-white rounded-xl focus:border-[#d4a855]/50 outline-none transition-all font-bold text-xs" 
-              placeholder="Buscar por nombre, tags, ubicación..." 
+              type="text"
+              className="w-full bg-black/40 border border-white/10 p-4 pl-12 text-white rounded-xl focus:border-[#d4a855]/50 outline-none transition-all font-bold text-xs"
+              placeholder="Buscar por nombre, tags, ubicación..."
             />
             <Search className="absolute left-4 text-white/30" size={16} />
           </div>
 
           <div className="flex gap-2">
-            <select 
+            <select
               value={selectedProvincia}
               onChange={(e) => setSelectedProvincia(e.target.value)}
               className="flex-1 bg-black/40 border border-white/10 p-4 text-white rounded-xl focus:border-[#d4a855]/50 outline-none transition-all font-bold text-xs"
@@ -135,7 +134,7 @@ export default function Arsenal() {
               ))}
             </select>
 
-            <button 
+            <button
               onClick={handleSearch}
               className="px-6 bg-[#d4a855] text-black font-black uppercase tracking-[0.2em] rounded-xl hover:bg-white transition-colors text-[10px]"
             >
@@ -149,7 +148,7 @@ export default function Arsenal() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {activeSource === 'fincas' ? (
             fincas.map((f) => (
-              <motion.div 
+              <motion.div
                 key={f.id}
                 whileHover={{ y: -6 }}
                 className="group bg-white/[0.01] border border-white/5 rounded-[3rem] p-8 flex flex-col justify-between h-full hover:bg-white/[0.02] hover:border-[#d4a855]/30 transition-all duration-300 relative overflow-hidden"
@@ -191,7 +190,7 @@ export default function Arsenal() {
             ))
           ) : (
             providers.map((p) => (
-              <motion.div 
+              <motion.div
                 key={p.id}
                 whileHover={{ y: -6 }}
                 className="group bg-white/[0.01] border border-white/5 rounded-[3rem] p-8 flex flex-col justify-between h-full hover:bg-white/[0.02] hover:border-[#d4a855]/30 transition-all duration-300 relative overflow-hidden"

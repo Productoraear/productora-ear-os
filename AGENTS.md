@@ -21,7 +21,12 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
 - Tarifa Base Solista (Edwin Agudelo): 350,00 €.
 - Logística S-Class: 1,50 €/km a partir del km 50 (+120 € Hotel si hora fin >= 3:00 AM o distancia > 200 km). ORIGEN: Hub Méntrida aplica EXCLUSIVAMENTE a Edwin Agudelo y empresas con base en Méntrida. Para el resto de la red nacional, el kilometraje se calcula por GPS / Dirección fiscal del proveedor hasta el evento del cliente.
 - Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME.
-- Cierre: Depósito de 100,00 € en Stripe (Price-Lock SHA-256).
+- Cierre y Garantía Mutua de Doble Vía (Cero Fricción Comercial):
+  * Ruta Libre / Asesoría Rápida: Contacto directo a WhatsApp (+34 693 693 048) para dudas, asesoría o cotizaciones preliminares sin barrera económica.
+  * Ruta Blindaje VIP (Depósito 100 € Stripe Price-Lock SHA-256):
+    - 100% Deducible del total del evento (se resta íntegro de la liquidación final).
+    - Bloqueo atómico y exclusivo de fecha y hora en el calendario de Edwin Agudelo (`atomicDateLockEngine`).
+    - Filtro de compromiso mutuo: ahorra tiempo al cliente con filtros inteligentes y atención prioritaria; protege al artista erradicando mirones y cancelaciones de última hora.
 - Rider Acústico y Presión Sonora Realista (Ley 37/2003 del Ruido):
   * Festejos Populares / Plazas / Conciertos: 90 - 102 dBA (con limitador telemático homologado).
   * Bodas & Fincas: 85 - 90 dBA en exteriores / 80 - 85 dBA en interiores.
@@ -41,9 +46,12 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
 - Tipografía: `Syne` (Display/Títulos), `Inter` (Cuerpos legibles, py-16+), `JetBrains Mono` (Telemetría).
 - Redacción UX: Verbos de valor, datos reales. Prohibido copy vacío ("revoluciona tu experiencia").
 
-━━ 6. PROTOCOLO ZERO-TOKEN MEMORY (ZTM) PARA ARCHIVOS MASIVOS ━━━━━━━━━━━━━━━━━━━━━━
+━━ 6. PROTOCOLO ZERO-TOKEN MEMORY (ZTM) Y PACTO SAGRADO ANTI-SOBRECOSTES ━━━━━━━━
 - NUNCA leas archivos pesados (MFT, EAR_GOLDEN_INDEX, CSVs masivos, o un historial de chat largo) en tu contexto.
-- SATURACIÓN DE TOKENS (Error UND_ERR_HEADERS_TIMEOUT): Si el prompt acumula > 30.000 tokens en Cline, el agente colapsará el LLM local. Solución: Clic en 'Start New Task' y arrancar desde cero leyendo los objetivos en `tasks_queue.json`.
+- PACTO SAGRADO ANTI-SOBRECOSTES (PURGA OBLIGATORIA 1 TAREA POR SESIÓN):
+  * Toda sesión de chat en Cline que encadene múltiples tareas incurre en inflación exponencial de tokens facturados (hasta 700k+ tokens por turno).
+  * Regla Inmutable: Al completar `node .antigravity/omega.js complete <ID>` con Exit Code 0, el obrero DEBE DETENERSE INMEDIATAMENTE.
+  * Se exige abrir 'Start New Task' (+) en Cline para la siguiente tarea. El progreso reside en disco (`tasks_queue.json`); arrancar cada tarea desde cero garantiza coste mínimo de céntimos y velocidad ultra-rápida.
 - GESTIÓN DE VENTANA (Ollama): Fija el 'Model Context Window' en `32768` (Sweet Spot). Solo usar `131072` si es estrictamente necesario y asumiendo pérdida drástica de velocidad t/s por offload a RAM.
 - PRECARGA OLLAMA: Para evitar Timeouts al cargar modelos pesados (27B/32B), ejecuta `ollama run qwen-sclass ""` en PowerShell antes de pedirle a Cline que actúe.
 - DELEGA: Escribe una tarea para que Cline ejecute scripts en PowerShell 7/Node.js por streaming y te devuelva únicamente un resumen estadístico JSON (< 300 tokens).
@@ -93,6 +101,23 @@ ROL PRINCIPAL: ARQUITECTO IA (CLAUDE / ANTIGRAVITY) — ORQUESTADOR DEL SISTEMA
      - DEDUCCIÓN FISCAL LEY 49/2002: Hasta el 80% deducible en IRPF o 40%-50% en Impuesto de Sociedades (Certificado Modelo 182 AEAT).
      - CERTIFICADO DE IMPACTO RSC / ESG: Financiación directa de sesiones de neuro-musicoterapia para mayores con deterioro cognitivo en residencias (Protocolo 40 Hz Gamma, desescalada del 74% en psicofármacos y 38.2% en agitación).
      - SROI 4.85x: Cada euro aportado genera un retorno social contrastado de 4,85 €. No es un coste, es un dividendo social y reputacional que prestigia al evento, a la finca y al artista.
+
+━━ 11. INFRAESTRUCTURA HÍBRIDA BARE-METAL & AUTOMATIZACIÓN CUÁNTICA (COOLIFY + N8N S-CLASS) ━━━━━━━━━
+- SERVIDOR HOSTINGER VPS BARE-METAL (IP: `82.29.179.172:8000`):
+  * Ubuntu 24.04 LTS con Coolify v4 orquestando servicios contenerizados.
+  * Base de Datos Relacional: PostgreSQL 16 con persistencia de volumen y credenciales blindadas.
+- CLUSTER N8N S-CLASS EN PRODUCCIÓN (`https://n8n.productoraear.com`):
+  * Automatización 100% activa sin intervención manual del CEO.
+  * 7 Workflows Cuánticos en Producción (Endpoints Live):
+    1) B2B / B2G Enterprise Quote & Smart Lead Dispatcher (`POST /webhook/b2b-quote`).
+    2) Stripe Price-Lock Deposit & Smart Contract Engine (`POST /webhook/stripe-price-lock`).
+    3) Finca & Venue Strategic Partnership Qualifier (`POST /webhook/finca-partnership`).
+    4) VIMUME Clinical Impact & Neuroacoustic Report Generator (`POST /webhook/vimume-clinical-report`).
+    5) Call Center & WhatsApp Lead Intake Multi-Channel (`POST /webhook/call-center-intake`).
+    6) Autonomous Escalation & Lead Scoring S-Class Engine (`POST /webhook/autonomous-escalation`).
+    7) Daily Executive Business Intelligence & KPI Radar (`POST /webhook/executive-kpi-radar`).
+- REGLA DE INTEGRACIÓN FRONTEND -> N8N:
+  * Toda terminal comercial (como `SClassPricingTerminal.tsx` o `b2g-tender-engine`) debe disparar eventos a los webhooks de n8n en background (`mode: 'no-cors'` o fetch asíncrono no bloqueante) garantizando que ningún lead o solicitud quede huérfana.
 
 
 <!-- BEGIN:nextjs-agent-rules -->
