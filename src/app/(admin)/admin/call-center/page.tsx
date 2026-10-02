@@ -199,7 +199,7 @@ export default function CallCenterAdminPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+    <div className="min-h-screen bg-[#030305] space-y-6 max-w-7xl mx-auto font-sans">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
         <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
@@ -243,7 +243,7 @@ export default function CallCenterAdminPage() {
 
       {/* KPI Cards CATMÍN S-Class */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Total en Vista</span>
             <div className="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-105 transition-transform">
@@ -258,7 +258,7 @@ export default function CallCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">En Conversación</span>
             <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 group-hover:scale-105 transition-transform">
@@ -273,7 +273,7 @@ export default function CallCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Interesados HOT</span>
             <div className="w-8 h-8 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:scale-105 transition-transform">
@@ -288,7 +288,7 @@ export default function CallCenterAdminPage() {
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
+        <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] hover:border-[#ecb613]/30 transition-all group">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider">Cerrados / Señal</span>
             <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-105 transition-transform">
@@ -307,7 +307,7 @@ export default function CallCenterAdminPage() {
       {/* Main Two-Column Deck */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[680px]">
         {/* Left Column: Filterable Provider List (5 Cols) */}
-        <div className="lg:col-span-5 flex flex-col bg-[#050508] border border-[#1a1a24] rounded-2xl overflow-hidden">
+        <div className="lg:col-span-5 flex flex-col bg-[#050507] border border-[#1a1a24] rounded-2xl overflow-hidden">
           {/* Filters Bar */}
           <div className="p-3 border-b border-[#1a1a24] space-y-2 bg-black/40">
             <div className="relative">
@@ -458,7 +458,7 @@ export default function CallCenterAdminPage() {
         </div>
 
         {/* Right Column: Tactical Calling Deck & Scripts (7 Cols) */}
-        <div className="lg:col-span-7 flex flex-col bg-[#050508] border border-[#1a1a24] rounded-2xl overflow-hidden">
+        <div className="lg:col-span-7 flex flex-col bg-[#050507] border border-[#1a1a24] rounded-2xl overflow-hidden">
           {selectedProvider ? (
             <>
               {/* Top Details Card */}
@@ -507,21 +507,21 @@ export default function CallCenterAdminPage() {
                         >
                           {copiedField === 'phone' ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
                         </button>
-                      <a
-                        href={`https://wa.me/${(() => {
-                          let num = (selectedProvider.phone || '').replace(/\D/g, '');
-                          if (num.length === 9 && ['6','7','8','9'].includes(num[0])) num = '34' + num;
-                          else if (num.startsWith('0034')) num = num.slice(2);
-                          return num;
-                        })()}?text=${encodeURIComponent(getWhatsAppMessage(selectedProvider))}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-3 py-2 rounded-xl bg-green-700 hover:bg-green-600 text-white font-mono text-xs flex items-center gap-1.5 transition-colors font-bold"
-                        title="Abrir WhatsApp en nueva pestaña"
-                      >
-                        <MessageSquare className="w-4 h-4" />
-                        WA
-                      </a>
+                        <a
+                          href={`https://wa.me/${(() => {
+                            let num = (selectedProvider.phone || '').replace(/\D/g, '');
+                            if (num.length === 9 && ['6', '7', '8', '9'].includes(num[0])) num = '34' + num;
+                            else if (num.startsWith('0034')) num = num.slice(2);
+                            return num;
+                          })()}?text=${encodeURIComponent(getWhatsAppMessage(selectedProvider))}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-2 rounded-xl bg-green-700 hover:bg-green-600 text-white font-mono text-xs flex items-center gap-1.5 transition-colors font-bold"
+                          title="Abrir WhatsApp en nueva pestaña"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                          WA
+                        </a>
                       </>
                     ) : (
                       <>

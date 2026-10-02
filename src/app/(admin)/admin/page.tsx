@@ -101,7 +101,7 @@ export default function CatminAdminDashboardPage() {
   }, [selectedCategory, searchQuery]);
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
+    <div className="min-h-screen bg-[#030305] space-y-6 max-w-7xl mx-auto pb-16 font-sans">
 
       {/* ===================================================================== */}
       {/* 1. HEADER DE PÁGINA (ESTILO CATMÍN TEMPLATE 21ST.DEV)                 */}
@@ -143,7 +143,7 @@ export default function CatminAdminDashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
 
         {/* Card 1: Total Revenue (Facturación Bruta) */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Facturación Bruta (Split)</span>
             <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
@@ -159,7 +159,7 @@ export default function CatminAdminDashboardPage() {
         </div>
 
         {/* Card 2: Bóveda SSOT Proveedores (New Customers) */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Bóveda SSOT Proveedores</span>
             <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
@@ -175,7 +175,7 @@ export default function CatminAdminDashboardPage() {
         </div>
 
         {/* Card 3: Depósitos Stripe Price-Lock (Active Accounts) */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Price-Lock Inmutable</span>
             <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
@@ -191,7 +191,7 @@ export default function CatminAdminDashboardPage() {
         </div>
 
         {/* Card 4: Licitaciones Menores B2G (Growth Rate) */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
             <span className="text-xs font-medium text-zinc-400">Licitaciones Menores B2G</span>
             <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
@@ -222,7 +222,7 @@ export default function CatminAdminDashboardPage() {
         <div className="grid gap-6 md:grid-cols-2 xl:col-span-2">
 
           {/* Gráfico 1: Subscriptions / Cierres de Contratos */}
-          <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
+          <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm flex flex-col justify-between">
             <div>
               <div className="text-sm font-medium text-zinc-400">Cierres de Contratos (Galas)</div>
               <div className="text-2xl font-bold font-mono text-white mt-1">0</div>
@@ -236,7 +236,7 @@ export default function CatminAdminDashboardPage() {
           </div>
 
           {/* Gráfico 2: Total Revenue (Barras Semanales) */}
-          <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
+          <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm flex flex-col justify-between">
             <div>
               <div className="text-sm font-medium text-zinc-400">Facturación Bruta Mensual</div>
               <div className="text-2xl font-bold font-mono text-white mt-1">0,00 €</div>
@@ -252,7 +252,7 @@ export default function CatminAdminDashboardPage() {
         </div>
 
         {/* Columna Derecha: Budget Overview // Split Soberano 80/10/10 */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-bold text-white font-syne uppercase">Split 80/10/10 Overview</span>
@@ -322,7 +322,7 @@ export default function CatminAdminDashboardPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
 
         {/* Milestone 1: Fondo de Reserva Stripe */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm flex flex-col justify-between">
           <div className="space-y-3">
             <div className="flex items-start justify-between">
               <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
@@ -362,7 +362,7 @@ export default function CatminAdminDashboardPage() {
         </div>
 
         {/* Milestone 2: Cartera B2G Ayuntamientos */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm flex flex-col justify-between">
           <div className="space-y-3">
             <div className="flex items-start justify-between">
               <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
@@ -402,7 +402,7 @@ export default function CatminAdminDashboardPage() {
         </div>
 
         {/* Milestone 3: Logística & Flota Méntrida */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-5 shadow-sm flex flex-col justify-between">
           <div className="space-y-3">
             <div className="flex items-start justify-between">
               <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
@@ -449,7 +449,7 @@ export default function CatminAdminDashboardPage() {
       <div className="grid gap-6 lg:grid-cols-2">
 
         {/* Card Izquierda: Total Balance y Cuentas Operativas */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] shadow-sm">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] shadow-sm">
           <div className="p-5 border-b border-[#1a1a24]">
             <p className="text-xs text-zinc-400">Balance Operativo Total</p>
             <h2 className="text-3xl font-bold font-mono text-white mt-1">0,00 €</h2>
@@ -520,7 +520,7 @@ export default function CatminAdminDashboardPage() {
         </div>
 
         {/* Card Derecha: Últimas Transacciones */}
-        <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] shadow-sm flex flex-col justify-between">
+        <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] shadow-sm flex flex-col justify-between">
           <div>
             <div className="p-5 border-b border-[#1a1a24] flex items-center justify-between">
               <div>
@@ -561,7 +561,7 @@ export default function CatminAdminDashboardPage() {
       {/* ===================================================================== */}
       {/* 6. CATMÍN ROW 5: DIRECTORIO MAESTRO DE TODAS LAS 22 URLS DEL ADMIN     */}
       {/* ===================================================================== */}
-      <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-6 shadow-sm space-y-5">
+      <div className="rounded-2xl border border-[#1a1a24] bg-[#050507] p-6 shadow-sm space-y-5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-[#ecb613] uppercase tracking-widest">
@@ -599,8 +599,8 @@ export default function CatminAdminDashboardPage() {
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
               className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${selectedCategory === cat.id
-                  ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-[#ecb613]/20'
-                  : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
+                ? 'bg-[#ecb613] text-black font-bold shadow-md shadow-[#ecb613]/20'
+                : 'bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white'
                 }`}
             >
               {cat.label}

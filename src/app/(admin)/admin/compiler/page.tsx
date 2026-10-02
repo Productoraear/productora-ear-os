@@ -157,7 +157,7 @@ export default function VibeCodingCompilerPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+    <div className="min-h-screen bg-[#030305] space-y-6 max-w-7xl mx-auto font-sans">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
         <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
@@ -212,8 +212,8 @@ export default function VibeCodingCompilerPage() {
                 setOracleResult(null);
               }}
               className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${oraclePersona === 'CEO'
-                  ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
                 }`}
             >
               <Crown className="w-3.5 h-3.5" />
@@ -226,8 +226,8 @@ export default function VibeCodingCompilerPage() {
                 setOracleResult(null);
               }}
               className={`px-4 py-2.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition ${oraclePersona === 'ARTISTA'
-                  ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-lg shadow-rose-500/20'
-                  : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+                ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-lg shadow-rose-500/20'
+                : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
                 }`}
             >
               <Music2 className="w-3.5 h-3.5" />
@@ -251,7 +251,7 @@ export default function VibeCodingCompilerPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Input Prompt & Controls */}
         <div className="lg:col-span-5 flex flex-col gap-4">
-          <div className="p-5 rounded-2xl bg-[#050508] border border-[#1a1a24] flex flex-col gap-4">
+          <div className="p-5 rounded-2xl bg-[#050507] border border-[#1a1a24] flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <label className="text-xs font-mono uppercase text-zinc-400 flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-[#ecb613]" /> Visión del Negocio

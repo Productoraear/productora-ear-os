@@ -14,15 +14,22 @@ interface PageProps {
   }>;
 }
 
+interface GscIntentItem {
+  internalPath: string;
+  seoTitle: string;
+  metaDescription: string;
+  canonicalUrl: string;
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   if (!slug || slug.length === 0) return {};
 
   const rawPath = '/fincas/' + slug.join('/').toLowerCase();
-  
+
   // Buscar en intenciones GSC
-  const gscItem = (gscIntentLandings.allIntents as any[])?.find(
-    (item: any) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
+  const gscItem = (gscIntentLandings.allIntents as GscIntentItem[])?.find(
+    (item: GscIntentItem) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
   );
 
   if (gscItem) {
@@ -65,8 +72,8 @@ export default async function FincaDetailPage({ params }: PageProps) {
   const lastSlug = slug[slug.length - 1];
 
   // Buscar en intenciones GSC
-  const gscItem = (gscIntentLandings.allIntents as any[])?.find(
-    (item: any) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
+  const gscItem = (gscIntentLandings.allIntents as GscIntentItem[])?.find(
+    (item: GscIntentItem) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
   );
 
   const prov = slug.length > 1 ? slug[0] : 'madrid';

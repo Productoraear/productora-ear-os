@@ -24,7 +24,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { provincia } = await params;
+  const resolvedParams = await params;
+  const { provincia } = resolvedParams;
   const provKey = provincia.toLowerCase();
   const data = PROVINCIAS_52_GRAPH[provKey];
 
@@ -51,7 +52,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProvincialWeddingPage({ params }: Props) {
-  const { provincia } = await params;
+  const resolvedParams = await params;
+  const { provincia } = resolvedParams;
   const provKey = provincia.toLowerCase();
 
   // SSOT canónico: redirigir ciudades mal anidadas en el hueco de provincia.

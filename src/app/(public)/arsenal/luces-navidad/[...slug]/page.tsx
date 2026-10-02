@@ -1,10 +1,9 @@
-﻿// @ts-nocheck
-import React from 'react';
+﻿import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  Sparkles, ShieldCheck, Zap, PhoneCall, ArrowLeft, CheckCircle2, 
+import {
+  Sparkles, ShieldCheck, Zap, PhoneCall, ArrowLeft, CheckCircle2,
   ChevronRight, Truck, Award, Eye, FileSpreadsheet, Layers, Download, Lock
 } from 'lucide-react';
 import { CHRISTMAS_LIGHTING_PRODUCTS, CHRISTMAS_LIGHTING_CATEGORIES } from '@/data/luces-navidad';
@@ -47,11 +46,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const productId = slug[slug.length - 1].toLowerCase();
   const product = CHRISTMAS_LIGHTING_PRODUCTS.find(
-    p => p.id.toLowerCase() === productId || 
-         p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
-         p.sku.toLowerCase() === productId
+    p => p.id.toLowerCase() === productId ||
+      p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
+      p.sku.toLowerCase() === productId
   );
-  
+
   if (product) {
     return {
       title: `${product.name} (Ref: ${product.sku}) | Productora EAR Alumbrado Monumental`,
@@ -80,7 +79,7 @@ export default async function LucesNavidadCatchAllPage({ params }: PageProps) {
 
   if (matchedCategory) {
     return (
-      <ChristmasLightingCatalogView 
+      <ChristmasLightingCatalogView
         products={CHRISTMAS_LIGHTING_PRODUCTS}
         categories={[...CHRISTMAS_LIGHTING_CATEGORIES]}
         initialCategory={matchedCategory}
@@ -90,9 +89,9 @@ export default async function LucesNavidadCatchAllPage({ params }: PageProps) {
 
   const productId = slug[slug.length - 1].toLowerCase();
   const product = CHRISTMAS_LIGHTING_PRODUCTS.find(
-    p => p.id.toLowerCase() === productId || 
-         p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
-         p.sku.toLowerCase() === productId
+    p => p.id.toLowerCase() === productId ||
+      p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
+      p.sku.toLowerCase() === productId
   );
 
   if (!product) notFound();
@@ -120,9 +119,9 @@ export default async function LucesNavidadCatchAllPage({ params }: PageProps) {
         <div className="bg-[#0d0d0d] border border-white/10 rounded-3xl overflow-hidden p-6 sm:p-10 mb-12 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
             <div className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[450px]">
-              <img 
-                src={product.image} 
-                alt={product.name} 
+              <img
+                src={product.image}
+                alt={product.name}
                 className="w-full h-full object-contain max-h-[600px] rounded-xl"
               />
               <div className="absolute top-4 left-4">

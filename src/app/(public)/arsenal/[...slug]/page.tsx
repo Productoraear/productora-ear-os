@@ -1,10 +1,9 @@
-// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { 
-  Sparkles, ShieldCheck, Zap, PhoneCall, ArrowLeft, CheckCircle2, 
+import {
+  Sparkles, ShieldCheck, Zap, PhoneCall, ArrowLeft, CheckCircle2,
   ChevronRight, Truck, Award, Eye, FileSpreadsheet, Layers, Download, Lock
 } from 'lucide-react';
 import { CHRISTMAS_LIGHTING_PRODUCTS, CHRISTMAS_LIGHTING_CATEGORIES } from '@/data/luces-navidad';
@@ -36,7 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!slug || slug.length === 0) return {};
 
   const primary = slug[0].toLowerCase();
-  
+
   if (primary === 'luces-navidad') {
     if (slug.length === 1) {
       return {
@@ -53,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         }
       };
     }
-    
+
     // Check if category
     const catSlug = slug.length === 3 && slug[1] === 'categoria' ? slug[2] : slug[1];
     const matchedCategory = CHRISTMAS_LIGHTING_CATEGORIES.find(c => slugifyCategory(c) === catSlug.toLowerCase());
@@ -69,11 +68,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const productId = slug[slug.length - 1].toLowerCase();
     const product = CHRISTMAS_LIGHTING_PRODUCTS.find(
-      p => p.id.toLowerCase() === productId || 
-           p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
-           p.sku.toLowerCase() === productId
+      p => p.id.toLowerCase() === productId ||
+        p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
+        p.sku.toLowerCase() === productId
     );
-    
+
     if (product) {
       return {
         title: `${product.name} (Ref: ${product.sku}) | Productora EAR Alumbrado Monumental`,
@@ -127,7 +126,7 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
   if (primary === 'luces-navidad') {
     if (slug.length === 1) {
       return (
-        <ChristmasLightingCatalogView 
+        <ChristmasLightingCatalogView
           products={CHRISTMAS_LIGHTING_PRODUCTS}
           categories={CHRISTMAS_LIGHTING_CATEGORIES}
           initialCategory="all"
@@ -141,7 +140,7 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
 
     if (matchedCategory) {
       return (
-        <ChristmasLightingCatalogView 
+        <ChristmasLightingCatalogView
           products={CHRISTMAS_LIGHTING_PRODUCTS}
           categories={CHRISTMAS_LIGHTING_CATEGORIES}
           initialCategory={matchedCategory}
@@ -154,9 +153,9 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     const productId = slug[slug.length - 1].toLowerCase();
     const product = CHRISTMAS_LIGHTING_PRODUCTS.find(
-      p => p.id.toLowerCase() === productId || 
-           p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
-           p.sku.toLowerCase() === productId
+      p => p.id.toLowerCase() === productId ||
+        p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
+        p.sku.toLowerCase() === productId
     );
 
     if (product) {
@@ -185,12 +184,12 @@ export default async function ArsenalCatchAllPage({ params }: PageProps) {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
                 {/* Product Visual - Captura Oficial */}
                 <div className="lg:col-span-7 relative rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[450px]">
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
+                  <img
+                    src={product.image}
+                    alt={product.name}
                     className="w-full h-full object-contain max-h-[600px] rounded-xl"
                   />
-                  
+
                   <div className="absolute top-4 left-4">
                     <span className="px-3 py-1 rounded-full bg-black/90 backdrop-blur-md border border-[#ecb613]/50 font-mono text-xs text-[#ecb613] font-bold">
                       Ref: {product.sku}

@@ -93,7 +93,7 @@ export default async function ProgrammaticLandingPage({
   const { vertical, intent } = await params;
 
   // Gate: Solo permitir verticales válidas
-  if (!VALID_VERTICALS.includes(vertical as any)) {
+  if (!(VALID_VERTICALS as readonly string[]).includes(vertical)) {
     notFound();
   }
 

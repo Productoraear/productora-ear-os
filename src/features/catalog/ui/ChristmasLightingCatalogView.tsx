@@ -2,9 +2,9 @@
 
 import React, { useState, useMemo, useTransition, useEffect } from 'react';
 import Link from 'next/link';
-import { 
-  Sparkles, ShieldCheck, Zap, PhoneCall, Truck, Award, 
-  Eye, Layers, Search, Filter, CheckCircle2, ChevronRight, 
+import {
+  Sparkles, ShieldCheck, Zap, PhoneCall, Truck, Award,
+  Eye, Layers, Search, Filter, CheckCircle2, ChevronRight,
   Lock, Loader2, CreditCard, X, ExternalLink, ChevronLeft, ArrowRight,
   Play, Video, FileText
 } from 'lucide-react';
@@ -13,7 +13,7 @@ import { createB2GLightingCheckout } from '@/app/actions/vipCheckoutActions';
 
 interface Props {
   products: ChristmasLightingProduct[];
-  categories: string[];
+  categories: readonly string[];
   initialCategory?: string;
 }
 
@@ -128,9 +128,9 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
     return products.filter((p) => {
       const matchCat = selectedCategory === 'all' || p.category === selectedCategory;
       const q = searchQuery.toLowerCase().trim();
-      const matchSearch = !q || 
-        p.name.toLowerCase().includes(q) || 
-        p.sku.toLowerCase().includes(q) || 
+      const matchSearch = !q ||
+        p.name.toLowerCase().includes(q) ||
+        p.sku.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q) ||
         (p.subcategory && p.subcategory.toLowerCase().includes(q));
       return matchCat && matchSearch;
@@ -238,18 +238,17 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                   const el = document.getElementById('catalogo-grid');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className={`group relative rounded-2xl overflow-hidden text-left p-4 h-36 flex flex-col justify-between border transition-all ${
-                  isSelected 
-                    ? 'border-[#ecb613] shadow-[0_0_25px_rgba(236,182,19,0.3)] ring-2 ring-[#ecb613]' 
+                className={`group relative rounded-2xl overflow-hidden text-left p-4 h-36 flex flex-col justify-between border transition-all ${isSelected
+                    ? 'border-[#ecb613] shadow-[0_0_25px_rgba(236,182,19,0.3)] ring-2 ring-[#ecb613]'
                     : 'border-white/10 hover:border-[#ecb613]/50 bg-neutral-900'
-                }`}
+                  }`}
               >
                 {/* Background Image */}
-                <img 
-                  src={cover.image} 
-                  alt={cat} 
+                <img
+                  src={cover.image}
+                  alt={cat}
                   loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-70 group-hover:scale-105 transition-all duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
 
@@ -317,11 +316,11 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
           {paginatedProducts.map((prod) => {
             const isLockingThis = isPending && pendingSku === prod.sku;
             return (
-              <div 
+              <div
                 key={prod.id}
                 className="group bg-[#0d0d0d] border border-white/10 rounded-2xl overflow-hidden hover:border-[#ecb613]/60 transition-all flex flex-col justify-between"
               >
-                <div 
+                <div
                   className="cursor-pointer"
                   onClick={() => {
                     setModalTab('product');
@@ -330,8 +329,8 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                 >
                   {/* Visual Card con Imagen Real del Catálogo */}
                   <div className="relative h-56 w-full overflow-hidden bg-black flex items-center justify-center">
-                    <img 
-                      src={prod.image || prod.pageImage} 
+                    <img
+                      src={prod.image || prod.pageImage}
                       alt={prod.name}
                       loading="lazy"
                       onError={(e) => {
@@ -343,7 +342,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent opacity-80" />
-                    
+
                     <div className="absolute top-3 left-3 flex items-center gap-1.5">
                       <span className="px-2.5 py-1 rounded-md bg-black/90 backdrop-blur-md border border-[#ecb613]/40 font-mono text-[10px] text-[#ecb613] font-bold">
                         Ref: {prod.sku}
@@ -394,7 +393,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                     <div className="text-xs font-bold text-[#ecb613] font-mono">
                       {prod.priceDisplay || 'Cotización a Medida'}
                     </div>
-                    
+
                     <div className="flex items-center gap-1.5">
                       {/* Botón que abre el modal técnico instantáneo */}
                       <button
@@ -492,7 +491,7 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
       {activeModalProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
           <div className="relative w-full max-w-4xl bg-[#0c0c0c] border border-[#ecb613]/50 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.9)] max-h-[90vh] flex flex-col">
-            
+
             {/* Modal Header */}
             <div className="flex items-center justify-between p-5 border-b border-white/10 bg-black/40">
               <div className="flex items-center gap-2">
@@ -517,9 +516,9 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
               {/* Imagen Grande Oficial y Switcher de Lámina */}
               <div className="md:col-span-7 flex flex-col gap-3">
                 <div className="rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center p-2 min-h-[340px] max-h-[460px] relative">
-                  <img 
-                    src={modalTab === 'product' ? (activeModalProduct.image || activeModalProduct.pageImage) : (activeModalProduct.pageImage || activeModalProduct.image)} 
-                    alt={activeModalProduct.name} 
+                  <img
+                    src={modalTab === 'product' ? (activeModalProduct.image || activeModalProduct.pageImage) : (activeModalProduct.pageImage || activeModalProduct.image)}
+                    alt={activeModalProduct.name}
                     className="w-full h-full object-contain max-h-[420px] rounded-xl transition-all duration-300"
                   />
                   {modalTab === 'page' && (
@@ -534,9 +533,8 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                   <button
                     type="button"
                     onClick={() => setModalTab('product')}
-                    className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
-                      modalTab === 'product' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'
-                    }`}
+                    className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${modalTab === 'product' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'
+                      }`}
                   >
                     Foto Individual
                   </button>
@@ -544,9 +542,8 @@ export default function ChristmasLightingCatalogView({ products, categories, ini
                     <button
                       type="button"
                       onClick={() => setModalTab('page')}
-                      className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
-                        modalTab === 'page' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'
-                      }`}
+                      className={`flex-1 min-w-[110px] py-1.5 px-3 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${modalTab === 'page' ? 'bg-[#ecb613] text-black shadow-md' : 'bg-white/5 text-neutral-400 hover:text-white border border-white/10'
+                        }`}
                     >
                       Lámina (Pág. {activeModalProduct.cataloguePage || '1'})
                     </button>

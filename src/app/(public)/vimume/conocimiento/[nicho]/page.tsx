@@ -18,6 +18,13 @@ type Props = {
   params: Promise<{ nicho: string }>
 };
 
+interface NicheContent {
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  content: string;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const nicho = resolvedParams?.nicho || '';
@@ -37,8 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function VimumeNichePage({ params }: Props) {
   const resolvedParams = await params;
   const nicho = resolvedParams?.nicho || 'musicoterapia-alzheimer';
-  
-  const contentMap: Record<string, any> = {
+
+  const contentMap: Record<string, NicheContent> = {
     'musicoterapia-alzheimer': {
       title: 'Impacto de la Musicoterapia en el Alzheimer',
       subtitle: 'Estimulación Cognitiva y Recuperación de la Memoria a través de la Música Vernácula',
@@ -105,7 +112,7 @@ export default async function VimumeNichePage({ params }: Props) {
             <p className="text-xs leading-relaxed text-white/50 font-bold uppercase mb-8">
               Al contratar los servicios artísticos de la red EAR OS, se destina una cuota inmutable al sostenimiento de este programa. Si usted representa a un Ayuntamiento o Residencia, puede incorporar VIMUME directamente.
             </p>
-            
+
             <div className="flex gap-4 items-center">
               <Link href="/vimume" className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white hover:text-pink-500 transition-colors">
                 Regresar al Hub <ArrowRight size={14} />

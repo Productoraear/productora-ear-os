@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound, redirect, RedirectType } from 'next/navigation';
@@ -17,6 +16,25 @@ interface PageProps {
   params: Promise<{
     slug: string[];
   }>;
+}
+
+interface CatalogItem {
+  canonicalUrl: string;
+  name: string;
+  description: string;
+  image?: string;
+  category?: string;
+  id?: string;
+}
+
+interface GscIntentItem {
+  internalPath: string;
+  seoTitle: string;
+  metaDescription: string;
+  canonicalUrl: string;
+  province?: string;
+  intentType?: string;
+  query?: string;
 }
 
 // 🛡️ LISTA DE RAÍCES ESTÁTICAS DE NIVEL 1 QUE TIENEN RUTA PROPIA EN APP ROUTER
@@ -50,7 +68,7 @@ function findProvinceInString(str: string): string | null {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   if (!slug || slug.length === 0) return {};
-  
+
   const rootPrefix = slug[0].toLowerCase();
   if (EXACT_ROOT_STATIC_ROUTES.has(rootPrefix) && slug.length === 1) {
     return {};
@@ -60,7 +78,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // 1. Coincidencia con catálogo de alquiler de Madrid
   const catalogItem = madridAlquilerCatalog.find(
-    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+    (item: CatalogItem) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
   );
   if (catalogItem) {
     return {
@@ -83,7 +101,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // 1.B. Coincidencia con catálogo Quality VIP Solutions
   const vipItem = qualityVipCatalog.find(
-    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+    (item: CatalogItem) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
   );
   if (vipItem) {
     return {
@@ -105,8 +123,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // 1.C. Coincidencia con Intenciones de Búsqueda GSC / GEO Top 1
-  const gscItem = (gscIntentLandings.allIntents as any[])?.find(
-    (item: any) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
+  const gscItem = (gscIntentLandings.allIntents as GscIntentItem[])?.find(
+    (item: GscIntentItem) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
   );
   if (gscItem) {
     return {
@@ -156,20 +174,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locationCandidate = rootPrefix;
   }
 
-  const semantic = generateSemanticPageData(slug, locationCandidate);
+  const semantic = generateSemanticPageData(slug);
   const canonicalPath = '/' + slug.join('/').toLowerCase().trim();
   const canonicalUrl = `https://productoraear.com${canonicalPath}`;
 
   return {
     title: semantic.title,
-    description: (semantic as any).metaDescription || (semantic as any).description,
-    keywords: (semantic as any).localKeywords,
+    description: semantic.description,
+    keywords: semantic.keywords,
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
       title: semantic.title,
-      description: (semantic as any).metaDescription || (semantic as any).description,
+      description: semantic.description,
       url: canonicalUrl,
       images: ['/og-image-vimume.jpg'],
       siteName: 'Productora EAR',
@@ -179,7 +197,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: semantic.title,
-      description: (semantic as any).metaDescription || (semantic as any).description,
+      description: semantic.description,
       images: ['/og-image-vimume.jpg']
     }
   };
@@ -214,7 +232,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   // 2. COINCIDENCIA DIRECTA CON CATÁLOGOS TÉCNICOS Y SERVICIOS VIP (MADRID ALQUILER & QUALITY VIP)
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   const catalogItem = madridAlquilerCatalog.find(
-    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+    (item: CatalogItem) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
   );
 
   if (catalogItem) {
@@ -232,7 +250,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   }
 
   const vipItem = qualityVipCatalog.find(
-    (item: any) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
+    (item: CatalogItem) => item.canonicalUrl.toLowerCase() === rawPath || item.canonicalUrl.toLowerCase() === `${rawPath}/`
   );
 
   if (vipItem) {
@@ -240,8 +258,8 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   }
 
   // 2.C. INTENCIONES DE BÚSQUEDA GSC / GEO TOP 1 (gscIntentLandings)
-  const gscItem = (gscIntentLandings.allIntents as any[])?.find(
-    (item: any) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
+  const gscItem = (gscIntentLandings.allIntents as GscIntentItem[])?.find(
+    (item: GscIntentItem) => item.internalPath.toLowerCase() === rawPath || item.internalPath.toLowerCase() === `${rawPath}/`
   );
 
   if (gscItem) {
@@ -251,7 +269,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
         description={gscItem.metaDescription}
         location={gscItem.province ? gscItem.province.toUpperCase() : 'MADRID'}
         province={gscItem.province ? gscItem.province.toUpperCase() : 'MADRID'}
-        category={gscItem.intentType.replace(/_/g, ' ')}
+        category={gscItem.intentType ? gscItem.intentType.replace(/_/g, ' ') : 'Servicios'}
         serviceId={gscItem.query}
         isApex={true}
       />
@@ -287,7 +305,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   if (primaryPrefix === 'articulo' || primaryPrefix === 'noticias' || primaryPrefix === 'post' || primaryPrefix === 'blog-post') {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || 'madrid';
-    
+
     if (rawRest.includes('pantalla-led') || rawRest.includes('led') || rawRest.includes('visual')) {
       redirect(`/arsenal/pantalla-led/${detectedProv}`, RedirectType.replace);
     } else if (rawRest.includes('mariachi') || rawRest.includes('edwin') || rawRest.includes('cantante') || rawRest.includes('serenata')) {
@@ -305,7 +323,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   if ((primaryPrefix === 'weddings' || primaryPrefix === 'bodas' || primaryPrefix === 'production') && slug.length >= 2) {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || (slug.length >= 3 && PROVINCIAS.includes(slug[2].toLowerCase()) ? slug[2].toLowerCase() : 'madrid');
-    
+
     if (rawRest.includes('mariachi') || rawRest.includes('musica')) {
       redirect(`/servicios/mariachis/${detectedProv}`, RedirectType.replace);
     } else if (rawRest.includes('planner') || rawRest.includes('fincas')) {
@@ -348,22 +366,22 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const isLastProv = PROVINCIAS.includes(lastSeg);
     const provinceSlug = isLastProv ? lastSeg : (slug.length >= 3 ? slug[2].toLowerCase() : 'madrid');
     const serviceSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : slug.slice(1).join('-');
-    
+
     const { cityName } = resolveGeoLocation(provinceSlug);
 
     if (/chofer|conductor|transfer|coche|transporte-vip/.test(serviceSlug)) {
       return <ChauffeurVipView location={cityName} />;
     }
 
-    const semantic = generateSemanticPageData(slug, cityName);
+    const semantic = generateSemanticPageData(slug);
 
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={(semantic as any).metaDescription || (semantic as any).description}
+        description={semantic.description}
         location={cityName}
         serviceId={serviceSlug || 'mariachis'}
-        keywords={(semantic as any).localKeywords}
+        keywords={semantic.keywords}
         isApex={true}
       />
     );
@@ -393,15 +411,15 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
       return <ChauffeurVipView location={cityName} />;
     }
 
-    const semantic = generateSemanticPageData(slug, cityName);
+    const semantic = generateSemanticPageData(slug);
 
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={(semantic as any).metaDescription || (semantic as any).description}
+        description={semantic.description}
         location={cityName}
         serviceId={serviceSlug || primaryPrefix}
-        keywords={(semantic as any).localKeywords}
+        keywords={semantic.keywords}
         isApex={true}
       />
     );
@@ -413,17 +431,17 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const isLastProv = PROVINCIAS.includes(lastSeg);
     const provinceSlug = isLastProv ? lastSeg : 'madrid';
     const equipmentSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : (slug[1] || 'pantalla-led');
-    
+
     const { cityName } = resolveGeoLocation(provinceSlug);
-    const semantic = generateSemanticPageData(slug, cityName);
+    const semantic = generateSemanticPageData(slug);
 
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={(semantic as any).metaDescription || (semantic as any).description}
+        description={semantic.description}
         location={cityName}
         serviceId={equipmentSlug}
-        keywords={(semantic as any).localKeywords}
+        keywords={semantic.keywords}
         isApex={true}
       />
     );
@@ -435,17 +453,17 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const isLastProv = PROVINCIAS.includes(lastSeg);
     const provinceSlug = isLastProv ? lastSeg : 'madrid';
     const eventSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : (slug[1] || 'fiestas-patronales');
-    
+
     const { cityName } = resolveGeoLocation(provinceSlug);
-    const semantic = generateSemanticPageData(slug, cityName);
+    const semantic = generateSemanticPageData(slug);
 
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={(semantic as any).metaDescription || (semantic as any).description}
+        description={semantic.description}
         location={cityName}
         serviceId={eventSlug}
-        keywords={(semantic as any).localKeywords}
+        keywords={semantic.keywords}
         isApex={true}
       />
     );
@@ -454,15 +472,15 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   // 5.E. LANDINGS PROVINCIALES PURAS (/[provincia])
   if (isProvincia && slug.length === 1) {
     const { cityName } = resolveGeoLocation(primaryPrefix);
-    const semantic = generateSemanticPageData(slug, cityName);
+    const semantic = generateSemanticPageData(slug);
 
     return (
       <BespokeTemplate
         title={semantic.title}
-        description={(semantic as any).metaDescription || (semantic as any).description}
+        description={semantic.description}
         location={cityName}
         serviceId="produccion-integral"
-        keywords={(semantic as any).localKeywords}
+        keywords={semantic.keywords}
         isApex={true}
       />
     );
