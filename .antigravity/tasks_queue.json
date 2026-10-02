@@ -1,22 +1,21 @@
 {
   "_meta": {
     "version": "7.0-ANTIGRAVITY-OMEGA-SCLASS",
-    "doctrine": "BARE-METAL GOVERNANCE + SCAFFOLDING FIRST + FRAMER LANDING INTEGRATION",
-    "waves": "11",
+    "doctrine": "BARE-METAL GOVERNANCE + SCAFFOLDING FIRST + EXIGENCIA SUPREMA MARKET-LEADING UX",
+    "waves": "12",
     "model": "claude-3-7-sonnet-sclass"
   },
   "_instructions_for_cline": "PACTO SAGRADO ANTI-SOBRECOSTES (ZTM 1-TASK): 1) node .antigravity/omega.js next 2) Modifica con excelencia 3) node .antigravity/omega.js complete <ID> 4) DETENTE Y FINALIZA TURNO. Clic en 'Start New Task' en Cline para 0 tokens acumulados.",
   "tasks": [
     {
-      "id": "TASK-FRAMER-02",
-      "title": "Integración Vanguardista Framer Motion Canvas en Landings Principales",
-      "status": "COMPLETED",
+      "id": "TASK-FRAMER-03",
+      "title": "Rediseño SOTA Supremo de la Landing de Bodas (La experiencia de usuario más potente del mercado)",
+      "status": "QUEUED",
       "files": [
-        "src/app/page.tsx",
         "src/app/(public)/bodas/page.tsx"
       ],
-      "action": "Invocación e integración del componente FramerMotionScrollCanvas y tokens de diseño Framer en la página principal y la landing de bodas S-Class.",
-      "scaffold": "1. Importar FramerMotionScrollCanvas desde '@/components/ui/FramerMotionScrollCanvas' en src/app/page.tsx y src/app/(public)/bodas/page.tsx.\n2. Reemplazar o integrar secciones estáticas con la experiencia de scroll 60FPS Framer Motion Canvas.\n3. Aplicar acentos de color S-Class (#ecb613 oro para portada, #FF2B44 rubí para bodas).\n4. Ejecutar y validar obligatoriamente npx tsc --noEmit -> Exit Code 0.",
+      "action": "Restaurar e integrar SmartMarketplaceNav, ThermodynamicNeuralTunnel, FramerMotionScrollCanvas, Tarjetas 3D de los 6 Pilares, Show Solista 350€, Grid Nupcial por Provincias y Testimonios 5.0★ en una experiencia de lujo cálido deslumbrante.",
+      "scaffold": "1. Re-integrar SmartMarketplaceNav y ThermodynamicNeuralTunnel en la cabecera de src/app/(public)/bodas/page.tsx.\n2. Incorporar el FramerMotionScrollCanvas a 60FPS con acento dorado champagne.\n3. Presentar los 6 Pilares Nupciales con tarjetas glassmorphism 3D e imágenes de fondo fotorrealistas.\n4. Mantener la cuadrícula completa de banquetes por provincia (Madrid 419, Barcelona 524, Toledo 185...) y el selector de 52 provincias.\n5. Validar con npx tsc --noEmit -> Exit Code 0.",
       "validation": "npx tsc --noEmit"
     }
   ]
