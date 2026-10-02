@@ -223,8 +223,9 @@ export async function generateSitemapPartition(partitionId: string): Promise<Met
 
       // Catálogo oficial 2026 de alumbrado monumental (530+ productos)
       try {
-        for (const prod of CHRISTMAS_LIGHTING_PRODUCTS) {
-          if (prod.canonicalUrl) {
+        const prods = (CHRISTMAS_LIGHTING_PRODUCTS as any[]) || [];
+        for (const prod of prods) {
+          if (prod && typeof prod === 'object' && prod.canonicalUrl && typeof prod.canonicalUrl === 'string') {
             addEntry(`${BASE_URL}${prod.canonicalUrl}`, 0.80, 'weekly');
           }
         }
