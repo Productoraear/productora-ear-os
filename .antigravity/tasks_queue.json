@@ -250,7 +250,7 @@
     {
       "id": "W04-049",
       "wave": 4,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "COMPONENT: Eliminar imports no usados en src/components/logistics/SosEquipmentRescueModal.tsx",
       "action": "Abrir. Eliminar imports muertos.",
       "files": [
@@ -261,7 +261,7 @@
     {
       "id": "W04-050",
       "wave": 4,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "COMPONENT: Eliminar imports no usados en src/components/vimume/VimumeOscilloscope40Hz.tsx",
       "action": "Abrir. Eliminar imports muertos.",
       "files": [
@@ -318,7 +318,7 @@
       "wave": 5,
       "status": "QUEUED",
       "title": "LOGISTICS: Actualizar Motor de Comisiones a Reglas Octubre 2026",
-      "action": "Abrir src/lib/affiliate/affiliateCommissionEngine.ts (o crearlo si no existe). Configurar EAR_OS_COMMISSION = 0.20, y COSTO_KM = 1.00 desde el km 50.",
+      "action": "Verificar src/lib/affiliate/affiliateCommissionEngine.ts. Confirmar SSOT S-Class inmutable: 80% Artista, 10% EAR OS, 10% VIMUME, y tarifa logística 1,50 €/km a partir del km 50 (+120 € Hotel si > 200 km o fin >= 3:00 AM).",
       "files": [
         "src/lib/affiliate/affiliateCommissionEngine.ts"
       ],
