@@ -62,10 +62,10 @@ export const VendorClaimProposalModal: React.FC<VendorClaimProposalModalProps> =
     },
     {
       num: '02',
-      title: 'Tarifa Acreditada + 10% Comisión en Producción & Sonido',
-      description: `El proveedor acredita su cuota histórica y la congelamos al 0% de subidas por contrato con Garantía ROI. Además, percibe un 10% de comisión sobre cualquier contratación de sonido (Bose/luces), producción o música realizada en sus instalaciones. El saldo acumulado se puede descontar de la cuota anual del siguiente ejercicio, abonarse en cuenta o canjearse por actuaciones exclusivas (ej. Edwin Agudelo) abonando únicamente los costes logísticos de desplazamiento, dietas y hotel.`,
-      badge: 'Tarifa Histórica + 10% Comisión',
-      highlight: 'Saldo canjeable en cuota futura, abono directo o actuaciones exclusivas'
+      title: 'Tarifa Acreditada + 10% Comisión por Recomendación & Producción',
+      description: `El proveedor acredita su cuota histórica y la congelamos al 0% de subidas por contrato con Garantía ROI. Además, percibe un 10% de comisión sobre contrataciones de sonido, producción, música o recomendaciones de afiliados. El saldo acumulado se puede: A) Descontar de la cuota anual del siguiente ejercicio (0 € cuota), B) Cobrar en cuenta bancaria, C) Canjear por actuaciones de Edwin Agudelo abonando solo logística, o D) Donar al Proyecto VIMUME Senior con Certificado Oficial de Deducción Fiscal (Ley 49/2002, hasta 80% IRPF / 50% Sociedades) + Sello RSC Empresa Solidaria.`,
+      badge: 'Tarifa Histórica + 10% Comisión Multi-Uso',
+      highlight: 'Saldo aplicable a cuota 0€, abono directo, show exclusivo o Donativo VIMUME (Ley 49/2002)'
     },
     {
       num: '03',
