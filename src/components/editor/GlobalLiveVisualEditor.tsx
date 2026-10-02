@@ -93,6 +93,7 @@ export function GlobalLiveVisualEditor() {
   const [aiGeneratedText, setAiGeneratedText] = useState<string>('');
   const [aiStyle, setAiStyle] = useState<string>('titular_hero');
   const [aiEngineUsed, setAiEngineUsed] = useState<string>('');
+  const [isAdminMode, setIsAdminMode] = useState<boolean>(false);
 
   const mutationsRef = useRef<Record<string, BlockMutation>>({});
 
@@ -103,6 +104,15 @@ export function GlobalLiveVisualEditor() {
     setCurrentPath(path);
     setSelectedElement(null);
     setToolbarPos(null);
+
+    // El constructor S-Class solo estará disponible en rutas admin (/admin, /command-center), o si se activa ?admin=true / ear_admin_mode
+    const isAdminRoute = Boolean(
+      path.startsWith('/admin') ||
+      path.startsWith('/command-center')
+    );
+    const hasAdminParam = window.location.search.includes('admin=true');
+    const hasAdminStorage = localStorage.getItem('ear_admin_mode') === 'true';
+    setIsAdminMode(isAdminRoute || hasAdminParam || hasAdminStorage);
 
     const loadMutations = async () => {
       let localMutations: Record<string, BlockMutation> = {};
@@ -521,9 +531,9 @@ export function GlobalLiveVisualEditor() {
     setShowLinkModal(false);
   };
 
-  // El editor visual es herramienta de la web pública / landings comerciales.
-  // En paneles privados (afiliado, admin) no debe pintarse.
-  if (nextPathname?.startsWith('/panel') || nextPathname?.startsWith('/admin')) {
+  // El constructor S-Class solo está activo en el panel de administración (/admin) o si se accede con ?admin=true / ear_admin_mode.
+  // En las vistas públicas para los usuarios y parejas se oculta por completo para eliminar el ruido visual.
+  if (!isAdminMode) {
     return null;
   }
 

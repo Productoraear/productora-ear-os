@@ -1,21 +1,53 @@
 {
   "_meta": {
     "version": "7.0-ANTIGRAVITY-OMEGA-SCLASS",
-    "doctrine": "BARE-METAL GOVERNANCE + SCAFFOLDING FIRST + EXIGENCIA SUPREMA MARKET-LEADING UX",
-    "waves": "12",
+    "doctrine": "BARE-METAL GOVERNANCE + ARSENAL DE 10 VECTORES DE DOMINANCIA QUANTUM SEO/GEO + COSECHA SIGILOSA INFALIBLE",
+    "waves": "23",
     "model": "claude-3-7-sonnet-sclass"
   },
   "_instructions_for_cline": "PACTO SAGRADO ANTI-SOBRECOSTES (ZTM 1-TASK): 1) node .antigravity/omega.js next 2) Modifica con excelencia 3) node .antigravity/omega.js complete <ID> 4) DETENTE Y FINALIZA TURNO. Clic en 'Start New Task' en Cline para 0 tokens acumulados.",
   "tasks": [
     {
-      "id": "TASK-FRAMER-03",
-      "title": "Rediseño SOTA Supremo de la Landing de Bodas (La experiencia de usuario más potente del mercado)",
-      "status": "COMPLETED",
+      "id": "TASK-UI-SEARCH-FUSION-01",
+      "title": "Experiencia Inmersiva Bodas S-Class: Hero Video Cinemático 4K, Traslucidez Glassmorphic, GPS Activo y Cero 404s",
+      "status": "QUEUED",
       "files": [
-        "src/app/(public)/bodas/page.tsx"
+        "src/features/marketplace/ui/SmartMarketplaceNav.tsx",
+        "src/features/search/AirbnbNeuralBookingBar.tsx",
+        "src/components/providers/BentoFilterBar.tsx",
+        "src/app/(public)/proveedores/page.tsx",
+        "src/app/(public)/bodas/page.tsx",
+        "src/components/sclass/ThermodynamicNeuralTunnel.tsx"
       ],
-      "action": "Restaurar e integrar SmartMarketplaceNav, ThermodynamicNeuralTunnel, FramerMotionScrollCanvas, Tarjetas 3D de los 6 Pilares, Show Solista 350€, Grid Nupcial por Provincias y Testimonios 5.0★ en una experiencia de lujo cálido deslumbrante.",
-      "scaffold": "1. Re-integrar SmartMarketplaceNav y ThermodynamicNeuralTunnel en la cabecera de src/app/(public)/bodas/page.tsx.\n2. Incorporar el FramerMotionScrollCanvas a 60FPS con acento dorado champagne.\n3. Presentar los 6 Pilares Nupciales con tarjetas glassmorphism 3D e imágenes de fondo fotorrealistas.\n4. Mantener la cuadrícula completa de banquetes por provincia (Madrid 419, Barcelona 524, Toledo 185...) y el selector de 52 provincias.\n5. Validar con npx tsc --noEmit -> Exit Code 0.",
+      "action": "Integrar un vídeo cinemático de boda a pantalla gigante en el Hero de /bodas (con ambient loop Pexels/Mixkit), fusionar las cajas en cristales traslúcidos Glassmorphic, activar el GPS en el botón MapPin y corregir todos los enlaces 404.",
+      "scaffold": "1. En src/app/(public)/bodas/page.tsx, añadir en el Hero un fondo de vídeo cinemático ambient de boda HD (HTML5 <video autoPlay loop muted playsInline>) de alta tasa de fotogramas, con viñeta de degradado radial oscuro (from-[#060507]/90 to-[#060507]) e iluminación ambiental dorada para un impacto visual emocionante al entrar a la página.\n2. En src/app/(public)/bodas/page.tsx, SmartMarketplaceNav.tsx y ThermodynamicNeuralTunnel.tsx, REEMPLAZAR los fondos negros opacos por cristales traslúcidos Glassmorphic (bg-black/35 backdrop-blur-2xl border border-white/15 hover:border-[#ecb613]/50 shadow-2xl). Esto deja traslucir el vídeo cinemático y el shader líquido dorado por detrás de todas las secciones.\n3. En src/app/(public)/bodas/page.tsx, cambiar el href de las 12 tarjetas de zonas (Madrid, Barcelona, Toledo, Sevilla, etc.) de '/bodas/fincas-${prov.slug}-sonorizacion-gala' A '/proveedores?cat=finca&provincia=${encodeURIComponent(prov.name)}'. Esto elimina el 100% de los 404s.\n4. En src/features/marketplace/ui/SmartMarketplaceNav.tsx, hacer interactivo el icono MapPin 📍: al pulsar, ejecutar navigator.geolocation.getCurrentPosition() para calcular la provincia española más cercana (Madrid, Toledo, Barcelona, Valencia, etc.) y auto-rellenar 'Dónde (Provincia)' instantáneamente con spinner de carga.\n5. En src/app/(public)/proveedores/page.tsx, ELIMINAR los buscadores duplicados inferiores. Dejar únicamente SmartMarketplaceNav como el BUSCADOR ÚNICO S-CLASS oficial.\n6. En SmartMarketplaceNav.tsx, cargar las 52 provincias de España (PROVINCIAS_ESPANA) en el desplegable de ubicación.\n7. En src/features/search/AirbnbNeuralBookingBar.tsx, aplicar color-scheme: dark y alto contraste al selector de fecha <input type='date'> para visibilidad 100% del icono de calendario.\n8. Validar compilación con npx tsc --noEmit -> Exit Code 0.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "TASK-VANGUARD-ULTRA-PROACTIVE-01",
+      "title": "Elevación Proactiva Global: Edwin Agudelo Page, Simulator Fincas B2B & Telemetría Nav",
+      "status": "QUEUED",
+      "files": [
+        "src/app/(public)/artistas/edwin-agudelo/page.tsx",
+        "src/components/fincas/FincasB2BPortal.tsx",
+        "src/components/layout/SovereignNavbar.tsx"
+      ],
+      "action": "Aplicar de forma ultraproactiva la misma experiencia cinemática de vídeo HD y Glassmorphism a la landing principal del Artista Solista Edwin Agudelo (/artistas/edwin-agudelo) y al Portal B2B de Fincas (/fincas), activando el indicador de estado telemático en la barra superior.",
+      "scaffold": "1. En src/app/(public)/artistas/edwin-agudelo/page.tsx, integrar background de vídeo cinemático de show solista en vivo (con microfonía Shure Beta 87A y sonido Bose F1), tarjeta 3D holográfica del Caché Base (350 €) y botón de bloqueo de fecha atómico por Stripe.\n2. En src/components/fincas/FincasB2BPortal.tsx, integrar un simulador dinámico en tiempo real de liquidación de comisiones para la finca (380 € - 570 €) con indicador de sonometría homologada (85-90 dBA) y descarga directa de dossier técnico.\n3. En src/components/layout/SovereignNavbar.tsx, añadir insignia telemática de estado en vivo 'COBERTURA NACIONAL S-CLASS · GPS ACTIVO' con acceso rápido al Concierge de Reserva.\n4. Validar compilación con npx tsc --noEmit -> Exit Code 0.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "TASK-SEO-GEO-DOMINANCE-01",
+      "title": "Dominancia Absoluta Quantum SEO/GEO (Arsenal de 10 Vectores vs Bodas.net)",
+      "status": "QUEUED",
+      "files": [
+        "src/app/(public)/bodas/guias/page.tsx",
+        "src/lib/seo/sitemapGenerator.ts",
+        "src/components/seo/LocalBusinessSchema.tsx",
+        "public/robots.txt"
+      ],
+      "action": "Desplegar el Arsenal de 10 Vectores de Dominancia Orgánica e Inteligencia Artificial para aniquilar el posicionamiento de Bodas.net: 243.930 nodos programáticos (8.131 municipios x 30 categorías), compatibilidad llms.txt y Schema.org Master.",
+      "scaffold": "1. En public/robots.txt y public/well-known/ai-plugin.json, configurar permiso y marcado semántico optimizado para crawlers de IA (GPTBot, PerplexityBot, ClaudeBot, Google-Extended).\n2. En src/components/seo/LocalBusinessSchema.tsx, enriquecer esquemas Schema.org (Event, LocalBusiness, AggregateRating, FAQPage, HowTo, Service) para citación directa en respuestas de IA (GEO).\n3. En src/app/(public)/bodas/guias/page.tsx, integrar el Centro de Guías Nupciales y Lead Magnets descargables (Calculadora Ley 37/2003, Dossier Fincas 2026, Guía Presupuestos).\n4. En src/lib/seo/sitemapGenerator.ts, asegurar el pipeline de indexación para los 8.131 municipios españoles a <120ms sin 404s/500s.\n5. Validar compilación con npx tsc --noEmit -> Exit Code 0.",
       "validation": "npx tsc --noEmit"
     }
   ]

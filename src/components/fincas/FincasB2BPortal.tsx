@@ -185,9 +185,9 @@ export default function FincasB2BPortal() {
 
       {/* ── HERO BANNER CINEMÁTICO ── */}
       <section className="relative overflow-hidden pt-8 pb-12 sm:pt-12 sm:pb-16 px-4 sm:px-6 lg:px-10 border-b border-white/10">
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[450px] w-[800px] max-w-full bg-gradient-radial from-[#ecb613]/10 via-[#258DCD]/5 to-transparent blur-[120px]" />
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[450px] w-[800px] max-w-full bg-gradient-radial from-[#ecb613]/10 via-[#258DCD]/5 to-transparent blur-[120px] z-0" />
 
-        <div className="relative mx-auto max-w-7xl space-y-6">
+        <div className="relative z-10 mx-auto max-w-7xl space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-[#ecb613] max-w-full truncate">
             <Sparkles size={12} className="shrink-0" aria-hidden="true" />
             <span className="truncate">Bloque 5 SSOT · Red de Afiliación & Homologación de Fincas</span>

@@ -99,8 +99,12 @@ export const ClaimProfileTrigger: React.FC<ClaimProfileTriggerProps> = ({ provid
     setIsModalOpen(true);
   };
 
+  const cleanProviderName = (provider.name || '')
+    .replace(/Restáaurante/gi, 'Restaurante')
+    .replace(/Restáurante/gi, 'Restaurante');
+
   const whatsappDirectMsg = encodeURIComponent(
-    `Hola, soy el titular de ${provider.name} (${provider.province || 'España'}). He visto mi ficha pública en EAR OS y quiero reclamar mi perfil oficial con el Split 80/10/10 [Ref: VAR-${variant}].`
+    `Hola, soy el titular de ${cleanProviderName} (${provider.province || 'España'}). He visto mi ficha pública en EAR OS y quiero reclamar mi perfil oficial con el Split 80/10/10 [Ref: VAR-${variant}].`
   );
   const whatsappDirectUrl = `https://wa.me/34693693048?text=${whatsappDirectMsg}`;
 

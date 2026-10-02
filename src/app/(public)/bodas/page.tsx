@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   Heart,
@@ -15,18 +15,16 @@ import {
   Phone,
   Calendar,
   Star,
-  Sparkles,
-  MapPin,
   Building2,
-  CheckCircle2,
   ChevronRight
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import ThermodynamicNeuralTunnel from '@/features/bodas/ui/ThermodynamicNeuralTunnel';
 import SmartMarketplaceNav from '@/features/marketplace/ui/SmartMarketplaceNav';
 import { FramerMotionScrollCanvas } from '@/components/ui/FramerMotionScrollCanvas';
-import { FRAMER_PHYSICS_PRESETS } from '@/lib/framer/framerDesignVault';
 import { motion } from 'framer-motion';
+import VanguardFluidBackground from '@/components/sclass/VanguardFluidBackground';
+import HolographicTiltCard from '@/components/sclass/HolographicTiltCard';
 
 interface WeddingBlock {
   id: string;
@@ -125,10 +123,17 @@ const topProvincesBanquetes = [
 ];
 
 export default function BodasPage() {
-  const [activeTab, setActiveTab] = useState<'all' | 'centro' | 'sur' | 'este' | 'norte'>('all');
-
   return (
-    <main className="min-h-screen bg-[#060507] text-white pt-24 pb-20 px-4 md:px-8 font-sans selection:bg-[#ecb613]/30 overflow-x-hidden">
+    <main className="min-h-screen bg-[#060507] text-white pt-24 pb-20 px-4 md:px-8 font-sans selection:bg-[#ecb613]/30 overflow-x-hidden relative">
+
+      {/* FLUIDO WEBGL S-CLASS: Shaders reactivos al cursor (Nivel Awwwards) */}
+      <VanguardFluidBackground
+        accentColor="#ecb613"
+        accentColorSecondary="#0a0806"
+        cursorReactivity={0.9}
+        speed={1.1}
+        opacity={0.85}
+      />
 
       {/* Iluminación ambiental dorada champagne de gala */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1300px] h-[650px] bg-gradient-radial from-[#ecb613]/18 via-[#d4af37]/8 to-transparent blur-[180px] pointer-events-none" />
@@ -293,52 +298,64 @@ export default function BodasPage() {
             {weddingBlocks.map((block) => (
               <motion.div
                 key={block.id}
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={FRAMER_PHYSICS_PRESETS.tactileSpring}
-                className="relative rounded-3xl overflow-hidden border border-white/15 bg-[#0e0c10] flex flex-col justify-between p-8 group shadow-2xl min-h-[380px]"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
               >
-                <div className="absolute inset-0 z-0">
-                  <img
-                    src={block.imageBg}
-                    alt={block.title}
-                    className="w-full h-full object-cover opacity-25 group-hover:opacity-45 transition-opacity duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#060507] via-[#060507]/80 to-transparent" />
-                </div>
-
-                <div className="relative z-10 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="p-3.5 rounded-2xl bg-[#ecb613]/15 border border-[#ecb613]/30 backdrop-blur-md group-hover:scale-110 transition-transform">
-                      {block.icon}
+                <HolographicTiltCard
+                  className="rounded-3xl group min-h-[380px]"
+                  glareColor="#ecb613"
+                  maxTilt={9}
+                  hoverScale={1.02}
+                  glareIntensity={0.6}
+                  parallaxDepth={22}
+                >
+                  <div className="relative rounded-3xl overflow-hidden border border-white/15 bg-[#0e0c10] flex flex-col justify-between p-8 group shadow-2xl min-h-[380px] h-full">
+                    <div className="absolute inset-0 z-0">
+                      <img
+                        src={block.imageBg}
+                        alt={block.title}
+                        className="w-full h-full object-cover opacity-25 group-hover:opacity-45 transition-opacity duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#060507] via-[#060507]/80 to-transparent" />
                     </div>
-                    <span className="px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-[10px] font-black uppercase tracking-wider text-[#ecb613] font-mono backdrop-blur-md">
-                      {block.highlightTag}
-                    </span>
+
+                    <div className="relative z-10 space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="p-3.5 rounded-2xl bg-[#ecb613]/15 border border-[#ecb613]/30 backdrop-blur-md group-hover:scale-110 transition-transform">
+                          {block.icon}
+                        </div>
+                        <span className="px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-[10px] font-black uppercase tracking-wider text-[#ecb613] font-mono backdrop-blur-md">
+                          {block.highlightTag}
+                        </span>
+                      </div>
+
+                      <div className="pt-2">
+                        <h3 className="text-2xl font-black uppercase text-white font-syne tracking-tight group-hover:text-[#ecb613] transition-colors">
+                          {block.title}
+                        </h3>
+                        <p className="text-[11px] font-mono text-[#ecb613] uppercase tracking-widest mt-1">
+                          {block.subtitle}
+                        </p>
+                      </div>
+
+                      <p className="text-xs text-white/70 leading-relaxed font-medium">
+                        {block.description}
+                      </p>
+                    </div>
+
+                    <div className="relative z-10 pt-6">
+                      <Link
+                        href={block.ctaHref}
+                        className="w-full py-4 px-5 rounded-xl bg-white/10 group-hover:bg-[#ecb613] group-hover:text-black text-white font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer backdrop-blur-md"
+                      >
+                        <span>{block.ctaText}</span>
+                        <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </div>
                   </div>
-
-                  <div className="pt-2">
-                    <h3 className="text-2xl font-black uppercase text-white font-syne tracking-tight group-hover:text-[#ecb613] transition-colors">
-                      {block.title}
-                    </h3>
-                    <p className="text-[11px] font-mono text-[#ecb613] uppercase tracking-widest mt-1">
-                      {block.subtitle}
-                    </p>
-                  </div>
-
-                  <p className="text-xs text-white/70 leading-relaxed font-medium">
-                    {block.description}
-                  </p>
-                </div>
-
-                <div className="relative z-10 pt-6">
-                  <Link
-                    href={block.ctaHref}
-                    className="w-full py-4 px-5 rounded-xl bg-white/10 group-hover:bg-[#ecb613] group-hover:text-black text-white font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer backdrop-blur-md"
-                  >
-                    <span>{block.ctaText}</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </div>
+                </HolographicTiltCard>
               </motion.div>
             ))}
           </div>

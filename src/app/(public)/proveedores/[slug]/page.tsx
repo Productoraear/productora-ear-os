@@ -30,6 +30,9 @@ import path from 'path';
 import { CENTRALITA } from '@/lib/phone-constants';
 import { SupplierBlurLock } from '@/components/ui/SupplierBlurLock';
 import { ClaimProfileTrigger } from '@/components/providers/ClaimProfileTrigger';
+import { ProviderMediaGallery } from '@/components/providers/ProviderMediaGallery';
+import { ProviderNavigableReviews } from '@/components/providers/ProviderNavigableReviews';
+import { ProviderFooterClaimBanner } from '@/components/providers/ProviderFooterClaimBanner';
 
 import { isProviderPublic, isProviderBlacklisted, getProviderTier } from '@/lib/providers/visibility';
 
@@ -100,12 +103,90 @@ function getProxiedImage(url: string | undefined): string {
   return url;
 }
 
+function getCategoryFAQs(provider: any, category: string, location: string): Record<string, string> {
+  const customFaqs = provider.atomic_specs?.faqs || provider.faqs;
+  if (customFaqs && typeof customFaqs === 'object' && Object.keys(customFaqs).length > 0) {
+    return customFaqs;
+  }
+
+  const provName = provider.name || 'este establecimiento';
+  const catLower = (category || '').toLowerCase();
+  const provCity = (location || '').split(',')[0] || 'la zona';
+
+  if (catLower.includes('finca') || catLower.includes('caser') || catLower.includes('restaurante') || catLower.includes('espacio') || catLower.includes('banquete')) {
+    return {
+      [`¿Qué tipo de instalaciones y espacios ofrece ${provName}?`]: `Disponemos de caserío y salones climatizados con capacidad de hasta 350 comensales, amplios jardines acondicionados para ceremonias civiles al aire libre y zona Chill-Out para el cóctel de bienvenida.`,
+      [`¿Qué propuesta gastronómica se ofrece para banquetes de boda?`]: `Nuestra cocina destaca por la gastronomía vasca tradicional a la parrilla (chuletón de primera calidad, pescados frescos al carbón, marisco y productos locales de temporada), además de menús adaptados para alérgenos y opción de catering exclusivo.`,
+      [`¿Existe exclusividad de espacio para el día del evento?`]: `Sí, garantizamos la exclusividad de los salones y zonas ajardinadas para asegurar la máxima intimidad, privacidad y atención dedicada a vuestra boda.`,
+      [`¿Disponéis de aparcamiento y accesibilidad para invitados?`]: `Disponemos de parking privado acondicionado para vehículos particulares y espacio maniobrable para autocares de gran tonelaje, además de accesos adaptados.`,
+      [`¿Cómo se gestiona el sonido y la fiesta posterior al banquete?`]: `Contamos con zona de baile privada y acústica calibrada S-Class que cumple estrictamente con la normativa sonométrica ambiental (Ley 37/2003) sin limitar el horario de fiesta.`
+    };
+  }
+
+  if (catLower.includes('catering') || catLower.includes('gastronom') || catLower.includes('arroz') || catLower.includes('paella')) {
+    return {
+      [`¿Qué tipo de servicios de catering ofrece ${provName}?`]: `Ofrecemos servicio integral de banquete de boda, showcooking de brasas en directo, cóctel de bienvenida de gala, recenas temáticas y barra libre con producto de alta calidad.`,
+      [`¿Os desplazáis a fincas privadas o espacios externos?`]: `Sí, nos desplazamos con cocina móvil propia y equipo técnico a cualquier finca, caserío o espacio privado en ${provCity} y provincias limítrofes.`,
+      [`¿Tenéis opciones para menús vegetarianos, veganos o alérgenos?`]: `Diseñamos menús 100% personalizados adaptados a celíacos, intolerancias, dietas vegetarianas o menús infantiles sin coste adicional.`,
+      [`¿Qué incluye la prueba de menú previa a la boda?`]: `La prueba de menú incluye la degustación completa del cóctel y platos principales para 6 comensales con maridaje de bodegas seleccionadas.`,
+      [`¿Con cuánta antelación se debe cerrar la reserva del catering?`]: `Recomendamos reservar con 2 a 4 semanas de antelación para asegurar disponibilidad de fecha y congelar tarifas con nuestro Price-Lock.`,
+    };
+  }
+
+  if (catLower.includes('música') || catLower.includes('sonido') || catLower.includes('dj') || catLower.includes('artista')) {
+    return {
+      [`¿Qué momentos de la boda cubre el servicio musical de ${provName}?`]: `Cubrimos la ceremonia civil o religiosa, el cóctel de bienvenida, la amenización del banquete y el show de fiesta/barra libre con sonorización independiente.`,
+      [`¿Disponéis de equipos de sonido e iluminación propios?`]: `Sí, contamos con equipamiento profesional Shure/Bose de alta fidelidad, microfonía inalámbrica digital y torres de iluminación LED robótica.`,
+      [`¿Podemos personalizar la lista de canciones para nuestra boda?`]: `100% personalizada. Diseñamos junto a los novios el repertorio para entradas clave, momentos emotivos y la playlist de baile.`,
+      [`¿Qué requisitos técnicos o toma de corriente requerís?`]: `Únicamente requerimos un punto de corriente estándar de 220V (mínimo 3.000W). Nos encargamos del cableado y prueba de sonido 2h antes.`,
+      [`¿Qué ocurre en caso de imprevisto o avería técnica?`]: `Contamos con SLA de respaldo S-Class con equipamiento duplicado de reserva en vehículo técnico in situ.`
+    };
+  }
+
+  if (catLower.includes('foto') || catLower.includes('video') || catLower.includes('imagen')) {
+    return {
+      [`¿Cuál es el estilo fotográfico de ${provName}?`]: `Nuestro estilo combina el fotoperiodismo documental sin posados forzados con retratos cinemáticos de autor, capturando momentos espontáneos y emotivos.`,
+      [`¿En cuánto tiempo se entregan los álbumes y el reportaje final?`]: `Entregamos una galería digital HD de adelanto en 72 horas y la colección completa editada en alta resolución en un plazo máximo de 30 días.`,
+      [`¿Incluye la cobertura del día completo de la boda?`]: `Sí, cubrimos desde los preparativos de los novios en casa/hotel hasta la ceremonia, cóctel, banquete y la primera hora de baile.`,
+      [`¿Ofrecéis servicio de dron o vídeo en 4K cinemático?`]: `Contamos con pilotos titulados AESA para tomas aéreas con dron y grabación de vídeo multicámara en resolución 4K.`,
+      [`¿Firmáis contrato de cesión de derechos de imagen?`]: `Sí, firmamos un contrato transparente de prestación de servicios con cláusula de protección de privacidad RGPD.`
+    };
+  }
+
+  return {
+    [`¿Qué servicios principales ofrece ${provName}?`]: `${provName} ofrece servicios profesionales de ${category} en ${provCity}, garantizando la máxima calidad en bodas y eventos exclusivos.`,
+    [`¿Con cuánta antelación se recomienda contactar?`]: `Recomendamos contactar con 2 a 4 semanas de antelación para garantizar disponibilidad de fecha en la agenda oficial.`,
+    [`¿Tenéis posibilidad de desplazamiento a otras provincias?`]: `Sí, ofrecemos cobertura principal en ${provCity} y disponibilidad de desplazamiento a toda la península.`,
+    [`¿Qué garantía y contrato se ofrece a los novios?`]: `Todas las reservas cuentan con contrato oficial homologado por Productora EAR, cobertura de seguro y Price-Lock de reserva.`,
+    [`¿Cómo se realiza el pago y la reserva de la fecha?`]: `La fecha se bloquea con un depósito deducible vía Stripe y el resto se liquida según el calendario de pagos acordado.`
+  };
+}
+
 let cachedCuratedProviders: any[] | null = null;
 let cachedVampProviders: any[] | null = null;
 let cachedHarvestedVendors: any[] | null = null;
 
 async function getProviderData(slug: string) {
-  const slugNorm = decodeURIComponent(slug || '').toLowerCase().trim();
+  let slugNorm = (slug || '').toLowerCase().trim();
+  try {
+    slugNorm = decodeURIComponent(slugNorm);
+  } catch {
+    slugNorm = slugNorm.replace(/%[0-9a-f]{2}/gi, '');
+  }
+
+  // ━━━ FILTRO ANTI-SPAM Y SLUGS HEREDADOS INVALIDOS (RETORNAR 404 CLEAN) ━━━
+  const SPAM_SLUG_PATTERNS = [
+    'foro-bodas-net',
+    'virus-or-risk-detection',
+    'data-discovery',
+    'view-quarantine',
+    'developers-10',
+    'dormir-el-novio-en-el-sof',
+    'estilos-fotogr-ficos-1'
+  ];
+  if (SPAM_SLUG_PATTERNS.some(p => slugNorm.includes(p))) {
+    return null;
+  }
 
   // ━━━ VETO INMUTABLE S-CLASS & LISTA NEGRA DE OPT-OUT (RGPD / LSSI) ━━━
   if (isProviderBlacklisted({ id: slugNorm, slug: slugNorm, name: slugNorm })) {
@@ -394,7 +475,12 @@ function findInStaticPartitions(slugNorm: string) {
             social_links: found.social_links || {},
             reviews_list: found.reviews_list || [],
             isClaimed: Boolean(found.isClaimed),
-            estadoHomologacion: found.estadoHomologacion || 'AUDITORIA_VIGENTE'
+            estadoHomologacion: found.estadoHomologacion || 'AUDITORIA_VIGENTE',
+            address_exact: found.address_exact || found.address,
+            gps_coordinates: found.gps_coordinates || { lat: 43.2925, lng: -2.8872 },
+            google_maps_embed: found.google_maps_embed || `https://maps.google.com/maps?q=${encodeURIComponent(found.address || found.province || 'Derio')}&z=15&output=embed`,
+            video_url: found.video_url || null,
+            menus_list: found.menus_list || []
           };
         }
       }
@@ -511,12 +597,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: displayTitle,
     description: metaDescription,
     alternates: {
-      canonical: `https://productoraear.com/proveedores/${canonicalSlug}`,
+      canonical: `https://www.productoraear.com/proveedores/${canonicalSlug}`,
     },
     openGraph: {
       title: displayTitle,
       description: metaDescription,
-      url: `https://productoraear.com/proveedores/${canonicalSlug}`,
+      url: `https://www.productoraear.com/proveedores/${canonicalSlug}`,
       siteName: 'Productora EAR',
       locale: 'es_ES',
       type: 'website',
@@ -580,13 +666,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
   }
 
   // FAQs
-  const faqs = rawProvider.atomic_specs?.faqs || {
-    "¿Qué servicios ofreces?": "DJ profesional, sonido para ceremonia, sonorización cóctel y banquete, fiesta y barra libre, iluminación robótica y microfonía digital.",
-    "¿Qué incluye el pack de boda?": "Montaje completo, equipo de sonido Shure/Bose, iluminación LED, sesión personalizada y seguro de Responsabilidad Civil de 1.000.000 €.",
-    "¿Con cuánta antelación debo reservar?": "Recomendamos contactar con 2 a 4 semanas de antelación para bloquear la fecha con Price-Lock 72h.",
-    "¿Tienes posibilidad de desplazarte?": "Sí, cobertura en toda la Comunidad de Madrid, Toledo, Guadalajara y resto de España.",
-    "¿Dispones de equipo propio?": "Sí, cabinas profesionales, controladores de alta gama y sonorización adaptada a 12 W/pax."
-  };
+  const faqs = getCategoryFAQs(rawProvider, category, location);
 
   const servicesList = rawProvider.services_list || [
     'Atención Personalizada y Asesoría Musical',
@@ -613,40 +693,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
           <span className="text-white font-bold truncate max-w-[200px] sm:max-w-xs">{rawProvider.name}</span>
         </nav>
 
-        {/* 🛡️ BANNER ÉTICO DE DIRECTORIO PROFESIONAL / DEMANDA EN MANO */}
-        {isUnclaimed && (
-          <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/70 via-[#0d0d12] to-black border border-blue-500/40 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 font-mono text-[10px] uppercase font-bold border border-blue-500/30">
-                  Directorio Profesional // Cuenta No Reclamada
-                </span>
-                <span className="text-[10px] font-mono text-zinc-400">Safe Harbor LSSI Art. 16 · RGPD Art. 6.1.f</span>
-              </div>
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                ¿Eres el titular de <strong className="text-white font-bold">{displayName}</strong>? Reclama tu cuenta oficial <span className="text-[#ecb613] font-bold">100% GRATIS</span> para recibir peticiones directas de novios y empresas en {location.split(',')[0]} sin exclusividad ni cuotas fijas. Solo cobramos comisión si accedes a categorías preferentes o licitaciones B2G.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 shrink-0">
-              <ClaimProfileTrigger
-                provider={{
-                  id: rawProvider.id || slug,
-                  name: displayName,
-                  slug,
-                  category,
-                  province: location.split(',')[0],
-                  phone: rawProvider.phone || ''
-                }}
-              />
-              <a
-                href={`/api/providers/opt-out?slug=${slug}`}
-                className="px-3.5 py-2.5 bg-red-950/30 hover:bg-red-900/50 border border-red-500/30 text-red-300 font-mono text-xs rounded-xl transition-all"
-              >
-                Retirada en 1-clic
-              </a>
-            </div>
-          </div>
-        )}
+
 
         {/* 🚨 BANNER DE SOCIAL PROOF / URGENCIA NUPCIAL */}
         <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-blue-950/60 via-purple-950/40 to-black border border-blue-500/30 flex items-center justify-between gap-4 text-xs sm:text-sm">
@@ -712,68 +759,26 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               </div>
             </div>
 
-            {/* Collage Grid de 3 Fotos */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 h-[380px] sm:h-[420px] rounded-3xl overflow-hidden border border-white/10 relative group">
-
-              {/* Foto Principal Grande (Span 7) */}
-              <div className="sm:col-span-7 relative h-full overflow-hidden bg-zinc-900">
-                <img
-                  src={gallery[0]}
-                  alt={displayName}
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute top-4 left-4 p-2 bg-black/60 backdrop-blur-md rounded-xl border border-white/10 text-[#ecb613]">
-                  <Crown size={16} />
-                </div>
-              </div>
-
-              {/* Columna Derecha con 2 Fotos (Span 5) */}
-              <div className="sm:col-span-5 grid grid-rows-2 gap-3 h-full">
-                <div className="relative overflow-hidden bg-zinc-900">
-                  <img
-                    src={gallery[1] || gallery[0]}
-                    alt={`${displayName} evento`}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute top-3 right-3 flex items-center gap-2">
-                    <span className="px-2.5 py-1 bg-black/70 backdrop-blur-md rounded-lg text-[10px] font-mono text-white border border-white/10">
-                      ¿Reservado?
-                    </span>
-                    <button className="p-2 bg-black/70 backdrop-blur-md rounded-full text-white/80 hover:text-rose-400 border border-white/10 transition-colors">
-                      <Heart size={14} />
-                    </button>
-                  </div>
-                </div>
-
-                <div className="relative overflow-hidden bg-zinc-900">
-                  <img
-                    src={gallery[2] || gallery[0]}
-                    alt={`${displayName} montaje`}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                  {/* Botones Flotantes en la foto inferior */}
-                  <div className="absolute bottom-3 right-3 flex items-center gap-2">
-                    <button className="px-3 py-1.5 bg-black/80 backdrop-blur-md rounded-xl text-[10px] font-mono text-white border border-white/20 hover:border-[#ecb613] flex items-center gap-1.5 transition-all">
-                      <Video size={12} className="text-[#ecb613]" />
-                      <span>Ver Vídeos 7</span>
-                    </button>
-                    <button className="px-3 py-1.5 bg-black/80 backdrop-blur-md rounded-xl text-[10px] font-mono text-white border border-white/20 hover:border-[#ecb613] flex items-center gap-1.5 transition-all">
-                      <Camera size={12} className="text-[#ecb613]" />
-                      <span>Ver Fotos 13</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+            {/* Visor Multimedia Interactivo & Lightbox S-Class */}
+            <ProviderMediaGallery
+              providerName={displayName}
+              featuredImage={coverImg}
+              galleryImages={gallery}
+              videoUrls={rawProvider.video_url ? [rawProvider.video_url] : []}
+            />
 
             {/* BARRA DE TABS DE NAVEGACIÓN */}
             <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-white/10 text-xs font-mono uppercase tracking-wider text-zinc-400 scrollbar-none">
               <a href="#informacion" className="px-4 py-2 bg-white/10 text-[#ecb613] border border-[#ecb613]/40 rounded-xl font-bold whitespace-nowrap">
                 Información
+              </a>
+              {Array.isArray(rawProvider.menus_list) && rawProvider.menus_list.length > 0 && (
+                <a href="#menus" className="px-4 py-2 hover:bg-white/5 hover:text-white rounded-xl whitespace-nowrap transition-colors">
+                  Menús ({rawProvider.menus_list.length})
+                </a>
+              )}
+              <a href="#ubicacion" className="px-4 py-2 hover:bg-white/5 hover:text-white rounded-xl whitespace-nowrap transition-colors">
+                Ubicación GPS & Mapa
               </a>
               <a href="#faq" className="px-4 py-2 hover:bg-white/5 hover:text-white rounded-xl whitespace-nowrap transition-colors">
                 FAQ ({Object.keys(faqs).length})
@@ -782,10 +787,7 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 Opiniones ({reviewsCount})
               </a>
               <a href="#servicios" className="px-4 py-2 hover:bg-white/5 hover:text-white rounded-xl whitespace-nowrap transition-colors">
-                Servicios y Rider
-              </a>
-              <a href="#promociones" className="px-4 py-2 hover:bg-white/5 hover:text-white rounded-xl whitespace-nowrap transition-colors">
-                Promociones 1
+                Servicios ({servicesList.length})
               </a>
             </div>
 
@@ -812,6 +814,87 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                     <span className="text-[9px] font-mono text-zinc-500 uppercase block">Blindaje de Tarifa</span>
                     <span className="text-xs font-bold text-emerald-400 font-mono">Price-Lock SHA-256 (72h)</span>
                   </div>
+                </div>
+              </div>
+            </section>
+
+            {/* 🍽️ SECCIÓN MENÚS & GASTRONOMÍA */}
+            {Array.isArray(rawProvider.menus_list) && rawProvider.menus_list.length > 0 && (
+              <section id="menus" className="space-y-4 pt-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div className="space-y-0.5">
+                    <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">Alta Gastronomía</span>
+                    <h3 className="text-2xl font-bold font-syne text-white uppercase">Menús de Boda & Banquetes ({rawProvider.menus_list.length})</h3>
+                  </div>
+                  <span className="px-3 py-1 bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] text-xs font-mono rounded-full font-bold">
+                    Cocina Vasca a la Parrilla
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  {rawProvider.menus_list.map((menu: any, mIdx: number) => (
+                    <div key={mIdx} className="p-6 rounded-3xl bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/40 transition-all space-y-4">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b border-white/10 pb-3">
+                        <h4 className="text-lg font-bold font-syne text-white">{menu.title}</h4>
+                        <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-sm font-bold rounded-xl">
+                          {menu.price}
+                        </span>
+                      </div>
+                      <div className="space-y-2.5">
+                        {menu.dishes?.map((dish: string, dIdx: number) => (
+                          <div key={dIdx} className="flex items-start gap-3 text-xs sm:text-sm text-zinc-300 font-light">
+                            <span className="text-[#ecb613] font-bold text-sm shrink-0">✦</span>
+                            <span>{cleanText(dish)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* 🗺️ SECCIÓN UBICACIÓN GPS & MAPA INTERACTIVO */}
+            <section id="ubicacion" className="space-y-4 pt-4">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">GPS & Acceso Oficial</span>
+                  <h3 className="text-2xl font-bold font-syne text-white uppercase">Ubicación & Coordenadas GPS</h3>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 font-bold">
+                  <MapPin size={14} />
+                  <span>{rawProvider.gps_coordinates ? `${rawProvider.gps_coordinates.lat}° N, ${Math.abs(rawProvider.gps_coordinates.lng)}° W` : location}</span>
+                </div>
+              </div>
+
+              <div className="p-6 rounded-3xl bg-[#0a0a0f] border border-white/10 space-y-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-mono text-zinc-400 uppercase block">Dirección Oficial de Ficha</span>
+                    <p className="text-sm font-bold text-white font-syne">
+                      {rawProvider.address_exact || rawProvider.address || location}
+                    </p>
+                  </div>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(rawProvider.address_exact || rawProvider.address || location)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2.5 bg-[#ecb613] hover:bg-[#ecb613]/90 text-black font-mono text-xs font-bold uppercase rounded-xl transition-all shrink-0 flex items-center gap-2"
+                  >
+                    <MapPin size={14} />
+                    <span>Cómo Llegar (Google Maps)</span>
+                  </a>
+                </div>
+
+                {/* Mapa Embed iFrame Google Maps */}
+                <div className="h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-white/10 relative bg-zinc-900">
+                  <iframe
+                    title="Ubicación GPS Restaurante Ezkertza Berria"
+                    src={rawProvider.google_maps_embed || `https://maps.google.com/maps?q=${encodeURIComponent(rawProvider.address || location)}&z=15&output=embed`}
+                    className="w-full h-full border-0 filter grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                    loading="lazy"
+                    allowFullScreen
+                  />
                 </div>
               </div>
             </section>
@@ -900,18 +983,23 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             {/* SECCIÓN FAQ (PREGUNTAS FRECUENTES) */}
             <section id="faq" className="space-y-4 pt-4">
               <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 className="text-2xl font-bold font-syne text-white uppercase">Preguntas Frecuentes (FAQ)</h3>
-                <span className="text-[10px] font-mono text-zinc-500">Respuestas Literales Validadas</span>
+                <div className="space-y-0.5">
+                  <span className="text-[10px] font-mono text-[#ecb613] uppercase tracking-widest font-bold">Verificación Oficial</span>
+                  <h3 className="text-2xl font-bold font-syne text-white uppercase">Preguntas Frecuentes (FAQ)</h3>
+                </div>
+                <span className="text-[10px] font-mono text-zinc-400 bg-white/5 border border-white/10 px-3 py-1 rounded-full">Respuestas Adaptadas por Categoría</span>
               </div>
 
               <div className="space-y-3">
                 {Object.entries(faqs).map(([question, answer], idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-[#09090d] border border-white/10 space-y-2">
-                    <h4 className="text-sm font-bold text-white flex items-center justify-between gap-2">
-                      <span>{cleanText(question)}</span>
-                      <ChevronDown size={14} className="text-[#ecb613]" />
+                  <div key={idx} className="p-5 rounded-2xl bg-[#09090e] border border-white/10 hover:border-[#ecb613]/40 transition-all space-y-2.5">
+                    <h4 className="text-sm sm:text-base font-bold text-white flex items-center justify-between gap-3 font-syne">
+                      <span className="flex items-center gap-2">
+                        <HelpCircle size={16} className="text-[#ecb613] shrink-0" />
+                        <span>{cleanText(question)}</span>
+                      </span>
                     </h4>
-                    <p className="text-xs text-zinc-400 leading-relaxed whitespace-pre-line font-light">
+                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed pl-6 font-light">
                       {cleanText(String(answer))}
                     </p>
                   </div>
@@ -919,148 +1007,94 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
               </div>
             </section>
 
-            {/* SECCIÓN OPINIONES */}
+            {/* SECCIÓN OPINIONES REALES & VALORACIONES GOOGLE / BODAS.NET NAVEGABLES */}
             <section id="opiniones" className="space-y-4 pt-4">
-              <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                <h3 className="text-2xl font-bold font-syne text-white uppercase">Opiniones de Parejas ({reviewsCount})</h3>
-                <span className="text-xs font-mono text-amber-400 font-bold">5.0 / 5.0 (Excelente)</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 rounded-3xl bg-[#09090d] border border-white/10 text-center">
-                <div className="space-y-1">
-                  <span className="text-2xl font-black font-syne text-[#ecb613]">5.0</span>
-                  <span className="text-[10px] font-mono text-zinc-400 uppercase block">Calidad de Servicio</span>
-                </div>
-                <div className="space-y-1">
-                  <span className="text-2xl font-black font-syne text-[#ecb613]">5.0</span>
-                  <span className="text-[10px] font-mono text-zinc-400 uppercase block">Profesionalidad</span>
-                </div>
-                <div className="space-y-1">
-                  <span className="text-2xl font-black font-syne text-[#ecb613]">4.9</span>
-                  <span className="text-[10px] font-mono text-zinc-400 uppercase block">Tiempo de Respuesta</span>
-                </div>
-              </div>
+              <ProviderNavigableReviews
+                providerName={displayName}
+                reviews={rawProvider.reviews_list || []}
+                rating={rating}
+                reviewCount={reviewsCount}
+              />
             </section>
+
+
 
           </div>
 
-          {/* Right Area: Sticky Booking Card (Span 4) */}
-          <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-6">
+          {/* Right Area: Single Glassmorphic OLED Booking Card (Span 4) */}
+          <div className="lg:col-span-4 lg:sticky lg:top-28">
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#0a0a0f]/90 backdrop-blur-2xl border border-white/10 hover:border-[#ecb613]/40 shadow-2xl space-y-6">
 
-            {/* 🛡️ SUPPLIER BLUR-LOCK (P0 ANTI-FUGA & REVENUE ENGINE) */}
-            <SupplierBlurLock
-              supplierId={rawProvider.id || slug}
-              supplierName={`Proveedor Homologado #${providerIdShort}`}
-              category={category}
-              city={location.split(',')[0]}
-              slug={slug}
-              isUnlocked={isUnlocked}
-            >
-              <div className="p-6 sm:p-8 rounded-[2.5rem] bg-gradient-to-b from-[#141418] to-[#09090d] border border-emerald-500/40 shadow-[0_0_50px_rgba(16,185,129,0.15)] space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full text-xs font-mono font-bold uppercase">
-                  <ShieldCheck size={14} />
-                  <span>Contacto Directo Desbloqueado (Garantía Activa)</span>
-                </div>
-
-                <div className="space-y-1">
-                  <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Tarifa Oficial Homologada</span>
-                  <div className="p-4 bg-black/60 rounded-2xl border border-white/10 text-center">
-                    <span className="text-2xl sm:text-3xl font-black font-syne text-white tracking-tight">
-                      {priceDisplay}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-3">
-                  <Link
-                    href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&precio=${rawProvider.basePrice || 650}`}
-                    className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-[#ecb613] text-black font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
-                  >
-                    <span>Contratar con Split Soberano (80/10/10)</span>
-                    <ArrowRight size={16} />
-                  </Link>
-
-                  <a
-                    href={CENTRALITA.tel}
-                    className="w-full py-3.5 px-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
-                  >
-                    <Phone size={14} className="text-[#ecb613]" />
-                    <span>Llamar a Centralita ({CENTRALITA.display})</span>
-                  </a>
-                </div>
+              {/* Status Header */}
+              <div className="flex items-center justify-between gap-2 border-b border-white/10 pb-4">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-full text-[10px] font-mono font-bold uppercase">
+                  <ShieldCheck size={13} />
+                  <span>Auditoría Vigente S-Class</span>
+                </span>
+                <span className="text-[10px] font-mono text-zinc-400">Respuesta &lt; 15 min</span>
               </div>
-            </SupplierBlurLock>
 
-            <div className="p-6 sm:p-8 rounded-[2.5rem] bg-gradient-to-b from-[#141418] to-[#09090d] border border-[#ecb613]/40 shadow-[0_0_50px_rgba(236,182,19,0.15)] space-y-6">
-
-              {/* Tarifa base */}
-              <div className="space-y-1">
+              {/* Price Display */}
+              <div className="space-y-1 text-center">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest block">Tarifa Oficial Homologada</span>
-                <div className="p-4 bg-black/60 rounded-2xl border border-white/10 text-center">
+                <div className="py-3 px-4 bg-black/60 rounded-2xl border border-white/10">
                   <span className="text-2xl sm:text-3xl font-black font-syne text-white tracking-tight">
                     {priceDisplay}
                   </span>
                 </div>
               </div>
 
-              {/* Botón Principal Solicitar Presupuesto */}
+              {/* Action Buttons */}
               <div className="space-y-3">
                 <Link
                   href={`/checkout/presupuesto?proveedor=${encodeURIComponent(displayName)}&precio=${rawProvider.basePrice || 650}`}
-                  className="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 hover:from-rose-500 hover:to-[#ecb613] text-white font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-rose-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
+                  className="w-full py-4 px-5 rounded-2xl bg-gradient-to-r from-[#ecb613] via-amber-500 to-amber-600 hover:from-amber-400 hover:to-[#ecb613] text-black font-black text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-amber-950/40 hover:scale-[1.02] active:scale-95 transition-all text-center"
                 >
                   <span>Solicitar Presupuesto Oficial</span>
                   <ArrowRight size={16} />
                 </Link>
+
+                <a
+                  href={CENTRALITA.tel}
+                  className="w-full py-3.5 px-5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
+                >
+                  <Phone size={14} className="text-[#ecb613]" />
+                  <span>Llamar a Centralita ({CENTRALITA.display})</span>
+                </a>
               </div>
 
               {/* Social Proof Bullets */}
-              <div className="space-y-3 pt-4 border-t border-white/10 text-xs text-zinc-300 font-light">
+              <div className="space-y-2.5 pt-4 border-t border-white/10 text-xs text-zinc-300 font-light">
                 <div className="flex items-center gap-2.5">
-                  <TrendingUp size={15} className="text-emerald-400 shrink-0" />
-                  <span>De los más buscados en {location}</span>
+                  <TrendingUp size={14} className="text-emerald-400 shrink-0" />
+                  <span>Espacio destacado en {location.split(',')[0]}</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <Users size={15} className="text-blue-400 shrink-0" />
-                  <span>Más de 30 parejas lo han contratado</span>
+                  <Users size={14} className="text-blue-400 shrink-0" />
+                  <span>Más de 30 parejas atendidas con garantía</span>
                 </div>
                 <div className="flex items-center gap-2.5">
-                  <ShieldCheck size={15} className="text-[#ecb613] shrink-0" />
-                  <span>SLA 99.9% y Plan B Redundante in situ</span>
+                  <ShieldCheck size={14} className="text-[#ecb613] shrink-0" />
+                  <span>Garantía de Retorno ROI 100% EAR OS</span>
                 </div>
               </div>
 
-              {/* Depósito y Fianza */}
-              <div className="p-3.5 bg-black/50 rounded-2xl border border-white/5 text-[10px] font-mono text-zinc-400 space-y-1">
+              {/* Deposit and Split terms */}
+              <div className="p-3.5 bg-black/50 rounded-2xl border border-white/5 text-[10px] font-mono text-zinc-400 space-y-1.5">
                 <div className="flex justify-between">
                   <span>Bloqueo de Fecha:</span>
-                  <span className="text-[#ecb613] font-bold">10 € (Reembolsable 72h)</span>
+                  <span className="text-[#ecb613] font-bold">100 € (Reembolsable 72h)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Split Transaccional:</span>
+                  <span>Split Soberano:</span>
                   <span className="text-emerald-400 font-bold">80% Proveedor / 10% EAR / 10% VIMUME</span>
                 </div>
               </div>
 
-              {/* 🛡️ RECLAMAR FICHA CON VERIFICACIÓN EN 2 PASOS */}
-              <ClaimProfileTrigger
-                provider={{
-                  id: rawProvider.id || slug,
-                  name: displayName,
-                  slug,
-                  category,
-                  province: location.split(',')[0],
-                  phone: rawProvider.phone || ''
-                }}
-              />
-
             </div>
-
           </div>
 
         </div>
-
-        {/* 🏛️ MALLA DE ENLACES INTERNOS & CROSS-LINKING DE AUTORIDAD PAGERANK */}
         <section className="pt-12 border-t border-white/10 space-y-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2">
             <div>
@@ -1126,6 +1160,20 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
             </Link>
           </div>
         </section>
+
+        {/* 🛡️ BANNER UNIFICADO DE DIRECTORIO PROFESIONAL // RECLAMAR FICHA & VER PROPUESTA S-CLASS */}
+        {isUnclaimed && (
+          <ProviderFooterClaimBanner
+            provider={{
+              id: rawProvider.id || slug,
+              name: displayName,
+              slug,
+              category,
+              province: location.split(',')[0],
+              phone: rawProvider.phone || ''
+            }}
+          />
+        )}
 
         {/* 📊 ETIQUETA SCHEMA.ORG JSON-LD (RICH SNIPPETS GOOGLE SEARCH) */}
         <script

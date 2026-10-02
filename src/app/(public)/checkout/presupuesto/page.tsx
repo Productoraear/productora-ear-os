@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useMemo, Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -55,8 +55,28 @@ function ExternalVendorEscrowCheckout({
         .map(w => w.charAt(0).toUpperCase() + w.slice(1))
         .join(' ');
     }
+    // Sanitización atómica de errores de codificación/typos
+    name = name
+      .replace(/Restáaurante/gi, 'Restaurante')
+      .replace(/Restáurante/gi, 'Restaurante')
+      .replace(/Restaurante Ezkertza Berria/gi, 'Restaurante Ezkertza Berria');
     return name || 'Proveedor Homologado';
   }, [venueParam]);
+
+  // Detector de Establecimiento Fijo (Finca / Restaurante / Palacio / Hotel)
+  const isVenueProvider = useMemo(() => {
+    const n = cleanVenueName.toLowerCase();
+    return n.includes('restaurante') || n.includes('ezkertza') || n.includes('finca') || n.includes('cigarral') || n.includes('palacio') || n.includes('hotel') || n.includes('complejo') || n.includes('bodega') || n.includes('masia') || n.includes('pazo') || n.includes('cortijo');
+  }, [cleanVenueName]);
+
+  // Si es un establecimiento fijo como Ezkertza Berria, fijamos su ubicación real automáticamente
+  useEffect(() => {
+    if (cleanVenueName.toLowerCase().includes('ezkertza')) {
+      setEventLocation('Santo Domingo Hiribidea 13, Derio / Zizurkil, Gipuzkoa');
+    } else if (isVenueProvider && (eventLocation === 'Madrid' || !eventLocation)) {
+      setEventLocation(`${cleanVenueName} (Instalaciones Homologadas)`);
+    }
+  }, [cleanVenueName, isVenueProvider]);
 
   // Si formatParam es 'Solista' y baseParam es 350, es residuo del antiguo copy-paste de la tarifa de Edwin.
   // Lo neutralizamos asignando el pack base o la tarifa estándar del proveedor (650 €).
@@ -209,22 +229,29 @@ function ExternalVendorEscrowCheckout({
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-neutral-400 mb-1.5 font-mono">Fecha Prevista del Evento</label>
+                  <label className="block text-xs font-bold text-neutral-300 mb-1.5 font-mono">Fecha Prevista del Evento</label>
                   <input
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
-                    className="w-full bg-[#121218] border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-[#258DCD] font-mono"
+                    className="w-full bg-[#121218] border border-white/20 hover:border-[#ecb613]/60 focus:border-[#ecb613] rounded-xl px-3.5 py-2.5 text-white text-xs font-mono font-bold focus:outline-none [color-scheme:dark] shadow-inner"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-neutral-400 mb-1.5 font-mono">Lugar / Localidad del Evento</label>
+                  <label className="block text-xs font-bold text-neutral-300 mb-1.5 font-mono">
+                    {isVenueProvider ? '📍 Ubicación Fija del Establecimiento' : 'Lugar / Localidad del Evento'}
+                  </label>
                   <input
                     type="text"
                     value={eventLocation}
+                    readOnly={isVenueProvider}
                     placeholder="ej. Madrid, Toledo, Finca..."
                     onChange={(e) => setEventLocation(e.target.value)}
-                    className="w-full bg-[#121218] border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-[#258DCD]"
+                    className={`w-full border rounded-xl px-3.5 py-2.5 text-xs font-mono ${
+                      isVenueProvider
+                        ? 'bg-white/5 border-emerald-500/30 text-emerald-300 font-bold cursor-not-allowed'
+                        : 'bg-[#121218] border-white/20 text-white focus:outline-none focus:border-[#258DCD]'
+                    }`}
                   />
                 </div>
               </div>

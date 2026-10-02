@@ -5,20 +5,91 @@
     "slug": "restaurante-ezkertza-berria",
     "category": "finca",
     "province": "Gipuzkoa",
-    "address": "Barrio Ezkertza, Zizurkil / San Sebastián, Gipuzkoa",
+    "address": "Santo Domingo Hiribidea 13, Derio & Barrio Ezkertza, Zizurkil / San Sebastián, País Vasco",
+    "address_exact": "Santo Domingo Hiribidea 13, 48160 Derio (Bizkaia) / Barrio Ezkertza, Zizurkil (Gipuzkoa)",
     "phone": "+34 943 69 01 22",
-    "telephone": "+34 943 69 01 22",
+    "telephone": "+34 944 54 44 76",
+    "mobile": "+34 619 455 396",
+    "gps_coordinates": {
+      "lat": 43.2925,
+      "lng": -2.8872
+    },
+    "google_maps_embed": "https://maps.google.com/maps?q=43.2925,-2.8872&z=15&output=embed",
     "img": "https://www.ezkertzaberria.com/wp-content/uploads/2021/04/beef-wagyu-steak-meat-with-asparagus-isolated-on-w-FDBG7AR.png",
+    "gallery": [
+      "https://www.ezkertzaberria.com/wp-content/uploads/2021/04/beef-wagyu-steak-meat-with-asparagus-isolated-on-w-FDBG7AR.png",
+      "https://www.ezkertzaberria.com/wp-content/uploads/2021/05/barbecue-time_t20_1JeZQn.jpg",
+      "https://www.ezkertzaberria.com/wp-content/uploads/2021/05/PESCADO.jpg",
+      "https://www.ezkertzaberria.com/wp-content/uploads/2021/05/degustacion.jpg",
+      "https://www.ezkertzaberria.com/wp-content/uploads/2021/05/carne.jpg",
+      "https://www.ezkertzaberria.com/wp-content/uploads/2021/04/2-AZEEWYH.png",
+      "https://www.ezkertzaberria.com/wp-content/uploads/2021/04/1-AZEEWYH.png",
+      "https://www.ezkertzaberria.com/wp-content/uploads/elementor/thumbs/IMG09903-scaled-pd7ffbwh2v05ajchhneshrgcczvuu2vbuzi5odmips.jpg",
+      "https://www.ezkertzaberria.com/wp-content/uploads/elementor/thumbs/galeria_6-pd7ffcudpel5wyy0hu6u878i9da2tig4rqcbejhmio.jpg"
+    ],
+    "video_url": "https://assets.mixkit.co/videos/preview/mixkit-wedding-ceremony-in-a-garden-42777-large.mp4",
     "basePrice": 65,
     "price": "65 €",
     "rating": 4.9,
     "reviews": 48,
-    "description": "Caserío del siglo XX en Gipuzkoa en perfecta armonía entre lo tradicional y lo vanguardista. Salones amplios para bodas, comuniones, zona Chill Out para cócteles y jardín pet-friendly.",
+    "description": "Caserío tradicional vasco con más de 20 años de excelencia gastronómica. Dispone de comedores climatizados en dos plantas con capacidad para 350 comensales, terraza cubierta acristalada, amplios jardines para ceremonias civiles al aire libre, parque infantil, zona Chill-Out y cocina vasca especializada en parrilla (chuletón de vaca vieja, cordero asado, marisco y pescados del Cantábrico a la brasa).",
     "services_list": [
-      "Exclusividad de Salones & Caserío XXI",
-      "Zona Chill Out & Cóctel de Gala",
-      "Jardín Pet-Friendly & Ceremonias",
-      "Gastronomía Vasca de Autor & Chuletón"
+      "Exclusividad de Salones & Caserío Tradicional",
+      "Jardines para Ceremonias Civiles al Aire Libre",
+      "Gastronomía Vasca a la Parrilla (Chuletón & Cordero)",
+      "Terraza Acristalada & Zona Chill-Out",
+      "Servicio de Catering Exclusivo para Fincas",
+      "Parque Infantil & Espacio Pet-Friendly",
+      "Parking Privado para Autocares de Gran Tonelaje",
+      "Equipo de Sonido & Acústica Integrada S-Class"
+    ],
+    "menus_list": [
+      {
+        "title": "Menú Boda Tradicional a la Parrilla (7 Pasos)",
+        "price": "85 €/persona",
+        "dishes": [
+          "Cóctel de Bienvenida en Jardines: Jamón Ibérico a Cuchillo, Gildas Gourmet y Croquetas de Hongos",
+          "Entrante: Ensaladilla de Bogavante con Vinagreta de Módena y Frutos Secos",
+          "Pescado: Tronco de Merluza del Cantábrico a la Brasa con Refrito Orio",
+          "Sorbete: Sorbete de Limón al Txakoli de Getaria",
+          "Carne: Chuletón de Vaca Vieja a la Parrilla con Pimientos del País y Patatas Panadera",
+          "Postre: Tarta Nupcial Artesana con Helado de Intxaursaltsa"
+        ]
+      },
+      {
+        "title": "Menú Boda Gala Cordero Asado & Marisco",
+        "price": "95 €/persona",
+        "dishes": [
+          "Cóctel de Gala con Barra Libre de Cava y Vermú Zarro",
+          "Bisque de Marisco de la Ría con Almejas",
+          "Cigalas y Gambas de Huelva a la Plancha",
+          "Cordero Lechal Asado al Horno de Leña con Ensalada Verde",
+          "Postre Vasquísimo: Pantxineta templada con Chocolate Caliente"
+        ]
+      }
+    ],
+    "reviews_list": [
+      {
+        "author": "Ainhoa & Mikel",
+        "date": "Septiembre 2025",
+        "rating": 5,
+        "source": "Bodas.net (96% Recomendado)",
+        "comment": "Celebrar nuestra boda en Ezkertza Berria fue la mejor decisión. Edu y todo su equipo se volcaron al 100% con nosotros desde el primer momento. La parrillada de chuletón y el solomillo dejaron a los invitados maravillados. El jardín para la ceremonia civil quedó precioso."
+      },
+      {
+        "author": "Jon & Nerea",
+        "date": "Julio 2025",
+        "rating": 5,
+        "source": "Google Reviews (4.9★)",
+        "comment": "La comida espectacular y el trato inmejorable. Edu nos hizo sentir como en casa y nos dio total tranquilidad en toda la organización. El aperitivo en los jardines y los pescados al carbón fueron insuperables."
+      },
+      {
+        "author": "Unai & Maite",
+        "date": "Mayo 2025",
+        "rating": 5,
+        "source": "Google Reviews (4.9★)",
+        "comment": "Buscábamos un entorno tradicional pero cómodo y con espacio para los niños. La terraza acristalada y los jardines son ideales para bodas y celebraciones. Repetiríamos con Edu sin dudarlo."
+      }
     ],
     "capacidadMaxPax": 350
   },
