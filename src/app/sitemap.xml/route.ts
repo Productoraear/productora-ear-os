@@ -4,7 +4,7 @@ import { SITEMAP_PARTITIONS } from '@/lib/seo/sitemapGenerator';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
 export const dynamic = 'force-dynamic';
-export const revalidate = 3600;
+export const revalidate = 0;
 
 export async function GET() {
   const today = new Date().toISOString().split('T')[0];
