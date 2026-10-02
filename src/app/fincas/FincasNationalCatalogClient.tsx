@@ -363,7 +363,9 @@ function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => 
   const charCodeSum = (finca.id || finca.name || 'finca').split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const fallbackImg = FALLBACK_FINCA_IMAGES[charCodeSum % FALLBACK_FINCA_IMAGES.length];
 
-  const displayImg = (!imgError && (finca.img || (finca.imageUrls && finca.imageUrls[0]) || (finca.gallery && finca.gallery[0]))) || fallbackImg;
+  const rawImg = finca.img || (finca.imageUrls && finca.imageUrls[0]) || (finca.gallery && finca.gallery[0]);
+  const isBrokenExternalUrl = !rawImg || rawImg.includes('bodas.net') || rawImg.includes('cdn0.bodas') || rawImg.includes('tour3d');
+  const displayImg = (!imgError && !isBrokenExternalUrl && rawImg) ? rawImg : fallbackImg;
   const directPhone = finca.hasDirectPhone ? (finca.phone || finca.telephone) : null;
   const isDirect = Boolean(directPhone);
 
@@ -376,6 +378,7 @@ function RealFincaCard({ finca, onSelect }: { finca: RealFinca; onSelect: () => 
         <img
           src={displayImg}
           alt={finca.name}
+          referrerPolicy="no-referrer"
           onError={() => setImgError(true)}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"

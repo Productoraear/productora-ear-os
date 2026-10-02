@@ -10,7 +10,7 @@
     {
       "id": "TASK-FRAMER-03",
       "title": "Rediseño SOTA Supremo de la Landing de Bodas (La experiencia de usuario más potente del mercado)",
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "files": [
         "src/app/(public)/bodas/page.tsx"
       ],
