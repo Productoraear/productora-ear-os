@@ -232,7 +232,7 @@ export default function AdminCommandCenterPage() {
       {/* Header S-Class */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
             CENTRO DE MANDO // COMMAND CENTER
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">
@@ -332,112 +332,111 @@ export default function AdminCommandCenterPage() {
           <h2 className="text-xl font-bold text-white tracking-tight">
             Consulta estratégica a los Funnels de Aceleración Cuántica de EAR OS
           </h2>
-            <div className="flex flex-col sm:flex-row gap-2 pt-1">
-              <input
-                type="text"
-                placeholder="Ej: ¿Cómo crear una oferta irresistible y captar atención en los primeros 3 segundos?"
-                className="flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-xs font-mono text-white placeholder:text-zinc-500 outline-none focus:border-[#ecb613] transition-all"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleSimulateConsult((e.target as HTMLInputElement).value);
-                }}
-              />
-              <button
-                onClick={() => handleSimulateConsult("como captar atencion con hook marketing")}
-                disabled={isConsulting}
-                className="px-5 py-2.5 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-mono font-bold text-xs transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)] shrink-0 cursor-pointer disabled:opacity-50"
-              >
-                {isConsulting ? 'Consultando...' : 'Preguntar al Oráculo'}
-              </button>
+          <div className="flex flex-col sm:flex-row gap-2 pt-1">
+            <input
+              type="text"
+              placeholder="Ej: ¿Cómo crear una oferta irresistible y captar atención en los primeros 3 segundos?"
+              className="flex-1 px-4 py-2.5 rounded-xl bg-black/60 border border-white/15 text-xs font-mono text-white placeholder:text-zinc-500 outline-none focus:border-[#ecb613] transition-all"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSimulateConsult((e.target as HTMLInputElement).value);
+              }}
+            />
+            <button
+              onClick={() => handleSimulateConsult("como captar atencion con hook marketing")}
+              disabled={isConsulting}
+              className="px-5 py-2.5 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-mono font-bold text-xs transition-all shadow-[0_0_20px_rgba(236,182,19,0.3)] shrink-0 cursor-pointer disabled:opacity-50"
+            >
+              {isConsulting ? 'Consultando...' : 'Preguntar al Oráculo'}
+            </button>
+          </div>
+          {oracleOutput && (
+            <div className="mt-4 p-4 rounded-xl bg-black/80 border border-[#ecb613]/40 text-xs font-mono text-zinc-200 whitespace-pre-wrap animate-fadeIn">
+              {oracleOutput}
             </div>
-            {oracleOutput && (
-              <div className="mt-4 p-4 rounded-xl bg-black/80 border border-[#ecb613]/40 text-xs font-mono text-zinc-200 whitespace-pre-wrap animate-fadeIn">
-                {oracleOutput}
-              </div>
-            )}
-          </div>
+          )}
         </div>
+      </div>
 
-        {/* Filtros de Categoría */}
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-2">
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono">
-            {['ALL', 'TELEMARKETING', 'AUDIT', 'INTELLIGENCE', 'HARDWARE'].map(cat => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  filter === cat ? 'bg-[#ecb613] text-black font-bold shadow-sm' : 'text-zinc-400 hover:text-white hover:bg-white/5'
+      {/* Filtros de Categoría */}
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-2">
+        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono">
+          {['ALL', 'TELEMARKETING', 'AUDIT', 'INTELLIGENCE', 'HARDWARE'].map(cat => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${filter === cat ? 'bg-[#ecb613] text-black font-bold shadow-sm' : 'text-zinc-400 hover:text-white hover:bg-white/5'
                 }`}
-              >
-                {cat === 'ALL' ? `Todas (${TOOLS.length})` : cat}
-              </button>
-            ))}
-          </div>
-
-          <input
-            type="text"
-            placeholder="Filtrar herramientas..."
-            value={activeQuery}
-            onChange={(e) => setActiveQuery(e.target.value)}
-            className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white placeholder:text-zinc-500 outline-none focus:border-[#ecb613] w-64"
-          />
+            >
+              {cat === 'ALL' ? `Todas (${TOOLS.length})` : cat}
+            </button>
+          ))}
         </div>
 
-        {/* Rejilla de Herramientas Centralizadas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filteredTools.map(tool => {
-            const Icon = tool.icon;
-            return (
-              <div
-                key={tool.id}
-                className="group relative p-5 rounded-2xl bg-[#07070a] hover:bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/50 transition-all duration-200 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:scale-[1.01]"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 group-hover:border-[#ecb613]/50 flex items-center justify-center text-[#ecb613] transition-colors">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 text-zinc-400 border border-white/5">
-                      {tool.tag}
-                    </span>
-                  </div>
+        <input
+          type="text"
+          placeholder="Filtrar herramientas..."
+          value={activeQuery}
+          onChange={(e) => setActiveQuery(e.target.value)}
+          className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-white placeholder:text-zinc-500 outline-none focus:border-[#ecb613] w-64"
+        />
+      </div>
 
-                  <div>
-                    <h3 className="text-sm font-bold text-white group-hover:text-[#ecb613] transition-colors font-mono">
-                      {tool.title}
-                    </h3>
-                    <p className="text-xs text-zinc-400 mt-1 line-clamp-3 leading-relaxed">
-                      {tool.description}
-                    </p>
+      {/* Rejilla de Herramientas Centralizadas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        {filteredTools.map(tool => {
+          const Icon = tool.icon;
+          return (
+            <div
+              key={tool.id}
+              className="group relative p-5 rounded-2xl bg-[#07070a] hover:bg-[#0a0a0f] border border-white/10 hover:border-[#ecb613]/50 transition-all duration-200 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:scale-[1.01]"
+            >
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 group-hover:border-[#ecb613]/50 flex items-center justify-center text-[#ecb613] transition-colors">
+                    <Icon className="w-5 h-5" />
                   </div>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/5 text-zinc-400 border border-white/5">
+                    {tool.tag}
+                  </span>
                 </div>
 
-                <div className="pt-4 border-t border-white/5 mt-4 space-y-2.5">
-                  <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
-                    <span className="truncate max-w-[170px]">{tool.telemetry}</span>
-                    <span className="text-emerald-400 flex items-center gap-1 font-semibold">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                      {tool.status}
-                    </span>
-                  </div>
-
-                  {tool.targetUrl ? (
-                    <Link
-                      href={tool.targetUrl}
-                      className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black text-xs font-mono font-bold text-zinc-200 transition-all border border-white/10 hover:border-[#ecb613]"
-                    >
-                      <span>Abrir Herramienta</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </Link>
-                  ) : (
-                    <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-[10px] font-mono text-zinc-400 truncate text-center">
-                      <code>{tool.localPath}</code>
-                    </div>
-                  )}
+                <div>
+                  <h3 className="text-sm font-bold text-white group-hover:text-[#ecb613] transition-colors font-mono">
+                    {tool.title}
+                  </h3>
+                  <p className="text-xs text-zinc-400 mt-1 line-clamp-3 leading-relaxed">
+                    {tool.description}
+                  </p>
                 </div>
               </div>
-            );
-          })}
-        </div>
+
+              <div className="pt-4 border-t border-white/5 mt-4 space-y-2.5">
+                <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500">
+                  <span className="truncate max-w-[170px]">{tool.telemetry}</span>
+                  <span className="text-emerald-400 flex items-center gap-1 font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    {tool.status}
+                  </span>
+                </div>
+
+                {tool.targetUrl ? (
+                  <Link
+                    href={tool.targetUrl}
+                    className="w-full flex items-center justify-center gap-1.5 py-2 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black text-xs font-mono font-bold text-zinc-200 transition-all border border-white/10 hover:border-[#ecb613]"
+                  >
+                    <span>Abrir Herramienta</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </Link>
+                ) : (
+                  <div className="p-2 rounded-xl bg-black/40 border border-white/5 text-[10px] font-mono text-zinc-400 truncate text-center">
+                    <code>{tool.localPath}</code>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

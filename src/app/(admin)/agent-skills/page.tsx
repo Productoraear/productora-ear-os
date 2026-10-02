@@ -236,7 +236,7 @@ export default function AgentSkillsPage() {
                   7 QUALITY GATES ACTIVAS
                 </span>
               </div>
-              <h1 className="text-2xl font-bold tracking-tight text-white font-serif mt-1">
+              <h1 className="text-2xl font-bold tracking-tight text-white font-syne mt-1">
                 Ciclo de Vida de Ingeniería Senior (Agent Skills)
               </h1>
             </div>
@@ -285,11 +285,10 @@ export default function AgentSkillsPage() {
                     <button
                       type="button"
                       onClick={() => setSelectedStage(stage)}
-                      className={`flex flex-col items-center text-center p-3 rounded-xl border transition-all cursor-pointer flex-1 group relative ${
-                        isSelected
+                      className={`flex flex-col items-center text-center p-3 rounded-xl border transition-all cursor-pointer flex-1 group relative ${isSelected
                           ? 'border-[#ecb613] bg-[#ecb613]/10 scale-105 shadow-lg shadow-[#ecb613]/10'
                           : 'border-[#1F1F2E] bg-[#0C0C14] hover:border-zinc-500 hover:bg-[#12121E]'
-                      }`}
+                        }`}
                     >
                       {/* Nombre de Fase Superior */}
                       <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 font-bold mb-2">
@@ -313,13 +312,12 @@ export default function AgentSkillsPage() {
                       {/* Estado */}
                       <div className="mt-2 flex items-center gap-1">
                         <span
-                          className={`w-1.5 h-1.5 rounded-full ${
-                            stage.status === 'ACTIVE'
+                          className={`w-1.5 h-1.5 rounded-full ${stage.status === 'ACTIVE'
                               ? 'bg-[#EAB308] animate-pulse'
                               : stage.status === 'PASSED'
-                              ? 'bg-[#10B981]'
-                              : 'bg-zinc-600'
-                          }`}
+                                ? 'bg-[#10B981]'
+                                : 'bg-zinc-600'
+                            }`}
                         />
                         <span className="text-[9px] font-mono text-zinc-400">{stage.status}</span>
                       </div>

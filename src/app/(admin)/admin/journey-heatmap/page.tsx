@@ -66,7 +66,7 @@ export default function JourneyHeatmapAdminPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
             CUSTOMER JOURNEY HEATMAP S-CLASS
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">
@@ -168,11 +168,10 @@ export default function JourneyHeatmapAdminPage() {
             <button
               key={t}
               onClick={() => setFilterTemp(t)}
-              className={`px-3 py-1.5 rounded-lg border transition-colors ${
-                filterTemp === t
+              className={`px-3 py-1.5 rounded-lg border transition-colors ${filterTemp === t
                   ? 'bg-[#ecb613] text-black border-[#ecb613] font-bold'
                   : 'bg-[#050508] text-zinc-400 border-[#1a1a24] hover:text-white'
-              }`}
+                }`}
             >
               {t}
             </button>
@@ -202,11 +201,10 @@ export default function JourneyHeatmapAdminPage() {
                   <td className="py-3 px-4 text-zinc-500 text-[11px]">{j.id}</td>
                   <td className="py-3 px-4 text-white font-sans font-medium text-xs">{j.query}</td>
                   <td className="py-3 px-4 text-center">
-                    <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${
-                      j.temperature === 'FIRE'
+                    <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${j.temperature === 'FIRE'
                         ? 'bg-red-950/40 text-red-400 border-red-800'
                         : 'bg-amber-950/40 text-amber-400 border-amber-800'
-                    }`}>
+                      }`}>
                       {j.temperature}
                     </span>
                   </td>

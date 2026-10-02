@@ -25,7 +25,7 @@ const JourneyHeatmapPage = () => {
 
   return (
     <div className="bg-[#030305] text-white p-8">
-      <h1 className="text-2xl font-bold">Journey Heatmap</h1>
+      <h1 className="text-2xl font-bold font-syne tracking-tight text-white">Journey Heatmap</h1>
       <div
         draggable
         onDragStart={(e) => handleDragStart(e, { id: 1, name: 'Item 1' })}

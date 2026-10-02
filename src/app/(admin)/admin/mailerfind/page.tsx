@@ -1,18 +1,18 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-  Compass, 
-  Search, 
-  Send, 
-  MessageCircle, 
-  Mail, 
-  CheckCircle2, 
-  ExternalLink, 
-  Flame, 
-  ShieldCheck, 
-  RefreshCw, 
-  Copy, 
+import {
+  Compass,
+  Search,
+  Send,
+  MessageCircle,
+  Mail,
+  CheckCircle2,
+  ExternalLink,
+  Flame,
+  ShieldCheck,
+  RefreshCw,
+  Copy,
   Sparkles,
   MapPin,
   Instagram,
@@ -128,7 +128,7 @@ export default function AdminMailerfindProspectingPage() {
           <div className="flex items-center gap-2 text-[#ecb613] text-xs font-mono font-bold tracking-widest uppercase mb-1">
             <Compass className="w-4 h-4" /> MAILERFIND MCP · RADAR B2B UNIVERSAL 2050
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight font-syne">
             Base Nacional de Proveedores & Fincas (84.774 Indexados)
           </h1>
           <p className="text-neutral-400 text-sm mt-1">
@@ -403,11 +403,10 @@ export default function AdminMailerfindProspectingPage() {
                 <div
                   key={lead.id}
                   onClick={() => setSelectedLead(lead)}
-                  className={`p-4 rounded-xl border transition-all cursor-pointer ${
-                    selectedLead?.id === lead.id
+                  className={`p-4 rounded-xl border transition-all cursor-pointer ${selectedLead?.id === lead.id
                       ? 'border-[#ecb613] bg-[#ecb613]/10 shadow-lg'
                       : 'border-neutral-800 bg-[#08080c] hover:border-neutral-700'
-                  }`}
+                    }`}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">

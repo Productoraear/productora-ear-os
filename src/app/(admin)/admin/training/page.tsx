@@ -79,7 +79,7 @@ export default function TrainingCenterAdminPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
             OMNI TRAINING CENTER &amp; CIERRE TÁCTICO
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">
@@ -256,11 +256,10 @@ export default function TrainingCenterAdminPage() {
                 <button
                   key={obj.id}
                   onClick={() => setSelectedObjection(obj)}
-                  className={`w-full p-4 rounded-xl text-left border transition-all ${
-                    isSelected
+                  className={`w-full p-4 rounded-xl text-left border transition-all ${isSelected
                       ? 'bg-[#ecb613]/10 border-[#ecb613] text-white'
                       : 'bg-[#050508] border-[#1a1a24] text-zinc-400 hover:text-white hover:bg-white/[0.02]'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-between text-[10px] font-mono mb-1">
                     <span className="text-zinc-500">{obj.id}</span>

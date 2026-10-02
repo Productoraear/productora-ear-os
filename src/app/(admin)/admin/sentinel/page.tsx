@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function SentinelPage() {
   return (
-    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+    <div className="min-h-screen bg-[#030305] text-white space-y-6 max-w-7xl mx-auto p-6 sm:p-10 font-sans">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
         <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
@@ -23,7 +23,7 @@ export default function SentinelPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
             CONSOLA SENTINEL // ZERO-TOKEN ABSORBER
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">

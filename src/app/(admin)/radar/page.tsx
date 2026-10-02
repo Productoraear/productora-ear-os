@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 export default function RadarCoveragePage() {
   const matrixPath = path.join(process.cwd(), 'docs', 'architecture', 'HISTORIC_FORENSIC_GAP_MATRIX.json');
-  
+
   let reportData = {
     audit_date: 'No auditada',
     total_signatures: 0,
@@ -41,7 +41,7 @@ export default function RadarCoveragePage() {
               EAR_OS // COGNITIVE RADAR HUD
             </span>
           </div>
-          <h1 className="text-2xl font-bold tracking-tight mt-1 text-white">
+          <h1 className="text-2xl font-bold tracking-tight mt-1 text-white font-syne">
             Monitor de Soberanía y Cobertura Histórica
           </h1>
         </div>

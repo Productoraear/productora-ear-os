@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { 
-  Trophy, 
-  Swords, 
-  Sparkles, 
-  ThumbsUp, 
-  Flame, 
-  Cpu, 
-  ArrowRight, 
-  CheckCircle2, 
+import {
+  Trophy,
+  Swords,
+  Sparkles,
+  ThumbsUp,
+  Flame,
+  Cpu,
+  ArrowRight,
+  CheckCircle2,
   RefreshCw,
   Image as ImageIcon,
   Zap,
@@ -73,7 +73,7 @@ export default function AdminArenaDashboardPage() {
           <div className="flex items-center gap-2 text-[#ecb613] text-xs font-mono font-bold tracking-widest uppercase mb-1">
             <Swords className="w-4 h-4" /> EAR OS ARENA (ARENA.AI PROTOCOL)
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+          <h1 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight font-syne">
             Torneo Elo de Copys, Imágenes & Conversión 2050
           </h1>
           <p className="text-neutral-400 text-sm mt-1">
@@ -101,11 +101,10 @@ export default function AdminArenaDashboardPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* VARIANTE A */}
-          <div className={`p-6 rounded-2xl border-2 transition-all flex flex-col justify-between ${
-            lastWinner === battleA.id
+          <div className={`p-6 rounded-2xl border-2 transition-all flex flex-col justify-between ${lastWinner === battleA.id
               ? 'border-emerald-500 bg-emerald-950/20 shadow-lg shadow-emerald-500/10'
               : 'border-neutral-800 bg-[#08080c] hover:border-[#ecb613]/50'
-          }`}>
+            }`}>
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="px-2.5 py-1 bg-neutral-800 text-white rounded-lg text-xs font-mono font-bold">
@@ -130,11 +129,10 @@ export default function AdminArenaDashboardPage() {
           </div>
 
           {/* VARIANTE B */}
-          <div className={`p-6 rounded-2xl border-2 transition-all flex flex-col justify-between ${
-            lastWinner === battleB.id
+          <div className={`p-6 rounded-2xl border-2 transition-all flex flex-col justify-between ${lastWinner === battleB.id
               ? 'border-emerald-500 bg-emerald-950/20 shadow-lg shadow-emerald-500/10'
               : 'border-neutral-800 bg-[#08080c] hover:border-cyan-500/50'
-          }`}>
+            }`}>
             <div>
               <div className="flex items-center justify-between mb-4">
                 <span className="px-2.5 py-1 bg-neutral-800 text-white rounded-lg text-xs font-mono font-bold">

@@ -47,7 +47,7 @@ export default function SovereignConciergeDock({
             href={`https://wa.me/34693693048?text=${waMessage}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm"
+            className="bg-[#ecb613] hover:bg-amber-400 text-slate-950 font-black text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span className="hidden xs:inline">WhatsApp</span>

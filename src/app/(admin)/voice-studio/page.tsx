@@ -178,7 +178,7 @@ export default function VoiceStudioAdminPage() {
       }
       setIsPlayingAudio(false);
     } else {
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().catch(() => { });
       setIsPlayingAudio(true);
       if (typeof window !== 'undefined' && 'speechSynthesis' in window && generatedSong) {
         window.speechSynthesis.cancel();
@@ -187,7 +187,7 @@ export default function VoiceStudioAdminPage() {
         utter.lang = 'es-ES';
         utter.rate = 0.92;
         utter.pitch = 0.95;
-        utter.onend = () => {};
+        utter.onend = () => { };
         window.speechSynthesis.speak(utter);
       }
     }
@@ -222,7 +222,7 @@ export default function VoiceStudioAdminPage() {
                   BARE-METAL 0€ CLOUD
                 </span>
               </div>
-              <h1 className="text-2xl font-bold tracking-tight text-white font-serif mt-1">
+              <h1 className="text-2xl font-bold tracking-tight text-white font-syne mt-1">
                 Personalización de Canciones & Doblaje de Vídeos
               </h1>
             </div>
@@ -265,33 +265,30 @@ export default function VoiceStudioAdminPage() {
         <div className="max-w-7xl mx-auto flex gap-2 mt-4 pt-2 border-t border-[#1A1A24]/60">
           <button
             onClick={() => setActiveTab('SONGS')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${
-              activeTab === 'SONGS'
+            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${activeTab === 'SONGS'
                 ? 'bg-[#ecb613]/10 border-[#ecb613]/40 text-[#ecb613]'
                 : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-[#12121A]'
-            }`}
+              }`}
           >
             <Music className="w-4 h-4" />
             Canciones Personalizadas (Voz Edwin Agudelo)
           </button>
           <button
             onClick={() => setActiveTab('DUBBING')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${
-              activeTab === 'DUBBING'
+            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${activeTab === 'DUBBING'
                 ? 'bg-[#00E5FF]/10 border-[#00E5FF]/40 text-[#00E5FF]'
                 : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-[#12121A]'
-            }`}
+              }`}
           >
             <Video className="w-4 h-4" />
             Doblaje de Vídeos IA (Higgsfield)
           </button>
           <button
             onClick={() => setActiveTab('SERVER')}
-            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${
-              activeTab === 'SERVER'
+            className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-2 border ${activeTab === 'SERVER'
                 ? 'bg-[#FF2B44]/10 border-[#FF2B44]/40 text-[#FF2B44]'
                 : 'border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-[#12121A]'
-            }`}
+              }`}
           >
             <Cpu className="w-4 h-4" />
             Voice Gallery & Daemon Local (RX 7900 XTX)
@@ -330,11 +327,10 @@ export default function VoiceStudioAdminPage() {
                         key={song.id}
                         type="button"
                         onClick={() => setSelectedSongId(song.id)}
-                        className={`p-3.5 rounded-lg border text-left transition-all ${
-                          selectedSongId === song.id
+                        className={`p-3.5 rounded-lg border text-left transition-all ${selectedSongId === song.id
                             ? 'border-[#ecb613] bg-[#ecb613]/5 text-white shadow-sm'
                             : 'border-[#1A1A24] bg-[#0D0D15] text-zinc-300 hover:border-zinc-700'
-                        }`}
+                          }`}
                       >
                         <div className="font-semibold text-sm flex items-center justify-between">
                           <span>{song.title}</span>
@@ -390,11 +386,10 @@ export default function VoiceStudioAdminPage() {
                         key={profile.id}
                         type="button"
                         onClick={() => setVoiceId(profile.id)}
-                        className={`p-3.5 rounded-lg border text-left transition-all ${
-                          voiceId === profile.id
+                        className={`p-3.5 rounded-lg border text-left transition-all ${voiceId === profile.id
                             ? 'border-[#ecb613] bg-[#ecb613]/5 text-white'
                             : 'border-[#1A1A24] bg-[#0D0D15] text-zinc-300 hover:border-zinc-700'
-                        }`}
+                          }`}
                       >
                         <div className="font-semibold text-xs text-white">{profile.name}</div>
                         <p className="text-[11px] text-zinc-400 mt-0.5">{profile.tone}</p>
@@ -488,9 +483,8 @@ export default function VoiceStudioAdminPage() {
                           <div
                             key={i}
                             style={{ height: `${height}%` }}
-                            className={`flex-1 rounded-full transition-all ${
-                              isPlayingAudio ? 'bg-[#ecb613]' : 'bg-zinc-700'
-                            }`}
+                            className={`flex-1 rounded-full transition-all ${isPlayingAudio ? 'bg-[#ecb613]' : 'bg-zinc-700'
+                              }`}
                           />
                         ))}
                       </div>

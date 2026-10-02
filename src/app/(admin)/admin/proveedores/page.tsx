@@ -124,7 +124,7 @@ export default function ProveedoresSyncPage() {
       {/* Header Soberano */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
             DIRECTORIO &amp; PROVEEDORES EDGE CDN
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">
@@ -246,11 +246,10 @@ export default function ProveedoresSyncPage() {
                 setSelectedCat(tab.id);
                 setPage(1);
               }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all whitespace-nowrap ${
-                selectedCat === tab.id
-                  ? 'bg-[#ecb613]/15 text-[#ecb613] border border-[#ecb613]/40 font-bold'
-                  : 'bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white'
-              }`}
+              className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all whitespace-nowrap ${selectedCat === tab.id
+                ? 'bg-[#ecb613]/15 text-[#ecb613] border border-[#ecb613]/40 font-bold'
+                : 'bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:text-white'
+                }`}
             >
               {tab.label}
             </button>
@@ -324,7 +323,7 @@ export default function ProveedoresSyncPage() {
 
                 <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono">
                   <span className="text-zinc-500 text-[10px]">TARIFA EST.</span>
-                  <span className="text-sm font-bold text-white">
+                  <span className="text-sm font-bold text-white font-mono">
                     {p.price ? `${p.price} €` : 'A consultar'}
                   </span>
                 </div>

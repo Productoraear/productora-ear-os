@@ -116,7 +116,7 @@ export default function SourcingHubPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[#030305] text-zinc-100 font-sans space-y-6 max-w-7xl mx-auto">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
         <Link href="/admin" className="hover:text-zinc-300 transition-colors">Admin</Link>
@@ -129,7 +129,7 @@ export default function SourcingHubPage() {
       {/* Header S-Class */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
             SCALA LEADS &amp; PROSPECCIÓN SENIOR
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">
@@ -142,8 +142,8 @@ export default function SourcingHubPage() {
             type="button"
             onClick={() => setActiveTab('LEADS')}
             className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${activeTab === 'LEADS'
-                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+              : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
               }`}
           >
             📋 Leads & Prospección Senior
@@ -152,8 +152,8 @@ export default function SourcingHubPage() {
             type="button"
             onClick={() => setActiveTab('MATRIX')}
             className={`px-4 py-2 rounded-xl text-xs font-mono font-bold transition-all ${activeTab === 'MATRIX'
-                ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
-                : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
+              ? 'bg-[#ecb613] text-black shadow-lg shadow-[#ecb613]/20'
+              : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
               }`}
           >
             📊 Matriz Predictiva Presupuestos
@@ -234,7 +234,7 @@ export default function SourcingHubPage() {
           </div>
 
           {/* Guion de Telemarketing S-Class */}
-          <div className="rounded-2xl border border-[#ecb613]/30 bg-gradient-to-r from-amber-500/10 via-black to-zinc-950 p-5 shadow-[0_0_30px_rgba(236,182,19,0.08)]">
+          <div className="rounded-2xl border border-[#ecb613]/30 bg-gradient-to-r from-amber-500/10 via-[#050508] to-[#050508] p-5 shadow-[0_0_30px_rgba(236,182,19,0.08)]">
             <div className="flex items-center justify-between cursor-pointer" onClick={() => setShowPitch(!showPitch)}>
               <div className="flex items-center gap-2.5">
                 <Sparkles className="w-5 h-5 text-[#ecb613]" />
@@ -295,8 +295,8 @@ export default function SourcingHubPage() {
                   key={tab.id}
                   onClick={() => setActiveFilter(tab.id)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all whitespace-nowrap ${activeFilter === tab.id
-                      ? 'bg-[#ecb613] text-black font-bold shadow-[0_0_15px_rgba(236,182,19,0.3)]'
-                      : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
+                    ? 'bg-[#ecb613] text-black font-bold shadow-[0_0_15px_rgba(236,182,19,0.3)]'
+                    : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
                     }`}
                 >
                   {tab.label}
@@ -317,7 +317,7 @@ export default function SourcingHubPage() {
           </div>
 
           {/* Tabla de Leads */}
-          <div className="bg-[#050508] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="bg-[#050508] border border-[#1a1a24] rounded-2xl overflow-hidden shadow-2xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs text-zinc-300">
                 <thead className="bg-white/5 border-b border-white/10 font-mono text-[11px] text-zinc-400 uppercase">
@@ -413,14 +413,14 @@ export default function SourcingHubPage() {
                           value={lead.estado}
                           onChange={e => handleUpdateStatus(lead.id, e.target.value as Lead['estado'])}
                           className={`text-xs font-mono px-2.5 py-1.5 rounded-lg border focus:outline-none ${lead.estado === 'cita_agendada'
-                              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                              : lead.estado === 'interesado'
-                                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
-                                : lead.estado === 'contactado'
-                                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                                  : lead.estado === 'no_llamar'
-                                    ? 'bg-red-500/20 text-red-300 border-red-500/40'
-                                    : 'bg-zinc-800 text-zinc-300 border-zinc-700'
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                            : lead.estado === 'interesado'
+                              ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+                              : lead.estado === 'contactado'
+                                ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                                : lead.estado === 'no_llamar'
+                                  ? 'bg-red-500/20 text-red-300 border-red-500/40'
+                                  : 'bg-zinc-800 text-zinc-300 border-zinc-700'
                             }`}
                         >
                           <option value="nuevo">Nuevo</option>

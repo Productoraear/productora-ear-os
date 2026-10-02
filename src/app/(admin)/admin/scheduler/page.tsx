@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-  Calendar, Zap, Shield, Cpu, Activity, Play, CheckCircle2, 
+import {
+  Calendar, Zap, Shield, Cpu, Activity, Play, CheckCircle2,
   Clock, AlertTriangle, Layers, Filter, Terminal, Sparkles, Plus,
   ArrowRight, Radio, RefreshCw
 } from 'lucide-react';
@@ -34,7 +34,7 @@ export default function AdminSchedulerPage() {
 
   return (
     <div className="space-y-8 pb-16">
-      
+
       {/* ───────────────────────────────────────────────────────────────────── */}
       {/* 1. ENCABEZADO MAESTRO S-CLASS (CATMİN + QRONOS VAMPIRIZED)            */}
       {/* ───────────────────────────────────────────────────────────────────── */}
@@ -44,7 +44,7 @@ export default function AdminSchedulerPage() {
             <Calendar className="w-3.5 h-3.5" />
             <span>ORQUESTADOR AUTÓNOMO QRONOS · VAMPIRE RAG ENGINE</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black font-display text-white tracking-tight flex items-center gap-3">
+          <h1 className="text-2xl sm:text-3xl font-black font-syne text-white tracking-tight flex items-center gap-3">
             Programador y Despacho Multi-Agente
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#ecb613]/10 text-[#ecb613] border border-[#ecb613]/30 font-mono font-bold">
               GPU 24GB
@@ -84,61 +84,55 @@ export default function AdminSchedulerPage() {
       <div className="flex items-center gap-1 border-b border-zinc-800/80 pb-2 overflow-x-auto">
         <button
           onClick={() => setActiveTab('all')}
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${
-            activeTab === 'all'
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'all'
               ? 'bg-[#ecb613] text-black font-bold shadow-md'
               : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-          }`}
+            }`}
         >
           Visión Completa 360°
         </button>
         <button
           onClick={() => setActiveTab('pipeline')}
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${
-            activeTab === 'pipeline'
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'pipeline'
               ? 'bg-[#ecb613] text-black font-bold shadow-md'
               : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-          }`}
+            }`}
         >
           Pipeline Multi-Agente (SVG Live)
         </button>
         <button
           onClick={() => setActiveTab('gantt')}
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${
-            activeTab === 'gantt'
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'gantt'
               ? 'bg-[#ecb613] text-black font-bold shadow-md'
               : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-          }`}
+            }`}
         >
           Cronograma Gantt 7 Días
         </button>
         <button
           onClick={() => setActiveTab('guardrails')}
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${
-            activeTab === 'guardrails'
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'guardrails'
               ? 'bg-[#ecb613] text-black font-bold shadow-md'
               : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-          }`}
+            }`}
         >
           Guardarraíles & Blindaje
         </button>
         <button
           onClick={() => setActiveTab('inbox')}
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${
-            activeTab === 'inbox'
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'inbox'
               ? 'bg-[#ecb613] text-black font-bold shadow-md'
               : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-          }`}
+            }`}
         >
           Bandeja de Aprobaciones
         </button>
         <button
           onClick={() => setActiveTab('insights')}
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${
-            activeTab === 'insights'
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-colors whitespace-nowrap ${activeTab === 'insights'
               ? 'bg-[#ecb613] text-black font-bold shadow-md'
               : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
-          }`}
+            }`}
         >
           Métricas & Telemetría
         </button>
@@ -147,7 +141,7 @@ export default function AdminSchedulerPage() {
       {/* ───────────────────────────────────────────────────────────────────── */}
       {/* 3. FORMULARIO RÁPIDO PARA ENCOLAR TAREAS                              */}
       {/* ───────────────────────────────────────────────────────────────────── */}
-      <form 
+      <form
         onSubmit={handleQueueTask}
         className="rounded-xl border border-white/[0.08] bg-zinc-900/40 p-4 flex flex-col sm:flex-row items-center gap-3"
       >

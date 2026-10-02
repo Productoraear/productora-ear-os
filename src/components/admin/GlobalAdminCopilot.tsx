@@ -9,7 +9,7 @@ export default function GlobalAdminCopilot() {
   const [isOpen, setIsOpen] = useState(false);
   const [contextMessage, setContextMessage] = useState('Analizando contexto operativo del sistema...');
   const [quickOptions, setQuickOptions] = useState<string[]>([]);
-  
+
   const idleTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Evaluador heurístico según la ruta actual del Admin
@@ -49,7 +49,7 @@ export default function GlobalAdminCopilot() {
     const resetIdleTimer = () => {
       // Opcional: si prefieres que se cierre al mover el ratón, descomenta la siguiente línea:
       // setIsOpen(false);
-      
+
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
       idleTimerRef.current = setTimeout(triggerIdle, 5000); // 5 segundos
     };
@@ -82,7 +82,7 @@ export default function GlobalAdminCopilot() {
           evaluateContext(pathname);
           setIsOpen(!isOpen);
         }}
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-amber-400 text-neutral-950 hover:bg-amber-300 font-mono font-bold text-xs shadow-2xl shadow-amber-400/30 transition-all cursor-pointer border border-amber-300"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 rounded-full bg-[#ecb613] text-neutral-950 hover:bg-amber-300 font-mono font-bold text-xs shadow-2xl shadow-amber-400/30 transition-all cursor-pointer border border-amber-300"
         title="Copiloto Global EAR OS"
       >
         <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '4s' }} />
@@ -95,7 +95,7 @@ export default function GlobalAdminCopilot() {
           <div className="p-4 rounded-2xl bg-neutral-950 border border-amber-500/40 shadow-2xl shadow-amber-500/10 text-neutral-100 backdrop-blur-xl space-y-3">
             <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-xl bg-amber-400 text-neutral-950 flex items-center justify-center font-bold shadow-md shadow-amber-400/20">
+                <div className="w-7 h-7 rounded-xl bg-[#ecb613] text-neutral-950 flex items-center justify-center font-bold shadow-md shadow-amber-400/20">
                   <Bot className="w-4 h-4" />
                 </div>
                 <div>

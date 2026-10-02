@@ -74,7 +74,7 @@ export default function WhatsAppDispatchPage() {
       {/* Grid Principal */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Columna Izquierda: Formulario de Configuración */}
-        <div className="lg:col-span-1 p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-5 shadow-2xl">
+        <div className="lg:col-span-1 p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md space-y-5 shadow-2xl">
           <h2 className="text-sm font-bold font-syne text-white uppercase tracking-wider flex items-center gap-2">
             <MessageSquare size={16} className="text-[#ecb613]" />
             Configurar Plantilla
@@ -88,8 +88,8 @@ export default function WhatsAppDispatchPage() {
                 type="button"
                 onClick={() => { setTemplateType('solista'); setCustomPrice(350); }}
                 className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'solista'
-                    ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
-                    : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
+                  ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
+                  : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
                   }`}
               >
                 <Music size={14} />
@@ -100,8 +100,8 @@ export default function WhatsAppDispatchPage() {
                 type="button"
                 onClick={() => { setTemplateType('mariachi'); setCustomPrice(450); }}
                 className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'mariachi'
-                    ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
-                    : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
+                  ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]'
+                  : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
                   }`}
               >
                 <Sparkles size={14} />
@@ -112,8 +112,8 @@ export default function WhatsAppDispatchPage() {
                 type="button"
                 onClick={() => { setTemplateType('vimume'); setCustomPrice(0); }}
                 className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'vimume'
-                    ? 'bg-violet-950/30 border-violet-500 text-violet-400'
-                    : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
+                  ? 'bg-violet-950/30 border-violet-500 text-violet-400'
+                  : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
                   }`}
               >
                 <HeartPulse size={14} />
@@ -124,8 +124,8 @@ export default function WhatsAppDispatchPage() {
                 type="button"
                 onClick={() => { setTemplateType('b2g'); setCustomPrice(14250); }}
                 className={`p-3 rounded-xl border text-left font-mono text-xs flex items-center gap-2 transition-all ${templateType === 'b2g'
-                    ? 'bg-cyan-950/30 border-cyan-500 text-cyan-400'
-                    : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
+                  ? 'bg-cyan-950/30 border-cyan-500 text-cyan-400'
+                  : 'bg-white/5 border-white/5 text-zinc-400 hover:text-white'
                   }`}
               >
                 <Building2 size={14} />
@@ -182,7 +182,7 @@ export default function WhatsAppDispatchPage() {
         </div>
 
         {/* Columna Derecha: Vista Previa y Disparo Directo */}
-        <div className="lg:col-span-2 p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-6 flex flex-col justify-between shadow-2xl">
+        <div className="lg:col-span-2 p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md space-y-6 flex flex-col justify-between shadow-2xl">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-xs font-mono uppercase tracking-widest text-[#ecb613] flex items-center gap-1.5">

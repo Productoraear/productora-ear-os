@@ -212,7 +212,7 @@ export default function CallCenterAdminPage() {
       {/* Top Header Bar */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white uppercase">
+          <h1 className="text-2xl sm:text-3xl font-bold font-syne tracking-tight text-white uppercase">
             CALL CENTER &amp; PROSPECCIÓN OUTBOUND
           </h1>
           <p className="text-xs font-mono text-zinc-400 mt-1">

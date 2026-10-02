@@ -237,64 +237,9 @@
       "validate": "npx tsc --noEmit"
     },
     {
-      "id": "W03-033",
-      "wave": 3,
-      "status": "COMPLETED",
-      "title": "UNIFY: Estandarizar color de fondo OLED en src/app/(admin)/admin/call-center/page.tsx",
-      "action": "Verificar fondo OLED.",
-      "files": [
-        "src/app/(admin)/admin/call-center/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W03-034",
-      "wave": 3,
-      "status": "QUEUED",
-      "title": "UNIFY: Estandarizar color de fondo OLED en src/app/(admin)/admin/sourcing/page.tsx",
-      "action": "Verificar fondo OLED.",
-      "files": [
-        "src/app/(admin)/admin/sourcing/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W03-035",
-      "wave": 3,
-      "status": "QUEUED",
-      "title": "UNIFY: Estandarizar color de fondo OLED en src/app/(admin)/admin/whatsapp/page.tsx",
-      "action": "Verificar fondo OLED.",
-      "files": [
-        "src/app/(admin)/admin/whatsapp/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W03-036",
-      "wave": 3,
-      "status": "QUEUED",
-      "title": "UNIFY: Estandarizar color de fondo OLED en src/app/(admin)/admin/sentinel/page.tsx",
-      "action": "Verificar fondo OLED.",
-      "files": [
-        "src/app/(admin)/admin/sentinel/page.tsx"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W03-037",
-      "wave": 3,
-      "status": "QUEUED",
-      "title": "UNIFY: Estandarizar tipografía Syne para títulos en /admin pages",
-      "action": "Grep por font-bold text-2xl o text-3xl en src/app/(admin)/. Verificar que usan font-syne.",
-      "files": [
-        "src/app/(admin)/"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W03-038",
       "wave": 3,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "UNIFY: Estandarizar tipografía JetBrains Mono para datos numéricos en /admin",
       "action": "Grep por text-sm font-bold en datos monetarios de admin. Verificar que usan font-mono.",
       "files": [
@@ -305,7 +250,7 @@
     {
       "id": "W03-039",
       "wave": 3,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "UNIFY: Verificar que todos los botones dorados usan #ecb613 consistente",
       "action": "Grep por bg-amber o bg-yellow en src/components/. Reemplazar por bg-[#ecb613] si son botones CTA principales.",
       "files": [
