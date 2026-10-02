@@ -8,71 +8,9 @@
   "_instructions_for_cline": "PROTOCOLO DEEPSEEK 100K: 1) node .antigravity/omega.js next 2) Tienes permiso para leer y modificar cualquier motor existente para forzar el cumplimiento estricto del SSOT. 3) Usa tsc --noEmit.",
   "tasks": [
     {
-      "id": "W06-001",
-      "wave": 6,
-      "status": "COMPLETED",
-      "title": "AUDITORÍA ZERO: Centralización Inmutable de Constantes (SSOT)",
-      "action": "Crear src/lib/constants/ear-os-ssot.ts. Mover TODAS las constantes (14250, 350, 80/10/10, 1.50€/km, 100€ deposit) aquí y exportarlas con Object.freeze().",
-      "files": [
-        "src/lib/constants/ear-os-ssot.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W06-002",
-      "wave": 6,
-      "status": "COMPLETED",
-      "title": "AUDITORÍA UNO: Purgar Duplicidad B2G",
-      "action": "Buscar y reemplazar el valor '14250' hardcodeado en b2gArsenalTenderRadar, b2g-tender-engine, leadScoreEngine, whatsapp-dispatch y fincaMetricsEngine. Deben importar SAFE_LCSP_CEILING_EUR desde ear-os-ssot.ts.",
-      "files": [
-        "src/lib/vimume/b2gArsenalTenderRadar.ts",
-        "src/lib/vimume/b2g-tender-engine.ts",
-        "src/lib/b2g-tender-engine.ts",
-        "src/lib/whatsapp/whatsapp-dispatch.ts",
-        "src/lib/scoring/leadScoreEngine.ts",
-        "src/lib/fincas/fincaMetricsEngine.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W06-003",
-      "wave": 6,
-      "status": "COMPLETED",
-      "title": "AUDITORÍA DOS: Purgar Duplicidad de Precios S-Class",
-      "action": "Reemplazar los hardcodes de 350, 100, 1.50 y 80/10/10 en todo el sistema. Todo debe apuntar a ear-os-ssot.ts.",
-      "files": [
-        "src/lib/pricing/sovereign-pricing.ts",
-        "src/lib/affiliate/affiliateCommissionEngine.ts",
-        "src/lib/geo/geo-acoustic-radar.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W06-004",
-      "wave": 6,
-      "status": "COMPLETED",
-      "title": "API: Cotizador B2B Finca Multi-Servicio + n8n Webhook",
-      "action": "Crear POST /api/vendor/b2b-quote/route.ts. Al generar la cotización, disparar Webhook asíncrono a n8n para que entre en el CRM.",
-      "files": [
-        "src/app/api/vendor/b2b-quote/route.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
-      "id": "W06-005",
-      "wave": 6,
-      "status": "QUEUED",
-      "title": "SECURITY: Motor de Reclamación de Fichas (State Machine + n8n)",
-      "action": "Crear src/lib/vendor/claimStateMachine.ts. Lógica JWT. Al completar reclamación (ACTIVE_VERIFIED), emitir evento n8n para enviar email de bienvenida.",
-      "files": [
-        "src/lib/vendor/claimStateMachine.ts"
-      ],
-      "validate": "npx tsc --noEmit"
-    },
-    {
       "id": "W07-001",
       "wave": 7,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "Soberanía: Ledger Inmutable Event-Sourced (aura-wallet)",
       "action": "Reescribir src/lib/aura-wallet.ts usando Event Sourcing. Al añadir PayoutExecuted, disparar webhook n8n.",
       "files": [
@@ -83,7 +21,7 @@
     {
       "id": "W10-001",
       "wave": 10,
-      "status": "QUEUED",
+      "status": "COMPLETED",
       "title": "Soberanía: Sentinel de Integridad en Runtime",
       "action": "Crear src/lib/security/ssotIntegrityGuard.ts que lea de ear-os-ssot.ts y compare hashes SHA-256 en runtime para evitar manipulaciones.",
       "files": [
