@@ -1,53 +1,121 @@
 {
   "_meta": {
-    "version": "7.0-ANTIGRAVITY-OMEGA-SCLASS",
-    "doctrine": "BARE-METAL GOVERNANCE + ARSENAL DE 10 VECTORES DE DOMINANCIA QUANTUM SEO/GEO + COSECHA SIGILOSA INFALIBLE",
-    "waves": "23",
-    "model": "claude-3-7-sonnet-sclass"
+    "version": "7.1-MVP-RELEASE",
+    "doctrine": "WAVE FINAL MVP -> PRODUCCION HOY. Tareas atomicas de 1 objetivo. Cero exploracion.",
+    "deadline": "2026-10-03 22:00 CET"
   },
-  "_instructions_for_cline": "PACTO SAGRADO ANTI-SOBRECOSTES (ZTM 1-TASK): 1) node .antigravity/omega.js next 2) Modifica con excelencia 3) node .antigravity/omega.js complete <ID> 4) DETENTE Y FINALIZA TURNO. Clic en 'Start New Task' en Cline para 0 tokens acumulados.",
+  "_instructions_for_cline": "1) node .antigravity/omega.js next 2) Sigue el SCAFFOLD paso a paso, sin explorar otras carpetas 3) node .antigravity/omega.js complete <ID> 4) DETENTE. Nueva sesion por tarea. PROHIBIDO git commit/push (lo hace Antigravity). Shell = PowerShell 7: rutas con parentesis SIEMPRE entre comillas y con -LiteralPath.",
   "tasks": [
     {
-      "id": "TASK-UI-SEARCH-FUSION-01",
-      "title": "Experiencia Inmersiva Bodas S-Class: Hero Video Cinemático 4K, Traslucidez Glassmorphic, GPS Activo y Cero 404s",
+      "id": "MVP-01-FINCAS-404",
+      "title": "Crear la ruta /fincas (hoy da 404) y borrar 2 archivos basura",
       "status": "QUEUED",
       "files": [
-        "src/features/marketplace/ui/SmartMarketplaceNav.tsx",
-        "src/features/search/AirbnbNeuralBookingBar.tsx",
-        "src/components/providers/BentoFilterBar.tsx",
-        "src/app/(public)/proveedores/page.tsx",
-        "src/app/(public)/bodas/page.tsx",
-        "src/components/sclass/ThermodynamicNeuralTunnel.tsx"
+        "src/app/(public)/fincas/page.tsx",
+        "src/app/(",
+        "src/app/(public"
       ],
-      "action": "Integrar un vídeo cinemático de boda a pantalla gigante en el Hero de /bodas (con ambient loop Pexels/Mixkit), fusionar las cajas en cristales traslúcidos Glassmorphic, activar el GPS en el botón MapPin y corregir todos los enlaces 404.",
-      "scaffold": "1. En src/app/(public)/bodas/page.tsx, añadir en el Hero un fondo de vídeo cinemático ambient de boda HD (HTML5 <video autoPlay loop muted playsInline>) de alta tasa de fotogramas, con viñeta de degradado radial oscuro (from-[#060507]/90 to-[#060507]) e iluminación ambiental dorada para un impacto visual emocionante al entrar a la página.\n2. En src/app/(public)/bodas/page.tsx, SmartMarketplaceNav.tsx y ThermodynamicNeuralTunnel.tsx, REEMPLAZAR los fondos negros opacos por cristales traslúcidos Glassmorphic (bg-black/35 backdrop-blur-2xl border border-white/15 hover:border-[#ecb613]/50 shadow-2xl). Esto deja traslucir el vídeo cinemático y el shader líquido dorado por detrás de todas las secciones.\n3. En src/app/(public)/bodas/page.tsx, cambiar el href de las 12 tarjetas de zonas (Madrid, Barcelona, Toledo, Sevilla, etc.) de '/bodas/fincas-${prov.slug}-sonorizacion-gala' A '/proveedores?cat=finca&provincia=${encodeURIComponent(prov.name)}'. Esto elimina el 100% de los 404s.\n4. En src/features/marketplace/ui/SmartMarketplaceNav.tsx, hacer interactivo el icono MapPin 📍: al pulsar, ejecutar navigator.geolocation.getCurrentPosition() para calcular la provincia española más cercana (Madrid, Toledo, Barcelona, Valencia, etc.) y auto-rellenar 'Dónde (Provincia)' instantáneamente con spinner de carga.\n5. En src/app/(public)/proveedores/page.tsx, ELIMINAR los buscadores duplicados inferiores. Dejar únicamente SmartMarketplaceNav como el BUSCADOR ÚNICO S-CLASS oficial.\n6. En SmartMarketplaceNav.tsx, cargar las 52 provincias de España (PROVINCIAS_ESPANA) en el desplegable de ubicación.\n7. En src/features/search/AirbnbNeuralBookingBar.tsx, aplicar color-scheme: dark y alto contraste al selector de fecha <input type='date'> para visibilidad 100% del icono de calendario.\n8. Validar compilación con npx tsc --noEmit -> Exit Code 0.",
+      "action": "Existen 2 ARCHIVOS basura sin extension: 'src/app/(' y 'src/app/(public' (intentos fallidos de crear la pagina /fincas). Convertir el mejor en src/app/(public)/fincas/page.tsx y borrar ambos.",
+      "scaffold": "1. Leer SOLO estos 2 archivos con: Get-Content -LiteralPath 'src/app/(public' y Get-Content -LiteralPath 'src/app/('.\n2. Elegir el que compile y use SCLASS_12_FINCAS_HOMOLOGADAS de '@/lib/constants/fincas-catalog' (verificar que ese export existe con grep).\n3. Copiar: Copy-Item -LiteralPath 'src/app/(public' -Destination 'src/app/(public)/fincas/page.tsx'  (o el otro si es mejor).\n4. Borrar basura: Remove-Item -LiteralPath 'src/app/(' ; Remove-Item -LiteralPath 'src/app/(public'.\n5. La pagina debe ser Server Component (sin 'use client'), exportar metadata, y si recibe params usar const resolvedParams = await params.\n6. No tocar src/app/(public)/fincas/[provincia]/ ni portal-demostrativo/.",
+      "done_when": "Existe src/app/(public)/fincas/page.tsx, NO existen 'src/app/(' ni 'src/app/(public', y npx tsc --noEmit = 0.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "MVP-02-PRESUPUESTO-LEAD",
+      "title": "El formulario /checkout/presupuesto debe guardar el lead y avisar a n8n",
+      "status": "QUEUED",
+      "files": [
+        "src/app/actions/checkoutActions.ts"
+      ],
+      "action": "Garantizar que ningun lead del formulario de presupuesto queda huerfano.",
+      "scaffold": "1. Leer src/app/actions/checkoutActions.ts y localizar la server action que recibe el formulario de presupuesto (la que importa src/app/(public)/checkout/presupuesto/page.tsx; confirmalo con grep del nombre de la funcion).\n2. Tras validar datos, añadir envio NO bloqueante: void fetch('https://n8n.productoraear.com/webhook/call-center-intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: 'checkout-presupuesto', proveedor, nombre, telefono, email, fecha, invitados, createdAt: new Date().toISOString() }) }).catch(() => {});  Usa solo los campos que realmente existan.\n3. Si la accion ya llama a ese webhook, NO duplicar: solo verificar que tiene .catch y no bloquea la respuesta.\n4. La accion debe devolver { ok: true } aunque n8n falle.\n5. Prohibido any implicito.",
+      "done_when": "La server action dispara el webhook call-center-intake en background y tsc = 0.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "MVP-03-STRIPE-100",
+      "title": "Auditar el deposito de 100 EUR Stripe (Price-Lock) de /reservar/solista",
+      "status": "QUEUED",
+      "files": [
+        "src/app/reservar/solista/page.tsx",
+        "src/app/api/reservar"
+      ],
+      "action": "Verificar que el boton de reserva crea la sesion de Stripe en servidor por 100,00 EUR y que la clave secreta nunca llega al cliente.",
+      "scaffold": "1. grep -r 'STRIPE_SECRET_KEY' src  -> SOLO puede aparecer en archivos de servidor (route.ts, actions con 'use server', lib/server). Si aparece en un archivo 'use client' o con prefijo NEXT_PUBLIC_, moverlo a servidor.\n2. Abrir el route.ts dentro de src/app/api/reservar que crea la Checkout Session: confirmar unit_amount = 10000 (100,00 EUR, currency 'eur'). NO cambiar el importe.\n3. Confirmar success_url y cancel_url absolutos usando process.env.NEXT_PUBLIC_BASE_URL con fallback 'https://www.productoraear.com'.\n4. Si falta STRIPE_SECRET_KEY en runtime, devolver JSON 503 { error: 'pagos_no_configurados' } en vez de lanzar excepcion.\n5. En reservar/solista/page.tsx el boton debe mostrar estado de carga y error legible.",
+      "done_when": "STRIPE_SECRET_KEY solo en servidor, importe 10000 centimos EUR, URLs absolutas, tsc = 0. Reportar en 3 lineas lo verificado.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "MVP-04-LINKS-NAV",
+      "title": "Cero 404 en Navbar y Footer",
+      "status": "QUEUED",
+      "files": [
+        "src/app/components/layout/SovereignNavbar.tsx",
+        "src/app/components/layout/SovereignFooter.tsx"
+      ],
+      "action": "Cada href interno de Navbar y Footer debe apuntar a una ruta existente.",
+      "scaffold": "1. Extraer todos los href=\"/...\" de los 2 archivos (Select-String -Pattern 'href=\"(/[^\"]*)\"').\n2. Para cada ruta comprobar que existe page.tsx en src/app/<ruta>/ o src/app/(public)/<ruta>/ o src/app/(admin)/<ruta>/ (usar Test-Path -LiteralPath).\n3. Si no existe: cambiar el href a la ruta valida mas cercana (/proveedores, /bodas, /artistas/edwin-agudelo, /calculadora, /vimume, /fincas). NO crear paginas nuevas.\n4. Entregar tabla corta: ruta | existe | accion.",
+      "done_when": "Todos los href internos de ambos archivos existen y tsc = 0.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "MVP-05-BUILD",
+      "title": "Build de produccion limpio",
+      "status": "QUEUED",
+      "files": [
+        "package.json"
+      ],
+      "action": "npm run build debe terminar con Exit Code 0.",
+      "scaffold": "1. Ejecutar: npm run build 2>&1 | Tee-Object -FilePath .antigravity/build.log\n2. Si falla: leer SOLO las ultimas 80 lineas de .antigravity/build.log y corregir UNICAMENTE el archivo citado en el error. Repetir.\n3. Prohibido desactivar typescript/eslint en next.config para forzar el build.\n4. Prohibido tocar src/lib/vimume/b2g-tender-engine.ts y src/lib/astra/astra-conversation-engine.ts.",
+      "done_when": "npm run build = Exit Code 0. Reportar duracion del build.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "MVP-06-SMOKE",
+      "title": "Smoke test de las 8 rutas que venden",
+      "status": "QUEUED",
+      "files": [
+        ".antigravity/smoke.ps1"
+      ],
+      "action": "Crear y ejecutar un script que verifique HTTP 200 en las rutas criticas sobre el build de produccion.",
+      "scaffold": "1. Crear .antigravity/smoke.ps1 con: $base='http://localhost:3010'; $routes=@('/','/bodas','/proveedores','/proveedores/restaurante-ezkertza-berria','/fincas','/reservar/solista','/checkout/presupuesto','/artistas/edwin-agudelo'); foreach($r in $routes){ try { $s=(Invoke-WebRequest -Uri ($base+$r) -UseBasicParsing -TimeoutSec 60).StatusCode } catch { $s=$_.Exception.Response.StatusCode.value__ }; Write-Output (\"{0}  {1}\" -f $s,$r) }\n2. Arrancar en otra terminal: npx next start -p 3010 (requiere MVP-05 hecho).\n3. Ejecutar: pwsh .antigravity/smoke.ps1\n4. Cualquier ruta != 200: corregir solo esa pagina y repetir.\n5. Parar el servidor del puerto 3010 al terminar.",
+      "done_when": "Las 8 rutas devuelven 200. Pegar la salida del script en el reporte.",
       "validation": "npx tsc --noEmit"
     },
     {
       "id": "TASK-VANGUARD-ULTRA-PROACTIVE-01",
-      "title": "Elevación Proactiva Global: Edwin Agudelo Page, Simulator Fincas B2B & Telemetría Nav",
-      "status": "QUEUED",
+      "title": "(POST-MVP) Elevacion Edwin Agudelo, Simulador Fincas B2B y Telemetria Nav",
+      "status": "BACKLOG",
       "files": [
         "src/app/(public)/artistas/edwin-agudelo/page.tsx",
         "src/components/fincas/FincasB2BPortal.tsx",
         "src/components/layout/SovereignNavbar.tsx"
       ],
-      "action": "Aplicar de forma ultraproactiva la misma experiencia cinemática de vídeo HD y Glassmorphism a la landing principal del Artista Solista Edwin Agudelo (/artistas/edwin-agudelo) y al Portal B2B de Fincas (/fincas), activando el indicador de estado telemático en la barra superior.",
-      "scaffold": "1. En src/app/(public)/artistas/edwin-agudelo/page.tsx, integrar background de vídeo cinemático de show solista en vivo (con microfonía Shure Beta 87A y sonido Bose F1), tarjeta 3D holográfica del Caché Base (350 €) y botón de bloqueo de fecha atómico por Stripe.\n2. En src/components/fincas/FincasB2BPortal.tsx, integrar un simulador dinámico en tiempo real de liquidación de comisiones para la finca (380 € - 570 €) con indicador de sonometría homologada (85-90 dBA) y descarga directa de dossier técnico.\n3. En src/components/layout/SovereignNavbar.tsx, añadir insignia telemática de estado en vivo 'COBERTURA NACIONAL S-CLASS · GPS ACTIVO' con acceso rápido al Concierge de Reserva.\n4. Validar compilación con npx tsc --noEmit -> Exit Code 0.",
+      "action": "Aparcada hasta despues del lanzamiento MVP.",
       "validation": "npx tsc --noEmit"
     },
     {
       "id": "TASK-SEO-GEO-DOMINANCE-01",
-      "title": "Dominancia Absoluta Quantum SEO/GEO (Arsenal de 10 Vectores vs Bodas.net)",
-      "status": "QUEUED",
+      "title": "(POST-MVP) Dominancia SEO/GEO",
+      "status": "BACKLOG",
       "files": [
-        "src/app/(public)/bodas/guias/page.tsx",
         "src/lib/seo/sitemapGenerator.ts",
-        "src/components/seo/LocalBusinessSchema.tsx",
         "public/robots.txt"
       ],
-      "action": "Desplegar el Arsenal de 10 Vectores de Dominancia Orgánica e Inteligencia Artificial para aniquilar el posicionamiento de Bodas.net: 243.930 nodos programáticos (8.131 municipios x 30 categorías), compatibilidad llms.txt y Schema.org Master.",
-      "scaffold": "1. En public/robots.txt y public/well-known/ai-plugin.json, configurar permiso y marcado semántico optimizado para crawlers de IA (GPTBot, PerplexityBot, ClaudeBot, Google-Extended).\n2. En src/components/seo/LocalBusinessSchema.tsx, enriquecer esquemas Schema.org (Event, LocalBusiness, AggregateRating, FAQPage, HowTo, Service) para citación directa en respuestas de IA (GEO).\n3. En src/app/(public)/bodas/guias/page.tsx, integrar el Centro de Guías Nupciales y Lead Magnets descargables (Calculadora Ley 37/2003, Dossier Fincas 2026, Guía Presupuestos).\n4. En src/lib/seo/sitemapGenerator.ts, asegurar el pipeline de indexación para los 8.131 municipios españoles a <120ms sin 404s/500s.\n5. Validar compilación con npx tsc --noEmit -> Exit Code 0.",
+      "action": "Aparcada hasta despues del lanzamiento MVP.",
+      "validation": "npx tsc --noEmit"
+    },
+    {
+      "id": "prune-placeholder-inventory-3231",
+      "title": "Poda quirurgica inventario: placeholder centralita -> verified:false + edge lean verified",
+      "status": "QUEUED",
+      "files": [
+        "public/data/providers/finca.json",
+        "src/data/all_providers_database.json"
+      ],
+      "action": "Marcar verified:false los registros con telefono placeholder (+34 693 693 048) o vacio y regenerar particiones edge solo con telefonos reales (anti-bloat < 1MB).",
+      "scaffold": "1) node scripts/prune_placeholder_verified.cjs 2) node scripts/build_lean_verified_edge.cjs 3) npx tsc --noEmit = 0",
+      "done_when": "Edge sin placeholders (0), tsc Exit Code 0",
       "validation": "npx tsc --noEmit"
     }
   ]
