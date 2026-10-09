@@ -21,7 +21,8 @@ import {
   Lock,
   ArrowRight,
   ShieldCheck,
-  Calculator
+  Calculator,
+  Handshake
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useSharedContext } from '@/app/context/SharedContext';
@@ -173,14 +174,14 @@ const SovereignNavbar = () => {
   }
 
   const roleStyles: Record<string, string> = {
-    ROLE_B2G: "border-blue-500/30 bg-[#0a1128]/85 shadow-[0_0_30px_rgba(59,130,246,0.2)]",
-    ROLE_B2B: "border-white/15 bg-[#050507]/90 shadow-[0_0_30px_rgba(255,255,255,0.05)]",
+    ROLE_B2G: "border-[#ecb613]/40 bg-[#0c0a05]/85 shadow-[0_0_30px_rgba(236,182,19,0.2)]",
+    ROLE_B2B: "border-[#ecb613]/25 bg-[#050507]/90 shadow-[0_0_30px_rgba(236,182,19,0.05)]",
     ROLE_B2C: "border-white/15 bg-[#050507]/90",
-    ROLE_ADMIN: "border-red-500/40 bg-black/90 shadow-[0_0_40px_rgba(239,68,68,0.3)]",
+    ROLE_ADMIN: "border-[#ecb613]/50 bg-black/90 shadow-[0_0_40px_rgba(236,182,19,0.3)]",
     ROLE_GUEST: "border-white/15 bg-[#050507]/90",
-    ROLE_ARTIST: "border-purple-500/20 bg-[#0a0f0a]/90",
-    ROLE_PROVIDER: "border-green-500/20 bg-[#0a0f0a]/90",
-    ROLE_AFFILIATE: "border-orange-500/20 bg-[#0a0f0a]/90",
+    ROLE_ARTIST: "border-[#FF2B44]/30 bg-[#0f0507]/90",
+    ROLE_PROVIDER: "border-[#ecb613]/25 bg-[#0a0805]/90",
+    ROLE_AFFILIATE: "border-[#ecb613]/25 bg-[#0a0805]/90",
     ROLE_CLIENT: "border-white/15 bg-[#050507]/90"
   };
 
@@ -214,7 +215,7 @@ const SovereignNavbar = () => {
             pathname?.startsWith('/vimume')
               ? "border-[#00E5FF]/60 shadow-[0_0_20px_rgba(0,229,255,0.4)]"
               : role === 'ROLE_B2G'
-                ? "border-blue-400/60 shadow-[0_0_20px_rgba(59,130,246,0.4)]"
+                ? "border-[#ecb613]/60 shadow-[0_0_20px_rgba(236,182,19,0.4)]"
                 : "border-[#FF2B44]/70 shadow-[0_0_20px_rgba(255,43,68,0.45)]"
           )}>
             <img
@@ -228,7 +229,7 @@ const SovereignNavbar = () => {
               {pathname?.startsWith('/vimume') ? (
                 <>VIMUME <span className="text-[#00E5FF]">OS</span></>
               ) : role === 'ROLE_B2G' ? (
-                <>EAR OS <span className="text-blue-400">B2G</span></>
+                <>EAR OS <span className="text-[#ecb613]">B2G</span></>
               ) : (
                 <>PRODUCTORA <span className="text-[#FF2B44]">EAR</span></>
               )}
@@ -326,11 +327,20 @@ const SovereignNavbar = () => {
           <Link href="/vimume" className={cn(
             "flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider ml-1",
             role === 'ROLE_B2G'
-              ? "border-blue-400/50 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300"
+              ? "border-[#ecb613]/50 bg-[#ecb613]/10 hover:bg-[#ecb613]/20 text-[#ecb613]"
               : "border-[#00E5FF]/30 hover:border-[#00E5FF] hover:bg-[#00E5FF]/10 text-[#00E5FF]"
           )}>
             <Activity size={13} />
             <span>VIMUME</span>
+          </Link>
+
+          {/* ALIANZAS ESTRATÉGICAS */}
+          <Link
+            href="/alianzas"
+            className="flex items-center gap-1.5 text-xs font-mono font-bold px-3.5 py-1.5 rounded-full border transition-all uppercase tracking-wider ml-1 border-[#FF2B44]/30 hover:border-[#FF2B44] hover:bg-[#FF2B44]/10 text-[#FF2B44]"
+          >
+            <Handshake size={13} />
+            <span>Alianzas</span>
           </Link>
 
           {/* PRESUPUESTADOR S-CLASS HIGHLIGHT */}
@@ -474,6 +484,15 @@ const SovereignNavbar = () => {
               >
                 <span className="flex items-center gap-2"><Activity size={16} /> VIMUME OS</span>
                 <span className="font-mono text-[10px] text-white/60">Neuroacústica</span>
+              </Link>
+
+              <Link
+                href="/alianzas"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between p-3 rounded-xl border border-[#FF2B44]/20 bg-[#FF2B44]/5 text-[#FF2B44] font-syne text-sm font-bold uppercase"
+              >
+                <span className="flex items-center gap-2"><Handshake size={16} /> Alianzas</span>
+                <span className="font-mono text-[10px] text-white/60">Red de Fincas & Partners</span>
               </Link>
 
               <Link

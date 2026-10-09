@@ -1,122 +1,1028 @@
 {
   "_meta": {
-    "version": "7.1-MVP-RELEASE",
-    "doctrine": "WAVE FINAL MVP -> PRODUCCION HOY. Tareas atomicas de 1 objetivo. Cero exploracion.",
-    "deadline": "2026-10-03 22:00 CET"
+    "version": "9.0-OMEGA-50-CONDENSED-MVP",
+    "doctrine": "50 REVISIONES INTEGRALES S-CLASS: Cada tarea sella por completo 1 superficie comercial real. Precio SSOT + CTA real + JSON-LD + Estética OLED. Tiempo estimado total: < 8 horas.",
+    "generado": "2026-10-08T21:59:27.180Z",
+    "total_tasks": 50,
+    "original_tasks_absorbed": 193,
+    "unique_surfaces_covered": 50
   },
-  "_instructions_for_cline": "1) node .antigravity/omega.js next 2) Sigue el SCAFFOLD paso a paso, sin explorar otras carpetas 3) node .antigravity/omega.js complete <ID> 4) DETENTE. Nueva sesion por tarea. PROHIBIDO git commit/push (lo hace Antigravity). Shell = PowerShell 7: rutas con parentesis SIEMPRE entre comillas y con -LiteralPath.",
+  "_instructions_for_worker": "1) node .antigravity/omega.js next  2) Lee SOLO .antigravity/MISSION_ACTIVE.json  3) Ejecuta el sellado integral del archivo  4) npx tsc --noEmit  5) node .antigravity/omega.js complete <ID>  6) Vuelve al paso 1 hasta agotar la cola.",
   "tasks": [
     {
-      "id": "MVP-01-FINCAS-404",
-      "title": "Crear la ruta /fincas (hoy da 404) y borrar 2 archivos basura",
+      "id": "MVP-50-005",
+      "wave": 1,
       "status": "QUEUED",
-      "files": [
-        "src/app/(public)/fincas/page.tsx",
-        "src/app/(",
-        "src/app/(public"
+      "cliente": "Proveedores / Marketplace / Fincas / Venues B2B",
+      "ruta": "src/app/(public)/proveedores/page.tsx",
+      "condensed_count": 6,
+      "original_ids": [
+        "MVP-046",
+        "MVP-050",
+        "MVP-094",
+        "MVP-134",
+        "MVP-142",
+        "MVP-190"
       ],
-      "action": "Existen 2 ARCHIVOS basura sin extension: 'src/app/(' y 'src/app/(public' (intentos fallidos de crear la pagina /fincas). Convertir el mejor en src/app/(public)/fincas/page.tsx y borrar ambos.",
-      "scaffold": "1. Leer SOLO estos 2 archivos con: Get-Content -LiteralPath 'src/app/(public' y Get-Content -LiteralPath 'src/app/('.\n2. Elegir el que compile y use SCLASS_12_FINCAS_HOMOLOGADAS de '@/lib/constants/fincas-catalog' (verificar que ese export existe con grep).\n3. Copiar: Copy-Item -LiteralPath 'src/app/(public' -Destination 'src/app/(public)/fincas/page.tsx'  (o el otro si es mejor).\n4. Borrar basura: Remove-Item -LiteralPath 'src/app/(' ; Remove-Item -LiteralPath 'src/app/(public'.\n5. La pagina debe ser Server Component (sin 'use client'), exportar metadata, y si recibe params usar const resolvedParams = await params.\n6. No tocar src/app/(public)/fincas/[provincia]/ ni portal-demostrativo/.",
-      "done_when": "Existe src/app/(public)/fincas/page.tsx, NO existen 'src/app/(' ni 'src/app/(public', y npx tsc --noEmit = 0.",
-      "validation": "npx tsc --noEmit"
+      "title": "[proveedores/page] Revisión y Sellado Integral S-Class · Proveedores / Marketplace / Fincas / Venues B2B",
+      "files": [
+        "src/app/(public)/proveedores/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/proveedores/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/proveedores/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-005",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-005"
     },
     {
-      "id": "MVP-02-PRESUPUESTO-LEAD",
-      "title": "El formulario /checkout/presupuesto debe guardar el lead y avisar a n8n",
+      "id": "MVP-50-006",
+      "wave": 1,
       "status": "QUEUED",
-      "files": [
-        "src/app/actions/checkoutActions.ts"
+      "cliente": "Eventos / Ocasiones sociales / Empresas / Corporativo",
+      "ruta": "src/app/(public)/eventos/page.tsx",
+      "condensed_count": 6,
+      "original_ids": [
+        "MVP-048",
+        "MVP-052",
+        "MVP-112",
+        "MVP-120",
+        "MVP-172",
+        "MVP-192"
       ],
-      "action": "Garantizar que ningun lead del formulario de presupuesto queda huerfano.",
-      "scaffold": "1. Leer src/app/actions/checkoutActions.ts y localizar la server action que recibe el formulario de presupuesto (la que importa src/app/(public)/checkout/presupuesto/page.tsx; confirmalo con grep del nombre de la funcion).\n2. Tras validar datos, añadir envio NO bloqueante: void fetch('https://n8n.productoraear.com/webhook/call-center-intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ source: 'checkout-presupuesto', proveedor, nombre, telefono, email, fecha, invitados, createdAt: new Date().toISOString() }) }).catch(() => {});  Usa solo los campos que realmente existan.\n3. Si la accion ya llama a ese webhook, NO duplicar: solo verificar que tiene .catch y no bloquea la respuesta.\n4. La accion debe devolver { ok: true } aunque n8n falle.\n5. Prohibido any implicito.",
-      "done_when": "La server action dispara el webhook call-center-intake en background y tsc = 0.",
-      "validation": "npx tsc --noEmit"
+      "title": "[eventos/page] Revisión y Sellado Integral S-Class · Eventos / Ocasiones sociales / Empresas / Corporativo",
+      "files": [
+        "src/app/(public)/eventos/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/eventos/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/eventos/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-006",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-006"
     },
     {
-      "id": "MVP-03-STRIPE-100",
-      "title": "Auditar el deposito de 100 EUR Stripe (Price-Lock) de /reservar/solista",
+      "id": "MVP-50-007",
+      "wave": 1,
       "status": "QUEUED",
-      "files": [
-        "src/app/reservar/solista/page.tsx",
-        "src/app/api/reservar"
+      "cliente": "Afiliados / Prescriptores",
+      "ruta": "src/app/(public)/afiliado/page.tsx",
+      "condensed_count": 5,
+      "original_ids": [
+        "MVP-021",
+        "MVP-057",
+        "MVP-093",
+        "MVP-129",
+        "MVP-165"
       ],
-      "action": "Verificar que el boton de reserva crea la sesion de Stripe en servidor por 100,00 EUR y que la clave secreta nunca llega al cliente.",
-      "scaffold": "1. grep -r 'STRIPE_SECRET_KEY' src  -> SOLO puede aparecer en archivos de servidor (route.ts, actions con 'use server', lib/server). Si aparece en un archivo 'use client' o con prefijo NEXT_PUBLIC_, moverlo a servidor.\n2. Abrir el route.ts dentro de src/app/api/reservar que crea la Checkout Session: confirmar unit_amount = 10000 (100,00 EUR, currency 'eur'). NO cambiar el importe.\n3. Confirmar success_url y cancel_url absolutos usando process.env.NEXT_PUBLIC_BASE_URL con fallback 'https://www.productoraear.com'.\n4. Si falta STRIPE_SECRET_KEY en runtime, devolver JSON 503 { error: 'pagos_no_configurados' } en vez de lanzar excepcion.\n5. En reservar/solista/page.tsx el boton debe mostrar estado de carga y error legible.",
-      "done_when": "STRIPE_SECRET_KEY solo en servidor, importe 10000 centimos EUR, URLs absolutas, tsc = 0. Reportar en 3 lineas lo verificado.",
-      "validation": "npx tsc --noEmit"
+      "title": "[afiliado/page] Revisión y Sellado Integral S-Class · Afiliados / Prescriptores",
+      "files": [
+        "src/app/(public)/afiliado/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/afiliado/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/afiliado/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-007",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-007"
     },
     {
-      "id": "MVP-04-LINKS-NAV",
-      "title": "Cero 404 en Navbar y Footer",
+      "id": "MVP-50-008",
+      "wave": 1,
       "status": "QUEUED",
-      "files": [
-        "src/app/components/layout/SovereignNavbar.tsx",
-        "src/app/components/layout/SovereignFooter.tsx"
+      "cliente": "Afiliados / Prescriptores",
+      "ruta": "src/app/(public)/afiliados/page.tsx",
+      "condensed_count": 5,
+      "original_ids": [
+        "MVP-033",
+        "MVP-069",
+        "MVP-105",
+        "MVP-141",
+        "MVP-177"
       ],
-      "action": "Cada href interno de Navbar y Footer debe apuntar a una ruta existente.",
-      "scaffold": "1. Extraer todos los href=\"/...\" de los 2 archivos (Select-String -Pattern 'href=\"(/[^\"]*)\"').\n2. Para cada ruta comprobar que existe page.tsx en src/app/<ruta>/ o src/app/(public)/<ruta>/ o src/app/(admin)/<ruta>/ (usar Test-Path -LiteralPath).\n3. Si no existe: cambiar el href a la ruta valida mas cercana (/proveedores, /bodas, /artistas/edwin-agudelo, /calculadora, /vimume, /fincas). NO crear paginas nuevas.\n4. Entregar tabla corta: ruta | existe | accion.",
-      "done_when": "Todos los href internos de ambos archivos existen y tsc = 0.",
-      "validation": "npx tsc --noEmit"
+      "title": "[afiliados/page] Revisión y Sellado Integral S-Class · Afiliados / Prescriptores",
+      "files": [
+        "src/app/(public)/afiliados/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/afiliados/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/afiliados/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-008",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-008"
     },
     {
-      "id": "MVP-05-BUILD",
-      "title": "Build de produccion limpio",
+      "id": "MVP-50-009",
+      "wave": 1,
       "status": "QUEUED",
-      "files": [
-        "package.json"
+      "cliente": "Proveedores / Marketplace / Fincas / Venues B2B",
+      "ruta": "src/app/(public)/proveedores/[slug]/page.tsx",
+      "condensed_count": 5,
+      "original_ids": [
+        "MVP-058",
+        "MVP-062",
+        "MVP-106",
+        "MVP-146",
+        "MVP-154"
       ],
-      "action": "npm run build debe terminar con Exit Code 0.",
-      "scaffold": "1. Ejecutar: npm run build 2>&1 | Tee-Object -FilePath .antigravity/build.log\n2. Si falla: leer SOLO las ultimas 80 lineas de .antigravity/build.log y corregir UNICAMENTE el archivo citado en el error. Repetir.\n3. Prohibido desactivar typescript/eslint en next.config para forzar el build.\n4. Prohibido tocar src/lib/vimume/b2g-tender-engine.ts y src/lib/astra/astra-conversation-engine.ts.",
-      "done_when": "npm run build = Exit Code 0. Reportar duracion del build.",
-      "validation": "npx tsc --noEmit"
+      "title": "[[slug]/page] Revisión y Sellado Integral S-Class · Proveedores / Marketplace / Fincas / Venues B2B",
+      "files": [
+        "src/app/(public)/proveedores/[slug]/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/proveedores/[slug]/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/proveedores/[slug]/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-009",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-009"
     },
     {
-      "id": "MVP-06-SMOKE",
-      "title": "Smoke test de las 8 rutas que venden",
+      "id": "MVP-50-010",
+      "wave": 1,
       "status": "QUEUED",
-      "files": [
-        ".antigravity/smoke.ps1"
+      "cliente": "Alquiler equipos / DJ",
+      "ruta": "src/app/(public)/alquiler/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-006",
+        "MVP-066",
+        "MVP-126",
+        "MVP-186"
       ],
-      "action": "Crear y ejecutar un script que verifique HTTP 200 en las rutas criticas sobre el build de produccion.",
-      "scaffold": "1. Crear .antigravity/smoke.ps1 con: $base='http://localhost:3010'; $routes=@('/','/bodas','/proveedores','/proveedores/restaurante-ezkertza-berria','/fincas','/reservar/solista','/checkout/presupuesto','/artistas/edwin-agudelo'); foreach($r in $routes){ try { $s=(Invoke-WebRequest -Uri ($base+$r) -UseBasicParsing -TimeoutSec 60).StatusCode } catch { $s=$_.Exception.Response.StatusCode.value__ }; Write-Output (\"{0}  {1}\" -f $s,$r) }\n2. Arrancar en otra terminal: npx next start -p 3010 (requiere MVP-05 hecho).\n3. Ejecutar: pwsh .antigravity/smoke.ps1\n4. Cualquier ruta != 200: corregir solo esa pagina y repetir.\n5. Parar el servidor del puerto 3010 al terminar.",
-      "done_when": "Las 8 rutas devuelven 200. Pegar la salida del script en el reporte.",
-      "validation": "npx tsc --noEmit"
+      "title": "[alquiler/page] Revisión y Sellado Integral S-Class · Alquiler equipos / DJ",
+      "files": [
+        "src/app/(public)/alquiler/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/alquiler/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/alquiler/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-010",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-010"
     },
     {
-      "id": "TASK-VANGUARD-ULTRA-PROACTIVE-01",
-      "title": "(POST-MVP) Elevacion Edwin Agudelo, Simulador Fincas B2B y Telemetria Nav",
-      "status": "BACKLOG",
-      "files": [
-        "src/app/(public)/artistas/edwin-agudelo/page.tsx",
-        "src/components/fincas/FincasB2BPortal.tsx",
-        "src/components/layout/SovereignNavbar.tsx"
-      ],
-      "action": "Aparcada hasta despues del lanzamiento MVP.",
-      "validation": "npx tsc --noEmit"
-    },
-    {
-      "id": "TASK-SEO-GEO-DOMINANCE-01",
-      "title": "(POST-MVP) Dominancia SEO/GEO",
-      "status": "BACKLOG",
-      "files": [
-        "src/lib/seo/sitemapGenerator.ts",
-        "public/robots.txt"
-      ],
-      "action": "Aparcada hasta despues del lanzamiento MVP.",
-      "validation": "npx tsc --noEmit"
-    },
-    {
-      "id": "prune-placeholder-inventory-3231",
-      "title": "Poda quirurgica inventario: placeholder centralita -> verified:false + edge lean verified",
+      "id": "MVP-50-011",
+      "wave": 1,
       "status": "QUEUED",
-      "files": [
-        "public/data/providers/finca.json",
-        "src/data/all_providers_database.json"
+      "cliente": "Consultoría / Soberanía",
+      "ruta": "src/app/(public)/soberania-tecnica/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-011",
+        "MVP-059",
+        "MVP-107",
+        "MVP-155"
       ],
-      "action": "Marcar verified:false los registros con telefono placeholder (+34 693 693 048) o vacio y regenerar particiones edge solo con telefonos reales (anti-bloat < 1MB).",
-      "scaffold": "1) node scripts/prune_placeholder_verified.cjs 2) node scripts/build_lean_verified_edge.cjs 3) npx tsc --noEmit = 0",
-      "done_when": "Edge sin placeholders (0), tsc Exit Code 0",
-      "validation": "npx tsc --noEmit"
+      "title": "[soberania-tecnica/page] Revisión y Sellado Integral S-Class · Consultoría / Soberanía",
+      "files": [
+        "src/app/(public)/soberania-tecnica/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/soberania-tecnica/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/soberania-tecnica/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-011",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-011"
+    },
+    {
+      "id": "MVP-50-012",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Empresas / Corporativo",
+      "ruta": "src/app/(public)/infraestructura/mundial-2026/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-004",
+        "MVP-064",
+        "MVP-124",
+        "MVP-184"
+      ],
+      "title": "[mundial-2026/page] Revisión y Sellado Integral S-Class · Empresas / Corporativo",
+      "files": [
+        "src/app/(public)/infraestructura/mundial-2026/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/infraestructura/mundial-2026/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/infraestructura/mundial-2026/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-012",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-012"
+    },
+    {
+      "id": "MVP-50-013",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Ayuntamientos / B2G",
+      "ruta": "src/app/(public)/instituciones/catalogo-360/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-015",
+        "MVP-075",
+        "MVP-135",
+        "MVP-195"
+      ],
+      "title": "[catalogo-360/page] Revisión y Sellado Integral S-Class · Ayuntamientos / B2G",
+      "files": [
+        "src/app/(public)/instituciones/catalogo-360/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/instituciones/catalogo-360/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/instituciones/catalogo-360/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-013",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-013"
+    },
+    {
+      "id": "MVP-50-014",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Empresas / Corporativo",
+      "ruta": "src/app/(public)/infraestructura/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-016",
+        "MVP-076",
+        "MVP-136",
+        "MVP-196"
+      ],
+      "title": "[infraestructura/page] Revisión y Sellado Integral S-Class · Empresas / Corporativo",
+      "files": [
+        "src/app/(public)/infraestructura/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/infraestructura/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/infraestructura/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-014",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-014"
+    },
+    {
+      "id": "MVP-50-015",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Proveedores / Marketplace",
+      "ruta": "src/app/(public)/proveedores-servicios/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-022",
+        "MVP-070",
+        "MVP-118",
+        "MVP-166"
+      ],
+      "title": "[proveedores-servicios/page] Revisión y Sellado Integral S-Class · Proveedores / Marketplace",
+      "files": [
+        "src/app/(public)/proveedores-servicios/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/proveedores-servicios/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/proveedores-servicios/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-015",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-015"
+    },
+    {
+      "id": "MVP-50-016",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Consultoría / Soberanía",
+      "ruta": "src/app/(public)/the-signal/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-023",
+        "MVP-071",
+        "MVP-119",
+        "MVP-167"
+      ],
+      "title": "[the-signal/page] Revisión y Sellado Integral S-Class · Consultoría / Soberanía",
+      "files": [
+        "src/app/(public)/the-signal/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/the-signal/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/the-signal/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-016",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-016"
+    },
+    {
+      "id": "MVP-50-017",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Proveedores / Marketplace",
+      "ruta": "src/app/(public)/reclamar-perfil/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-034",
+        "MVP-082",
+        "MVP-130",
+        "MVP-178"
+      ],
+      "title": "[reclamar-perfil/page] Revisión y Sellado Integral S-Class · Proveedores / Marketplace",
+      "files": [
+        "src/app/(public)/reclamar-perfil/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/reclamar-perfil/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/reclamar-perfil/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-017",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-017"
+    },
+    {
+      "id": "MVP-50-018",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Consultoría / Soberanía",
+      "ruta": "src/app/(public)/dominancia/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-035",
+        "MVP-083",
+        "MVP-131",
+        "MVP-179"
+      ],
+      "title": "[dominancia/page] Revisión y Sellado Integral S-Class · Consultoría / Soberanía",
+      "files": [
+        "src/app/(public)/dominancia/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/dominancia/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/dominancia/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-018",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-018"
+    },
+    {
+      "id": "MVP-50-019",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Consultoría / Soberanía",
+      "ruta": "src/app/(public)/oraculo/page.tsx",
+      "condensed_count": 4,
+      "original_ids": [
+        "MVP-047",
+        "MVP-095",
+        "MVP-143",
+        "MVP-191"
+      ],
+      "title": "[oraculo/page] Revisión y Sellado Integral S-Class · Consultoría / Soberanía",
+      "files": [
+        "src/app/(public)/oraculo/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/oraculo/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/oraculo/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-019",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-019"
+    },
+    {
+      "id": "MVP-50-020",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Fincas / Venues B2B",
+      "ruta": "src/app/(public)/fincas/portal-demostrativo/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-014",
+        "MVP-098",
+        "MVP-182"
+      ],
+      "title": "[portal-demostrativo/page] Revisión y Sellado Integral S-Class · Fincas / Venues B2B",
+      "files": [
+        "src/app/(public)/fincas/portal-demostrativo/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/fincas/portal-demostrativo/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/fincas/portal-demostrativo/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-020",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-020"
+    },
+    {
+      "id": "MVP-50-021",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Eventos / Ocasiones sociales",
+      "ruta": "src/app/(public)/social/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-012",
+        "MVP-084",
+        "MVP-156"
+      ],
+      "title": "[social/page] Revisión y Sellado Integral S-Class · Eventos / Ocasiones sociales",
+      "files": [
+        "src/app/(public)/social/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/social/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/social/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-021",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-021"
+    },
+    {
+      "id": "MVP-50-022",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Eventos / Ocasiones sociales",
+      "ruta": "src/app/(public)/comparar/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-024",
+        "MVP-096",
+        "MVP-168"
+      ],
+      "title": "[comparar/page] Revisión y Sellado Integral S-Class · Eventos / Ocasiones sociales",
+      "files": [
+        "src/app/(public)/comparar/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/comparar/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/comparar/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-022",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-022"
+    },
+    {
+      "id": "MVP-50-023",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Fincas / Venues B2B",
+      "ruta": "src/app/(public)/fincas/villa-escorial-park/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-026",
+        "MVP-110",
+        "MVP-194"
+      ],
+      "title": "[villa-escorial-park/page] Revisión y Sellado Integral S-Class · Fincas / Venues B2B",
+      "files": [
+        "src/app/(public)/fincas/villa-escorial-park/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/fincas/villa-escorial-park/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/fincas/villa-escorial-park/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-023",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-023"
+    },
+    {
+      "id": "MVP-50-024",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Ayuntamientos / B2G",
+      "ruta": "src/app/(public)/instituciones/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-027",
+        "MVP-087",
+        "MVP-147"
+      ],
+      "title": "[instituciones/page] Revisión y Sellado Integral S-Class · Ayuntamientos / B2G",
+      "files": [
+        "src/app/(public)/instituciones/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/instituciones/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/instituciones/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-024",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-024"
+    },
+    {
+      "id": "MVP-50-025",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Empresas / Corporativo",
+      "ruta": "src/app/(public)/empresarios/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-028",
+        "MVP-088",
+        "MVP-148"
+      ],
+      "title": "[empresarios/page] Revisión y Sellado Integral S-Class · Empresas / Corporativo",
+      "files": [
+        "src/app/(public)/empresarios/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/empresarios/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/empresarios/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-025",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-025"
+    },
+    {
+      "id": "MVP-50-026",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Alquiler equipos / DJ",
+      "ruta": "src/app/(public)/alquiler-equipos-sonido-audiovisuales/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-030",
+        "MVP-090",
+        "MVP-150"
+      ],
+      "title": "[alquiler-equipos-sonido-audiovisuales/page] Revisión y Sellado Integral S-Class · Alquiler equipos / DJ",
+      "files": [
+        "src/app/(public)/alquiler-equipos-sonido-audiovisuales/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/alquiler-equipos-sonido-audiovisuales/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/alquiler-equipos-sonido-audiovisuales/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-026",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-026"
+    },
+    {
+      "id": "MVP-50-027",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Ayuntamientos / B2G",
+      "ruta": "src/app/(public)/ayuntamientos/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-039",
+        "MVP-099",
+        "MVP-159"
+      ],
+      "title": "[ayuntamientos/page] Revisión y Sellado Integral S-Class · Ayuntamientos / B2G",
+      "files": [
+        "src/app/(public)/ayuntamientos/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/ayuntamientos/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/ayuntamientos/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-027",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-027"
+    },
+    {
+      "id": "MVP-50-028",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Alquiler equipos / DJ",
+      "ruta": "src/app/(public)/alquiler-pantallas-led-madrid/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-042",
+        "MVP-102",
+        "MVP-162"
+      ],
+      "title": "[alquiler-pantallas-led-madrid/page] Revisión y Sellado Integral S-Class · Alquiler equipos / DJ",
+      "files": [
+        "src/app/(public)/alquiler-pantallas-led-madrid/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/alquiler-pantallas-led-madrid/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/alquiler-pantallas-led-madrid/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-028",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-028"
+    },
+    {
+      "id": "MVP-50-029",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Ayuntamientos / B2G",
+      "ruta": "src/app/(public)/b2g/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-051",
+        "MVP-111",
+        "MVP-171"
+      ],
+      "title": "[b2g/page] Revisión y Sellado Integral S-Class · Ayuntamientos / B2G",
+      "files": [
+        "src/app/(public)/b2g/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/b2g/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/b2g/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-029",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-029"
+    },
+    {
+      "id": "MVP-50-030",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Alquiler equipos / DJ",
+      "ruta": "src/app/(public)/rider-tecnico/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-054",
+        "MVP-114",
+        "MVP-174"
+      ],
+      "title": "[rider-tecnico/page] Revisión y Sellado Integral S-Class · Alquiler equipos / DJ",
+      "files": [
+        "src/app/(public)/rider-tecnico/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/rider-tecnico/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/rider-tecnico/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-030",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-030"
+    },
+    {
+      "id": "MVP-50-031",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Ayuntamientos / B2G",
+      "ruta": "src/app/(public)/b2g/[...slug]/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-063",
+        "MVP-123",
+        "MVP-183"
+      ],
+      "title": "[[...slug]/page] Revisión y Sellado Integral S-Class · Ayuntamientos / B2G",
+      "files": [
+        "src/app/(public)/b2g/[...slug]/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/b2g/[...slug]/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/b2g/[...slug]/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-031",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-031"
+    },
+    {
+      "id": "MVP-50-032",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Alquiler equipos / DJ",
+      "ruta": "src/app/(public)/alquiler/[...slug]/page.tsx",
+      "condensed_count": 3,
+      "original_ids": [
+        "MVP-078",
+        "MVP-138",
+        "MVP-198"
+      ],
+      "title": "[[...slug]/page] Revisión y Sellado Integral S-Class · Alquiler equipos / DJ",
+      "files": [
+        "src/app/(public)/alquiler/[...slug]/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/alquiler/[...slug]/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/alquiler/[...slug]/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-032",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-032"
+    },
+    {
+      "id": "MVP-50-033",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/djs/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-020",
+        "MVP-073"
+      ],
+      "title": "[djs/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/djs/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/djs/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/djs/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-033",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-033"
+    },
+    {
+      "id": "MVP-50-034",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/dashboard/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-008",
+        "MVP-061"
+      ],
+      "title": "[dashboard/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/dashboard/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/dashboard/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/dashboard/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-034",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-034"
+    },
+    {
+      "id": "MVP-50-035",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/edwin-agudelo/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-032",
+        "MVP-085"
+      ],
+      "title": "[edwin-agudelo/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/edwin-agudelo/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/edwin-agudelo/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/edwin-agudelo/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-035",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-035"
+    },
+    {
+      "id": "MVP-50-036",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Fincas / Venues B2B",
+      "ruta": "src/app/(public)/fincas/[provincia]/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-038",
+        "MVP-122"
+      ],
+      "title": "[[provincia]/page] Revisión y Sellado Integral S-Class · Fincas / Venues B2B",
+      "files": [
+        "src/app/(public)/fincas/[provincia]/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/fincas/[provincia]/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/fincas/[provincia]/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-036",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-036"
+    },
+    {
+      "id": "MVP-50-037",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/eventos/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-044",
+        "MVP-097"
+      ],
+      "title": "[eventos/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/eventos/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/eventos/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/eventos/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-037",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-037"
+    },
+    {
+      "id": "MVP-50-038",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/ferias/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-056",
+        "MVP-109"
+      ],
+      "title": "[ferias/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/ferias/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/ferias/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/ferias/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-038",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-038"
+    },
+    {
+      "id": "MVP-50-039",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Eventos / Ocasiones sociales",
+      "ruta": "src/app/(public)/ocasiones/ayuntamientos/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-060",
+        "MVP-132"
+      ],
+      "title": "[ayuntamientos/page] Revisión y Sellado Integral S-Class · Eventos / Ocasiones sociales",
+      "files": [
+        "src/app/(public)/ocasiones/ayuntamientos/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/ocasiones/ayuntamientos/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/ocasiones/ayuntamientos/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-039",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-039"
+    },
+    {
+      "id": "MVP-50-040",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/festivales/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-068",
+        "MVP-121"
+      ],
+      "title": "[festivales/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/festivales/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/festivales/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/festivales/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-040",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-040"
+    },
+    {
+      "id": "MVP-50-041",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Eventos / Ocasiones sociales",
+      "ruta": "src/app/(public)/ocasiones/[slug]/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-072",
+        "MVP-144"
+      ],
+      "title": "[[slug]/page] Revisión y Sellado Integral S-Class · Eventos / Ocasiones sociales",
+      "files": [
+        "src/app/(public)/ocasiones/[slug]/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/ocasiones/[slug]/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/ocasiones/[slug]/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-041",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-041"
+    },
+    {
+      "id": "MVP-50-042",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Fincas / Venues B2B",
+      "ruta": "src/app/(public)/fincas/jardines-la-cartuja/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-074",
+        "MVP-158"
+      ],
+      "title": "[jardines-la-cartuja/page] Revisión y Sellado Integral S-Class · Fincas / Venues B2B",
+      "files": [
+        "src/app/(public)/fincas/jardines-la-cartuja/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/fincas/jardines-la-cartuja/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/fincas/jardines-la-cartuja/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-042",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-042"
+    },
+    {
+      "id": "MVP-50-043",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/municipios/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-080",
+        "MVP-133"
+      ],
+      "title": "[municipios/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/municipios/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/municipios/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/municipios/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-043",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-043"
+    },
+    {
+      "id": "MVP-50-044",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Fincas / Venues B2B",
+      "ruta": "src/app/(public)/fincas/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-086",
+        "MVP-170"
+      ],
+      "title": "[fincas/page] Revisión y Sellado Integral S-Class · Fincas / Venues B2B",
+      "files": [
+        "src/app/(public)/fincas/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/fincas/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/fincas/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-044",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-044"
+    },
+    {
+      "id": "MVP-50-045",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/orquestas/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-092",
+        "MVP-145"
+      ],
+      "title": "[orquestas/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/orquestas/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/orquestas/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/orquestas/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-045",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-045"
+    },
+    {
+      "id": "MVP-50-046",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-104",
+        "MVP-157"
+      ],
+      "title": "[artistas/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-046",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-046"
+    },
+    {
+      "id": "MVP-50-047",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/provincias/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-116",
+        "MVP-169"
+      ],
+      "title": "[provincias/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/provincias/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/provincias/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/provincias/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-047",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-047"
+    },
+    {
+      "id": "MVP-50-048",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/reclamar-regalias/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-128",
+        "MVP-181"
+      ],
+      "title": "[reclamar-regalias/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/reclamar-regalias/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/reclamar-regalias/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/reclamar-regalias/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-048",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-048"
+    },
+    {
+      "id": "MVP-50-049",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Artistas / Talento / Novios / Bodas",
+      "ruta": "src/app/(public)/artistas/representacion/page.tsx",
+      "condensed_count": 2,
+      "original_ids": [
+        "MVP-140",
+        "MVP-193"
+      ],
+      "title": "[representacion/page] Revisión y Sellado Integral S-Class · Artistas / Talento / Novios / Bodas",
+      "files": [
+        "src/app/(public)/artistas/representacion/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/artistas/representacion/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/artistas/representacion/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-049",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-049"
+    },
+    {
+      "id": "MVP-50-050",
+      "wave": 1,
+      "status": "QUEUED",
+      "cliente": "Residencias / VIMUME",
+      "ruta": "src/app/(public)/vimume/clinica/page.tsx",
+      "condensed_count": 1,
+      "original_ids": [
+        "MVP-017"
+      ],
+      "title": "[clinica/page] Revisión y Sellado Integral S-Class · Residencias / VIMUME",
+      "files": [
+        "src/app/(public)/vimume/clinica/page.tsx"
+      ],
+      "action": "Revisión y Sellado Integral S-Class de la superficie comercial (src/app/(public)/vimume/clinica/page.tsx):\n1. PRECIO TRANSPARENTE: Exponer el precio oficial SSOT (Tarifa Solista 350 € o packs de inventario) sin textos de \"consultar\".\n2. CTA DE CIERRE REAL: Enlazar botones/links a rutas de conversión reales (/reservar/solista, /alquiler, /checkout o WhatsApp directo +34 693 693 048). Cero href=\"#\" ni anclas rotas.\n3. JSON-LD SCHEMA.ORG: Incluir o verificar bloque structured data (Offer/Product) con precio coherente con el SSOT.\n4. ESTÉTICA LUXURY OLED: Contenedores rounded-3xl bg-[#09090d]/80 border border-white/10 con micro-animaciones hover.\n5. BLINDAJE ZONA CERO: Usar solo constantes de src/lib/constants/ear-os-ssot.ts o inventory-catalog.ts. Cero valores hardcodeados ajenos.",
+      "scaffold": "1) Lee el archivo src/app/(public)/vimume/clinica/page.tsx.\n2) Localiza los bloques de oferta/conversión de la página.\n3) Aplica el sellado integral (precio SSOT visible + CTA real + JSON-LD Offer + estética OLED).\n4) Valida: npx tsc --noEmit (Exit Code 0).\n5) Cierra: node .antigravity/omega.js complete MVP-50-050",
+      "done_when": "Página sellada: precio SSOT visible, CTA de cierre real a ruta existente, JSON-LD Schema.org y estética OLED S-Class sin errores TS.",
+      "validate": "npx tsc --noEmit",
+      "complete": "node .antigravity/omega.js complete MVP-50-050"
     }
   ]
 }

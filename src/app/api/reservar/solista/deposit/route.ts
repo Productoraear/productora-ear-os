@@ -2,19 +2,28 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import crypto from 'crypto';
 import { checkDateAvailability } from '@/lib/availability/atomicDateLockEngine';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const stripe = new Stripe(
-  process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build',
-  { apiVersion: '2025-01-27.acacia' as any }
-);
-
 const DEPOSIT_CENTS = 10000;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
 
 export async function POST(req: NextRequest) {
   try {
+    const stripeSecret = process.env.STRIPE_SECRET_KEY;
+    if (!stripeSecret) {
+      return NextResponse.json(
+        { error: 'pagos_no_configurados' },
+        { status: 503 }
+      );
+    }
+
+    const stripe = new Stripe(stripeSecret, {
+      apiVersion: '2025-01-27.acacia' as never,
+    });
+
     const body = await req.json();
     const { fecha, formato, distanciaKm, horaFin, totalEstimado, artistProfileId } = body;
 
@@ -52,19 +61,14 @@ export async function POST(req: NextRequest) {
     const orderId = `EAR-SOLISTA-${Date.now()}`;
     const priceLockHash = crypto
       .createHash('sha256')
-      .update(`${orderId}-${DEPOSIT_CENTS}-${fecha}-${process.env.STRIPE_SECRET_KEY || 'dev'}`)
+      .update(`${orderId}-${DEPOSIT_CENTS}-${fecha}-${stripeSecret}`)
       .digest('hex');
-
-    const origin =
-      req.headers.get('origin') ||
-      process.env.NEXT_PUBLIC_APP_URL ||
-      'https://productoraear.com';
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      success_url: `${origin}/reservar/solista?deposit=confirmado&order_id=${orderId}&lock=${priceLockHash.slice(0, 16)}`,
-      cancel_url: `${origin}/reservar/solista?deposit=cancelado`,
+      success_url: `${BASE_URL}/reservar/solista?deposit=confirmado&order_id=${orderId}&lock=${priceLockHash.slice(0, 16)}`,
+      cancel_url: `${BASE_URL}/reservar/solista?deposit=cancelado`,
       line_items: [
         {
           price_data: {
@@ -88,6 +92,22 @@ export async function POST(req: NextRequest) {
         totalEstimado: String(totalEstimado || 0),
         priceLockHash,
       },
+    });
+
+    // Despacho asíncrono al workflow n8n de Stripe Price-Lock (no bloqueante).
+    // Garantiza que el depósito quede registrado en el CRM aunque el cliente
+    // todavía no haya completado el pago en Stripe.
+    fireAndForgetN8n('stripe-price-lock', {
+      event: 'deposit_session_created',
+      orderId,
+      priceLockHash,
+      fecha,
+      formato: formato || 'solista',
+      distanciaKm,
+      horaFin: horaFin || '',
+      totalEstimado: totalEstimado || 0,
+      sessionId: session.id,
+      timestamp: new Date().toISOString()
     });
 
     return NextResponse.json({ url: session.url, orderId, priceLockHash });

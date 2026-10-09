@@ -14,7 +14,12 @@ const supabaseUrl = (rawSupabaseUrl && (rawSupabaseUrl.startsWith('http://') || 
   ? rawSupabaseUrl
   : 'https://ear-os-production.supabase.co';
 
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key_placeholder';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+// 🔒 FAIL-CLOSED SUPABASE (BLINDAJE SESSION_SECRET P0): sin anon key real, el NEXUS no se instancia.
+if (!supabaseAnonKey || supabaseAnonKey.includes('dummy_anon_key_placeholder')) {
+  throw new Error('[AUTH_NEXUS] NEXT_PUBLIC_SUPABASE_ANON_KEY no configurada (fail-closed).');
+}
 
 // 1. SUPABASE CLIENT
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -25,13 +30,20 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 });
 
 // 2. FIREBASE CLIENT
+const firebaseApiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+
+// 🔒 FAIL-CLOSED FIREBASE (BLINDAJE SESSION_SECRET P0): sin apiKey real, el NEXUS no se instancia.
+if (!firebaseApiKey || firebaseApiKey === 'dummy_firebase_key') {
+  throw new Error('[AUTH_NEXUS] NEXT_PUBLIC_FIREBASE_API_KEY no configurada (fail-closed).');
+}
+
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || 'dummy_firebase_key',
+  apiKey: firebaseApiKey,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'productora-ear.firebaseapp.com',
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'productora-ear',
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'productora-ear.appspot.com',
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '123456789',
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '1:123456789:web:abcdef'
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 const firebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -43,12 +55,12 @@ export const syncSClassAuth = (callback: (user: FirebaseUser | null) => void) =>
     if (firebaseUser) {
       try {
         const token = await firebaseUser.getIdToken();
-        
+
         const { error } = await supabase.auth.setSession({
           access_token: token,
           refresh_token: token,
         });
-        
+
         if (error) {
           if (error.status === 403) {
             console.warn('⚠️ [AUTH NEXUS] Supabase devolvió 403. Operando en modo degradado.');

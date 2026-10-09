@@ -45,13 +45,14 @@ export class UserService {
     if (!user) return false;
 
     const roleHierarchy: Record<Role, number> = {
-    USER: 0,
+      USER: 0,
       EXPLORADOR: 0,
       CLIENT: 1,
       AFFILIATE: 2,
       ARTIST: 3,
       PROVIDER: 4,
       ARQUITECTO: 5,
+      THERAPIST: 6,
       OPERADOR: 6,
       FLEET_OPERATOR: 7,
       ADMIN: 8,

@@ -3,8 +3,12 @@ export const runtime = 'nodejs';
 
 import { NextResponse } from 'next/server';
 import os from 'os';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   const totalMem = os.totalmem();
   const freeMem = os.freemem();
   const usedMem = totalMem - freeMem;

@@ -121,10 +121,10 @@ export default async function ReservaConfirmadaPage({
         const slotTime = asString(metadata.timeSlot || metadata.horaTramo, '18:00');
         const dateFormatted = production.eventDate
           ? new Date(production.eventDate).toLocaleDateString('es-ES', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric'
-            })
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })
           : '';
 
         initialData = {
@@ -174,7 +174,12 @@ export default async function ReservaConfirmadaPage({
   if (!initialData && sessionId) {
     try {
       const Stripe = (await import('stripe')).default;
-      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build', {
+      // 🔒 FAIL-CLOSED STRIPE (BLINDAJE SESSION_SECRET P0): sin secreto real, no se consulta Stripe.
+      const stripeKey = process.env.STRIPE_SECRET_KEY;
+      if (!stripeKey || stripeKey === 'sk_test_dummy_key_for_build') {
+        throw new Error('[RESERVA_CONFIRMADA] STRIPE_SECRET_KEY no configurado (fail-closed).');
+      }
+      const stripe = new Stripe(stripeKey, {
         apiVersion: '2025-01-27.acacia' as any
       });
       const session = await stripe.checkout.sessions.retrieve(sessionId);

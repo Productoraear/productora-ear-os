@@ -1,0 +1,20 @@
+{
+  "arms": {
+    "chat::ear-14b-textos-sclass:latest": {
+      "plays": 1,
+      "wins": 1,
+      "prior": 0.5,
+      "latSum": 50498,
+      "last": 1791485960130
+    }
+  },
+  "plays": 1,
+  "version": 1,
+  "lastRun": {
+    "intent": "chat",
+    "model": "ear-14b-textos-sclass:latest",
+    "success": true,
+    "latMs": 50498,
+    "at": 1791485960130
+  }
+}

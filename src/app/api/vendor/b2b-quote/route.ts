@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import crypto from 'crypto';
 import { ServiceCategory } from '@/types/multi-service';
+import { fireAndForgetN8n } from '@/lib/services/n8n-dispatcher';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -131,38 +132,7 @@ interface B2BN8nCrmEvent {
  * forma segura (no interrumpe el flujo de cotización).
  */
 function dispatchToN8nCrm(event: B2BN8nCrmEvent): void {
-    if (!N8N_B2B_CRM_WEBHOOK_URL) {
-        console.warn('[API/vendor/b2b-quote] N8N_B2B_CRM_WEBHOOK_URL no configurado. Omitiendo webhook CRM.');
-        return;
-    }
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), N8N_DISPATCH_TIMEOUT_MS);
-
-    void (async () => {
-        try {
-            const response = await fetch(N8N_B2B_CRM_WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(event),
-                signal: controller.signal,
-            });
-
-            if (!response.ok) {
-                console.error(
-                    `[API/vendor/b2b-quote] Webhook n8n no OK (${response.status}) para ${event.quoteId}.`
-                );
-                return;
-            }
-
-            console.log(`[API/vendor/b2b-quote] Webhook n8n entregado para ${event.quoteId}.`);
-        } catch (err) {
-            const reason = err instanceof Error ? err.message : String(err);
-            console.error(`[API/vendor/b2b-quote] Fallo al despachar webhook n8n: ${reason}`);
-        } finally {
-            clearTimeout(timeout);
-        }
-    })();
+    fireAndForgetN8n('b2b-quote', event as unknown as Record<string, unknown>);
 }
 
 // ─── POST Handler ──────────────────────────────────────────────────────────────

@@ -1,4 +1,5 @@
-"use client";
+import { redirect } from 'next/navigation';
 
-import AfiliadosPage from '../afiliados/page';
-export default AfiliadosPage;
+export default function AfiliadoRedirectPage() {
+  redirect('/afiliados');
+}

@@ -5,7 +5,12 @@ export const createClient = () => {
   const supabaseUrl = (rawUrl && (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')))
     ? rawUrl
     : 'https://ear-os-production.supabase.co';
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key_placeholder';
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // 🔒 FAIL-CLOSED SUPABASE (BLINDAJE SESSION_SECRET P0): sin anon key real, no hay cliente.
+  if (!supabaseAnonKey || supabaseAnonKey.includes('dummy_anon_key_placeholder')) {
+    throw new Error('[SUPABASE_CLIENT] NEXT_PUBLIC_SUPABASE_ANON_KEY no configurada (fail-closed).');
+  }
 
   return createSupabaseClient(supabaseUrl, supabaseAnonKey);
 };

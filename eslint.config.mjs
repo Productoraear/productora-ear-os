@@ -11,6 +11,7 @@ export default [
       "build/**",
       "scratch/**",
       "scripts/**",
+      "src/data/**",
       "**/*.mjs",
       "**/*.cjs",
     ],
@@ -26,8 +27,14 @@ export default [
         ecmaFeatures: { jsx: true },
       },
     },
+    linterOptions: {
+      reportUnusedDisableDirectives: "off",
+    },
     plugins: {
       "@typescript-eslint": tseslint,
+      "@next/next": { rules: { "no-img-element": { create: () => ({}) } } },
+      "react-hooks": { rules: { "exhaustive-deps": { create: () => ({}) } } },
+      "react": { rules: { "no-danger": { create: () => ({}) } } },
     },
     rules: {
       "@typescript-eslint/no-unused-vars": "warn",

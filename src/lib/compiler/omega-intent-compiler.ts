@@ -1,14 +1,39 @@
+import {
+  runGpuChat,
+  extractJsonObject,
+  resolveGpuModel,
+  DEFAULT_GPU_MODEL,
+  type GpuModelId
+} from './qwen-gpu-inference';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  LOGISTICA_KM_HOTEL,
+  SUPLEMENTO_HOTEL_EUR,
+  HORA_FIN_HOTEL,
+  DEPOSITO_STRIPE_EUR,
+  SAFE_LCSP_CEILING_EUR,
+  LIMITE_SPL_DB,
+  WATTS_PER_PAX,
+  SPLIT_SOBERANO
+} from '@/lib/constants/ear-os-ssot';
+
 export type CompileMode = 'QUIRURGICO' | 'OMEGA_FULLSTACK';
 export type CompileEngine = 'OLLAMA' | 'CLOUD';
 
+/**
+ * Reglas de negocio derivadas ÚNICAMENTE del SSOT canónico (Zona Cero).
+ * Prohibido duplicar valores: todo número nace de ear-os-ssot.ts.
+ */
 export const SSOT_BUSINESS_RULES: readonly string[] = [
-  'TarifaBaseSolista(EdwinAgudelo):350,00EUR',
-  'Logistica:1,50EUR/km desde Mentrida a partir del km50',
-  'Hotel:+120EUR si horaFin>=3:00AM o distancia>200km',
-  'SplitSoberano:80%Artista/10%EAROS/10%VIMUME',
-  'Cierre:Deposito100,00EUR Stripe Price-Lock SHA-256 (24h-72h)',
-  'RiderAcustico:12W/pax Bose F1 812/S1 Pro Shure Beta 87A',
-  'LimiteB2G Art.118 LCSP: <15.000EUR (Ajuste95%=14.250EUR) y <75dB SPL'
+  `TarifaBaseSolista(EdwinAgudelo):${TARIFA_BASE_SOLISTA_EUR.toFixed(2)}EUR`,
+  `Logistica:${LOGISTICA_EUR_PER_KM.toFixed(2)}EUR/km desde Hub Mentrida a partir del km${LOGISTICA_KM_EXENTOS}`,
+  `Hotel:+${SUPLEMENTO_HOTEL_EUR.toFixed(0)}EUR si horaFin>=${HORA_FIN_HOTEL}:00AM o distancia>${LOGISTICA_KM_HOTEL}km`,
+  `SplitSoberano:${Math.round(SPLIT_SOBERANO.artista * 100)}%Artista/${Math.round(SPLIT_SOBERANO.earOs * 100)}%EAROS/${Math.round(SPLIT_SOBERANO.vimume * 100)}%VIMUME`,
+  `Cierre:Deposito${DEPOSITO_STRIPE_EUR.toFixed(2)}EUR Stripe Price-Lock SHA-256`,
+  `RiderAcustico:${WATTS_PER_PAX}W/pax limiteSaludPublica<${LIMITE_SPL_DB}dB SPL`,
+  `LimiteB2G Art.118 LCSP:<${SAFE_LCSP_CEILING_EUR.toFixed(2)}EUR (Ajuste preventivo 95%)`
 ];
 
 export interface CompileOptions {
@@ -16,22 +41,28 @@ export interface CompileOptions {
   engine?: CompileEngine;
   targetEngine?: 'LOCAL_OLLAMA' | 'CLOUD_EDGE';
   autoInjectQueue?: boolean;
+  /** Modelo GPU a usar para el razonamiento profundo. */
+  model?: GpuModelId | string;
+  /** Si es true, salta la consulta GPU del arquitecto (el DAG se deriva del discriminador). */
+  skipOllamaArchitect?: boolean;
+  /** Prompt maestro ya forjado; si se aporta, se convierte en el macro-script del DAG. */
+  masterPromptOverride?: string;
 }
 
 export interface CompiledDAGResult {
   yaml: string;
   engine: CompileEngine;
   protocol: string;
+  /** Contrato canónico Omega (consumido por /api/admin/tasks/inject -> omega.js). */
   jsonTask: {
     id: string;
     title: string;
-    block: number;
-    status: 'PENDING';
+    status: 'QUEUED';
     description: string;
-    scaffold: {
-      files_to_touch: string[];
-      macro_script: string;
-    };
+    files: string[];
+    action: string;
+    scaffold: string;
+    done_when: string;
     validation: string;
   };
   estimatedTokens: number;
@@ -226,50 +257,56 @@ function resolveSemanticFiles(cleanInput: string): { files: string[]; macro: str
 }
 
 /**
- * 🧠 INTENTO DE RAZONAMIENTO PROFUNDO VÍA OLLAMA GPU BARE-METAL
+ * 🧠 RAZONAMIENTO PROFUNDO VÍA OLLAMA GPU BARE-METAL (RX 7900 XTX)
+ * Usa el motor GPU compartido con num_gpu=999 (todas las capas a VRAM).
+ * El timeout es amplio porque la carga en frío del 27B/32B tarda 15-40s.
  */
-async function queryOllamaArchitect(cleanInput: string): Promise<{ files: string[]; macro: string; validation: string } | null> {
+async function queryOllamaArchitect(
+  cleanInput: string,
+  model: GpuModelId | string
+): Promise<{ files: string[]; macro: string; validation: string; model: string } | null> {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 6000); // 6s timeout max
+  const profile = resolveGpuModel(model);
+  // Presupuesto de tiempo: carga VRAM (hasta ~40s) + inferencia. Tope de seguridad 75s.
+  const timeoutId = setTimeout(() => controller.abort(), 75000);
 
-  try {
-    const prompt = `Eres el Arquitecto de Software de EAR OS (Next.js 15, TypeScript).
-Dado el requerimiento del usuario, selecciona los ARCHIVOS REALES del proyecto a tocar y el macro-script de ejecución.
+  const prompt = `Eres el Arquitecto de Software de EAR OS (Next.js 15 App Router, TypeScript estricto).
+Dado el requerimiento del usuario, selecciona los ARCHIVOS REALES del proyecto a tocar y el macro-script de ejecución quirúrgico.
 Responde ÚNICAMENTE un JSON con esta estructura exacta:
 {
   "files": ["ruta/del/archivo1.tsx", "ruta/del/archivo2.ts"],
-  "macro": "Instrucción técnica y quirúrgica para Cline...",
+  "macro": "Instrucción técnica y quirúrgica paso a paso para el ejecutor local...",
   "validation": "npx tsc --noEmit -> Exit Code 0"
 }
 Requerimiento: "${cleanInput}"`;
 
-    const res = await fetch('http://127.0.0.1:11434/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'ear-27b-flow:latest',
-        messages: [{ role: 'user', content: prompt }],
-        stream: false,
-        options: { temperature: 0.1, num_predict: 250 }
-      }),
+  try {
+    const result = await runGpuChat({
+      model: profile.id,
+      prompt,
+      json: true,
+      temperature: 0.1,
+      keepAlive: '30m',
+      numPredict: 900,
       signal: controller.signal
     });
 
     clearTimeout(timeoutId);
-    if (!res.ok) return null;
 
-    const data = await res.json();
-    const rawText = data.message?.content || '';
-    const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-    if (jsonMatch) {
-      const parsed = JSON.parse(jsonMatch[0]);
-      if (Array.isArray(parsed.files) && parsed.files.length > 0 && typeof parsed.macro === 'string') {
-        return {
-          files: parsed.files,
-          macro: parsed.macro,
-          validation: parsed.validation || 'npx tsc --noEmit -> Exit Code 0'
-        };
-      }
+    const parsed = extractJsonObject<{ files?: unknown; macro?: unknown; validation?: unknown }>(result.content);
+    if (
+      parsed &&
+      Array.isArray(parsed.files) &&
+      parsed.files.length > 0 &&
+      parsed.files.every((f): f is string => typeof f === 'string') &&
+      typeof parsed.macro === 'string'
+    ) {
+      return {
+        files: parsed.files,
+        macro: parsed.macro,
+        validation: typeof parsed.validation === 'string' ? parsed.validation : 'npx tsc --noEmit -> Exit Code 0',
+        model: profile.id
+      };
     }
     return null;
   } catch {
@@ -294,22 +331,29 @@ export async function compileIntentToDAG(
 
   const taskId = 'omega-' + slug + '-' + Date.now().toString().slice(-4);
 
-  // 1. Intentar razonamiento profundo con Ollama si está activo
+  // 1. Intentar razonamiento profundo con la GPU local (27B/32B) si está activa
   let reasoningEngineUsed = 'SCLASS_AST_CLASSIFIER_INSTANT';
   let resolved = resolveSemanticFiles(cleanInput);
+  const selectedModel = options.model ?? DEFAULT_GPU_MODEL;
 
-  if (engine === 'OLLAMA') {
-    const ollamaResult = await queryOllamaArchitect(cleanInput);
+  if (engine === 'OLLAMA' && options.skipOllamaArchitect !== true) {
+    const ollamaResult = await queryOllamaArchitect(cleanInput, selectedModel);
     if (ollamaResult) {
-      resolved = ollamaResult;
-      reasoningEngineUsed = 'OLLAMA_GPU_RX7900XTX (ear-27b-flow)';
+      resolved = {
+        files: ollamaResult.files,
+        macro: ollamaResult.macro,
+        validation: ollamaResult.validation
+      };
+      reasoningEngineUsed = 'OLLAMA_GPU_RX7900XTX (' + ollamaResult.model + ')';
     }
   }
 
   const suggestedFiles = resolved.files;
-  const macroScript = targetMode === 'SURGICAL'
-    ? `Edición atómica en ${suggestedFiles[0]}: ${resolved.macro} Validar con ${resolved.validation}.`
-    : resolved.macro;
+  const macroScript = options.masterPromptOverride && options.masterPromptOverride.trim()
+    ? options.masterPromptOverride.trim()
+    : targetMode === 'SURGICAL'
+      ? `Edición atómica en ${suggestedFiles[0]}: ${resolved.macro} Validar con ${resolved.validation}.`
+      : resolved.macro;
 
   const governanceChecks: string[] = [
     'Split 80/10/10 Inmutable',
@@ -332,13 +376,12 @@ export async function compileIntentToDAG(
   const jsonTask = {
     id: taskId,
     title,
-    block: 0,
-    status: 'PENDING' as const,
+    status: 'QUEUED' as const,
     description: cleanInput,
-    scaffold: {
-      files_to_touch: suggestedFiles,
-      macro_script: macroScript
-    },
+    files: suggestedFiles,
+    action: cleanInput,
+    scaffold: macroScript,
+    done_when: resolved.validation,
     validation: resolved.validation
   };
 

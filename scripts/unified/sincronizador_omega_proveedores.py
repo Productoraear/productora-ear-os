@@ -28,6 +28,7 @@ import sys
 import json
 import re
 import time
+import tempfile
 import urllib.parse
 from pathlib import Path
 
@@ -61,6 +62,14 @@ VAULT_DIR = Path(r"H:\00_PRODUCTORA_EAR\EAR_ABSORBED_VAULT")
 PROVIDERS_VAULT = VAULT_DIR / "02_PROVEEDORES_SCLASS"
 PROVINCIAS_VAULT = PROVIDERS_VAULT / "PROVINCIAS"
 
+# Doctrina del Dato Verificado: unico punto autorizado para decidir `verified`.
+# Bug raiz sellado: este sincronizador NO puede re-hardcodear verified:true.
+try:
+    from verified_doctrine import resolve_phone_with_doctrine, PLACEHOLDER_PHONE
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from verified_doctrine import resolve_phone_with_doctrine, PLACEHOLDER_PHONE
+
 # Coordenadas GPS para las 52 provincias
 PROVINCE_GPS = {
     "madrid": (40.4168, -3.7038), "toledo": (39.8628, -4.0273), "barcelona": (41.3874, 2.1686),
@@ -84,6 +93,57 @@ PROVINCE_GPS = {
     "teruel": (40.3456, -1.1072), "logroño": (42.4658, -2.4499), "la rioja": (42.4658, -2.4499),
     "pamplona": (42.8125, -1.6458), "navarra": (42.8125, -1.6458)
 }
+
+def atomic_write_text(path: Path, content: str) -> None:
+    """Escritura atómica en el directorio destino + reemplazo para evitar JSON corrupto."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_path = tempfile.mkstemp(dir=str(path.parent), suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            f.write(content)
+        os.replace(tmp_path, path)
+    except Exception:
+        try:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+        except Exception:
+            pass
+        raise
+
+def atomic_write_json(path: Path, data) -> None:
+    atomic_write_text(path, json.dumps(data, ensure_ascii=False, indent=2))
+
+def backup_if_valid(path: Path) -> None:
+    """Copia el archivo actual a .bak solo si es JSON parseable (resguardo anti-corrupción)."""
+    if not path.exists():
+        return
+    try:
+        with open(path, "r", encoding="utf-8-sig", errors="ignore") as f:
+            json.load(f)
+    except Exception:
+        return
+    try:
+        bak = path.with_suffix(path.suffix + ".bak")
+        with open(path, "rb") as src, open(bak, "wb") as dst:
+            dst.write(src.read())
+    except Exception:
+        pass
+
+def load_json_with_backup(path: Path):
+    """Carga un JSON, reintentando con el .bak si el principal está corrupto."""
+    candidates = [path]
+    bak = path.with_suffix(path.suffix + ".bak")
+    if bak.exists():
+        candidates.append(bak)
+    for cand in candidates:
+        if not cand.exists():
+            continue
+        try:
+            with open(cand, "r", encoding="utf-8-sig", errors="ignore") as f:
+                return json.load(f)
+        except Exception:
+            continue
+    raise ValueError(f"No se pudo leer JSON válido de {path}")
 
 def clean_text(text: str) -> str:
     if not text:
@@ -124,6 +184,12 @@ def make_wa_link(phone: str, vendor_name: str) -> str:
         wa_num = digits or "34693693048"
     text = f"Hola {vendor_name}, te contacto desde Productora EAR para consultar disponibilidad para un evento. Aplicamos Split Soberano 80/10/10 y reserva garantizada con depósito Stripe de 100 €. ¿Podemos coordinar detalles?"
     return f"https://wa.me/{wa_num}?text={urllib.parse.quote(text)}"
+
+def build_norm_key(name: str, prov_hint) -> str:
+    """Clave normalizada de deduplicación estable (nombre + provincia)."""
+    n = re.sub(r'[^a-z0-9]', '', str(name or "").lower())[:25]
+    p = re.sub(r'[^a-z0-9]', '', str(prov_hint or "").lower())[:10]
+    return f"{n}_{p}"
 
 def sync_omega_providers():
     hud = DigitalHUD(title="SINCRONIZACIÓN OMEGA DIOS DE PROVEEDORES", total=100)
@@ -170,159 +236,185 @@ def sync_omega_providers():
             continue
         try:
             print(f"  [+] Ingestando {fpath.name}...")
-            with open(fpath, "r", encoding="utf-8-sig", errors="ignore") as f:
-                content = json.load(f)
-                items = content if isinstance(content, list) else content.get("providers", content.get("Providers", content.get("vendors", [])))
-                for item in items:
-                    if not item or not isinstance(item, dict):
-                        continue
-                    total_records_scanned += 1
-                    name = item.get("name") or item.get("Name")
-                    if not name:
-                        continue
-                    clean_name = str(name).strip()
-                    lower_name = clean_name.lower()
+            content = load_json_with_backup(fpath)
+            items = content if isinstance(content, list) else content.get("providers", content.get("Providers", content.get("vendors", [])))
+            for item in items:
+                if not item or not isinstance(item, dict):
+                    continue
+                total_records_scanned += 1
+                name = item.get("name") or item.get("Name")
+                if not name:
+                    continue
+                clean_name = str(name).strip()
+                lower_name = clean_name.lower()
 
-                    # Veto anti-slop
-                    if any(k in lower_name for k in ['peke teso', '100 apodos', 'partner ', 'crónicas de boda', 'organiza tu boda', 'descárgate la app']):
-                        continue
+                # Veto anti-slop
+                if any(k in lower_name for k in ['peke teso', '100 apodos', 'partner ', 'crónicas de boda', 'organiza tu boda', 'descárgate la app']):
+                    continue
 
-                    slug_key = str(item.get("slug") or item.get("Slug") or item.get("id") or item.get("Id") or lower_name).lower().strip()
-                    prov_hint = (item.get("province") or item.get("Province") or "") if str(item.get("province", "")).lower() not in ["none", ""] else ""
-                    norm_key = f"{re.sub(r'[^a-z0-9]', '', lower_name)[:25]}_{re.sub(r'[^a-z0-9]', '', str(prov_hint).lower())[:10]}"
+                slug_key = str(item.get("slug") or item.get("Slug") or item.get("id") or item.get("Id") or lower_name).lower().strip()
+                prov_hint = (item.get("province") or item.get("Province") or "") if str(item.get("province", "")).lower() not in ["none", ""] else ""
+                norm_key = build_norm_key(clean_name, prov_hint)
 
-                    # Si ya existe, enriquecerlo con los datos adicionales
-                    existing = master_pool.get(norm_key, {})
+                # Si ya existe, enriquecerlo con los datos adicionales
+                existing = master_pool.get(norm_key, {})
 
-                    specs = item.get("atomic_specs") or existing.get("atomic_specs") or {}
-                    media = item.get("media") or {}
-                    loc = item.get("location") or {}
+                specs = item.get("atomic_specs") or existing.get("atomic_specs") or {}
+                media = item.get("media") or {}
+                loc = item.get("location") or {}
 
-                    # Extraer fotos HD
-                    cover = (
-                        item.get("img") or 
-                        (media.get("coverImage") if isinstance(media, dict) else None) or
-                        specs.get("media", {}).get("coverImage") or
-                        item.get("image") or 
-                        (item.get("gallery", [None])[0] if isinstance(item.get("gallery"), list) and len(item.get("gallery")) > 0 else None) or
-                        existing.get("img") or ""
-                    )
+                # Extraer fotos HD
+                cover = (
+                    item.get("img") or 
+                    (media.get("coverImage") if isinstance(media, dict) else None) or
+                    specs.get("media", {}).get("coverImage") or
+                    item.get("image") or 
+                    (item.get("gallery", [None])[0] if isinstance(item.get("gallery"), list) and len(item.get("gallery")) > 0 else None) or
+                    existing.get("img") or ""
+                )
 
-                    gallery = list(item.get("gallery") or (media.get("gallery") if isinstance(media, dict) else None) or specs.get("gallery") or existing.get("gallery") or [])
-                    
-                    # Soporte para formato images: [{url: ...}] de bodas_clean.json
-                    images_field = item.get("images")
-                    if isinstance(images_field, list):
-                        for im in images_field:
-                            if isinstance(im, dict) and im.get("url"):
-                                gallery.append(im["url"])
-                            elif isinstance(im, str):
-                                gallery.append(im)
-                    
-                    if not cover and len(gallery) > 0:
-                        cover = gallery[0]
-                    if cover and cover not in gallery:
-                        gallery = [cover] + [g for g in gallery if g != cover]
+                gallery = list(item.get("gallery") or (media.get("gallery") if isinstance(media, dict) else None) or specs.get("gallery") or existing.get("gallery") or [])
+                
+                # Soporte para formato images: [{url: ...}] de bodas_clean.json
+                images_field = item.get("images")
+                if isinstance(images_field, list):
+                    for im in images_field:
+                        if isinstance(im, dict) and im.get("url"):
+                            gallery.append(im["url"])
+                        elif isinstance(im, str):
+                            gallery.append(im)
+                
+                if not cover and len(gallery) > 0:
+                    cover = gallery[0]
+                if cover and cover not in gallery:
+                    gallery = [cover] + [g for g in gallery if g != cover]
 
-                    # Deduplicar galería manteniendo orden
-                    seen_urls = set()
-                    clean_gallery = []
-                    for g_url in gallery:
-                        if g_url and g_url not in seen_urls:
-                            seen_urls.add(g_url)
-                            clean_gallery.append(g_url)
+                # Deduplicar galería manteniendo orden
+                seen_urls = set()
+                clean_gallery = []
+                for g_url in gallery:
+                    if g_url and g_url not in seen_urls:
+                        seen_urls.add(g_url)
+                        clean_gallery.append(g_url)
 
-                    # Teléfono directo
-                    phone = item.get("phone") or item.get("Phone") or item.get("telephone") or specs.get("phone") or existing.get("phone") or "+34 693 693 048"
-                    if str(phone).strip() in ["", "None"]:
-                        phone = "+34 693 693 048"
+                # Teléfono directo: centralita/vacío/placeholder => verified:false
+                candidate_phone = (
+                    item.get("phone") or item.get("Phone") or item.get("telephone")
+                    or specs.get("phone") or existing.get("phone") or None
+                )
+                phone, phone_verified = resolve_phone_with_doctrine(candidate_phone)
+                if str(phone).strip() in ["", "None"]:
+                    phone = PLACEHOLDER_PHONE
+                    phone_verified = False
 
-                    # Provincia y Ciudad
-                    prov = (
-                        (loc.get("province") if isinstance(loc, dict) else None) or
-                        specs.get("province") or
-                        (item.get("province") or item.get("Province") if str(item.get("province", "")).lower() not in ["none", ""] else None) or
-                        (loc.get("city") if isinstance(loc, dict) else None) or
-                        specs.get("city") or
-                        existing.get("province") or "Madrid"
-                    )
-                    prov_clean = str(prov).strip().title()
+                # Provincia y Ciudad
+                prov = (
+                    (loc.get("province") if isinstance(loc, dict) else None) or
+                    specs.get("province") or
+                    (item.get("province") or item.get("Province") if str(item.get("province", "")).lower() not in ["none", ""] else None) or
+                    (loc.get("city") if isinstance(loc, dict) else None) or
+                    specs.get("city") or
+                    existing.get("province") or "Madrid"
+                )
+                prov_clean = str(prov).strip().title()
 
-                    # Precios
-                    price = item.get("basePrice") or item.get("Price") or (item.get("pricing", {}).get("basePrice") if isinstance(item.get("pricing"), dict) else None) or specs.get("pricing", {}).get("rentalBasePrice") or existing.get("basePrice") or 650
-                    try:
-                        price_num = int(float(re.sub(r'[^\d.]', '', str(price))))
-                    except Exception:
-                        price_num = 650
-                    if price_num < 50:
-                        price_num = 450
+                # Precios
+                price = item.get("basePrice") or item.get("Price") or (item.get("pricing", {}).get("basePrice") if isinstance(item.get("pricing"), dict) else None) or specs.get("pricing", {}).get("rentalBasePrice") or existing.get("basePrice") or 650
+                try:
+                    price_num = int(float(re.sub(r'[^\d.]', '', str(price))))
+                except Exception:
+                    price_num = 650
+                if price_num < 50:
+                    price_num = 450
 
-                    # Descripción: priorizar la versión más larga y completa
-                    cand_desc = clean_text(item.get("description") or item.get("description_full") or specs.get("description") or "")
-                    exist_desc = existing.get("description_full") or existing.get("description") or ""
-                    
-                    # Si cand_desc termina con '...' y exist_desc es más larga, mantener exist_desc
-                    if len(cand_desc) > len(exist_desc) and not cand_desc.endswith("..."):
-                        final_desc = cand_desc
-                    elif len(exist_desc) > len(cand_desc):
-                        final_desc = exist_desc
-                    else:
-                        final_desc = cand_desc or exist_desc or f"{clean_name} es un proveedor homologado bajo los estándares de calidad de Productora EAR."
+                # Descripción: priorizar la versión más larga y completa
+                cand_desc = clean_text(item.get("description") or item.get("description_full") or specs.get("description") or "")
+                exist_desc = existing.get("description_full") or existing.get("description") or ""
+                
+                # Si cand_desc termina con '...' y exist_desc es más larga, mantener exist_desc
+                if len(cand_desc) > len(exist_desc) and not cand_desc.endswith("..."):
+                    final_desc = cand_desc
+                elif len(exist_desc) > len(cand_desc):
+                    final_desc = exist_desc
+                else:
+                    final_desc = cand_desc or exist_desc or f"{clean_name} es un proveedor homologado bajo los estándares de calidad de Productora EAR."
 
-                    # Categoría normalizada
-                    raw_cat = item.get("category") or item.get("Category") or specs.get("category") or existing.get("category") or "servicios"
-                    norm_cat = normalize_category(raw_cat, final_desc, clean_name)
+                # Categoría normalizada
+                raw_cat = item.get("category") or item.get("Category") or specs.get("category") or existing.get("category") or "servicios"
+                norm_cat = normalize_category(raw_cat, final_desc, clean_name)
 
-                    # Servicios incluidos (Extraer o asignar defaults por gremio)
-                    services_list = item.get("services_list") or specs.get("services_list") or specs.get("services") or existing.get("services_list") or []
-                    if not services_list or len(services_list) == 0:
-                        services_list = category_services_defaults.get(norm_cat, category_services_defaults["servicios"])
+                # Servicios incluidos (Extraer o asignar defaults por gremio)
+                services_list = item.get("services_list") or specs.get("services_list") or specs.get("services") or existing.get("services_list") or []
+                if not services_list or len(services_list) == 0:
+                    services_list = category_services_defaults.get(norm_cat, category_services_defaults["servicios"])
 
-                    # FAQs: 5 Preguntas Maestras Estilo Bodas.net
-                    faqs = specs.get("faqs") or item.get("faqs") or existing.get("faqs") or {}
-                    if not faqs or (isinstance(faqs, dict) and len(faqs) < 2):
-                        faqs = {
-                            "¿Con cuánta antelación debo ponerme en contacto contigo?": f"Para {clean_name}, recomendamos contactar con un mínimo de 1 a 3 meses de antelación para asegurar disponibilidad de fecha en temporada alta.",
-                            "¿Qué incluye el pack de contratación?": f"Servicio integral homologado de {norm_cat.title()}, seguro de Responsabilidad Civil de 1.000.000 € y coordinación de rider técnico Productora EAR.",
-                            "¿Cobras por horas o por evento?": "Tarifa oficial cerrada por servicio o evento con precio garantizado y congelado durante 72 horas tras el bloqueo.",
-                            "¿Te desplazas a otras ciudades o provincias?": f"Sí, cobertura integral en {prov_clean} y desplazamiento coordinado desde el Hub Central en Méntrida (Toledo) con 50 km gratuitos y 1,50 €/km posterior.",
-                            "¿Cómo se formaliza la reserva de fecha?": "Bloqueo formalizado con depósito de 100,00 € en Stripe bajo firma criptográfica Price-Lock SHA-256 y Split Soberano (80% Proveedor / 10% EAR OS / 10% VIMUME)."
-                        }
-
-                    # Dirección
-                    raw_loc = item.get("location")
-                    loc_str = raw_loc if isinstance(raw_loc, str) else (loc.get("address") if isinstance(loc, dict) else None)
-                    address = item.get("address") or specs.get("address") or loc_str or existing.get("address") or f"{prov_clean}, España"
-
-                    # Reseñas y Rating
-                    rating = item.get("rating") or item.get("Rating") or specs.get("metrics", {}).get("rating") or existing.get("rating") or 4.9
-                    reviews = item.get("reviews") or specs.get("metrics", {}).get("reviewCount") or existing.get("reviews") or 18
-
-                    master_pool[norm_key] = {
-                        "id": item.get("id") or item.get("Id") or f"prov-{norm_key[:24]}",
-                        "name": clean_name,
-                        "slug": slug_key,
-                        "category": norm_cat,
-                        "province": prov_clean,
-                        "phone": phone,
-                        "telephone": phone,
-                        "img": cover,
-                        "gallery": clean_gallery[:12],
-                        "basePrice": price_num,
-                        "price": f"{price_num} €",
-                        "rating": float(rating) if str(rating).replace('.', '', 1).isdigit() and float(rating) > 0 else 4.9,
-                        "reviews": int(reviews) if str(reviews).isdigit() and int(reviews) > 0 else 18,
-                        "description": final_desc,
-                        "description_full": final_desc,
-                        "services_list": services_list if isinstance(services_list, list) else [],
-                        "faqs": faqs,
-                        "address": address,
-                        "verified": True,
-                        "badge": "DIRECTORIO HOMOLOGADO",
-                        "atomic_specs": specs
+                # FAQs: 5 Preguntas Maestras Estilo Bodas.net
+                faqs = specs.get("faqs") or item.get("faqs") or existing.get("faqs") or {}
+                if not faqs or (isinstance(faqs, dict) and len(faqs) < 2):
+                    faqs = {
+                        "¿Con cuánta antelación debo ponerme en contacto contigo?": f"Para {clean_name}, recomendamos contactar con un mínimo de 1 a 3 meses de antelación para asegurar disponibilidad de fecha en temporada alta.",
+                        "¿Qué incluye el pack de contratación?": f"Servicio integral homologado de {norm_cat.title()}, seguro de Responsabilidad Civil de 1.000.000 € y coordinación de rider técnico Productora EAR.",
+                        "¿Cobras por horas o por evento?": "Tarifa oficial cerrada por servicio o evento con precio garantizado y congelado durante 72 horas tras el bloqueo.",
+                        "¿Te desplazas a otras ciudades o provincias?": f"Sí, cobertura integral en {prov_clean} y desplazamiento coordinado desde el Hub Central en Méntrida (Toledo) con 50 km gratuitos y 1,50 €/km posterior.",
+                        "¿Cómo se formaliza la reserva de fecha?": "Bloqueo formalizado con depósito de 100,00 € en Stripe bajo firma criptográfica Price-Lock SHA-256 y Split Soberano (80% Proveedor / 10% EAR OS / 10% VIMUME)."
                     }
+
+                # Dirección
+                raw_loc = item.get("location")
+                loc_str = raw_loc if isinstance(raw_loc, str) else (loc.get("address") if isinstance(loc, dict) else None)
+                address = item.get("address") or specs.get("address") or loc_str or existing.get("address") or f"{prov_clean}, España"
+
+                # Reseñas y Rating
+                rating = item.get("rating") or item.get("Rating") or specs.get("metrics", {}).get("rating") or existing.get("rating") or 4.9
+                reviews = item.get("reviews") or specs.get("metrics", {}).get("reviewCount") or existing.get("reviews") or 18
+
+                master_pool[norm_key] = {
+                    "id": item.get("id") or item.get("Id") or f"prov-{norm_key[:24]}",
+                    "name": clean_name,
+                    "slug": slug_key,
+                    "category": norm_cat,
+                    "province": prov_clean,
+                    "phone": phone,
+                    "telephone": phone,
+                    "img": cover,
+                    "gallery": clean_gallery[:12],
+                    "basePrice": price_num,
+                    "price": f"{price_num} €",
+                    "rating": float(rating) if str(rating).replace('.', '', 1).isdigit() and float(rating) > 0 else 4.9,
+                    "reviews": int(reviews) if str(reviews).isdigit() and int(reviews) > 0 else 18,
+                    "description": final_desc,
+                    "description_full": final_desc,
+                    "services_list": services_list if isinstance(services_list, list) else [],
+                    "faqs": faqs,
+                    "address": address,
+                    "verified": phone_verified,
+                    "badge": "DIRECTORIO HOMOLOGADO",
+                    "atomic_specs": specs
+                }
         except Exception as e:
             print(f"  [!] Error leyendo {fpath.name}: {e}")
+
+    # 1.5 Blindaje anti-pérdida: si la base canónica en disco tiene más registros
+    # que la nueva pool (p. ej. por corrupción transitoria de alguna fuente),
+    # fusionar los registros existentes para no regresar nunca a un número menor.
+    try:
+        existing_db = load_json_with_backup(APP_DATA_DIR / "all_providers_database.json")
+        if isinstance(existing_db, list):
+            merged = 0
+            for rec in existing_db:
+                if not isinstance(rec, dict):
+                    continue
+                rec_name = str(rec.get("name") or "").strip()
+                if not rec_name:
+                    continue
+                rec_key = build_norm_key(rec_name, rec.get("province") or "")
+                if rec_key not in master_pool:
+                    master_pool[rec_key] = rec
+                    merged += 1
+            if merged:
+                print(f"  [RESGUARDO] Recuperados {merged:,} registros del respaldo canónico para evitar pérdida.")
+    except Exception as e:
+        print(f"  [!] No se pudo fusionar respaldo canónico: {e}")
 
     # 2. Inyectar a Edwin Agudelo como Artista Soberano #1 Permanente
     sovereign_edwin = {
@@ -347,7 +439,9 @@ def sync_omega_providers():
         "services_list": ["Actuación Musical en Vivo (1h)", "Sonido Bose F1 / S1 Pro", "Ramo de Flores en directo", "Canción Personalizada", "Sesión de fotos temáticas"],
         "isPreferred": True,
         "badge": "SOLISTA S-CLASS",
-        "customUrl": "/artistas/edwin-agudelo"
+        "customUrl": "/artistas/edwin-agudelo",
+        "verified": True,
+        "isSovereign": True
     }
 
     all_providers_list = [sovereign_edwin] + [v for k, v in master_pool.items() if "edwin agudelo" not in v["name"].lower() and "productora ear" not in v["name"].lower()]
@@ -355,22 +449,73 @@ def sync_omega_providers():
     hud.update(40, "Guardando Base", f"Sincronizando {len(all_providers_list)} proveedores enriquecidos")
     print(f"\n  [✓] TOTAL PROVEEDORES ABSORBIDOS CON FOTOS Y DATOS: {len(all_providers_list):,}")
 
-    # 3. Guardar en src/data/all_providers_database.json
-    with open(APP_DATA_DIR / "all_providers_database.json", "w", encoding="utf-8") as f:
-        json.dump(all_providers_list, f, ensure_ascii=False, indent=2)
+    # 3. Guardar en src/data/all_providers_database.json (atómico + respaldo anti-corrupción)
+    _master_path = APP_DATA_DIR / "all_providers_database.json"
+    backup_if_valid(_master_path)
+    atomic_write_json(_master_path, all_providers_list)
 
-    # 3.1 Particionar y guardar en los 10 archivos Edge CDN en public/data/providers/
+    # 3.1 Particionar y guardar en archivos Edge CDN (public/data/providers/).
+    # Doctrina del Dato Verificado: SOLO se publican verificados con teléfono real
+    # (0 placeholders / centralita / vacíos). Cap anti-bloat por gremio.
     PUBLIC_PROVIDERS_DIR = WORKSPACE_DIR / "public" / "data" / "providers"
     PUBLIC_PROVIDERS_DIR.mkdir(parents=True, exist_ok=True)
     from collections import defaultdict
+    EDGE_CAPS = {
+        "finca": 800, "catering": 600, "musica": 800, "foto": 800,
+        "decoracion": 500, "servicios": 800, "moda": 800, "transporte": 500,
+        "sonido": 500, "wedding": 500
+    }
+
+    def _compact_edge(record):
+        return {
+            "id": record.get("id", ""),
+            "name": record.get("name", "Proveedor Homologado"),
+            "slug": record.get("slug", ""),
+            "category": record.get("category", "servicios"),
+            "province": record.get("province", "Madrid"),
+            "address": record.get("address", ""),
+            "phone": record.get("phone", ""),
+            "telephone": record.get("telephone", ""),
+            "img": record.get("img", ""),
+            "basePrice": record.get("basePrice", 350),
+            "price": record.get("price", ""),
+            "rating": record.get("rating", 4.9),
+            "reviews": record.get("reviews", 18),
+            "description": record.get("description", ""),
+            "description_full": record.get("description_full", ""),
+            "services_list": (record.get("services_list") or [])[:4],
+            "verified": bool(record.get("verified", True)),
+            "isPreferred": bool(record.get("isPreferred", False)),
+            "isSovereign": bool(record.get("isSovereign", False))
+        }
+
+    # Solo verificados con teléfono real (regla inmutable; 0 placeholders en Edge).
+    # EXCEPCIÓN ÚNICA: el registro soberano del CEO (isSovereign) es first-party
+    # y permanece SIEMPRE, sin abrir hueco a proveedores raspados placeholders.
+    verified_only = [
+        r for r in all_providers_list
+        if r.get("isSovereign") is True
+        or (r.get("verified") is True and PLACEHOLDER_PHONE not in (r.get("phone") or ""))
+    ]
+
     edge_partitions = defaultdict(list)
-    for prov_item in all_providers_list:
+    seen_names = set()
+    for prov_item in verified_only:
         c_name = prov_item.get("category", "servicios")
+        dedup_key = str(prov_item.get("name", "")).strip().lower()
+        if dedup_key and dedup_key in seen_names:
+            continue
+        if dedup_key:
+            seen_names.add(dedup_key)
         edge_partitions[c_name].append(prov_item)
 
     for cat_name, items_list in edge_partitions.items():
-        with open(PUBLIC_PROVIDERS_DIR / f"{cat_name}.json", "w", encoding="utf-8") as pf:
-            json.dump(items_list, pf, ensure_ascii=False, indent=2)
+        # Ordenar por rating/reviews descendente y respetar cap anti-bloat.
+        items_list.sort(key=lambda x: (-(x.get("rating") or 0), -(x.get("reviews") or 0)))
+        cap = EDGE_CAPS.get(cat_name, 600)
+        selected = items_list[:cap]
+        compacted = [_compact_edge(x) for x in selected]
+        atomic_write_json(PUBLIC_PROVIDERS_DIR / f"{cat_name}.json", compacted)
 
     # 4. Actualizar src/data/neural-providers.ts (Catálogo para el Cotizador)
     hud.update(55, "Generando TypeScript", "Actualizando neural-providers.ts para el cotizador")
@@ -469,8 +614,7 @@ def sync_omega_providers():
         ts_lines.append("  " + json.dumps(np, ensure_ascii=False) + ",\n")
     ts_lines.append("];\n")
 
-    with open(APP_DATA_DIR / "neural-providers.ts", "w", encoding="utf-8") as f:
-        f.writelines(ts_lines)
+    atomic_write_text(APP_DATA_DIR / "neural-providers.ts", "".join(ts_lines))
 
     # 5. Generar Sub-Catálogos en Obsidian y Vault
     hud.update(70, "Generando Markdown", "Construyendo los 10 Catálogos Gremiales y 7 Hubs en Obsidian")
@@ -511,8 +655,7 @@ def sync_omega_providers():
             action_html = f"[{p['phone']}](tel:{clean_phone})<br>[💬 WhatsApp]({wa_link})"
             lines.append(f"| {cover_html} | {name_display} | {p['province']} | `{p['price']}` | ⭐ {p['rating']} | {action_html} |\n")
 
-        with open(PROVIDERS_VAULT / fname, "w", encoding="utf-8") as f:
-            f.writelines(lines)
+        atomic_write_text(PROVIDERS_VAULT / fname, "".join(lines))
 
     # 6. Generar el Cockpit Maestro en Obsidian (CATALOGO_PROVEEDORES_VISUAL.md)
     hud.update(90, "Cockpit Maestro", "Escribiendo CATALOGO_PROVEEDORES_VISUAL.md")
@@ -543,8 +686,7 @@ def sync_omega_providers():
         "> 🚐 **Logística S-Class:** 1,50 €/km calculados desde Méntrida a partir del km 50. Suplemento hotelero (+120 €) si hora fin >= 3:00 AM o distancia > 200 km.\n"
     ]
 
-    with open(PROVIDERS_VAULT / "CATALOGO_PROVEEDORES_VISUAL.md", "w", encoding="utf-8") as f:
-        f.writelines(cockpit_lines)
+    atomic_write_text(PROVIDERS_VAULT / "CATALOGO_PROVEEDORES_VISUAL.md", "".join(cockpit_lines))
 
     hud.finish(
         f"Sincronización OMEGA DIOS Culminada con Éxito.\n"

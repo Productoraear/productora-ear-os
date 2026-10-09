@@ -128,7 +128,7 @@ export function calculateMariachiDispatch(input: MariachiOrderInput): MariachiDi
     '🎁 *Bono Activado:* Bono EDWIN150-COMPLEMENTOS aplicable suscribiéndote a nuestro canal de YouTube.',
     '',
     '📲 *Para confirmar el despacho y bloquear la agenda, realiza el depósito de 100 € aquí:*',
-    `https://www.productoraear.com/api/payments/checkout?ref=${orderId}&hash=${priceLockHash}`,
+    `https://productoraear.com/api/payments/checkout?ref=${orderId}&hash=${priceLockHash}`,
     '',
     'Centralita 24h: +34 693 693 048 | Edwin Agudelo'
   ].filter(Boolean).join('\n');

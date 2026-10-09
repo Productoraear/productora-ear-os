@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { BespokeTemplate } from '@/app/components/SClassScreens/BespokeTemplate';
@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { cityName } = resolveGeoLocation(provinceSlug);
 
   return {
-    title: `Licitaciones B2G y Producción Institucional en ${cityName} | Productora EAR`,
-    description: `Servicios de ${eventSlug.replace(/-/g, ' ')} para Ayuntamientos e Instituciones Públicas en ${cityName}. Cumplimiento estricto LCSP, seguro RC 600.000€ y memorias técnicas.`,
+    title: `Contratar Producción B2G y Agrupaciones en ${cityName} | Desde 900 € · Productora EAR`,
+    description: `Contratar ${eventSlug.replace(/-/g, ' ') || 'agrupación profesional'} para Ayuntamientos e Instituciones en ${cityName} desde 900 €. Techo preventivo 14.250 € (Art. 118 LCSP) con dossier FACe y seguro RC 600.000 €.`,
     alternates: {
       canonical: `https://productoraear.com/b2g/${slug.join('/')}`,
     }

@@ -6,8 +6,14 @@ import { checkDateAvailability } from '@/lib/availability/atomicDateLockEngine';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// 🔒 FAIL-CLOSED STRIPE (BLINDAJE SESSION_SECRET P0): sin secreto real, el módulo NO se instancia.
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+if (!STRIPE_SECRET_KEY || STRIPE_SECRET_KEY === 'sk_test_dummy_key_for_build') {
+  throw new Error('[ARTIST_DEPOSIT] STRIPE_SECRET_KEY no configurado en el servidor (fail-closed).');
+}
+
 const stripe = new Stripe(
-  process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build',
+  STRIPE_SECRET_KEY,
   { apiVersion: '2025-01-27.acacia' as any }
 );
 
@@ -54,7 +60,7 @@ export async function POST(req: NextRequest) {
     const orderId = `EAR-ARTIST-${Date.now()}`;
     const priceLockHash = crypto
       .createHash('sha256')
-      .update(`${orderId}-${DEPOSIT_CENTS}-${fecha}-${horaTramo || ''}-${process.env.STRIPE_SECRET_KEY || 'dev'}`)
+      .update(`${orderId}-${DEPOSIT_CENTS}-${fecha}-${horaTramo || ''}-${STRIPE_SECRET_KEY}`)
       .digest('hex');
 
     const origin =

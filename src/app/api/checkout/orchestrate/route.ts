@@ -8,7 +8,13 @@ import { waitUntil } from '@vercel/functions';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build', {
+// 🔒 FAIL-CLOSED STRIPE (BLINDAJE SESSION_SECRET P0): sin secreto real, el módulo NO se instancia.
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+if (!STRIPE_SECRET_KEY || STRIPE_SECRET_KEY === 'sk_test_dummy_key_for_build') {
+  throw new Error('[CHECKOUT_ORCHESTRATE] STRIPE_SECRET_KEY no configurado en el servidor (fail-closed).');
+}
+
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2025-01-27.acacia' as any,
 });
 

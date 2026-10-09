@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+r"""
 ═══════════════════════════════════════════════════════════════════════════════
   🦇 EAR OS V2 — MASTER OVERNIGHT VAMPIRE DAEMON (BODAS.NET + CELEBRENTS)
   Arquitectura: ANTIGRAVITY OMEGA v7.0 · Modo CEO Activo · Protocolo ZTM
@@ -30,7 +30,7 @@ import re
 import json
 import time
 import argparse
-import random
+import tempfile
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from collections import defaultdict
@@ -42,6 +42,14 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
+
+# Doctrina del Dato Verificado: unico punto autorizado para decidir `verified`.
+# Prohibido re-hardcodear verified:true (bug raiz sellado: sincronizador_omega_proveedores.py).
+try:
+    from verified_doctrine import resolve_phone_with_doctrine, PLACEHOLDER_PHONE
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from verified_doctrine import resolve_phone_with_doctrine, PLACEHOLDER_PHONE
 
 PROJECT_ROOT = Path(r"H:\EAR_OS_V2\EAR_OS_V2")
 SCRIPTS_DIR = PROJECT_ROOT / "scripts"
@@ -55,6 +63,8 @@ PROGRESS_FILE = RESULTS_DIR / "master_vampire_progress.json"
 TELEMETRY_LOG = RESULTS_DIR / "master_vampire_telemetry.log"
 CHECKPOINT_BODAS = RESULTS_DIR / "bodas_live_harvested.json"
 CHECKPOINT_CELEBRENTS = RESULTS_DIR / "celebrents_live_harvested.json"
+PENDING_CATALOGS = RESULTS_DIR / "bodas_catalog_pending.json"
+PENDING_STOREFRONTS = RESULTS_DIR / "bodas_storefront_pending.json"
 
 # Dependencia para evasión WAF
 try:
@@ -102,6 +112,29 @@ def log_telemetry(msg: str):
             f.write(formatted + "\n")
     except Exception:
         pass
+
+def atomic_write_json(filepath: Path, data) -> None:
+    """Escritura atómica + reemplazo para evitar checkpoints/colas corruptas."""
+    filepath.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_path = tempfile.mkstemp(dir=str(filepath.parent), suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        os.replace(tmp_path, filepath)
+    except Exception:
+        try:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+        except Exception:
+            pass
+        raise
+
+def save_pending_queue(filepath: Path, items: List[str]):
+    """Persiste la cola pendiente de forma atómica para retomar sin perder trabajo."""
+    try:
+        atomic_write_json(filepath, items)
+    except Exception as e:
+        log_telemetry(f"[!] No se pudo guardar la cola {filepath.name}: {e}")
 
 def clean_spanish(t: Any) -> str:
     if not t:
@@ -298,7 +331,7 @@ def extract_celebrents_profile_99(html: str, source_url: str = "") -> Optional[D
             if m_phone:
                 direct_phone = m_phone.group(0).strip()
 
-    phone = direct_phone or "+34 693 693 048"
+    phone, phone_verified = resolve_phone_with_doctrine(direct_phone)
     cat_hint = breadcrumbs[2] if len(breadcrumbs) > 3 else (breadcrumbs[1] if len(breadcrumbs) > 2 else "")
     category = normalize_category(cat_hint, description, name)
 
@@ -331,7 +364,7 @@ def extract_celebrents_profile_99(html: str, source_url: str = "") -> Optional[D
         "price": "650 €",
         "source": "Celebrents.es Deep Extractor",
         "sourceUrl": source_url,
-        "verified": True,
+        "verified": phone_verified,
         "vampirizedAt": time.strftime("%Y-%m-%dT%H:%M:%S+02:00")
     }
 
@@ -400,6 +433,7 @@ def extract_bodas_storefront_99(html: str, url: str = "") -> Optional[Dict[str, 
     cat = normalize_category(url, desc, name)
     full_address = f"{street}, {prov}, España" if street else f"{prov}, España"
     tkey = make_token_key(name, prov)
+    phone, phone_verified = resolve_phone_with_doctrine(direct_phone)
 
     return {
         "id": f"bodas-live-{tkey[:20]}",
@@ -407,8 +441,8 @@ def extract_bodas_storefront_99(html: str, url: str = "") -> Optional[Dict[str, 
         "slug": re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-'),
         "category": cat,
         "province": prov.title(),
-        "phone": direct_phone or "+34 693 693 048",
-        "telephone": direct_phone or "+34 693 693 048",
+        "phone": phone,
+        "telephone": phone,
         "address": full_address,
         "imageUrls": images,
         "img": images[0] if images else "",
@@ -419,7 +453,7 @@ def extract_bodas_storefront_99(html: str, url: str = "") -> Optional[Dict[str, 
         "reviews": reviews,
         "description": desc or f"{name} es un proveedor homologado bajo los estándares de calidad de Productora EAR.",
         "description_full": desc or f"{name} es un proveedor homologado bajo los estándares de calidad de Productora EAR.",
-        "verified": True,
+        "verified": phone_verified,
         "source": "Bodas.net Live Miner",
         "sourceUrl": url,
         "vampirizedAt": time.strftime("%Y-%m-%dT%H:%M:%S+02:00")
@@ -486,21 +520,43 @@ def main():
 
     log_telemetry(f"Celebrents: {len(celeb_urls):,} URLs pendientes de extracción profunda 99%.")
 
-    # 2. Cargar Sitemaps de Bodas.net
-    log_telemetry("Descargando índice de catálogos de Bodas.net...")
-    catalog_urls = []
-    for s_idx in range(1, 42):
-        s_url = f"https://www.bodas.net/sitemaps/desktop/vendor-catalog-s-{s_idx}.xml"
-        s_xml = fetch_url_stealth(s_url, timeout=8)
-        if s_xml:
-            found = re.findall(r'<loc><!\[CDATA\[(.*?)\]\]></loc>', s_xml)
-            if not found:
-                found = re.findall(r'<loc>(.*?)</loc>', s_xml)
-            catalog_urls.extend(found)
-        if len(catalog_urls) > 500 and not args.daemon:
-            break
+    # 2. Cargar / restaurar cola persistente de catálogos de Bodas.net
+    catalog_queue: List[str] = []
+    if PENDING_CATALOGS.exists():
+        try:
+            with open(PENDING_CATALOGS, "r", encoding="utf-8") as f:
+                catalog_queue = [u for u in json.load(f) if isinstance(u, str) and u.startswith("http")]
+            log_telemetry(f"Catálogos pendientes restaurados desde checkpoint: {len(catalog_queue):,}.")
+        except Exception:
+            catalog_queue = []
 
-    log_telemetry(f"Bodas.net: {len(catalog_urls):,} páginas de catálogo indexadas.")
+    if not catalog_queue:
+        log_telemetry("Descargando índice de catálogos de Bodas.net...")
+        for s_idx in range(1, 42):
+            s_url = f"https://www.bodas.net/sitemaps/desktop/vendor-catalog-s-{s_idx}.xml"
+            s_xml = fetch_url_stealth(s_url, timeout=8)
+            if s_xml:
+                found = re.findall(r'<loc><!\[CDATA\[(.*?)\]\]></loc>', s_xml)
+                if not found:
+                    found = re.findall(r'<loc>(.*?)</loc>', s_xml)
+                for u in found:
+                    if u and u not in catalog_queue:
+                        catalog_queue.append(u)
+        save_pending_queue(PENDING_CATALOGS, catalog_queue)
+        log_telemetry(f"Bodas.net: {len(catalog_queue):,} páginas de catálogo indexadas.")
+
+    # 3. Restaurar cola persistente de escaparates (--e) pendientes
+    storefront_queue: List[str] = []
+    if PENDING_STOREFRONTS.exists():
+        try:
+            with open(PENDING_STOREFRONTS, "r", encoding="utf-8") as f:
+                storefront_queue = [
+                    u for u in json.load(f)
+                    if isinstance(u, str) and u.startswith("http") and u not in bodas_harvested
+                ]
+            log_telemetry(f"Escaparates pendientes restaurados: {len(storefront_queue):,}.")
+        except Exception:
+            storefront_queue = []
 
     cycle_count = 0
     while True:
@@ -508,7 +564,7 @@ def main():
         log_telemetry(f"\n--- [CICLO NOCTURNO #{cycle_count}] Procesando enjambre multihilo ---")
         new_in_cycle = 0
 
-        # Sub-ciclo Celebrents
+        # Sub-ciclo Celebrents (FIFO estricto)
         target_celeb = celeb_urls[:args.batch_size]
         if target_celeb:
             log_telemetry(f"  -> Minando lote de {len(target_celeb)} perfiles de Celebrents...")
@@ -523,43 +579,46 @@ def main():
                             celeb_harvested[u] = prof
                             new_in_cycle += 1
 
-            # Eliminar procesados de la cola
             celeb_urls = celeb_urls[args.batch_size:]
+            atomic_write_json(CHECKPOINT_CELEBRENTS, list(celeb_harvested.values()))
 
-            # Guardar checkpoint Celebrents
-            with open(CHECKPOINT_CELEBRENTS, "w", encoding="utf-8") as f:
-                json.dump(list(celeb_harvested.values()), f, ensure_ascii=False, indent=2)
-
-        # Sub-ciclo Bodas.net
-        target_catalogs = random.sample(catalog_urls, min(15, len(catalog_urls))) if catalog_urls else []
+        # Sub-ciclo Bodas.net FASE A: explorar catálogos y encolar escaparates (--e)
+        target_catalogs = catalog_queue[:args.batch_size]
         if target_catalogs:
             log_telemetry(f"  -> Explorando {len(target_catalogs)} catálogos de Bodas.net...")
-            new_storefront_urls = set()
+            discovered = 0
             with ThreadPoolExecutor(max_workers=args.workers) as executor:
                 futures = {executor.submit(fetch_url_stealth, cu): cu for cu in target_catalogs}
                 for f in as_completed(futures):
                     html = f.result()
                     if html:
                         for s_url in re.findall(r'href=[\'"](https://www\.bodas\.net/[^\'"]+--e\d+)[\'"]', html):
-                            if s_url not in bodas_harvested:
-                                new_storefront_urls.add(s_url)
+                            if s_url not in bodas_harvested and s_url not in storefront_queue:
+                                storefront_queue.append(s_url)
+                                discovered += 1
+            catalog_queue = catalog_queue[args.batch_size:]
+            save_pending_queue(PENDING_CATALOGS, catalog_queue)
+            save_pending_queue(PENDING_STOREFRONTS, storefront_queue)
+            if discovered:
+                log_telemetry(f"  -> {discovered} nuevos escaparates --e encolados.")
 
-            if new_storefront_urls:
-                log_telemetry(f"  -> Descubiertos {len(new_storefront_urls)} nuevos escaparates --e. Extrayendo fichas...")
-                with ThreadPoolExecutor(max_workers=args.workers) as executor:
-                    sf_futures = {executor.submit(fetch_url_stealth, su): su for su in list(new_storefront_urls)[:args.batch_size]}
-                    for sf in as_completed(sf_futures):
-                        su = sf_futures[sf]
-                        sf_html = sf.result()
-                        if sf_html:
-                            sf_prof = extract_bodas_storefront_99(sf_html, su)
-                            if sf_prof:
-                                bodas_harvested[su] = sf_prof
-                                new_in_cycle += 1
-
-                # Guardar checkpoint Bodas.net
-                with open(CHECKPOINT_BODAS, "w", encoding="utf-8") as f:
-                    json.dump(list(bodas_harvested.values()), f, ensure_ascii=False, indent=2)
+        # Sub-ciclo Bodas.net FASE B: extraer fichas de la cola de escaparates
+        target_storefronts = storefront_queue[:args.batch_size]
+        if target_storefronts:
+            log_telemetry(f"  -> Extrayendo {len(target_storefronts)} fichas de escaparates...")
+            with ThreadPoolExecutor(max_workers=args.workers) as executor:
+                sf_futures = {executor.submit(fetch_url_stealth, su): su for su in target_storefronts}
+                for sf in as_completed(sf_futures):
+                    su = sf_futures[sf]
+                    sf_html = sf.result()
+                    if sf_html:
+                        sf_prof = extract_bodas_storefront_99(sf_html, su)
+                        if sf_prof:
+                            bodas_harvested[su] = sf_prof
+                            new_in_cycle += 1
+            storefront_queue = storefront_queue[args.batch_size:]
+            save_pending_queue(PENDING_STOREFRONTS, storefront_queue)
+            atomic_write_json(CHECKPOINT_BODAS, list(bodas_harvested.values()))
 
         # Sincronización soberana al completar lote
         if new_in_cycle > 0:
@@ -574,13 +633,17 @@ def main():
             "bodas_live_harvested": len(bodas_harvested),
             "total_harvested": len(celeb_harvested) + len(bodas_harvested),
             "pending_celebrents_urls": len(celeb_urls),
+            "pending_catalogs": len(catalog_queue),
+            "pending_storefronts": len(storefront_queue),
             "status": "RUNNING"
         }
-        with open(PROGRESS_FILE, "w", encoding="utf-8") as f:
-            json.dump(progress_data, f, ensure_ascii=False, indent=2)
+        atomic_write_json(PROGRESS_FILE, progress_data)
 
-        if not args.daemon:
-            log_telemetry("Modo un solo paso culminado. Finalizando ejecución.")
+        # CONDICIÓN DE FINALIZACIÓN: colas agotadas => proceso completo al 100%
+        if not celeb_urls and not catalog_queue and not storefront_queue:
+            progress_data["status"] = "COMPLETED"
+            atomic_write_json(PROGRESS_FILE, progress_data)
+            log_telemetry("🏁 [COMPLETADO] Celebrents + catálogos + escaparates de Bodas.net extraídos al 100%. Proceso terminado.")
             break
 
         log_telemetry("Pausa de resguardo térmico (10 segundos)...")

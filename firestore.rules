@@ -75,6 +75,22 @@ service cloud.firestore {
       allow read, update, delete: if isSuperAdmin();
     }
 
+    // 🎯 EMBUDO DE ARTISTAS S-CLASS (CAPTACIÓN PÚBLICA)
+    // Doctrina del dato verificado: se exige nombre, email y teléfono real.
+    // No se admite centralita ni teléfono vacío para evitar placeholders.
+    match /ear_artist_funnels/{funnelId} {
+      allow create: if request.resource.data.nombre is string
+        && request.resource.data.nombre.size() > 0
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 0
+        && request.resource.data.telefono is string
+        && request.resource.data.telefono.size() > 0
+        && request.resource.data.telefono != '+34 693 693 048'
+        && request.resource.data.objetivoPrincipal is string
+        && request.resource.data.objetivoPrincipal.size() > 0;
+      allow read, update, delete: if isSuperAdmin();
+    }
+
     // 🧬 VIMUME INTERVENCIONES & MULTI-CENTRO PATIENTS
     match /vimume_intervenciones/{docId} {
       // Allow read if user belongs to the same center or is Super Admin

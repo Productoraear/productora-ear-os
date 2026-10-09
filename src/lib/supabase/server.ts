@@ -5,7 +5,13 @@ export const createClient = () => {
   const supabaseUrl = (rawUrl && (rawUrl.startsWith('http://') || rawUrl.startsWith('https://')))
     ? rawUrl
     : 'https://ear-os-production.supabase.co';
-  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_service_key_placeholder';
+
+  // 🔒 BLINDAJE P1-2: el cliente de SERVIDOR exige SERVICE_ROLE_KEY real.
+  // Prohibido degradar silenciosamente a anon key o placeholder.
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!supabaseKey) {
+    throw new Error('[SUPABASE_SERVER] SUPABASE_SERVICE_ROLE_KEY no definida en el entorno de servidor.');
+  }
 
   return createSupabaseClient(supabaseUrl, supabaseKey);
 };

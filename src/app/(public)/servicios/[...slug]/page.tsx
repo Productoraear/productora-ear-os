@@ -19,6 +19,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   if (!slug || slug.length === 0) return {};
 
+  // 🚪 CONSOLIDACIÓN ANTI-DOORWAY: /servicios/{servicio}/{ocasion}/{municipio} (3+ niveles)
+  // No aporta contenido diferencial por municipio/ocasión. Se noindexa y su señal
+  // canónica se pliega hacia el hub de servicio de 2 niveles (/servicios/{servicio}).
+  const isDoorway = slug.length >= 3;
+
   const fullPath = slug.join('-').toLowerCase();
   const lastSeg = slug[slug.length - 1].toLowerCase();
   const isLastProv = PROVINCIAS.includes(lastSeg);
@@ -33,8 +38,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `Alquiler de Vehículos de Lujo con Conductor & Chófer VIP en ${cityName} | Productora EAR`,
       description: `Flota oficial Mercedes-Benz Clase S, Clase V y Maybach en ${cityName}. Servicios de representación, transfers aeropuerto Barajas FBO, bodas y eventos VIP.`,
       alternates: {
-        canonical: `https://productoraear.com/servicios/${slug.join('/')}`,
-      }
+        canonical: isDoorway
+          ? `https://productoraear.com/servicios/${slug[0]}`
+          : `https://productoraear.com/servicios/${slug.join('/')}`,
+      },
+      ...(isDoorway ? { robots: { index: false, follow: false, nocache: true } } : {}),
     };
   }
 
@@ -42,8 +50,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${serviceSlug.replace(/-/g, ' ').toUpperCase()} en ${cityName} | Productora EAR`,
     description: `Servicios profesionales de ${serviceSlug.replace(/-/g, ' ')} en ${cityName} con infraestructura técnica directa.`,
     alternates: {
-      canonical: `https://productoraear.com/servicios/${slug.join('/')}`,
-    }
+      canonical: isDoorway
+        ? `https://productoraear.com/servicios/${slug[0]}`
+        : `https://productoraear.com/servicios/${slug.join('/')}`,
+    },
+    ...(isDoorway ? { robots: { index: false, follow: false, nocache: true } } : {}),
   };
 }
 

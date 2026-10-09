@@ -60,7 +60,7 @@ export async function sendB2GTelegramAlert(tender: B2GTenderAlertPayload): Promi
     ? `${tender.matchScore}% (&lt;75 dB SPL - Certificado)` 
     : `${tender.matchScore}% (Estándar Festejos)`;
 
-  const actionUrl = `https://www.productoraear.com/admin/flota?tab=b2g&id=${encodeURIComponent(tender.id)}`;
+  const actionUrl = `https://productoraear.com/admin/flota?tab=b2g&id=${encodeURIComponent(tender.id)}`;
 
   const messageHtml = [
     `🏛️ <b>NUEVA LICITACIÓN B2G DETECTADA</b>`,

@@ -49,7 +49,7 @@ export async function POST(req: Request) {
         // ====================================================================
         // 🌌 FASE CONVERSACION — Gemini 1.5 PRO + RAG
         // ====================================================================
-        const apiKey = process.env.GEMINI_API_KEY || process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+        const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
             throw new Error("Missing Gemini API Key in environment.");
         }

@@ -13,7 +13,14 @@ export const dynamic = "force-dynamic";
  */
 export async function GET(req: Request) {
   const authHeader = req.headers.get("authorization");
-  const cronSecret = process.env.CRON_SECRET || "LEVIATHAN_SECRET_KEY";
+
+  // 🔒 BLINDAJE P0-4: sin CRON_SECRET definido en el entorno, el cron queda DESHABILITADO.
+  // Prohibido cualquier fallback predecible.
+  const cronSecret = process.env.CRON_SECRET;
+  if (!cronSecret) {
+    logger.error({ event: "CRON_SYNC_MISCONFIGURED", description: "CRON_SECRET no definido." });
+    return NextResponse.json({ error: "CONFIGURACION_SEGURIDAD_INVALIDA" }, { status: 500 });
+  }
 
   // 1. Verificación del Guardián Bearer Token
   if (
@@ -45,9 +52,9 @@ export async function GET(req: Request) {
     // 4. Alertar e informarle a Telegram del nuevo estado cognitivo
     await sendTelegramNotification(
       `🧠 *ASTRA RAG ACTUALIZADO. MEMORIA SINCRONIZADA.*\n\n` +
-        `📁 Se han parseado, indexado y vectorizado con éxito **${fragments.length} notas** ` +
-        `del vault Obsidian \`docs/memoria EAR OS\` en el cerebro lógico de EAR OS.\n\n` +
-        `🚀 _ASTRA RAG Engine: Cognitive sovereignty active._`
+      `📁 Se han parseado, indexado y vectorizado con éxito **${fragments.length} notas** ` +
+      `del vault Obsidian \`docs/memoria EAR OS\` en el cerebro lógico de EAR OS.\n\n` +
+      `🚀 _ASTRA RAG Engine: Cognitive sovereignty active._`
     );
 
     return NextResponse.json({

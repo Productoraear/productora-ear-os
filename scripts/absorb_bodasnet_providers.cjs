@@ -17,6 +17,47 @@ const CANONICAL_CATEGORIES = [
     'Autobuses', 'Planners', 'Animación', 'Mobiliario'
 ];
 
+const PLACEHOLDER_PHONE = '+34 693 693 048';
+const PLACEHOLDER_NATIONAL = '693693048';
+// Un número compartido por muchos proveedores distintos es dato no verificado (scraper artifact).
+const MAX_SHARED_PHONE = 3;
+
+const normalizePhone = (p) => {
+    if (p == null) return '';
+    return String(p).replace(/[^0-9]/g, '');
+};
+
+// Devuelve los 9 dígitos nacionales válidos (sin prefijo país) o null.
+const spanishNationalDigits = (raw) => {
+    const d = normalizePhone(raw);
+    if (!d) return null;
+    if (d.startsWith('34') && d.length === 11) return d.slice(2);
+    if (d.length === 9) return d;
+    return null;
+};
+
+// Solo móviles (6/7) y fijos geográficos (91x–98x).
+// Excluye 8xx (tarificación especial), 90x (premium: 901/902/905...)
+// y 99x (reservado/no asignado), que no pueden ser teléfonos reales verificables.
+const isUsableSpanishPhone = (d) => {
+    if (!d || d.length !== 9) return false;
+    if (d[0] === '6' || d[0] === '7') return true; // móvil
+    if (d[0] === '9' && d[1] >= '1' && d[1] <= '8') return true; // fijo geográfico
+    return false;
+};
+
+const formatPhone = (d) => `+34 ${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6)}`;
+
+const rawPhoneFields = (item) => item.phone || item.telephone || item.phone_number || item.movil || item.movil_ || item.whatsapp || '';
+
+const realPhoneOf = (item, phoneFreq) => {
+    const d = spanishNationalDigits(rawPhoneFields(item));
+    if (!isUsableSpanishPhone(d)) return null;
+    if (d === PLACEHOLDER_NATIONAL) return null;
+    if ((phoneFreq[d] || 0) > MAX_SHARED_PHONE) return null;
+    return d;
+};
+
 const PROVINCIAS = [
     'Álava', 'Albacete', 'Alicante', 'Almería', 'Asturias', 'Ávila', 'Badajoz',
     'Baleares', 'Barcelona', 'Burgos', 'Cáceres', 'Cádiz', 'Cantabria', 'Castellón',
@@ -116,6 +157,8 @@ function main() {
     console.log('📦 Iniciando ingesta de proveedores Bodas.net...');
     const canonicalList = [];
     const seenIds = new Set();
+    const phoneFreq = {};
+    const pendingItems = [];
 
     const processItem = (item, defaultCat) => {
         if (!item || !item.name || item.name.length < 3) return;
@@ -135,6 +178,11 @@ function main() {
 
         const dimensions = buildDimensions(category, basePrice, province);
 
+        const realDigits = realPhoneOf(item, phoneFreq);
+        const hasRealPhone = Boolean(realDigits);
+        const telephone = hasRealPhone ? formatPhone(realDigits) : PLACEHOLDER_PHONE;
+        const contactHref = `tel:${hasRealPhone ? `+34${realDigits}` : '+34693693048'}`;
+
         const canonical = {
             id,
             slug: item.slug || id,
@@ -148,10 +196,10 @@ function main() {
             description: (item.description || item.description_full || `Servicio homologado de ${category} para bodas y eventos en ${province}.`).slice(0, 320),
             imageUrls: images,
             img: images[0] || null,
-            telephone: '+34 693 693 048', // Telemetría SSOT Centralita
-            contactHref: 'tel:+34693693048',
+            telephone, // Teléfono real verificable; centralita solo como fallback NO verificado
+            contactHref,
             source: item.source || 'Bodas.net',
-            verified: true,
+            verified: hasRealPhone, // Doctrina del Dato Verificado: centralita/vacío => false
             calibratedBy: 'admin',
             completionPercent: 100,
             dimensions
@@ -160,10 +208,11 @@ function main() {
         canonicalList.push(canonical);
     };
 
+    // ── FASE 1: recolectar items pendientes (sin procesar) y calcular frecuencia de teléfonos ──
     if (fs.existsSync(FEATURED_PATH)) {
         const rawData = JSON.parse(fs.readFileSync(FEATURED_PATH, 'utf-8'));
         console.log(`🔍 Registros leídos de all_featured.json: ${rawData.length}`);
-        rawData.forEach(x => processItem(x));
+        rawData.forEach((item) => pendingItems.push({ item, defaultCat: undefined }));
     }
 
     const partitions = [
@@ -184,7 +233,7 @@ function main() {
                 for (const item of items) {
                     if (added >= p.max) break;
                     if (item && item.name) {
-                        processItem(item, p.cat);
+                        pendingItems.push({ item, defaultCat: p.cat });
                         added++;
                     }
                 }
@@ -193,6 +242,20 @@ function main() {
                 console.warn(`Aviso al leer ${p.file}:`, err.message);
             }
         }
+    }
+
+    for (const { item } of pendingItems) {
+        const d = spanishNationalDigits(rawPhoneFields(item));
+        if (isUsableSpanishPhone(d) && d !== PLACEHOLDER_NATIONAL) {
+            phoneFreq[d] = (phoneFreq[d] || 0) + 1;
+        }
+    }
+    const duplicatePhones = Object.entries(phoneFreq).filter(([, n]) => n > MAX_SHARED_PHONE).length;
+    console.log(`📞 Teléfonos con frecuencia > ${MAX_SHARED_PHONE} (descartados como no verificables): ${duplicatePhones}`);
+
+    // ── FASE 2: construir registros canónicos aplicando la doctrina del dato verificado ──
+    for (const { item, defaultCat } of pendingItems) {
+        processItem(item, defaultCat);
     }
 
     // Limit to ~380 items to keep file strictly between 500 KB and 900 KB (< 1 MB)

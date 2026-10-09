@@ -3,6 +3,7 @@ import { Shield, Brain, HeartPulse, Sparkles, BookOpen, ArrowRight } from 'lucid
 import { PredatorNav } from '@/widgets/navigation/PredatorNav';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
 
 // Ggeneración estática de nichos tácticos
 export async function generateStaticParams() {
@@ -74,6 +75,10 @@ export default async function VimumeNichePage({ params }: Props) {
 
   const data = contentMap[nicho] || contentMap['musicoterapia-alzheimer'];
 
+  // 📦 Cabezas Móviles Beam 7R DMX — Precio transparente SSOT
+  const beamProduct = INITIAL_INVENTORY.find((i) => i.id === 'light-dj-beam7r');
+  const beamPriceEur = beamProduct?.dailyPrice ?? 140;
+
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-pink-500/30">
       <PredatorNav />
@@ -112,6 +117,35 @@ export default async function VimumeNichePage({ params }: Props) {
             <p className="text-xs leading-relaxed text-white/50 font-bold uppercase mb-8">
               Al contratar los servicios artísticos de la red EAR OS, se destina una cuota inmutable al sostenimiento de este programa. Si usted representa a un Ayuntamiento o Residencia, puede incorporar VIMUME directamente.
             </p>
+
+            {/* 🛡️ Residencias / VIMUME — Precio Transparente SSOT */}
+            <div className="mb-8 p-6 rounded-2xl bg-[#09090d]/90 border border-pink-500/20 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6 transition-all duration-300 ease-out hover:border-pink-500/50">
+              <div className="space-y-1 text-left">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-pink-400 bg-pink-500/10 px-2.5 py-0.5 rounded border border-pink-500/20">
+                  Residencias / VIMUME &bull; Equipamiento SSOT
+                </span>
+                <h4 className="text-base font-bold text-white">
+                  {beamProduct?.name ?? 'Cabezas Móviles Beam 7R DMX'}
+                </h4>
+                <p className="text-xs text-white/60 max-w-lg">
+                  Protocolo 40 Hz Gamma y estimulación sensorial controlada. Desescalada de psicofármacos y agitación en mayores sin coste social (Deducción Ley 49/2002, SROI 4.85x).
+                </p>
+              </div>
+              <div className="flex items-center gap-4 shrink-0">
+                <div className="text-right">
+                  <span className="text-[10px] text-white/40 uppercase font-mono block">Tarifa Oficial</span>
+                  <div className="text-2xl font-black text-pink-400 font-mono">
+                    {beamPriceEur} <span className="text-xs font-normal text-white">€/día</span>
+                  </div>
+                </div>
+                <Link
+                  href="/alquiler"
+                  className="px-4 py-2 rounded-xl bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30 text-white font-bold text-xs transition-all duration-300"
+                >
+                  Ver Equipamiento
+                </Link>
+              </div>
+            </div>
 
             <div className="flex gap-4 items-center">
               <Link href="/vimume" className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white hover:text-pink-500 transition-colors">

@@ -185,7 +185,7 @@ export default function FincasB2BPortal() {
 
       {/* ── HERO BANNER CINEMÁTICO ── */}
       <section className="relative overflow-hidden pt-8 pb-12 sm:pt-12 sm:pb-16 px-4 sm:px-6 lg:px-10 border-b border-white/10">
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[450px] w-[800px] max-w-full bg-gradient-radial from-[#ecb613]/10 via-[#258DCD]/5 to-transparent blur-[120px] z-0" />
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[450px] w-[800px] max-w-full bg-gradient-radial from-[#ecb613]/10 via-[#00E5FF]/5 to-transparent blur-[120px] z-0" />
 
         <div className="relative z-10 mx-auto max-w-7xl space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#ecb613]/30 bg-[#ecb613]/10 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-[#ecb613] max-w-full truncate">
@@ -218,7 +218,7 @@ export default function FincasB2BPortal() {
                   <span className="text-[10px] text-white/40 uppercase">Póliza RC Mín.</span>
                 </div>
                 <div className="p-3 rounded-2xl bg-black/40 border border-white/5">
-                  <span className="text-lg font-black text-[#AAD6CD] block">CETAC 32A</span>
+                  <span className="text-lg font-black text-[#00E5FF] block">CETAC 32A</span>
                   <span className="text-[10px] text-white/40 uppercase">Trifásico Oblig.</span>
                 </div>
               </div>
@@ -348,7 +348,7 @@ export default function FincasB2BPortal() {
                   <div className="space-y-4">
                     {/* Header Card */}
                     <div className="flex items-center justify-between">
-                      <span className="rounded-full bg-[#AAD6CD]/10 border border-[#AAD6CD]/30 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-[#AAD6CD] flex items-center gap-1">
+                      <span className="rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-[#00E5FF] flex items-center gap-1">
                         <ShieldCheck size={11} />
                         <span>Auditada EAR OS</span>
                       </span>
@@ -382,8 +382,8 @@ export default function FincasB2BPortal() {
                         <strong className="text-[#ecb613]">{finca.potenciaKw} kW ({finca.tomaElectrica})</strong>
                       </div>
                       <div className="flex items-center justify-between text-white/70">
-                        <span className="flex items-center gap-1.5"><Volume2 size={12} className="text-[#AAD6CD]" /> Sonometría:</span>
-                        <strong className="text-[#AAD6CD]">{finca.limiteAcustico.interiorDBA} dBA int. / {finca.limiteAcustico.exteriorDBA} dBA ext.</strong>
+                        <span className="flex items-center gap-1.5"><Volume2 size={12} className="text-[#00E5FF]" /> Sonometría:</span>
+                        <strong className="text-[#00E5FF]">{finca.limiteAcustico.interiorDBA} dBA int. / {finca.limiteAcustico.exteriorDBA} dBA ext.</strong>
                       </div>
                       <div className="flex items-center justify-between text-white/70">
                         <span className="flex items-center gap-1.5"><ShieldCheck size={12} className="text-emerald-400" /> Póliza RC:</span>
@@ -527,7 +527,7 @@ export default function FincasB2BPortal() {
                     onChange={(e) => setAnnualEventsCount(Number(e.target.value))}
                     aria-label="Eventos referenciados al año"
                     aria-valuetext={`${annualEventsCount} bodas al año`}
-                    className="w-full accent-[#AAD6CD] cursor-pointer"
+                    className="w-full accent-[#00E5FF] cursor-pointer"
                   />
                   <div className="flex justify-between font-mono text-[10px] text-white/40">
                     <span>Mín. Exclusividad (10)</span>
@@ -564,8 +564,8 @@ export default function FincasB2BPortal() {
                     </p>
                   </div>
 
-                  <div className="rounded-3xl border border-[#AAD6CD]/30 bg-[#081226]/40 p-6 space-y-2">
-                    <span className="font-mono text-xs text-[#AAD6CD] uppercase tracking-wider block">
+                  <div className="rounded-3xl border border-[#00E5FF]/30 bg-[#09090d]/80 p-6 space-y-2">
+                    <span className="font-mono text-xs text-[#00E5FF] uppercase tracking-wider block">
                       Retorno Anual Estimado
                     </span>
                     <div className="font-syne text-4xl font-black text-white">
@@ -850,14 +850,14 @@ export default function FincasB2BPortal() {
                     animate={{ opacity: 1, scale: 1 }}
                     className={`rounded-2xl p-6 border ${onboardingResult.resultadoAuditoria.aprobado
                       ? 'border-emerald-500/40 bg-emerald-950/30'
-                      : 'border-[#FF455B]/40 bg-rose-950/30'
+                      : 'border-[#FF2B44]/40 bg-rose-950/30'
                       }`}
                   >
                     <div className="flex items-center gap-3">
                       {onboardingResult.resultadoAuditoria.aprobado ? (
                         <ShieldCheck className="text-emerald-400" size={28} />
                       ) : (
-                        <AlertTriangle className="text-[#FF455B]" size={28} />
+                        <AlertTriangle className="text-[#FF2B44]" size={28} />
                       )}
                       <div>
                         <h4 className="font-syne text-base font-bold uppercase text-white">
@@ -892,7 +892,7 @@ export default function FincasB2BPortal() {
                 {/* BARRA DE PROGRESO */}
                 <div className="h-2 rounded-full bg-white/10 overflow-hidden">
                   <div
-                    className={`h-full transition-all duration-500 ${auditStatus.score >= 80 ? 'bg-emerald-400' : auditStatus.score >= 50 ? 'bg-[#ecb613]' : 'bg-[#FF455B]'
+                    className={`h-full transition-all duration-500 ${auditStatus.score >= 80 ? 'bg-emerald-400' : auditStatus.score >= 50 ? 'bg-[#ecb613]' : 'bg-[#FF2B44]'
                       }`}
                     style={{ width: `${auditStatus.score}%` }}
                   />
@@ -904,7 +904,7 @@ export default function FincasB2BPortal() {
                     {onboardingData.polizaRCEuros >= 300000 ? (
                       <span className="text-emerald-400 flex items-center gap-1"><CheckCircle2 size={12} /> Válida</span>
                     ) : (
-                      <span className="text-[#FF455B] flex items-center gap-1"><AlertTriangle size={12} /> Insuficiente</span>
+                      <span className="text-[#FF2B44] flex items-center gap-1"><AlertTriangle size={12} /> Insuficiente</span>
                     )}
                   </div>
 
@@ -913,7 +913,7 @@ export default function FincasB2BPortal() {
                     {onboardingData.potenciaKw >= 15 ? (
                       <span className="text-emerald-400 flex items-center gap-1"><CheckCircle2 size={12} /> Aprobada</span>
                     ) : (
-                      <span className="text-[#FF455B] flex items-center gap-1"><AlertTriangle size={12} /> Baja</span>
+                      <span className="text-[#FF2B44] flex items-center gap-1"><AlertTriangle size={12} /> Baja</span>
                     )}
                   </div>
 
@@ -922,7 +922,7 @@ export default function FincasB2BPortal() {
                     {onboardingData.tomaElectrica.includes('CETAC') ? (
                       <span className="text-emerald-400 flex items-center gap-1"><CheckCircle2 size={12} /> Normalizada</span>
                     ) : (
-                      <span className="text-[#FF455B] flex items-center gap-1"><AlertTriangle size={12} /> No CETAC</span>
+                      <span className="text-[#FF2B44] flex items-center gap-1"><AlertTriangle size={12} /> No CETAC</span>
                     )}
                   </div>
 
@@ -931,7 +931,7 @@ export default function FincasB2BPortal() {
                     {onboardingData.accesoConvoy14Plazas ? (
                       <span className="text-emerald-400 flex items-center gap-1"><CheckCircle2 size={12} /> Despejado</span>
                     ) : (
-                      <span className="text-[#FF455B] flex items-center gap-1"><AlertTriangle size={12} /> Restringido</span>
+                      <span className="text-[#FF2B44] flex items-center gap-1"><AlertTriangle size={12} /> Restringido</span>
                     )}
                   </div>
                 </div>

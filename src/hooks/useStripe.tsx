@@ -7,8 +7,8 @@
 import { useState, useEffect } from 'react';
 import { loadStripe, Stripe } from '@stripe/stripe-js';
 
-// Reemplazar con la clave pública de EAR OS (debería estar en .env)
-const STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder';
+// 🔒 FAIL-CLOSED STRIPE CLIENT (BLINDAJE SESSION_SECRET P0): sin public key real, no se carga Stripe.
+const STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
 
 export const useStripe = () => {
     const [stripe, setStripe] = useState<Stripe | null>(null);
@@ -17,8 +17,14 @@ export const useStripe = () => {
     useEffect(() => {
         const initStripe = async () => {
             try {
-                const stripeInstance = await loadStripe(STRIPE_PUBLIC_KEY);
-                setStripe(stripeInstance);
+                // 🔒 FAIL-CLOSED: sin public key real, no se instancia Stripe (jamás clave falsa).
+                if (!STRIPE_PUBLIC_KEY || STRIPE_PUBLIC_KEY === 'pk_test_placeholder') {
+                    console.error('[USE_STRIPE] NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY no configurada (fail-closed).');
+                    setStripe(null);
+                } else {
+                    const stripeInstance = await loadStripe(STRIPE_PUBLIC_KEY);
+                    setStripe(stripeInstance);
+                }
             } catch (error) {
                 console.error("Stripe Initialization Failed:", error);
             } finally {

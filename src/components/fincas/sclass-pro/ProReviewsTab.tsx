@@ -103,7 +103,7 @@ export function ProReviewsTab() {
       `¡Hola ${name}! 🎶 Esperamos que estéis disfrutando al máximo vuestros primeros días de casados. ` +
       `Para nosotros fue un honor absoluto acompañaros en vuestro gran día. ` +
       `¿Nos dedicaríais 1 minuto para dejarnos una reseña de 5 estrellas en nuestro portal oficial? ` +
-      `Vuestra opinión nos ayuda enormemente: https://www.productoraear.com/opiniones`
+      `Vuestra opinión nos ayuda enormemente: https://productoraear.com/opiniones`
     );
     const cleanPhone = couplePhone.replace(/[^0-9]/g, "");
     const url = cleanPhone

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import {
   PhoneCall,
@@ -24,6 +24,22 @@ import {
 import { PROVIDERS_GRAND_TOTAL, formatProviderCount } from '@/lib/constants/providers-manifest';
 
 const GRAND_TOTAL_FORMATTED = formatProviderCount(PROVIDERS_GRAND_TOTAL);
+
+interface OllamaShieldStatus {
+  action: 'status';
+  ts: string;
+  online: boolean;
+  models: Array<{
+    name: string;
+    id: string;
+    size: string;
+    processor: string;
+    context: string;
+    until: string;
+  }>;
+  totalRows: number;
+  rawError?: string;
+}
 
 interface ToolCard {
   id: string;
@@ -198,6 +214,52 @@ export default function AdminCommandCenterPage() {
   const [activeQuery, setActiveQuery] = useState('');
   const [oracleOutput, setOracleOutput] = useState<string | null>(null);
   const [isConsulting, setIsConsulting] = useState(false);
+  const [shieldStatus, setShieldStatus] = useState<OllamaShieldStatus | null>(null);
+  const [shieldBusy, setShieldBusy] = useState(false);
+  const [shieldOutput, setShieldOutput] = useState<string | null>(null);
+
+  const fetchShieldStatus = async () => {
+    setShieldBusy(true);
+    setShieldOutput(null);
+    try {
+      const res = await fetch('/api/admin/ollama-shield', { cache: 'no-store' });
+      const data = (await res.json()) as OllamaShieldStatus;
+      setShieldStatus(data);
+    } catch (e) {
+      setShieldOutput(
+        `Error al consultar estado de Ollama: ${e instanceof Error ? e.message : 'desconocido'}`
+      );
+    } finally {
+      setShieldBusy(false);
+    }
+  };
+
+  const runShieldAction = async (action: 'build' | 'purge' | 'activate') => {
+    setShieldBusy(true);
+    setShieldOutput(null);
+    try {
+      const res = await fetch('/api/admin/ollama-shield', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+      });
+      const data = (await res.json()) as { message?: string; detail?: string; status?: string };
+      setShieldOutput(
+        `${data?.message ?? 'Acción ejecutada.'}${data?.detail ? `\n${data.detail}` : ''}`
+      );
+      await fetchShieldStatus();
+    } catch (e) {
+      setShieldOutput(
+        `Error en la acción ${action}: ${e instanceof Error ? e.message : 'desconocido'}`
+      );
+    } finally {
+      setShieldBusy(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchShieldStatus();
+  }, []);
 
   const filteredTools = TOOLS.filter(t => {
     if (filter !== 'ALL' && t.category !== filter) return false;
@@ -298,6 +360,104 @@ export default function AdminCommandCenterPage() {
           </div>
         </div>
 
+        {/* Consola VRAM-Shield Ollama (bare-metal RX 7900 XTX) */}
+        <div className="p-6 rounded-3xl bg-[#09090d]/80 border border-cyan-500/30 backdrop-blur-md shadow-[0_0_30px_rgba(0,229,255,0.08)]">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                <Cpu className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-sm font-black font-mono tracking-wider text-white uppercase">
+                  VRAM-Shield <span className="text-cyan-400">Ollama Console</span>
+                </h2>
+                <p className="text-xs text-zinc-400 font-mono">
+                  Flota 14B/27B/32B blindada: 0 offload a RAM/CPU · contexto máx 24k
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span
+                className={`text-[10px] font-mono px-2.5 py-1 rounded-full border ${shieldStatus?.online
+                  ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                  : 'bg-red-500/10 text-red-400 border-red-500/20'
+                  }`}
+              >
+                {shieldStatus?.online ? 'OLLAMA ONLINE' : 'OLLAMA OFFLINE'}
+              </span>
+              <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-white/5 text-zinc-300 border border-white/10">
+                {shieldStatus ? `${shieldStatus.totalRows} modelo(s) activos` : 'sin telemetría'}
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-5">
+            <button
+              onClick={() => runShieldAction('build')}
+              disabled={shieldBusy}
+              className="px-4 py-3 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 hover:text-cyan-100 text-xs font-mono font-bold transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <Play className="w-4 h-4" />
+              {shieldBusy ? 'Procesando...' : 'Construir 3 Perfiles'}
+            </button>
+            <button
+              onClick={() => runShieldAction('purge')}
+              disabled={shieldBusy}
+              className="px-4 py-3 rounded-2xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-300 hover:text-red-100 text-xs font-mono font-bold transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <ShieldAlert className="w-4 h-4" />
+              {shieldBusy ? 'Purgando...' : 'Liberar VRAM (ctx 100k)'}
+            </button>
+            <button
+              onClick={() => runShieldAction('activate')}
+              disabled={shieldBusy}
+              className="px-4 py-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 hover:text-emerald-100 text-xs font-mono font-bold transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              {shieldBusy ? 'Chequeando...' : 'Activar Escudo'}
+            </button>
+            <button
+              onClick={fetchShieldStatus}
+              disabled={shieldBusy}
+              className="px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/15 text-zinc-300 hover:text-white text-xs font-mono font-bold transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+            >
+              <RefreshCw className={`w-4 h-4 ${shieldBusy ? 'animate-spin' : ''}`} />
+              Recargar Estado
+            </button>
+          </div>
+
+          {shieldStatus && shieldStatus.models.length > 0 && (
+            <div className="mt-4 overflow-x-auto rounded-2xl border border-white/10">
+              <table className="w-full text-left text-[11px] font-mono">
+                <thead className="bg-black/50 text-zinc-400">
+                  <tr>
+                    <th className="px-3 py-2 font-bold">MODELO</th>
+                    <th className="px-3 py-2 font-bold">VRAM</th>
+                    <th className="px-3 py-2 font-bold">PROCESADOR</th>
+                    <th className="px-3 py-2 font-bold">CONTEXTO</th>
+                  </tr>
+                </thead>
+                <tbody className="text-zinc-300">
+                  {shieldStatus.models.map((m) => (
+                    <tr key={m.id} className="border-t border-white/5">
+                      <td className="px-3 py-2 text-cyan-300">{m.name}</td>
+                      <td className="px-3 py-2">{m.size}</td>
+                      <td className="px-3 py-2">{m.processor}</td>
+                      <td className="px-3 py-2">{m.context}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {shieldOutput && (
+            <div className="mt-4 p-4 rounded-2xl bg-black/70 border border-cyan-500/30 text-xs font-mono text-zinc-200 whitespace-pre-wrap overflow-x-auto">
+              {shieldOutput}
+            </div>
+          )}
+        </div>
+
         {/* Filtros de Categoría */}
         <div className="flex flex-wrap items-center justify-between gap-4 pb-2">
           <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/10 text-xs font-mono">
@@ -305,9 +465,8 @@ export default function AdminCommandCenterPage() {
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
-                  filter === cat ? 'bg-[#ecb613] text-black font-bold shadow-sm' : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                }`}
+                className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${filter === cat ? 'bg-[#ecb613] text-black font-bold shadow-sm' : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                  }`}
               >
                 {cat === 'ALL' ? `Todas (${TOOLS.length})` : cat}
               </button>

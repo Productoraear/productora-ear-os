@@ -3,10 +3,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { 
+import {
   Search, MapPin, ChevronRight, ChevronLeft, Sparkles, Building2,
-  Camera, Music, Car, Bus, Layers, Tent, Flower2, 
-  Gift, Heart, Utensils, Award, X, Check, ShieldCheck, 
+  Camera, Music, Car, Bus, Layers, Tent, Flower2,
+  Gift, Heart, Utensils, Award, X, Check, ShieldCheck,
   PartyPopper, Cake, Compass, Crown
 } from 'lucide-react';
 
@@ -111,12 +111,12 @@ const ZONES_LIST: ZoneItem[] = [
 ];
 
 const PROVINCIAS_ESPANA = [
-  'A Coruña', 'Álava', 'Albacete', 'Alicante', 'Almería', 'Asturias', 'Ávila', 'Badajoz', 
-  'Barcelona', 'Burgos', 'Cáceres', 'Cádiz', 'Cantabria', 'Castellón', 'Ciudad Real', 
-  'Córdoba', 'Cuenca', 'Girona', 'Granada', 'Guadalajara', 'Guipúzcoa', 'Huelva', 'Huesca', 
-  'Illes Balears (Ibiza/Mallorca)', 'Jaén', 'La Rioja', 'Las Palmas', 'León', 'Lleida', 'Lugo', 
-  'Madrid', 'Málaga (Marbella)', 'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra', 
-  'Salamanca', 'Santa Cruz de Tenerife', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Teruel', 
+  'A Coruña', 'Álava', 'Albacete', 'Alicante', 'Almería', 'Asturias', 'Ávila', 'Badajoz',
+  'Barcelona', 'Burgos', 'Cáceres', 'Cádiz', 'Cantabria', 'Castellón', 'Ciudad Real',
+  'Córdoba', 'Cuenca', 'Girona', 'Granada', 'Guadalajara', 'Guipúzcoa', 'Huelva', 'Huesca',
+  'Illes Balears (Ibiza/Mallorca)', 'Jaén', 'La Rioja', 'Las Palmas', 'León', 'Lleida', 'Lugo',
+  'Madrid', 'Málaga (Marbella)', 'Murcia', 'Navarra', 'Ourense', 'Palencia', 'Pontevedra',
+  'Salamanca', 'Santa Cruz de Tenerife', 'Segovia', 'Sevilla', 'Soria', 'Tarragona', 'Teruel',
   'Toledo', 'Valencia', 'Valladolid', 'Vizcaya', 'Zamora', 'Zaragoza'
 ];
 
@@ -148,17 +148,21 @@ export default function SmartMarketplaceNav() {
 
   const handleSearch = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    
+
     setIsCategoryDropdownOpen(false);
     setIsLocationDropdownOpen(false);
 
     const locSlug = selectedLocation.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || 'madrid';
     const termLower = searchTerm.toLowerCase();
 
-    if (termLower.includes('musica') || termLower.includes('dj') || termLower.includes('cantante') || termLower.includes('agudelo')) {
-      router.push(`/bodas/${locSlug}-precios-musica-directo`);
-    } else if (termLower.includes('finca') || termLower.includes('lugar') || termLower.includes('espacio') || termLower.includes('masia')) {
-      router.push(`/bodas/fincas-${locSlug}-sonorizacion-gala`);
+    // 🎯 ENRUTADO A DATOS REALES (Anti-fachada-vacía):
+    // Cada rama apunta a la superficie con catálogo certificado y CTA de reserva,
+    // NO a plantillas SEO que devuelven 0 resultados.
+    if (termLower.includes('musica') || termLower.includes('dj') || termLower.includes('cantante') || termLower.includes('agudelo') || termLower.includes('mariachi')) {
+      router.push(`/bodas/${locSlug}/musica-ceremonia`);
+    } else if (termLower.includes('finca') || termLower.includes('lugar') || termLower.includes('espacio') || termLower.includes('masia') || termLower.includes('hacienda') || termLower.includes('cortijo') || termLower.includes('palacete') || termLower.includes('castillo') || termLower.includes('salon') || termLower === '') {
+      // 📍 Red de 12 fincas homologadas S-Class con aforo, potencia y distancia reales.
+      router.push(`/fincas/${locSlug}`);
     } else if (termLower.includes('chofer') || termLower.includes('coche') || termLower.includes('mercedes') || termLower.includes('vehiculo')) {
       router.push(`/servicios/chofer-vip/${locSlug}`);
     } else if (termLower.includes('luz') || termLower.includes('luces') || termLower.includes('navidad') || termLower.includes('monumental')) {
@@ -190,7 +194,7 @@ export default function SmartMarketplaceNav() {
 
   return (
     <div className="w-full space-y-16">
-      
+
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           1. DUAL SEARCH BAR HERO BOX (S-CLASS OLED & GLASS SURFACE)
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -209,13 +213,13 @@ export default function SmartMarketplaceNav() {
         </div>
 
         {/* Dual Search Input Container — S-Class Dark Glass Surface */}
-        <form 
+        <form
           onSubmit={handleSearch}
           className="relative bg-[#0c0c12]/95 border border-white/15 rounded-3xl p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.9)] flex flex-col md:flex-row items-stretch gap-2 text-white focus-within:border-[#ecb613]/50 focus-within:shadow-[0_0_35px_rgba(236,182,19,0.15)] transition-all backdrop-blur-2xl"
         >
           {/* Input 1: Servicio / Categoría / Nombre */}
           <div ref={categoryRef} className="relative flex-1">
-            <div 
+            <div
               onClick={() => {
                 setIsCategoryDropdownOpen(prev => !prev);
                 setIsLocationDropdownOpen(false);
@@ -237,11 +241,11 @@ export default function SmartMarketplaceNav() {
             {isCategoryDropdownOpen && (
               <div className="absolute top-full left-0 right-0 md:w-[750px] bg-[#0e0e16] border border-white/15 rounded-3xl shadow-2xl p-6 z-50 text-left mt-2 animate-in fade-in max-h-[75vh] overflow-y-auto backdrop-blur-3xl">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-zinc-300">
-                  
+
                   {/* Col 1: Lugares & Fincas */}
                   <div className="space-y-3">
-                    <div 
-                      onClick={() => handleSelectCategory('Lugares para Boda', '/bodas/fincas-toledo-sonorizacion-gala')}
+                    <div
+                      onClick={() => handleSelectCategory('Lugares para Boda', '/fincas/toledo')}
                       className="flex items-center gap-2 font-bold text-white text-sm pb-1 border-b border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
                       <Building2 className="w-4 h-4 text-[#ecb613]" />
@@ -249,7 +253,7 @@ export default function SmartMarketplaceNav() {
                     </div>
                     <div className="space-y-2 pl-6">
                       {['Fincas', 'Masías', 'Hoteles', 'Restaurantes', 'Salones de Boda', 'Castillos & Palacetes', 'Cortijos', 'Espacios Singulares', 'Haciendas', 'Bodegas', 'Bodas en la Playa'].map((sub) => (
-                        <div 
+                        <div
                           key={sub}
                           onClick={() => handleSelectCategory(sub)}
                           className="text-zinc-400 hover:text-[#ecb613] hover:translate-x-1 transition-all cursor-pointer font-normal"
@@ -259,7 +263,7 @@ export default function SmartMarketplaceNav() {
                       ))}
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Catering Gourmet')}
                       className="flex items-center gap-2 font-bold text-white text-sm pt-3 border-t border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -270,7 +274,7 @@ export default function SmartMarketplaceNav() {
 
                   {/* Col 2: Música, Chófer & Fotografía */}
                   <div className="space-y-3">
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Música para Boda', '/artistas/edwin-agudelo')}
                       className="flex items-center gap-2 font-bold text-white text-sm pb-1 border-b border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -285,7 +289,7 @@ export default function SmartMarketplaceNav() {
                         { title: 'Orquestas de Representación', url: '/artistas/orquestas' },
                         { title: 'Sonorización Pista-BPM Bose', url: '/infraestructura' }
                       ].map((item) => (
-                        <div 
+                        <div
                           key={item.title}
                           onClick={() => handleSelectCategory(item.title, item.url)}
                           className="text-zinc-400 hover:text-[#ecb613] hover:translate-x-1 transition-all cursor-pointer font-normal"
@@ -295,7 +299,7 @@ export default function SmartMarketplaceNav() {
                       ))}
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Coches de Boda & Chófer VIP', '/servicios/chofer-vip')}
                       className="flex items-center gap-2 font-bold text-white text-sm pt-2 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -303,7 +307,7 @@ export default function SmartMarketplaceNav() {
                       <span>Coches de Boda VIP</span>
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Fotógrafos de Autor')}
                       className="flex items-center gap-2 font-bold text-white text-sm pt-1 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -311,7 +315,7 @@ export default function SmartMarketplaceNav() {
                       <span>Fotógrafos & Vídeo 4K</span>
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Autobuses & Minivans')}
                       className="flex items-center gap-2 font-bold text-white text-sm pt-1 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -319,7 +323,7 @@ export default function SmartMarketplaceNav() {
                       <span>Autobuses para Invitados</span>
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Mobiliario & Carpas')}
                       className="flex items-center gap-2 font-bold text-white text-sm pt-1 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -330,7 +334,7 @@ export default function SmartMarketplaceNav() {
 
                   {/* Col 3: Novias, Flores & Complementos */}
                   <div className="space-y-3">
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Food Trucks & Mesas Dulces')}
                       className="flex items-center gap-2 font-bold text-white text-sm pb-1 border-b border-white/10 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -338,7 +342,7 @@ export default function SmartMarketplaceNav() {
                       <span>Food Truck & Dulces</span>
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Floristerías & Ramos')}
                       className="flex items-center gap-2 font-bold text-white text-sm hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -346,7 +350,7 @@ export default function SmartMarketplaceNav() {
                       <span>Floristerías</span>
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Joyería & Alianzas')}
                       className="flex items-center gap-2 font-bold text-white text-sm hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -354,7 +358,7 @@ export default function SmartMarketplaceNav() {
                       <span>Joyería & Alianzas</span>
                     </div>
 
-                    <div 
+                    <div
                       onClick={() => handleSelectCategory('Novias & Alta Costura')}
                       className="flex items-center gap-2 font-bold text-white text-sm pt-2 hover:text-[#ecb613] transition-colors cursor-pointer"
                     >
@@ -363,7 +367,7 @@ export default function SmartMarketplaceNav() {
                     </div>
                     <div className="space-y-2 pl-6">
                       {['Talleres de Novia', 'Tiendas de Novia', 'Complementos Novia', 'Trajes de Madrina', 'Trajes de Fiesta'].map((sub) => (
-                        <div 
+                        <div
                           key={sub}
                           onClick={() => handleSelectCategory(sub)}
                           className="text-zinc-400 hover:text-[#ecb613] hover:translate-x-1 transition-all cursor-pointer font-normal"
@@ -394,7 +398,7 @@ export default function SmartMarketplaceNav() {
 
           {/* Input 2: Selector de Ubicación / Provincia */}
           <div ref={locationRef} className="relative md:w-72 border-t md:border-t-0 md:border-l border-white/10">
-            <div 
+            <div
               onClick={() => {
                 setIsLocationDropdownOpen(prev => !prev);
                 setIsCategoryDropdownOpen(false);
@@ -420,18 +424,16 @@ export default function SmartMarketplaceNav() {
                   <button
                     type="button"
                     onClick={() => setLocationTab('provincia')}
-                    className={`flex-1 py-1.5 text-xs font-bold text-center border-b-2 transition-all ${
-                      locationTab === 'provincia' ? 'border-[#ecb613] text-[#ecb613]' : 'border-transparent text-zinc-400'
-                    }`}
+                    className={`flex-1 py-1.5 text-xs font-bold text-center border-b-2 transition-all ${locationTab === 'provincia' ? 'border-[#ecb613] text-[#ecb613]' : 'border-transparent text-zinc-400'
+                      }`}
                   >
                     España (Provincias)
                   </button>
                   <button
                     type="button"
                     onClick={() => setLocationTab('internacional')}
-                    className={`flex-1 py-1.5 text-xs font-bold text-center border-b-2 transition-all ${
-                      locationTab === 'internacional' ? 'border-[#ecb613] text-[#ecb613]' : 'border-transparent text-zinc-400'
-                    }`}
+                    className={`flex-1 py-1.5 text-xs font-bold text-center border-b-2 transition-all ${locationTab === 'internacional' ? 'border-[#ecb613] text-[#ecb613]' : 'border-transparent text-zinc-400'
+                      }`}
                   >
                     Destinos VIP
                   </button>
@@ -509,8 +511,8 @@ export default function SmartMarketplaceNav() {
           </span>
           <div className="flex flex-wrap items-center gap-2">
             {[
-              'Mobiliario', 'Carpas', 'Animación', 'Decoración para bodas', 
-              'Listas de boda', 'Organización Bodas', 'Tartas de boda', 
+              'Mobiliario', 'Carpas', 'Animación', 'Decoración para bodas',
+              'Listas de boda', 'Organización Bodas', 'Tartas de boda',
               'Food truck y mesas dulces', 'Alumbrado Monumental', 'Promociones'
             ].map((tag) => (
               <button
@@ -559,20 +561,20 @@ export default function SmartMarketplaceNav() {
         </div>
 
         {/* Scrollable Container */}
-        <div 
+        <div
           ref={carouselRef}
           className="flex items-center gap-6 overflow-x-auto pb-4 scrollbar-none scroll-smooth"
         >
           {ZONES_LIST.map((zone) => (
             <Link
               key={zone.name}
-              href={`/bodas/fincas-${zone.slug}-sonorizacion-gala`}
+              href={`/fincas/${zone.slug}`}
               className="flex flex-col items-center text-center group shrink-0 w-28 sm:w-36 cursor-pointer"
             >
               {/* Circular Avatar with Zoom Effect */}
               <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-white/15 group-hover:border-[#ecb613] group-hover:shadow-[0_0_25px_rgba(236,182,19,0.4)] transition-all duration-300 relative bg-neutral-900 mb-3">
-                <img 
-                  src={zone.image} 
+                <img
+                  src={zone.image}
                   alt={zone.name}
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"

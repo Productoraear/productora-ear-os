@@ -530,7 +530,7 @@ export function analyzeNeuralIntent(rawQuery: string): NeuralIntentResult {
       headline: `FINCAS Y ESPACIOS SELECCIONADOS EN ${loc.toUpperCase()}`,
       responseHtml: `Catálogo de fincas verificadas con certificación acústica de 12 W/pax, licencias municipales al día y sin carrusel de competidores ni sobrecostes ocultos en **${loc}**.`,
       primaryActionLabel: `EXPLORAR FINCAS EN ${loc.toUpperCase()} →`,
-      primaryActionUrl: `/bodas/${locSlug}/fincas`,
+      primaryActionUrl: `/fincas/${locSlug}`,
       secondaryActionLabel: 'VER DIRECTORIO COMPLETO',
       secondaryActionUrl: `/proveedores?cat=finca&provincia=${locSlug}`,
       isCustomRedirect: true
@@ -856,13 +856,12 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
-                  className={`p-5 rounded-2xl border space-y-3 text-xs leading-relaxed font-light ${
-                    currentIntent.category === 'SOUND_HARDWARE'
+                  className={`p-5 rounded-2xl border space-y-3 text-xs leading-relaxed font-light ${currentIntent.category === 'SOUND_HARDWARE'
                       ? 'bg-blue-950/30 border-blue-500/40 text-blue-100'
                       : currentIntent.category === 'B2G_INSTITUTIONAL'
-                      ? 'bg-amber-950/30 border-amber-500/40 text-amber-100'
-                      : 'bg-emerald-950/20 border-emerald-500/30 text-white/80'
-                  }`}
+                        ? 'bg-amber-950/30 border-amber-500/40 text-amber-100'
+                        : 'bg-emerald-950/20 border-emerald-500/30 text-white/80'
+                    }`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 font-bold font-mono uppercase text-xs tracking-wider">
@@ -878,7 +877,7 @@ export const ThermodynamicNeuralTunnel: React.FC<ThermodynamicNeuralTunnelProps>
                   </h4>
 
                   <p className="whitespace-pre-line text-xs leading-relaxed">
-                    {currentIntent.responseHtml.split('**').map((chunk, idx) => 
+                    {currentIntent.responseHtml.split('**').map((chunk, idx) =>
                       idx % 2 === 1 ? <strong key={idx} className="font-bold text-white">{chunk}</strong> : chunk
                     )}
                   </p>

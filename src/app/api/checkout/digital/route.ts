@@ -6,8 +6,14 @@ import { OccasionCategory, MusicalGenre, EmotionalTone } from '@/lib/types/digit
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+// 🔒 FAIL-CLOSED STRIPE (BLINDAJE SESSION_SECRET P0): sin secreto real, el módulo NO se instancia.
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
+if (!STRIPE_SECRET_KEY || STRIPE_SECRET_KEY === 'sk_test_dummy_key_for_build') {
+  throw new Error('[CHECKOUT_DIGITAL] STRIPE_SECRET_KEY no configurado en el servidor (fail-closed).');
+}
+
 const stripe = new Stripe(
-  process.env.STRIPE_SECRET_KEY || 'sk_test_dummy_key_for_build',
+  STRIPE_SECRET_KEY,
   {
     apiVersion: '2025-01-27.acacia' as any,
   }
@@ -64,7 +70,7 @@ export async function POST(req: NextRequest) {
     const orderId = `EAR-SONG-${Date.now()}`;
     const priceLockHash = crypto
       .createHash('sha256')
-      .update(`${orderId}-${totalAmount}-${process.env.STRIPE_SECRET_KEY || 'dev'}`)
+      .update(`${orderId}-${totalAmount}-${STRIPE_SECRET_KEY}`)
       .digest('hex');
 
     const origin = req.headers.get('origin') || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3007';

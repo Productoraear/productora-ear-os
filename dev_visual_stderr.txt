@@ -1,0 +1,1166 @@
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead.
+
+  To migrate automatically, run:
+  npx @next/codemod@canary middleware-to-proxy .
+
+  Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+[browser] You may test your Stripe.js integration over HTTP. However, live Stripe.js integrations must use HTTPS. (https://js.stripe.com/dahlia/stripe.js:1:922357)
+[browser] Image with src "/images/brand/ear_logo_official_diamond.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] .dampingFactor has been deprecated. use smoothTime (in seconds) instead.
+[browser] .dampingFactor has been deprecated. use smoothTime (in seconds) instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] .dampingFactor has been deprecated. use smoothTime (in seconds) instead.
+[browser] .dampingFactor has been deprecated. use smoothTime (in seconds) instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[browser] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+[browser] Image with src "/images/brand/ear_logo_official_diamond.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes
+[browser] You may test your Stripe.js integration over HTTP. However, live Stripe.js integrations must use HTTPS. (https://js.stripe.com/dahlia/stripe.js:1:922357)
+[ORÁCULO] DB no disponible o vacía. Activando Fallback de Genoma H.
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+[browser] You may test your Stripe.js integration over HTTP. However, live Stripe.js integrations must use HTTPS. (https://js.stripe.com/dahlia/stripe.js:1:922357)
+[browser] Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+⨯ Error: [FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.
+    at getFirebaseAdminApp (src\lib\firebaseAdmin.ts:27:9)
+    at <unknown> (src\lib\firebaseAdmin.ts:33:18)
+  25 |   // a Application Default Credentials, que puede autenticar contra un proyecto
+  26 |   // impredecible y socava la raíz de confianza del guardián admin.
+> 27 |   throw new Error(
+     |         ^
+  28 |     '[FIREBASE_ADMIN] Configuración incompleta. Define FIREBASE_ADMIN_PROJECT_ID, ' +
+  29 |     'FIREBASE_ADMIN_CLIENT_EMAIL y FIREBASE_ADMIN_PRIVATE_KEY en el servidor.'
+  30 |   );
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/academia" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head headCacheNode={{rsc:{...}, ...}}>
+                    <meta>
+                    <meta>
+                    <MetadataWrapper>
+                      <div
+                        hidden={true}
+-                       bis_skin_checked="1"
+                      >
+                    ...
+                  ...
+                    <SovereignProvider>
+                      <AtmosphereProvider>
+                        <EventCartProvider>
+                          <SmoothScrollProvider>
+                            <SpatialIntelligence>
+                              <div
+                                className="fixed inset-0 bg-[#050505] z-[-1]"
+-                               bis_skin_checked="1"
+                              >
+                            <div
+                              className="min-h-screen relative flex flex-col"
+-                             bis_skin_checked="1"
+                            >
+                              <script>
+                              <script>
+                              <script>
+                              ...
+                                <motion.nav style={{...}} className="max-w-7xl ...">
+                                  <nav className="max-w-7xl ..." style={{...}} ref={function useMotionRef.useCallback}>
+                                    <LinkComponent href="/" className="flex items...">
+                                      <a className="flex items..." ref={function} onClick={function onClick1} ...>
+                                        <div
+                                          className="w-9 h-9 rounded-2xl overflow-hidden border p-0.5 flex items-cente..."
+-                                         bis_skin_checked="1"
+                                        >
+                                        <div
+                                          className="flex flex-col"
+-                                         bis_skin_checked="1"
+                                        >
+                                    <div
+                                      className="hidden lg:flex items-center gap-1 xl:gap-2"
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+                                        className="relative"
+                                        onMouseEnter={function onMouseEnter}
+                                        onMouseLeave={function handleMouseLeave}
+-                                       bis_skin_checked="1"
+                                      >
+                                      <div
+                                        className="relative"
+                                        onMouseEnter={function onMouseEnter}
+                                        onMouseLeave={function handleMouseLeave}
+-                                       bis_skin_checked="1"
+                                      >
+                                      <div
+                                        className="relative"
+                                        onMouseEnter={function onMouseEnter}
+                                        onMouseLeave={function handleMouseLeave}
+-                                       bis_skin_checked="1"
+                                      >
+                                      <div
+                                        className="relative"
+                                        onMouseEnter={function onMouseEnter}
+                                        onMouseLeave={function handleMouseLeave}
+-                                       bis_skin_checked="1"
+                                      >
+                                      <div
+                                        className="relative"
+                                        onMouseEnter={function onMouseEnter}
+                                        onMouseLeave={function handleMouseLeave}
+-                                       bis_skin_checked="1"
+                                      >
+                                      ...
+                                    <div
+                                      className="hidden md:flex items-center gap-3"
+-                                     bis_skin_checked="1"
+                                    >
+                                    ...
+                              ...
+                                <Template>
+                                  <motion.div initial={{opacity:0,y:20, ...}} animate={{opacity:1,y:0, ...}} ...>
+                                    <div
+                                      style={{opacity:0,filter:"blur(10px)",transform:"translateY..."}}
+                                      ref={function useMotionRef.useCallback}
+-                                     bis_skin_checked="1"
+                                    >
+                                      ...
+                                        <script>
+                                        <script>
+                                        <ClientSegmentRoot Component={function PublicLayout} slots={{children:{...}}} ...>
+                                          <PublicLayout params={Promise}>
+                                            <div
+                                              className="relative min-h-screen bg-[#050505]"
+-                                             bis_skin_checked="1"
+                                            >
+                              <SovereignFooter>
+                                <SovereignFooterContent>
+                                  <footer className="bg-[#03030...">
+                                    <div
+                                      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12"
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+                                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 pb-1..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="space-y-4"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="flex items-center gap-3"
+-                                           bis_skin_checked="1"
+                                          >
+                                            <div
+                                              className="relative w-11 h-11 rounded-2xl overflow-hidden border border-..."
+-                                             bis_skin_checked="1"
+                                            >
+                                            <div
+-                                             bis_skin_checked="1"
+                                            >
+                                          <p>
+                                          <p>
+                                          <div
+                                            className="pt-1"
+-                                           bis_skin_checked="1"
+                                          >
+                                            <span>
+                                            <div
+                                              className="flex items-center gap-2"
+-                                             bis_skin_checked="1"
+                                            >
+                                        <div
+                                          className="space-y-3"
+-                                         bis_skin_checked="1"
+                                        >
+                                        <div
+                                          className="space-y-3"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <h4>
+                                          <LinkComponent>
+                                          <div
+                                            className="space-y-1.5 text-[11px] font-mono text-zinc-400 pt-1"
+-                                           bis_skin_checked="1"
+                                          >
+                                            <div
+                                              className="p-2 rounded-xl bg-white/[0.02] border border-white/5"
+-                                             bis_skin_checked="1"
+                                            >
+                                            <div
+                                              className="p-2 rounded-xl bg-white/[0.02] border border-white/5"
+-                                             bis_skin_checked="1"
+                                            >
+                                            <div
+                                              className="p-2 rounded-xl bg-white/[0.02] border border-white/5"
+-                                             bis_skin_checked="1"
+                                            >
+                                            <div
+                                              className="p-2 rounded-xl bg-white/[0.02] border border-white/5"
+-                                             bis_skin_checked="1"
+                                            >
+                                        <div
+                                          className="space-y-3"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <h4>
+                                          <div
+                                            className="space-y-2.5 text-xs font-mono text-zinc-400"
+-                                           bis_skin_checked="1"
+                                          >
+                                            <div
+                                              className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1"
+-                                             bis_skin_checked="1"
+                                            >
+                                            <div
+                                              className="space-y-1.5"
+-                                             bis_skin_checked="1"
+                                            >
+                                            <div
+                                              className="p-2.5 rounded-xl bg-white/[0.02] border border-white/5 text-[..."
+-                                             bis_skin_checked="1"
+                                            >
+                                      <div
+                                        className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 t..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+-                                         bis_skin_checked="1"
+                                        >
+                                        <div
+                                          className="flex flex-wrap items-center gap-4"
+-                                         bis_skin_checked="1"
+                                        >
+                              <HummingbirdFlight>
+                              <BespokePricerModal>
+                              <OmniSearchModal>
+                              <EarConcierge>
+                              <DynamicMobileExperienceOrchestrator>
+                                <SovereignMobileHUD>
+                                  <AnimatePresence>
+                                  <div
+                                    className="fixed bottom-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-lg..."
+-                                   bis_skin_checked="1"
+                                  >
+                                    <AnimatePresence>
+                                    <nav aria-label="Navegación..." className="w-full h-1...">
+                                      <button>
+                                      <button>
+                                      <button onClick={function onClick} className="relative -..." ...>
+                                        <motion.div animate={{rotate:0,scale:1}} transition={{type:"spring", ...}}>
+                                          <div
+                                            style={{}}
+                                            ref={function useMotionRef.useCallback}
+-                                           bis_skin_checked="1"
+                                          >
+                                        ...
+                                      ...
+                              <SovereignFloatingCallBar>
+                                <aside>
+                                <aside aria-label="Contacto D..." className="hidden md:...">
+                                  <div
+                                    className="flex flex-col text-right pr-2"
+-                                   bis_skin_checked="1"
+                                  >
+                                  ...
+                              ...
+                  ...
+ 
+[browser] A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RenderFromTemplateContext>
+      <ScrollAndMaybeFocusHandler cacheNode={{rsc:{...}, ...}}>
+        <InnerScrollHandlerNew focusAndScrollRef={{scrollRef:null, ...}} cacheNode={{rsc:{...}, ...}}>
+          <ErrorBoundary errorComponent={undefined} errorStyles={undefined} errorScripts={undefined}>
+            <LoadingBoundary name="academia/" loading={null}>
+              <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+                <RedirectBoundary>
+                  <RedirectErrorBoundary router={{...}}>
+                    <InnerLayoutRouter url="/academia" tree={[...]} params={{}} cacheNode={{rsc:{...}, ...}} ...>
+                      <SegmentViewNode type="page" pagePath="(public)/a...">
+                        <SegmentTrieNode>
+                        <ClientPageRoot Component={function PublicAcademyPage} serverProvidedParams={{...}}>
+                          <PublicAcademyPage params={Promise} searchParams={Promise}>
+                            <div
+                              className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#ecb613] selecti..."
+-                             bis_skin_checked="1"
+                            >
+                              <section className="relative p...">
+                                <div
+                                  className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#ecb613]..."
+-                                 bis_skin_checked="1"
+                                >
+                                <div
+                                  className="max-w-6xl mx-auto text-center space-y-6 relative z-10"
+-                                 bis_skin_checked="1"
+                                >
+                                  <div
+                                    className="inline-flex items-center gap-2 border border-[#ecb613]/30 px-4 py-1.5 r..."
+-                                   bis_skin_checked="1"
+                                  >
+                                  <h1>
+                                  <p>
+                                  <div
+                                    className="flex flex-wrap items-center justify-center gap-4 pt-4"
+-                                   bis_skin_checked="1"
+                                  >
+                              <main id="campus-lms" className="max-w-7xl ...">
+                                <GrowthMasteryVault>
+                                  <div
+                                    className="relative rounded-[2.5rem] bg-[#09090d] border border-white/10 p-6 md:p-..."
+-                                   bis_skin_checked="1"
+                                  >
+                                    <audio>
+                                    <div
+                                      className="absolute top-0 right-0 w-[450px] h-[450px] bg-[#a855f7]/10 blur-[130p..."
+-                                     bis_skin_checked="1"
+                                    >
+                                    <div
+                                      className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-[#ecb613]/10 blur-[11..."
+-                                     bis_skin_checked="1"
+                                    >
+                                    <div
+                                      className="relative z-10 flex flex-wrap items-center justify-between gap-4 borde..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+                                        className="flex items-center gap-3"
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/3..."
+-                                         bis_skin_checked="1"
+                                        >
+                                        <div
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="flex items-center gap-2"
+-                                           bis_skin_checked="1"
+                                          >
+                                          ...
+                                      <div
+                                        className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 bo..."
+-                                       bis_skin_checked="1"
+                                      >
+                                    <div
+                                      className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+                                        className="lg:col-span-4 flex flex-col items-center justify-center space-y-4"
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="w-32 h-32 md:w-36 md:h-36 rounded-full bg-gradient-to-tr from-[#1..."
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-14 h-14 rounded-full bg-purple-500/20 border border-purple-40..."
+-                                           bis_skin_checked="1"
+                                          >
+                                      <div
+                                        className="lg:col-span-8 space-y-4"
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="space-y-1"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="flex items-center gap-2"
+-                                           bis_skin_checked="1"
+                                          >
+                                          ...
+                                        <div
+                                          className="space-y-1.5 pt-2"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            onClick={function handleSeek}
+                                            className="h-2.5 w-full bg-white/10 rounded-full cursor-pointer relative o..."
+-                                           bis_skin_checked="1"
+                                          >
+                                            <div
+                                              className="h-full bg-gradient-to-r from-purple-500 to-[#ecb613] rounded-..."
+                                              style={{width:"0%"}}
+-                                             bis_skin_checked="1"
+                                            >
+                                          <div
+                                            className="flex justify-between text-[10px] font-mono text-white/40"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center justify-between pt-2"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="flex items-center gap-3"
+-                                           bis_skin_checked="1"
+                                          >
+                                          <div
+                                            className="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-xl borde..."
+-                                           bis_skin_checked="1"
+                                          >
+                                    <div
+                                      className="relative z-10 flex flex-col md:flex-row gap-4 justify-between items-s..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+                                        className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none"
+-                                       bis_skin_checked="1"
+                                      >
+                                      <div
+                                        className="relative w-full md:w-64"
+-                                       bis_skin_checked="1"
+                                      >
+                                    <div
+                                      className="relative z-10 max-h-[380px] overflow-y-auto pr-2 space-y-2.5"
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           01
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           02
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           03
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           04
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           05
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           06
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           07
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           08
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           09
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           10
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           11
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           12
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           13
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           14
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           15
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           16
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           17
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           18
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           19
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                      <div
+                                        onClick={function onClick}
+                                        className="p-4 rounded-2xl cursor-pointer transition-all border flex items-cen..."
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex items-center gap-3 truncate"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="w-8 h-8 rounded-xl flex items-center justify-center text-xs fon..."
+-                                           bis_skin_checked="1"
+                                          >
++                                           20
+                                          <div
+                                            className="truncate"
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="flex items-center gap-3 shrink-0 text-xs font-mono"
+-                                         bis_skin_checked="1"
+                                        >
+                                <div
+                                  className="space-y-6"
+-                                 bis_skin_checked="1"
+                                >
+                                  <div
+-                                   bis_skin_checked="1"
+                                  >
+                                  <ArtistFunnelPanel source="academia">
+                                    <div
+                                      className="rounded-[2.5rem] bg-[#09090d]/80 border border-white/10 backdrop-blur..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+                                        className="absolute top-0 right-0 w-[380px] h-[380px] bg-[#ecb613]/10 blur-[12..."
+-                                       bis_skin_checked="1"
+                                      >
+                                      <div
+                                        className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-[#00E5FF]/5 blur-[1..."
+-                                       bis_skin_checked="1"
+                                      >
+                                      <div
+                                        className="relative z-10"
+-                                       bis_skin_checked="1"
+                                      >
+                                        <div
+                                          className="flex flex-wrap items-center justify-between gap-4 border-b border..."
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="flex items-center gap-3"
+-                                           bis_skin_checked="1"
+                                          >
+                                            <div
+                                              className="w-12 h-12 rounded-2xl bg-[#ecb613]/10 border border-[#ecb613]..."
+-                                             bis_skin_checked="1"
+                                            >
+                                            <div
+-                                             bis_skin_checked="1"
+                                            >
+                                          <div
+                                            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#ecb613]/10 ..."
+-                                           bis_skin_checked="1"
+                                          >
+                                        <div
+                                          className="grid grid-cols-4 gap-2 mb-10"
+-                                         bis_skin_checked="1"
+                                        >
+                                          <div
+                                            className="rounded-xl px-2 py-2 text-center border transition-all bg-[#ecb..."
+-                                           bis_skin_checked="1"
+                                          >
+                                          <div
+                                            className="rounded-xl px-2 py-2 text-center border transition-all bg-white..."
+-                                           bis_skin_checked="1"
+                                          >
+                                          <div
+                                            className="rounded-xl px-2 py-2 text-center border transition-all bg-white..."
+-                                           bis_skin_checked="1"
+                                          >
+                                          <div
+                                            className="rounded-xl px-2 py-2 text-center border transition-all bg-white..."
+-                                           bis_skin_checked="1"
+                                          >
+                                        ...
+                                          <motion.form initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} ...>
+                                            <form onSubmit={function handleCapture} className="space-y-4" ...>
+                                              <div
+                                                className="text-center mb-6"
+-                                               bis_skin_checked="1"
+                                              >
+                                              <div
+                                                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+-                                               bis_skin_checked="1"
+                                              >
+                                                <Field icon={<User>} label="NOMBRE">
+                                                  <div
+-                                                   bis_skin_checked="1"
+                                                  >
+                                                    <label>
+                                                    <div
+                                                      className="relative"
+-                                                     bis_skin_checked="1"
+                                                    >
+                                                <Field icon={<Mail>} label="EMAIL">
+                                                  <div
+-                                                   bis_skin_checked="1"
+                                                  >
+                                                    <label>
+                                                    <div
+                                                      className="relative"
+-                                                     bis_skin_checked="1"
+                                                    >
+                                                <Field icon={<Phone>} label="WHATSAPP REAL">
+                                                  <div
+-                                                   bis_skin_checked="1"
+                                                  >
+                                                    <label>
+                                                    <div
+                                                      className="relative"
+-                                                     bis_skin_checked="1"
+                                                    >
+                                                <Field icon={<Music2>} label="GÉNERO (OP...">
+                                                  <div
+-                                                   bis_skin_checked="1"
+                                                  >
+                                                    <label>
+                                                    <div
+                                                      className="relative"
+-                                                     bis_skin_checked="1"
+                                                    >
+                                              <Field icon={<Sparkles>} label="OBJETIVO P...">
+                                                <div
+-                                                 bis_skin_checked="1"
+                                                >
+                                                  <label>
+                                                  <div
+                                                    className="relative"
+-                                                   bis_skin_checked="1"
+                                                  >
+                                              ...
+                                <div
+                                  className="space-y-6"
+-                                 bis_skin_checked="1"
+                                >
+                                  <div
+                                    className="flex items-center justify-between"
+-                                   bis_skin_checked="1"
+                                  >
+                                    <div
+-                                     bis_skin_checked="1"
+                                    >
+                                  ...
+                                <div
+                                  className="border border-white/10 bg-[#0a0a0c] rounded-3xl p-8 space-y-6"
+-                                 bis_skin_checked="1"
+                                >
+                                  <div
+                                    className="flex flex-col md:flex-row justify-between items-start md:items-center g..."
+-                                   bis_skin_checked="1"
+                                  >
+                                    <div
+-                                     bis_skin_checked="1"
+                                    >
+                                  <div
+                                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+-                                   bis_skin_checked="1"
+                                  >
+                                    <div
+                                      className="bg-white/5 border border-white/5 p-4 rounded-2xl flex flex-col justif..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+-                                       bis_skin_checked="1"
+                                      >
+                                      ...
+                                    <div
+                                      className="bg-white/5 border border-white/5 p-4 rounded-2xl flex flex-col justif..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+-                                       bis_skin_checked="1"
+                                      >
+                                      ...
+                                    <div
+                                      className="bg-white/5 border border-white/5 p-4 rounded-2xl flex flex-col justif..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+-                                       bis_skin_checked="1"
+                                      >
+                                      ...
+                                    <div
+                                      className="bg-white/5 border border-white/5 p-4 rounded-2xl flex flex-col justif..."
+-                                     bis_skin_checked="1"
+                                    >
+                                      <div
+-                                       bis_skin_checked="1"
+                                      >
+                                      ...
+                                <div
+                                  className="space-y-6"
+-                                 bis_skin_checked="1"
+                                >
+                                  <div
+-                                   bis_skin_checked="1"
+                                  >
+                                  ...
+                      ...
+                    ...
+          ...
+ 
+[browser] You may test your Stripe.js integration over HTTP. However, live Stripe.js integrations must use HTTPS. (https://js.stripe.com/dahlia/stripe.js:1:922357)
+[browser] Received `true` for a non-boolean attribute `p-jsx`.
+
+If you want to write it to the DOM, pass a string instead: p-jsx="true" or p-jsx={value.toString()}. 
+[browser] ⚠️ [AUDIO ERROR] No se pudo cargar: /media/dani-aragon-vault/ART_AUDIOS_DE_DANI_ARAGON_FORMACION_PARA_MANAGERS_Y_AR_1.ogg (src/features/academy/ui/GrowthMasteryVault.tsx:142:19)
+[browser] ⚠️ [AUDIO PLAYBACK ERROR]: NotSupportedError: The element has no supported sources. (src/features/academy/ui/GrowthMasteryVault.tsx:82:17)
+[browser] Image with src "/images/brand/ear_logo_official_diamond.png" has "fill" but is missing "sizes" prop. Please add it to improve page performance. Read more: https://nextjs.org/docs/api-reference/next/image#sizes

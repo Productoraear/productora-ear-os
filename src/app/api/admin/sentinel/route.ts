@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { exec } from 'node:child_process';
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
 const execAsync = promisify(exec);
 
@@ -52,9 +53,8 @@ async function runScript(action: 'scan' | 'absorb', paths: string[] = []): Promi
   const command =
     action === 'scan'
       ? `powershell -NoProfile -ExecutionPolicy Bypass -File "${SCRIPT_PATH}" -Action scan`
-      : `powershell -NoProfile -ExecutionPolicy Bypass -File "${SCRIPT_PATH}" -Action absorb${
-          safePaths ? ` -Paths ${safePaths}` : ''
-        }`;
+      : `powershell -NoProfile -ExecutionPolicy Bypass -File "${SCRIPT_PATH}" -Action absorb${safePaths ? ` -Paths ${safePaths}` : ''
+      }`;
 
   const { stdout, stderr } = await execAsync(command, {
     timeout: 30000,
@@ -70,6 +70,9 @@ async function runScript(action: 'scan' | 'absorb', paths: string[] = []): Promi
 }
 
 export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   const { searchParams } = new URL(request.url);
   const action = searchParams.get('action') === 'absorb' ? 'absorb' : 'scan';
 
@@ -89,6 +92,9 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   let paths: string[] = [];
   try {
     const payload = (await request.json()) as { paths?: string[] };

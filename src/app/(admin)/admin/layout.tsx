@@ -37,7 +37,8 @@ import {
   BookOpen,
   Layers,
   Sliders,
-  Swords
+  Swords,
+  FileText
 } from 'lucide-react';
 import OracleAmbientInterface from '@/components/admin/OracleAmbientInterface';
 import { PROVIDERS_GRAND_TOTAL, formatProviderBadge } from '@/lib/constants/providers-manifest';
@@ -102,6 +103,7 @@ const MASTER_TABS: MasterTab[] = [
       { id: 'whatsapp', name: '💬 Centralita WhatsApp', href: '/admin/whatsapp', icon: MessageCircle, badge: '693 048', description: 'Recepción y cierre directo por WhatsApp' },
       { id: 'affiliates', name: '🏰 Red Afiliados Fincas', href: '/admin/afiliados', icon: Share2, badge: 'SPLIT 80/10', description: 'Gestión de fincas homologadas y comisiones' },
       { id: 'providers', name: '👥 Proveedores Edge CDN', href: '/admin/proveedores', icon: Users, badge: '75k CDN', description: 'Catálogo indexado de proveedores nacionales' },
+      { id: 'propuestas', name: '📑 Propuestas & Presupuestos', href: '/admin/propuestas', icon: FileText, badge: 'QUOTES', description: 'Generación de propuestas comerciales y presupuestos' },
       { id: 'simulador', name: '🗺️ Mapa & Simulador', href: '/admin/simulador', icon: Compass, badge: 'SIMULADOR', description: 'Simulación de rutas y logística de bodas' }
     ]
   },
@@ -141,6 +143,16 @@ const MASTER_TABS: MasterTab[] = [
       { id: 'sentinel', name: '🛰️ Consola Sentinel ZTM', href: '/admin/sentinel', icon: Satellite, badge: 'ZERO-TKN', description: 'Vigilancia de memoria y árbol de Git' },
       { id: 'command', name: '🛡️ Centro de Mando & Skills', href: '/admin/command-center', icon: Shield, badge: 'ROOT', description: 'Auditoría de skills y directivas de gobernanza' }
     ]
+  },
+  {
+    id: 'control',
+    title: 'Ctrl Soberano',
+    shortTitle: 'Control',
+    icon: Sliders,
+    badge: 'SEGMENTADO',
+    subTabs: [
+      { id: 'control-panel', name: 'Panel Segmentado', href: '/admin/control', icon: LayoutDashboard, badge: '6 ENTIDADES', description: 'Artistas, Proveedores, Terapeutas, Flota, Afiliados y Tesoreria' }
+    ]
   }
 ];
 
@@ -174,7 +186,7 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
       {/* 1. HEADER SUPERIOR STICKY                                             */}
       {/* ===================================================================== */}
       <header className="sticky top-0 z-50 w-full bg-[#06060a]/95 backdrop-blur-md border-b border-[#1a1a24] px-4 flex flex-col justify-center">
-        
+
         {/* FILA 1: LOGO, BUSCADOR, STATUS GPU & PERFIL */}
         <div className="h-14 flex items-center justify-between gap-3 border-b border-white/[0.04]">
           <div className="flex items-center gap-3">
@@ -193,7 +205,7 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
             </button>
 
             <Link href="/admin" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#181824] to-[#0a0a10] border border-[#ecb613]/40 flex items-center justify-center shadow-[0_0_10px_rgba(236,182,19,0.15)]">
+              <div className="w-8 h-8 rounded-xl bg-[#0d0d10] border border-[#ecb613]/40 flex items-center justify-center shadow-[0_0_10px_rgba(236,182,19,0.15)]">
                 <span className="text-[#ecb613] font-mono font-black text-xs">EAR</span>
               </div>
               <div className="hidden sm:block">
@@ -254,7 +266,7 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
 
             <Link
               href="/"
-              className="p-2 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-cyan-400 transition-colors"
+              className="p-2 rounded-lg bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-[#ecb613] transition-colors"
               title="Ir a la Web Pública"
             >
               <LogOut className="w-4 h-4" />
@@ -279,19 +291,17 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
                       setActiveTabId(tab.id);
                       setOpenDropdownId(openDropdownId === tab.id ? null : tab.id);
                     }}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-bold tracking-tight transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-[#ecb613] text-black shadow-[0_0_12px_rgba(236,182,19,0.3)]'
-                        : 'bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800'
-                    }`}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-mono font-bold tracking-tight transition-all cursor-pointer ${isSelected
+                      ? 'bg-[#ecb613] text-black shadow-[0_0_12px_rgba(236,182,19,0.3)]'
+                      : 'bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800'
+                      }`}
                   >
                     <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-black' : 'text-[#ecb613]'}`} />
                     <span>{tab.title}</span>
-                    <span className={`text-[9px] px-1 py-0.2 rounded border ${
-                      isSelected
-                        ? 'bg-black/20 border-black/30 text-black'
-                        : 'bg-black/40 border-white/10 text-zinc-400'
-                    }`}>
+                    <span className={`text-[9px] px-1 py-0.2 rounded border ${isSelected
+                      ? 'bg-black/20 border-black/30 text-black'
+                      : 'bg-black/40 border-white/10 text-zinc-400'
+                      }`}>
                       {tab.badge}
                     </span>
                     <ChevronDown className={`w-3 h-3 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
@@ -315,11 +325,10 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
                           key={sub.id}
                           href={sub.href}
                           onClick={() => setOpenDropdownId(null)}
-                          className={`flex items-start gap-2.5 p-2 rounded-xl text-xs transition-colors group ${
-                            isSubActive
-                              ? 'bg-[#ecb613]/15 text-[#ecb613] font-bold border border-[#ecb613]/30'
-                              : 'text-zinc-300 hover:bg-zinc-800/80 hover:text-white'
-                          }`}
+                          className={`flex items-start gap-2.5 p-2 rounded-xl text-xs transition-colors group ${isSubActive
+                            ? 'bg-[#ecb613]/15 text-[#ecb613] font-bold border border-[#ecb613]/30'
+                            : 'text-zinc-300 hover:bg-zinc-800/80 hover:text-white'
+                            }`}
                         >
                           <SubIcon className={`w-4 h-4 mt-0.5 shrink-0 ${isSubActive ? 'text-[#ecb613]' : 'text-zinc-400 group-hover:text-[#ecb613]'}`} />
                           <div className="min-w-0 flex-1">
@@ -354,19 +363,17 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
               <Link
                 key={sub.id}
                 href={sub.href}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono shrink-0 transition-all ${
-                  isSubActive
-                    ? 'bg-[#ecb613]/20 text-[#ecb613] font-bold border border-[#ecb613]/50 shadow-[0_0_8px_rgba(236,182,19,0.2)]'
-                    : 'bg-zinc-950/70 hover:bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800/60'
-                }`}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono shrink-0 transition-all ${isSubActive
+                  ? 'bg-[#ecb613]/20 text-[#ecb613] font-bold border border-[#ecb613]/50 shadow-[0_0_8px_rgba(236,182,19,0.2)]'
+                  : 'bg-zinc-950/70 hover:bg-zinc-900 text-zinc-400 hover:text-zinc-200 border border-zinc-800/60'
+                  }`}
               >
                 <SubIcon className={`w-3.5 h-3.5 ${isSubActive ? 'text-[#ecb613]' : 'text-zinc-500'}`} />
                 <span>{sub.name}</span>
-                <span className={`text-[9px] px-1 py-0.2 rounded border ${
-                  isSubActive
-                    ? 'bg-[#ecb613]/30 border-[#ecb613]/40 text-[#ecb613]'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-500'
-                }`}>
+                <span className={`text-[9px] px-1 py-0.2 rounded border ${isSubActive
+                  ? 'bg-[#ecb613]/30 border-[#ecb613]/40 text-[#ecb613]'
+                  : 'bg-zinc-900 border-zinc-800 text-zinc-500'
+                  }`}>
                   {sub.badge}
                 </span>
               </Link>
@@ -391,15 +398,14 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
 
         {/* SIDEBAR CATMÍN RESPONSIVE */}
         <aside
-          className={`fixed lg:sticky top-28 h-[calc(100vh-7rem)] bg-[#050508] border-r border-[#1a1a24] z-40 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
-            mobileOpen ? 'left-0 w-72 shadow-2xl' : '-left-72 lg:left-0'
-          } ${collapsed ? 'lg:w-16' : 'lg:w-64'}`}
+          className={`fixed lg:sticky top-28 h-[calc(100vh-7rem)] bg-[#050508] border-r border-[#1a1a24] z-40 transition-all duration-300 flex flex-col justify-between overflow-hidden ${mobileOpen ? 'left-0 w-72 shadow-2xl' : '-left-72 lg:left-0'
+            } ${collapsed ? 'lg:w-16' : 'lg:w-64'}`}
         >
           {/* Header del Sidebar con Marca */}
           <div className="p-3 border-b border-[#1a1a24] flex items-center justify-between">
             {(!collapsed || mobileOpen) ? (
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#141420] to-[#0a0a10] border border-[#ecb613]/30 flex items-center justify-center shrink-0 shadow-sm">
+                <div className="w-8 h-8 rounded-xl bg-[#0d0d10] border border-[#ecb613]/30 flex items-center justify-center shrink-0 shadow-sm">
                   <span className="text-[#ecb613] font-mono font-black text-xs">EAR</span>
                 </div>
                 <div className="min-w-0">
@@ -449,11 +455,10 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
                         key={item.id}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className={`flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs transition-all group ${
-                          isActive
-                            ? 'bg-[#ecb613]/15 text-[#ecb613] font-bold border border-[#ecb613]/30 shadow-[0_0_12px_rgba(236,182,19,0.1)]'
-                            : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60 border border-transparent'
-                        }`}
+                        className={`flex items-center gap-3 px-2.5 py-2 rounded-xl text-xs transition-all group ${isActive
+                          ? 'bg-[#ecb613]/15 text-[#ecb613] font-bold border border-[#ecb613]/30 shadow-[0_0_12px_rgba(236,182,19,0.1)]'
+                          : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900/60 border border-transparent'
+                          }`}
                         title={isColl ? item.name : undefined}
                       >
                         <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#ecb613]' : 'group-hover:text-[#ecb613] transition-colors'}`} />
@@ -462,11 +467,10 @@ export default function CatminAdminMasterLayout({ children }: { children: React.
                           <div className="flex items-center justify-between w-full min-w-0">
                             <span className="truncate">{item.name}</span>
                             <span
-                              className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ml-1.5 shrink-0 ${
-                                isActive
-                                  ? 'bg-[#ecb613]/20 border-[#ecb613]/40 text-[#ecb613]'
-                                  : 'bg-zinc-900 border-zinc-800 text-zinc-500 group-hover:text-zinc-300'
-                              }`}
+                              className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ml-1.5 shrink-0 ${isActive
+                                ? 'bg-[#ecb613]/20 border-[#ecb613]/40 text-[#ecb613]'
+                                : 'bg-zinc-900 border-zinc-800 text-zinc-500 group-hover:text-zinc-300'
+                                }`}
                             >
                               {item.badge}
                             </span>

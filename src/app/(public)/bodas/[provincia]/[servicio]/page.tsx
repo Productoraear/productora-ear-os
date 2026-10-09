@@ -44,7 +44,7 @@ export function generateStaticParams() {
       params.push({ provincia: prov, servicio: serv.slug });
     }
   }
-  
+
   return params;
 }
 
@@ -107,6 +107,12 @@ export default async function BodasServicioProvinciaPage({ params }: Props) {
   }
   if (canonical.needsRedirect) {
     redirect(canonical.path);
+  }
+
+  // 🏰 El servicio "fincas" se sirve con el catálogo certificado real
+  // (aforo, potencia, acústica y distancia), nunca con una plantilla SEO vacía.
+  if (canonical.service === 'fincas') {
+    redirect(`/fincas/${canonical.province}`);
   }
 
   const provData = PROVINCIAS_52_GRAPH[canonical.province] || { name: canonical.province, slug: canonical.province };

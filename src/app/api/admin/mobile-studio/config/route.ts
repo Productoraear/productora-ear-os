@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
 const CONFIG_PATH = path.join(process.cwd(), 'src/data/admin/mobile-studio-config.json');
 
@@ -17,7 +18,10 @@ const DEFAULT_CONFIG = {
   updatedAt: new Date().toISOString()
 };
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   try {
     if (fs.existsSync(CONFIG_PATH)) {
       const data = fs.readFileSync(CONFIG_PATH, 'utf-8');
@@ -31,6 +35,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await req.json();
     const updatedConfig = {

@@ -4,7 +4,7 @@ export function generateJsonLd(provincia: string, evento: string, artistName: st
   const provCapitalized = provincia.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
   const eventClean = evento.replace(/-/g, ' ');
   const provKey = provincia.toLowerCase();
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.productoraear.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://productoraear.com';
   const canonicalUrl = `${baseUrl}/servicios/mariachis/${provincia}/${evento}`;
 
   // Estructura base S-Class

@@ -87,7 +87,7 @@ export class AdWordsEngine {
             adGroupId: 'AG_REGALO_CUMPLEANOS',
             adGroupName: 'Regalos Cumpleaños & Fiestas Privadas',
             targetVertical: 'REGALOS_Y_OCASIONES',
-            landingUrl: 'https://www.productoraear.com/artistas/edwin-agudelo?utm_source=google&utm_medium=cpc&utm_campaign=solista_premium&utm_term=serenata+cumpleanos',
+            landingUrl: 'https://productoraear.com/artistas/edwin-agudelo?utm_source=google&utm_medium=cpc&utm_campaign=solista_premium&utm_term=serenata+cumpleanos',
             keywordsExact: [
               '[serenata cumpleaños madrid]',
               '[contratar cantante fiesta privada]',
@@ -121,17 +121,17 @@ export class AdWordsEngine {
               {
                 text: 'Bono 150€ Complementos', // 23 chars
                 description: 'Flores, sombrero charro y extras.', // 33 chars
-                url: 'https://www.productoraear.com/checkout/presupuesto?promo=EDWIN150'
+                url: 'https://productoraear.com/checkout/presupuesto?promo=EDWIN150'
               },
               {
                 text: 'Ver Vídeos en Directo', // 21 chars
                 description: 'Escucha a Edwin Agudelo en acción.', // 34 chars
-                url: 'https://www.productoraear.com/artistas/edwin-agudelo'
+                url: 'https://productoraear.com/artistas/edwin-agudelo'
               },
               {
                 text: 'Cotizador en 1 Minuto', // 21 chars
                 description: 'Calcula tu presupuesto al instante.', // 35 chars
-                url: 'https://www.productoraear.com/cotizador'
+                url: 'https://productoraear.com/cotizador'
               }
             ],
             callouts: [
@@ -151,7 +151,7 @@ export class AdWordsEngine {
             adGroupId: 'AG_DIA_MADRE_PADRE',
             adGroupName: 'Día de la Madre & Día del Padre',
             targetVertical: 'REGALOS_Y_OCASIONES',
-            landingUrl: 'https://www.productoraear.com/artistas/edwin-agudelo?utm_source=google&utm_medium=cpc&utm_campaign=solista_premium&utm_term=serenata+dia+de+la+madre',
+            landingUrl: 'https://productoraear.com/artistas/edwin-agudelo?utm_source=google&utm_medium=cpc&utm_campaign=solista_premium&utm_term=serenata+dia+de+la+madre',
             keywordsExact: [
               '[serenata dia de la madre madrid]',
               '[regalo dia de la madre musica]',
@@ -180,12 +180,12 @@ export class AdWordsEngine {
               {
                 text: 'Cupón 150€ Flores y Más', // 23 chars
                 description: 'Arreglos florales y dedicatoria.', // 32 chars
-                url: 'https://www.productoraear.com/checkout/presupuesto?promo=EDWIN150'
+                url: 'https://productoraear.com/checkout/presupuesto?promo=EDWIN150'
               },
               {
                 text: 'Repertorio para Madres', // 22 chars
                 description: 'Amor Eterno, Madrecita y más.', // 29 chars
-                url: 'https://www.productoraear.com/artistas/edwin-agudelo'
+                url: 'https://productoraear.com/artistas/edwin-agudelo'
               }
             ],
             callouts: [
@@ -213,7 +213,7 @@ export class AdWordsEngine {
             adGroupId: 'AG_MARIACHI_BODAS_MADRID',
             adGroupName: 'Mariachi para Bodas Madrid & Toledo',
             targetVertical: 'BODAS',
-            landingUrl: 'https://www.productoraear.com/bodas/madrid/dj-eventos?utm_source=google&utm_medium=cpc&utm_campaign=mariachi_bodas',
+            landingUrl: 'https://productoraear.com/bodas/madrid/dj-eventos?utm_source=google&utm_medium=cpc&utm_campaign=mariachi_bodas',
             keywordsExact: [
               '[mariachi para bodas madrid]',
               '[contratar mariachi boda toledo]',
@@ -243,12 +243,12 @@ export class AdWordsEngine {
               {
                 text: 'Presupuesto para Boda', // 21 chars
                 description: 'Precios cerrados sin sorpresas.', // 31 chars
-                url: 'https://www.productoraear.com/cotizador'
+                url: 'https://productoraear.com/cotizador'
               },
               {
                 text: 'Ficha Técnica Quinteto', // 22 chars
                 description: 'Instrumentación de conservatorio.', // 33 chars
-                url: 'https://www.productoraear.com/artistas/edwin-agudelo'
+                url: 'https://productoraear.com/artistas/edwin-agudelo'
               }
             ],
             callouts: [

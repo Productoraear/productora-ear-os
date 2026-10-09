@@ -7,7 +7,11 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { usePathname } from 'next/navigation';
 
 // Initialize Stripe (uses public key)
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_placeholder');
+// 🔒 FAIL-CLOSED STRIPE CLIENT (BLINDAJE SESSION_SECRET P0): sin public key real, no hay cliente Stripe.
+const STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+const stripePromise = STRIPE_PUBLIC_KEY && STRIPE_PUBLIC_KEY !== 'pk_test_placeholder'
+  ? loadStripe(STRIPE_PUBLIC_KEY)
+  : null;
 
 function StripeCheckoutForm({ clientSecret, onSuccess }: { clientSecret: string, onSuccess: () => void }) {
   const stripe = useStripe();

@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import routeGovernance from '@/data/governance/route_visibility.json';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
 /**
  * 🛡️ API HANDLER: GET / POST /api/admin/route-governance
  * Permite al Administrador consultar y alternar en caliente qué URLs
  * son accesibles para el público y cuáles quedan blindadas en exclusiva para el Administrador.
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   return NextResponse.json({
     success: true,
     data: routeGovernance
@@ -15,6 +19,9 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await request.json();
     const { path, isPublic } = body;

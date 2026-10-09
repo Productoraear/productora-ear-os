@@ -74,7 +74,7 @@ export async function sendHoldAndPingTemplate(payload: HoldAndPingPayload): Prom
             { type: 'text', text: payload.vendorName || 'Estimado Proveedor' },
             { type: 'text', text: String(payload.totalAmountEur || '0') },
             { type: 'text', text: payload.eventDate || 'Próxima Temporada' },
-            { type: 'text', text: payload.claimUrl || 'https://www.productoraear.com' }
+            { type: 'text', text: payload.claimUrl || 'https://productoraear.com' }
           ]
         }
       ]

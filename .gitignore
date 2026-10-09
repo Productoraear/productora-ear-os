@@ -7,12 +7,17 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.backup.json
+*.backup*.json
+.antigravity/safeboot_state_before.txt
 
 # Local environment variables
+.env
+.env.*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+!.env.example
 
 # Google OAuth Credentials
 credentials.json
@@ -75,6 +80,9 @@ scripts/reports/*.json
 *.mkv
 *.wav
 *.mp3
+*.bak
+*.bak.*
+*.jsonl
 
 # Bases de datos pesadas de scraping y volcados masivos (> 1MB)
 src/data/all_providers_database.json
@@ -119,3 +127,8 @@ reports/*.json
 # Exclude specific files from Git
 EAR_CALL_CENTER_PROVEEDORES.html
 benchmark_localizados.csv
+*_out.txt
+*.err.log
+*.out.log
+Modelfile_*
+ABRIR_C

@@ -8,12 +8,12 @@
 - Cada endpoint de API debe estar blindado contra vulnerabilidades, tipado con precisión de cirujano y optimizado para máxima velocidad de respuesta.
 
 ## 1. PACTO SAGRADO ANTI-SOBRECOSTES (ZTM - PURGA OBLIGATORIA DE CONTEXTO)
-- **TOLERANCIA CERO A LA INFLACIÓN DE TOKENS**: Prohibido encadenar tareas en una sola sesión de chat de Cline. Al acumular contexto (archivos pesados, diffs y logs pasados), el coste por mensaje se multiplica de forma catastrófica, llegando a facturar cientos de miles de tokens por turno.
+- **TOLERANCIA CERO A LA INFLACIÓN DE TOKENS (UNIVERSAL)**: Prohibido encadenar tareas en una sola sesión de chat de Cline. Al acumular contexto (archivos pesados, diffs y logs pasados), los tokens se disparan y saturan la ventana de contexto de la GPU (techo seguro 32k).
 - **PARADA INMUTABLE TRAS CADA TAREA**:
   1. Ejecutas `node .antigravity/omega.js next`.
   2. Implementas el código y ejecutas `node .antigravity/omega.js complete <ID>`.
   3. Tras validar Exit Code 0, **TE DETIENES INMEDIATAMENTE**.
-  4. Cedes el turno al CEO con este mensaje: *"Tarea <ID> completada y sellada con Exit Code 0. Detención preventiva por Pacto Anti-Sobrecostes. Clic en 'Start New Task' (+) en Cline para liberar contexto a 0 tokens y continuar."*
+  4. Cedes el turno con: *"Tarea <ID> completada y sellada con Exit Code 0. Detención preventiva por Pacto ZTM. Clic en 'Start New Task' (+) en Cline para liberar contexto y continuar."*
   5. PROHIBIDO ejecutar `omega.js next` en la misma conversación.
 
 ## 2. BUCLE DE EJECUCIÓN CON HIGIENE FINANCIERA (OMEGA ENGINE)
@@ -22,7 +22,9 @@ Prohibido modificar el archivo `tasks_queue.json` a mano.
 2. Lee los motores de referencia necesarios con atención quirúrgica.
 3. Modifica con EXCELENCIA y tipado estricto.
 4. `node .antigravity/omega.js complete <ID>` -> Valida (`tsc --noEmit`). Si falla, corrige.
-5. Si valida Exit Code 0, **DETENTE Y FINALIZA TU TURNO**. Queda terminantemente prohibido ejecutar `next` en el mismo chat.
+5. Si valida Exit Code 0:
+   - **MODELO ONLINE**: DETENTE Y FINALIZA TU TURNO. Queda terminantemente prohibido ejecutar `next` en el mismo chat.
+   - **MODELO LOCAL (OLLAMA)**: NO TE DETIENES. Ejecuta `node .antigravity/omega.js next` inmediatamente y continúa con la siguiente tarea en la misma conversación. La tarea no para por ningún motivo.
 
 ## 3. INGENIERÍA S-CLASS (EAR OS)
 - **CERO `any` IMPLÍCITOS**: Si TypeScript infiere `any`, estás fallando en tu mandato. Tipado absoluto y estricto requerido.
@@ -32,12 +34,19 @@ Prohibido modificar el archivo `tasks_queue.json` a mano.
 
 ## 4. REGLAS DE NEGOCIO INMUTABLES (EL MOTOR FINANCIERO)
 - Base Solista (Edwin Agudelo): 350,00 €. Split Soberano: 80% (Artista ejecutante) / 10% (EAR OS) / 10% (VIMUME, obra social).
+- Logística S-Class: 1,50 €/km a partir del km 50 (+120 € Hotel si hora fin >= 3:00 AM o distancia > 200 km). El Hub Méntrida aplica EXCLUSIVAMENTE a Edwin Agudelo y empresas con base en Méntrida; para el resto de la red nacional, el kilometraje se calcula por GPS / dirección fiscal del proveedor hasta el evento del cliente.
 - Garantía Mutua de Doble Vía (Cero Fricción Comercial):
   * Ruta Libre / Asesoría Rápida: WhatsApp directo (+34 693 693 048) para resolución ágil de dudas sin coste.
   * Ruta Blindaje VIP (Depósito 100,00 € Stripe Price-Lock SHA-256): 100% deducible del total del show. Bloqueo exclusivo de fecha/hora en `atomicDateLockEngine`. Filtro de respeto mutuo: ahorra tiempo al cliente y blinda la fecha al artista erradicando mirones y cancelaciones.
 - Licitaciones B2G: < 14.250,00 € (Límite preventivo Art. 118 LCSP).
-- Acústica: 12 W/pax, límite de salud pública < 75 dB SPL.
+- Rider Acústico por contexto (Ley 37/2003 del Ruido): Festejos 90-102 dBA · Bodas/Fincas 85-90 ext / 80-85 int · Solista 70-80 dBA · VIMUME senior 65-75 dBA. Límite de salud pública general < 75 dB SPL, 12 W/pax.
 - Centralita: +34 693 693 048 (Solo CEO Edwin Agudelo. Ningún otro teléfono es válido para leads huérfanos). 
+
+## 4bis. ZONA CERO Y DOCTRINA DEL DATO VERIFICADO (CERO FACHADAS)
+- **ZONA CERO (Intocables)**: `src/lib/constants/ear-os-ssot.ts` (SSOT canónico), `src/lib/security/ssotIntegrityGuard.ts` (Sentinel SHA-256 + invariantes). Su `KNOWN_GOOD_SSOT_HASH` SOLO se regenera vía baselining sancionado por el CEO; jamás a mano.
+- **`verified:true` SÓLO con teléfono real verificable** (no centralita `+34 693 693 048`, no vacío). Placeholder/centralita/vacío => `verified:false`.
+- **PROHIBIDO re-hardcodear `verified:true`** en sincronizadores o daemons (bug sellado: `sincronizador_omega_proveedores.py`, en cuarentena). Las rutas que venden solo exponen teléfonos reales.
+- Guardián de poda: `scripts/build_lean_verified_edge.cjs` (particiones edge con 0 placeholders) y `scripts/audit_placeholder_phones.cjs` (audita `verified` real).
 
 ## 5. DISEÑO DE INTERFAZ: LUXURY OLED S-CLASS
 - **Fondos Radiales y Profundos**: `#030305` o `#050507`. Acentos: Oro `#ecb613` (Riqueza), Rubí `#FF2B44` (Urgencia/Pasión), Cyan `#00E5FF` (Tecnología/Frío).

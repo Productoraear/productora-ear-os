@@ -38,6 +38,7 @@ const routes: string[] = [
   'https://www.productoraear.com/vimume',
   'https://www.productoraear.com/artistas',
   'https://www.productoraear.com/artistas/edwin-agudelo',
+  'https://www.productoraear.com/academia',
   'https://www.productoraear.com/arsenal/luces-navidad'
 ];
 

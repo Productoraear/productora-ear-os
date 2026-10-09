@@ -6,8 +6,9 @@ import {
   Flame, CheckCircle2, Star, ShieldCheck, Sparkles, 
   MessageCircle, Lock, ArrowRight, ChevronRight, Check,
   Clock, MapPin, Users, Heart, Award, UtensilsCrossed,
-  Truck, Shield, Volume2, PhoneCall, HelpCircle, FileText
+  Truck, Shield, Volume2, PhoneCall, HelpCircle, FileText, Music
 } from 'lucide-react';
+import { TARIFA_BASE_SOLISTA_EUR, DEPOSITO_STRIPE_EUR, CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 interface ArrozDish {
   id: string;
@@ -228,6 +229,27 @@ export default function ArrocesSotaPage() {
     <main className="min-h-screen bg-[#030305] text-white font-sans selection:bg-[#ecb613] selection:text-black pb-28 pt-24">
       {/* Background Glow */}
       <div className="fixed top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-[#ecb613]/12 to-transparent blur-[160px] pointer-events-none rounded-full" />
+
+      {/* 📦 ETIQUETA SCHEMA.ORG JSON-LD — MASTER SHOWCOOKING & SHOW SOLISTA SSOT */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: 'Showcooking de Arroces Monumentales + Show Solista en Vivo',
+            description: 'Paellas gigantes en directo a leña con maridaje acústico de gala y Show Solista Premium.',
+            category: 'CATERING_EVENTOS',
+            brand: { '@type': 'Brand', name: 'Productora EAR' },
+            offers: {
+              '@type': 'Offer',
+              price: TARIFA_BASE_SOLISTA_EUR,
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+            },
+          }),
+        }}
+      />
 
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
       {/* 1. HERO SECTION SOTA: VAMPIRIZACIÓN DE 120GRAMOS ELEVADA A S-CLASS */}
@@ -824,8 +846,16 @@ export default function ArrocesSotaPage() {
                   className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ecb613] via-[#ffcf4d] to-[#ecb613] text-black font-black text-xs uppercase tracking-widest text-center hover:brightness-110 transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(236,182,19,0.35)]"
                 >
                   <Lock size={14} />
-                  <span>Bloquear Fecha con Depósito (100,00 €)</span>
+                  <span>Bloquear Fecha con Depósito ({DEPOSITO_STRIPE_EUR},00 €)</span>
                 </a>
+
+                <Link
+                  href="/reservar/solista"
+                  className="w-full py-3 rounded-xl bg-white/5 border border-white/10 hover:border-[#ecb613]/50 text-white font-bold text-xs uppercase tracking-wider text-center transition-all flex items-center justify-center gap-2"
+                >
+                  <Music size={14} className="text-[#ecb613]" />
+                  <span>Maridaje con Show Solista Edwin Agudelo ({TARIFA_BASE_SOLISTA_EUR} € SSOT)</span>
+                </Link>
 
                 <a
                   href={`https://wa.me/34693693048?text=${whatsappText}`}

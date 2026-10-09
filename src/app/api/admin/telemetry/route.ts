@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import os from 'node:os';
+import { requireAdmin } from '@/lib/security/adminGuard';
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
@@ -10,7 +11,10 @@ const execAsync = promisify(exec);
  * Devuelve métricas reales del host: CPU, RAM, red, Ollama (GPU local) y pasarela de pagos.
  * GET /api/admin/telemetry
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   const startedAt = Date.now();
   const platform = process.platform;
 

@@ -20,7 +20,7 @@ console.log(`- Rutas prerenderizadas (SSG/Estáticas): ${staticRoutes.length}`);
 console.log(`- Patrones dinámicos configurados: ${routesManifest.dynamicRoutes.length}`);
 
 // Verificación de endpoints críticos
-const criticalRoutes = ['/', '/cotizador', '/presupuesto', '/vimume', '/artistas', '/artistas/edwin-agudelo', '/blog/b2g', '/empresarios', '/dossier'];
+const criticalRoutes = ['/', '/cotizador', '/presupuesto', '/vimume', '/artistas', '/artistas/edwin-agudelo', '/academia', '/blog/b2g', '/empresarios', '/dossier'];
 console.log(`\n🔍 [VERIFICACIÓN DE RUTAS CRÍTICAS]`);
 criticalRoutes.forEach(route => {
   const isCompiled = staticRoutes.includes(route) || staticRoutes.includes(route + '/');

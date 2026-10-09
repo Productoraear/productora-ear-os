@@ -24,6 +24,7 @@ enum Role {
   EXPLORADOR
   CLIENT
   AFFILIATE
+  THERAPIST
 }
 
 enum WaybillStatus {
@@ -101,6 +102,8 @@ model User {
   email             String              @unique
   name              String?
   displayName       String?
+  firebaseUid       String?             @unique
+  whatsapp          String?
   role              Role                @default(USER)
   rank              String?
   artistProfile     artistProfile?
@@ -109,11 +112,48 @@ model User {
   vendorProfile     VendorProfile?
   affiliateProfile  AffiliateProfile?
   auraWallet        auraWallet?
+  therapists        TherapistProfile[]
   commissionLedgers commissionLedger[]
   payouts           Payout[]
   referralsMade     AffiliateReferral[] @relation("AffiliateReferral_referrer")
+  userSpace         UserSpace?
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
+}
+
+// ==========================================
+// 🧩 ESPACIO INDIVIDUAL EDITABLE (S-CLASS)
+// Primer factor: Firebase (Google/Apple/Meta/Email)
+// Segundo factor: WhatsApp OTP
+// ==========================================
+
+model UserSpace {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug             String?  @unique
+  brandName        String?
+  headline         String?
+  bio              String?  @db.Text
+  avatarUrl        String?
+  primaryColor     String?  @default("#ecb613")
+  category         String?
+  province         String?
+  city             String?
+  phone            String?
+  websiteUrl       String?
+  socialLinks      Json     @default("[]")
+  gallery          Json     @default("[]")
+  servicesOffered  Json     @default("[]")
+  availability     Json     @default("[]")
+  verified         Boolean  @default(false)
+  published        Boolean  @default(false)
+  lastEditedAt     DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([slug], name: "idx_userspace_slug")
+  @@index([verified], name: "idx_userspace_verified")
 }
 
 model artistProfile {
@@ -887,4 +927,21 @@ model Payout {
   @@index([userId], name: "idx_payout_user")
   @@index([affiliateId], name: "idx_payout_affiliate")
   @@index([status], name: "idx_payout_status")
+}
+
+model TherapistProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug        String?  @unique
+  specialty   String?  // musicoterapia | neuroacustica | estimulacion_cognitiva | ocupacional
+  credentials String?  @db.Text
+  status      String   @default("ACTIVE") // ACTIVE | SUSPENDED | INACTIVE
+  isActive    Boolean  @default(true)
+  bio         String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([specialty], name: "idx_therapist_specialty")
+  @@index([status], name: "idx_therapist_status")
 }

@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getActiveWhitelist, toggleProviderVisibility } from '@/lib/providers/visibility';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const whitelist = getActiveWhitelist();
     return NextResponse.json({
@@ -19,6 +23,9 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const body = await req.json();
     const { id, slug, active } = body;

@@ -1,0 +1,170 @@
+{
+    "name": "SOPORTE · Monitor Uptime 5min (S-Class)",
+    "nodes": [
+        {
+            "parameters": {
+                "rule": {
+                    "interval": [
+                        {
+                            "triggerAtHour": -1
+                        }
+                    ]
+                }
+            },
+            "id": "cron-trigger",
+            "name": "Cron cada 5 min",
+            "type": "n8n-nodes-base.scheduleTrigger",
+            "typeVersion": 1.2,
+            "position": [
+                0,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "url": "={{ $env.EAR_HEALTH_CHECK_URL }}",
+                "options": {
+                    "timeout": 20000
+                },
+                "authentication": "genericCredentialType",
+                "genericAuthType": "httpHeaderAuth",
+                "sendHeaders": true,
+                "headerParameters": {
+                    "parameters": [
+                        {
+                            "name": "Authorization",
+                            "value": "=Bearer {{ $env.CRON_SECRET }}"
+                        }
+                    ]
+                }
+            },
+            "id": "http-health-check",
+            "name": "Llamar Health-Check",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                220,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "conditions": {
+                    "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "loose",
+                        "version": 2
+                    },
+                    "conditions": [
+                        {
+                            "id": "cond-healthy",
+                            "leftValue": "={{ $json.healthy }}",
+                            "rightValue": true,
+                            "operator": {
+                                "type": "boolean",
+                                "operation": "true"
+                            }
+                        }
+                    ],
+                    "combinator": "and"
+                }
+            },
+            "id": "if-healthy",
+            "name": "¿Todo saludable?",
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.2,
+            "position": [
+                440,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "content": "## 🩺 SOPORTE EAR OS — Degradación detectada\n\nLos siguientes componentes no responden:\n{{ $json.results.filter(r => !r.alive).map(r => `- ${r.name}: ${r.status ?? 'timeout'}`).join('\\n') }}",
+                "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+                "additionalFields": {}
+            },
+            "id": "telegram-alert",
+            "name": "Alerta Telegram",
+            "type": "n8n-nodes-base.telegram",
+            "typeVersion": 1.2,
+            "position": [
+                660,
+                200
+            ],
+            "credentials": {
+                "telegramApi": {
+                    "id": "telegram-cred",
+                    "name": "Telegram Account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "content": "## ✅ SOPORTE EAR OS — Todo operativo",
+                "chatId": "={{ $env.TELEGRAM_CHAT_ID }}"
+            },
+            "id": "telegram-ok",
+            "name": "Heartbeat OK (opcional)",
+            "type": "n8n-nodes-base.telegram",
+            "typeVersion": 1.2,
+            "position": [
+                660,
+                -100
+            ],
+            "credentials": {
+                "telegramApi": {
+                    "id": "telegram-cred",
+                    "name": "Telegram Account"
+                }
+            }
+        }
+    ],
+    "connections": {
+        "Cron cada 5 min": {
+            "main": [
+                [
+                    {
+                        "node": "Llamar Health-Check",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Llamar Health-Check": {
+            "main": [
+                [
+                    {
+                        "node": "¿Todo saludable?",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "¿Todo saludable?": {
+            "main": [
+                [
+                    {
+                        "node": "Heartbeat OK (opcional)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Alerta Telegram",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "pinData": {}
+}

@@ -6,7 +6,7 @@
   :root {
     /* --- 🏛️ EAR OS 60-30-10 S-CLASS (AURA ONYX & IMPERIAL GOLD) --- */
     /* 60% Dominant Canvas (OLED Pure Black) */
-    --background: #050505;
+    --background: #030305;
     --foreground: #f4f4f5;
 
     /* 30% Structure (Bento Surfaces, Cards & Borders) */
@@ -27,11 +27,11 @@
     --primary-aura: rgba(255, 43, 68, 0.28);
 
     /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
-    --color-ear-cyan: #AAD6CD;
-    --color-ear-blue: #258DCD;
-    --color-ear-sapphire: #081226;
-    --color-ear-sapphire-dark: #040914;
-    --color-ear-coral: #FF455B;
+    --color-ear-cyan: #00E5FF;
+    --color-ear-blue: #00E5FF;
+    --color-ear-sapphire: #030305;
+    --color-ear-sapphire-dark: #050507;
+    --color-ear-coral: #FF2B44;
 
     /* 💎 PALETA SOBERANA DIAMANTE ROJO (PRODUCTORA EAR / FUEGO / PASIÓN) */
     --color-ear-red-primary: #E11D48;
@@ -41,19 +41,19 @@
     --color-ear-red-light: #FEE2E2;
 
     /* 💎 PALETA SOBERANA DIAMANTE AZUL (VIMUME / NEUROACÚSTICA / CIENCIA) */
-    --color-ear-blue-deep: #030712;
-    --color-ear-blue-technical: #0284C7;
-    --color-ear-blue-electric: #258DCD;
-    --color-ear-blue-ice: #BAE6FD;
-    --color-ear-blue-sky: #44A3D8;
+    --color-ear-blue-deep: #030305;
+    --color-ear-blue-technical: #00E5FF;
+    --color-ear-blue-electric: #00E5FF;
+    --color-ear-blue-ice: #66F0FF;
+    --color-ear-blue-sky: #00B8D4;
 
     /* Gradientes & Resplandores Corporativos */
-    --grad-ear-sapphire: linear-gradient(185deg, #081226 0%, #000000 100%);
+    --grad-ear-sapphire: linear-gradient(185deg, #030305 0%, #000000 100%);
     --grad-ear-red: linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%);
-    --grad-ear-blue: linear-gradient(135deg, #BAE6FD 0%, #44A3D8 35%, #258DCD 70%, #0284C7 100%);
-    --glow-ear-blue: 0 0 25px rgba(37, 141, 205, 0.35);
-    --glow-ear-cyan: 0 0 20px rgba(170, 214, 205, 0.25);
-    --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
+    --grad-ear-blue: linear-gradient(135deg, #66F0FF 0%, #00E5FF 35%, #00B8D4 70%, #00E5FF 100%);
+    --glow-ear-blue: 0 0 25px rgba(0, 229, 255, 0.35);
+    --glow-ear-cyan: 0 0 20px rgba(0, 229, 255, 0.25);
+    --glow-ear-coral: 0 0 20px rgba(255, 43, 68, 0.35);
     --glow-ear-red: 0 0 25px rgba(255, 43, 68, 0.4);
 
     /* 🖋️ TIPOGRAFÍA SOBERANA S-CLASS: MONTSERRAT (BODY GLOBAL) + SYNE (DISPLAY TITLES) */
@@ -64,7 +64,7 @@
   }
 
   .dark {
-    --background: #050505;
+    --background: #030305;
     --foreground: #f4f4f5;
     --card: #0d0d10;
     --card-foreground: #e4e4e7;
@@ -81,16 +81,16 @@
     --primary-aura: rgba(255, 43, 68, 0.28);
 
     /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
-    --color-ear-cyan: #AAD6CD;
-    --color-ear-blue: #258DCD;
-    --color-ear-sapphire: #081226;
-    --color-ear-sapphire-dark: #040914;
-    --color-ear-coral: #FF455B;
+    --color-ear-cyan: #00E5FF;
+    --color-ear-blue: #00E5FF;
+    --color-ear-sapphire: #030305;
+    --color-ear-sapphire-dark: #050507;
+    --color-ear-coral: #FF2B44;
 
-    --grad-ear-sapphire: linear-gradient(185deg, #081226 0%, #000000 100%);
-    --glow-ear-blue: 0 0 25px rgba(37, 141, 205, 0.35);
-    --glow-ear-cyan: 0 0 20px rgba(170, 214, 205, 0.25);
-    --glow-ear-coral: 0 0 20px rgba(255, 69, 91, 0.35);
+    --grad-ear-sapphire: linear-gradient(185deg, #030305 0%, #000000 100%);
+    --glow-ear-blue: 0 0 25px rgba(0, 229, 255, 0.35);
+    --glow-ear-cyan: 0 0 20px rgba(0, 229, 255, 0.25);
+    --glow-ear-coral: 0 0 20px rgba(255, 43, 68, 0.35);
   }
 
   *,
@@ -145,7 +145,16 @@
     transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
 
-  p, span, div, a, button, input, textarea, select, label, li {
+  p,
+  span,
+  div,
+  a,
+  button,
+  input,
+  textarea,
+  select,
+  label,
+  li {
     font-family: var(--font-montserrat), 'Montserrat', sans-serif;
   }
 
@@ -168,13 +177,13 @@
   body.theme-vimume {
     --background: #050507;
     --foreground: #f4f4f5;
-    --primary: #8b5cf6;
-    /* Violeta Neón */
-    --primary-light: #a78bfa;
-    --primary-dark: #7c3aed;
-    --primary-aura: rgba(139, 92, 246, 0.25);
-    --border: rgba(139, 92, 246, 0.2);
-    --border-subtle: rgba(139, 92, 246, 0.1);
+    --primary: #00E5FF;
+    /* Cyan Neón */
+    --primary-light: #66F0FF;
+    --primary-dark: #00B8D4;
+    --primary-aura: rgba(0, 229, 255, 0.25);
+    --border: rgba(0, 229, 255, 0.2);
+    --border-subtle: rgba(0, 229, 255, 0.1);
   }
 }
 
@@ -324,14 +333,14 @@
   /* 💎 DIAMOND SYSTEM UTILITIES (60-30-10 HIGH-TECH AESTHETICS) */
   .card-ear-sapphire {
     background-color: var(--color-ear-sapphire);
-    border: 1px solid rgba(170, 214, 205, 0.18);
+    border: 1px solid rgba(0, 229, 255, 0.18);
     border-radius: 1.75rem;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .card-ear-sapphire:hover {
-    border-color: rgba(170, 214, 205, 0.45);
-    box-shadow: 0 12px 40px -10px rgba(8, 18, 38, 0.8), 0 0 25px -5px rgba(37, 141, 205, 0.25);
+    border-color: rgba(0, 229, 255, 0.45);
+    box-shadow: 0 12px 40px -10px rgba(3, 3, 5, 0.8), 0 0 25px -5px rgba(0, 229, 255, 0.25);
   }
 
   .badge-ear-cyan {
@@ -340,15 +349,15 @@
     gap: 0.5rem;
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
-    background-color: rgba(170, 214, 205, 0.1);
-    border: 1px solid rgba(170, 214, 205, 0.3);
+    background-color: rgba(0, 229, 255, 0.1);
+    border: 1px solid rgba(0, 229, 255, 0.3);
     color: var(--color-ear-cyan);
     font-family: var(--font-montserrat);
     font-size: 0.625rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    box-shadow: 0 0 15px rgba(170, 214, 205, 0.15);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
   }
 
   .btn-ear-blue {
@@ -358,20 +367,21 @@
     gap: 0.5rem;
     padding: 0.875rem 2rem;
     background-color: var(--color-ear-blue);
-    color: #ffffff;
+    color: #030305;
     font-family: var(--font-montserrat);
     font-size: 0.75rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     border-radius: 1rem;
-    box-shadow: 0 0 25px rgba(37, 141, 205, 0.35);
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.35);
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .btn-ear-blue:hover {
-    background-color: #1e7ebd;
-    box-shadow: 0 0 35px rgba(37, 141, 205, 0.55);
+    background-color: #00E5FF;
+    color: #030305;
+    box-shadow: 0 0 35px rgba(0, 229, 255, 0.55);
     transform: translateY(-1px);
   }
 

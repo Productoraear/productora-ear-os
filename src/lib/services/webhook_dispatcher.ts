@@ -15,14 +15,17 @@ export interface LeadPayload {
 }
 
 class WebhookDispatcher {
-    // URL del Webhook de Make (Placeholder - Debe configurarse en .env)
-    private readonly MAKE_WEBHOOK_URL = process.env.NEXT_PUBLIC_MAKE_WEBHOOK_TRELLO || 'https://hook.us1.make.com/placeholder';
+    // URL del Webhook de Make (server-only, BLINDAJE P1-4)
+    private readonly MAKE_WEBHOOK_URL = process.env.MAKE_WEBHOOK_TRELLO || '';
 
     /**
      * Dispatches a lead object to the Make/Trello pipeline.
      */
     async dispatchLead(data: LeadPayload): Promise<{ success: boolean; message: string }> {
-        
+        if (!this.MAKE_WEBHOOK_URL) {
+            return { success: false, message: 'MAKE_WEBHOOK_TRELLO no configurado en el entorno de servidor.' };
+        }
+
         try {
             const response = await fetch(this.MAKE_WEBHOOK_URL, {
                 method: 'POST',
@@ -44,9 +47,9 @@ class WebhookDispatcher {
         } catch (error) {
             console.error('❌ DISPATCHER_ERROR:', error);
             // Fallback for development/simulation
-            return { 
-                success: true, 
-                message: 'SIMULACIÓN: Webhook recibido en logs. El puente lógico está configurado.' 
+            return {
+                success: true,
+                message: 'SIMULACIÓN: Webhook recibido en logs. El puente lógico está configurado.'
             };
         }
     }

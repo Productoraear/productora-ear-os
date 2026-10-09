@@ -22,6 +22,7 @@ interface StripeSmartLockCtaProps {
   priceBase: number;
   isUrgent?: boolean;
   daysUntilEvent?: number;
+  depositAmount?: number;
 }
 
 type FunnelState =
@@ -48,6 +49,7 @@ function StripeSmartLockCta({
   priceBase,
   isUrgent = false,
   daysUntilEvent = 30,
+  depositAmount = 10,
 }: StripeSmartLockCtaProps) {
   const [state, setState] = useState<FunnelState>(isUrgent ? 'URGENCY_VALIDATION' : 'BLUR_LOCKED');
   const [email, setEmail] = useState('');
@@ -93,6 +95,7 @@ function StripeSmartLockCta({
         vertical,
         intentSlug,
         daysUntilEvent,
+        depositAmount,
       });
 
       if (result.urgencyBypassed) {

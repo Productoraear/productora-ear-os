@@ -13,5 +13,11 @@
 - Next.js 15 App Router: Server Components por defecto. "use client" solo en la hoja del árbol reactivo.
 - Params dinámicos: `const resolvedParams = await params;` en Next.js 15.
 - TypeScript Estricto: Cero `any` implícito. npx tsc --noEmit debe dar siempre Exit Code 0.
-- Negocio SSOT: Edwin Agudelo Solista 350€, Split 80/10/10, Depósito Stripe 100€ (Price-Lock SHA-256), Méntrida 1.50€/km a partir de km 50 (+120€ hotel si >200km o fin >= 3:00 AM).
+- Negocio SSOT: Edwin Agudelo Solista 350€, Split 80/10/10, Depósito Stripe 100€ (Price-Lock SHA-256), Logística 1.50€/km a partir de km 50 (+120€ hotel si >200km o fin >= 3:00 AM). El Hub Méntrida aplica solo a Edwin Agudelo y empresas con base en Méntrida; resto de la red nacional se calcula por GPS/dirección fiscal del proveedor.
+- Rider Acústico (Ley 37/2003): Festejos 90-102 dBA · Bodas/Fincas 85-90 ext / 80-85 int · Solista 70-80 dBA · VIMUME senior 65-75 dBA. Límite salud pública < 75 dB SPL, 12 W/pax.
+
+## 2bis. ZONA CERO Y DOCTRINA DEL DATO VERIFICADO (CERO FACHADAS)
+- Zona Cero (no tocar): `src/lib/constants/ear-os-ssot.ts` (SSOT canónico) y `src/lib/security/ssotIntegrityGuard.ts` (Sentinel SHA-256 + invariantes). `KNOWN_GOOD_SSOT_HASH` solo se regenera por baselining sancionado por el CEO.
+- `verified:true` SOLO con teléfono real verificable (no centralita +34 693 693 048, no vacío). Placeholder/centralita/vacío => `verified:false`.
+- Prohibido re-hardcodear `verified:true` en sincronizadores/daemons (`sincronizador_omega_proveedores.py` en cuarentena). Rutas que venden solo exponen teléfonos reales.
 - Datos reales: Prohibido introducir generadores falsos o teléfonos ficticios.

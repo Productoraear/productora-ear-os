@@ -46,11 +46,11 @@ module.exports = {
         "text-secondary": "#9ca3af",
 
         // 10% Accent (S-Class Sovereign Ruby Red & Diamond Cyan)
-        gold: "#FF2B44",
-        "gold-imperial": "#FF2B44",
-        "gold-light": "#FF6B7D",
-        "gold-dark": "#E11D48",
-        "gold-glow": "rgba(255, 43, 68, 0.35)",
+        gold: "#ecb613",
+        "gold-imperial": "#ecb613",
+        "gold-light": "#f5c538",
+        "gold-dark": "#b38805",
+        "gold-glow": "rgba(236, 182, 19, 0.35)",
 
         // 🎬 CINEMATIC MONOCHROME SYSTEM (SQUARESPACE ULTRA-LUXURY SPEC)
         obsidian: "#000000",
@@ -61,11 +61,11 @@ module.exports = {
         slate: "#999999",
 
         // 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM)
-        "ear-cyan": "#AAD6CD",
-        "ear-blue": "#258DCD",
-        "ear-sapphire": "#081226",
-        "ear-sapphire-dark": "#040914",
-        "ear-coral": "#FF455B",
+        "ear-cyan": "#00E5FF",
+        "ear-blue": "#00E5FF",
+        "ear-sapphire": "#030305",
+        "ear-sapphire-dark": "#050507",
+        "ear-coral": "#FF2B44",
 
         // 💎 PALETA SOBERANA DIAMANTE ROJO & DIAMANTE AZUL (SSOT CUADERNO)
         "ear-red": {
@@ -77,12 +77,12 @@ module.exports = {
           light: "#FEE2E2",
         },
         "ear-blue-palette": {
-          DEFAULT: "#258DCD",
-          deep: "#030712",
-          technical: "#0284C7",
-          electric: "#258DCD",
-          ice: "#BAE6FD",
-          sky: "#44A3D8",
+          DEFAULT: "#00E5FF",
+          deep: "#030305",
+          technical: "#00E5FF",
+          electric: "#00E5FF",
+          ice: "#66F0FF",
+          sky: "#00B8D4",
         },
 
         // Stitch Semantic Tokens (Additive)
@@ -102,17 +102,17 @@ module.exports = {
         "outline-variant": "#4d4635",
       },
       boxShadow: {
-        "glow-ear-blue": "0 0 25px rgba(37, 141, 205, 0.35)",
-        "glow-ear-cyan": "0 0 20px rgba(170, 214, 205, 0.25)",
-        "glow-ear-coral": "0 0 20px rgba(255, 69, 91, 0.35)",
+        "glow-ear-blue": "0 0 25px rgba(0, 229, 255, 0.35)",
+        "glow-ear-cyan": "0 0 20px rgba(0, 229, 255, 0.25)",
+        "glow-ear-coral": "0 0 20px rgba(255, 43, 68, 0.35)",
         "glow-ear-red": "0 0 25px rgba(255, 43, 68, 0.4)",
-        "glow-ear-sapphire": "0 10px 40px -10px rgba(8, 18, 38, 0.8)",
+        "glow-ear-sapphire": "0 10px 40px -10px rgba(3, 3, 5, 0.8)",
       },
       backgroundImage: {
-        "grad-ear-sapphire": "linear-gradient(185deg, #081226 0%, #000000 100%)",
-        "grad-ear-cyan-blue": "linear-gradient(135deg, #AAD6CD 0%, #258DCD 100%)",
+        "grad-ear-sapphire": "linear-gradient(185deg, #030305 0%, #000000 100%)",
+        "grad-ear-cyan-blue": "linear-gradient(135deg, #00E5FF 0%, #00B8D4 100%)",
         "grad-ear-red": "linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%)",
-        "grad-ear-blue": "linear-gradient(135deg, #BAE6FD 0%, #44A3D8 35%, #258DCD 70%, #0284C7 100%)",
+        "grad-ear-blue": "linear-gradient(135deg, #66F0FF 0%, #00E5FF 35%, #00B8D4 70%, #00E5FF 100%)",
       },
       fontFamily: {
         montserrat: ["var(--font-montserrat)", "Montserrat", "sans-serif"],

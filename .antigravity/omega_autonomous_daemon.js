@@ -8,7 +8,10 @@ const QUEUE_FILE = path.join(__dirname, 'tasks_queue.json');
 const JOURNAL_FILE = path.join(__dirname, 'OMEGA_STATE_JOURNAL.md');
 const VAULT_DIR = path.join(__dirname, '..', '..', 'EAR_VAULT_GOLDEN_NUGGETS');
 const OLLAMA_URL = 'http://localhost:11434/api/chat';
-const MODEL_NAME = 'ear-27b-apis-ctx20480:latest';
+// Modelo local blindado VRAM-Shield (GPU 24GB). Configurable por env para no acoplar.
+const MODEL_NAME = process.env.OMEGA_MODEL || 'ear-27b-apis-sclass:latest';
+// Ventana de contexto blindada: 16k tokens + KV q4_0 (0 offload a RAM/CPU).
+const NUM_CTX = Number(process.env.OMEGA_NUM_CTX || 16384);
 
 if (!fs.existsSync(VAULT_DIR)) fs.mkdirSync(VAULT_DIR, { recursive: true });
 
@@ -43,9 +46,9 @@ PROGRESO BATCH: [${progressBar}] ${percentage}% (${processed}/${total})
 ---------------------------------------------------------------------
 STATUS        | CANTIDAD | % DEL TOTAL
 ---------------------------------------------------------------------
-✅ COMPLETED  | ${completed.toString().padStart(8)} | ${Math.round((completed/total)*100 || 0)}%
-⏳ QUEUED     | ${queued.toString().padStart(8)} | ${Math.round((queued/total)*100 || 0)}%
-❌ FAILED     | ${failed.toString().padStart(8)} | ${Math.round((failed/total)*100 || 0)}%
+✅ COMPLETED  | ${completed.toString().padStart(8)} | ${Math.round((completed / total) * 100 || 0)}%
+⏳ QUEUED     | ${queued.toString().padStart(8)} | ${Math.round((queued / total) * 100 || 0)}%
+❌ FAILED     | ${failed.toString().padStart(8)} | ${Math.round((failed / total) * 100 || 0)}%
 \`\`\`
 
 ---
@@ -85,7 +88,7 @@ async function callOllama(systemPrompt, userPrompt) {
             stream: false,
             options: {
                 temperature: 0.1,
-                num_ctx: 20480
+                num_ctx: NUM_CTX
             }
         })
     });
@@ -161,6 +164,16 @@ Por favor entrega el contenido completo y refactorizado del archivo:`;
         cleanedCode = lines.join('\n');
     }
 
+    // GUARD ZERO-BYTES: nunca escribir un archivo vacío si Ollama devuelve basura.
+    if (!cleanedCode || cleanedCode.length < 20 || !/export|import|React|function|const|\{|>/.test(cleanedCode)) {
+        console.warn(`⚠️ Respuesta vacía/inválida de Ollama (${cleanedCode.length} chars). Abortando sin escribir.`);
+        task.status = 'FAILED';
+        task.retries = (task.retries || 0) + 1;
+        writeJSON(QUEUE_FILE, queueData);
+        updateJournal(queueData, task, 'FAILED (respuesta vacía de Ollama)');
+        return false;
+    }
+
     fs.writeFileSync(targetFilePath, cleanedCode, 'utf8');
     console.log(`💾 Archivo ${task.files[0]} actualizado.`);
 
@@ -186,13 +199,18 @@ Corrige todos los errores y entrega el código completo corregido:`;
             cleanedFixed = lines.join('\n');
         }
 
-        fs.writeFileSync(targetFilePath, cleanedFixed, 'utf8');
+        if (!cleanedFixed || cleanedFixed.length < 20) {
+            console.warn(`⚠️ Fix vacío de Ollama (${cleanedFixed.length} chars). Se conserva el archivo previo.`);
+            fs.writeFileSync(targetFilePath, fileContent, 'utf8');
+        } else {
+            fs.writeFileSync(targetFilePath, cleanedFixed, 'utf8');
+        }
         valResult = runTscValidation();
     }
 
     if (valResult.success) {
         console.log(`✅ [ÉXITO] Tarea ${task.id} completada.`);
-        
+
         // Save Golden Nugget if this was a fix task
         if (task.id.includes('-HEAL')) {
             fs.writeFileSync(path.join(VAULT_DIR, `nugget-${task.id}.md`), `Aprendizaje de ${task.id}: Se resolvió compilación en ${task.files[0]}.`, 'utf8');
@@ -209,16 +227,17 @@ Corrige todos los errores y entrega el código completo corregido:`;
         task.status = 'FAILED';
 
         // Milestone 1: SELF-HEALING LOOP
+        // PARCHE ANTI-INFLACIÓN: máximo 1 heal total por id base; jamás regenrar un HEAL.
         const healCount = (task.id.match(/-HEAL/g) || []).length;
-        if (healCount >= 2) {
-            console.log(`⚠️ Abortando Auto-Sanación para ${task.id} (límite de 2 alcanzado).`);
+        if (healCount >= 1) {
+            console.log(`⚠️ Auto-Sanación DESACTIVADA para ${task.id} (límite de 1 alcanzado). No se inyectan más tareas.`);
         } else {
             console.log(`🚑 [AUTO-SANACIÓN] Generando tarea de diagnóstico dinámico...`);
             try {
                 const healPrompt = `La tarea ${task.id} falló de forma irrecuperable. Error TSC: ${valResult.error.slice(0, 500)}.
                 Genera un JSON estrictamente con este formato para una NUEVA tarea que arregle esto:
                 {"id": "${task.id}-HEAL", "wave": ${task.wave || 99}, "status": "QUEUED", "title": "Auto-Fix ${task.id}", "action": "Reescribir dependencias o fixear tipos basándose en el error TS...", "files": ["${task.files[0]}"], "validate": "npx tsc --noEmit"}`;
-                
+
                 const healRes = await callOllama("Eres un orquestador que solo escupe JSON estricto.", healPrompt);
                 const healJsonStr = healRes.substring(healRes.indexOf('{'), healRes.lastIndexOf('}') + 1);
                 const healTask = JSON.parse(healJsonStr);
@@ -237,7 +256,7 @@ Corrige todos los errores y entrega el código completo corregido:`;
 
 async function runDaemonLoop() {
     console.log("⚡ === MOTOR AUTÓNOMO OMEGA v8.0 INICIADO ===");
-    
+
     while (true) {
         let queueData;
         try {
@@ -262,15 +281,16 @@ async function runDaemonLoop() {
             }
 
             console.log("🏁 TODAS LAS TAREAS DE LA COLA ACTUAL FUERON COMPLETADAS.");
-            
+
             // Milestone 3: CI/CD Pre-Flight Checks
             console.log("✈️ [PRE-FLIGHT CHECK] Comprobando tamaño del repositorio Git...");
             try {
                 const cwd = path.join(__dirname, '..');
-                const gitSize = execSync('git rev-list --objects --all | wc -l', { shell: true, cwd }).toString().trim();
+                const gitCount = execSync('git rev-list --objects --all', { shell: true, cwd }).toString();
+                const gitSize = gitCount.split(/\r?\n/).filter(Boolean).length;
                 console.log(`📦 Objetos en Git: ${gitSize} (Mantenimiento ultra-ligero S-Class OK).`);
                 updateJournal(queueData, null, `Pre-Flight OK. Git Objects: ${gitSize}`);
-            } catch(e) {
+            } catch (e) {
                 console.log("⚠️ No se pudo ejecutar el pre-flight check de Git.");
             }
 
@@ -282,8 +302,14 @@ async function runDaemonLoop() {
             await processSingleTask(nextTask, queueData);
         } catch (err) {
             console.error(`Error crítico procesando tarea ${nextTask.id}:`, err);
+            const errMsg = String((err && err.message) || err);
+            if (/ECONNREFUSED|fetch failed|connection|connect/i.test(errMsg)) {
+                console.log('🔌 Ollama no disponible. Pausa y reintento (tarea no quemada).');
+                await new Promise(r => setTimeout(r, 5000));
+                continue;
+            }
             nextTask.status = 'FAILED';
-            nextTask.retries = 999; 
+            nextTask.retries = (nextTask.retries || 0) + 1;
             writeJSON(QUEUE_FILE, queueData);
         }
 

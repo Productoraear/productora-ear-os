@@ -27,10 +27,10 @@ export class TrelloService {
     const apiKey = (process.env.TRELLO_API_KEY || '').replace(/['"]/g, '').trim();
     const token = (process.env.TRELLO_TOKEN || '').replace(/['"]/g, '').trim();
     const listId = (process.env.TRELLO_LIST_ID_INBOUND || process.env.TRELLO_LIST_ID || '').replace(/['"]/g, '').trim();
-    const makeWebhook = (process.env.NEXT_PUBLIC_MAKE_WEBHOOK_TRELLO || process.env.TRELLO_WEBHOOK_URL || '').replace(/['"]/g, '').trim();
+    const makeWebhook = (process.env.MAKE_WEBHOOK_TRELLO || process.env.TRELLO_WEBHOOK_URL || '').replace(/['"]/g, '').trim();
 
     const title = `[LEAD EAR OS] ${payload.contactName} - ${payload.occasion} ${payload.totalAmount ? `(${payload.totalAmount}€)` : ''}`;
-    
+
     const description = `
 # 🎯 NUEVO PROSPECTO / DOSSIER EMITIDO
 - **Cliente:** ${payload.contactName}
@@ -50,7 +50,7 @@ ${payload.selectedAssets.map(a => `- ${a}`).join('\n')}
 
 ---
 🔗 **Enlace al Dossier Interactivo:**
-https://www.productoraear.com/dossier/${payload.dossierId || ''}
+https://productoraear.com/dossier/${payload.dossierId || ''}
     `.trim();
 
     // 1. INTENTO VÍA API NATIVA DE TRELLO (Si existen credenciales)
@@ -58,7 +58,7 @@ https://www.productoraear.com/dossier/${payload.dossierId || ''}
       try {
         const url = `https://api.trello.com/1/cards?key=${apiKey}&token=${token}&idList=${listId}&name=${encodeURIComponent(title)}&desc=${encodeURIComponent(description)}&pos=top`;
         const res = await fetch(url, { method: 'POST' });
-        
+
         if (res.ok) {
           const cardData = await res.json();
           console.log(`📋 [TRELLO NATIVE API] Tarjeta creada con éxito: ${cardData.id} (${cardData.shortUrl})`);

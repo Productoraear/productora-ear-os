@@ -33,7 +33,7 @@ export class EmailService {
   public static async sendDossierEmail(payload: DossierEmailPayload): Promise<{ success: boolean; message: string }> {
     const resendKey = this.getResendKey();
     const sendGridKey = this.getSendGridKey();
-    const dossierUrl = `https://www.productoraear.com/dossier/${payload.dossierId}`;
+    const dossierUrl = `https://productoraear.com/dossier/${payload.dossierId}`;
 
     // 1. Ingesta simultánea en MailerLite para Nurturing y Cupón de 150€
     try {

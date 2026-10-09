@@ -1,7 +1,7 @@
 'use client';
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calculator,
@@ -22,6 +22,8 @@ import {
   Filter,
   Sparkles
 } from 'lucide-react';
+import StripeSmartLockCta from '@/components/programmatic/StripeSmartLockCta';
+import { DEPOSITO_STRIPE_EUR, LOGISTICA_EUR_PER_KM, LOGISTICA_KM_EXENTOS, LOGISTICA_KM_HOTEL, SUPLEMENTO_HOTEL_EUR } from '@/lib/constants/ear-os-ssot';
 
 export interface SClassArtistFormat {
   id: string;
@@ -162,6 +164,47 @@ interface CalendarDay {
   reason?: string;
 }
 
+interface AvailabilityRecord {
+  available: boolean;
+  reason: string;
+}
+
+type VenueType = 'SALON_BODA' | 'FINCA_EXTERIOR' | 'IGLESIA' | 'RESIDENCIA_MAYORES' | 'PLAZA_PUBLICA';
+type ArtistCategoryFilter = 'all' | 'mariachi' | 'solista' | 'cuerdas' | 'fiesta';
+
+interface AcousticRiderState {
+  totalWatts: number;
+  wattsPerPax: number;
+  recommendedSystem: string;
+  maxDecibelsSPL: number;
+  isVimumeCompliant: boolean;
+  requiresAccommodation: boolean;
+  sha256: string;
+}
+
+interface GeoRadarResponse {
+  success: boolean;
+  acousticRider?: {
+    totalWatts: number;
+    wattsPerPax: number;
+    recommendedSystem: string;
+    maxDecibelsSPL: number;
+    isVimumeCompliant: boolean;
+  };
+  logisticsBreakdown?: {
+    requiresAccommodation: boolean;
+  };
+  sha256Hash?: string;
+}
+
+const ARTIST_CATEGORY_FILTERS = [
+  { id: 'all', label: `Todos (${ARTIST_FORMATS.length})` },
+  { id: 'mariachi', label: 'Mariachis de Gala' },
+  { id: 'solista', label: 'Solistas & Piano' },
+  { id: 'cuerdas', label: 'Cuerdas & Clásica' },
+  { id: 'fiesta', label: 'Fiesta & DJs' }
+] as const satisfies ReadonlyArray<{ id: ArtistCategoryFilter; label: string }>;
+
 export default function SolistaReservationPage() {
   const [distance, setDistance] = useState<number>(0);
   const [endTime, setEndTime] = useState<string>('23:00');
@@ -173,9 +216,19 @@ export default function SolistaReservationPage() {
 
   // S-Class Multi-Artist Selection State
   const [selectedArtistId, setSelectedArtistId] = useState<string>('edwin-solista');
-  const [artistCategoryFilter, setArtistCategoryFilter] = useState<'all' | 'mariachi' | 'solista' | 'cuerdas' | 'fiesta'>('all');
+  const [artistCategoryFilter, setArtistCategoryFilter] = useState<ArtistCategoryFilter>('all');
   const [artistSearch, setArtistSearch] = useState<string>('');
   const [blockedAlert, setBlockedAlert] = useState<string | null>(null);
+
+  // CERO-FACHADAS: disponibilidad real desde el motor ACID
+  const [availabilityMap, setAvailabilityMap] = useState<Record<string, AvailabilityRecord>>({});
+  const [calendarLoading, setCalendarLoading] = useState<boolean>(false);
+
+  // CERO-FACHADAS: geo-acoustic radar por contexto (Ley 37/2003)
+  const [guestCount, setGuestCount] = useState<number>(100);
+  const [venueType, setVenueType] = useState<VenueType>('SALON_BODA');
+  const [acousticRider, setAcousticRider] = useState<AcousticRiderState | null>(null);
+  const [acousticLoading, setAcousticLoading] = useState<boolean>(false);
 
   const selectedArtist = useMemo(() => {
     return ARTIST_FORMATS.find(a => a.id === selectedArtistId) || ARTIST_FORMATS[0];
@@ -202,11 +255,11 @@ export default function SolistaReservationPage() {
 
   // Base constants sincronizados con el artista seleccionado
   const BASE_RATE = selectedArtist.baseRate;
-  const DEPOSIT = 100.00;
-  const KM_RATE = 1.50;
-  const FREE_KM = 50;
-  const HOTEL_FEE = 120.00;
-  const HOTEL_DISTANCE_THRESHOLD = 200;
+  const DEPOSIT = DEPOSITO_STRIPE_EUR;
+  const KM_RATE = LOGISTICA_EUR_PER_KM;
+  const FREE_KM = LOGISTICA_KM_EXENTOS;
+  const HOTEL_FEE = SUPLEMENTO_HOTEL_EUR;
+  const HOTEL_DISTANCE_THRESHOLD = LOGISTICA_KM_HOTEL;
 
   // Logistics calculation
   const logisticsCost = useMemo(() => {
@@ -239,7 +292,49 @@ export default function SolistaReservationPage() {
     });
   }, [selectedDate]);
 
-  // Generate calendar days for the selected month (Year 2026)
+  // CERO-FACHADAS: consultar disponibilidad real vía motor ACID para cada día del mes visible.
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadAvailability() {
+      setCalendarLoading(true);
+      const daysInMonth = new Date(2026, selectedMonth, 0).getDate();
+      const dates: string[] = [];
+      for (let d = 1; d <= daysInMonth; d++) {
+        dates.push(`2026-${String(selectedMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`);
+      }
+
+      const settled = await Promise.allSettled(
+        dates.map((date) =>
+          fetch(`/api/availability/check?date=${date}`).then((res) => res.json())
+        )
+      );
+
+      if (cancelled) return;
+
+      const map: Record<string, AvailabilityRecord> = {};
+      settled.forEach((result, i) => {
+        if (result.status === 'fulfilled') {
+          map[dates[i]] = {
+            available: Boolean(result.value.available),
+            reason: typeof result.value.reason === 'string' ? result.value.reason : 'AVAILABLE',
+          };
+        } else {
+          map[dates[i]] = { available: false, reason: 'ERROR' };
+        }
+      });
+
+      setAvailabilityMap(map);
+      setCalendarLoading(false);
+    }
+
+    loadAvailability();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedMonth]);
+
+  // Generate calendar days for the selected month (Year 2026), alimentado por el motor ACID.
   const calendarDays = useMemo<CalendarDay[]>(() => {
     const daysInMonth = new Date(2026, selectedMonth, 0).getDate();
     const list: CalendarDay[] = [];
@@ -249,19 +344,19 @@ export default function SolistaReservationPage() {
       const dayOfWeek = dateObj.getDay(); // 0 = Dom, 1 = Lun, ... 6 = Sab
 
       let status: 'available' | 'blocked' | 'high_demand' | 'past' = 'available';
-      let reason = undefined;
+      let reason: string | undefined;
 
-      // SPECIFIC S-CLASS RULES:
-      // Septiembre 25 y 26 BLOQUEADOS
-      if (selectedMonth === 9 && (d === 25 || d === 26)) {
-        status = 'blocked';
-        reason = 'Cerrado por Depósito S-Class (Confirmado)';
-      }
-      // Fines de semana clave con alta demanda
-      else if ((selectedMonth === 9 && [18, 19, 20, 27].includes(d)) ||
-        (selectedMonth === 10 && [2, 3, 4, 9, 10, 11, 16, 17].includes(d))) {
-        status = 'high_demand';
-        reason = 'Alta Demanda — Último Cupo';
+      const dateStr = `2026-${String(selectedMonth).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const avail = availabilityMap[dateStr];
+
+      if (avail && !avail.available) {
+        if (avail.reason === 'MAX_DAILY_CAP_REACHED') {
+          status = 'high_demand';
+          reason = 'Alta Demanda — Último Cupo';
+        } else {
+          status = 'blocked';
+          reason = 'Fecha no disponible (bloqueo activo)';
+        }
       }
 
       list.push({
@@ -275,7 +370,7 @@ export default function SolistaReservationPage() {
     }
 
     return list;
-  }, [selectedMonth]);
+  }, [selectedMonth, availabilityMap]);
 
   // Filtered calendar days based on dynamic filters
   const filteredDays = useMemo(() => {
@@ -306,6 +401,54 @@ export default function SolistaReservationPage() {
     const dateStr = `2026-${String(selectedMonth).padStart(2, '0')}-${String(dayObj.day).padStart(2, '0')}`;
     setSelectedDate(dateStr);
   };
+
+  // CERO-FACHADAS: emitir rider acústico por contexto (12 W/pax · < 75 dB SPL) antes del depósito.
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadRadar() {
+      setAcousticLoading(true);
+      try {
+        const res = await fetch('/api/geo/acoustic-calculate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            venueName: 'Evento Solista S-Class',
+            venueType,
+            guestCount,
+            destinationProvince: 'Toledo',
+            distanceKmFromMentrida: distance,
+            eventEndHour: endTime,
+            isVimumeContext: venueType === 'RESIDENCIA_MAYORES',
+          }),
+        });
+        const data = (await res.json()) as GeoRadarResponse;
+
+        if (cancelled) return;
+
+        if (data.success && data.acousticRider) {
+          setAcousticRider({
+            totalWatts: data.acousticRider.totalWatts,
+            wattsPerPax: data.acousticRider.wattsPerPax,
+            recommendedSystem: data.acousticRider.recommendedSystem,
+            maxDecibelsSPL: data.acousticRider.maxDecibelsSPL,
+            isVimumeCompliant: data.acousticRider.isVimumeCompliant,
+            requiresAccommodation: data.logisticsBreakdown?.requiresAccommodation ?? false,
+            sha256: data.sha256Hash ?? '',
+          });
+        }
+      } catch {
+        // Degradación silenciosa: el resto del flujo de reserva sigue operativo.
+      } finally {
+        if (!cancelled) setAcousticLoading(false);
+      }
+    }
+
+    loadRadar();
+    return () => {
+      cancelled = true;
+    };
+  }, [distance, endTime, guestCount, venueType]);
 
   const whatsappMessage = useMemo(() => {
     const locText = distance > 0 ? `${distance} km de Méntrida` : 'zona centro';
@@ -529,8 +672,8 @@ export default function SolistaReservationPage() {
                         key={dateStr}
                         onClick={() => handleDateSelect(item)}
                         className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all relative ${isSelected
-                            ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
-                            : 'border-amber-500/30 bg-amber-500/5 hover:border-amber-400 text-zinc-200'
+                          ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
+                          : 'border-amber-500/30 bg-amber-500/5 hover:border-amber-400 text-zinc-200'
                           }`}
                       >
                         <div className="flex justify-between items-center w-full">
@@ -550,8 +693,8 @@ export default function SolistaReservationPage() {
                       key={dateStr}
                       onClick={() => handleDateSelect(item)}
                       className={`h-14 sm:h-16 rounded-xl border p-2 flex flex-col justify-between items-start transition-all ${isSelected
-                          ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
-                          : 'border-white/10 bg-[#050505] hover:border-[#258DCD]/50 text-zinc-300 hover:text-white'
+                        ? 'bg-[#258DCD] border-white text-white shadow-[0_0_20px_rgba(37,141,205,0.5)] scale-[1.03] z-10'
+                        : 'border-white/10 bg-[#050505] hover:border-[#258DCD]/50 text-zinc-300 hover:text-white'
                         }`}
                     >
                       <span className="text-xs font-mono font-bold">{item.day}</span>
@@ -606,19 +749,13 @@ export default function SolistaReservationPage() {
 
               {/* Category Filter Pills */}
               <div className="flex flex-wrap gap-2">
-                {[
-                  { id: 'all', label: `Todos (${ARTIST_FORMATS.length})` },
-                  { id: 'mariachi', label: 'Mariachis de Gala' },
-                  { id: 'solista', label: 'Solistas & Piano' },
-                  { id: 'cuerdas', label: 'Cuerdas & Clásica' },
-                  { id: 'fiesta', label: 'Fiesta & DJs' }
-                ].map((tab) => (
+                {ARTIST_CATEGORY_FILTERS.map((tab) => (
                   <button
                     key={tab.id}
-                    onClick={() => setArtistCategoryFilter(tab.id as any)}
+                    onClick={() => setArtistCategoryFilter(tab.id)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${artistCategoryFilter === tab.id
-                        ? 'bg-[#258DCD] text-white font-bold shadow-[0_0_15px_rgba(37,141,205,0.4)]'
-                        : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
+                      ? 'bg-[#258DCD] text-white font-bold shadow-[0_0_15px_rgba(37,141,205,0.4)]'
+                      : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
                       }`}
                   >
                     {tab.label}
@@ -635,8 +772,8 @@ export default function SolistaReservationPage() {
                       key={artist.id}
                       onClick={() => setSelectedArtistId(artist.id)}
                       className={`relative rounded-xl border p-4 transition-all cursor-pointer flex flex-col justify-between group ${isSelected
-                          ? 'bg-[#258DCD]/15 border-[#258DCD] shadow-[0_0_25px_rgba(37,141,205,0.3)] ring-1 ring-[#258DCD]'
-                          : 'bg-[#050505] border-white/10 hover:border-white/20'
+                        ? 'bg-[#258DCD]/15 border-[#258DCD] shadow-[0_0_25px_rgba(37,141,205,0.3)] ring-1 ring-[#258DCD]'
+                        : 'bg-[#050505] border-white/10 hover:border-white/20'
                         }`}
                     >
                       <div className="flex gap-3 items-start">
@@ -685,8 +822,8 @@ export default function SolistaReservationPage() {
                         <button
                           type="button"
                           className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition-all flex items-center gap-1.5 ${isSelected
-                              ? 'bg-[#258DCD] text-white shadow'
-                              : 'bg-white/5 text-zinc-300 group-hover:bg-white/10'
+                            ? 'bg-[#258DCD] text-white shadow'
+                            : 'bg-white/5 text-zinc-300 group-hover:bg-white/10'
                             }`}
                         >
                           {isSelected ? (
@@ -742,7 +879,82 @@ export default function SolistaReservationPage() {
                   />
                   <p className="text-[11px] text-zinc-500 font-mono">Finalizaciones post 03:00 AM requieren suplemento de pernoctación.</p>
                 </div>
+
+                <div className="space-y-3">
+                  <label className="flex items-center justify-between text-sm text-zinc-300">
+                    <span className="flex items-center gap-2"><Music size={16} className="text-zinc-500" /> Nº de invitados (aforo acústico)</span>
+                    <span className="font-mono text-[#258DCD]">{guestCount} pax</span>
+                  </label>
+                  <input
+                    type="range"
+                    min="10"
+                    max="1000"
+                    step="10"
+                    value={guestCount}
+                    onChange={(e) => setGuestCount(Number(e.target.value))}
+                    className="w-full accent-[#258DCD]"
+                  />
+                  <p className="text-[11px] text-zinc-500 font-mono">Potencia calculada a 12 W/pax (SSOT).</p>
+                </div>
+
+                <div className="space-y-3">
+                  <label className="flex items-center gap-2 text-sm text-zinc-300">
+                    <MapPin size={16} className="text-zinc-500" /> Contexto del evento
+                  </label>
+                  <select
+                    value={venueType}
+                    onChange={(e) => setVenueType(e.target.value as VenueType)}
+                    className="w-full bg-[#111] border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-[#258DCD] font-mono text-sm"
+                  >
+                    <option value="SALON_BODA">Salón de boda</option>
+                    <option value="FINCA_EXTERIOR">Finca / Exterior</option>
+                    <option value="IGLESIA">Iglesia</option>
+                    <option value="RESIDENCIA_MAYORES">Residencia de mayores (VIMUME)</option>
+                    <option value="PLAZA_PUBLICA">Plaza pública / Festejo</option>
+                  </select>
+                </div>
               </div>
+            </div>
+
+            {/* CERO-FACHADAS: RIDER ACÚSTICO POR CONTEXTO (Ley 37/2003) */}
+            <div className="bg-[#0A0A0C] border border-[#258DCD]/40 rounded-2xl p-6 sm:p-8">
+              <h3 className="text-sm font-bold text-white uppercase tracking-widest mb-4 flex items-center gap-2">
+                <ShieldCheck size={16} className="text-[#258DCD]" /> Rider Acústico por Contexto <span className="font-mono text-[#AAD6CD]">(Ley 37/2003)</span>
+              </h3>
+              {acousticLoading && !acousticRider && (
+                <p className="text-xs text-zinc-500 font-mono animate-pulse">Calculando presión sonora y sistema recomendado…</p>
+              )}
+              {acousticRider && (
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-zinc-400">Potencia total</span>
+                    <span className="font-mono text-white">{acousticRider.totalWatts} W</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-zinc-400">Sistema recomendado</span>
+                    <span className="font-mono text-[#AAD6CD]">{acousticRider.recommendedSystem}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-zinc-400">Límite SPL</span>
+                    <span className={`font-mono ${acousticRider.isVimumeCompliant ? 'text-emerald-400' : 'text-amber-400'}`}>
+                      {acousticRider.maxDecibelsSPL} dB
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-zinc-400">Cumplimiento VIMUME</span>
+                    <span className="font-mono text-xs">{acousticRider.isVimumeCompliant ? '✅ < 75 dB SPL' : 'Contexto estándar'}</span>
+                  </div>
+                  {acousticRider.requiresAccommodation && (
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-zinc-400">Pernoctación</span>
+                      <span className="font-mono text-amber-400">Incluida (+120 €)</span>
+                    </div>
+                  )}
+                  <div className="pt-2 border-t border-white/10">
+                    <span className="text-[10px] text-zinc-500 font-mono break-all">SHA-256: {acousticRider.sha256}</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* SPECS PANEL */}
@@ -840,6 +1052,20 @@ export default function SolistaReservationPage() {
                 <p className="text-[11px] text-zinc-500 leading-tight">
                   Pago seguro oficial vía Stripe (SHA-256). El abono de este depósito formaliza el bloqueo inmutable de tu fecha en nuestro calendario oficial. El importe restante se liquida el día del evento.
                 </p>
+              </div>
+
+              {/* CERO-FACHADAS: GARANTÍA MUTUA DE DOBLE VÍA (Ruta Libre / Blindaje VIP) */}
+              <div className="mb-8">
+                <div className="flex items-center gap-2 mb-3">
+                  <Lock size={16} className="text-[#ecb613]" />
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">Garantía Mutua de Doble Vía</h3>
+                </div>
+                <StripeSmartLockCta
+                  vertical="solista"
+                  intentSlug={selectedArtist.id}
+                  priceBase={selectedArtist.baseRate}
+                  depositAmount={10}
+                />
               </div>
 
               {/* HESITATION ENGINE BANNER */}

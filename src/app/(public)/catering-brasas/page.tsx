@@ -7,6 +7,15 @@ import {
   MessageCircle, Lock, ArrowRight, ChevronRight, Check,
   Clock, MapPin, Users, Heart
 } from 'lucide-react';
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  DEPOSITO_STRIPE_EUR,
+  WATTS_PER_PAX,
+  CENTRALITA_EAR_OS,
+} from '@/lib/constants/ear-os-ssot';
+import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
 
 const CATERING_MENUS = [
   {
@@ -76,17 +85,62 @@ const CATERING_MENUS = [
   }
 ];
 
+/** Teléfono canónico (SSOT) saneado para deep-links de WhatsApp. */
+const WHATSAPP_DIGITS = CENTRALITA_EAR_OS.replace(/\D/g, '');
+
+/** Equipamiento de sonido S-Class incluido (SSOT inventario). */
+const INCLUDED_SOUND_PACK = INITIAL_INVENTORY.find((item) => item.id === 'spk-bose-f1');
+
+/** Structured Data Schema.org con precios coherentes con el catálogo de brasas. */
+const CATERING_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Catering de Brasas & Showcooking al aire libre',
+  name: 'Catering de Brasas Ancestrales para Fincas & Bodas',
+  description:
+    'Espectáculo gastronómico de brasas y asado a la cruz con sonorización profesional de cortesía incluida.',
+  provider: {
+    '@type': 'Organization',
+    name: 'EAR OS — Productora EAR',
+    telephone: CENTRALITA_EAR_OS,
+    areaServed: 'ES',
+  },
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'EUR',
+    lowPrice: Math.min(...CATERING_MENUS.map((menu) => menu.price)),
+    highPrice: Math.max(...CATERING_MENUS.map((menu) => menu.price)),
+    offerCount: CATERING_MENUS.length,
+    offers: CATERING_MENUS.map((menu) => ({
+      '@type': 'Offer',
+      name: menu.title,
+      price: menu.price,
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+      url: 'https://productoraear.com/catering-brasas',
+    })),
+  },
+} as const;
+
 export default function CateringBrasasPage() {
   const [selectedMenu, setSelectedMenu] = useState(CATERING_MENUS[0]);
   const [pax, setPax] = useState(80);
   const [distanceKm, setDistanceKm] = useState(25);
   const [locked, setLocked] = useState(false);
 
-  const totalQuote = Math.round(selectedMenu.price * pax + (distanceKm > 30 ? (distanceKm - 30) * 0.95 : 0));
-  const acousticWatts = pax * 12;
+  const logisticaEur = distanceKm > LOGISTICA_KM_EXENTOS
+    ? Math.round((distanceKm - LOGISTICA_KM_EXENTOS) * LOGISTICA_EUR_PER_KM)
+    : 0;
+  const totalQuote = Math.round(selectedMenu.price * pax + logisticaEur);
+  const acousticWatts = pax * WATTS_PER_PAX;
 
   return (
     <main className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#ecb613] selection:text-black pb-28 pt-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(CATERING_JSON_LD) }}
+      />
+
       {/* Background Glow */}
       <div className="fixed top-20 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-[#ecb613]/10 to-transparent blur-[160px] pointer-events-none rounded-full" />
 
@@ -212,7 +266,8 @@ export default function CateringBrasasPage() {
                 className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
               />
               <span className="text-[10px] font-mono text-zinc-400 block">
-                Sonorización Bose F1 de cortesía calibrada a {acousticWatts}W RMS
+                Sonorización profesional de cortesía calibrada a {acousticWatts}W RMS
+                {INCLUDED_SOUND_PACK ? ` (pack ${INCLUDED_SOUND_PACK.name} — valor ${INCLUDED_SOUND_PACK.dailyPrice} €/día)` : ''}
               </span>
             </div>
 
@@ -230,7 +285,7 @@ export default function CateringBrasasPage() {
                 className="w-full accent-[#ecb613] h-2 bg-[#1a1a24] rounded-lg cursor-pointer border border-white/10"
               />
               <span className="text-[10px] font-mono text-zinc-400 block">
-                Radio Provincial: {distanceKm <= 30 ? 'Desplazamiento Incluido' : `+${Math.round((distanceKm - 30) * 0.95)}€ Km`}
+                Logística S-Class: {logisticaEur === 0 ? 'Desplazamiento Incluido (≤ 50 km)' : `+${logisticaEur} € (${LOGISTICA_EUR_PER_KM} €/km desde el km ${LOGISTICA_KM_EXENTOS})`}
               </span>
             </div>
           </div>
@@ -242,11 +297,11 @@ export default function CateringBrasasPage() {
             </div>
             <div>
               <span className="text-[9px] font-mono text-zinc-400 uppercase block">Depósito Stripe</span>
-              <span className="text-xl font-black text-emerald-400 font-mono">100 €</span>
+              <span className="text-xl font-black text-emerald-400 font-mono">{DEPOSITO_STRIPE_EUR} €</span>
             </div>
             <div>
               <span className="text-[9px] font-mono text-zinc-400 uppercase block">Resto en Evento</span>
-              <span className="text-xl font-black text-white font-mono">{totalQuote - 100} €</span>
+              <span className="text-xl font-black text-white font-mono">{totalQuote - DEPOSITO_STRIPE_EUR} €</span>
             </div>
             <div>
               <span className="text-[9px] font-mono text-zinc-400 uppercase block">Price-Lock SHA-256</span>
@@ -265,18 +320,42 @@ export default function CateringBrasasPage() {
                 <Lock size={18} />
                 <span>BLOQUEAR FECHA 72H CON DEPÓSITO STRIPE</span>
               </div>
-              <span className="font-mono text-base font-black">100 €</span>
+              <span className="font-mono text-base font-black">{DEPOSITO_STRIPE_EUR} €</span>
             </a>
 
             <a
-              href={`https://wa.me/34693693048?text=Hola%20Productora%20EAR%2C%20quiero%20reservar%20${encodeURIComponent(selectedMenu.title)}%20para%20${pax}%20comensales%20(${totalQuote}%E2%82%AC).`}
+              href={`https://wa.me/${WHATSAPP_DIGITS}?text=Hola%20Productora%20EAR%2C%20quiero%20reservar%20${encodeURIComponent(selectedMenu.title)}%20para%20${pax}%20comensales%20(${totalQuote}%E2%82%AC).`}
               target="_blank"
               rel="noreferrer"
               className="w-full py-3.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2.5 transition-all"
             >
               <MessageCircle size={15} className="text-[#25D366]" />
-              <span>Despachar Payload Directo a WhatsApp (+34 693 693 048)</span>
+              <span>Despachar Payload Directo a WhatsApp ({CENTRALITA_EAR_OS})</span>
             </a>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+              <Link
+                href="/reservar/solista"
+                className="py-3 px-4 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-white font-mono text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 ease-out"
+              >
+                <Flame size={15} />
+                <span>Show en Directo desde {TARIFA_BASE_SOLISTA_EUR} €</span>
+              </Link>
+              <Link
+                href="/alquiler"
+                className="py-3 px-4 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-white font-mono text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 ease-out"
+              >
+                <Sparkles size={15} />
+                <span>Alquiler de Equipos</span>
+              </Link>
+              <Link
+                href="/checkout"
+                className="py-3 px-4 rounded-xl bg-white/5 hover:bg-[#ecb613] hover:text-black border border-white/10 text-white font-mono text-[11px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 ease-out"
+              >
+                <Lock size={15} />
+                <span>Cierre Seguro Stripe</span>
+              </Link>
+            </div>
           </div>
         </div>
 

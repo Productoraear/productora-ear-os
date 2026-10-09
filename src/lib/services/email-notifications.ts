@@ -149,7 +149,7 @@ export async function sendArtistBookingNotification(payload: ArtistNotificationP
       </table>
     </div>
     <div style="text-align:center;margin:25px 0;">
-      <a href="https://www.productoraear.com/studio/artist/bookings" style="background:#ecb613;color:#000;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;padding:14px 28px;border-radius:12px;display:inline-block;">Ver en EManeger Studio</a>
+      <a href="https://productoraear.com/studio/artist/bookings" style="background:#ecb613;color:#000;font-weight:900;font-size:12px;text-transform:uppercase;letter-spacing:1px;text-decoration:none;padding:14px 28px;border-radius:12px;display:inline-block;">Ver en EManeger Studio</a>
     </div>
     <div style="border-top:1px solid rgba(255,255,255,0.08);padding-top:20px;font-size:11px;color:#666;text-align:center;">Split Soberano: 80% Artista / 10% EAR OS / 10% VIMUME</div>
   </div>

@@ -171,6 +171,7 @@ export async function lockDateAtomically(input: {
   bufferMinutes?: number;
   clientName?: string;
   location?: string;
+  stripeSessionId?: string;
 }): Promise<{ success: boolean; blockId?: string; reason: string; productionId?: string }> {
   const range = getDayRange(input.eventDate);
   if (!range) {
@@ -180,6 +181,16 @@ export async function lockDateAtomically(input: {
   const { start, end } = range;
 
   return prisma.$transaction(async (tx) => {
+    // 0. Idempotencia Stripe: si ya se materializó un bloqueo para esta sesión, devolver éxito (evita duplicados ante retries del webhook).
+    if (input.stripeSessionId) {
+      const existingBySession = await tx.productionEvent.findFirst({
+        where: { metadata: { path: ['stripeSessionId'], equals: input.stripeSessionId } }
+      });
+      if (existingBySession) {
+        return { success: true, reason: 'LOCKED', productionId: existingBySession.id };
+      }
+    }
+
     // 1. Re-verificar calendarBlock
     const existingBlock = await tx.calendarBlock.findFirst({
       where: {
@@ -233,6 +244,7 @@ export async function lockDateAtomically(input: {
           horaTramo: input.timeSlot || null,
           bufferMinutes: input.bufferMinutes || 30,
           artistProfileId: input.artistProfileId || null,
+          stripeSessionId: input.stripeSessionId || null,
           lockedAt: new Date().toISOString()
         }
       }

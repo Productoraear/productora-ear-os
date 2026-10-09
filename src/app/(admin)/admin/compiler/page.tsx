@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   Terminal,
@@ -18,7 +18,11 @@ import {
   Crown,
   Music2,
   Flame,
-  CheckCircle2
+  CheckCircle2,
+  BrainCircuit,
+  Gauge,
+  RefreshCw,
+  Loader2
 } from 'lucide-react';
 import {
   DOCTRINA_CEO_EMPRESARIO,
@@ -27,9 +31,54 @@ import {
   type OraclePersona,
   type OracleRefinedResult
 } from '@/lib/oracle/quantum-oracle-engine';
+import type { CompiledDAGResult } from '@/lib/compiler/omega-intent-compiler';
 
 type CompileMode = 'QUIRURGICO' | 'OMEGA_FULLSTACK';
 type CompileEngine = 'OLLAMA' | 'CLOUD';
+
+/** Contrato estructural del SpeechRecognition del navegador (cero `any`). */
+type SpeechRecognitionResultLike = {
+  transcript: string;
+};
+
+type SpeechRecognitionEventLike = {
+  results: Array<Array<SpeechRecognitionResultLike>>;
+};
+
+type SpeechRecognitionLike = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  maxAlternatives: number;
+  onresult: ((event: SpeechRecognitionEventLike) => void) | null;
+  onend: (() => void) | null;
+  onerror: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+};
+
+type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
+
+type WindowWithSpeech = Window & {
+  SpeechRecognition?: SpeechRecognitionConstructor;
+  webkitSpeechRecognition?: SpeechRecognitionConstructor;
+};
+
+type SelectableGpuModel = {
+  id: string;
+  label: string;
+  paramSize: string;
+  numCtx?: number;
+  role?: string;
+};
+
+type GpuStatusPayload = {
+  online: boolean;
+  usedVramMB: number;
+  totalVramMB: number;
+  freeVramMB: number;
+  loadedModels: Array<{ name: string; vramMB: number; contextSize: number }>;
+};
 
 export default function VibeCodingCompilerPage() {
   const [prompt, setPrompt] = useState('');
@@ -38,14 +87,65 @@ export default function VibeCodingCompilerPage() {
   const [oraclePersona, setOraclePersona] = useState<OraclePersona>('CEO');
   const [oracleResult, setOracleResult] = useState<OracleRefinedResult | null>(null);
   const [isCompiling, setIsCompiling] = useState(false);
-  const [compiledData, setCompiledData] = useState<any>(null);
+  const [compiledData, setCompiledData] = useState<CompiledDAGResult | null>(null);
   const [copied, setCopied] = useState(false);
+  const [copiedMaster, setCopiedMaster] = useState(false);
   const [injected, setInjected] = useState(false);
   const [isInjecting, setIsInjecting] = useState(false);
   const [isListening, setIsListening] = useState(false);
-  const recognitionRef = useRef<any>(null);
+  const [selectedModel, setSelectedModel] = useState<string>('qwen3.8-27b-fast:latest');
+  const [forgeEnabled, setForgeEnabled] = useState<boolean>(true);
+  const [masterPrompt, setMasterPrompt] = useState<string | null>(null);
+  const [gpuStatus, setGpuStatus] = useState<GpuStatusPayload | null>(null);
+  const [gpuModels, setGpuModels] = useState<SelectableGpuModel[]>([]);
+  const [isPreloading, setIsPreloading] = useState<string | null>(null);
+  const [isRefreshingGpu, setIsRefreshingGpu] = useState(false);
+  const [lastLatency, setLastLatency] = useState<number | null>(null);
+  const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
   const activeDoctrine = oraclePersona === 'CEO' ? DOCTRINA_CEO_EMPRESARIO : DOCTRINA_ARTISTA_SOBERANO;
+
+  const refreshGpuStatus = useCallback(async () => {
+    setIsRefreshingGpu(true);
+    try {
+      const res = await fetch('/api/admin/gpu-status', { method: 'GET' });
+      const data = await res.json();
+      if (data?.ok) {
+        setGpuStatus(data.gpu ?? null);
+        const selectable: SelectableGpuModel[] = Array.isArray(data.selectableModels)
+          ? data.selectableModels
+          : [];
+        setGpuModels(selectable);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsRefreshingGpu(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void refreshGpuStatus();
+  }, [refreshGpuStatus]);
+
+  const handlePreloadModel = useCallback(async (modelId: string) => {
+    setIsPreloading(modelId);
+    try {
+      const res = await fetch('/api/admin/gpu-status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: modelId })
+      });
+      const data = await res.json();
+      if (data?.ok) {
+        setGpuStatus(data.gpu ?? null);
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsPreloading(null);
+    }
+  }, []);
 
   const handleRefineWithOracle = () => {
     if (!prompt.trim()) return;
@@ -57,6 +157,8 @@ export default function VibeCodingCompilerPage() {
     if (!prompt.trim()) return;
     setIsCompiling(true);
     setInjected(false);
+    setMasterPrompt(null);
+    setLastLatency(null);
     try {
       const res = await fetch('/api/admin/compile-intent', {
         method: 'POST',
@@ -65,7 +167,9 @@ export default function VibeCodingCompilerPage() {
           intent: prompt,
           mode,
           engine,
-          oraclePersona
+          oraclePersona,
+          model: selectedModel,
+          forge: forgeEnabled
         })
       });
       const data = await res.json();
@@ -74,16 +178,24 @@ export default function VibeCodingCompilerPage() {
         if (data.oracle) {
           setOracleResult(data.oracle);
         }
+        if (typeof data.masterPrompt === 'string' && data.masterPrompt) {
+          setMasterPrompt(data.masterPrompt);
+        }
+        if (typeof data.latencyMs === 'number') {
+          setLastLatency(data.latencyMs);
+        }
       }
     } catch (e) {
       console.error(e);
     } finally {
       setIsCompiling(false);
+      void refreshGpuStatus();
     }
   };
 
   const toggleVoice = async () => {
-    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const speechWindow = window as WindowWithSpeech;
+    const SpeechRecognition = speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
     if (!SpeechRecognition) return;
 
     if (isListening) {
@@ -97,8 +209,8 @@ export default function VibeCodingCompilerPage() {
     recognition.continuous = false;
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
+    recognition.onresult = (event) => {
+      const transcript = event.results[0]?.[0]?.transcript ?? '';
       setPrompt(prev => (prev ? prev + ' ' : '') + transcript);
     };
     recognition.onend = () => setIsListening(false);
@@ -134,6 +246,13 @@ export default function VibeCodingCompilerPage() {
     navigator.clipboard.writeText(compiledData.yaml);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleCopyMasterPrompt = () => {
+    if (!masterPrompt) return;
+    navigator.clipboard.writeText(masterPrompt);
+    setCopiedMaster(true);
+    setTimeout(() => setCopiedMaster(false), 2000);
   };
 
   const handleInjectQueue = async () => {
@@ -285,6 +404,98 @@ export default function VibeCodingCompilerPage() {
               </div>
             </div>
 
+            {/* GPU Inference Control Panel */}
+            {engine === 'OLLAMA' && (
+              <div className="p-4 rounded-2xl bg-black/50 border border-cyan-500/20 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-[10px] font-mono uppercase text-cyan-300 flex items-center gap-1.5">
+                    <Gauge className="w-3.5 h-3.5" /> Modelo GPU & Telemetría VRAM
+                  </label>
+                  <button
+                    onClick={() => void refreshGpuStatus()}
+                    disabled={isRefreshingGpu}
+                    className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 text-cyan-300 transition disabled:opacity-50"
+                    title="Refrescar estado de la GPU"
+                  >
+                    <RefreshCw className={'w-3.5 h-3.5 ' + (isRefreshingGpu ? 'animate-spin' : '')} />
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-center">
+                    <div className="text-[10px] font-mono text-zinc-500">VRAM Ocupada</div>
+                    <div className="text-sm font-mono text-cyan-300 font-bold">
+                      {gpuStatus ? ((gpuStatus.usedVramMB / 1024).toFixed(1) + ' GB') : '—'}
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-center">
+                    <div className="text-[10px] font-mono text-zinc-500">VRAM Libre</div>
+                    <div className="text-sm font-mono text-emerald-400 font-bold">
+                      {gpuStatus ? ((gpuStatus.freeVramMB / 1024).toFixed(1) + ' GB') : '—'}
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-center">
+                    <div className="text-[10px] font-mono text-zinc-500">Iteración</div>
+                    <div className="text-sm font-mono text-[#ecb613] font-bold">
+                      {lastLatency !== null ? (lastLatency + ' ms') : '—'}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[10px] font-mono text-zinc-500">Modelo de razonamiento</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                    {gpuModels.length === 0
+                      ? [
+                        { id: 'qwen3.8-27b-fast:latest', label: 'Qwen3.8 27B FAST', paramSize: '27B' },
+                        { id: 'ear-32b-architect:latest', label: 'EAR-32B Architect', paramSize: '32B' },
+                        { id: 'ear-14b-speed:latest', label: 'EAR-14B Speed', paramSize: '14B' }
+                      ].map(m => (
+                        <button
+                          key={m.id}
+                          onClick={() => setSelectedModel(m.id)}
+                          className={'px-2 py-2 rounded-lg border text-[10px] font-mono transition ' + (selectedModel === m.id ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 font-bold' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-white hover:border-cyan-500/30')}
+                        >
+                          {m.paramSize} &bull; {m.label.replace('Qwen3.8 27B FAST', '27B Fast').replace('EAR-32B Architect', '32B Arch').replace('EAR-14B Speed', '14B Speed')}
+                        </button>
+                      ))
+                      : gpuModels.map(m => (
+                        <button
+                          key={m.id}
+                          onClick={() => setSelectedModel(m.id)}
+                          className={'px-2 py-2 rounded-lg border text-[10px] font-mono transition ' + (selectedModel === m.id ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 font-bold' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-white hover:border-cyan-500/30')}
+                        >
+                          {m.paramSize} &bull; {m.label}
+                        </button>
+                      ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 pt-1 border-t border-zinc-800">
+                  <div className="flex items-center gap-2">
+                    <BrainCircuit className="w-3.5 h-3.5 text-[#ecb613]" />
+                    <span className="text-[10px] font-mono text-zinc-400">Forja Prompt Maestro (nivel Claude Opus High)</span>
+                  </div>
+                  <button
+                    onClick={() => setForgeEnabled(v => !v)}
+                    className={'relative w-9 h-5 rounded-full transition ' + (forgeEnabled ? 'bg-[#ecb613]' : 'bg-zinc-700')}
+                    title={forgeEnabled ? 'Forja activada' : 'Forja desactivada'}
+                  >
+                    <span className={'absolute top-0.5 w-4 h-4 rounded-full bg-black transition ' + (forgeEnabled ? 'left-4' : 'left-0.5')} />
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => void handlePreloadModel(selectedModel)}
+                  disabled={isPreloading !== null}
+                  className="w-full px-3 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-2 transition disabled:opacity-50"
+                >
+                  {isPreloading === selectedModel ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Zap className="w-3.5 h-3.5" />}
+                  {isPreloading === selectedModel ? 'Cargando en VRAM...' : 'Precargar modelo en VRAM (adiós cold-start)'}
+                </button>
+              </div>
+            )}
+
             <textarea
               value={prompt}
               onChange={e => setPrompt(e.target.value)}
@@ -404,6 +615,55 @@ export default function VibeCodingCompilerPage() {
               </div>
             )}
           </div>
+
+          {/* Barra de acciones del DAG — siempre visible cuando hay DAG compilado */}
+          {compiledData && (
+            <div className="p-4 rounded-2xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
+                <Send className="w-4 h-4 text-[#ecb613]" />
+                <span>Acciones del Manifiesto DAG</span>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button
+                  onClick={handleCopyYAML}
+                  className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono font-bold flex items-center justify-center gap-2 transition"
+                >
+                  {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+                  <span>{copied ? 'DAG Copiado' : 'Copiar DAG completo'}</span>
+                </button>
+                <button
+                  onClick={handleInjectQueue}
+                  disabled={isInjecting || injected}
+                  className="px-4 py-2.5 rounded-xl bg-[#ecb613]/20 hover:bg-[#ecb613]/30 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono font-bold flex items-center justify-center gap-2 transition disabled:opacity-50"
+                >
+                  {injected ? <Check className="w-4 h-4 text-emerald-400" /> : <Send className="w-4 h-4" />}
+                  <span>{injected ? 'Tarea en Cola' : 'Enviar a tasks_queue.json'}</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Forged Master Prompt (nivel Claude Opus High) */}
+          {masterPrompt && (
+            <div className="p-5 rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/30 backdrop-blur-md space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-800 pb-2">
+                <div className="flex items-center gap-2">
+                  <BrainCircuit className="w-4 h-4 text-[#ecb613]" />
+                  <span className="text-xs font-mono uppercase text-[#ecb613] font-bold">Prompt Maestro Forjado (Claude Opus High)</span>
+                </div>
+                <button
+                  onClick={handleCopyMasterPrompt}
+                  className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono flex items-center gap-1.5 transition"
+                >
+                  {copiedMaster ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedMaster ? 'Copiado' : 'Copiar Prompt Maestro'}</span>
+                </button>
+              </div>
+              <pre className="p-4 rounded-xl bg-black border border-[#ecb613]/20 text-[11px] font-mono leading-relaxed overflow-x-auto whitespace-pre-wrap text-zinc-300 max-h-96">
+                {masterPrompt}
+              </pre>
+            </div>
+          )}
         </div>
       </div>
     </div>

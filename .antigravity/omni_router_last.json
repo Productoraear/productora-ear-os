@@ -1,0 +1,6 @@
+{
+  "prompt": "hola, ¿cómo estás?",
+  "intent": "chat",
+  "model": "ear-14b-textos-sclass:latest",
+  "success": true
+}

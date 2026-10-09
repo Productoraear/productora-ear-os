@@ -16,7 +16,10 @@ import {
   Calendar,
   Star,
   Building2,
-  ChevronRight
+  ChevronRight,
+  Sparkles,
+  BadgeCheck,
+  Armchair
 } from 'lucide-react';
 import { CENTRALITA } from '@/lib/phone-constants';
 import ThermodynamicNeuralTunnel from '@/features/bodas/ui/ThermodynamicNeuralTunnel';
@@ -25,6 +28,13 @@ import { FramerMotionScrollCanvas } from '@/components/ui/FramerMotionScrollCanv
 import { motion } from 'framer-motion';
 import VanguardFluidBackground from '@/components/sclass/VanguardFluidBackground';
 import HolographicTiltCard from '@/components/sclass/HolographicTiltCard';
+
+// Marco cinematográfico del hero: imagen auténtica y emocional (Edwin Agudelo cantando a los novios en directo).
+const HERO_WEDDING_IMAGE =
+  'https://cdn0.bodas.net/vendor/78903/3_2/960/jpg/edwin-agudelo-canta-a-novios_1_78903_v3.jpeg';
+
+// Reel nupcial propio (self-hosted / CDN propio). Si está vacío, el hero usa la imagen cinematográfica con movimiento.
+const WEDDING_REEL_URL = '';
 
 interface WeddingBlock {
   id: string;
@@ -140,63 +150,156 @@ export default function BodasPage() {
 
       <div className="max-w-7xl mx-auto space-y-20 relative z-10">
 
-        {/* 1. HERO SECTION NUPCIAL ULTRALUJO (S-CLASS) */}
-        <section className="text-center max-w-4xl mx-auto space-y-8 pt-6">
+        {/* 1. HERO EDITORIAL CINEMATOGRÁFICO — SPLIT LAYOUT (Nivel Awwwards) */}
+        <section className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center pt-4 lg:pt-6">
+
+          {/* COLUMNA EDITORIAL: tipografía de autor, hairlines y prueba social real */}
+          <div className="lg:col-span-6 text-left space-y-7">
+
+            {/* Hairline superior con sello de autor */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+              className="flex items-center gap-4"
+            >
+              <span className="h-px w-12 bg-gradient-to-r from-[#ecb613] to-transparent" />
+              <span className="text-[11px] font-mono font-black uppercase tracking-[0.35em] text-[#ecb613]">
+                Arquitectura Nupcial de Autor · España
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-5xl sm:text-6xl xl:text-7xl font-black uppercase tracking-tight text-white font-syne leading-[0.92]"
+            >
+              Bodas de{' '}
+              <span className="relative inline-block">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffffff] via-[#f5d77f] to-[#ecb613]">
+                  Alta Distinción
+                </span>
+                <span className="absolute -bottom-2 left-0 h-[3px] w-full bg-gradient-to-r from-[#ecb613] via-[#f5d77f]/60 to-transparent" />
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-white/75 text-base sm:text-lg max-w-xl leading-relaxed"
+            >
+              Orquestamos los <strong className="text-white">6 pilares</strong> de una celebración legendaria —música en directo, catering de autor, escenografía monumental y blindaje técnico— con la precisión de una producción de gala y la emoción de un instante irrepetible.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <a
+                href={CENTRALITA.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-5 bg-gradient-to-r from-[#ecb613] via-[#f5d77f] to-[#ecb613] hover:from-white hover:to-white text-black font-black text-xs uppercase tracking-widest rounded-2xl flex items-center justify-center gap-3 transition-all duration-300 shadow-[0_10px_35px_rgba(236,182,19,0.4)] hover:scale-[1.03] cursor-pointer"
+              >
+                <Calendar size={18} />
+                <span>Consultar Fecha con Asesor Nupcial</span>
+              </a>
+
+              <Link
+                href="/artistas/edwin-agudelo"
+                className="px-8 py-5 bg-white/5 hover:bg-white/10 text-white font-black text-xs uppercase tracking-widest rounded-2xl border border-white/15 flex items-center justify-center gap-3 transition-all duration-300 cursor-pointer backdrop-blur-xl hover:border-[#ecb613]/50"
+              >
+                <Music size={18} className="text-[#ecb613]" />
+                <span>Show Solista Premium</span>
+              </Link>
+            </motion.div>
+
+            {/* Prueba social real + sellos S-Class */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="flex flex-wrap items-center gap-x-7 gap-y-3 pt-6 border-t border-white/10"
+            >
+              <div className="flex items-center gap-2">
+                <div className="flex items-center text-[#ecb613]">
+                  {[...Array(5)].map((_, s) => (
+                    <Star key={s} size={13} className="fill-[#ecb613]" />
+                  ))}
+                </div>
+                <span className="text-[11px] font-mono text-white/70 uppercase tracking-wider">5.0 · Opiniones verificadas</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/70">
+                <BadgeCheck size={15} className="text-[#ecb613]" />
+                <span className="text-[11px] font-mono uppercase tracking-wider">Depósito 100€ 100% deducible</span>
+              </div>
+              <div className="flex items-center gap-2 text-white/70">
+                <ShieldCheck size={15} className="text-[#ecb613]" />
+                <span className="text-[11px] font-mono uppercase tracking-wider">Plan B · Cero imprevistos</span>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* COLUMNA MEDIA: marco cinematográfico retrato 4/5, sin texto encima del sujeto */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2.5 px-6 py-2 rounded-full bg-gradient-to-r from-[#ecb613]/20 via-[#f5d77f]/15 to-[#ecb613]/20 border border-[#ecb613]/40 text-[#ecb613] text-[11px] font-black tracking-[0.35em] uppercase font-mono shadow-[0_0_35px_rgba(236,182,19,0.25)]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.15 }}
+            className="lg:col-span-6"
           >
-            <Heart size={14} className="animate-pulse fill-current text-[#ecb613]" />
-            <span>Arquitectura Nupcial de Autor</span>
+            <div className="relative mx-auto max-w-sm sm:max-w-md lg:max-w-none">
+              {/* Halo dorado tras el marco */}
+              <div className="absolute -inset-6 bg-gradient-radial from-[#ecb613]/22 via-[#ecb613]/5 to-transparent blur-3xl pointer-events-none" />
+
+              <div className="group relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/15 shadow-[0_35px_90px_rgba(0,0,0,0.85)]">
+                {WEDDING_REEL_URL ? (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    poster={HERO_WEDDING_IMAGE}
+                  >
+                    <source src={WEDDING_REEL_URL} type="video/mp4" />
+                  </video>
+                ) : (
+                  <motion.img
+                    src={HERO_WEDDING_IMAGE}
+                    alt="Edwin Agudelo cantando en directo a los novios durante su enlace"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    initial={{ scale: 1.14 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 6, ease: 'easeOut' }}
+                  />
+                )}
+
+                {/* Gradientes que protegen la imagen y anclan la tipografía de las esquinas */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#060507] via-[#060507]/15 to-transparent" />
+                <div className="absolute inset-0 rounded-[2.5rem] ring-1 ring-inset ring-white/10" />
+
+                {/* Sello dorado superior */}
+                <div className="absolute top-5 left-5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/45 backdrop-blur-md border border-[#ecb613]/40 text-[#ecb613] text-[10px] font-mono font-black uppercase tracking-widest">
+                  <Sparkles size={12} /> Directo & Emotivo
+                </div>
+
+                {/* Caption inferior (no tapa al sujeto) */}
+                <div className="absolute bottom-0 inset-x-0 p-6 space-y-1">
+                  <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-[#ecb613]">En vivo</p>
+                  <p className="text-sm font-black uppercase text-white font-syne tracking-tight">
+                    Edwin Agudelo · Banda sonora de vuestra boda
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-white font-syne leading-[0.91]"
-          >
-            Bodas de <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ffffff] via-[#f5d77f] to-[#ecb613]">
-              Alta Distinción
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-white/80 text-base sm:text-xl font-normal max-w-2xl mx-auto leading-relaxed"
-          >
-            Una orquestación perfecta donde cada detalle técnico y emocional está blindado. Conectamos los 6 pilares indispensables para una celebración legendaria.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="flex flex-wrap justify-center gap-4 pt-2"
-          >
-            <a
-              href={CENTRALITA.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-5 bg-gradient-to-r from-[#ecb613] via-[#f5d77f] to-[#ecb613] hover:from-white hover:to-white text-black font-black text-xs uppercase tracking-widest rounded-2xl flex items-center justify-center gap-3 transition-all shadow-[0_10px_35px_rgba(236,182,19,0.4)] hover:scale-105 cursor-pointer"
-            >
-              <Calendar size={18} />
-              <span>Consultar Fecha con Asesor Nupcial</span>
-            </a>
-
-            <Link
-              href="/artistas/edwin-agudelo"
-              className="px-8 py-5 bg-white/5 hover:bg-white/10 text-white font-black text-xs uppercase tracking-widest rounded-2xl border border-white/15 flex items-center justify-center gap-3 transition-all cursor-pointer backdrop-blur-xl hover:border-[#ecb613]/50"
-            >
-              <Music size={18} className="text-[#ecb613]" />
-              <span>Show Solista Premium Edwin Agudelo</span>
-            </Link>
-          </motion.div>
         </section>
 
         {/* 2. BUSCADOR INTELIGENTE NUPCIAL DUAL & NAVEGACIÓN S-CLASS */}
@@ -210,6 +313,33 @@ export default function BodasPage() {
             </h2>
           </div>
           <SmartMarketplaceNav />
+        </section>
+
+        {/* 2.5. HERRAMIENTAS DE BODA PRO (GESTIÓN DE MESAS S-CLASS) */}
+        <section className="pt-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 p-6 rounded-3xl bg-[#0c0a0e] border border-white/10">
+            <div className="md:col-span-2 space-y-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ecb613]/15 border border-[#ecb613]/30 text-[#ecb613] text-[10px] font-black uppercase tracking-widest font-mono">
+                <Armchair size={13} /> Herramientas Pro
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black uppercase text-white font-syne">
+                Gestiona las Mesas y los Invitados con precisión S-Class
+              </h3>
+              <p className="text-white/70 text-sm max-w-xl">
+                Plano visual con arrastrar y soltar, auto-asignación por grupos, detección de sobrecapacidad y exportación a PDF lista para imprenta.
+              </p>
+            </div>
+            <div className="flex md:items-end justify-start md:justify-end">
+              <Link
+                href="/bodas/herramientas/mesas"
+                className="inline-flex items-center gap-2 px-7 py-4 rounded-2xl bg-gradient-to-r from-[#ecb613] to-[#f5d77f] hover:from-white hover:to-white text-black font-black text-xs uppercase tracking-widest transition-all hover:scale-105 shadow-[0_10px_35px_rgba(236,182,19,0.35)]"
+              >
+                <Armchair size={15} />
+                Abrir Gestión de Mesas
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
         </section>
 
         {/* 3. TÚNEL NEURAL TERMODINÁMICO (MATCHMAKING INTELIGENTE NUPCIAL) */}
@@ -258,7 +388,7 @@ export default function BodasPage() {
             {topProvincesBanquetes.map((prov) => (
               <Link
                 key={prov.slug}
-                href={`/bodas/fincas-${prov.slug}-sonorizacion-gala`}
+                href={`/fincas/${prov.slug}`}
                 className="p-5 rounded-2xl bg-[#0c0a0e] border border-white/10 hover:border-[#ecb613] transition-all flex flex-col justify-between group shadow-lg hover:shadow-[0_10px_30px_rgba(236,182,19,0.15)] hover:-translate-y-1"
               >
                 <div className="flex items-center justify-between mb-3">

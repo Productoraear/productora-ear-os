@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+r"""
 ═══════════════════════════════════════════════════════════════════════════════
   🦇 EAR OS V2 — MASTER BODAS.NET TOTAL ABSORBER & VAMPIRE HARVESTER (S-CLASS)
   Arquitectura: ANTIGRAVITY OMEGA v7.0 · Modo CEO Activo · Protocolo ZTM
@@ -32,6 +32,7 @@ import sys
 import re
 import json
 import time
+import tempfile
 from pathlib import Path
 from collections import defaultdict
 
@@ -46,6 +47,14 @@ PROJECT_ROOT = Path(r"H:\EAR_OS_V2\EAR_OS_V2")
 APP_DATA_DIR = PROJECT_ROOT / "src" / "data"
 PUBLIC_PROVIDERS_DIR = PROJECT_ROOT / "public" / "data" / "providers"
 PUBLIC_PROVIDERS_DIR.mkdir(parents=True, exist_ok=True)
+
+# Doctrina del Dato Verificado: unico punto autorizado para decidir `verified`.
+# Prohibido re-hardcodear verified:true en sincronizadores/daemons (bug raiz sellado).
+try:
+    from verified_doctrine import resolve_phone_with_doctrine, PLACEHOLDER_PHONE
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from verified_doctrine import resolve_phone_with_doctrine, PLACEHOLDER_PHONE
 
 # Coordenadas GPS para las 52 provincias
 PROVINCE_GPS = {
@@ -79,6 +88,22 @@ def resolve_gps(province_str, city_str=""):
     for prov, coords in PROVINCE_GPS.items():
         if prov in p_key: return coords
     return (40.4168, -3.7038)
+
+def atomic_write_json(path: Path, data) -> None:
+    """Escritura atómica + reemplazo para evitar JSON corrupto por corte."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, tmp_path = tempfile.mkstemp(dir=str(path.parent), suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        os.replace(tmp_path, path)
+    except Exception:
+        try:
+            if os.path.exists(tmp_path):
+                os.unlink(tmp_path)
+        except Exception:
+            pass
+        raise
 
 def clean_spanish(t):
     if not t: return ""
@@ -192,8 +217,10 @@ def main():
                             if is_valid_image(g_url) and g_url not in gallery:
                                 gallery.append(g_url)
 
-                    # Teléfono
-                    phone = item.get("phone") or item.get("telephone") or "+34 693 693 048"
+                    # Teléfono directo: centralita/vacío/placeholder => verified:false
+                    phone, phone_verified = resolve_phone_with_doctrine(
+                        item.get("phone") or item.get("telephone") or None
+                    )
 
                     # Descripción
                     desc = clean_spanish(item.get("description") or item.get("description_full") or "")
@@ -221,9 +248,10 @@ def main():
                         if len(desc) > len(ex.get("description", "")):
                             ex["description"] = desc
                             ex["description_full"] = desc
-                        if phone != "+34 693 693 048" and ex["phone"] == "+34 693 693 048":
+                        if phone_verified and not ex.get("verified"):
                             ex["phone"] = phone
                             ex["telephone"] = phone
+                            ex["verified"] = True
                     else:
                         master_vendors[tkey] = {
                             "id": item.get("id") or f"bodas-{tkey[:20]}",
@@ -243,7 +271,7 @@ def main():
                             "reviews": reviews,
                             "description": desc or f"{name} es un proveedor homologado bajo los estándares de calidad de Productora EAR.",
                             "description_full": desc or f"{name} es un proveedor homologado bajo los estándares de calidad de Productora EAR.",
-                            "verified": True,
+                            "verified": phone_verified,
                             "source": "Bodas.net"
                         }
                     loaded += 1
@@ -301,7 +329,9 @@ def main():
                                 prov = clean_spanish(addr.get("addressRegion") or addr.get("addressLocality") or "Madrid")
                                 tkey = make_token_key(name, prov)
 
-                                phone = extracted_phone or node.get("telephone") or "+34 693 693 048"
+                                phone, phone_verified = resolve_phone_with_doctrine(
+                                    extracted_phone or node.get("telephone") or None
+                                )
                                 
                                 # Fotos en nodo
                                 node_imgs = []
@@ -329,9 +359,10 @@ def main():
                                     for im in node_imgs:
                                         if im not in rec["imageUrls"]:
                                             rec["imageUrls"].append(im)
-                                    if phone != "+34 693 693 048" and rec["phone"] == "+34 693 693 048":
+                                    if phone_verified and not rec.get("verified"):
                                         rec["phone"] = phone
                                         rec["telephone"] = phone
+                                        rec["verified"] = True
                                     if len(desc) > len(rec["description"]):
                                         rec["description"] = desc
                                         rec["description_full"] = desc
@@ -355,7 +386,7 @@ def main():
                                         "reviews": reviews,
                                         "description": desc or f"{name} es un proveedor de alta gama homologado en la red Productora EAR.",
                                         "description_full": desc or f"{name} es un proveedor de alta gama homologado en la red Productora EAR.",
-                                        "verified": True,
+                                        "verified": phone_verified,
                                         "source": "Bodas.net HTML Scraping"
                                     }
                                     new_from_html += 1
@@ -402,6 +433,7 @@ def main():
         "badge": "SOLISTA S-CLASS",
         "customUrl": "/artistas/edwin-agudelo",
         "verified": True,
+        "isSovereign": True,
         "source": "SSOT"
     }
 
@@ -430,39 +462,73 @@ def main():
     # ──────────────────────────────────────────────────────────────────────────
     # FASE 4: Escritura de Datasets Consolidados
     # ──────────────────────────────────────────────────────────────────────────
-    # 1. Base maestra completa en src/data/all_providers_database.json
+    # 1. Base maestra completa en src/data/all_providers_database.json (atómico)
     print(f"\n[*] Guardando base consolidada en {APP_DATA_DIR / 'all_providers_database.json'}...")
-    with open(APP_DATA_DIR / "all_providers_database.json", "w", encoding="utf-8") as f:
-        json.dump(final_list, f, ensure_ascii=False, indent=2)
+    atomic_write_json(APP_DATA_DIR / "all_providers_database.json", final_list)
 
-    # 2. Respaldo en bodas-vendors-harvested.json
+    # 2. Respaldo en bodas-vendors-harvested.json (atómico)
     print(f"[*] Guardando réplica en {APP_DATA_DIR / 'bodas-vendors-harvested.json'}...")
-    with open(APP_DATA_DIR / "bodas-vendors-harvested.json", "w", encoding="utf-8") as f:
-        json.dump(final_list, f, ensure_ascii=False, indent=2)
+    atomic_write_json(APP_DATA_DIR / "bodas-vendors-harvested.json", final_list)
 
-    # 3. Particionamiento en los 12 archivos de Edge CDN para Netlify en public/data/providers/
+    # 3. Particionamiento Edge CDN (public/data/providers/) con Doctrina del Dato Verificado.
+    # SOLO se publican verificados con teléfono real (0 placeholders/centralita/vacíos).
+    # EXCEPCIÓN ÚNICA: registro soberano first-party del CEO (isSovereign/Edwin).
+    # Cap anti-bloat por gremio (< 1 MB por archivo).
     print(f"[*] Regenerando particiones Edge CDN en {PUBLIC_PROVIDERS_DIR}...")
     edge_manifest = {}
-    
-    # 10 categorías maestras
+    EDGE_CAPS = {
+        "finca": 800, "catering": 600, "musica": 800, "foto": 800,
+        "decoracion": 500, "servicios": 800, "moda": 800, "transporte": 500,
+        "sonido": 500, "wedding": 500
+    }
     target_categories = ['finca', 'catering', 'musica', 'sonido', 'foto', 'decoracion', 'transporte', 'moda', 'wedding', 'servicios']
-    
+
+    def _is_publishable(p):
+        if p.get("isSovereign") is True:
+            return True
+        return p.get("verified") is True and PLACEHOLDER_PHONE not in (p.get("phone") or "")
+
+    def _compact_edge(p):
+        return {
+            "id": p.get("id", ""),
+            "name": p.get("name", "Proveedor Homologado"),
+            "slug": p.get("slug", ""),
+            "category": p.get("category", "servicios"),
+            "province": p.get("province", "Madrid"),
+            "phone": p.get("phone", ""),
+            "telephone": p.get("telephone", ""),
+            "img": p.get("img", ""),
+            "basePrice": p.get("basePrice", 350),
+            "price": p.get("price", ""),
+            "rating": p.get("rating", 4.9),
+            "reviews": p.get("reviews", 18),
+            "description": p.get("description", ""),
+            "services_list": (p.get("services_list") or [])[:4],
+            "verified": bool(p.get("verified", True)),
+            "isPreferred": bool(p.get("isPreferred", False)),
+            "isSovereign": bool(p.get("isSovereign", False))
+        }
+
     for cat in target_categories:
-        cat_items = [p for p in final_list if p.get("category") == cat]
+        cat_items = [p for p in final_list if p.get("category") == cat and _is_publishable(p)]
+        # Ordenar por rating/reviews desc y cap anti-bloat.
+        cat_items.sort(key=lambda x: (-(x.get("rating") or 0), -(x.get("reviews") or 0)))
+        cap = EDGE_CAPS.get(cat, 600)
+        selected = [_compact_edge(p) for p in cat_items[:cap]]
         out_file = PUBLIC_PROVIDERS_DIR / f"{cat}.json"
         with open(out_file, "w", encoding="utf-8") as f:
-            json.dump(cat_items, f, ensure_ascii=False)
+            json.dump(selected, f, ensure_ascii=False)
         sz_kb = round(os.path.getsize(out_file) / 1024, 1)
         edge_manifest[cat] = {
-            "count": len(cat_items),
+            "count": len(selected),
             "sizeKB": f"{sz_kb}"
         }
-        print(f"  -> {cat}.json: {len(cat_items):,} proveedores ({sz_kb} KB)")
+        print(f"  -> {cat}.json: {len(selected):,} proveedores verificados ({sz_kb} KB)")
 
-    # all_featured.json (proveedores destacados de cada provincia y categoría)
-    featured = [p for p in final_list if p.get("isPreferred") or p.get("rating", 0) >= 4.95][:3000]
+    # all_featured.json (destacados verificados o soberanos)
+    featured = [p for p in final_list if _is_publishable(p) and (p.get("isPreferred") or p.get("rating", 0) >= 4.95)][:3000]
     with open(PUBLIC_PROVIDERS_DIR / "all_featured.json", "w", encoding="utf-8") as f:
-        json.dump(featured, f, ensure_ascii=False)
+        json.dump([_compact_edge(p) for p in featured], f, ensure_ascii=False)
     
     # manifest.json
     with open(PUBLIC_PROVIDERS_DIR / "manifest.json", "w", encoding="utf-8") as f:

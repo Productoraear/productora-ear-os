@@ -1,0 +1,116 @@
+{
+    "name": "SOPORTE · DLQ Reintento de Eventos Fallidos (S-Class)",
+    "nodes": [
+        {
+            "parameters": {
+                "httpMethod": "POST",
+                "path": "dlq-retry",
+                "options": {}
+            },
+            "id": "webhook-dlq",
+            "name": "Webhook DLQ",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2,
+            "position": [
+                0,
+                0
+            ],
+            "webhookId": "dlq-retry"
+        },
+        {
+            "parameters": {
+                "jsCode": "const entry = $input.first().json;\n// entry = { slug, payload, attempts, lastError, ts }\nreturn [{ ...entry, targetUrl: `https://n8n.productoraear.com/webhook/${entry.slug}` }];"
+            },
+            "id": "code-map",
+            "name": "Resolver webhook destino",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                220,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "method": "POST",
+                "url": "={{ $json.targetUrl }}",
+                "sendBody": true,
+                "bodyParameters": {
+                    "parameters": []
+                },
+                "options": {
+                    "timeout": 20000
+                },
+                "jsonBody": "={{ JSON.stringify($json.payload) }}"
+            },
+            "id": "http-redeliver",
+            "name": "Reenviar al webhook original",
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.2,
+            "position": [
+                440,
+                0
+            ]
+        },
+        {
+            "parameters": {
+                "content": "## ♻️ DLQ EAR OS — Evento recuperado\n\nSlug: {{ $json.slug }}\nEstado: {{ $json.status }}\nReintentos previos: {{ $json.attempts }}",
+                "chatId": "={{ $env.TELEGRAM_CHAT_ID }}",
+                "additionalFields": {}
+            },
+            "id": "telegram-dlq-ok",
+            "name": "Notificar recuperación",
+            "type": "n8n-nodes-base.telegram",
+            "typeVersion": 1.2,
+            "position": [
+                660,
+                0
+            ],
+            "credentials": {
+                "telegramApi": {
+                    "id": "telegram-cred",
+                    "name": "Telegram Account"
+                }
+            }
+        }
+    ],
+    "connections": {
+        "Webhook DLQ": {
+            "main": [
+                [
+                    {
+                        "node": "Resolver webhook destino",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Resolver webhook destino": {
+            "main": [
+                [
+                    {
+                        "node": "Reenviar al webhook original",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Reenviar al webhook original": {
+            "main": [
+                [
+                    {
+                        "node": "Notificar recuperación",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    },
+    "settings": {
+        "executionOrder": "v1"
+    },
+    "pinData": {}
+}

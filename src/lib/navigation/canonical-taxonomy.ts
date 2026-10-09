@@ -191,12 +191,10 @@ export function resolveCanonicalBodasService(provinciaSeg: string, servicioSeg: 
     if (!service) return null;
 
     const province = geo.province;
-    const municipality = geo.municipality;
-    // La ruta real siempre es de 2 niveles: /bodas/{provincia}/{servicio}.
-    // Si el primer segmento era una ciudad, el canónico sube a 3 niveles.
-    const path = municipality
-        ? `/bodas/${province}/${service}/${municipality}`
-        : `/bodas/${province}/${service}`;
+    // Consolidación anti-doorway: la ruta canónica de servicio es SIEMPRE de 2 niveles
+    // (/bodas/{provincia}/{servicio}). Un primer segmento que era una ciudad se normaliza
+    // a su provincia; NUNCA se autogenera una variante de municipio de 3 niveles.
+    const path = `/bodas/${province}/${service}`;
 
     const currentPath = `/bodas/${provinciaSeg.toLowerCase()}/${servicioSeg.toLowerCase()}`;
 
@@ -205,7 +203,7 @@ export function resolveCanonicalBodasService(provinciaSeg: string, servicioSeg: 
         needsRedirect: path !== currentPath,
         province,
         service,
-        municipality: municipality ?? undefined,
+        municipality: undefined,
     };
 }
 
@@ -227,40 +225,19 @@ export function resolveCanonicalBodasMunicipio(
     const geo = resolveGeoSegment(provinciaSeg);
     if (!geo.province) return null;
 
-    const currentPath = `/bodas/${provinciaSeg.toLowerCase()}/${servicioSeg.toLowerCase()}/${municipio}`;
-
-    // Municipio capital duplicado (/bodas/madrid/dj/madrid) -> colapsar a 2 niveles.
-    if (municipio === geo.province) {
-        return {
-            path: `/bodas/${geo.province}/${service}`,
-            needsRedirect: true,
-            province: geo.province,
-            service,
-            municipality: undefined,
-        };
-    }
-
-    if (geo.municipality) {
-        // El hueco de provincia era en realidad una ciudad: corregir a la provincia real.
-        if (municipio === geo.municipality) {
-            return {
-                path: `/bodas/${geo.province}/${service}/${municipio}`,
-                needsRedirect: true,
-                province: geo.province,
-                service,
-                municipality: municipio,
-            };
-        }
-    }
-
-    // Municipio mal anidado (pertenece a otra provincia).
+    // Municipio mal anidado (pertenece a otra provincia): se consolida hacia la
+    // provincia real del municipio.
     const realProvince = MUNICIPALITY_TO_PROVINCE[municipio];
     const province = realProvince && realProvince !== geo.province ? realProvince : geo.province;
 
-    const path = `/bodas/${province}/${service}/${municipio}`;
+    // Consolidación anti-doorway: las variantes por municipio no aportan contenido
+    // diferencial real y se pliegan SIEMPRE (301 permanente) hacia el hub de
+    // provincia/servicio de 2 niveles, unificando toda la señal SEO en un único URL.
+    const path = `/bodas/${province}/${service}`;
+
     return {
         path,
-        needsRedirect: path !== currentPath,
+        needsRedirect: true,
         province,
         service,
         municipality: municipio,

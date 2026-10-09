@@ -5,6 +5,19 @@
  * Estricto cumplimiento de la Regla 10 (Sin marcas registradas ni mención a terceros).
  */
 
+import {
+  TARIFA_BASE_SOLISTA_EUR,
+  DEPOSITO_STRIPE_EUR,
+  LOGISTICA_EUR_PER_KM,
+  LOGISTICA_KM_EXENTOS,
+  SUPLEMENTO_HOTEL_EUR,
+  HORA_FIN_HOTEL,
+  LOGISTICA_KM_HOTEL,
+  LIMITE_SPL_DB,
+  WATTS_PER_PAX,
+  SPLIT_SOBERANO
+} from '@/lib/constants/ear-os-ssot';
+
 export type OraclePersona = 'CEO' | 'ARTISTA';
 
 export interface OracleRefinedResult {
@@ -17,6 +30,11 @@ export interface OracleRefinedResult {
   suggestedFiles: string[];
   suggestedAction: string;
 }
+
+/** Porcentajes del Split Soberano derivados del SSOT canónico (Zona Cero). */
+const SPLIT_ARTISTA_PCT = Math.round(SPLIT_SOBERANO.artista * 100);
+const SPLIT_EAROS_PCT = Math.round(SPLIT_SOBERANO.earOs * 100);
+const SPLIT_VIMUME_PCT = Math.round(SPLIT_SOBERANO.vimume * 100);
 
 export const DOCTRINA_CEO_EMPRESARIO = {
   nombre: 'Doctrina de Crecimiento Cuántico, Neurobranding & Alto Standing',
@@ -70,16 +88,19 @@ export const DOCTRINA_ARTISTA_SOBERANO = {
 export function refineQueryWithOracle(
   query: string,
   persona: OraclePersona = 'CEO',
-  context?: Record<string, any>
+  context?: Readonly<Record<string, string | number | boolean>>
 ): OracleRefinedResult {
+  // `context` queda reservado para ampliaciones futuras (telemetría, scoring);
+  // no se re-hardcodea ningún valor de negocio: todo nace del SSOT canónico.
+  void context;
   const cleanQuery = query.trim();
   const lower = cleanQuery.toLowerCase();
 
   if (persona === 'ARTISTA') {
     const levers = [
-      'Dignificación de caché: 350,00 € solista base',
-      'Split Soberano 80/10/10 con deducción Ley 49/2002 VIMUME',
-      'Protocolo acústico Bose F1 < 75 dB SPL para fincas'
+      `Dignificación de caché: ${TARIFA_BASE_SOLISTA_EUR.toFixed(2)} € solista base`,
+      `Split Soberano ${SPLIT_ARTISTA_PCT}/${SPLIT_EAROS_PCT}/${SPLIT_VIMUME_PCT} con deducción Ley 49/2002 VIMUME`,
+      `Protocolo acústico Bose F1 < ${LIMITE_SPL_DB} dB SPL (${WATTS_PER_PAX} W/pax) para fincas`
     ];
 
     if (lower.includes('precio') || lower.includes('tarifa') || lower.includes('descuento')) {
@@ -91,10 +112,10 @@ export function refineQueryWithOracle(
 
     const refined = `[ORÁCULO ARTISTA SOBERANO]\nOBJETIVO: ${cleanQuery}\n` +
       `DIRECTRICES TÁCTICAS:\n` +
-      `- Defender la tarifa base de 350,00 € (Edwin Agudelo) con solvencia técnica Bose F1 y voz de conservatorio.\n` +
-      `- Articular el Split Soberano 80/10/10 justificando el dividendo social y fiscal de VIMUME (Modelo 182 AEAT).\n` +
-      `- Blindar la relación con las fincas garantizando presión acústica < 75 dB SPL y conexión Cetac protegida.\n` +
-      `- Cierre obligatorio mediante depósito de 100,00 € en Stripe Price-Lock SHA-256.`;
+      `- Defender la tarifa base de ${TARIFA_BASE_SOLISTA_EUR.toFixed(2)} € (Edwin Agudelo) con solvencia técnica Bose F1 y voz de conservatorio.\n` +
+      `- Articular el Split Soberano ${SPLIT_ARTISTA_PCT}/${SPLIT_EAROS_PCT}/${SPLIT_VIMUME_PCT} justificando el dividendo social y fiscal de VIMUME (Modelo 182 AEAT).\n` +
+      `- Blindar la relación con las fincas garantizando presión acústica < ${LIMITE_SPL_DB} dB SPL (${WATTS_PER_PAX} W/pax) y conexión Cetac protegida.\n` +
+      `- Cierre obligatorio mediante depósito de ${DEPOSITO_STRIPE_EUR.toFixed(2)} € en Stripe Price-Lock SHA-256.`;
 
     return {
       persona: 'ARTISTA',
@@ -112,7 +133,7 @@ export function refineQueryWithOracle(
   const levers = [
     'Neurobranding y posicionamiento de alto standing',
     'Venta Elegante: llamada consultiva orientada a resolver, no a empujar',
-    'Filtro de exclusividad: depósito de 100,00 € Stripe Price-Lock en 24h'
+    `Filtro de exclusividad: depósito de ${DEPOSITO_STRIPE_EUR.toFixed(2)} € Stripe Price-Lock en 24h`
   ];
 
   if (lower.includes('campaña') || lower.includes('adquisicion') || lower.includes('lead')) {
@@ -126,7 +147,8 @@ export function refineQueryWithOracle(
     `DIRECTRICES TÁCTICAS:\n` +
     `- Aplicar el principio de Sobredemanda: posicionar a Productora EAR como el estándar de lujo y alta fidelidad.\n` +
     `- Implementar Venta Elegante: responder en < 5 minutos con empatía, interés en la fecha y solvencia ejecutiva.\n` +
-    `- Optimizar el modelo Midas: eliminar costes ocultos y canalizar todas las reservas al depósito directo de 100 €.\n` +
+    `- Optimizar el modelo Midas: eliminar costes ocultos y canalizar todas las reservas al depósito directo de ${DEPOSITO_STRIPE_EUR.toFixed(2)} €.\n` +
+    `- Blindar la logística: ${LOGISTICA_EUR_PER_KM.toFixed(2)} €/km a partir del km ${LOGISTICA_KM_EXENTOS}, con suplemento hotelero de ${SUPLEMENTO_HOTEL_EUR.toFixed(0)} € si el cierre supera las ${HORA_FIN_HOTEL}:00 h o los ${LOGISTICA_KM_HOTEL} km.\n` +
     `- Neutralizar la competencia de directorios tradicionales destacando el ahorro del 30% en intermediarios parásitos.`;
 
   return {

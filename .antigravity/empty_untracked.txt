@@ -1,0 +1,2 @@
+src\app\(public)\fincas\page.tsx
+src\app\(public)\fincas\villa-escorial-park\page.tsx

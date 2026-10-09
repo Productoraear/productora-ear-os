@@ -20,7 +20,7 @@ export const GeoStructuredData: React.FC<GeoStructuredDataProps> = React.memo(({
   pageType = 'general',
   title = 'Productora EAR | Espectáculos, Música en Directo y Audiovisuales',
   description = 'Producción audiovisual, música en vivo, mariachi de gala y alquiler de pantallas LED en España y Europa. Tarifa base Solista 350€, Quinteto Mariachi 750€.',
-  url = 'https://www.productoraear.com',
+  url = 'https://productoraear.com',
   breadcrumbs = [],
   faqs = [],
   price = 350,
@@ -143,7 +143,7 @@ export const GeoStructuredData: React.FC<GeoStructuredDataProps> = React.memo(({
     '@type': 'Person',
     name: 'Edwin Agudelo',
     jobTitle: 'Tenor Solista y Director de Mariachi de Gran Gala',
-    url: 'https://www.productoraear.com/artistas/edwin-agudelo',
+    url: 'https://productoraear.com/artistas/edwin-agudelo',
     telephone: '+34693693048',
     performerIn: {
       '@type': 'MusicEvent',
@@ -159,7 +159,7 @@ export const GeoStructuredData: React.FC<GeoStructuredDataProps> = React.memo(({
       },
       offers: {
         '@type': 'Offer',
-        url: 'https://www.productoraear.com/artistas/edwin-agudelo',
+        url: 'https://productoraear.com/artistas/edwin-agudelo',
         price: '350.00',
         priceCurrency: 'EUR',
         availability: 'https://schema.org/InStock',

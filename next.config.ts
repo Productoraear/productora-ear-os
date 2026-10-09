@@ -128,14 +128,9 @@ const nextConfig: NextConfig = {
         destination: "/artistas",
         permanent: true,
       },
-    ];
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/sitemap.xml",
-        destination: "/api/sitemap-index",
-      },
+      // Consolidación anti-doorway: rutas legacy /weddings -> hub real de bodas
+      { source: "/weddings", destination: "/bodas", permanent: true },
+      { source: "/weddings/:path*", destination: "/bodas", permanent: true },
     ];
   },
 };

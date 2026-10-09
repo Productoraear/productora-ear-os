@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import { rankArtist } from '@/lib/astra-intelligence';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const demandMap = await rankArtist('some_artist_id'); // Example usage of rankArtist
     return NextResponse.json(demandMap);

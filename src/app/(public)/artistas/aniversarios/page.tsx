@@ -1,8 +1,10 @@
 import React from 'react';
+import Link from 'next/link';
 import { generateArtistSEOMeta, generateEventSchema } from '@/lib/artists/seo';
 import { Sparkles, Calendar } from 'lucide-react';
 import { ArtistPricingMatrix } from '@/app/components/artists/ArtistPricingMatrix';
 import { ArtistTestimonials } from '@/app/components/artists/ArtistTestimonials';
+import { DEPOSITO_STRIPE_EUR, CENTRALITA_EAR_OS } from '@/lib/constants/ear-os-ssot';
 
 export const metadata = generateArtistSEOMeta('aniversarios', 'España');
 
@@ -17,7 +19,7 @@ export default function ArtistasAniversariosPage() {
       />
 
       <div className="max-w-7xl mx-auto px-6 space-y-20">
-        
+
         {/* Hero */}
         <section className="space-y-6 text-center max-w-3xl mx-auto">
           <div className="flex justify-center items-center gap-3">
@@ -54,6 +56,34 @@ export default function ArtistasAniversariosPage() {
         </section>
 
         <ArtistPricingMatrix />
+
+        {/* CTA de compra real — Depósito 100 € deducible con bloqueo atómico de fecha/hora */}
+        <section className="bg-[#09090d]/80 border border-white/10 backdrop-blur-md rounded-3xl p-10 md:p-14 text-center space-y-6 max-w-3xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight text-white font-syne">
+            Bloquea tu fecha hoy
+          </h2>
+          <p className="text-white/50 text-sm leading-relaxed">
+            Depósito de {DEPOSITO_STRIPE_EUR.toFixed(2).replace('.', ',')} € 100% deducible del total del show,
+            con bloqueo atómico y exclusivo de fecha y hora. Cero cancelaciones de última hora, cero mirones.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <Link
+              href="/reservar/solista"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-[#ecb613] text-black text-sm font-black uppercase tracking-widest transition-all duration-300 ease-out hover:bg-[#f5c93a] hover:scale-[1.03] active:scale-[0.98]"
+            >
+              Bloquear Fecha (Stripe 100 €)
+            </Link>
+            <a
+              href={`https://wa.me/${CENTRALITA_EAR_OS.replace(/\s/g, '')}?text=${encodeURIComponent('Hola, quiero bloquear mi fecha para un aniversario con Edwin Agudelo (Depósito 100 € deducible).')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white/10 text-white text-sm font-black uppercase tracking-widest border border-white/10 hover:bg-white/20 transition-all duration-300"
+            >
+              Consultar por WhatsApp
+            </a>
+          </div>
+        </section>
+
         <ArtistTestimonials />
 
       </div>

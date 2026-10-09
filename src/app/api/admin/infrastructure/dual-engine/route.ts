@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getDualEngineSystemStatus } from '@/lib/infrastructure/hostinger-dual-engine';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const status = await getDualEngineSystemStatus();
     return NextResponse.json({

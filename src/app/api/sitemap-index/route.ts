@@ -11,7 +11,7 @@ export async function GET() {
 
   const sitemapsXml = SITEMAP_PARTITIONS.map(
     (id) => `  <sitemap>
-    <loc>${BASE_URL}/sitemap/${id}.xml</loc>
+    <loc>${BASE_URL}/api/sitemap/${id}.xml</loc>
     <lastmod>${today}</lastmod>
   </sitemap>`
   ).join('\n');

@@ -45,7 +45,7 @@ function findProvinceInString(str: string): string | null {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   if (!slug || slug.length === 0) return {};
-  
+
   const rootPrefix = slug[0].toLowerCase();
   if (EXACT_ROOT_STATIC_ROUTES.has(rootPrefix) && slug.length === 1) {
     return {};
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const semantic = generateSemanticPageData(slug, locationCandidate);
-  const canonicalUrl = `https://www.productoraear.com/${semantic.canonicalPath.replace(/^\//, '')}`;
+  const canonicalUrl = `https://productoraear.com/${semantic.canonicalPath.replace(/^\//, '')}`;
 
   return {
     title: semantic.title,
@@ -121,7 +121,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   if (primaryPrefix === 'articulo' || primaryPrefix === 'noticias' || primaryPrefix === 'post' || primaryPrefix === 'blog-post') {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || 'madrid';
-    
+
     if (rawRest.includes('pantalla-led') || rawRest.includes('led') || rawRest.includes('visual')) {
       redirect(`/arsenal/pantalla-led/${detectedProv}`, RedirectType.replace);
     } else if (rawRest.includes('mariachi') || rawRest.includes('edwin') || rawRest.includes('cantante') || rawRest.includes('serenata')) {
@@ -139,7 +139,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
   if ((primaryPrefix === 'weddings' || primaryPrefix === 'bodas' || primaryPrefix === 'production') && slug.length >= 2) {
     const rawRest = slug.slice(1).join('-');
     const detectedProv = findProvinceInString(rawRest) || (slug.length >= 3 && PROVINCIAS.includes(slug[2].toLowerCase()) ? slug[2].toLowerCase() : 'madrid');
-    
+
     if (rawRest.includes('mariachi') || rawRest.includes('musica')) {
       redirect(`/servicios/mariachis/${detectedProv}`, RedirectType.replace);
     } else if (rawRest.includes('planner') || rawRest.includes('fincas')) {
@@ -182,7 +182,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const isLastProv = PROVINCIAS.includes(lastSeg);
     const provinceSlug = isLastProv ? lastSeg : (slug.length >= 3 ? slug[2].toLowerCase() : 'madrid');
     const serviceSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : slug.slice(1).join('-');
-    
+
     const { cityName } = resolveGeoLocation(provinceSlug);
     const semantic = generateSemanticPageData(slug, cityName);
 
@@ -232,7 +232,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const isLastProv = PROVINCIAS.includes(lastSeg);
     const provinceSlug = isLastProv ? lastSeg : 'madrid';
     const equipmentSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : (slug[1] || 'pantalla-led');
-    
+
     const { cityName } = resolveGeoLocation(provinceSlug);
     const semantic = generateSemanticPageData(slug, cityName);
 
@@ -254,7 +254,7 @@ export default async function DynamicCatchAllPage({ params }: PageProps) {
     const isLastProv = PROVINCIAS.includes(lastSeg);
     const provinceSlug = isLastProv ? lastSeg : 'madrid';
     const eventSlug = isLastProv ? slug.slice(1, slug.length - 1).join('-') : (slug[1] || 'fiestas-patronales');
-    
+
     const { cityName } = resolveGeoLocation(provinceSlug);
     const semantic = generateSemanticPageData(slug, cityName);
 

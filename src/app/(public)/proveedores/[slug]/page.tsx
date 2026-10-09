@@ -35,6 +35,7 @@ import { ProviderNavigableReviews } from '@/components/providers/ProviderNavigab
 import { ProviderFooterClaimBanner } from '@/components/providers/ProviderFooterClaimBanner';
 
 import { isProviderPublic, isProviderBlacklisted, getProviderTier } from '@/lib/providers/visibility';
+import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
 
 export const dynamic = 'force-dynamic';
 
@@ -678,6 +679,10 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
     'Facturación Centralizada vía Split Soberano'
   ];
 
+  // 📦 Pack Gala VIP (80-150 m²) — precio SSOT desde el inventario canónico
+  const galaPack = INITIAL_INVENTORY.find((item) => item.id === 'pack-gala-100m2');
+  const galaPriceEur: number = galaPack?.dailyPrice ?? 420;
+
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans pt-28 pb-36 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -1207,6 +1212,27 @@ export default async function ProviderDetailPage({ params, searchParams }: PageP
                 reviewCount: typeof reviewsCount === 'number' ? reviewsCount : 24,
                 bestRating: '5',
                 worstRating: '1',
+              },
+            }),
+          }}
+        />
+
+        {/* 📦 ETIQUETA SCHEMA.ORG JSON-LD — OFFER PACK GALA VIP (PRECIO SSOT) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Product',
+              name: galaPack?.name ?? 'Pack Gala VIP (Espacios 80 - 150 m²)',
+              description: galaPack?.description ?? 'Configuración de sonido profesional para bodas y eventos de 80 a 150 m².',
+              category: galaPack?.category ?? 'PACKS_SONIDO',
+              brand: { '@type': 'Brand', name: galaPack?.brand ?? 'Bose' },
+              offers: {
+                '@type': 'Offer',
+                price: galaPriceEur,
+                priceCurrency: 'EUR',
+                availability: 'https://schema.org/InStock',
               },
             }),
           }}

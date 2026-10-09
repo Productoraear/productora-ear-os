@@ -3,17 +3,43 @@ import { generateArtistSEOMeta, generateEventSchema } from '@/lib/artists/seo';
 import { ShieldCheck, Heart } from 'lucide-react';
 import { ArtistPricingMatrix } from '@/app/components/artists/ArtistPricingMatrix';
 import { ArtistTestimonials } from '@/app/components/artists/ArtistTestimonials';
+import { INITIAL_INVENTORY } from '@/lib/constants/inventory-catalog';
 
 export const metadata = generateArtistSEOMeta('bodas', 'España');
 
 export default function ArtistasBodasPage() {
   const schema = generateEventSchema('bodas', 'España');
 
+  // 📦 Show Láser RGB 3W + Máquina Humo Geyser — precio SSOT
+  const laserPack = INITIAL_INVENTORY.find((item) => item.id === 'light-dj-laser-geyser');
+  const laserPriceEur: number = laserPack?.dailyPrice ?? 160;
+
   return (
     <main className="min-h-screen bg-[#050505] text-white pt-40 pb-24 font-sans">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+
+      {/* 📦 ETIQUETA SCHEMA.ORG JSON-LD — OFFER SHOW LÁSER RGB 3W + GEYSER (PRECIO SSOT) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: laserPack?.name ?? 'Pack Show Láser RGB 3W + Máquina Humo LED Geyser',
+            description: laserPack?.description ?? 'Efecto pirotécnico frío y proyecciones 3D para bodas y celebraciones.',
+            category: laserPack?.category ?? 'ILUMINACION_DJ',
+            brand: { '@type': 'Brand', name: laserPack?.brand ?? 'Chauvet' },
+            offers: {
+              '@type': 'Offer',
+              price: laserPriceEur,
+              priceCurrency: 'EUR',
+              availability: 'https://schema.org/InStock',
+            },
+          }),
+        }}
       />
 
       <div className="max-w-7xl mx-auto px-6 space-y-20">

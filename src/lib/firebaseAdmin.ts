@@ -1,9 +1,14 @@
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 
-const getFirebaseAdminApp = () => {
+let _adminApp: ReturnType<typeof initializeApp> | null = null;
+
+export const getFirebaseAdminApp = () => {
   if (getApps().length > 0) {
     return getApps()[0];
+  }
+  if (_adminApp) {
+    return _adminApp;
   }
 
   const projectId = process.env.FIREBASE_ADMIN_PROJECT_ID;
@@ -11,17 +16,33 @@ const getFirebaseAdminApp = () => {
   const privateKey = process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, '\n');
 
   if (projectId && clientEmail && privateKey) {
-    return initializeApp({
+    _adminApp = initializeApp({
       credential: cert({
         projectId,
         clientEmail,
         privateKey,
       }),
     });
+    return _adminApp;
   }
 
-  return initializeApp();
+  return null;
 };
 
-const adminApp = getFirebaseAdminApp();
-export const adminAuth = getAuth(adminApp);
+export const adminAuth = new Proxy({} as ReturnType<typeof getAuth>, {
+  get(_target, prop) {
+    const app = getFirebaseAdminApp();
+    if (!app) {
+      if (prop === 'verifyIdToken') {
+        return async () => {
+          throw new Error('[FIREBASE_ADMIN] No configurado en el servidor');
+        };
+      }
+      return undefined;
+    }
+    const authInstance = getAuth(app);
+    const value = (authInstance as any)[prop];
+    return typeof value === 'function' ? value.bind(authInstance) : value;
+  }
+});
+

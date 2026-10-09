@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   try {
     const baseDir = process.cwd();
     const resultsDir = path.join(baseDir, 'scripts', 'nightcrawler_results');
@@ -15,7 +19,7 @@ export async function GET() {
     if (fs.existsSync(progressPath)) {
       try {
         progress = JSON.parse(fs.readFileSync(progressPath, 'utf-8'));
-      } catch {}
+      } catch { }
     }
 
     // 2. Online providers
@@ -25,7 +29,7 @@ export async function GET() {
       try {
         const raw = JSON.parse(fs.readFileSync(onlinePath, 'utf-8'));
         onlineProviders = Array.isArray(raw) ? raw : (raw.providers || []);
-      } catch {}
+      } catch { }
     }
 
     // 3. Vault absorbed providers
@@ -38,7 +42,7 @@ export async function GET() {
         const provs = Array.isArray(raw) ? raw : (raw.providers || []);
         vaultCount = raw.total || provs.length;
         vaultSample = provs.slice(0, 10);
-      } catch {}
+      } catch { }
     }
 
     // 4. Fast phones
@@ -48,7 +52,7 @@ export async function GET() {
       try {
         const raw = JSON.parse(fs.readFileSync(phonesPath, 'utf-8'));
         phonesCount = Array.isArray(raw) ? raw.length : 0;
-      } catch {}
+      } catch { }
     }
 
     // 5. Stdout log tail with fallback to system task logs
@@ -61,7 +65,7 @@ export async function GET() {
         if (lines.length > 5) {
           logTail = lines.slice(-30);
         }
-      } catch {}
+      } catch { }
     }
 
     // Fallback to active task logs if stdout.log has few lines
@@ -101,7 +105,7 @@ export async function GET() {
             }
           }
         }
-      } catch {}
+      } catch { }
     }
 
     // If still empty, reconstruct from completed_urls

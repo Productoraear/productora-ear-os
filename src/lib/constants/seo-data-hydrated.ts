@@ -983,7 +983,7 @@ export function generateGeoSchema(provinceSlug: string, serviceKey: 'mariachi' |
     },
     priceRange: '350€ - 2400€',
     telephone: '+34693693048',
-    url: `https://www.productoraear.com/bodas/${province.slug}`,
+    url: `https://productoraear.com/bodas/${province.slug}`,
     sameAs: [
       'https://www.youtube.com/c/EdwinAgudelocantante'
     ]

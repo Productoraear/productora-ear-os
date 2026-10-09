@@ -6,16 +6,11 @@ import { UserProfileSummary, AIAssistantAction, UserRole, Persona, Scenario, Syn
 let genAIClient: GoogleGenerativeAI | null = null;
 
 function getGenAI(): GoogleGenerativeAI | null {
-  if (genAIClient) return genAIClient;
-  const apiKey = (typeof process !== 'undefined' && process.env && (process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY || process.env.API_KEY)) || '';
-  if (apiKey) {
-    try {
-      genAIClient = new GoogleGenerativeAI(apiKey);
-    } catch (e) {
-      console.warn('Failed to initialize GoogleGenerativeAI client', e);
-    }
-  }
-  return genAIClient;
+  // 🔒 BLINDAJE P1-3: el cliente NUNCA debe portar la API key de Gemini.
+  // Cualquier `NEXT_PUBLIC_GEMINI_API_KEY` embebida en el bundle es exfiltrable.
+  // La inferencia real de Gemini se resuelve EXCLUSIVAMENTE en el servidor vía /api/astra.
+  // Aquí forzamos el fallback heurístico local (sin clave en cliente).
+  return null;
 }
 
 export async function generateUserProfileSummary(
@@ -57,7 +52,7 @@ Return a JSON object matching this exact structure:
       ? `Operando en el epicentro de la estrategia como ${roleTitle}, impulsando iniciativas de alto impacto y calibrando decisiones críticas en tiempo real.`
       : `Operating at the focal nexus of strategic leadership as ${roleTitle}, orchestrating high-leverage initiatives and navigating market opportunities with systematic discipline.`,
     archetype: language === 'es' ? 'Arquitecto Estratégico' : 'The Strategic Architect',
-    keyStrengths: language === 'es' 
+    keyStrengths: language === 'es'
       ? ['Pensamiento de Primeros Principios', 'Mitigación de Riesgos Sistémicos', 'Alineación de Stakeholders']
       : ['First-Principles Reasoning', 'Systemic Risk Mitigation', 'Multi-Stakeholder Alignment']
   };

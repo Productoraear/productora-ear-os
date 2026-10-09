@@ -5,8 +5,12 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import fs from 'fs';
 import path from 'path';
+import { requireAdmin } from '@/lib/security/adminGuard';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
+
   let totalDepositsAmount = 0;
   let artistSplit = 0;
   let earOsSplit = 0;

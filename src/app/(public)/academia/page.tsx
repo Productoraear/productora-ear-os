@@ -33,6 +33,7 @@ const AstraNeuralTwinPanel = dynamic(
 );
 
 import { GrowthMasteryVault } from '@/features/academy/ui/GrowthMasteryVault';
+import { ArtistFunnelPanel } from '@/features/artist-funnel/ui/ArtistFunnelPanel';
 
 export default function PublicAcademyPage() {
   const tools = [
@@ -44,11 +45,11 @@ export default function PublicAcademyPage() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#ecb613] selection:text-black">
-      
+
       {/* HERO SECTION AURA ONYX */}
       <section className="relative pt-24 pb-16 px-4 md:px-12 border-b border-white/10 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#ecb613]/10 blur-[140px] pointer-events-none rounded-full" />
-        
+
         <div className="max-w-6xl mx-auto text-center space-y-6 relative z-10">
           <div className="inline-flex items-center gap-2 border border-[#ecb613]/30 px-4 py-1.5 rounded-full bg-[#ecb613]/5 text-[#ecb613] text-xs font-mono tracking-widest uppercase">
             <Trophy className="w-3.5 h-3.5" /> EAR ACADEMY :: TALENT CAMPUS S-CLASS
@@ -66,13 +67,13 @@ export default function PublicAcademyPage() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <a 
+            <a
               href="#campus-lms"
               className="bg-[#ecb613] text-black font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-widest hover:bg-[#d4a210] transition-all shadow-lg flex items-center gap-2"
             >
               <BookOpen className="w-4 h-4" /> Entrar al Campus
             </a>
-            <Link 
+            <Link
               href="/contacto"
               className="border border-white/20 bg-white/5 hover:bg-white/10 text-white font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-widest transition-all flex items-center gap-2"
             >
@@ -84,9 +85,19 @@ export default function PublicAcademyPage() {
 
       {/* LMS INTERFACE CONTAINER */}
       <main id="campus-lms" className="max-w-7xl mx-auto px-4 md:px-12 py-16 space-y-16">
-        
+
         {/* BÓVEDA DE CRECIMIENTO MUSICAL (56 AUDIOS NATIVOS) */}
         <GrowthMasteryVault />
+
+        {/* EMBUDO DE CAPTACIÓN DE ARTISTAS S-CLASS */}
+        <div className="space-y-6">
+          <div>
+            <span className="text-xs font-mono text-[#ecb613] uppercase tracking-widest">Motor de Captación</span>
+            <h2 className="text-2xl font-black mt-1">Embudo de Artistas S-Class</h2>
+            <p className="text-slate-400 text-xs mt-1">Activa tu ruta de crecimiento artístico con tips accionables, ruta libre o blindaje VIP.</p>
+          </div>
+          <ArtistFunnelPanel source="academia" />
+        </div>
 
         {/* LMS Module */}
         <div className="space-y-6">
@@ -125,7 +136,7 @@ export default function PublicAcademyPage() {
                   <p className="font-bold text-sm mt-1 line-clamp-2 text-white">{tool.name}</p>
                   <span className="text-slate-500 text-[11px] mt-1 block">{tool.size}</span>
                 </div>
-                <a 
+                <a
                   href={`/api/academy/download?doc=${tool.docId}`}
                   download
                   className="flex items-center justify-center gap-2 w-full py-2 bg-white/10 hover:bg-[#ecb613] hover:text-black text-white text-xs font-bold rounded-xl transition-all cursor-pointer no-underline"

@@ -15,7 +15,7 @@ export async function executeBatchIndexing() {
   console.log('⚡ [GOOGLE INDEXING ENGINE] Inspeccionando manifest para envío prioritario...');
 
   const prerenderPath = path.join(process.cwd(), '.next', 'prerender-manifest.json');
-  
+
   if (!fs.existsSync(prerenderPath)) {
     console.warn('⚠️ No se encontró prerender-manifest.json local. Buscando rutas prioritarias en sitemap...');
   }
@@ -28,7 +28,7 @@ export async function executeBatchIndexing() {
       const allRoutes = Object.keys(manifest.routes || {});
 
       priorityRoutes = allRoutes
-        .filter(r => r.startsWith('/servicios') || r.startsWith('/blog/b2g') || r.startsWith('/cotizador') || r.startsWith('/vimume') || r.startsWith('/artistas') || r.startsWith('/eventos'))
+        .filter(r => r.startsWith('/servicios') || r.startsWith('/blog/b2g') || r.startsWith('/cotizador') || r.startsWith('/vimume') || r.startsWith('/artistas') || r.startsWith('/academia') || r.startsWith('/eventos'))
         .slice(0, 200);
     } catch (e) {
       console.warn('Error leyendo prerender-manifest:', e);
@@ -42,6 +42,7 @@ export async function executeBatchIndexing() {
       '/artistas/reclamar-regalias',
       '/artistas/dashboard',
       '/artistas/edwin-agudelo',
+      '/academia',
       '/cotizador',
       '/blog/b2g',
       '/blog/b2g?municipio=Ayuntamiento%20de%20Navalcarnero&presupuesto=14107.50&cpv=51313000-9',

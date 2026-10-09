@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { sanitizeToPlainText } from '@/lib/security/sanitizeHtml';
 import {
   ShieldCheck,
   Lock,
@@ -539,11 +540,17 @@ export default function JardinesLaCartujaGrandSlam({
                     </div>
                   ) : null}
 
-                  {/* Renderizado real del HTML embebido para clientes y preview */}
-                  <div
-                    className="w-full overflow-hidden rounded-2xl"
-                    dangerouslySetInnerHTML={{ __html: block.htmlCode || '' }}
-                  />
+                  {/* Renderizado seguro: solo texto plano. Sin dangerouslySetInnerHTML (BLINDAJE P0-3 anti-XSS). */}
+                  {!isEditMode && (
+                    <p className="w-full overflow-hidden rounded-2xl bg-[#07070c] border border-white/10 p-4 text-sm text-zinc-300 leading-relaxed font-light whitespace-pre-line">
+                      {sanitizeToPlainText(block.htmlCode)}
+                    </p>
+                  )}
+                  {isEditMode && (
+                    <div className="w-full overflow-hidden rounded-2xl bg-black/40 border border-purple-500/30 p-3 text-xs font-mono text-zinc-400">
+                      Vista previa desactivada por seguridad. El código se aplica como contenido sanitizado en la vista pública.
+                    </div>
+                  )}
                 </section>
               )}
 
