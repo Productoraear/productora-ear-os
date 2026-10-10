@@ -25,22 +25,6 @@
     --primary-light: #FF6B7D;
     --primary-dark: #E11D48;
     --primary-aura: rgba(255, 43, 68, 0.28);
-  }
-
-  .light {
-    --background: #FBFBFC;
-    --foreground: #09090B;
-    --card: #FFFFFF;
-    --card-foreground: #18181B;
-    --card-surface-elevated: #F4F4F5;
-    --border: #E4E4E7;
-    --border-subtle: rgba(0, 0, 0, 0.08);
-    --border-glass: rgba(0, 0, 0, 0.12);
-    --muted: #F4F4F5;
-    --muted-foreground: #71717A;
-    --primary: #C99716;
-    --primary-foreground: #000000;
-  }
 
     /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
     --color-ear-cyan: #00E5FF;
@@ -79,6 +63,21 @@
     --font-syne: var(--font-syne), 'Syne', sans-serif;
   }
 
+  .light {
+    --background: #FBFBFC;
+    --foreground: #09090B;
+    --card: #FFFFFF;
+    --card-foreground: #18181B;
+    --card-surface-elevated: #F4F4F5;
+    --border: #E4E4E7;
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    --border-glass: rgba(0, 0, 0, 0.12);
+    --muted: #F4F4F5;
+    --muted-foreground: #71717A;
+    --primary: #C99716;
+    --primary-foreground: #000000;
+  }
+
   .dark {
     --background: #030305;
     --foreground: #f4f4f5;
@@ -95,14 +94,11 @@
     --primary-light: #FF6B7D;
     --primary-dark: #E11D48;
     --primary-aura: rgba(255, 43, 68, 0.28);
-
-    /* 💎 PALETA CORPORATIVA DIAMOND EAR OS (HIGH-TECH SYSTEM) */
     --color-ear-cyan: #00E5FF;
     --color-ear-blue: #00E5FF;
     --color-ear-sapphire: #030305;
     --color-ear-sapphire-dark: #050507;
     --color-ear-coral: #FF2B44;
-
     --grad-ear-sapphire: linear-gradient(185deg, #030305 0%, #000000 100%);
     --glow-ear-blue: 0 0 25px rgba(0, 229, 255, 0.35);
     --glow-ear-cyan: 0 0 20px rgba(0, 229, 255, 0.25);
