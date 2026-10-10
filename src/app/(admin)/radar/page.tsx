@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import fs from 'fs';
 import path from 'path';
 import Link from 'next/link';
@@ -6,32 +6,163 @@ import { ShieldCheck, AlertTriangle, Database } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
-export default function RadarCoveragePage() {
-  const matrixPath = path.join(process.cwd(), 'docs', 'architecture', 'HISTORIC_FORENSIC_GAP_MATRIX.json');
+interface MatrixItem {
+  Type: string;
+  Signature: string;
+  Status: string;
+  Diagnostics: string;
+}
 
-  let reportData = {
-    audit_date: 'No auditada',
-    total_signatures: 0,
-    implemented_count: 0,
-    missing_count: 0,
-    coverage_ratio: 0,
-    matrix: [] as Array<{ Type: string; Signature: string; Status: string; Diagnostics: string }>
-  };
+interface ReportData {
+  audit_date: string;
+  total_signatures: number;
+  implemented_count: number;
+  missing_count: number;
+  coverage_ratio: number;
+  matrix: MatrixItem[];
+}
 
-  if (fs.existsSync(matrixPath)) {
-    try {
-      const raw = fs.readFileSync(matrixPath, 'utf8');
-      reportData = JSON.parse(raw);
-    } catch (e) {
-      console.error('Error leyendo matriz forense:', e);
-    }
+const DEFAULT_REPORT: ReportData = {
+  audit_date: 'No auditada',
+  total_signatures: 0,
+  implemented_count: 0,
+  missing_count: 0,
+  coverage_ratio: 0,
+  matrix: [],
+};
+
+function loadReportData(): ReportData {
+  const matrixPath = path.join(
+    process.cwd(),
+    'docs',
+    'architecture',
+    'HISTORIC_FORENSIC_GAP_MATRIX.json'
+  );
+
+  if (!fs.existsSync(matrixPath)) {
+    return DEFAULT_REPORT;
   }
 
+  try {
+    const raw = fs.readFileSync(matrixPath, 'utf8');
+    const parsed = JSON.parse(raw) as Partial<ReportData>;
+    return {
+      audit_date: typeof parsed.audit_date === 'string' ? parsed.audit_date : DEFAULT_REPORT.audit_date,
+      total_signatures:
+        typeof parsed.total_signatures === 'number' ? parsed.total_signatures : DEFAULT_REPORT.total_signatures,
+      implemented_count:
+        typeof parsed.implemented_count === 'number' ? parsed.implemented_count : DEFAULT_REPORT.implemented_count,
+      missing_count:
+        typeof parsed.missing_count === 'number' ? parsed.missing_count : DEFAULT_REPORT.missing_count,
+      coverage_ratio:
+        typeof parsed.coverage_ratio === 'number' ? parsed.coverage_ratio : DEFAULT_REPORT.coverage_ratio,
+      matrix: Array.isArray(parsed.matrix) ? (parsed.matrix as MatrixItem[]) : DEFAULT_REPORT.matrix,
+    };
+  } catch (e) {
+    console.error('Error leyendo matriz forense:', e);
+    return DEFAULT_REPORT;
+  }
+}
+
+function RadarSkeleton(): React.ReactElement {
+  return (
+    <main className="min-h-screen bg-[#030305] text-[#FFFFFF] p-6 font-sans">
+      <header className="border-b border-[#1a1a1a] pb-6 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#258DCD] animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-widest text-[#258DCD]">
+              EAR_OS // COGNITIVE RADAR HUD
+            </span>
+          </div>
+          <div className="h-7 w-72 bg-zinc-900/60 rounded mt-2 animate-pulse" />
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="h-9 w-32 bg-zinc-900/60 rounded-xl animate-pulse" />
+          <div className="h-9 w-44 bg-zinc-900/60 rounded-xl animate-pulse" />
+        </div>
+      </header>
+      <section className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 animate-pulse"
+          >
+            <div className="h-3 w-24 bg-zinc-900/60 rounded" />
+            <div className="h-8 w-20 bg-zinc-900/60 rounded mt-3" />
+            <div className="h-2 w-full bg-zinc-900/60 rounded mt-4" />
+          </div>
+        ))}
+      </section>
+      <section className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 animate-pulse">
+        <div className="h-5 w-64 bg-zinc-900/60 rounded mb-4" />
+        <div className="space-y-3">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-4 w-full bg-zinc-900/60 rounded" />
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function RadarErrorFallback({ error }: { error: Error }): React.ReactElement {
+  return (
+    <main className="min-h-screen bg-[#030305] text-[#FFFFFF] p-6 font-sans flex items-center justify-center">
+      <div className="max-w-lg w-full rounded-3xl bg-[#09090d]/80 border border-[#FF455B]/30 p-8 text-center">
+        <AlertTriangle className="w-10 h-10 text-[#FF455B] mx-auto mb-4" />
+        <h1 className="text-xl font-bold text-white font-syne mb-2">
+          Fallo en el Radar Cognitivo
+        </h1>
+        <p className="text-sm text-zinc-400 mb-4">
+          No se pudo cargar la matriz forense de cobertura histórica.
+        </p>
+        <pre className="text-[11px] font-mono text-[#FF455B]/80 bg-black/40 border border-[#FF455B]/20 rounded-xl p-3 overflow-x-auto text-left">
+          {error.message}
+        </pre>
+        <Link
+          href="/"
+          className="inline-block mt-6 px-4 py-2 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-xl text-xs font-mono transition-colors"
+        >
+          Volver a la Home
+        </Link>
+      </div>
+    </main>
+  );
+}
+
+class RadarErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: (error: Error) => React.ReactElement },
+  { error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode; fallback: (error: Error) => React.ReactElement }) {
+    super(props);
+    this.state = { error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): { error: Error } {
+    return { error };
+  }
+
+  componentDidCatch(error: Error, info: React.ErrorInfo): void {
+    console.error('RadarErrorBoundary caught:', error, info);
+  }
+
+  render(): React.ReactNode {
+    if (this.state.error) {
+      return this.props.fallback(this.state.error);
+    }
+    return this.props.children;
+  }
+}
+
+function RadarContent(): React.ReactElement {
+  const reportData = loadReportData();
   const missingItems = reportData.matrix.filter((item) => item.Status === 'MISSING_IN_REPO');
   const safeRatio = Math.min(Math.max(reportData.coverage_ratio, 0), 100);
 
   return (
-    <main className="min-h-screen bg-[#050505] text-[#FFFFFF] p-6 font-sans">
+    <main className="min-h-screen bg-[#030305] text-[#FFFFFF] p-6 font-sans">
       {/* HUD Header */}
       <header className="border-b border-[#1a1a1a] pb-6 mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -150,5 +281,15 @@ export default function RadarCoveragePage() {
         )}
       </section>
     </main>
+  );
+}
+
+export default function RadarCoveragePage(): React.ReactElement {
+  return (
+    <RadarErrorBoundary fallback={(error) => <RadarErrorFallback error={error} />}>
+      <Suspense fallback={<RadarSkeleton />}>
+        <RadarContent />
+      </Suspense>
+    </RadarErrorBoundary>
   );
 }

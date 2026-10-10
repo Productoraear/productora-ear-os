@@ -64,6 +64,8 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
         role="img"
         aria-label={`Ruta logística desde Méntrida Hub hasta ${selectedFinca.name}, ${state.finca.distanceKm} kilómetros`}
       >
+        <title>{`Ruta logística desde Méntrida Hub hasta ${selectedFinca.name}`}</title>
+        <desc>{`Trayecto vectorial de ${state.finca.distanceKm} kilómetros desde el hub SSOT de Méntrida hasta la finca ${selectedFinca.name} en ${selectedFinca.provincia}.`}</desc>
         <defs>
           <linearGradient id="acg-route-grad" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor={ACG_ACCENT.oro} stopOpacity="0.95" />
@@ -92,31 +94,64 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
   };
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div
+      className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6"
+      role="region"
+      aria-label="Radar logístico y telemetría acústica del evento"
+    >
       {/* Columna mapa + finca */}
       <div className="lg:col-span-7 space-y-5">
-        <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
+        <section
+          className="rounded-2xl bg-[#050507] border border-white/10 p-6"
+          aria-labelledby="acg-radar-heading"
+        >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center">
+              <span
+                className="w-8 h-8 rounded-lg bg-[#ecb613]/10 border border-[#ecb613]/30 flex items-center justify-center"
+                aria-hidden="true"
+              >
                 <Navigation size={15} className="text-[#ecb613]" aria-hidden="true" />
               </span>
               <div>
-                <p className="font-syne text-sm font-black uppercase tracking-tight text-white">Radar Logístico Vectorial</p>
-                <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Origen SSOT · {ACG_SSOT.HUB_MENTRIDA}</p>
+                <p
+                  id="acg-radar-heading"
+                  className="font-syne text-sm font-black uppercase tracking-tight text-white"
+                >
+                  Radar Logístico Vectorial
+                </p>
+                <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest">
+                  Origen SSOT · {ACG_SSOT.HUB_MENTRIDA}
+                </p>
               </div>
             </div>
-            <span className="font-mono text-xs text-[#ecb613] font-bold">{state.finca.distanceKm} km</span>
+            <span
+              className="font-mono text-xs text-[#ecb613] font-bold"
+              aria-label={`Distancia total ${state.finca.distanceKm} kilómetros`}
+            >
+              {state.finca.distanceKm} km
+            </span>
           </div>
           {renderRouteSvg()}
-        </div>
+        </section>
 
-        <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
-          <label className="block font-mono text-[10px] text-white/40 uppercase tracking-widest mb-3">Finca de destino homologada</label>
+        <section
+          className="rounded-2xl bg-[#050507] border border-white/10 p-6"
+          aria-labelledby="acg-finca-heading"
+        >
+          <label
+            id="acg-finca-heading"
+            htmlFor="acg-finca-select"
+            className="block font-mono text-[10px] text-white/40 uppercase tracking-widest mb-3"
+          >
+            Finca de destino homologada
+          </label>
           <select
+            id="acg-finca-select"
             value={selectedFinca.id}
             onChange={(e) => handleSelectFinca(e.target.value)}
             aria-label="Finca de destino homologada"
+            aria-describedby="acg-finca-description"
             className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-[#ecb613]"
           >
             {fincas.map((f) => (
@@ -125,72 +160,139 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
               </option>
             ))}
           </select>
-          <p className="font-mono text-[11px] text-white/50 mt-3 leading-relaxed">
+          <p
+            id="acg-finca-description"
+            className="font-mono text-[11px] text-white/50 mt-3 leading-relaxed"
+          >
             {selectedFinca.description}
           </p>
-        </div>
+        </section>
       </div>
 
       {/* Columna telemetría */}
       <div className="lg:col-span-5 space-y-5">
-        <div className="rounded-2xl bg-[#050507] border border-white/10 p-6 space-y-4">
+        <section
+          className="rounded-2xl bg-[#050507] border border-white/10 p-6 space-y-4"
+          aria-labelledby="acg-acoustic-heading"
+        >
           <div className="flex items-center gap-2">
             <Zap size={15} className="text-[#ecb613]" aria-hidden="true" />
-            <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Aforo · {state.space.pax} pax</span>
+            <span
+              id="acg-acoustic-heading"
+              className="font-mono text-[10px] text-white/40 uppercase tracking-widest"
+            >
+              Aforo · {state.space.pax} pax
+            </span>
           </div>
           <input
+            id="acg-pax-range"
             type="range"
             min={50}
             max={500}
             step={10}
             value={state.space.pax}
             onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { pax: Number(e.target.value) } })}
-            aria-label="Aforo del evento"
+            aria-label="Aforo del evento en personas"
+            aria-valuemin={50}
+            aria-valuemax={500}
+            aria-valuenow={state.space.pax}
             aria-valuetext={`${state.space.pax} personas`}
             className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer accent-[#ecb613]"
           />
           <div className="grid grid-cols-2 gap-3">
-            <div className="p-4 rounded-xl bg-black/40 border border-white/5">
+            <div
+              className="p-4 rounded-xl bg-black/40 border border-white/5"
+              role="group"
+              aria-label={`Potencia RMS total ${acoustic.totalWatts} vatios, ${acoustic.wattsPerPax} vatios por persona`}
+            >
               <span className="block font-mono text-[10px] text-white/40 uppercase">Potencia RMS</span>
               <span className="font-mono text-xl text-white font-bold">{acoustic.totalWatts} W</span>
               <span className="font-mono text-[10px] text-[#ecb613]">{acoustic.wattsPerPax} W/pax · SSOT</span>
             </div>
-            <div className="p-4 rounded-xl bg-black/40 border border-white/5">
+            <div
+              className="p-4 rounded-xl bg-black/40 border border-white/5"
+              role="group"
+              aria-label={`Sistema de sonido asignado: ${acoustic.recommendedSystem}`}
+            >
               <span className="block font-mono text-[10px] text-white/40 uppercase">Sistema Asignado</span>
               <span className="font-mono text-sm text-white font-bold">{acoustic.recommendedSystem}</span>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="rounded-2xl bg-[#050507] border border-white/10 p-6 space-y-3">
+        <section
+          className="rounded-2xl bg-[#050507] border border-white/10 p-6 space-y-3"
+          aria-labelledby="acg-logistics-heading"
+        >
           <div className="flex items-center gap-2">
             <MapPin size={15} className="text-[#00E5FF]" aria-hidden="true" />
-            <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Desglose Logístico SSOT</span>
+            <span
+              id="acg-logistics-heading"
+              className="font-mono text-[10px] text-white/40 uppercase tracking-widest"
+            >
+              Desglose Logístico SSOT
+            </span>
           </div>
-          <div className="space-y-2 font-mono text-xs">
-            <div className="flex justify-between"><span className="text-white/50">Km facturables</span><span className="text-white">{logistics.billableKm} km</span></div>
-            <div className="flex justify-between"><span className="text-white/50">Coste km × {ACG_SSOT.LOGISTICA_EUR_KM} €</span><span className="text-white">{formatEur(logistics.kmCost)} €</span></div>
-            <div className="flex justify-between"><span className="text-white/50">Suplemento hotel</span><span className="text-white">{logistics.requiresAccommodation ? '+120,00 €' : '0,00 €'}</span></div>
-            <div className="border-t border-white/10 pt-2 flex justify-between text-sm"><span className="text-white/60">Total logística</span><span className="text-[#ecb613] font-bold">{formatEur(logistics.totalLogistics)} €</span></div>
-          </div>
+          <dl
+            className="space-y-2 font-mono text-xs"
+            aria-label="Desglose de costes logísticos"
+          >
+            <div className="flex justify-between">
+              <dt className="text-white/50">Km facturables</dt>
+              <dd className="text-white">{logistics.billableKm} km</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-white/50">Coste km × {ACG_SSOT.LOGISTICA_EUR_KM} €</dt>
+              <dd className="text-white">{formatEur(logistics.kmCost)} €</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-white/50">Suplemento hotel</dt>
+              <dd className="text-white">{logistics.requiresAccommodation ? '+120,00 €' : '0,00 €'}</dd>
+            </div>
+            <div className="border-t border-white/10 pt-2 flex justify-between text-sm">
+              <dt className="text-white/60">Total logística</dt>
+              <dd className="text-[#ecb613] font-bold">{formatEur(logistics.totalLogistics)} €</dd>
+            </div>
+          </dl>
 
           <div className="pt-2">
-            <label className="block font-mono text-[10px] text-white/40 uppercase mb-2">Tipo de venue · SPL límite</label>
+            <label
+              htmlFor="acg-venue-select"
+              className="block font-mono text-[10px] text-white/40 uppercase mb-2"
+            >
+              Tipo de venue · SPL límite
+            </label>
             <select
+              id="acg-venue-select"
               value={state.space.venueType}
               onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { venueType: e.target.value as AcgVenueType } })}
               aria-label="Tipo de venue y límite SPL"
               className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-[#00E5FF]"
             >
               {VENUE_OPTIONS.map((v) => (
-                <option key={v.id} value={v.id}>{v.label} · {calculateAcousticAcg(state.space.pax, v.id).maxSplDb} dB</option>
+                <option key={v.id} value={v.id}>
+                  {v.label} · {calculateAcousticAcg(state.space.pax, v.id).maxSplDb} dB
+                </option>
               ))}
             </select>
           </div>
-        </div>
+        </section>
 
-        <div className={`p-4 rounded-xl border flex items-start gap-3 ${acoustic.isB2GCompliant ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-[#ecb613]/30 bg-[#ecb613]/5'}`}>
-          <ShieldCheck size={18} aria-hidden="true" className={acoustic.isB2GCompliant ? 'text-emerald-400 shrink-0' : 'text-[#ecb613] shrink-0'} />
+        <div
+          className={`p-4 rounded-xl border flex items-start gap-3 ${acoustic.isB2GCompliant ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-[#ecb613]/30 bg-[#ecb613]/5'}`}
+          role="status"
+          aria-live="polite"
+          aria-label={
+            acoustic.isB2GCompliant
+              ? `Protocolo B2G compatible: ${acoustic.maxSplDb} decibelios SPL, por debajo de 75 decibelios según el artículo 118 de la LCSP.`
+              : `Venue estándar: ${acoustic.maxSplDb} decibelios SPL. En contexto B2G o VIMUME se limitará a menos de 75 decibelios.`
+          }
+        >
+          <ShieldCheck
+            size={18}
+            aria-hidden="true"
+            className={acoustic.isB2GCompliant ? 'text-emerald-400 shrink-0' : 'text-[#ecb613] shrink-0'}
+          />
           <p className="font-mono text-[11px] leading-relaxed text-white/70">
             {acoustic.isB2GCompliant
               ? `Protocolo B2G compatible: ${acoustic.maxSplDb} dB SPL < 75 dB (Art. 118 LCSP).`
@@ -201,7 +303,8 @@ export default function UberRouteRadar({ state, dispatch }: UberRouteRadarProps)
         <button
           type="button"
           onClick={() => dispatch({ type: 'GO_NEXT' })}
-          className="w-full py-4 rounded-xl bg-[#ecb613] text-black font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(236,182,19,0.4)] transition-all flex items-center justify-center gap-2"
+          aria-label="Confirmar ruta logística y avanzar al siguiente paso"
+          className="w-full py-4 rounded-xl bg-[#ecb613] text-black font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(236,182,19,0.4)] transition-all flex items-center justify-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
         >
           <Home size={16} aria-hidden="true" /> Confirmar ruta · Siguiente
         </button>

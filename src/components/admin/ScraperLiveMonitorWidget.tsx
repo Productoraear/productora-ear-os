@@ -13,36 +13,55 @@ import {
   Database,
   Radio,
   Eye,
-  CheckCircle2,
-  AlertTriangle,
-  PauseCircle
 } from 'lucide-react';
+
+interface TelemetryMetrics {
+  total_online_captured: number;
+  total_vault_absorbed: number;
+  total_phones_recovered: number;
+  total_requests: number;
+  waf_status: string;
+  daemon_status: string;
+  started_at: string;
+  updated_at: string;
+}
+
+interface TelemetryLead {
+  id?: string;
+  name?: string;
+  phone?: string;
+  province?: string;
+  captured_at?: string;
+  [key: string]: unknown;
+}
 
 interface TelemetryData {
   success: boolean;
   timestamp: string;
-  metrics: {
-    total_online_captured: number;
-    total_vault_absorbed: number;
-    total_phones_recovered: number;
-    total_requests: number;
-    waf_status: string;
-    daemon_status: string;
-    started_at: string;
-    updated_at: string;
-  };
+  metrics: TelemetryMetrics;
   log_tail: string[];
-  recent_leads: any[];
+  recent_leads: TelemetryLead[];
 }
 
-export default function ScraperLiveMonitorWidget() {
+const FALLBACK_METRICS: TelemetryMetrics = {
+  total_online_captured: 11743,
+  total_vault_absorbed: 0,
+  total_phones_recovered: 0,
+  total_requests: 2054,
+  waf_status: 'BYPASS_ACTIVE_CHROME110',
+  daemon_status: 'RUNNING',
+  started_at: '',
+  updated_at: '',
+};
+
+export default function ScraperLiveMonitorWidget(): React.JSX.Element {
   const [data, setData] = useState<TelemetryData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [autoRefresh, setAutoRefresh] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [autoRefresh, setAutoRefresh] = useState<boolean>(true);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const terminalRef = useRef<HTMLDivElement>(null);
 
-  const fetchTelemetry = async () => {
+  const fetchTelemetry = async (): Promise<void> => {
     try {
       setIsRefreshing(true);
       const res = await fetch('/api/admin/vampire-telemetry');
@@ -59,35 +78,27 @@ export default function ScraperLiveMonitorWidget() {
   };
 
   useEffect(() => {
-    fetchTelemetry();
+    void fetchTelemetry();
     if (!autoRefresh) return;
 
     const interval = setInterval(() => {
-      fetchTelemetry();
+      void fetchTelemetry();
     }, 3500);
 
     return () => clearInterval(interval);
   }, [autoRefresh]);
 
-  // Auto-scroll terminal when logs change
   useEffect(() => {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   }, [data?.log_tail]);
 
-  const metrics = data?.metrics || {
-    total_online_captured: 11743,
-    total_vault_absorbed: 0,
-    total_phones_recovered: 0,
-    total_requests: 2054,
-    waf_status: 'BYPASS_ACTIVE_CHROME110',
-    daemon_status: 'RUNNING',
-    started_at: '',
-    updated_at: ''
-  };
+  const metrics: TelemetryMetrics = data?.metrics ?? FALLBACK_METRICS;
 
-  const isPaused = data?.log_tail?.some((l) => l.includes('[PAUSA LARGA]') && !l.includes('[CRAWL OK]'));
+  const isPaused = data?.log_tail?.some(
+    (l) => l.includes('[PAUSA LARGA]') && !l.includes('[CRAWL OK]')
+  );
 
   return (
     <div className="rounded-2xl border border-[#1a1a24] bg-[#050508] p-5 shadow-xl hover:border-[#ecb613]/40 transition-all font-sans">
@@ -97,8 +108,8 @@ export default function ScraperLiveMonitorWidget() {
           <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
             <Radio className="w-5 h-5 text-emerald-400 animate-pulse" aria-hidden="true" />
             <span className="absolute -top-1 -right-1 flex h-3 w-3" aria-hidden="true">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
             </span>
           </div>
           <div>
@@ -133,12 +144,16 @@ export default function ScraperLiveMonitorWidget() {
           </label>
 
           <button
-            onClick={fetchTelemetry}
+            type="button"
+            onClick={() => void fetchTelemetry()}
             disabled={isRefreshing}
             className="px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-[#ecb613]/50 text-xs font-mono text-zinc-300 flex items-center gap-1.5 transition-all"
             title="Sincronizar ahora"
           >
-            <RefreshCw className={`w-3.5 h-3.5 text-[#ecb613] ${isRefreshing ? 'animate-spin' : ''}`} aria-hidden="true" />
+            <RefreshCw
+              className={`w-3.5 h-3.5 text-[#ecb613] ${isRefreshing ? 'animate-spin' : ''}`}
+              aria-hidden="true"
+            />
             <span>Refrescar</span>
           </button>
         </div>
@@ -204,7 +219,9 @@ export default function ScraperLiveMonitorWidget() {
         <div className="flex items-center justify-between pb-2 text-xs font-mono text-zinc-400">
           <div className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
-            <span className="text-white font-medium">Terminal Telemetría Daemon (Salida Estocástica en Vivo)</span>
+            <span className="text-white font-medium">
+              Terminal Telemetría Daemon (Salida Estocástica en Vivo)
+            </span>
           </div>
           <div className="text-[11px] text-zinc-500 font-mono">
             {data?.timestamp ? new Date(data.timestamp).toLocaleTimeString() : 'Conectando...'}
@@ -227,12 +244,19 @@ export default function ScraperLiveMonitorWidget() {
               else if (line.includes('[FLUSH]')) colorClass = 'text-[#ecb613] font-bold';
               else if (line.includes('[PAUSA')) colorClass = 'text-cyan-300 font-medium';
               else if (line.includes('[WARN')) colorClass = 'text-amber-400/80';
-              else if (line.includes('[WAF-BLOCK') || line.includes('[FATAL')) colorClass = 'text-red-400 font-bold';
-              else if (line.includes('===') || line.includes('ANTIGRAVITY')) colorClass = 'text-purple-300 font-bold';
+              else if (line.includes('[WAF-BLOCK') || line.includes('[FATAL'))
+                colorClass = 'text-red-400 font-bold';
+              else if (line.includes('===') || line.includes('ANTIGRAVITY'))
+                colorClass = 'text-purple-300 font-bold';
 
               return (
-                <div key={idx} className={`leading-relaxed whitespace-pre-wrap break-all ${colorClass}`}>
-                  <span className="text-zinc-600 select-none mr-2">{String(idx + 1).padStart(2, '0')}</span>
+                <div
+                  key={idx}
+                  className={`leading-relaxed whitespace-pre-wrap break-all ${colorClass}`}
+                >
+                  <span className="text-zinc-600 select-none mr-2">
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
                   {line}
                 </div>
               );
@@ -247,7 +271,12 @@ export default function ScraperLiveMonitorWidget() {
       <div className="mt-4 pt-3 border-t border-[#1a1a24] flex flex-wrap items-center justify-between gap-3 text-xs">
         <div className="text-zinc-400 text-[11px] font-mono flex items-center gap-1.5">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" aria-hidden="true" />
-          <span>Volcado directo a bóveda segura: <code className="text-zinc-300">scripts/nightcrawler_results/new_online_providers.json</code></span>
+          <span>
+            Volcado directo a bóveda segura:{' '}
+            <code className="text-zinc-300">
+              scripts/nightcrawler_results/new_online_providers.json
+            </code>
+          </span>
         </div>
 
         <div className="flex items-center gap-2">

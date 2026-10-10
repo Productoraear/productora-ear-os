@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
 import type { ClaimStatus, VendorCategory } from '@prisma/client';
+import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/security/adminGuard';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const VENDOR_CATEGORIES: VendorCategory[] = [
+/* -------------------------------------------------------------------------- */
+/*  SSOT-aligned enums (mirror of Prisma enums, kept local for validation)    */
+/* -------------------------------------------------------------------------- */
+
+const VENDOR_CATEGORIES = [
     'FINCA_ALQUILER',
     'CATERING',
     'DJ_DISCOMOVIL',
@@ -16,19 +21,96 @@ const VENDOR_CATEGORIES: VendorCategory[] = [
     'FLORISTERIA',
     'TRANSPORTE_AUTOBUS',
     'DECORACION_ILUMINACION',
-];
+] as const satisfies readonly VendorCategory[];
 
-const CLAIM_STATUSES: ClaimStatus[] = [
+const CLAIM_STATUSES = [
     'GHOST_UNCLAIMED',
     'CLAIMED_PENDING_VERIFICATION',
     'VERIFIED_ACTIVE',
-];
+] as const satisfies readonly ClaimStatus[];
 
-function sanitizeSearch(raw: unknown): string | undefined {
-    if (typeof raw !== 'string') return undefined;
-    const trimmed = raw.trim().slice(0, 120);
-    return trimmed.length > 0 ? trimmed : undefined;
+/* -------------------------------------------------------------------------- */
+/*  Security headers                                                          */
+/* -------------------------------------------------------------------------- */
+
+const SECURITY_HEADERS: Readonly<Record<string, string>> = Object.freeze({
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    Pragma: 'no-cache',
+    Expires: '0',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'no-referrer',
+    'Cross-Origin-Resource-Policy': 'same-origin',
+});
+
+function jsonResponse(
+    body: unknown,
+    init?: { status?: number; headers?: Record<string, string> },
+): NextResponse {
+    return NextResponse.json(body, {
+        status: init?.status ?? 200,
+        headers: { ...SECURITY_HEADERS, ...(init?.headers ?? {}) },
+    });
 }
+
+/* -------------------------------------------------------------------------- */
+/*  Zod schemas                                                               */
+/* -------------------------------------------------------------------------- */
+
+const SearchSchema = z
+    .string()
+    .trim()
+    .min(1)
+    .max(120)
+    .transform((v) => v.replace(/[\u0000-\u001F\u007F]/g, ''));
+
+const StatusSchema = z.string().trim().min(1).max(64);
+
+const GetQuerySchema = z.object({
+    category: z.enum(VENDOR_CATEGORIES).optional(),
+    claimStatus: z.enum(CLAIM_STATUSES).optional(),
+    status: StatusSchema.optional(),
+    search: SearchSchema.optional(),
+});
+
+const PatchBodySchema = z
+    .object({
+        id: z.string().trim().min(1).max(64),
+        status: StatusSchema.optional(),
+        rating: z
+            .union([z.number(), z.string()])
+            .transform((v) => (typeof v === 'string' ? Number(v) : v))
+            .refine((v) => Number.isFinite(v), { message: 'rating no valido' })
+            .refine((v) => v >= 0 && v <= 5, {
+                message: 'rating debe estar entre 0 y 5',
+            })
+            .optional(),
+    })
+    .strict()
+    .refine((v) => v.status !== undefined || v.rating !== undefined, {
+        message: 'no hay campos validos para actualizar',
+    });
+
+/* -------------------------------------------------------------------------- */
+/*  Helpers                                                                   */
+/* -------------------------------------------------------------------------- */
+
+function parseEnumParam<T extends string>(
+    raw: string | null,
+    allowed: readonly T[],
+): { ok: true; value: T | undefined } | { ok: false } {
+    if (raw === null) return { ok: true, value: undefined };
+    const normalized = raw.trim().toUpperCase();
+    if (normalized.length === 0) return { ok: true, value: undefined };
+    if ((allowed as readonly string[]).includes(normalized)) {
+        return { ok: true, value: normalized as T };
+    }
+    return { ok: false };
+}
+
+/* -------------------------------------------------------------------------- */
+/*  GET /api/admin/providers                                                  */
+/* -------------------------------------------------------------------------- */
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
     const auth = await requireAdmin(request);
@@ -36,41 +118,54 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     try {
         const { searchParams } = new URL(request.url);
-        const rawCategory = searchParams.get('category');
+
+        const categoryResult = parseEnumParam(
+            searchParams.get('category'),
+            VENDOR_CATEGORIES,
+        );
+        if (!categoryResult.ok) {
+            return jsonResponse(
+                { ok: false, error: 'category no valida' },
+                { status: 400 },
+            );
+        }
+
+        const claimStatusResult = parseEnumParam(
+            searchParams.get('claimStatus'),
+            CLAIM_STATUSES,
+        );
+        if (!claimStatusResult.ok) {
+            return jsonResponse(
+                { ok: false, error: 'claimStatus no valido' },
+                { status: 400 },
+            );
+        }
+
         const rawStatus = searchParams.get('status');
-        const rawClaimStatus = searchParams.get('claimStatus');
         const rawSearch = searchParams.get('search');
+
+        const parsed = GetQuerySchema.safeParse({
+            category: categoryResult.value,
+            claimStatus: claimStatusResult.value,
+            status: rawStatus ?? undefined,
+            search: rawSearch ?? undefined,
+        });
+
+        if (!parsed.success) {
+            return jsonResponse(
+                { ok: false, error: 'Parametros de consulta no validos' },
+                { status: 400 },
+            );
+        }
+
+        const { category, claimStatus, status, search } = parsed.data;
 
         const where: Prisma.providerProfileWhereInput = {};
 
-        if (rawCategory) {
-            const category = rawCategory.toUpperCase() as VendorCategory;
-            if (!VENDOR_CATEGORIES.includes(category)) {
-                return NextResponse.json(
-                    { ok: false, error: 'category no valida' },
-                    { status: 400 },
-                );
-            }
-            where.category = category;
-        }
+        if (category) where.category = category;
+        if (claimStatus) where.claimStatus = claimStatus;
+        if (status) where.status = status;
 
-        if (rawStatus) {
-            const status = rawStatus.trim().slice(0, 64);
-            if (status) where.status = status;
-        }
-
-        if (rawClaimStatus) {
-            const claimStatus = rawClaimStatus.toUpperCase() as ClaimStatus;
-            if (!CLAIM_STATUSES.includes(claimStatus)) {
-                return NextResponse.json(
-                    { ok: false, error: 'claimStatus no valido' },
-                    { status: 400 },
-                );
-            }
-            where.claimStatus = claimStatus;
-        }
-
-        const search = sanitizeSearch(rawSearch);
         if (search) {
             where.OR = [
                 { name: { contains: search, mode: 'insensitive' } },
@@ -94,72 +189,53 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             prisma.providerProfile.count({ where }),
         ]);
 
-        return NextResponse.json({ ok: true, data, total });
+        return jsonResponse({ ok: true, data, total });
     } catch (error) {
         console.error('[admin/providers] GET error', error);
-        return NextResponse.json(
+        return jsonResponse(
             { ok: false, error: 'Error interno del servidor' },
             { status: 500 },
         );
     }
 }
 
+/* -------------------------------------------------------------------------- */
+/*  PATCH /api/admin/providers                                                */
+/* -------------------------------------------------------------------------- */
+
 export async function PATCH(request: NextRequest): Promise<NextResponse> {
     const auth = await requireAdmin(request);
     if (!auth.ok) return auth.response;
 
     try {
-        const body = (await request.json()) as {
-            id?: unknown;
-            status?: unknown;
-            rating?: unknown;
-        };
-
-        const id = typeof body.id === 'string' ? body.id.trim() : '';
-        if (!id) {
-            return NextResponse.json(
-                { ok: false, error: 'id requerido' },
+        let rawBody: unknown;
+        try {
+            rawBody = await request.json();
+        } catch {
+            return jsonResponse(
+                { ok: false, error: 'JSON invalido' },
                 { status: 400 },
             );
         }
+
+        const parsed = PatchBodySchema.safeParse(rawBody);
+        if (!parsed.success) {
+            const firstIssue = parsed.error.issues[0];
+            return jsonResponse(
+                {
+                    ok: false,
+                    error: firstIssue?.message ?? 'Payload no valido',
+                },
+                { status: 400 },
+            );
+        }
+
+        const { id, status, rating } = parsed.data;
 
         // Solo se permite actualizar status y rating. Jamás isVerified/verified.
         const data: Prisma.providerProfileUpdateInput = {};
-
-        if (body.status !== undefined) {
-            if (typeof body.status !== 'string') {
-                return NextResponse.json(
-                    { ok: false, error: 'status no valido' },
-                    { status: 400 },
-                );
-            }
-            const status = body.status.trim().slice(0, 64);
-            if (!status) {
-                return NextResponse.json(
-                    { ok: false, error: 'status no valido' },
-                    { status: 400 },
-                );
-            }
-            data.status = status;
-        }
-
-        if (body.rating !== undefined) {
-            const rating = Number(body.rating);
-            if (!Number.isFinite(rating) || rating < 0 || rating > 5) {
-                return NextResponse.json(
-                    { ok: false, error: 'rating debe estar entre 0 y 5' },
-                    { status: 400 },
-                );
-            }
-            data.rating = rating;
-        }
-
-        if (Object.keys(data).length === 0) {
-            return NextResponse.json(
-                { ok: false, error: 'no hay campos validos para actualizar' },
-                { status: 400 },
-            );
-        }
+        if (status !== undefined) data.status = status;
+        if (rating !== undefined) data.rating = rating;
 
         const updated = await prisma.providerProfile.update({
             where: { id },
@@ -171,19 +247,19 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
             },
         });
 
-        return NextResponse.json({ ok: true, data: updated });
+        return jsonResponse({ ok: true, data: updated });
     } catch (error) {
         if (
             error instanceof Prisma.PrismaClientKnownRequestError &&
             error.code === 'P2025'
         ) {
-            return NextResponse.json(
+            return jsonResponse(
                 { ok: false, error: 'Proveedor no encontrado' },
                 { status: 404 },
             );
         }
         console.error('[admin/providers] PATCH error', error);
-        return NextResponse.json(
+        return jsonResponse(
             { ok: false, error: 'Error interno del servidor' },
             { status: 500 },
         );

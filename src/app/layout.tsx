@@ -48,6 +48,7 @@ import { GeoStructuredData } from "@/components/seo/GeoStructuredData";
 import { VimumeThemeInjector } from "@/components/theme/VimumeThemeInjector";
 import { EarConcierge } from "@/components/Astra/EarConcierge";
 import { SovereignFloatingCallBar } from "@/components/layout/SovereignFloatingCallBar";
+import SovereignUrgentFloatBar from "@/components/layout/SovereignUrgentFloatBar";
 import { GlobalLiveVisualEditor } from "@/components/editor/GlobalLiveVisualEditor";
 
 export const metadata: Metadata = {
@@ -163,6 +164,7 @@ export default function RootLayout({
                             <EarConcierge />
                             <DynamicMobileExperienceOrchestrator />
                             <SovereignFloatingCallBar />
+                            <SovereignUrgentFloatBar />
                             <GlobalLiveVisualEditor />
                           </div>
                         </SmoothScrollProvider>

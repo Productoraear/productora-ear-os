@@ -1,14 +1,16 @@
-﻿import React from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
-  Sparkles, ShieldCheck, Zap, PhoneCall, ArrowLeft, CheckCircle2,
-  ChevronRight, Truck, Award, Eye, FileSpreadsheet, Layers, Download, Lock
+  Sparkles, ArrowLeft
 } from 'lucide-react';
 import { CHRISTMAS_LIGHTING_PRODUCTS, CHRISTMAS_LIGHTING_CATEGORIES } from '@/data/luces-navidad';
 import ChristmasLightingCatalogView from '@/features/catalog/ui/ChristmasLightingCatalogView';
 import LightingDetailActions from '@/features/catalog/ui/LightingDetailActions';
+
+const SITE_URL = 'https://productoraear.com';
+const DEFAULT_OG_IMAGE = '/images/demetrio/page_2.jpg';
 
 interface PageProps {
   params: Promise<{
@@ -22,86 +24,253 @@ export const revalidate = 3600;
 function slugifyCategory(cat: string): string {
   return cat
     .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function resolveCategory(slug: string[]): string | undefined {
+  if (!slug || slug.length === 0) return undefined;
+  const catSlug = slug.length >= 2 && slug[0] === 'categoria' ? slug[1] : slug[0];
+  return CHRISTMAS_LIGHTING_CATEGORIES.find(
+    (c) => slugifyCategory(c) === catSlug.toLowerCase()
+  );
+}
+
+function resolveProduct(slug: string[]) {
+  if (!slug || slug.length === 0) return undefined;
+  const productId = slug[slug.length - 1].toLowerCase();
+  return CHRISTMAS_LIGHTING_PRODUCTS.find(
+    (p) =>
+      p.id.toLowerCase() === productId ||
+      p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
+      p.sku.toLowerCase() === productId
+  );
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  if (!slug || slug.length === 0) return {};
-
-  const catSlug = slug.length >= 2 && slug[0] === 'categoria' ? slug[1] : slug[0];
-  const matchedCategory = CHRISTMAS_LIGHTING_CATEGORIES.find(c => slugifyCategory(c) === catSlug.toLowerCase());
-  if (matchedCategory) {
+  if (!slug || slug.length === 0) {
     return {
-      title: `${matchedCategory} | Catálogo Alumbrado Navideño Productora EAR`,
-      description: `Línea oficial de ${matchedCategory} para alumbrado público y grandes eventos. Cumplimiento normativo LCSP e instalación homologada.`,
+      title: 'Catálogo Alumbrado Navideño | Productora EAR',
+      description:
+        'Catálogo oficial de alumbrado navideño monumental para municipios y grandes eventos. Suministro e instalación homologada Productora EAR.',
       alternates: {
-        canonical: `https://productoraear.com/arsenal/luces-navidad/categoria/${catSlug}`,
-      }
+        canonical: `${SITE_URL}/arsenal/luces-navidad`,
+      },
     };
   }
 
-  const productId = slug[slug.length - 1].toLowerCase();
-  const product = CHRISTMAS_LIGHTING_PRODUCTS.find(
-    p => p.id.toLowerCase() === productId ||
-      p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
-      p.sku.toLowerCase() === productId
-  );
-
-  if (product) {
+  const matchedCategory = resolveCategory(slug);
+  if (matchedCategory) {
+    const catSlug = slugifyCategory(matchedCategory);
+    const canonical = `${SITE_URL}/arsenal/luces-navidad/categoria/${catSlug}`;
+    const title = `${matchedCategory} | Catálogo Alumbrado Navideño Productora EAR`;
+    const description = `Línea oficial de ${matchedCategory} para alumbrado público y grandes eventos. Cumplimiento normativo LCSP e instalación homologada.`;
     return {
-      title: `${product.name} (Ref: ${product.sku}) | Productora EAR Alumbrado Monumental`,
-      description: `${product.description} Medidas: ${product.dimensions}. IP: ${product.ipRating}. Voltaje: ${product.voltage}. Suministro e instalación Productora EAR.`,
+      title,
+      description,
       alternates: {
-        canonical: `https://productoraear.com${product.canonicalUrl}`,
+        canonical,
+      },
+      openGraph: {
+        title,
+        description,
+        url: canonical,
+        siteName: 'Productora EAR',
+        type: 'website',
+        images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: matchedCategory }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title,
+        description,
+        images: [DEFAULT_OG_IMAGE],
+      },
+    };
+  }
+
+  const product = resolveProduct(slug);
+  if (product) {
+    const canonical = `${SITE_URL}${product.canonicalUrl}`;
+    const title = `${product.name} (Ref: ${product.sku}) | Productora EAR Alumbrado Monumental`;
+    const description = `${product.description} Medidas: ${product.dimensions}. IP: ${product.ipRating}. Voltaje: ${product.voltage}. Suministro e instalación Productora EAR.`;
+    const ogImage = product.image || DEFAULT_OG_IMAGE;
+    return {
+      title,
+      description,
+      alternates: {
+        canonical,
       },
       openGraph: {
         title: `${product.name} | Productora EAR S-Class`,
         description: product.description,
-        images: [product.image || '/images/demetrio/page_2.jpg'],
-        type: 'website'
-      }
+        url: canonical,
+        siteName: 'Productora EAR',
+        images: [{ url: ogImage, width: 1200, height: 630, alt: product.name }],
+        type: 'website',
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${product.name} | Productora EAR S-Class`,
+        description: product.description,
+        images: [ogImage],
+      },
     };
   }
 
-  return {};
+  return {
+    title: 'Catálogo Alumbrado Navideño | Productora EAR',
+    description:
+      'Catálogo oficial de alumbrado navideño monumental para municipios y grandes eventos. Suministro e instalación homologada Productora EAR.',
+    alternates: {
+      canonical: `${SITE_URL}/arsenal/luces-navidad`,
+    },
+  };
 }
 
 export default async function LucesNavidadCatchAllPage({ params }: PageProps) {
   const { slug } = await params;
   if (!slug || slug.length === 0) notFound();
 
-  const catCandidate = slug.length >= 2 && slug[0] === 'categoria' ? slug[1] : slug[0];
-  const matchedCategory = CHRISTMAS_LIGHTING_CATEGORIES.find(c => slugifyCategory(c) === catCandidate.toLowerCase());
+  const matchedCategory = resolveCategory(slug);
 
   if (matchedCategory) {
+    const catSlug = slugifyCategory(matchedCategory);
+    const canonical = `${SITE_URL}/arsenal/luces-navidad/categoria/${catSlug}`;
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: `${matchedCategory} | Catálogo Alumbrado Navideño Productora EAR`,
+      description: `Línea oficial de ${matchedCategory} para alumbrado público y grandes eventos.`,
+      url: canonical,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: 'Productora EAR',
+        url: SITE_URL,
+      },
+    };
+
     return (
-      <ChristmasLightingCatalogView
-        products={CHRISTMAS_LIGHTING_PRODUCTS}
-        categories={[...CHRISTMAS_LIGHTING_CATEGORIES]}
-        initialCategory={matchedCategory}
-      />
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <ChristmasLightingCatalogView
+          products={CHRISTMAS_LIGHTING_PRODUCTS}
+          categories={[...CHRISTMAS_LIGHTING_CATEGORIES]}
+          initialCategory={matchedCategory}
+        />
+      </>
     );
   }
 
-  const productId = slug[slug.length - 1].toLowerCase();
-  const product = CHRISTMAS_LIGHTING_PRODUCTS.find(
-    p => p.id.toLowerCase() === productId ||
-      p.canonicalUrl.toLowerCase().endsWith(`/${productId}`) ||
-      p.sku.toLowerCase() === productId
-  );
-
+  const product = resolveProduct(slug);
   if (!product) notFound();
 
   const relatedProducts = CHRISTMAS_LIGHTING_PRODUCTS
-    .filter(p => p.category === product.category && p.id !== product.id)
+    .filter((p) => p.category === product.category && p.id !== product.id)
     .slice(0, 4);
 
+  const canonical = `${SITE_URL}${product.canonicalUrl}`;
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description,
+    sku: product.sku,
+    image: product.image ? [`${SITE_URL}${product.image.startsWith('/') ? product.image : `/${product.image}`}`] : [`${SITE_URL}${DEFAULT_OG_IMAGE}`],
+    category: product.category,
+    brand: {
+      '@type': 'Brand',
+      name: 'Productora EAR',
+    },
+    url: canonical,
+    offers: {
+      '@type': 'Offer',
+      url: canonical,
+      availability: 'https://schema.org/InStock',
+      priceCurrency: 'EUR',
+      price: '0',
+      priceValidUntil: '2099-12-31',
+      seller: {
+        '@type': 'Organization',
+        name: 'Productora EAR',
+        url: SITE_URL,
+      },
+    },
+    additionalProperty: [
+      product.dimensions && {
+        '@type': 'PropertyValue',
+        name: 'Dimensiones',
+        value: product.dimensions,
+      },
+      product.voltage && {
+        '@type': 'PropertyValue',
+        name: 'Voltaje',
+        value: product.voltage,
+      },
+      product.ipRating && {
+        '@type': 'PropertyValue',
+        name: 'Grado de Protección',
+        value: product.ipRating,
+      },
+      product.powerWatts && {
+        '@type': 'PropertyValue',
+        name: 'Consumo',
+        value: `${product.powerWatts} W`,
+      },
+      product.weightKg && {
+        '@type': 'PropertyValue',
+        name: 'Peso',
+        value: `${product.weightKg} kg`,
+      },
+    ].filter(Boolean),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Inicio',
+        item: SITE_URL,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Arsenal',
+        item: `${SITE_URL}/arsenal`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Luces Navidad',
+        item: `${SITE_URL}/arsenal/luces-navidad`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 4,
+        name: product.name,
+        item: canonical,
+      },
+    ],
+  };
+
   return (
-    <main className="min-h-screen bg-[#050505] text-white pt-28 pb-20 px-4 sm:px-6 lg:px-8 selection:bg-[#ecb613] selection:text-black">
+    <main className="min-h-screen bg-[#030305] text-white pt-28 pb-20 px-4 sm:px-6 lg:px-8 selection:bg-[#ecb613] selection:text-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <Link

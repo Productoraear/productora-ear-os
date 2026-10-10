@@ -72,7 +72,8 @@ export interface TransactionAtom {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const N8N_DISPATCH_TIMEOUT_MS = 4000;
-const N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL = process.env.N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL;
+const N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL: string | undefined =
+  process.env.N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -99,16 +100,19 @@ function computeEventHash(event: {
 
 function dispatchPayoutToN8n(event: PayoutN8nEvent): void {
   if (!N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL) {
-    console.warn('[aura-wallet] N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL no configurado. Omitiendo webhook de payout.');
+    console.warn(
+      '[aura-wallet] N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL no configurado. Omitiendo webhook de payout.'
+    );
     return;
   }
 
+  const webhookUrl: string = N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL;
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), N8N_DISPATCH_TIMEOUT_MS);
 
-  void (async () => {
+  void (async (): Promise<void> => {
     try {
-      const response = await fetch(N8N_AURA_WALLET_PAYOUT_WEBHOOK_URL, {
+      const response = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(event),
@@ -116,11 +120,13 @@ function dispatchPayoutToN8n(event: PayoutN8nEvent): void {
       });
 
       if (!response.ok) {
-        console.error(`[aura-wallet] Webhook n8n no OK (${response.status}) para payout #${event.sequence}.`);
+        console.error(
+          `[aura-wallet] Webhook n8n no OK (${response.status}) para payout #${event.sequence}.`
+        );
       } else {
         console.log(`[aura-wallet] Webhook n8n entregado para payout #${event.sequence}.`);
       }
-    } catch (err) {
+    } catch (err: unknown) {
       const reason = err instanceof Error ? err.message : String(err);
       console.error(`[aura-wallet] Fallo al despachar webhook n8n: ${reason}`);
     } finally {
@@ -258,11 +264,16 @@ export function isVerified(artistId: string): boolean {
 
 export function transacciones_exitosas(artistId: string): number {
   const normalized = artistId.trim();
-  return ledger.getTransactions().filter((transaction) => transaction.description.includes(normalized) && transaction.amount > 0).length;
+  return ledger
+    .getTransactions()
+    .filter(
+      (transaction) => transaction.description.includes(normalized) && transaction.amount > 0
+    ).length;
 }
 
 export function clicks_en_landings(artistId: string): number {
   // Placeholder sin fuente de datos persistente; se mantiene el contrato previo.
+  void artistId;
   return Math.floor(Math.random() * 100);
 }
 

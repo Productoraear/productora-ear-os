@@ -3,10 +3,127 @@
  * Fuente SSOT: Manual de Identidad Corporativa (LP / Productora EAR)
  * + Manual de Marca VIMUME (Sebastián Díaz, Feb 2025)
  * + Manifiesto Filosófico "Sin Igual" (Edwin Agudelo)
+ *
+ * S-Class Seal — Wave 6 / LIB-AUDIT
+ * Tipado estricto, cero `any`, exports vivos únicamente.
  */
 
-export const EAR_PALETTE = {
-  // 1. Fondos y Superficies de Élite (Deep Space Obsidian)
+/* ------------------------------------------------------------------ */
+/*  TIPOS ESTRICTOS                                                    */
+/* ------------------------------------------------------------------ */
+
+export interface ObsidianTokens {
+  readonly pure: string;
+  readonly core: string;
+  readonly subtle: string;
+  readonly surface: string;
+  readonly card: string;
+  readonly elevated: string;
+  readonly border: string;
+  readonly borderSubtle: string;
+  readonly borderGold: string;
+}
+
+export interface DiamondRedTokens {
+  readonly primary: string;
+  readonly action: string;
+  readonly highlight: string;
+  readonly deep: string;
+  readonly light: string;
+  readonly glow: string;
+  readonly gradient: string;
+  readonly borderGlow: string;
+}
+
+export interface DiamondBlueTokens {
+  readonly obsidian: string;
+  readonly technical: string;
+  readonly electric: string;
+  readonly ice: string;
+  readonly sky: string;
+  readonly glow: string;
+  readonly gradient: string;
+  readonly borderGlow: string;
+}
+
+export interface GoldTokens {
+  readonly base: string;
+  readonly glow: string;
+  readonly light: string;
+  readonly deep: string;
+  readonly dark: string;
+  readonly gradient: string;
+  readonly borderGlow: string;
+  readonly boxGlow: string;
+}
+
+export interface AxisTokens {
+  readonly name: string;
+  readonly pantone: string;
+  readonly hex: string;
+  readonly primary: string;
+  readonly accent: string;
+  readonly glow: string;
+  readonly gradient: string;
+  readonly shadow: string;
+}
+
+export interface VimumeAxisTokens extends AxisTokens {
+  readonly colibriTeal: string;
+  readonly colibriYellow: string;
+  readonly colibriOrange: string;
+  readonly colibriViolet: string;
+}
+
+export interface AxesTokens {
+  readonly artistas: AxisTokens;
+  readonly eventos: AxisTokens;
+  readonly empresas: AxisTokens;
+  readonly instituciones: AxisTokens;
+  readonly vimume: VimumeAxisTokens;
+}
+
+export interface TypographyTokens {
+  readonly primary: string;
+  readonly display: string;
+  readonly script: string;
+  readonly mono: string;
+}
+
+export interface ManifestoTokens {
+  readonly lema: string;
+  readonly lemaAlternativo: string;
+  readonly tribu: string;
+  readonly perfilTransformado: string;
+  readonly filosofiaColibri: string;
+}
+
+export interface AssetsTokens {
+  readonly diamondOfficialLogo: string;
+  readonly earGoldIsotipo: string;
+  readonly earWhiteIsotipo: string;
+  readonly colibriIsotipo: string;
+  readonly colibriLogoCompleto: string;
+}
+
+export interface EarPalette {
+  readonly obsidian: ObsidianTokens;
+  readonly diamondRed: DiamondRedTokens;
+  readonly diamondBlue: DiamondBlueTokens;
+  readonly gold: GoldTokens;
+  readonly axes: AxesTokens;
+  readonly typography: TypographyTokens;
+  readonly manifesto: ManifestoTokens;
+  readonly assets: AssetsTokens;
+}
+
+export type AxisKey = keyof AxesTokens;
+
+/* ------------------------------------------------------------------ */
+/*  PALETA SSOT                                                        */
+/* ------------------------------------------------------------------ */
+
+export const EAR_PALETTE: EarPalette = {
   // 1. Fondos y Superficies de Élite (Deep Space Obsidian)
   obsidian: {
     pure: '#000000',
@@ -29,7 +146,8 @@ export const EAR_PALETTE = {
     deep: '#9F1239',
     light: '#FEE2E2',
     glow: 'rgba(255, 43, 68, 0.35)',
-    gradient: 'linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%)',
+    gradient:
+      'linear-gradient(135deg, #FF6B7D 0%, #FF2B44 50%, #E11D48 75%, #9F1239 100%)',
     borderGlow: '0 0 25px rgba(255, 43, 68, 0.4)'
   },
 
@@ -42,18 +160,20 @@ export const EAR_PALETTE = {
     ice: '#BAE6FD',
     sky: '#44A3D8',
     glow: 'rgba(37, 141, 205, 0.35)',
-    gradient: 'linear-gradient(135deg, #BAE6FD 0%, #44A3D8 35%, #258DCD 70%, #0284C7 100%)',
+    gradient:
+      'linear-gradient(135deg, #BAE6FD 0%, #44A3D8 35%, #258DCD 70%, #0284C7 100%)',
     borderGlow: '0 0 25px rgba(37, 141, 205, 0.35)'
   },
 
   // 4. Oro & Ámbar S-Class (Espectáculos & Núcleo Productora EAR)
   gold: {
-    base: '#c3983c',       // Pantone P 15-14 C
-    glow: '#ecb613',       // EAR S-Class Highlight
-    light: '#faf08f',      // Pantone 602 CP
-    deep: '#744527',       // Pantone 7588 CP
+    base: '#c3983c', // Pantone P 15-14 C
+    glow: '#ecb613', // EAR S-Class Highlight
+    light: '#faf08f', // Pantone 602 CP
+    deep: '#744527', // Pantone 7588 CP
     dark: '#4d2a1f',
-    gradient: 'linear-gradient(135deg, #ffd000 0%, #ecb613 40%, #c3983c 75%, #744527 100%)',
+    gradient:
+      'linear-gradient(135deg, #ffd000 0%, #ecb613 40%, #c3983c 75%, #744527 100%)',
     borderGlow: '0 0 25px rgba(236, 182, 19, 0.35)',
     boxGlow: '0 8px 32px rgba(236, 182, 19, 0.18)'
   },
@@ -139,7 +259,8 @@ export const EAR_PALETTE = {
     lemaAlternativo: 'Arte con propósito',
     tribu: 'Sin Igual',
     perfilTransformado: 'Artista Premium',
-    filosofiaColibri: 'La acción individual frente a problemas inmensos: Haz tu parte. Eso es suficiente para empezar.'
+    filosofiaColibri:
+      'La acción individual frente a problemas inmensos: Haz tu parte. Eso es suficiente para empezar.'
   },
 
   // 6. Activos Oficiales
@@ -151,3 +272,47 @@ export const EAR_PALETTE = {
     colibriLogoCompleto: '/images/brand/colibri_logo_completo.png'
   }
 };
+
+/* ------------------------------------------------------------------ */
+/*  HELPERS TIPADOS (consumidores vivos del SSOT)                      */
+/* ------------------------------------------------------------------ */
+
+/**
+ * Devuelve los tokens de un eje operativo por su clave.
+ * Tipado estricto: la clave está restringida a `AxisKey`.
+ */
+export function getAxisTokens(key: AxisKey): AxesTokens[AxisKey] {
+  return EAR_PALETTE.axes[key];
+}
+
+/**
+ * Devuelve el gradiente CSS de un eje operativo.
+ */
+export function getAxisGradient(key: AxisKey): string {
+  return EAR_PALETTE.axes[key].gradient;
+}
+
+/**
+ * Devuelve el color hex principal de un eje operativo.
+ */
+export function getAxisHex(key: AxisKey): string {
+  return EAR_PALETTE.axes[key].hex;
+}
+
+/**
+ * Lista inmutable de claves de ejes operativos.
+ */
+export const AXIS_KEYS: readonly AxisKey[] = [
+  'artistas',
+  'eventos',
+  'empresas',
+  'instituciones',
+  'vimume'
+] as const;
+
+/**
+ * Type guard para validar si un string arbitrario es un `AxisKey` válido.
+ */
+export function isAxisKey(value: string): value is AxisKey {
+  return (AXIS_KEYS as readonly string[]).includes(value);
+}

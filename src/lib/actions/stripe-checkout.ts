@@ -21,18 +21,33 @@ const StripeCheckoutSchema = z.object({
   bookingId: z.string().min(1),
 });
 
-export async function createBookingCheckout(input: unknown) {
+export type StripeCheckoutInput = z.infer<typeof StripeCheckoutSchema>;
+
+export interface StripeCheckoutResult {
+  clientSecret: string;
+  sessionId: string;
+  totalAmount: number;
+  depositAmount: number;
+  distanceKm: number;
+}
+
+const STRIPE_API_VERSION = "2026-04-22.dahlia" as Stripe.LatestApiVersion;
+const DEFAULT_ORIGIN = "https://productoraear.com";
+
+export async function createBookingCheckout(
+  input: unknown,
+): Promise<StripeCheckoutResult> {
   const stripeSecret = process.env.STRIPE_SECRET_KEY;
   if (!stripeSecret) {
     throw new Error("Missing STRIPE_SECRET_KEY in production server environment");
   }
-  
+
   const stripe = new Stripe(stripeSecret, {
-    apiVersion: '2026-04-22.dahlia' as any,
+    apiVersion: STRIPE_API_VERSION,
   });
 
   const payload = StripeCheckoutSchema.parse(input);
-  const origin = (await headers()).get("origin") ?? "https://productoraear.com";
+  const origin = (await headers()).get("origin") ?? DEFAULT_ORIGIN;
 
   const user = await prisma.user.findUnique({
     where: { id: payload.clientId },
@@ -51,7 +66,7 @@ export async function createBookingCheckout(input: unknown) {
   });
 
   const session = await stripe.checkout.sessions.create({
-    ui_mode: "embedded" as any,
+    ui_mode: "embedded",
     mode: "payment",
     line_items: [
       {
@@ -62,7 +77,7 @@ export async function createBookingCheckout(input: unknown) {
             name: "Depósito Garantía - Productora EAR",
             description: `Reserva para ${payload.eventDate}`,
           },
-          unit_amount: pricing.depositAmount * 100,
+          unit_amount: Math.round(pricing.depositAmount * 100),
         },
       },
     ],

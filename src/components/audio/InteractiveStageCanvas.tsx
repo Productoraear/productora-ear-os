@@ -28,8 +28,8 @@ export const InteractiveStageCanvas: React.FC<Props> = ({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let width = (canvas.width = canvas.parentElement?.clientWidth || 900);
-    let height = (canvas.height = 540);
+    const width = (canvas.width = canvas.parentElement?.clientWidth || 900);
+    const height = (canvas.height = 540);
 
     ctx.clearRect(0, 0, width, height);
 
@@ -232,7 +232,7 @@ export const InteractiveStageCanvas: React.FC<Props> = ({
           const clickX = ((e.clientX - rect.left) / rect.width) * 100;
           const clickY = ((e.clientY - rect.top) / rect.height) * 100;
 
-          let closest = musicians[0];
+          let closest: MusicianPosition | undefined = musicians[0];
           let minDist = 9999;
           musicians.forEach((m) => {
             const dist = Math.hypot(m.x - clickX, m.y - clickY);

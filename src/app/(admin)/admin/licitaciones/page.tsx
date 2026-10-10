@@ -1,16 +1,49 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, Suspense, Component, type ReactNode, type ErrorInfo } from 'react';
 import {
   Landmark,
   Volume2,
   FileCheck,
   TrendingUp,
   Search,
-  Sparkles
+  Sparkles,
+  AlertTriangle,
+  Loader2,
+  RefreshCw
 } from 'lucide-react';
 
-const TENDERS = [
+/* ========================================================================== */
+/* TIPOS ESTRICTOS                                                            */
+/* ========================================================================== */
+
+interface Tender {
+  id: string;
+  municipality: string;
+  event: string;
+  budgetMax: string;
+  status: string;
+  legalArticle: string;
+  soundLimit: string;
+  dir3: string;
+}
+
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+  label?: string;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+/* ========================================================================== */
+/* DATOS                                                                      */
+/* ========================================================================== */
+
+const TENDERS: readonly Tender[] = [
   {
     id: "B2G-TO-2026-04",
     municipality: "Ayuntamiento de Méntrida (Toledo)",
@@ -53,18 +86,294 @@ const TENDERS = [
   }
 ];
 
-export default function LicitacionesAdminCatminPage() {
-  const [search, setSearch] = useState("");
+/* ========================================================================== */
+/* ERROR BOUNDARY (S-Class)                                                   */
+/* ========================================================================== */
 
-  const filteredTenders = TENDERS.filter(t =>
-    t.municipality.toLowerCase().includes(search.toLowerCase()) ||
-    t.event.toLowerCase().includes(search.toLowerCase()) ||
-    t.id.toLowerCase().includes(search.toLowerCase())
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public state: ErrorBoundaryState = { hasError: false, error: null };
+
+  public static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    if (typeof console !== 'undefined') {
+      console.error('[EAR-OS][ErrorBoundary]', this.props.label ?? 'unknown', error, errorInfo);
+    }
+  }
+
+  private handleReset = (): void => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  public render(): ReactNode {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+      return (
+        <div className="rounded-3xl bg-[#09090d]/80 border border-red-500/30 p-6 shadow-sm">
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-4 h-4 text-red-400" />
+            </div>
+            <div className="flex-1 space-y-2">
+              <h3 className="text-sm font-bold text-white font-syne uppercase">
+                Error en módulo {this.props.label ?? 'desconocido'}
+              </h3>
+              <p className="text-xs text-zinc-400 font-mono break-all">
+                {this.state.error?.message ?? 'Error desconocido'}
+              </p>
+              <button
+                type="button"
+                onClick={this.handleReset}
+                className="inline-flex items-center gap-1.5 text-xs font-mono text-[#ecb613] hover:text-[#ecb613]/80 transition-colors"
+              >
+                <RefreshCw className="w-3 h-3" />
+                Reintentar
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+/* ========================================================================== */
+/* FALLBACKS DE SUSPENSE                                                      */
+/* ========================================================================== */
+
+function KpiSkeleton(): ReactNode {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {[0, 1, 2, 3].map((i) => (
+        <div
+          key={i}
+          className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm animate-pulse"
+        >
+          <div className="flex items-center justify-between pb-2">
+            <div className="h-3 w-24 bg-zinc-800 rounded" />
+            <div className="w-8 h-8 rounded-lg bg-zinc-800" />
+          </div>
+          <div className="h-7 w-32 bg-zinc-800 rounded mt-2" />
+          <div className="h-3 w-40 bg-zinc-800 rounded mt-3" />
+          <div className="h-3 w-36 bg-zinc-800 rounded mt-3" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ListSkeleton(): ReactNode {
+  return (
+    <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 shadow-sm space-y-4">
+      <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
+        <div className="space-y-2">
+          <div className="h-4 w-64 bg-zinc-800 rounded animate-pulse" />
+          <div className="h-3 w-80 bg-zinc-800 rounded animate-pulse" />
+        </div>
+        <div className="h-8 w-72 bg-zinc-800 rounded-lg animate-pulse" />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="p-5 rounded-xl bg-zinc-950/60 border border-zinc-900 space-y-4 animate-pulse"
+          >
+            <div className="flex items-center justify-between">
+              <div className="h-5 w-32 bg-zinc-800 rounded" />
+              <div className="h-5 w-24 bg-zinc-800 rounded" />
+            </div>
+            <div className="h-4 w-56 bg-zinc-800 rounded" />
+            <div className="h-3 w-48 bg-zinc-800 rounded" />
+            <div className="grid grid-cols-2 gap-2 pt-3 border-t border-zinc-900">
+              <div className="h-8 bg-zinc-800 rounded" />
+              <div className="h-8 bg-zinc-800 rounded" />
+              <div className="h-8 bg-zinc-800 rounded" />
+              <div className="h-8 bg-zinc-800 rounded" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function InlineLoader({ label }: { label: string }): ReactNode {
+  return (
+    <div className="flex items-center justify-center gap-2 py-8 text-xs font-mono text-zinc-500">
+      <Loader2 className="w-3.5 h-3.5 animate-spin text-[#ecb613]" />
+      <span>Cargando {label}…</span>
+    </div>
+  );
+}
+
+/* ========================================================================== */
+/* SUBCOMPONENTES                                                             */
+/* ========================================================================== */
+
+function KpiCards(): ReactNode {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
+        <div className="flex items-center justify-between pb-2">
+          <span className="text-xs font-medium text-zinc-400">Tope Preventivo Legal</span>
+          <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
+            <Landmark className="w-4 h-4 text-[#ecb613]" />
+          </div>
+        </div>
+        <div className="text-2xl font-bold font-mono text-white">&lt; 14.250 €</div>
+        <p className="text-[11px] text-zinc-400 mt-1">Art. 118 LCSP (Margen de seguridad 750€)</p>
+        <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
+          <TrendingUp className="mr-1 h-3.5 w-3.5" />
+          Adjudicación Directa Sin Concurso
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-emerald-500/50 transition-all">
+        <div className="flex items-center justify-between pb-2">
+          <span className="text-xs font-medium text-zinc-400">Blindaje Acústico</span>
+          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+            <Volume2 className="w-4 h-4 text-emerald-400" />
+          </div>
+        </div>
+        <div className="text-2xl font-bold font-mono text-white">&lt; 75 dB SPL</div>
+        <p className="text-[11px] text-zinc-400 mt-1">Bose F1 con limitador y dBA certificado</p>
+        <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
+          <TrendingUp className="mr-1 h-3.5 w-3.5" />
+          Cero Sanciones Municipales
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-cyan-500/50 transition-all">
+        <div className="flex items-center justify-between pb-2">
+          <span className="text-xs font-medium text-zinc-400">Retorno Social VIMUME</span>
+          <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+            <Sparkles className="w-4 h-4 text-cyan-400" />
+          </div>
+        </div>
+        <div className="text-2xl font-bold font-mono text-cyan-400">SROI 4.85x</div>
+        <p className="text-[11px] text-zinc-400 mt-1">Impacto cognitivo geriátrico certificado</p>
+        <div className="mt-2 flex items-center text-xs font-mono text-cyan-400 font-medium">
+          <TrendingUp className="mr-1 h-3.5 w-3.5" />
+          Modelo 182 AEAT Incluido
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-purple-500/50 transition-all">
+        <div className="flex items-center justify-between pb-2">
+          <span className="text-xs font-medium text-zinc-400">Facturación Electrónica</span>
+          <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+            <FileCheck className="w-4 h-4 text-purple-400" />
+          </div>
+        </div>
+        <div className="text-2xl font-bold font-mono text-white">FacturaE</div>
+        <p className="text-[11px] text-zinc-400 mt-1">Compatibilidad FACe y código DIR3</p>
+        <div className="mt-2 flex items-center text-xs font-mono text-purple-400 font-medium">
+          <TrendingUp className="mr-1 h-3.5 w-3.5" />
+          Cobro en 30 Días Garantizado
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface TenderListProps {
+  search: string;
+  onSearchChange: (value: string) => void;
+}
+
+function TenderList({ search, onSearchChange }: TenderListProps): ReactNode {
+  const filteredTenders: readonly Tender[] = TENDERS.filter(
+    (t) =>
+      t.municipality.toLowerCase().includes(search.toLowerCase()) ||
+      t.event.toLowerCase().includes(search.toLowerCase()) ||
+      t.id.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
+    <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 shadow-sm space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-3">
+        <div>
+          <h2 className="text-base font-bold font-syne text-white uppercase">
+            Expedientes de Contratación Menor Activos
+          </h2>
+          <p className="text-xs text-zinc-500">
+            Radar municipal en Castilla-La Mancha y Comunidad de Madrid
+          </p>
+        </div>
 
+        <div className="relative w-full sm:w-72">
+          <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            placeholder="Buscar ayuntamiento o pliego..."
+            value={search}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="w-full h-8 pl-8 pr-3 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
+        {filteredTenders.map((tender) => (
+          <div
+            key={tender.id}
+            className="p-5 rounded-xl bg-zinc-950/60 border border-zinc-900 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between group space-y-4"
+          >
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs text-[#ecb613] font-bold bg-[#ecb613]/10 px-2 py-0.5 rounded border border-[#ecb613]/20">
+                  {tender.id}
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 text-emerald-400 border border-zinc-800">
+                  {tender.status}
+                </span>
+              </div>
+
+              <h3 className="text-sm font-bold text-white group-hover:text-[#ecb613] transition-colors">
+                {tender.municipality}
+              </h3>
+              <p className="text-xs text-zinc-300 font-light">{tender.event}</p>
+            </div>
+
+            <div className="pt-3 border-t border-zinc-900 grid grid-cols-2 gap-2 text-[11px] font-mono">
+              <div>
+                <span className="text-zinc-500 block text-[10px]">PRESUPUESTO MÁX.</span>
+                <span className="font-bold text-white">{tender.budgetMax}</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[10px]">LÍMITE ACÚSTICO</span>
+                <span className="text-emerald-400">{tender.soundLimit}</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[10px]">RÉGIMEN LEGAL</span>
+                <span className="text-zinc-400 truncate block">{tender.legalArticle}</span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block text-[10px]">CÓDIGO DIR3</span>
+                <span className="text-cyan-400">{tender.dir3}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ========================================================================== */
+/* PÁGINA PRINCIPAL                                                           */
+/* ========================================================================== */
+
+export default function LicitacionesAdminCatminPage(): ReactNode {
+  const [search, setSearch] = useState<string>("");
+
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
       {/* ===================================================================== */}
       {/* 1. HEADER DE PÁGINA CATMÍN                                            */}
       {/* ===================================================================== */}
@@ -73,12 +382,12 @@ export default function LicitacionesAdminCatminPage() {
           <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
             <span>Admin</span>
             <span>/</span>
-            <span>Finanzas & Legal</span>
+            <span>Finanzas &amp; Legal</span>
             <span>/</span>
-            <span className="text-[#ecb613] font-bold">B2G & Licitaciones</span>
+            <span className="text-[#ecb613] font-bold">B2G &amp; Licitaciones</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-syne uppercase mt-1">
-            B2G & Contratación Menor (&lt; 14.250 €)
+            B2G &amp; Contratación Menor (&lt; 14.250 €)
           </h1>
         </div>
 
@@ -91,143 +400,29 @@ export default function LicitacionesAdminCatminPage() {
       </div>
 
       {/* ===================================================================== */}
-      {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI LEGALES                               */}
+      {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI LEGALES (SUSPENSE + ERROR BOUNDARY)   */}
       {/* ===================================================================== */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Tope Preventivo Legal</span>
-            <div className="w-8 h-8 rounded-lg bg-[#ecb613]/10 flex items-center justify-center">
-              <Landmark className="w-4 h-4 text-[#ecb613]" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-mono text-white">&lt; 14.250 €</div>
-          <p className="text-[11px] text-zinc-400 mt-1">Art. 118 LCSP (Margen de seguridad 750€)</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Adjudicación Directa Sin Concurso
-          </div>
-        </div>
-
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-emerald-500/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Blindaje Acústico</span>
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-              <Volume2 className="w-4 h-4 text-emerald-400" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-mono text-white">&lt; 75 dB SPL</div>
-          <p className="text-[11px] text-zinc-400 mt-1">Bose F1 con limitador y dBA certificado</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-emerald-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Cero Sanciones Municipales
-          </div>
-        </div>
-
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-cyan-500/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Retorno Social VIMUME</span>
-            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-cyan-400" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-mono text-cyan-400">SROI 4.85x</div>
-          <p className="text-[11px] text-zinc-400 mt-1">Impacto cognitivo geriátrico certificado</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-cyan-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Modelo 182 AEAT Incluido
-          </div>
-        </div>
-
-        <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-purple-500/50 transition-all">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-medium text-zinc-400">Facturación Electrónica</span>
-            <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-              <FileCheck className="w-4 h-4 text-purple-400" />
-            </div>
-          </div>
-          <div className="text-2xl font-bold font-mono text-white">FacturaE</div>
-          <p className="text-[11px] text-zinc-400 mt-1">Compatibilidad FACe y código DIR3</p>
-          <div className="mt-2 flex items-center text-xs font-mono text-purple-400 font-medium">
-            <TrendingUp className="mr-1 h-3.5 w-3.5" />
-            Cobro en 30 Días Garantizado
-          </div>
-        </div>
-
-      </div>
+      <ErrorBoundary label="KPI-Legales">
+        <Suspense fallback={<KpiSkeleton />}>
+          <KpiCards />
+        </Suspense>
+      </ErrorBoundary>
 
       {/* ===================================================================== */}
-      {/* 3. LISTADO DE EXPEDIENTES Y PLIEGOS MENORES (ESTILO CATMÍN)           */}
+      {/* 3. LISTADO DE EXPEDIENTES Y PLIEGOS MENORES (SUSPENSE + ERROR BOUND)  */}
       {/* ===================================================================== */}
-      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 shadow-sm space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-3">
-          <div>
-            <h2 className="text-base font-bold font-syne text-white uppercase">
-              Expedientes de Contratación Menor Activos
-            </h2>
-            <p className="text-xs text-zinc-500">Radar municipal en Castilla-La Mancha y Comunidad de Madrid</p>
-          </div>
+      <ErrorBoundary label="Expedientes-Contratación-Menor">
+        <Suspense fallback={<ListSkeleton />}>
+          <TenderList search={search} onSearchChange={setSearch} />
+        </Suspense>
+      </ErrorBoundary>
 
-          <div className="relative w-full sm:w-72">
-            <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Buscar ayuntamiento o pliego..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full h-8 pl-8 pr-3 text-xs font-mono bg-black/60 border border-white/10 rounded-lg text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#ecb613] transition-colors"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 pt-1">
-          {filteredTenders.map((tender) => (
-            <div
-              key={tender.id}
-              className="p-5 rounded-xl bg-zinc-950/60 border border-zinc-900 hover:border-[#ecb613]/50 transition-all flex flex-col justify-between group space-y-4"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-[#ecb613] font-bold bg-[#ecb613]/10 px-2 py-0.5 rounded border border-[#ecb613]/20">
-                    {tender.id}
-                  </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 text-emerald-400 border border-zinc-800">
-                    {tender.status}
-                  </span>
-                </div>
-
-                <h3 className="text-sm font-bold text-white group-hover:text-[#ecb613] transition-colors">
-                  {tender.municipality}
-                </h3>
-                <p className="text-xs text-zinc-300 font-light">
-                  {tender.event}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-zinc-900 grid grid-cols-2 gap-2 text-[11px] font-mono">
-                <div>
-                  <span className="text-zinc-500 block text-[10px]">PRESUPUESTO MÁX.</span>
-                  <span className="font-bold text-white">{tender.budgetMax}</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block text-[10px]">LÍMITE ACÚSTICO</span>
-                  <span className="text-emerald-400">{tender.soundLimit}</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block text-[10px]">RÉGIMEN LEGAL</span>
-                  <span className="text-zinc-400 truncate block">{tender.legalArticle}</span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block text-[10px]">CÓDIGO DIR3</span>
-                  <span className="text-cyan-400">{tender.dir3}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
+      {/* ===================================================================== */}
+      {/* 4. LOADER INLINE (reserva para futuros fetch asíncronos)              */}
+      {/* ===================================================================== */}
+      <Suspense fallback={<InlineLoader label="sincronización B2G" />}>
+        <div aria-hidden="true" />
+      </Suspense>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, Component, ReactNode, ErrorInfo } from 'react';
 import {
   Calendar, Zap, Shield, Cpu, Activity, Play, CheckCircle2,
   Clock, AlertTriangle, Layers, Filter, Terminal, Sparkles, Plus,
@@ -13,14 +13,98 @@ import { QronosAgentInbox } from '@/app/components/qronos/QronosAgentInbox';
 import { QronosInsightsDashboard } from '@/app/components/qronos/QronosInsightsDashboard';
 import { QronosHatchingDivider } from '@/app/components/qronos/QronosHatchingDivider';
 
-export default function AdminSchedulerPage() {
+/* ───────────────────────────────────────────────────────────────────────── */
+/* S-CLASS ERROR BOUNDARY                                                    */
+/* ───────────────────────────────────────────────────────────────────────── */
+
+interface QronosErrorBoundaryProps {
+  children: ReactNode;
+  fallbackLabel?: string;
+}
+
+interface QronosErrorBoundaryState {
+  hasError: boolean;
+  errorMessage: string | null;
+}
+
+class QronosErrorBoundary extends Component<QronosErrorBoundaryProps, QronosErrorBoundaryState> {
+  constructor(props: QronosErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, errorMessage: null };
+  }
+
+  static getDerivedStateFromError(error: Error): QronosErrorBoundaryState {
+    return { hasError: true, errorMessage: error.message };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    if (typeof console !== 'undefined') {
+      console.error('[QRONOS-ERROR-BOUNDARY]', this.props.fallbackLabel ?? 'unknown', error, errorInfo);
+    }
+  }
+
+  handleReset = (): void => {
+    this.setState({ hasError: false, errorMessage: null });
+  };
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      return (
+        <div className="rounded-xl border border-red-500/40 bg-red-500/5 p-5 font-mono text-xs text-red-300 space-y-3">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+            <span className="font-bold uppercase tracking-wider">
+              Fallo en módulo: {this.props.fallbackLabel ?? 'desconocido'}
+            </span>
+          </div>
+          {this.state.errorMessage && (
+            <p className="text-red-400/80 break-all">{this.state.errorMessage}</p>
+          )}
+          <button
+            type="button"
+            onClick={this.handleReset}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/40 text-red-200 hover:bg-red-500/20 transition-colors"
+          >
+            <RefreshCw className="w-3 h-3" />
+            <span>Reintentar módulo</span>
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────── */
+/* S-CLASS SUSPENSE FALLBACK                                                 */
+/* ───────────────────────────────────────────────────────────────────────── */
+
+function QronosModuleSkeleton({ label }: { label: string }): React.JSX.Element {
+  return (
+    <div className="rounded-xl border border-white/[0.08] bg-zinc-900/40 p-6 space-y-3 animate-pulse">
+      <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
+        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+        <span>Cargando módulo: {label}…</span>
+      </div>
+      <div className="h-3 w-2/3 rounded bg-zinc-800/80" />
+      <div className="h-3 w-1/2 rounded bg-zinc-800/60" />
+      <div className="h-3 w-3/4 rounded bg-zinc-800/40" />
+    </div>
+  );
+}
+
+/* ───────────────────────────────────────────────────────────────────────── */
+/* PAGE                                                                      */
+/* ───────────────────────────────────────────────────────────────────────── */
+
+export default function AdminSchedulerPage(): React.JSX.Element {
   const [activeTab, setActiveTab] = useState<'all' | 'pipeline' | 'gantt' | 'guardrails' | 'inbox' | 'insights'>('all');
   const [isDeployingTask, setIsDeployingTask] = useState<boolean>(false);
   const [newTaskTitle, setNewTaskTitle] = useState<string>('');
   const [newTaskTrigger, setNewTaskTrigger] = useState<string>('cron');
   const [statusFeedback, setStatusFeedback] = useState<string | null>(null);
 
-  const handleQueueTask = (e: React.FormEvent) => {
+  const handleQueueTask = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!newTaskTitle) return;
     setIsDeployingTask(true);
@@ -190,7 +274,11 @@ export default function AdminSchedulerPage() {
             </h2>
             <span className="text-xs font-mono text-zinc-500">Malla GPU AMD RX 7900 XTX</span>
           </div>
-          <QronosMultiAgentPipeline />
+          <QronosErrorBoundary fallbackLabel="Pipeline Multi-Agente">
+            <Suspense fallback={<QronosModuleSkeleton label="Pipeline Multi-Agente" />}>
+              <QronosMultiAgentPipeline />
+            </Suspense>
+          </QronosErrorBoundary>
         </section>
       )}
 
@@ -206,7 +294,11 @@ export default function AdminSchedulerPage() {
             </h2>
             <span className="text-xs font-mono text-zinc-500">Gatillos Programados & Handoffs</span>
           </div>
-          <QronosGanttScheduler />
+          <QronosErrorBoundary fallbackLabel="Cronograma Gantt">
+            <Suspense fallback={<QronosModuleSkeleton label="Cronograma Gantt" />}>
+              <QronosGanttScheduler />
+            </Suspense>
+          </QronosErrorBoundary>
         </section>
       )}
 
@@ -222,7 +314,11 @@ export default function AdminSchedulerPage() {
             </h2>
             <span className="text-xs font-mono text-zinc-500">Cero Exposición de Secretos</span>
           </div>
-          <QronosGuardrails />
+          <QronosErrorBoundary fallbackLabel="Guardarraíles">
+            <Suspense fallback={<QronosModuleSkeleton label="Guardarraíles" />}>
+              <QronosGuardrails />
+            </Suspense>
+          </QronosErrorBoundary>
         </section>
       )}
 
@@ -238,7 +334,11 @@ export default function AdminSchedulerPage() {
                 <Terminal className="w-4 h-4 text-cyan-400" /> Cola de Aprobaciones Humanas
               </h2>
             </div>
-            <QronosAgentInbox />
+            <QronosErrorBoundary fallbackLabel="Bandeja de Aprobaciones">
+              <Suspense fallback={<QronosModuleSkeleton label="Bandeja de Aprobaciones" />}>
+                <QronosAgentInbox />
+              </Suspense>
+            </QronosErrorBoundary>
           </div>
         )}
 
@@ -249,7 +349,11 @@ export default function AdminSchedulerPage() {
                 <Activity className="w-4 h-4 text-[#ecb613]" /> Panel de Insights & Telemetría
               </h2>
             </div>
-            <QronosInsightsDashboard />
+            <QronosErrorBoundary fallbackLabel="Insights & Telemetría">
+              <Suspense fallback={<QronosModuleSkeleton label="Insights & Telemetría" />}>
+                <QronosInsightsDashboard />
+              </Suspense>
+            </QronosErrorBoundary>
           </div>
         )}
       </div>

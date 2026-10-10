@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
 import Link from 'next/link';
 import {
   Users,
@@ -19,7 +19,8 @@ import {
   RefreshCw,
   Sliders,
   Image as ImageIcon,
-  Sparkles
+  Sparkles,
+  AlertTriangle
 } from 'lucide-react';
 import {
   PROVIDERS_MANIFEST_TOTALS,
@@ -44,6 +45,106 @@ interface ProviderItem {
   verified?: boolean;
 }
 
+interface ProvidersApiResponse {
+  success?: boolean;
+  providers?: ProviderItem[];
+  total?: number;
+  totalPages?: number;
+}
+
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+  fallback: React.ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  errorMessage: string;
+}
+
+class ProvidersErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, errorMessage: '' };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, errorMessage: error?.message || 'Error desconocido' };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+    console.error('[PROVEEDORES-ERROR-BOUNDARY]', error, errorInfo);
+  }
+
+  handleReset = (): void => {
+    this.setState({ hasError: false, errorMessage: '' });
+  };
+
+  render(): React.ReactNode {
+    if (this.state.hasError) {
+      return (
+        <div className="space-y-4">
+          <div className="p-6 rounded-3xl bg-red-500/5 border border-red-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 shrink-0">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div>
+                <h2 className="text-sm font-bold text-white font-mono uppercase tracking-wider">
+                  Fallo en el módulo de Proveedores
+                </h2>
+                <p className="text-xs font-mono text-zinc-400 mt-1">
+                  {this.state.errorMessage || 'Se ha producido un error inesperado al renderizar la partición.'}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={this.handleReset}
+              className="px-4 py-2 rounded-xl bg-[#ecb613] hover:bg-[#d8a510] text-black font-bold text-xs transition-colors flex items-center gap-2"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              Reintentar
+            </button>
+          </div>
+          {this.props.fallback}
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function ProvidersLoadingSkeleton(): React.ReactElement {
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto font-sans">
+      <div className="h-4 w-64 rounded bg-zinc-900/80 animate-pulse" />
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-2">
+          <div className="h-8 w-96 rounded bg-zinc-900/80 animate-pulse" />
+          <div className="h-3 w-72 rounded bg-zinc-900/60 animate-pulse" />
+        </div>
+        <div className="flex gap-2">
+          <div className="h-9 w-40 rounded-xl bg-zinc-900/80 animate-pulse" />
+          <div className="h-9 w-9 rounded-xl bg-zinc-900/80 animate-pulse" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-3">
+            <div className="h-3 w-32 rounded bg-zinc-900/80 animate-pulse" />
+            <div className="h-8 w-24 rounded bg-zinc-900/80 animate-pulse" />
+            <div className="h-2 w-40 rounded bg-zinc-900/60 animate-pulse" />
+          </div>
+        ))}
+      </div>
+      <div className="py-24 text-center space-y-3">
+        <RefreshCw className="w-8 h-8 text-[#ecb613] animate-spin mx-auto" />
+        <p className="text-xs font-mono text-zinc-400">Sincronizando particiones del Data Lake...</p>
+      </div>
+    </div>
+  );
+}
+
 // Contadores SSOT: derivados del manifest, nunca hardcodeados.
 const CATEGORY_TABS = [
   { id: 'ALL', label: `Todos (${formatProviderCount(PROVIDERS_GRAND_TOTAL)})` },
@@ -60,7 +161,7 @@ const CATEGORY_TABS = [
   { id: 'senior_care', label: `Centros Senior VIMUME (${formatProviderCount(PROVIDERS_MANIFEST_TOTALS.senior_care)})` }
 ];
 
-export default function ProveedoresSyncPage() {
+function ProveedoresSyncContent(): React.ReactElement {
   const [providers, setProviders] = useState<ProviderItem[]>([]);
   const [totalCount, setTotalCount] = useState<number>(PROVIDERS_GRAND_TOTAL);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -68,11 +169,13 @@ export default function ProveedoresSyncPage() {
   const [selectedCat, setSelectedCat] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [selectedProvider, setSelectedProvider] = useState<ProviderItem | null>(null);
 
   // Carga de datos real desde el endpoint de búsqueda y Data Lake
-  const fetchProviders = useCallback(async () => {
+  const fetchProviders = useCallback(async (): Promise<void> => {
     setLoading(true);
+    setFetchError(null);
     try {
       const params = new URLSearchParams();
       params.set('page', String(page));
@@ -86,28 +189,33 @@ export default function ProveedoresSyncPage() {
 
       const res = await fetch(`/api/profiles/search?${params.toString()}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
+      const data: ProvidersApiResponse = await res.json();
 
       if (data.success && Array.isArray(data.providers)) {
         setProviders(data.providers);
         setTotalCount(data.total || PROVIDERS_GRAND_TOTAL);
         setTotalPages(data.totalPages || Math.ceil((data.total || PROVIDERS_GRAND_TOTAL) / 24));
+      } else {
+        setProviders([]);
       }
     } catch (err) {
+      const message = err instanceof Error ? err.message : 'Error desconocido';
       console.error('[PROVEEDORES-SYNC] Error cargando proveedores:', err);
+      setFetchError(message);
+      setProviders([]);
     } finally {
       setLoading(false);
     }
   }, [page, selectedCat, searchQuery]);
 
   useEffect(() => {
-    fetchProviders();
+    void fetchProviders();
   }, [fetchProviders]);
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     setPage(1);
-    fetchProviders();
+    void fetchProviders();
   };
 
   return (
@@ -141,7 +249,7 @@ export default function ProveedoresSyncPage() {
             Abrir Call Center ({GRAND_TOTAL_FORMATTED})
           </Link>
           <button
-            onClick={() => fetchProviders()}
+            onClick={() => void fetchProviders()}
             className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-[#ecb613]/50 transition-colors"
             title="Refrescar datos"
           >
@@ -256,6 +364,22 @@ export default function ProveedoresSyncPage() {
           ))}
         </div>
       </div>
+
+      {/* Estado de error de fetch */}
+      {fetchError && !loading && (
+        <div className="p-4 rounded-2xl bg-red-500/5 border border-red-500/30 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 text-xs font-mono text-red-400">
+            <AlertTriangle className="w-4 h-4" />
+            Error al sincronizar con el Data Lake: {fetchError}
+          </div>
+          <button
+            onClick={() => void fetchProviders()}
+            className="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-300 text-xs font-mono hover:bg-red-500/20 transition-colors"
+          >
+            Reintentar
+          </button>
+        </div>
+      )}
 
       {/* Grid de Proveedores */}
       {loading ? (
@@ -406,5 +530,15 @@ export default function ProveedoresSyncPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProveedoresSyncPage(): React.ReactElement {
+  return (
+    <ProvidersErrorBoundary fallback={<ProvidersLoadingSkeleton />}>
+      <Suspense fallback={<ProvidersLoadingSkeleton />}>
+        <ProveedoresSyncContent />
+      </Suspense>
+    </ProvidersErrorBoundary>
   );
 }

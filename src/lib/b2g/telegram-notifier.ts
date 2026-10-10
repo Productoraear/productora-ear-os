@@ -1,7 +1,7 @@
 /**
  * 🏛️ TELEGRAM NOTIFIER SERVICE — B2G HUNTER ALERTS
  * Gobernanza Antigravity Omega v4.1 (SSOT S-Class)
- * 
+ *
  * Envío de alertas push estructuradas a Telegram (+34 693 693 048)
  * cuando el escáner PLACSP detecta licitaciones y contratos menores
  * con Match Score >= 90% (Art. 118 LCSP < 15.000 €).
@@ -30,6 +30,16 @@ export interface B2GTenderAlertPayload {
   status?: string;
 }
 
+interface TelegramApiResponse {
+  ok: boolean;
+  description?: string;
+  result?: {
+    message_id: number;
+    date: number;
+    text?: string;
+  };
+}
+
 function escapeHtml(text: string): string {
   if (!text) return '';
   return text
@@ -43,26 +53,30 @@ function escapeHtml(text: string): string {
  * Manejo defensivo: Si faltan credenciales, registra log de advertencia sin lanzar excepción.
  */
 export async function sendB2GTelegramAlert(tender: B2GTenderAlertPayload): Promise<boolean> {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
+  const token: string | undefined = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId: string | undefined = process.env.TELEGRAM_CHAT_ID;
 
   if (!token || !chatId) {
-    console.warn('⚠️ [B2G TELEGRAM NOTIFIER] TELEGRAM_BOT_TOKEN o TELEGRAM_CHAT_ID no configurados en variables de entorno. Notificación omitida.');
+    console.warn(
+      '⚠️ [B2G TELEGRAM NOTIFIER] TELEGRAM_BOT_TOKEN o TELEGRAM_CHAT_ID no configurados en variables de entorno. Notificación omitida.'
+    );
     return false;
   }
 
-  const baseFormatted = tender.importeBase.toLocaleString('es-ES', {
+  const baseFormatted: string = tender.importeBase.toLocaleString('es-ES', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  const vimumeBadge = tender.vimumeCompatible 
-    ? `${tender.matchScore}% (&lt;75 dB SPL - Certificado)` 
+  const vimumeBadge: string = tender.vimumeCompatible
+    ? `${tender.matchScore}% (&lt;75 dB SPL - Certificado)`
     : `${tender.matchScore}% (Estándar Festejos)`;
 
-  const actionUrl = `https://productoraear.com/admin/flota?tab=b2g&id=${encodeURIComponent(tender.id)}`;
+  const actionUrl: string = `https://productoraear.com/admin/flota?tab=b2g&id=${encodeURIComponent(
+    tender.id
+  )}`;
 
-  const messageHtml = [
+  const messageHtml: string = [
     `🏛️ <b>NUEVA LICITACIÓN B2G DETECTADA</b>`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
     `• <b>Municipio:</b> ${escapeHtml(tender.municipio)} (${escapeHtml(tender.provincia)})`,
@@ -74,39 +88,46 @@ export async function sendB2GTelegramAlert(tender: B2GTenderAlertPayload): Promi
     `• <b>Régimen:</b> Art. 118 LCSP (Contrato Menor)`,
     `━━━━━━━━━━━━━━━━━━━━━━━━━━━`,
     `👉 <a href="${actionUrl}"><b>Generar Expediente Art. 118 (1-Clic)</b></a>`,
-    `📞 Retención EAR: +34 693 693 048`
+    `📞 Retención EAR: +34 693 693 048`,
   ].join('\n');
 
   try {
-    const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: messageHtml,
-        parse_mode: 'HTML',
-        disable_web_page_preview: false,
-      }),
-    });
+    const response: Response = await fetch(
+      `https://api.telegram.org/bot${token}/sendMessage`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: messageHtml,
+          parse_mode: 'HTML',
+          disable_web_page_preview: false,
+        }),
+      }
+    );
 
     if (!response.ok) {
-      const errBody = await response.text();
+      const errBody: string = await response.text();
       console.error(`❌ [B2G TELEGRAM ERROR] HTTP ${response.status}:`, errBody);
       return false;
     }
 
-    const data = await response.json();
+    const data: TelegramApiResponse = (await response.json()) as TelegramApiResponse;
     if (data.ok) {
-      console.log(`✅ [B2G TELEGRAM ALERT DISPATCHED] Alerta enviada para licitación ${tender.id} (${tender.municipio})`);
+      console.log(
+        `✅ [B2G TELEGRAM ALERT DISPATCHED] Alerta enviada para licitación ${tender.id} (${tender.municipio})`
+      );
       return true;
     } else {
       console.error(`❌ [B2G TELEGRAM RESPONSE ERROR]:`, data.description);
       return false;
     }
-  } catch (error: any) {
-    console.error(`❌ [B2G TELEGRAM NETWORK ERROR]:`, error?.message || error);
+  } catch (error: unknown) {
+    const message: string =
+      error instanceof Error ? error.message : String(error);
+    console.error(`❌ [B2G TELEGRAM NETWORK ERROR]:`, message);
     return false;
   }
 }

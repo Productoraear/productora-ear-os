@@ -2,6 +2,7 @@
 
 import { useReducer, useEffect, useCallback, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { ArrowLeft, ArrowRight, Radio } from 'lucide-react';
 import {
   ACG_INITIAL_STATE,
@@ -11,10 +12,35 @@ import {
   type DecisionStepId,
 } from '@/lib/acg/acgDecisionEngine';
 import { SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
-import UberRouteRadar from './UberRouteRadar';
-import TinderEventMatcher from './TinderEventMatcher';
-import AirbnbPriceLockEscrow from './AirbnbPriceLockEscrow';
-import BodasPlanPlanner from './BodasPlanPlanner';
+
+const StageSkeleton = () => (
+  <div
+    className="w-full min-h-[320px] rounded-2xl border border-white/10 bg-white/[0.02] animate-pulse"
+    role="status"
+    aria-live="polite"
+    aria-label="Cargando etapa"
+  />
+);
+
+const UberRouteRadar = dynamic(() => import('./UberRouteRadar'), {
+  ssr: false,
+  loading: () => <StageSkeleton />,
+});
+
+const TinderEventMatcher = dynamic(() => import('./TinderEventMatcher'), {
+  ssr: false,
+  loading: () => <StageSkeleton />,
+});
+
+const AirbnbPriceLockEscrow = dynamic(() => import('./AirbnbPriceLockEscrow'), {
+  ssr: false,
+  loading: () => <StageSkeleton />,
+});
+
+const BodasPlanPlanner = dynamic(() => import('./BodasPlanPlanner'), {
+  ssr: false,
+  loading: () => <StageSkeleton />,
+});
 
 const STEP_IDS: readonly DecisionStepId[] = ['ruta', 'match', 'espacio', 'plan'];
 
@@ -99,6 +125,9 @@ export default function DecisionBelt() {
     }
   };
 
+  const isFirstStep = state.currentStepIndex === 0;
+  const isLastStep = state.currentStepIndex === DECISION_STEPS.length - 1;
+
   return (
     <div className="w-full overflow-x-hidden">
       {/* Cabecera telemetría */}
@@ -112,8 +141,15 @@ export default function DecisionBelt() {
             Reserva directa en <span style={{ color: activeStep.accent }}>60 segundos</span>.
           </h1>
         </div>
-        <div className="flex items-center gap-3 font-mono text-[10px] text-white/40 uppercase tracking-widest">
-          <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">Paso {state.currentStepIndex + 1}/{DECISION_STEPS.length}</span>
+        <div
+          className="flex items-center gap-3 font-mono text-[10px] text-white/40 uppercase tracking-widest"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10">
+            Paso {state.currentStepIndex + 1}/{DECISION_STEPS.length}
+          </span>
           <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10" style={{ color: activeStep.accent }}>
             {activeStep.nickname} Layer
           </span>
@@ -121,21 +157,22 @@ export default function DecisionBelt() {
       </div>
 
       {/* Barra de progreso interactiva */}
-      <div
-        role="group"
+      <nav
+        role="navigation"
         aria-label="Progreso de la reserva"
         className="flex items-center gap-2 mb-10"
       >
         {DECISION_STEPS.map((step) => {
           const isActive = step.id === activeStep.id;
           const isCompleted = step.index < state.currentStepIndex;
+          const stepStatus = isCompleted ? 'completada' : isActive ? 'actual' : 'pendiente';
           return (
             <button
               key={step.id}
               type="button"
               onClick={() => goToStep(step.index)}
-              className="flex-1 text-left group"
-              aria-label={`Ir a etapa ${step.label}`}
+              className="flex-1 text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] rounded-lg"
+              aria-label={`Ir a etapa ${step.label} (${stepStatus})`}
               aria-current={isActive ? 'step' : undefined}
             >
               <div className="flex items-center gap-2 mb-2">
@@ -145,6 +182,7 @@ export default function DecisionBelt() {
                     backgroundColor: isActive || isCompleted ? step.accent : 'rgba(255,255,255,0.05)',
                     color: isActive || isCompleted ? '#030305' : 'rgba(255,255,255,0.45)',
                   }}
+                  aria-hidden="true"
                 >
                   {isCompleted ? '✓' : step.index + 1}
                 </span>
@@ -155,7 +193,14 @@ export default function DecisionBelt() {
                   {step.label}
                 </span>
               </div>
-              <div className="h-1 rounded-full bg-white/10 overflow-hidden">
+              <div
+                className="h-1 rounded-full bg-white/10 overflow-hidden"
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={isCompleted ? 100 : isActive ? 60 : 0}
+                aria-label={`Progreso etapa ${step.label}`}
+              >
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{
@@ -167,31 +212,45 @@ export default function DecisionBelt() {
             </button>
           );
         })}
-      </div>
+      </nav>
 
       {/* Etapa activa */}
-      <div className="mb-8">{renderActiveStage()}</div>
+      <section
+        className="mb-8"
+        aria-label={`Etapa activa: ${activeStep.label}`}
+        aria-live="polite"
+      >
+        {renderActiveStage()}
+      </section>
 
       {/* Navegación inferior */}
-      <div className="flex items-center justify-between border-t border-white/10 pt-6">
+      <div
+        className="flex items-center justify-between border-t border-white/10 pt-6"
+        role="group"
+        aria-label="Navegación entre etapas"
+      >
         <button
           type="button"
           onClick={goBack}
-          disabled={state.currentStepIndex === 0}
-          className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 disabled:opacity-30 flex items-center gap-2 font-mono text-xs uppercase tracking-widest"
+          disabled={isFirstStep}
+          aria-label="Ir a la etapa anterior"
+          aria-disabled={isFirstStep}
+          className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 disabled:opacity-30 flex items-center gap-2 font-mono text-xs uppercase tracking-widest focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
         >
           <ArrowLeft size={14} aria-hidden="true" /> Anterior
         </button>
 
-        <p className="hidden md:block font-mono text-[10px] text-white/30 uppercase tracking-widest">
+        <p className="hidden md:block font-mono text-[10px] text-white/30 uppercase tracking-widest" aria-hidden="true">
           Teclado: ← → · 1–4 · Espacio
         </p>
 
         <button
           type="button"
           onClick={goNext}
-          disabled={state.currentStepIndex === DECISION_STEPS.length - 1}
-          className="px-5 py-3 rounded-xl text-black font-mono text-xs uppercase tracking-widest flex items-center gap-2 disabled:opacity-30"
+          disabled={isLastStep}
+          aria-label="Ir a la siguiente etapa"
+          aria-disabled={isLastStep}
+          className="px-5 py-3 rounded-xl text-black font-mono text-xs uppercase tracking-widest flex items-center gap-2 disabled:opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
           style={{ backgroundColor: activeStep.accent }}
         >
           Siguiente <ArrowRight size={14} aria-hidden="true" />

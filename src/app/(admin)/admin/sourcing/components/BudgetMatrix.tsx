@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
-import { Calculator, Download, Sparkles, PieChart, ShieldCheck, DollarSign } from 'lucide-react';
+import React, { useState, useMemo, Suspense, Component, ReactNode, ErrorInfo } from 'react';
+import { Calculator, Download, Sparkles, PieChart, ShieldCheck, DollarSign, AlertTriangle, RefreshCw } from 'lucide-react';
 
 export interface BudgetPartition {
   name: string;
@@ -21,7 +21,91 @@ const PARTITIONS: BudgetPartition[] = [
   { name: 'Contingencia & Imprevistos', minPct: 15, maxPct: 22, recommendedPct: 21, color: '#64748b', description: 'Fianza de daños, generador de rescate y margen de seguridad.' },
 ];
 
-export const BudgetMatrix: React.FC = () => {
+interface BudgetMatrixErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface BudgetMatrixErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class BudgetMatrixErrorBoundary extends Component<BudgetMatrixErrorBoundaryProps, BudgetMatrixErrorBoundaryState> {
+  constructor(props: BudgetMatrixErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): BudgetMatrixErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    if (typeof console !== 'undefined') {
+      console.error('[BudgetMatrix] ErrorBoundary caught:', error, errorInfo);
+    }
+  }
+
+  private handleReset = (): void => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+      return (
+        <div className="p-6 rounded-3xl bg-[#08080d] border border-red-500/30 space-y-4 shadow-2xl">
+          <div className="flex items-center gap-2 text-red-400">
+            <AlertTriangle size={18} />
+            <span className="text-xs font-mono uppercase tracking-widest">
+              Error en Matriz de Presupuestos
+            </span>
+          </div>
+          <p className="text-sm text-zinc-400 font-mono">
+            {this.state.error?.message ?? 'Error desconocido al renderizar el simulador.'}
+          </p>
+          <button
+            onClick={this.handleReset}
+            className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-zinc-300 flex items-center gap-2 transition-all"
+          >
+            <RefreshCw size={14} className="text-[#ecb613]" />
+            Reintentar
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+const BudgetMatrixSkeleton: React.FC = () => (
+  <div className="p-6 rounded-3xl bg-[#08080d] border border-white/10 space-y-6 shadow-2xl animate-pulse">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+      <div className="space-y-2">
+        <div className="h-3 w-48 rounded bg-white/5" />
+        <div className="h-5 w-72 rounded bg-white/5" />
+      </div>
+      <div className="h-9 w-32 rounded-xl bg-white/5" />
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 rounded-3xl bg-[#09090d]/80 border border-white/10">
+      <div className="h-12 rounded bg-white/5" />
+      <div className="h-12 rounded bg-white/5" />
+    </div>
+    <div className="space-y-4">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="space-y-2">
+          <div className="h-3 w-full rounded bg-white/5" />
+          <div className="h-3 w-full rounded bg-white/5" />
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const BudgetMatrixInner: React.FC = () => {
   const [totalBudgetEur, setTotalBudgetEur] = useState<number>(45000);
   const [paxCount, setPaxCount] = useState<number>(150);
 
@@ -37,7 +121,7 @@ export const BudgetMatrix: React.FC = () => {
     });
   }, [totalBudgetEur, paxCount]);
 
-  const exportCSV = () => {
+  const exportCSV = (): void => {
     const headers = 'Partida,Porcentaje,Importe Total (€),Coste por Persona (€),Descripción\n';
     const rows = breakdown
       .map((b) => `"${b.name}","${b.recommendedPct}%","${b.amount} €","${b.perPax} €","${b.description}"`)
@@ -153,3 +237,15 @@ export const BudgetMatrix: React.FC = () => {
     </div>
   );
 };
+
+export const BudgetMatrix: React.FC = () => {
+  return (
+    <BudgetMatrixErrorBoundary>
+      <Suspense fallback={<BudgetMatrixSkeleton />}>
+        <BudgetMatrixInner />
+      </Suspense>
+    </BudgetMatrixErrorBoundary>
+  );
+};
+
+export default BudgetMatrix;

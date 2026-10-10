@@ -70,61 +70,61 @@
     {
       "wave": 11,
       "category": "SCHEMA-ORG: Verificar/añadir JSON-LD structured data en 50 páginas comerciales",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 12,
       "category": "UX-COPY: Eliminar copy vacío (revoluciona, transforma, experiencia) y sustituir por datos reales en 50 componentes",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 13,
       "category": "DEAD-CODE: Eliminar archivos huérfanos sin importar de src/components/ y src/lib/ (50 archivos)",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 14,
       "category": "API-CONSOLIDATE: Unificar API routes duplicados (quote vs quotes, checkout vs payments) 50 archivos",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 15,
       "category": "TESTING: Crear smoke tests mínimos para 50 API routes críticas (curl + status 200/201/400)",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 16,
       "category": "ADMIN-POLISH: Mejorar UX de las 22 páginas admin (loading states, empty states, error states)",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 17,
       "category": "VENDOR-POLISH: Mejorar UX de las 12 páginas vendor (loading, empty, error + PWA icons)",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 18,
       "category": "PUBLIC-POLISH: Mejorar CTA buttons, hover states y micro-animations en 50 páginas públicas",
-      "status": "PENDING",
+      "status": "ACTIVE",
       "tasks": 50
     },
     {
       "wave": 19,
       "category": "INTEGRATION: Verificar que los 10 flujos de negocio E2E funcionan (Reserva->Stripe->WhatsApp->Confirmación)",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "tasks": 50
     },
     {
       "wave": 20,
       "category": "PRODUCTION-SEAL: Build final, lighthouse audit, git commit + deploy a ambos remotos",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "tasks": 50
     }
   ]

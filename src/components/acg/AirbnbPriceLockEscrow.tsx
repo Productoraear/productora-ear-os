@@ -107,8 +107,15 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
     }
   };
 
+  const fincaName = selectedFinca?.name ?? 'Finca Homologada';
+  const fincaProvincia = selectedFinca?.provincia ?? 'destino homologado';
+  const fincaCapacidad = selectedFinca?.capacidadMaxPax ?? '—';
+
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <section
+      aria-label="Reserva Price-Lock con custodia fiduciaria ACG"
+      className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6"
+    >
       {/* Columna fecha + galería */}
       <div className="lg:col-span-7 space-y-5">
         <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
@@ -116,12 +123,19 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
             <Calendar size={15} className="text-[#00E5FF]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Disponibilidad real · reserva en 1 clic</span>
           </div>
-          <label className="block font-mono text-[10px] text-white/40 uppercase mb-2">Fecha del evento</label>
+          <label
+            htmlFor="acg-event-date"
+            className="block font-mono text-[10px] text-white/40 uppercase mb-2"
+          >
+            Fecha del evento
+          </label>
           <input
+            id="acg-event-date"
             type="date"
             value={eventDate}
             onChange={(e) => handleDateChange(e.target.value)}
             aria-label="Fecha del evento"
+            aria-required="true"
             className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-sm font-mono focus:outline-none focus:border-[#00E5FF]"
           />
 
@@ -129,15 +143,15 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
             <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-3">Vista FOH / Escenario del destino</p>
             <div
               role="img"
-              aria-label={`Vista del escenario de ${selectedFinca?.name ?? 'Finca Homologada'} en ${selectedFinca?.provincia ?? 'destino homologado'}, capacidad ${selectedFinca?.capacidadMaxPax ?? '—'} personas`}
+              aria-label={`Vista del escenario de ${fincaName} en ${fincaProvincia}, capacidad ${fincaCapacidad} personas`}
               className="rounded-2xl border border-[#00E5FF]/20 bg-gradient-to-br from-[#0a141a] to-[#030305] p-8 flex items-center justify-center"
             >
               <div className="text-center space-y-2">
                 <div className="w-20 h-20 mx-auto rounded-full bg-[#00E5FF]/10 border border-[#00E5FF]/30 flex items-center justify-center">
                   <ShieldCheck size={32} className="text-[#00E5FF]" aria-hidden="true" />
                 </div>
-                <p className="font-syne text-lg font-black text-white">{selectedFinca?.name ?? 'Finca Homologada'}</p>
-                <p className="font-mono text-xs text-white/50">{selectedFinca?.provincia} · Capacidad {selectedFinca?.capacidadMaxPax} pax</p>
+                <p className="font-syne text-lg font-black text-white">{fincaName}</p>
+                <p className="font-mono text-xs text-white/50">{fincaProvincia} · Capacidad {fincaCapacidad} pax</p>
                 <p className="font-mono text-[10px] text-[#00E5FF] uppercase tracking-widest">{'Escenario optimizado <75 dB SPL · B2G ready'}</p>
               </div>
             </div>
@@ -147,7 +161,11 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
 
       {/* Columna escrow + cierre */}
       <div className="lg:col-span-5 space-y-5">
-        <div className="rounded-2xl bg-[#050507] border border-[#00E5FF]/30 p-6 space-y-4">
+        <div
+          role="region"
+          aria-label="Panel de custodia fiduciaria y cierre de reserva"
+          className="rounded-2xl bg-[#050507] border border-[#00E5FF]/30 p-6 space-y-4"
+        >
           <div className="flex items-center gap-2">
             <Lock size={15} className="text-[#00E5FF]" aria-hidden="true" />
             <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Custodia fiduciaria · Split Soberano</span>
@@ -156,57 +174,117 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
           <div className="border-b border-white/10 pb-4">
             <div className="flex justify-between items-baseline">
               <span className="font-mono text-xs text-white/50">Total base (sin IVA)</span>
-              <span className="font-mono text-2xl text-white font-black">{formatEur(quote.totalBase)} €</span>
+              <span
+                className="font-mono text-2xl text-white font-black"
+                aria-label={`Total base sin IVA: ${formatEur(quote.totalBase)} euros`}
+              >
+                {formatEur(quote.totalBase)} €
+              </span>
             </div>
             <div className="mt-1 flex justify-between items-baseline">
               <span className="font-mono text-xs text-white/50">Depósito Price-Lock</span>
-              <span className="font-mono text-lg text-[#00E5FF] font-black">{formatEur(quote.deposit)} €</span>
+              <span
+                className="font-mono text-lg text-[#00E5FF] font-black"
+                aria-label={`Depósito Price-Lock: ${formatEur(quote.deposit)} euros`}
+              >
+                {formatEur(quote.deposit)} €
+              </span>
             </div>
           </div>
 
-          <div className="space-y-2 font-mono text-xs">
-            <div className="flex justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+          <div
+            role="list"
+            aria-label="Desglose del split soberano"
+            className="space-y-2 font-mono text-xs"
+          >
+            <div
+              role="listitem"
+              className="flex justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5"
+            >
               <span className="text-white/50">80% Artista</span>
-              <span className="text-white font-bold">{formatEur(quote.split.artista)} €</span>
+              <span
+                className="text-white font-bold"
+                aria-label={`Artista: ${formatEur(quote.split.artista)} euros`}
+              >
+                {formatEur(quote.split.artista)} €
+              </span>
             </div>
-            <div className="flex justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+            <div
+              role="listitem"
+              className="flex justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5"
+            >
               <span className="text-white/50">10% EAR OS</span>
-              <span className="text-[#00E5FF] font-bold">{formatEur(quote.split.earOs)} €</span>
+              <span
+                className="text-[#00E5FF] font-bold"
+                aria-label={`EAR OS: ${formatEur(quote.split.earOs)} euros`}
+              >
+                {formatEur(quote.split.earOs)} €
+              </span>
             </div>
-            <div className="flex justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5">
+            <div
+              role="listitem"
+              className="flex justify-between p-2.5 rounded-xl bg-white/[0.03] border border-white/5"
+            >
               <span className="text-white/50">10% VIMUME</span>
-              <span className="text-emerald-400 font-bold">{formatEur(quote.split.vimume)} €</span>
+              <span
+                className="text-emerald-400 font-bold"
+                aria-label={`VIMUME: ${formatEur(quote.split.vimume)} euros`}
+              >
+                {formatEur(quote.split.vimume)} €
+              </span>
             </div>
           </div>
 
           <div className="space-y-2 pt-1">
+            <label htmlFor="acg-client-name" className="sr-only">
+              Nombre de la persona de contacto
+            </label>
             <input
+              id="acg-client-name"
               type="text"
               placeholder="Nombre o persona de contacto"
               value={state.space.clientName}
               onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { clientName: e.target.value } })}
               aria-label="Nombre de la persona de contacto"
+              aria-required="true"
+              autoComplete="name"
               className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-[#00E5FF]"
             />
+            <label htmlFor="acg-client-phone" className="sr-only">
+              Teléfono o WhatsApp
+            </label>
             <input
+              id="acg-client-phone"
               type="tel"
               placeholder="Teléfono / WhatsApp"
               value={state.space.clientPhone}
               onChange={(e) => dispatch({ type: 'SET_SPACE', payload: { clientPhone: e.target.value } })}
               aria-label="Teléfono o WhatsApp"
+              aria-required="true"
+              autoComplete="tel"
+              inputMode="tel"
               className="w-full bg-[#0a0a0d] border border-white/10 rounded-xl px-4 py-3 text-white text-xs focus:outline-none focus:border-[#00E5FF]"
             />
           </div>
 
           {state.space.priceLockHash && (
-            <div className="p-3 rounded-xl bg-black/50 border border-[#00E5FF]/30 break-all">
+            <div
+              role="status"
+              aria-live="polite"
+              aria-label="Firma Price-Lock emitida"
+              className="p-3 rounded-xl bg-black/50 border border-[#00E5FF]/30 break-all"
+            >
               <span className="block font-mono text-[9px] text-white/40 uppercase tracking-widest mb-1">Firma Price-Lock emitida</span>
               <span className="font-mono text-[10px] text-[#00E5FF]">{state.space.priceLockHash}</span>
             </div>
           )}
 
           {lockError && (
-            <p role="alert" className="font-mono text-xs text-[#FF2B44]">
+            <p
+              role="alert"
+              aria-live="assertive"
+              className="font-mono text-xs text-[#FF2B44]"
+            >
               {lockError}
             </p>
           )}
@@ -215,9 +293,20 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
             type="button"
             onClick={handlePriceLock}
             disabled={isProcessing}
+            aria-label={
+              isProcessing
+                ? 'Firmando y bloqueando la fecha, por favor espere'
+                : `Bloquear fecha con depósito de ${formatEur(quote.deposit)} euros`
+            }
+            aria-busy={isProcessing}
+            aria-disabled={isProcessing}
             className="w-full py-4 rounded-xl bg-[#00E5FF] text-black font-black text-sm uppercase tracking-widest hover:shadow-[0_0_35px_rgba(0,229,255,0.5)] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {isProcessing ? <Loader2 size={18} className="animate-spin" aria-hidden="true" /> : <CreditCard size={18} aria-hidden="true" />}
+            {isProcessing ? (
+              <Loader2 size={18} className="animate-spin" aria-hidden="true" />
+            ) : (
+              <CreditCard size={18} aria-hidden="true" />
+            )}
             {isProcessing ? 'Firmando y bloqueando...' : `Bloquear fecha (${formatEur(quote.deposit)} €)`}
           </button>
 
@@ -227,6 +316,6 @@ export default function AirbnbPriceLockEscrow({ state, dispatch }: AirbnbPriceLo
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

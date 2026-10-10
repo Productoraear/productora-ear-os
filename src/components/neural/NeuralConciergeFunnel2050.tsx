@@ -271,7 +271,7 @@ export default function NeuralConciergeFunnel2050() {
             <div className={`p-4 rounded-2xl border ${isLight ? 'bg-zinc-50 border-zinc-200' : 'bg-black/40 border-white/5'}`}>
               <div className="flex items-center gap-2 mb-2 text-xs font-mono font-semibold opacity-70">
                 <MapPin size={14} className="text-amber-500" />
-                <span>¿Dónde se celebra? (GPS & Distancia desde Méntrida)</span>
+                <span>¿Dónde se celebra tu evento? (Logística desde Sede del Artista/Proveedor)</span>
               </div>
               <select
                 aria-label="Selecciona la provincia o zona"
@@ -285,10 +285,13 @@ export default function NeuralConciergeFunnel2050() {
               >
                 {PROVINCES.map((prov, idx) => (
                   <option key={prov.name} value={idx}>
-                    {prov.name} — {prov.distanceKm} km ({prov.note})
+                    {prov.name} — {prov.distanceKm} km {selectedCatId === 'solista' ? '(Origen: Base Méntrida de Edwin Agudelo)' : '(Calculado por GPS desde la sede del proveedor)'}
                   </option>
                 ))}
               </select>
+              <p className="text-[10px] opacity-60 mt-2 font-mono">
+                * Para Edwin Agudelo y proveedores locales, el cálculo parte de la base en Méntrida. Para el resto de la red nacional, el kilometraje se liquida por GPS desde la sede física de cada proveedor.
+              </p>
             </div>
 
             {/* Fecha del Evento */}

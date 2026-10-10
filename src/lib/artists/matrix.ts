@@ -4,21 +4,32 @@
  * Fully enriched with absolute authority evidence, awards, tour backing, and VIMUME clinical integration.
  */
 
+export type EventType =
+  | 'bodas'
+  | 'cumpleaños'
+  | 'aniversarios'
+  | 'ferias'
+  | 'festivales'
+  | 'ayuntamientos'
+  | 'corporativos';
+
+export type ShowType = 'solista' | 'mariachi-6' | 'show-caballo' | 'monumental';
+
 export interface SEOVariant {
-  slug: string;
-  title: string;
-  metaDescription: string;
-  eventType: 'bodas' | 'cumpleaños' | 'aniversarios' | 'ferias' | 'festivales' | 'ayuntamientos' | 'corporativos';
-  city: string;
-  showType: 'solista' | 'mariachi-6' | 'show-caballo' | 'monumental';
-  showTypeName: string;
-  intent: string;
-  uniqueDescription: string;
-  localLogistics: string;
-  suggestedRepertoire: string[];
+  readonly slug: string;
+  readonly title: string;
+  readonly metaDescription: string;
+  readonly eventType: EventType;
+  readonly city: string;
+  readonly showType: ShowType;
+  readonly showTypeName: string;
+  readonly intent: string;
+  readonly uniqueDescription: string;
+  readonly localLogistics: string;
+  readonly suggestedRepertoire: readonly string[];
 }
 
-export const HIGH_VALUE_VARIANTS: SEOVariant[] = [
+export const HIGH_VALUE_VARIANTS: readonly SEOVariant[] = [
   {
     slug: "mariachi-bodas-madrid-solista",
     title: "Mariachi Solista para Bodas en Madrid | Edwin Agudelo Premium",

@@ -11,31 +11,40 @@ export interface CommissionCalculationResult {
 }
 
 const TIER_RATES: Record<AffiliateTier, number> = {
-  S_CLASS: 0.10,
+  S_CLASS: 0.1,
   TIER_1: 0.08,
   TIER_2: 0.05,
-  AMBASSADOR: 0.06
+  AMBASSADOR: 0.06,
 };
+
+const DEFAULT_TIER_RATE = 0.05;
+const SECONDARY_EVENT_BONUS_RATE = 0.05;
+const DEFAULT_CUSTOM_DOMAIN = 'https://productoraear.com';
 
 export function calculateDeterministicCommission(
   tier: AffiliateTier,
   baseEventAmount: number,
-  isSecondaryEvent: boolean = false
+  isSecondaryEvent: boolean = false,
 ): CommissionCalculationResult {
-  const rate = TIER_RATES[tier] || 0.05;
+  const rate = TIER_RATES[tier] ?? DEFAULT_TIER_RATE;
   const primaryCommission = Number((baseEventAmount * rate).toFixed(2));
-  const lifetimeBonus = isSecondaryEvent ? Number((baseEventAmount * 0.05).toFixed(2)) : 0;
-  
+  const lifetimeBonus = isSecondaryEvent
+    ? Number((baseEventAmount * SECONDARY_EVENT_BONUS_RATE).toFixed(2))
+    : 0;
+
   return {
     baseAmount: baseEventAmount,
     commissionRate: rate,
     commissionAmount: primaryCommission,
     lifetimeBonusAmount: lifetimeBonus,
-    totalPayout: Number((primaryCommission + lifetimeBonus).toFixed(2))
+    totalPayout: Number((primaryCommission + lifetimeBonus).toFixed(2)),
   };
 }
 
-export function buildSovereignTrackingUrl(partnerSlug: string, customDomain: string = 'https://productoraear.com'): string {
+export function buildSovereignTrackingUrl(
+  partnerSlug: string,
+  customDomain: string = DEFAULT_CUSTOM_DOMAIN,
+): string {
   return `${customDomain}/proveedores?ref=${encodeURIComponent(partnerSlug)}`;
 }
 
@@ -43,7 +52,11 @@ export function buildSovereignTrackingUrl(partnerSlug: string, customDomain: str
 /* Descuento Profesional S-Class (Organizadores / Wedding Planners)     */
 /* ------------------------------------------------------------------ */
 
-export type ProfessionalRole = 'WEDDING_PLANNER' | 'EVENT_ORGANIZER' | 'VENUE_COORDINATOR' | 'NOT_VERIFIED';
+export type ProfessionalRole =
+  | 'WEDDING_PLANNER'
+  | 'EVENT_ORGANIZER'
+  | 'VENUE_COORDINATOR'
+  | 'NOT_VERIFIED';
 
 export const PROFESSIONAL_DISCOUNT_RATE = 0.05; // 5% al momento de pagar, con acreditación previa.
 
@@ -57,23 +70,45 @@ export interface ProfessionalDiscountResult {
   discountedTotal: number;
 }
 
+const VALID_ROLE_KEYWORDS: readonly string[] = [
+  'wedding',
+  'planner',
+  'organizador',
+  'organizadora',
+  'coordinador',
+  'coordinadora',
+  'eventos',
+  'boda',
+] as const;
+
 /**
  * Verifica la elegibilidad de un profesional del sector (organizadora de bodas,
  * wedding planner, coordinadora de eventos/recinto) para acceder al descuento.
  * La acreditación (proofProvided) es OBLIGATORIA: sin demostración no hay descuento.
  */
-export function verifyProfessionalEligibility(role: string, proofProvided: boolean): boolean {
+export function verifyProfessionalEligibility(
+  role: string,
+  proofProvided: boolean,
+): boolean {
+  if (!proofProvided) {
+    return false;
+  }
   const normalized = role.toLowerCase();
-  const validRole =
-    normalized.includes('wedding') ||
-    normalized.includes('planner') ||
-    normalized.includes('organizador') ||
-    normalized.includes('organizadora') ||
-    normalized.includes('coordinador') ||
-    normalized.includes('coordinadora') ||
-    normalized.includes('eventos') ||
-    normalized.includes('boda');
-  return validRole && proofProvided;
+  return VALID_ROLE_KEYWORDS.some((keyword) => normalized.includes(keyword));
+}
+
+function resolveProfessionalRole(role: string, isVerified: boolean): ProfessionalRole {
+  if (!isVerified) {
+    return 'NOT_VERIFIED';
+  }
+  const normalized = role.toLowerCase();
+  if (normalized.includes('coord') || normalized.includes('recinto')) {
+    return 'VENUE_COORDINATOR';
+  }
+  if (normalized.includes('organizador') || normalized.includes('organizadora')) {
+    return 'EVENT_ORGANIZER';
+  }
+  return 'WEDDING_PLANNER';
 }
 
 /**
@@ -83,18 +118,12 @@ export function verifyProfessionalEligibility(role: string, proofProvided: boole
 export function applyProfessionalDiscount(
   total: number,
   role: string,
-  proofProvided: boolean
+  proofProvided: boolean,
 ): ProfessionalDiscountResult {
   const isVerified = verifyProfessionalEligibility(role, proofProvided);
   const discountRate = isVerified ? PROFESSIONAL_DISCOUNT_RATE : 0;
   const discountAmount = Number((total * discountRate).toFixed(2));
-  const professionalRole: ProfessionalRole = isVerified
-    ? role.toLowerCase().includes('coord') || role.toLowerCase().includes('recinto')
-      ? 'VENUE_COORDINATOR'
-      : role.toLowerCase().includes('organizador') || role.toLowerCase().includes('organizadora')
-        ? 'EVENT_ORGANIZER'
-        : 'WEDDING_PLANNER'
-    : 'NOT_VERIFIED';
+  const professionalRole = resolveProfessionalRole(role, isVerified);
 
   return {
     role: professionalRole,
@@ -103,6 +132,6 @@ export function applyProfessionalDiscount(
     originalTotal: Number(total.toFixed(2)),
     discountRate,
     discountAmount,
-    discountedTotal: Number((total - discountAmount).toFixed(2))
+    discountedTotal: Number((total - discountAmount).toFixed(2)),
   };
 }

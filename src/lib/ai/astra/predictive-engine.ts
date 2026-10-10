@@ -3,16 +3,29 @@
  * Evaluates transport risk, pricing dynamics, and local demand splits.
  */
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_API_KEY: string | undefined = process.env.GEMINI_API_KEY;
 const MODEL = "gemini-1.5-flash";
+
+export interface AstraHistoricalWaybill {
+  status?: string;
+  distanceMeters?: number | null;
+  createdAt?: string | Date | null;
+  [key: string]: unknown;
+}
+
+export interface AstraHistoricalWalletMove {
+  amount?: number | null;
+  createdAt?: string | Date | null;
+  [key: string]: unknown;
+}
 
 export interface AstraPredictionInput {
   origin: string;
   destination: string;
   eventDate: string | Date;
   providerId?: string;
-  historicalWaybills?: any[];
-  historicalWalletMoves?: any[];
+  historicalWaybills?: AstraHistoricalWaybill[];
+  historicalWalletMoves?: AstraHistoricalWalletMove[];
 }
 
 export interface AstraPredictionOutput {
@@ -23,6 +36,27 @@ export interface AstraPredictionOutput {
   explanation: string;
   confidenceScore: number;
   warningMessage?: string;
+}
+
+interface GeminiResponseCandidatePart {
+  text?: string;
+}
+
+interface GeminiResponseCandidateContent {
+  parts?: GeminiResponseCandidatePart[];
+}
+
+interface GeminiResponseCandidate {
+  content?: GeminiResponseCandidateContent;
+}
+
+interface GeminiResponseError {
+  message?: string;
+}
+
+interface GeminiResponse {
+  candidates?: GeminiResponseCandidate[];
+  error?: GeminiResponseError;
 }
 
 /**
@@ -50,7 +84,10 @@ function runAnalyticalFallback(input: AstraPredictionInput): AstraPredictionOutp
 
   // If long distance (different provinces or islands)
   if (
-    (lowercaseDest.includes("ibiza") || lowercaseDest.includes("palma") || lowercaseDest.includes("baleares") || lowercaseDest.includes("canarias")) &&
+    (lowercaseDest.includes("ibiza") ||
+      lowercaseDest.includes("palma") ||
+      lowercaseDest.includes("baleares") ||
+      lowercaseDest.includes("canarias")) &&
     !(lowercaseOrigin.includes("ibiza") || lowercaseOrigin.includes("palma"))
   ) {
     geoPriceMultiplier = 2.2; // High island tariff multiplier
@@ -76,10 +113,12 @@ function runAnalyticalFallback(input: AstraPredictionInput): AstraPredictionOutp
   // Standard pricing formula: 150 EUR base flat fee + 1.2 EUR / km (assumed 120km average distance if not known)
   const estimatedKm = geoPriceMultiplier > 2.0 ? 350 : 120;
   const baseCost = 150 + estimatedKm * 1.2;
-  const recommendedTotalAmount = Number((baseCost * geoPriceMultiplier * (1 + riskScore * 0.25)).toFixed(2));
+  const recommendedTotalAmount = Number(
+    (baseCost * geoPriceMultiplier * (1 + riskScore * 0.25)).toFixed(2)
+  );
 
   // 5. Confidence Score (based on historical data availability)
-  const historyWeight = (input.historicalWaybills?.length || 0) * 0.1;
+  const historyWeight = (input.historicalWaybills?.length ?? 0) * 0.1;
   const confidenceScore = Math.min(0.5 + historyWeight, 0.95);
 
   const output: AstraPredictionOutput = {
@@ -87,12 +126,15 @@ function runAnalyticalFallback(input: AstraPredictionInput): AstraPredictionOutp
     geoPriceMultiplier: Number(geoPriceMultiplier.toFixed(2)),
     riskScore: Number(riskScore.toFixed(2)),
     recommendedTotalAmount,
-    explanation: `Estimación heurística determinista ASTRA en base a distancias zonales aproximadas, estacionalidad del mes (${month + 1}) y el día de la semana (${day}). Alta demanda detectada en temporada de bodas.`,
-    confidenceScore: Number(confidenceScore.toFixed(2))
+    explanation: `Estimación heurística determinista ASTRA en base a distancias zonales aproximadas, estacionalidad del mes (${
+      month + 1
+    }) y el día de la semana (${day}). Alta demanda detectada en temporada de bodas.`,
+    confidenceScore: Number(confidenceScore.toFixed(2)),
   };
 
   if (confidenceScore < 0.6) {
-    output.warningMessage = "Nivel de confianza predictiva bajo debido al tamaño limitado del historial transaccional de flotas.";
+    output.warningMessage =
+      "Nivel de confianza predictiva bajo debido al tamaño limitado del historial transaccional de flotas.";
   }
 
   return output;
@@ -104,7 +146,9 @@ export class AstraPredictiveEngine {
    */
   async predict(input: AstraPredictionInput): Promise<AstraPredictionOutput> {
     if (!GEMINI_API_KEY) {
-      console.warn("⚠️ [ASTRA] GEMINI_API_KEY not configured. Invoking S-Class Heuristic engine.");
+      console.warn(
+        "⚠️ [ASTRA] GEMINI_API_KEY not configured. Invoking S-Class Heuristic engine."
+      );
       return runAnalyticalFallback(input);
     }
 
@@ -122,13 +166,13 @@ export class AstraPredictiveEngine {
         eventDate: input.eventDate,
         month: monthLabel,
         isWeekend,
-        historicalWaybillsCount: input.historicalWaybills?.length || 0,
-        historicalWalletMovesCount: input.historicalWalletMoves?.length || 0,
-        historicalDataSnippet: input.historicalWaybills?.slice(0, 5).map(w => ({
+        historicalWaybillsCount: input.historicalWaybills?.length ?? 0,
+        historicalWalletMovesCount: input.historicalWalletMoves?.length ?? 0,
+        historicalDataSnippet: input.historicalWaybills?.slice(0, 5).map((w) => ({
           status: w.status,
           distance: w.distanceMeters,
-          created: w.createdAt
-        }))
+          created: w.createdAt,
+        })),
       };
 
       const systemPrompt = `
@@ -163,38 +207,48 @@ ${JSON.stringify(context)}
           contents: [{ parts: [{ text: systemPrompt }] }],
           generationConfig: {
             temperature: 0.15,
-            responseMimeType: "application/json"
-          }
-        })
+            responseMimeType: "application/json",
+          },
+        }),
       });
 
       if (!response.ok) {
         throw new Error(`Gemini API HTTP status ${response.status}`);
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as GeminiResponse;
       if (data.error) {
-        throw new Error(data.error.message || "Gemini generative language API error");
+        throw new Error(data.error.message ?? "Gemini generative language API error");
       }
 
-      const rawText = data.candidates[0].content.parts[0].text;
-      const parsed: AstraPredictionOutput = JSON.parse(rawText.trim());
+      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (typeof rawText !== "string" || rawText.trim().length === 0) {
+        throw new Error("Gemini API returned an empty or malformed response payload");
+      }
+
+      const parsed = JSON.parse(rawText.trim()) as AstraPredictionOutput;
 
       // Ensure proper formatting and inject warning message if trust is low
       parsed.baseDemandScore = Number(Number(parsed.baseDemandScore).toFixed(2));
       parsed.geoPriceMultiplier = Number(Number(parsed.geoPriceMultiplier).toFixed(2));
       parsed.riskScore = Number(Number(parsed.riskScore).toFixed(2));
-      parsed.recommendedTotalAmount = Number(Number(parsed.recommendedTotalAmount).toFixed(2));
+      parsed.recommendedTotalAmount = Number(
+        Number(parsed.recommendedTotalAmount).toFixed(2)
+      );
       parsed.confidenceScore = Number(Number(parsed.confidenceScore).toFixed(2));
 
       if (parsed.confidenceScore < 0.6) {
-        parsed.warningMessage = "Nivel de confianza predictiva bajo debido al tamaño limitado del historial transaccional de flotas.";
+        parsed.warningMessage =
+          "Nivel de confianza predictiva bajo debido al tamaño limitado del historial transaccional de flotas.";
       }
 
       return parsed;
-
-    } catch (err: any) {
-      console.error("🛑 [ASTRA] Synapse prediction call failed, deploying fallback engine:", err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(
+        "🛑 [ASTRA] Synapse prediction call failed, deploying fallback engine:",
+        message
+      );
       return runAnalyticalFallback(input);
     }
   }

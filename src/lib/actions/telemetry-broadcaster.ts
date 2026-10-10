@@ -7,29 +7,59 @@ import { trackFleetUnit } from "./fleet-actions";
  * Simulates a real-time tracking session by emitting pings at intervals.
  */
 
-export async function simulateTelemetryStream(waybillId: string, unitId: string, startLat: number, startLng: number, endLat: number, endLng: number) {
-  console.log(`[SIMULATOR] Starting telemetry stream for Waybill ${waybillId}`);
-  
-  const steps = 20;
-  const interval = 2000; // 2 seconds between pings
+export interface TelemetryStreamResult {
+  readonly success: boolean;
+}
 
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
+export interface TelemetryStreamParams {
+  readonly waybillId: string;
+  readonly unitId: string;
+  readonly startLat: number;
+  readonly startLng: number;
+  readonly endLat: number;
+  readonly endLng: number;
+}
+
+const TELEMETRY_STEPS = 20;
+const TELEMETRY_INTERVAL_MS = 2000;
+const TELEMETRY_MOCK_SPEED = 120;
+const TELEMETRY_MOCK_HEADING = 0;
+
+function delay(ms: number): Promise<void> {
+  return new Promise<void>((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+export async function simulateTelemetryStream(
+  waybillId: string,
+  unitId: string,
+  startLat: number,
+  startLng: number,
+  endLat: number,
+  endLng: number
+): Promise<TelemetryStreamResult> {
+  console.log(
+    `[SIMULATOR] Starting telemetry stream for Waybill ${waybillId} (Unit ${unitId})`
+  );
+
+  for (let i = 0; i <= TELEMETRY_STEPS; i++) {
+    const t = i / TELEMETRY_STEPS;
     const currentLat = startLat + (endLat - startLat) * t;
     const currentLng = startLng + (endLng - startLng) * t;
 
-    // Persist to DB via existing S-Class Action
     await trackFleetUnit({
       waybillId,
       latitude: currentLat,
       longitude: currentLng,
-      type: i === steps ? "ARRIVED" : "LOCATION_PING",
-      heading: 0, // Simplified for mock
-      speed: 120,
+      type: i === TELEMETRY_STEPS ? "ARRIVED" : "LOCATION_PING",
+      heading: TELEMETRY_MOCK_HEADING,
+      speed: TELEMETRY_MOCK_SPEED,
     });
 
-    // Wait before next ping
-    await new Promise(resolve => setTimeout(resolve, interval));
+    if (i < TELEMETRY_STEPS) {
+      await delay(TELEMETRY_INTERVAL_MS);
+    }
   }
 
   console.log(`[SIMULATOR] Waybill ${waybillId} simulation completed.`);

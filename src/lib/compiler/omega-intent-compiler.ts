@@ -74,28 +74,57 @@ export interface CompiledDAGResult {
   };
 }
 
+interface SemanticResolution {
+  files: string[];
+  macro: string;
+  validation: string;
+}
+
+interface OllamaArchitectResult {
+  files: string[];
+  macro: string;
+  validation: string;
+  model: string;
+}
+
 /**
  * 🏛️ KNOWLEDGE GRAPH ESTÁTICO DE EAR OS (Zero-Cold-Start)
  * Mapeo semántico de dominios a archivos reales y scripts verificadores.
  */
-function resolveSemanticFiles(cleanInput: string): { files: string[]; macro: string; validation: string } {
+function resolveSemanticFiles(cleanInput: string): SemanticResolution {
   const lower = cleanInput.toLowerCase();
 
   // 0. Coherencia de Navegación, Navbars, Sidebars y Menús
-  if (lower.includes('navegac') || lower.includes('navbar') || lower.includes('sidebar') || lower.includes('menu') || lower.includes('coherencia') || lower.includes('ruta')) {
+  if (
+    lower.includes('navegac') ||
+    lower.includes('navbar') ||
+    lower.includes('sidebar') ||
+    lower.includes('menu') ||
+    lower.includes('coherencia') ||
+    lower.includes('ruta')
+  ) {
     return {
       files: [
         'src/app/components/layout/SovereignNavbar.tsx',
         'src/app/(admin)/admin/layout.tsx',
         'src/components/fincas/FincasB2BPortal.tsx'
       ],
-      macro: 'ARMONIZACIÓN CANÓNICA DE NAVEGACIÓN: 1) Alinear rutas públicas en SovereignNavbar.tsx con los destinos canónicos (/fincas, /reservar/solista, /simulacion-mariachis, /vimume, /alianzas, /admin). 2) Sincronizar el sidebar de AdminLayout con los módulos oficiales. 3) Añadir conmutador bidireccional entre la web pública y el panel Admin.',
+      macro:
+        'ARMONIZACIÓN CANÓNICA DE NAVEGACIÓN: 1) Alinear rutas públicas en SovereignNavbar.tsx con los destinos canónicos (/fincas, /reservar/solista, /simulacion-mariachis, /vimume, /alianzas, /admin). 2) Sincronizar el sidebar de AdminLayout con los módulos oficiales. 3) Añadir conmutador bidireccional entre la web pública y el panel Admin.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 0.1. Unificación Cromática & Paleta OLED S-Class
-  if (lower.includes('color') || lower.includes('paleta') || lower.includes('oled') || lower.includes('estilo') || lower.includes('diseño') || lower.includes('dorado') || lower.includes('oro')) {
+  if (
+    lower.includes('color') ||
+    lower.includes('paleta') ||
+    lower.includes('oled') ||
+    lower.includes('estilo') ||
+    lower.includes('diseño') ||
+    lower.includes('dorado') ||
+    lower.includes('oro')
+  ) {
     return {
       files: [
         'src/app/globals.css',
@@ -103,13 +132,21 @@ function resolveSemanticFiles(cleanInput: string): { files: string[]; macro: str
         'src/app/components/layout/SovereignNavbar.tsx',
         'src/app/(admin)/admin/layout.tsx'
       ],
-      macro: 'UNIFICACIÓN CROMÁTICA S-CLASS: 1) Estandarizar fondos OLED profundos (#030305, #050507). 2) Fijar acentos canónicos: Oro (#ecb613) para Admin y Comercial, Rubí (#FF2B44) para Bodas y Acción, y Cyan (#00E5FF) para Ciencia/VIMUME. 3) Eliminar grises lavados y gradientes violeta/azul AI-slop.',
+      macro:
+        'UNIFICACIÓN CROMÁTICA S-CLASS: 1) Estandarizar fondos OLED profundos (#030305, #050507). 2) Fijar acentos canónicos: Oro (#ecb613) para Admin y Comercial, Rubí (#FF2B44) para Bodas y Acción, y Cyan (#00E5FF) para Ciencia/VIMUME. 3) Eliminar grises lavados y gradientes violeta/azul AI-slop.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 1. Auditorías forenses, caza de errores, bit a bit, revisión de código
-  if (lower.includes('forense') || lower.includes('auditor') || lower.includes('error') || lower.includes('revision') || lower.includes('bit a bit') || lower.includes('yolo')) {
+  if (
+    lower.includes('forense') ||
+    lower.includes('auditor') ||
+    lower.includes('error') ||
+    lower.includes('revision') ||
+    lower.includes('bit a bit') ||
+    lower.includes('yolo')
+  ) {
     return {
       files: [
         'scripts/forensic_audit_mvp.cjs',
@@ -117,25 +154,38 @@ function resolveSemanticFiles(cleanInput: string): { files: string[]; macro: str
         'src/app/fincas/FincasNationalCatalogClient.tsx',
         'src/app/api/profiles/search/route.ts'
       ],
-      macro: 'AUDITORÍA FORENSE BIT-A-BIT: 1) Ejecutar node scripts/forensic_audit_mvp.cjs && npx tsc --noEmit. 2) Si el script reporta incidencias, abrir ÚNICAMENTE las líneas reportadas y corregir con replace_in_file con diff mínimo. 3) Verificar que no existan teléfonos inventados ni enlaces muertos. // ignore-audit',
+      macro:
+        'AUDITORÍA FORENSE BIT-A-BIT: 1) Ejecutar node scripts/forensic_audit_mvp.cjs && npx tsc --noEmit. 2) Si el script reporta incidencias, abrir ÚNICAMENTE las líneas reportadas y corregir con replace_in_file con diff mínimo. 3) Verificar que no existan teléfonos inventados ni enlaces muertos. // ignore-audit',
       validation: 'node scripts/forensic_audit_mvp.cjs && npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 2. Call Center Outbound & Leads
-  if (lower.includes('call center') || lower.includes('llamada') || lower.includes('centralita') || lower.includes('telef') || lower.includes('outbound')) {
+  if (
+    lower.includes('call center') ||
+    lower.includes('llamada') ||
+    lower.includes('centralita') ||
+    lower.includes('telef') ||
+    lower.includes('outbound')
+  ) {
     return {
       files: [
         'src/app/(admin)/admin/call-center/page.tsx',
         'src/app/api/profiles/search/route.ts'
       ],
-      macro: 'SANEAMIENTO CALL CENTER: Garantizar que la búsqueda provincial devuelva teléfonos directos verificados o enlaces de 1 clic a Google Search y ficha Bodas.net. Cero bucles con la centralita corporativa.',
+      macro:
+        'SANEAMIENTO CALL CENTER: Garantizar que la búsqueda provincial devuelva teléfonos directos verificados o enlaces de 1 clic a Google Search y ficha Bodas.net. Cero bucles con la centralita corporativa.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 3. Fincas B2B & Catálogo Nacional
-  if (lower.includes('finca') || lower.includes('espacio') || lower.includes('b2b') || lower.includes('homologac')) {
+  if (
+    lower.includes('finca') ||
+    lower.includes('espacio') ||
+    lower.includes('b2b') ||
+    lower.includes('homologac')
+  ) {
     return {
       files: [
         'src/app/fincas/page.tsx',
@@ -143,104 +193,160 @@ function resolveSemanticFiles(cleanInput: string): { files: string[]; macro: str
         'src/components/fincas/FincasB2BPortal.tsx',
         'src/lib/constants/fincas-catalog.ts'
       ],
-      macro: 'PORTAL FINCAS S-CLASS: Conectar directorio nacional de 9.559 fincas reales vía /api/profiles/search?category=finca. Mantener tarjetas Bento, modal de detalle y filtrado por provincias.',
+      macro:
+        'PORTAL FINCAS S-CLASS: Conectar directorio nacional de 9.559 fincas reales vía /api/profiles/search?category=finca. Mantener tarjetas Bento, modal de detalle y filtrado por provincias.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 4. Solista Insignia (Edwin Agudelo) & Cotizador
-  if (lower.includes('solista') || lower.includes('edwin') || lower.includes('cotiz') || lower.includes('reservar')) {
+  if (
+    lower.includes('solista') ||
+    lower.includes('edwin') ||
+    lower.includes('cotiz') ||
+    lower.includes('reservar')
+  ) {
     return {
       files: [
         'src/app/reservar/solista/page.tsx',
         'src/components/widgets/BookingCalculator.tsx'
       ],
-      macro: 'COTIZADOR S-CLASS: Fijar Tarifa Base Solista (350€), logística Méntrida 1.50€/km >50km (+120€ hotel si fin >= 3am o distancia > 200km) y pasarela Stripe con Price-Lock de 100€.',
+      macro:
+        'COTIZADOR S-CLASS: Fijar Tarifa Base Solista (350€), logística Méntrida 1.50€/km >50km (+120€ hotel si fin >= 3am o distancia > 200km) y pasarela Stripe con Price-Lock de 100€.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 5. Mariachis Tradicionales
-  if (lower.includes('mariachi') || lower.includes('trio') || lower.includes('charro') || lower.includes('serenata')) {
+  if (
+    lower.includes('mariachi') ||
+    lower.includes('trio') ||
+    lower.includes('charro') ||
+    lower.includes('serenata')
+  ) {
     return {
       files: [
         'src/app/(public)/simulacion-mariachis/page.tsx',
         'src/lib/pricing/mariachi-packs.ts'
       ],
-      macro: 'PACKS MARIACHI: Trío 450€ / Quinteto 750€ / Monumental 1300€ con depósito de señal de 100€ en Stripe y rider Bose S1 Pro / F1.',
+      macro:
+        'PACKS MARIACHI: Trío 450€ / Quinteto 750€ / Monumental 1300€ con depósito de señal de 100€ en Stripe y rider Bose S1 Pro / F1.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 6. VIMUME & Senior Care & Licitaciones B2G
-  if (lower.includes('vimume') || lower.includes('senior') || lower.includes('residencia') || lower.includes('geriat') || lower.includes('licitac') || lower.includes('b2g') || lower.includes('pliego')) {
+  if (
+    lower.includes('vimume') ||
+    lower.includes('senior') ||
+    lower.includes('residencia') ||
+    lower.includes('geriat') ||
+    lower.includes('licitac') ||
+    lower.includes('b2g') ||
+    lower.includes('pliego')
+  ) {
     return {
       files: [
         'src/app/vimume/page.tsx',
         'src/app/(admin)/admin/licitaciones/page.tsx',
         'src/lib/vimume/b2g-tender-engine.ts'
       ],
-      macro: 'NEURO-MUSICOTERAPIA VIMUME: Protocolo 40 Hz Gamma para mayores con deterioro cognitivo. Dossiers B2G ajustados al Art. 118 LCSP (< 14.250€) con garantía acústica < 75 dB SPL.',
+      macro:
+        'NEURO-MUSICOTERAPIA VIMUME: Protocolo 40 Hz Gamma para mayores con deterioro cognitivo. Dossiers B2G ajustados al Art. 118 LCSP (< 14.250€) con garantía acústica < 75 dB SPL.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 7. Flota & Logística Méntrida
-  if (lower.includes('flota') || lower.includes('mentrida') || lower.includes('furgoneta') || lower.includes('distancia') || lower.includes('porte')) {
+  if (
+    lower.includes('flota') ||
+    lower.includes('mentrida') ||
+    lower.includes('furgoneta') ||
+    lower.includes('distancia') ||
+    lower.includes('porte')
+  ) {
     return {
       files: [
         'src/app/(admin)/admin/flota/page.tsx',
         'src/lib/geo/mentrida-distance.ts'
       ],
-      macro: 'LOGÍSTICA MÉNTRIDA KM 0: Cálculo geodésico de portes (1.50€/km tras km 50). Telemetría de vehículos Mercedes Vito y equipos acústicos Bose.',
+      macro:
+        'LOGÍSTICA MÉNTRIDA KM 0: Cálculo geodésico de portes (1.50€/km tras km 50). Telemetría de vehículos Mercedes Vito y equipos acústicos Bose.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 8. Afiliados & Split Soberano
-  if (lower.includes('afiliad') || lower.includes('alianza') || lower.includes('comision') || lower.includes('split') || lower.includes('partner')) {
+  if (
+    lower.includes('afiliad') ||
+    lower.includes('alianza') ||
+    lower.includes('comision') ||
+    lower.includes('split') ||
+    lower.includes('partner')
+  ) {
     return {
       files: [
         'src/app/(admin)/admin/afiliados/page.tsx',
         'src/data/affiliates/partners_ledger.json'
       ],
-      macro: 'SPLIT SOBERANO 80/10/10: Retribución directa (80% Artista, 10% Finca/Partner, 10% EAR OS). Liquidaciones con certificado criptográfico SHA-256.',
+      macro:
+        'SPLIT SOBERANO 80/10/10: Retribución directa (80% Artista, 10% Finca/Partner, 10% EAR OS). Liquidaciones con certificado criptográfico SHA-256.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 9. Stripe & Tesorería
-  if (lower.includes('stripe') || lower.includes('pago') || lower.includes('tarjeta') || lower.includes('webhook') || lower.includes('tesoreria')) {
+  if (
+    lower.includes('stripe') ||
+    lower.includes('pago') ||
+    lower.includes('tarjeta') ||
+    lower.includes('webhook') ||
+    lower.includes('tesoreria')
+  ) {
     return {
       files: [
         'src/app/api/stripe/webhook/route.ts',
         'src/app/(admin)/admin/sourcing/components/BudgetMatrix.tsx'
       ],
-      macro: 'SEGURIDAD DE TESORERÍA: Verificación de firma criptográfica en Stripe Webhook. Registro de depósitos inmutables de 100€ con Price-Lock de 72h.',
+      macro:
+        'SEGURIDAD DE TESORERÍA: Verificación de firma criptográfica en Stripe Webhook. Registro de depósitos inmutables de 100€ con Price-Lock de 72h.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 10. Voice Studio & Música IA
-  if (lower.includes('voice') || lower.includes('voto') || lower.includes('cancion') || lower.includes('audio') || lower.includes('clon')) {
+  if (
+    lower.includes('voice') ||
+    lower.includes('voto') ||
+    lower.includes('cancion') ||
+    lower.includes('audio') ||
+    lower.includes('clon')
+  ) {
     return {
       files: [
         'src/app/(admin)/voice-studio/page.tsx',
         'src/lib/audio/voiceStudioEngine.ts'
       ],
-      macro: 'VOICE STUDIO S-CLASS: Composición musical personalizada para votos de boda y canciones de homenaje con síntesis de audio WAV y perfil lírico de Edwin Agudelo.',
+      macro:
+        'VOICE STUDIO S-CLASS: Composición musical personalizada para votos de boda y canciones de homenaje con síntesis de audio WAV y perfil lírico de Edwin Agudelo.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
 
   // 11. Oráculo S-Class Ambient
-  if (lower.includes('oraculo') || lower.includes('ambient') || lower.includes('chat') || lower.includes('gpu')) {
+  if (
+    lower.includes('oraculo') ||
+    lower.includes('ambient') ||
+    lower.includes('chat') ||
+    lower.includes('gpu')
+  ) {
     return {
       files: [
         'src/app/api/oracle/chat/route.ts',
         'src/components/admin/OracleAmbientInterface.tsx'
       ],
-      macro: 'ORÁCULO BARE-METAL: Conexión por streaming SSE a Ollama local (127.0.0.1:11434). Inyección estricta del system prompt SSOT y telemetría de hardware.',
+      macro:
+        'ORÁCULO BARE-METAL: Conexión por streaming SSE a Ollama local (127.0.0.1:11434). Inyección estricta del system prompt SSOT y telemetría de hardware.',
       validation: 'npx tsc --noEmit -> Exit Code 0'
     };
   }
@@ -264,7 +370,7 @@ function resolveSemanticFiles(cleanInput: string): { files: string[]; macro: str
 async function queryOllamaArchitect(
   cleanInput: string,
   model: GpuModelId | string
-): Promise<{ files: string[]; macro: string; validation: string; model: string } | null> {
+): Promise<OllamaArchitectResult | null> {
   const controller = new AbortController();
   const profile = resolveGpuModel(model);
   // Presupuesto de tiempo: carga VRAM (hasta ~40s) + inferencia. Tope de seguridad 75s.
@@ -293,7 +399,12 @@ Requerimiento: "${cleanInput}"`;
 
     clearTimeout(timeoutId);
 
-    const parsed = extractJsonObject<{ files?: unknown; macro?: unknown; validation?: unknown }>(result.content);
+    const parsed = extractJsonObject<{
+      files?: unknown;
+      macro?: unknown;
+      validation?: unknown;
+    }>(result.content);
+
     if (
       parsed &&
       Array.isArray(parsed.files) &&
@@ -304,7 +415,10 @@ Requerimiento: "${cleanInput}"`;
       return {
         files: parsed.files,
         macro: parsed.macro,
-        validation: typeof parsed.validation === 'string' ? parsed.validation : 'npx tsc --noEmit -> Exit Code 0',
+        validation:
+          typeof parsed.validation === 'string'
+            ? parsed.validation
+            : 'npx tsc --noEmit -> Exit Code 0',
         model: profile.id
       };
     }
@@ -320,21 +434,27 @@ export async function compileIntentToDAG(
   options: CompileOptions = { mode: 'OMEGA_FULLSTACK', engine: 'OLLAMA' }
 ): Promise<CompiledDAGResult> {
   const cleanInput = input.trim();
-  const targetMode = options.mode === 'QUIRURGICO' ? 'SURGICAL' : options.mode === 'OMEGA_FULLSTACK' ? 'FULL_STACK' : options.mode;
+  const targetMode: CompileOptions['mode'] =
+    options.mode === 'QUIRURGICO'
+      ? 'SURGICAL'
+      : options.mode === 'OMEGA_FULLSTACK'
+        ? 'FULL_STACK'
+        : options.mode;
   const engine: CompileEngine = options.engine ?? 'OLLAMA';
-  const slug = cleanInput
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .slice(0, 32) || 'omega-task';
+  const slug =
+    cleanInput
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .slice(0, 32) || 'omega-task';
 
   const taskId = 'omega-' + slug + '-' + Date.now().toString().slice(-4);
 
   // 1. Intentar razonamiento profundo con la GPU local (27B/32B) si está activa
   let reasoningEngineUsed = 'SCLASS_AST_CLASSIFIER_INSTANT';
-  let resolved = resolveSemanticFiles(cleanInput);
-  const selectedModel = options.model ?? DEFAULT_GPU_MODEL;
+  let resolved: SemanticResolution = resolveSemanticFiles(cleanInput);
+  const selectedModel: GpuModelId | string = options.model ?? DEFAULT_GPU_MODEL;
 
   if (engine === 'OLLAMA' && options.skipOllamaArchitect !== true) {
     const ollamaResult = await queryOllamaArchitect(cleanInput, selectedModel);
@@ -349,11 +469,12 @@ export async function compileIntentToDAG(
   }
 
   const suggestedFiles = resolved.files;
-  const macroScript = options.masterPromptOverride && options.masterPromptOverride.trim()
-    ? options.masterPromptOverride.trim()
-    : targetMode === 'SURGICAL'
-      ? `Edición atómica en ${suggestedFiles[0]}: ${resolved.macro} Validar con ${resolved.validation}.`
-      : resolved.macro;
+  const macroScript =
+    options.masterPromptOverride && options.masterPromptOverride.trim()
+      ? options.masterPromptOverride.trim()
+      : targetMode === 'SURGICAL'
+        ? `Edición atómica en ${suggestedFiles[0]}: ${resolved.macro} Validar con ${resolved.validation}.`
+        : resolved.macro;
 
   const governanceChecks: string[] = [
     'Split 80/10/10 Inmutable',
@@ -366,17 +487,18 @@ export async function compileIntentToDAG(
   const priceMatches: string[] = [];
   const prices = cleanInput.match(/\d+([.,]\d+)?\s*€/g);
   if (prices) {
-    prices.forEach(p => priceMatches.push(p));
+    prices.forEach((p) => priceMatches.push(p));
   } else {
     priceMatches.push('350,00 EUR (Base Solista)');
   }
 
-  const title = 'B0.Omega: ' + cleanInput.slice(0, 55) + (cleanInput.length > 55 ? '...' : '');
+  const title =
+    'B0.Omega: ' + cleanInput.slice(0, 55) + (cleanInput.length > 55 ? '...' : '');
 
-  const jsonTask = {
+  const jsonTask: CompiledDAGResult['jsonTask'] = {
     id: taskId,
     title,
-    status: 'QUEUED' as const,
+    status: 'QUEUED',
     description: cleanInput,
     files: suggestedFiles,
     action: cleanInput,
@@ -385,9 +507,9 @@ export async function compileIntentToDAG(
     validation: resolved.validation
   };
 
-  const filesYaml = suggestedFiles.map(f => '    - "' + f + '"').join('\n');
-  const govYaml = governanceChecks.map(g => '    - "' + g + '"').join('\n');
-  const ssotYaml = SSOT_BUSINESS_RULES.map(r => '    - "' + r + '"').join('\n');
+  const filesYaml = suggestedFiles.map((f) => '    - "' + f + '"').join('\n');
+  const govYaml = governanceChecks.map((g) => '    - "' + g + '"').join('\n');
+  const ssotYaml = SSOT_BUSINESS_RULES.map((r) => '    - "' + r + '"').join('\n');
 
   const yaml = [
     '# ==============================================================================#',

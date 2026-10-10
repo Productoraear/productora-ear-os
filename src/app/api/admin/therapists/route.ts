@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Prisma } from '@prisma/client';
+import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/security/adminGuard';
 
@@ -9,9 +10,61 @@ export const dynamic = 'force-dynamic';
 const THERAPIST_STATUSES = ['ACTIVE', 'SUSPENDED', 'INACTIVE'] as const;
 type TherapistStatus = (typeof THERAPIST_STATUSES)[number];
 
-function sanitizeQuery(raw: unknown): string | undefined {
+const SECURITY_HEADERS: Record<string, string> = {
+    'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+    Pragma: 'no-cache',
+    Expires: '0',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'no-referrer',
+    'X-Robots-Tag': 'noindex, nofollow',
+};
+
+const MAX_QUERY_LENGTH = 120;
+const MAX_PAGE_SIZE = 500;
+
+const statusSchema = z.enum(THERAPIST_STATUSES);
+
+const querySchema = z.object({
+    specialty: z
+        .string()
+        .trim()
+        .min(1)
+        .max(MAX_QUERY_LENGTH)
+        .optional(),
+    status: statusSchema.optional(),
+});
+
+const patchBodySchema = z
+    .object({
+        id: z.string().trim().min(1).max(128),
+        status: statusSchema.optional(),
+        specialty: z
+            .string()
+            .trim()
+            .min(1)
+            .max(MAX_QUERY_LENGTH)
+            .optional(),
+        isActive: z.boolean().optional(),
+    })
+    .strict();
+
+type ApiError = { ok: false; error: string };
+type ApiSuccess<T> = { ok: true; data: T; total?: number };
+
+function jsonResponse<T>(
+    payload: ApiSuccess<T> | ApiError,
+    status = 200,
+): NextResponse {
+    return NextResponse.json(payload, {
+        status,
+        headers: SECURITY_HEADERS,
+    });
+}
+
+function sanitizeQuery(raw: string | null): string | undefined {
     if (typeof raw !== 'string') return undefined;
-    const trimmed = raw.trim().slice(0, 120);
+    const trimmed = raw.trim().slice(0, MAX_QUERY_LENGTH);
     return trimmed.length > 0 ? trimmed : undefined;
 }
 
@@ -21,30 +74,28 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     try {
         const { searchParams } = new URL(request.url);
-        const rawSpecialty = searchParams.get('specialty');
-        const rawStatus = searchParams.get('status');
+
+        const parsed = querySchema.safeParse({
+            specialty: sanitizeQuery(searchParams.get('specialty')),
+            status: sanitizeQuery(searchParams.get('status')),
+        });
+
+        if (!parsed.success) {
+            return jsonResponse(
+                { ok: false, error: 'Parámetros de consulta no válidos' },
+                400,
+            );
+        }
 
         const where: Prisma.TherapistProfileWhereInput = {};
-
-        const specialty = sanitizeQuery(rawSpecialty);
-        if (specialty) where.specialty = specialty;
-
-        const status = sanitizeQuery(rawStatus);
-        if (status) {
-            if (!(THERAPIST_STATUSES as readonly string[]).includes(status)) {
-                return NextResponse.json(
-                    { ok: false, error: 'status no valido' },
-                    { status: 400 },
-                );
-            }
-            where.status = status;
-        }
+        if (parsed.data.specialty) where.specialty = parsed.data.specialty;
+        if (parsed.data.status) where.status = parsed.data.status;
 
         const [data, total] = await Promise.all([
             prisma.therapistProfile.findMany({
                 where,
                 orderBy: { updatedAt: 'desc' },
-                take: 500,
+                take: MAX_PAGE_SIZE,
                 include: {
                     user: {
                         select: { email: true, name: true },
@@ -54,12 +105,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             prisma.therapistProfile.count({ where }),
         ]);
 
-        return NextResponse.json({ ok: true, data, total });
+        return jsonResponse({ ok: true, data, total });
     } catch (error) {
         console.error('[admin/therapists] GET error', error);
-        return NextResponse.json(
+        return jsonResponse(
             { ok: false, error: 'Error interno del servidor' },
-            { status: 500 },
+            500,
         );
     }
 }
@@ -69,71 +120,35 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
     if (!auth.ok) return auth.response;
 
     try {
-        const body = (await request.json()) as {
-            id?: unknown;
-            status?: unknown;
-            specialty?: unknown;
-            isActive?: unknown;
-        };
-
-        const id = typeof body.id === 'string' ? body.id.trim() : '';
-        if (!id) {
-            return NextResponse.json(
-                { ok: false, error: 'id requerido' },
-                { status: 400 },
+        let rawBody: unknown;
+        try {
+            rawBody = await request.json();
+        } catch {
+            return jsonResponse(
+                { ok: false, error: 'Cuerpo de solicitud no válido' },
+                400,
             );
         }
 
+        const parsed = patchBodySchema.safeParse(rawBody);
+        if (!parsed.success) {
+            return jsonResponse(
+                { ok: false, error: 'Datos de entrada no válidos' },
+                400,
+            );
+        }
+
+        const { id, status, specialty, isActive } = parsed.data;
+
         const data: Prisma.TherapistProfileUpdateInput = {};
-
-        if (body.status !== undefined) {
-            if (typeof body.status !== 'string') {
-                return NextResponse.json(
-                    { ok: false, error: 'status no valido' },
-                    { status: 400 },
-                );
-            }
-            const status = body.status.trim().toUpperCase() as TherapistStatus;
-            if (!(THERAPIST_STATUSES as readonly string[]).includes(status)) {
-                return NextResponse.json(
-                    { ok: false, error: 'status no valido' },
-                    { status: 400 },
-                );
-            }
-            data.status = status;
-        }
-
-        if (body.specialty !== undefined) {
-            if (typeof body.specialty !== 'string') {
-                return NextResponse.json(
-                    { ok: false, error: 'specialty no valido' },
-                    { status: 400 },
-                );
-            }
-            const specialty = body.specialty.trim().slice(0, 120);
-            if (!specialty) {
-                return NextResponse.json(
-                    { ok: false, error: 'specialty no valido' },
-                    { status: 400 },
-                );
-            }
-            data.specialty = specialty;
-        }
-
-        if (body.isActive !== undefined) {
-            if (typeof body.isActive !== 'boolean') {
-                return NextResponse.json(
-                    { ok: false, error: 'isActive no valido' },
-                    { status: 400 },
-                );
-            }
-            data.isActive = body.isActive;
-        }
+        if (status !== undefined) data.status = status as TherapistStatus;
+        if (specialty !== undefined) data.specialty = specialty;
+        if (isActive !== undefined) data.isActive = isActive;
 
         if (Object.keys(data).length === 0) {
-            return NextResponse.json(
-                { ok: false, error: 'no hay campos validos para actualizar' },
-                { status: 400 },
+            return jsonResponse(
+                { ok: false, error: 'No hay campos válidos para actualizar' },
+                400,
             );
         }
 
@@ -147,21 +162,21 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
             },
         });
 
-        return NextResponse.json({ ok: true, data: updated });
+        return jsonResponse({ ok: true, data: updated });
     } catch (error) {
         if (
             error instanceof Prisma.PrismaClientKnownRequestError &&
             error.code === 'P2025'
         ) {
-            return NextResponse.json(
+            return jsonResponse(
                 { ok: false, error: 'Terapeuta no encontrado' },
-                { status: 404 },
+                404,
             );
         }
         console.error('[admin/therapists] PATCH error', error);
-        return NextResponse.json(
+        return jsonResponse(
             { ok: false, error: 'Error interno del servidor' },
-            { status: 500 },
+            500,
         );
     }
 }

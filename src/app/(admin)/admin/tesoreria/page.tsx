@@ -1,6 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useEffect,
+  useCallback,
+  Suspense,
+  Component,
+  type ReactNode,
+  type ErrorInfo,
+} from 'react';
 import {
   CreditCard,
   Lock,
@@ -8,7 +16,8 @@ import {
   RefreshCw,
   TrendingUp,
   Landmark,
-  Wallet
+  Wallet,
+  AlertTriangle,
 } from 'lucide-react';
 
 interface TreasuryData {
@@ -31,33 +40,124 @@ interface TreasuryData {
   }>;
 }
 
-export default function TesoreriaAdminCatminPage() {
+interface TreasuryErrorBoundaryProps {
+  children: ReactNode;
+  onRetry?: () => void;
+}
+
+interface TreasuryErrorBoundaryState {
+  hasError: boolean;
+  message: string | null;
+}
+
+class TreasuryErrorBoundary extends Component<
+  TreasuryErrorBoundaryProps,
+  TreasuryErrorBoundaryState
+> {
+  constructor(props: TreasuryErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, message: null };
+  }
+
+  static getDerivedStateFromError(error: Error): TreasuryErrorBoundaryState {
+    return { hasError: true, message: error.message };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    console.error('[TESORERIA][ERROR-BOUNDARY]', error, errorInfo);
+  }
+
+  handleRetry = (): void => {
+    this.setState({ hasError: false, message: null });
+    if (this.props.onRetry) {
+      this.props.onRetry();
+    }
+  };
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      return (
+        <div className="rounded-3xl bg-[#09090d]/80 border border-red-500/30 p-8 shadow-sm space-y-3 text-center">
+          <AlertTriangle className="w-8 h-8 text-red-400 mx-auto" />
+          <h2 className="text-sm font-bold font-syne text-white uppercase">
+            Error en el módulo de Tesorería
+          </h2>
+          <p className="text-xs font-mono text-zinc-400 max-w-md mx-auto">
+            {this.state.message ?? 'Se produjo un error inesperado al renderizar el libro mayor.'}
+          </p>
+          <button
+            onClick={this.handleRetry}
+            className="mt-2 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 hover:text-white hover:border-[#ecb613]/50 transition-all text-xs font-mono"
+          >
+            <RefreshCw className="w-3.5 h-3.5 text-[#ecb613]" />
+            Reintentar
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function TreasurySkeleton(): ReactNode {
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans animate-pulse">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#1a1a24] pb-4">
+        <div className="space-y-2">
+          <div className="h-3 w-48 rounded bg-zinc-900" />
+          <div className="h-7 w-80 rounded bg-zinc-900" />
+        </div>
+        <div className="h-9 w-40 rounded-xl bg-zinc-900" />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 h-32"
+          />
+        ))}
+      </div>
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 h-64" />
+    </div>
+  );
+}
+
+function TesoreriaAdminCatminContent(): ReactNode {
   const [data, setData] = useState<TreasuryData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchTreasury = useCallback(async () => {
+  const fetchTreasury = useCallback(async (): Promise<void> => {
     setLoading(true);
+    setError(null);
     try {
       const res = await fetch('/api/admin/treasury', { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
+      const json = (await res.json()) as { success?: boolean } & TreasuryData;
       if (json.success) {
         setData(json);
+      } else {
+        throw new Error('Respuesta sin éxito del servidor');
       }
     } catch (err) {
+      const message = err instanceof Error ? err.message : 'Error desconocido';
       console.error('[TESORERIA] Error cargando datos:', err);
+      setError(message);
     } finally {
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchTreasury();
+    void fetchTreasury();
   }, [fetchTreasury]);
+
+  if (error) {
+    throw new Error(error);
+  }
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-16 font-sans">
-
       {/* ===================================================================== */}
       {/* 1. HEADER DE PÁGINA CATMÍN                                            */}
       {/* ===================================================================== */}
@@ -77,7 +177,9 @@ export default function TesoreriaAdminCatminPage() {
 
         <div className="flex items-center gap-2.5">
           <button
-            onClick={fetchTreasury}
+            onClick={() => {
+              void fetchTreasury();
+            }}
             className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:border-[#ecb613]/50 transition-all"
             title="Sincronizar con Stripe"
           >
@@ -95,7 +197,6 @@ export default function TesoreriaAdminCatminPage() {
       {/* 2. CATMÍN ROW 1: 4 TARJETAS KPI DE TESORERÍA                          */}
       {/* ===================================================================== */}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-
         {/* Card 1: Total Señales */}
         <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 shadow-sm hover:border-[#ecb613]/50 transition-all">
           <div className="flex items-center justify-between pb-2">
@@ -169,7 +270,6 @@ export default function TesoreriaAdminCatminPage() {
             Modelo 182 AEAT (80% Deducible)
           </div>
         </div>
-
       </div>
 
       {/* ===================================================================== */}
@@ -181,7 +281,9 @@ export default function TesoreriaAdminCatminPage() {
             <h2 className="text-base font-bold font-syne text-white uppercase">
               Libro Mayor de Señales Stripe Price-Lock
             </h2>
-            <p className="text-xs text-zinc-500">Conciliación criptográfica SHA-256 válida por 48 horas</p>
+            <p className="text-xs text-zinc-500">
+              Conciliación criptográfica SHA-256 válida por 48 horas
+            </p>
           </div>
           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
             INMUTABLE
@@ -192,12 +294,16 @@ export default function TesoreriaAdminCatminPage() {
           <div className="py-12 text-center text-xs font-mono text-zinc-500">
             Cargando libro mayor desde Stripe...
           </div>
-        ) : (!data?.transactions || data.transactions.length === 0) ? (
+        ) : !data?.transactions || data.transactions.length === 0 ? (
           <div className="py-12 text-center space-y-2">
             <CreditCard className="w-8 h-8 text-zinc-600 mx-auto" />
-            <p className="text-xs font-mono text-zinc-400">0 depósitos registrados en el Libro Mayor</p>
+            <p className="text-xs font-mono text-zinc-400">
+              0 depósitos registrados en el Libro Mayor
+            </p>
             <p className="text-[11px] text-zinc-600 max-w-md mx-auto">
-              Cero cifras de vanidad. Los depósitos de Stripe (100 €) se registrarán aquí automáticamente en tiempo real con su hash SHA-256 una vez sean procesados por la pasarela.
+              Cero cifras de vanidad. Los depósitos de Stripe (100 €) se registrarán aquí
+              automáticamente en tiempo real con su hash SHA-256 una vez sean procesados por la
+              pasarela.
             </p>
           </div>
         ) : (
@@ -220,12 +326,18 @@ export default function TesoreriaAdminCatminPage() {
 
                 <div className="flex items-center gap-6 shrink-0">
                   <div className="text-right">
-                    <span className="text-[10px] text-zinc-500 block font-mono uppercase">DEPÓSITO</span>
-                    <span className="text-base font-bold text-emerald-400 font-mono">{tx.deposit}</span>
+                    <span className="text-[10px] text-zinc-500 block font-mono uppercase">
+                      DEPÓSITO
+                    </span>
+                    <span className="text-base font-bold text-emerald-400 font-mono">
+                      {tx.deposit}
+                    </span>
                   </div>
 
                   <div className="text-right">
-                    <span className="text-[10px] text-zinc-500 block font-mono uppercase">ESTADO</span>
+                    <span className="text-[10px] text-zinc-500 block font-mono uppercase">
+                      ESTADO
+                    </span>
                     <span className="text-[10px] font-mono text-zinc-300 bg-zinc-900 px-2 py-0.5 rounded border border-zinc-800">
                       {tx.status}
                     </span>
@@ -236,7 +348,16 @@ export default function TesoreriaAdminCatminPage() {
           </div>
         )}
       </div>
-
     </div>
+  );
+}
+
+export default function TesoreriaAdminCatminPage(): ReactNode {
+  return (
+    <TreasuryErrorBoundary>
+      <Suspense fallback={<TreasurySkeleton />}>
+        <TesoreriaAdminCatminContent />
+      </Suspense>
+    </TreasuryErrorBoundary>
   );
 }

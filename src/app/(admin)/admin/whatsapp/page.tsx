@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, Suspense, Component, ReactNode, ErrorInfo } from 'react';
 import {
   MessageSquare,
   PhoneCall,
@@ -12,7 +12,9 @@ import {
   Copy,
   CheckCircle2,
   ExternalLink,
-  ShieldCheck
+  ShieldCheck,
+  AlertTriangle,
+  Loader2
 } from 'lucide-react';
 import {
   generateWhatsAppDispatchLink,
@@ -21,7 +23,108 @@ import {
   DispatchTemplateType
 } from '@/lib/whatsapp/whatsapp-dispatch';
 
-export default function WhatsAppDispatchPage() {
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class WhatsAppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line no-console
+      console.error('[EAR OS][WhatsAppDispatch] ErrorBoundary:', error, errorInfo);
+    }
+  }
+
+  handleReset = (): void => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+      return (
+        <div className="min-h-screen bg-[#030305] text-white p-6 sm:p-10 flex items-center justify-center">
+          <div className="max-w-lg w-full p-6 rounded-3xl bg-[#09090d]/80 border border-red-500/30 backdrop-blur-md space-y-4 shadow-2xl">
+            <div className="flex items-center gap-2 text-red-400">
+              <AlertTriangle size={18} />
+              <h2 className="text-sm font-bold font-syne uppercase tracking-wider">
+                Error en Centralita WhatsApp
+              </h2>
+            </div>
+            <p className="text-xs font-mono text-zinc-400">
+              {this.state.error?.message ?? 'Se produjo un error inesperado al generar el despacho.'}
+            </p>
+            <button
+              type="button"
+              onClick={this.handleReset}
+              className="px-4 py-2 rounded-xl bg-[#ecb613]/10 hover:bg-[#ecb613]/20 border border-[#ecb613]/40 text-[#ecb613] text-xs font-mono transition-all"
+            >
+              Reintentar
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function WhatsAppDispatchSkeleton(): ReactNode {
+  return (
+    <div className="min-h-screen bg-[#030305] text-white p-6 sm:p-10 space-y-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/10 pb-6">
+        <div className="space-y-3">
+          <div className="h-5 w-48 rounded-full bg-white/5 animate-pulse" />
+          <div className="h-8 w-80 rounded-lg bg-white/5 animate-pulse" />
+          <div className="h-3 w-96 rounded bg-white/5 animate-pulse" />
+        </div>
+        <div className="h-10 w-40 rounded-xl bg-white/5 animate-pulse" />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-1 p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-5">
+          <div className="h-4 w-40 rounded bg-white/5 animate-pulse" />
+          <div className="grid grid-cols-2 gap-2">
+            <div className="h-12 rounded-xl bg-white/5 animate-pulse" />
+            <div className="h-12 rounded-xl bg-white/5 animate-pulse" />
+            <div className="h-12 rounded-xl bg-white/5 animate-pulse" />
+            <div className="h-12 rounded-xl bg-white/5 animate-pulse" />
+          </div>
+          <div className="h-10 rounded-xl bg-white/5 animate-pulse" />
+          <div className="h-10 rounded-xl bg-white/5 animate-pulse" />
+          <div className="h-10 rounded-xl bg-white/5 animate-pulse" />
+        </div>
+        <div className="lg:col-span-2 p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-6">
+          <div className="h-4 w-56 rounded bg-white/5 animate-pulse" />
+          <div className="h-64 rounded-3xl bg-white/5 animate-pulse" />
+          <div className="h-14 rounded-2xl bg-white/5 animate-pulse" />
+        </div>
+      </div>
+      <div className="flex items-center justify-center gap-2 text-zinc-500 font-mono text-xs">
+        <Loader2 size={14} className="animate-spin" />
+        Cargando Centralita WhatsApp...
+      </div>
+    </div>
+  );
+}
+
+function WhatsAppDispatchContent(): ReactNode {
   const [templateType, setTemplateType] = useState<DispatchTemplateType>('solista');
   const [clientName, setClientName] = useState<string>('');
   const [province, setProvince] = useState<string>('Madrid');
@@ -37,10 +140,12 @@ export default function WhatsAppDispatchPage() {
     totalEur: customPrice
   });
 
-  const handleCopyText = () => {
-    navigator.clipboard.writeText(dispatchData.rawText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyText = (): void => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      void navigator.clipboard.writeText(dispatchData.rawText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   return (
@@ -221,5 +326,15 @@ export default function WhatsAppDispatchPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function WhatsAppDispatchPage(): ReactNode {
+  return (
+    <WhatsAppErrorBoundary>
+      <Suspense fallback={<WhatsAppDispatchSkeleton />}>
+        <WhatsAppDispatchContent />
+      </Suspense>
+    </WhatsAppErrorBoundary>
   );
 }

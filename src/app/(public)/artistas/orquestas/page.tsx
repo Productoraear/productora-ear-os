@@ -28,6 +28,45 @@ const WHATSAPP_HREF = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?tex
   'Hola, quiero reservar un Ensamble de Gala S-Class.'
 )}`;
 
+interface OrquestaNodo {
+  slug: string;
+  title: string;
+  location: string;
+  desc: string;
+  icon: React.ReactNode;
+}
+
+interface FichaTecnica {
+  label: string;
+  value: string;
+}
+
+const LOCALIZED_ORQUESTAS: OrquestaNodo[] = [
+  {
+    slug: 'mariachis-bodas-barcelona-gala',
+    title: 'Ensamble de Gala en Barcelona',
+    location: 'Barcelona',
+    desc: 'Gran puesta en escena con 6+ músicos y sombreros tradicionales.',
+    icon: <Users className="text-amber-400" size={24} />,
+  },
+  {
+    slug: 'mariachi-aniversarios-zaragoza-gala',
+    title: 'Agrupación Profesional en Zaragoza',
+    location: 'Zaragoza',
+    desc: 'Perfecto para aniversarios, bodas de oro y eventos de empresa.',
+    icon: <Music className="text-[#ecb613]" size={24} />,
+  },
+];
+
+const FICHA_TECNICA: FichaTecnica[] = [
+  { label: 'Músicos en Escena', value: 'Desde 6 hasta 12 integrantes en gala' },
+  { label: 'Rider de Microfonía', value: 'Inalámbrica Shure / Ecualización digital' },
+  { label: 'Duración Recomendada', value: '60 a 120 minutos en dos bloques' },
+  { label: 'Repertorio de Apertura', value: 'El Rey, La Bikina, Si Nos Dejan' },
+  { label: 'Cumplimiento Operativo', value: 'Seguro RC de montaje y coordinación directa de tiempos' },
+  { label: 'Tarifa Oficial SSOT', value: `Desde ${TARIFA_BASE_SOLISTA_EUR} € · Sin sobrecostes ocultos` },
+];
+
 export default function OrquestasPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -49,25 +88,8 @@ export default function OrquestasPage() {
     },
   };
 
-  const localizedOrquestas = [
-    {
-      slug: 'mariachis-bodas-barcelona-gala',
-      title: 'Ensamble de Gala en Barcelona',
-      location: 'Barcelona',
-      desc: 'Gran puesta en escena con 6+ músicos y sombreros tradicionales.',
-      icon: <Users className="text-amber-400" size={24} />,
-    },
-    {
-      slug: 'mariachi-aniversarios-zaragoza-gala',
-      title: 'Agrupación Profesional en Zaragoza',
-      location: 'Zaragoza',
-      desc: 'Perfecto para aniversarios, bodas de oro y eventos de empresa.',
-      icon: <Music className="text-[#ecb613]" size={24} />,
-    },
-  ];
-
   return (
-    <main className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-white pt-40 pb-24 font-sans selection:bg-[#ecb613]/30">
+    <main className="min-h-screen w-full overflow-x-hidden bg-[#030305] text-white pt-40 pb-24 font-sans selection:bg-[#ecb613]/30">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -96,7 +118,7 @@ export default function OrquestasPage() {
           </h1>
 
           <p className="text-white/40 text-lg md:text-xl italic leading-relaxed max-w-2xl mx-auto">
-            La majestuosidad y el poder sónico de ensambles de gran formato. Formaciones tradicionales de alta escuela coordinadas bajo estándares militares de etiqueta.
+            Ensambles de 6 a 12 músicos con guitarrón, vihuela, guitarra, violines y trompetas. Trajes de charro bordados a mano, repertorio de gala y coordinación operativa directa con Edwin Agudelo.
           </p>
 
           <div className="flex flex-wrap justify-center items-center gap-3 pt-2">
@@ -125,7 +147,7 @@ export default function OrquestasPage() {
               </h2>
 
               <p className="text-white/50 text-sm md:text-base leading-relaxed">
-                Nuestras agrupaciones representan el cenit de la puesta en escena mexicana en la península ibérica. Con un mínimo de 6 integrantes (guitarrón, vihuela, guitarra, violines y trompetas), cada músico es rigurosamente seleccionado de la Academia Diamante Rojo, asegurando una presentación de gala pulcra, trajes bordados a mano de alta costura y un comportamiento social intachable alineado con los protocolos de eventos corporativos e institucionales.
+                Cada ensamble parte de un mínimo de 6 integrantes: guitarrón, vihuela, guitarra, violines y trompetas. Los músicos provienen de la Academia Diamante Rojo y se seleccionan por criterios de afinación, presencia escénica y protocolo social. Trajes de charro bordados a mano, repertorio de gala y coordinación de tiempos alineada con eventos corporativos e institucionales.
               </p>
 
               <div className="space-y-4">
@@ -133,14 +155,14 @@ export default function OrquestasPage() {
                   Nodos Territoriales de Ensambles:
                 </h4>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {localizedOrquestas.map((item, idx) => (
+                  {LOCALIZED_ORQUESTAS.map((item) => (
                     <Link
-                      key={idx}
+                      key={item.slug}
                       href={`/artistas/${item.slug}`}
-                      className="p-5 bg-white/[0.02] border border-white/10 hover:border-[#ecb613]/40 rounded-3xl flex flex-col justify-between transition-all group/link hover:-translate-y-1"
+                      className="p-5 bg-white/[0.02] border border-white/10 hover:border-[#ecb613]/40 rounded-3xl flex flex-col justify-between transition-all duration-300 group/link hover:-translate-y-1 hover:shadow-[0_0_30px_-10px_rgba(236,182,19,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
                     >
                       <div className="flex justify-between items-start mb-4">
-                        <div className="p-2 bg-white/5 rounded-xl text-white/60">
+                        <div className="p-2 bg-white/5 rounded-xl text-white/60 transition-colors duration-300 group-hover/link:bg-[#ecb613]/10 group-hover/link:text-[#ecb613]">
                           {item.icon}
                         </div>
                         <span className="text-[8px] font-mono font-black text-white/30 uppercase">
@@ -163,17 +185,30 @@ export default function OrquestasPage() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
                   href={RESERVAR_SOLISTA_HREF}
-                  className="px-8 py-4 bg-white text-black hover:bg-[#ecb613] rounded-xl text-[10px] font-black uppercase tracking-[0.3em] transition-all text-center"
+                  className="group/cta relative px-8 py-4 bg-white text-black hover:bg-[#ecb613] rounded-xl text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-300 text-center overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_10px_40px_-10px_rgba(236,182,19,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] active:translate-y-0"
                 >
-                  Reservar Ensamble de Gala
+                  <span className="relative z-10 inline-flex items-center justify-center gap-2">
+                    Reservar Ensamble de Gala
+                    <ChevronRight
+                      size={14}
+                      className="transition-transform duration-300 group-hover/cta:translate-x-1"
+                    />
+                  </span>
+                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover/cta:translate-x-full" />
                 </Link>
                 <a
                   href={WHATSAPP_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-8 py-4 bg-[#ecb613]/10 border border-[#ecb613]/30 hover:bg-[#ecb613] hover:text-black rounded-xl text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613] transition-all text-center"
+                  className="group/wa relative px-8 py-4 bg-[#ecb613]/10 border border-[#ecb613]/30 hover:bg-[#ecb613] hover:text-black rounded-xl text-[10px] font-black uppercase tracking-[0.3em] text-[#ecb613] transition-all duration-300 text-center overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_10px_40px_-10px_rgba(236,182,19,0.6)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] active:translate-y-0"
                 >
-                  WhatsApp Directo
+                  <span className="relative z-10 inline-flex items-center justify-center gap-2">
+                    WhatsApp Directo
+                    <ChevronRight
+                      size={14}
+                      className="transition-transform duration-300 group-hover/wa:translate-x-1"
+                    />
+                  </span>
                 </a>
               </div>
             </div>
@@ -187,15 +222,8 @@ export default function OrquestasPage() {
               </h3>
 
               <div className="space-y-4 border-t border-white/10 pt-4">
-                {[
-                  { label: 'Músicos en Escena', value: 'Desde 6 hasta 12 integrantes en gala' },
-                  { label: 'Rider de Microfonía', value: 'Inalámbrica Shure / Ecualización digital' },
-                  { label: 'Duración Recomendada', value: '60 a 120 minutos en dos bloques' },
-                  { label: 'Repertorio de Apertura', value: 'El Rey, La Bikina, Si Nos Dejan' },
-                  { label: 'Cumplimiento Operativo', value: 'Seguro RC de montaje y coordinación directa de tiempos' },
-                  { label: 'Tarifa Oficial SSOT', value: `Desde ${TARIFA_BASE_SOLISTA_EUR} € · Sin sobrecostes ocultos` },
-                ].map((spec, i) => (
-                  <div key={i} className="flex flex-col gap-1">
+                {FICHA_TECNICA.map((spec) => (
+                  <div key={spec.label} className="flex flex-col gap-1">
                     <span className="text-[9px] font-black text-white/30 uppercase tracking-widest">
                       {spec.label}
                     </span>
@@ -217,7 +245,7 @@ export default function OrquestasPage() {
               Tarifas y Transparencia
             </h2>
             <p className="text-white/40 text-sm md:text-base leading-relaxed">
-              El valor de los ensambles de gran formato radica en su impacto visual y su potencia sonora natural. Tarifa oficial desde {TARIFA_BASE_SOLISTA_EUR} € sin sobrecostes ocultos.
+              El coste de un ensamble de gran formato se calcula por número de músicos, desplazamiento y duración del bloque. Tarifa oficial desde {TARIFA_BASE_SOLISTA_EUR} € sin sobrecostes ocultos.
             </p>
           </div>
 
@@ -238,26 +266,30 @@ export default function OrquestasPage() {
                 ¿Buscas formatos individuales?
               </h3>
               <p className="text-white/40 text-sm">
-                Si buscas una amenización acústica íntima y flexible, consulta nuestra selección de solistas de alta alcurnia desde {TARIFA_BASE_SOLISTA_EUR} €.
+                Si necesitas una amenización acústica íntima con 1 a 3 músicos, consulta la selección de solistas desde {TARIFA_BASE_SOLISTA_EUR} €.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
               <Link
                 href="/artistas/solistas"
-                className="px-8 py-5 bg-white/5 hover:bg-white text-white hover:text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-center transition-all flex items-center justify-center gap-2 group"
+                className="group/sol px-8 py-5 bg-white/5 hover:bg-white text-white hover:text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-center transition-all duration-300 flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-[0_10px_40px_-10px_rgba(255,255,255,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] active:translate-y-0"
               >
                 Ver Solistas Premium
                 <ChevronRight
                   size={14}
-                  className="group-hover:translate-x-1 transition-transform"
+                  className="group-hover/sol:translate-x-1 transition-transform duration-300"
                 />
               </Link>
               <Link
                 href={RESERVAR_SOLISTA_HREF}
-                className="px-8 py-5 bg-[#ecb613] hover:bg-white text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-center transition-all"
+                className="group/res px-8 py-5 bg-[#ecb613] hover:bg-white text-black rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] text-center transition-all duration-300 inline-flex items-center justify-center gap-2 hover:-translate-y-0.5 hover:shadow-[0_10px_40px_-10px_rgba(236,182,19,0.7)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] active:translate-y-0"
               >
                 Reservar Ahora
+                <ChevronRight
+                  size={14}
+                  className="group-hover/res:translate-x-1 transition-transform duration-300"
+                />
               </Link>
             </div>
           </div>

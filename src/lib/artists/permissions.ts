@@ -7,14 +7,18 @@ export interface UserTokenClaims {
   verified: boolean;
 }
 
-export const ROLE_PERMISSIONS: Record<LabelRole, {
+export interface RolePermissions {
   canViewAllArtists: boolean;
   canEditArtists: boolean;
   canViewFinancials: boolean;
   canManageContracts: boolean;
   canEditOwnArtistOnly: boolean;
   canAccessAnalytics: boolean;
-}> = {
+}
+
+export type PermissionAction = keyof RolePermissions;
+
+export const ROLE_PERMISSIONS: Record<LabelRole, RolePermissions> = {
   super_admin: {
     canViewAllArtists: true,
     canEditArtists: true,
@@ -62,10 +66,10 @@ export const ROLE_PERMISSIONS: Record<LabelRole, {
  */
 export function hasPermission(
   claims: UserTokenClaims,
-  action: keyof typeof ROLE_PERMISSIONS['viewer'],
+  action: PermissionAction,
   targetArtistId?: string
 ): boolean {
-  const perms = ROLE_PERMISSIONS[claims.role];
+  const perms: RolePermissions | undefined = ROLE_PERMISSIONS[claims.role];
   if (!perms) return false;
 
   // Si tiene acceso global

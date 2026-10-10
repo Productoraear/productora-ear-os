@@ -1,17 +1,17 @@
-﻿import React from 'react';
+import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { 
-  ShieldCheck, 
-  Cpu, 
-  Zap, 
-  PhoneCall, 
-  CheckCircle2, 
-  Volume2, 
-  Tv, 
-  Layers, 
-  Radio, 
-  Truck, 
+import {
+  ShieldCheck,
+  Cpu,
+  Zap,
+  PhoneCall,
+  CheckCircle2,
+  Volume2,
+  Tv,
+  Layers,
+  Radio,
+  Truck,
   Award,
   ArrowRight,
   Sliders
@@ -85,8 +85,8 @@ export default async function ArsenalEquipoProvinciaPage({ params }: PageProps) 
   const whatsappUrl = `https://wa.me/34693693048?text=${whatsappMessage}`;
 
   return (
-    <main className="min-h-screen bg-[#050505] text-white selection:bg-[#ecb613] selection:text-black font-sans">
-      
+    <main className="min-h-screen bg-[#030305] text-white selection:bg-[#ecb613] selection:text-black font-sans">
+
       {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
           1. HERO HEADER S-CLASS HARDWARE
          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
@@ -117,7 +117,7 @@ export default async function ArsenalEquipoProvinciaPage({ params }: PageProps) 
         </h1>
 
         <p className="text-base sm:text-xl text-neutral-400 max-w-3xl mb-10 leading-relaxed font-light">
-          Suministro, transporte asegurado y montaje técnico directo con garantía de <strong className="text-white font-semibold">Cero Fallos</strong>. 
+          Suministro, transporte asegurado y montaje técnico directo con garantía de <strong className="text-white font-semibold">Cero Fallos</strong>.
           Riders de alta gama para eventos corporativos, congresos, festivales y galas de alta distinción en {provinciaFormatted}.
         </p>
 
@@ -133,8 +133,8 @@ export default async function ArsenalEquipoProvinciaPage({ params }: PageProps) 
             <span>Verificar Disponibilidad VIP en WhatsApp</span>
           </a>
 
-          <Link 
-            href="/cotizador" 
+          <Link
+            href="/cotizador"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl font-bold text-white border border-neutral-800 bg-neutral-900/80 hover:bg-neutral-800 transition-all text-sm sm:text-base font-mono"
           >
             <Sliders size={16} />

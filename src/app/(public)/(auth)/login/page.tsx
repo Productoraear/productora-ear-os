@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Lock, KeyRound, ArrowRight, AlertCircle, Mail, Smartphone, ShieldCheck, Edit3, UserCheck, Eye, EyeOff } from 'lucide-react';
+import { Lock, KeyRound, ArrowRight, AlertCircle, ShieldCheck, Edit3, UserCheck, Eye, EyeOff } from 'lucide-react';
 import { SignIn2 } from '@/components/ui/clean-minimal-sign-in';
 
 function OmniAuthLoginForm() {
@@ -16,7 +16,7 @@ function OmniAuthLoginForm() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [code2fa, setCode2fa] = useState('');
-  const [verifyMethod, setVerifyMethod] = useState<'authenticator' | 'email'>('authenticator');
+  const [verifyMethod] = useState<'authenticator' | 'email'>('authenticator');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
@@ -72,7 +72,7 @@ function OmniAuthLoginForm() {
       } else {
         setError(data.message || 'Contraseña incorrecta.');
       }
-    } catch (err) {
+    } catch {
       setError('Error conectando con el servidor de autenticación.');
     } finally {
       setLoading(false);
@@ -94,7 +94,7 @@ function OmniAuthLoginForm() {
       } else {
         setError(data.message || 'Acceso de editor denegado.');
       }
-    } catch (e) {
+    } catch {
       setError('Fallo de verificación de editor.');
     }
   };
@@ -119,7 +119,7 @@ function OmniAuthLoginForm() {
       } else {
         setError(data.message || 'Código 2FA inválido.');
       }
-    } catch (err) {
+    } catch {
       setError('Fallo de verificación en el servidor.');
     } finally {
       setLoading(false);
@@ -129,16 +129,16 @@ function OmniAuthLoginForm() {
   if (!mounted) return null;
 
   return (
-    <div suppressHydrationWarning className="min-h-screen bg-neutral-950 text-white flex items-center justify-center p-4 font-sans selection:bg-amber-500 selection:text-black">
-      <div className="max-w-md w-full bg-neutral-950/95 border border-neutral-800 rounded-3xl p-8 shadow-2xl backdrop-blur-2xl">
-        
+    <div suppressHydrationWarning className="min-h-screen bg-[#030305] text-white flex items-center justify-center p-4 font-sans selection:bg-amber-500 selection:text-black">
+      <div className="max-w-md w-full bg-[#030305]/95 border border-neutral-800 rounded-3xl p-8 shadow-2xl backdrop-blur-2xl">
+
         {/* CABECERA */}
         <div className="text-center mb-6">
           <div className="inline-flex p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-2xl text-amber-400 mb-2">
             <Lock className="w-7 h-7" />
           </div>
           <h1 className="text-2xl font-black tracking-tight text-white uppercase">IDENTIDAD S-CLASS</h1>
-          <p className="text-xs text-neutral-400 mt-1">Acceso Soberano Vercel Serverless • 2FA & Editores</p>
+          <p className="text-xs text-neutral-400 mt-1">Acceso Soberano Vercel Serverless • 2FA &amp; Editores</p>
         </div>
 
         {/* SELECTOR DE PERFIL DE ENTRADA */}
@@ -147,7 +147,7 @@ function OmniAuthLoginForm() {
             type="button"
             onClick={() => { setAuthRole('admin'); setStep(1); setError(null); }}
             className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
-              authRole === 'admin' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
+              authRole === 'admin' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-[#030305] border-neutral-800 text-neutral-500'
             }`}
           >
             <ShieldCheck className="w-4 h-4 text-amber-400 mb-1" />
@@ -161,7 +161,7 @@ function OmniAuthLoginForm() {
             type="button"
             onClick={() => { setAuthRole('editor'); setStep(1); setError(null); }}
             className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
-              authRole === 'editor' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
+              authRole === 'editor' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-[#030305] border-neutral-800 text-neutral-500'
             }`}
           >
             <Edit3 className="w-4 h-4 text-amber-400 mb-1" />
@@ -175,7 +175,7 @@ function OmniAuthLoginForm() {
             type="button"
             onClick={() => { setAuthRole('partner'); setError(null); }}
             className={`p-2.5 rounded-xl border text-left transition flex flex-col justify-between ${
-              authRole === 'partner' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-neutral-950 border-neutral-800 text-neutral-500'
+              authRole === 'partner' ? 'bg-amber-500/15 border-amber-500 text-amber-300' : 'bg-[#030305] border-neutral-800 text-neutral-500'
             }`}
           >
             <UserCheck className="w-4 h-4 text-amber-400 mb-1" />
@@ -189,10 +189,10 @@ function OmniAuthLoginForm() {
         {/* MODO PARTNERS / CLIENTES (CLEAN MINIMAL SIGN IN) */}
         {authRole === 'partner' && (
           <div className="w-full">
-            <SignIn2 
-              onSuccess={(email) => {
+            <SignIn2
+              onSuccess={() => {
                 router.push('/panel');
-              }} 
+              }}
             />
           </div>
         )}
@@ -200,7 +200,7 @@ function OmniAuthLoginForm() {
         {/* PASO 1 (ADMIN / EDITOR) */}
         {authRole !== 'partner' && step === 1 && (
           <form onSubmit={handleStep1} className="space-y-4">
-            <div className="p-3 bg-neutral-950 border border-neutral-800 rounded-xl text-xs font-mono text-neutral-400 flex items-center justify-between">
+            <div className="p-3 bg-[#030305] border border-neutral-800 rounded-xl text-xs font-mono text-neutral-400 flex items-center justify-between">
               <span className="truncate">Destino: {fromPath}</span>
               <span className="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded border border-amber-500/30 uppercase">
                 {authRole}
@@ -218,7 +218,7 @@ function OmniAuthLoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••••••"
-                  className="w-full pl-4 pr-11 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 transition"
+                  className="w-full pl-4 pr-11 py-3 bg-[#030305] border border-neutral-800 rounded-xl text-sm text-white focus:outline-none focus:border-amber-500 transition"
                 />
                 <button
                   type="button"
@@ -277,7 +277,7 @@ function OmniAuthLoginForm() {
                 value={code2fa}
                 onChange={(e) => setCode2fa(e.target.value)}
                 placeholder="ej. 1524"
-                className="w-full px-4 py-3 bg-neutral-950 border border-neutral-800 rounded-xl text-lg font-mono tracking-widest text-center text-amber-400 focus:outline-none focus:border-amber-500 transition"
+                className="w-full px-4 py-3 bg-[#030305] border border-neutral-800 rounded-xl text-lg font-mono tracking-widest text-center text-amber-400 focus:outline-none focus:border-amber-500 transition"
               />
             </div>
 
@@ -317,7 +317,7 @@ function OmniAuthLoginForm() {
 
 export default function OmniAuthLoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-neutral-950 flex items-center justify-center text-amber-400 font-mono text-xs">Cargando Identidad S-Class...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#030305] flex items-center justify-center text-amber-400 font-mono text-xs">Cargando Identidad S-Class...</div>}>
       <OmniAuthLoginForm />
     </Suspense>
   );

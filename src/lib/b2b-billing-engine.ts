@@ -1,6 +1,6 @@
 /**
  * MOTOR LÓGICO DE AUTOFACTURACIÓN B2B Y LIQUIDACIÓN DE COMISIONES (SSOT BLOQUE 5)
- * 
+ *
  * Reglas de Negocio Inmutables:
  * - Comisión B2B para Fincas y Wedding Planners: 10% a 15% sobre ticket nupcial / corporativo.
  * - Suelo de Evento Bodas 360: 3.800,00 € (Comisión mínima: 380,00 € a 570,00 € netos).
@@ -8,7 +8,7 @@
  * - Validación Técnica Obligatoria: Póliza RC >= 300.000 € y toma CETAC 32A/16A.
  */
 
-import { FincaHomologada, SCLASS_12_FINCAS_HOMOLOGADAS } from '@/lib/constants/fincas-catalog';
+import type { FincaHomologada } from '@/lib/constants/fincas-catalog';
 
 export interface B2BAffiliatePartner {
   id: string;
@@ -76,14 +76,44 @@ export interface AutoInvoiceDraft {
   observaciones: string;
 }
 
+export interface B2BCommissionResult {
+  ticketEfectivo: number;
+  comisionRate: number;
+  comisionNeta: number;
+  comisionConIva: number;
+  esTicketMinimo: boolean;
+}
+
+export interface AnnualAffiliateIncomeSimulation {
+  totalBodas: number;
+  volumenContratado: number;
+  ingresoNetoAnualFinca: number;
+  ingresoMensualPromedio: number;
+}
+
+export interface FincaTechnicalAuditResult {
+  aprobado: boolean;
+  score: number;
+  infracciones: string[];
+}
+
+const TICKET_MINIMO_BODA_EUR = 3800;
+const COMISION_RATE_MIN = 0.10;
+const COMISION_RATE_MAX = 0.15;
+const IVA_RATE = 0.21;
+const SLA_DIAS_HABILES = 7;
+const POLIZA_RC_MIN_EUR = 300000;
+const POTENCIA_MIN_KW = 15;
+const SCORE_APROBACION_MIN = 75;
+
 /**
  * Calcula la fecha de vencimiento a 7 días hábiles bancarios exactos (excluyendo sábados y domingos).
  */
 export function calculateSevenBusinessDaysDueDate(startDate: Date = new Date()): string {
   let count = 0;
   const current = new Date(startDate);
-  
-  while (count < 7) {
+
+  while (count < SLA_DIAS_HABILES) {
     current.setDate(current.getDate() + 1);
     const dayOfWeek = current.getDay();
     // 0 es Domingo, 6 es Sábado
@@ -91,8 +121,10 @@ export function calculateSevenBusinessDaysDueDate(startDate: Date = new Date()):
       count++;
     }
   }
-  
-  return current.toISOString().split('T')[0];
+
+  const iso = current.toISOString();
+  const datePart = iso.split('T')[0];
+  return datePart ?? iso;
 }
 
 /**
@@ -100,29 +132,23 @@ export function calculateSevenBusinessDaysDueDate(startDate: Date = new Date()):
  */
 export function calculateB2BCommission(
   eventTicket: number,
-  customRatePct: number = 0.10,
+  customRatePct: number = COMISION_RATE_MIN,
   isDiamondBoda: boolean = false
-): {
-  ticketEfectivo: number;
-  comisionRate: number;
-  comisionNeta: number;
-  comisionConIva: number;
-  esTicketMinimo: boolean;
-} {
+): B2BCommissionResult {
   // Suelo de 3.800 € en bodas
-  const ticketMinimo = isDiamondBoda ? Math.max(3800, eventTicket) : eventTicket;
-  
+  const ticketMinimo = isDiamondBoda ? Math.max(TICKET_MINIMO_BODA_EUR, eventTicket) : eventTicket;
+
   // Rate calibrado entre 10% y 15%
-  const comisionRate = Math.min(0.15, Math.max(0.10, customRatePct));
+  const comisionRate = Math.min(COMISION_RATE_MAX, Math.max(COMISION_RATE_MIN, customRatePct));
   const comisionNeta = Math.round(ticketMinimo * comisionRate * 100) / 100;
-  const comisionConIva = Math.round(comisionNeta * 1.21 * 100) / 100;
+  const comisionConIva = Math.round(comisionNeta * (1 + IVA_RATE) * 100) / 100;
 
   return {
     ticketEfectivo: ticketMinimo,
     comisionRate,
     comisionNeta,
     comisionConIva,
-    esTicketMinimo: ticketMinimo === 3800
+    esTicketMinimo: ticketMinimo === TICKET_MINIMO_BODA_EUR
   };
 }
 
@@ -133,13 +159,8 @@ export function simulateAnnualAffiliateIncome(
   bodasPorAno: number,
   ticketPromedio: number = 4500,
   ratePct: number = 0.12
-): {
-  totalBodas: number;
-  volumenContratado: number;
-  ingresoNetoAnualFinca: number;
-  ingresoMensualPromedio: number;
-} {
-  const volumenContratado = bodasPorAno * Math.max(3800, ticketPromedio);
+): AnnualAffiliateIncomeSimulation {
+  const volumenContratado = bodasPorAno * Math.max(TICKET_MINIMO_BODA_EUR, ticketPromedio);
   const ingresoNetoAnualFinca = Math.round(volumenContratado * ratePct * 100) / 100;
   const ingresoMensualPromedio = Math.round((ingresoNetoAnualFinca / 12) * 100) / 100;
 
@@ -159,12 +180,13 @@ export function generateAutoInvoiceDraft(
   events: B2BCommissionEvent[]
 ): AutoInvoiceDraft {
   const today = new Date();
-  const fechaEmision = today.toISOString().split('T')[0];
+  const isoToday = today.toISOString();
+  const fechaEmision = isoToday.split('T')[0] ?? isoToday;
   const fechaVencimientoSLA7Dias = calculateSevenBusinessDaysDueDate(today);
-  
+
   const baseImponibleComision = events.reduce((acc, ev) => acc + ev.comisionNeta, 0);
-  const cuotaIva21 = Math.round(baseImponibleComision * 0.21 * 100) / 100;
-  const retencionIrpf = events.reduce((acc, ev) => acc + (ev.retencionIrpfImporte || 0), 0);
+  const cuotaIva21 = Math.round(baseImponibleComision * IVA_RATE * 100) / 100;
+  const retencionIrpf = events.reduce((acc, ev) => acc + (ev.retencionIrpfImporte ?? 0), 0);
   const totalAPagarEnCuenta = Math.round((baseImponibleComision + cuotaIva21 - retencionIrpf) * 100) / 100;
 
   const invoiceNumber = `AUTOFAC-${today.getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -208,20 +230,16 @@ export function generateAutoInvoiceDraft(
 /**
  * Valida la auditoría técnica de una finca para certificar o mantener su homologación.
  */
-export function validateFincaTechnicalAudit(finca: Partial<FincaHomologada>): {
-  aprobado: boolean;
-  score: number;
-  infracciones: string[];
-} {
+export function validateFincaTechnicalAudit(finca: Partial<FincaHomologada>): FincaTechnicalAuditResult {
   const infracciones: string[] = [];
   let score = 100;
 
-  if (!finca.polizaRC || finca.polizaRC.coberturaEuros < 300000) {
+  if (!finca.polizaRC || finca.polizaRC.coberturaEuros < POLIZA_RC_MIN_EUR) {
     infracciones.push('Póliza de Responsabilidad Civil insuficiente (< 300.000 €). Exigida por protocolo de seguridad.');
     score -= 40;
   }
 
-  if (!finca.potenciaKw || finca.potenciaKw < 15) {
+  if (!finca.potenciaKw || finca.potenciaKw < POTENCIA_MIN_KW) {
     infracciones.push('Acometida eléctrica deficiente (< 15 kW). Riesgo de caída de tensión con sistemas de sonido e iluminación.');
     score -= 30;
   }
@@ -237,7 +255,7 @@ export function validateFincaTechnicalAudit(finca: Partial<FincaHomologada>): {
   }
 
   return {
-    aprobado: score >= 75 && infracciones.length === 0,
+    aprobado: score >= SCORE_APROBACION_MIN && infracciones.length === 0,
     score: Math.max(0, score),
     infracciones
   };

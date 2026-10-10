@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { prisma } from '@/lib/prisma';
 
 interface WalletTransaction {
@@ -12,6 +13,16 @@ interface WalletData {
     balance: number;
     currency: string;
     transactions: WalletTransaction[];
+}
+
+interface SplitEvent {
+    id: string;
+    date: Date;
+    description: string;
+    total: number;
+    artist80: number;
+    earOs10: number;
+    vimume10: number;
 }
 
 async function getArtistWallet(artistSlug: string): Promise<WalletData | null> {
@@ -67,14 +78,90 @@ function formatDate(date: Date): string {
     }).format(date);
 }
 
-export default async function ArtistWalletPage() {
-    const wallet = await getArtistWallet('edwin-agudelo');
+function WalletSkeleton(): React.ReactElement {
+    return (
+        <div className="min-h-screen bg-[#030305] w-full overflow-x-hidden">
+            <div className="max-w-5xl mx-auto px-6 py-16">
+                <header className="mb-12">
+                    <div className="h-6 w-48 rounded-full bg-white/5 animate-pulse mb-4" />
+                    <div className="h-12 w-96 max-w-full rounded-2xl bg-white/5 animate-pulse mb-3" />
+                    <div className="h-4 w-80 max-w-full rounded-lg bg-white/5 animate-pulse" />
+                </header>
+                <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-8 mb-8">
+                    <div className="h-3 w-32 rounded bg-white/5 animate-pulse mb-3" />
+                    <div className="h-14 w-64 rounded-2xl bg-white/5 animate-pulse mb-4" />
+                    <div className="h-3 w-56 rounded bg-white/5 animate-pulse" />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                    {[0, 1, 2].map((i) => (
+                        <div key={i} className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6">
+                            <div className="h-3 w-24 rounded bg-white/5 animate-pulse mb-2" />
+                            <div className="h-7 w-32 rounded-lg bg-white/5 animate-pulse" />
+                        </div>
+                    ))}
+                </div>
+                <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 overflow-hidden">
+                    <div className="px-6 py-4 border-b border-white/5">
+                        <div className="h-4 w-48 rounded bg-white/5 animate-pulse" />
+                    </div>
+                    <div className="divide-y divide-white/5">
+                        {[0, 1, 2, 3].map((i) => (
+                            <div key={i} className="px-6 py-4 flex items-center justify-between">
+                                <div className="flex-1">
+                                    <div className="h-4 w-64 max-w-full rounded bg-white/5 animate-pulse mb-2" />
+                                    <div className="h-3 w-40 rounded bg-white/5 animate-pulse" />
+                                </div>
+                                <div className="h-4 w-20 rounded bg-white/5 animate-pulse ml-4" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function WalletError({ message }: { message: string }): React.ReactElement {
+    return (
+        <div className="min-h-screen bg-[#030305] w-full overflow-x-hidden flex items-center justify-center px-6">
+            <div className="max-w-md w-full rounded-3xl bg-[#09090d]/80 border border-[#FF2B44]/30 backdrop-blur-md p-8 text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#FF2B44]/10 border border-[#FF2B44]/30 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-[#FF2B44]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                    </svg>
+                </div>
+                <h2 className="text-lg font-bold font-syne text-white mb-2">
+                    Error al cargar la bóveda
+                </h2>
+                <p className="text-sm text-zinc-400 font-light mb-4">
+                    {message}
+                </p>
+                <p className="text-[10px] text-zinc-600 font-mono">
+                    EAR OS · AuraWallet · Reintenta recargando la página
+                </p>
+            </div>
+        </div>
+    );
+}
+
+async function WalletContent(): Promise<React.ReactElement> {
+    let wallet: WalletData | null = null;
+    let errorMessage: string | null = null;
+
+    try {
+        wallet = await getArtistWallet('edwin-agudelo');
+    } catch (err) {
+        errorMessage = err instanceof Error ? err.message : 'Error desconocido al consultar el ledger.';
+    }
+
+    if (errorMessage) {
+        return <WalletError message={errorMessage} />;
+    }
 
     const hasTransactions = wallet !== null && wallet.transactions.length > 0;
 
-    // Split 80/10/10 desglosado por evento (últimas transacciones)
-    const splitByEvent = hasTransactions
-        ? wallet!.transactions.map((t) => {
+    const splitByEvent: SplitEvent[] = hasTransactions && wallet
+        ? wallet.transactions.map((t) => {
             const total = Math.abs(t.amount);
             return {
                 id: t.id,
@@ -87,6 +174,10 @@ export default async function ArtistWalletPage() {
             };
         })
         : [];
+
+    const totalArtist80 = splitByEvent.reduce((s, e) => s + e.artist80, 0);
+    const totalEarOs10 = splitByEvent.reduce((s, e) => s + e.earOs10, 0);
+    const totalVimume10 = splitByEvent.reduce((s, e) => s + e.vimume10, 0);
 
     return (
         <div className="min-h-screen bg-[#030305] w-full overflow-x-hidden">
@@ -114,7 +205,7 @@ export default async function ArtistWalletPage() {
                             Balance Actual
                         </div>
                         <div className="text-5xl sm:text-6xl font-black font-mono text-[#ecb613] tracking-tight">
-                            {hasTransactions ? formatEUR(wallet!.balance) : '0,00 €'}
+                            {hasTransactions && wallet ? formatEUR(wallet.balance) : '0,00 €'}
                         </div>
                         <div className="mt-4 flex items-center gap-2 text-[11px] text-zinc-500 font-mono">
                             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -130,7 +221,7 @@ export default async function ArtistWalletPage() {
                             Artista (80%)
                         </div>
                         <div className="text-2xl font-black font-mono text-white">
-                            {hasTransactions ? formatEUR(splitByEvent.reduce((s, e) => s + e.artist80, 0)) : '0,00 €'}
+                            {hasTransactions ? formatEUR(totalArtist80) : '0,00 €'}
                         </div>
                     </div>
                     <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md p-6">
@@ -138,7 +229,7 @@ export default async function ArtistWalletPage() {
                             EAR OS (10%)
                         </div>
                         <div className="text-2xl font-black font-mono text-white">
-                            {hasTransactions ? formatEUR(splitByEvent.reduce((s, e) => s + e.earOs10, 0)) : '0,00 €'}
+                            {hasTransactions ? formatEUR(totalEarOs10) : '0,00 €'}
                         </div>
                     </div>
                     <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 backdrop-blur-md p-6">
@@ -146,7 +237,7 @@ export default async function ArtistWalletPage() {
                             VIMUME (10%)
                         </div>
                         <div className="text-2xl font-black font-mono text-white">
-                            {hasTransactions ? formatEUR(splitByEvent.reduce((s, e) => s + e.vimume10, 0)) : '0,00 €'}
+                            {hasTransactions ? formatEUR(totalVimume10) : '0,00 €'}
                         </div>
                     </div>
                 </div>
@@ -159,9 +250,9 @@ export default async function ArtistWalletPage() {
                         </h2>
                     </div>
 
-                    {hasTransactions ? (
+                    {hasTransactions && wallet ? (
                         <div className="divide-y divide-white/5">
-                            {wallet!.transactions.map((tx) => (
+                            {wallet.transactions.map((tx) => (
                                 <div
                                     key={tx.id}
                                     className="px-6 py-4 flex items-center justify-between hover:bg-white/[0.02] transition-colors duration-300"
@@ -241,5 +332,13 @@ export default async function ArtistWalletPage() {
                 </footer>
             </div>
         </div>
+    );
+}
+
+export default function ArtistWalletPage(): React.ReactElement {
+    return (
+        <Suspense fallback={<WalletSkeleton />}>
+            <WalletContent />
+        </Suspense>
     );
 }

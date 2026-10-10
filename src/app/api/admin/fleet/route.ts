@@ -1,9 +1,72 @@
 import { NextResponse } from "next/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/security/adminGuard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+/* -------------------------------------------------------------------------- */
+/*                              SECURITY HEADERS                              */
+/* -------------------------------------------------------------------------- */
+
+const SECURITY_HEADERS: Record<string, string> = {
+    "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "no-referrer",
+    "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+};
+
+function jsonResponse(
+    body: unknown,
+    init?: { status?: number; headers?: Record<string, string> },
+): NextResponse {
+    return NextResponse.json(body, {
+        status: init?.status ?? 200,
+        headers: { ...SECURITY_HEADERS, ...(init?.headers ?? {}) },
+    });
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   SCHEMAS                                  */
+/* -------------------------------------------------------------------------- */
+
+const FleetPatchSchema = z
+    .object({
+        id: z
+            .string()
+            .trim()
+            .min(1, "Se requiere un id válido")
+            .max(128, "id excede longitud máxima"),
+        status: z
+            .string()
+            .trim()
+            .min(1)
+            .max(64, "status excede longitud máxima")
+            .optional(),
+        currentLocation: z
+            .string()
+            .trim()
+            .min(1)
+            .max(256, "currentLocation excede longitud máxima")
+            .optional(),
+    })
+    .strict();
+
+type FleetPatchInput = z.infer<typeof FleetPatchSchema>;
+
+/* -------------------------------------------------------------------------- */
+/*                                   TYPES                                    */
+/* -------------------------------------------------------------------------- */
+
+type FleetPositionRow = {
+    latitude: number;
+    longitude: number;
+    speed: number | null;
+    heading: number | null;
+    timestamp: Date;
+};
 
 type FleetUnitRow = {
     id: string;
@@ -13,14 +76,37 @@ type FleetUnitRow = {
     currentLocation: string | null;
     createdAt: Date;
     updatedAt: Date;
-    positions: {
-        latitude: number;
-        longitude: number;
-        speed: number | null;
-        heading: number | null;
-        timestamp: Date;
-    }[];
+    positions: FleetPositionRow[];
 };
+
+type FleetListResponse = {
+    ok: true;
+    data: FleetUnitRow[];
+    total: number;
+};
+
+type FleetPatchResponse = {
+    ok: true;
+    data: {
+        id: string;
+        unitCode: string | null;
+        code: string | null;
+        status: string;
+        currentLocation: string | null;
+        createdAt: Date;
+        updatedAt: Date;
+    };
+};
+
+type ErrorResponse = {
+    ok: false;
+    error: string;
+    details?: unknown;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                    GET                                     */
+/* -------------------------------------------------------------------------- */
 
 export async function GET(request: Request): Promise<Response> {
     const auth = await requireAdmin(request);
@@ -61,49 +147,67 @@ export async function GET(request: Request): Promise<Response> {
             })),
         }));
 
-        return NextResponse.json({ ok: true, data, total: data.length });
+        const payload: FleetListResponse = {
+            ok: true,
+            data,
+            total: data.length,
+        };
+
+        return jsonResponse(payload);
     } catch (error) {
         console.error("[fleet] GET error:", error);
-        return NextResponse.json(
-            { ok: false, error: "Error interno al leer la flota" },
-            { status: 500 },
-        );
+        const payload: ErrorResponse = {
+            ok: false,
+            error: "Error interno al leer la flota",
+        };
+        return jsonResponse(payload, { status: 500 });
     }
 }
 
-type FleetPatchBody = {
-    id?: string;
-    status?: string;
-    currentLocation?: string;
-};
+/* -------------------------------------------------------------------------- */
+/*                                   PATCH                                    */
+/* -------------------------------------------------------------------------- */
 
 export async function PATCH(request: Request): Promise<Response> {
     const auth = await requireAdmin(request);
     if (!auth.ok) return auth.response;
 
     try {
-        const body = (await request.json()) as FleetPatchBody;
-
-        if (!body.id || typeof body.id !== "string" || body.id.length === 0) {
-            return NextResponse.json(
-                { ok: false, error: "Se requiere un id válido" },
-                { status: 400 },
-            );
+        let rawBody: unknown;
+        try {
+            rawBody = await request.json();
+        } catch {
+            const payload: ErrorResponse = {
+                ok: false,
+                error: "Cuerpo JSON inválido",
+            };
+            return jsonResponse(payload, { status: 400 });
         }
+
+        const parsed = FleetPatchSchema.safeParse(rawBody);
+        if (!parsed.success) {
+            const payload: ErrorResponse = {
+                ok: false,
+                error: "Payload inválido",
+                details: parsed.error.flatten(),
+            };
+            return jsonResponse(payload, { status: 400 });
+        }
+
+        const body: FleetPatchInput = parsed.data;
 
         const data: { status?: string; currentLocation?: string } = {};
-        if (typeof body.status === "string" && body.status.length > 0) {
-            data.status = body.status;
-        }
-        if (typeof body.currentLocation === "string" && body.currentLocation.length > 0) {
+        if (body.status !== undefined) data.status = body.status;
+        if (body.currentLocation !== undefined) {
             data.currentLocation = body.currentLocation;
         }
 
         if (Object.keys(data).length === 0) {
-            return NextResponse.json(
-                { ok: false, error: "Sin campos válidos que actualizar" },
-                { status: 400 },
-            );
+            const payload: ErrorResponse = {
+                ok: false,
+                error: "Sin campos válidos que actualizar",
+            };
+            return jsonResponse(payload, { status: 400 });
         }
 
         const updated = await prisma.fleetUnit.update({
@@ -111,19 +215,34 @@ export async function PATCH(request: Request): Promise<Response> {
             data,
         });
 
-        return NextResponse.json({ ok: true, data: updated });
+        const payload: FleetPatchResponse = {
+            ok: true,
+            data: {
+                id: updated.id,
+                unitCode: updated.unitCode,
+                code: updated.code,
+                status: updated.status,
+                currentLocation: updated.currentLocation,
+                createdAt: updated.createdAt,
+                updatedAt: updated.updatedAt,
+            },
+        };
+
+        return jsonResponse(payload);
     } catch (error) {
         const code = (error as { code?: string }).code;
         if (code === "P2025") {
-            return NextResponse.json(
-                { ok: false, error: "Unidad de flota no encontrada" },
-                { status: 404 },
-            );
+            const payload: ErrorResponse = {
+                ok: false,
+                error: "Unidad de flota no encontrada",
+            };
+            return jsonResponse(payload, { status: 404 });
         }
         console.error("[fleet] PATCH error:", error);
-        return NextResponse.json(
-            { ok: false, error: "Error interno al actualizar la flota" },
-            { status: 500 },
-        );
+        const payload: ErrorResponse = {
+            ok: false,
+            error: "Error interno al actualizar la flota",
+        };
+        return jsonResponse(payload, { status: 500 });
     }
 }

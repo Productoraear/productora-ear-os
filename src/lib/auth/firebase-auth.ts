@@ -1,4 +1,4 @@
-import { getApps, getApp, initializeApp } from 'firebase/app';
+import { getApps, getApp, initializeApp, type FirebaseApp } from 'firebase/app';
 import {
     getAuth,
     GoogleAuthProvider,
@@ -10,6 +10,7 @@ import {
     sendPasswordResetEmail,
     onAuthStateChanged,
     signOut,
+    type Auth,
     type User
 } from 'firebase/auth';
 
@@ -20,14 +21,23 @@ import {
 // El segundo factor (WhatsApp OTP) se resuelve en el backend.
 // ============================================================================
 
-const firebaseApiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
+const firebaseApiKey: string | undefined = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
 
 // 🔒 FAIL-CLOSED FIREBASE (BLINDAJE SESSION_SECRET P0): sin apiKey real, el módulo NO se instancia.
 if (!firebaseApiKey || firebaseApiKey === 'dummy_firebase_key') {
     throw new Error('[FIREBASE_AUTH] NEXT_PUBLIC_FIREBASE_API_KEY no configurada (fail-closed).');
 }
 
-const firebaseConfig = {
+interface FirebaseClientConfig {
+    readonly apiKey: string;
+    readonly authDomain: string;
+    readonly projectId: string;
+    readonly storageBucket: string;
+    readonly messagingSenderId: string | undefined;
+    readonly appId: string | undefined;
+}
+
+const firebaseConfig: FirebaseClientConfig = {
     apiKey: firebaseApiKey,
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'productora-ear-backend.firebaseapp.com',
     projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'productora-ear-backend',
@@ -36,14 +46,17 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-export const auth = getAuth(app);
+const app: FirebaseApp = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-const googleProvider = new GoogleAuthProvider();
+export const auth: Auth = getAuth(app);
+
+const googleProvider: GoogleAuthProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
-const facebookProvider = new FacebookAuthProvider();
+
+const facebookProvider: FacebookAuthProvider = new FacebookAuthProvider();
 facebookProvider.setCustomParameters({ display: 'popup' });
-const appleProvider = new OAuthProvider('apple.com');
+
+const appleProvider: OAuthProvider = new OAuthProvider('apple.com');
 
 export type OAuthProviderId = 'google' | 'apple' | 'facebook';
 
@@ -84,4 +97,14 @@ export async function signOutGlobal(): Promise<void> {
     await signOut(auth);
 }
 
-export default { auth, signInWithGoogle, signInWithFacebook, signInWithApple, signInWithEmail, registerWithEmail, resetPasswordByEmail, onAuthChange, signOutGlobal };
+export default {
+    auth,
+    signInWithGoogle,
+    signInWithFacebook,
+    signInWithApple,
+    signInWithEmail,
+    registerWithEmail,
+    resetPasswordByEmail,
+    onAuthChange,
+    signOutGlobal
+};

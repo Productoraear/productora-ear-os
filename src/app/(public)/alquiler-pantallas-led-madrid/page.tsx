@@ -21,23 +21,72 @@ import {
   CENTRALITA_EAR_OS,
 } from '@/lib/constants/ear-os-ssot';
 
+const SITE_URL = 'https://productoraear.com';
+const PAGE_PATH = '/alquiler-pantallas-led-madrid';
+const CANONICAL_URL = `${SITE_URL}${PAGE_PATH}`;
+const BRAND_NAME = 'Productora EAR — Producciones y Sonorización';
+
 export const metadata: Metadata = {
   title: 'Alquiler de Pantallas LED en Madrid y Toledo | Productora EAR',
   description:
-    'Alquiler de pantallas LED gigantes de alta definición (P2.9, P3.9) para bodas, conciertos y eventos corporativos en Madrid. Montaje técnico profesional, seguro de RC y soporte en vivo.',
+    'Alquiler de pantallas LED modulares P2.9 y P3.9 para bodas, conciertos y eventos corporativos en Madrid. Montaje técnico, seguro de RC y operador de vídeo en vivo. Desde 2x1m hasta 6x3m.',
   alternates: {
-    canonical: 'https://productoraear.com/alquiler-pantallas-led-madrid',
+    canonical: CANONICAL_URL,
   },
   openGraph: {
     title: 'Alquiler de Pantallas LED en Madrid | Productora EAR',
     description:
-      'Pantallas LED gigantes para eventos, bodas y galas con sonido profesional Bose.',
-    url: 'https://productoraear.com/alquiler-pantallas-led-madrid',
+      'Pantallas LED modulares P2.9 y P3.9 con procesadores Novastar y sonorización Bose F1 para eventos en Madrid y Toledo.',
+    url: CANONICAL_URL,
     type: 'website',
+    siteName: BRAND_NAME,
+    locale: 'es_ES',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Alquiler de Pantallas LED en Madrid | Productora EAR',
+    description:
+      'Pantallas LED modulares P2.9 y P3.9 con procesadores Novastar y sonorización Bose F1 para eventos en Madrid y Toledo.',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
-const jsonLd = {
+interface JsonLdOffer {
+  '@type': 'Offer';
+  price: string;
+  priceCurrency: string;
+  availability: string;
+  url: string;
+  areaServed: string[];
+  seller: {
+    '@type': 'LocalBusiness';
+    name: string;
+    telephone: string;
+    address: {
+      '@type': 'PostalAddress';
+      addressLocality: string;
+      addressRegion: string;
+      addressCountry: string;
+    };
+  };
+}
+
+interface JsonLdProduct {
+  '@context': 'https://schema.org';
+  '@type': 'Product';
+  name: string;
+  description: string;
+  brand: {
+    '@type': 'Brand';
+    name: string;
+  };
+  offers: JsonLdOffer;
+}
+
+const jsonLd: JsonLdProduct = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Alquiler de Pantallas LED para Eventos en Madrid',
@@ -45,18 +94,18 @@ const jsonLd = {
     'Servicio integral de alquiler y montaje de pantallas LED modulares P2.9 y P3.9 para galas, bodas y eventos institucionales.',
   brand: {
     '@type': 'Brand',
-    name: 'Productora EAR — Producciones y Sonorización',
+    name: BRAND_NAME,
   },
   offers: {
     '@type': 'Offer',
     price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
     priceCurrency: 'EUR',
     availability: 'https://schema.org/InStock',
-    url: 'https://productoraear.com/alquiler-pantallas-led-madrid',
+    url: CANONICAL_URL,
     areaServed: ['Madrid', 'Toledo', 'Castilla-La Mancha', 'Comunidad de Madrid'],
     seller: {
       '@type': 'LocalBusiness',
-      name: 'Productora EAR — Producciones y Sonorización',
+      name: BRAND_NAME,
       telephone: `+${CENTRALITA_EAR_OS}`,
       address: {
         '@type': 'PostalAddress',
@@ -68,15 +117,26 @@ const jsonLd = {
   },
 };
 
-const specs = [
+interface SpecItem {
+  title: string;
+  desc: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+interface TrustBadge {
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const specs: SpecItem[] = [
   {
     title: 'Pitch P2.9 / P3.9 Indoor & Outdoor',
-    desc: 'Calidad 4K con brillo ultrabrillante de hasta 5.000 nits para luz solar directa.',
+    desc: 'Brillo de hasta 5.000 nits para luz solar directa y resolución 4K en interior.',
     icon: Tv,
   },
   {
     title: 'Estructura Modular Rápida',
-    desc: 'Configuración personalizada desde 2x1m hasta formatos gigantes de 6x3m.',
+    desc: 'Configuración desde 2x1m hasta formatos de 6x3m con ensamblaje en menos de 90 minutos.',
     icon: Layers,
   },
   {
@@ -91,7 +151,7 @@ const specs = [
   },
 ];
 
-const trustBadges = [
+const trustBadges: TrustBadge[] = [
   { label: 'Seguro RC Profesional', icon: ShieldCheck },
   { label: 'Procesadores Novastar', icon: Award },
   { label: 'Sonorización Bose F1', icon: Sparkles },
@@ -101,7 +161,7 @@ export default function AlquilerPantallasLedMadridPage() {
   const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS}?text=Hola%20Edwin,%20deseo%20informaci%C3%B3n%20sobre%20el%20alquiler%20de%20pantallas%20LED%20en%20Madrid`;
 
   return (
-    <main className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-[#f5f1e8] pt-28 pb-32 px-4 md:px-8 font-sans selection:bg-[#ecb613] selection:text-black">
+    <main className="min-h-screen w-full overflow-x-hidden bg-[#030305] text-[#f5f1e8] pt-28 pb-32 px-4 md:px-8 font-sans selection:bg-[#ecb613] selection:text-black">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -120,7 +180,7 @@ export default function AlquilerPantallasLedMadridPage() {
               Alquiler de Pantallas LED Gigantes para Bodas y Eventos en Madrid
             </h1>
             <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-              Transforma la experiencia visual de tu gala o boda con pantallas modulares de alta definición P2.9 y P3.9. Montaje certificado, procesadores Novastar y operadores de vídeo en vivo.
+              Pantallas modulares P2.9 y P3.9 con procesadores Novastar, montaje certificado y operadores de vídeo en vivo. Configuración desde 2x1m hasta 6x3m, con brillo de hasta 5.000 nits para interior y exterior.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -135,23 +195,27 @@ export default function AlquilerPantallasLedMadridPage() {
             <div className="flex flex-wrap gap-4 pt-4">
               <Link
                 href="/reservar/solista"
-                className="py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#ecb613] to-amber-500 hover:from-amber-400 hover:to-amber-600 text-black font-bold text-sm tracking-wide transition-all shadow-[0_10px_30px_rgba(236,182,19,0.3)] hover:shadow-[0_14px_40px_rgba(236,182,19,0.45)] flex items-center gap-2"
+                className="group relative py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#ecb613] to-amber-500 hover:from-amber-400 hover:to-amber-600 text-black font-bold text-sm tracking-wide transition-all duration-300 shadow-[0_10px_30px_rgba(236,182,19,0.3)] hover:shadow-[0_14px_40px_rgba(236,182,19,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
               >
-                <CreditCard className="w-4 h-4" /> Reservar Tarifa Solista {TARIFA_BASE_SOLISTA_EUR} €
+                <CreditCard className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                <span>Reservar Tarifa Solista {TARIFA_BASE_SOLISTA_EUR} €</span>
+                <ArrowRight className="w-4 h-4 -ml-1 opacity-0 -translate-x-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:ml-0" />
               </Link>
               <Link
                 href="/alquiler"
-                className="py-3.5 px-6 rounded-xl bg-[#121218] hover:bg-[#1a1a24] border border-white/15 hover:border-[#ecb613]/40 text-white font-medium text-sm flex items-center gap-2 transition-colors"
+                className="group py-3.5 px-6 rounded-xl bg-[#121218] hover:bg-[#1a1a24] border border-white/15 hover:border-[#ecb613]/40 text-white font-medium text-sm flex items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
               >
-                <Layers className="w-4 h-4 text-[#ecb613]" /> Ver Packs de Inventario
+                <Layers className="w-4 h-4 text-[#ecb613] transition-transform duration-300 group-hover:rotate-6" />
+                <span>Ver Packs de Inventario</span>
               </Link>
               <a
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-3.5 px-6 rounded-xl bg-[#121218] hover:bg-[#1a1a24] border border-white/15 hover:border-emerald-500/40 text-white font-medium text-sm flex items-center gap-2 transition-colors"
+                className="group py-3.5 px-6 rounded-xl bg-[#121218] hover:bg-[#1a1a24] border border-white/15 hover:border-emerald-500/40 text-white font-medium text-sm flex items-center gap-2 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
               >
-                <Phone className="w-4 h-4 text-emerald-400" /> WhatsApp Directo (+34 {CENTRALITA_EAR_OS})
+                <Phone className="w-4 h-4 text-emerald-400 transition-transform duration-300 group-hover:scale-110" />
+                <span>WhatsApp Directo (+34 {CENTRALITA_EAR_OS})</span>
               </a>
             </div>
           </div>
@@ -164,9 +228,9 @@ export default function AlquilerPantallasLedMadridPage() {
             return (
               <div
                 key={badge.label}
-                className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 flex items-center gap-3 hover:border-[#ecb613]/40 hover:-translate-y-0.5 transition-all duration-300"
+                className="group rounded-3xl bg-[#09090d]/80 border border-white/10 p-5 flex items-center gap-3 hover:border-[#ecb613]/40 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(236,182,19,0.08)] transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-[#ecb613]/20 group-hover:scale-105">
                   <Icon className="w-5 h-5" />
                 </div>
                 <span className="text-sm font-semibold text-white">{badge.label}</span>
@@ -190,9 +254,9 @@ export default function AlquilerPantallasLedMadridPage() {
             {specs.map((spec) => (
               <div
                 key={spec.title}
-                className="p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-2 hover:border-[#ecb613]/40 hover:-translate-y-1 transition-all duration-300"
+                className="group p-6 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-2 hover:border-[#ecb613]/40 hover:-translate-y-1 hover:shadow-[0_14px_40px_rgba(236,182,19,0.1)] transition-all duration-300"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] flex items-center justify-center mb-3">
+                <div className="w-10 h-10 rounded-xl bg-[#ecb613]/10 border border-[#ecb613]/30 text-[#ecb613] flex items-center justify-center mb-3 transition-all duration-300 group-hover:bg-[#ecb613]/20 group-hover:scale-105 group-hover:rotate-3">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
                 <h3 className="text-sm font-bold text-white">{spec.title}</h3>
@@ -203,7 +267,7 @@ export default function AlquilerPantallasLedMadridPage() {
         </section>
 
         {/* Banner de Integración con el Repertorio de Edwin Agudelo */}
-        <section className="p-8 rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/30 flex flex-col md:flex-row justify-between items-center gap-6 hover:border-[#ecb613]/60 transition-colors duration-500">
+        <section className="p-8 rounded-3xl bg-[#09090d]/80 border border-[#ecb613]/30 flex flex-col md:flex-row justify-between items-center gap-6 hover:border-[#ecb613]/60 hover:shadow-[0_14px_40px_rgba(236,182,19,0.12)] transition-all duration-500">
           <div className="space-y-1 text-center md:text-left">
             <h3 className="text-xl font-bold text-white font-serif">
               ¿Deseas combinar Pantallas LED con Música en Vivo?
@@ -215,15 +279,17 @@ export default function AlquilerPantallasLedMadridPage() {
           <div className="flex flex-wrap gap-3 justify-center shrink-0">
             <Link
               href="/reservar/solista"
-              className="py-3 px-6 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs tracking-wider uppercase transition-all flex items-center gap-2"
+              className="group py-3 px-6 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs tracking-wider uppercase transition-all duration-300 flex items-center gap-2 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] hover:shadow-[0_10px_30px_rgba(236,182,19,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
             >
-              Reservar Solista <ArrowRight className="w-3.5 h-3.5" />
+              <span>Reservar Solista</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <Link
               href="/checkout"
-              className="py-3 px-6 rounded-xl bg-[#121218] hover:bg-[#1a1a24] border border-white/15 hover:border-[#ecb613]/40 text-white font-bold text-xs tracking-wider uppercase transition-colors flex items-center gap-2"
+              className="group py-3 px-6 rounded-xl bg-[#121218] hover:bg-[#1a1a24] border border-white/15 hover:border-[#ecb613]/40 text-white font-bold text-xs tracking-wider uppercase transition-all duration-300 flex items-center gap-2 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ecb613] focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305]"
             >
-              Ir al Checkout
+              <span>Ir al Checkout</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         </section>

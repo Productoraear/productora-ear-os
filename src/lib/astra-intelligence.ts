@@ -1,16 +1,25 @@
 import { isVerified, transacciones_exitosas, clicks_en_landings } from './aura-wallet';
 
+/**
+ * Calcula el ranking de un artista basado en su estado de verificación,
+ * transacciones exitosas y clics en landings.
+ *
+ * @param artistId - Identificador único del artista.
+ * @returns Puntuación numérica del ranking del artista.
+ */
 export function rankArtist(artistId: string): number {
-  const verificationStatus = isVerified(artistId);
-  const successfulTransactions = transacciones_exitosas(artistId);
-  const landingClicks = clicks_en_landings(artistId);
+  const verificationStatus: boolean = isVerified(artistId);
+  const successfulTransactions: number = transacciones_exitosas(artistId);
+  const landingClicks: number = clicks_en_landings(artistId);
 
-  let score = 0;
+  let score: number = 0;
+
   if (verificationStatus) {
-    score += 10; // High score for verified artists
+    score += 10;
   }
-  score += successfulTransactions * 2; // Additional points for each successful transaction
-  score += Math.log(landingClicks + 1); // Points for landing clicks, logarithmic scale
+
+  score += successfulTransactions * 2;
+  score += Math.log(landingClicks + 1);
 
   return score;
 }

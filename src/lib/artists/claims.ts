@@ -6,9 +6,9 @@ import { LabelRole, UserTokenClaims } from './permissions';
 export function getSimulatedToken(role: LabelRole, artistId?: string): UserTokenClaims {
   return {
     role,
-    labelId: "LABEL-EAR-GLOBAL",
-    artistId: role === 'artist' ? (artistId || "ART-WAG-001") : undefined,
-    verified: true
+    labelId: 'LABEL-EAR-GLOBAL',
+    artistId: role === 'artist' ? (artistId ?? 'ART-WAG-001') : undefined,
+    verified: true,
   };
 }
 
@@ -16,5 +16,5 @@ export function getSimulatedToken(role: LabelRole, artistId?: string): UserToken
  * 🔒 Valida la autenticidad del token (en producción se leería del token JWT decodificado en Firebase Auth).
  */
 export function verifyLabelToken(token: UserTokenClaims): boolean {
-  return token.verified && !!token.role;
+  return token.verified && Boolean(token.role);
 }

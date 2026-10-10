@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense, Component, ReactNode, ErrorInfo } from 'react';
 import Link from 'next/link';
 import {
   Compass,
@@ -13,7 +13,9 @@ import {
   Search,
   ExternalLink,
   Layers,
-  ArrowUpRight
+  ArrowUpRight,
+  AlertTriangle,
+  RefreshCw
 } from 'lucide-react';
 
 interface JourneyItem {
@@ -40,7 +42,87 @@ const JOURNEYS: JourneyItem[] = [
   { id: 'sim-10-dj-boda-sonido-directo', query: 'dj y sonido profesional boda navalcarnero', temperature: 'HOT', efficiency: 100, clicks: 3, timeSeconds: 35.8, neuralJourney: true, priceLock: '100 € LOCKED' }
 ];
 
-export default function JourneyHeatmapAdminPage() {
+interface ErrorBoundaryProps {
+  children: ReactNode;
+  fallback?: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
+class JourneyErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    if (typeof console !== 'undefined') {
+      console.error('[JourneyHeatmap ErrorBoundary]', error, errorInfo);
+    }
+  }
+
+  handleReset = (): void => {
+    this.setState({ hasError: false, error: null });
+  };
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+      return (
+        <div className="max-w-3xl mx-auto p-6 rounded-3xl bg-[#09090d]/80 border border-red-900/40">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-red-950/40 border border-red-800 flex items-center justify-center text-red-400 shrink-0">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-sm font-bold font-syne text-white uppercase tracking-tight">
+                Error en Journey Heatmap
+              </h2>
+              <p className="text-xs font-mono text-zinc-400 mt-1">
+                {this.state.error?.message ?? 'Error desconocido al renderizar el módulo.'}
+              </p>
+              <button
+                onClick={this.handleReset}
+                className="mt-3 px-3 py-1.5 rounded-lg bg-[#ecb613]/10 border border-[#ecb613]/40 text-[11px] font-mono text-[#ecb613] hover:bg-[#ecb613]/20 flex items-center gap-2 transition-all font-bold"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                Reintentar
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function JourneySkeleton(): ReactNode {
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto font-sans animate-pulse">
+      <div className="h-4 w-64 bg-white/5 rounded" />
+      <div className="h-10 w-96 bg-white/5 rounded" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[0, 1, 2, 3].map(i => (
+          <div key={i} className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 h-32" />
+        ))}
+      </div>
+      <div className="h-12 w-full bg-white/5 rounded-xl" />
+      <div className="rounded-3xl bg-[#09090d]/80 border border-white/10 h-96" />
+    </div>
+  );
+}
+
+function JourneyHeatmapContent(): ReactNode {
   const [filterTemp, setFilterTemp] = useState<string>('ALL');
   const [search, setSearch] = useState('');
 
@@ -226,5 +308,15 @@ export default function JourneyHeatmapAdminPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function JourneyHeatmapAdminPage(): ReactNode {
+  return (
+    <JourneyErrorBoundary>
+      <Suspense fallback={<JourneySkeleton />}>
+        <JourneyHeatmapContent />
+      </Suspense>
+    </JourneyErrorBoundary>
   );
 }

@@ -1,59 +1,139 @@
-'use client';
-
-import React, { useState } from 'react';
+import type { Metadata } from 'next';
+import React from 'react';
 import Link from 'next/link';
-import { 
-  Tv, Volume2, ShieldCheck, Zap, Calculator, 
-  CheckCircle2, ArrowRight, PhoneCall, Sparkles, Layers, Sliders
+import {
+  Tv, Volume2, ShieldCheck, Zap,
+  CheckCircle2, PhoneCall, Sparkles, Layers
 } from 'lucide-react';
 import { AudiovisualFaqAccordion } from '@/components/seo/AudiovisualFaqAccordion';
+import { AudiovisualCalculator } from '@/components/public/AudiovisualCalculator';
 import {
   TARIFA_BASE_SOLISTA_EUR,
   DEPOSITO_STRIPE_EUR,
-  CENTRALITA_EAR_OS,
-  SPLIT_SOBERANO
+  CENTRALITA_EAR_OS
 } from '@/lib/constants/ear-os-ssot';
 
-export default function AlquilerAudiovisualesPage() {
-  const [screenM2, setScreenM2] = useState<number>(6);
-  const [attendees, setAttendees] = useState<number>(150);
-  const [isOutdoor, setIsOutdoor] = useState<boolean>(false);
+const CANONICAL_URL =
+  'https://ear-os.com/alquiler-equipos-sonido-audiovisuales';
 
-  // Lógica matemática de estimación audiovisual
-  const ledCostPerM2 = isOutdoor ? 140 : 110;
-  const ledPrice = screenM2 * ledCostPerM2;
-  const soundPowerW = attendees * (isOutdoor ? 20 : 12);
-  const soundPrice = Math.max(TARIFA_BASE_SOLISTA_EUR, Math.floor(attendees * 2.8));
-  const totalPrice = ledPrice + soundPrice;
-  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(/\D/g, '')}?text=Hola,%20busco%20presupuesto%20para%20alquiler%20de%20pantalla%20LED%20y%20sonido`;
+export const metadata: Metadata = {
+  title:
+    'Alquiler de Equipos de Sonido, Pantallas LED Gigantes & Iluminación DMX | Productora EAR',
+  description:
+    'Alquiler profesional de pantallas LED P2.9 HDR, sonorización Bose F1 / L-Acoustics e iluminación robótica DMX para bodas de gala, convenciones corporativas y festivales. Montaje certificado, técnicos titulados y cobertura nacional.',
+  keywords: [
+    'alquiler pantallas LED',
+    'alquiler equipos sonido',
+    'iluminación DMX eventos',
+    'sonorización profesional bodas',
+    'pantalla LED gigante alquiler',
+    'alquiler audiovisual corporativo',
+    'Productora EAR'
+  ],
+  alternates: {
+    canonical: CANONICAL_URL
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'es_ES',
+    url: CANONICAL_URL,
+    siteName: 'Productora EAR',
+    title:
+      'Alquiler de Equipos de Sonido, Pantallas LED Gigantes & Iluminación DMX | Productora EAR',
+    description:
+      'Infraestructura escénica audiovisual de alta definición: pantallas LED P2.9 HDR, sonorización Bose F1 / L-Acoustics e iluminación robótica DMX. Montaje certificado y técnicos titulados.',
+    images: [
+      {
+        url: 'https://ear-os.com/og/alquiler-audiovisuales.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Alquiler de pantallas LED y sonido profesional — Productora EAR'
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title:
+      'Alquiler de Equipos de Sonido, Pantallas LED Gigantes & Iluminación DMX',
+    description:
+      'Pantallas LED P2.9 HDR, sonorización Bose F1 / L-Acoustics e iluminación DMX para eventos de gala y corporativos.',
+    images: ['https://ear-os.com/og/alquiler-audiovisuales.jpg']
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1
+    }
+  }
+};
+
+const SERVICE_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Alquiler de Equipos de Sonido, Pantallas LED Gigantes & Iluminación DMX',
+  description:
+    'Infraestructura escénica audiovisual de alta definición para eventos y galas.',
+  serviceType: 'Alquiler de equipos audiovisuales',
+  areaServed: {
+    '@type': 'Country',
+    name: 'España'
+  },
+  provider: {
+    '@type': 'Organization',
+    name: 'Productora EAR',
+    url: 'https://ear-os.com',
+    telephone: CENTRALITA_EAR_OS
+  },
+  offers: {
+    '@type': 'Offer',
+    price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
+    priceCurrency: 'EUR',
+    availability: 'https://schema.org/InStock',
+    url: CANONICAL_URL
+  }
+} as const;
+
+const BREADCRUMB_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Inicio',
+      item: 'https://ear-os.com'
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Alquiler de Equipos de Sonido y Audiovisuales',
+      item: CANONICAL_URL
+    }
+  ]
+} as const;
+
+export default function AlquilerAudiovisualesPage() {
+  const whatsappHref = `https://wa.me/${CENTRALITA_EAR_OS.replace(
+    /\D/g,
+    ''
+  )}?text=Hola,%20busco%20presupuesto%20para%20alquiler%20de%20pantalla%20LED%20y%20sonido`;
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-[#050505] text-white pt-24 pb-20 px-4">
+    <div className="min-h-screen w-full overflow-x-hidden bg-[#030305] text-white pt-24 pb-20 px-4">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Service',
-            name: 'Alquiler de Equipos de Sonido, Pantallas LED Gigantes & Iluminación DMX',
-            description: 'Infraestructura escénica audiovisual de alta definición para eventos y galas.',
-            provider: {
-              '@type': 'Organization',
-              name: 'Productora EAR',
-              telephone: CENTRALITA_EAR_OS
-            },
-            offers: {
-              '@type': 'Offer',
-              price: TARIFA_BASE_SOLISTA_EUR.toFixed(2),
-              priceCurrency: 'EUR',
-              availability: 'https://schema.org/InStock',
-              url: 'https://ear-os.com/alquiler-equipos-sonido-audiovisuales'
-            }
-          })
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_JSON_LD) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_JSON_LD) }}
+      />
+
       <div className="max-w-7xl mx-auto space-y-16">
-        
         {/* HEADER AUDIOVISUAL S-CLASS */}
         <div className="border-b border-white/10 pb-12">
           <div className="flex flex-wrap items-center gap-3 mb-4">
@@ -77,103 +157,11 @@ export default function AlquilerAudiovisualesPage() {
         </div>
 
         {/* SIMULADOR INTERACTIVO DE PANTALLAS LED & SONIDO */}
-        <div className="bg-[#0a0a0f] border border-white/10 rounded-3xl p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-2xl">
-          <div className="lg:col-span-7 space-y-6">
-            <div>
-              <span className="text-xs font-mono text-[#ecb613] uppercase tracking-widest block mb-2">
-                Simulador Audiovisual Instantáneo
-              </span>
-              <h2 className="text-2xl font-fraunces font-bold text-white uppercase">
-                Calculadora de Pantallas LED &amp; Potencia Acústica
-              </h2>
-            </div>
-
-            <div className="space-y-5">
-              {/* Selector m2 Pantalla LED */}
-              <div>
-                <div className="flex justify-between text-xs text-white/60 mb-2 font-mono">
-                  <span>Superficie de Pantalla LED (m²)</span>
-                  <span className="text-[#ecb613] font-bold">{screenM2} m² ({screenM2 === 6 ? '3x2m' : screenM2 === 12 ? '4x3m' : `${screenM2}m²`})</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="4" 
-                  max="24" 
-                  step="2" 
-                  value={screenM2}
-                  onChange={(e) => setScreenM2(Number(e.target.value))}
-                  className="w-full accent-[#ecb613]"
-                />
-              </div>
-
-              {/* Selector Aforo / Asistentes */}
-              <div>
-                <div className="flex justify-between text-xs text-white/60 mb-2 font-mono">
-                  <span>Asistentes / Aforo</span>
-                  <span className="text-[#ecb613] font-bold">{attendees} Pax ({soundPowerW}W RMS)</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="30" 
-                  max="1000" 
-                  step="10" 
-                  value={attendees}
-                  onChange={(e) => setAttendees(Number(e.target.value))}
-                  className="w-full accent-[#ecb613]"
-                />
-              </div>
-
-              {/* Selector Interior / Exterior */}
-              <div className="flex items-center gap-4 pt-2">
-                <button
-                  onClick={() => setIsOutdoor(false)}
-                  className={`px-4 py-2.5 rounded-xl border text-xs font-mono font-bold transition-all ${
-                    !isOutdoor ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/10 text-white/40'
-                  }`}
-                >
-                  Recinto Interior (Indoor)
-                </button>
-                <button
-                  onClick={() => setIsOutdoor(true)}
-                  className={`px-4 py-2.5 rounded-xl border text-xs font-mono font-bold transition-all ${
-                    isOutdoor ? 'bg-[#ecb613]/10 border-[#ecb613] text-[#ecb613]' : 'bg-black/40 border-white/10 text-white/40'
-                  }`}
-                >
-                  Exterior (Outdoor &gt;4500 Nits)
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-5 bg-black/60 border border-white/10 rounded-2xl p-6 space-y-6">
-            <div className="space-y-2">
-              <span className="text-xs text-white/40 uppercase font-mono">Presupuesto Estimado Audiovisual</span>
-              <div className="text-4xl font-black text-white font-fraunces">
-                {totalPrice.toLocaleString('es-ES')} € <span className="text-xs text-white/40 font-normal">+ IVA</span>
-              </div>
-              <p className="text-xs text-white/50 leading-relaxed pt-2">
-                Incluye pantalla LED P2.9 de {screenM2}m², sistema de sonido de {soundPowerW}W RMS, estructura Truss, cableado y técnico operador. Bloqueo de fecha con depósito de {DEPOSITO_STRIPE_EUR} € Stripe Price-Lock.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3.5 bg-[#ecb613] hover:bg-yellow-400 text-black font-black uppercase text-xs rounded-xl transition-colors flex items-center justify-center gap-2"
-              >
-                <PhoneCall size={16} /> Bloquear Equipamiento
-              </a>
-              <Link 
-                href="/checkout/presupuesto"
-                className="w-full py-2.5 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white font-mono text-xs rounded-xl transition-colors flex items-center justify-center gap-2"
-              >
-                Abrir Cotizador Avanzado 360°
-              </Link>
-            </div>
-          </div>
-        </div>
+        <AudiovisualCalculator
+          tarifaBaseSolistaEur={TARIFA_BASE_SOLISTA_EUR}
+          depositoStripeEur={DEPOSITO_STRIPE_EUR}
+          whatsappHref={whatsappHref}
+        />
 
         {/* MÓDULOS TÉCNICOS DESTACADOS (GSC KEYWORDS) */}
         <div className="space-y-8">
@@ -187,20 +175,27 @@ export default function AlquilerAudiovisualesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
             <div className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-[#ecb613]">
                   <Tv size={24} />
                 </div>
-                <h3 className="text-xl font-bold font-fraunces text-white">Pantallas LED Gigantes P2.9</h3>
+                <h3 className="text-xl font-bold font-fraunces text-white">
+                  Pantallas LED Gigantes P2.9
+                </h3>
                 <p className="text-white/60 text-xs leading-relaxed">
                   Módulos LED de alta tasa de refresco (3840Hz), contraste profundo y brillo para luz solar directa. Ideales para vídeos nupciales, presentaciones B2B y conciertos.
                 </p>
                 <ul className="space-y-2 text-xs text-white/50">
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-[#ecb613]" /> Resolución 4K HDR P2.9</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-[#ecb613]" /> Estructuras Truss en Aluminio</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-[#ecb613]" /> Escalador &amp; Procesador de Vídeo</li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-[#ecb613]" /> Resolución 4K HDR P2.9
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-[#ecb613]" /> Estructuras Truss en Aluminio
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-[#ecb613]" /> Escalador &amp; Procesador de Vídeo
+                  </li>
                 </ul>
               </div>
             </div>
@@ -210,14 +205,22 @@ export default function AlquilerAudiovisualesPage() {
                 <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400">
                   <Volume2 size={24} />
                 </div>
-                <h3 className="text-xl font-bold font-fraunces text-white">Sonorización de Gala &amp; Conciertos</h3>
+                <h3 className="text-xl font-bold font-fraunces text-white">
+                  Sonorización de Gala &amp; Conciertos
+                </h3>
                 <p className="text-white/60 text-xs leading-relaxed">
                   Sistemas Bose F1 Model 812, Bose S1 Pro y cajas de alineación de fase L-Acoustics K2 con mesas digitales Behringer XR18 y microfonía inalámbrica Shure Axient.
                 </p>
                 <ul className="space-y-2 text-xs text-white/50">
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-blue-400" /> Cobertura Homogénea 12 W/pax</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-blue-400" /> Microfonía Inalámbrica Shure/Neumann</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-blue-400" /> Mesas de Mezcla Digitales DANTE</li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-blue-400" /> Cobertura Homogénea 12 W/pax
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-blue-400" /> Microfonía Inalámbrica Shure/Neumann
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-blue-400" /> Mesas de Mezcla Digitales DANTE
+                  </li>
                 </ul>
               </div>
             </div>
@@ -227,18 +230,25 @@ export default function AlquilerAudiovisualesPage() {
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
                   <Sparkles size={24} />
                 </div>
-                <h3 className="text-xl font-bold font-fraunces text-white">Iluminación Robótica &amp; DMX</h3>
+                <h3 className="text-xl font-bold font-fraunces text-white">
+                  Iluminación Robótica &amp; DMX
+                </h3>
                 <p className="text-white/60 text-xs leading-relaxed">
                   Cabezas móviles Beam/Spot/Wash, focos de bañado arquitectónico LED a batería para jardines de fincas y puentes de luces para pista de baile.
                 </p>
                 <ul className="space-y-2 text-xs text-white/50">
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-400" /> Control DMX con Escenas de Gala</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-400" /> Iluminación Inalámbrica para Fincas</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 size={14} className="text-emerald-400" /> Efectos de Humo denso &amp; Fuego Frío</li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-emerald-400" /> Control DMX con Escenas de Gala
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-emerald-400" /> Iluminación Inalámbrica para Fincas
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 size={14} className="text-emerald-400" /> Efectos de Humo denso &amp; Fuego Frío
+                  </li>
                 </ul>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -251,44 +261,59 @@ export default function AlquilerAudiovisualesPage() {
             Soberanía Técnica &amp; Garantía Operativa EAR OS
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Link 
-              href="/soberania-tecnica" 
+            <Link
+              href="/soberania-tecnica"
               className="bg-black/40 border border-white/5 p-5 rounded-2xl space-y-2 hover:border-emerald-500/50 hover:bg-white/5 transition-all group"
             >
               <ShieldCheck className="text-emerald-400 group-hover:scale-110 transition-transform" size={28} />
-              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">Póliza RC 1M€</h4>
-              <p className="text-xs text-white/50">Cobertura civil completa en recintos e instalaciones.</p>
+              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">
+                Póliza RC 1M€
+              </h4>
+              <p className="text-xs text-white/50">
+                Cobertura civil completa en recintos e instalaciones.
+              </p>
             </Link>
 
-            <Link 
-              href="/soberania-tecnica" 
+            <Link
+              href="/soberania-tecnica"
               className="bg-black/40 border border-white/5 p-5 rounded-2xl space-y-2 hover:border-emerald-500/50 hover:bg-white/5 transition-all group"
             >
               <Zap className="text-emerald-400 group-hover:scale-110 transition-transform" size={28} />
-              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">Técnicos Titulados</h4>
-              <p className="text-xs text-white/50">Personal cualificado con prevención de riesgos laborables.</p>
+              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">
+                Técnicos Titulados
+              </h4>
+              <p className="text-xs text-white/50">
+                Personal cualificado con prevención de riesgos laborables.
+              </p>
             </Link>
 
-            <Link 
-              href="/soberania-tecnica" 
+            <Link
+              href="/soberania-tecnica"
               className="bg-black/40 border border-white/5 p-5 rounded-2xl space-y-2 hover:border-emerald-500/50 hover:bg-white/5 transition-all group"
             >
               <Layers className="text-emerald-400 group-hover:scale-110 transition-transform" size={28} />
-              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">Plan B por Clima</h4>
-              <p className="text-xs text-white/50">Estructuras estancas e impermeables para exterior.</p>
+              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">
+                Plan B por Clima
+              </h4>
+              <p className="text-xs text-white/50">
+                Estructuras estancas e impermeables para exterior.
+              </p>
             </Link>
 
-            <Link 
-              href="/soberania-tecnica" 
+            <Link
+              href="/soberania-tecnica"
               className="bg-black/40 border border-white/5 p-5 rounded-2xl space-y-2 hover:border-emerald-500/50 hover:bg-white/5 transition-all group"
             >
               <CheckCircle2 className="text-emerald-400 group-hover:scale-110 transition-transform" size={28} />
-              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">Facturación FACe/DIR3</h4>
-              <p className="text-xs text-white/50">Apto para contratos privados y licitaciones públicas.</p>
+              <h4 className="font-bold text-sm text-white group-hover:text-emerald-400 transition-colors">
+                Facturación FACe/DIR3
+              </h4>
+              <p className="text-xs text-white/50">
+                Apto para contratos privados y licitaciones públicas.
+              </p>
             </Link>
           </div>
         </div>
-
       </div>
     </div>
   );

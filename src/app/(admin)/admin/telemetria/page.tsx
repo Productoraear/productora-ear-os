@@ -1,6 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useState } from 'react';
+import {
+  Component,
+  Suspense,
+  useCallback,
+  useEffect,
+  useState,
+  type ErrorInfo,
+  type ReactNode
+} from 'react';
 import Link from 'next/link';
 import {
   Cpu,
@@ -33,7 +41,100 @@ function fmtCount(n: number): string {
   return new Intl.NumberFormat('es-ES').format(n);
 }
 
-export default function TelemetriaCatminPage() {
+type TelemetryErrorBoundaryProps = {
+  children: ReactNode;
+  fallback?: ReactNode;
+};
+
+type TelemetryErrorBoundaryState = {
+  hasError: boolean;
+  message: string | null;
+};
+
+class TelemetryErrorBoundary extends Component<
+  TelemetryErrorBoundaryProps,
+  TelemetryErrorBoundaryState
+> {
+  constructor(props: TelemetryErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, message: null };
+  }
+
+  static getDerivedStateFromError(error: unknown): TelemetryErrorBoundaryState {
+    return {
+      hasError: true,
+      message: error instanceof Error ? error.message : 'Error desconocido en telemetría'
+    };
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo): void {
+    if (typeof console !== 'undefined') {
+      console.error('[TelemetriaErrorBoundary]', error, info.componentStack);
+    }
+  }
+
+  private handleReset = (): void => {
+    this.setState({ hasError: false, message: null });
+  };
+
+  render(): ReactNode {
+    if (this.state.hasError) {
+      if (this.props.fallback) return this.props.fallback;
+      return (
+        <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-5 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+          <div className="flex-1 space-y-2">
+            <p className="font-mono text-xs text-red-300">
+              Fallo crítico en módulo de telemetría: {this.state.message ?? 'desconocido'}
+            </p>
+            <button
+              onClick={this.handleReset}
+              className="px-3 py-1.5 rounded-lg bg-red-500/20 border border-red-500/40 text-[11px] font-mono text-red-200 hover:bg-red-500/30 transition-colors"
+            >
+              Reintentar render
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function TelemetrySkeleton(): ReactNode {
+  return (
+    <div className="space-y-6 max-w-7xl mx-auto font-sans animate-pulse">
+      <div className="h-4 w-64 rounded bg-zinc-900/80" />
+      <div className="h-10 w-96 rounded bg-zinc-900/80" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-3"
+          >
+            <div className="h-3 w-24 rounded bg-zinc-800/80" />
+            <div className="h-8 w-32 rounded bg-zinc-800/80" />
+            <div className="h-3 w-40 rounded bg-zinc-800/60" />
+          </div>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            className="p-5 rounded-3xl bg-[#09090d]/80 border border-white/10 space-y-3"
+          >
+            <div className="h-3 w-28 rounded bg-zinc-800/80" />
+            <div className="h-4 w-48 rounded bg-zinc-800/70" />
+            <div className="h-3 w-36 rounded bg-zinc-800/60" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TelemetriaCatminContent(): ReactNode {
   const [data, setData] = useState<Telemetry | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -233,5 +334,15 @@ export default function TelemetriaCatminPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function TelemetriaCatminPage(): ReactNode {
+  return (
+    <TelemetryErrorBoundary>
+      <Suspense fallback={<TelemetrySkeleton />}>
+        <TelemetriaCatminContent />
+      </Suspense>
+    </TelemetryErrorBoundary>
   );
 }

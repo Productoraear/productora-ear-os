@@ -12,11 +12,37 @@ export const metadata: Metadata = {
     'Representación artística exclusiva, booking y dirección técnica para solistas, orquestas y formaciones musicales. Tarifa Solista 350 € con depósito Stripe 100 €.',
 };
 
-const TARIFA_FORMATEADA = TARIFA_BASE_SOLISTA_EUR.toFixed(2);
-const DEPOSITO_FORMATEADO = DEPOSITO_STRIPE_EUR.toFixed(2);
-const WHATSAPP_HREF = `https://wa.me/${CENTRALITA_EAR_OS.replace(/[^0-9]/g, '')}`;
+const TARIFA_FORMATEADA: string = TARIFA_BASE_SOLISTA_EUR.toFixed(2);
+const DEPOSITO_FORMATEADO: string = DEPOSITO_STRIPE_EUR.toFixed(2);
+const WHATSAPP_HREF: string = `https://wa.me/${CENTRALITA_EAR_OS.replace(/[^0-9]/g, '')}`;
 
-const jsonLd = {
+interface JsonLdOffer {
+  '@type': 'Offer';
+  url: string;
+  priceCurrency: string;
+  price: string;
+  availability: string;
+  priceValidUntil: string;
+  seller: {
+    '@type': 'Organization';
+    name: string;
+    telephone: string;
+  };
+}
+
+interface JsonLdProduct {
+  '@context': 'https://schema.org';
+  '@type': 'Product';
+  name: string;
+  description: string;
+  brand: {
+    '@type': 'Brand';
+    name: string;
+  };
+  offers: JsonLdOffer;
+}
+
+const jsonLd: JsonLdProduct = {
   '@context': 'https://schema.org',
   '@type': 'Product',
   name: 'Representación Artística y Management — Tarifa Solista',
@@ -41,9 +67,45 @@ const jsonLd = {
   },
 };
 
-export default function RepresentacionPage() {
+interface FichaTecnicaItem {
+  readonly id: string;
+  readonly label: string;
+  readonly value: string;
+}
+
+const FICHA_TECNICA: readonly FichaTecnicaItem[] = [
+  {
+    id: 'tarifa-base',
+    label: 'Tarifa Base Solista (Edwin Agudelo)',
+    value: `${TARIFA_FORMATEADA} € (Hub Central Méntrida, Toledo).`,
+  },
+  {
+    id: 'logistica',
+    label: 'Logística y Kilometraje',
+    value:
+      '1,50 €/km a partir del km 50 (+120 € suplemento hotelero si fin ≥ 3:00 AM o distancia > 200 km).',
+  },
+  {
+    id: 'rider',
+    label: 'Rider y Presión Acústica',
+    value:
+      '12 W/pax (Sistemas Bose F1 Model 812 / S1 Pro, Microfonía Shure Beta 87A).',
+  },
+  {
+    id: 'vimume',
+    label: 'Límite VIMUME B2G',
+    value: '< 15.000,00 € (Ajuste preventivo Art. 118 LCSP = 14.250,00 €).',
+  },
+  {
+    id: 'deposito',
+    label: 'Depósito Transaccional',
+    value: `${DEPOSITO_FORMATEADO} € mediante Stripe con firma Price-Lock SHA-256.`,
+  },
+] as const;
+
+export default function RepresentacionPage(): React.JSX.Element {
   return (
-    <main className="bg-black text-white min-h-screen w-full overflow-x-hidden p-8 max-w-5xl mx-auto">
+    <main className="bg-[#030305] text-white min-h-screen w-full overflow-x-hidden p-8 max-w-5xl mx-auto">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -55,51 +117,38 @@ export default function RepresentacionPage() {
 
       <div className="space-y-6 text-zinc-300 text-lg leading-relaxed">
         <p>
-          Gestión integral de contratación directa de solistas y elencos musicales con rider
-          técnico acústico homologado y liquidaciones automatizadas bajo el Split Soberano (80%
-          Artista / 10% EAR OS / 10% VIMUME).
+          Contratación directa de solistas y elencos musicales con rider técnico acústico
+          homologado y liquidaciones automatizadas bajo el Split Soberano (80% Artista / 10% EAR OS
+          / 10% VIMUME).
         </p>
 
-        <section className="rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 my-6 transition-all duration-300 hover:border-cyan-400/40 hover:shadow-[0_0_40px_-10px_rgba(34,211,238,0.35)]">
-          <h2 className="text-xl font-semibold text-white mb-4">
+        <section
+          aria-labelledby="ficha-tecnica-heading"
+          className="group rounded-3xl bg-[#09090d]/80 border border-white/10 p-6 my-6 transition-all duration-500 ease-out hover:border-cyan-400/40 hover:shadow-[0_0_40px_-10px_rgba(34,211,238,0.35)] hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+        >
+          <h2
+            id="ficha-tecnica-heading"
+            className="text-xl font-semibold text-white mb-4 transition-colors duration-300 group-hover:text-cyan-100"
+          >
             Ficha Técnica y Condiciones Transaccionales
           </h2>
           <ul className="space-y-3 text-sm text-zinc-300">
-            <li className="flex items-center gap-2">
-              <span className="text-cyan-400 font-mono font-bold">•</span>
-              <span>
-                <strong>Tarifa Base Solista (Edwin Agudelo):</strong> {TARIFA_FORMATEADA} € (Hub
-                Central Méntrida, Toledo).
-              </span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-cyan-400 font-mono font-bold">•</span>
-              <span>
-                <strong>Logística y Kilometraje:</strong> 1,50 €/km a partir del km 50 (+120 €
-                suplemento hotelero si fin &ge; 3:00 AM o distancia &gt; 200 km).
-              </span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-cyan-400 font-mono font-bold">•</span>
-              <span>
-                <strong>Rider y Presión Acústica:</strong> 12 W/pax (Sistemas Bose F1 Model 812 /
-                S1 Pro, Microfonía Shure Beta 87A).
-              </span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-cyan-400 font-mono font-bold">•</span>
-              <span>
-                <strong>Límite VIMUME B2G:</strong> &lt; 15.000,00 € (Ajuste preventivo Art. 118
-                LCSP = 14.250,00 €).
-              </span>
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="text-cyan-400 font-mono font-bold">•</span>
-              <span>
-                <strong>Depósito Transaccional:</strong> {DEPOSITO_FORMATEADO} € mediante Stripe
-                con firma Price-Lock SHA-256.
-              </span>
-            </li>
+            {FICHA_TECNICA.map((item: FichaTecnicaItem) => (
+              <li
+                key={item.id}
+                className="flex items-start gap-2 transition-colors duration-300 hover:text-white"
+              >
+                <span
+                  aria-hidden="true"
+                  className="text-cyan-400 font-mono font-bold leading-6 transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none"
+                >
+                  •
+                </span>
+                <span>
+                  <strong>{item.label}:</strong> {item.value}
+                </span>
+              </li>
+            ))}
           </ul>
         </section>
 
@@ -108,15 +157,29 @@ export default function RepresentacionPage() {
             href={WHATSAPP_HREF}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 bg-white text-black font-semibold rounded-3xl transition-all duration-300 hover:bg-cyan-300 hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.6)]"
+            aria-label={`Contactar por WhatsApp al ${CENTRALITA_EAR_OS}`}
+            className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-black font-semibold rounded-3xl overflow-hidden transition-all duration-300 ease-out hover:bg-cyan-300 hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.6)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] motion-reduce:transform-none motion-reduce:transition-none"
           >
-            WhatsApp {CENTRALITA_EAR_OS}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
+            />
+            <span className="relative transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none">
+              WhatsApp {CENTRALITA_EAR_OS}
+            </span>
           </a>
           <a
             href="/reservar/solista"
-            className="inline-flex items-center justify-center px-6 py-3 border border-white/10 text-white font-semibold rounded-3xl transition-all duration-300 hover:bg-[#09090d]/80 hover:border-cyan-400/40 hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.4)]"
+            aria-label={`Reservar Solista por ${TARIFA_FORMATEADA} euros`}
+            className="group relative inline-flex items-center justify-center gap-2 px-6 py-3 border border-white/10 text-white font-semibold rounded-3xl overflow-hidden transition-all duration-300 ease-out hover:bg-[#09090d]/80 hover:border-cyan-400/40 hover:shadow-[0_0_30px_-5px_rgba(34,211,238,0.4)] hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#030305] motion-reduce:transform-none motion-reduce:transition-none"
           >
-            Reservar Solista — {TARIFA_FORMATEADA} €
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full motion-reduce:hidden"
+            />
+            <span className="relative transition-colors duration-300 group-hover:text-cyan-100">
+              Reservar Solista — {TARIFA_FORMATEADA} €
+            </span>
           </a>
         </div>
       </div>

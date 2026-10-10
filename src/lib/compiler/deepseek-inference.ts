@@ -39,20 +39,34 @@ interface DeepSeekApiMessage {
     content: string;
 }
 
+interface DeepSeekApiChoice {
+    message?: { role?: string; content?: string };
+    finish_reason?: string | null;
+}
+
 interface DeepSeekApiResponse {
-    choices?: Array<{
-        message?: { role?: string; content?: string };
-        finish_reason?: string | null;
-    }>;
+    choices?: DeepSeekApiChoice[];
     model?: string;
+}
+
+interface DeepSeekRequestBody {
+    model: DeepSeekModel;
+    messages: DeepSeekApiMessage[];
+    stream: false;
+    temperature: number;
+    max_tokens: number;
+    response_format?: { type: 'json_object' };
 }
 
 const DEEPSEEK_ENDPOINT = 'https://api.deepseek.com/chat/completions';
 const DEFAULT_MODEL: DeepSeekModel = 'deepseek-chat';
 const DEFAULT_TIMEOUT_MS = 8000;
+const DEFAULT_TEMPERATURE = 0.2;
+const DEFAULT_MAX_TOKENS = 2048;
 
 export function isDeepSeekConfigured(): boolean {
-    return Boolean(process.env.DEEPSEEK_API_KEY && process.env.DEEPSEEK_API_KEY.trim());
+    const key = process.env.DEEPSEEK_API_KEY;
+    return typeof key === 'string' && key.trim().length > 0;
 }
 
 /**
@@ -63,31 +77,39 @@ export function isDeepSeekConfigured(): boolean {
 export async function runDeepSeekChat(req: DeepSeekChatRequest): Promise<DeepSeekChatResult> {
     const apiKey = process.env.DEEPSEEK_API_KEY;
 
-    if (!apiKey || !apiKey.trim()) {
-        return { available: false, content: '', model: 'unconfigured', latencyMs: 0, finishReason: null };
+    if (typeof apiKey !== 'string' || apiKey.trim().length === 0) {
+        return {
+            available: false,
+            content: '',
+            model: 'unconfigured',
+            latencyMs: 0,
+            finishReason: null
+        };
     }
 
     const startedAt = Date.now();
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), DEFAULT_TIMEOUT_MS);
-    const abortHandler = () => controller.abort();
+    const abortHandler = (): void => controller.abort();
     req.signal?.addEventListener('abort', abortHandler, { once: true });
 
     const messages: DeepSeekApiMessage[] = [];
-    if (req.system && req.system.trim()) {
+    if (typeof req.system === 'string' && req.system.trim().length > 0) {
         messages.push({ role: 'system', content: req.system.trim() });
     }
     messages.push({ role: 'user', content: req.prompt });
 
-    const body: Record<string, unknown> = {
-        model: req.model ?? DEFAULT_MODEL,
+    const selectedModel: DeepSeekModel = req.model ?? DEFAULT_MODEL;
+
+    const body: DeepSeekRequestBody = {
+        model: selectedModel,
         messages,
         stream: false,
-        temperature: req.temperature ?? 0.2,
-        max_tokens: req.maxTokens ?? 2048
+        temperature: req.temperature ?? DEFAULT_TEMPERATURE,
+        max_tokens: req.maxTokens ?? DEFAULT_MAX_TOKENS
     };
 
-    if (req.json) {
+    if (req.json === true) {
         body.response_format = { type: 'json_object' };
     }
 
@@ -103,21 +125,34 @@ export async function runDeepSeekChat(req: DeepSeekChatRequest): Promise<DeepSee
         });
 
         if (!res.ok) {
-            return { available: false, content: '', model: 'deepseek-error', latencyMs: Date.now() - startedAt, finishReason: `http_${res.status}` };
+            return {
+                available: false,
+                content: '',
+                model: 'deepseek-error',
+                latencyMs: Date.now() - startedAt,
+                finishReason: `http_${res.status}`
+            };
         }
 
         const data = (await res.json()) as DeepSeekApiResponse;
-        const content = data.choices?.[0]?.message?.content ?? '';
+        const firstChoice: DeepSeekApiChoice | undefined = data.choices?.[0];
+        const content: string = firstChoice?.message?.content ?? '';
 
         return {
             available: content.length > 0,
             content,
-            model: data.model ?? (body.model as string),
+            model: data.model ?? selectedModel,
             latencyMs: Date.now() - startedAt,
-            finishReason: data.choices?.[0]?.finish_reason ?? null
+            finishReason: firstChoice?.finish_reason ?? null
         };
     } catch {
-        return { available: false, content: '', model: 'deepseek-timeout', latencyMs: Date.now() - startedAt, finishReason: null };
+        return {
+            available: false,
+            content: '',
+            model: 'deepseek-timeout',
+            latencyMs: Date.now() - startedAt,
+            finishReason: null
+        };
     } finally {
         clearTimeout(timeout);
         req.signal?.removeEventListener('abort', abortHandler);

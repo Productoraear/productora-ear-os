@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Landmark,
@@ -11,13 +11,12 @@ import {
   Sparkles,
   FileText,
   Volume2,
-  ArrowRight,
   RefreshCw,
   CheckCircle2,
   BadgeAlert,
   Building2,
   CircleDollarSign,
-  Loader2
+  Loader2,
 } from 'lucide-react';
 
 interface B2GTenderOpportunity {
@@ -40,29 +39,72 @@ interface B2GTenderOpportunity {
   vimumeCompatible: boolean;
   matchScore: number;
   matchReasons: string[];
-  status: 'NUEVA' | 'ANALIZADA' | 'BORRADOR_EMITIDO' | 'PRESENTADA' | 'ADJUDICADA' | 'DESCARTADA';
+  status:
+    | 'NUEVA'
+    | 'ANALIZADA'
+    | 'BORRADOR_EMITIDO'
+    | 'PRESENTADA'
+    | 'ADJUDICADA'
+    | 'DESCARTADA';
 }
 
-const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  NUEVA: { label: 'Nueva', color: 'text-[#ecb613]', bg: 'bg-[#ecb613]/10 border-[#ecb613]/30' },
-  ANALIZADA: { label: 'Analizada', color: 'text-sky-400', bg: 'bg-sky-400/10 border-sky-400/30' },
-  BORRADOR_EMITIDO: { label: 'Borrador Emitido', color: 'text-violet-400', bg: 'bg-violet-400/10 border-violet-400/30' },
-  PRESENTADA: { label: 'Presentada', color: 'text-emerald-400', bg: 'bg-emerald-400/10 border-emerald-400/30' },
-  ADJUDICADA: { label: 'Adjudicada', color: 'text-green-400', bg: 'bg-green-400/10 border-green-400/30' },
-  DESCARTADA: { label: 'Descartada', color: 'text-gray-500', bg: 'bg-gray-500/10 border-gray-500/30' },
+interface B2GAlertsResponse {
+  success: boolean;
+  tenders: B2GTenderOpportunity[];
+}
+
+interface StatusConfigEntry {
+  label: string;
+  color: string;
+  bg: string;
+}
+
+const STATUS_CONFIG: Record<B2GTenderOpportunity['status'], StatusConfigEntry> = {
+  NUEVA: {
+    label: 'Nueva',
+    color: 'text-[#ecb613]',
+    bg: 'bg-[#ecb613]/10 border-[#ecb613]/30',
+  },
+  ANALIZADA: {
+    label: 'Analizada',
+    color: 'text-sky-400',
+    bg: 'bg-sky-400/10 border-sky-400/30',
+  },
+  BORRADOR_EMITIDO: {
+    label: 'Borrador Emitido',
+    color: 'text-violet-400',
+    bg: 'bg-violet-400/10 border-violet-400/30',
+  },
+  PRESENTADA: {
+    label: 'Presentada',
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-400/10 border-emerald-400/30',
+  },
+  ADJUDICADA: {
+    label: 'Adjudicada',
+    color: 'text-green-400',
+    bg: 'bg-green-400/10 border-green-400/30',
+  },
+  DESCARTADA: {
+    label: 'Descartada',
+    color: 'text-gray-500',
+    bg: 'bg-gray-500/10 border-gray-500/30',
+  },
 };
 
-export function B2GTenderFeedCard() {
+const URGENT_THRESHOLD_DAYS = 3;
+
+export function B2GTenderFeedCard(): React.JSX.Element {
   const [tenders, setTenders] = useState<B2GTenderOpportunity[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [lastRefresh, setLastRefresh] = useState<string>('');
   const [generatingExpediente, setGeneratingExpediente] = useState<string | null>(null);
 
-  const fetchTenders = async () => {
+  const fetchTenders = useCallback(async (): Promise<void> => {
     setLoading(true);
     try {
       const res = await fetch('/api/b2g/alerts');
-      const data = await res.json();
+      const data = (await res.json()) as B2GAlertsResponse;
       if (data.success) {
         setTenders(data.tenders);
         setLastRefresh(new Date().toLocaleTimeString('es-ES'));
@@ -72,30 +114,30 @@ export function B2GTenderFeedCard() {
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    fetchTenders();
   }, []);
 
-  const handleGenerateExpediente = (tenderId: string) => {
+  useEffect(() => {
+    void fetchTenders();
+  }, [fetchTenders]);
+
+  const handleGenerateExpediente = useCallback((tenderId: string): void => {
     setGeneratingExpediente(tenderId);
     setTimeout(() => {
-      setTenders(prev =>
-        prev.map(t =>
-          t.id === tenderId ? { ...t, status: 'BORRADOR_EMITIDO' as const } : t
-        )
+      setTenders((prev) =>
+        prev.map((t) =>
+          t.id === tenderId ? { ...t, status: 'BORRADOR_EMITIDO' as const } : t,
+        ),
       );
       setGeneratingExpediente(null);
     }, 2000);
-  };
+  }, []);
 
   const totalPipelineValue = tenders
-    .filter(t => t.status !== 'DESCARTADA')
+    .filter((t) => t.status !== 'DESCARTADA')
     .reduce((acc, t) => acc + t.importeBase, 0);
 
-  const vimumeCount = tenders.filter(t => t.vimumeCompatible).length;
-  const urgentCount = tenders.filter(t => t.diasRestantes <= 3).length;
+  const vimumeCount = tenders.filter((t) => t.vimumeCompatible).length;
+  const urgentCount = tenders.filter((t) => t.diasRestantes <= URGENT_THRESHOLD_DAYS).length;
 
   return (
     <div className="space-y-6">
@@ -106,19 +148,20 @@ export function B2GTenderFeedCard() {
             <Landmark className="w-3.5 h-3.5" aria-hidden="true" /> Escáner de Licitaciones PLACSP · Art. 118 LCSP
           </span>
           <h2 className="text-xl md:text-2xl font-bold text-white mt-1">
-            Licitaciones & Festejos Municipales B2G
+            Licitaciones &amp; Festejos Municipales B2G
           </h2>
           <p className="text-xs text-gray-400 mt-0.5">
             Rastreo automático de contratos menores (&lt;15.000 €) en la Plataforma de Contratación del Sector Público
           </p>
         </div>
         <button
-          onClick={fetchTenders}
+          type="button"
+          onClick={() => void fetchTenders()}
           disabled={loading}
           className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-[#ecb613]/40 text-white text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} aria-hidden="true" />
-          {loading ? 'Escaneando PLACSP...' : `Refrescar Feed`}
+          {loading ? 'Escaneando PLACSP...' : 'Refrescar Feed'}
           {lastRefresh && <span className="text-gray-500 normal-case">({lastRefresh})</span>}
         </button>
       </div>
@@ -131,7 +174,9 @@ export function B2GTenderFeedCard() {
         </div>
         <div className="p-3 rounded-xl bg-[#09090d] border border-white/10">
           <span className="text-[10px] text-gray-500 font-mono uppercase">Pipeline B2G</span>
-          <p className="text-2xl font-bold text-[#ecb613] mt-1">{totalPipelineValue.toLocaleString('es-ES')} €</p>
+          <p className="text-2xl font-bold text-[#ecb613] mt-1">
+            {totalPipelineValue.toLocaleString('es-ES')} €
+          </p>
         </div>
         <div className="p-3 rounded-xl bg-[#09090d] border border-emerald-500/20">
           <span className="text-[10px] text-gray-500 font-mono uppercase flex items-center gap-1">
@@ -150,19 +195,22 @@ export function B2GTenderFeedCard() {
       {/* Tender Cards */}
       <div className="space-y-3">
         {tenders.map((tender) => {
-          const statusCfg = STATUS_CONFIG[tender.status] || STATUS_CONFIG.NUEVA;
-          const isUrgent = tender.diasRestantes <= 3;
+          const statusCfg = STATUS_CONFIG[tender.status] ?? STATUS_CONFIG.NUEVA;
+          const isUrgent = tender.diasRestantes <= URGENT_THRESHOLD_DAYS;
           const isGenerating = generatingExpediente === tender.id;
 
           return (
             <article
               key={tender.id}
-              className={`p-5 rounded-2xl bg-[#09090d] border transition-all hover:border-[#ecb613]/30 ${isUrgent ? 'border-orange-500/30' : 'border-white/10'
-                }`}
+              className={`p-5 rounded-2xl bg-[#09090d] border transition-all hover:border-[#ecb613]/30 ${
+                isUrgent ? 'border-orange-500/30' : 'border-white/10'
+              }`}
             >
               {/* Top Row: Status + Match + Urgency */}
               <div className="flex flex-wrap items-center gap-2 mb-3">
-                <span className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${statusCfg.bg} ${statusCfg.color}`}>
+                <span
+                  className={`text-[10px] font-mono px-2.5 py-0.5 rounded-full border ${statusCfg.bg} ${statusCfg.color}`}
+                >
                   {statusCfg.label}
                 </span>
                 <span className="text-[10px] font-mono px-2.5 py-0.5 rounded-full border border-white/10 bg-white/5 text-white">
@@ -202,7 +250,9 @@ export function B2GTenderFeedCard() {
                   <MapPin className="w-3.5 h-3.5 text-[#AAD6CD] shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <span className="text-gray-500 block">Municipio</span>
-                    <span className="text-white">{tender.municipio} ({tender.provincia})</span>
+                    <span className="text-white">
+                      {tender.municipio} ({tender.provincia})
+                    </span>
                     <span className="text-gray-600 block">DIR3: {tender.dir3Code}</span>
                   </div>
                 </div>
@@ -210,7 +260,9 @@ export function B2GTenderFeedCard() {
                   <CircleDollarSign className="w-3.5 h-3.5 text-[#ecb613] shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <span className="text-gray-500 block">Importe Base (sin IVA)</span>
-                    <span className="text-[#ecb613] text-base font-bold">{tender.importeBase.toLocaleString('es-ES')} €</span>
+                    <span className="text-[#ecb613] text-base font-bold">
+                      {tender.importeBase.toLocaleString('es-ES')} €
+                    </span>
                     <span className="text-gray-600 block">CPV: {tender.cpvCode}</span>
                   </div>
                 </div>
@@ -220,7 +272,7 @@ export function B2GTenderFeedCard() {
               <div className="flex flex-wrap gap-1.5 mb-4">
                 {tender.matchReasons.map((reason, i) => (
                   <span
-                    key={i}
+                    key={`${tender.id}-reason-${i}`}
                     className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-gray-300 border border-white/5"
                   >
                     {reason}
@@ -243,14 +295,19 @@ export function B2GTenderFeedCard() {
               <div className="flex flex-wrap gap-2">
                 {tender.status === 'NUEVA' || tender.status === 'ANALIZADA' ? (
                   <button
+                    type="button"
                     onClick={() => handleGenerateExpediente(tender.id)}
                     disabled={isGenerating}
                     className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#ecb613] hover:bg-amber-400 text-black font-bold text-xs font-mono uppercase tracking-wider transition-all disabled:opacity-50"
                   >
                     {isGenerating ? (
-                      <><Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> Generando Expediente Art. 118...</>
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" aria-hidden="true" /> Generando Expediente Art. 118...
+                      </>
                     ) : (
-                      <><FileText className="w-3.5 h-3.5" aria-hidden="true" /> Generar Expediente Art. 118</>
+                      <>
+                        <FileText className="w-3.5 h-3.5" aria-hidden="true" /> Generar Expediente Art. 118
+                      </>
                     )}
                   </button>
                 ) : tender.status === 'BORRADOR_EMITIDO' ? (
@@ -260,7 +317,9 @@ export function B2GTenderFeedCard() {
                 ) : null}
 
                 <Link
-                  href={`/checkout/presupuesto?format=vimume-b2g&entity=${encodeURIComponent(tender.organoContratante)}&base=${tender.importeBase}`}
+                  href={`/checkout/presupuesto?format=vimume-b2g&entity=${encodeURIComponent(
+                    tender.organoContratante,
+                  )}&base=${tender.importeBase}`}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:border-[#ecb613]/40 text-white text-xs font-mono uppercase tracking-wider transition-all"
                 >
                   <Sparkles className="w-3.5 h-3.5" aria-hidden="true" /> Calcular Split Soberano
@@ -275,9 +334,13 @@ export function B2GTenderFeedCard() {
       <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-black/40 border border-white/5 text-xs text-gray-400 font-mono">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" aria-hidden="true" />
-          <span>Techo Art. 118 LCSP: 14.250,00 € (Ajuste automático al 95%). Split Soberano 80/10/10.</span>
+          <span>
+            Techo Art. 118 LCSP: 14.250,00 € (Ajuste automático al 95%). Split Soberano 80/10/10.
+          </span>
         </div>
-        <span>Teléfono Retención: <strong className="text-white">+34 693 693 048</strong></span>
+        <span>
+          Teléfono Retención: <strong className="text-white">+34 693 693 048</strong>
+        </span>
       </div>
     </div>
   );

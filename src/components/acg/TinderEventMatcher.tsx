@@ -68,45 +68,93 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
     dispatch({ type: 'SELECT_ARTIST', payload: ACG_ARTIST_OFFERS[nextIndex].id });
   };
 
+  const currentStepLabel = DECISION_STEPS[state.currentStepIndex]?.label ?? 'Sin etapa';
+
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <div
+      className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6"
+      role="region"
+      aria-label="Selector de artista tipo Tinder para eventos"
+    >
       {/* Tarjeta principal swipe */}
       <div className="lg:col-span-7 flex items-start justify-center">
-        <div className="relative w-full max-w-md rounded-3xl bg-[#050507] border border-[#FF2B44]/30 overflow-hidden shadow-[0_30px_80px_rgba(255,43,68,0.15)]">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF2B44] to-transparent" />
+        <div
+          className="relative w-full max-w-md rounded-3xl bg-[#050507] border border-[#FF2B44]/30 overflow-hidden shadow-[0_30px_80px_rgba(255,43,68,0.15)]"
+          role="article"
+          aria-labelledby="tinder-artist-name"
+          aria-describedby="tinder-artist-tagline"
+        >
+          <div
+            className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#FF2B44] to-transparent"
+            aria-hidden="true"
+          />
 
           <div className="p-6 space-y-4">
             <div className="flex items-start justify-between">
               <div>
-                <p className="font-syne text-2xl font-black text-white tracking-tight">{selectedArtist.name}</p>
-                <p className="font-mono text-xs text-[#FF2B44] font-bold uppercase tracking-widest">{selectedArtist.formatLabel}</p>
+                <p
+                  id="tinder-artist-name"
+                  className="font-syne text-2xl font-black text-white tracking-tight"
+                >
+                  {selectedArtist.name}
+                </p>
+                <p className="font-mono text-xs text-[#FF2B44] font-bold uppercase tracking-widest">
+                  {selectedArtist.formatLabel}
+                </p>
               </div>
-              <span className="px-3 py-1 bg-[#FF2B44]/10 border border-[#FF2B44]/30 text-[#FF2B44] rounded-full font-mono text-xs font-bold">
+              <span
+                className="px-3 py-1 bg-[#FF2B44]/10 border border-[#FF2B44]/30 text-[#FF2B44] rounded-full font-mono text-xs font-bold"
+                aria-label={`Precio base ${selectedArtist.basePriceEur} euros`}
+              >
                 {selectedArtist.basePriceEur} €
               </span>
             </div>
 
-            <p className="font-body text-sm text-white/60 leading-relaxed">{selectedArtist.tagline}</p>
+            <p
+              id="tinder-artist-tagline"
+              className="font-body text-sm text-white/60 leading-relaxed"
+            >
+              {selectedArtist.tagline}
+            </p>
 
             {/* Ficha técnica */}
-            <div className="grid grid-cols-2 gap-3">
+            <div
+              className="grid grid-cols-2 gap-3"
+              role="group"
+              aria-label="Ficha técnica del artista"
+            >
               <div className="p-3 rounded-xl bg-black/40 border border-white/5">
                 <span className="block font-mono text-[10px] text-white/40 uppercase">Músicos</span>
-                <span className="font-mono text-lg text-white font-bold">{selectedArtist.musiciansCount}</span>
+                <span
+                  className="font-mono text-lg text-white font-bold"
+                  aria-label={`${selectedArtist.musiciansCount} músicos`}
+                >
+                  {selectedArtist.musiciansCount}
+                </span>
               </div>
               <div className="p-3 rounded-xl bg-black/40 border border-white/5">
                 <span className="block font-mono text-[10px] text-white/40 uppercase">Finca destino</span>
-                <span className="font-mono text-xs text-white font-bold truncate">{selectedFinca?.name ?? 'Sin finca'}</span>
+                <span
+                  className="font-mono text-xs text-white font-bold truncate"
+                  aria-label={`Finca destino: ${selectedFinca?.name ?? 'Sin finca'}`}
+                >
+                  {selectedFinca?.name ?? 'Sin finca'}
+                </span>
               </div>
             </div>
 
             {/* Reproductor audio caliente */}
-            <div className="p-4 rounded-xl bg-[#0a0a0d] border border-white/10 flex items-center gap-3">
+            <div
+              className="p-4 rounded-xl bg-[#0a0a0d] border border-white/10 flex items-center gap-3"
+              role="group"
+              aria-label="Reproductor de fragmento de audio"
+            >
               <button
                 type="button"
                 onClick={toggleAudio}
-                className="w-11 h-11 rounded-xl bg-[#FF2B44] text-white flex items-center justify-center hover:shadow-[0_0_25px_rgba(255,43,68,0.5)] transition-all shrink-0"
+                className="w-11 h-11 rounded-xl bg-[#FF2B44] text-white flex items-center justify-center hover:shadow-[0_0_25px_rgba(255,43,68,0.5)] transition-all shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2B44] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0d]"
                 aria-label={isPlaying ? 'Pausar fragmento de audio' : 'Reproducir fragmento de audio'}
+                aria-pressed={isPlaying}
               >
                 {isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
               </button>
@@ -116,12 +164,27 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
                 </p>
                 <p className="font-mono text-xs text-white/70 truncate">Edwin Agudelo · Podcast Cumpleaños</p>
               </div>
-              <audio ref={audioRef} src={AUDIO_SOURCE} preload="auto" onEnded={() => setIsPlaying(false)} />
+              <audio
+                ref={audioRef}
+                src={AUDIO_SOURCE}
+                preload="auto"
+                onEnded={() => setIsPlaying(false)}
+                aria-label="Fragmento de audio de Edwin Agudelo, Podcast Cumpleaños"
+              />
             </div>
 
             {/* Aviso de compatibilidad acústica */}
-            <div className={`p-3 rounded-xl border flex items-start gap-2 ${isArtistCompatible ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-[#FF2B44]/40 bg-[#FF2B44]/5'}`}>
-              <Info size={15} aria-hidden="true" className={isArtistCompatible ? 'text-emerald-400 shrink-0 mt-0.5' : 'text-[#FF2B44] shrink-0 mt-0.5'} />
+            <div
+              className={`p-3 rounded-xl border flex items-start gap-2 ${isArtistCompatible ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-[#FF2B44]/40 bg-[#FF2B44]/5'}`}
+              role="status"
+              aria-live="polite"
+              aria-label="Aviso de compatibilidad acústica"
+            >
+              <Info
+                size={15}
+                aria-hidden="true"
+                className={isArtistCompatible ? 'text-emerald-400 shrink-0 mt-0.5' : 'text-[#FF2B44] shrink-0 mt-0.5'}
+              />
               <p className="font-mono text-[11px] leading-relaxed text-white/70">
                 {isArtistCompatible
                   ? 'Match acústico compatible: rider aprobado para la finca seleccionada.'
@@ -130,20 +193,24 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
             </div>
 
             {/* Acciones swipe */}
-            <div className="flex items-center justify-center gap-4 pt-2">
+            <div
+              className="flex items-center justify-center gap-4 pt-2"
+              role="group"
+              aria-label="Acciones de selección de artista"
+            >
               <button
                 type="button"
                 onClick={handleReject}
-                className="w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white transition-all flex items-center justify-center"
-                aria-label="Descartar artista"
+                className="w-14 h-14 rounded-full bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 hover:text-white transition-all flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]"
+                aria-label={`Descartar artista ${selectedArtist.name}`}
               >
                 <X size={24} aria-hidden="true" />
               </button>
               <button
                 type="button"
                 onClick={handleLike}
-                className="w-16 h-16 rounded-full bg-[#FF2B44] text-white hover:shadow-[0_0_40px_rgba(255,43,68,0.6)] transition-all flex items-center justify-center scale-105"
-                aria-label="Seleccionar artista"
+                className="w-16 h-16 rounded-full bg-[#FF2B44] text-white hover:shadow-[0_0_40px_rgba(255,43,68,0.6)] transition-all flex items-center justify-center scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2B44] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]"
+                aria-label={`Seleccionar artista ${selectedArtist.name}`}
               >
                 <Heart size={28} aria-hidden="true" />
               </button>
@@ -154,27 +221,44 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
 
       {/* Columna contexto */}
       <div className="lg:col-span-5 space-y-5">
-        <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
+        <div
+          className="rounded-2xl bg-[#050507] border border-white/10 p-6"
+          role="region"
+          aria-labelledby="tinder-context-heading"
+        >
           <div className="flex items-center gap-2 mb-4">
             <Sparkles size={15} className="text-[#FF2B44]" aria-hidden="true" />
-            <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">Event Matcher · Doble opt-in</span>
+            <span
+              id="tinder-context-heading"
+              className="font-mono text-[10px] text-white/40 uppercase tracking-widest"
+            >
+              Event Matcher · Doble opt-in
+            </span>
           </div>
           <p className="font-body text-sm text-white/60 leading-relaxed mb-4">
             Selecciona el formato que mejor sintonice con tu finca y aforo. Al darle
             <span className="text-[#FF2B44] font-bold"> like</span> se activa el Split Soberano y las fechas recomendadas.
           </p>
-          <div className="space-y-2">
+          <div
+            className="space-y-2"
+            role="listbox"
+            aria-label="Lista de artistas disponibles"
+            aria-activedescendant={`artist-option-${selectedArtist.id}`}
+          >
             {ACG_ARTIST_OFFERS.map((offer) => {
               const active = offer.id === selectedArtist.id;
               const liked = state.match.likedProviderIds.includes(offer.id);
               return (
                 <button
                   key={offer.id}
+                  id={`artist-option-${offer.id}`}
                   type="button"
                   onClick={() => dispatch({ type: 'SELECT_ARTIST', payload: offer.id })}
+                  role="option"
+                  aria-selected={active}
                   aria-pressed={active}
-                  aria-label={`Seleccionar ${offer.name} (${offer.formatLabel})`}
-                  className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${active
+                  aria-label={`Seleccionar ${offer.name} (${offer.formatLabel})${liked ? ', ya marcado como favorito' : ''}`}
+                  className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2B44] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507] ${active
                     ? 'border-[#FF2B44]/50 bg-[#FF2B44]/10'
                     : 'border-white/10 bg-black/30 hover:border-white/30'
                     }`}
@@ -183,7 +267,10 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
                     <span className={`block font-syne text-sm font-bold ${active ? 'text-white' : 'text-white/70'}`}>{offer.name}</span>
                     <span className="block font-mono text-[10px] text-white/40 uppercase">{offer.formatLabel}</span>
                   </div>
-                  <span className={`font-mono text-sm font-bold ${active ? 'text-[#FF2B44]' : 'text-white/50'}`}>
+                  <span
+                    className={`font-mono text-sm font-bold ${active ? 'text-[#FF2B44]' : 'text-white/50'}`}
+                    aria-hidden="true"
+                  >
                     {liked ? '❤' : `${offer.basePriceEur} €`}
                   </span>
                 </button>
@@ -192,19 +279,48 @@ export default function TinderEventMatcher({ state, dispatch }: TinderEventMatch
           </div>
         </div>
 
-        <div className="rounded-2xl bg-[#050507] border border-white/10 p-6">
-          <p className="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-3">Telemetría de match</p>
-          <div className="space-y-2 font-mono text-xs">
-            <div className="flex justify-between"><span className="text-white/50">Likes emitidos</span><span className="text-white">{state.match.likedProviderIds.length}</span></div>
-            <div className="flex justify-between"><span className="text-white/50">Descartados</span><span className="text-white">{state.match.rejectedProviderIds.length}</span></div>
-            <div className="flex justify-between"><span className="text-white/50">Etapa</span><span className="text-[#FF2B44]">{DECISION_STEPS[state.currentStepIndex].label}</span></div>
+        <div
+          className="rounded-2xl bg-[#050507] border border-white/10 p-6"
+          role="region"
+          aria-labelledby="tinder-telemetry-heading"
+        >
+          <p
+            id="tinder-telemetry-heading"
+            className="font-mono text-[10px] text-white/40 uppercase tracking-widest mb-3"
+          >
+            Telemetría de match
+          </p>
+          <div
+            className="space-y-2 font-mono text-xs"
+            role="group"
+            aria-label="Métricas de telemetría del match"
+          >
+            <div className="flex justify-between">
+              <span className="text-white/50">Likes emitidos</span>
+              <span className="text-white" aria-label={`${state.match.likedProviderIds.length} likes emitidos`}>
+                {state.match.likedProviderIds.length}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-white/50">Descartados</span>
+              <span className="text-white" aria-label={`${state.match.rejectedProviderIds.length} artistas descartados`}>
+                {state.match.rejectedProviderIds.length}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-white/50">Etapa</span>
+              <span className="text-[#FF2B44]" aria-label={`Etapa actual: ${currentStepLabel}`}>
+                {currentStepLabel}
+              </span>
+            </div>
           </div>
         </div>
 
         <button
           type="button"
           onClick={() => dispatch({ type: 'GO_NEXT' })}
-          className="w-full py-4 rounded-xl bg-[#FF2B44] text-white font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,43,68,0.5)] transition-all"
+          className="w-full py-4 rounded-xl bg-[#FF2B44] text-white font-black text-sm uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,43,68,0.5)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2B44] focus-visible:ring-offset-2 focus-visible:ring-offset-[#050507]"
+          aria-label="Confirmar match y avanzar al siguiente paso"
         >
           Confirmar match · Siguiente
         </button>

@@ -22,23 +22,44 @@ export interface AtmosphereMatchResult {
   warnings: string[];
 }
 
-const WATTS_PER_GUEST_BASE = 12;
+export interface FinancialSplit {
+  grossAmount: number;
+  supplierShare: number;
+  earOsShare: number;
+  vimumeShare: number;
+}
+
+const WATTS_PER_GUEST_BASE: number = 12;
+const OUTDOOR_MULTIPLIER: number = 1.4;
+const INDOOR_MULTIPLIER: number = 1.0;
+const DENSITY_WARNING_THRESHOLD: number = 3;
+const DENSITY_COMPATIBILITY_THRESHOLD: number = 4;
+const SUBWOOFER_WATT_RATIO: number = 1000;
+const TOP_SPEAKER_WATT_RATIO: number = 500;
+const DB_BASE: number = 102;
+const DB_REFERENCE_WATTS: number = 100;
+const SUPPLIER_SHARE_RATIO: number = 0.8;
+const EAR_OS_SHARE_RATIO: number = 0.1;
 
 export function calculateAtmosphereMatch(specs: VenueSpecs): AtmosphereMatchResult {
   const warnings: string[] = [];
-  const density = specs.areaSquareMeters > 0 ? specs.guestsCount / specs.areaSquareMeters : 0;
-  if (density > 3) {
-    warnings.push("Alta densidad de aforo (>3 personas/m²). Revisa evacuación.");
+  const density: number =
+    specs.areaSquareMeters > 0 ? specs.guestsCount / specs.areaSquareMeters : 0;
+
+  if (density > DENSITY_WARNING_THRESHOLD) {
+    warnings.push('Alta densidad de aforo (>3 personas/m²). Revisa evacuación.');
   }
 
-  const multiplier = specs.isOutdoor ? 1.4 : 1.0;
-  const totalWatts = Math.ceil(specs.guestsCount * WATTS_PER_GUEST_BASE * multiplier);
-  const subwoofers = Math.ceil(totalWatts / 1000);
-  const tops = Math.ceil(totalWatts / 500);
-  const estimatedDb = Math.round(102 + 10 * Math.log10(Math.max(totalWatts, 100) / 100));
+  const multiplier: number = specs.isOutdoor ? OUTDOOR_MULTIPLIER : INDOOR_MULTIPLIER;
+  const totalWatts: number = Math.ceil(specs.guestsCount * WATTS_PER_GUEST_BASE * multiplier);
+  const subwoofers: number = Math.ceil(totalWatts / SUBWOOFER_WATT_RATIO);
+  const tops: number = Math.ceil(totalWatts / TOP_SPEAKER_WATT_RATIO);
+  const estimatedDb: number = Math.round(
+    DB_BASE + 10 * Math.log10(Math.max(totalWatts, DB_REFERENCE_WATTS) / DB_REFERENCE_WATTS),
+  );
 
   return {
-    isCompatible: density <= 4,
+    isCompatible: density <= DENSITY_COMPATIBILITY_THRESHOLD,
     densityPerSqm: Number(density.toFixed(2)),
     acoustic: {
       totalWattsRMS: totalWatts,
@@ -51,17 +72,10 @@ export function calculateAtmosphereMatch(specs: VenueSpecs): AtmosphereMatchResu
   };
 }
 
-export interface FinancialSplit {
-  grossAmount: number;
-  supplierShare: number;
-  earOsShare: number;
-  vimumeShare: number;
-}
-
 export function calculateSovereignSplit(totalAmount: number): FinancialSplit {
-  const supplierShare = Number((totalAmount * 0.80).toFixed(2));
-  const earOsShare = Number((totalAmount * 0.10).toFixed(2));
-  const vimumeShare = Number((totalAmount - supplierShare - earOsShare).toFixed(2));
+  const supplierShare: number = Number((totalAmount * SUPPLIER_SHARE_RATIO).toFixed(2));
+  const earOsShare: number = Number((totalAmount * EAR_OS_SHARE_RATIO).toFixed(2));
+  const vimumeShare: number = Number((totalAmount - supplierShare - earOsShare).toFixed(2));
 
   return {
     grossAmount: totalAmount,

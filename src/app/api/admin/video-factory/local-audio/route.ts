@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { z } from "zod";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export interface LocalAudioItem {
   filename: string;
@@ -12,16 +16,90 @@ export interface LocalAudioItem {
   durationEstimatedSeconds?: number;
 }
 
-// Endpoint S-Class: Lector e indexador forense de los miles de audios y FX locales del PC
-// Conecta directamente con D:\BRUTOS_AUDIO\GRABACIONES_CUBASE_(Sesiones) y colecciones locales
-export async function GET(request: NextRequest) {
+const AUDIO_EXTENSIONS = [".ogg", ".wav", ".mp3", ".flac", ".aac"] as const;
+
+const CATEGORY_VALUES = [
+  "fx",
+  "bass",
+  "keys",
+  "brass",
+  "drums",
+  "ambient",
+  "vocal",
+  "other",
+] as const;
+
+type AudioCategory = (typeof CATEGORY_VALUES)[number];
+
+const QuerySchema = z.object({
+  q: z
+    .string()
+    .max(200, "Query demasiado larga")
+    .transform((v) => v.toLowerCase().trim())
+    .default(""),
+  category: z
+    .enum(["all", ...CATEGORY_VALUES] as [string, ...string[]])
+    .default("all"),
+  limit: z
+    .string()
+    .optional()
+    .transform((v) => {
+      const n = parseInt(v ?? "100", 10);
+      if (Number.isNaN(n) || n <= 0) return 100;
+      return Math.min(n, 500);
+    }),
+});
+
+const SECURITY_HEADERS: Record<string, string> = {
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "Referrer-Policy": "no-referrer",
+  "Cache-Control": "no-store, max-age=0",
+  "X-EAR-OS": "v2",
+};
+
+function jsonResponse<T>(body: T, status = 200): NextResponse {
+  return NextResponse.json(body, { status, headers: SECURITY_HEADERS });
+}
+
+function classifyAudio(lowerName: string): AudioCategory {
+  if (lowerName.includes("bass") || lowerName.includes("sub") || lowerName.includes("808")) return "bass";
+  if (lowerName.includes("chord") || lowerName.includes("piano") || lowerName.includes("key") || lowerName.includes("bell")) return "keys";
+  if (lowerName.includes("brass") || lowerName.includes("horn")) return "brass";
+  if (lowerName.includes("kick") || lowerName.includes("tom") || lowerName.includes("drum") || lowerName.includes("snare")) return "drums";
+  if (lowerName.includes("ambient") || lowerName.includes("atmosphere") || lowerName.includes("pad")) return "ambient";
+  if (lowerName.includes("vocal") || lowerName.includes("voice")) return "vocal";
+  return "fx";
+}
+
+function formatSize(size: number): string {
+  if (size > 1024 * 1024) return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+  return `${(size / 1024).toFixed(1)} KB`;
+}
+
+export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(request.url);
-    const query = (searchParams.get("q") || "").toLowerCase().trim();
-    const categoryFilter = searchParams.get("category") || "all";
-    const limit = parseInt(searchParams.get("limit") || "100", 10);
+    const parsed = QuerySchema.safeParse({
+      q: searchParams.get("q") ?? undefined,
+      category: searchParams.get("category") ?? undefined,
+      limit: searchParams.get("limit") ?? undefined,
+    });
 
-    const sourceFolders = [
+    if (!parsed.success) {
+      return jsonResponse(
+        {
+          success: false,
+          error: "Parámetros inválidos",
+          details: parsed.error.flatten().fieldErrors,
+        },
+        400,
+      );
+    }
+
+    const { q: query, category: categoryFilter, limit } = parsed.data;
+
+    const sourceFolders: string[] = [
       path.join("D:", "BRUTOS_AUDIO", "GRABACIONES_CUBASE_(Sesiones)"),
       path.join("D:", "01_PRODUCCION_AUDIO", "Media_Suelta"),
     ];
@@ -29,32 +107,27 @@ export async function GET(request: NextRequest) {
     const results: LocalAudioItem[] = [];
 
     for (const folder of sourceFolders) {
+      if (results.length >= limit) break;
       if (!fs.existsSync(folder)) continue;
 
       let fileNames: string[] = [];
       try {
         fileNames = fs.readdirSync(folder);
       } catch (e) {
-        console.warn(`No se pudo leer directorio ${folder}:`, e);
+        console.warn(`[local-audio] No se pudo leer directorio ${folder}:`, e);
         continue;
       }
 
       for (const name of fileNames) {
-        const ext = path.extname(name).toLowerCase();
-        if (![".ogg", ".wav", ".mp3", ".flac", ".aac"].includes(ext)) continue;
+        if (results.length >= limit) break;
 
-        // Filtro de búsqueda
+        const ext = path.extname(name).toLowerCase();
+        if (!(AUDIO_EXTENSIONS as readonly string[]).includes(ext)) continue;
+
         if (query && !name.toLowerCase().includes(query)) continue;
 
-        // Clasificar por nombre
         const lowerName = name.toLowerCase();
-        let cat: LocalAudioItem["category"] = "fx";
-        if (lowerName.includes("bass") || lowerName.includes("sub") || lowerName.includes("808")) cat = "bass";
-        else if (lowerName.includes("chord") || lowerName.includes("piano") || lowerName.includes("key") || lowerName.includes("bell")) cat = "keys";
-        else if (lowerName.includes("brass") || lowerName.includes("horn")) cat = "brass";
-        else if (lowerName.includes("kick") || lowerName.includes("tom") || lowerName.includes("drum") || lowerName.includes("snare")) cat = "drums";
-        else if (lowerName.includes("ambient") || lowerName.includes("atmosphere") || lowerName.includes("pad")) cat = "ambient";
-        else if (lowerName.includes("vocal") || lowerName.includes("voice")) cat = "vocal";
+        const cat = classifyAudio(lowerName);
 
         if (categoryFilter !== "all" && cat !== categoryFilter) continue;
 
@@ -62,29 +135,23 @@ export async function GET(request: NextRequest) {
         let size = 0;
         try {
           size = fs.statSync(fullPath).size;
-        } catch (_) {}
-
-        const sizeFormatted = size > 1024 * 1024 
-          ? `${(size / (1024 * 1024)).toFixed(2)} MB` 
-          : `${(size / 1024).toFixed(1)} KB`;
+        } catch {
+          // Ignorar archivos inaccesibles
+        }
 
         results.push({
           filename: name,
           fullPath,
           streamUrl: `/api/admin/video-factory/media/stream?file=${encodeURIComponent(fullPath)}`,
           sizeBytes: size,
-          sizeFormatted,
+          sizeFormatted: formatSize(size),
           category: cat,
           durationEstimatedSeconds: 3,
         });
-
-        if (results.length >= limit) break;
       }
-
-      if (results.length >= limit) break;
     }
 
-    return NextResponse.json({
+    return jsonResponse({
       success: true,
       totalFound: results.length,
       limit,
@@ -93,6 +160,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : "Error al indexar audios locales";
-    return NextResponse.json({ error: msg }, { status: 500 });
+    console.error("[local-audio] Error crítico:", error);
+    return jsonResponse({ success: false, error: msg }, 500);
   }
 }

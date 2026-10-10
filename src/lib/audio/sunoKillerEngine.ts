@@ -63,9 +63,9 @@ export interface SunoMasteringReport {
   masteredAt: string;
 }
 
-const STEM_ROLES: StemRole[] = ["Lead Vocal", "Percusión", "Bajo", "Armonía"];
+const STEM_ROLES: readonly StemRole[] = ["Lead Vocal", "Percusión", "Bajo", "Armonía"] as const;
 
-const GENRE_BPM: Record<MusicalGenre, number> = {
+const GENRE_BPM: Readonly<Record<MusicalGenre, number>> = {
   balada_romantica: 84,
   mariachi_tradicional: 96,
   pop_acustico: 108,
@@ -73,6 +73,17 @@ const GENRE_BPM: Record<MusicalGenre, number> = {
   electronica_dark: 124,
   corrido_soberano: 104,
 };
+
+const STEM_VOLUME: Readonly<Record<StemRole, number>> = {
+  "Lead Vocal": 0.92,
+  "Percusión": 0.74,
+  "Bajo": 0.8,
+  "Armonía": 0.66,
+};
+
+const TARGET_LUFS = -14;
+const AES_STANDARD = "AES TD1004" as const;
+const SOVEREIGN_SPLIT = "80% Artista / 10% EAR OS / 10% VIMUME";
 
 /**
  * Hash determinista FNV-1a para semillas de forma de onda estables.
@@ -116,7 +127,7 @@ export function renderStems(config: SunoTrackConfig): StemTrack[] {
 
   return STEM_ROLES.map((role, index): StemTrack => {
     const seed = hashSeed(`${config.title}-${config.genre}-${role}`);
-    const volume = role === "Lead Vocal" ? 0.92 : role === "Percusión" ? 0.74 : role === "Bajo" ? 0.8 : 0.66;
+    const volume = STEM_VOLUME[role];
 
     return {
       id: `stem-${role.toLowerCase().replace(/\s+/g, "-")}-${index + 1}`,
@@ -125,8 +136,8 @@ export function renderStems(config: SunoTrackConfig): StemTrack[] {
       muted: false,
       solo: false,
       waveformSeed: seed,
-      estimatedPeakDb: Number((basePeak + (index * 1.1)).toFixed(2)),
-      estimatedLufs: Number((-18 + (index * 1.4)).toFixed(2)),
+      estimatedPeakDb: Number((basePeak + index * 1.1).toFixed(2)),
+      estimatedLufs: Number((-18 + index * 1.4).toFixed(2)),
     };
   });
 }
@@ -148,19 +159,19 @@ export function masterToAesTd1004(
     ? Math.max(...active.map((stem) => stem.estimatedPeakDb))
     : -1.0;
 
-  const integratedLufs = -14;
+  const integratedLufs = TARGET_LUFS;
   const dynamicRangeDb = Number((integratedLufs - averageLufs + 9.5).toFixed(2));
 
   return {
-    targetLufs: -14,
+    targetLufs: TARGET_LUFS,
     integratedLufs,
     truePeakDb: Number(truePeak.toFixed(2)),
     dynamicRangeDb,
     stereoWidth: 0.84,
     format,
     sampleRate,
-    standard: "AES TD1004",
-    splitSovereign: "80% Artista / 10% EAR OS / 10% VIMUME",
+    standard: AES_STANDARD,
+    splitSovereign: SOVEREIGN_SPLIT,
     masteredAt: new Date().toISOString(),
   };
 }
